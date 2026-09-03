@@ -1,11 +1,11 @@
 # MedOps Copilot 工程基线与开发 Checklist
 
-> - 基线版本：v0.3
+> - 基线版本：v0.4
 > - 更新日期：2026-09-03
 > - 状态：已冻结
 > - 原始需求来源：[MedOps Copilot 项目设计文档 v0.1](source/MedOps_Copilot_项目设计文档_v0.1.pdf)与[用户提供的项目描述 v0.1](source/PROJECT_DESCRIPTION_v0.1.md)（SHA-256 均见 [SHA256SUMS](source/SHA256SUMS)；`300-500` 份文档目标来自项目描述）
 > - 编制时仓库状态：仅有 README，尚未开始工程实现
-> - 修订记录：v0.1 初版；v0.2 按 [第一轮审核记录](reviews/2026-09-03-baseline-review-01.md) 的 9 项技术修正与 8 项决策修订；v0.3 按 [第二轮审核记录](reviews/2026-09-03-baseline-review-02.md) 修正 3 处一致性问题并固定幂等并发语义；冻结前来源补录与核验见[第三轮审核记录](reviews/2026-09-03-baseline-review-03.md)
+> - 修订记录：v0.1 初版；v0.2 按 [第一轮审核记录](reviews/2026-09-03-baseline-review-01.md) 的 9 项技术修正与 8 项决策修订；v0.3 按 [第二轮审核记录](reviews/2026-09-03-baseline-review-02.md) 修正 3 处一致性问题并固定幂等并发语义，来源补录与冻结核验见[第三轮审核记录](reviews/2026-09-03-baseline-review-03.md)；v0.4 按 [ADR-0002](adr/ADR-0002-lexical-retrieval-selection.md) 将词法方案对比前置到 M1 入口，修订与复核见[第四轮审核记录](reviews/2026-09-03-baseline-review-04.md)
 
 ## 0. 本文件怎么用
 
@@ -107,12 +107,12 @@
 
 ### 3.1 词法检索：P0 要求精确词法召回达标，不强制 BM25 公式
 
-PostgreSQL 原生 `tsvector + ts_rank/ts_rank_cd` 是全文检索，不是 BM25。原设计中的“BM25”按审核决策解释为“精确词法召回能力”，而非特定排序公式：
+PostgreSQL 原生 `tsvector + ts_rank/ts_rank_cd` 是全文检索，不是 BM25。原设计中的“BM25”按审核决策解释为“精确词法召回能力”，而非特定排序公式。是否采用 BM25 不改变上层检索、RRF、Reranker 或业务契约，但会改变词法适配器、数据库索引、中文分词、镜像、测试、许可证与 `retrieval_version`。
 
-1. P0 首选 PostgreSQL FTS 加合适的中文 tokenizer（DEC-001），保持架构简单；组件名固定为 `lexical_retriever`。
-2. 代码、文档和对外描述不得把 FTS 写成 BM25。
-3. 只有 FTS 在精确条款切片（中文药名、剂量单位、否定词、时间窗、方案编号、中英混排）上不达标，或消融实验证明 BM25 有明显收益时，才引入真正 BM25。
-4. 具体 BM25 组件、许可证（例如 pg_search 为 AGPL-3.0，其他组件需核实）和维护成本作为 P1 的 ADR 决策。
+1. 组件名固定为 `lexical_retriever`；M1 入口按 [ADR-0002](adr/ADR-0002-lexical-retrieval-selection.md) 比较三个生产候选：应用层预分词 + PostgreSQL `simple` FTS、PostgreSQL FTS + 数据库中文 tokenizer、`pg_search` BM25 + 固定中文 tokenizer。
+2. 进程内 BM25 只作离线参考基线，不进入生产候选，避免形成数据库权限过滤之外的第二份生产索引。
+3. 代码、文档和对外描述必须写实际实现，不得把 FTS 写成 BM25；RRF 和 Reranker 不能补回未进入候选集的条款。
+4. 选择阈值、探针集、RLS 测试与许可证门禁在实验前固定；三个生产候选均未通过硬门禁时，DEC-001 保持阻塞，M1 不得绕过。
 
 ### 3.2 重试标识不等于幂等键
 
@@ -175,10 +175,13 @@ documents.parse_quality = trusted                  -- 由 documents.active_inges
 
 说明书、SOP 和方案以中文为主，并有中英混排。PostgreSQL 默认 parser 不切分中文，BM25 类组件同样需要配置中文 tokenizer。M1 必须完成 tokenizer 选择、词典版本记录和专项评测；DEC-001 的判据包含中文药名、剂量单位、否定词、时间窗、方案编号和中英混排，而不只是排序公式。
 
+若采用应用层预分词，入库与查询必须复用同一 tokenizer、医学词典和规范化规则版本；词元以空格连接后交给 PostgreSQL `simple` 配置，并保留 `tsvector` 位置信息，不得退化为无位置 token 集。上述版本必须进入索引元数据、`retrieval_version` 和缓存键；版本不匹配时拒绝查询，升级任一版本必须产生新的 `retrieval_version` 并重建索引。
+
 ### 3.7 过滤必须进入数据库查询，并处理近似索引召回不足
 
 - ACL、状态和生效时间过滤必须进入数据库查询和 RLS，不能先取跨权限候选再在应用层过滤。
 - pgvector 近似索引在过滤后候选不足时，采用自适应 over-fetch 或 iterative scan，并记录实际候选数。
+- 数据库内检索扩展的自定义扫描必须在普通应用角色、`FORCE ROW LEVEL SECURITY` 和连接池身份切换条件下证明零越权；同时验证排序与 `LIMIT` 下推后不会静默少取候选。若同一查询及过滤条件的精确计数证明合格候选不少于 `K`，必须返回 `K` 条；不足时返回实际数量并显式设置 `candidate_exhausted=true`，再按既定 over-fetch/降级规则处理。
 - Recall 必须按 MA / PV / CO 部门分别报告。
 - RLS 运行条件：每个请求开启事务；用 `SET LOCAL` 或事务级 `set_config` 注入服务端解析的身份；连接归还池前清除身份上下文；应用角色为 `NOSUPERUSER NOBYPASSRLS` 且不是表 owner；业务表启用 `FORCE ROW LEVEL SECURITY`；管理角色与业务角色分离；集成测试直接验证连接池复用和跨部门隔离。
 
@@ -270,7 +273,7 @@ upload -> file validation -> PII scan -> immutable store -> SHA-256
 
 - Query Rewriter 从用户查询、可信会话实体、术语表生成 1-3 条有界查询。
 - 用户文本不得直接生成 SQL、过滤表达式或权限条件。
-- 词法和向量召回并行，各自记录排名与分数。
+- 词法和向量召回并行，各自记录排名与分数。`LexicalRetriever` 对每个候选至少返回 `chunk_id/raw_score/rank`，并在结果级返回 `requested_k/returned_count/candidate_exhausted/retriever_version/tokenizer_version/dictionary_version`；RRF 只使用排名，原始分数用于 Trace 与实验诊断。
 - 使用确定性的 RRF 融合；默认 `k=60` 只是初始配置，不是永久常量。
 - Reranker 输入最多 20 个候选，输出最多 5-8 个。
 - 事实回查后再构造 Evidence；失效、越权、低可信或完整性失败的候选直接丢弃并记录原因。
@@ -346,6 +349,7 @@ Execute -> Observe -> Reflect -> Adapt -> Replay -> Approve -> Canary -> Release
 
 - `Recall@5`：严格宏平均 Recall。单条 query 的 `recall@5 = |required_gold_evidence ∩ retrieved_top5| / |required_gold_evidence|`，`retrieved_top5` 取事实回查后的 top 5 而非向量候选；`Recall@5` 为全部 query 的平均值。冗余或等价 Evidence 不重复计入 required gold。
 - `Hit@5`：任一 required gold 出现在 top 5 的 query 比例，单独报告，不得称为 Recall@5。
+- `Lexical Recall@20`：事实与权限过滤后、RRF/Reranker 前的词法 top 20 对 `required_gold_evidence` 的严格宏平均 Recall；专用于 DEC-001 探针实验，不替代端到端 Recall@5。
 - 无答案样本：`required_gold_evidence` 为空的样本不进入 Recall@5 和 Hit@5 的分母，单独以 abstention/no-answer accuracy（应声明证据不足或拒答的样本中被正确处理的比例）评测；若正样本出现空 gold，视为标注异常，评测任务直接失败而不是跳过。
 - 引用准确率：最终答案中被原文支持的引用数 / 最终答案全部引用数。
 - 失效版本引用率：非显式历史查询中 archived/未生效引用数 / 全部引用数，必须为 0。
@@ -422,7 +426,7 @@ P0 保留：
 - **外部工单集成**：只发送最小必要、已脱敏上下文，并保留投递审计。
 - **灾备与合规加固**：明确 RPO/RTO、保留期、审计导出、密钥轮换和第三方数据处理评审。
 - **生产就绪增强（自 P0 降级）**：SBOM、依赖和镜像扫描、完整备份恢复演练、数据库短暂不可用/Redis 不可用/Reranker 故障等故障演练。
-- **真正 BM25（自 P0 降级，DEC-001）**：仅当 FTS 精确条款切片不达标或消融证明收益时引入；评估组件许可证与维护成本。
+- **词法引擎后续替换**：DEC-001 在 M1 定型后，仅在新的冻结评测证明收益且重新通过权限、性能、许可证与回归门禁时更换实现。
 
 ### 7.2 P2：研究型增强
 
@@ -457,17 +461,21 @@ P0 保留：
 
 ### M1：知识治理与检索
 
+- [ ] 在实现候选前冻结 DEC-001 精确条款探针集：不少于 60 条、目标 72 条，覆盖六类专项与 MA/PV/CO（每部门不少于 15 条），双人复核并记录 `dataset_version` 和 SHA-256；修正标注必须升版并重跑全部候选。
+- [ ] 冻结 DEC-001 实验清单：三个生产候选的具体实现/配置、PostgreSQL/扩展/tokenizer/词典版本、镜像 digest、硬件与测量参数；进程内 BM25 仅作离线参考。
+- [ ] 固定 `LexicalRetriever` 契约，包含候选 `chunk_id/raw_score/rank` 与结果级 `requested_k/returned_count/candidate_exhausted/retriever_version/tokenizer_version/dictionary_version`。
+- [ ] 用最小实验 schema 在普通应用角色 + `FORCE ROW LEVEL SECURITY` 下完成词法候选对比；同时断言零跨部门泄漏与零静默候选不足，覆盖 `LIMIT`、按分数排序和连接池身份切换。
+- [ ] 按 ADR-0002 的预登记阈值完成三候选实验与许可证审查，将选择、证据和复现命令回填 ADR；未产生合格方案前阻塞正式 M1 实现。
 - [ ] migration 建立文档、版本、chunk、ACL、审计、source object 和 ingestion job 表。
 - [ ] 数据库约束保证同一 family 只有一个 active 版本。
-- [ ] 数据库 RLS/安全视图和角色权限测试证明跨部门不可见，覆盖 3.7 全部运行条件和连接池复用。
+- [ ] 正式数据库 RLS/安全视图和角色权限测试证明跨部门不可见且候选不足可检测，覆盖 3.7 全部运行条件和连接池复用。
 - [ ] 完成 PDF/DOCX 校验、PII 扫描、`source_hash` 全局唯一去重、不可变保存，以及多 document 引用同一 source object 的管理员确认与审计。
 - [ ] 解析保留 page/section/seq/offset 并写入 `chunk_content_hash`；`parse_quality` 非 trusted 的文档不能 active；active 文档 `effective_from` 非空由约束保证。
 - [ ] 发布/归档在事务中完成，并通过 outbox 触发索引与缓存失效。
 - [ ] 建立医学术语表及版本；记录通用名、商品名、缩写的来源。
 - [ ] 实现 1-3 条有界 Query Rewrite，并验证会话实体不会跨会话污染。
-- [ ] 选择中文 tokenizer 并记录词典版本；建立中文药名、剂量单位、否定词、时间窗、方案编号和中英混排专项评测。
-- [ ] 实现 `lexical_retriever`（PostgreSQL FTS + 中文 tokenizer）；代码与文档不得称其为 BM25。
-- [ ] 精确条款切片达标；若不达标，在 DEC-001 记录 BM25 消融实验结论后再决定是否引入。
+- [ ] 实现 DEC-001 选定的 `lexical_retriever`；若为应用层预分词，保证入库/查询版本一致、保留词元位置、版本不匹配拒绝查询且升级触发重建索引。
+- [ ] 固化选定方案的中文 tokenizer、医学词典和规范化规则版本，并把它们纳入索引元数据、`retrieval_version` 与缓存键。
 - [ ] DEC-002 完成后实现 pgvector 召回；migration 记录模型、维度、归一化方法和 embedding 版本；过滤后候选不足时 over-fetch 或 iterative scan。
 - [ ] 实现 RRF、Reranker、候选上限和并行超时。
 - [ ] 实现事实回查：状态、生效时间、ACL、完整性、解析质量。
@@ -542,7 +550,7 @@ P0 保留：
 - [ ] P1：高可用部署、灾备和合规审计加固。
 - [ ] P1：外部工单系统的脱敏集成。
 - [ ] P1：SBOM、依赖/镜像扫描、完整备份恢复演练与外部依赖故障演练。
-- [ ] P1：真正 BM25 组件的消融实验、许可证评估与 ADR（DEC-001）。
+- [ ] P1：词法引擎后续替换的冻结评测、权限/性能回归、许可证复审与 ADR。
 - [ ] P2：多模态表格/图像证据与独立评测体系。
 - [ ] P2：知识图谱辅助候选召回。
 - [ ] P2：跨语言检索与引用核验。
@@ -578,7 +586,7 @@ P0 保留：
 
 | ID | 决策 | 推荐处理时点 | 判定依据 |
 | --- | --- | --- | --- |
-| DEC-001 | 中文 tokenizer 与词典选择；FTS 为 P0 词法方案，真 BM25 仅在精确条款切片不达标或消融证明收益时作为 P1 引入 | M1 | 中文药名、剂量单位、否定词、时间窗、方案编号、中英混排切片 Recall；许可证；运维复杂度；延迟 |
+| DEC-001 | 词法检索实现、中文 tokenizer 与词典选择；选择协议和阈值已由 [ADR-0002](adr/ADR-0002-lexical-retrieval-selection.md) 预登记，具体实现待实验 | M1 入口，后续实现前 | 探针集 Lexical Recall@20、端到端 Recall@5、关键切片、RLS/候选数、延迟、许可证与运维复杂度 |
 | DEC-002 | Embedding（模型、维度、归一化）与 Reranker；决策前不建固定维度 migration | M1 | 中英文医学集效果、许可、延迟、部署资源、维度切换成本 |
 | DEC-003 | Verifier 使用专用 NLI 还是小 LLM | M2 | 支持/矛盾准确率、可解释性、成本 |
 | DEC-004 | arq、Celery 或轻量 worker | M0/M3 | 可靠性需求、运维成本、任务复杂度；默认优先最小方案 |
