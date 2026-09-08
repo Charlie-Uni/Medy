@@ -1,0 +1,168 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://medy.local/evals/probe/precise_clause/manifest.schema.json",
+  "title": "PreciseClauseProbeManifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "dataset_id", "dataset_version", "spec_version", "status", "created_at", "frozen_at",
+    "purpose", "source_store", "extraction", "normalization", "minimums", "counts",
+    "reviewers", "review_policy", "pii_ruleset_version", "files", "dataset_hash",
+    "supersedes", "change_reason"
+  ],
+  "properties": {
+    "dataset_id": { "const": "precise_clause_probe" },
+    "dataset_version": { "type": "string", "pattern": "^v[0-9]+(\\.[0-9]+)?$" },
+    "spec_version": { "const": "spec-v1" },
+    "status": { "enum": ["draft", "frozen"] },
+    "created_at": { "type": "string", "format": "date" },
+    "frozen_at": { "type": ["string", "null"], "format": "date" },
+    "purpose": { "type": "string", "minLength": 10, "maxLength": 500 },
+    "source_store": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "location"],
+      "properties": {
+        "kind": { "enum": ["local_path", "object_store"] },
+        "location": { "type": "string", "minLength": 1 }
+      }
+    },
+    "extraction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["extractor", "extractor_version", "params", "params_hash"],
+      "properties": {
+        "extractor": { "type": "string", "minLength": 1 },
+        "extractor_version": { "type": "string", "minLength": 1 },
+        "params": { "type": "object" },
+        "params_hash": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "normalization": { "const": "norm-v1" },
+    "minimums": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["samples", "target_samples", "per_slice", "per_dept", "max_samples_per_document", "documents", "documents_per_dept"],
+      "properties": {
+        "samples": { "const": 60 },
+        "target_samples": { "const": 72 },
+        "per_slice": { "const": 8 },
+        "per_dept": { "const": 15 },
+        "max_samples_per_document": { "const": 6 },
+        "documents": { "const": 10 },
+        "documents_per_dept": { "const": 3 }
+      }
+    },
+    "counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["samples", "documents", "per_slice", "per_dept"],
+      "properties": {
+        "samples": { "type": "integer", "minimum": 0 },
+        "documents": { "type": "integer", "minimum": 0 },
+        "per_slice": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["drug_name_zh", "dose_unit", "negation", "time_window", "protocol_id", "mixed_zh_en"],
+          "properties": {
+            "drug_name_zh": { "type": "integer", "minimum": 0 },
+            "dose_unit": { "type": "integer", "minimum": 0 },
+            "negation": { "type": "integer", "minimum": 0 },
+            "time_window": { "type": "integer", "minimum": 0 },
+            "protocol_id": { "type": "integer", "minimum": 0 },
+            "mixed_zh_en": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "per_dept": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["MA", "PV", "CO"],
+          "properties": {
+            "MA": { "type": "integer", "minimum": 0 },
+            "PV": { "type": "integer", "minimum": 0 },
+            "CO": { "type": "integer", "minimum": 0 }
+          }
+        }
+      }
+    },
+    "reviewers": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": { "$ref": "#/$defs/reviewer" },
+      "allOf": [
+        {
+          "contains": { "required": ["role", "kind"], "properties": { "role": { "const": "annotator" }, "kind": { "const": "human" } } },
+          "minContains": 1, "maxContains": 1
+        },
+        {
+          "contains": { "required": ["role", "kind"], "properties": { "role": { "const": "second_reviewer" }, "kind": { "const": "llm" } } },
+          "minContains": 1, "maxContains": 1
+        }
+      ]
+    },
+    "review_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["human_reviewers", "llm_reviewers", "statement"],
+      "properties": {
+        "human_reviewers": { "const": 1 },
+        "llm_reviewers": { "const": 1 },
+        "statement": { "const": "人工标注加 LLM 独立复核；不等同于两名独立人工复核。" }
+      }
+    },
+    "pii_ruleset_version": { "type": "string", "minLength": 1 },
+    "files": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 4,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "sha256"],
+        "properties": {
+          "path": { "enum": ["corpus.json", "samples.jsonl", "review_prompt.md", "acl_probes.jsonl"] },
+          "sha256": { "$ref": "#/$defs/sha256" }
+        }
+      },
+      "allOf": [
+        { "contains": { "properties": { "path": { "const": "corpus.json" } } }, "minContains": 1, "maxContains": 1 },
+        { "contains": { "properties": { "path": { "const": "samples.jsonl" } } }, "minContains": 1, "maxContains": 1 },
+        { "contains": { "properties": { "path": { "const": "review_prompt.md" } } }, "minContains": 1, "maxContains": 1 },
+        { "contains": { "properties": { "path": { "const": "acl_probes.jsonl" } } }, "minContains": 0, "maxContains": 1 }
+      ]
+    },
+    "dataset_hash": { "oneOf": [ { "$ref": "#/$defs/sha256" }, { "type": "null" } ] },
+    "supersedes": { "oneOf": [ { "type": "string", "pattern": "^v[0-9]+(\\.[0-9]+)?$" }, { "type": "null" } ] },
+    "change_reason": { "type": ["string", "null"], "maxLength": 1000 }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "status": { "const": "frozen" } } },
+      "then": { "properties": { "frozen_at": { "type": "string" }, "dataset_hash": { "$ref": "#/$defs/sha256" } } }
+    },
+    {
+      "if": { "properties": { "supersedes": { "type": "string" } } },
+      "then": { "properties": { "change_reason": { "type": "string", "minLength": 5 } } }
+    }
+  ],
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "reviewer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["role", "kind", "id"],
+      "properties": {
+        "role": { "enum": ["annotator", "second_reviewer"] },
+        "kind": { "enum": ["human", "llm"] },
+        "id": { "type": "string", "minLength": 1, "maxLength": 64 },
+        "model": { "type": "string", "minLength": 1 },
+        "model_version": { "type": "string", "minLength": 1 },
+        "prompt_hash": { "$ref": "#/$defs/sha256" }
+      },
+      "if": { "properties": { "kind": { "const": "llm" } } },
+      "then": { "required": ["model", "model_version", "prompt_hash"] }
+    }
+  }
+}

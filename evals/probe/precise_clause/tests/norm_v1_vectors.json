@@ -1,0 +1,127 @@
+{
+  "normalization": "norm-v1",
+  "unit_map_version": "unit-map-v1",
+  "unit_map": {
+    "㎎": "mg",
+    "㎍": "μg",
+    "㎖": "mL",
+    "㎏": "kg",
+    "㎜": "mm",
+    "㎝": "cm",
+    "㎡": "m²",
+    "㎕": "μL",
+    "㎗": "dL",
+    "℃": "°C"
+  },
+  "note": "fold 用例必须产生 expected；preserve 用例必须保持不变。M0 校验器的 norm-v1 实现必须全部通过。",
+  "cases": [
+    {
+      "id": "fold-01",
+      "kind": "fold",
+      "input": "每 次 0.5 g，每 日 2 次",
+      "expected": "每次 0.5 g,每日 2 次"
+    },
+    {
+      "id": "fold-02",
+      "kind": "fold",
+      "input": "１０ ｍｇ",
+      "expected": "10 mg"
+    },
+    {
+      "id": "fold-03",
+      "kind": "fold",
+      "input": "50 µg",
+      "expected": "50 μg"
+    },
+    {
+      "id": "fold-04",
+      "kind": "fold",
+      "input": "２.５㎎",
+      "expected": "2.5mg"
+    },
+    {
+      "id": "fold-05",
+      "kind": "fold",
+      "input": "2~8℃ 保存",
+      "expected": "2~8°C 保存"
+    },
+    {
+      "id": "fold-06",
+      "kind": "fold",
+      "input": "体表面积　1.7 m²",
+      "expected": "体表面积 1.7 m²"
+    },
+    {
+      "id": "fold-07",
+      "kind": "fold",
+      "input": "ＰＲＯＴ－２０２４－０１７",
+      "expected": "PROT-2024-017"
+    },
+    {
+      "id": "fold-08",
+      "kind": "fold",
+      "input": "禁忌 ： 孕妇 禁用 。",
+      "expected": "禁忌:孕妇禁用。"
+    },
+    {
+      "id": "fold-09",
+      "kind": "fold",
+      "input": "  多  个   空 格  ",
+      "expected": "多个空格"
+    },
+    {
+      "id": "fold-10",
+      "kind": "fold",
+      "input": "每日 2 次 ，饭后",
+      "expected": "每日 2 次,饭后"
+    },
+    {
+      "id": "keep-01",
+      "kind": "preserve",
+      "input": "1×10⁹/L",
+      "expected": "1×10⁹/L"
+    },
+    {
+      "id": "keep-02",
+      "kind": "preserve",
+      "input": "CO₂",
+      "expected": "CO₂"
+    },
+    {
+      "id": "keep-03",
+      "kind": "preserve",
+      "input": "①②③",
+      "expected": "①②③"
+    },
+    {
+      "id": "keep-04",
+      "kind": "preserve",
+      "input": "PROT-2024-017",
+      "expected": "PROT-2024-017"
+    },
+    {
+      "id": "keep-05",
+      "kind": "preserve",
+      "input": "每次 0.5 g",
+      "expected": "每次 0.5 g"
+    },
+    {
+      "id": "keep-06",
+      "kind": "preserve",
+      "input": "《药品说明书》【禁忌】",
+      "expected": "《药品说明书》【禁忌】"
+    },
+    {
+      "id": "keep-07",
+      "kind": "preserve",
+      "input": "μg",
+      "expected": "μg"
+    },
+    {
+      "id": "keep-08",
+      "kind": "preserve",
+      "input": "Tmax 2 h",
+      "expected": "Tmax 2 h"
+    }
+  ]
+}

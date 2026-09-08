@@ -1,0 +1,88 @@
+{
+  "change_reason": null,
+  "counts": {
+    "documents": 2,
+    "per_dept": {
+      "CO": 1,
+      "MA": 2,
+      "PV": 0
+    },
+    "per_slice": {
+      "dose_unit": 1,
+      "drug_name_zh": 2,
+      "mixed_zh_en": 1,
+      "negation": 1,
+      "protocol_id": 1,
+      "time_window": 1
+    },
+    "samples": 3
+  },
+  "created_at": "2026-09-08",
+  "dataset_hash": null,
+  "dataset_id": "precise_clause_probe",
+  "dataset_version": "v0",
+  "extraction": {
+    "extractor": "<extractor-name>",
+    "extractor_version": "<version>",
+    "params": {
+      "dehyphenate": false,
+      "layout": "text",
+      "page_separator": "\f"
+    },
+    "params_hash": "b8bcc3096b3e145b5f7509b78ec5edc1fa0d775d1fde3dd0422a4f84d6f218a7"
+  },
+  "files": [
+    {
+      "path": "corpus.json",
+      "sha256": "7d1f670e1c3d906bf4812b0a3ea50d0147eb511116a35c2da390e0ee0627b20f"
+    },
+    {
+      "path": "samples.jsonl",
+      "sha256": "3b82a8c8e39f44727ab5ff41619b9737e5cd639d9ac207c0a8c5e0ad66149af1"
+    },
+    {
+      "path": "review_prompt.md",
+      "sha256": "6d12c186e64e0d09880ce6b96cfb1d38ad2b1949ddd34427d4a0c244e1f61f49"
+    }
+  ],
+  "frozen_at": null,
+  "minimums": {
+    "documents": 10,
+    "documents_per_dept": 3,
+    "max_samples_per_document": 6,
+    "per_dept": 15,
+    "per_slice": 8,
+    "samples": 60,
+    "target_samples": 72
+  },
+  "normalization": "norm-v1",
+  "pii_ruleset_version": "pii-rules-v0",
+  "purpose": "示意 manifest：演示字段与计数格式；不是冻结数据集，不得用于 DEC-001 实验。",
+  "review_policy": {
+    "human_reviewers": 1,
+    "llm_reviewers": 1,
+    "statement": "人工标注加 LLM 独立复核；不等同于两名独立人工复核。"
+  },
+  "reviewers": [
+    {
+      "id": "annotator-01",
+      "kind": "human",
+      "role": "annotator"
+    },
+    {
+      "id": "reviewer-llm-01",
+      "kind": "llm",
+      "model": "<llm-model-id>",
+      "model_version": "<pinned-version>",
+      "prompt_hash": "6d12c186e64e0d09880ce6b96cfb1d38ad2b1949ddd34427d4a0c244e1f61f49",
+      "role": "second_reviewer"
+    }
+  ],
+  "source_store": {
+    "kind": "local_path",
+    "location": "v0/sources（本地目录，不进入 Git）"
+  },
+  "spec_version": "spec-v1",
+  "status": "draft",
+  "supersedes": null
+}

@@ -4,6 +4,7 @@
 | --- | --- |
 | 状态 | 协议已决；生产实现待 M1 入口实验 |
 | 日期 | 2026-09-03 |
+| 最后修订 | 2026-09-08：复核方式、gold 命中规则与切片门禁作用域按第五轮审核记录修订 |
 | 关联 | 基线 DEC-001、3.1、3.6、3.7、5.2、5.9、M1 Checklist |
 | 决策人 | Qihan Zhu |
 
@@ -26,7 +27,8 @@
 ## 实验输入与复现条件
 
 - 先冻结不少于 60 条、目标 72 条的精确条款探针集，覆盖中文药名、剂量单位、否定词、时间窗、方案编号和中英混排；每类至少 8 条，允许多标签。
-- MA、PV、CO 每个部门不少于 15 条；样本和 gold 双人复核，固定 `dataset_version` 与 SHA-256。
+- MA、PV、CO 每个部门不少于 15 条；语料只用公开文档；样本和 gold 由人工标注并经 LLM 独立复核，manifest 如实记录复核者类型，不等同于两名独立人工复核。
+- gold 锚定到 `source_hash/version_label/page/section/key_text`，不引用 `chunk_id`；`key_text` 在规范化后的 `gold.page` 页文本中恰好出现一次。chunk 命中要求同一 `source_hash/version_label`，且 chunk 具有覆盖 `gold.page` 的来源片段并覆盖该 `key_text` 的页内位置，不得仅凭跨页 chunk 全文包含 `key_text` 判定；切分器变更只重生成映射文件。数据结构、校验规则与冻结流程见 [evals/probe/precise_clause/SPEC.md](../../evals/probe/precise_clause/SPEC.md)，冻结后固定 `dataset_version` 与 `dataset_hash`。
 - 实验期间不得改样本。发现标注错误时创建新版本，并对全部候选完整重跑。
 - 所有候选使用同一份授权语料、query/gold、数据库过滤条件和 `K=20`。记录 PostgreSQL、扩展、tokenizer、词典、规范化规则、镜像 digest、硬件、并发、预热、重复次数和复现命令。
 - 应用层预分词的入库与查询必须使用同一组 tokenizer/词典/规范化版本。这些版本进入索引元数据、`retrieval_version` 和缓存键；不匹配时拒绝查询，升级时产生新版本并重建索引。
@@ -55,12 +57,16 @@ LexicalSearchResult
 1. 探针集严格宏平均 Lexical Recall@20 不低于 90%。
 2. 六个精确条款切片各自的 Lexical Recall@20 不低于 85%。
 3. 跨部门受限 chunk、分数、计数和其他元数据泄漏为 0。
-4. 候选不足不得静默发生：在相同查询、tokenization 与数据库过滤条件下，精确计数证明合格候选不少于 `K` 时必须返回 `K` 条并设置 `candidate_exhausted=false`；少于 `K` 时返回实际数量并设置为 `true`。
-5. tokenizer/词典/规范化规则版本不匹配时拒绝查询；相同 `retrieval_version` 的索引和查询结果可复现。
+4. 候选不足不得静默发生：在相同查询、tokenization 与数据库过滤条件下，精确计数证明合格候选不少于 `K` 时必须返回 `K` 条并设置 `candidate_exhausted=false`；少于 `K` 时返回实际数量并设置为 `true`。“合格候选”指满足该候选在实验清单中固定的词法匹配谓词（词元 AND、OR 或短语，逐候选声明）且通过数据库过滤的 chunk；计数与检索使用同一谓词与过滤条件。
+5. tokenizer/词典/规范化规则版本不匹配时拒绝查询；相同 `retrieval_version` 的索引和查询结果可复现。分数相同的候选按 `chunk_id` 升序打破并列，“可复现”指候选集合与排名逐项一致。
+
+切片门禁按每类不少于 8 条的探针样本计算；基线 5.8 的“样本少于 30 条只作诊断”只适用于 M4 Loop 回放报告，不适用于本实验。
 
 任何一项失败即淘汰；三个候选均失败则 DEC-001 和 M1 保持阻塞，不降低门禁。
 
 ## 选择规则
+
+“合格候选”指通过上节全部硬门禁且许可证门禁通过的候选；技术得分不能替代许可证结论。
 
 候选 A 通过全部硬门禁时作为复杂度基线。候选 B 或 C 只有同时满足下列条件，才能替代 A：
 

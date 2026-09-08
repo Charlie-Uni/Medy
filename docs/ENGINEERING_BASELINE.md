@@ -1,11 +1,11 @@
 # MedOps Copilot 工程基线与开发 Checklist
 
-> - 基线版本：v0.4
-> - 更新日期：2026-09-03
+> - 基线版本：v0.5
+> - 更新日期：2026-09-08
 > - 状态：已冻结
 > - 原始需求来源：[MedOps Copilot 项目设计文档 v0.1](source/MedOps_Copilot_项目设计文档_v0.1.pdf)与[用户提供的项目描述 v0.1](source/PROJECT_DESCRIPTION_v0.1.md)（SHA-256 均见 [SHA256SUMS](source/SHA256SUMS)；`300-500` 份文档目标来自项目描述）
 > - 编制时仓库状态：仅有 README，尚未开始工程实现
-> - 修订记录：v0.1 初版；v0.2 按 [第一轮审核记录](reviews/2026-09-03-baseline-review-01.md) 的 9 项技术修正与 8 项决策修订；v0.3 按 [第二轮审核记录](reviews/2026-09-03-baseline-review-02.md) 修正 3 处一致性问题并固定幂等并发语义，来源补录与冻结核验见[第三轮审核记录](reviews/2026-09-03-baseline-review-03.md)；v0.4 按 [ADR-0002](adr/ADR-0002-lexical-retrieval-selection.md) 将词法方案对比前置到 M1 入口，修订与复核见[第四轮审核记录](reviews/2026-09-03-baseline-review-04.md)
+> - 修订记录：v0.1 初版；v0.2 按 [第一轮审核记录](reviews/2026-09-03-baseline-review-01.md) 的 9 项技术修正与 8 项决策修订；v0.3 按 [第二轮审核记录](reviews/2026-09-03-baseline-review-02.md) 修正 3 处一致性问题并固定幂等并发语义，来源补录与冻结核验见[第三轮审核记录](reviews/2026-09-03-baseline-review-03.md)；v0.4 按 [ADR-0002](adr/ADR-0002-lexical-retrieval-selection.md) 将词法方案对比前置到 M1 入口，修订与复核见[第四轮审核记录](reviews/2026-09-03-baseline-review-04.md)；v0.5 按[第五轮审核记录](reviews/2026-09-08-baseline-review-05.md) 定义 `retrieval_version` 复合规则、合格候选谓词与并列规则、5.8 切片诊断规则的作用域、5.9 主评测集分层复核政策，并发布探针集冻结规范 [evals/probe/precise_clause/SPEC.md](../evals/probe/precise_clause/SPEC.md)
 
 ## 0. 本文件怎么用
 
@@ -177,11 +177,14 @@ documents.parse_quality = trusted                  -- 由 documents.active_inges
 
 若采用应用层预分词，入库与查询必须复用同一 tokenizer、医学词典和规范化规则版本；词元以空格连接后交给 PostgreSQL `simple` 配置，并保留 `tsvector` 位置信息，不得退化为无位置 token 集。上述版本必须进入索引元数据、`retrieval_version` 和缓存键；版本不匹配时拒绝查询，升级任一版本必须产生新的 `retrieval_version` 并重建索引。
 
+`retrieval_version` 是复合版本：对 `{retriever_version, tokenizer_version, dictionary_version, normalization_version, embedding_version, rrf_params, rerank_params, candidate_limits}` 做 `canonical_json` 后取 SHA-256。契约中的 `retriever_version/tokenizer_version/dictionary_version` 是其组成部分，只用于诊断与实验报告，不得单独作为缓存键或回放键。
+
 ### 3.7 过滤必须进入数据库查询，并处理近似索引召回不足
 
 - ACL、状态和生效时间过滤必须进入数据库查询和 RLS，不能先取跨权限候选再在应用层过滤。
 - pgvector 近似索引在过滤后候选不足时，采用自适应 over-fetch 或 iterative scan，并记录实际候选数。
 - 数据库内检索扩展的自定义扫描必须在普通应用角色、`FORCE ROW LEVEL SECURITY` 和连接池身份切换条件下证明零越权；同时验证排序与 `LIMIT` 下推后不会静默少取候选。若同一查询及过滤条件的精确计数证明合格候选不少于 `K`，必须返回 `K` 条；不足时返回实际数量并显式设置 `candidate_exhausted=true`，再按既定 over-fetch/降级规则处理。
+- “合格候选”指满足该实现在实验清单中逐候选固定的词法匹配谓词（词元 AND、OR 或短语）且通过数据库权限、状态、生效时间过滤的 chunk；精确计数与检索必须使用同一谓词和过滤条件。分数相同的候选按 `chunk_id` 升序打破并列；“可复现”指候选集合与排名逐项一致。
 - Recall 必须按 MA / PV / CO 部门分别报告。
 - RLS 运行条件：每个请求开启事务；用 `SET LOCAL` 或事务级 `set_config` 注入服务端解析的身份；连接归还池前清除身份上下文；应用角色为 `NOSUPERUSER NOBYPASSRLS` 且不是表 owner；业务表启用 `FORCE ROW LEVEL SECURITY`；管理角色与业务角色分离；集成测试直接验证连接池复用和跨部门隔离。
 
@@ -341,7 +344,7 @@ Execute -> Observe -> Reflect -> Adapt -> Replay -> Approve -> Canary -> Release
 - 门禁：目标任务成功率至少 `+5pp`；任何非目标切片下降超过 `1pp` 拒绝；任何安全指标下降拒绝。
 - 发布必须有人签字；初始灰度不超过 10%；回滚为原子切换 released 指针，并定期演练。
 - 可靠性报告（当前基线必报项，不作为额外硬门禁）：至少 200 条唯一 Trace；含随机性的流程独立运行 3 次；同一批 Trace 做 paired comparison；报告 bootstrap 95% CI；`+5pp / 非目标下降不超过 1pp` 仍按点估计作为硬门禁。
-- 切片样本少于 30 条时标记“样本不足”，只作诊断；安全指标采用三次运行的最差值，任何下降仍拒绝发布。
+- 切片样本少于 30 条时标记“样本不足”，只作诊断；安全指标采用三次运行的最差值，任何下降仍拒绝发布。本条只适用于 M4 Loop 回放报告；M1 DEC-001 探针实验是确定性检索实验，其切片门禁由 ADR-0002 规定（每类不少于 8 条），不适用本条。
 
 ### 5.9 评测
 
@@ -349,7 +352,7 @@ Execute -> Observe -> Reflect -> Adapt -> Replay -> Approve -> Canary -> Release
 
 - `Recall@5`：严格宏平均 Recall。单条 query 的 `recall@5 = |required_gold_evidence ∩ retrieved_top5| / |required_gold_evidence|`，`retrieved_top5` 取事实回查后的 top 5 而非向量候选；`Recall@5` 为全部 query 的平均值。冗余或等价 Evidence 不重复计入 required gold。
 - `Hit@5`：任一 required gold 出现在 top 5 的 query 比例，单独报告，不得称为 Recall@5。
-- `Lexical Recall@20`：事实与权限过滤后、RRF/Reranker 前的词法 top 20 对 `required_gold_evidence` 的严格宏平均 Recall；专用于 DEC-001 探针实验，不替代端到端 Recall@5。
+- `Lexical Recall@20`：事实与权限过滤后、RRF/Reranker 前的词法 top 20 对 `required_gold_evidence` 的严格宏平均 Recall；专用于 DEC-001 探针实验，不替代端到端 Recall@5。探针集的 gold 锚定与 chunk 级命中规则（chunk 的 `gold.page` 来源片段覆盖 `key_text` 页内位置）以 [探针集规范](../evals/probe/precise_clause/SPEC.md) 为准。
 - 无答案样本：`required_gold_evidence` 为空的样本不进入 Recall@5 和 Hit@5 的分母，单独以 abstention/no-answer accuracy（应声明证据不足或拒答的样本中被正确处理的比例）评测；若正样本出现空 gold，视为标注异常，评测任务直接失败而不是跳过。
 - 引用准确率：最终答案中被原文支持的引用数 / 最终答案全部引用数。
 - 失效版本引用率：非显式历史查询中 archived/未生效引用数 / 全部引用数，必须为 0。
@@ -358,7 +361,7 @@ Execute -> Observe -> Reflect -> Adapt -> Replay -> Approve -> Canary -> Release
 - 高风险升级召回率：应升级的高风险样本中成功创建升级记录的比例。
 - 任务成功率：按冻结任务 rubric 判定，不能用主观点赞替代。
 
-至少维护以下数据切片：文档类型、部门、语言、精确数字/剂量、版本冲突、无答案、注入、高风险和长上下文。样本只能来自允许的数据，记录来源许可；gold 标注至少抽样双人复核。
+至少维护以下数据切片：文档类型、部门、语言、精确数字/剂量、版本冲突、无答案、注入、高风险和长上下文。样本只能来自允许的数据，记录来源许可。主评测集复核政策：全部样本由一名人工标注并经 LLM 独立复核；全部争议样本以及剂量、否定、时间窗、版本冲突、高风险样本必须有第二人工复核；其余样本随机抽取不少于 20% 做第二人工复核；LLM 不计作第二人工，争议最终由人工裁决并记录。探针集并入主集后按同一政策补第二人工复核。
 
 ### 5.10 可观测性与运行保障
 
@@ -461,7 +464,7 @@ P0 保留：
 
 ### M1：知识治理与检索
 
-- [ ] 在实现候选前冻结 DEC-001 精确条款探针集：不少于 60 条、目标 72 条，覆盖六类专项与 MA/PV/CO（每部门不少于 15 条），双人复核并记录 `dataset_version` 和 SHA-256；修正标注必须升版并重跑全部候选。
+- [ ] 在实现候选前冻结 DEC-001 精确条款探针集：不少于 60 条、目标 72 条，覆盖六类专项与 MA/PV/CO（每部门不少于 15 条）；语料只用公开文档，gold 锚定到 `source_hash/version_label/page/section/key_text`，人工标注加 LLM 独立复核并如实记录，按 [evals/probe/precise_clause/SPEC.md](../evals/probe/precise_clause/SPEC.md) 通过校验后记录 `dataset_version` 与 `dataset_hash`；修正标注必须升版并重跑全部候选。
 - [ ] 冻结 DEC-001 实验清单：三个生产候选的具体实现/配置、PostgreSQL/扩展/tokenizer/词典版本、镜像 digest、硬件与测量参数；进程内 BM25 仅作离线参考。
 - [ ] 固定 `LexicalRetriever` 契约，包含候选 `chunk_id/raw_score/rank` 与结果级 `requested_k/returned_count/candidate_exhausted/retriever_version/tokenizer_version/dictionary_version`。
 - [ ] 用最小实验 schema 在普通应用角色 + `FORCE ROW LEVEL SECURITY` 下完成词法候选对比；同时断言零跨部门泄漏与零静默候选不足，覆盖 `LIMIT`、按分数排序和连接池身份切换。

@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://medy.local/evals/probe/precise_clause/probe_sample.schema.json",
+  "title": "PreciseClauseProbeSample",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["sample_id", "query", "dept", "language", "slices", "required_gold_evidence", "review", "notes"],
+  "properties": {
+    "sample_id": { "type": "string", "pattern": "^pc-[0-9]{4}$" },
+    "query": { "type": "string", "minLength": 4, "maxLength": 300 },
+    "dept": { "enum": ["MA", "PV", "CO"] },
+    "language": { "enum": ["zh", "en", "mixed"] },
+    "slices": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 6,
+      "uniqueItems": true,
+      "items": { "enum": ["drug_name_zh", "dose_unit", "negation", "time_window", "protocol_id", "mixed_zh_en"] }
+    },
+    "required_gold_evidence": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 5,
+      "items": { "$ref": "#/$defs/goldEvidence" }
+    },
+    "review": { "$ref": "#/$defs/review" },
+    "notes": { "type": "string", "maxLength": 500 }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "slices": { "contains": { "const": "mixed_zh_en" } } } },
+      "then": { "properties": { "language": { "const": "mixed" } } }
+    },
+    {
+      "if": { "properties": { "language": { "const": "en" } } },
+      "then": { "properties": { "slices": { "not": { "contains": { "const": "drug_name_zh" } } } } }
+    }
+  ],
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "goldEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["gold_id", "source_hash", "version_label", "page", "printed_page_label", "section", "key_text", "evidence_span"],
+      "properties": {
+        "gold_id": { "type": "string", "pattern": "^pc-[0-9]{4}-g[0-9]{1,2}$" },
+        "source_hash": { "$ref": "#/$defs/sha256" },
+        "version_label": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "page": { "type": "integer", "minimum": 1 },
+        "printed_page_label": { "type": ["string", "null"], "maxLength": 20 },
+        "section": { "type": "string", "minLength": 1, "maxLength": 200 },
+        "key_text": { "type": "string", "minLength": 2, "maxLength": 200 },
+        "evidence_span": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["text", "char_start", "char_end"],
+          "properties": {
+            "text": { "type": "string", "minLength": 2, "maxLength": 2000 },
+            "char_start": { "type": "integer", "minimum": 0 },
+            "char_end": { "type": "integer", "minimum": 1 }
+          }
+        }
+      }
+    },
+    "reviewer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "id"],
+      "properties": {
+        "kind": { "enum": ["human", "llm"] },
+        "id": { "type": "string", "minLength": 1, "maxLength": 64 },
+        "model": { "type": "string", "minLength": 1 },
+        "model_version": { "type": "string", "minLength": 1 },
+        "prompt_hash": { "$ref": "#/$defs/sha256" }
+      },
+      "if": { "properties": { "kind": { "const": "llm" } } },
+      "then": { "required": ["model", "model_version", "prompt_hash"] }
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["annotator", "second_reviewer", "status", "resolution_note"],
+      "properties": {
+        "annotator": { "allOf": [ { "$ref": "#/$defs/reviewer" }, { "properties": { "kind": { "const": "human" } } } ] },
+        "second_reviewer": { "allOf": [ { "$ref": "#/$defs/reviewer" }, { "properties": { "kind": { "const": "llm" } } } ] },
+        "status": { "enum": ["agreed", "disputed_resolved"] },
+        "resolution_note": { "type": ["string", "null"], "maxLength": 1000 }
+      },
+      "if": { "properties": { "status": { "const": "disputed_resolved" } } },
+      "then": { "properties": { "resolution_note": { "type": "string", "minLength": 5 } } }
+    }
+  }
+}
