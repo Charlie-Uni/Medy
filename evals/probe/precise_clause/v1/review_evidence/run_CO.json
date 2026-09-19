@@ -1,0 +1,1249 @@
+{
+  "batch": "CO",
+  "codex_binary": "/Applications/ChatGPT.app/Contents/Resources/codex",
+  "model": "gpt-6-astra",
+  "reasoning_effort_requested": "high",
+  "review_prompt_sha256": "f4a3804e969b23ec9ab467406937e62f0b9e30933d6a680d4b00ee59b2631c38",
+  "sample_input_sha256": {
+    "pc-0060": "e9b223fc2c5a8e8eb53bf0f5968cdb9ccd2db3857f2df873946da126bd7fcf4d",
+    "pc-0061": "c18af092d6b030ffd021cdb227320de94526b2e95a8020d477a16a244d9f3d9f",
+    "pc-0062": "d5f359b3f2bbe0ca837d5a524d9d19b30bda581d0e9a6ed11b9d31c014d1057e",
+    "pc-0063": "821dd31aa7c5437cbd16985c6e30b21ac1d897cf1759804ba2bdb24e44b73d07",
+    "pc-0064": "bd4136ea3fc1a55062b16f4d37a4a8e98cae04d68db790ce1ae50b65ad326f55",
+    "pc-0065": "47fdde19cc4a59058cab7e256539ff6bd3bc823f64a1ba14779df6697ad66838",
+    "pc-0066": "4c81df04210783606a33929c85b22d92ff61bf94ba7234fde75a39ef755ff6b6",
+    "pc-0067": "5f1a1684ebe8c8a234968b74b998f7bf954822b1582d5cc6dc0f7bd753766c77",
+    "pc-0068": "782b7c267ec9df48cfc85e9282770bb8775580299d0daa91af2ef172f90a5d33",
+    "pc-0069": "b41e69c51a8da1260041423c8bf5093c7bccc2b6d574c9ec46159e0695e77d28",
+    "pc-0070": "78b5e757e4968a03a1533fe2440f3705d6d20dafd222b11996fadecae43260b5",
+    "pc-0071": "2614b2633a6c5cc29d80947aba53f1943506e8f8df1ffb3c9cd4ffaf3ec7740c",
+    "pc-0072": "561ad1d76f4a8a56597cc950eebba3eb7228ffe854d596b174a24c448ec3a301",
+    "pc-0073": "228723beadacc84757de8ddc9a21a10cf54bc830a4cf2e253b180b88d0927165",
+    "pc-0074": "b3623bcda70834b9f262d99e2404648389d6ef54a55baa4865ffc60895d839f1",
+    "pc-0075": "7a453c46f29e4e5727fae761f1c4b2c83363f48614609288ee4140fb1fca53d0"
+  },
+  "chunks": [
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d0-92b8-7832-9c06-138ef2dd73a9",
+      "reasoning_effort": "high",
+      "tokens_used": "7,049",
+      "sample_ids": [
+        "pc-0060"
+      ],
+      "started_at": "2026-09-19T13:17:29+00:00",
+      "finished_at": "2026-09-19T13:18:38+00:00",
+      "prompt_chars": 6334,
+      "prompt_sha256": "4ce5f20ca66c0d6b17946b4b24205214ea5c726a91c86b35230b34a2aeac5420",
+      "input_path": "chunk_inputs/input_4ce5f20ca66c0d6b17946b4b24205214ea5c726a91c86b35230b34a2aeac5420.jsonl",
+      "sample_input_sha256": {
+        "pc-0060": "128b95b5cde4cefcee4d0c6f091391437f6ea21b73271e86880d23c667f523b3"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0060",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "issue",
+            "key_text": "issue",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "query 依赖 ICH E8(R1) 的编号及修订版本精确检索，缺少 protocol_id 标签。key_text 虽为页内唯一的逐字原文，但“do not place undue burden”未保留负担所作用的对象，不符合 P1 同时保留对象与约束的要求。evidence_span 条款完整，偏移与文本一致。",
+          "suggestion": "补充 protocol_id 标签；将 key_text 改为“do not place undue burden on study participants”。"
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d1-9fe5-7ac1-884f-34a92a9d7dc2",
+      "reasoning_effort": "high",
+      "tokens_used": "5,525",
+      "sample_ids": [
+        "pc-0061"
+      ],
+      "started_at": "2026-09-19T13:18:38+00:00",
+      "finished_at": "2026-09-19T13:18:58+00:00",
+      "prompt_chars": 6666,
+      "prompt_sha256": "f8fe9e6fe733576248a94644e5da000257309c05b42c8c8d782f734533e77190",
+      "input_path": "chunk_inputs/input_f8fe9e6fe733576248a94644e5da000257309c05b42c8c8d782f734533e77190.jsonl",
+      "sample_input_sha256": {
+        "pc-0061": "beb66340caf89b42cd42a8d03454187f6010c00a02afe95f769826c9b0f0ae03"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0061",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "issue",
+            "key_text": "issue",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "query 明确限定 ICH E8(R1)，检索依赖指南版本号，按版本号的切片定义应补充 protocol_id。key_text 中的“not sufficient to ensure quality”未保留质量所属对象“a clinical study”，不满足 P1 同时保留对象与约束的要求。",
+          "suggestion": "slices 增加 protocol_id；key_text 改为页内唯一的逐字原文“not sufficient to ensure quality of a clinical study”。"
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d1-f0ed-7db3-9f2d-14924b72f097",
+      "reasoning_effort": "high",
+      "tokens_used": "3,216",
+      "sample_ids": [
+        "pc-0062"
+      ],
+      "started_at": "2026-09-19T13:18:58+00:00",
+      "finished_at": "2026-09-19T13:19:19+00:00",
+      "prompt_chars": 6500,
+      "prompt_sha256": "c1b38cc7d1bc00e10a4f8ec2fb4aff4a5743dc3ce556246166868e6923b5d9c7",
+      "input_path": "chunk_inputs/input_c1b38cc7d1bc00e10a4f8ec2fb4aff4a5743dc3ce556246166868e6923b5d9c7.jsonl",
+      "sample_input_sha256": {
+        "pc-0062": "7d678542335491f18532fe62d16886a1d58238e3090c223d0cd1aaa5b1e521fc"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0062",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "issue",
+            "key_text": "issue",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "query 依赖 ICH E8(R1) 的版本标识定位指南，按版本号精确匹配口径应补充 protocol_id。key_text 虽为页内唯一的逐字原文，但未保留约束对象 critical to quality factors，不符合 P1 同时保留对象与约束的要求。",
+          "suggestion": "slices 补充 protocol_id；key_text 改为页内连续原文“critical to quality factors should be clear and should not be cluttered with minor issues”。"
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d2-40a1-75b2-8abd-6808063cfd10",
+      "reasoning_effort": "high",
+      "tokens_used": "3,104",
+      "sample_ids": [
+        "pc-0063"
+      ],
+      "started_at": "2026-09-19T13:19:19+00:00",
+      "finished_at": "2026-09-19T13:19:34+00:00",
+      "prompt_chars": 6378,
+      "prompt_sha256": "bc073fb84e7cb873be4d5f3db0ed2237d9f67e1d2965a2e0713d91ca1da5e8f2",
+      "input_path": "chunk_inputs/input_bc073fb84e7cb873be4d5f3db0ed2237d9f67e1d2965a2e0713d91ca1da5e8f2.jsonl",
+      "sample_input_sha256": {
+        "pc-0063": "821dd31aa7c5437cbd16985c6e30b21ac1d897cf1759804ba2bdb24e44b73d07"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0063",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d2-7ba2-70d1-a486-cba6862319a0",
+      "reasoning_effort": "high",
+      "tokens_used": "5,638",
+      "sample_ids": [
+        "pc-0064"
+      ],
+      "started_at": "2026-09-19T13:19:34+00:00",
+      "finished_at": "2026-09-19T13:20:01+00:00",
+      "prompt_chars": 6361,
+      "prompt_sha256": "c2970ddb9c99725b37626086896a58d0823ac8d9f29df2b760b9b7017964a963",
+      "input_path": "chunk_inputs/input_c2970ddb9c99725b37626086896a58d0823ac8d9f29df2b760b9b7017964a963.jsonl",
+      "sample_input_sha256": {
+        "pc-0064": "f3814f363b84d36a7021939f2318b42b6bc3e88a06c4fc94a3a603b0ca9055e5"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0064",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "issue",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "query 明确以 ICH E8(R1) 限定指南及修订版本，检索依赖该版本标识的精确匹配，缺少 protocol_id 标签。",
+          "suggestion": "将 slices 修改为 [\"protocol_id\", \"mixed_zh_en\"]。"
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d2-e796-7aa1-bf79-a4f52455154e",
+      "reasoning_effort": "high",
+      "tokens_used": "5,410",
+      "sample_ids": [
+        "pc-0065"
+      ],
+      "started_at": "2026-09-19T13:20:01+00:00",
+      "finished_at": "2026-09-19T13:20:24+00:00",
+      "prompt_chars": 5705,
+      "prompt_sha256": "b755771c993d8ee23bd57714a57f9cb94e9606a343bb4dc97eb526ac2e866622",
+      "input_path": "chunk_inputs/input_b755771c993d8ee23bd57714a57f9cb94e9606a343bb4dc97eb526ac2e866622.jsonl",
+      "sample_input_sha256": {
+        "pc-0065": "cd7f6f3193dee1c076608252fb29082b03b9ac6230ea65cb7e7527ae22ce77ab"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0065",
+          "verdict": "dispute",
+          "items": {
+            "query": "issue",
+            "slices": "issue",
+            "key_text": "issue",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "query 基本将原文条款翻译后改成“能否”问句，缺少独立的业务提问情境。query 明确依赖 ICH E6(R3) 的版本匹配，缺少 protocol_id 标签。key_text 虽为页内唯一原文，但未保留承担义务的申办方及负担涉及的受试者和研究者，不满足 P1 保留对象与约束的要求。evidence_span 为完整条款，偏移正确；CO 归属符合临床试验质量管理用途。",
+          "suggestion": "将 query 改为具体业务情境，例如“我们正在按 ICH E6(R3) 审查研究流程，发现有些安排只会增加受试者和研究者的工作量，没有必要保留；申办方应依据哪项原则处理？”补充 protocol_id 标签；key_text 改为“sponsor should not place unnecessary burden on participants and investigators”。"
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d3-3e09-7ea3-b4b4-fb2dc1d02109",
+      "reasoning_effort": "high",
+      "tokens_used": "5,673",
+      "sample_ids": [
+        "pc-0066"
+      ],
+      "started_at": "2026-09-19T13:20:24+00:00",
+      "finished_at": "2026-09-19T13:20:52+00:00",
+      "prompt_chars": 5620,
+      "prompt_sha256": "cec62ead7a4c089579a3ff42a8d228df036a4b4870da6c5ae84f7c7d2061c682",
+      "input_path": "chunk_inputs/input_cec62ead7a4c089579a3ff42a8d228df036a4b4870da6c5ae84f7c7d2061c682.jsonl",
+      "sample_input_sha256": {
+        "pc-0066": "326240c9800c8837fa55b692f9be3d46547e9bf9697ec626b3d0d66bb504f425"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0066",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "issue",
+            "key_text": "issue",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "query 明确依赖 ICH E6(R3) 的版本标识，缺少 protocol_id 标签。key_text“is not coercive”仅保留判断，未保留报销对象及合理性限定，不符合 P1 要求。",
+          "suggestion": "补充 protocol_id 标签；将 key_text 改为“Reasonable r eimbursement of expenses incurred by participants, such as for travel and lodging, is not coercive”，保留页文本中的原始空格。"
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d3-ab8c-7ff1-b8da-932aef3d2020",
+      "reasoning_effort": "high",
+      "tokens_used": "5,435",
+      "sample_ids": [
+        "pc-0067"
+      ],
+      "started_at": "2026-09-19T13:20:52+00:00",
+      "finished_at": "2026-09-19T13:21:14+00:00",
+      "prompt_chars": 5775,
+      "prompt_sha256": "d8badbb1c1d89fca69dd2730b07dbcc3feeb58e2760214ab67ac5eef5630d9f0",
+      "input_path": "chunk_inputs/input_d8badbb1c1d89fca69dd2730b07dbcc3feeb58e2760214ab67ac5eef5630d9f0.jsonl",
+      "sample_input_sha256": {
+        "pc-0067": "07fbc21fdcabf986834c893bb563acf7f08ad0fade86d095032cca00bae6679a"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0067",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "issue",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "query 明确以 ICH E6(R3) 限定所依据的指南版本，召回依赖该版本标识的精确匹配，按版本号归入 protocol_id 的定义，现有 slices 漏标 protocol_id。",
+          "suggestion": "将 slices 改为 [\"protocol_id\", \"mixed_zh_en\"]。"
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d4-02b4-77b3-b98e-15e70a09933a",
+      "reasoning_effort": "high",
+      "tokens_used": "4,325",
+      "sample_ids": [
+        "pc-0068"
+      ],
+      "started_at": "2026-09-19T13:21:14+00:00",
+      "finished_at": "2026-09-19T13:22:07+00:00",
+      "prompt_chars": 5977,
+      "prompt_sha256": "31260c99fdb3e470e4f9a660d0040b747491d55809b034684b1d7bc3c89e0fb8",
+      "input_path": "chunk_inputs/input_31260c99fdb3e470e4f9a660d0040b747491d55809b034684b1d7bc3c89e0fb8.jsonl",
+      "sample_input_sha256": {
+        "pc-0068": "a6e9a8feff02d5738a181c5eefd21f1e16eadff8b8ffa9544506a382ee6a3b7d"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0068",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "issue",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "key_text 虽为页内唯一原文，但未保留回答两份指南关系的“builds on”表述，且包含可省略的指南全名；存在更短、同时保留对象与关系的连续原文。",
+          "suggestion": "将 key_text 改为“This guideline builds on key conce pts outlined in ICH E8 (R1)”，其余保持不变。"
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d4-d14a-7442-86e6-e6f46e1f56d0",
+      "reasoning_effort": "high",
+      "tokens_used": "4,268",
+      "sample_ids": [
+        "pc-0069"
+      ],
+      "started_at": "2026-09-19T13:22:07+00:00",
+      "finished_at": "2026-09-19T13:23:02+00:00",
+      "prompt_chars": 5170,
+      "prompt_sha256": "93df7049991b4219e9bcfc57a86a9b6055564bfb49f228266db116c518190e11",
+      "input_path": "chunk_inputs/input_93df7049991b4219e9bcfc57a86a9b6055564bfb49f228266db116c518190e11.jsonl",
+      "sample_input_sha256": {
+        "pc-0069": "e85d1cbccca1677dc894df77b1a0f0732ab0b37ab5b07fc45e729e77463f60d5"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0069",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "issue",
+            "key_text": "issue",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "query 明确以 ICH E6(R3) 限定指南版本，按版本号精确匹配的定义应补充 protocol_id。key_text 可删除开头的“the ”，缩为“protocol and relevant trial documents”，仍保留所问文件范围且在页内唯一。evidence_span 完整回答问题，偏移与文本一致。",
+          "suggestion": "slices 改为 [\"protocol_id\",\"mixed_zh_en\"]；key_text 改为“protocol and relevant trial documents”。"
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d5-aa4d-7d83-9535-98daf06527e8",
+      "reasoning_effort": "high",
+      "tokens_used": "5,893",
+      "sample_ids": [
+        "pc-0070"
+      ],
+      "started_at": "2026-09-19T13:23:02+00:00",
+      "finished_at": "2026-09-19T13:23:39+00:00",
+      "prompt_chars": 5077,
+      "prompt_sha256": "e78fb3767e1ec46e9ea3efcac0b492fb0297a7caee370f6221acce46f322a61c",
+      "input_path": "chunk_inputs/input_e78fb3767e1ec46e9ea3efcac0b492fb0297a7caee370f6221acce46f322a61c.jsonl",
+      "sample_input_sha256": {
+        "pc-0070": "13f16b805e4472b00d56ac1ac8b2e31d25b7d0ec4ef3e879de4ebb75dd982e5f"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0070",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "issue",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "缺少 protocol_id 标签：query 明确以 ICH E6(R3) 限定所问指南及版本，检索依赖 E6(R3) 的精确匹配，符合版本号标签定义。",
+          "suggestion": "将 slices 改为 [\"protocol_id\", \"mixed_zh_en\"]。"
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d6-3887-7802-ae63-3344e6cf07db",
+      "reasoning_effort": "high",
+      "tokens_used": "5,622",
+      "sample_ids": [
+        "pc-0071"
+      ],
+      "started_at": "2026-09-19T13:23:39+00:00",
+      "finished_at": "2026-09-19T13:24:03+00:00",
+      "prompt_chars": 6354,
+      "prompt_sha256": "45b85cd62c4b5c8f6b71f0bafb8ba8758418bb5fd7db2fe8b78040d155248975",
+      "input_path": "chunk_inputs/input_45b85cd62c4b5c8f6b71f0bafb8ba8758418bb5fd7db2fe8b78040d155248975.jsonl",
+      "sample_input_sha256": {
+        "pc-0071": "7a594eba5cb7639b607d64b76141ceb32d7dac20f5412d648d20be0e5bf98bad"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0071",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "issue",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "key_text 虽为页内唯一的逐字原文，但“might significantly affect the completeness”未保留被定义的对象，也未说明完整性所指对象，不能保留该定义的对象与约束，不符合 P1。",
+          "suggestion": "将 key_text 改为“important protocol deviation is a subset of protocol 118 deviations that might significantly affect the completeness, accuracy, and/or reliability of the 119 study data or that might significantly affect a subject’s rights, safety, or well-being”。"
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d6-97fb-7f61-b74f-3a2838423fdc",
+      "reasoning_effort": "high",
+      "tokens_used": "5,642",
+      "sample_ids": [
+        "pc-0072"
+      ],
+      "started_at": "2026-09-19T13:24:03+00:00",
+      "finished_at": "2026-09-19T13:24:28+00:00",
+      "prompt_chars": 6691,
+      "prompt_sha256": "3df9e9af62302da67173c8739d99311ff0dd733a1c70d7602195f04a86a5ff31",
+      "input_path": "chunk_inputs/input_3df9e9af62302da67173c8739d99311ff0dd733a1c70d7602195f04a86a5ff31.jsonl",
+      "sample_input_sha256": {
+        "pc-0072": "c85bc10111763dd7cfee52de11777fd41b5232018a851924b051283bf5cd5117"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0072",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "issue",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "key_text 虽为页内唯一的逐字片段，但截断在来源名称处，未保留采用的对象，即 protocol deviation 和 important protocol deviation 的定义，不符合 P1 同时保留对象与约束的要求。",
+          "suggestion": "将 key_text 改为“adopting the ICH E3(R1) 62 definitions of protocol deviation and important protocol deviation”。"
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d6-fa9b-7922-90c0-8dd6c6248afe",
+      "reasoning_effort": "high",
+      "tokens_used": "5,719",
+      "sample_ids": [
+        "pc-0073"
+      ],
+      "started_at": "2026-09-19T13:24:28+00:00",
+      "finished_at": "2026-09-19T13:24:44+00:00",
+      "prompt_chars": 7762,
+      "prompt_sha256": "0617a3966994204a2f2b437dd53099c79d8e6240e66c422554a69d416978d2ea",
+      "input_path": "chunk_inputs/input_0617a3966994204a2f2b437dd53099c79d8e6240e66c422554a69d416978d2ea.jsonl",
+      "sample_input_sha256": {
+        "pc-0073": "c23389a6821ab530387bcb4ac801db3613f7af13d8f849a1ef74ad59265713e8"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0073",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "issue",
+            "key_text": "issue",
+            "evidence_span": "issue",
+            "dept": "ok"
+          },
+          "reason": "slices 缺少 negation：完整证据含“no later than 5 working days”的时限限制及“Except in such an emergency”的例外限制。key_text 虽为页内唯一原文，但仅保留期限，未保留通知对象、通知行为及紧急情况这一适用条件，不符合 P1。evidence_span 还纳入了非紧急情况下变更或偏离计划的事先审批条款，超出回答本题所需范围。",
+          "suggestion": "将 evidence_span 收至首句末尾“812.150(a)(4)).”，删除后续非紧急情况审批条款并更新偏移；将 key_text 扩展为保留医疗器械研究、紧急偏离通知义务及期限的连续原文；补充 negation 标签。"
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d7-391d-7fb0-84ec-fe41316176a3",
+      "reasoning_effort": "high",
+      "tokens_used": "3,585",
+      "sample_ids": [
+        "pc-0074"
+      ],
+      "started_at": "2026-09-19T13:24:44+00:00",
+      "finished_at": "2026-09-19T13:25:08+00:00",
+      "prompt_chars": 6575,
+      "prompt_sha256": "e6d8ae9df75b2e216a24dcbcddbdc7e469705ea778301324dc1b9038dfc2f18b",
+      "input_path": "chunk_inputs/input_e6d8ae9df75b2e216a24dcbcddbdc7e469705ea778301324dc1b9038dfc2f18b.jsonl",
+      "sample_input_sha256": {
+        "pc-0074": "7d44485af9d3c8b0c2e8957ef170cf346c43081d464cf3bd020ba077e94e48ce"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0074",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "issue",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "key_text 虽为页内唯一的逐字原文，但仅保留报告义务的谓语，未保留方案偏离这一对象及其分类、即时危险限定，不符合 P1 的对象与约束保留要求。",
+          "suggestion": "将 key_text 改为：protocol deviations that are not classified as important and do not present an apparent 355 immediate hazard to participants do not need to be immediately reported to the IRB"
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d7-94bb-7e80-8a0f-9ee75ae98358",
+      "reasoning_effort": "high",
+      "tokens_used": "3,024",
+      "sample_ids": [
+        "pc-0075"
+      ],
+      "started_at": "2026-09-19T13:25:08+00:00",
+      "finished_at": "2026-09-19T13:25:23+00:00",
+      "prompt_chars": 5760,
+      "prompt_sha256": "dd2a0a3607981f436e4122f37aac62909b5cd71d9152a7c1ba9b4ce2a28b6354",
+      "input_path": "chunk_inputs/input_dd2a0a3607981f436e4122f37aac62909b5cd71d9152a7c1ba9b4ce2a28b6354.jsonl",
+      "sample_input_sha256": {
+        "pc-0075": "613735499d07df2080cafd3033583ffff7220f60088ab853bf14283f582e97a3"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0075",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "issue",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "key_text 虽为页内唯一的逐字原文，但“do not include a definition”未保留法规主体及被定义对象，不能同时保留对象与约束的命中含义，不符合 P1。",
+          "suggestion": "将 key_text 改为“FDA regulations do not include a definition of the term protocol 17 deviation”，保留页文本中的行号 17。"
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9f5-1930-7b73-9ec6-b8678d303053",
+      "reasoning_effort": "high",
+      "tokens_used": "5,213",
+      "sample_ids": [
+        "pc-0060"
+      ],
+      "started_at": "2026-09-19T13:57:22+00:00",
+      "finished_at": "2026-09-19T13:57:37+00:00",
+      "prompt_chars": 6371,
+      "prompt_sha256": "9c6b2b90519735273c1dc4b83f5a25eae0ca6dde63a001f2c096e8e52fbfad50",
+      "verdicts": [
+        {
+          "sample_id": "pc-0060",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_9c6b2b90519735273c1dc4b83f5a25eae0ca6dde63a001f2c096e8e52fbfad50.jsonl",
+      "sample_input_sha256": {
+        "pc-0060": "e9b223fc2c5a8e8eb53bf0f5968cdb9ccd2db3857f2df873946da126bd7fcf4d"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9f5-5152-7b73-b156-c4f642207e6e",
+      "reasoning_effort": "high",
+      "tokens_used": "3,220",
+      "sample_ids": [
+        "pc-0061"
+      ],
+      "started_at": "2026-09-19T13:57:37+00:00",
+      "finished_at": "2026-09-19T13:57:54+00:00",
+      "prompt_chars": 6701,
+      "prompt_sha256": "c06fadc4bcd71ee7870cb5a7228f238da1d59d58b8f7bb7e66562162425890da",
+      "verdicts": [
+        {
+          "sample_id": "pc-0061",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_c06fadc4bcd71ee7870cb5a7228f238da1d59d58b8f7bb7e66562162425890da.jsonl",
+      "sample_input_sha256": {
+        "pc-0061": "c18af092d6b030ffd021cdb227320de94526b2e95a8020d477a16a244d9f3d9f"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9f5-9384-7052-992e-6ff9a3c148b4",
+      "reasoning_effort": "high",
+      "tokens_used": "5,384",
+      "sample_ids": [
+        "pc-0062"
+      ],
+      "started_at": "2026-09-19T13:57:54+00:00",
+      "finished_at": "2026-09-19T13:58:11+00:00",
+      "prompt_chars": 6563,
+      "prompt_sha256": "752c57d30d80bf6e0a20358a615e6e8d477d8e6584700b66d36deac7cfec838d",
+      "verdicts": [
+        {
+          "sample_id": "pc-0062",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_752c57d30d80bf6e0a20358a615e6e8d477d8e6584700b66d36deac7cfec838d.jsonl",
+      "sample_input_sha256": {
+        "pc-0062": "d5f359b3f2bbe0ca837d5a524d9d19b30bda581d0e9a6ed11b9d31c014d1057e"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9f5-d713-7710-8b7b-824bd5ebb8e9",
+      "reasoning_effort": "high",
+      "tokens_used": "3,105",
+      "sample_ids": [
+        "pc-0064"
+      ],
+      "started_at": "2026-09-19T13:58:11+00:00",
+      "finished_at": "2026-09-19T13:58:36+00:00",
+      "prompt_chars": 6376,
+      "prompt_sha256": "d4d06b78c2ddaff7d30a07febff7122af49e52fcc2881543caa7221f29c0a96c",
+      "verdicts": [
+        {
+          "sample_id": "pc-0064",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_d4d06b78c2ddaff7d30a07febff7122af49e52fcc2881543caa7221f29c0a96c.jsonl",
+      "sample_input_sha256": {
+        "pc-0064": "bd4136ea3fc1a55062b16f4d37a4a8e98cae04d68db790ce1ae50b65ad326f55"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9f6-3886-7f71-b56a-afa36580a5ca",
+      "reasoning_effort": "high",
+      "tokens_used": "5,137",
+      "sample_ids": [
+        "pc-0065"
+      ],
+      "started_at": "2026-09-19T13:58:36+00:00",
+      "finished_at": "2026-09-19T13:58:50+00:00",
+      "prompt_chars": 5759,
+      "prompt_sha256": "3512655d84fb76e82a5036fd8cde542318464236a7a50c40ec8f1208b0a7230f",
+      "verdicts": [
+        {
+          "sample_id": "pc-0065",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_3512655d84fb76e82a5036fd8cde542318464236a7a50c40ec8f1208b0a7230f.jsonl",
+      "sample_input_sha256": {
+        "pc-0065": "47fdde19cc4a59058cab7e256539ff6bd3bc823f64a1ba14779df6697ad66838"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9f6-705a-73d0-ba00-e1b695ad2708",
+      "reasoning_effort": "high",
+      "tokens_used": "7,321",
+      "sample_ids": [
+        "pc-0066"
+      ],
+      "started_at": "2026-09-19T13:58:50+00:00",
+      "finished_at": "2026-09-19T14:00:06+00:00",
+      "prompt_chars": 5731,
+      "prompt_sha256": "cfc65eec299ebeca7546f912059b1069c5133f41adcf928a2d6c410cbdd368a8",
+      "verdicts": [
+        {
+          "sample_id": "pc-0066",
+          "verdict": "dispute",
+          "items": {
+            "query": "issue",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "query 基本逐项翻译 key_text，并将“is not coercive”改为“是否属于胁迫”，仅增加指南编号，属于将原句改成问句，不符合 query 的设计要求。",
+          "suggestion": "将 query 改为具体业务情境，例如：“按照 ICH E6(R3)，研究中心拟实报实销受试者因到访产生的合理路费和住宿费，伦理审查能否仅因这种报销就认定存在胁迫？”"
+        }
+      ],
+      "input_path": "chunk_inputs/input_cfc65eec299ebeca7546f912059b1069c5133f41adcf928a2d6c410cbdd368a8.jsonl",
+      "sample_input_sha256": {
+        "pc-0066": "e7b79f53bd3bc03947ec4deb6e88fa1df05abd4836079bd58d10355353e78f0b"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9f7-998c-7dd0-aec9-2eea6e4eb2c0",
+      "reasoning_effort": "high",
+      "tokens_used": "3,101",
+      "sample_ids": [
+        "pc-0067"
+      ],
+      "started_at": "2026-09-19T14:00:06+00:00",
+      "finished_at": "2026-09-19T14:00:23+00:00",
+      "prompt_chars": 5790,
+      "prompt_sha256": "7b9ca7a4e44f2c3c86c8c6729fdde09ab7fa415d02b2cede47bd8fe21374dda9",
+      "verdicts": [
+        {
+          "sample_id": "pc-0067",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_7b9ca7a4e44f2c3c86c8c6729fdde09ab7fa415d02b2cede47bd8fe21374dda9.jsonl",
+      "sample_input_sha256": {
+        "pc-0067": "5f1a1684ebe8c8a234968b74b998f7bf954822b1582d5cc6dc0f7bd753766c77"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9f7-da58-7ef3-bacb-82e9ca8076ed",
+      "reasoning_effort": "high",
+      "tokens_used": "5,333",
+      "sample_ids": [
+        "pc-0068"
+      ],
+      "started_at": "2026-09-19T14:00:23+00:00",
+      "finished_at": "2026-09-19T14:00:42+00:00",
+      "prompt_chars": 5972,
+      "prompt_sha256": "dce254a32a00d5ff47529ae9454ecf94fc328be2198df602ba5f38eddc4fedb5",
+      "verdicts": [
+        {
+          "sample_id": "pc-0068",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_dce254a32a00d5ff47529ae9454ecf94fc328be2198df602ba5f38eddc4fedb5.jsonl",
+      "sample_input_sha256": {
+        "pc-0068": "782b7c267ec9df48cfc85e9282770bb8775580299d0daa91af2ef172f90a5d33"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9f8-25ff-7eb2-9876-9bb9b388f53d",
+      "reasoning_effort": "high",
+      "tokens_used": "3,083",
+      "sample_ids": [
+        "pc-0069"
+      ],
+      "started_at": "2026-09-19T14:00:42+00:00",
+      "finished_at": "2026-09-19T14:01:02+00:00",
+      "prompt_chars": 5181,
+      "prompt_sha256": "237fa5319bd1a8b57ede8bf8ff5a4146b6cf6bf155c2776b707e2c7c03a392e4",
+      "verdicts": [
+        {
+          "sample_id": "pc-0069",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_237fa5319bd1a8b57ede8bf8ff5a4146b6cf6bf155c2776b707e2c7c03a392e4.jsonl",
+      "sample_input_sha256": {
+        "pc-0069": "b41e69c51a8da1260041423c8bf5093c7bccc2b6d574c9ec46159e0695e77d28"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9f8-74b1-7fd2-be6f-fac7ccf0526d",
+      "reasoning_effort": "high",
+      "tokens_used": "3,667",
+      "sample_ids": [
+        "pc-0070"
+      ],
+      "started_at": "2026-09-19T14:01:02+00:00",
+      "finished_at": "2026-09-19T14:01:43+00:00",
+      "prompt_chars": 5092,
+      "prompt_sha256": "4409f7ad30d25fcb0d742e024718fbf41da27c8e3ac240e47c5e9e0dbf0522ab",
+      "verdicts": [
+        {
+          "sample_id": "pc-0070",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_4409f7ad30d25fcb0d742e024718fbf41da27c8e3ac240e47c5e9e0dbf0522ab.jsonl",
+      "sample_input_sha256": {
+        "pc-0070": "78b5e757e4968a03a1533fe2440f3705d6d20dafd222b11996fadecae43260b5"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9f9-12d8-7af0-a1b6-3c53b49b51de",
+      "reasoning_effort": "high",
+      "tokens_used": "3,242",
+      "sample_ids": [
+        "pc-0071"
+      ],
+      "started_at": "2026-09-19T14:01:43+00:00",
+      "finished_at": "2026-09-19T14:02:03+00:00",
+      "prompt_chars": 6479,
+      "prompt_sha256": "0475c541134089f6cef56a0d3c8670b3b92659a8dd2955bba12efbc6db32a786",
+      "verdicts": [
+        {
+          "sample_id": "pc-0071",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_0475c541134089f6cef56a0d3c8670b3b92659a8dd2955bba12efbc6db32a786.jsonl",
+      "sample_input_sha256": {
+        "pc-0071": "2614b2633a6c5cc29d80947aba53f1943506e8f8df1ffb3c9cd4ffaf3ec7740c"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9f9-6009-7883-8a54-7d4e95263369",
+      "reasoning_effort": "high",
+      "tokens_used": "3,733",
+      "sample_ids": [
+        "pc-0072"
+      ],
+      "started_at": "2026-09-19T14:02:03+00:00",
+      "finished_at": "2026-09-19T14:02:32+00:00",
+      "prompt_chars": 6761,
+      "prompt_sha256": "50ccc3d1f6b0c7ea01e2cee178723f92e5a9598d707723fcfc9fa6369d7cd011",
+      "verdicts": [
+        {
+          "sample_id": "pc-0072",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "issue",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "key_text 可进一步缩短：删除开头的“adopting the ”后，仍保留 ICH E3(R1) 来源限定及两类定义的完整名称，且在页内唯一，足以保留所问定义的命中含义。",
+          "suggestion": "将 key_text 改为“ICH E3(R1) 62 definitions of protocol deviation and important protocol deviation”，保留完整 evidence_span。"
+        }
+      ],
+      "input_path": "chunk_inputs/input_50ccc3d1f6b0c7ea01e2cee178723f92e5a9598d707723fcfc9fa6369d7cd011.jsonl",
+      "sample_input_sha256": {
+        "pc-0072": "e32b22b56a1fa1fc31de58ca2ee0947e4d057503686afae92b789a88466733df"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9f9-d3a4-74b3-aa01-df19ecb75c24",
+      "reasoning_effort": "high",
+      "tokens_used": "5,668",
+      "sample_ids": [
+        "pc-0073"
+      ],
+      "started_at": "2026-09-19T14:02:32+00:00",
+      "finished_at": "2026-09-19T14:02:51+00:00",
+      "prompt_chars": 7585,
+      "prompt_sha256": "40269b70d3129eae8dd3c936d165ae98da0ed9975fa280608473f560dd21cac3",
+      "verdicts": [
+        {
+          "sample_id": "pc-0073",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_40269b70d3129eae8dd3c936d165ae98da0ed9975fa280608473f560dd21cac3.jsonl",
+      "sample_input_sha256": {
+        "pc-0073": "228723beadacc84757de8ddc9a21a10cf54bc830a4cf2e253b180b88d0927165"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9fa-1d74-7381-8289-b6e58a7f8755",
+      "reasoning_effort": "high",
+      "tokens_used": "6,718",
+      "sample_ids": [
+        "pc-0074"
+      ],
+      "started_at": "2026-09-19T14:02:51+00:00",
+      "finished_at": "2026-09-19T14:03:43+00:00",
+      "prompt_chars": 6711,
+      "prompt_sha256": "a49043bd7843827010c15f19bbc8d193fcad962fdfc6981fee0c871cb0a3ce84",
+      "verdicts": [
+        {
+          "sample_id": "pc-0074",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "issue",
+            "dept": "ok"
+          },
+          "reason": "evidence_span.text 内容完整且能回答 query，但偏移与页文本不一致：按零基、右端不含的字符偏移，该文本位于 [914,1099)，不是所标注的 [940,1125)。",
+          "suggestion": "将 evidence_span.char_start 改为 914，char_end 改为 1099，保留其余内容。"
+        }
+      ],
+      "input_path": "chunk_inputs/input_a49043bd7843827010c15f19bbc8d193fcad962fdfc6981fee0c871cb0a3ce84.jsonl",
+      "sample_input_sha256": {
+        "pc-0074": "b3623bcda70834b9f262d99e2404648389d6ef54a55baa4865ffc60895d839f1"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9fa-e710-7df3-9ccd-5988c6acaf5a",
+      "reasoning_effort": "high",
+      "tokens_used": "3,137",
+      "sample_ids": [
+        "pc-0075"
+      ],
+      "started_at": "2026-09-19T14:03:43+00:00",
+      "finished_at": "2026-09-19T14:04:01+00:00",
+      "prompt_chars": 5810,
+      "prompt_sha256": "3022a92e78c374a004f63aa377e059cfa4e01440ac7b95b310538eaec7bfb678",
+      "verdicts": [
+        {
+          "sample_id": "pc-0075",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_3022a92e78c374a004f63aa377e059cfa4e01440ac7b95b310538eaec7bfb678.jsonl",
+      "sample_input_sha256": {
+        "pc-0075": "7a453c46f29e4e5727fae761f1c4b2c83363f48614609288ee4140fb1fca53d0"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9fc-5e1b-77d3-9c2f-53bd3e28893e",
+      "reasoning_effort": "high",
+      "tokens_used": "5,701",
+      "sample_ids": [
+        "pc-0072"
+      ],
+      "started_at": "2026-09-19T14:05:19+00:00",
+      "finished_at": "2026-09-19T14:05:44+00:00",
+      "prompt_chars": 6748,
+      "prompt_sha256": "9ad90c31536f56e694dcb2cf66ab33c7835ca9b858793c9dcf43fa9dee6193c4",
+      "verdicts": [
+        {
+          "sample_id": "pc-0072",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_9ad90c31536f56e694dcb2cf66ab33c7835ca9b858793c9dcf43fa9dee6193c4.jsonl",
+      "sample_input_sha256": {
+        "pc-0072": "561ad1d76f4a8a56597cc950eebba3eb7228ffe854d596b174a24c448ec3a301"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0ba04-e750-7153-b864-16e6b603d848",
+      "reasoning_effort": "high",
+      "tokens_used": "2,952",
+      "sample_ids": [
+        "pc-0066"
+      ],
+      "started_at": "2026-09-19T14:14:38+00:00",
+      "finished_at": "2026-09-19T14:14:48+00:00",
+      "prompt_chars": 5750,
+      "prompt_sha256": "9bee70a748eaaa428a68aaf3aeb98b3e71900890d94c61b910ef5edb08d1e0ae",
+      "verdicts": [
+        {
+          "sample_id": "pc-0066",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_9bee70a748eaaa428a68aaf3aeb98b3e71900890d94c61b910ef5edb08d1e0ae.jsonl",
+      "sample_input_sha256": {
+        "pc-0066": "4c81df04210783606a33929c85b22d92ff61bf94ba7234fde75a39ef755ff6b6"
+      }
+    }
+  ],
+  "provenance_version": 2,
+  "latest": {
+    "pc-0063": {
+      "chunk_index": 3,
+      "sample_input_sha256": "821dd31aa7c5437cbd16985c6e30b21ac1d897cf1759804ba2bdb24e44b73d07",
+      "prompt_sha256": "bc073fb84e7cb873be4d5f3db0ed2237d9f67e1d2965a2e0713d91ca1da5e8f2",
+      "verdict_sha256": "09d83870d735c420bb327feb5f4efa3f8bf63db9faaaa086196cdfd9a576eea0"
+    },
+    "pc-0060": {
+      "chunk_index": 16,
+      "sample_input_sha256": "e9b223fc2c5a8e8eb53bf0f5968cdb9ccd2db3857f2df873946da126bd7fcf4d",
+      "prompt_sha256": "9c6b2b90519735273c1dc4b83f5a25eae0ca6dde63a001f2c096e8e52fbfad50",
+      "verdict_sha256": "9c5846a8f372240211eebf567c2ad22964687bfcaaa9e8387ae44673375797ce"
+    },
+    "pc-0061": {
+      "chunk_index": 17,
+      "sample_input_sha256": "c18af092d6b030ffd021cdb227320de94526b2e95a8020d477a16a244d9f3d9f",
+      "prompt_sha256": "c06fadc4bcd71ee7870cb5a7228f238da1d59d58b8f7bb7e66562162425890da",
+      "verdict_sha256": "bace90017f2c13152f1eab735e75594e498fe2bb75eb02e130a10fb4582c016c"
+    },
+    "pc-0062": {
+      "chunk_index": 18,
+      "sample_input_sha256": "d5f359b3f2bbe0ca837d5a524d9d19b30bda581d0e9a6ed11b9d31c014d1057e",
+      "prompt_sha256": "752c57d30d80bf6e0a20358a615e6e8d477d8e6584700b66d36deac7cfec838d",
+      "verdict_sha256": "976f2ad16abead50a03bb9715d7f91c1c3eacdd52a82a6f0997e2b16e34985eb"
+    },
+    "pc-0064": {
+      "chunk_index": 19,
+      "sample_input_sha256": "bd4136ea3fc1a55062b16f4d37a4a8e98cae04d68db790ce1ae50b65ad326f55",
+      "prompt_sha256": "d4d06b78c2ddaff7d30a07febff7122af49e52fcc2881543caa7221f29c0a96c",
+      "verdict_sha256": "112b42c9e59664b648a47d8c1e39e6fa85f89ac999320acfa39e2bb7563859ca"
+    },
+    "pc-0065": {
+      "chunk_index": 20,
+      "sample_input_sha256": "47fdde19cc4a59058cab7e256539ff6bd3bc823f64a1ba14779df6697ad66838",
+      "prompt_sha256": "3512655d84fb76e82a5036fd8cde542318464236a7a50c40ec8f1208b0a7230f",
+      "verdict_sha256": "29028689cd6aa3eb047062ab8ce797aec7844b56019eb138b0fe6a5ab0caccb8"
+    },
+    "pc-0067": {
+      "chunk_index": 22,
+      "sample_input_sha256": "5f1a1684ebe8c8a234968b74b998f7bf954822b1582d5cc6dc0f7bd753766c77",
+      "prompt_sha256": "7b9ca7a4e44f2c3c86c8c6729fdde09ab7fa415d02b2cede47bd8fe21374dda9",
+      "verdict_sha256": "33c480eb62093e30c28f5ce855f8905f75f7eacdeaf649bd7bb4ba8348f10828"
+    },
+    "pc-0068": {
+      "chunk_index": 23,
+      "sample_input_sha256": "782b7c267ec9df48cfc85e9282770bb8775580299d0daa91af2ef172f90a5d33",
+      "prompt_sha256": "dce254a32a00d5ff47529ae9454ecf94fc328be2198df602ba5f38eddc4fedb5",
+      "verdict_sha256": "e3eabef6d3222e550939cebc98742adcfe6b68ee29229da8ce00454dd9abd1a8"
+    },
+    "pc-0069": {
+      "chunk_index": 24,
+      "sample_input_sha256": "b41e69c51a8da1260041423c8bf5093c7bccc2b6d574c9ec46159e0695e77d28",
+      "prompt_sha256": "237fa5319bd1a8b57ede8bf8ff5a4146b6cf6bf155c2776b707e2c7c03a392e4",
+      "verdict_sha256": "946ddbd3ccd43b7a3b1f2b35ac54484d7d82949537465b1a0445d2b796fc544b"
+    },
+    "pc-0070": {
+      "chunk_index": 25,
+      "sample_input_sha256": "78b5e757e4968a03a1533fe2440f3705d6d20dafd222b11996fadecae43260b5",
+      "prompt_sha256": "4409f7ad30d25fcb0d742e024718fbf41da27c8e3ac240e47c5e9e0dbf0522ab",
+      "verdict_sha256": "868c4b35b485493a2caa52b6643b9cfc12a323493c9e99d41528061b64555419"
+    },
+    "pc-0071": {
+      "chunk_index": 26,
+      "sample_input_sha256": "2614b2633a6c5cc29d80947aba53f1943506e8f8df1ffb3c9cd4ffaf3ec7740c",
+      "prompt_sha256": "0475c541134089f6cef56a0d3c8670b3b92659a8dd2955bba12efbc6db32a786",
+      "verdict_sha256": "9d29541e4626eeec54d7ec3041ac0a199ecf08373031f5fc3dc9f3bf85b8f99b"
+    },
+    "pc-0073": {
+      "chunk_index": 28,
+      "sample_input_sha256": "228723beadacc84757de8ddc9a21a10cf54bc830a4cf2e253b180b88d0927165",
+      "prompt_sha256": "40269b70d3129eae8dd3c936d165ae98da0ed9975fa280608473f560dd21cac3",
+      "verdict_sha256": "1f45e1382ade80b031af6c14cab3117c552970c4044f06834424b63272e46659"
+    },
+    "pc-0074": {
+      "chunk_index": 29,
+      "sample_input_sha256": "b3623bcda70834b9f262d99e2404648389d6ef54a55baa4865ffc60895d839f1",
+      "prompt_sha256": "a49043bd7843827010c15f19bbc8d193fcad962fdfc6981fee0c871cb0a3ce84",
+      "verdict_sha256": "95ee9002a3e3dfc5d8be34239def46b972b0509418dbffc1063b45cff0e92e74"
+    },
+    "pc-0075": {
+      "chunk_index": 30,
+      "sample_input_sha256": "7a453c46f29e4e5727fae761f1c4b2c83363f48614609288ee4140fb1fca53d0",
+      "prompt_sha256": "3022a92e78c374a004f63aa377e059cfa4e01440ac7b95b310538eaec7bfb678",
+      "verdict_sha256": "24744535d237f9b3a96b48d17974fa1b6d43375a693736e2d56cf59fe9435a92"
+    },
+    "pc-0072": {
+      "chunk_index": 31,
+      "sample_input_sha256": "561ad1d76f4a8a56597cc950eebba3eb7228ffe854d596b174a24c448ec3a301",
+      "prompt_sha256": "9ad90c31536f56e694dcb2cf66ab33c7835ca9b858793c9dcf43fa9dee6193c4",
+      "verdict_sha256": "3837085d9c3d6bbe25a036e43f8729c8f51cba9fb380f323d1bd8fe0fcbb2a84"
+    },
+    "pc-0066": {
+      "chunk_index": 32,
+      "sample_input_sha256": "4c81df04210783606a33929c85b22d92ff61bf94ba7234fde75a39ef755ff6b6",
+      "prompt_sha256": "9bee70a748eaaa428a68aaf3aeb98b3e71900890d94c61b910ef5edb08d1e0ae",
+      "verdict_sha256": "fbbe050142b7c79f3be8bfa189b75c7c52b8ee4c6a7d4d4c36066c8746df4729"
+    }
+  },
+  "active_review": null
+}
