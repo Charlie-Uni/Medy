@@ -4,7 +4,7 @@
 | --- | --- |
 | 状态 | 协议已决；生产实现待 M1 入口实验 |
 | 日期 | 2026-09-03 |
-| 最后修订 | 2026-09-20：追加实验输入本地冻结结果，预登记判据不变；2026-09-10：增加 zh-Hans 样本最低数量与脚本变体分开报告（第七轮记录）；2026-09-08：复核方式、gold 命中规则与切片门禁作用域按第五轮审核记录修订 |
+| 最后修订 | 2026-09-20：完成探针 Git 归档，追加映射与实验准备状态，预登记判据不变；2026-09-10：增加 zh-Hans 样本最低数量与脚本变体分开报告（第七轮记录）；2026-09-08：复核方式、gold 命中规则与切片门禁作用域按第五轮审核记录修订 |
 | 关联 | 基线 DEC-001、3.1、3.6、3.7、5.2、5.9、M1 Checklist |
 | 决策人 | Qihan Zhu |
 
@@ -99,7 +99,7 @@ M1 实验完成后在本节追加：探针集版本与哈希、候选版本/镜�
 
 当前状态：尚未运行，无生产实现选择。
 
-### 2026-09-20：实验输入已本地冻结，Git 归档待完成
+### 2026-09-20：实验输入已冻结并完成 Git 归档
 
 精确条款探针集 `v1` 已在本地冻结，包含 16 份文档、75 条样本（MA 30、PV 29、CO 16；gold 来源为 zh-Hans 的样本 10 条）。当前复核结果为 71 条 `agreed`、4 条 `disputed_resolved`、0 条待决。带页文本的正式 frozen 校验通过，PR-01～PR-14 报告为 0 findings；全套软件检查为 482 passed（418 单元、64 PostgreSQL 集成）。这些结果确认实验输入与现有软件检查通过，词法检索选型实验尚未运行，无生产实现选择，以上预登记候选、指标、阈值和选择规则不变。
 
@@ -109,13 +109,20 @@ M1 实验完成后在本节追加：探针集版本与哈希、候选版本/镜�
 | 本地冻结日期 | `2026-09-20` |
 | `dataset_hash`（SHA-256 of `SHA256SUMS` bytes） | `5561bee58e37cd8d86b756f17e6c1a6ebed32ba54ba2ac48f4cd4adee254db7e` |
 | `manifest.json` SHA-256 | `062f9a536e0d811306f80dd5c24cc44f40a39a8f36ac360959c4de99b1faf54b` |
-| 冻结归档 Git commit | 尚未生成；待提交本轮冻结产物后回填，当前 HEAD 不代表该归档提交 |
+| 冻结归档 Git commit | `213dbe8ead8ff92d8919b201460ac3a961176c8c`（祖先 `2a4aef6` 归档校验器与工程依赖） |
 
 PII 规则保持 `pii-rules-v1`。`pc-0046` 的 EMA 机构联系邮箱沿用已批准的人工依据，以一条精确到样本、来源、字段哈希、匹配文本及区间的例外记录处理；例外文件已纳入 `manifest.files` 与 `SHA256SUMS`，未改动原始页文本或证据 span，也未放行其他邮箱或个人数据。
 
 复核模型如实记录为 `service-alias:gpt-6-astra;backend-version:not-exposed`，调用 effort 为 `high`。8 件复核运行证据已随版本保存并由 manifest 中的哈希绑定；后端模型版本未暴露，CLI 版本单独记录，因此不声称固定模型快照或再次调用同一后端的可复现性。
 
-依据：[本地冻结摘要](../../evals/probe/precise_clause/drafts/v1/review/local_freeze_summary_2026-09-20.json)、[正式 frozen 校验](../../evals/probe/precise_clause/drafts/v1/review/frozen_validation_2026-09-20.json)、[manifest](../../evals/probe/precise_clause/v1/manifest.json)、[PII 逐命中裁决](../../evals/probe/precise_clause/v1/pii_exceptions.json)、[当前处理表](../../evals/probe/precise_clause/drafts/v1/review/current_review_disposition.md)。完成 Git 归档与提交哈希回填后，按上述预登记协议开展 DEC-001 候选实验；实验结果另行追加。
+依据：[本地冻结摘要](../../evals/probe/precise_clause/drafts/v1/review/local_freeze_summary_2026-09-20.json)、[正式 frozen 校验](../../evals/probe/precise_clause/drafts/v1/review/frozen_validation_2026-09-20.json)、[manifest](../../evals/probe/precise_clause/v1/manifest.json)、[PII 逐命中裁决](../../evals/probe/precise_clause/v1/pii_exceptions.json)、[当前处理表](../../evals/probe/precise_clause/drafts/v1/review/current_review_disposition.md)。Git 归档已完成；在独立 checkout 上，418 项既有单元测试及正式 frozen 校验再次通过。归档回执见 [git_archive_2026-09-20.json](../../evals/probe/precise_clause/drafts/v1/review/git_archive_2026-09-20.json)。
+
+
+### 2026-09-20：实验准备进展（尚非选型结果）
+
+已建立 [DEC-001 准备目录](../../evals/experiments/lexical/README.md)，记录 A/B/C 固定源码候选、实测环境和测量参数草案。B/C 镜像及部分配置尚未构建验证，三候选适配器、端到端配置及独立许可证审核未完成，实验清单状态仍为 draft，尚未观察检索得分。
+
+只读导出当前 2,661 个 chunk，和冻结页文本重新切分后逐条内容/哈希/来源区间相同。75 条 gold 中 73 条 mapped，pc-0056-g1 与 pc-0072-g1 跨切分边界，按既有规则记录 unmappable 并计 miss，不删除或改写样本。该统计不等于 Lexical Recall@20。另有既存 low_trust 文档及 draft 发布状态需要在正式实验前处理；本次管理侧导出不作为 RLS 或生产可用性证据。
 
 ## 后果
 

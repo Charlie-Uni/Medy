@@ -464,7 +464,7 @@ P0 保留：
 
 ### M1：知识治理与检索
 
-- [ ] 在实现候选前冻结 DEC-001 精确条款探针集：不少于 60 条、目标 72 条，覆盖六类专项与 MA/PV/CO（每部门不少于 15 条）；语料只用 ADR-0003 准入为 `eligible` 的公开文档，gold 锚定到 `source_hash/version_label/page/section/key_text`，人工标注加 LLM 独立复核并如实记录，按 [evals/probe/precise_clause/SPEC.md](../evals/probe/precise_clause/SPEC.md) 通过校验后记录 `dataset_version` 与 `dataset_hash`；修正标注必须升版并重跑全部候选。
+- [x] 在实现候选前冻结 DEC-001 精确条款探针集：不少于 60 条、目标 72 条，覆盖六类专项与 MA/PV/CO（每部门不少于 15 条）；语料只用 ADR-0003 准入为 `eligible` 的公开文档，gold 锚定到 `source_hash/version_label/page/section/key_text`，人工标注加 LLM 独立复核并如实记录，按 [evals/probe/precise_clause/SPEC.md](../evals/probe/precise_clause/SPEC.md) 通过校验后记录 `dataset_version` 与 `dataset_hash`；修正标注必须升版并重跑全部候选。
 - [ ] 冻结 DEC-001 实验清单：三个生产候选的具体实现/配置、PostgreSQL/扩展/tokenizer/词典版本、镜像 digest、硬件与测量参数；进程内 BM25 仅作离线参考。
 - [ ] 固定 `LexicalRetriever` 契约，包含候选 `chunk_id/raw_score/rank` 与结果级 `requested_k/returned_count/candidate_exhausted/retriever_version/tokenizer_version/dictionary_version`。
 - [ ] 用最小实验 schema 在普通应用角色 + `FORCE ROW LEVEL SECURITY` 下完成词法候选对比；同时断言零跨部门泄漏与零静默候选不足，覆盖 `LIMIT`、按分数排序和连接池身份切换。

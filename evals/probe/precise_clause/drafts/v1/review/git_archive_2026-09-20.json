@@ -1,0 +1,22 @@
+{
+  "state": "git_archived",
+  "archived_on": "2026-09-20",
+  "foundation_commit": "2a4aef6632bda08a5621c69a3218d95083d2ee44",
+  "freeze_commit": "213dbe8ead8ff92d8919b201460ac3a961176c8c",
+  "dataset_version": "v1",
+  "dataset_hash": "5561bee58e37cd8d86b756f17e6c1a6ebed32ba54ba2ac48f4cd4adee254db7e",
+  "manifest_sha256": "062f9a536e0d811306f80dd5c24cc44f40a39a8f36ac360959c4de99b1faf54b",
+  "review_counts": {
+    "agreed": 71,
+    "disputed_resolved": 4,
+    "pending": 0
+  },
+  "frozen_files": 14,
+  "isolated_checkout_verification": {
+    "commit": "213dbe8ead8ff92d8919b201460ac3a961176c8c",
+    "unit_tests_passed": 418,
+    "frozen_errors": 0,
+    "frozen_warnings": 0,
+    "pages_supplied_externally": true
+  }
+}

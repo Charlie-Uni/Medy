@@ -1,0 +1,71 @@
+{
+  "dataset_version": "v1",
+  "dataset_hash": "5561bee58e37cd8d86b756f17e6c1a6ebed32ba54ba2ac48f4cd4adee254db7e",
+  "mapping_sha256": "b818733e1835587e4ac0cf01d2209cc7ab8ac55b2314892487425dbd9ac5f5ce",
+  "snapshot_sha256": "f509fd8b1adf0089dc24dd6d724d2fc19e40d282e3d5e6e7526dcc85af60f5a1",
+  "entries": 75,
+  "mapped": 73,
+  "unmappable": 2,
+  "same_snapshot_on_independent_read": true,
+  "unmappable_count_as_miss": true,
+  "unmappable_details": [
+    {
+      "sample_id": "pc-0056",
+      "gold_id": "pc-0056-g1",
+      "dept": "PV",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "page": 6,
+      "key_interval": [
+        435,
+        546
+      ],
+      "overlapping_chunks": [
+        {
+          "chunk_id": "2c4c06c2-fb31-40ca-bd9f-3f37e449e651",
+          "char_end": 862,
+          "char_start": 441,
+          "page": 6
+        },
+        {
+          "chunk_id": "4879761e-db50-4b27-a4ed-520a2d116f29",
+          "char_end": 440,
+          "char_start": 0,
+          "page": 6
+        }
+      ]
+    },
+    {
+      "sample_id": "pc-0072",
+      "gold_id": "pc-0072-g1",
+      "dept": "CO",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "page": 5,
+      "key_interval": [
+        2321,
+        2401
+      ],
+      "overlapping_chunks": [
+        {
+          "chunk_id": "5a3933c5-dabe-4119-b151-160a30f437c8",
+          "char_end": 2358,
+          "char_start": 1766,
+          "page": 5
+        },
+        {
+          "chunk_id": "975e6634-3ca4-4d6e-aa11-3d06599a7ef3",
+          "char_end": 2801,
+          "char_start": 2359,
+          "page": 5
+        }
+      ]
+    }
+  ],
+  "retrieval_metrics_measured": false,
+  "note": "Mapping coverage is not retrieval Recall@20. Frozen samples and chunker configuration were not changed."
+}

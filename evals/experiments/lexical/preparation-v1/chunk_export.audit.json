@@ -1,0 +1,125 @@
+{
+  "generated_at": "2026-09-19T14:34:49.988091+00:00",
+  "mode": "read_only_admin_export_not_retrieval",
+  "dataset_hash": "5561bee58e37cd8d86b756f17e6c1a6ebed32ba54ba2ac48f4cd4adee254db7e",
+  "manifest_sha256": "062f9a536e0d811306f80dd5c24cc44f40a39a8f36ac360959c4de99b1faf54b",
+  "snapshot_sha256": "f509fd8b1adf0089dc24dd6d724d2fc19e40d282e3d5e6e7526dcc85af60f5a1",
+  "postgresql": "16.15 (Debian 16.15-1.pgdg12+2)",
+  "migration": "0004",
+  "documents": [
+    {
+      "document_key": "ema-gvp-module-ix-rev1",
+      "source_hash": "801755430dbf3ac68dfed481afc642937b9dbb3c73e38a83e8cd767dc165d1b5",
+      "status": "draft",
+      "parse_quality": "trusted",
+      "chunks": 153
+    },
+    {
+      "document_key": "ema-gvp-module-vi-rev2",
+      "source_hash": "f27a7f0d678b17f2d6374946ae03d0b59db18217ed0fabae0b2f8a9111513b9e",
+      "status": "draft",
+      "parse_quality": "trusted",
+      "chunks": 881
+    },
+    {
+      "document_key": "fda-protocol-deviations-draft-2024",
+      "source_hash": "3b172d83fd5310029d0933a2efdb821c31d77c31d874e292dff7fb7da9abd42f",
+      "status": "draft",
+      "parse_quality": "trusted",
+      "chunks": 84
+    },
+    {
+      "document_key": "fda-sponsor-safety-reporting-2025",
+      "source_hash": "7124849af0417893a1c5d93fa6ccf2c4b4c67d5945e09060ae3977f6e0646bac",
+      "status": "draft",
+      "parse_quality": "trusted",
+      "chunks": 298
+    },
+    {
+      "document_key": "ich-e2a-step4-1994",
+      "source_hash": "1c095d80419287187bf5b2db5eba83864adccebf07b9c593bf5925b4ab6f7cf7",
+      "status": "draft",
+      "parse_quality": "trusted",
+      "chunks": 62
+    },
+    {
+      "document_key": "ich-e2f-step4-2010",
+      "source_hash": "7912d4d0f2b5fa407a5e8fe3908a7e8262e4034c23409cd903e3646c5b7a693b",
+      "status": "draft",
+      "parse_quality": "trusted",
+      "chunks": 194
+    },
+    {
+      "document_key": "ich-e6-r3-step4-2025",
+      "source_hash": "e6ce19e36ce7d2e294f89ee89492b9e035178c3cca48984392bbd92eec9b002c",
+      "status": "draft",
+      "parse_quality": "trusted",
+      "chunks": 485
+    },
+    {
+      "document_key": "ich-e8-r1-step4-2021",
+      "source_hash": "99d56638828c823bb603ff3ef451fcfafc607de8a5b3926136d64980f27baa13",
+      "status": "draft",
+      "parse_quality": "trusted",
+      "chunks": 175
+    },
+    {
+      "document_key": "meddra-data-retrieval-ptc-3-26-zh-hans",
+      "source_hash": "ea0824b58213d740df8ac7459c3c9b08819aa21127a7c63fe04b81ec056f9938",
+      "status": "draft",
+      "parse_quality": "trusted",
+      "chunks": 87
+    },
+    {
+      "document_key": "meddra-term-selection-ptc-4-26-zh-hans",
+      "source_hash": "440123f479ab3c324337ef6f731fb6ab9303576c6c21ce30043e99a6d6b1a097",
+      "status": "draft",
+      "parse_quality": "trusted",
+      "chunks": 100
+    },
+    {
+      "document_key": "tfda-adr-report-form-guide-4th",
+      "source_hash": "f5f597affd022ec5b57293bf47d437f2f1fadff51f15dc263cfa58f4a6134c92",
+      "status": "draft",
+      "parse_quality": "trusted",
+      "chunks": 45
+    },
+    {
+      "document_key": "tfda-label-cancliol-100mg",
+      "source_hash": "2b8ab3b1bfea619d8eba938864e10614313dfa92e036bdba6a8fec2cb5fd2425",
+      "status": "draft",
+      "parse_quality": "trusted",
+      "chunks": 6
+    },
+    {
+      "document_key": "tfda-label-deurinol-300mg",
+      "source_hash": "42f20f2b5b0ea0ed7afe8bb709699a58b222985b70ccada6e0c470f5c3f58a7f",
+      "status": "draft",
+      "parse_quality": "trusted",
+      "chunks": 31
+    },
+    {
+      "document_key": "tfda-label-esomen-40mg",
+      "source_hash": "f80b904f4e2f15a59cb78fe1baed5c1c06b8b975d43dc0291217d64c43e43fbb",
+      "status": "draft",
+      "parse_quality": "low_trust",
+      "chunks": 33
+    },
+    {
+      "document_key": "tfda-label-loformin-850mg",
+      "source_hash": "b6af0d88b1f0e3b5660e6e3c6678e18c40616073bc082b6cb7214604b2f81f98",
+      "status": "draft",
+      "parse_quality": "trusted",
+      "chunks": 17
+    },
+    {
+      "document_key": "tfda-label-zosaa-50mg",
+      "source_hash": "81069adaf87d21e640d9b5cbc83a799a59a33acbdc4ead46ed338c9ad6d06b3a",
+      "status": "draft",
+      "parse_quality": "trusted",
+      "chunks": 10
+    }
+  ],
+  "chunks": 2661,
+  "regenerated_chunks_match": true
+}

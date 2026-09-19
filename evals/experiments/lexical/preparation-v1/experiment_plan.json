@@ -1,0 +1,155 @@
+{
+  "experiment_id": "DEC-001-preparation-v1",
+  "status": "draft_not_ready_for_comparison",
+  "created_on": "2026-09-20",
+  "protocol": "docs/adr/ADR-0002-lexical-retrieval-selection.md",
+  "dataset": {
+    "version": "v1",
+    "git_commit": "213dbe8ead8ff92d8919b201460ac3a961176c8c",
+    "dataset_hash": "5561bee58e37cd8d86b756f17e6c1a6ebed32ba54ba2ac48f4cd4adee254db7e",
+    "manifest_sha256": "062f9a536e0d811306f80dd5c24cc44f40a39a8f36ac360959c4de99b1faf54b",
+    "samples": 75,
+    "documents": 16,
+    "chunk_snapshot_sha256": "f509fd8b1adf0089dc24dd6d724d2fc19e40d282e3d5e6e7526dcc85af60f5a1"
+  },
+  "environment": {
+    "host": "macOS 26.5.2",
+    "architecture": "arm64",
+    "cpu": "Apple M3",
+    "physical_cpu": 8,
+    "logical_cpu": 8,
+    "host_memory_bytes": 25769803776,
+    "docker_engine": "29.8.0",
+    "docker_cpu": 8,
+    "docker_memory_bytes": 8319770624,
+    "container_os": "Debian 12 bookworm",
+    "postgresql": "16.15",
+    "python": "3.11.16",
+    "base_image": "pgvector/pgvector:pg16@sha256:ccc6e83d6e35e931dc7c5def2022729d5a6c370318d099181995567ff1fb4d6b",
+    "runtime_verified_for": [
+      "base_image_only"
+    ]
+  },
+  "measurement": {
+    "k": 20,
+    "query_order": "sort sample_id then shuffle independently for each pass using seed + pass_index; identical per candidate",
+    "random_seed": 20260920,
+    "concurrency": 1,
+    "warmup_full_passes": 5,
+    "measured_full_passes": 10,
+    "latency_clock": "perf_counter_ns, tokenizer plus database roundtrip",
+    "p95_estimator": "nearest-rank ceil(0.95*n), warmup excluded",
+    "paired_bootstrap_resamples": 10000,
+    "paired_bootstrap_seed": 20260920,
+    "confidence_level": 0.95,
+    "confidence_method": "paired query-level percentile bootstrap of strict macro recall difference",
+    "repeated_rankings": "must be identical for all repeated executions of each query; otherwise fail reproducibility gate",
+    "tie_break": "chunk_id ascending",
+    "matching_predicate": "OR across tokenized query terms; empty tokens yield zero eligible candidates",
+    "query_rewrite": false,
+    "custom_dictionary": false,
+    "cold_cache_measurement": "not included in this warm-cache lexical measurement; report limitation"
+  },
+  "candidates": [
+    {
+      "id": "A",
+      "implementation": "application pretokenization + PostgreSQL simple FTS",
+      "tokenizer": "tok-jieba-v1",
+      "normalization": "norm-v1",
+      "packages": {
+        "jieba": "0.42.1"
+      },
+      "dictionary_version": "jieba-0.42.1+default",
+      "dictionary_sha256": "7197c3211ddd98962b036cdf40324d1ea2bfaa12bd028e68faa70111a88e12a8",
+      "ranking": "ts_rank_cd with default weights and normalization=0; chunk_id ascending for ties",
+      "index": "position-preserving tsvector, GIN",
+      "image_digest": "sha256:ccc6e83d6e35e931dc7c5def2022729d5a6c370318d099181995567ff1fb4d6b",
+      "adapter_runtime_verified": false,
+      "license_evidence": "https://github.com/fxsjy/jieba/blob/v0.42.1/LICENSE"
+    },
+    {
+      "id": "B",
+      "implementation": "PostgreSQL FTS + zhparser",
+      "extension": "zhparser",
+      "release_tag": "v2.3",
+      "source_commit": "dd292fd591edbcb7ebee79d3c3cdc969e9cddced",
+      "expected_extension_version": "2.3",
+      "scws_version": "1.2.3",
+      "scws_commit": "a04ef5e655213eb6b07fb57761d0eac72c281ad4",
+      "normalization": "norm-v1",
+      "ranking": "ts_rank_cd with default weights and normalization=0; chunk_id ascending for ties",
+      "pos_mapping": null,
+      "guc_snapshot": null,
+      "dictionary_sha256": null,
+      "rules_sha256": null,
+      "image_digest": null,
+      "adapter_runtime_verified": false,
+      "source_evidence": [
+        "https://github.com/amutu/zhparser/blob/dd292fd591edbcb7ebee79d3c3cdc969e9cddced/zhparser.control",
+        "https://github.com/hightman/scws/tree/a04ef5e655213eb6b07fb57761d0eac72c281ad4"
+      ],
+      "license_evidence": [
+        "https://github.com/amutu/zhparser/blob/dd292fd591edbcb7ebee79d3c3cdc969e9cddced/COPYRIGHT",
+        "https://github.com/hightman/scws/blob/a04ef5e655213eb6b07fb57761d0eac72c281ad4/COPYING"
+      ]
+    },
+    {
+      "id": "C",
+      "implementation": "pg_search BM25 + pdb.jieba",
+      "release_tag": "v0.25.9",
+      "source_commit": "c727757be0aab7fbb17c6cc5f0360f22efdd3776",
+      "expected_extension_version": "0.25.9",
+      "asset": "postgresql-16-pg-search_0.25.9-1PARADEDB-bookworm_arm64.deb",
+      "asset_sha256_from_publisher": "69ac9f7ade7ec66b3e062d823e023f28440b5c87be30d6ee85b16f51eab549a9",
+      "downloaded_asset_verified": false,
+      "tokenizer": "pdb.jieba",
+      "tantivy_jieba": "0.20.0",
+      "jieba_rs": "0.10.1",
+      "chinese_convert": null,
+      "normalization": "norm-v1",
+      "full_filter_config": null,
+      "image_digest": null,
+      "adapter_runtime_verified": false,
+      "release_status": "release_blocked",
+      "license_approval": null,
+      "source_evidence": [
+        "https://github.com/paradedb/paradedb/releases/expanded_assets/v0.25.9",
+        "https://github.com/paradedb/paradedb/blob/c727757be0aab7fbb17c6cc5f0360f22efdd3776/Cargo.lock",
+        "https://github.com/paradedb/paradedb/blob/c727757be0aab7fbb17c6cc5f0360f22efdd3776/tokenizers/src/manager.rs"
+      ],
+      "license_evidence": "https://github.com/paradedb/paradedb/blob/c727757be0aab7fbb17c6cc5f0360f22efdd3776/LICENSE"
+    }
+  ],
+  "readiness_blockers": [
+    {
+      "code": "candidate_builds_unverified",
+      "detail": "B/C exact images and extension runtime versions are not yet built/verified; B dictionary/POS/GUC and C full filter config are not frozen"
+    },
+    {
+      "code": "adapters_unimplemented",
+      "detail": "A/B/C ordinary-role adapters and actual FORCE RLS/count/version/execution-plan contract runs remain to be implemented"
+    },
+    {
+      "code": "corpus_not_publishable",
+      "detail": "All 16 development documents are draft; tfda-label-esomen-40mg remains low_trust. Do not activate or remove the six affected samples to force a passing experiment",
+      "affected_samples": [
+        "pc-0025",
+        "pc-0026",
+        "pc-0027",
+        "pc-0028",
+        "pc-0029",
+        "pc-0030"
+      ]
+    },
+    {
+      "code": "end_to_end_configuration_unfixed",
+      "detail": "Embedding/reranker and end-to-end Recall@5/P95 configuration for the final selection gates have not been fixed"
+    },
+    {
+      "code": "production_license_review_pending",
+      "detail": "C remains release_blocked; direct/transitive component and dictionary licensing requires independent review"
+    }
+  ],
+  "no_quality_results_observed": true,
+  "production_selection": null
+}

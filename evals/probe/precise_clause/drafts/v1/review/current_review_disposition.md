@@ -2,7 +2,7 @@
 
 核查日期：2026-09-20（Australia/Sydney）。用户已同意上轮三项具体方案，并要求每轮自审；两条改题已重新独立复核，另一条已绑定人工裁决。
 
-探针集 `v1` 已**本地冻结**：75/75 条当前输入均有真实独立复核，**71 条 agreed、4 条 disputed_resolved、0 条待决**。16 份文档及 75 条样本的正式带页文本 frozen 校验通过，PR-01～PR-14 为 0 findings。**Git 归档提交尚未生成**，本地冻结与 Git 完整归档分开记录。
+探针集 `v1` 已**冻结并完成 Git 归档**：75/75 条当前输入均有真实独立复核，**71 条 agreed、4 条 disputed_resolved、0 条待决**。16 份文档及 75 条样本的正式带页文本 frozen 校验通过，PR-01～PR-14 为 0 findings。**Git 归档提交为 `213dbe8ead8ff92d8919b201460ac3a961176c8c`**，基础依赖已在祖先 `2a4aef6` 归档，独立 checkout 复验通过。
 
 | 类型 | 样本 | 当前处理 |
 | --- | --- | --- |
@@ -27,16 +27,18 @@
 | `dataset_version` / 冻结日期 | `v1` / `2026-09-20` |
 | `dataset_hash` | `5561bee58e37cd8d86b756f17e6c1a6ebed32ba54ba2ac48f4cd4adee254db7e` |
 | `manifest.json` SHA-256 | `062f9a536e0d811306f80dd5c24cc44f40a39a8f36ac360959c4de99b1faf54b` |
-| 冻结归档 Git commit | 尚未生成；不得用现有 HEAD 代替 |
+| 冻结归档 Git commit | `213dbe8ead8ff92d8919b201460ac3a961176c8c` |
 
-接下来完成 Git 归档并在 [ADR-0002](../../../../../../docs/adr/ADR-0002-lexical-retrieval-selection.md) 回填实际提交哈希，然后按预登记方案开展 DEC-001 词法检索候选实验。实验尚未运行，无生产实现选择。冻结 `v1` 的后续数据修正必须创建新版本。
+Git 归档及 [ADR-0002](../../../../../../docs/adr/ADR-0002-lexical-retrieval-selection.md) 实际提交哈希回填已完成；现已进入 [DEC-001 实验准备](../../../../../../evals/experiments/lexical/README.md)。实验尚未运行，无生产实现选择。冻结 `v1` 的后续数据修正必须创建新版本。
 
 ## 证据入口
 
-- [本地冻结摘要](local_freeze_summary_2026-09-20.json)、[正式 frozen 校验](frozen_validation_2026-09-20.json)
+- [Git 归档回执](git_archive_2026-09-20.json)、[本地冻结时的历史摘要](local_freeze_summary_2026-09-20.json)、[正式 frozen 校验](frozen_validation_2026-09-20.json)
 - [冻结 manifest](../../../v1/manifest.json)、[SHA256SUMS](../../../v1/SHA256SUMS)、[PII 逐命中裁决](../../../v1/pii_exceptions.json)
 - [冻结人工裁决](../../../v1/review_evidence/resolutions.json)、[冻结模型运行元数据](../../../v1/review_evidence/reviewer_runtime_metadata.json)
 - [最后三项批准落地](approved_final_changes_2026-09-20.json)、[pc-0074 偏移核验](pc-0074_offset_check_2026-09-20.json)
 - [每轮自审与验证记录 26](../../../../../../docs/reviews/2026-09-20-implementation-26-probe-review-and-freeze.md)
 
-最终全套软件检查为 **482 passed（418 单元 + 64 PostgreSQL 集成）**，类型、格式与 Schema 同步检查通过；数据冻结另有上述正式校验报告。测试通过和探针冻结不等于词法召回指标已经达标。
+冻结时的全套软件检查为 **482 passed（418 单元 + 64 PostgreSQL 集成）**，类型、格式与 Schema 同步检查通过；数据冻结另有上述正式校验报告。测试通过和探针冻结不等于词法召回指标已经达标。
+
+归档和下一阶段代码验证见[实现记录 27](../../../../../../docs/reviews/2026-09-20-implementation-27-archive-and-experiment-preparation.md)：549 passed（485 单元 + 64 PostgreSQL 集成），冻结 v1 内容未修改。

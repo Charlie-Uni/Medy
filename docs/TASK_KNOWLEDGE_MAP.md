@@ -1,7 +1,7 @@
 # Medy 全量任务、当前进度与八股知识点对照
 
-> 核查日期：2026-09-20（[实现记录 26](reviews/2026-09-20-implementation-26-probe-review-and-freeze.md)）。编号与 [开发路线图](DEVELOPMENT_ROADMAP.md) 一致，验收文字以 [工程基线 v0.6](ENGINEERING_BASELINE.md) 为准；本文只补每个任务对应的基础知识，不新增门禁。
-> 状态口径同路线图：已实现（小范围产物有代码与证据，不等于验收完成）、部分、待做、阻塞、选做、未验收。基线 99 个复选项目前 0 项勾选。
+> 核查日期：2026-09-20（[实现记录 27](reviews/2026-09-20-implementation-27-archive-and-experiment-preparation.md)）。编号与 [开发路线图](DEVELOPMENT_ROADMAP.md) 一致，验收文字以 [工程基线 v0.6](ENGINEERING_BASELINE.md) 为准；本文只补每个任务对应的基础知识，不新增门禁。
+> 状态口径同路线图：已实现（小范围产物有代码与证据，不等于整体验收完成）、部分、待做、阻塞、选做、未验收。基线 99 个复选项目前 1 项勾选（M1-01 探针冻结）。
 > `tests/unit/docs/test_baseline_roadmap_consistency.py` 机械检查本文与路线图、基线的编号数量一致。
 
 ## 0. 进度总览
@@ -56,8 +56,8 @@ M1-01 同时是“部分”和“阻塞”，上表按“部分”计。P1/P2 11
 
 | ID | 状态 | 任务 | 八股知识点 |
 | --- | --- | --- | --- |
-| M1-01 | 部分（75 条已本地冻结，71 agree、4 已裁决、0 待决；Git 归档待完成） | 冻结 DEC-001 精确条款探针集 | 数据集版本化与哈希；标注一致性与复核；训练/评测隔离防泄漏；语料许可 |
-| M1-02 | 待做 | 冻结实验清单（候选、镜像 digest、硬件、参数） | 实验预登记；可复现性（种子、digest、环境）；消融实验；避免事后改判据 |
+| M1-01 | 已实现（75 条冻结归档，71 agree、4 已裁决、0 待决；`213dbe8`） | 冻结 DEC-001 精确条款探针集 | 数据集版本化与哈希；标注一致性与复核；训练/评测隔离防泄漏；语料许可 |
+| M1-02 | 部分（准备草案和映射已有，镜像/配置待实测冻结） | 冻结实验清单（候选、镜像 digest、硬件、参数） | 实验预登记；可复现性（种子、digest、环境）；消融实验；避免事后改判据 |
 | M1-03 | 已实现（契约范围，待审核） | LexicalRetriever 统一契约 | 接口与适配器模式；Protocol 结构化子类型；契约测试；rank 与 raw_score 的职责分离 |
 | M1-04 | 部分（零泄漏已证明；候选不足待实验） | 最小 schema 上的 RLS 零泄漏与零静默不足测试 | PostgreSQL RLS 策略、FORCE RLS、BYPASSRLS；连接池与 SET LOCAL；LIMIT 下推导致候选不足 |
 | M1-05 | 阻塞 | 三候选对比实验与许可证审核 | BM25 与 ts_rank 的区别；Tantivy 倒排；配对 bootstrap 置信区间；统计显著性；AGPL 义务 |
@@ -177,7 +177,7 @@ M1-01 同时是“部分”和“阻塞”，上表按“部分”计。P1/P2 11
 
 ## 10. 下一步
 
-按[路线图 §8.3](DEVELOPMENT_ROADMAP.md#83-接下来按这个顺序推进)：最后三项建议已获批准，两条改题重新独立复核通过，一条偏移争议已裁决；75 条探针已本地冻结，71 agree、4 disputed_resolved、0 待决。机构邮箱精确例外、复核证据绑定和后端模型版本未暴露的声明已落地，frozen 校验零错误、零警告。下一步梳理提交范围并完成 Git 归档，再做 DEC-001 实验清单；M1-11 发布事务可独立推进。未变结果只有输入和提示一致才能复用，旧人工裁决也必须绑定具体判定。
+按[路线图 §8.3](DEVELOPMENT_ROADMAP.md#83-接下来按这个顺序推进)：M1-01 已完成 Git 归档，现进入 M1-02 / DEC-001 准备。已有候选源码与参数草案、实际环境记录和 gold 映射；73 条 mapped、2 条跨切分边界的 unmappable 保留计 miss。下一步补齐候选构建与配置、合成契约验证和正式实验前置，不在缺少实际运行或许可证结论时宣布选型。学习重点从标注有效性扩展到来源区间覆盖、可复现实验与失败结果的如实报告。
 
 知识确认采用“先用自己的话解释 → 对照仓库代码 → 举一个失败例子 → 跑对应验证 → 简短复述”的方式。下面列出相关问题，具体回答和核对记录见本节末；未回答或未完成核对的内容不记为已掌握。
 
@@ -207,3 +207,10 @@ M1-01 同时是“部分”和“阻塞”，上表按“部分”计。P1/P2 11
 - 已提问：数据文件由 SHA256SUMS 和 dataset_hash 保护，而复核证据的哈希放在 manifest 中。为什么归档时还需要单独记录 manifest.json 的 SHA-256？
 - 代码入口：[review_provenance.py](../src/medops/evals/probe/review_provenance.py)、[SPEC](../evals/probe/precise_clause/SPEC.md) 冻结流程、[ADR-0002 本地冻结记录](adr/ADR-0002-lexical-retrieval-selection.md)。
 - 状态：待学习者回答，不影响已授权的实现与归档工作，不标记为已掌握。
+
+### 2026-09-20 归档后的知识确认
+
+- 任务：M1-02 / M1-10，映射缺陷与召回判据。
+- 已提问：某条 key_text 前半段在 chunk A、后半段在 chunk B，即使两个 chunk 都被召回，为什么按当前 SPEC 仍是 unmappable，不能直接算命中？
+- 代码与实测：[chunk_mapping.py](../src/medops/evals/probe/chunk_mapping.py)、[两条边界诊断](../evals/experiments/lexical/preparation-v1/mapping.audit.json)。
+- 状态：等待学习者解释，不阻塞已授权工作，不标记为已掌握。前一条 manifest 独立哈希问题也尚未收到回答。

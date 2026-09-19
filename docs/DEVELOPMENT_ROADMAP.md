@@ -1,14 +1,14 @@
 # Medy 开发任务、当前进度与边做边学路线
 
-> 核查日期：2026-09-20（[实现记录 26](reviews/2026-09-20-implementation-26-probe-review-and-freeze.md)；本轮 482 passed，含 64 项 PostgreSQL 集成测试）。依据：工作区中的[工程基线 v0.6](ENGINEERING_BASELINE.md)、ADR、SPEC、代码、复核记录与本机测试。历史实现证据见记录 13～25。
+> 核查日期：2026-09-20（[实现记录 27](reviews/2026-09-20-implementation-27-archive-and-experiment-preparation.md)；本轮 549 passed，含 64 项 PostgreSQL 集成测试）。依据：工作区中的[工程基线 v0.6](ENGINEERING_BASELINE.md)、ADR、SPEC、代码、复核记录与本机测试。历史实现证据见记录 13～26。
 > 本文件是基线的执行进度视图，不是第二份需求契约。范围、阈值和安全约束仍以基线为准；不新增 P0 门禁，不代替正式验收。
-> 当前 Git HEAD：`aa5e503`（已提交基线 v0.5）；工作区包含尚未提交的 v0.6 文档与实现。本文件不表示这些改动已经提交。
+> Git 归档：`2a4aef6` 为工程基础，`213dbe8` 为冻结探针 v1；归档提交已在独立 checkout 复验。本轮后续实验准备与回填文档单独提交，冻结 v1 原始字节不变。
 
 ## 1. 先看结论
 
-目前处于 **M0 基础工程与契约大部分已实现，M1 知识治理与入库已落地，75 条真实探针已本地冻结、待 Git 归档**。领域模型、数据库迁移与 RLS、PDF 入库切分、评测工具已有代码和本地证据；医学问答服务、生产混合检索与 DEC-001 选型实验尚未完成。
+目前处于 **M0 基础工程与契约大部分已实现，M1 知识治理与入库已落地，75 条真实探针已冻结归档，正在准备 DEC-001 实验**。领域模型、数据库迁移与 RLS、PDF 入库切分、评测工具已有代码和本地证据；医学问答服务、生产混合检索与 DEC-001 选型实验尚未完成。
 
-本次完整复跑：`env -u DEBUG -u PYTHONPATH make check` 通过，仓库外导入、ruff、106 文件格式检查、mypy 47 个源文件、pytest **482 passed**（418 单元 + 64 集成，无跳过）、Schema 漂移检查均通过。PostgreSQL 集成测试实际连库执行；此前继承的 `DEBUG` 布尔解析问题仍以命令级移除处理。开发库最近核查为迁移 0004、16 份 draft 文档、2,661 个 chunk。75 条探针现为 71 agree、4 disputed_resolved、0 待决；带页文本的正式 frozen 校验零错误、零警告。pc-0046 的公开机构邮箱已按既有人工依据绑定精确例外；模型后端版本未暴露，已明确记录其复现限制。Git 归档、远端 CI 与检索质量实验尚未完成。
+本次完整复跑：`env -u DEBUG -u PYTHONPATH make check` 通过，仓库外导入、ruff、109 文件格式检查、mypy 48 个源文件、pytest **549 passed**（485 单元 + 64 集成，无跳过）、Schema 漂移检查均通过。PostgreSQL 集成测试实际连库执行；此前继承的 `DEBUG` 布尔解析问题仍以命令级移除处理。开发库最近核查为迁移 0004、16 份 draft 文档、2,661 个 chunk。75 条探针现为 71 agree、4 disputed_resolved、0 待决；带页文本的正式 frozen 校验零错误、零警告。pc-0046 的公开机构邮箱已按既有人工依据绑定精确例外；模型后端版本未暴露，已明确记录其复现限制。记录 27 已完成 Git 归档，开始实验准备与映射；远端 CI 与检索质量实验尚未完成。
 
 两件事不能混淆：
 
@@ -17,9 +17,9 @@
 
 ### 进度百分比口径
 
-决策人要求每个阶段汇报"离总目标百分之多少"。口径固定为：[任务知识对照](TASK_KNOWLEDGE_MAP.md) 中 79 个 P0 任务行的状态加权和（已实现 1、部分 0.5、阻塞与待做 0）除以 79；另报除以 99 个基线复选项的数值。状态只随实现记录的证据变更，基线勾选保持 0，最终验收仍是第 11 节九条门禁的二元结果。`tests/unit/docs/test_baseline_roadmap_consistency.py` 重算并比对下面这行数字：
+决策人要求每个阶段汇报"离总目标百分之多少"。口径固定为：[任务知识对照](TASK_KNOWLEDGE_MAP.md) 中 79 个 P0 任务行的状态加权和（已实现 1、部分 0.5、阻塞与待做 0）除以 79；另报除以 99 个基线复选项的数值。状态只随实现记录的证据变更，基线勾选只依据完整证据更新，最终验收仍是第 11 节九条门禁的二元结果。`tests/unit/docs/test_baseline_roadmap_consistency.py` 重算并比对下面这行数字：
 
-P0 加权进度：22.8%（18.0/79）；按 99 项计 18.2%。分项：M0 10/11、M1 8/21、M2 0/16、M3 0/13、M4 0/10、M5 0/8。
+P0 加权进度：24.1%（19.0/79）；按 99 项计 19.2%。分项：M0 10/11、M1 9/21、M2 0/16、M3 0/13、M4 0/10、M5 0/8。
 
 ### 状态与计数
 
@@ -34,7 +34,7 @@ P0 加权进度：22.8%（18.0/79）；按 99 项计 18.2%。分项：M0 10/11�
 | 范围 | 基线项数 | 当前定位 |
 | --- | ---: | --- |
 | M0 工程与契约 | 11 | 基础工程、领域/API/MCP 契约与本地门禁已有；远端 CI、安全阶段及服务接线待补 |
-| M1 知识治理与检索 | 21 | 数据库治理、RLS、入库切分和探针本地冻结已有；Git 归档与生产检索选型待完成 |
+| M1 知识治理与检索 | 21 | 数据库治理、RLS、入库切分和探针冻结归档已有；实验准备已启动，生产检索选型待完成 |
 | M2 Harness / Verifier / Safety / Skills | 16 | 待做 |
 | M3 API / worker / MCP / 观测 / 部署 | 13 | 待做 |
 | M4 受控 Loop | 10 | 待做 |
@@ -42,7 +42,7 @@ P0 加权进度：22.8%（18.0/79）；按 99 项计 18.2%。分项：M0 10/11�
 | P1/P2 checklist | 11 | 选做，未启动 |
 | 最终验收 | 9 | 未验收；是前述工作的汇总门禁，不是 9 个新功能 |
 
-合计 **79 项 P0 阶段任务 + 11 项选做 + 9 项汇总验收 = 99 个基线复选项**。基线当前仍为 **0 项勾选**，并不表示没有工作完成；多数复选项是包含多项条件的验收包。本次不直接修改其勾选状态，也不按代码行数估算完成百分比。基线另有 30 条不变量、11 项 DEC。
+合计 **79 项 P0 阶段任务 + 11 项选做 + 9 项汇总验收 = 99 个基线复选项**。基线当前为 **1 项勾选**（M1-01 探针冻结）；多数复选项是包含多项条件的验收包，尚未满足全部条件时不勾选，也不按代码行数估算完成百分比。基线另有 30 条不变量、11 项 DEC。
 
 ## 2. 截止目前已经做了什么
 
@@ -56,7 +56,7 @@ P0 加权进度：22.8%（18.0/79）；按 99 项计 18.2%。分项：M0 10/11�
 | C-06 | norm-v1、jieba/regex tokenizer 原型及专项测试 | [normalization.py](../src/medops/retrieval/lexical/normalization.py)、[tokenizer.py](../src/medops/retrieval/lexical/tokenizer.py)；尚无正式医学词典、数据库索引版本校验；§3.1 的全局词典隔离问题已于实现记录 05 修复并有回归 |
 | C-07 | 检索结果 Pydantic 契约、离线 BM25、确定性 RRF | [contracts.py](../src/medops/retrieval/contracts.py)、[bm25_offline.py](../src/medops/retrieval/lexical/bm25_offline.py)、[fusion.py](../src/medops/retrieval/fusion.py)；不是生产检索链路 |
 | C-08 | PR-01～PR-14 探针校验器、PII 规则版本、CLI、draft/frozen 行为、页文本抽取工具、草稿 canonical JSONL 重写工具 | [validator.py](../src/medops/evals/probe/validator.py)、[CLI](../src/medops/evals/probe/__main__.py)、[extract.py](../src/medops/evals/probe/extract.py)（pypdf，[ADR-0005](adr/ADR-0005-pdf-extraction-library.md)）、[canonicalize.py](../src/medops/evals/probe/canonicalize.py)（只改表示与顺序、记录集不变、非 draft 与内容问题一律拒绝、全部检查后才写、原子发布、写后重跑 draft 校验）；已具备精确 PII 例外和运行证据绑定，16 份文档、75 条真实样本的带页文本 frozen 全规则校验通过（记录 26） |
-| C-09 | 合成数据工厂、单元与回归测试 | [fixture_builder.py](../tests/unit/evals/fixture_builder.py)、[加固回归测试](../tests/unit/evals/test_probe_validator_regressions.py)；全套 482 tests 本地通过（本轮，含 64 项集成） |
+| C-09 | 合成数据工厂、单元与回归测试 | [fixture_builder.py](../tests/unit/evals/fixture_builder.py)、[加固回归测试](../tests/unit/evals/test_probe_validator_regressions.py)；全套 549 tests 本地通过（本轮，含 64 项集成） |
 | C-10 | Python 包、venv、Makefile、ruff、mypy、pytest、CI 工作流、依赖锁 | [pyproject.toml](../pyproject.toml)、[Makefile](../Makefile)、[CI](../.github/workflows/ci.yml)、`requirements.lock`（带哈希，含构建后端；2026-09-17 新增 dev 依赖 openapi-spec-validator 及 7 个传递包，既有版本未动）；仓库外导入、迁移往返与现有 64 项集成测试通过；远端 CI 与后续服务/安全集成覆盖待补 |
 | C-11 | 十类 Pydantic 领域契约与 AgentState | [domain/](../src/medops/domain/)（实现记录 05、07）；契约范围，未接运行时节点 |
 | C-13 | 切分器与入库流水线 | [chunker.py](../src/medops/ingestion/chunker.py)、[pipeline.py](../src/medops/ingestion/pipeline.py)、迁移 0003（实现记录 20）：chunker-v1 页锚定切分，入库校验/去重/PII 默认拒绝/审计；本机 16 份文档 2,661 个 chunk 入库，4 份 PII 误报经决策人复核以审计覆盖入库；迁移 0004 增加 draft 专用终态 withdrawn（实现记录 21） |
@@ -76,9 +76,9 @@ P0 加权进度：22.8%（18.0/79）；按 99 项计 18.2%。分项：M0 10/11�
 | --- | --- | --- |
 | 候选许可状态 | v0.6（2026-09-17）：预判 eligible 19、needs_review 15、research_only 1、rejected 3；签字 `eligible` 18，其中 cand-0030、0031 不进入 v1 主体 | v1 主体 16 份：MA 5、PV 8、CO 3，每部门不少于 3 份已满足；剩余 1 条预判 eligible（cand-0032/0033 之外的 needs_review 不计）留作补充 |
 | 部门覆盖 | v1 主体：MA 5（仿單）、PV 8（EMA GVP VI/IX、FDA 申办方安全报告、ICH E2A/E2F、TFDA 通報表指引、MedDRA 两份）、CO 3（ICH E8(R1)、E6(R3)、FDA 方案偏离草案）；16 份 corpus.json 已有，cand-0036 排除，cand-0030/0031 不入主体 | 已满足每部门至少 3 份文档、15 条样本及每份至多 6 条；修改时继续核验 |
-| 简体中文 | 已签字 zh-Hans 2（MedDRA 两份考虑要点，共 110 页）；本地冻结 v1 的 zh-Hans gold 10 | 已超过至少 8 条门槛；繁体不计入，Git 归档待完成 |
+| 简体中文 | 已签字 zh-Hans 2（MedDRA 两份考虑要点，共 110 页）；本地冻结 v1 的 zh-Hans gold 10 | 已超过至少 8 条门槛；繁体不计入；Git 归档已完成 |
 | TFDA 路径 | 五份许可证仿單（cand-0029、0034、0035、0037、0038）已签字，2026-09-17 export/36、39 快照证据已追加到 v0.5；corpus 已填写 `verified_by=reviewer-01` 和版本线索 | 对应样本已复核并本地冻结；后续版本更新需重新核对来源 |
-| 冻结输入 | 18 份原件与 18 组页文本；主体 16 份 draft / 2,661 个 chunk；75 条探针已本地冻结（MA 30、PV 29、CO 16；zh-Hans gold 10），71 agree、4 disputed_resolved、0 待决。样本、复核证据、精确 PII 例外与哈希均已装配 | Git 归档待完成；dataset_hash 与 manifest SHA-256 已回填 ADR-0002；见[实现记录 26](reviews/2026-09-20-implementation-26-probe-review-and-freeze.md) |
+| 冻结输入 | 18 份原件与 18 组页文本；主体 16 份 draft / 2,661 个 chunk；75 条探针已本地冻结（MA 30、PV 29、CO 16；zh-Hans gold 10），71 agree、4 disputed_resolved、0 待决。样本、复核证据、精确 PII 例外与哈希均已装配 | Git 归档 `213dbe8` 已完成；双哈希与 commit 已回填 ADR-0002，见[实现记录 27](reviews/2026-09-20-implementation-27-archive-and-experiment-preparation.md) |
 
 探针集固定条件：至少 60 条、目标 72 条；六类切片各至少 8 条；每部门至少 15 条；至少 10 份文档且每部门至少 3 份；每文档最多 6 条；zh-Hans 至少 8 条。只有获批 `eligible` 的公开 PDF 可进入 spec-v1。公开 PV 指南保持真实文档类型，不能为凑数改称 SOP。
 
@@ -116,8 +116,8 @@ P0 加权进度：22.8%（18.0/79）；按 99 项计 18.2%。分项：M0 10/11�
 
 | ID | 状态 | 要做的工作与剩余验收 |
 | --- | --- | --- |
-| M1-01 | 部分（75 条已本地冻结；Git 归档待完成） | 16 份语料、71 agree、4 disputed_resolved、0 待决；样本、8 份复核证据与精确 PII 例外完整绑定，frozen 校验通过。后端模型版本未暴露的限制已记录，ADR 已回填两个哈希；仍缺归档 commit（[记录 26](reviews/2026-09-20-implementation-26-probe-review-and-freeze.md)） |
-| M1-02 | 待做，依赖 M1-01 | 固定三个生产候选 A/B/C 的实现、配置、版本、镜像 digest、硬件、并发、预热和测量参数；不能边看结果边改实验 |
+| M1-01 | 已实现（冻结与 Git 归档完成） | 16 份语料、75 条样本；71 agree、4 disputed_resolved、0 待决。冻结提交 `213dbe8`、双哈希和复核链已归档，独立 checkout 校验通过；该项基线已勾选（记录 27） |
+| M1-02 | 部分（实验准备草案已建，尚未冻结运行清单） | [准备说明](../evals/experiments/lexical/README.md)：A 现有环境已测，B/C 源码及资产版本、硬件和测量参数已记录；仍需构建镜像并固定全部配置、补适配器/运行证据与端到端参数。gold 映射 73 mapped、2 unmappable 原样计 miss |
 | M1-03 | 契约切片已复核通过（Codex，2026-09-11），整项不勾选 | `LexicalVersions`、`LexicalRetriever` Protocol、`run_lexical_search` 边界与可复用适配器契约测试已有（实现记录 10），离线 BM25 两种分词器通过；缺 DEC-001 候选适配器与真实语料运行证据，不勾选 |
 | M1-04 | 部分（权限半边已证明；候选对比半边依赖 M1-01/02） | 真实 schema 上以 LOGIN 用户证明：普通角色 + FORCE RLS 零跨部门泄漏、按主键无存在性泄露、LIMIT/排序/join 下推不丢可见行、连接池身份切换与 RESET/DISCARD 清除（实现记录 18）；"零静默候选不足"与三候选词法对比等真实探针集与 DEC-001 适配器 |
 | M1-05 | 阻塞 | 按 ADR-0002 完成候选 A/B/C 对比及独立许可证审核，回填结果、执行计划、复现命令。端到端对照所需向量/重排配置固定后再测，不把未测门禁算通过 |
@@ -125,7 +125,7 @@ P0 加权进度：22.8%（18.0/79）；按 99 项计 18.2%。分项：M0 10/11�
 | M1-07 | 已实现 | `documents_one_active_per_family` 部分唯一索引；集成测试证明同 family 第二个 active 被拒，且两会话并发激活时第二个阻塞、首个提交后失败，最终只剩一个 active（实现记录 17） |
 | M1-08 | 已实现（数据库层；API 注入接线在 M3） | 迁移 0002：三组 NOLOGIN 角色、登录用户供应脚本、七表 FORCE RLS、按 document_acl 与部门的策略、无身份默认拒绝、草稿不可见、owner 分离；37 项集成测试覆盖 SET LOCAL 作用域、非 owner、非 superuser、无 BYPASSRLS、只读无写路径、管理角色不能改 schema（实现记录 18）；本机 .env 已切到受限用户 |
 | M1-09 | 部分（PDF 校验、哈希去重、PII 默认拒绝与留痕覆盖、同源第二文档拒绝已实现；DOCX、恶意文件扫描、管理员确认流程待做） | `medops.ingestion.pipeline`：PDF 魔数、大小上限、声明哈希与字节数比对、`pii-rules-v1` 命中默认拒绝且覆盖须写 `pii_review_override` 审计、同 source 第二文档拒绝、重复入库幂等（实现记录 20） |
-| M1-10 | 已实现（chunker-v1 与入库；gold 映射随标注生成） | `chunker-v1` 在 norm-v1 页文本上切分，chunk 即页文本切片，`chunk_spans` 记页码与字符区间，哈希由触发器校验；抽取告警大于 0 记 low_trust 不得 active（约束）；本机 16 份文档 2,661 个 chunk 已入库（实现记录 20、21）；gold 到 chunk 的映射文件在探针集标注后生成 |
+| M1-10 | 已实现（chunker-v1、入库与映射工具） | 16 份文档、2,661 个 chunk 与原页重建逐条一致；新增 gold 映射器按来源/版本/页/区间校验。75 条中 73 mapped、2 unmappable，切分边界缺陷保留并计 miss；low_trust 禁止 active 的约束不变（记录 20、27） |
 | M1-11 | 待做（effective_from 口径已定） | 新版发布、旧版归档、审计和 outbox 同事务；可靠触发索引更新与缓存失效；索引延迟不能令旧版本成为有效证据。激活时 `effective_from` 取值优先级（决策人 2026-09-17）：说明书取文内修订日期，其次 TFDA 许可证异动日期，再次 PDF 元数据日期，备注写明层级；指南取文内发布或生效日期 |
 | M1-12 | 部分 | 分词器支持词典版本，但无正式医学词典；完成 DEC-005 的来源审核、通用名/商品名/缩写映射与版本更新方式 |
 | M1-13 | 待做 | 1–3 条有界 Query Rewrite，接入术语与会话实体；测试剂量、否定、时间窗、编号不被改写错，实体不跨会话污染 |
@@ -249,7 +249,7 @@ P0 加权进度：22.8%（18.0/79）；按 99 项计 18.2%。分项：M0 10/11�
 
 | DEC | 内容 | 状态与处理时点 |
 | --- | --- | --- |
-| DEC-001 | 词法引擎、中文 tokenizer/词典 | 协议/阈值已决，生产实现未决；真实探针已本地冻结，Git 归档后做 M1 入口实验 |
+| DEC-001 | 词法引擎、中文 tokenizer/词典 | 协议/阈值已决，探针已归档，实验准备草案和映射已有；镜像/适配器与正式实验待完成，生产实现未决 |
 | DEC-002 | Embedding 模型、维度、归一化与 Reranker | 待实验，M1；选定前不锁死 vector 维度 |
 | DEC-003 | Verifier：NLI 或小 LLM | 待实验，M2；确定性数字规则不因此省略 |
 | DEC-004 | arq / Celery / 轻量 worker | 待决，M0/M3；以恢复、幂等和运维需求选择最小可用方案 |
@@ -318,14 +318,14 @@ P0 加权进度：22.8%（18.0/79）；按 99 项计 18.2%。分项：M0 10/11�
 
 ### 8.3 接下来按这个顺序推进
 
-1. **当前：完成 M1-01 的 Git 归档。** 75 条探针已本地冻结，71 agree、4 disputed_resolved、0 待决；两条最后改题已实际重审，pc-0074 已绑定人工裁决，PII 例外与复核运行证据均通过 frozen 校验。dataset_hash 与 manifest SHA-256 已写入 ADR-0002，尚无归档 commit。先梳理当前工作区大量历史未提交改动的依赖与提交范围，再提交冻结材料、校验器和所需依据，回填实际 commit；不能用旧 HEAD 代替。见[当前处理表](../evals/probe/precise_clause/drafts/v1/review/current_review_disposition.md)和[实现记录 26](reviews/2026-09-20-implementation-26-probe-review-and-freeze.md)。
-2. **维护冻结边界。** v1 内容不再原地修改；发现标注错误建立新数据集版本，对所有候选完整重跑。复核证据由 manifest 哈希绑定，归档时同时保留 dataset_hash 与 manifest SHA-256；模型服务别名不等同于固定后端快照。每轮继续执行工程基线 §9 自审。
-3. **归档后推进 M1-02 / DEC-001。** 固定三候选、tokenizer/词典、镜像、环境和测量参数，补适配器及 gold→chunk 映射，再跑词法召回、RLS、候选不足与许可证门禁；按 ADR-0002 判定，产出可复现实验报告。模型与词法引擎的结论留给真实实验。
+1. **M1-01 已完成并归档。** `2a4aef6` 归档基础代码与复核依赖，`213dbe8` 独立冻结 75 条探针及 8 件复核证据；ADR 已回填真实 commit 和双哈希。独立 checkout 的既有 418 项单元测试及 frozen 校验通过。冻结 v1 后续修正必须升版。
+2. **当前：补齐 M1-02 的候选环境并冻结实验清单。** [准备目录](../evals/experiments/lexical/README.md)已记录 A 现有环境、B=zhparser v2.3/SCWS 1.2.3、C=pg_search v0.25.9/Jieba 的源码身份、硬件和测量参数草案。下一轮构建 B/C，记录真实镜像 digest、词典/规则/完整配置和扩展运行版本；先用合成输入验证，不按探针得分调参。
+3. **补适配器与正式实验前置。** gold→chunk 映射已经生成，73 mapped、pc-0056/0072 两条 unmappable 原样计 miss；不会通过删题或改 key_text 消除。开发库 16 份文档仍为 draft，其中 esomen 为 low_trust，正式实验前处理解析质量与发布条件。随后在隔离实验环境以普通角色验证 RLS、计数、版本和执行计划；补齐端到端配置、独立许可证结论后按 ADR-0002 跑全部候选。C 仍 release_blocked，尚无生产选择。
 4. **可独立推进的实现切片：M1-11 发布事务。** 新版本激活、同 family 旧版归档、审计与 outbox 原子提交；验证并发发布、事务回滚和重复消费。先做数据库事务与事件边界，索引/缓存消费者随实际组件接入后再验收整项。该切片不要求先选定词法引擎。
 5. **补齐剩余 M1 与 M0 接线。** DEC-002/005/007 等按依赖推进，完成混合检索、事实回查、缓存和主评测；M0 已有契约、依赖锁、迁移、Compose 与威胁模型按代码继续复用，远端 CI 首次运行及安全阶段仍待完成。
 6. **M2 → M3 → M4 → M5。** 先完成固定安全链路与低风险 Skill，再扩到五个 Skill、可恢复服务、受控 Loop 和全量验收；P1/P2 按需要启动。
 
-下一步是步骤 1 的提交范围核查与归档，再进入步骤 3 的实验清单；步骤 4 可独立推进。领域模型、错误模型、tokenizer 隔离与 canonical 工具已实现，不再列作从零开发任务。对应知识确认题与代码入口见[任务知识对照 §10](TASK_KNOWLEDGE_MAP.md#10-下一步)。
+下一步是步骤 2 的固定环境构建与合成契约验证；步骤 4 可独立推进。领域模型、错误模型、tokenizer 隔离与 canonical 工具已实现，不再列作从零开发任务。对应知识确认题与代码入口见[任务知识对照 §10](TASK_KNOWLEDGE_MAP.md#10-下一步)。
 
 ### 8.4 每轮固定的开发与复检方式
 
