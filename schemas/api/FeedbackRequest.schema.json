@@ -1,0 +1,84 @@
+{
+  "$defs": {
+    "FeedbackSignal": {
+      "enum": [
+        "up",
+        "down",
+        "correction"
+      ],
+      "title": "FeedbackSignal",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "signal": {
+            "const": "correction"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "correction_text": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "correction_text"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "signal": {
+            "enum": [
+              "up",
+              "down"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "correction_text": {
+            "type": "null"
+          }
+        }
+      }
+    }
+  ],
+  "properties": {
+    "correction_text": {
+      "anyOf": [
+        {
+          "maxLength": 4000,
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Correction Text"
+    },
+    "signal": {
+      "$ref": "#/$defs/FeedbackSignal"
+    },
+    "trace_id": {
+      "pattern": "^[0-9a-f]{32}$",
+      "title": "Trace Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "trace_id",
+    "signal"
+  ],
+  "title": "FeedbackRequest",
+  "type": "object"
+}

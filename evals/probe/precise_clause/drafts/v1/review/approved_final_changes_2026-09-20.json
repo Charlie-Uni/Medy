@@ -1,0 +1,36 @@
+{
+  "approval_quote": "可以 继续",
+  "date": "2026-09-20",
+  "changes": [
+    {
+      "sample_id": "pc-0052",
+      "changes": {
+        "query": {
+          "before": "按照 ICH E2A，side effect 能否作为 adverse event 或 adverse reaction 的同义词？",
+          "after": "按 ICH E2A 修订安全性报告模板时，术语栏里沿用 side effect 这个旧称是否合适？"
+        },
+        "key_text": {
+          "before": "should not be regarded as synonymous with adverse event or adverse reaction",
+          "after": "\"side effect\" has been used in various ways in the past, usually to describe negative (unfavourable) effects, but also positive (favourable) effects. It is recommended that this term no longer be used"
+        }
+      },
+      "previous_verdict_sha256": "70b6b2f7a74dc2240885be7b60d151fa0ba3682d2b7a6cf06443da561d20157b",
+      "review_required": true
+    },
+    {
+      "sample_id": "pc-0066",
+      "changes": {
+        "query": {
+          "before": "按照 ICH E6(R3)，合理报销受试者实际发生的交通和住宿等费用，是否属于胁迫？",
+          "after": "按照 ICH E6(R3)，研究中心拟实报实销受试者因到访产生的合理路费和住宿费，伦理审查能否仅因这种报销就认定存在胁迫？"
+        }
+      },
+      "previous_verdict_sha256": "a3dcfac7622b044f9b4d670d8ed242fce73e398b3ff77376d2991e06db61e723",
+      "review_required": true
+    }
+  ],
+  "unchanged_resolved": [
+    "pc-0074"
+  ],
+  "scope": "Two approved wording changes need independent re-review; correct offsets preserved with explicit owner approval."
+}

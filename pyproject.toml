@@ -1,0 +1,56 @@
+[project]
+name = "medops-copilot"
+version = "0.0.1"
+description = "MedOps Copilot: trusted medical RAG and controlled agent (baseline v0.6)"
+requires-python = ">=3.11"
+dependencies = [
+  "pydantic>=2.6,<3",
+  "pydantic-settings>=2.2,<3",
+  "jieba>=0.42",
+  "jsonschema>=4.25",
+  "pypdf>=6.0,<7",
+  "alembic>=1.13,<2",
+  "sqlalchemy>=2.0,<3",
+  "psycopg[binary]>=3.2,<4",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+  "ruff>=0.6",
+  "mypy>=1.10",
+  "openapi-spec-validator>=0.7,<1",
+  # build backend, pinned here so editable installs with --no-build-isolation use the locked version
+  "setuptools>=68,<85",
+]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+# short tracebacks: long ones print function arguments, which for integration tests include DSNs with passwords
+addopts = "--tb=short"
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "BLE"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.11"
+files = ["src"]
+check_untyped_defs = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+no_implicit_optional = true
+ignore_missing_imports = true

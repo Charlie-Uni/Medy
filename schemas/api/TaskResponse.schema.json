@@ -1,0 +1,559 @@
+{
+  "$defs": {
+    "Answer": {
+      "additionalProperties": false,
+      "properties": {
+        "citations": {
+          "items": {
+            "$ref": "#/$defs/Citation"
+          },
+          "minItems": 1,
+          "title": "Citations",
+          "type": "array"
+        },
+        "claims": {
+          "items": {
+            "$ref": "#/$defs/Claim"
+          },
+          "minItems": 1,
+          "title": "Claims",
+          "type": "array"
+        },
+        "disclaimer": {
+          "const": "基于文档检索，仅供专业人员参考",
+          "default": "基于文档检索，仅供专业人员参考",
+          "title": "Disclaimer",
+          "type": "string"
+        },
+        "historical_notice": {
+          "default": false,
+          "title": "Historical Notice",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "claims",
+        "citations"
+      ],
+      "title": "Answer",
+      "type": "object"
+    },
+    "AskResponse": {
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "answered"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "answer": {
+                "type": "object"
+              },
+              "escalation": {
+                "type": "null"
+              },
+              "refusal": {
+                "type": "null"
+              }
+            },
+            "required": [
+              "answer"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "refused"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "answer": {
+                "type": "null"
+              },
+              "escalation": {
+                "type": "null"
+              },
+              "refusal": {
+                "type": "object"
+              }
+            },
+            "required": [
+              "refusal"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "escalated"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "answer": {
+                "type": "null"
+              },
+              "escalation": {
+                "type": "object"
+              },
+              "refusal": {
+                "type": "null"
+              }
+            },
+            "required": [
+              "escalation"
+            ]
+          }
+        }
+      ],
+      "properties": {
+        "answer": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Answer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "escalation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EscalationReceipt"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "outcome": {
+          "$ref": "#/$defs/OutcomeKind"
+        },
+        "refusal": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Refusal"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "trace_id": {
+          "pattern": "^[0-9a-f]{32}$",
+          "title": "Trace Id",
+          "type": "string"
+        },
+        "versions": {
+          "$ref": "#/$defs/VersionSet"
+        }
+      },
+      "required": [
+        "trace_id",
+        "outcome",
+        "versions"
+      ],
+      "title": "AskResponse",
+      "type": "object"
+    },
+    "Citation": {
+      "additionalProperties": false,
+      "properties": {
+        "chunk_id": {
+          "minLength": 1,
+          "title": "Chunk Id",
+          "type": "string"
+        },
+        "doc_id": {
+          "minLength": 1,
+          "title": "Doc Id",
+          "type": "string"
+        },
+        "effective_date": {
+          "format": "date",
+          "title": "Effective Date",
+          "type": "string"
+        },
+        "page": {
+          "minimum": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "section": {
+          "title": "Section",
+          "type": "string"
+        },
+        "version": {
+          "minLength": 1,
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "doc_id",
+        "version",
+        "effective_date",
+        "page",
+        "section",
+        "chunk_id"
+      ],
+      "title": "Citation",
+      "type": "object"
+    },
+    "Claim": {
+      "additionalProperties": false,
+      "properties": {
+        "citation_chunk_ids": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Citation Chunk Ids",
+          "type": "array"
+        },
+        "text": {
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "text",
+        "citation_chunk_ids"
+      ],
+      "title": "Claim",
+      "type": "object"
+    },
+    "ErrorCode": {
+      "enum": [
+        "invalid_request",
+        "schema_violation",
+        "idempotency_payload_mismatch",
+        "rate_limited",
+        "unauthenticated",
+        "forbidden",
+        "not_found",
+        "version_conflict",
+        "task_not_retryable",
+        "evidence_integrity_failed",
+        "dependency_timeout",
+        "dependency_unavailable",
+        "audit_unavailable",
+        "internal_error"
+      ],
+      "title": "ErrorCode",
+      "type": "string"
+    },
+    "ErrorResponse": {
+      "additionalProperties": false,
+      "description": "Public wire format. Contains no internal detail by construction.",
+      "properties": {
+        "code": {
+          "$ref": "#/$defs/ErrorCode"
+        },
+        "message": {
+          "minLength": 1,
+          "title": "Message",
+          "type": "string"
+        },
+        "retryable": {
+          "title": "Retryable",
+          "type": "boolean"
+        },
+        "trace_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Trace Id"
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "retryable"
+      ],
+      "title": "ErrorResponse",
+      "type": "object"
+    },
+    "EscalationReceipt": {
+      "additionalProperties": false,
+      "properties": {
+        "escalation_id": {
+          "minLength": 1,
+          "title": "Escalation Id",
+          "type": "string"
+        },
+        "message": {
+          "minLength": 1,
+          "title": "Message",
+          "type": "string"
+        },
+        "reason_codes": {
+          "items": {
+            "$ref": "#/$defs/ReasonCode"
+          },
+          "minItems": 1,
+          "title": "Reason Codes",
+          "type": "array"
+        }
+      },
+      "required": [
+        "escalation_id",
+        "reason_codes",
+        "message"
+      ],
+      "title": "EscalationReceipt",
+      "type": "object"
+    },
+    "OutcomeKind": {
+      "enum": [
+        "answered",
+        "refused",
+        "escalated"
+      ],
+      "title": "OutcomeKind",
+      "type": "string"
+    },
+    "ReasonCode": {
+      "description": "Stable refusal/escalation reason codes (baseline 5.5, F4.1).",
+      "enum": [
+        "insufficient_evidence",
+        "version_conflict",
+        "acl_denied",
+        "prompt_injection",
+        "high_risk_medical",
+        "unsupported_conclusion",
+        "budget_exceeded",
+        "intent_unclear",
+        "system_failure"
+      ],
+      "title": "ReasonCode",
+      "type": "string"
+    },
+    "Refusal": {
+      "additionalProperties": false,
+      "properties": {
+        "message": {
+          "minLength": 1,
+          "title": "Message",
+          "type": "string"
+        },
+        "reason_codes": {
+          "items": {
+            "$ref": "#/$defs/ReasonCode"
+          },
+          "minItems": 1,
+          "title": "Reason Codes",
+          "type": "array"
+        }
+      },
+      "required": [
+        "reason_codes",
+        "message"
+      ],
+      "title": "Refusal",
+      "type": "object"
+    },
+    "TaskStatus": {
+      "enum": [
+        "queued",
+        "running",
+        "completed",
+        "failed"
+      ],
+      "title": "TaskStatus",
+      "type": "string"
+    },
+    "VersionSet": {
+      "additionalProperties": false,
+      "description": "Every version that shapes a run; recorded on each trace (INV-HAR-05) and inside operation keys.",
+      "properties": {
+        "model_config_version": {
+          "minLength": 1,
+          "title": "Model Config Version",
+          "type": "string"
+        },
+        "policy_version": {
+          "minLength": 1,
+          "title": "Policy Version",
+          "type": "string"
+        },
+        "retrieval_version": {
+          "minLength": 1,
+          "title": "Retrieval Version",
+          "type": "string"
+        },
+        "skill_version_set": {
+          "default": [],
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Skill Version Set",
+          "type": "array"
+        }
+      },
+      "required": [
+        "policy_version",
+        "retrieval_version",
+        "model_config_version"
+      ],
+      "title": "VersionSet",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "completed"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "error": {
+            "type": "null"
+          },
+          "result": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "result"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "failed"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "error": {
+            "type": "object"
+          },
+          "result": {
+            "type": "null"
+          }
+        },
+        "required": [
+          "error"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "enum": [
+              "queued",
+              "running"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "error": {
+            "type": "null"
+          },
+          "result": {
+            "type": "null"
+          }
+        }
+      }
+    }
+  ],
+  "properties": {
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "error": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ErrorResponse"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "result": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/AskResponse"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "status": {
+      "$ref": "#/$defs/TaskStatus"
+    },
+    "task_id": {
+      "minLength": 1,
+      "title": "Task Id",
+      "type": "string"
+    },
+    "trace_id": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{32}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Trace Id"
+    },
+    "updated_at": {
+      "format": "date-time",
+      "title": "Updated At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "task_id",
+    "status",
+    "created_at",
+    "updated_at"
+  ],
+  "title": "TaskResponse",
+  "type": "object"
+}

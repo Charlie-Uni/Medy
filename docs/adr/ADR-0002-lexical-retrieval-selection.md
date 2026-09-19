@@ -4,7 +4,7 @@
 | --- | --- |
 | 状态 | 协议已决；生产实现待 M1 入口实验 |
 | 日期 | 2026-09-03 |
-| 最后修订 | 2026-09-08：复核方式、gold 命中规则与切片门禁作用域按第五轮审核记录修订 |
+| 最后修订 | 2026-09-20：追加实验输入本地冻结结果，预登记判据不变；2026-09-10：增加 zh-Hans 样本最低数量与脚本变体分开报告（第七轮记录）；2026-09-08：复核方式、gold 命中规则与切片门禁作用域按第五轮审核记录修订 |
 | 关联 | 基线 DEC-001、3.1、3.6、3.7、5.2、5.9、M1 Checklist |
 | 决策人 | Qihan Zhu |
 
@@ -27,7 +27,7 @@
 ## 实验输入与复现条件
 
 - 先冻结不少于 60 条、目标 72 条的精确条款探针集，覆盖中文药名、剂量单位、否定词、时间窗、方案编号和中英混排；每类至少 8 条，允许多标签。
-- MA、PV、CO 每个部门不少于 15 条；语料只用公开文档；样本和 gold 由人工标注并经 LLM 独立复核，manifest 如实记录复核者类型，不等同于两名独立人工复核。
+- MA、PV、CO 每个部门不少于 15 条；gold 来源文档为 `zh-Hans` 的样本不少于 8 条；`zh-Hant` 文档可计入 `drug_name_zh` 切片，但报告按脚本变体分开，繁体结果不证明简体达标；语料只用 ADR-0003 准入为 `eligible` 的公开文档；样本和 gold 由人工标注并经 LLM 独立复核，manifest 如实记录复核者类型，不等同于两名独立人工复核。
 - gold 锚定到 `source_hash/version_label/page/section/key_text`，不引用 `chunk_id`；`key_text` 在规范化后的 `gold.page` 页文本中恰好出现一次。chunk 命中要求同一 `source_hash/version_label`，且 chunk 具有覆盖 `gold.page` 的来源片段并覆盖该 `key_text` 的页内位置，不得仅凭跨页 chunk 全文包含 `key_text` 判定；切分器变更只重生成映射文件。数据结构、校验规则与冻结流程见 [evals/probe/precise_clause/SPEC.md](../../evals/probe/precise_clause/SPEC.md)，冻结后固定 `dataset_version` 与 `dataset_hash`。
 - 实验期间不得改样本。发现标注错误时创建新版本，并对全部候选完整重跑。
 - 所有候选使用同一份授权语料、query/gold、数据库过滤条件和 `K=20`。记录 PostgreSQL、扩展、tokenizer、词典、规范化规则、镜像 digest、硬件、并发、预热、重复次数和复现命令。
@@ -98,6 +98,24 @@ LexicalSearchResult
 M1 实验完成后在本节追加：探针集版本与哈希、候选版本/镜像 digest、各指标与置信区间、RLS/候选数测试、许可证结论、最终选择和复现命令。回填不得删除本次预登记内容。
 
 当前状态：尚未运行，无生产实现选择。
+
+### 2026-09-20：实验输入已本地冻结，Git 归档待完成
+
+精确条款探针集 `v1` 已在本地冻结，包含 16 份文档、75 条样本（MA 30、PV 29、CO 16；gold 来源为 zh-Hans 的样本 10 条）。当前复核结果为 71 条 `agreed`、4 条 `disputed_resolved`、0 条待决。带页文本的正式 frozen 校验通过，PR-01～PR-14 报告为 0 findings；全套软件检查为 482 passed（418 单元、64 PostgreSQL 集成）。这些结果确认实验输入与现有软件检查通过，词法检索选型实验尚未运行，无生产实现选择，以上预登记候选、指标、阈值和选择规则不变。
+
+| 冻结记录 | 值 |
+| --- | --- |
+| `dataset_version` | `v1` |
+| 本地冻结日期 | `2026-09-20` |
+| `dataset_hash`（SHA-256 of `SHA256SUMS` bytes） | `5561bee58e37cd8d86b756f17e6c1a6ebed32ba54ba2ac48f4cd4adee254db7e` |
+| `manifest.json` SHA-256 | `062f9a536e0d811306f80dd5c24cc44f40a39a8f36ac360959c4de99b1faf54b` |
+| 冻结归档 Git commit | 尚未生成；待提交本轮冻结产物后回填，当前 HEAD 不代表该归档提交 |
+
+PII 规则保持 `pii-rules-v1`。`pc-0046` 的 EMA 机构联系邮箱沿用已批准的人工依据，以一条精确到样本、来源、字段哈希、匹配文本及区间的例外记录处理；例外文件已纳入 `manifest.files` 与 `SHA256SUMS`，未改动原始页文本或证据 span，也未放行其他邮箱或个人数据。
+
+复核模型如实记录为 `service-alias:gpt-6-astra;backend-version:not-exposed`，调用 effort 为 `high`。8 件复核运行证据已随版本保存并由 manifest 中的哈希绑定；后端模型版本未暴露，CLI 版本单独记录，因此不声称固定模型快照或再次调用同一后端的可复现性。
+
+依据：[本地冻结摘要](../../evals/probe/precise_clause/drafts/v1/review/local_freeze_summary_2026-09-20.json)、[正式 frozen 校验](../../evals/probe/precise_clause/drafts/v1/review/frozen_validation_2026-09-20.json)、[manifest](../../evals/probe/precise_clause/v1/manifest.json)、[PII 逐命中裁决](../../evals/probe/precise_clause/v1/pii_exceptions.json)、[当前处理表](../../evals/probe/precise_clause/drafts/v1/review/current_review_disposition.md)。完成 Git 归档与提交哈希回填后，按上述预登记协议开展 DEC-001 候选实验；实验结果另行追加。
 
 ## 后果
 

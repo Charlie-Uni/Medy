@@ -1,0 +1,35 @@
+{
+  "_note": "Local descriptor for M3-06; not an MCP tools/list response. The server maps input_schema/output_schema to the protocol's inputSchema/outputSchema; read_only is documentation, database roles enforce read-only access.",
+  "auth": "bearer (OIDC)",
+  "tools": [
+    {
+      "description": "Authorized hybrid search over documents visible to the caller; returns verified citations with snippets.",
+      "input_schema": "mcp/SearchDocumentsInput.schema.json",
+      "name": "search_documents",
+      "output_schema": "mcp/SearchDocumentsOutput.schema.json",
+      "read_only": true
+    },
+    {
+      "description": "Fetch one visible chunk with its citation and content hash, subject to ACL and status.",
+      "input_schema": "mcp/GetChunkInput.schema.json",
+      "name": "get_chunk",
+      "output_schema": "mcp/ChunkView.schema.json",
+      "read_only": true
+    },
+    {
+      "description": "Check that a citation is visible to the caller and that all of its fields match the fact plane.",
+      "input_schema": "mcp/VerifyCitationInput.schema.json",
+      "name": "verify_citation",
+      "output_schema": "mcp/VerifyCitationOutput.schema.json",
+      "read_only": true
+    },
+    {
+      "description": "Return the single active version of a document family visible to the caller, if any.",
+      "input_schema": "mcp/ListActiveVersionsInput.schema.json",
+      "name": "list_active_versions",
+      "output_schema": "mcp/ListActiveVersionsOutput.schema.json",
+      "read_only": true
+    }
+  ],
+  "transport": "streamable-http"
+}

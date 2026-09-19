@@ -1,0 +1,87 @@
+{
+  "$defs": {
+    "DocStatus": {
+      "description": "draft -> active -> archived; a draft may instead end as withdrawn (terminal, never evidence, never exposed).",
+      "enum": [
+        "draft",
+        "active",
+        "archived",
+        "withdrawn"
+      ],
+      "title": "DocStatus",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "exists": {
+            "const": false
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "fields_match": {
+            "const": false
+          },
+          "status": {
+            "type": "null"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "exists": {
+            "const": true
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "status": {
+            "enum": [
+              "active",
+              "archived"
+            ]
+          }
+        },
+        "required": [
+          "status"
+        ]
+      }
+    }
+  ],
+  "description": "`exists` means visible to the calling identity, not present anywhere in the database. Drafts\nare never visible, archived versions only under an explicit historical request. `fields_match`\nmeans every Citation field (doc_id, version, effective_date, page, section, chunk_id) agrees with\nthe fact plane; it does not mean the citation is currently citable.",
+  "properties": {
+    "exists": {
+      "title": "Exists",
+      "type": "boolean"
+    },
+    "fields_match": {
+      "default": false,
+      "title": "Fields Match",
+      "type": "boolean"
+    },
+    "status": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/DocStatus"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    }
+  },
+  "required": [
+    "exists"
+  ],
+  "title": "VerifyCitationOutput",
+  "type": "object"
+}

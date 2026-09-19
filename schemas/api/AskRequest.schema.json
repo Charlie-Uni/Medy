@@ -1,0 +1,105 @@
+{
+  "$defs": {
+    "HistoricalRequest": {
+      "additionalProperties": false,
+      "description": "Explicit request for an archived version (INV-DATA-03); exactly one selector.",
+      "oneOf": [
+        {
+          "properties": {
+            "as_of": {
+              "type": "null"
+            },
+            "version": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "version"
+          ]
+        },
+        {
+          "properties": {
+            "as_of": {
+              "type": "string"
+            },
+            "version": {
+              "type": "null"
+            }
+          },
+          "required": [
+            "as_of"
+          ]
+        }
+      ],
+      "properties": {
+        "as_of": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "As Of"
+        },
+        "version": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Version"
+        }
+      },
+      "title": "HistoricalRequest",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "historical": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/HistoricalRequest"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "query": {
+      "maxLength": 2000,
+      "minLength": 1,
+      "title": "Query",
+      "type": "string"
+    },
+    "session_id": {
+      "anyOf": [
+        {
+          "maxLength": 128,
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Session Id"
+    }
+  },
+  "required": [
+    "query"
+  ],
+  "title": "AskRequest",
+  "type": "object"
+}

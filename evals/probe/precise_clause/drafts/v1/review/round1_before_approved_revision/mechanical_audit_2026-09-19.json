@@ -1,0 +1,32 @@
+{
+  "status": "pass",
+  "scope": "draft mechanical checks only; missing review excluded; not PR-01..PR-14 full validation",
+  "counts": {
+    "samples": 75,
+    "per_dept": {
+      "MA": 30,
+      "PV": 29,
+      "CO": 16
+    },
+    "per_slice": {
+      "dose_unit": 19,
+      "drug_name_zh": 18,
+      "negation": 32,
+      "time_window": 21,
+      "mixed_zh_en": 52,
+      "protocol_id": 9
+    },
+    "gold_languages": {
+      "zh-Hant": 33,
+      "zh-Hans": 10,
+      "en": 32
+    },
+    "max_samples_per_document": 6
+  },
+  "sample_file_sha256": {
+    "MA": "194f82ea72ad7238d9e0c6acba8b578e84c1e0d331fa28c86c3bae8daca40d5e",
+    "PV": "6abd1af4936ea14c45f3b2ecea5ce558f9948de82cb8a63e18c8f8c979f02f67",
+    "CO": "75cb0650b3f028dbe3323c3a8d7e48ec6d484b56471ad6c086d452f330a8f28e"
+  },
+  "errors": []
+}

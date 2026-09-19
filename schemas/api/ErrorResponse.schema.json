@@ -1,0 +1,59 @@
+{
+  "$defs": {
+    "ErrorCode": {
+      "enum": [
+        "invalid_request",
+        "schema_violation",
+        "idempotency_payload_mismatch",
+        "rate_limited",
+        "unauthenticated",
+        "forbidden",
+        "not_found",
+        "version_conflict",
+        "task_not_retryable",
+        "evidence_integrity_failed",
+        "dependency_timeout",
+        "dependency_unavailable",
+        "audit_unavailable",
+        "internal_error"
+      ],
+      "title": "ErrorCode",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Public wire format. Contains no internal detail by construction.",
+  "properties": {
+    "code": {
+      "$ref": "#/$defs/ErrorCode"
+    },
+    "message": {
+      "minLength": 1,
+      "title": "Message",
+      "type": "string"
+    },
+    "retryable": {
+      "title": "Retryable",
+      "type": "boolean"
+    },
+    "trace_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Trace Id"
+    }
+  },
+  "required": [
+    "code",
+    "message",
+    "retryable"
+  ],
+  "title": "ErrorResponse",
+  "type": "object"
+}

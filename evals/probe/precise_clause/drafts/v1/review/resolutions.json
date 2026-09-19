@@ -1,0 +1,42 @@
+{
+  "pc-0027": {
+    "sample_input_sha256": "096a0bd33f7a1633f84ea9950c8f053214cdf881a92212971798c18b66279d13",
+    "verdict_sha256": "2084ea31319d7d8264e1eb7ef1409d2a2c1a116a41f8e367a2f5ac9977878102",
+    "resolution_note": "人工已确认保留此 span：上位年龄标题含重复抽取伪影，不纳入 gold；本题保留“4 周后仍有症状须进一步检查”的原文，不将其解释为固定疗程。该裁决只处理此条既有的年龄标题范围争议。",
+    "issue_scope": [
+      "evidence_span"
+    ],
+    "approval_source": "owner_confirmations_2026-09-19.md sections 1 and 3; MA_pilot_disputes_2026-09-19.md",
+    "approval_quote": "确认修改 按照你的建议来 记得每轮需要自审"
+  },
+  "pc-0026": {
+    "sample_input_sha256": "4eecac3c3379da3f1770d41f50d13b55a79ae3b1d5ec898e23798df6f6e01e2e",
+    "verdict_sha256": "a9c4a06dcb1fa37758264e7cfbb946629ce998b03043554d87b767942182c4ad",
+    "resolution_note": "人工已确认本题 query 限定药片在水中崩散后的服用时限，span 不扩入此前人群与液体限制；本轮锚点已补足崩散药物与饮用动作。新增 negation 建议依赖未采纳的 span 扩展，故保持原标签。本裁决仅处理此既有人群/液体范围议题。",
+    "issue_scope": [
+      "evidence_span"
+    ],
+    "approval_source": "owner_confirmations_2026-09-19.md sections 1 and 3; MA_pilot_disputes_2026-09-19.md",
+    "approval_quote": "确认修改 按照你的建议来 记得每轮需要自审"
+  },
+  "pc-0038": {
+    "sample_input_sha256": "3c38596c5c9af31f2954d3042e143465edd0da5c08056a3fdfaa3d671c0bc8a8",
+    "verdict_sha256": "a63ef3429a3b0e5443a2830b07807651bc7978e3afd9fb0860d6122899727c89",
+    "resolution_note": "人工已明确确认本条年度文档更新频次不计 dose_unit，保留 time_window、mixed_zh_en；dose_unit 在此按给药频次理解。本轮最小锚点已获 ok。此裁决只处理年度文档更新频次是否归 dose_unit 的已批准议题。",
+    "issue_scope": [
+      "slices"
+    ],
+    "approval_source": "owner_confirmations_2026-09-19.md section 3",
+    "approval_quote": "确认修改 按照你的建议来 记得每轮需要自审"
+  },
+  "pc-0074": {
+    "sample_input_sha256": "b3623bcda70834b9f262d99e2404648389d6ef54a55baa4865ffc60895d839f1",
+    "verdict_sha256": "95ee9002a3e3dfc5d8be34239def46b972b0509418dbffc1063b45cff0e92e74",
+    "resolution_note": "人工同意保留现有正确字符区间 [940,1125)。对复核时同一规范化页文本逐字核验，该区间与 span 完全相同且唯一；LLM 建议的 [914,1099) 不匹配，属于字符计数错误，不改动原文或坐标。",
+    "issue_scope": [
+      "evidence_span"
+    ],
+    "approval_quote": "可以 继续",
+    "approval_source": "owner_confirmations_2026-09-19.md section 5; pc-0074_offset_check_2026-09-20.json"
+  }
+}

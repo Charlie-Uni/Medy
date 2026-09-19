@@ -1,0 +1,94 @@
+{
+  "$defs": {
+    "DocType": {
+      "enum": [
+        "label",
+        "protocol",
+        "sop",
+        "guideline"
+      ],
+      "title": "DocType",
+      "type": "string"
+    },
+    "DocumentVersionView": {
+      "additionalProperties": false,
+      "properties": {
+        "doc_id": {
+          "minLength": 1,
+          "title": "Doc Id",
+          "type": "string"
+        },
+        "doc_type": {
+          "$ref": "#/$defs/DocType"
+        },
+        "effective_from": {
+          "format": "date",
+          "title": "Effective From",
+          "type": "string"
+        },
+        "effective_to": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Effective To"
+        },
+        "family_id": {
+          "minLength": 1,
+          "title": "Family Id",
+          "type": "string"
+        },
+        "title": {
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "version": {
+          "minLength": 1,
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "doc_id",
+        "family_id",
+        "title",
+        "doc_type",
+        "version",
+        "effective_from"
+      ],
+      "title": "DocumentVersionView",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "active": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/DocumentVersionView"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "family_id": {
+      "minLength": 1,
+      "title": "Family Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "family_id",
+    "active"
+  ],
+  "title": "ListActiveVersionsOutput",
+  "type": "object"
+}

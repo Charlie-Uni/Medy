@@ -1,11 +1,11 @@
 # MedOps Copilot 工程基线与开发 Checklist
 
-> - 基线版本：v0.5
-> - 更新日期：2026-09-08
+> - 基线版本：v0.6
+> - 更新日期：2026-09-10
 > - 状态：已冻结
 > - 原始需求来源：[MedOps Copilot 项目设计文档 v0.1](source/MedOps_Copilot_项目设计文档_v0.1.pdf)与[用户提供的项目描述 v0.1](source/PROJECT_DESCRIPTION_v0.1.md)（SHA-256 均见 [SHA256SUMS](source/SHA256SUMS)；`300-500` 份文档目标来自项目描述）
 > - 编制时仓库状态：仅有 README，尚未开始工程实现
-> - 修订记录：v0.1 初版；v0.2 按 [第一轮审核记录](reviews/2026-09-03-baseline-review-01.md) 的 9 项技术修正与 8 项决策修订；v0.3 按 [第二轮审核记录](reviews/2026-09-03-baseline-review-02.md) 修正 3 处一致性问题并固定幂等并发语义，来源补录与冻结核验见[第三轮审核记录](reviews/2026-09-03-baseline-review-03.md)；v0.4 按 [ADR-0002](adr/ADR-0002-lexical-retrieval-selection.md) 将词法方案对比前置到 M1 入口，修订与复核见[第四轮审核记录](reviews/2026-09-03-baseline-review-04.md)；v0.5 按[第五轮审核记录](reviews/2026-09-08-baseline-review-05.md) 定义 `retrieval_version` 复合规则、合格候选谓词与并列规则、5.8 切片诊断规则的作用域、5.9 主评测集分层复核政策，并发布探针集冻结规范 [evals/probe/precise_clause/SPEC.md](../evals/probe/precise_clause/SPEC.md)
+> - 修订记录：v0.1 初版；v0.2 按 [第一轮审核记录](reviews/2026-09-03-baseline-review-01.md) 的 9 项技术修正与 8 项决策修订；v0.3 按 [第二轮审核记录](reviews/2026-09-03-baseline-review-02.md) 修正 3 处一致性问题并固定幂等并发语义，来源补录与冻结核验见[第三轮审核记录](reviews/2026-09-03-baseline-review-03.md)；v0.4 按 [ADR-0002](adr/ADR-0002-lexical-retrieval-selection.md) 将词法方案对比前置到 M1 入口，修订与复核见[第四轮审核记录](reviews/2026-09-03-baseline-review-04.md)；v0.5 按[第五轮审核记录](reviews/2026-09-08-baseline-review-05.md) 定义 `retrieval_version` 复合规则、合格候选谓词与并列规则、5.8 切片诊断规则的作用域、5.9 主评测集分层复核政策，并发布探针集冻结规范 [evals/probe/precise_clause/SPEC.md](../evals/probe/precise_clause/SPEC.md)；v0.6 按 [ADR-0003](adr/ADR-0003-corpus-source-license-policy.md) 固定语料来源白名单与四级许可准入（新增 DEC-011），修订与复核见[第六轮审核记录](reviews/2026-09-09-baseline-review-06.md)，候选清单审核决策与证据结构修正见[第七轮记录](reviews/2026-09-10-baseline-review-07.md)
 
 ## 0. 本文件怎么用
 
@@ -52,7 +52,7 @@
 - 无人工审批的在线自修改、自训练或自动发布。
 - MCP 写操作、文档在线编辑或协作。
 - 跨租户 SaaS、实时流式 Loop。
-- 把图表、医学影像作为可推理证据的多模态 RAG；它仅是 P1 增强项。
+- 把图表、医学影像作为可推理证据的多模态 RAG；它属于 P2 研究型增强（见 7.2）。
 
 ## 2. 不可破坏的工程不变量
 
@@ -464,7 +464,7 @@ P0 保留：
 
 ### M1：知识治理与检索
 
-- [ ] 在实现候选前冻结 DEC-001 精确条款探针集：不少于 60 条、目标 72 条，覆盖六类专项与 MA/PV/CO（每部门不少于 15 条）；语料只用公开文档，gold 锚定到 `source_hash/version_label/page/section/key_text`，人工标注加 LLM 独立复核并如实记录，按 [evals/probe/precise_clause/SPEC.md](../evals/probe/precise_clause/SPEC.md) 通过校验后记录 `dataset_version` 与 `dataset_hash`；修正标注必须升版并重跑全部候选。
+- [ ] 在实现候选前冻结 DEC-001 精确条款探针集：不少于 60 条、目标 72 条，覆盖六类专项与 MA/PV/CO（每部门不少于 15 条）；语料只用 ADR-0003 准入为 `eligible` 的公开文档，gold 锚定到 `source_hash/version_label/page/section/key_text`，人工标注加 LLM 独立复核并如实记录，按 [evals/probe/precise_clause/SPEC.md](../evals/probe/precise_clause/SPEC.md) 通过校验后记录 `dataset_version` 与 `dataset_hash`；修正标注必须升版并重跑全部候选。
 - [ ] 冻结 DEC-001 实验清单：三个生产候选的具体实现/配置、PostgreSQL/扩展/tokenizer/词典版本、镜像 digest、硬件与测量参数；进程内 BM25 仅作离线参考。
 - [ ] 固定 `LexicalRetriever` 契约，包含候选 `chunk_id/raw_score/rank` 与结果级 `requested_k/returned_count/candidate_exhausted/retriever_version/tokenizer_version/dictionary_version`。
 - [ ] 用最小实验 schema 在普通应用角色 + `FORCE ROW LEVEL SECURITY` 下完成词法候选对比；同时断言零跨部门泄漏与零静默候选不足，覆盖 `LIMIT`、按分数排序和连接池身份切换。
@@ -536,7 +536,7 @@ P0 保留：
 
 ### M5：规模、全量验收与成本
 
-- [ ] 接入 300-500 份许可清楚的公开文档（目标来自项目描述），记录来源和版本。
+- [ ] 接入 300-500 份许可清楚的公开文档（目标来自项目描述；准入按 ADR-0003 四级状态判定），记录来源和版本。
 - [ ] 五个 Skill 全部通过功能、安全、权限和故障测试。
 - [ ] 质量、安全、性能指标在冻结集上全部达标。
 - [ ] 通过上下文裁剪、缓存和模型路由使 Token 降低 >=25%，质量不降。
@@ -599,6 +599,7 @@ P0 保留：
 | DEC-008 | Trace 与审计保留期 | M3 上线前 | 项目要求、数据最小化、重放窗口 |
 | DEC-009 | 模型托管/本地及数据传输边界 | M0/M2 | 数据政策、质量、成本、可用性 |
 | DEC-010 | 身份提供方与 token 签发；架构保持 OIDC 兼容，不提前锁定厂商。OIDC 边界已决（[ADR-0001](adr/ADR-0001-identity-oidc-boundary.md)），具体 IdP 延后 | 边界：已决 / IdP：M3 上线前 | 部门与 scope 的服务端映射、group claim allowlist、开发环境测试签发密钥、审计要求 |
+| DEC-011 | 评测语料来源白名单与四级许可准入政策；政策已决（[ADR-0003](adr/ADR-0003-corpus-source-license-policy.md)），探针集 v1 只收 `eligible` 文档，具体文档清单待审核 | 政策：已决 / 清单：探针集 v1 冻结前 | 发布主体权威、版本可追溯、原始 PDF 可定位、许可状态、第三方内容、署名要求 |
 
 决策完成后应在 `docs/adr/` 增加简短 ADR，并在本表标记为已决。
 

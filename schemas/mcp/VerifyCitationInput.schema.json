@@ -1,0 +1,59 @@
+{
+  "$defs": {
+    "Citation": {
+      "additionalProperties": false,
+      "properties": {
+        "chunk_id": {
+          "minLength": 1,
+          "title": "Chunk Id",
+          "type": "string"
+        },
+        "doc_id": {
+          "minLength": 1,
+          "title": "Doc Id",
+          "type": "string"
+        },
+        "effective_date": {
+          "format": "date",
+          "title": "Effective Date",
+          "type": "string"
+        },
+        "page": {
+          "minimum": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "section": {
+          "title": "Section",
+          "type": "string"
+        },
+        "version": {
+          "minLength": 1,
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "doc_id",
+        "version",
+        "effective_date",
+        "page",
+        "section",
+        "chunk_id"
+      ],
+      "title": "Citation",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "citation": {
+      "$ref": "#/$defs/Citation"
+    }
+  },
+  "required": [
+    "citation"
+  ],
+  "title": "VerifyCitationInput",
+  "type": "object"
+}

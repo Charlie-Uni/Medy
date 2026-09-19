@@ -1,0 +1,17 @@
+{
+  "status": "awaiting_owner_reply",
+  "items": [
+    {
+      "sample_id": "pc-0052",
+      "before_query": "按照 ICH E2A，side effect 能否作为 adverse event 或 adverse reaction 的同义词？",
+      "after_query": "按 ICH E2A 修订安全性报告模板时，术语栏里沿用 side effect 这个旧称是否合适？",
+      "after_key_text": "\"side effect\" has been used in various ways in the past, usually to describe negative (unfavourable) effects, but also positive (favourable) effects. It is recommended that this term no longer be used",
+      "reason": "Literal object plus synonym restriction needs 292 characters; proposal changes question scope to use of old term, while preserving full span."
+    },
+    {
+      "sample_id": "pc-0074",
+      "action": "Keep verified [940,1125) offsets; resolve deterministic LLM counting error",
+      "evidence": "pc-0074_offset_check_2026-09-20.json"
+    }
+  ]
+}

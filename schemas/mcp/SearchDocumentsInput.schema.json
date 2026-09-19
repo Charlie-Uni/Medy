@@ -1,0 +1,36 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "historical_version": {
+      "anyOf": [
+        {
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Historical Version"
+    },
+    "k": {
+      "default": 8,
+      "maximum": 20,
+      "minimum": 1,
+      "title": "K",
+      "type": "integer"
+    },
+    "query": {
+      "maxLength": 2000,
+      "minLength": 1,
+      "title": "Query",
+      "type": "string"
+    }
+  },
+  "required": [
+    "query"
+  ],
+  "title": "SearchDocumentsInput",
+  "type": "object"
+}

@@ -1,0 +1,15 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "family_id": {
+      "minLength": 1,
+      "title": "Family Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "family_id"
+  ],
+  "title": "ListActiveVersionsInput",
+  "type": "object"
+}

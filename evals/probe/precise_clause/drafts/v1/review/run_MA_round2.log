@@ -1,0 +1,26 @@
+Traceback (most recent call last):
+  File "/Users/leaf/Documents/GitHub/Medy/evals/probe/precise_clause/drafts/v1/tooling/run_codex_review.py", line 472, in <module>
+    main()
+  File "/Users/leaf/Documents/GitHub/Medy/evals/probe/precise_clause/drafts/v1/tooling/run_codex_review.py", line 430, in main
+    reply, meta = run_chunk(args.codex, args.model, args.effort, prompt, workdir)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/leaf/Documents/GitHub/Medy/evals/probe/precise_clause/drafts/v1/tooling/run_codex_review.py", line 338, in run_chunk
+    raise RuntimeError(f"codex exec failed ({proc.returncode}): {log[-1500:]}")
+RuntimeError: codex exec failed (1): WARNING: proceeding, even though we could not create PATH aliases: Operation not permitted (os error 1)
+2026-09-19T13:56:26.936808Z  WARN codex_state::runtime: failed to open state db at /Users/leaf/.codex/state_5.sqlite: failed to open state DB at /Users/leaf/.codex/state_5.sqlite: error returned from database: (code: 8) attempt to write a readonly database
+2026-09-19T13:56:26.937004Z  WARN codex_rollout::state_db: failed to initialize state runtime: failed to initialize state runtime at /Users/leaf/.codex: failed to open state DB at /Users/leaf/.codex/state_5.sqlite: error returned from database: (code: 8) attempt to write a readonly database: error returned from database: (code: 8) attempt to write a readonly database: (code: 8) attempt to write a readonly database
+Error: failed to initialize in-process app-server client: Operation not permitted (os error 1)
+
+pc-0003..pc-0003: 0 dispute / 1; tokens 5,125; session 01a0b9f4-8e43-7e41-9ced-dd74a9e9b5b6
+pc-0006..pc-0006: 0 dispute / 1; tokens 7,457; session 01a0b9f4-bae0-7872-a43f-1d0898ad3c25
+pc-0008..pc-0008: 0 dispute / 1; tokens 5,375; session 01a0b9f4-ee31-7ea3-9121-2d19c4653864
+pc-0011..pc-0011: 0 dispute / 1; tokens 3,741; session 01a0b9f5-2839-7aa0-b8ee-2179e2c6e0bf
+pc-0012..pc-0012: 0 dispute / 1; tokens 3,111; session 01a0b9f5-5552-7873-afd9-bd38af0ca5b4
+pc-0015..pc-0015: 1 dispute / 1; tokens 8,349; session 01a0b9f5-8518-7041-a2e5-dbd6741de70c
+pc-0016..pc-0016: 0 dispute / 1; tokens 6,313; session 01a0b9f5-c2d1-7f33-9e4d-f105acb994c7
+pc-0023..pc-0023: 0 dispute / 1; tokens 3,415; session 01a0b9f6-108e-7c50-9da7-5cedbf90c051
+pc-0024..pc-0024: 0 dispute / 1; tokens 5,728; session 01a0b9f6-5b41-7e91-8b6e-d240b7a79f61
+pc-0025..pc-0025: 0 dispute / 1; tokens 8,357; session 01a0b9f6-96ac-7241-b95d-9a40c45e9896
+pc-0026..pc-0026: 1 dispute / 1; tokens 6,389; session 01a0b9f6-c480-7cd1-9446-78a36eefa4f3
+pc-0029..pc-0029: 0 dispute / 1; tokens 6,348; session 01a0b9f7-1759-7ee1-b676-d4fdeab37efb
+MA: 30 verdicts, 3 dispute: ['pc-0027', 'pc-0015', 'pc-0026']

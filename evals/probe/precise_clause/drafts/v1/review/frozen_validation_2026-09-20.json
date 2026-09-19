@@ -1,0 +1,29 @@
+{
+  "mode": "frozen",
+  "version_dir": "/Users/leaf/Documents/GitHub/Medy/evals/probe/precise_clause/v1",
+  "passed": true,
+  "counts": {
+    "samples": 75,
+    "documents": 16,
+    "per_slice": {
+      "drug_name_zh": 18,
+      "dose_unit": 20,
+      "negation": 41,
+      "time_window": 20,
+      "protocol_id": 17,
+      "mixed_zh_en": 53
+    },
+    "per_dept": {
+      "MA": 30,
+      "PV": 29,
+      "CO": 16
+    },
+    "per_language": {
+      "zh-Hans": 10,
+      "zh-Hant": 33,
+      "en": 32,
+      "mixed": 0
+    }
+  },
+  "findings": []
+}

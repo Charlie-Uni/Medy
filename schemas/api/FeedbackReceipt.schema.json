@@ -1,0 +1,21 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "feedback_id": {
+      "minLength": 1,
+      "title": "Feedback Id",
+      "type": "string"
+    },
+    "trace_id": {
+      "pattern": "^[0-9a-f]{32}$",
+      "title": "Trace Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "feedback_id",
+    "trace_id"
+  ],
+  "title": "FeedbackReceipt",
+  "type": "object"
+}

@@ -1,0 +1,362 @@
+# Medy 开发任务、当前进度与边做边学路线
+
+> 核查日期：2026-09-20（[实现记录 26](reviews/2026-09-20-implementation-26-probe-review-and-freeze.md)；本轮 482 passed，含 64 项 PostgreSQL 集成测试）。依据：工作区中的[工程基线 v0.6](ENGINEERING_BASELINE.md)、ADR、SPEC、代码、复核记录与本机测试。历史实现证据见记录 13～25。
+> 本文件是基线的执行进度视图，不是第二份需求契约。范围、阈值和安全约束仍以基线为准；不新增 P0 门禁，不代替正式验收。
+> 当前 Git HEAD：`aa5e503`（已提交基线 v0.5）；工作区包含尚未提交的 v0.6 文档与实现。本文件不表示这些改动已经提交。
+
+## 1. 先看结论
+
+目前处于 **M0 基础工程与契约大部分已实现，M1 知识治理与入库已落地，75 条真实探针已本地冻结、待 Git 归档**。领域模型、数据库迁移与 RLS、PDF 入库切分、评测工具已有代码和本地证据；医学问答服务、生产混合检索与 DEC-001 选型实验尚未完成。
+
+本次完整复跑：`env -u DEBUG -u PYTHONPATH make check` 通过，仓库外导入、ruff、106 文件格式检查、mypy 47 个源文件、pytest **482 passed**（418 单元 + 64 集成，无跳过）、Schema 漂移检查均通过。PostgreSQL 集成测试实际连库执行；此前继承的 `DEBUG` 布尔解析问题仍以命令级移除处理。开发库最近核查为迁移 0004、16 份 draft 文档、2,661 个 chunk。75 条探针现为 71 agree、4 disputed_resolved、0 待决；带页文本的正式 frozen 校验零错误、零警告。pc-0046 的公开机构邮箱已按既有人工依据绑定精确例外；模型后端版本未暴露，已明确记录其复现限制。Git 归档、远端 CI 与检索质量实验尚未完成。
+
+两件事不能混淆：
+
+- 合成的 12 文档 / 72 样本 fixture 验证的是校验器行为，不是实际医学语料质量、许可或召回率。
+- `OfflineBM25Index` 是离线参考，`rrf_fuse` 是融合函数；它们不表示生产 BM25、数据库权限过滤或混合检索已经完成。
+
+### 进度百分比口径
+
+决策人要求每个阶段汇报"离总目标百分之多少"。口径固定为：[任务知识对照](TASK_KNOWLEDGE_MAP.md) 中 79 个 P0 任务行的状态加权和（已实现 1、部分 0.5、阻塞与待做 0）除以 79；另报除以 99 个基线复选项的数值。状态只随实现记录的证据变更，基线勾选保持 0，最终验收仍是第 11 节九条门禁的二元结果。`tests/unit/docs/test_baseline_roadmap_consistency.py` 重算并比对下面这行数字：
+
+P0 加权进度：22.8%（18.0/79）；按 99 项计 18.2%。分项：M0 10/11、M1 8/21、M2 0/16、M3 0/13、M4 0/10、M5 0/8。
+
+### 状态与计数
+
+下表编号逐项对应基线第 8 节的顺序；`G-xx` 对应第 11 节。后续按编号更新状态和证据，不把一项拆成许多空文件来制造进度。
+
+- **已实现**：该小范围产物已有代码/文档与本地证据，不等于整项生产验收完成。
+- **部分**：已有一部分，但表中列出的交付仍有缺口。
+- **待做**：尚无对应实现；只在文档里约定不算实现。
+- **阻塞**：缺少明确的前置输入或决策；不通过降低门禁解除。
+- **选做**：P1/P2，不能反过来拖延 P0。
+
+| 范围 | 基线项数 | 当前定位 |
+| --- | ---: | --- |
+| M0 工程与契约 | 11 | 基础工程、领域/API/MCP 契约与本地门禁已有；远端 CI、安全阶段及服务接线待补 |
+| M1 知识治理与检索 | 21 | 数据库治理、RLS、入库切分和探针本地冻结已有；Git 归档与生产检索选型待完成 |
+| M2 Harness / Verifier / Safety / Skills | 16 | 待做 |
+| M3 API / worker / MCP / 观测 / 部署 | 13 | 待做 |
+| M4 受控 Loop | 10 | 待做 |
+| M5 规模与全量验收 | 8 | 待做 |
+| P1/P2 checklist | 11 | 选做，未启动 |
+| 最终验收 | 9 | 未验收；是前述工作的汇总门禁，不是 9 个新功能 |
+
+合计 **79 项 P0 阶段任务 + 11 项选做 + 9 项汇总验收 = 99 个基线复选项**。基线当前仍为 **0 项勾选**，并不表示没有工作完成；多数复选项是包含多项条件的验收包。本次不直接修改其勾选状态，也不按代码行数估算完成百分比。基线另有 30 条不变量、11 项 DEC。
+
+## 2. 截止目前已经做了什么
+
+| 编号 | 已有产物 | 证据与完成边界 |
+| --- | --- | --- |
+| C-01 | 需求来源归档、工程基线、里程碑、自检与验收口径 | [基线](ENGINEERING_BASELINE.md)、[来源校验清单](source/SHA256SUMS)；两份来源哈希本轮通过。冻结的是契约，不是项目成果 |
+| C-02 | OIDC 身份边界、词法选型预登记、语料许可政策 | [ADR-0001](adr/ADR-0001-identity-oidc-boundary.md)、[ADR-0002](adr/ADR-0002-lexical-retrieval-selection.md)、[ADR-0003](adr/ADR-0003-corpus-source-license-policy.md)；具体 IdP、生产检索器、准入语料仍未全部确定 |
+| C-03 | 探针规范、7 个 JSON Schema、示意样本、18 个 norm-v1 向量 | [SPEC](../evals/probe/precise_clause/SPEC.md)；示例是 draft，正式冻结内容位于 v1 |
+| C-04 | 38 条候选的结构化来源与许可证据清单 | [候选 v0.6](../evals/probe/precise_clause/corpus_candidates/DEC-011-candidates-v0.6.json)（v0.1～v0.5 逐版承接）；预判 eligible 19，决策人已签字 `eligible` 18（2026-09-12 六条、2026-09-17 十二条），其中 cand-0030/0031 不进入 v1 主体；v1 主体 16 份原件与页文本已就绪 |
+| C-05 | canonical JSON、SHA-256、operation key 纯函数及测试 | [canonical.py](../src/medops/core/canonical.py)；实现确定性与分隔符防歧义；[已知答案向量](../tests/unit/core/test_canonical_vectors.py)（10 组 + operation_key，含 NFC/NFD 不归一、三种 PYTHONHASHSEED 子进程复算）固定了字节形式；尚未接入节点、持久化、任务事务与回放 |
+| C-06 | norm-v1、jieba/regex tokenizer 原型及专项测试 | [normalization.py](../src/medops/retrieval/lexical/normalization.py)、[tokenizer.py](../src/medops/retrieval/lexical/tokenizer.py)；尚无正式医学词典、数据库索引版本校验；§3.1 的全局词典隔离问题已于实现记录 05 修复并有回归 |
+| C-07 | 检索结果 Pydantic 契约、离线 BM25、确定性 RRF | [contracts.py](../src/medops/retrieval/contracts.py)、[bm25_offline.py](../src/medops/retrieval/lexical/bm25_offline.py)、[fusion.py](../src/medops/retrieval/fusion.py)；不是生产检索链路 |
+| C-08 | PR-01～PR-14 探针校验器、PII 规则版本、CLI、draft/frozen 行为、页文本抽取工具、草稿 canonical JSONL 重写工具 | [validator.py](../src/medops/evals/probe/validator.py)、[CLI](../src/medops/evals/probe/__main__.py)、[extract.py](../src/medops/evals/probe/extract.py)（pypdf，[ADR-0005](adr/ADR-0005-pdf-extraction-library.md)）、[canonicalize.py](../src/medops/evals/probe/canonicalize.py)（只改表示与顺序、记录集不变、非 draft 与内容问题一律拒绝、全部检查后才写、原子发布、写后重跑 draft 校验）；已具备精确 PII 例外和运行证据绑定，16 份文档、75 条真实样本的带页文本 frozen 全规则校验通过（记录 26） |
+| C-09 | 合成数据工厂、单元与回归测试 | [fixture_builder.py](../tests/unit/evals/fixture_builder.py)、[加固回归测试](../tests/unit/evals/test_probe_validator_regressions.py)；全套 482 tests 本地通过（本轮，含 64 项集成） |
+| C-10 | Python 包、venv、Makefile、ruff、mypy、pytest、CI 工作流、依赖锁 | [pyproject.toml](../pyproject.toml)、[Makefile](../Makefile)、[CI](../.github/workflows/ci.yml)、`requirements.lock`（带哈希，含构建后端；2026-09-17 新增 dev 依赖 openapi-spec-validator 及 7 个传递包，既有版本未动）；仓库外导入、迁移往返与现有 64 项集成测试通过；远端 CI 与后续服务/安全集成覆盖待补 |
+| C-11 | 十类 Pydantic 领域契约与 AgentState | [domain/](../src/medops/domain/)（实现记录 05、07）；契约范围，未接运行时节点 |
+| C-13 | 切分器与入库流水线 | [chunker.py](../src/medops/ingestion/chunker.py)、[pipeline.py](../src/medops/ingestion/pipeline.py)、迁移 0003（实现记录 20）：chunker-v1 页锚定切分，入库校验/去重/PII 默认拒绝/审计；本机 16 份文档 2,661 个 chunk 入库，4 份 PII 误报经决策人复核以审计覆盖入库；迁移 0004 增加 draft 专用终态 withdrawn（实现记录 21） |
+| C-12 | OpenAPI 3.1 初版 | [openapi.py](../src/medops/api/openapi.py) → [schemas/openapi.json](../schemas/openapi.json)（实现记录 13）：不引入 Web 框架，`components.schemas` 与单文件 Schema 逐模型相等，错误响应由 `HTTP_STATUS` 推导，通过 openapi-spec-validator 与 7 项契约测试，13 种变异文档均被拒绝；成功状态码与 retry 失败码为本轮约定，待审核 |
+
+## 3. 当前缺口与前置事项
+
+### 3.1 本轮确认的实现问题
+
+**分词器实例共享全局词典，影响实验可复现性。** `JiebaTokenizerV1` 使用模块级 `jieba.load_userdict/cut`；实例 B 加载词典后，实例 A 的结果也会改变，但 A 的 `dictionary_version` 不变。本轮在独立进程中复现，证据见复核记录。
+
+处理范围限定为一个小修复：每个实例使用独立 `jieba.Tokenizer`；增加“两个不同词典实例互不影响、默认实例不被污染”的回归测试。修复前不用于正式 DEC-001 对比；不需要修改 norm-v1 或重新设计检索架构。对应 M1-03、M1-15。**状态：已修复**（[实现记录 05](reviews/2026-09-10-implementation-05-contracts-and-fixes.md)，两条回归通过，原复现脚本不再复现）。
+
+### 3.2 语料与探针集
+
+| 项目 | 当前实测/仓库状态 | 后续工作 |
+| --- | --- | --- |
+| 候选许可状态 | v0.6（2026-09-17）：预判 eligible 19、needs_review 15、research_only 1、rejected 3；签字 `eligible` 18，其中 cand-0030、0031 不进入 v1 主体 | v1 主体 16 份：MA 5、PV 8、CO 3，每部门不少于 3 份已满足；剩余 1 条预判 eligible（cand-0032/0033 之外的 needs_review 不计）留作补充 |
+| 部门覆盖 | v1 主体：MA 5（仿單）、PV 8（EMA GVP VI/IX、FDA 申办方安全报告、ICH E2A/E2F、TFDA 通報表指引、MedDRA 两份）、CO 3（ICH E8(R1)、E6(R3)、FDA 方案偏离草案）；16 份 corpus.json 已有，cand-0036 排除，cand-0030/0031 不入主体 | 已满足每部门至少 3 份文档、15 条样本及每份至多 6 条；修改时继续核验 |
+| 简体中文 | 已签字 zh-Hans 2（MedDRA 两份考虑要点，共 110 页）；本地冻结 v1 的 zh-Hans gold 10 | 已超过至少 8 条门槛；繁体不计入，Git 归档待完成 |
+| TFDA 路径 | 五份许可证仿單（cand-0029、0034、0035、0037、0038）已签字，2026-09-17 export/36、39 快照证据已追加到 v0.5；corpus 已填写 `verified_by=reviewer-01` 和版本线索 | 对应样本已复核并本地冻结；后续版本更新需重新核对来源 |
+| 冻结输入 | 18 份原件与 18 组页文本；主体 16 份 draft / 2,661 个 chunk；75 条探针已本地冻结（MA 30、PV 29、CO 16；zh-Hans gold 10），71 agree、4 disputed_resolved、0 待决。样本、复核证据、精确 PII 例外与哈希均已装配 | Git 归档待完成；dataset_hash 与 manifest SHA-256 已回填 ADR-0002；见[实现记录 26](reviews/2026-09-20-implementation-26-probe-review-and-freeze.md) |
+
+探针集固定条件：至少 60 条、目标 72 条；六类切片各至少 8 条；每部门至少 15 条；至少 10 份文档且每部门至少 3 份；每文档最多 6 条；zh-Hans 至少 8 条。只有获批 `eligible` 的公开 PDF 可进入 spec-v1。公开 PV 指南保持真实文档类型，不能为凑数改称 SOP。
+
+2026-09-20 冻结校验统计：time_window 20、drug_name_zh 18、dose_unit 20、mixed_zh_en 53、negation 41、protocol_id 17。正式 samples.jsonl 已包含真实 review；页内唯一性、span 偏移、部门/版本对应、query 去重及 PR-01～PR-14 frozen 校验均通过。pc-0046 的一处公开机构邮箱例外绑定确切字段内容、位置、来源和人工依据文件哈希；一般 PII 规则不变。完整 span 与运行证据见冻结 v1，Markdown 表中部分长段落仅供阅读。哈希和结构校验不替代语义判断。
+
+草稿 canonical JSONL 重写命令已交付（`make canonicalize-probe DIR=<draft_dir> [PAGES=..] [CHECK=1]`，实现记录 13）：只对 `manifest.status=draft`、无 `frozen_at`、无 `SHA256SUMS` 的目录生效；只改 BOM/换行/空行/键序/转义与记录顺序，记录集不变；重复键、NaN、非对象行、缺 id 或重复 id 一律拒绝且不写任何文件；写后自动重跑 draft 校验，内容问题（如非法 dept）由校验器报告而不被“修正”。它仍是 M1-01 的配套小工具，不是标注平台。
+
+### 3.3 文档/验收边界
+
+- 基线 §1.3 曾把多模态写作 P1，§7.2 和 checklist 写作 P2；已按决策就地更正为 P2（第七轮记录第 8 节），并新增 `tests/unit/docs` 的机械一致性测试。扫描件 OCR 的纯文本抽取仍是 P1，两者不同。
+- 本轮验证了当前 `venv/` 的有效导入，没有重做 iCloud 隐藏标志的时序取证；运行成功不能扩写成对所有 macOS、Python 版本和 iCloud 环境的普遍结论。
+- 2026-09-17 决策人提供的对外描述修订稿与基线的六处出入见[第八轮审核记录](reviews/2026-09-17-baseline-review-08-description-check-and-mrr-decision.md)：`MRR≥0.80` 不在两份冻结来源与基线中，决策人决定不设（不作门禁、不另报），基线不变；其余五处为对外措辞退化（BM25 写法、"同等质量下"、"线索提取"、人工审批、目标值限定），基线本已按来源原文表述，不需修改。
+
+## 4. P0 全量开发任务
+
+### M0：工程与契约（11 项）
+
+| ID | 状态 | 要做的工作与剩余验收 |
+| --- | --- | --- |
+| M0-01 | 已实现（结构范围） | `src/tests/migrations/evals/deploy/docs` 均已存在且有内容（`migrations/` 与 `tests/integration/` 随实现记录 17 建立）；保持模块化单体，不预建空目录或拆微服务 |
+| M0-02 | 已实现（Codex 已复核；uv/pip 已由 ADR-0004 批准；Redis 7.2 与 digest 已于 2026-09-17 固定） | Python >= 3.11、`requirements.lock` 与 `requirements-build.lock`（带哈希）、固定 pip、无构建隔离安装、`Settings` 与 `.env.example`、`.env` 忽略规则与仓库卫生测试已有（实现记录 08）；本机干净环境安装已实测，远端 CI 未运行，不勾选 |
+| M0-03 | 已实现（本地门禁齐全；远端 CI 首次运行待提交推送） | lint、format-check、typecheck、单元 + 集成测试、Schema 漂移检查与 migration check（单一 head + 空库升降级往返）均在 `make check`/`make migration-check` 与 CI（实现记录 15、17） |
+| M0-04 | 部分（单元、集成、契约漂移、迁移、评测 smoke 已配置；安全阶段与首次远端运行待补） | CI 含 PostgreSQL 服务容器与集成测试、Schema 漂移、migration check、探针示例校验（实现记录 17）；安全测试阶段随 M2 安全集加入；镜像扫描仍为 P1 |
+| M0-05 | 已实现（核心范围，Codex 两轮反馈已按记录 06 第三版关闭，待复核） | `src/medops/core/{errors,tracing,logging}.py` 与 18 个测试已有（实现记录 06）：业务/基础设施错误分离、detail 不外泄、trace_id contextvars 传播、JSON 脱敏日志；缺 API/worker 接线与观测后端，不勾选 |
+| M0-06 | 已实现（函数与已知答案范围；远端多平台 CI 未运行） | canonical_json / operation_key 已有；已知答案向量固定了 10 组输入与 operation_key 的字节形式和 SHA-256，并在三种 `PYTHONHASHSEED` 子进程中复算一致（实现记录 13）；macOS arm64 之外的平台证据待远端 CI。后续节点调用方必须纳入完整版本集合，不只验证哈希函数 |
+| M0-07 | 已实现（契约范围；D-01/02/03/05 已复核关闭，D-04 第二版待复核） | `src/medops/domain/` 十类契约与 AgentState（实现记录 05、07）：完整引用比对、不支持要素与高风险意图禁止作答、过期下游结果清空、不可变排名；仍缺与运行时节点的对接和跨平台证据，不勾选 |
+| M0-08 | 已实现（契约、Schema 与 OpenAPI 初版；待审核） | `src/medops/api/contracts.py`、`src/medops/mcp/contracts.py`、`schemas/`（15 个 Schema、工具清单与 `openapi.json`，已生成未提交）与 `docs/api/CONTRACTS.md` 已有（实现记录 09、13）；OpenAPI 3.1 初版由同一批模型生成，管理/回放端点随其模型加入；成功状态码 202/201/200、retry 非法状态 `409 task_not_retryable`、保留期 `IDEMPOTENCY_KEY_TTL_SECONDS`（默认 604800 秒、下限 86400 秒）已于 2026-09-17 定稿（实现记录 15）；远端 CI 未运行，不勾选 |
+| M0-09 | 已实现（v0.1，Codex 已复核） | `docs/THREAT_MODEL.md`：八条边界数据流、七类风险各对应条款与测试/里程碑；随组件补行 |
+| M0-10 | 已实现（探针范围） | 合成工厂已有 12 文档 / 72 样本与页文本；后续随 API、数据库、Harness 扩展 fixture，不预造整套医学业务数据 |
+| M0-11 | 部分（基础设施已在本机一条命令启动并验证；API/worker、对象存储、远端 CI 未含） | `make up` 约 20 秒内 PostgreSQL 16.15 + pgvector 0.8.6 与 Redis 7.2.16 均 healthy，命名卷在重启后保留数据，Redis 用锁定 digest，pgvector 镜像实测 digest 已记录（实现记录 16）；API/worker 随代码加入，对象存储等 DEC-007 |
+
+领域层先做契约，不绑定 FastAPI、数据库会话或模型 SDK。AgentState 只存可序列化数据；连接、锁、客户端不能塞进 State。声明了字段并不等于权限或状态机已执行。
+
+### M1：知识治理与检索（21 项）
+
+| ID | 状态 | 要做的工作与剩余验收 |
+| --- | --- | --- |
+| M1-01 | 部分（75 条已本地冻结；Git 归档待完成） | 16 份语料、71 agree、4 disputed_resolved、0 待决；样本、8 份复核证据与精确 PII 例外完整绑定，frozen 校验通过。后端模型版本未暴露的限制已记录，ADR 已回填两个哈希；仍缺归档 commit（[记录 26](reviews/2026-09-20-implementation-26-probe-review-and-freeze.md)） |
+| M1-02 | 待做，依赖 M1-01 | 固定三个生产候选 A/B/C 的实现、配置、版本、镜像 digest、硬件、并发、预热和测量参数；不能边看结果边改实验 |
+| M1-03 | 契约切片已复核通过（Codex，2026-09-11），整项不勾选 | `LexicalVersions`、`LexicalRetriever` Protocol、`run_lexical_search` 边界与可复用适配器契约测试已有（实现记录 10），离线 BM25 两种分词器通过；缺 DEC-001 候选适配器与真实语料运行证据，不勾选 |
+| M1-04 | 部分（权限半边已证明；候选对比半边依赖 M1-01/02） | 真实 schema 上以 LOGIN 用户证明：普通角色 + FORCE RLS 零跨部门泄漏、按主键无存在性泄露、LIMIT/排序/join 下推不丢可见行、连接池身份切换与 RESET/DISCARD 清除（实现记录 18）；"零静默候选不足"与三候选词法对比等真实探针集与 DEC-001 适配器 |
+| M1-05 | 阻塞 | 按 ADR-0002 完成候选 A/B/C 对比及独立许可证审核，回填结果、执行计划、复现命令。端到端对照所需向量/重排配置固定后再测，不把未测门禁算通过 |
+| M1-06 | 已实现（首个迁移 0001；evidence_log、outbox 等随其里程碑追加） | Alembic 原生 SQL 迁移建 source_objects、ingestion_jobs、documents、chunks、chunk_spans、document_acl、doc_audit，字段落点按基线 3.3/3.4/4.2 与设计文档 3.3；不可变性、状态机、审计追加写、chunk 哈希由触发器强制；15 项集成测试（实现记录 17，ADR-0006）；无 tsvector/vector 列 |
+| M1-07 | 已实现 | `documents_one_active_per_family` 部分唯一索引；集成测试证明同 family 第二个 active 被拒，且两会话并发激活时第二个阻塞、首个提交后失败，最终只剩一个 active（实现记录 17） |
+| M1-08 | 已实现（数据库层；API 注入接线在 M3） | 迁移 0002：三组 NOLOGIN 角色、登录用户供应脚本、七表 FORCE RLS、按 document_acl 与部门的策略、无身份默认拒绝、草稿不可见、owner 分离；37 项集成测试覆盖 SET LOCAL 作用域、非 owner、非 superuser、无 BYPASSRLS、只读无写路径、管理角色不能改 schema（实现记录 18）；本机 .env 已切到受限用户 |
+| M1-09 | 部分（PDF 校验、哈希去重、PII 默认拒绝与留痕覆盖、同源第二文档拒绝已实现；DOCX、恶意文件扫描、管理员确认流程待做） | `medops.ingestion.pipeline`：PDF 魔数、大小上限、声明哈希与字节数比对、`pii-rules-v1` 命中默认拒绝且覆盖须写 `pii_review_override` 审计、同 source 第二文档拒绝、重复入库幂等（实现记录 20） |
+| M1-10 | 已实现（chunker-v1 与入库；gold 映射随标注生成） | `chunker-v1` 在 norm-v1 页文本上切分，chunk 即页文本切片，`chunk_spans` 记页码与字符区间，哈希由触发器校验；抽取告警大于 0 记 low_trust 不得 active（约束）；本机 16 份文档 2,661 个 chunk 已入库（实现记录 20、21）；gold 到 chunk 的映射文件在探针集标注后生成 |
+| M1-11 | 待做（effective_from 口径已定） | 新版发布、旧版归档、审计和 outbox 同事务；可靠触发索引更新与缓存失效；索引延迟不能令旧版本成为有效证据。激活时 `effective_from` 取值优先级（决策人 2026-09-17）：说明书取文内修订日期，其次 TFDA 许可证异动日期，再次 PDF 元数据日期，备注写明层级；指南取文内发布或生效日期 |
+| M1-12 | 部分 | 分词器支持词典版本，但无正式医学词典；完成 DEC-005 的来源审核、通用名/商品名/缩写映射与版本更新方式 |
+| M1-13 | 待做 | 1–3 条有界 Query Rewrite，接入术语与会话实体；测试剂量、否定、时间窗、编号不被改写错，实体不跨会话污染 |
+| M1-14 | 待做 | 实现 DEC-001 选定的数据库内 lexical_retriever；A 方案入库/查询同规则，simple FTS 保留位置；版本不匹配拒绝、升级重建 |
+| M1-15 | 部分（复合哈希函数已实现，实现记录 14；生产取值待 DEC-001/002） | norm-v1 与原型版本字段已有；基线 3.6 的复合 `retrieval_version` 由 [versioning.py](../src/medops/retrieval/versioning.py) 计算（八个成员、封闭输入、任一成员或嵌套参数变化即换版本，已知答案已固定）；仍待：固定生产 tokenizer/词典/规范化取值，写入索引元数据与缓存键，证明相同版本可复现 |
+| M1-16 | 待做 | DEC-002 选 embedding 后建对应维度 migration；记录模型/归一化/版本，pgvector 检索在权限过滤下采用 over-fetch 或 iterative scan 并报告实际候选数 |
+| M1-17 | 部分 | RRF 纯函数与离线 BM25 已有；补生产词法/向量并行、Reranker、候选上限、总超时与显式降级；RRF 不使用原始分数融合 |
+| M1-18 | 待做 | 候选回查 PostgreSQL 事实平面：ACL、active、生效时间、source 完整性、解析质量；不通过的证据禁止进入回答上下文 |
+| M1-19 | 待做 | 缓存纳入身份权限指纹、文档/策略/检索版本与相关会话上下文；测试撤权、归档、换版本后的缓存失效 |
+| M1-20 | 待做 | >=300 条主评测样本与 doc/version/page gold；执行人工 + LLM 及分层第二人工复核，探针并入后补复核；覆盖无答案与冲突场景 |
+| M1-21 | 待做 | 事实回查后的严格宏平均 Recall@5 >=85%，另报 Hit@5，失效版本引用率 0；按部门、语言及其他关键切片输出可复现报告 |
+
+实验选择不改口径：A 为应用预分词 + FTS，B 为数据库中文分词 + FTS，C 为数据库内 BM25；进程内 BM25 仅离线参考。基础门禁为 Lexical Recall@20 >=90%、六切片各 >=85%、零泄漏与零静默候选不足等。B/C 替代合格 A 需满足预登记的 +5pp、配对 CI 下界 >0 等全部条件，详见 ADR-0002；不在本表重新制定阈值。
+
+主集统计采用严格 recall，而不是“命中任一 gold”：空 gold 的无答案样本单独评 abstention，不进入 Recall/Hit 分母；正样本空 gold 必须报错。探针每切片 >=8 的门禁与 M4 小于 30 仅作诊断不是同一个规则。
+
+### M2：Harness、Verifier、Safety 与 Skills（16 项）
+
+| ID | 状态 | 要做的工作与验收 |
+| --- | --- | --- |
+| M2-01 | 待做 | LangGraph 固定 Intent → Retrieve → Evidence Verify → Safety → Answer / Escalate；测试图中不存在绕过必经节点的回答路径 |
+| M2-02 | 待做 | 每节点明确输入输出模型、超时、错误类型、有限重试、取消与降级；跨节点只通过 State 交换数据 |
+| M2-03 | 待做 | operation key 接入持久化执行；attempt 单独记录，重试不重复副作用，replay_run_id 与生产隔离；不能仅凭函数存在算幂等完成 |
+| M2-04 | 待做 | Answer 只接收已验证证据，输出 claim-citation；生成后再校验引用和关键结论，通过前不外发最终医学答案 |
+| M2-05 | 待做 | 验证引用属于本 Trace、版本/页码/chunk 真实且有权限；重算 chunk_content_hash 与实际 evidence_text_hash，expected/observed 写 evidence_log |
+| M2-06 | 待做 | Trace 总 Token/成本预算与单次模型上限都生效；超限先裁剪证据，仍不足则升级，不扩大预算继续猜测 |
+| M2-07 | 待做 | 抽取剂量、单位、频次、适应证、人群、时间和方案编号等关键要素，建立确定性规则测试 |
+| M2-08 | 待做 | supported / not_supported / contradicted 支持度判断；数字规则优先，NLI/小模型按 DEC-003 选；无依据不补医学常识，矛盾升级 |
+| M2-09 | 待做 | 用户输入、检索内容、最终输出三层 Safety；文档是数据而不是指令，注入不能改变权限或绕过检索 |
+| M2-10 | 待做 | 稳定拒答/升级 reason code，最小必要上下文持久化，可由人工接手；诊断、处方、个体调整及紧急医疗意图拒答并升级 |
+| M2-11 | 待做 | Skill Registry 执行 Schema、scope、risk、timeout、parallel_safe、版本控制；节点不得绕过 Registry 调工具 |
+| M2-12 | 待做 | 先交付说明书查询、医学引用验证两个低风险 Skill 的完整正向/失败链路 |
+| M2-13 | 待做 | 再交付 AE 线索提取、方案偏离核验、超说明书检查三类 Skill；在 M5 前完成全部验收 |
+| M2-14 | 待做 | AE 不自动判断因果；超说明书等高风险 Skill 只做文档范围核验，不输出用药建议 |
+| M2-15 | 待做 | >=150 条安全样本：越权、提示词注入、无依据结论、高风险问题及其组合；冻结版本与预期行为 |
+| M2-16 | 待做 | 引用准确率 >=95%、正确拒答率 >=95%、越权拦截率 >=98%、高风险升级召回率 >=95%；不得用总体分数掩盖已知越权缺陷 |
+
+### M3：API、异步、MCP、观测与部署（13 项）
+
+| ID | 状态 | 要做的工作与验收 |
+| --- | --- | --- |
+| M3-01 | 待做 | FastAPI `/v1/ask`：成功、证据不足、拒答、升级、服务失败契约与集成测试 |
+| M3-02 | 待做 | task 创建/查询/失败重试；Idempotency-Key 按身份和路由限定作用域，存 request hash；同 key 同 payload 返回原任务，不同 payload 返回 422；事务创建、TTL 和并发语义进入 OpenAPI |
+| M3-03 | 待做 | 反馈、文档管理、策略候选、审批、Trace replay 接口；逐接口验证业务/管理/审核权限 |
+| M3-04 | 待做 | worker 的 queued/running/completed/failed 转换、租约与结果原子持久化；崩溃恢复、重复消费安全，不把 Redis 队列当唯一事实来源 |
+| M3-05 | 待做 | 接入 OIDC：验证 issuer/audience/expiry/signature；用户部门/scope 服务端映射，group allowlist，角色分离；本地测试签发器仅用于合成身份 |
+| M3-06 | 待做 | 只读 MCP：search_documents、get_chunk、verify_citation、list_active_versions；生产 Streamable HTTP + bearer，继承身份与数据库权限，不能写入；stdio 仅开发测试 |
+| M3-07 | 待做 | 每次请求完整 Trace；身份 surrogate/HMAC 假名、日志脱敏，受限可回放 payload 单独加密和授权，审计追加写 |
+| M3-08 | 待做 | Trace replay 固定实际策略/检索/Skill/模型版本，用独立 run id 生成差异报告；禁止被原执行缓存短路 |
+| M3-09 | 待做 | Langfuse 与 OTel 串联 API、数据库、Redis、LLM、Reranker、worker spans，跨任务传播 trace/task/version 信息 |
+| M3-10 | 待做 | 延迟、错误、拒答/升级、队列、缓存、Token/成本与安全告警；trace_id/user_id 不作为高基数指标标签 |
+| M3-11 | 待做 | 普通问答 P95 <=8s、复杂 Skill <=15s；记录并发、硬件、语料、冷热缓存、失败率，不能仅测单次最快请求 |
+| M3-12 | 待做 | 固定依赖、非 root 镜像、health/readiness、优雅停机；配置/密钥隔离、持久化和部署说明 |
+| M3-13 | 待做 | 主链路故障测试：模型超时、worker 重启、队列重复消费；证明失败可定位、可恢复且不绕过安全链 |
+
+### M4：受控自进化 Loop（10 项）
+
+| ID | 状态 | 要做的工作与验收 |
+| --- | --- | --- |
+| M4-01 | 待做 | 用户反馈、Verifier、Safety、升级信号关联原 Trace；Execute/Observe 有统一数据来源 |
+| M4-02 | 待做 | Reflect 对 bad case 分为 retrieval / intent / generation / knowledge_gap / safety，带置信与人工修正入口 |
+| M4-03 | 待做 | Adapt 只生成 Prompt/Rule/Skill/检索参数候选 diff；线上只读 released，生产来源不是仓库最新 Prompt 明文 |
+| M4-04 | 待做 | Loop 数据库角色只能写候选，无 released 写权限；用直接数据库操作的权限测试证明 |
+| M4-05 | 待做 | knowledge_gap 生成补文档任务，不自动生成或补写医学事实 |
+| M4-06 | 待做 | >=200 条独立 good/bad 历史 Trace 的冻结回放集，另跑安全回归集；不以 3 次重复运行充当 600 条独立样本 |
+| M4-07 | 待做 | 3 次独立运行、配对比较、bootstrap 95% CI；报告目标/非目标/安全/延迟/Token/成本，<30 样本切片标记不足；冻结评测集不进入候选生成上下文 |
+| M4-08 | 待做 | 自动门禁：目标点估计 >=+5pp、非目标下降 <=1pp、安全不下降；安全取三次最差值，CI 如实报告不事后改阈值 |
+| M4-09 | 待做 | 人工签字、候选发布、初始灰度 <=10%、观察窗与全量发布；版本及操作者可审计 |
+| M4-10 | 待做 | 一次操作原子回滚 released 指针，完成演练并确认运行请求的版本一致性 |
+
+### M5：规模、全量验收与成本（8 项）
+
+| ID | 状态 | 要做的工作与验收 |
+| --- | --- | --- |
+| M5-01 | 待做 | 300–500 份许可清楚的公开文档治理入库，记录原始来源、版本、部门用途与许可依据；合成 fixture 不充数量 |
+| M5-02 | 待做 | 五个 Skill 全部通过功能、安全、权限、失败与故障测试 |
+| M5-03 | 待做 | 冻结数据上的质量、安全、性能全项验收；固定系统版本与可复现运行清单 |
+| M5-04 | 待做 | 上下文裁剪、缓存、模型路由使同等质量下 Token 降低 >=25%；保留优化前后同集对照及安全回归 |
+| M5-05 | 待做 | 目标语料规模、并发、队列积压、冷启动与缓存失效容量测试，记录瓶颈及资源上限 |
+| M5-06 | 待做 | 数据保留/删除、密钥轮换、备份恢复、依赖升级手册；P0 迁移恢复方案与 P1 完整灾备演练不混淆 |
+| M5-07 | 待做 | 运维 runbook、事故响应、人工升级、发布与回滚操作手册，可按文档实际执行 |
+| M5-08 | 待做 | 最终验收报告与演示材料；简历只写实测、已交付能力，区分目标、局部工具结果和端到端成绩 |
+
+### 不能遗漏的横向实现细节
+
+这些来自基线正文，是上述任务的实现要求，不额外增加任务门禁：
+
+- **数据模型分批建**：知识表之外还有 tasks/task_attempts、traces/spans、evidence_log、escalations、skills/skill_versions、policies/releases、feedback/bad_cases、evaluation_datasets/runs/results、outbox_events；按所处里程碑迁移，不在 M0 一次性写全。
+- **三层证据完整性**：原始 source hash、chunk 内容 hash、实际裁剪证据 hash 各有用途；关联 JOIN 不等于重算内容。原件/抽取 manifest 的后台完整性检查、expected/observed 审计纳入 M1-09/10、M2-05。
+- **失败与审计**：外部调用设连接/读取/总超时、有限重试、取消和并发上限；审计故障不能悄悄生成无审计医学答案，应可靠缓冲或安全失败。对应 M2-02、M3-07/13。
+- **基础部署安全**：TLS、CORS 白名单、请求体/速率限制、dev/test/prod 配置隔离、生产调试/接口文档默认关闭、数据库/Redis/对象存储持久化和容量限制，纳入 M0-09、M3-12、M5-05。
+- **原文可回看**：展示原文与用于定位的规范化文本分开；保留来源页片段，历史版本查询必须显著提示且有权限。对应 M1-10/18、M2-05。
+- **服务复用**：API、MCP、Skill 都走同一授权检索与证据校验服务，不各自复制一套逻辑。并行只对 parallel_safe 工具开放，部分结果不等于可以跳过最终安全门禁。
+
+## 5. P1/P2 全量选做项
+
+先有 P0 稳定回归集，再按“具体问题 → 基线数据 → 小实验 → 收益/故障/成本评估”决定是否做；不是技术栈里出现就必须实现。
+
+| ID | 优先级 | 选做工作与边界 |
+| --- | --- | --- |
+| OPT-01 | P1 | 扫描 PDF OCR、版面识别、置信度与人工复核队列；产物仍是可定位文字，不宣称理解图表 |
+| OPT-02 | P1 | 独立 Reranker/NLI 推理服务：GPU、批处理、预热、量化、并发/显存控制、弹性伸缩；先测推理瓶颈，不先堆服务 |
+| OPT-03 | P1 | 文档审核、ACL、升级、策略 diff、评测、灰度、回滚管理界面；P0 不要求完整前端 |
+| OPT-04 | P1 | 高可用后端、托管存储、多副本 worker、读写隔离评估、零停机迁移、灾备和合规审计；明确 RPO/RTO、审计导出与第三方数据处理边界 |
+| OPT-05 | P1 | 外部工单系统脱敏集成、最小必要上下文、投递幂等与审计 |
+| OPT-06 | P1 | SBOM、依赖/镜像扫描、完整恢复演练、DB/Redis/Reranker 等外部依赖故障演练 |
+| OPT-07 | P1 | 后续词法引擎替换：新冻结评测、权限与候选数/性能回归、许可证复审、ADR；不是只换一个适配器就发布 |
+| OPT-08 | P2 | 多模态表格、流程图、图像证据：坐标、引用渲染、模态级 Verifier、安全与质量独立评测；不是个人诊断/医学影像诊断扩展 |
+| OPT-09 | P2 | 知识图谱辅助召回/一致性检查；每项结论仍回查来源，不把图谱当无来源医学事实 |
+| OPT-10 | P2 | 跨语言术语对齐、检索与引用核验，按中英及繁简分别报告质量 |
+| OPT-11 | P2 | 主动学习只推荐待标注样本，人工确认后才进入数据或词典 |
+
+基线 §7 还列有两组没有独立 checklist 行的选做方向，也保留在任务视图中：
+
+- **OPT-12 / P1 更强检索**：结构/标题感知切分、parent-child retrieval、查询路由、hard-negative 训练，以消融决定去留。
+- **OPT-13 / P2 学习型路由与个性化**：仅用非敏感受控特征，不能修改 ACL 或放宽安全阈值。
+
+这两项不是本轮新需求，不计入 99 个基线复选项。暂不引入 Kubernetes、微服务拆分、模型微调或额外向量数据库作为默认前提。
+
+## 6. 全部 DEC 与当前状态
+
+| DEC | 内容 | 状态与处理时点 |
+| --- | --- | --- |
+| DEC-001 | 词法引擎、中文 tokenizer/词典 | 协议/阈值已决，生产实现未决；真实探针已本地冻结，Git 归档后做 M1 入口实验 |
+| DEC-002 | Embedding 模型、维度、归一化与 Reranker | 待实验，M1；选定前不锁死 vector 维度 |
+| DEC-003 | Verifier：NLI 或小 LLM | 待实验，M2；确定性数字规则不因此省略 |
+| DEC-004 | arq / Celery / 轻量 worker | 待决，M0/M3；以恢复、幂等和运维需求选择最小可用方案 |
+| DEC-005 | 医学术语来源 | 待决，M1 入库前；不是语料许可政策的编号 |
+| DEC-006 | 灰度按用户或部门 | 待决，M4；结合风险范围与统计有效性 |
+| DEC-007 | 对象存储与备份 | 待决，M1；不可变、权限、原文回看、恢复与成本 |
+| DEC-008 | Trace/审计保留期 | 待决，M3 上线前；覆盖重放窗口与数据最小化 |
+| DEC-009 | 模型托管/本地与数据传输边界 | 待决，M0/M2；在接真实外部模型前落实 |
+| DEC-010 | 身份提供方/token | OIDC 边界已决，具体 IdP 未决，M3 上线前确定 |
+| DEC-011 | 来源白名单、四级许可政策 | 政策已决；v1 主体 16 份逐文档准入已落实，其余候选按需继续审核 |
+
+无需为继续写纯领域模型而提前决定全部模型厂商、身份厂商或基础设施。
+
+## 7. 最终验收清单（基线第 11 节，9 项）
+
+以下当前均未验收，不能作为简历实测成果：
+
+| ID | 验收条件 |
+| --- | --- |
+| G-01 | 300–500 份文档治理入库，按 M5 与 ADR-0003 的实际准入要求验收；不拿测试 fixture 替代真实公开语料 |
+| G-02 | >=300 条检索/引用样本，严格宏平均 Recall@5 >=85%，另报 Hit@5，引用准确率 >=95%，失效版本引用率 0 |
+| G-03 | >=150 条安全样本，正确拒答 >=95%、越权拦截 >=98%、高风险升级召回 >=95% |
+| G-04 | >=200 条历史 Trace，发布满足 +5pp、非目标下降 <=1pp、安全不降、人工签字与灰度 <=10% |
+| G-05 | 普通问答 P95 <=8s，复杂 Skill P95 <=15s |
+| G-06 | 同等质量下单次 Token 消耗降低 >=25% |
+| G-07 | 回答可审计、策略可追溯、一次操作可回滚 |
+| G-08 | 无诊断/处方、真实患者数据、跨部门泄漏、写入型 MCP、自动生产策略修改路径 |
+| G-09 | 全部数值来自可复现实测报告，不以目标或局部工具测试冒充系统结果 |
+
+## 8. 结合八股的学习顺序
+
+“边编译边学习”在本项目里可以落实为：**读一个知识点 → 写一个小功能 → 跑测试/构建 → 制造一个失败 → 用代码解释原理**。Python 阶段主要是安装、运行、测试；不用为了“编译”额外引入其他语言。
+
+### 8.1 已有代码，现在就能拿来学习
+
+| 顺序 | 读代码/运行入口 | 对应基础与面试问题 | 练习产物 |
+| --- | --- | --- | --- |
+| L-01 | pyproject、Makefile、CI；`make check` | src layout、模块导入、venv、editable 安装；为什么 pytest 能通过而 CLI 找不到包？ | 在仓库外验证 import，说明 PYTHONPATH 如何掩盖安装问题 |
+| L-02 | canonical.py 与 core 单测 | JSON 规范化、UTF-8、散列、幂等；为什么 `hash(a+b)` 不可靠？哈希与 HMAC 有何区别？ | 解释分隔符、版本字段、run_id 各解决什么，构造顺序不同但同义输入 |
+| L-03 | normalization.py 与 18 个向量 | Unicode NFC/NFKC、字符与字节、偏移量、正则；为什么不能直接统一兼容字符？ | 用 10⁹/L、全角字符和伪空白演示语义/定位风险 |
+| L-04 | validator.py、fixture_builder、回归测试 | Schema 与跨文件业务校验、fail-closed、pytest fixture、反向测试；为什么 Schema 通过不代表数据正确？ | 选一个 PR 规则，只篡改一处数据，证明它被对应 Finding 拦下 |
+| L-05 | tokenizer.py、contracts.py | Protocol/Pydantic、依赖隔离、可变全局状态、版本化；为什么有版本字符串仍可能不可复现？ | 修实例词典隔离，用两个词典实例的回归测试说明问题 |
+| L-06 | bm25_offline.py、fusion.py | 倒排索引、TF/IDF、词频饱和、长度归一化、RRF；为何 raw_score 不直接相加？ | 手算一个微型语料的排名，比较召回漏项与排序变化，解释 Reranker 救不回漏召回 |
+
+### 8.2 后续开发与知识点一一对应
+
+| 阶段 | 边做的功能 | 应掌握的八股 | 可用于面试的代码证据 |
+| --- | --- | --- | --- |
+| M0 契约 | 领域模型、AgentState、错误模型 | 类型提示、dataclass vs Pydantic、不可变性、序列化、依赖倒置、契约测试 | 非法状态/字段被拒绝，JSON 往返，模型不依赖数据库 SDK；不是背一套架构名词 |
+| M0 工程 | 依赖锁、CI、Compose、威胁模型 | 可复现构建、测试分层、容器进程/网络/卷、配置与密钥、信任边界 | 干净环境启动与故障用例；说明为什么“能在自己机器运行”不够 |
+| M1 数据库 | 文档版本、ACL、RLS、outbox | ACID、MVCC、隔离级别、锁、唯一/部分索引、事务竞态、行级权限、连接池 | 两个事务并发发布只能留下一个 active；池连接复用不串身份 |
+| M1 文档 | 抽取、切分、内容 hash、gold 映射 | 数据清洗与不可变原件、内容寻址、字符区间、ETL 质量门禁 | 跨页同句不会误判命中；改 chunk 文本会被 hash 校验发现 |
+| M1 检索 | FTS/BM25、embedding、pgvector、RRF、Reranker | 倒排索引与向量相似度、ANN/HNSW、过滤后召回、双塔 vs cross-encoder、Recall/Hit/Precision | 同一冻结集的消融、部门切片、候选不足和执行计划；不泛称 BM25 一定更好 |
+| M1 缓存 | 权限/版本指纹与失效 | cache-aside、TTL、穿透/击穿/雪崩、读写一致性、撤权失效 | 旧 active 归档后缓存不能继续提供证据；缓存命中不能绕过授权 |
+| M2 Harness | 图执行、重试、取消、幂等 | 状态机/DAG、异常分类、指数退避、at-least-once、幂等与重试区别、并发合并 | 无检索回答路径不可达；超时/重复执行不会产生多份副作用 |
+| M2 医学 RAG | Evidence、Verifier、Safety、Skills | Grounding、结构化输出、工具调用、提示词注入、规则与模型分工、NLI 支持/矛盾 | 剂量改一个单位能被识别；文档里的“忽略规则”无法提权 |
+| M2 模型基础 | Token 预算与模型调用 | Transformer/attention 的基本机制、上下文窗口、生成随机性、Token 成本；KV cache 留到推理优化再深入 | 解释为什么低 temperature 不等于严格可复现；为何整条 Trace 要限预算 |
+| M3 服务 | FastAPI、任务与 worker | HTTP/ASGI、async/await、I/O vs CPU、背压、连接池、超时取消、任务租约 | 并发相同 key 返回同 task；不同 payload 422；worker 杀掉后恢复 |
+| M3 身份/MCP | token、scope、只读工具 | 认证 vs 授权、OAuth/OIDC/JWT 边界、签名与 claim 验证、最小权限 | 伪造 dept/scopes 无效；MCP 连接成功不代表能读所有文档 |
+| M3 观测/性能 | Trace、metrics、P95、压测 | logs/metrics/traces 区别、分位数、指标基数、慢调用拆解、队列与吞吐 | 用一条 Trace 定位 DB/模型/排队时间，给出固定环境的 P95 报告 |
+| M4 Loop | 回放、配对评测、发布/回滚 | 数据泄漏、独立样本、配对 bootstrap、置信区间、灰度与版本指针 | 200 个 Trace 不等于 600 个独立样本；候选评分再高也不能绕过审批 |
+| M5 优化 | 成本对照、容量、运维 | 性能与质量权衡、容量规划、冷缓存、恢复策略、复现实验 | 同一数据/质量约束下 Token -25%，同时展示安全与延迟未恶化 |
+| P1 按需 | 独立推理和高可用 | batching、量化、GPU 显存、扩缩、RPO/RTO、零停机迁移 | 只有主链路测出瓶颈后，展示优化前后对照与新增故障处理 |
+
+学到能解释当前代码和失败机制即可，不要求开始 M0 前背完分布式系统、CUDA 或模型训练。尤其不要为了面试关键词引入用不到的 Kafka、Kubernetes、图数据库或微调链路。
+
+### 8.3 接下来按这个顺序推进
+
+1. **当前：完成 M1-01 的 Git 归档。** 75 条探针已本地冻结，71 agree、4 disputed_resolved、0 待决；两条最后改题已实际重审，pc-0074 已绑定人工裁决，PII 例外与复核运行证据均通过 frozen 校验。dataset_hash 与 manifest SHA-256 已写入 ADR-0002，尚无归档 commit。先梳理当前工作区大量历史未提交改动的依赖与提交范围，再提交冻结材料、校验器和所需依据，回填实际 commit；不能用旧 HEAD 代替。见[当前处理表](../evals/probe/precise_clause/drafts/v1/review/current_review_disposition.md)和[实现记录 26](reviews/2026-09-20-implementation-26-probe-review-and-freeze.md)。
+2. **维护冻结边界。** v1 内容不再原地修改；发现标注错误建立新数据集版本，对所有候选完整重跑。复核证据由 manifest 哈希绑定，归档时同时保留 dataset_hash 与 manifest SHA-256；模型服务别名不等同于固定后端快照。每轮继续执行工程基线 §9 自审。
+3. **归档后推进 M1-02 / DEC-001。** 固定三候选、tokenizer/词典、镜像、环境和测量参数，补适配器及 gold→chunk 映射，再跑词法召回、RLS、候选不足与许可证门禁；按 ADR-0002 判定，产出可复现实验报告。模型与词法引擎的结论留给真实实验。
+4. **可独立推进的实现切片：M1-11 发布事务。** 新版本激活、同 family 旧版归档、审计与 outbox 原子提交；验证并发发布、事务回滚和重复消费。先做数据库事务与事件边界，索引/缓存消费者随实际组件接入后再验收整项。该切片不要求先选定词法引擎。
+5. **补齐剩余 M1 与 M0 接线。** DEC-002/005/007 等按依赖推进，完成混合检索、事实回查、缓存和主评测；M0 已有契约、依赖锁、迁移、Compose 与威胁模型按代码继续复用，远端 CI 首次运行及安全阶段仍待完成。
+6. **M2 → M3 → M4 → M5。** 先完成固定安全链路与低风险 Skill，再扩到五个 Skill、可恢复服务、受控 Loop 和全量验收；P1/P2 按需要启动。
+
+下一步是步骤 1 的提交范围核查与归档，再进入步骤 3 的实验清单；步骤 4 可独立推进。领域模型、错误模型、tokenizer 隔离与 canonical 工具已实现，不再列作从零开发任务。对应知识确认题与代码入口见[任务知识对照 §10](TASK_KNOWLEDGE_MAP.md#10-下一步)。
+
+### 8.4 每轮固定的开发与复检方式
+
+每轮只选一个可验证切片；下面是学习记录模板，不是新增发布流程：
+
+```text
+任务：关联 Mx-xx；本轮只实现什么，明确不实现什么。
+知识：最多 2–3 个原理问题，先写自己的答案。
+约束：关联哪些 INV、Schema、版本/权限规则。
+实现：最小代码和必要注释，不先造框架。
+测试：正常 + 边界 + 失败；涉及权限/版本/并发时必须补对应反例。
+复检：逐条执行基线第 9 节，跑 lint/type/test 和相关集成/eval。
+证据：记录命令、真实结果、未运行项、剩余风险；据此更新本表。
+复述：用 3–5 分钟讲清“为什么这样做、错在哪里、如何证明、还有什么没做”。
+```
+
+常用本地命令（仓库根目录，已有 `venv/`）：
+
+```sh
+env -u DEBUG -u PYTHONPATH make check
+venv/bin/python -m pytest -q tests/unit/evals/test_probe_validator_regressions.py
+venv/bin/python -m pytest -q tests/unit/retrieval
+```
+
+本轮会话有继承的非布尔 `DEBUG`，上面的命令只移除进程变量，让 `.env` 的项目配置生效。每次核对 pytest 的 passed/skipped 明细；需要集成验证时，出现 skipped 应先查配置与数据库可达性。`make check` 的 pytest 已包含迁移集成用例，`make migration-check` 是可单独执行的迁移检查目标。
+
+真实版本目录建立后，才使用下列带占位参数的命令；目前不要将 `examples/` 声称为 frozen：
+
+```sh
+make validate-probe DIR=<真实版本目录> MODE=draft PAGES=<页文本目录>
+make validate-probe DIR=<真实版本目录> MODE=frozen PAGES=<页文本目录>
+```
+
+后续修改范围/阈值先走基线与 ADR；完成实现后更新这里的状态、测试证据和日期。历史审核记录不改写成新的实测结论。

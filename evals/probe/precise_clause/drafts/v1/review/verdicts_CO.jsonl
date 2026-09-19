@@ -1,0 +1,16 @@
+{"sample_id": "pc-0060", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
+{"sample_id": "pc-0061", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
+{"sample_id": "pc-0062", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
+{"sample_id": "pc-0063", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
+{"sample_id": "pc-0064", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
+{"sample_id": "pc-0065", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
+{"sample_id": "pc-0066", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
+{"sample_id": "pc-0067", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
+{"sample_id": "pc-0068", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
+{"sample_id": "pc-0069", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
+{"sample_id": "pc-0070", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
+{"sample_id": "pc-0071", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
+{"sample_id": "pc-0072", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
+{"sample_id": "pc-0073", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
+{"sample_id": "pc-0074", "verdict": "dispute", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "issue", "dept": "ok"}, "reason": "evidence_span.text 内容完整且能回答 query，但偏移与页文本不一致：按零基、右端不含的字符偏移，该文本位于 [914,1099)，不是所标注的 [940,1125)。", "suggestion": "将 evidence_span.char_start 改为 914，char_end 改为 1099，保留其余内容。"}
+{"sample_id": "pc-0075", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}

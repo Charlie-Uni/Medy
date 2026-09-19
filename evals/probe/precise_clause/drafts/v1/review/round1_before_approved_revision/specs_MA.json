@@ -1,0 +1,360 @@
+{
+  "batch": "MA",
+  "start_id": 1,
+  "specs": [
+    {
+      "doc": "tfda-label-loformin-850mg",
+      "page": 1,
+      "key_text": "每日服用二次,每次服用一錠",
+      "query": "美洛醣一天要吃幾次、每次幾錠？",
+      "slices": [
+        "dose_unit",
+        "drug_name_zh"
+      ],
+      "section": "用法用量"
+    },
+    {
+      "doc": "tfda-label-loformin-850mg",
+      "page": 1,
+      "key_text": "每日最高治療劑量速效劑型:3000 mg",
+      "query": "美洛醣每日最高治療劑量是多少",
+      "slices": [
+        "dose_unit",
+        "drug_name_zh"
+      ],
+      "section": "用法用量"
+    },
+    {
+      "doc": "tfda-label-loformin-850mg",
+      "page": 1,
+      "key_text": "不建議開始使用",
+      "query": "超過八十歲的老人家可以開始用美洛醣嗎",
+      "slices": [
+        "negation",
+        "drug_name_zh"
+      ],
+      "section": "用法用量"
+    },
+    {
+      "doc": "tfda-label-loformin-850mg",
+      "page": 2,
+      "key_text": "約2.5小時就會達到最高血中濃度",
+      "query": "口服 metformin 之後大約多久達到最高血中濃度",
+      "slices": [
+        "time_window",
+        "mixed_zh_en"
+      ],
+      "section": "藥動學"
+    },
+    {
+      "doc": "tfda-label-loformin-850mg",
+      "page": 2,
+      "key_text": "服用後24至48小時內可達穩定血中濃度",
+      "query": "美洛醣按建議劑量服用多久後血中濃度會穩定",
+      "slices": [
+        "time_window",
+        "drug_name_zh",
+        "dose_unit"
+      ],
+      "section": "藥動學"
+    },
+    {
+      "doc": "tfda-label-loformin-850mg",
+      "page": 2,
+      "key_text": "衛部藥製字第058257號 Code No. 美洛醣膜衣錠850毫克",
+      "query": "衛部藥製字第058257號是哪一個藥品",
+      "slices": [
+        "protocol_id",
+        "dose_unit"
+      ],
+      "section": "許可證資訊",
+      "span": "衛部藥製字第058257號 Code No. 美洛醣膜衣錠850毫克 Loformin Film-coated Tablets 850mg (Metformin)"
+    },
+    {
+      "doc": "tfda-label-deurinol-300mg",
+      "page": 3,
+      "key_text": "初始劑量:口服,100mg,一天一次",
+      "query": "痛風停錠用於成人及青少年抗痛風的初始劑量是多少",
+      "slices": [
+        "dose_unit",
+        "drug_name_zh",
+        "time_window",
+        "negation"
+      ],
+      "section": "用法用量",
+      "span": "一般成人及青少年劑量:抗痛風劑(Antigout agent)— 初始劑量:口服,100mg,一天一次,在一星期的間隔期間每天增加100mg 直到達到所需要的血清尿酸濃度為止。不得超過每日800mg 之最大建議劑量。"
+    },
+    {
+      "doc": "tfda-label-deurinol-300mg",
+      "page": 3,
+      "key_text": "每一劑量300mg;每天800mg",
+      "query": "allopurinol 一般成人的處方限量是多少（每一劑量與每天）",
+      "slices": [
+        "dose_unit",
+        "negation",
+        "mixed_zh_en"
+      ],
+      "section": "用法用量",
+      "span": "一般成人處方限量:每一劑量300mg;每天800mg"
+    },
+    {
+      "doc": "tfda-label-deurinol-300mg",
+      "page": 2,
+      "key_text": "不得使用於痛風性關節炎的急性發作",
+      "query": "痛風關節炎急性發作的時候可以用 allopurinol 嗎",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "section": "適應症"
+    },
+    {
+      "doc": "tfda-label-deurinol-300mg",
+      "page": 1,
+      "key_text": "Oxipurinol,12 至30 小時",
+      "query": "Oxipurinol 的半衰期大約多久",
+      "slices": [
+        "mixed_zh_en"
+      ],
+      "section": "藥動學"
+    },
+    {
+      "doc": "tfda-label-deurinol-300mg",
+      "page": 8,
+      "key_text": "不得超過300 mg",
+      "query": "痛風停錠單次劑量的上限是多少",
+      "slices": [
+        "dose_unit",
+        "negation",
+        "drug_name_zh"
+      ],
+      "section": "注意事項"
+    },
+    {
+      "doc": "tfda-label-deurinol-300mg",
+      "page": 10,
+      "key_text": "本藥須由醫師處方使用",
+      "query": "衛署藥製字第 048564 號的藥品須由醫師處方使用嗎",
+      "slices": [
+        "protocol_id"
+      ],
+      "section": "許可證資訊",
+      "span": "本藥須由醫師處方使用衛署藥製字第 048564 號"
+    },
+    {
+      "doc": "tfda-label-zosaa-50mg",
+      "page": 1,
+      "key_text": "起始劑量及維持劑量為每次 50mg,每日一次",
+      "query": "穩壓膜衣錠治療高血壓的一般起始劑量是多少",
+      "slices": [
+        "dose_unit",
+        "drug_name_zh",
+        "time_window"
+      ],
+      "section": "用法用量"
+    },
+    {
+      "doc": "tfda-label-zosaa-50mg",
+      "page": 1,
+      "key_text": "3~6 週可獲得最大降壓效果",
+      "query": "穩壓膜衣錠吃多久才會有最大的降壓效果",
+      "slices": [
+        "time_window",
+        "drug_name_zh",
+        "dose_unit"
+      ],
+      "section": "用法用量"
+    },
+    {
+      "doc": "tfda-label-zosaa-50mg",
+      "page": 1,
+      "key_text": "改用每次 25mg",
+      "query": "高血壓且血管內體液缺乏的病人使用穩壓膜衣錠的起始劑量是多少",
+      "slices": [
+        "dose_unit",
+        "drug_name_zh"
+      ],
+      "section": "用法用量"
+    },
+    {
+      "doc": "tfda-label-zosaa-50mg",
+      "page": 1,
+      "key_text": "合併使用本品及含 aliskiren 成分藥品於糖尿病患",
+      "query": "糖尿病患者能同時使用穩壓膜衣錠和 aliskiren 嗎",
+      "slices": [
+        "negation",
+        "drug_name_zh",
+        "dose_unit",
+        "mixed_zh_en"
+      ],
+      "section": "禁忌症"
+    },
+    {
+      "doc": "tfda-label-zosaa-50mg",
+      "page": 1,
+      "key_text": "ACEIs 及 ARBs 不應合併使用於糖尿病腎病變患者",
+      "query": "糖尿病腎病變患者已使用 ACEI 時，可以再加用 ARB 嗎",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "section": "注意事項",
+      "span": "雙重阻斷腎素-血管昇壓素-醛固酮系統(renin-angiotensin-aldosterone system, RAAS):有證據顯示,合併使用 ACEIs、ARBs 或含 aliskiren 成分藥品會增加低血壓、高鉀血症及腎功能下降(包括急性腎衰竭)之風險,故不建議合併使用 ACEIs、ARBs 或含 aliskiren 成分藥品來雙重阻斷 RAAS,若確有必要使用雙重阻斷治療,應密切監測患者之腎+A12 功能、電解質及血壓。ACEIs 及 ARBs 不應合併使用於糖尿病腎病變患者。"
+    },
+    {
+      "doc": "tfda-label-zosaa-50mg",
+      "page": 1,
+      "key_text": "穩壓膜衣錠 50 毫克",
+      "query": "衛署藥製字第 047911 號是哪個藥品",
+      "slices": [
+        "protocol_id",
+        "dose_unit"
+      ],
+      "section": "許可證資訊",
+      "span": "G-9053 衛署藥製字第 047911 號穩壓膜衣錠 50 毫克 Zosaa F.C. Tablets 50 mg"
+    },
+    {
+      "doc": "tfda-label-cancliol-100mg",
+      "page": 1,
+      "key_text": "高血壓:每日投與 100〜200mg",
+      "query": "高血壓患者每天用明德心壓暢錠治療用量範圍是多少",
+      "slices": [
+        "dose_unit",
+        "drug_name_zh"
+      ],
+      "section": "用法用量",
+      "span": "高血壓:每日投與 100〜200mg,以單一劑量於晨間口服抑或將之分成二次劑量於早、晚服用。某些情況,亦有可能需要酌增劑量或併服其他降血壓藥。"
+    },
+    {
+      "doc": "tfda-label-cancliol-100mg",
+      "page": 1,
+      "key_text": "房室神經傳導阻斷第二和第三期,非代償性心衰竭,心原性休克,顯著的心搏過緩等症狀者禁用此劑",
+      "query": "哪些病人禁止使用明德心壓暢錠",
+      "slices": [
+        "negation",
+        "drug_name_zh"
+      ],
+      "section": "禁忌"
+    },
+    {
+      "doc": "tfda-label-cancliol-100mg",
+      "page": 1,
+      "key_text": "需逐漸停用,例如於 7〜10 天",
+      "query": "明德心壓暢錠要怎麼停藥，可以突然停嗎",
+      "slices": [
+        "time_window",
+        "drug_name_zh"
+      ],
+      "section": "注意事項"
+    },
+    {
+      "doc": "tfda-label-cancliol-100mg",
+      "page": 1,
+      "key_text": "麻醉前至少 48 小時即應停止服用",
+      "query": "要開刀麻醉的病人手術前多久停用心壓暢錠",
+      "slices": [
+        "time_window",
+        "drug_name_zh",
+        "negation"
+      ],
+      "section": "注意事項"
+    },
+    {
+      "doc": "tfda-label-cancliol-100mg",
+      "page": 2,
+      "key_text": "靜脈注射1〜2mg Atropine sulfate",
+      "query": "心壓暢錠過量時，該如何急救",
+      "slices": [
+        "dose_unit",
+        "drug_name_zh",
+        "mixed_zh_en"
+      ],
+      "section": "過量處理",
+      "span": "過量中毒時之處裡:本劑服用過量時會導致明顯的低血壓和心搏過緩。初步的急救方法,係靜脈注射1〜2mg Atropine sulfate;倘若還未能達到滿意效果時,在使用 Atropine 後可接著投與升壓劑,例如metaraminol 或 noradrenaline。此外如果任何β-blocket 過量中毒的時候,亦可投與一次劑量1〜5(10)mg 的 glucagon 施救。"
+    },
+    {
+      "doc": "tfda-label-cancliol-100mg",
+      "page": 1,
+      "key_text": "心壓暢錠 100 毫克(美托普洛)",
+      "query": "衛署藥製字第 029301 號是哪個藥品",
+      "slices": [
+        "protocol_id",
+        "dose_unit"
+      ],
+      "section": "許可證資訊",
+      "span": "衛署藥製字第 029301 號 GMP-G-0462 號 \"明德\"心壓暢錠 100 毫克(美托普洛) CANCLIOL TABLETS 100mg (Metoprolol) \"Meider\""
+    },
+    {
+      "doc": "tfda-label-esomen-40mg",
+      "page": 1,
+      "key_text": "不可嚼破或壓破本錠劑",
+      "query": "胃所樂腸溶膜衣錠可以嚼碎或壓碎再吃嗎",
+      "slices": [
+        "negation",
+        "drug_name_zh",
+        "time_window"
+      ],
+      "section": "用法用量",
+      "span": "本錠劑應整粒以液體吞服,不可嚼破或壓破本錠劑。對於有吞嚥困難的病人,可將藥錠置入半杯非碳酸類的水中,且不可使用他種液體,因為藥錠的腸衣膜可能因此溶解。同時攪拌直到藥錠崩散,並立即或在 30 分鐘之內將水連同小藥球喝下。再將半杯水加入杯中沖洗並喝下,小藥球不可咬碎或壓碎。本品不適用於胃管給藥。"
+    },
+    {
+      "doc": "tfda-label-esomen-40mg",
+      "page": 1,
+      "key_text": "30 分鐘之內",
+      "query": "胃所樂泡在水裡崩散後要在多久之內喝完",
+      "slices": [
+        "time_window",
+        "drug_name_zh"
+      ],
+      "section": "用法用量"
+    },
+    {
+      "doc": "tfda-label-esomen-40mg",
+      "page": 1,
+      "key_text": "食道未發炎之患者 20 mg 每天 1次",
+      "span": "胃食道逆流性疾病之症狀治療:對食道未發炎之患者 20 mg 每天 1次;若 4週後仍有症狀時,則應進一步檢查患者。一旦症狀獲得緩解後,可以每天 1次 20 mg 之療法來做後續的症狀控制。就成人而言,如需要時,可以給予 20 mg 每天 1次之療法。對於使用非類固醇抗發炎藥 (NSAID) 治療而有誘發胃潰瘍和十二指腸潰瘍危險之病患,不建議以有需要時才服藥的方式作為後續的症狀控制。",
+      "query": "胃所樂腸溶膜衣錠用於食道未發炎的胃食道逆流症狀治療，劑量和療程是多少",
+      "slices": [
+        "dose_unit",
+        "time_window",
+        "drug_name_zh",
+        "negation"
+      ],
+      "section": "用法用量"
+    },
+    {
+      "doc": "tfda-label-esomen-40mg",
+      "page": 2,
+      "key_text": "禁止同時併用 esomeprazole 和 nelfinavir",
+      "query": "esomeprazole 可以和 nelfinavir 一起服用嗎",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "section": "藥物交互作用"
+    },
+    {
+      "doc": "tfda-label-esomen-40mg",
+      "page": 3,
+      "key_text": "不可超過 20 mg",
+      "query": "嚴重肝功能不良的病人 esomeprazole 最高劑量是多少",
+      "slices": [
+        "dose_unit",
+        "negation",
+        "mixed_zh_en"
+      ],
+      "section": "特殊族群"
+    },
+    {
+      "doc": "tfda-label-esomen-40mg",
+      "page": 4,
+      "key_text": "廠址:新北市土城區中央路二段 104 號",
+      "query": "衛部藥製字第 058102 號藥品的製造廠址在哪裡",
+      "slices": [
+        "protocol_id"
+      ],
+      "section": "許可證資訊",
+      "span": "衛部藥製字第 058102 號 G- 12115 公司地址:台北市中山北路二段 113 號 8 樓廠址:新北市土城區中央路二段 104 號"
+    }
+  ]
+}

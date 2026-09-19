@@ -1,0 +1,11 @@
+{
+  "sample_id": "pc-0066",
+  "field": "query",
+  "before": "按照 ICH E6(R3)，合理报销受试者实际发生的交通和住宿等费用，是否属于胁迫？",
+  "after": "按照 ICH E6(R3)，研究中心拟实报实销受试者因到访产生的合理路费和住宿费，伦理审查能否仅因这种报销就认定存在胁迫？",
+  "reason": "query 基本逐项翻译 key_text，并将“is not coercive”改为“是否属于胁迫”，仅增加指南编号，属于将原句改成问句，不符合 query 的设计要求。",
+  "other_fields_unchanged": true,
+  "status": "approved_and_applied",
+  "asked_at": "2026-09-20 Australia/Sydney",
+  "approval_quote": "可以 继续"
+}

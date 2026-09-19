@@ -1,0 +1,381 @@
+"""Validate recorded review evidence without claiming an unavailable model snapshot.
+
+The assembler verifies actual prompts against local page text. This check deliberately
+does not read input packs: it verifies the frozen sample coverage, v2 result bindings,
+human resolutions and the eight hashed execution artifacts copied into the version.
+"""
+
+from __future__ import annotations
+
+import hashlib
+import json
+import re
+from collections.abc import Mapping
+from pathlib import Path
+from typing import TYPE_CHECKING, Any
+
+from medops.core.canonical import canonical_json
+
+if TYPE_CHECKING:
+    from medops.evals.probe.validator import Finding, PageTextProvider
+
+BATCHES = ("MA", "PV", "CO")
+EVIDENCE_NAMES = (
+    tuple(f"run_{batch}.json" for batch in BATCHES)
+    + tuple(f"verdicts_{batch}.jsonl" for batch in BATCHES)
+    + ("resolutions.json", "reviewer_runtime_metadata.json")
+)
+EVIDENCE_PATHS = tuple(f"review_evidence/{name}" for name in EVIDENCE_NAMES)
+ITEM_KEYS = {"query", "slices", "key_text", "evidence_span", "dept"}
+_SHA256 = re.compile(r"[0-9a-f]{64}\Z")
+
+
+def service_alias_version(model: str) -> str:
+    """Explicitly describe observed identity and missing metadata, not a pinned version."""
+    return f"service-alias:{model};backend-version:not-exposed"
+
+
+def _require(condition: bool, message: str) -> None:
+    if not condition:
+        raise ValueError(message)
+
+
+def _digest(value: Any) -> str:
+    return hashlib.sha256(canonical_json(value).encode("utf-8")).hexdigest()
+
+
+def _hashes(value: Any, ids: set[str], label: str) -> None:
+    _require(isinstance(value, dict) and set(value) == ids, f"{label}: hash coverage mismatch")
+    _require(all(isinstance(v, str) and _SHA256.fullmatch(v) for v in value.values()), f"{label}: invalid hash")
+
+
+def _unique_object(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+    result: dict[str, Any] = {}
+    for key, value in pairs:
+        _require(key not in result, "duplicate JSON object key in review evidence")
+        result[key] = value
+    return result
+
+
+def _json(data: bytes) -> Any:
+    return json.loads(data.decode("utf-8"), object_pairs_hook=_unique_object)
+
+
+def _jsonl(data: bytes) -> list[dict[str, Any]]:
+    rows = [_json(line) for line in data.splitlines() if line.strip()]
+    _require(all(isinstance(row, dict) for row in rows), "JSONL review evidence must contain objects")
+    return rows
+
+
+def _verdicts(rows: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    result = {}
+    for row in rows:
+        _require(set(row) == {"sample_id", "verdict", "items", "reason", "suggestion"}, "invalid verdict fields")
+        sid = row["sample_id"]
+        _require(isinstance(sid, str) and sid not in result, "duplicate or invalid verdict sample_id")
+        items = row["items"]
+        _require(isinstance(items, dict) and set(items) == ITEM_KEYS, f"{sid}: invalid verdict items")
+        _require(all(value in ("ok", "issue") for value in items.values()), f"{sid}: invalid verdict item value")
+        expected = "dispute" if "issue" in items.values() else "agree"
+        _require(row["verdict"] == expected, f"{sid}: verdict disagrees with its issue items")
+        _require(isinstance(row["reason"], str) and isinstance(row["suggestion"], str), f"{sid}: invalid verdict text")
+        _require(expected != "dispute" or bool(row["reason"].strip()), f"{sid}: disputed verdict needs a reason")
+        result[sid] = row
+    return result
+
+
+def _read_artifacts(version_dir: Path, provenance: dict[str, Any]) -> dict[str, bytes]:
+    entries = provenance["artifacts"]
+    _require(
+        isinstance(entries, list) and len(entries) == len(EVIDENCE_PATHS),
+        "review evidence must contain eight artifacts",
+    )
+    paths = [entry["path"] for entry in entries]
+    _require(
+        len(set(paths)) == len(paths) and set(paths) == set(EVIDENCE_PATHS),
+        "review evidence paths must match the eight required files",
+    )
+    root = version_dir.resolve()
+    evidence_dir = version_dir / "review_evidence"
+    _require(not evidence_dir.is_symlink(), "review_evidence directory must not be a symlink")
+    result = {}
+    for entry in entries:
+        relative = entry["path"]
+        path = version_dir / relative
+        _require(
+            not path.is_symlink() and path.resolve().is_relative_to(root),
+            f"{relative}: artifact escapes version directory or is a symlink",
+        )
+        raw = path.read_bytes()
+        _require(hashlib.sha256(raw).hexdigest() == entry["sha256"], f"{relative}: artifact SHA-256 mismatch")
+        result[Path(relative).name] = raw
+    return result
+
+
+def _current_records(
+    version_dir: Path, samples: list[dict[str, Any]], pages: PageTextProvider | None
+) -> dict[str, dict[str, Any]] | None:
+    if pages is None:
+        return None
+    corpus = _json((version_dir / "corpus.json").read_bytes())
+    docs = {d["source_hash"]: d for d in corpus["documents"]}
+    result = {}
+    for sample in samples:
+        _require(len(sample["required_gold_evidence"]) == 1, "recorded review protocol requires one gold per sample")
+        gold = sample["required_gold_evidence"][0]
+        doc = docs[gold["source_hash"]]
+        text = pages.page_text(gold["source_hash"], gold["page"])
+        if text is None:
+            return None
+        result[sample["sample_id"]] = {
+            "sample_id": sample["sample_id"],
+            "query": sample["query"],
+            "dept": sample["dept"],
+            "language": sample["language"],
+            "slices": sample["slices"],
+            "gold": {
+                "page": gold["page"],
+                "section": gold["section"],
+                "key_text": gold["key_text"],
+                "evidence_span": {key: gold["evidence_span"][key] for key in ("text", "char_start", "char_end")},
+            },
+            "document": {
+                "document_key": doc["document_key"],
+                "title": doc["title"],
+                "doc_type": doc["doc_type"],
+                "language": doc["language"],
+            },
+            "page_text": text,
+        }
+    return result
+
+
+def _actual_prompt_hash(prompt_text: str, records: list[dict[str, Any]]) -> str:
+    """Frozen v2 invocation wire format; keep its byte order, including JSON key order."""
+    parts = [
+        "下面第一部分是复核提示原文，第二部分是本轮要复核的样本（每条含 gold 页的页文本）。",
+        f"严格按复核提示的输出格式作答：只输出 JSON 行，每条样本一行，共 {len(records)} 行，不要任何其他文字或代码围栏。",
+        "",
+        "===== 第一部分：复核提示 =====",
+        prompt_text.rstrip("\n"),
+        "",
+        "===== 第二部分：样本 =====",
+    ]
+    parts.extend(json.dumps(record, ensure_ascii=False) for record in records)
+    parts.extend(["", f"===== 结束：请输出 {len(records)} 行 JSON ====="])
+    return hashlib.sha256(("\n".join(parts) + "\n").encode("utf-8")).hexdigest()
+
+
+def _validate(
+    version_dir: Path, manifest: dict[str, Any], second: dict[str, Any], pages: PageTextProvider | None
+) -> bool:
+    model = second["model"]
+    _require(
+        second["model_version"] == service_alias_version(model),
+        "model_version must exactly describe the observed service alias and unexposed backend",
+    )
+    provenance = manifest.get("review_provenance")
+    if not isinstance(provenance, dict):
+        raise ValueError("service-alias model_version requires review_provenance")
+    _require(provenance["reviewer_id"] == second["id"], "review_provenance reviewer_id differs from manifest")
+    _require(provenance["version_source"] == "service_alias", "review_provenance version_source must be service_alias")
+    _require(
+        "backend_model_version" in provenance and provenance["backend_model_version"] is None,
+        "unexposed backend_model_version must be explicitly null",
+    )
+    limitation = provenance["reproducibility_limitations"]
+    _require(
+        isinstance(limitation, str) and len(limitation.strip()) >= 20,
+        "review_provenance needs an explicit reproducibility limitation",
+    )
+    artifacts = _read_artifacts(version_dir, provenance)
+    samples = _jsonl((version_dir / "samples.jsonl").read_bytes())
+    sample_ids = [s["sample_id"] for s in samples]
+    _require(
+        len(set(sample_ids)) == len(samples) and len(samples) == manifest["counts"]["samples"],
+        "review evidence sample coverage differs from manifest",
+    )
+    _require(all(s["dept"] in BATCHES for s in samples), "review evidence has an unknown sample department")
+    records = _current_records(version_dir, samples, pages)
+    prompt_raw = (version_dir / "review_prompt.md").read_bytes()
+    _require(
+        hashlib.sha256(prompt_raw).hexdigest() == second["prompt_hash"], "review_prompt.md hash differs from manifest"
+    )
+    prompt_text = prompt_raw.decode("utf-8")
+    resolutions = _json(artifacts["resolutions.json"])
+    _require(isinstance(resolutions, dict), "resolutions must be an object")
+    disputed = set()
+    all_chunks = []
+    for batch in BATCHES:
+        group = {s["sample_id"]: s for s in samples if s["dept"] == batch}
+        _require(bool(group) and len(group) == manifest["counts"]["per_dept"][batch], f"{batch}: sample count mismatch")
+        run = _json(artifacts[f"run_{batch}.json"])
+        _require(
+            run["batch"] == batch and run["provenance_version"] == 2, f"{batch}: requires matching v2 run evidence"
+        )
+        _require(run["active_review"] is None, f"{batch}: review is unfinished")
+        _require(
+            run["model"] == model and run["reasoning_effort_requested"] == "high", f"{batch}: model or effort mismatch"
+        )
+        _require(run["review_prompt_sha256"] == second["prompt_hash"], f"{batch}: review prompt hash mismatch")
+        _require(
+            run.get("backend_model_version") is None, f"{batch}: backend version is exposed, sentinel is inappropriate"
+        )
+        _hashes(run["sample_input_sha256"], set(group), batch)
+        if records is not None:
+            _require(
+                run["sample_input_sha256"] == {sid: _digest(records[sid]) for sid in group},
+                f"{batch}: current sample/page input hash differs from review",
+            )
+        latest, chunks = run["latest"], run["chunks"]
+        _require(isinstance(latest, dict) and set(latest) == set(group), f"{batch}: latest coverage mismatch")
+        _require(isinstance(chunks, list) and bool(chunks), f"{batch}: missing invocation evidence")
+        current = _verdicts(_jsonl(artifacts[f"verdicts_{batch}.jsonl"]))
+        _require(set(current) == set(group), f"{batch}: verdict coverage mismatch")
+        for chunk in chunks:
+            _require(
+                chunk["model"] == model and chunk["reasoning_effort"] == "high" and chunk["returncode"] == 0,
+                f"{batch}: unsuccessful or mismatched invocation",
+            )
+            _require(
+                all(
+                    isinstance(chunk.get(k), str) and chunk[k].strip()
+                    for k in ("session_id", "cli_version", "started_at", "finished_at")
+                ),
+                f"{batch}: missing invocation metadata",
+            )
+            _require(chunk.get("backend_model_version") is None, f"{batch}: invocation exposes a backend version")
+            ids = chunk["sample_ids"]
+            _require(
+                isinstance(ids, list) and bool(ids) and len(ids) == len(set(ids)) and set(ids).issubset(group),
+                f"{batch}: invalid invocation sample coverage",
+            )
+            _hashes(chunk["sample_input_sha256"], set(ids), batch)
+            _require(
+                isinstance(chunk["prompt_sha256"], str) and bool(_SHA256.fullmatch(chunk["prompt_sha256"])),
+                f"{batch}: missing actual prompt hash",
+            )
+            _require(set(_verdicts(chunk["verdicts"])).issubset(ids), f"{batch}: invocation verdict coverage mismatch")
+        all_chunks.extend(chunks)
+        last_invocation = {sid: index for index, chunk in enumerate(chunks) for sid in chunk["sample_ids"]}
+        for sid, sample in group.items():
+            reference = latest[sid]
+            index = reference["chunk_index"]
+            _require(type(index) is int and 0 <= index < len(chunks), f"{sid}: invalid latest chunk index")
+            _require(index == last_invocation.get(sid), f"{sid}: latest must reference the last appended invocation")
+            chunk = chunks[index]
+            _require(sid in chunk["sample_ids"], f"{sid}: latest points to an unrelated invocation")
+            verdict = current[sid]
+            _require(
+                _verdicts(chunk["verdicts"]).get(sid) == verdict, f"{sid}: current verdict differs from invocation"
+            )
+            expected = {
+                "chunk_index": index,
+                "sample_input_sha256": chunk["sample_input_sha256"][sid],
+                "prompt_sha256": chunk["prompt_sha256"],
+                "verdict_sha256": _digest(verdict),
+            }
+            _require(
+                reference == expected and reference["sample_input_sha256"] == run["sample_input_sha256"][sid],
+                f"{sid}: latest binding mismatch",
+            )
+            if records is not None:
+                inputs = [records[member] for member in chunk["sample_ids"]]
+                _require(
+                    chunk["sample_input_sha256"] == {record["sample_id"]: _digest(record) for record in inputs},
+                    f"{sid}: latest invocation also contains superseded input; rereview before freezing",
+                )
+                _require(
+                    _actual_prompt_hash(prompt_text, inputs) == chunk["prompt_sha256"],
+                    f"{sid}: actual prompt hash differs from current input",
+                )
+            reviewer = sample["review"]["second_reviewer"]
+            _require(
+                all(reviewer[k] == second[k] for k in ("id", "model", "model_version", "prompt_hash")),
+                f"{sid}: sample reviewer differs from manifest",
+            )
+            if verdict["verdict"] == "agree":
+                _require(sample["review"]["status"] == "agreed", f"{sid}: sample status disagrees with current verdict")
+                continue
+            disputed.add(sid)
+            resolution = resolutions[sid]
+            _require(not resolution.get("accepted"), f"{sid}: pending accepted dispute requires rereview")
+            _require(
+                resolution["sample_input_sha256"] == reference["sample_input_sha256"]
+                and resolution["verdict_sha256"] == _digest(verdict),
+                f"{sid}: stale resolution binding",
+            )
+            note = resolution["resolution_note"]
+            _require(
+                isinstance(note, str) and len(note.strip()) >= 5 and sample["review"]["resolution_note"] == note,
+                f"{sid}: resolution note differs from sample",
+            )
+            _require(sample["review"]["status"] == "disputed_resolved", f"{sid}: disputed sample is not resolved")
+            _require(
+                set(resolution["issue_scope"]) == {k for k, v in verdict["items"].items() if v == "issue"},
+                f"{sid}: resolution issue scope mismatch",
+            )
+    _require(set(resolutions) == disputed, "resolutions must cover exactly the current disputed samples")
+    runtime = _json(artifacts["reviewer_runtime_metadata.json"])
+    _require(
+        runtime["model_service_alias"] == model and runtime["backend_model_version"] is None,
+        "runtime model identity differs from manifest",
+    )
+    _require(
+        "not exposed" in runtime["backend_model_version_status"].lower(),
+        "runtime must disclose the unexposed backend version",
+    )
+    _require(runtime["reasoning_effort"] == "high", "runtime effort differs from invocations")
+    _require(
+        runtime["cli_versions"] == sorted({chunk["cli_version"] for chunk in all_chunks}),
+        "runtime CLI versions differ from invocations",
+    )
+    _require(
+        type(runtime["observed_successful_calls"]) is int and runtime["observed_successful_calls"] == len(all_chunks),
+        "runtime invocation count differs from evidence",
+    )
+    _require(
+        runtime["first_started_at"] == min(c["started_at"] for c in all_chunks)
+        and runtime["last_finished_at"] == max(c["finished_at"] for c in all_chunks),
+        "runtime time range differs from invocations",
+    )
+    if "current_reviewed_samples" in runtime:
+        _require(
+            runtime["current_reviewed_samples"] == len(samples), "runtime current sample count differs from dataset"
+        )
+    return records is not None
+
+
+def validate_review_provenance(
+    version_dir: Path, manifest: Mapping[str, Any], *, pages: PageTextProvider | None = None
+) -> list[Finding]:
+    """Return PR-09 findings; ordinary recorded model versions remain backwards compatible."""
+    from medops.evals.probe.validator import Finding
+
+    seconds = [
+        r for r in manifest.get("reviewers", []) if r.get("role") == "second_reviewer" and r.get("kind") == "llm"
+    ]
+    special = any(
+        str(r.get("model_version", "")).startswith("service-alias:")
+        or "backend-version:" in str(r.get("model_version", ""))
+        for r in seconds
+    )
+    evidence_dir = Path(version_dir) / "review_evidence"
+    has_evidence = evidence_dir.exists() or evidence_dir.is_symlink()
+    if not special and "review_provenance" not in manifest and not has_evidence:
+        return []
+    try:
+        _require(len(seconds) == 1, "review_provenance requires exactly one LLM reviewer")
+        complete = _validate(Path(version_dir), dict(manifest), seconds[0], pages)
+    except (OSError, UnicodeError, ValueError, KeyError, TypeError, AttributeError, IndexError) as exc:
+        return [Finding("PR-09", "error", f"invalid review provenance: {exc}", "manifest.json/review_provenance")]
+    if not complete:
+        return [
+            Finding(
+                "PR-09",
+                "warning",
+                "page texts unavailable: current input and actual prompt hashes were not reconstructed; PR-05 blocks frozen validation",
+                "manifest.json/review_provenance",
+            )
+        ]
+    return []

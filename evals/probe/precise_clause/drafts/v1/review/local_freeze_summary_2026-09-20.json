@@ -1,0 +1,20 @@
+{
+  "state": "local_frozen_git_archive_pending",
+  "dataset_version": "v1",
+  "dataset_hash": "5561bee58e37cd8d86b756f17e6c1a6ebed32ba54ba2ac48f4cd4adee254db7e",
+  "manifest_sha256": "062f9a536e0d811306f80dd5c24cc44f40a39a8f36ac360959c4de99b1faf54b",
+  "freeze_date": "2026-09-20",
+  "git_commit": null,
+  "review_counts": {
+    "agreed": 71,
+    "disputed_resolved": 4,
+    "pending": 0
+  },
+  "full_test_result": {
+    "passed": 482,
+    "integration_passed": 64,
+    "unit_passed": 418
+  },
+  "pii_exceptions": 1,
+  "backend_model_version": "not exposed; recorded honestly as service alias, not a pinned snapshot"
+}

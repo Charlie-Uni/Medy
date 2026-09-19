@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://medy.local/evals/probe/precise_clause/pii_exceptions.schema.json",
+  "title": "PreciseClauseProbePIIExceptions",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "dataset_version",
+    "pii_ruleset_version",
+    "exceptions"
+  ],
+  "properties": {
+    "dataset_version": {
+      "type": "string",
+      "pattern": "^v[0-9]+(\\.[0-9]+)?$"
+    },
+    "pii_ruleset_version": {
+      "const": "pii-rules-v1"
+    },
+    "exceptions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "sample_id",
+          "gold_id",
+          "source_hash",
+          "field",
+          "field_sha256",
+          "rule",
+          "match",
+          "char_start",
+          "char_end",
+          "human_review"
+        ],
+        "properties": {
+          "sample_id": {
+            "type": "string",
+            "pattern": "^pc-[0-9]{4}$"
+          },
+          "gold_id": {
+            "type": "string",
+            "pattern": "^pc-[0-9]{4}-g[0-9]{1,2}$"
+          },
+          "source_hash": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "field": {
+            "enum": [
+              "key_text",
+              "evidence_span.text"
+            ]
+          },
+          "field_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "rule": {
+            "const": "email"
+          },
+          "match": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "char_start": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "char_end": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "human_review": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "reviewer_id",
+              "reviewed_at",
+              "decision",
+              "approval_record",
+              "approval_record_sha256",
+              "reason"
+            ],
+            "properties": {
+              "reviewer_id": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              },
+              "reviewed_at": {
+                "type": "string",
+                "format": "date"
+              },
+              "decision": {
+                "const": "public_institutional_contact"
+              },
+              "approval_record": {
+                "type": "string",
+                "pattern": "^docs/reviews/[A-Za-z0-9_.-]+\\.md$"
+              },
+              "approval_record_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 10,
+                "maxLength": 1000,
+                "pattern": "\\S"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

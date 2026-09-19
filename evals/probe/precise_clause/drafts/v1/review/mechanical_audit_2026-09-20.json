@@ -1,0 +1,43 @@
+{
+  "status": "blocked",
+  "date": "2026-09-20",
+  "scope": "Current draft structural, anchor, count and PII preflight; absent review excluded; not full assembled PR-01..PR-14 validation",
+  "counts": {
+    "samples": 75,
+    "per_dept": {
+      "MA": 30,
+      "PV": 29,
+      "CO": 16
+    },
+    "per_slice": {
+      "dose_unit": 20,
+      "drug_name_zh": 18,
+      "negation": 41,
+      "time_window": 20,
+      "mixed_zh_en": 53,
+      "protocol_id": 17
+    },
+    "gold_languages": {
+      "zh-Hant": 33,
+      "zh-Hans": 10,
+      "en": 32
+    },
+    "max_samples_per_document": 6
+  },
+  "sample_file_sha256": {
+    "MA": "4d810820cd086b510747165cc88276856f1b923fa2feaee69fa472cc36dde8a6",
+    "PV": "468726925c9060bf6cac2704ce27807b785f274675c3af502c6068207e3eba29",
+    "CO": "0e6d640296e5774f1fa33f884cb60c531bb288ab0c6ced36e6e7028ac526e14e"
+  },
+  "errors": [
+    {
+      "sample_id": "pc-0046",
+      "rule": "PR-07 preflight",
+      "field": "evidence_span",
+      "patterns": [
+        "email"
+      ],
+      "note": "Public EMA institutional mailbox; previous ingestion approval does not implement an evaluation override."
+    }
+  ]
+}

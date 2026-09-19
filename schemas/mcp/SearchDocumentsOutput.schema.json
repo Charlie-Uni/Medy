@@ -1,0 +1,163 @@
+{
+  "$defs": {
+    "Citation": {
+      "additionalProperties": false,
+      "properties": {
+        "chunk_id": {
+          "minLength": 1,
+          "title": "Chunk Id",
+          "type": "string"
+        },
+        "doc_id": {
+          "minLength": 1,
+          "title": "Doc Id",
+          "type": "string"
+        },
+        "effective_date": {
+          "format": "date",
+          "title": "Effective Date",
+          "type": "string"
+        },
+        "page": {
+          "minimum": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "section": {
+          "title": "Section",
+          "type": "string"
+        },
+        "version": {
+          "minLength": 1,
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "doc_id",
+        "version",
+        "effective_date",
+        "page",
+        "section",
+        "chunk_id"
+      ],
+      "title": "Citation",
+      "type": "object"
+    },
+    "DocStatus": {
+      "description": "draft -> active -> archived; a draft may instead end as withdrawn (terminal, never evidence, never exposed).",
+      "enum": [
+        "draft",
+        "active",
+        "archived",
+        "withdrawn"
+      ],
+      "title": "DocStatus",
+      "type": "string"
+    },
+    "SearchHit": {
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "properties": {
+            "status": {
+              "enum": [
+                "active",
+                "archived"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "archived"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "historical": {
+                "const": true
+              }
+            },
+            "required": [
+              "historical"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "active"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "historical": {
+                "const": false
+              }
+            }
+          }
+        }
+      ],
+      "properties": {
+        "citation": {
+          "$ref": "#/$defs/Citation"
+        },
+        "historical": {
+          "default": false,
+          "title": "Historical",
+          "type": "boolean"
+        },
+        "snippet": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Snippet",
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/DocStatus"
+        }
+      },
+      "required": [
+        "citation",
+        "snippet",
+        "status"
+      ],
+      "title": "SearchHit",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "`candidate_exhausted` follows the hit count; that relation needs server state and is not in the schema.",
+  "properties": {
+    "candidate_exhausted": {
+      "title": "Candidate Exhausted",
+      "type": "boolean"
+    },
+    "hits": {
+      "items": {
+        "$ref": "#/$defs/SearchHit"
+      },
+      "title": "Hits",
+      "type": "array"
+    },
+    "requested_k": {
+      "maximum": 20,
+      "minimum": 1,
+      "title": "Requested K",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "hits",
+    "requested_k",
+    "candidate_exhausted"
+  ],
+  "title": "SearchDocumentsOutput",
+  "type": "object"
+}

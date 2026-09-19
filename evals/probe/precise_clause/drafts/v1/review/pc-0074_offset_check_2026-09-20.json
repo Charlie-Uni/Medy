@@ -1,0 +1,20 @@
+{
+  "sample_id": "pc-0074",
+  "page_text_sha256": "eb6f153a4fe703e369e34d0408a104c1037e50cce0c33364ea917f38e8d1304e",
+  "span_occurrences": 1,
+  "actual_interval": [
+    940,
+    1125
+  ],
+  "actual_interval_matches": true,
+  "llm_proposed_interval": [
+    914,
+    1099
+  ],
+  "llm_proposed_interval_matches": false,
+  "recorded_interval": [
+    940,
+    1125
+  ],
+  "recommendation": "Keep existing correct offsets; deterministic check contradicts LLM character counting. Human adjudication not yet recorded."
+}

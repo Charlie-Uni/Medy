@@ -1,0 +1,51 @@
+# MedOps Copilot local infrastructure (baseline M0-11, minimal form).
+# Only the fact plane and cache run here. API and worker services are added when their code exists;
+# object storage waits for DEC-007. Ports bind to localhost only. Passwords come from .env.
+name: medops
+
+services:
+  postgres:
+    # Digest pinned 2026-09-17 (ADR-0006 item 6): PostgreSQL 16.15 + pgvector 0.8.6 as measured in record 16.
+    # Bump tag and digest together; DEC-001/002 may later require a different image (zhparser, pg_search).
+    image: pgvector/pgvector:pg16@sha256:ccc6e83d6e35e931dc7c5def2022729d5a6c370318d099181995567ff1fb4d6b
+    container_name: medops-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-medops}
+      POSTGRES_USER: ${POSTGRES_USER:-medops_admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./deploy/postgres/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-medops_admin} -d ${POSTGRES_DB:-medops}"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+    stop_grace_period: 30s
+
+  redis:
+    # Redis 7.2 line (BSD-3-Clause); 7.4+ is RSALv2/SSPLv1 and was rejected by the owner on 2026-09-17
+    # (implementation record 15). Digest is the multi-arch index of `redis:7.2-alpine` resolved that day
+    # (7.2.16-alpine); bump tag and digest together, never the tag alone.
+    image: redis:7.2-alpine@sha256:ccd6aa8d45ff3f033d6fa15b8cc1a50579f65c89f38cf9bb607a954c4f2128ed
+    container_name: medops-redis
+    restart: unless-stopped
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD:?set REDIS_PASSWORD in .env}", "--appendonly", "yes"]
+    ports:
+      - "127.0.0.1:6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli -a \"$$REDIS_PASSWORD\" ping | grep -q PONG"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD:?set REDIS_PASSWORD in .env}
+
+volumes:
+  postgres_data:
+  redis_data:

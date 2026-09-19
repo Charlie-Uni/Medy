@@ -1,0 +1,51 @@
+{
+  "checked_at": "2026-09-19T14:09:21+00:00",
+  "scope": "Current input, actual prompt, model/effort and verdict provenance; not dataset freeze or semantic approval for unresolved disputes",
+  "prompt_sha256": "f4a3804e969b23ec9ab467406937e62f0b9e30933d6a680d4b00ee59b2631c38",
+  "batches": {
+    "MA": {
+      "expected": 30,
+      "reviewed": 30,
+      "agree": 28,
+      "dispute": 2,
+      "new_model_calls": 13,
+      "new_reported_tokens": 77868,
+      "run_sha256": "7044c489ea56af1c5cbc069f10221c16b020000085786fc0b1e13345d96263fe",
+      "verdicts_sha256": "45e5ccb62ff0c7d4f0e52027ba340ea5fa243d4a7987b03a226d6b40d8a6dd5d"
+    },
+    "PV": {
+      "expected": 29,
+      "reviewed": 29,
+      "agree": 27,
+      "dispute": 2,
+      "new_model_calls": 24,
+      "new_reported_tokens": 104709,
+      "run_sha256": "32a539457c7ce29ad0a2a0707d83cdee4704543bcfc55622074a98a1e57098af",
+      "verdicts_sha256": "ccd842d4aba5931e2453ca345e6a9d6cebc5c6144700438c0f7f44ad681624a7"
+    },
+    "CO": {
+      "expected": 16,
+      "reviewed": 16,
+      "agree": 14,
+      "dispute": 2,
+      "new_model_calls": 16,
+      "new_reported_tokens": 72763,
+      "run_sha256": "ab8c309ffc904ae6166c287ccbf98f2d1747e7e304b74a565b20ad03a4c47cf0",
+      "verdicts_sha256": "0c5b1f4f083a07f8bb9a598659a465bfe256687afa1d85af9e77cf725b1c4b1c"
+    }
+  },
+  "resolved": [
+    "pc-0026",
+    "pc-0027",
+    "pc-0038"
+  ],
+  "pending": [
+    "pc-0052",
+    "pc-0066",
+    "pc-0074"
+  ],
+  "complete_coverage": true,
+  "ready_reviews": 72,
+  "new_model_calls": 53,
+  "new_reported_tokens": 255340
+}

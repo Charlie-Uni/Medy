@@ -1,0 +1,30 @@
+{"sample_id": "pc-0001", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
+{"sample_id": "pc-0002", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
+{"sample_id": "pc-0003", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
+{"sample_id": "pc-0004", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
+{"sample_id": "pc-0005", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
+{"sample_id": "pc-0006", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
+{"sample_id": "pc-0007", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
+{"sample_id": "pc-0008", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
+{"sample_id": "pc-0009", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
+{"sample_id": "pc-0010", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
+{"sample_id": "pc-0011", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
+{"sample_id": "pc-0012", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
+{"sample_id": "pc-0013", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
+{"sample_id": "pc-0014", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
+{"sample_id": "pc-0015", "verdict": "dispute", "items": {"query": "ok", "slices": "ok", "key_text": "issue", "evidence_span": "ok", "dept": "ok"}, "reason": "key_text 尚可缩短：删除开头的“其”后，仍保留起始劑量这一对象及“需考慮改用每次 25mg”的约束，且在页内唯一，符合 P1。", "suggestion": "将 key_text 改为“起始劑量需考慮改用每次 25mg”。"}
+{"sample_id": "pc-0016", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
+{"sample_id": "pc-0017", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
+{"sample_id": "pc-0018", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
+{"sample_id": "pc-0019", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
+{"sample_id": "pc-0020", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
+{"sample_id": "pc-0021", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
+{"sample_id": "pc-0022", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
+{"sample_id": "pc-0023", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
+{"sample_id": "pc-0024", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
+{"sample_id": "pc-0025", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
+{"sample_id": "pc-0026", "verdict": "dispute", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "issue", "dept": "ok"}, "reason": "evidence_span 遗漏该服用方式的适用人群和液体限制。前句明确规定：「對於有吞嚥困難的病人,可將藥錠置入半杯非碳酸類的水中,且不可使用他種液體,因為藥錠的腸衣膜可能因此溶解。」现有 span 单独引用时未保留这些必要限定条件。", "suggestion": "将 evidence_span 起点前移至「對於有吞嚥困難的病人」，保留至现有终点并更新偏移；扩展后按完整 span 增加 negation 标签。"}
+{"sample_id": "pc-0027", "verdict": "dispute", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "issue", "dept": "ok"}, "reason": "evidence_span 遗漏适用人群的上位限定。页文本将该条款置于“成人成人成人成人及及及及 12 歲以上之青少年歲以上之青少年歲以上之青少年歲以上之青少年”之下，现有 span 未保留此年龄范围。", "suggestion": "证据应保留成人及12岁以上青少年的适用范围，并同步核对文本及偏移；回答疗程时应区分“若 4週後仍有症狀時,則應進一步檢查患者。”与固定4周疗程，原文未明确规定固定疗程。"}
+{"sample_id": "pc-0028", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
+{"sample_id": "pc-0029", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
+{"sample_id": "pc-0030", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}

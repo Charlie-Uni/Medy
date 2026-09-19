@@ -1,0 +1,31 @@
+# MA 批次：按你 2026-09-19 的改动重算后的对照（只列有变化或需再确认的行）
+
+> 规则：key_text 必须是页文本里逐字存在且页内唯一的一段，它是检索命中的锚点，不是答案；span 是完整条款。你的问法改动全部采纳；不能逐字定位的 key_text 已映射为最接近的原文，请对下表逐行回复 OK 或改法。
+
+| ID | 你的结论 | 现在的 query | 现在的 key_text | 现在的 span（前 120 字） | 切片 | 说明 |
+| --- | --- | --- | --- | --- | --- | --- |
+| pc-0002 | 修改query | 美洛醣每日最高治療劑量是多少 | 每日最高治療劑量速效劑型:3000 mg | Metformin之每日最高治療劑量速效劑型:3000 mg;緩釋劑型: 2000mg (本品為速效劑型)。 | dose_unit, drug_name_zh, mixed_zh_en | query 按你的改法；query 改用中文药名，补 drug_name_zh 切片；条款含 Metformin，保留 mixed_zh_en。 |
+| pc-0003 | 修改key_text | 八十歲以上的老人家可以開始用美洛醣嗎 | 不建議開始使用 | 大於80歲之老年患者不建議開始使用 Metformin治療。 | negation, drug_name_zh | key_text 按你的改法缩短，页内唯一。 |
+| pc-0006 | 改写key_text | 美洛醣膜衣錠850毫克的許可證字號是多少 | 衛部藥製字第058257號 | 衛部藥製字第058257號 Code No. 美洛醣膜衣錠850毫克 Loformin Film-coated Tablets 850mg (Metformin) | protocol_id, drug_name_zh | 你写的 span 是 PDF 版面顺序，页文本顺序不同；改为页文本里逐字存在的一段，含许可证号与品名。 |
+| pc-0007 | 修改query，key_text，evidence_span | 痛風停錠於成人及青少年的初始劑量是多少 | 一般成人及青少年劑量:抗痛風劑(Antigout agent)— 初始劑量:口服,100mg,一天一次 | 一般成人及青少年劑量:抗痛風劑(Antigout agent)— 初始劑量:口服,100mg,一天一次,在一星期的間隔期間每天增加100mg 直到達到所需要的血清尿酸濃度為止。不得超過每日800mg 之最大建議劑量。維持劑量:口服,100 … | dose_unit, drug_name_zh | query 与 span 按你的改法：span 取「一般成人及青少年劑量」整节，从节名到「一般成人處方限量:每一劑量300mg;每天800mg」，共 633 字（页文本里腎功能表格的数字行被抽取到别处，故 span 内不含该表）。你写的 key_text 把三种适应证的起始剂量拼在一起，原文中不是连续文本，不能作锚点；改为节名加第一句「一般成人及青少年劑量:抗痛風劑(Antigout agent)— 初始劑量:口服,100mg,一天一次」，页内唯一。 |
+| pc-0008 | 修改query，key_text，evidence_span | allopurinol一般成人每日劑量最多多少 | 一般成人處方限量:每一劑量300mg;每天800mg | 一般成人處方限量:每一劑量300mg;每天800mg | dose_unit, mixed_zh_en | 按你的意图换到「一般成人處方限量」条款，key_text 与 span 取页文本原文；该句无否定词，去掉 negation 切片。 |
+| pc-0009 | 修改key_text | 痛風關節炎急性發作的時候可以用 allopurinol 嗎 | 不得使用於痛風性關節炎的急性發作 | Allopurinol沒有抗發炎的效力,它必須不得使用於痛風性關節炎的急性發作,一種抗發炎藥,最好是一種非類固醇類抗發炎劑(NSAI)或者是皮質類固醇(Corticosteroid)〔當可行時,最好是滑膜內注射(Intrasynovial … | negation, mixed_zh_en | query 按你的改法。key_text「不可以」在原文中不存在，锚点保留原文「不得使用於痛風性關節炎的急性發作」。 |
+| pc-0011 | 修改query，key_text | 痛風停錠單次劑量的上限是多少 | 不得超過300 mg | 每一個單一劑量,都必須不得超過300 mg。 | dose_unit, negation, drug_name_zh | query 按你的改法；你写的「單一劑量不得超過300 mg」与原文差两个字，改为原文中唯一的「不得超過300 mg」。 |
+| pc-0013 | 修改query | 穩壓膜衣錠治療高血壓的一般起始劑量是多少 | 一般起始劑量及維持劑量為每次 50mg,每日一次 | 高血壓:大多數病人的一般起始劑量及維持劑量為每次 50mg,每日一次;在治療後 3~6 週可獲得最大降壓效果;有些病人在劑量增加至每次 100 mg,每日一次後,其療效更佳。 | dose_unit, drug_name_zh | query 按你的改法。 |
+| pc-0014 | 修改query | 穩壓膜衣錠吃多久才會有最大的降壓效果 | 治療後 3~6 週可獲得最大降壓效果 | 高血壓:大多數病人的一般起始劑量及維持劑量為每次 50mg,每日一次;在治療後 3~6 週可獲得最大降壓效果;有些病人在劑量增加至每次 100 mg,每日一次後,其療效更佳。 | time_window, drug_name_zh | query 按你的改法。 |
+| pc-0015 | 修改query，key_text | 血管內體液缺乏的病人使用穩壓膜衣錠的起始劑量是多少 | 改用每次 25mg | 對血管內體液缺乏(intravascularly volume-depleted)之患者(如以高劑量利尿劑治療者) ,其起始劑量需考慮改用每次 25mg ,每日一次(參見注意事項)。 | dose_unit, drug_name_zh, mixed_zh_en | query 按你的改法并补 drug_name_zh；你写的「起始劑量每次 25mg」非原文，改为原文中唯一的「改用每次 25mg」。 |
+| pc-0016 | 修改query，key_text,evidence_span | 糖尿病患者能同時使用穩壓膜衣錠和 aliskiren 嗎 | 合併使用本品及含 aliskiren 成分藥品於糖尿病患 | 1、禁忌症:合併使用本品及含 aliskiren 成分藥品於糖尿病患或腎功能不全患者 (GFR < 60 ml/min/1.73 m 2 )。 | negation, drug_name_zh, mixed_zh_en | query 按你的改法并补 drug_name_zh。key_text「不可以」非原文，保留「合併使用本品及含 aliskiren 成分藥品於糖尿病患」；span 保留禁忌症整句。 |
+| pc-0017 | 修改query，key_text,evidence_span | 糖尿病腎病變患者能同時使用 ACEI、ARB或含 aliskiren 成分藥品嗎 | 不建議合併使用 ACEIs、ARBs 或含 aliskiren 成分藥品來雙重阻斷 RAAS | 雙重阻斷腎素-血管昇壓素-醛固酮系統(renin-angiotensin-aldosterone system, RAAS):有證據顯示,合併使用 ACEIs、ARBs 或含 aliskiren 成分藥品會增加低血壓、高鉀血症及腎功能下降(… | negation, mixed_zh_en | query 与 span 按你的改法（整段 RAAS 警語，逐字取自页文本，含原文自带的「腎+A12」伪影）；key_text 不能整段，取其中唯一的一句「不建議合併使用 ACEIs、ARBs 或含 aliskiren 成分藥品來雙重阻斷 RAAS」。 |
+| pc-0018 | 修改query | 穩壓膜衣錠50毫克的許可證字號是多少 | 衛署藥製字第 047911 號 | G-9053 衛署藥製字第 047911 號穩壓膜衣錠 50 毫克 Zosaa F.C. | protocol_id, drug_name_zh | query 按你的改法。 |
+| pc-0019 | 修改query，key_text | 高血壓患者每天用明德心壓暢錠治療用量範圍是多少 | 每日投與 100〜200mg,以單一劑量於晨間口服抑或將之分成二次劑量於早、晚服用 | 高血壓:每日投與 100〜200mg,以單一劑量於晨間口服抑或將之分成二次劑量於早、晚服用。 | dose_unit, drug_name_zh | 按你的改法，key_text 为整句（标点按页文本为半角）。 |
+| pc-0020 | 修改query，key_text | 哪些病人禁止使用明德心壓暢錠 | 房室神經傳導阻斷第二和第三期,非代償性心衰竭,心原性休克,顯著的心搏過緩等症狀者禁用此劑 | 【注意事項】一、禁忌:房室神經傳導阻斷第二和第三期,非代償性心衰竭,心原性休克,顯著的心搏過緩等症狀者禁用此劑。 | negation, drug_name_zh | 按你的改法。 |
+| pc-0021 | 修改query，key_text | 停用明德心壓暢錠需要注意什麼 | 停用本劑時需逐漸停用,例如於 7〜10 天之期間 | 二、停用本劑時需逐漸停用,例如於 7〜10 天之期間,因突然停藥會導致急性損害患者身體狀況,尤其是罹患心臟局部缺血者。 | time_window, drug_name_zh | 按你的改法。 |
+| pc-0022 | 修改query | 要開刀麻醉的病人手術前多久停用心壓暢錠 | 麻醉前至少 48 小時即應停止服用本劑 | 三、對於即將進行麻醉開刀的病患,在麻醉前至少 48 小時即應停止服用本劑。 | time_window, drug_name_zh | query 按你的改法。 |
+| pc-0023 | 修改query，key_text,evidence_text | 心壓暢錠過量時，該如何急救 | 係靜脈注射1〜2mg Atropine sulfate;倘若還未能達到滿意效果時,在使用 Atropine 後可接著投與升壓劑,例如metaraminol 或 noradrenaline。此外如果任何β-blocket 過量中毒的時候,亦可投與一次劑量1〜5(10)mg 的 glucagon 施救。 | 過量中毒時之處裡:本劑服用過量時會導致明顯的低血壓和心搏過緩。初步的急救方法,係靜脈注射1〜2mg Atropine sulfate;倘若還未能達到滿意效果時,在使用 Atropine 後可接著投與升壓劑,例如metaraminol 或 n… | dose_unit, drug_name_zh, mixed_zh_en | 按你的改法：key_text 为急救整段（页文本为半角标点与半角数字），span 从「過量中毒時之處裡」到「施救。」；补 drug_name_zh。 |
+| pc-0024 | 修改evidence_text | 心壓暢錠100毫克的許可證字號 | 衛署藥製字第 029301 號 | 衛署藥製字第 029301 號 GMP-G-0462 號 "明德"心壓暢錠 100 毫克(美托普洛) CANCLIOL TABLETS 100mg (Metoprolol) "Meider" | protocol_id, drug_name_zh | span 按你的改法取页首许可证行。 |
+| pc-0025 | 修改query，key_text，evidence_text | 胃所樂腸溶膜衣錠可以嚼碎或壓碎再吃嗎 | 本錠劑應整粒以液體吞服,不可嚼破或壓破本錠劑 | 本錠劑應整粒以液體吞服,不可嚼破或壓破本錠劑。對於有吞嚥困難的病人,可將藥錠置入半杯非碳酸類的水中,且不可使用他種液體,因為藥錠的腸衣膜可能因此溶解。同時攪拌直到藥錠崩散,並立即或在 30 分鐘之內將水連同小藥球喝下。再將半杯水加入杯中沖洗… | negation, drug_name_zh | query 与 span 按你的改法；key_text 去掉原文中不存在的「不可以，」。 |
+| pc-0026 | query | 胃所樂泡在水裡崩散後要在多久之內喝完 | 在 30 分鐘之內 | 同時攪拌直到藥錠崩散,並立即或在 30 分鐘之內將水連同小藥球喝下。 | time_window, drug_name_zh | key_text 按你的改法缩短，页内唯一。 |
+| pc-0027 | query,key_context,evidence_text | 胃所樂腸溶膜衣錠用於食道未發炎的胃食道逆流症狀治療，劑量和療程是多少 | 對食道未發炎之患者 20 mg 每天 1次 | 胃食道逆流性疾病之症狀治療:對食道未發炎之患者 20 mg 每天 1次;若 4週後仍有症狀時,則應進一步檢查患者。一旦症狀獲得緩解後,可以每天 1次 20 mg 之療法來做後續的症狀控制。就成人而言,如需要時,可以給予 20 mg 每天 1… | dose_unit, time_window, drug_name_zh, mixed_zh_en | 你的 key_text/span 换到了「症狀治療 20 mg」条款，但 query 仍问糜爛性食道炎（40 mg、4 週），两者不一致。我把 query 改成与新条款一致的问法；若你想保留原题，请说明，我改回 40 mg 版本。 |
+| pc-0028 | key_text | esomeprazole 可以和 nelfinavir 一起服用嗎 | 禁止同時併用 esomeprazole 和 nelfinavir | 由於omeprazole 與 esomeprazole 的藥效學效應與藥動學性質類似,故不建議同時投予 esomeprazole 和 atazanavir ,禁止同時併用 esomeprazole 和 nelfinavir 。 | negation, mixed_zh_en | key_text「不可以」非原文，保留「禁止同時併用 esomeprazole 和 nelfinavir」；query 未改。 |
+
+未列出的行（pc-0001、0004、0005、0010、0012、0029、0030）为你标 OK 或未改动，保持原样。

@@ -1,0 +1,69 @@
+{
+  "basis": "Follow-up implementation under approved P1 and instruction to continue; not a new per-item human adjudication. Every changed sample must be re-reviewed.",
+  "date": "2026-09-20",
+  "changes": [
+    {
+      "sample_id": "pc-0015",
+      "field": "key_text",
+      "before": "其起始劑量需考慮改用每次 25mg",
+      "after": "起始劑量需考慮改用每次 25mg",
+      "reviewer_verdict_sha256": "0f5491fdbdf763ca6051615956c0c87ab0f9e8f9f6760952468ba23b51d9d124",
+      "reason": "Remove redundant pronoun while retaining starting-dose object and all constraints; independent read-only audit agreed.",
+      "other_fields_unchanged": true
+    },
+    {
+      "sample_id": "pc-0072",
+      "field": "key_text",
+      "before": "adopting the ICH E3(R1) 62 definitions of protocol deviation and important protocol deviation",
+      "after": "ICH E3(R1) 62 definitions of protocol deviation and important protocol deviation",
+      "reviewer_verdict_sha256": "4e085329b5c7e9625df7788ae2d75fc57af4fea8c6263258d95c63017cf683f2",
+      "reason": "Remove redundant adoption phrase, retain ICH E3(R1) source qualifier and both definition names; original span still contains adoption statement.",
+      "other_fields_unchanged": true
+    },
+    {
+      "sample_id": "pc-0038",
+      "field": "key_text",
+      "before": "本《数据检索和展示:考虑要点》(DRP:PTC)文档是 ICH 认可的 MedDRA 用户指南,每年更新一次",
+      "after": "MedDRA 用户指南,每年更新一次",
+      "reviewer_verdict_sha256": "ab257d93a8b37136b52e81c7284710d3851d56b0066d80d62f6941f8ab593f6d",
+      "reason": "Adopt reviewed removal of redundant words under P1; object, constraint and complete evidence retained. Independent read-only semantic and exact-source audit passed.",
+      "other_fields_unchanged": true
+    },
+    {
+      "sample_id": "pc-0043",
+      "field": "key_text",
+      "before": "non-serious valid ICSRs shall be submitted by the competent authority in a Member State or by the marketing authorisation holder within 90 days from the date of receipt of the reports",
+      "after": "non-serious valid ICSRs shall be submitted by the competent authority in a Member State or by the marketing authorisation holder within 90 days from the date of receipt",
+      "reviewer_verdict_sha256": "866f624b86ca02682e3198ce157033f7100da1a05ba66af82ddc637cc2adfc30",
+      "reason": "Adopt reviewed removal of redundant words under P1; object, constraint and complete evidence retained. Independent read-only semantic and exact-source audit passed.",
+      "other_fields_unchanged": true
+    },
+    {
+      "sample_id": "pc-0048",
+      "field": "key_text",
+      "before": "the sponsor must notify FDA as soon as possible but in no case later than 7 calendar days after the sponsor’s initial receipt of the information",
+      "after": "notify FDA as soon as possible but in no case later than 7 calendar days after the sponsor’s initial receipt of the information",
+      "reviewer_verdict_sha256": "4ca26b2018841b94d32074c78df7a2c5e470bdb8600508232552fd537c8965a4",
+      "reason": "Adopt reviewed removal of redundant words under P1; object, constraint and complete evidence retained. Independent read-only semantic and exact-source audit passed.",
+      "other_fields_unchanged": true
+    },
+    {
+      "sample_id": "pc-0055",
+      "field": "key_text",
+      "before": "The DSUR should be submitted to all concer ned regulatory authorities no later than 60 calendar days after the DSUR data lock point",
+      "after": "DSUR should be submitted to all concer ned regulatory authorities no later than 60 calendar days after the DSUR data lock point",
+      "reviewer_verdict_sha256": "51acf74c919cb616b4237ae45a194e387d0a7dea183ef079f6557de15ab281fc",
+      "reason": "Adopt reviewed removal of redundant words under P1; object, constraint and complete evidence retained. Independent read-only semantic and exact-source audit passed.",
+      "other_fields_unchanged": true
+    },
+    {
+      "sample_id": "pc-0057",
+      "field": "key_text",
+      "before": "用以治療或緩解藥品不良反應之藥品不應列入可疑藥品通報",
+      "after": "治療或緩解藥品不良反應之藥品不應列入可疑藥品",
+      "reviewer_verdict_sha256": "66750eca73252ce7bf32ee547a99988c28936fb23e729e65e9d49d6e67f499f0",
+      "reason": "Adopt reviewed removal of redundant words under P1; object, constraint and complete evidence retained. Independent read-only semantic and exact-source audit passed.",
+      "other_fields_unchanged": true
+    }
+  ]
+}

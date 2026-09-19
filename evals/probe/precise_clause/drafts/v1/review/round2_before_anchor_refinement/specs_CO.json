@@ -1,0 +1,218 @@
+{
+  "batch": "CO",
+  "start_id": 60,
+  "specs": [
+    {
+      "doc": "ich-e8-r1-step4-2021",
+      "page": 8,
+      "key_text": "do not place undue burden on study participants",
+      "query": "ICH E8(R1) 对研究程序和评估的科学必要性及受试者负担有什么要求？",
+      "slices": [
+        "negation",
+        "mixed_zh_en",
+        "protocol_id"
+      ],
+      "section": "2.1 Protection of Clinical Study Participants",
+      "span": "Throughout drug development, care should be taken to ensure all study procedures and assessments are necessary from a scientific viewpoint and do not place undue burden on study participants.",
+      "language": "mixed"
+    },
+    {
+      "doc": "ich-e8-r1-step4-2021",
+      "page": 9,
+      "key_text": "not sufficient to ensure quality of a clinical study",
+      "query": "按照 ICH E8(R1)，回顾性开展的文件和数据审查、监查，即使结合稽查，是否足以保证临床研究质量？",
+      "slices": [
+        "negation",
+        "mixed_zh_en",
+        "protocol_id"
+      ],
+      "section": "3.1 Quality by Design of Clinical Studies",
+      "span": "Activities such as document and data review and monitoring, where conducted retrospectively, are an important part of a quality assurance process; but, even when combined with audits, they are not sufficient to ensure quality of a clinical study.",
+      "language": "mixed"
+    },
+    {
+      "doc": "ich-e8-r1-step4-2021",
+      "page": 11,
+      "key_text": "critical to quality factors should be clear and should not be cluttered with minor issues",
+      "query": "按照 ICH E8(R1)，关键质量因素（critical to quality factors）应避免混入哪类事项？",
+      "slices": [
+        "negation",
+        "mixed_zh_en",
+        "protocol_id"
+      ],
+      "section": "3.2 Critical to Quality Factors",
+      "span": "The critical to quality factors should be clear and should not be cluttered with minor issues (e.g., due to extensive secondary objectives or processes/data collection not linked to the proper protection of the study participants and/or primary study objectives).",
+      "language": "mixed"
+    },
+    {
+      "doc": "ich-e8-r1-step4-2021",
+      "page": 7,
+      "key_text": "Section 6 addresses study conduct",
+      "query": "ICH E8(R1) 的 Section 6 讨论哪些内容？",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "section": "1. OBJECTIVES OF THIS DOCUMENT",
+      "span": "Section 6 addresses study conduct, ensuring the safety of study participants , and study reporting."
+    },
+    {
+      "doc": "ich-e8-r1-step4-2021",
+      "page": 8,
+      "key_text": "study protocol and processes",
+      "query": "按照 ICH E8(R1)，quality by design 要把质量主动设计进研究的哪些部分？",
+      "slices": [
+        "mixed_zh_en",
+        "protocol_id"
+      ],
+      "section": "2.2 Scientific Approach in Clinical Study Design, Planning, Conduct, Analysis, and Reporting",
+      "span": "Quality by design in clinical research sets out to ensure that the quality of a study is driven proactively by designing quality into the study protocol and processes .",
+      "language": "mixed"
+    },
+    {
+      "doc": "ich-e6-r3-step4-2025",
+      "page": 13,
+      "key_text": "sponsor should not place unnecessary burden on participants and investigators",
+      "query": "按 ICH E6(R3) 设计研究流程时，申办方应如何控制受试者和研究者的额外负担？",
+      "slices": [
+        "negation",
+        "mixed_zh_en",
+        "protocol_id"
+      ],
+      "section": "II. PRINCIPLES OF ICH GCP / 7.4",
+      "language": "mixed",
+      "span": "The sponsor should not place unnecessary burden on participants and investigators."
+    },
+    {
+      "doc": "ich-e6-r3-step4-2025",
+      "page": 16,
+      "key_text": "Reasonable r eimbursement of expenses incurred by participants, such as for travel and lodging, is not coercive",
+      "query": "按照 ICH E6(R3)，合理报销受试者实际发生的交通和住宿等费用，是否属于胁迫？",
+      "slices": [
+        "negation",
+        "mixed_zh_en",
+        "protocol_id"
+      ],
+      "section": "III. ANNEX 1 / 1.2 Responsibilities / 1.2.8",
+      "span": "Reasonable r eimbursement of expenses incurred by participants, such as for travel and lodging, is not coercive.",
+      "language": "mixed"
+    },
+    {
+      "doc": "ich-e6-r3-step4-2025",
+      "page": 13,
+      "key_text": "retained securely by sponsors and investigators",
+      "query": "按照 ICH E6(R3)，必要记录应由哪些主体安全保存，保存期限依据什么确定？",
+      "slices": [
+        "mixed_zh_en",
+        "protocol_id"
+      ],
+      "section": "II. PRINCIPLES OF ICH GCP / 9.5",
+      "span": "Essential records should be retained securely by sponsors and investigators for the required period in accordance with applicable regulatory requirements.",
+      "language": "mixed"
+    },
+    {
+      "doc": "ich-e6-r3-step4-2025",
+      "page": 8,
+      "key_text": "This guideline builds on key conce pts outlined in ICH E8 (R1)",
+      "query": "ICH E6(R3) 与 ICH E8(R1) 是什么关系？",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "section": "I. INTRODUCTION",
+      "span": "This guideline builds on key conce pts outlined in ICH E8 (R1) General Considerations for Clinical Studies.",
+      "language": "mixed"
+    },
+    {
+      "doc": "ich-e6-r3-step4-2025",
+      "page": 14,
+      "key_text": "protocol and relevant trial documents",
+      "query": "按照 ICH E6(R3)，试验用药品应依据哪些文件使用？",
+      "slices": [
+        "mixed_zh_en",
+        "protocol_id"
+      ],
+      "section": "II. PRINCIPLES OF ICH GCP / 11.3",
+      "span": "Investigational products should be used in accordance with the protocol and relevant trial documents.",
+      "language": "mixed"
+    },
+    {
+      "doc": "ich-e6-r3-step4-2025",
+      "page": 18,
+      "key_text": "retain all relevant records",
+      "query": "ICH E6(R3) 对 IRB/IEC 应保留的相关记录列举了哪些例子？",
+      "slices": [
+        "mixed_zh_en",
+        "protocol_id"
+      ],
+      "section": "III. ANNEX 1 / 1.5 Records / 1.5.1",
+      "span": "The IRB/IEC should retain all relevant records (e.g. , documented procedures, membership lists, lists of occupations/affiliations of members, submitted documents, minutes of meetings and correspondence) in accordance with applicable regulatory requirements and make them available upon request from the regulatory authority(ies).",
+      "language": "mixed"
+    },
+    {
+      "doc": "fda-protocol-deviations-draft-2024",
+      "page": 7,
+      "key_text": "important protocol deviation is a subset of protocol 118 deviations that might significantly affect the completeness, accuracy, and/or reliability of the 119 study data",
+      "query": "FDA 2024 年《方案偏离》指南草案如何定义 important protocol deviation？",
+      "slices": [
+        "mixed_zh_en"
+      ],
+      "section": "III.A.1. Important Protocol Deviations",
+      "span": "As noted above, in this guidance an important protocol deviation is a subset of protocol 118 deviations that might significantly affect the completeness, accuracy, and/or reliability of the 119 study data or that might significantly affect a subject’s rights, safety, or well-being.",
+      "language": "mixed"
+    },
+    {
+      "doc": "fda-protocol-deviations-draft-2024",
+      "page": 5,
+      "key_text": "adopting the ICH E3(R1) 62 definitions of protocol deviation and important protocol deviation",
+      "query": "FDA 2024 年《方案偏离》指南草案采用了 ICH E3(R1) 的哪些定义？",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "section": "II. BACKGROUND",
+      "span": "In this guidance, FDA is adopting the ICH E3(R1) 62 definitions of protocol deviation and important protocol deviation.",
+      "language": "mixed"
+    },
+    {
+      "doc": "fda-protocol-deviations-draft-2024",
+      "page": 9,
+      "key_text": "any deviation from the 210 investigational plan to protect the life or physical well-being of a subject in an emergency as 211 soon as possible but no later than 5 working days",
+      "query": "按照 FDA 2024 年《方案偏离》指南草案，医疗器械研究为紧急保护受试者生命或身体健康而偏离研究计划时，研究者最迟应在紧急情况发生后几个工作日内通知申办方和 IRB？",
+      "slices": [
+        "time_window",
+        "mixed_zh_en",
+        "negation"
+      ],
+      "section": "III.B.1. Role of the Investigator in Monitoring, Mitigating, and Reporting Protocol Deviations",
+      "span": "Similarly, for device investigations, investigators must keep records of each protocol deviation 209 (21 CFR 812.140(a)(4)) and must notify the sponsor and the IRB of any deviation from the 210 investigational plan to protect the life or physical well-being of a subject in an emergency as 211 soon as possible but no later than 5 working days after the emergency occurred (21 CFR 212 812.150(a)(4)).",
+      "language": "mixed"
+    },
+    {
+      "doc": "fda-protocol-deviations-draft-2024",
+      "page": 13,
+      "key_text": "protocol deviations that are not classified as important and do not present an apparent 355 immediate hazard to participants do not need to be immediately reported to the IRB",
+      "query": "按照 FDA 2024 年《方案偏离》指南草案，未被归类为 important 且不对受试者构成明显即时危险的方案偏离，需要立即报告给 IRB 吗？",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "section": "III.B.3. Role of the IRB in Evaluating Protocol Deviations",
+      "span": "All other protocol deviations that are not classified as important and do not present an apparent 355 immediate hazard to participants do not need to be immediately reported to the IRB.",
+      "language": "mixed"
+    },
+    {
+      "doc": "fda-protocol-deviations-draft-2024",
+      "page": 4,
+      "key_text": "FDA regulations do not include a definition of the term protocol 17 deviation",
+      "query": "根据 FDA 2024 年《方案偏离》指南草案的说明，FDA 法规是否给 protocol deviation 下了定义？",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "section": "I. INTRODUCTION",
+      "span": "FDA regulations do not include a definition of the term protocol 17 deviation or provide a system for classifying the various types of deviations that may occur 18 during the conduct of a clinical investigation.",
+      "language": "mixed"
+    }
+  ]
+}

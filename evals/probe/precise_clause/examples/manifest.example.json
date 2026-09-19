@@ -7,6 +7,12 @@
       "MA": 2,
       "PV": 0
     },
+    "per_language": {
+      "en": 0,
+      "mixed": 0,
+      "zh-Hans": 3,
+      "zh-Hant": 0
+    },
     "per_slice": {
       "dose_unit": 1,
       "drug_name_zh": 2,
@@ -17,7 +23,7 @@
     },
     "samples": 3
   },
-  "created_at": "2026-09-08",
+  "created_at": "2026-09-10",
   "dataset_hash": null,
   "dataset_id": "precise_clause_probe",
   "dataset_version": "v0",
@@ -34,7 +40,7 @@
   "files": [
     {
       "path": "corpus.json",
-      "sha256": "7d1f670e1c3d906bf4812b0a3ea50d0147eb511116a35c2da390e0ee0627b20f"
+      "sha256": "fcad1bd6704331afa3c68c6407b7aa4af43265e3a8ffe91a45860455ce809b90"
     },
     {
       "path": "samples.jsonl",
@@ -53,10 +59,11 @@
     "per_dept": 15,
     "per_slice": 8,
     "samples": 60,
-    "target_samples": 72
+    "target_samples": 72,
+    "zh_hans_samples": 8
   },
   "normalization": "norm-v1",
-  "pii_ruleset_version": "pii-rules-v0",
+  "pii_ruleset_version": "pii-rules-v1",
   "purpose": "示意 manifest：演示字段与计数格式；不是冻结数据集，不得用于 DEC-001 实验。",
   "review_policy": {
     "human_reviewers": 1,

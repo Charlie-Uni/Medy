@@ -1,0 +1,267 @@
+{
+  "batch": "CO",
+  "codex_binary": "/Applications/ChatGPT.app/Contents/Resources/codex",
+  "model": "gpt-6-astra",
+  "reasoning_effort_requested": "high",
+  "review_prompt_sha256": "f4a3804e969b23ec9ab467406937e62f0b9e30933d6a680d4b00ee59b2631c38",
+  "sample_input_sha256": {
+    "pc-0060": "128b95b5cde4cefcee4d0c6f091391437f6ea21b73271e86880d23c667f523b3",
+    "pc-0061": "beb66340caf89b42cd42a8d03454187f6010c00a02afe95f769826c9b0f0ae03",
+    "pc-0062": "7d678542335491f18532fe62d16886a1d58238e3090c223d0cd1aaa5b1e521fc",
+    "pc-0063": "821dd31aa7c5437cbd16985c6e30b21ac1d897cf1759804ba2bdb24e44b73d07",
+    "pc-0064": "f3814f363b84d36a7021939f2318b42b6bc3e88a06c4fc94a3a603b0ca9055e5",
+    "pc-0065": "cd7f6f3193dee1c076608252fb29082b03b9ac6230ea65cb7e7527ae22ce77ab",
+    "pc-0066": "326240c9800c8837fa55b692f9be3d46547e9bf9697ec626b3d0d66bb504f425",
+    "pc-0067": "07fbc21fdcabf986834c893bb563acf7f08ad0fade86d095032cca00bae6679a",
+    "pc-0068": "a6e9a8feff02d5738a181c5eefd21f1e16eadff8b8ffa9544506a382ee6a3b7d",
+    "pc-0069": "e85d1cbccca1677dc894df77b1a0f0732ab0b37ab5b07fc45e729e77463f60d5",
+    "pc-0070": "13f16b805e4472b00d56ac1ac8b2e31d25b7d0ec4ef3e879de4ebb75dd982e5f",
+    "pc-0071": "7a594eba5cb7639b607d64b76141ceb32d7dac20f5412d648d20be0e5bf98bad",
+    "pc-0072": "c85bc10111763dd7cfee52de11777fd41b5232018a851924b051283bf5cd5117",
+    "pc-0073": "c23389a6821ab530387bcb4ac801db3613f7af13d8f849a1ef74ad59265713e8",
+    "pc-0074": "7d44485af9d3c8b0c2e8957ef170cf346c43081d464cf3bd020ba077e94e48ce",
+    "pc-0075": "613735499d07df2080cafd3033583ffff7220f60088ab853bf14283f582e97a3"
+  },
+  "chunks": [
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d0-92b8-7832-9c06-138ef2dd73a9",
+      "reasoning_effort": "high",
+      "tokens_used": "7,049",
+      "sample_ids": [
+        "pc-0060"
+      ],
+      "started_at": "2026-09-19T13:17:29+00:00",
+      "finished_at": "2026-09-19T13:18:38+00:00",
+      "prompt_chars": 6334,
+      "prompt_sha256": "4ce5f20ca66c0d6b17946b4b24205214ea5c726a91c86b35230b34a2aeac5420"
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d1-9fe5-7ac1-884f-34a92a9d7dc2",
+      "reasoning_effort": "high",
+      "tokens_used": "5,525",
+      "sample_ids": [
+        "pc-0061"
+      ],
+      "started_at": "2026-09-19T13:18:38+00:00",
+      "finished_at": "2026-09-19T13:18:58+00:00",
+      "prompt_chars": 6666,
+      "prompt_sha256": "f8fe9e6fe733576248a94644e5da000257309c05b42c8c8d782f734533e77190"
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d1-f0ed-7db3-9f2d-14924b72f097",
+      "reasoning_effort": "high",
+      "tokens_used": "3,216",
+      "sample_ids": [
+        "pc-0062"
+      ],
+      "started_at": "2026-09-19T13:18:58+00:00",
+      "finished_at": "2026-09-19T13:19:19+00:00",
+      "prompt_chars": 6500,
+      "prompt_sha256": "c1b38cc7d1bc00e10a4f8ec2fb4aff4a5743dc3ce556246166868e6923b5d9c7"
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d2-40a1-75b2-8abd-6808063cfd10",
+      "reasoning_effort": "high",
+      "tokens_used": "3,104",
+      "sample_ids": [
+        "pc-0063"
+      ],
+      "started_at": "2026-09-19T13:19:19+00:00",
+      "finished_at": "2026-09-19T13:19:34+00:00",
+      "prompt_chars": 6378,
+      "prompt_sha256": "bc073fb84e7cb873be4d5f3db0ed2237d9f67e1d2965a2e0713d91ca1da5e8f2"
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d2-7ba2-70d1-a486-cba6862319a0",
+      "reasoning_effort": "high",
+      "tokens_used": "5,638",
+      "sample_ids": [
+        "pc-0064"
+      ],
+      "started_at": "2026-09-19T13:19:34+00:00",
+      "finished_at": "2026-09-19T13:20:01+00:00",
+      "prompt_chars": 6361,
+      "prompt_sha256": "c2970ddb9c99725b37626086896a58d0823ac8d9f29df2b760b9b7017964a963"
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d2-e796-7aa1-bf79-a4f52455154e",
+      "reasoning_effort": "high",
+      "tokens_used": "5,410",
+      "sample_ids": [
+        "pc-0065"
+      ],
+      "started_at": "2026-09-19T13:20:01+00:00",
+      "finished_at": "2026-09-19T13:20:24+00:00",
+      "prompt_chars": 5705,
+      "prompt_sha256": "b755771c993d8ee23bd57714a57f9cb94e9606a343bb4dc97eb526ac2e866622"
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d3-3e09-7ea3-b4b4-fb2dc1d02109",
+      "reasoning_effort": "high",
+      "tokens_used": "5,673",
+      "sample_ids": [
+        "pc-0066"
+      ],
+      "started_at": "2026-09-19T13:20:24+00:00",
+      "finished_at": "2026-09-19T13:20:52+00:00",
+      "prompt_chars": 5620,
+      "prompt_sha256": "cec62ead7a4c089579a3ff42a8d228df036a4b4870da6c5ae84f7c7d2061c682"
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d3-ab8c-7ff1-b8da-932aef3d2020",
+      "reasoning_effort": "high",
+      "tokens_used": "5,435",
+      "sample_ids": [
+        "pc-0067"
+      ],
+      "started_at": "2026-09-19T13:20:52+00:00",
+      "finished_at": "2026-09-19T13:21:14+00:00",
+      "prompt_chars": 5775,
+      "prompt_sha256": "d8badbb1c1d89fca69dd2730b07dbcc3feeb58e2760214ab67ac5eef5630d9f0"
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d4-02b4-77b3-b98e-15e70a09933a",
+      "reasoning_effort": "high",
+      "tokens_used": "4,325",
+      "sample_ids": [
+        "pc-0068"
+      ],
+      "started_at": "2026-09-19T13:21:14+00:00",
+      "finished_at": "2026-09-19T13:22:07+00:00",
+      "prompt_chars": 5977,
+      "prompt_sha256": "31260c99fdb3e470e4f9a660d0040b747491d55809b034684b1d7bc3c89e0fb8"
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d4-d14a-7442-86e6-e6f46e1f56d0",
+      "reasoning_effort": "high",
+      "tokens_used": "4,268",
+      "sample_ids": [
+        "pc-0069"
+      ],
+      "started_at": "2026-09-19T13:22:07+00:00",
+      "finished_at": "2026-09-19T13:23:02+00:00",
+      "prompt_chars": 5170,
+      "prompt_sha256": "93df7049991b4219e9bcfc57a86a9b6055564bfb49f228266db116c518190e11"
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d5-aa4d-7d83-9535-98daf06527e8",
+      "reasoning_effort": "high",
+      "tokens_used": "5,893",
+      "sample_ids": [
+        "pc-0070"
+      ],
+      "started_at": "2026-09-19T13:23:02+00:00",
+      "finished_at": "2026-09-19T13:23:39+00:00",
+      "prompt_chars": 5077,
+      "prompt_sha256": "e78fb3767e1ec46e9ea3efcac0b492fb0297a7caee370f6221acce46f322a61c"
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d6-3887-7802-ae63-3344e6cf07db",
+      "reasoning_effort": "high",
+      "tokens_used": "5,622",
+      "sample_ids": [
+        "pc-0071"
+      ],
+      "started_at": "2026-09-19T13:23:39+00:00",
+      "finished_at": "2026-09-19T13:24:03+00:00",
+      "prompt_chars": 6354,
+      "prompt_sha256": "45b85cd62c4b5c8f6b71f0bafb8ba8758418bb5fd7db2fe8b78040d155248975"
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d6-97fb-7f61-b74f-3a2838423fdc",
+      "reasoning_effort": "high",
+      "tokens_used": "5,642",
+      "sample_ids": [
+        "pc-0072"
+      ],
+      "started_at": "2026-09-19T13:24:03+00:00",
+      "finished_at": "2026-09-19T13:24:28+00:00",
+      "prompt_chars": 6691,
+      "prompt_sha256": "3df9e9af62302da67173c8739d99311ff0dd733a1c70d7602195f04a86a5ff31"
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d6-fa9b-7922-90c0-8dd6c6248afe",
+      "reasoning_effort": "high",
+      "tokens_used": "5,719",
+      "sample_ids": [
+        "pc-0073"
+      ],
+      "started_at": "2026-09-19T13:24:28+00:00",
+      "finished_at": "2026-09-19T13:24:44+00:00",
+      "prompt_chars": 7762,
+      "prompt_sha256": "0617a3966994204a2f2b437dd53099c79d8e6240e66c422554a69d416978d2ea"
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d7-391d-7fb0-84ec-fe41316176a3",
+      "reasoning_effort": "high",
+      "tokens_used": "3,585",
+      "sample_ids": [
+        "pc-0074"
+      ],
+      "started_at": "2026-09-19T13:24:44+00:00",
+      "finished_at": "2026-09-19T13:25:08+00:00",
+      "prompt_chars": 6575,
+      "prompt_sha256": "e6d8ae9df75b2e216a24dcbcddbdc7e469705ea778301324dc1b9038dfc2f18b"
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d7-94bb-7e80-8a0f-9ee75ae98358",
+      "reasoning_effort": "high",
+      "tokens_used": "3,024",
+      "sample_ids": [
+        "pc-0075"
+      ],
+      "started_at": "2026-09-19T13:25:08+00:00",
+      "finished_at": "2026-09-19T13:25:23+00:00",
+      "prompt_chars": 5760,
+      "prompt_sha256": "dd2a0a3607981f436e4122f37aac62909b5cd71d9152a7c1ba9b4ce2a28b6354"
+    }
+  ]
+}

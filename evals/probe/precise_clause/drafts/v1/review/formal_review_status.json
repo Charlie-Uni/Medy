@@ -1,0 +1,28 @@
+{
+  "complete": true,
+  "prompt_hash": "f4a3804e969b23ec9ab467406937e62f0b9e30933d6a680d4b00ee59b2631c38",
+  "batches": {
+    "MA": {
+      "expected": 30,
+      "completed": 30,
+      "agree": 28,
+      "dispute": 2
+    },
+    "PV": {
+      "expected": 29,
+      "completed": 29,
+      "agree": 28,
+      "dispute": 1
+    },
+    "CO": {
+      "expected": 16,
+      "completed": 16,
+      "agree": 15,
+      "dispute": 1
+    }
+  },
+  "totals": {
+    "agree": 71,
+    "dispute": 4
+  }
+}

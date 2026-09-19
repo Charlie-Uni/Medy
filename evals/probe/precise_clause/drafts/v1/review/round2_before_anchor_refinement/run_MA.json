@@ -1,0 +1,1653 @@
+{
+  "batch": "MA",
+  "codex_binary": "/Applications/ChatGPT.app/Contents/Resources/codex",
+  "model": "gpt-6-astra",
+  "reasoning_effort_requested": "high",
+  "review_prompt_sha256": "f4a3804e969b23ec9ab467406937e62f0b9e30933d6a680d4b00ee59b2631c38",
+  "sample_input_sha256": {
+    "pc-0001": "8d45d6544d4f3c829aaf58f90bb85cf19988d8adc02c310ec72bad841979967d",
+    "pc-0002": "809423a9d75875a4758cd041cfb870a30df9ecdcc0942ac099f8459ef0e87976",
+    "pc-0003": "d69b1b6756a5a1d8ac0a7fa0382b43dc6916c6e3b5add8ca6a0bd9f12e0dae67",
+    "pc-0004": "fd5d6a7f4edd254a795200534f6d5bd8d56ef96ef70c63b460f5b1e0ca78351d",
+    "pc-0005": "c76e596e09fa8caea68784a416f82a4a8b792fe46f607e0533c715b537109fbc",
+    "pc-0006": "d8374be0ad102990848d8dfbc93f2f6681f366309f89a27bc8bfec2fde21f936",
+    "pc-0007": "34392a70a9e9f2163d66752f534ab93e738c1041d0f69aa593f3c158a768071d",
+    "pc-0008": "64ffb16eb8d7d6d967c3128ee01b1a76b086a7849fc9bc9b8266c758e99820d7",
+    "pc-0009": "2ab2fea68c1c8686f94b7a2ad14637e8157adb325a336cec6f7207a04b8fce47",
+    "pc-0010": "445d3cefb9b95009a830ea33e489ca9a92b0b04af2158cc55f4cad7e3a48f029",
+    "pc-0011": "0373fa0af7d152b95c87709be34aee37110963b7908475325704d5f1b381637f",
+    "pc-0012": "5976858b21ec8c3ef9be41fd319775af85d00702cc26b151197d7a7571245f72",
+    "pc-0013": "759642c4ea5ff6a763d9f8934c30bed45abfd80030b38b1179fcd50286a25c31",
+    "pc-0014": "13a00f51d7eddab0b1076cbeb7139089c328b3cb99804f944a18519fcf53ce8b",
+    "pc-0015": "7fb95b9e9fe548f3fd8e3e7e383a09e108e61657118d5b9ec03da5fddada1b78",
+    "pc-0016": "be801f52f1cdbbe9672280f973ac00d1589a44acdd41905dd0b40cfb2b325624",
+    "pc-0017": "998c181d1c8c8e158ef514e21c586a87afc31150f24c055c2670690de830a2b1",
+    "pc-0018": "7c475e836c9a68cd5abf56b495e72ec5c1d525fa2fd3079fd1874bb9c9414064",
+    "pc-0019": "bb2182717c98d4782d0f07797f3e581129799b1ccb41e91b2415019e907edf64",
+    "pc-0020": "94a0913f36ff7df93b041a3e2effb1fb7c2aef3d30cc35c9421725ea7b556ecb",
+    "pc-0021": "1d6703f25835a88fa87832c7dbaf7c6af2f077dcd8317fee937733036bf9f8f5",
+    "pc-0022": "fb5506313e4625a5f8c481fdb4bceb7e0b364f379ea41966b6c997bcedb71a25",
+    "pc-0023": "bbed86cd1895184b811ee71207062c78387c466e706803f1ba42dcce5d91aeab",
+    "pc-0024": "69587f5bdc5d9f6d9b4c90d1040007c540a85f58ccfd75a16372a1bf161fc711",
+    "pc-0025": "69724e3d4dfc3152dc192ca528d227158c135b42ae87a0285a0e31ad075e5d52",
+    "pc-0026": "4eecac3c3379da3f1770d41f50d13b55a79ae3b1d5ec898e23798df6f6e01e2e",
+    "pc-0027": "096a0bd33f7a1633f84ea9950c8f053214cdf881a92212971798c18b66279d13",
+    "pc-0028": "56fc54ef4e117db2d7b692de061e758c71641660b8d794bdade7bd6a25e6bae2",
+    "pc-0029": "3b09719b3d9ebfd306f1542ef37541166adf5a0b118f141a8860b0cd0e0386c1",
+    "pc-0030": "4422e34f9ffd27937726ba9dfcce56c9d2d614a5b8d5c620f14b45ed64ee24e4"
+  },
+  "chunks": [
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d0-926e-76b0-b0dd-f41dd4aca657",
+      "reasoning_effort": "high",
+      "tokens_used": "7,258",
+      "sample_ids": [
+        "pc-0001"
+      ],
+      "started_at": "2026-09-19T13:17:29+00:00",
+      "finished_at": "2026-09-19T13:17:39+00:00",
+      "prompt_chars": 6097,
+      "prompt_sha256": "eee892c2a04e35e3882fa4541ed1ecb98d33cedf6db4b49546fa326388da829f",
+      "input_path": "chunk_inputs/input_eee892c2a04e35e3882fa4541ed1ecb98d33cedf6db4b49546fa326388da829f.jsonl",
+      "sample_input_sha256": {
+        "pc-0001": "8d45d6544d4f3c829aaf58f90bb85cf19988d8adc02c310ec72bad841979967d"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0001",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d0-ba0b-7943-8f8a-69568ad262a6",
+      "reasoning_effort": "high",
+      "tokens_used": "7,386",
+      "sample_ids": [
+        "pc-0002"
+      ],
+      "started_at": "2026-09-19T13:17:39+00:00",
+      "finished_at": "2026-09-19T13:17:54+00:00",
+      "prompt_chars": 6140,
+      "prompt_sha256": "e08a49a803d5181bccb947d60f03af53845e51a113c7bfde41ddcf32b6b930c1",
+      "input_path": "chunk_inputs/input_e08a49a803d5181bccb947d60f03af53845e51a113c7bfde41ddcf32b6b930c1.jsonl",
+      "sample_input_sha256": {
+        "pc-0002": "809423a9d75875a4758cd041cfb870a30df9ecdcc0942ac099f8459ef0e87976"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0002",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d0-f74d-7ff2-8418-bced3c509256",
+      "reasoning_effort": "high",
+      "tokens_used": "5,211",
+      "sample_ids": [
+        "pc-0003"
+      ],
+      "started_at": "2026-09-19T13:17:54+00:00",
+      "finished_at": "2026-09-19T13:18:09+00:00",
+      "prompt_chars": 6106,
+      "prompt_sha256": "c609dec2b55230f4c241e0b068d23a0510c1f0a056388991a0e269e9482189b4",
+      "input_path": "chunk_inputs/input_c609dec2b55230f4c241e0b068d23a0510c1f0a056388991a0e269e9482189b4.jsonl",
+      "sample_input_sha256": {
+        "pc-0003": "76381494e707357db2383a84b1abf59fa02c5550bc3b8acb279cf995d4b798f9"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0003",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "issue",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "key_text「不建議開始使用」虽为页内唯一原文，但未保留适用对象「大於80歲之老年患者」，不符合 P1 要求的同时保留对象与约束。",
+          "suggestion": "将 key_text 改为「大於80歲之老年患者不建議開始使用」。"
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d1-2eab-72e0-8b45-fbc4b8836330",
+      "reasoning_effort": "high",
+      "tokens_used": "7,458",
+      "sample_ids": [
+        "pc-0004"
+      ],
+      "started_at": "2026-09-19T13:18:09+00:00",
+      "finished_at": "2026-09-19T13:18:23+00:00",
+      "prompt_chars": 6617,
+      "prompt_sha256": "f48c158430d0ca6cf7a4db3b587b1bb87259ace7b49aaaaab04c609989549bd9",
+      "input_path": "chunk_inputs/input_f48c158430d0ca6cf7a4db3b587b1bb87259ace7b49aaaaab04c609989549bd9.jsonl",
+      "sample_input_sha256": {
+        "pc-0004": "fd5d6a7f4edd254a795200534f6d5bd8d56ef96ef70c63b460f5b1e0ca78351d"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0004",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d1-6594-7cb2-b6ab-ad8ed3ee6640",
+      "reasoning_effort": "high",
+      "tokens_used": "5,178",
+      "sample_ids": [
+        "pc-0005"
+      ],
+      "started_at": "2026-09-19T13:18:23+00:00",
+      "finished_at": "2026-09-19T13:18:33+00:00",
+      "prompt_chars": 6614,
+      "prompt_sha256": "3e31585807512c4b3c5fb5b933899ddc0e5ba7130029a1146c25493479a1f94e",
+      "input_path": "chunk_inputs/input_3e31585807512c4b3c5fb5b933899ddc0e5ba7130029a1146c25493479a1f94e.jsonl",
+      "sample_input_sha256": {
+        "pc-0005": "c76e596e09fa8caea68784a416f82a4a8b792fe46f607e0533c715b537109fbc"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0005",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d1-8dee-77f3-858d-d77b1dcf7ba9",
+      "reasoning_effort": "high",
+      "tokens_used": "7,575",
+      "sample_ids": [
+        "pc-0006"
+      ],
+      "started_at": "2026-09-19T13:18:33+00:00",
+      "finished_at": "2026-09-19T13:18:51+00:00",
+      "prompt_chars": 6643,
+      "prompt_sha256": "003ca1a125a4e2133c6da1bc0c10be2dcb8eb01d05bc49789047f52065f9c68b",
+      "input_path": "chunk_inputs/input_003ca1a125a4e2133c6da1bc0c10be2dcb8eb01d05bc49789047f52065f9c68b.jsonl",
+      "sample_input_sha256": {
+        "pc-0006": "1fe38c110b36173d7a886f00f09c99089790606720fde288c40f6e4b16c73735"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0006",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "issue",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "切片漏标 mixed_zh_en：key_text 含英文标识及缩写“Code No.”，按 P2 应计入；protocol_id 和 dose_unit 均成立。",
+          "suggestion": "将 slices 改为 [\"protocol_id\",\"dose_unit\",\"mixed_zh_en\"]。"
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d1-d31f-7343-a055-0989bc929c3c",
+      "reasoning_effort": "high",
+      "tokens_used": "3,436",
+      "sample_ids": [
+        "pc-0007"
+      ],
+      "started_at": "2026-09-19T13:18:51+00:00",
+      "finished_at": "2026-09-19T13:19:08+00:00",
+      "prompt_chars": 3990,
+      "prompt_sha256": "5573c626a155fe439dd36b4721103f035addd84389ba8eefec086fb8efffc498",
+      "input_path": "chunk_inputs/input_5573c626a155fe439dd36b4721103f035addd84389ba8eefec086fb8efffc498.jsonl",
+      "sample_input_sha256": {
+        "pc-0007": "34392a70a9e9f2163d66752f534ab93e738c1041d0f69aa593f3c158a768071d"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0007",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d2-15a7-7a52-8c10-de0a938ffca9",
+      "reasoning_effort": "high",
+      "tokens_used": "3,314",
+      "sample_ids": [
+        "pc-0008"
+      ],
+      "started_at": "2026-09-19T13:19:08+00:00",
+      "finished_at": "2026-09-19T13:19:23+00:00",
+      "prompt_chars": 3905,
+      "prompt_sha256": "2b15113ce5713e8006b0ffb697854b73a517d227ae45f0785727f485696e3460",
+      "input_path": "chunk_inputs/input_2b15113ce5713e8006b0ffb697854b73a517d227ae45f0785727f485696e3460.jsonl",
+      "sample_input_sha256": {
+        "pc-0008": "d19337591ca75770eacd108ed0de838ed1f042e65c135abfd58958522beed595"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0008",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "issue",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "key_text 虽为页内唯一的逐字原文，但未保留一般成人这一对象及处方限量这一约束，单独命中无法区分常规剂量与处方上限，不符合 P1。完整 evidence_span 中的“處方限量”属于限制表达，支持 negation 标签。",
+          "suggestion": "将 key_text 改为“一般成人處方限量:每一劑量300mg;每天800mg”。"
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d2-5056-7b52-82fb-48703ee8d392",
+      "reasoning_effort": "high",
+      "tokens_used": "3,978",
+      "sample_ids": [
+        "pc-0009"
+      ],
+      "started_at": "2026-09-19T13:19:23+00:00",
+      "finished_at": "2026-09-19T13:19:43+00:00",
+      "prompt_chars": 4670,
+      "prompt_sha256": "857051fc1e7f4b752012a3d3b475165edf701ac8cd3be24daac79661499d9b02",
+      "input_path": "chunk_inputs/input_857051fc1e7f4b752012a3d3b475165edf701ac8cd3be24daac79661499d9b02.jsonl",
+      "sample_input_sha256": {
+        "pc-0009": "2ab2fea68c1c8686f94b7a2ad14637e8157adb325a336cec6f7207a04b8fce47"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0009",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d2-9f38-7a41-b7a0-bc7d2939d6c5",
+      "reasoning_effort": "high",
+      "tokens_used": "5,608",
+      "sample_ids": [
+        "pc-0010"
+      ],
+      "started_at": "2026-09-19T13:19:43+00:00",
+      "finished_at": "2026-09-19T13:19:51+00:00",
+      "prompt_chars": 4392,
+      "prompt_sha256": "f6a636f45295cbcda0a3fcfc9d7b43b40e95282534175d4158de10b9ecc0569b",
+      "input_path": "chunk_inputs/input_f6a636f45295cbcda0a3fcfc9d7b43b40e95282534175d4158de10b9ecc0569b.jsonl",
+      "sample_input_sha256": {
+        "pc-0010": "445d3cefb9b95009a830ea33e489ca9a92b0b04af2158cc55f4cad7e3a48f029"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0010",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d2-c0e1-7f61-8ba3-8b444a268961",
+      "reasoning_effort": "high",
+      "tokens_used": "6,028",
+      "sample_ids": [
+        "pc-0011"
+      ],
+      "started_at": "2026-09-19T13:19:51+00:00",
+      "finished_at": "2026-09-19T13:20:10+00:00",
+      "prompt_chars": 4479,
+      "prompt_sha256": "29c51d2507d7ba67596843d7fa41a37610c3428a3b27e99967339c59b7215faa",
+      "input_path": "chunk_inputs/input_29c51d2507d7ba67596843d7fa41a37610c3428a3b27e99967339c59b7215faa.jsonl",
+      "sample_input_sha256": {
+        "pc-0011": "8930c5d3a5de4ee05b398875e478c26838939bc071ea421bbe5f2aab7bb47f56"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0011",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "issue",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "key_text「不得超過300 mg」雖為頁內唯一的逐字原文，但缺少受限對象「單一劑量」，未符合 P1 同時保留對象與約束的要求，無法單獨區分單次劑量上限與每日劑量限制。",
+          "suggestion": "將 key_text 改為頁內連續原文「單一劑量,都必須不得超過300 mg」，保留受限對象及上限約束。"
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d3-0802-75c2-a0fa-48d711ddfb2e",
+      "reasoning_effort": "high",
+      "tokens_used": "5,456",
+      "sample_ids": [
+        "pc-0012"
+      ],
+      "started_at": "2026-09-19T13:20:10+00:00",
+      "finished_at": "2026-09-19T13:20:28+00:00",
+      "prompt_chars": 3598,
+      "prompt_sha256": "73f75daf96c64d1271aff9dfdcba60391bf6709b654219e215f2502237c5bf5b",
+      "input_path": "chunk_inputs/input_73f75daf96c64d1271aff9dfdcba60391bf6709b654219e215f2502237c5bf5b.jsonl",
+      "sample_input_sha256": {
+        "pc-0012": "cf9b044a3e7afafff93361ef8e47dd6268b6218b94d4fc44d2d604f6a6565cbc"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0012",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "issue",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "切片缺少 negation：完整 evidence_span 中的「本藥須由醫師處方使用」限定藥品須憑醫師處方使用，屬於切片定義中的限制表達。",
+          "suggestion": "將 slices 改為 [\"protocol_id\", \"negation\"]。"
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d3-4ef3-7833-a863-ea1f927a00de",
+      "reasoning_effort": "high",
+      "tokens_used": "6,149",
+      "sample_ids": [
+        "pc-0013"
+      ],
+      "started_at": "2026-09-19T13:20:28+00:00",
+      "finished_at": "2026-09-19T13:20:45+00:00",
+      "prompt_chars": 7230,
+      "prompt_sha256": "8d3e40b4c11147777f95bee125ae2061d24d0a7497c842e093ff469c18d6c6ec",
+      "input_path": "chunk_inputs/input_8d3e40b4c11147777f95bee125ae2061d24d0a7497c842e093ff469c18d6c6ec.jsonl",
+      "sample_input_sha256": {
+        "pc-0013": "759642c4ea5ff6a763d9f8934c30bed45abfd80030b38b1179fcd50286a25c31"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0013",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d3-9300-7d70-8ee8-2c3ea29a87ef",
+      "reasoning_effort": "high",
+      "tokens_used": "8,172",
+      "sample_ids": [
+        "pc-0014"
+      ],
+      "started_at": "2026-09-19T13:20:45+00:00",
+      "finished_at": "2026-09-19T13:20:55+00:00",
+      "prompt_chars": 7220,
+      "prompt_sha256": "090f7a166408be52519417075ea58bb2b614653e62375ca8c7096b94e158fbbb",
+      "input_path": "chunk_inputs/input_090f7a166408be52519417075ea58bb2b614653e62375ca8c7096b94e158fbbb.jsonl",
+      "sample_input_sha256": {
+        "pc-0014": "13a00f51d7eddab0b1076cbeb7139089c328b3cb99804f944a18519fcf53ce8b"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0014",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d3-b905-7623-abda-7a02ebbbb7b8",
+      "reasoning_effort": "high",
+      "tokens_used": "6,233",
+      "sample_ids": [
+        "pc-0015"
+      ],
+      "started_at": "2026-09-19T13:20:55+00:00",
+      "finished_at": "2026-09-19T13:21:14+00:00",
+      "prompt_chars": 7215,
+      "prompt_sha256": "a5e383df416011dbc052e6dd61a2b32e71550ee667b54cd95179875fae7f7c1a",
+      "input_path": "chunk_inputs/input_a5e383df416011dbc052e6dd61a2b32e71550ee667b54cd95179875fae7f7c1a.jsonl",
+      "sample_input_sha256": {
+        "pc-0015": "4f4cf25b211af9610959b432627f9426434e19269a41054b5f62de48b49fb93f"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0015",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "issue",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "key_text「改用每次 25mg」虽为页内唯一原文，但未保留剂量对象「起始劑量」及「需考慮」的限定语义，不符合 P1 同时保留对象与约束的要求。",
+          "suggestion": "将 key_text 改为「其起始劑量需考慮改用每次 25mg」。"
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d4-0446-7da0-87eb-67eb2d9ed584",
+      "reasoning_effort": "high",
+      "tokens_used": "8,299",
+      "sample_ids": [
+        "pc-0016"
+      ],
+      "started_at": "2026-09-19T13:21:14+00:00",
+      "finished_at": "2026-09-19T13:21:28+00:00",
+      "prompt_chars": 7242,
+      "prompt_sha256": "ee41a042b783a80a57ad4802700100c06753631e2934d0092b732cec1bc417b5",
+      "input_path": "chunk_inputs/input_ee41a042b783a80a57ad4802700100c06753631e2934d0092b732cec1bc417b5.jsonl",
+      "sample_input_sha256": {
+        "pc-0016": "106ea16174381574eedeb143534f4a417e2af129743f046d601fa928e3a96ce6"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0016",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "issue",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "key_text 虽为页内唯一原文，但未保留“禁忌症:”这一限制，无法表达糖尿病患者禁止合并用药的含义，不符合 P1 同时保留对象与约束的要求。",
+          "suggestion": "将 key_text 改为“禁忌症:合併使用本品及含 aliskiren 成分藥品於糖尿病患”，保留禁忌语义。"
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d4-397d-7bd1-b16c-183ac434130f",
+      "reasoning_effort": "high",
+      "tokens_used": "9,738",
+      "sample_ids": [
+        "pc-0017"
+      ],
+      "started_at": "2026-09-19T13:21:28+00:00",
+      "finished_at": "2026-09-19T13:23:25+00:00",
+      "prompt_chars": 7392,
+      "prompt_sha256": "c40d6684f78167b449b501073803bc38c02d5655205d6dc02e21d5550aa2e3bd",
+      "input_path": "chunk_inputs/input_c40d6684f78167b449b501073803bc38c02d5655205d6dc02e21d5550aa2e3bd.jsonl",
+      "sample_input_sha256": {
+        "pc-0017": "998c181d1c8c8e158ef514e21c586a87afc31150f24c055c2670690de830a2b1"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0017",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d6-042c-7433-922c-997c318de181",
+      "reasoning_effort": "high",
+      "tokens_used": "6,008",
+      "sample_ids": [
+        "pc-0018"
+      ],
+      "started_at": "2026-09-19T13:23:25+00:00",
+      "finished_at": "2026-09-19T13:23:37+00:00",
+      "prompt_chars": 7170,
+      "prompt_sha256": "b49983238b8a8af1864c9f1a8f13808cdccdb2b89e4824308e350503d857b31a",
+      "input_path": "chunk_inputs/input_b49983238b8a8af1864c9f1a8f13808cdccdb2b89e4824308e350503d857b31a.jsonl",
+      "sample_input_sha256": {
+        "pc-0018": "7c475e836c9a68cd5abf56b495e72ec5c1d525fa2fd3079fd1874bb9c9414064"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0018",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d6-303e-7dc3-8ee8-8d01c16e7a4a",
+      "reasoning_effort": "high",
+      "tokens_used": "5,807",
+      "sample_ids": [
+        "pc-0019"
+      ],
+      "started_at": "2026-09-19T13:23:37+00:00",
+      "finished_at": "2026-09-19T13:23:50+00:00",
+      "prompt_chars": 4227,
+      "prompt_sha256": "e8db29f0d8e3dc139202e49d6edea9b53a3eb8f15e2adbad56a35b7ee6609d3d",
+      "input_path": "chunk_inputs/input_e8db29f0d8e3dc139202e49d6edea9b53a3eb8f15e2adbad56a35b7ee6609d3d.jsonl",
+      "sample_input_sha256": {
+        "pc-0019": "bb2182717c98d4782d0f07797f3e581129799b1ccb41e91b2415019e907edf64"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0019",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d6-64bb-7751-b715-f8d7cc3a9b7e",
+      "reasoning_effort": "high",
+      "tokens_used": "3,635",
+      "sample_ids": [
+        "pc-0020"
+      ],
+      "started_at": "2026-09-19T13:23:50+00:00",
+      "finished_at": "2026-09-19T13:24:04+00:00",
+      "prompt_chars": 4226,
+      "prompt_sha256": "78169b01101803404bf61460d26c26c76209e874260d3e553552bc14387ad090",
+      "input_path": "chunk_inputs/input_78169b01101803404bf61460d26c26c76209e874260d3e553552bc14387ad090.jsonl",
+      "sample_input_sha256": {
+        "pc-0020": "94a0913f36ff7df93b041a3e2effb1fb7c2aef3d30cc35c9421725ea7b556ecb"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0020",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d6-9b06-7581-b8ea-8effaaa649bf",
+      "reasoning_effort": "high",
+      "tokens_used": "3,835",
+      "sample_ids": [
+        "pc-0021"
+      ],
+      "started_at": "2026-09-19T13:24:04+00:00",
+      "finished_at": "2026-09-19T13:24:24+00:00",
+      "prompt_chars": 4210,
+      "prompt_sha256": "e2ef1b6896f121ac03b36927993c088ccd4b2110714860d0e247881c0524692e",
+      "input_path": "chunk_inputs/input_e2ef1b6896f121ac03b36927993c088ccd4b2110714860d0e247881c0524692e.jsonl",
+      "sample_input_sha256": {
+        "pc-0021": "1d6703f25835a88fa87832c7dbaf7c6af2f077dcd8317fee937733036bf9f8f5"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0021",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d6-ea23-7d42-b792-b695730a416c",
+      "reasoning_effort": "high",
+      "tokens_used": "3,545",
+      "sample_ids": [
+        "pc-0022"
+      ],
+      "started_at": "2026-09-19T13:24:24+00:00",
+      "finished_at": "2026-09-19T13:24:36+00:00",
+      "prompt_chars": 4202,
+      "prompt_sha256": "6a597afd4b0ad1e66c1be024713485cbba786f8b8e7ace61ecf200e0977581b7",
+      "input_path": "chunk_inputs/input_6a597afd4b0ad1e66c1be024713485cbba786f8b8e7ace61ecf200e0977581b7.jsonl",
+      "sample_input_sha256": {
+        "pc-0022": "fb5506313e4625a5f8c481fdb4bceb7e0b364f379ea41966b6c997bcedb71a25"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0022",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d7-19b3-75c3-bbd6-b1cb0d8f829b",
+      "reasoning_effort": "high",
+      "tokens_used": "3,589",
+      "sample_ids": [
+        "pc-0023"
+      ],
+      "started_at": "2026-09-19T13:24:36+00:00",
+      "finished_at": "2026-09-19T13:24:53+00:00",
+      "prompt_chars": 4207,
+      "prompt_sha256": "4440b3ca31908ba03aad6a9995bfbd84674a207003d1fb0bb02dd54e2aa28746",
+      "input_path": "chunk_inputs/input_4440b3ca31908ba03aad6a9995bfbd84674a207003d1fb0bb02dd54e2aa28746.jsonl",
+      "sample_input_sha256": {
+        "pc-0023": "6c20dcf0838bbdbed6c5743f02a969e5b97bc8c650326b4dd59311520665e925"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0023",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "issue",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "完整 evidence_span 中的「倘若還未能達到滿意效果時」是接續投與升壓劑的必要限制條件，須保留其否定語義；現有切片缺少 negation。",
+          "suggestion": "在 slices 中補入 negation。"
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d7-5b63-7060-9344-26f18e88283f",
+      "reasoning_effort": "high",
+      "tokens_used": "5,993",
+      "sample_ids": [
+        "pc-0024"
+      ],
+      "started_at": "2026-09-19T13:24:53+00:00",
+      "finished_at": "2026-09-19T13:25:13+00:00",
+      "prompt_chars": 4246,
+      "prompt_sha256": "8c6197c4bc13532c1bdc76fc7f95323a52953fd3c207226a0499cde7a2ccf3a9",
+      "input_path": "chunk_inputs/input_8c6197c4bc13532c1bdc76fc7f95323a52953fd3c207226a0499cde7a2ccf3a9.jsonl",
+      "sample_input_sha256": {
+        "pc-0024": "e9177816e8efdea2b833e8755a37493f90545e2d0a4967c01ecc74e35cedb80d"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0024",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "issue",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "key_text 虽为页内唯一的逐字原文，但仍可缩短为“心壓暢錠 100 毫克”，保留药品对象及规格约束；末尾“(美托普洛)”不是该查询命中所必需的信息，不符合 P1 最小性要求。",
+          "suggestion": "将 key_text 改为“心壓暢錠 100 毫克”，完整 evidence_span 保持不变。"
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d7-aa14-7182-8de9-241b94ee02ca",
+      "reasoning_effort": "high",
+      "tokens_used": "6,596",
+      "sample_ids": [
+        "pc-0025"
+      ],
+      "started_at": "2026-09-19T13:25:13+00:00",
+      "finished_at": "2026-09-19T13:25:33+00:00",
+      "prompt_chars": 7485,
+      "prompt_sha256": "12f83dc1de17573ff7fc1d825883d033be2fda5314fe55e4ffd9ec6ba0535412",
+      "input_path": "chunk_inputs/input_12f83dc1de17573ff7fc1d825883d033be2fda5314fe55e4ffd9ec6ba0535412.jsonl",
+      "sample_input_sha256": {
+        "pc-0025": "58daaf9f6fe6b11d98f4f936ddc1d3be9bc65b32a6f25e8411a3892b7aedafaf"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0025",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "issue",
+            "dept": "ok"
+          },
+          "reason": "evidence_span 范围过宽。首句已完整回答能否嚼碎或压碎药片，后续吞咽困难患者的分散服药步骤、30 分钟时限及胃管给药限制不是回答该问题所必需的限定条件，不符合围绕一个条款保留必要限定条件的要求。现有切片按所给完整 span 判断成立。",
+          "suggestion": "将 evidence_span 缩为“本錠劑應整粒以液體吞服,不可嚼破或壓破本錠劑。”并同步更新偏移；缩短后删除 time_window 标签，保留 negation 和 drug_name_zh。"
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d7-f6e4-7eb3-85d4-6fdfb28f9bd7",
+      "reasoning_effort": "high",
+      "tokens_used": "6,373",
+      "sample_ids": [
+        "pc-0026"
+      ],
+      "started_at": "2026-09-19T13:25:33+00:00",
+      "finished_at": "2026-09-19T13:25:50+00:00",
+      "prompt_chars": 7358,
+      "prompt_sha256": "27f700155f914fe8f0193944911f6e9f2b01332e02a0971cfe00ca57cd8a7984",
+      "input_path": "chunk_inputs/input_27f700155f914fe8f0193944911f6e9f2b01332e02a0971cfe00ca57cd8a7984.jsonl",
+      "sample_input_sha256": {
+        "pc-0026": "e4728306d3eff9e0814ec16decb5e4d82ecf26044ddd476d89027d4069312cc6"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0026",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "issue",
+            "evidence_span": "issue",
+            "dept": "ok"
+          },
+          "reason": "key_text“30 分鐘之內”仅含时限，未保留服用对象与动作，不符合 P1。evidence_span 虽回答时限，但遗漏前文对该服用方式的限定：“對於有吞嚥困難的病人,可將藥錠置入半杯非碳酸類的水中,且不可使用他種液體,因為藥錠的腸衣膜可能因此溶解。”",
+          "suggestion": "将 key_text 改为“立即或在 30 分鐘之內將水連同小藥球喝下”；将 evidence_span 向前扩展以包含上述适用人群及用水限定，并同步更新偏移。扩展后的 span 含“不可使用他種液體”，应增加 negation 标签。"
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d8-3945-7f53-93e3-ce17c84ed836",
+      "reasoning_effort": "high",
+      "tokens_used": "8,827",
+      "sample_ids": [
+        "pc-0027"
+      ],
+      "started_at": "2026-09-19T13:25:50+00:00",
+      "finished_at": "2026-09-19T13:26:09+00:00",
+      "prompt_chars": 7572,
+      "prompt_sha256": "12cf2c1f9d61e01b8467a0357af8cb7dc41f635736636f046791d64fb97711cb",
+      "input_path": "chunk_inputs/input_12cf2c1f9d61e01b8467a0357af8cb7dc41f635736636f046791d64fb97711cb.jsonl",
+      "sample_input_sha256": {
+        "pc-0027": "096a0bd33f7a1633f84ea9950c8f053214cdf881a92212971798c18b66279d13"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0027",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "issue",
+            "dept": "ok"
+          },
+          "reason": "evidence_span 遗漏适用人群的上位限定。页文本将该条款置于“成人成人成人成人及及及及 12 歲以上之青少年歲以上之青少年歲以上之青少年歲以上之青少年”之下，现有 span 未保留此年龄范围。",
+          "suggestion": "证据应保留成人及12岁以上青少年的适用范围，并同步核对文本及偏移；回答疗程时应区分“若 4週後仍有症狀時,則應進一步檢查患者。”与固定4周疗程，原文未明确规定固定疗程。"
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d8-8476-72a2-bc82-5e6adff09909",
+      "reasoning_effort": "high",
+      "tokens_used": "5,998",
+      "sample_ids": [
+        "pc-0028"
+      ],
+      "started_at": "2026-09-19T13:26:09+00:00",
+      "finished_at": "2026-09-19T13:26:23+00:00",
+      "prompt_chars": 7649,
+      "prompt_sha256": "9973839b58a7976add9f3566e0b9f9fb4354812cd5175c2412352d009b0777ba",
+      "input_path": "chunk_inputs/input_9973839b58a7976add9f3566e0b9f9fb4354812cd5175c2412352d009b0777ba.jsonl",
+      "sample_input_sha256": {
+        "pc-0028": "56fc54ef4e117db2d7b692de061e758c71641660b8d794bdade7bd6a25e6bae2"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0028",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d8-b9f5-7df1-835b-526aa7a1fd79",
+      "reasoning_effort": "high",
+      "tokens_used": "6,252",
+      "sample_ids": [
+        "pc-0029"
+      ],
+      "started_at": "2026-09-19T13:26:23+00:00",
+      "finished_at": "2026-09-19T13:26:37+00:00",
+      "prompt_chars": 7333,
+      "prompt_sha256": "3cc3bb7ceb8842ac9e334a628a4da570d8e918af6ca95d37efc9961746f192ad",
+      "input_path": "chunk_inputs/input_3cc3bb7ceb8842ac9e334a628a4da570d8e918af6ca95d37efc9961746f192ad.jsonl",
+      "sample_input_sha256": {
+        "pc-0029": "5b5367adeab36285956c7d7e21bc8d1a253f74b790c7d45eec6ffcd6d5983473"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0029",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "issue",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "key_text「不可超過 20 mg」虽为页内唯一的逐字原文，但仅保留限制与数值，未保留药物及剂量对象，不符合 P1 同时保留对象与约束的要求。",
+          "suggestion": "将 key_text 改为页内原文「此類病人的esomeprazole 最高劑量不可超過 20 mg」，保留现有 evidence_span 以明确严重肝功能不良的人群限定。"
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9d8-f0a3-7193-b58f-7695f37f0dfb",
+      "reasoning_effort": "high",
+      "tokens_used": "3,587",
+      "sample_ids": [
+        "pc-0030"
+      ],
+      "started_at": "2026-09-19T13:26:37+00:00",
+      "finished_at": "2026-09-19T13:27:17+00:00",
+      "prompt_chars": 3246,
+      "prompt_sha256": "0684a126a4a7bdb54a3093b1ca5df045af36fca229ac375bb754525ab1a2342c",
+      "input_path": "chunk_inputs/input_0684a126a4a7bdb54a3093b1ca5df045af36fca229ac375bb754525ab1a2342c.jsonl",
+      "sample_input_sha256": {
+        "pc-0030": "4422e34f9ffd27937726ba9dfcce56c9d2d614a5b8d5c620f14b45ed64ee24e4"
+      },
+      "verdicts": [
+        {
+          "sample_id": "pc-0030",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ]
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9f4-8e43-7e41-9ced-dd74a9e9b5b6",
+      "reasoning_effort": "high",
+      "tokens_used": "5,125",
+      "sample_ids": [
+        "pc-0003"
+      ],
+      "started_at": "2026-09-19T13:56:47+00:00",
+      "finished_at": "2026-09-19T13:56:58+00:00",
+      "prompt_chars": 6116,
+      "prompt_sha256": "8a2a91a57a9ef546cd87a74978d1f7a643d78981c2407c41fc16226f2cc11f12",
+      "verdicts": [
+        {
+          "sample_id": "pc-0003",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_8a2a91a57a9ef546cd87a74978d1f7a643d78981c2407c41fc16226f2cc11f12.jsonl",
+      "sample_input_sha256": {
+        "pc-0003": "d69b1b6756a5a1d8ac0a7fa0382b43dc6916c6e3b5add8ca6a0bd9f12e0dae67"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9f4-bae0-7872-a43f-1d0898ad3c25",
+      "reasoning_effort": "high",
+      "tokens_used": "7,457",
+      "sample_ids": [
+        "pc-0006"
+      ],
+      "started_at": "2026-09-19T13:56:58+00:00",
+      "finished_at": "2026-09-19T13:57:11+00:00",
+      "prompt_chars": 6661,
+      "prompt_sha256": "d1cbee4ca7592b554df8fe633108faae9d0fbeba92699a84cc678ec2e9cd63bc",
+      "verdicts": [
+        {
+          "sample_id": "pc-0006",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_d1cbee4ca7592b554df8fe633108faae9d0fbeba92699a84cc678ec2e9cd63bc.jsonl",
+      "sample_input_sha256": {
+        "pc-0006": "d8374be0ad102990848d8dfbc93f2f6681f366309f89a27bc8bfec2fde21f936"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9f4-ee31-7ea3-9121-2d19c4653864",
+      "reasoning_effort": "high",
+      "tokens_used": "5,375",
+      "sample_ids": [
+        "pc-0008"
+      ],
+      "started_at": "2026-09-19T13:57:11+00:00",
+      "finished_at": "2026-09-19T13:57:26+00:00",
+      "prompt_chars": 3914,
+      "prompt_sha256": "2d98642922a4009407ceaceeec697e5c1fbca3188fb602acbd1d6df1d042ebf6",
+      "verdicts": [
+        {
+          "sample_id": "pc-0008",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_2d98642922a4009407ceaceeec697e5c1fbca3188fb602acbd1d6df1d042ebf6.jsonl",
+      "sample_input_sha256": {
+        "pc-0008": "64ffb16eb8d7d6d967c3128ee01b1a76b086a7849fc9bc9b8266c758e99820d7"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9f5-2839-7aa0-b8ee-2179e2c6e0bf",
+      "reasoning_effort": "high",
+      "tokens_used": "3,741",
+      "sample_ids": [
+        "pc-0011"
+      ],
+      "started_at": "2026-09-19T13:57:26+00:00",
+      "finished_at": "2026-09-19T13:57:38+00:00",
+      "prompt_chars": 4487,
+      "prompt_sha256": "2ac0d2296ebb4dd7ecbbcc64830c900fec49260d719c5ce2c3daab1065d0f9ad",
+      "verdicts": [
+        {
+          "sample_id": "pc-0011",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_2ac0d2296ebb4dd7ecbbcc64830c900fec49260d719c5ce2c3daab1065d0f9ad.jsonl",
+      "sample_input_sha256": {
+        "pc-0011": "0373fa0af7d152b95c87709be34aee37110963b7908475325704d5f1b381637f"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9f5-5552-7873-afd9-bd38af0ca5b4",
+      "reasoning_effort": "high",
+      "tokens_used": "3,111",
+      "sample_ids": [
+        "pc-0012"
+      ],
+      "started_at": "2026-09-19T13:57:38+00:00",
+      "finished_at": "2026-09-19T13:57:50+00:00",
+      "prompt_chars": 3610,
+      "prompt_sha256": "7c79100bdc95641ef596fa612275157606d3b6617974c1ac8ffeac3e68233590",
+      "verdicts": [
+        {
+          "sample_id": "pc-0012",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_7c79100bdc95641ef596fa612275157606d3b6617974c1ac8ffeac3e68233590.jsonl",
+      "sample_input_sha256": {
+        "pc-0012": "5976858b21ec8c3ef9be41fd319775af85d00702cc26b151197d7a7571245f72"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9f5-8518-7041-a2e5-dbd6741de70c",
+      "reasoning_effort": "high",
+      "tokens_used": "8,349",
+      "sample_ids": [
+        "pc-0015"
+      ],
+      "started_at": "2026-09-19T13:57:50+00:00",
+      "finished_at": "2026-09-19T13:58:06+00:00",
+      "prompt_chars": 7223,
+      "prompt_sha256": "7374a16b051075c4f31bf000cc75d68a415a35856f1b2a8e8d5216af1ed70ab9",
+      "verdicts": [
+        {
+          "sample_id": "pc-0015",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "issue",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "key_text 尚可缩短：删除开头的“其”后，仍保留起始劑量这一对象及“需考慮改用每次 25mg”的约束，且在页内唯一，符合 P1。",
+          "suggestion": "将 key_text 改为“起始劑量需考慮改用每次 25mg”。"
+        }
+      ],
+      "input_path": "chunk_inputs/input_7374a16b051075c4f31bf000cc75d68a415a35856f1b2a8e8d5216af1ed70ab9.jsonl",
+      "sample_input_sha256": {
+        "pc-0015": "7fb95b9e9fe548f3fd8e3e7e383a09e108e61657118d5b9ec03da5fddada1b78"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9f5-c2d1-7f33-9e4d-f105acb994c7",
+      "reasoning_effort": "high",
+      "tokens_used": "6,313",
+      "sample_ids": [
+        "pc-0016"
+      ],
+      "started_at": "2026-09-19T13:58:06+00:00",
+      "finished_at": "2026-09-19T13:58:26+00:00",
+      "prompt_chars": 7246,
+      "prompt_sha256": "bc21e5664b3dc4a65abe582670ed3f573655c10c4a88d28723987cff632947c1",
+      "verdicts": [
+        {
+          "sample_id": "pc-0016",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_bc21e5664b3dc4a65abe582670ed3f573655c10c4a88d28723987cff632947c1.jsonl",
+      "sample_input_sha256": {
+        "pc-0016": "be801f52f1cdbbe9672280f973ac00d1589a44acdd41905dd0b40cfb2b325624"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9f6-108e-7c50-9da7-5cedbf90c051",
+      "reasoning_effort": "high",
+      "tokens_used": "3,415",
+      "sample_ids": [
+        "pc-0023"
+      ],
+      "started_at": "2026-09-19T13:58:26+00:00",
+      "finished_at": "2026-09-19T13:58:45+00:00",
+      "prompt_chars": 4219,
+      "prompt_sha256": "cd5f8a5f5dfbddcadfc60db58564f0a8375f2b84c193b06958df7273cd701b73",
+      "verdicts": [
+        {
+          "sample_id": "pc-0023",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_cd5f8a5f5dfbddcadfc60db58564f0a8375f2b84c193b06958df7273cd701b73.jsonl",
+      "sample_input_sha256": {
+        "pc-0023": "bbed86cd1895184b811ee71207062c78387c466e706803f1ba42dcce5d91aeab"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9f6-5b41-7e91-8b6e-d240b7a79f61",
+      "reasoning_effort": "high",
+      "tokens_used": "5,728",
+      "sample_ids": [
+        "pc-0024"
+      ],
+      "started_at": "2026-09-19T13:58:45+00:00",
+      "finished_at": "2026-09-19T13:59:00+00:00",
+      "prompt_chars": 4240,
+      "prompt_sha256": "2d53579d55e93bb4f640f3c1eeb4f47f12c0cd36ebe27dd7d180ab05dae75d7e",
+      "verdicts": [
+        {
+          "sample_id": "pc-0024",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_2d53579d55e93bb4f640f3c1eeb4f47f12c0cd36ebe27dd7d180ab05dae75d7e.jsonl",
+      "sample_input_sha256": {
+        "pc-0024": "69587f5bdc5d9f6d9b4c90d1040007c540a85f58ccfd75a16372a1bf161fc711"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9f6-96ac-7241-b95d-9a40c45e9896",
+      "reasoning_effort": "high",
+      "tokens_used": "8,357",
+      "sample_ids": [
+        "pc-0025"
+      ],
+      "started_at": "2026-09-19T13:59:00+00:00",
+      "finished_at": "2026-09-19T13:59:12+00:00",
+      "prompt_chars": 7347,
+      "prompt_sha256": "71a6f669c2fe15066abfcb5564a652074cdbcf93c746122c4e247cf18a1e9054",
+      "verdicts": [
+        {
+          "sample_id": "pc-0025",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_71a6f669c2fe15066abfcb5564a652074cdbcf93c746122c4e247cf18a1e9054.jsonl",
+      "sample_input_sha256": {
+        "pc-0025": "69724e3d4dfc3152dc192ca528d227158c135b42ae87a0285a0e31ad075e5d52"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9f6-c480-7cd1-9446-78a36eefa4f3",
+      "reasoning_effort": "high",
+      "tokens_used": "6,389",
+      "sample_ids": [
+        "pc-0026"
+      ],
+      "started_at": "2026-09-19T13:59:12+00:00",
+      "finished_at": "2026-09-19T13:59:33+00:00",
+      "prompt_chars": 7372,
+      "prompt_sha256": "23294ec82387e5a4b6ce0874d71b6c26c96f368bfa448666ac0bce1d5c341f51",
+      "verdicts": [
+        {
+          "sample_id": "pc-0026",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "issue",
+            "dept": "ok"
+          },
+          "reason": "evidence_span 遗漏该服用方式的适用人群和液体限制。前句明确规定：「對於有吞嚥困難的病人,可將藥錠置入半杯非碳酸類的水中,且不可使用他種液體,因為藥錠的腸衣膜可能因此溶解。」现有 span 单独引用时未保留这些必要限定条件。",
+          "suggestion": "将 evidence_span 起点前移至「對於有吞嚥困難的病人」，保留至现有终点并更新偏移；扩展后按完整 span 增加 negation 标签。"
+        }
+      ],
+      "input_path": "chunk_inputs/input_23294ec82387e5a4b6ce0874d71b6c26c96f368bfa448666ac0bce1d5c341f51.jsonl",
+      "sample_input_sha256": {
+        "pc-0026": "4eecac3c3379da3f1770d41f50d13b55a79ae3b1d5ec898e23798df6f6e01e2e"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli_version": "0.154.0-alpha.6.2",
+      "model": "gpt-6-astra",
+      "session_id": "01a0b9f7-1759-7ee1-b676-d4fdeab37efb",
+      "reasoning_effort": "high",
+      "tokens_used": "6,348",
+      "sample_ids": [
+        "pc-0029"
+      ],
+      "started_at": "2026-09-19T13:59:33+00:00",
+      "finished_at": "2026-09-19T13:59:50+00:00",
+      "prompt_chars": 7355,
+      "prompt_sha256": "1c2a1e6a9ee6e8b6be223e32ddf8beaaeaba52669dbfac0d4790720fc95589e8",
+      "verdicts": [
+        {
+          "sample_id": "pc-0029",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_1c2a1e6a9ee6e8b6be223e32ddf8beaaeaba52669dbfac0d4790720fc95589e8.jsonl",
+      "sample_input_sha256": {
+        "pc-0029": "3b09719b3d9ebfd306f1542ef37541166adf5a0b118f141a8860b0cd0e0386c1"
+      }
+    }
+  ],
+  "provenance_version": 2,
+  "latest": {
+    "pc-0001": {
+      "chunk_index": 0,
+      "sample_input_sha256": "8d45d6544d4f3c829aaf58f90bb85cf19988d8adc02c310ec72bad841979967d",
+      "prompt_sha256": "eee892c2a04e35e3882fa4541ed1ecb98d33cedf6db4b49546fa326388da829f",
+      "verdict_sha256": "fefc03d9682ddeefe7dde605b2dbb0e26fa4a6f70c10a567f5f66c6af814f672"
+    },
+    "pc-0002": {
+      "chunk_index": 1,
+      "sample_input_sha256": "809423a9d75875a4758cd041cfb870a30df9ecdcc0942ac099f8459ef0e87976",
+      "prompt_sha256": "e08a49a803d5181bccb947d60f03af53845e51a113c7bfde41ddcf32b6b930c1",
+      "verdict_sha256": "f9344d5b4642d1c5acc2d2fac2ee144a9d1f63f06330686e9ce9dda385d9a9f5"
+    },
+    "pc-0004": {
+      "chunk_index": 3,
+      "sample_input_sha256": "fd5d6a7f4edd254a795200534f6d5bd8d56ef96ef70c63b460f5b1e0ca78351d",
+      "prompt_sha256": "f48c158430d0ca6cf7a4db3b587b1bb87259ace7b49aaaaab04c609989549bd9",
+      "verdict_sha256": "4f69a9bd2290418cfa73aa12f2fe6166415778645b318504dae2936aaff318f5"
+    },
+    "pc-0005": {
+      "chunk_index": 4,
+      "sample_input_sha256": "c76e596e09fa8caea68784a416f82a4a8b792fe46f607e0533c715b537109fbc",
+      "prompt_sha256": "3e31585807512c4b3c5fb5b933899ddc0e5ba7130029a1146c25493479a1f94e",
+      "verdict_sha256": "a90264e8e42f9ef26c45032291bca67e2ff6bb6e0786da41f4613ab705f810f5"
+    },
+    "pc-0007": {
+      "chunk_index": 6,
+      "sample_input_sha256": "34392a70a9e9f2163d66752f534ab93e738c1041d0f69aa593f3c158a768071d",
+      "prompt_sha256": "5573c626a155fe439dd36b4721103f035addd84389ba8eefec086fb8efffc498",
+      "verdict_sha256": "951f2f4c497542639120aadbfc3be5048ca1f15a2de93598499a145b7340d90c"
+    },
+    "pc-0009": {
+      "chunk_index": 8,
+      "sample_input_sha256": "2ab2fea68c1c8686f94b7a2ad14637e8157adb325a336cec6f7207a04b8fce47",
+      "prompt_sha256": "857051fc1e7f4b752012a3d3b475165edf701ac8cd3be24daac79661499d9b02",
+      "verdict_sha256": "db9089b6836f97d308e8fc68c982bf4e34dacda28542335d06c6ff8ea3d8aba0"
+    },
+    "pc-0010": {
+      "chunk_index": 9,
+      "sample_input_sha256": "445d3cefb9b95009a830ea33e489ca9a92b0b04af2158cc55f4cad7e3a48f029",
+      "prompt_sha256": "f6a636f45295cbcda0a3fcfc9d7b43b40e95282534175d4158de10b9ecc0569b",
+      "verdict_sha256": "d5f34d06f50b76c78e4da097181f4c66badf2129741654c92ffcf87582e9ebee"
+    },
+    "pc-0013": {
+      "chunk_index": 12,
+      "sample_input_sha256": "759642c4ea5ff6a763d9f8934c30bed45abfd80030b38b1179fcd50286a25c31",
+      "prompt_sha256": "8d3e40b4c11147777f95bee125ae2061d24d0a7497c842e093ff469c18d6c6ec",
+      "verdict_sha256": "6bb2d427f42f8d4155546f0703a2f32b576dec534b84b06611acbfde1251f742"
+    },
+    "pc-0014": {
+      "chunk_index": 13,
+      "sample_input_sha256": "13a00f51d7eddab0b1076cbeb7139089c328b3cb99804f944a18519fcf53ce8b",
+      "prompt_sha256": "090f7a166408be52519417075ea58bb2b614653e62375ca8c7096b94e158fbbb",
+      "verdict_sha256": "e0e2a08f340370f6d49ca7e4460fde526af06c4562c44fa5ca4795d64984859b"
+    },
+    "pc-0017": {
+      "chunk_index": 16,
+      "sample_input_sha256": "998c181d1c8c8e158ef514e21c586a87afc31150f24c055c2670690de830a2b1",
+      "prompt_sha256": "c40d6684f78167b449b501073803bc38c02d5655205d6dc02e21d5550aa2e3bd",
+      "verdict_sha256": "9fe478cc7aaa9521dcbd168510ebec5887bfa258d78d0720f2cd9e72976d2aae"
+    },
+    "pc-0018": {
+      "chunk_index": 17,
+      "sample_input_sha256": "7c475e836c9a68cd5abf56b495e72ec5c1d525fa2fd3079fd1874bb9c9414064",
+      "prompt_sha256": "b49983238b8a8af1864c9f1a8f13808cdccdb2b89e4824308e350503d857b31a",
+      "verdict_sha256": "9bac1410e40788213b5bf88a600bdf772842ddff371c028325385a069ea0c195"
+    },
+    "pc-0019": {
+      "chunk_index": 18,
+      "sample_input_sha256": "bb2182717c98d4782d0f07797f3e581129799b1ccb41e91b2415019e907edf64",
+      "prompt_sha256": "e8db29f0d8e3dc139202e49d6edea9b53a3eb8f15e2adbad56a35b7ee6609d3d",
+      "verdict_sha256": "7884dc48d98afd7ce00eee176d2477550f2a89254de42de90c7539509f92dd18"
+    },
+    "pc-0020": {
+      "chunk_index": 19,
+      "sample_input_sha256": "94a0913f36ff7df93b041a3e2effb1fb7c2aef3d30cc35c9421725ea7b556ecb",
+      "prompt_sha256": "78169b01101803404bf61460d26c26c76209e874260d3e553552bc14387ad090",
+      "verdict_sha256": "0ca68af17eecb2b2c35252c5cf76187bfc9a3226e99c1b5fd7c52b1870b08ef0"
+    },
+    "pc-0021": {
+      "chunk_index": 20,
+      "sample_input_sha256": "1d6703f25835a88fa87832c7dbaf7c6af2f077dcd8317fee937733036bf9f8f5",
+      "prompt_sha256": "e2ef1b6896f121ac03b36927993c088ccd4b2110714860d0e247881c0524692e",
+      "verdict_sha256": "63ca505492bc574a435c364d16dedc4afbc30cad7397d2690e6db066daa18810"
+    },
+    "pc-0022": {
+      "chunk_index": 21,
+      "sample_input_sha256": "fb5506313e4625a5f8c481fdb4bceb7e0b364f379ea41966b6c997bcedb71a25",
+      "prompt_sha256": "6a597afd4b0ad1e66c1be024713485cbba786f8b8e7ace61ecf200e0977581b7",
+      "verdict_sha256": "7250a2ecb4155527b2226797bb40b3a3e593ec915b430343c37cd78560805c18"
+    },
+    "pc-0027": {
+      "chunk_index": 26,
+      "sample_input_sha256": "096a0bd33f7a1633f84ea9950c8f053214cdf881a92212971798c18b66279d13",
+      "prompt_sha256": "12cf2c1f9d61e01b8467a0357af8cb7dc41f635736636f046791d64fb97711cb",
+      "verdict_sha256": "2084ea31319d7d8264e1eb7ef1409d2a2c1a116a41f8e367a2f5ac9977878102"
+    },
+    "pc-0028": {
+      "chunk_index": 27,
+      "sample_input_sha256": "56fc54ef4e117db2d7b692de061e758c71641660b8d794bdade7bd6a25e6bae2",
+      "prompt_sha256": "9973839b58a7976add9f3566e0b9f9fb4354812cd5175c2412352d009b0777ba",
+      "verdict_sha256": "a7ff36ebdb508ba968d43210d8a94d6406c8bde13f56972fb5d78b97bdbaef57"
+    },
+    "pc-0030": {
+      "chunk_index": 29,
+      "sample_input_sha256": "4422e34f9ffd27937726ba9dfcce56c9d2d614a5b8d5c620f14b45ed64ee24e4",
+      "prompt_sha256": "0684a126a4a7bdb54a3093b1ca5df045af36fca229ac375bb754525ab1a2342c",
+      "verdict_sha256": "1bbe4fd9c244ed46a6df7575a3cff8dfddb3ed25407adc14d127e5eec73ea362"
+    },
+    "pc-0003": {
+      "chunk_index": 30,
+      "sample_input_sha256": "d69b1b6756a5a1d8ac0a7fa0382b43dc6916c6e3b5add8ca6a0bd9f12e0dae67",
+      "prompt_sha256": "8a2a91a57a9ef546cd87a74978d1f7a643d78981c2407c41fc16226f2cc11f12",
+      "verdict_sha256": "6b35add913ec883a8fcbfac9a2c49682f2fc4d42fdf92e66fe01c673e3bb28f8"
+    },
+    "pc-0006": {
+      "chunk_index": 31,
+      "sample_input_sha256": "d8374be0ad102990848d8dfbc93f2f6681f366309f89a27bc8bfec2fde21f936",
+      "prompt_sha256": "d1cbee4ca7592b554df8fe633108faae9d0fbeba92699a84cc678ec2e9cd63bc",
+      "verdict_sha256": "afeef661197acadb76515473e221323a0296baf01421d0081343d35d6adbcff4"
+    },
+    "pc-0008": {
+      "chunk_index": 32,
+      "sample_input_sha256": "64ffb16eb8d7d6d967c3128ee01b1a76b086a7849fc9bc9b8266c758e99820d7",
+      "prompt_sha256": "2d98642922a4009407ceaceeec697e5c1fbca3188fb602acbd1d6df1d042ebf6",
+      "verdict_sha256": "9fce0a0e5fb3a76db3426ffa06c7b2585e45a553d18c39da78c8815c085cad3c"
+    },
+    "pc-0011": {
+      "chunk_index": 33,
+      "sample_input_sha256": "0373fa0af7d152b95c87709be34aee37110963b7908475325704d5f1b381637f",
+      "prompt_sha256": "2ac0d2296ebb4dd7ecbbcc64830c900fec49260d719c5ce2c3daab1065d0f9ad",
+      "verdict_sha256": "9c9add20e77ce491944c546f7691aa2843ef4d1eaf98d27675ddf925f07d1059"
+    },
+    "pc-0012": {
+      "chunk_index": 34,
+      "sample_input_sha256": "5976858b21ec8c3ef9be41fd319775af85d00702cc26b151197d7a7571245f72",
+      "prompt_sha256": "7c79100bdc95641ef596fa612275157606d3b6617974c1ac8ffeac3e68233590",
+      "verdict_sha256": "96a50cef778abfb7fac0a72ef5f5088792a95650ee27ede716012677fad42e83"
+    },
+    "pc-0015": {
+      "chunk_index": 35,
+      "sample_input_sha256": "7fb95b9e9fe548f3fd8e3e7e383a09e108e61657118d5b9ec03da5fddada1b78",
+      "prompt_sha256": "7374a16b051075c4f31bf000cc75d68a415a35856f1b2a8e8d5216af1ed70ab9",
+      "verdict_sha256": "0f5491fdbdf763ca6051615956c0c87ab0f9e8f9f6760952468ba23b51d9d124"
+    },
+    "pc-0016": {
+      "chunk_index": 36,
+      "sample_input_sha256": "be801f52f1cdbbe9672280f973ac00d1589a44acdd41905dd0b40cfb2b325624",
+      "prompt_sha256": "bc21e5664b3dc4a65abe582670ed3f573655c10c4a88d28723987cff632947c1",
+      "verdict_sha256": "8f0e86fdc60e60bd5b8893cebec5cba745c6bcc19860037f5ab25348203ba86e"
+    },
+    "pc-0023": {
+      "chunk_index": 37,
+      "sample_input_sha256": "bbed86cd1895184b811ee71207062c78387c466e706803f1ba42dcce5d91aeab",
+      "prompt_sha256": "cd5f8a5f5dfbddcadfc60db58564f0a8375f2b84c193b06958df7273cd701b73",
+      "verdict_sha256": "875057a00b8dafced4dcc7b8a8dc74e4cc336d817c8ef8699389d0014ff45f9c"
+    },
+    "pc-0024": {
+      "chunk_index": 38,
+      "sample_input_sha256": "69587f5bdc5d9f6d9b4c90d1040007c540a85f58ccfd75a16372a1bf161fc711",
+      "prompt_sha256": "2d53579d55e93bb4f640f3c1eeb4f47f12c0cd36ebe27dd7d180ab05dae75d7e",
+      "verdict_sha256": "ec2010c1c175425a69e8a909d844f2da1c391c07891445ec64d4b738970e8622"
+    },
+    "pc-0025": {
+      "chunk_index": 39,
+      "sample_input_sha256": "69724e3d4dfc3152dc192ca528d227158c135b42ae87a0285a0e31ad075e5d52",
+      "prompt_sha256": "71a6f669c2fe15066abfcb5564a652074cdbcf93c746122c4e247cf18a1e9054",
+      "verdict_sha256": "892b333783ac49c27b6c41686e675c4b149e8f78ecd3e8e0c4131cbc73867bd2"
+    },
+    "pc-0026": {
+      "chunk_index": 40,
+      "sample_input_sha256": "4eecac3c3379da3f1770d41f50d13b55a79ae3b1d5ec898e23798df6f6e01e2e",
+      "prompt_sha256": "23294ec82387e5a4b6ce0874d71b6c26c96f368bfa448666ac0bce1d5c341f51",
+      "verdict_sha256": "a9c4a06dcb1fa37758264e7cfbb946629ce998b03043554d87b767942182c4ad"
+    },
+    "pc-0029": {
+      "chunk_index": 41,
+      "sample_input_sha256": "3b09719b3d9ebfd306f1542ef37541166adf5a0b118f141a8860b0cd0e0386c1",
+      "prompt_sha256": "1c2a1e6a9ee6e8b6be223e32ddf8beaaeaba52669dbfac0d4790720fc95589e8",
+      "verdict_sha256": "3bc60f5c43a9286393a1ec13a1ad220de0707404f18e90df831a86ade5ceb0c1"
+    }
+  },
+  "active_review": null
+}

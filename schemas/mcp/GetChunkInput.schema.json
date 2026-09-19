@@ -1,0 +1,28 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "chunk_id": {
+      "minLength": 1,
+      "title": "Chunk Id",
+      "type": "string"
+    },
+    "historical_version": {
+      "anyOf": [
+        {
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Historical Version"
+    }
+  },
+  "required": [
+    "chunk_id"
+  ],
+  "title": "GetChunkInput",
+  "type": "object"
+}

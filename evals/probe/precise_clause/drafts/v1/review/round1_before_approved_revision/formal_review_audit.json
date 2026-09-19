@@ -1,0 +1,62 @@
+{
+  "review_prompt_sha256": "f4a3804e969b23ec9ab467406937e62f0b9e30933d6a680d4b00ee59b2631c38",
+  "current_input_bindings": "verified for all 75 records",
+  "total_reported_tokens": 387725,
+  "batches": {
+    "MA": {
+      "reviewed": 30,
+      "tokens_used": 176522,
+      "cli_versions": [
+        "0.154.0-alpha.6.2"
+      ],
+      "observed_models": [
+        "gpt-6-astra"
+      ],
+      "observed_efforts": [
+        "high"
+      ],
+      "artifacts_sha256": {
+        "run_MA.json": "ed775b85675f29933bc1385f62008a8ce199ea3509317178cc1e63f363a7344d",
+        "verdicts_MA.jsonl": "1b11a3e7f57f117bd697fbbe0fb4c68c25425e1b3d42c31cf8fe17c5028dc1ce",
+        "input_MA.jsonl": "c4682b289879784b9e19eb6b4779da01d252f5b936d6e5646b08d6743daa0a20"
+      }
+    },
+    "PV": {
+      "reviewed": 29,
+      "tokens_used": 132075,
+      "cli_versions": [
+        "0.154.0-alpha.6.2"
+      ],
+      "observed_models": [
+        "gpt-6-astra"
+      ],
+      "observed_efforts": [
+        "high"
+      ],
+      "artifacts_sha256": {
+        "run_PV.json": "4c5ebfcc64f2fbcbe16d93aff0575162b07bb1db4ce75231a8c0fb5db9add3a9",
+        "verdicts_PV.jsonl": "98ae91c871f540cf70915e61a4a424d2b84a49d2430880c8b3222674041cd8f6",
+        "input_PV.jsonl": "e1f2cfd8d03b3c9c04f8ea6e59954a9e0af9ab70bd7d02a678c90838956c5eb6"
+      }
+    },
+    "CO": {
+      "reviewed": 16,
+      "tokens_used": 79128,
+      "cli_versions": [
+        "0.154.0-alpha.6.2"
+      ],
+      "observed_models": [
+        "gpt-6-astra"
+      ],
+      "observed_efforts": [
+        "high"
+      ],
+      "artifacts_sha256": {
+        "run_CO.json": "0ae340aa5d3601a6d0a2492de73a0cee5904af2a3561f0e4b7e91b3825489581",
+        "verdicts_CO.jsonl": "5f4ab1ceac4d84e395bdae578272eb738e6f4fef3f90f8054abc0823ca59a4c0",
+        "input_CO.jsonl": "374d177f7341906fbbc38f6a51d55cf2057ddd2cb258ff76a82bac2e6c74048e"
+      }
+    }
+  },
+  "model_snapshot_version": "not exposed in CLI run metadata; do not substitute CLI version"
+}

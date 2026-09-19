@@ -1,0 +1,96 @@
+{
+  "approval_quote": "确认修改 按照你的建议来 记得每轮需要自审",
+  "proposal_sha256": "37e07ed1b4d2de42a20fd8dd336bcd715d30919491345da0c1e0298068463e37",
+  "exception": "pc-0038: keep original slices, do not add dose_unit",
+  "unchanged_resolution": "pc-0027: keep approved span",
+  "selected_ids": {
+    "MA": [
+      "pc-0003",
+      "pc-0006",
+      "pc-0008",
+      "pc-0011",
+      "pc-0012",
+      "pc-0015",
+      "pc-0016",
+      "pc-0023",
+      "pc-0024",
+      "pc-0025",
+      "pc-0026",
+      "pc-0029"
+    ],
+    "PV": [
+      "pc-0031",
+      "pc-0036",
+      "pc-0037",
+      "pc-0038",
+      "pc-0039",
+      "pc-0041",
+      "pc-0042",
+      "pc-0043",
+      "pc-0046",
+      "pc-0047",
+      "pc-0048",
+      "pc-0050",
+      "pc-0051",
+      "pc-0052",
+      "pc-0053",
+      "pc-0054",
+      "pc-0055",
+      "pc-0056",
+      "pc-0057"
+    ],
+    "CO": [
+      "pc-0060",
+      "pc-0061",
+      "pc-0062",
+      "pc-0064",
+      "pc-0065",
+      "pc-0066",
+      "pc-0067",
+      "pc-0068",
+      "pc-0069",
+      "pc-0070",
+      "pc-0071",
+      "pc-0072",
+      "pc-0073",
+      "pc-0074",
+      "pc-0075"
+    ]
+  },
+  "changed_samples": 46,
+  "unchanged_samples": 29,
+  "field_counts": {
+    "key_text": 36,
+    "slices": 21,
+    "language": 1,
+    "evidence_span": 2,
+    "query": 2
+  },
+  "counts": {
+    "samples": 75,
+    "per_dept": {
+      "MA": 30,
+      "PV": 29,
+      "CO": 16
+    },
+    "per_slice": {
+      "dose_unit": 20,
+      "drug_name_zh": 18,
+      "negation": 41,
+      "time_window": 20,
+      "mixed_zh_en": 53,
+      "protocol_id": 17
+    }
+  },
+  "before_sha256": {
+    "MA": "194f82ea72ad7238d9e0c6acba8b578e84c1e0d331fa28c86c3bae8daca40d5e",
+    "PV": "6abd1af4936ea14c45f3b2ecea5ce558f9948de82cb8a63e18c8f8c979f02f67",
+    "CO": "75cb0650b3f028dbe3323c3a8d7e48ec6d484b56471ad6c086d452f330a8f28e"
+  },
+  "after_sha256": {
+    "MA": "6b125a68464b4c91476f7230f914da872ffb601e46a5d01638261da02e4c47ed",
+    "PV": "10bf9a28290de95c79801563ec0d92765601b4621c938e661b8f809864b209bc",
+    "CO": "f06d70b28e50a8e9666ed0029d16355dfacceb769d1e4a2cb2fea1307cfb8e1a"
+  },
+  "validation": "Schema except absent review, complete reconstruction equality, page anchors/offsets, query uniqueness, minimums passed"
+}

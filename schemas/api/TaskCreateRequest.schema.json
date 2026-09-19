@@ -1,0 +1,106 @@
+{
+  "$defs": {
+    "HistoricalRequest": {
+      "additionalProperties": false,
+      "description": "Explicit request for an archived version (INV-DATA-03); exactly one selector.",
+      "oneOf": [
+        {
+          "properties": {
+            "as_of": {
+              "type": "null"
+            },
+            "version": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "version"
+          ]
+        },
+        {
+          "properties": {
+            "as_of": {
+              "type": "string"
+            },
+            "version": {
+              "type": "null"
+            }
+          },
+          "required": [
+            "as_of"
+          ]
+        }
+      ],
+      "properties": {
+        "as_of": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "As Of"
+        },
+        "version": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Version"
+        }
+      },
+      "title": "HistoricalRequest",
+      "type": "object"
+    },
+    "JsonValue": {}
+  },
+  "additionalProperties": false,
+  "description": "Skill workflow submission. `input` is validated against the skill's registered schema at\nexecution time (M2-11); the wire contract only requires a finite JSON object.",
+  "properties": {
+    "historical": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/HistoricalRequest"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "input": {
+      "additionalProperties": {
+        "$ref": "#/$defs/JsonValue"
+      },
+      "title": "Input",
+      "type": "object"
+    },
+    "skill_name": {
+      "pattern": "^[a-z][a-z0-9_]{2,63}$",
+      "title": "Skill Name",
+      "type": "string"
+    },
+    "skill_version": {
+      "minLength": 1,
+      "title": "Skill Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "skill_name",
+    "skill_version",
+    "input"
+  ],
+  "title": "TaskCreateRequest",
+  "type": "object"
+}

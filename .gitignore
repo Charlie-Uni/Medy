@@ -1,2 +1,24 @@
 # 探针集原始 PDF 不进入 Git，只记录 source_hash（见 evals/probe/precise_clause/SPEC.md 第 2 节）
 evals/probe/precise_clause/v*/sources/
+evals/probe/precise_clause/v*/pages/
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+.DS_Store
+
+# Local secrets
+.env
+.env.*
+!.env.example
+
+# uv project artifacts (we lock with requirements.lock; run uv one-offs with --no-project)
+uv.lock
+
+# derived reviewer input packs (page texts of the gold pages; regenerate with drafts/v1/tooling/review_pack.py)
+evals/probe/precise_clause/drafts/*/review/input_*.jsonl
+evals/probe/precise_clause/drafts/*/review/**/input_*.jsonl

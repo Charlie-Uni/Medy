@@ -1,0 +1,784 @@
+{
+  "status": "proposal_only",
+  "draft_file_sha256": {
+    "MA": "194f82ea72ad7238d9e0c6acba8b578e84c1e0d331fa28c86c3bae8daca40d5e",
+    "PV": "6abd1af4936ea14c45f3b2ecea5ce558f9948de82cb8a63e18c8f8c979f02f67",
+    "CO": "75cb0650b3f028dbe3323c3a8d7e48ec6d484b56471ad6c086d452f330a8f28e"
+  },
+  "changes": [
+    {
+      "sample_id": "pc-0003",
+      "changes": {
+        "key_text": {
+          "before": "不建議開始使用",
+          "after": "大於80歲之老年患者不建議開始使用"
+        }
+      },
+      "notes": [],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0006",
+      "changes": {
+        "slices": {
+          "before": [
+            "protocol_id",
+            "dose_unit"
+          ],
+          "after": [
+            "protocol_id",
+            "dose_unit",
+            "mixed_zh_en"
+          ]
+        },
+        "language": {
+          "before": "zh",
+          "after": "mixed"
+        }
+      },
+      "notes": [],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0008",
+      "changes": {
+        "key_text": {
+          "before": "每一劑量300mg;每天800mg",
+          "after": "一般成人處方限量:每一劑量300mg;每天800mg"
+        }
+      },
+      "notes": [],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0011",
+      "changes": {
+        "key_text": {
+          "before": "不得超過300 mg",
+          "after": "單一劑量,都必須不得超過300 mg"
+        }
+      },
+      "notes": [],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0012",
+      "changes": {
+        "slices": {
+          "before": [
+            "protocol_id"
+          ],
+          "after": [
+            "protocol_id",
+            "negation"
+          ]
+        }
+      },
+      "notes": [],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0015",
+      "changes": {
+        "key_text": {
+          "before": "改用每次 25mg",
+          "after": "其起始劑量需考慮改用每次 25mg"
+        }
+      },
+      "notes": [],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0016",
+      "changes": {
+        "key_text": {
+          "before": "合併使用本品及含 aliskiren 成分藥品於糖尿病患",
+          "after": "禁忌症:合併使用本品及含 aliskiren 成分藥品於糖尿病患"
+        }
+      },
+      "notes": [],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0023",
+      "changes": {
+        "slices": {
+          "before": [
+            "dose_unit",
+            "drug_name_zh",
+            "mixed_zh_en"
+          ],
+          "after": [
+            "dose_unit",
+            "drug_name_zh",
+            "mixed_zh_en",
+            "negation"
+          ]
+        }
+      },
+      "notes": [],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0024",
+      "changes": {
+        "key_text": {
+          "before": "心壓暢錠 100 毫克(美托普洛)",
+          "after": "心壓暢錠 100 毫克"
+        }
+      },
+      "notes": [],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0025",
+      "changes": {
+        "slices": {
+          "before": [
+            "negation",
+            "drug_name_zh",
+            "time_window"
+          ],
+          "after": [
+            "negation",
+            "drug_name_zh"
+          ]
+        },
+        "evidence_span": {
+          "before": {
+            "text": "本錠劑應整粒以液體吞服,不可嚼破或壓破本錠劑。對於有吞嚥困難的病人,可將藥錠置入半杯非碳酸類的水中,且不可使用他種液體,因為藥錠的腸衣膜可能因此溶解。同時攪拌直到藥錠崩散,並立即或在 30 分鐘之內將水連同小藥球喝下。再將半杯水加入杯中沖洗並喝下,小藥球不可咬碎或壓碎。本品不適用於胃管給藥。",
+            "char_start": 761,
+            "char_end": 907
+          },
+          "after": {
+            "text": "本錠劑應整粒以液體吞服,不可嚼破或壓破本錠劑。",
+            "char_start": 761,
+            "char_end": 784
+          }
+        }
+      },
+      "notes": [],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0026",
+      "changes": {
+        "key_text": {
+          "before": "30 分鐘之內",
+          "after": "立即或在 30 分鐘之內將水連同小藥球喝下"
+        }
+      },
+      "notes": [
+        "span 扩展建议与已批准的 MA 试跑逐条处理重复：沿用不扩展的既有裁决，见人工确认记录及试跑表；不把该裁决扩展到其他新问题。"
+      ],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0027",
+      "changes": {},
+      "notes": [
+        "span 扩展建议与已批准的 MA 试跑逐条处理重复：沿用不扩展的既有裁决，见人工确认记录及试跑表；不把该裁决扩展到其他新问题。"
+      ],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0029",
+      "changes": {
+        "key_text": {
+          "before": "不可超過 20 mg",
+          "after": "此類病人的esomeprazole 最高劑量不可超過 20 mg"
+        }
+      },
+      "notes": [],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0031",
+      "changes": {
+        "key_text": {
+          "before": "不应更改",
+          "after": "术语层级结构,不应更改"
+        }
+      },
+      "notes": [],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0036",
+      "changes": {
+        "slices": {
+          "before": [
+            "time_window",
+            "mixed_zh_en"
+          ],
+          "after": [
+            "time_window",
+            "mixed_zh_en",
+            "dose_unit",
+            "negation"
+          ]
+        }
+      },
+      "notes": [],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0037",
+      "changes": {
+        "key_text": {
+          "before": "将一个 PT 分配给多个系统器官分类 [SOC]",
+          "after": "将一个 PT 分配给多个系统器官分类"
+        }
+      },
+      "notes": [],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0038",
+      "changes": {
+        "slices": {
+          "before": [
+            "time_window",
+            "mixed_zh_en"
+          ],
+          "after": [
+            "time_window",
+            "mixed_zh_en",
+            "dose_unit"
+          ]
+        },
+        "key_text": {
+          "before": "每年更新一次",
+          "after": "本《数据检索和展示:考虑要点》(DRP:PTC)文档是 ICH 认可的 MedDRA 用户指南,每年更新一次"
+        }
+      },
+      "notes": [
+        "复核人按频次表达的字面口径建议给文档年度更新加 dose_unit；请人工明确接受或拒绝。"
+      ],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0039",
+      "changes": {
+        "query": {
+          "before": "在特定 HLT 或 HLGT 中检索多轴性 PT 时，能否假定该 PT 会显示在其次 SOC 路径中？",
+          "after": "按 HLT 或 HLGT 导出多轴性 PT 数据时，次 SOC 分支缺失可能与什么数据库限制有关？"
+        }
+      },
+      "notes": [
+        "使用简短自然的替代问题，不添加复核人建议的长场景。"
+      ],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0041",
+      "changes": {
+        "key_text": {
+          "before": "A valid ICSR should include",
+          "after": "valid ICSR should include at least one identifiable reporter, one single identifiable patient, at least one suspect adverse reaction, and at least one suspect medicinal product"
+        }
+      },
+      "notes": [],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0042",
+      "changes": {
+        "key_text": {
+          "before": "should still be submitted within 15 days",
+          "after": "Where a case initially sent as serious becomes non-serious based on new follow-up information, this information should still be submitted within 15 days"
+        }
+      },
+      "notes": [],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0043",
+      "changes": {
+        "key_text": {
+          "before": "within 90 days from the date of receipt",
+          "after": "non-serious valid ICSRs shall be submitted by the competent authority in a Member State or by the marketing authorisation holder within 90 days from the date of receipt of the reports"
+        }
+      },
+      "notes": [],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0046",
+      "changes": {
+        "slices": {
+          "before": [
+            "time_window",
+            "mixed_zh_en"
+          ],
+          "after": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ]
+        },
+        "key_text": {
+          "before": "no later than 3 working days",
+          "after": "no later than 3 working days after establishing that a validated signal or a safety issue from any source meets the definition of an emerging safety issue"
+        }
+      },
+      "notes": [],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0047",
+      "changes": {
+        "key_text": {
+          "before": "not intended to be a full assessment",
+          "after": "Signal confirmation is not intended to be a full assessment"
+        }
+      },
+      "notes": [],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0048",
+      "changes": {
+        "slices": {
+          "before": [
+            "time_window",
+            "mixed_zh_en"
+          ],
+          "after": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ]
+        },
+        "key_text": {
+          "before": "in no case later than 7 calendar days",
+          "after": "the sponsor must notify FDA as soon as possible but in no case later than 7 calendar days after the sponsor’s initial receipt of the information"
+        }
+      },
+      "notes": [],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0050",
+      "changes": {
+        "slices": {
+          "before": [
+            "protocol_id",
+            "mixed_zh_en"
+          ],
+          "after": [
+            "mixed_zh_en"
+          ]
+        }
+      },
+      "notes": [
+        "按现有定义移除法规条款编号的 protocol_id；这也恢复了 PV 原始人工编辑中的标签选择。其他样本仍满足编号切片数量门槛。"
+      ],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0051",
+      "changes": {
+        "key_text": {
+          "before": "does not necessarily have to have a causal relationship",
+          "after": "not necessarily have to have a causal relationship"
+        }
+      },
+      "notes": [],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0052",
+      "changes": {
+        "key_text": {
+          "before": "should not be regarded as synonymous",
+          "after": "should not be regarded as synonymous with adverse event or adverse reaction"
+        }
+      },
+      "notes": [],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0053",
+      "changes": {
+        "slices": {
+          "before": [
+            "time_window",
+            "mixed_zh_en"
+          ],
+          "after": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ]
+        },
+        "key_text": {
+          "before": "no later than 7 calendar days",
+          "after": "Regulatory agencies should be notified (e.g., by telephone, facsimile transmission, or in writing) as soon as possible but no later than 7 calendar days"
+        }
+      },
+      "notes": [
+        "复核人原建议超过 key_text 的 200 字符上限；改为保留对象与数据完整性约束的连续锚点，完整定义仍在 span。"
+      ],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0054",
+      "changes": {
+        "slices": {
+          "before": [
+            "time_window",
+            "mixed_zh_en"
+          ],
+          "after": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ]
+        },
+        "key_text": {
+          "before": "no longer than one year",
+          "after": "period covered by the next DSUR should be no longer than one year"
+        }
+      },
+      "notes": [],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0055",
+      "changes": {
+        "slices": {
+          "before": [
+            "time_window",
+            "mixed_zh_en"
+          ],
+          "after": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ]
+        },
+        "key_text": {
+          "before": "no later than 60 calendar days",
+          "after": "The DSUR should be submitted to all concer ned regulatory authorities no later than 60 calendar days after the DSUR data lock point"
+        }
+      },
+      "notes": [],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0056",
+      "changes": {
+        "key_text": {
+          "before": "should not be used to provide the initial notification",
+          "after": "DSUR; however, it should not be used to provide the initial notification of significant new safety info rmation"
+        }
+      },
+      "notes": [],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0057",
+      "changes": {
+        "key_text": {
+          "before": "不應列入可疑藥品通報",
+          "after": "用以治療或緩解藥品不良反應之藥品不應列入可疑藥品通報"
+        }
+      },
+      "notes": [],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0060",
+      "changes": {
+        "slices": {
+          "before": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "after": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ]
+        },
+        "key_text": {
+          "before": "do not place undue burden",
+          "after": "do not place undue burden on study participants"
+        }
+      },
+      "notes": [],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0061",
+      "changes": {
+        "slices": {
+          "before": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "after": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ]
+        },
+        "key_text": {
+          "before": "not sufficient to ensure quality",
+          "after": "not sufficient to ensure quality of a clinical study"
+        }
+      },
+      "notes": [],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0062",
+      "changes": {
+        "slices": {
+          "before": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "after": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ]
+        },
+        "key_text": {
+          "before": "should not be cluttered with minor issues",
+          "after": "critical to quality factors should be clear and should not be cluttered with minor issues"
+        }
+      },
+      "notes": [],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0064",
+      "changes": {
+        "slices": {
+          "before": [
+            "mixed_zh_en"
+          ],
+          "after": [
+            "mixed_zh_en",
+            "protocol_id"
+          ]
+        }
+      },
+      "notes": [],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0065",
+      "changes": {
+        "query": {
+          "before": "按照 ICH E6(R3) 的 GCP 原则，申办方能否给受试者和研究者增加不必要的负担？",
+          "after": "按 ICH E6(R3) 设计研究流程时，申办方应如何控制受试者和研究者的额外负担？"
+        },
+        "slices": {
+          "before": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "after": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ]
+        },
+        "key_text": {
+          "before": "should not place unnecessary burden",
+          "after": "sponsor should not place unnecessary burden on participants and investigators"
+        }
+      },
+      "notes": [
+        "使用简短自然的替代问题，不添加复核人建议的长场景。"
+      ],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0066",
+      "changes": {
+        "slices": {
+          "before": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "after": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ]
+        },
+        "key_text": {
+          "before": "is not coercive",
+          "after": "Reasonable r eimbursement of expenses incurred by participants, such as for travel and lodging, is not coercive"
+        }
+      },
+      "notes": [],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0067",
+      "changes": {
+        "slices": {
+          "before": [
+            "mixed_zh_en"
+          ],
+          "after": [
+            "mixed_zh_en",
+            "protocol_id"
+          ]
+        }
+      },
+      "notes": [],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0068",
+      "changes": {
+        "key_text": {
+          "before": "outlined in ICH E8 (R1) General Considerations for Clinical Studies",
+          "after": "This guideline builds on key conce pts outlined in ICH E8 (R1)"
+        }
+      },
+      "notes": [],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0069",
+      "changes": {
+        "slices": {
+          "before": [
+            "mixed_zh_en"
+          ],
+          "after": [
+            "mixed_zh_en",
+            "protocol_id"
+          ]
+        },
+        "key_text": {
+          "before": "the protocol and relevant trial documents",
+          "after": "protocol and relevant trial documents"
+        }
+      },
+      "notes": [],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0070",
+      "changes": {
+        "slices": {
+          "before": [
+            "mixed_zh_en"
+          ],
+          "after": [
+            "mixed_zh_en",
+            "protocol_id"
+          ]
+        }
+      },
+      "notes": [],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0071",
+      "changes": {
+        "key_text": {
+          "before": "might significantly affect the completeness",
+          "after": "important protocol deviation is a subset of protocol 118 deviations that might significantly affect the completeness, accuracy, and/or reliability of the 119 study data"
+        }
+      },
+      "notes": [
+        "复核人原建议超过 key_text 的 200 字符上限；改为保留对象与数据完整性约束的连续锚点，完整定义仍在 span。"
+      ],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0072",
+      "changes": {
+        "key_text": {
+          "before": "adopting the ICH E3(R1)",
+          "after": "adopting the ICH E3(R1) 62 definitions of protocol deviation and important protocol deviation"
+        }
+      },
+      "notes": [],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0073",
+      "changes": {
+        "slices": {
+          "before": [
+            "time_window",
+            "mixed_zh_en"
+          ],
+          "after": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ]
+        },
+        "key_text": {
+          "before": "no later than 5 working days",
+          "after": "any deviation from the 210 investigational plan to protect the life or physical well-being of a subject in an emergency as 211 soon as possible but no later than 5 working days"
+        },
+        "evidence_span": {
+          "before": {
+            "text": "Similarly, for device investigations, investigators must keep records of each protocol deviation 209 (21 CFR 812.140(a)(4)) and must notify the sponsor and the IRB of any deviation from the 210 investigational plan to protect the life or physical well-being of a subject in an emergency as 211 soon as possible but no later than 5 working days after the emergency occurred (21 CFR 212 812.150(a)(4)). Except in such an emergency, investigators must get prior sponsor approval for 213 changes in or deviations from a plan, and if these changes or deviations may affect the scientific 214 soundness of the plan or the rights, safety, or welfare of human participants, prior FDA and IRB 215 approval is also required (21 CFR 812.150(a)(4)).",
+            "char_start": 1689,
+            "char_end": 2426
+          },
+          "after": {
+            "text": "Similarly, for device investigations, investigators must keep records of each protocol deviation 209 (21 CFR 812.140(a)(4)) and must notify the sponsor and the IRB of any deviation from the 210 investigational plan to protect the life or physical well-being of a subject in an emergency as 211 soon as possible but no later than 5 working days after the emergency occurred (21 CFR 212 812.150(a)(4)).",
+            "char_start": 1689,
+            "char_end": 2089
+          }
+        }
+      },
+      "notes": [],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0074",
+      "changes": {
+        "key_text": {
+          "before": "do not need to be immediately reported",
+          "after": "protocol deviations that are not classified as important and do not present an apparent 355 immediate hazard to participants do not need to be immediately reported to the IRB"
+        }
+      },
+      "notes": [],
+      "status": "pending_human_decision"
+    },
+    {
+      "sample_id": "pc-0075",
+      "changes": {
+        "key_text": {
+          "before": "do not include a definition",
+          "after": "FDA regulations do not include a definition of the term protocol 17 deviation"
+        }
+      },
+      "notes": [],
+      "status": "pending_human_decision"
+    }
+  ],
+  "mechanical_errors": [],
+  "candidate_counts": {
+    "samples": 75,
+    "slices": {
+      "dose_unit": 21,
+      "drug_name_zh": 18,
+      "negation": 41,
+      "time_window": 20,
+      "mixed_zh_en": 53,
+      "protocol_id": 17
+    },
+    "gold_languages": {
+      "zh-Hant": 33,
+      "zh-Hans": 10,
+      "en": 32
+    }
+  }
+}

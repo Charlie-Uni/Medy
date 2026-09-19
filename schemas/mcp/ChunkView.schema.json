@@ -1,0 +1,139 @@
+{
+  "$defs": {
+    "Citation": {
+      "additionalProperties": false,
+      "properties": {
+        "chunk_id": {
+          "minLength": 1,
+          "title": "Chunk Id",
+          "type": "string"
+        },
+        "doc_id": {
+          "minLength": 1,
+          "title": "Doc Id",
+          "type": "string"
+        },
+        "effective_date": {
+          "format": "date",
+          "title": "Effective Date",
+          "type": "string"
+        },
+        "page": {
+          "minimum": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "section": {
+          "title": "Section",
+          "type": "string"
+        },
+        "version": {
+          "minLength": 1,
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "doc_id",
+        "version",
+        "effective_date",
+        "page",
+        "section",
+        "chunk_id"
+      ],
+      "title": "Citation",
+      "type": "object"
+    },
+    "DocStatus": {
+      "description": "draft -> active -> archived; a draft may instead end as withdrawn (terminal, never evidence, never exposed).",
+      "enum": [
+        "draft",
+        "active",
+        "archived",
+        "withdrawn"
+      ],
+      "title": "DocStatus",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "properties": {
+        "status": {
+          "enum": [
+            "active",
+            "archived"
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "archived"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "historical": {
+            "const": true
+          }
+        },
+        "required": [
+          "historical"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "active"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "historical": {
+            "const": false
+          }
+        }
+      }
+    }
+  ],
+  "description": "`content_hash` is the SHA-256 of the full UTF-8 content and is recomputed here; that only\nproves the view is self-consistent, the trusted hash still comes from the fact plane.",
+  "properties": {
+    "citation": {
+      "$ref": "#/$defs/Citation"
+    },
+    "content": {
+      "minLength": 1,
+      "title": "Content",
+      "type": "string"
+    },
+    "content_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Content Hash",
+      "type": "string"
+    },
+    "historical": {
+      "default": false,
+      "title": "Historical",
+      "type": "boolean"
+    },
+    "status": {
+      "$ref": "#/$defs/DocStatus"
+    }
+  },
+  "required": [
+    "citation",
+    "content",
+    "content_hash",
+    "status"
+  ],
+  "title": "ChunkView",
+  "type": "object"
+}

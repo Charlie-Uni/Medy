@@ -1,0 +1,97 @@
+"""Batch loader: ingest the documents of a probe corpus.json into the fact plane.
+
+    python -m medops.ingestion.load --corpus <corpus.json> --sources-dir <dir> --pages-dir <dir> --actor <id>
+                                    [--only key,key] [--accept-pii key=reason ...] [--admin-url <dsn>]
+
+Runs as the admin role (MEDOPS_MIGRATION_URL, else Settings DATABASE_ADMIN_URL / DATABASE_URL). One
+transaction per document; a refusal leaves that document untouched and is reported, the run continues
+and exits 1 at the end when anything was refused. Documents already present (same key and version)
+are reported as `exists`.
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import sys
+from pathlib import Path
+
+import psycopg
+
+from medops.ingestion.pipeline import DocumentSpec, IngestRefused, ingest_document
+
+
+def _admin_url() -> str:
+    explicit = os.environ.get("MEDOPS_MIGRATION_URL")
+    if explicit:
+        return explicit
+    from medops.core.config import Settings
+
+    settings = Settings()  # type: ignore[call-arg]
+    return (settings.database_admin_url or settings.database_url).get_secret_value()
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(prog="medops.ingestion.load")
+    parser.add_argument("--corpus", type=Path, required=True)
+    parser.add_argument("--sources-dir", type=Path, required=True, help="directory holding <source_hash>.pdf files")
+    parser.add_argument(
+        "--pages-dir", type=Path, default=None, help="stored page texts to cross-check extraction against"
+    )
+    parser.add_argument("--actor", required=True, help="surrogate id written to doc_audit")
+    parser.add_argument("--only", default=None, help="comma-separated document_key list")
+    parser.add_argument(
+        "--accept-pii",
+        action="append",
+        default=[],
+        metavar="KEY=REASON",
+        help="override a PII refusal for one document, with the review reason",
+    )
+    parser.add_argument("--admin-url", default=None)
+    args = parser.parse_args(argv)
+
+    corpus = json.loads(args.corpus.read_text(encoding="utf-8"))
+    only = set(args.only.split(",")) if args.only else None
+    overrides: dict[str, str] = {}
+    for item in args.accept_pii:
+        key, _, reason = item.partition("=")
+        if not key or not reason.strip():
+            print(f"--accept-pii needs KEY=REASON, got {item!r}")
+            return 2
+        overrides[key] = reason.strip()
+
+    refused = 0
+    with psycopg.connect(args.admin_url or _admin_url()) as conn:
+        for record in corpus["documents"]:
+            spec = DocumentSpec.from_corpus_record(record)
+            if only is not None and spec.document_key not in only:
+                continue
+            pdf = args.sources_dir / f"{spec.source_hash}.pdf"
+            line: dict[str, object] = {"document_key": spec.document_key}
+            try:
+                with conn.transaction():
+                    result = ingest_document(
+                        conn,
+                        spec,
+                        pdf,
+                        actor=args.actor,
+                        pages_dir=args.pages_dir,
+                        pii_override_reason=overrides.get(spec.document_key),
+                    )
+                line.update(
+                    status=result.status,
+                    doc_id=str(result.doc_id),
+                    chunks=result.chunk_count,
+                    parse_quality=result.parse_quality,
+                    pii_hits=len(result.pii_hits),
+                )
+            except (IngestRefused, FileNotFoundError) as exc:
+                refused += 1
+                line.update(status="refused", reason=str(exc))
+            print(json.dumps(line, ensure_ascii=False))
+    return 1 if refused else 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

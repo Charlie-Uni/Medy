@@ -1,0 +1,52 @@
+{
+  "checked_at": "2026-09-19T14:24:54+00:00",
+  "scope": "Current inputs, actual prompts, final verdicts and human decisions; local frozen validation separately recorded",
+  "prompt_sha256": "f4a3804e969b23ec9ab467406937e62f0b9e30933d6a680d4b00ee59b2631c38",
+  "batches": {
+    "MA": {
+      "reviewed": 30,
+      "agree": 28,
+      "dispute": 2,
+      "profile_calls": 43,
+      "round26_new_calls": 0,
+      "round26_reported_tokens": 0,
+      "run_sha256": "7044c489ea56af1c5cbc069f10221c16b020000085786fc0b1e13345d96263fe",
+      "verdicts_sha256": "45e5ccb62ff0c7d4f0e52027ba340ea5fa243d4a7987b03a226d6b40d8a6dd5d",
+      "sample_file_sha256": "4d810820cd086b510747165cc88276856f1b923fa2feaee69fa472cc36dde8a6"
+    },
+    "PV": {
+      "reviewed": 29,
+      "agree": 28,
+      "dispute": 1,
+      "profile_calls": 54,
+      "round26_new_calls": 1,
+      "round26_reported_tokens": 2986,
+      "run_sha256": "092455dca38f05c2a0779c0538f0179f76536972bd1b26302fe9cdb4c25f6e53",
+      "verdicts_sha256": "f03e94e439c84730779a344b2b87afb4256abfc40d535798f1c4796263b97c71",
+      "sample_file_sha256": "a09f818083be7b57a07bf754403939b6e97deb0c7bbd5ffd3f20e961a54603a4"
+    },
+    "CO": {
+      "reviewed": 16,
+      "agree": 15,
+      "dispute": 1,
+      "profile_calls": 33,
+      "round26_new_calls": 1,
+      "round26_reported_tokens": 2952,
+      "run_sha256": "fbb9d79fdbbd20d75c63d592dcedf216664f019d7b31aa229c815823641e3809",
+      "verdicts_sha256": "9c6627ae4e04721f4dad5af1b4c148150858e8535d90609d30c73e1484a7ccf2",
+      "sample_file_sha256": "35e5fc2b462cddf8691e57fc05608b3b6e9b8922a08692238e3b2549589ab51b"
+    }
+  },
+  "resolved": [
+    "pc-0026",
+    "pc-0027",
+    "pc-0038",
+    "pc-0074"
+  ],
+  "pending": [],
+  "complete_coverage": true,
+  "ready_reviews": 75,
+  "profile_calls": 130,
+  "round26_reported_tokens": 5938,
+  "local_frozen_validation": "frozen_validation_2026-09-20.json"
+}

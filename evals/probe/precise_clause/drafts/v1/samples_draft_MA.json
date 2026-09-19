@@ -1,0 +1,946 @@
+[
+  {
+    "sample_id": "pc-0001",
+    "query": "美洛醣一天要吃幾次、每次幾錠？",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "dose_unit",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "pc-0001-g1",
+        "source_hash": "b6af0d88b1f0e3b5660e6e3c6678e18c40616073bc082b6cb7214604b2f81f98",
+        "version_label": "pdf-meta 2015-10-06（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "用法用量",
+        "key_text": "每日服用二次,每次服用一錠",
+        "evidence_span": {
+          "text": "通常,每日服用二次,每次服用一錠。",
+          "char_start": 284,
+          "char_end": 301
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-loformin-850mg",
+      "title": "美洛醣膜衣錠850毫克（Loformin Film-coated Tablets 850mg, metformin hydrochloride）仿單"
+    }
+  },
+  {
+    "sample_id": "pc-0002",
+    "query": "美洛醣每日最高治療劑量是多少",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "dose_unit",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "pc-0002-g1",
+        "source_hash": "b6af0d88b1f0e3b5660e6e3c6678e18c40616073bc082b6cb7214604b2f81f98",
+        "version_label": "pdf-meta 2015-10-06（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "用法用量",
+        "key_text": "每日最高治療劑量速效劑型:3000 mg",
+        "evidence_span": {
+          "text": "Metformin之每日最高治療劑量速效劑型:3000 mg;緩釋劑型: 2000mg (本品為速效劑型)。",
+          "char_start": 312,
+          "char_end": 366
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-loformin-850mg",
+      "title": "美洛醣膜衣錠850毫克（Loformin Film-coated Tablets 850mg, metformin hydrochloride）仿單"
+    }
+  },
+  {
+    "sample_id": "pc-0003",
+    "query": "超過八十歲的老人家可以開始用美洛醣嗎",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "negation",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "pc-0003-g1",
+        "source_hash": "b6af0d88b1f0e3b5660e6e3c6678e18c40616073bc082b6cb7214604b2f81f98",
+        "version_label": "pdf-meta 2015-10-06（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "用法用量",
+        "key_text": "大於80歲之老年患者不建議開始使用",
+        "evidence_span": {
+          "text": "大於80歲之老年患者不建議開始使用 Metformin治療。",
+          "char_start": 366,
+          "char_end": 396
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-loformin-850mg",
+      "title": "美洛醣膜衣錠850毫克（Loformin Film-coated Tablets 850mg, metformin hydrochloride）仿單"
+    }
+  },
+  {
+    "sample_id": "pc-0004",
+    "query": "口服 metformin 之後大約多久達到最高血中濃度",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "time_window",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "pc-0004-g1",
+        "source_hash": "b6af0d88b1f0e3b5660e6e3c6678e18c40616073bc082b6cb7214604b2f81f98",
+        "version_label": "pdf-meta 2015-10-06（未见版本行）",
+        "page": 2,
+        "printed_page_label": null,
+        "section": "藥動學",
+        "key_text": "約2.5小時就會達到最高血中濃度",
+        "evidence_span": {
+          "text": "【藥動學】吸收: 口服metformin hydrochloride錠劑後,約2.5小時就會達到最高血中濃度 (Tmax)。",
+          "char_start": 2215,
+          "char_end": 2277
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-loformin-850mg",
+      "title": "美洛醣膜衣錠850毫克（Loformin Film-coated Tablets 850mg, metformin hydrochloride）仿單"
+    }
+  },
+  {
+    "sample_id": "pc-0005",
+    "query": "美洛醣按建議劑量服用多久後血中濃度會穩定",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "time_window",
+      "drug_name_zh",
+      "dose_unit"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "pc-0005-g1",
+        "source_hash": "b6af0d88b1f0e3b5660e6e3c6678e18c40616073bc082b6cb7214604b2f81f98",
+        "version_label": "pdf-meta 2015-10-06（未见版本行）",
+        "page": 2,
+        "printed_page_label": null,
+        "section": "藥動學",
+        "key_text": "服用後24至48小時內可達穩定血中濃度",
+        "evidence_span": {
+          "text": "在建議劑量與劑量療程之下,在服用後24至48小時內可達穩定血中濃度,且該濃度值通常低於1 ug /mL。",
+          "char_start": 2433,
+          "char_end": 2485
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-loformin-850mg",
+      "title": "美洛醣膜衣錠850毫克（Loformin Film-coated Tablets 850mg, metformin hydrochloride）仿單"
+    }
+  },
+  {
+    "sample_id": "pc-0006",
+    "query": "衛部藥製字第058257號是哪一個藥品",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "protocol_id",
+      "dose_unit",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "pc-0006-g1",
+        "source_hash": "b6af0d88b1f0e3b5660e6e3c6678e18c40616073bc082b6cb7214604b2f81f98",
+        "version_label": "pdf-meta 2015-10-06（未见版本行）",
+        "page": 2,
+        "printed_page_label": null,
+        "section": "許可證資訊",
+        "key_text": "衛部藥製字第058257號 Code No. 美洛醣膜衣錠850毫克",
+        "evidence_span": {
+          "text": "衛部藥製字第058257號 Code No. 美洛醣膜衣錠850毫克 Loformin Film-coated Tablets 850mg (Metformin)",
+          "char_start": 3545,
+          "char_end": 3626
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-loformin-850mg",
+      "title": "美洛醣膜衣錠850毫克（Loformin Film-coated Tablets 850mg, metformin hydrochloride）仿單"
+    }
+  },
+  {
+    "sample_id": "pc-0007",
+    "query": "痛風停錠用於成人及青少年抗痛風的初始劑量是多少",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "dose_unit",
+      "drug_name_zh",
+      "time_window",
+      "negation"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "pc-0007-g1",
+        "source_hash": "42f20f2b5b0ea0ed7afe8bb709699a58b222985b70ccada6e0c470f5c3f58a7f",
+        "version_label": "pdf-meta 2018-02-09（未见版本行）",
+        "page": 3,
+        "printed_page_label": null,
+        "section": "用法用量",
+        "key_text": "初始劑量:口服,100mg,一天一次",
+        "evidence_span": {
+          "text": "一般成人及青少年劑量:抗痛風劑(Antigout agent)— 初始劑量:口服,100mg,一天一次,在一星期的間隔期間每天增加100mg 直到達到所需要的血清尿酸濃度為止。不得超過每日800mg 之最大建議劑量。",
+          "char_start": 11,
+          "char_end": 119
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-deurinol-300mg",
+      "title": "痛風停錠300毫克（Deurinol Tablets 300mg, allopurinol）仿單"
+    }
+  },
+  {
+    "sample_id": "pc-0008",
+    "query": "allopurinol 一般成人的處方限量是多少（每一劑量與每天）",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "pc-0008-g1",
+        "source_hash": "42f20f2b5b0ea0ed7afe8bb709699a58b222985b70ccada6e0c470f5c3f58a7f",
+        "version_label": "pdf-meta 2018-02-09（未见版本行）",
+        "page": 3,
+        "printed_page_label": null,
+        "section": "用法用量",
+        "key_text": "一般成人處方限量:每一劑量300mg;每天800mg",
+        "evidence_span": {
+          "text": "一般成人處方限量:每一劑量300mg;每天800mg",
+          "char_start": 618,
+          "char_end": 644
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-deurinol-300mg",
+      "title": "痛風停錠300毫克（Deurinol Tablets 300mg, allopurinol）仿單"
+    }
+  },
+  {
+    "sample_id": "pc-0009",
+    "query": "痛風關節炎急性發作的時候可以用 allopurinol 嗎",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "pc-0009-g1",
+        "source_hash": "42f20f2b5b0ea0ed7afe8bb709699a58b222985b70ccada6e0c470f5c3f58a7f",
+        "version_label": "pdf-meta 2018-02-09（未见版本行）",
+        "page": 2,
+        "printed_page_label": null,
+        "section": "適應症",
+        "key_text": "不得使用於痛風性關節炎的急性發作",
+        "evidence_span": {
+          "text": "Allopurinol沒有抗發炎的效力,它必須不得使用於痛風性關節炎的急性發作,一種抗發炎藥,最好是一種非類固醇類抗發炎劑(NSAI)或者是皮質類固醇(Corticosteroid)〔當可行時,最好是滑膜內注射(Intrasynovial injection)〕必須加以使用,以治療急性發作。",
+          "char_start": 728,
+          "char_end": 874
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-deurinol-300mg",
+      "title": "痛風停錠300毫克（Deurinol Tablets 300mg, allopurinol）仿單"
+    }
+  },
+  {
+    "sample_id": "pc-0010",
+    "query": "Oxipurinol 的半衰期大約多久",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "pc-0010-g1",
+        "source_hash": "42f20f2b5b0ea0ed7afe8bb709699a58b222985b70ccada6e0c470f5c3f58a7f",
+        "version_label": "pdf-meta 2018-02-09（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "藥動學",
+        "key_text": "Oxipurinol,12 至30 小時",
+        "evidence_span": {
+          "text": "半衰期:Allopurinol,1 至3 小時;Oxipurinol,12 至30 小時(平均大約15 小時);有腎功能不全的病人可能會大為延長。",
+          "char_start": 1098,
+          "char_end": 1171
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-deurinol-300mg",
+      "title": "痛風停錠300毫克（Deurinol Tablets 300mg, allopurinol）仿單"
+    }
+  },
+  {
+    "sample_id": "pc-0011",
+    "query": "痛風停錠單次劑量的上限是多少",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "dose_unit",
+      "negation",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "pc-0011-g1",
+        "source_hash": "42f20f2b5b0ea0ed7afe8bb709699a58b222985b70ccada6e0c470f5c3f58a7f",
+        "version_label": "pdf-meta 2018-02-09（未见版本行）",
+        "page": 8,
+        "printed_page_label": null,
+        "section": "注意事項",
+        "key_text": "單一劑量,都必須不得超過300 mg",
+        "evidence_span": {
+          "text": "每一個單一劑量,都必須不得超過300 mg。",
+          "char_start": 27,
+          "char_end": 49
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-deurinol-300mg",
+      "title": "痛風停錠300毫克（Deurinol Tablets 300mg, allopurinol）仿單"
+    }
+  },
+  {
+    "sample_id": "pc-0012",
+    "query": "衛署藥製字第 048564 號的藥品須由醫師處方使用嗎",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "protocol_id",
+      "negation"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "pc-0012-g1",
+        "source_hash": "42f20f2b5b0ea0ed7afe8bb709699a58b222985b70ccada6e0c470f5c3f58a7f",
+        "version_label": "pdf-meta 2018-02-09（未见版本行）",
+        "page": 10,
+        "printed_page_label": null,
+        "section": "許可證資訊",
+        "key_text": "本藥須由醫師處方使用",
+        "evidence_span": {
+          "text": "本藥須由醫師處方使用衛署藥製字第 048564 號",
+          "char_start": 701,
+          "char_end": 726
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-deurinol-300mg",
+      "title": "痛風停錠300毫克（Deurinol Tablets 300mg, allopurinol）仿單"
+    }
+  },
+  {
+    "sample_id": "pc-0013",
+    "query": "穩壓膜衣錠治療高血壓的一般起始劑量是多少",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "dose_unit",
+      "drug_name_zh",
+      "time_window"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "pc-0013-g1",
+        "source_hash": "81069adaf87d21e640d9b5cbc83a799a59a33acbdc4ead46ed338c9ad6d06b3a",
+        "version_label": "B版 104.10.27（2015-10-27）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "用法用量",
+        "key_text": "起始劑量及維持劑量為每次 50mg,每日一次",
+        "evidence_span": {
+          "text": "高血壓:大多數病人的一般起始劑量及維持劑量為每次 50mg,每日一次;在治療後 3~6 週可獲得最大降壓效果;有些病人在劑量增加至每次 100 mg,每日一次後,其療效更佳。",
+          "char_start": 2105,
+          "char_end": 2192
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-zosaa-50mg",
+      "title": "穩壓膜衣錠50毫克（Zosaa F.C. Tablets 50mg, losartan potassium）仿單"
+    }
+  },
+  {
+    "sample_id": "pc-0014",
+    "query": "穩壓膜衣錠吃多久才會有最大的降壓效果",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "time_window",
+      "drug_name_zh",
+      "dose_unit"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "pc-0014-g1",
+        "source_hash": "81069adaf87d21e640d9b5cbc83a799a59a33acbdc4ead46ed338c9ad6d06b3a",
+        "version_label": "B版 104.10.27（2015-10-27）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "用法用量",
+        "key_text": "3~6 週可獲得最大降壓效果",
+        "evidence_span": {
+          "text": "高血壓:大多數病人的一般起始劑量及維持劑量為每次 50mg,每日一次;在治療後 3~6 週可獲得最大降壓效果;有些病人在劑量增加至每次 100 mg,每日一次後,其療效更佳。",
+          "char_start": 2105,
+          "char_end": 2192
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-zosaa-50mg",
+      "title": "穩壓膜衣錠50毫克（Zosaa F.C. Tablets 50mg, losartan potassium）仿單"
+    }
+  },
+  {
+    "sample_id": "pc-0015",
+    "query": "高血壓且血管內體液缺乏的病人使用穩壓膜衣錠的起始劑量是多少",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "dose_unit",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "pc-0015-g1",
+        "source_hash": "81069adaf87d21e640d9b5cbc83a799a59a33acbdc4ead46ed338c9ad6d06b3a",
+        "version_label": "B版 104.10.27（2015-10-27）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "用法用量",
+        "key_text": "起始劑量需考慮改用每次 25mg",
+        "evidence_span": {
+          "text": "對血管內體液缺乏(intravascularly volume-depleted)之患者(如以高劑量利尿劑治療者) ,其起始劑量需考慮改用每次 25mg ,每日一次(參見注意事項)。",
+          "char_start": 2192,
+          "char_end": 2283
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-zosaa-50mg",
+      "title": "穩壓膜衣錠50毫克（Zosaa F.C. Tablets 50mg, losartan potassium）仿單"
+    }
+  },
+  {
+    "sample_id": "pc-0016",
+    "query": "糖尿病患者能同時使用穩壓膜衣錠和 aliskiren 嗎",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "drug_name_zh",
+      "dose_unit",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "pc-0016-g1",
+        "source_hash": "81069adaf87d21e640d9b5cbc83a799a59a33acbdc4ead46ed338c9ad6d06b3a",
+        "version_label": "B版 104.10.27（2015-10-27）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "禁忌症",
+        "key_text": "禁忌症:合併使用本品及含 aliskiren 成分藥品於糖尿病患",
+        "evidence_span": {
+          "text": "1、禁忌症:合併使用本品及含 aliskiren 成分藥品於糖尿病患或腎功能不全患者 (GFR < 60 ml/min/1.73 m 2 )。",
+          "char_start": 2530,
+          "char_end": 2601
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-zosaa-50mg",
+      "title": "穩壓膜衣錠50毫克（Zosaa F.C. Tablets 50mg, losartan potassium）仿單"
+    }
+  },
+  {
+    "sample_id": "pc-0017",
+    "query": "糖尿病腎病變患者已使用 ACEI 時，可以再加用 ARB 嗎",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "pc-0017-g1",
+        "source_hash": "81069adaf87d21e640d9b5cbc83a799a59a33acbdc4ead46ed338c9ad6d06b3a",
+        "version_label": "B版 104.10.27（2015-10-27）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "注意事項",
+        "key_text": "ACEIs 及 ARBs 不應合併使用於糖尿病腎病變患者",
+        "evidence_span": {
+          "text": "雙重阻斷腎素-血管昇壓素-醛固酮系統(renin-angiotensin-aldosterone system, RAAS):有證據顯示,合併使用 ACEIs、ARBs 或含 aliskiren 成分藥品會增加低血壓、高鉀血症及腎功能下降(包括急性腎衰竭)之風險,故不建議合併使用 ACEIs、ARBs 或含 aliskiren 成分藥品來雙重阻斷 RAAS,若確有必要使用雙重阻斷治療,應密切監測患者之腎+A12 功能、電解質及血壓。ACEIs 及 ARBs 不應合併使用於糖尿病腎病變患者。",
+          "char_start": 2612,
+          "char_end": 2859
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-zosaa-50mg",
+      "title": "穩壓膜衣錠50毫克（Zosaa F.C. Tablets 50mg, losartan potassium）仿單"
+    }
+  },
+  {
+    "sample_id": "pc-0018",
+    "query": "衛署藥製字第 047911 號是哪個藥品",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "protocol_id",
+      "dose_unit"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "pc-0018-g1",
+        "source_hash": "81069adaf87d21e640d9b5cbc83a799a59a33acbdc4ead46ed338c9ad6d06b3a",
+        "version_label": "B版 104.10.27（2015-10-27）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "許可證資訊",
+        "key_text": "穩壓膜衣錠 50 毫克",
+        "evidence_span": {
+          "text": "G-9053 衛署藥製字第 047911 號穩壓膜衣錠 50 毫克 Zosaa F.C. Tablets 50 mg",
+          "char_start": 0,
+          "char_end": 58
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-zosaa-50mg",
+      "title": "穩壓膜衣錠50毫克（Zosaa F.C. Tablets 50mg, losartan potassium）仿單"
+    }
+  },
+  {
+    "sample_id": "pc-0019",
+    "query": "高血壓患者每天用明德心壓暢錠治療用量範圍是多少",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "dose_unit",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "pc-0019-g1",
+        "source_hash": "2b8ab3b1bfea619d8eba938864e10614313dfa92e036bdba6a8fec2cb5fd2425",
+        "version_label": "pdf-meta 2015-12-27（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "用法用量",
+        "key_text": "高血壓:每日投與 100〜200mg",
+        "evidence_span": {
+          "text": "高血壓:每日投與 100〜200mg,以單一劑量於晨間口服抑或將之分成二次劑量於早、晚服用。某些情況,亦有可能需要酌增劑量或併服其他降血壓藥。",
+          "char_start": 1007,
+          "char_end": 1078
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-cancliol-100mg",
+      "title": "\"明德\"心壓暢錠100毫克（美托普洛）（Cancliol Tablets 100mg, metoprolol tartrate）仿單"
+    }
+  },
+  {
+    "sample_id": "pc-0020",
+    "query": "哪些病人禁止使用明德心壓暢錠",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "negation",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "pc-0020-g1",
+        "source_hash": "2b8ab3b1bfea619d8eba938864e10614313dfa92e036bdba6a8fec2cb5fd2425",
+        "version_label": "pdf-meta 2015-12-27（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "禁忌",
+        "key_text": "房室神經傳導阻斷第二和第三期,非代償性心衰竭,心原性休克,顯著的心搏過緩等症狀者禁用此劑",
+        "evidence_span": {
+          "text": "【注意事項】一、禁忌:房室神經傳導阻斷第二和第三期,非代償性心衰竭,心原性休克,顯著的心搏過緩等症狀者禁用此劑。",
+          "char_start": 1125,
+          "char_end": 1181
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-cancliol-100mg",
+      "title": "\"明德\"心壓暢錠100毫克（美托普洛）（Cancliol Tablets 100mg, metoprolol tartrate）仿單"
+    }
+  },
+  {
+    "sample_id": "pc-0021",
+    "query": "明德心壓暢錠要怎麼停藥，可以突然停嗎",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "time_window",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "pc-0021-g1",
+        "source_hash": "2b8ab3b1bfea619d8eba938864e10614313dfa92e036bdba6a8fec2cb5fd2425",
+        "version_label": "pdf-meta 2015-12-27（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "注意事項",
+        "key_text": "需逐漸停用,例如於 7〜10 天",
+        "evidence_span": {
+          "text": "二、停用本劑時需逐漸停用,例如於 7〜10 天之期間,因突然停藥會導致急性損害患者身體狀況,尤其是罹患心臟局部缺血者。",
+          "char_start": 1181,
+          "char_end": 1240
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-cancliol-100mg",
+      "title": "\"明德\"心壓暢錠100毫克（美托普洛）（Cancliol Tablets 100mg, metoprolol tartrate）仿單"
+    }
+  },
+  {
+    "sample_id": "pc-0022",
+    "query": "要開刀麻醉的病人手術前多久停用心壓暢錠",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "time_window",
+      "drug_name_zh",
+      "negation"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "pc-0022-g1",
+        "source_hash": "2b8ab3b1bfea619d8eba938864e10614313dfa92e036bdba6a8fec2cb5fd2425",
+        "version_label": "pdf-meta 2015-12-27（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "注意事項",
+        "key_text": "麻醉前至少 48 小時即應停止服用",
+        "evidence_span": {
+          "text": "三、對於即將進行麻醉開刀的病患,在麻醉前至少 48 小時即應停止服用本劑。",
+          "char_start": 1240,
+          "char_end": 1277
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-cancliol-100mg",
+      "title": "\"明德\"心壓暢錠100毫克（美托普洛）（Cancliol Tablets 100mg, metoprolol tartrate）仿單"
+    }
+  },
+  {
+    "sample_id": "pc-0023",
+    "query": "心壓暢錠過量時，該如何急救",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "drug_name_zh",
+      "mixed_zh_en",
+      "negation"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "pc-0023-g1",
+        "source_hash": "2b8ab3b1bfea619d8eba938864e10614313dfa92e036bdba6a8fec2cb5fd2425",
+        "version_label": "pdf-meta 2015-12-27（未见版本行）",
+        "page": 2,
+        "printed_page_label": null,
+        "section": "過量處理",
+        "key_text": "靜脈注射1〜2mg Atropine sulfate",
+        "evidence_span": {
+          "text": "過量中毒時之處裡:本劑服用過量時會導致明顯的低血壓和心搏過緩。初步的急救方法,係靜脈注射1〜2mg Atropine sulfate;倘若還未能達到滿意效果時,在使用 Atropine 後可接著投與升壓劑,例如metaraminol 或 noradrenaline。此外如果任何β-blocket 過量中毒的時候,亦可投與一次劑量1〜5(10)mg 的 glucagon 施救。",
+          "char_start": 668,
+          "char_end": 857
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-cancliol-100mg",
+      "title": "\"明德\"心壓暢錠100毫克（美托普洛）（Cancliol Tablets 100mg, metoprolol tartrate）仿單"
+    }
+  },
+  {
+    "sample_id": "pc-0024",
+    "query": "衛署藥製字第 029301 號是哪個藥品",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "protocol_id",
+      "dose_unit"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "pc-0024-g1",
+        "source_hash": "2b8ab3b1bfea619d8eba938864e10614313dfa92e036bdba6a8fec2cb5fd2425",
+        "version_label": "pdf-meta 2015-12-27（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "許可證資訊",
+        "key_text": "心壓暢錠 100 毫克",
+        "evidence_span": {
+          "text": "衛署藥製字第 029301 號 GMP-G-0462 號 \"明德\"心壓暢錠 100 毫克(美托普洛) CANCLIOL TABLETS 100mg (Metoprolol) \"Meider\"",
+          "char_start": 0,
+          "char_end": 95
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-cancliol-100mg",
+      "title": "\"明德\"心壓暢錠100毫克（美托普洛）（Cancliol Tablets 100mg, metoprolol tartrate）仿單"
+    }
+  },
+  {
+    "sample_id": "pc-0025",
+    "query": "胃所樂腸溶膜衣錠可以嚼碎或壓碎再吃嗎",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "negation",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "pc-0025-g1",
+        "source_hash": "f80b904f4e2f15a59cb78fe1baed5c1c06b8b975d43dc0291217d64c43e43fbb",
+        "version_label": "pdf-meta 2013-11-08（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "用法用量",
+        "key_text": "不可嚼破或壓破本錠劑",
+        "evidence_span": {
+          "text": "本錠劑應整粒以液體吞服,不可嚼破或壓破本錠劑。",
+          "char_start": 761,
+          "char_end": 784
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-esomen-40mg",
+      "title": "胃所樂腸溶膜衣錠40毫克（Esomen Enteric-Coated Tablets 40mg, esomeprazole）仿單"
+    }
+  },
+  {
+    "sample_id": "pc-0026",
+    "query": "胃所樂泡在水裡崩散後要在多久之內喝完",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "time_window",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "pc-0026-g1",
+        "source_hash": "f80b904f4e2f15a59cb78fe1baed5c1c06b8b975d43dc0291217d64c43e43fbb",
+        "version_label": "pdf-meta 2013-11-08（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "用法用量",
+        "key_text": "立即或在 30 分鐘之內將水連同小藥球喝下",
+        "evidence_span": {
+          "text": "同時攪拌直到藥錠崩散,並立即或在 30 分鐘之內將水連同小藥球喝下。",
+          "char_start": 836,
+          "char_end": 870
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-esomen-40mg",
+      "title": "胃所樂腸溶膜衣錠40毫克（Esomen Enteric-Coated Tablets 40mg, esomeprazole）仿單"
+    }
+  },
+  {
+    "sample_id": "pc-0027",
+    "query": "胃所樂腸溶膜衣錠用於食道未發炎的胃食道逆流症狀治療，劑量和療程是多少",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "dose_unit",
+      "time_window",
+      "drug_name_zh",
+      "negation"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "pc-0027-g1",
+        "source_hash": "f80b904f4e2f15a59cb78fe1baed5c1c06b8b975d43dc0291217d64c43e43fbb",
+        "version_label": "pdf-meta 2013-11-08（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "用法用量",
+        "key_text": "食道未發炎之患者 20 mg 每天 1次",
+        "evidence_span": {
+          "text": "胃食道逆流性疾病之症狀治療:對食道未發炎之患者 20 mg 每天 1次;若 4週後仍有症狀時,則應進一步檢查患者。一旦症狀獲得緩解後,可以每天 1次 20 mg 之療法來做後續的症狀控制。就成人而言,如需要時,可以給予 20 mg 每天 1次之療法。對於使用非類固醇抗發炎藥 (NSAID) 治療而有誘發胃潰瘍和十二指腸潰瘍危險之病患,不建議以有需要時才服藥的方式作為後續的症狀控制。",
+          "char_start": 1053,
+          "char_end": 1245
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-esomen-40mg",
+      "title": "胃所樂腸溶膜衣錠40毫克（Esomen Enteric-Coated Tablets 40mg, esomeprazole）仿單"
+    }
+  },
+  {
+    "sample_id": "pc-0028",
+    "query": "esomeprazole 可以和 nelfinavir 一起服用嗎",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "pc-0028-g1",
+        "source_hash": "f80b904f4e2f15a59cb78fe1baed5c1c06b8b975d43dc0291217d64c43e43fbb",
+        "version_label": "pdf-meta 2013-11-08（未见版本行）",
+        "page": 2,
+        "printed_page_label": null,
+        "section": "藥物交互作用",
+        "key_text": "禁止同時併用 esomeprazole 和 nelfinavir",
+        "evidence_span": {
+          "text": "由於omeprazole 與 esomeprazole 的藥效學效應與藥動學性質類似,故不建議同時投予 esomeprazole 和 atazanavir ,禁止同時併用 esomeprazole 和 nelfinavir 。",
+          "char_start": 811,
+          "char_end": 924
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-esomen-40mg",
+      "title": "胃所樂腸溶膜衣錠40毫克（Esomen Enteric-Coated Tablets 40mg, esomeprazole）仿單"
+    }
+  },
+  {
+    "sample_id": "pc-0029",
+    "query": "嚴重肝功能不良的病人 esomeprazole 最高劑量是多少",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "pc-0029-g1",
+        "source_hash": "f80b904f4e2f15a59cb78fe1baed5c1c06b8b975d43dc0291217d64c43e43fbb",
+        "version_label": "pdf-meta 2013-11-08（未见版本行）",
+        "page": 3,
+        "printed_page_label": null,
+        "section": "特殊族群",
+        "key_text": "此類病人的esomeprazole 最高劑量不可超過 20 mg",
+        "evidence_span": {
+          "text": "嚴重肝功能不良的病人的 esomeprazole 代謝率降低,導致血漿濃度時間曲線下的面積加倍,因此此類病人的esomeprazole 最高劑量不可超過 20 mg 。",
+          "char_start": 4174,
+          "char_end": 4258
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-esomen-40mg",
+      "title": "胃所樂腸溶膜衣錠40毫克（Esomen Enteric-Coated Tablets 40mg, esomeprazole）仿單"
+    }
+  },
+  {
+    "sample_id": "pc-0030",
+    "query": "衛部藥製字第 058102 號藥品的製造廠址在哪裡",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "protocol_id"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "pc-0030-g1",
+        "source_hash": "f80b904f4e2f15a59cb78fe1baed5c1c06b8b975d43dc0291217d64c43e43fbb",
+        "version_label": "pdf-meta 2013-11-08（未见版本行）",
+        "page": 4,
+        "printed_page_label": null,
+        "section": "許可證資訊",
+        "key_text": "廠址:新北市土城區中央路二段 104 號",
+        "evidence_span": {
+          "text": "衛部藥製字第 058102 號 G- 12115 公司地址:台北市中山北路二段 113 號 8 樓廠址:新北市土城區中央路二段 104 號",
+          "char_start": 251,
+          "char_end": 320
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-esomen-40mg",
+      "title": "胃所樂腸溶膜衣錠40毫克（Esomen Enteric-Coated Tablets 40mg, esomeprazole）仿單"
+    }
+  }
+]

@@ -1,0 +1,56 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_DB: medops
+          POSTGRES_USER: medops_admin
+          POSTGRES_PASSWORD: ci-only-password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U medops_admin -d medops"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+    env:
+      # integration tests create and drop throwaway databases through this admin DSN (tests/integration/conftest.py)
+      MEDOPS_TEST_ADMIN_URL: postgresql://medops_admin:ci-only-password@localhost:5432/medops
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python -m pip install "pip==26.2.1"
+      - run: python -m pip install --no-cache-dir --require-hashes -r requirements-build.lock
+      - run: python -m pip install --no-cache-dir --no-build-isolation -r requirements.lock
+      - run: python -m pip install --no-build-isolation --no-deps -e .
+      - run: python -m pip check
+      - name: package importable outside the repo
+        run: cd /tmp && python -c "import medops.evals.probe.validator"
+      - run: python -m ruff check src tests migrations
+      - run: python -m ruff format --check src tests migrations
+      - run: python -m mypy
+      - run: python -m pytest -q
+      - name: migration check (single head, upgrade/downgrade round trip)
+        run: |
+          test "$(python -m alembic heads | wc -l | tr -d ' ')" = "1"
+          python -m pytest -q tests/integration/test_migrations.py -k "round_trip or single_head"
+      - run: python -m medops.contracts_export --out schemas --check
+      - name: probe examples validate as draft
+        run: |
+          mkdir -p /tmp/probe-draft
+          cp evals/probe/precise_clause/examples/manifest.example.json /tmp/probe-draft/manifest.json
+          cp evals/probe/precise_clause/examples/corpus.example.json /tmp/probe-draft/corpus.json
+          cp evals/probe/precise_clause/examples/samples.example.jsonl /tmp/probe-draft/samples.jsonl
+          cp evals/probe/precise_clause/examples/review_prompt.example.md /tmp/probe-draft/review_prompt.md
+          python -m medops.evals.probe /tmp/probe-draft --mode draft
