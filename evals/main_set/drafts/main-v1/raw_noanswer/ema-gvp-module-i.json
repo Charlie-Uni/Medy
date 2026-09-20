@@ -1,0 +1,33 @@
+{
+  "document_key": "ema-gvp-module-i",
+  "source_hash": "197de2bc0cfb6bdafe8d322934ece6e9bd4c5901651a5a828e74076470d7ff59",
+  "pages_sent": [
+    4,
+    8,
+    9,
+    13,
+    14,
+    18,
+    20,
+    22,
+    23,
+    24
+  ],
+  "drafting_prompt_sha256": "6ddf3154781b57b9f694350ca27addf18c709543b76c13e946275da0c43fd685",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:36:05+00:00",
+  "finished_at": "2026-09-20T16:36:37+00:00",
+  "prompt_chars": 37843,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "8a262077-0ed8-4b3a-85b8-c8246705181d",
+  "input_tokens": 1,
+  "output_tokens": 3086,
+  "cost_usd": 0.15919250000000001,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "ca9bbd911dd25d959b52f49c28237678cc237a92aa4df92f2446dc1e17ba3d57",
+  "tools_disabled": true,
+  "reply": "```json\n[\n  {\n    \"query\": \"GVP Module I 中，QPPV（欧盟药物警戒负责人）需要具备的具体学历或从业年限等资质标准是什么？\",\n    \"query_en\": \"According to GVP Module I, what specific educational qualifications or years of professional experience are required for the QPPV (Qualified Person Responsible for Pharmacovigilance)?\",\n    \"topic\": \"QPPV具体资质标准\",\n    \"absence_terms\": [\"degree\", \"qualification\", \"years of experience\", \"professional experience\"],\n    \"nearest_clause\": {\"page\": 14, \"text\": \"the marketing authorisation holder shall have permanently and continuously at its disposal an appropriately qualified person responsible for pharmacovigilance in the EU (QPPV) [DIR Art 104(3)(a)]\"},\n    \"rationale\": \"文档反复提及QPPV需“appropriately qualified”，但提供页文本从未给出具体的学历、专业背景或从业年限等可量化的资质标准，属于用户自然会追问但文档未回答的细节。\"\n  },\n  {\n    \"query\": \"GVP Module I 规定上市许可持有人将严重不良反应报告提交给主管机关的具体时限是多少天？\",\n    \"query_en\": \"According to GVP Module I, what is the specific number of days within which the marketing authorisation holder must submit serious adverse reaction reports to competent authorities?\",\n    \"topic\": \"不良反应报告提交时限天数\",\n    \"absence_terms\": [\"days\", \"15 days\", \"calendar days\", \"time limit of\"],\n    \"nearest_clause\": {\"page\": 8, \"text\": \"the submission of accurate and verifiable data on serious and non-serious adverse reactions to the competent authorities within the legally required time-limits [IR Art 11(1)(c)]\"},\n    \"rationale\": \"文档仅笼统提到“within the legally required time-limits”并指向其他Module，从未在提供页文本中给出具体的天数或计算方式，而这是PV人员会自然关心的操作性问题。\"\n  }\n]\n```"
+}

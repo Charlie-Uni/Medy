@@ -1,0 +1,27 @@
+{
+  "document_key": "tfda-label-perisafe-tablets-10mg-enalapil",
+  "source_hash": "0879f3f5e1a1b31a420dddc8510817aee8b57abe074ab656de7fc7da2afe5d4c",
+  "pages_sent": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "drafting_prompt_sha256": "6ddf3154781b57b9f694350ca27addf18c709543b76c13e946275da0c43fd685",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:41:21+00:00",
+  "finished_at": "2026-09-20T16:41:33+00:00",
+  "prompt_chars": 6065,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "6965eb4f-737d-42e0-8964-042e8b671d5b",
+  "input_tokens": 1,
+  "output_tokens": 935,
+  "cost_usd": 0.06417375,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "f9677a513224450b3d040deba1ab99ce0feaf48946ca35ae65b7ae27c48f3dd6",
+  "tools_disabled": true,
+  "reply": "[{\"query\":\"脈得服錠10公絲（PERISAFE，enalapril）應如何貯藏，是否需要避光或冷藏？\",\"query_en\":null,\"topic\":\"貯藏條件\",\"absence_terms\":[\"貯藏\",\"室溫\",\"遮光\",\"有效期限\"],\"nearest_clause\":null,\"rationale\":\"仿單全篇未提供貯藏溫度、避光或有效期限等儲存條件說明，屬仿單應載明卻未見於本文件頁面的事項。\"},{\"query\":\"脈得服錠10公絲（PERISAFE，enalapril）與非類固醇消炎止痛藥（NSAID）併用時是否會降低降壓效果或影響腎功能？\",\"query_en\":null,\"topic\":\"與NSAID之藥物交互作用\",\"absence_terms\":[\"NSAID\",\"非類固醇\",\"消炎\",\"消炎痛\"],\"nearest_clause\":{\"page\":3,\"text\":\"「藥物交互作用」:降壓劑治療 PERISAFE與其它降壓劑併用時具加成效應。血清鉀在臨床研究中,血清鉀通常均在正常值範圍內。\"},\"rationale\":\"藥物交互作用段落僅列出降壓劑、保鉀利尿劑、補鉀劑及鋰鹽之交互作用，未提及NSAID類藥物對本藥降壓效果或腎功能之影響，屬本文件未涵蓋之常見用藥諮詢事項。\"}]"
+}

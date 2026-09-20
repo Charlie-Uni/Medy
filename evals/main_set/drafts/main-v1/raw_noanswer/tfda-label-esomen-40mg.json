@@ -1,0 +1,27 @@
+{
+  "document_key": "tfda-label-esomen-40mg",
+  "source_hash": "f80b904f4e2f15a59cb78fe1baed5c1c06b8b975d43dc0291217d64c43e43fbb",
+  "pages_sent": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "drafting_prompt_sha256": "6ddf3154781b57b9f694350ca27addf18c709543b76c13e946275da0c43fd685",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:29:40+00:00",
+  "finished_at": "2026-09-20T16:30:12+00:00",
+  "prompt_chars": 15607,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "7554e6a6-cc94-4ef4-a01e-025b07d6779e",
+  "input_tokens": 1,
+  "output_tokens": 2599,
+  "cost_usd": 0.16274875,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "94e3ae0297a00ea06236479a92077773d0b2bd263e5cabd1a24440de21dfbd2a",
+  "tools_disabled": true,
+  "reply": "[{\"query\": \"「胃所樂」腸溶膜衣錠40毫克（esomeprazole）的錠劑外觀，包括顏色、形狀及錠面標示為何？\", \"query_en\": null, \"topic\": \"錠劑外觀與標示\", \"absence_terms\": [\"外觀\", \"顏色\", \"標示\", \"appearance\"], \"nearest_clause\": null, \"rationale\": \"文档仅列出成分含量、适应症、用法用量等药理与临床信息，全篇未提供锭剂之颜色、形状或锭面标示等物理外观描述，此为使用者辨识药品常见需求但文档未涵盖。\"}, {\"query\": \"「胃所樂」腸溶膜衣錠40毫克在建議儲存條件下的有效期限（保存期限）為多久？\", \"query_en\": null, \"topic\": \"藥品有效期限\", \"absence_terms\": [\"有效期限\", \"保存期限\", \"expiry\", \"shelf life\"], \"nearest_clause\": {\"page\": 4, \"text\": \"儲於 25 °C乾燥避光且孩童不易取得處所。\"}, \"rationale\": \"【貯存】一節仅说明储存温度与避光要求，并未标示该药品自制造或包装起算的有效期限或保存期限长度，属于文档未覆盖的规范性事项。\"}]"
+}

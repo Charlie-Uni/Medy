@@ -1,0 +1,32 @@
+{
+  "document_key": "ich-e12a-principle-2000",
+  "source_hash": "d09627c2d02dc3c6675be445232a7312e0aa295f6b1748da68fc9d771405a9ac",
+  "pages_sent": [
+    1,
+    2,
+    3,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "drafting_prompt_sha256": "6ddf3154781b57b9f694350ca27addf18c709543b76c13e946275da0c43fd685",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:42:13+00:00",
+  "finished_at": "2026-09-20T16:42:37+00:00",
+  "prompt_chars": 20101,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "3697b673-2a15-4453-8137-fe8ca196ecf1",
+  "input_tokens": 1,
+  "output_tokens": 2398,
+  "cost_usd": 0.108405,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "07d7a3a9544df14650573c350d95d2a18d942a8bfa39b24209e0ad2329e45737",
+  "tools_disabled": true,
+  "reply": "[{\"query\":\"根据E12A，评估新抗高血压药物时是否需要纳入患者生活质量（quality of life）或患者报告结局的评估？\",\"query_en\":\"According to ICH E12A, is assessment of patient quality of life (QoL) or patient-reported outcomes required in the clinical evaluation of new antihypertensive drugs?\",\"topic\":\"生活质量/患者报告结局评估要求\",\"absence_terms\":[\"quality of life\",\"QoL\",\"patient-reported outcome\"],\"nearest_clause\":null,\"rationale\":\"文档详细规定了血压、剂量反应、安全性与联合用药等评估原则，是该体裁指南本应覆盖生活质量或患者报告结局这类疗效补充指标，但提供页文本从未提及此类评估，属明显未覆盖事项。\"},{\"query\":\"E12A中，新抗高血压药物与非抗高血压药物（如NSAID）之间的相互作用研究应如何设计？\",\"query_en\":\"Under ICH E12A, how should interaction studies between the new antihypertensive drug and non-antihypertensive drugs (e.g., NSAIDs) be designed?\",\"topic\":\"与非抗高血压药物（如NSAID）的相互作用研究\",\"absence_terms\":[\"NSAID\",\"non-steroidal anti-inflammatory\",\"interaction study\",\"drug interaction\"],\"nearest_clause\":{\"page\":8,\"text\":\"As antihypertensive treatments are often used in combination, it is important to study the efficacy and safety of the new drug in this situation. Information on combination use can be obtained in formal factorial studies and in combined use in the course of long- and short-term clinical studies.\"},\"rationale\":\"第5节专门讨论与其他抗高血压药物联合用药的研究设计，但该节及全文均未提及与非抗高血压类药物（如已知影响血压控制的NSAID）之间相互作用研究的要求，属指南体裁本应覆盖却明显缺失的内容。\"}]"
+}

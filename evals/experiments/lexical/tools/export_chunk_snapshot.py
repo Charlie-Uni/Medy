@@ -51,7 +51,7 @@ class _CachedRawPages(PageTextProvider):
         return result
 
 
-def export(version: Path, pages: Path, out: Path, *, dsn: str | None = None) -> dict:
+def export(version: Path, pages: Path, out: Path, *, dsn: str | None = None, schema_dir: Path | None = None) -> dict:
     if out.resolve().is_relative_to(version.resolve()):
         raise ValueError("output must be outside the frozen dataset")
     if out.exists() or out.is_symlink():
@@ -59,7 +59,7 @@ def export(version: Path, pages: Path, out: Path, *, dsn: str | None = None) -> 
     names = ("manifest.json", "corpus.json", "samples.jsonl", "SHA256SUMS")
     before = {name: (version / name).read_bytes() for name in names}
     page_view = _CachedRawPages(pages)
-    schema_dir = Path(__file__).resolve().parents[4] / "evals/probe/precise_clause/schema"
+    schema_dir = schema_dir or Path(__file__).resolve().parents[4] / "evals/probe/precise_clause/schema"
     report = ProbeSetValidator(schema_dir, pages=page_view).validate(version, mode="frozen")
     if not report.passed:
         raise ValueError("frozen input validation failed")
@@ -175,9 +175,10 @@ def main() -> int:
     parser.add_argument("--pages", required=True, type=Path)
     parser.add_argument("--out", required=True, type=Path)
     parser.add_argument("--admin-url", default=None, help="admin DSN of another server (default: settings)")
+    parser.add_argument("--schema-dir", default=None, type=Path, help="schema directory (default: probe schemas)")
     args = parser.parse_args()
     try:
-        summary = export(args.dataset, args.pages, args.out, dsn=args.admin_url)
+        summary = export(args.dataset, args.pages, args.out, dsn=args.admin_url, schema_dir=args.schema_dir)
     except (OSError, ValueError, psycopg.Error) as exc:
         # Do not print exception arguments: a driver/config exception can contain a credential.
         print(json.dumps({"status": "failed", "error_type": type(exc).__name__}))

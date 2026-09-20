@@ -1,0 +1,25 @@
+{
+  "document_key": "tfda-label-cinolone-iv-infusion-10-mg-ml",
+  "source_hash": "5ef121b394cb2d28407c17ddb29655abfbda65e030e6dee83e5ba148abfef276",
+  "pages_sent": [
+    1,
+    2
+  ],
+  "drafting_prompt_sha256": "6ddf3154781b57b9f694350ca27addf18c709543b76c13e946275da0c43fd685",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:39:55+00:00",
+  "finished_at": "2026-09-20T16:40:33+00:00",
+  "prompt_chars": 19488,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "f4a41cb3-ce7c-44ee-a865-748ee59e4b50",
+  "input_tokens": 1,
+  "output_tokens": 3143,
+  "cost_usd": 0.1965175,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "b6a7be2fc6560d466e392ef51b2a94ab7901474118f3cf18f00b255a5e0b01b4",
+  "tools_disabled": true,
+  "reply": "```json\n[\n  {\n    \"query\": \"使用「信諾隆」靜脈輸注液（ciprofloxacin）治療期間，若同時飲用葡萄柚汁，是否會影響藥效或產生交互作用？\",\n    \"query_en\": null,\n    \"topic\": \"葡萄柚汁交互作用\",\n    \"absence_terms\": [\"葡萄柚\", \"grapefruit\", \"柑橘類果汁\"],\n    \"nearest_clause\": null,\n    \"rationale\": \"文件【藥物交互作用】段落詳列多種藥品（如Theophylline、Tizanidine、Probenecid等）與Ciprofloxacin的交互作用，但完全未提及葡萄柚汁或柑橘類果汁此類常見的食品交互作用議題，屬於仿單體裁本應涵蓋卻未見於本文件的內容。\"\n  },\n  {\n    \"query\": \"「信諾隆」靜脈輸注液 10 毫克/毫升在符合【保存條件】所述儲存方式下，其有效期限（保存期限）為多久？\",\n    \"query_en\": null,\n    \"topic\": \"有效期限\",\n    \"absence_terms\": [\"有效期限\", \"有效日期\", \"保存期限\", \"expiry\"],\n    \"nearest_clause\": {\"page\": 2, \"text\": \"本品應置於單劑量容器內,儲存於25°C以下、避免冷凍並避光貯之。須置於小孩接觸不到之處。\"},\n    \"rationale\": \"【保存條件】僅說明儲存溫度、避免冷凍及避光等條件，並未載明本品自製造日起的有效期限或保存年限，此為使用者常見但本文件未回答之問題。\"\n  }\n]\n```"
+}

@@ -1,0 +1,4879 @@
+[
+  {
+    "query": "瑪爾胰(glimepiride)每日最高建議劑量是多少?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "drug_name_zh",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "35ae3bb3cb14ba859cfc2ee006aba20762f79fc80834d19e8c606badbf07dc59",
+        "version_label": "pdf-meta 2016-11-22（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "[說明]",
+        "key_text": "Glimepiride 每日最高之建議劑量為 8mg",
+        "evidence_span": {
+          "text": "Glimepiride 每日最高之建議劑量為 8mg。",
+          "char_start": 468,
+          "char_end": 495
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-amaryl-2-0-tablets",
+      "title": "瑪爾胰２．０錠（AMARYL 2.0 TABLETS，glimepiride）仿單",
+      "rank": 1,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "页1[說明]仅此句给出glimepiride的每日最高建议剂量，其余剂量描述均针对不同治疗阶段或联合用药情形，不能回答此问题。",
+      "selected": true
+    }
+  },
+  {
+    "query": "瑪爾胰對於嚴重腎臟或肝臟功能異常的病患是否可以使用?",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "negation",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "35ae3bb3cb14ba859cfc2ee006aba20762f79fc80834d19e8c606badbf07dc59",
+        "version_label": "pdf-meta 2016-11-22（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "[禁忌]",
+        "key_text": "嚴重腎臟或肝臟功能異常",
+        "evidence_span": {
+          "text": "下列情況禁用 Amaryl:胰島素依賴型糖尿病、糖尿性昏迷、酮酸中毒、嚴重腎臟或肝臟功能異常、對 glimepiride、其它 sulphonylurea 類、sulphonamides 類藥物或對所含賦形劑過敏之病患、懷孕、授乳。",
+          "char_start": 1480,
+          "char_end": 1596
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-amaryl-2-0-tablets",
+      "title": "瑪爾胰２．０錠（AMARYL 2.0 TABLETS，glimepiride）仿單",
+      "rank": 2,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "页1[禁忌]明确列出严重肾脏或肝脏功能异常患者禁用Amaryl，为唯一给出该禁忌的条款。",
+      "selected": true
+    }
+  },
+  {
+    "query": "瑪爾胰藥物過量後,服藥多久可能仍無低血糖症狀出現?",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "time_window",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "35ae3bb3cb14ba859cfc2ee006aba20762f79fc80834d19e8c606badbf07dc59",
+        "version_label": "pdf-meta 2016-11-22（未见版本行）",
+        "page": 3,
+        "printed_page_label": null,
+        "section": "[藥物過量]",
+        "key_text": "服藥後 24 小時可能尚無症狀出現",
+        "evidence_span": {
+          "text": "劑量過量及長期使用過高劑量治療可能發生低血糖症,持續 12-72 小時,恢復後可能再發。服藥後 24 小時可能尚無症狀出現。",
+          "char_start": 683,
+          "char_end": 745
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-amaryl-2-0-tablets",
+      "title": "瑪爾胰２．０錠（AMARYL 2.0 TABLETS，glimepiride）仿單",
+      "rank": 3,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "页3[藥物過量]仅此处说明服药过量后症状可能延迟24小时才出现，为文档中唯一相关时间窗描述。",
+      "selected": true
+    }
+  },
+  {
+    "query": "瑪爾胰開始治療的建議起始劑量是多少?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "drug_name_zh",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "35ae3bb3cb14ba859cfc2ee006aba20762f79fc80834d19e8c606badbf07dc59",
+        "version_label": "pdf-meta 2016-11-22（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "[說明]",
+        "key_text": "開始時每天服用 1mg glimepiride",
+        "evidence_span": {
+          "text": "開始時每天服用 1mg glimepiride,如病情控制良好,可維持此劑量繼續治療。",
+          "char_start": 311,
+          "char_end": 354
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-amaryl-2-0-tablets",
+      "title": "瑪爾胰２．０錠（AMARYL 2.0 TABLETS，glimepiride）仿單",
+      "rank": 4,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "页1[說明]仅此句说明glimepiride起始治疗的每日建议剂量为1mg，为该问题唯一答案。",
+      "selected": true
+    }
+  },
+  {
+    "query": "瑪爾胰仿單所依據的CCDS版本編號是什麼?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "protocol_id",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "35ae3bb3cb14ba859cfc2ee006aba20762f79fc80834d19e8c606badbf07dc59",
+        "version_label": "pdf-meta 2016-11-22（未见版本行）",
+        "page": 4,
+        "printed_page_label": null,
+        "section": "页尾资讯",
+        "key_text": "Ref. CCDS v14_12 May 2016",
+        "evidence_span": {
+          "text": "Ref. CCDS v14_12 May 2016",
+          "char_start": 1306,
+          "char_end": 1331
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-amaryl-2-0-tablets",
+      "title": "瑪爾胰２．０錠（AMARYL 2.0 TABLETS，glimepiride）仿單",
+      "rank": 5,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "页4末尾仅此处给出仿单所依据的CCDS版本编号，为唯一答案。",
+      "selected": false
+    }
+  },
+  {
+    "query": "心壓暢錠用於狹心症時，每日建議如何分次服用？",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "dose_unit",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "2b8ab3b1bfea619d8eba938864e10614313dfa92e036bdba6a8fec2cb5fd2425",
+        "version_label": "pdf-meta 2015-12-27（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "【用法用量】",
+        "key_text": "狹心症:每日投與 100〜200mg,應分成二次劑量於早、晚服用。",
+        "evidence_span": {
+          "text": "狹心症:每日投與 100〜200mg,應分成二次劑量於早、晚服用。對於較嚴重病患應增加其劑量。",
+          "char_start": 1078,
+          "char_end": 1125
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-cancliol-100mg",
+      "title": "\"明德\"心壓暢錠100毫克（美托普洛）（Cancliol Tablets 100mg, metoprolol tartrate）仿單",
+      "rank": 1,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "頁一用法用量段落中僅狹心症項目載明100〜200mg分二次早晚服用之劑量規定，與高血壓項目劑量說明不同，故此條款唯一能回答此問題。",
+      "selected": true
+    }
+  },
+  {
+    "query": "心壓暢錠可以和verapamil併用嗎？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "2b8ab3b1bfea619d8eba938864e10614313dfa92e036bdba6a8fec2cb5fd2425",
+        "version_label": "pdf-meta 2015-12-27（未见版本行）",
+        "page": 2,
+        "printed_page_label": null,
+        "section": "【注意事項】",
+        "key_text": "本劑不可與 verapamil 倂用",
+        "evidence_span": {
+          "text": "像其他β-blocker 一樣,本劑不可與 verapamil 倂用。因同時投與 verapamil 和β -blocker 可能引起心搏過緩、低血壓和心收縮不全 (asystole)。",
+          "char_start": 396,
+          "char_end": 489
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-cancliol-100mg",
+      "title": "\"明德\"心壓暢錠100毫克（美托普洛）（Cancliol Tablets 100mg, metoprolol tartrate）仿單",
+      "rank": 2,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "頁二注意事項第八點是文件中唯一明確禁止本劑與verapamil併用並說明理由之條款。",
+      "selected": true
+    }
+  },
+  {
+    "query": "心壓暢錠停藥時應如何處理以避免突然停藥造成的危害？",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "time_window"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "2b8ab3b1bfea619d8eba938864e10614313dfa92e036bdba6a8fec2cb5fd2425",
+        "version_label": "pdf-meta 2015-12-27（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "【注意事項】",
+        "key_text": "停用本劑時需逐漸停用,例如於 7〜10 天之期間",
+        "evidence_span": {
+          "text": "停用本劑時需逐漸停用,例如於 7〜10 天之期間,因突然停藥會導致急性損害患者身體狀況,尤其是罹患心臟局部缺血者。",
+          "char_start": 1183,
+          "char_end": 1240
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-cancliol-100mg",
+      "title": "\"明德\"心壓暢錠100毫克（美托普洛）（Cancliol Tablets 100mg, metoprolol tartrate）仿單",
+      "rank": 3,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "頁一注意事項第二點是文件中唯一說明停藥應逐漸進行並給出7〜10天期限之條款。",
+      "selected": false
+    }
+  },
+  {
+    "query": "服用心壓暢錠的病患若須接受麻醉手術，應提前多久停藥？",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "time_window"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "2b8ab3b1bfea619d8eba938864e10614313dfa92e036bdba6a8fec2cb5fd2425",
+        "version_label": "pdf-meta 2015-12-27（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "【注意事項】",
+        "key_text": "在麻醉前至少 48 小時即應停止服用本劑",
+        "evidence_span": {
+          "text": "對於即將進行麻醉開刀的病患,在麻醉前至少 48 小時即應停止服用本劑。",
+          "char_start": 1242,
+          "char_end": 1277
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-cancliol-100mg",
+      "title": "\"明德\"心壓暢錠100毫克（美托普洛）（Cancliol Tablets 100mg, metoprolol tartrate）仿單",
+      "rank": 4,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "頁一注意事項第三點是文件中唯一說明麻醉前應提前48小時停藥之條款。",
+      "selected": false
+    }
+  },
+  {
+    "query": "ST段上升急性心肌梗塞病人若已超過75歲，開始使用Carvetone（clopidogrel）治療時是否應給予預載劑量（loading dose）？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "dose_unit",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "662b69e6044ed9746280815bc3bb5e45a2911c9f5edebf610a5a26aac44e95c9",
+        "version_label": "pdf-meta 2015-11-23（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "劑量和用法",
+        "key_text": "超過 75 歲的病患開始治療時,不應給予預載劑量",
+        "evidence_span": {
+          "text": "ST 段上升之急性心肌梗塞:不論是否使用血栓溶解劑,Clopidogrel 應給予每日單一劑量 75 mg,開始時可給予或不給予預載劑量(loading dose),同時併用 aspirin。超過 75 歲的病患開始治療時,不應給予預載劑量。",
+          "char_start": 6203,
+          "char_end": 6324
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-carvetone-f-c-tablets-75-mg",
+      "title": "固栓宜膜衣錠 75 毫克（Carvetone F.C. Tablets 75 mg，clopidogrel）仿單",
+      "rank": 1,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "此段是頁文本中唯一針對ST段上升急性心肌梗塞且年齡超過75歲病患是否給予預載劑量作出規定的條款，其他劑量段落不涉及此年齡限制。",
+      "selected": true
+    }
+  },
+  {
+    "query": "孕婦是否建議使用Carvetone（clopidogrel）？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "662b69e6044ed9746280815bc3bb5e45a2911c9f5edebf610a5a26aac44e95c9",
+        "version_label": "pdf-meta 2015-11-23（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "生育能力、懷孕和授乳",
+        "key_text": "懷孕期間不建議使用clopidogrel",
+        "evidence_span": {
+          "text": "懷孕:目前尚未有針對孕婦的對照試驗研究,由於資料不足,懷孕期間不建議使用clopidogrel。動物試驗結果並未顯示對懷孕期間、胚胎/胎兒的發展,分娩或生產的發展,有直接或間接的傷害 (請參考 ” 禁忌 ”欄)。",
+          "char_start": 1729,
+          "char_end": 1835
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-carvetone-f-c-tablets-75-mg",
+      "title": "固栓宜膜衣錠 75 毫克（Carvetone F.C. Tablets 75 mg，clopidogrel）仿單",
+      "rank": 2,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "此段是頁文本中唯一明確說明懷孕期間是否建議使用clopidogrel的條款，其他段落未針對懷孕給出用藥建議。",
+      "selected": true
+    }
+  },
+  {
+    "query": "病人接受手術前若不希望有抗血小板作用，應於術前幾天停止使用Carvetone（clopidogrel）？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "time_window",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "662b69e6044ed9746280815bc3bb5e45a2911c9f5edebf610a5a26aac44e95c9",
+        "version_label": "pdf-meta 2015-11-23（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "警語及注意事項",
+        "key_text": "應於手術進行前 7天停止使用 clopidogrel",
+        "evidence_span": {
+          "text": "若病人選擇手術治療並且不希望在手術期間有抗血小板作用,應於手術進行前 7天停止使用 clopidogrel 。",
+          "char_start": 7755,
+          "char_end": 7810
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-carvetone-f-c-tablets-75-mg",
+      "title": "固栓宜膜衣錠 75 毫克（Carvetone F.C. Tablets 75 mg，clopidogrel）仿單",
+      "rank": 3,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "此段是頁文本中唯一說明病人術前應提前幾天停止使用clopidogrel的條款，其他段落未提及具體天數。",
+      "selected": true
+    }
+  },
+  {
+    "query": "成人與老年人使用Carvetone（clopidogrel）的建議劑量為何？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "662b69e6044ed9746280815bc3bb5e45a2911c9f5edebf610a5a26aac44e95c9",
+        "version_label": "pdf-meta 2015-11-23（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "劑量和用法",
+        "key_text": "建議劑量為每天 75 mg,一天一次",
+        "evidence_span": {
+          "text": "本藥須由醫師處方使用成人和老年人:Clopidogrel 的建議劑量為每天 75 mg,一天一次,可和食物同時服用或分開服用。",
+          "char_start": 5881,
+          "char_end": 5944
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-carvetone-f-c-tablets-75-mg",
+      "title": "固栓宜膜衣錠 75 毫克（Carvetone F.C. Tablets 75 mg，clopidogrel）仿單",
+      "rank": 4,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "此段是頁文本中唯一列出成人與老年人clopidogrel標準建議劑量的條款，其他劑量段落均針對特定適應症或特殊族群。",
+      "selected": true
+    }
+  },
+  {
+    "query": "Carvetone（clopidogrel）是否建議與warfarin併用？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "662b69e6044ed9746280815bc3bb5e45a2911c9f5edebf610a5a26aac44e95c9",
+        "version_label": "pdf-meta 2015-11-23（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "交互作用",
+        "key_text": "不建議clopidogrel與warfarin併用",
+        "evidence_span": {
+          "text": "口服抗凝血劑:由於可能增加出血的危險,不建議clopidogrel與warfarin併用。請參考”警語及注意事項”欄。",
+          "char_start": 9079,
+          "char_end": 9138
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-carvetone-f-c-tablets-75-mg",
+      "title": "固栓宜膜衣錠 75 毫克（Carvetone F.C. Tablets 75 mg，clopidogrel）仿單",
+      "rank": 5,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "此段是頁文本中唯一明確指出不建議clopidogrel與warfarin併用的條款，其他交互作用段落涉及不同藥品。",
+      "selected": false
+    }
+  },
+  {
+    "query": "服用Carvetone（clopidogrel）過量會產生什麼後果？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "662b69e6044ed9746280815bc3bb5e45a2911c9f5edebf610a5a26aac44e95c9",
+        "version_label": "pdf-meta 2015-11-23（未见版本行）",
+        "page": 2,
+        "printed_page_label": null,
+        "section": "過量",
+        "key_text": "目前並未發現 clopidogrel 的解毒劑",
+        "evidence_span": {
+          "text": "服用過量的 clopidogrel 會導致出血時間延長及其他出血的併發症。若發生出血應採取適當之治療,目前並未發現 clopidogrel 的解毒劑,若需要立即校正過長的出血時間,輸血小板可能可以校正 clopidogrel 的作用。",
+          "char_start": 256,
+          "char_end": 373
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-carvetone-f-c-tablets-75-mg",
+      "title": "固栓宜膜衣錠 75 毫克（Carvetone F.C. Tablets 75 mg，clopidogrel）仿單",
+      "rank": 6,
+      "status": "ok",
+      "problems": [],
+      "warnings": [
+        "negation: no negation/limitation word in span"
+      ],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "此段是頁文本中唯一描述clopidogrel過量後果及處置方式的條款，僅出現於【過量】一節。",
+      "selected": false
+    }
+  },
+  {
+    "query": "信諾隆（ciprofloxacin）靜脈輸注液可以與Tizanidine併用嗎？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "drug_name_zh",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "5ef121b394cb2d28407c17ddb29655abfbda65e030e6dee83e5ba148abfef276",
+        "version_label": "pdf-meta 2019-09-19（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "【禁忌】",
+        "key_text": "禁止同時使用 Ciprofloxacin 和 Tizanidine",
+        "evidence_span": {
+          "text": "禁止同時使用 Ciprofloxacin 和 Tizanidine (參見“【藥物交互作用】”)。",
+          "char_start": 3773,
+          "char_end": 3822
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-cinolone-iv-infusion-10-mg-ml",
+      "title": "“信東”信諾隆靜脈輸注液 10 毫克/毫升（Cinolone IV Infusion 10 mg/mL，ciprofloxacin）仿單",
+      "rank": 1,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "页文本中只有【禁忌】段落这一条款明确禁止Ciprofloxacin与Tizanidine併用。",
+      "selected": true
+    }
+  },
+  {
+    "query": "需要血液透析且creatinine清除率低於30 ml/min/1.73m2的病人，靜脈注射Ciprofloxacin的每日最大劑量為何？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "5ef121b394cb2d28407c17ddb29655abfbda65e030e6dee83e5ba148abfef276",
+        "version_label": "pdf-meta 2019-09-19（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "用法用量-特殊族群-腎及肝功能受損的病患-2.腎功能受損且須血液透析",
+        "key_text": "靜脈注射每日最大劑量為一天 400 毫克,於透析完再給藥",
+        "evidence_span": {
+          "text": "2-2 當 creatinine 清除率少於 30 ml/min/1.73m2 或血漿中 creatinine 的濃度等於或高於 2.0 mg/100 ml 時,靜脈注射每日最大劑量為一天 400 毫克,於透析完再給藥。",
+          "char_start": 2333,
+          "char_end": 2443
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-cinolone-iv-infusion-10-mg-ml",
+      "title": "“信東”信諾隆靜脈輸注液 10 毫克/毫升（Cinolone IV Infusion 10 mg/mL，ciprofloxacin）仿單",
+      "rank": 2,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "仅此条款针对需血液透析且creatinine清除率<30的病人给出静脉注射每日最大剂量400毫克并于透析后给药的规定，页面上其他类似条款均无“於透析完再給藥”这一附加限定。",
+      "selected": true
+    }
+  },
+  {
+    "query": "吸入性炭疽病暴露後,使用Ciprofloxacin治療的總治療期為多久？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "time_window",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "5ef121b394cb2d28407c17ddb29655abfbda65e030e6dee83e5ba148abfef276",
+        "version_label": "pdf-meta 2019-09-19（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "用法用量-治療期",
+        "key_text": "治療炭疽桿菌(接觸後)的總治療期是 60 天",
+        "evidence_span": {
+          "text": "成人和小孩-吸入性炭疽病(接觸後) Ciprofloxacin (靜脈注射或口服)治療炭疽桿菌(接觸後)的總治療期是 60 天。",
+          "char_start": 3625,
+          "char_end": 3689
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-cinolone-iv-infusion-10-mg-ml",
+      "title": "“信東”信諾隆靜脈輸注液 10 毫克/毫升（Cinolone IV Infusion 10 mg/mL，ciprofloxacin）仿單",
+      "rank": 3,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "页文本中仅此条款说明吸入性炭疽病(接触后)Ciprofloxacin治疗的总疗程为60天。",
+      "selected": true
+    }
+  },
+  {
+    "query": "信諾隆是否可用於重症肌無力患者？",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "negation",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "5ef121b394cb2d28407c17ddb29655abfbda65e030e6dee83e5ba148abfef276",
+        "version_label": "pdf-meta 2019-09-19（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "警語及注意事項-肌肉骨骼系統",
+        "key_text": "具有重症肌無力患者應避免使用",
+        "evidence_span": {
+          "text": "本藥品具有使重症肌無力惡化之風險,具有重症肌無力患者應避免使用。",
+          "char_start": 6583,
+          "char_end": 6615
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-cinolone-iv-infusion-10-mg-ml",
+      "title": "“信東”信諾隆靜脈輸注液 10 毫克/毫升（Cinolone IV Infusion 10 mg/mL，ciprofloxacin）仿單",
+      "rank": 4,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "仅【警語及注意事項】肌肉骨骼系統段落明确指出重症肌无力患者应避免使用本药，页面其他处仅提及重症肌无力惡化作为不良反应，未含此禁止性建议。",
+      "selected": true
+    }
+  },
+  {
+    "query": "信諾隆靜脈輸注液10毫克/毫升的衛署藥製字號是多少？",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "protocol_id",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "5ef121b394cb2d28407c17ddb29655abfbda65e030e6dee83e5ba148abfef276",
+        "version_label": "pdf-meta 2019-09-19（未见版本行）",
+        "page": 2,
+        "printed_page_label": null,
+        "section": "【包裝】",
+        "key_text": "衛署藥製字第 049276 號",
+        "evidence_span": {
+          "text": "“信東”信諾隆靜脈輸注液 10 毫克/毫升衛署藥製字第 049276 號 40 毫升玻璃瓶裝,100 支以下盒裝。",
+          "char_start": 8290,
+          "char_end": 8347
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-cinolone-iv-infusion-10-mg-ml",
+      "title": "“信東”信諾隆靜脈輸注液 10 毫克/毫升（Cinolone IV Infusion 10 mg/mL，ciprofloxacin）仿單",
+      "rank": 5,
+      "status": "ok",
+      "problems": [],
+      "warnings": [
+        "protocol_id: no identifier pattern in query"
+      ],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "仅【包裝】段落中10毫克/毫升规格对应的许可证字号为衛署藥製字第049276號，与2毫克/毫升规格的字号不同。",
+      "selected": false
+    }
+  },
+  {
+    "query": "信諾隆與Zolpidem是否可以併用？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "drug_name_zh",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "5ef121b394cb2d28407c17ddb29655abfbda65e030e6dee83e5ba148abfef276",
+        "version_label": "pdf-meta 2019-09-19（未见版本行）",
+        "page": 2,
+        "printed_page_label": null,
+        "section": "【藥物交互作用】",
+        "key_text": "Zolpidem 和 Ciprofloxacin 併用可能會增加 Zolpidem 的血中濃度,因此不建議併用",
+        "evidence_span": {
+          "text": "Zolpidem 和 Ciprofloxacin 併用可能會增加 Zolpidem 的血中濃度,因此不建議併用。",
+          "char_start": 1817,
+          "char_end": 1873
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-cinolone-iv-infusion-10-mg-ml",
+      "title": "“信東”信諾隆靜脈輸注液 10 毫克/毫升（Cinolone IV Infusion 10 mg/mL，ciprofloxacin）仿單",
+      "rank": 6,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "页文本中仅此条款说明Ciprofloxacin与Zolpidem併用会增加其血中浓度并因此不建议併用。",
+      "selected": false
+    }
+  },
+  {
+    "query": "醫師想確認：開始使用康肯®治療穩定型慢性中度至重度心衰竭前，病人需在過去多久內沒有發生急性心衰竭才符合治療條件？",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "time_window"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "8f274dc347f717feba8b9745949dd8ef4d17ea1ff35995fbbe41848fef93c171",
+        "version_label": "pdf-meta 2020-08-10（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "治療穩定型慢性中度至重度心衰竭",
+        "key_text": "在過去 6 週內不曾發生過急性心衰竭之穩定型慢性心衰竭病人",
+        "evidence_span": {
+          "text": "在過去 6 週內不曾發生過急性心衰竭之穩定型慢性心衰竭病人",
+          "char_start": 1508,
+          "char_end": 1537
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-concor-5",
+      "title": "康肯５毫克（CONCOR 5，bisoprolol）仿單",
+      "rank": 1,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "本頁僅此一條列出「過去6週內未發生急性心衰竭」的時間窗條件，用於界定適合開始接受康肯®治療的穩定型慢性心衰竭病人。",
+      "selected": true
+    }
+  },
+  {
+    "query": "康肯®用於治療穩定型慢性心衰竭時，第1週的起始劑量應如何給予？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "8f274dc347f717feba8b9745949dd8ef4d17ea1ff35995fbbe41848fef93c171",
+        "version_label": "pdf-meta 2020-08-10（未见版本行）",
+        "page": 2,
+        "printed_page_label": null,
+        "section": "治療穩定型慢性心衰竭劑量調整",
+        "key_text": "第 1 週:1.25 毫克 bisoprolol fumarate 每日一次",
+        "evidence_span": {
+          "text": "第 1 週:1.25 毫克 bisoprolol fumarate 每日一次",
+          "char_start": 195,
+          "char_end": 233
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-concor-5",
+      "title": "康肯５毫克（CONCOR 5，bisoprolol）仿單",
+      "rank": 2,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "本頁劑量調整表中僅此一條專門說明第1週的康肯®起始劑量，其他週次劑量各不相同。",
+      "selected": true
+    }
+  },
+  {
+    "query": "康肯®（bisoprolol fumarate）是否建議用於兒童病人？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "8f274dc347f717feba8b9745949dd8ef4d17ea1ff35995fbbe41848fef93c171",
+        "version_label": "pdf-meta 2020-08-10（未见版本行）",
+        "page": 3,
+        "printed_page_label": null,
+        "section": "特殊族群",
+        "key_text": "康肯®不建議兒童使用",
+        "evidence_span": {
+          "text": "Bisoprolol fumarate 使用於兒童尚無足夠的經驗,因此康肯®不建議兒童使用。",
+          "char_start": 864,
+          "char_end": 910
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-concor-5",
+      "title": "康肯５毫克（CONCOR 5，bisoprolol）仿單",
+      "rank": 3,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "此句明確說明因兒童使用經驗不足，仿單不建議兒童使用康肯®，為本頁唯一涉及兒童用藥建議的條款。",
+      "selected": true
+    }
+  },
+  {
+    "query": "嚴重腎功能不全（肌酐酸廓清率小於20毫升/分鐘）病人使用康肯®治療高血壓或狹心症時，每日劑量上限是多少？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "8f274dc347f717feba8b9745949dd8ef4d17ea1ff35995fbbe41848fef93c171",
+        "version_label": "pdf-meta 2020-08-10（未见版本行）",
+        "page": 2,
+        "printed_page_label": null,
+        "section": "腎或肝功能不全的病人",
+        "key_text": "bisoprolol fumarate 的每日劑量不可超過 10 毫克",
+        "evidence_span": {
+          "text": "嚴重腎功能不全(肌酐酸廓清率<20 毫升 /分鐘)及嚴重肝功能不全的病人,bisoprolol fumarate 的每日劑量不可超過 10 毫克。",
+          "char_start": 911,
+          "char_end": 984
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-concor-5",
+      "title": "康肯５毫克（CONCOR 5，bisoprolol）仿單",
+      "rank": 4,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "此句同時限定嚴重腎/肝功能不全病人於治療高血壓或狹心症時的康肯®每日劑量上限，為本頁唯一此類劑量限制條款。",
+      "selected": true
+    }
+  },
+  {
+    "query": "老年病人使用康肯®是否需要調整劑量？",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "negation"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "8f274dc347f717feba8b9745949dd8ef4d17ea1ff35995fbbe41848fef93c171",
+        "version_label": "pdf-meta 2020-08-10（未见版本行）",
+        "page": 2,
+        "printed_page_label": null,
+        "section": "老年人",
+        "key_text": "老年人:不需要調整劑量",
+        "evidence_span": {
+          "text": "老年人:不需要調整劑量。",
+          "char_start": 1069,
+          "char_end": 1081
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-concor-5",
+      "title": "康肯５毫克（CONCOR 5，bisoprolol）仿單",
+      "rank": 5,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "此句明確指出老年病人使用康肯®不需調整劑量，為本頁唯一提及老年族群劑量調整之條款。",
+      "selected": false
+    }
+  },
+  {
+    "query": "痛風停錠(Allopurinol)可以用於治療痛風性關節炎的急性發作嗎?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "drug_name_zh",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "42f20f2b5b0ea0ed7afe8bb709699a58b222985b70ccada6e0c470f5c3f58a7f",
+        "version_label": "pdf-meta 2018-02-09（未见版本行）",
+        "page": 2,
+        "printed_page_label": null,
+        "section": "適應症",
+        "key_text": "它必須不得使用於痛風性關節炎的急性發作",
+        "evidence_span": {
+          "text": "Allopurinol沒有抗發炎的效力,它必須不得使用於痛風性關節炎的急性發作",
+          "char_start": 728,
+          "char_end": 767
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-deurinol-300mg",
+      "title": "痛風停錠300毫克（Deurinol Tablets 300mg, allopurinol）仿單",
+      "rank": 1,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "本頁僅此處明確說明Allopurinol不具抗發炎效力、不得用於痛風性關節炎急性發作之治療,其他段落均未針對此限制作出說明。",
+      "selected": true
+    }
+  },
+  {
+    "query": "痛風停錠(Allopurinol)用於一般成人抗痛風治療時,起始劑量與每日劑量上限各為多少?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "negation",
+      "drug_name_zh",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "42f20f2b5b0ea0ed7afe8bb709699a58b222985b70ccada6e0c470f5c3f58a7f",
+        "version_label": "pdf-meta 2018-02-09（未见版本行）",
+        "page": 3,
+        "printed_page_label": null,
+        "section": "用法用量-抗痛風劑(Antigout agent)",
+        "key_text": "初始劑量:口服,100mg,一天一次,在一星期的間隔期間每天增加100mg",
+        "evidence_span": {
+          "text": "初始劑量:口服,100mg,一天一次,在一星期的間隔期間每天增加100mg 直到達到所需要的血清尿酸濃度為止。不得超過每日800mg 之最大建議劑量。",
+          "char_start": 44,
+          "char_end": 119
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-deurinol-300mg",
+      "title": "痛風停錠300毫克（Deurinol Tablets 300mg, allopurinol）仿單",
+      "rank": 2,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "本頁僅此段落針對一般成人抗痛風劑治療給出起始劑量方案與每日最大建議劑量之限制,無其他條款重複此資訊。",
+      "selected": true
+    }
+  },
+  {
+    "query": "痛風停錠(Allopurinol)服用時,每一次單一劑量的上限是多少?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "negation",
+      "drug_name_zh",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "42f20f2b5b0ea0ed7afe8bb709699a58b222985b70ccada6e0c470f5c3f58a7f",
+        "version_label": "pdf-meta 2018-02-09（未见版本行）",
+        "page": 8,
+        "printed_page_label": null,
+        "section": "一般投藥資訊",
+        "key_text": "每一個單一劑量,都必須不得超過300 mg",
+        "evidence_span": {
+          "text": "每日劑量可以以分割的劑量或當作單一的劑量服用。每一個單一劑量,都必須不得超過300 mg。超出300 mg 要求的每日劑量,必須要分割劑量使用。",
+          "char_start": 4,
+          "char_end": 76
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-deurinol-300mg",
+      "title": "痛風停錠300毫克（Deurinol Tablets 300mg, allopurinol）仿單",
+      "rank": 3,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "本頁僅此段落明確規定Allopurinol單一劑量不得超過300mg,超出部分須分割服用,為唯一回答此劑量上限問題的條款。",
+      "selected": false
+    }
+  },
+  {
+    "query": "使用痛風停錠(Allopurinol)進行治療監測時,男性血清尿酸正常上限大約是多少?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "drug_name_zh",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "42f20f2b5b0ea0ed7afe8bb709699a58b222985b70ccada6e0c470f5c3f58a7f",
+        "version_label": "pdf-meta 2018-02-09（未见版本行）",
+        "page": 6,
+        "printed_page_label": null,
+        "section": "病人監測",
+        "key_text": "在男性與停經後婦女的正常上限大約為7mg/100ml",
+        "evidence_span": {
+          "text": "血清尿酸(為正確投藥,監測可能是需要的;在男性與停經後婦女的正常上限大約為7mg/100ml〔416 micromoles/L〕在停經前婦女大約為6mg/100ml〔356 micromoles/L〕,但可能會依病人及實驗室方法而有變異)。",
+          "char_start": 694,
+          "char_end": 814
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-deurinol-300mg",
+      "title": "痛風停錠300毫克（Deurinol Tablets 300mg, allopurinol）仿單",
+      "rank": 4,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "本頁僅此段落列出男性與停經後婦女血清尿酸正常上限之具體數值,為唯一能回答此監測數值問題的條款。",
+      "selected": false
+    }
+  },
+  {
+    "query": "正在服用「胃所樂」腸溶膜衣錠40毫克的病患，可以併用clopidogrel嗎？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "drug_name_zh",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "f80b904f4e2f15a59cb78fe1baed5c1c06b8b975d43dc0291217d64c43e43fbb",
+        "version_label": "pdf-meta 2013-11-08（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "警語及注意之事項",
+        "key_text": "應避免同時使用esomeprazole 和 clopidogrel",
+        "evidence_span": {
+          "text": "根據這些數據,應避免同時使用esomeprazole 和 clopidogrel (請參見【與其他藥物之交互作用及其他形式之交互作用】)。",
+          "char_start": 3300,
+          "char_end": 3369
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-esomen-40mg",
+      "title": "胃所樂腸溶膜衣錠40毫克（Esomen Enteric-Coated Tablets 40mg, esomeprazole）仿單",
+      "rank": 1,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "全文件中僅「警語及注意之事項」段落明確給出應避免esomeprazole與clopidogrel同時使用的建議，其餘章節僅描述交互作用試驗數據，未提出此項限制建議。",
+      "selected": true
+    }
+  },
+  {
+    "query": "Zollinger Ellison Syndrome (ZES)患者使用「胃所樂」（Esomeprazole）的起始劑量為多少？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "drug_name_zh",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "f80b904f4e2f15a59cb78fe1baed5c1c06b8b975d43dc0291217d64c43e43fbb",
+        "version_label": "pdf-meta 2013-11-08（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "用法用量－Zollinger Ellison Syndrome (ZES) 之治療",
+        "key_text": "建議起始起始起始起始劑量為服用 Esomeprazole 40mg 每日 2次",
+        "evidence_span": {
+          "text": "Zollinger Ellison Syndrome (ZES) 之治療之治療之治療之治療建議起始起始起始起始劑量為服用 Esomeprazole 40mg 每日 2次,然後再依個別情況調整劑量,並視臨床表徵決定是否需繼續治療。根據臨床試驗結果所示,每日服用 80 至 160mg esomeprazole ,大部分病人之病情可獲得控制。如每日服用劑量達 80mg 以上,需分為每日 2次給藥。",
+          "char_start": 1678,
+          "char_end": 1875
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-esomen-40mg",
+      "title": "胃所樂腸溶膜衣錠40毫克（Esomen Enteric-Coated Tablets 40mg, esomeprazole）仿單",
+      "rank": 2,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "文件中只有此段針對Zollinger Ellison Syndrome (ZES)之治療給出起始劑量與後續調整方式，其他適應症段落的劑量規定均不適用於ZES。",
+      "selected": true
+    }
+  },
+  {
+    "query": "使用非類固醇抗發炎藥(NSAID)相關胃潰瘍治療時，胃所樂（Esomeprazole）的劑量與療程為何？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "time_window",
+      "drug_name_zh",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "f80b904f4e2f15a59cb78fe1baed5c1c06b8b975d43dc0291217d64c43e43fbb",
+        "version_label": "pdf-meta 2013-11-08（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "用法用量－需要持續使用非類固醇抗發炎藥(NSAID) 之病患",
+        "key_text": "NSAID 治療相關之胃潰瘍的治療:一般劑量為20 mg 每天 1次,為期 4-8週",
+        "evidence_span": {
+          "text": "-NSAID 治療相關之胃潰瘍的治療:一般劑量為20 mg 每天 1次,為期 4-8週。",
+          "char_start": 1633,
+          "char_end": 1677
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-esomen-40mg",
+      "title": "胃所樂腸溶膜衣錠40毫克（Esomen Enteric-Coated Tablets 40mg, esomeprazole）仿單",
+      "rank": 3,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "此為文件中唯一針對NSAID治療相關胃潰瘍給出的具體劑量（20 mg每天1次）與療程（4-8週）之條款，與其他適應症之劑量規定互不相同。",
+      "selected": false
+    }
+  },
+  {
+    "query": "怡胃適腸溶錠(esomeprazole)用於治療成人及12歲以上青少年之糜爛性逆流性食道炎，起始劑量與療程為何？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "70d3d976a3b4ef70d192755440066618dd538d1bdf16659daa255b6f04dcaa81",
+        "version_label": "pdf-meta 2014-04-28（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "【劑量及給藥法】",
+        "key_text": "40mg每天1次,為期4週",
+        "evidence_span": {
+          "text": "-糜爛性逆流性食道炎之治療:40mg每天1次,為期4週。對食道炎尚未痊癒或尚有症狀之患者,建議另外再給予4週療程。",
+          "char_start": 671,
+          "char_end": 728
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-esomepsun-40mg-tablets-sunyet",
+      "title": "怡胃適腸溶錠40毫克（Esomepsun 40mg tablets \"SUNYET\"，esomeprazole）仿單",
+      "rank": 1,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "本頁劑量及給藥法中僅此段描述成人及12歲以上青少年糜爛性逆流性食道炎之劑量與療程。",
+      "selected": true
+    }
+  },
+  {
+    "query": "怡胃適腸溶錠(esomeprazole)可以與nelfinavir併用嗎？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "70d3d976a3b4ef70d192755440066618dd538d1bdf16659daa255b6f04dcaa81",
+        "version_label": "pdf-meta 2014-04-28（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "【禁忌】",
+        "key_text": "Esomeprazole不可與nelfinavir併用",
+        "evidence_span": {
+          "text": "Esomeprazole不可與nelfinavir併用(請參閱【與其他藥物之交互作用及其他形式之交互作用】)。",
+          "char_start": 1589,
+          "char_end": 1644
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-esomepsun-40mg-tablets-sunyet",
+      "title": "怡胃適腸溶錠40毫克（Esomepsun 40mg tablets \"SUNYET\"，esomeprazole）仿單",
+      "rank": 2,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "禁忌章節僅此句明確禁止esomeprazole與nelfinavir併用。",
+      "selected": true
+    }
+  },
+  {
+    "query": "esomeprazole用於肝功能嚴重不良的病人時，最高使用劑量限制為何？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "70d3d976a3b4ef70d192755440066618dd538d1bdf16659daa255b6f04dcaa81",
+        "version_label": "pdf-meta 2014-04-28（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "【劑量及給藥法】肝功能不良",
+        "key_text": "Esomeprazole的最高使用劑量不應超過20 mg",
+        "evidence_span": {
+          "text": "肝功能嚴重不良的病人,Esomeprazole的最高使用劑量不應超過20 mg。",
+          "char_start": 1461,
+          "char_end": 1501
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-esomepsun-40mg-tablets-sunyet",
+      "title": "怡胃適腸溶錠40毫克（Esomepsun 40mg tablets \"SUNYET\"，esomeprazole）仿單",
+      "rank": 3,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "劑量及給藥法中僅此句規定肝功能嚴重不良病人之esomeprazole最高劑量。",
+      "selected": true
+    }
+  },
+  {
+    "query": "長期使用PPI類藥品(如esomeprazole)可能出現低血鎂症，通常在使用多久之後才會出現此不良反應？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "time_window",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "70d3d976a3b4ef70d192755440066618dd538d1bdf16659daa255b6f04dcaa81",
+        "version_label": "pdf-meta 2014-04-28（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "警語及注意之事項－低血鎂症",
+        "key_text": "長期使用PPI類成分藥品(至少使用3個月,大部分在使用1年以上)",
+        "evidence_span": {
+          "text": "曾有通報案件顯示,當長期使用PPI類成分藥品(至少使用3個月,大部分在使用1年以上),可能出現罕見低血鎂之不良反應,可能無症狀或嚴重之不良反應症狀,包括手足抽搐、心律不整、癲癇發作等。",
+          "char_start": 2846,
+          "char_end": 2938
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-esomepsun-40mg-tablets-sunyet",
+      "title": "怡胃適腸溶錠40毫克（Esomepsun 40mg tablets \"SUNYET\"，esomeprazole）仿單",
+      "rank": 4,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "警語及注意事項中僅此段說明長期使用PPI類藥品出現低血鎂症之典型使用期間。",
+      "selected": true
+    }
+  },
+  {
+    "query": "esomeprazole治療Zollinger Ellison Syndrome (ZES)的建議起始劑量為何？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "70d3d976a3b4ef70d192755440066618dd538d1bdf16659daa255b6f04dcaa81",
+        "version_label": "pdf-meta 2014-04-28（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "【劑量及給藥法】",
+        "key_text": "建議起始劑量為服用esomeprazole 40mg每日2次",
+        "evidence_span": {
+          "text": "Zollinger Ellison Syndrome (ZES)之治療建議起始劑量為服用esomeprazole 40mg每日2次,然後再依個別情況調整劑量,並視臨床表徵決定是否需繼續治療。",
+          "char_start": 1167,
+          "char_end": 1262
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-esomepsun-40mg-tablets-sunyet",
+      "title": "怡胃適腸溶錠40毫克（Esomepsun 40mg tablets \"SUNYET\"，esomeprazole）仿單",
+      "rank": 5,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "劑量及給藥法中僅此段說明ZES治療之建議起始劑量。",
+      "selected": false
+    }
+  },
+  {
+    "query": "esomeprazole是否可用於哺乳期間之婦女？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "70d3d976a3b4ef70d192755440066618dd538d1bdf16659daa255b6f04dcaa81",
+        "version_label": "pdf-meta 2014-04-28（未见版本行）",
+        "page": 2,
+        "printed_page_label": null,
+        "section": "懷孕及授乳",
+        "key_text": "在哺乳期間不應使用esomeprazole",
+        "evidence_span": {
+          "text": "目前並不知道esomeprazole是否會由人類乳汁中排出;亦未曾對哺乳中婦女進行研究。因此,在哺乳期間不應使用esomeprazole。",
+          "char_start": 77,
+          "char_end": 146
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-esomepsun-40mg-tablets-sunyet",
+      "title": "怡胃適腸溶錠40毫克（Esomepsun 40mg tablets \"SUNYET\"，esomeprazole）仿單",
+      "rank": 6,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "懷孕及授乳章節中僅此段明確說明哺乳期間不應使用esomeprazole。",
+      "selected": false
+    }
+  },
+  {
+    "query": "革理蔓錠2毫克(Glimepiride)每日剂量最高可以调整到多少毫克?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "drug_name_zh",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "b1756268da31c9205cea8766181345921bdbec9c1930137428c79c5c3d8729f7",
+        "version_label": "pdf-meta 2015-10-05（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "ĪϡڱĆϡณī",
+        "key_text": "1 ̳කę2 ̳කę3 ̳කę4 ̳කę6ҌΞአፋҌՏ͟ 8 ̳කĄ",
+        "evidence_span": {
+          "text": "˘͟˘ѨĂՏѨ˘̳ක GlimepirideॡĂΞᆧΐՏ͟጗ณĄЇң጗ณ̝ᆧΐӮᑕ ҖĂͷᑕ႙ซአፋĂϺӈĂม࿣˘Ҍ˟ฉĂుՎซҖአፋт˭Ĉ 1 ̳කę2 ̳කę3 ̳කę4 ̳කę6ҌΞአፋҌՏ͟ 8 ̳කĄ",
+          "char_start": 456,
+          "char_end": 561
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-glimaryl-tablets-2mg-glimepiride",
+      "title": "\"信東\" 革理蔓錠２毫克（GLIMARYL TABLETS 2MG (GLIMEPIRIDE)，glimepiride）仿單",
+      "rank": 1,
+      "status": "ok",
+      "problems": [],
+      "warnings": [
+        "dose_unit: no numeral+unit/frequency pattern in span"
+      ],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "只有此段列出革理蔓錠自1毫克逐步调整、最高可增至每日8毫克的完整剂量调整方案，页内其他段落均未给出该具体数值序列。",
+      "selected": true
+    }
+  },
+  {
+    "query": "革理蔓錠2毫克(Glimepiride)可以用于第1型糖尿病或糖尿病酮酸中毒、糖尿病昏迷的病患吗?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "drug_name_zh",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "b1756268da31c9205cea8766181345921bdbec9c1930137428c79c5c3d8729f7",
+        "version_label": "pdf-meta 2015-10-05（未见版本行）",
+        "page": 2,
+        "printed_page_label": null,
+        "section": "Ī༰ԟাī",
+        "key_text": "Glimepiride ̙ዋϡٺڼᒚ਍फ৵ֶᏥݭ(ௐ 1ݭ)ᎤԌঽ",
+        "evidence_span": {
+          "text": "Glimepiride ̙ዋϡٺڼᒚ਍फ৵ֶᏥݭ(ௐ 1ݭ)ᎤԌঽ(ּтڼᒚѣ♖ᅕ߲̚ঽΫ̝ᎤԌঽ)ăᎤԌঽ ♖ᅕ߲̚Diabetic ketoacidosis)ٕᎤԌঽڃਜ਼(Diabetic coma)Ą",
+          "char_start": 421,
+          "char_end": 525
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-glimaryl-tablets-2mg-glimepiride",
+      "title": "\"信東\" 革理蔓錠２毫克（GLIMARYL TABLETS 2MG (GLIMEPIRIDE)，glimepiride）仿單",
+      "rank": 2,
+      "status": "ok",
+      "problems": [],
+      "warnings": [
+        "negation: no negation/limitation word in span"
+      ],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "禁忌段落中仅此句明确指出革理蔓不适用于需胰岛素治疗的第1型糖尿病、糖尿病酮酸中毒或糖尿病昏迷患者，为页内唯一对应条款。",
+      "selected": true
+    }
+  },
+  {
+    "query": "服用革理蔓錠2毫克(Glimepiride)的病患应随身携带多少公克的葡萄糖以预防严重低血糖?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "drug_name_zh",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "b1756268da31c9205cea8766181345921bdbec9c1930137428c79c5c3d8729f7",
+        "version_label": "pdf-meta 2015-10-05（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "Īڦຍְีī",
+        "key_text": "ᑕᐌॡᛸ૲Ҍ͌ 20 ̳ҹ۞ཬ෈Ꭴ",
+        "evidence_span": {
+          "text": "Яѩঽଈᑕᐌॡᛸ૲Ҍ͌ 20 ̳ҹ۞ཬ෈Ꭴć΁ࣇΞਕᅮࢋ΁ˠ۞םӄĂͽᔖҺ൴Ϡ׀൴াĄ",
+          "char_start": 1662,
+          "char_end": 1705
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-glimaryl-tablets-2mg-glimepiride",
+      "title": "\"信東\" 革理蔓錠２毫克（GLIMARYL TABLETS 2MG (GLIMEPIRIDE)，glimepiride）仿單",
+      "rank": 3,
+      "status": "ok",
+      "problems": [],
+      "warnings": [
+        "dose_unit: no numeral+unit/frequency pattern in span"
+      ],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "此句是页内唯一具体说明患者应随身携带至少20公克葡萄糖以应对严重低血糖的条款。",
+      "selected": true
+    }
+  },
+  {
+    "query": "革理蔓錠2毫克(Glimepiride)是否有严重肾功能不全或肝功能不全病患的使用经验?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "drug_name_zh",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "b1756268da31c9205cea8766181345921bdbec9c1930137428c79c5c3d8729f7",
+        "version_label": "pdf-meta 2015-10-05（未见版本行）",
+        "page": 2,
+        "printed_page_label": null,
+        "section": "Ī༰ԟাī",
+        "key_text": "Glimepirideإ൑ֹϡٺᚑࢦքΑਕຫच̝ଈ۰̈́߾ඪଈ۰۞གྷរ",
+        "evidence_span": {
+          "text": "Glimepirideإ൑ֹϡٺᚑࢦքΑਕຫच̝ଈ۰̈́߾ඪଈ۰۞གྷរĄ၆ᚑࢦքٕඪΑਕຫच۞ঽଈĂ ᑕԼϡ਍फ৵Ă̖ਕ྿זநຐ۞΃ᔁଠטĄ",
+          "char_start": 619,
+          "char_end": 690
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-glimaryl-tablets-2mg-glimepiride",
+      "title": "\"信東\" 革理蔓錠２毫克（GLIMARYL TABLETS 2MG (GLIMEPIRIDE)，glimepiride）仿單",
+      "rank": 4,
+      "status": "ok",
+      "problems": [],
+      "warnings": [
+        "negation: no negation/limitation word in span"
+      ],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "此句是页内唯一明确指出革理蔓正式无严重肾/肝功能不全病患使用经验、并建议改用胰岛素的条款。",
+      "selected": false
+    }
+  },
+  {
+    "query": "血管內體液缺乏(如使用高劑量利尿劑)之高血壓病人服用特釋壓膜衣錠(Hetlosar, losartan)時,起始劑量應如何調整?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "c59161e8c6b42e149351ccc8c1d5ca8337627fa490861e6fb7dceb2bbca13f36",
+        "version_label": "pdf-meta 2018-11-07（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "劑量及用法",
+        "key_text": "其起始劑量需考慮改用每次25 毫克,每日一次",
+        "evidence_span": {
+          "text": "對血管內體液缺乏(intravascularly volume-depleted)之病人(如以高劑量利尿劑治療者),其起始劑量需考慮改用每次25 毫克,每日一次(參見注意事項)。",
+          "char_start": 569,
+          "char_end": 658
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-hetlosar-100-losartan-tablets-100mg",
+      "title": "特釋壓膜衣錠100毫克（Hetlosar 100 (Losartan Tablets 100mg)，losartan）仿單",
+      "rank": 1,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "只有劑量及用法一節針對血管內體液缺乏之高血壓病人給出改用每次25毫克、每日一次的起始劑量調整。",
+      "selected": true
+    }
+  },
+  {
+    "query": "糖尿病病人使用特釋壓膜衣錠(Hetlosar, losartan)時,是否可以併用aliskiren?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "drug_name_zh",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "c59161e8c6b42e149351ccc8c1d5ca8337627fa490861e6fb7dceb2bbca13f36",
+        "version_label": "pdf-meta 2018-11-07（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "禁忌症〈依文獻記載〉",
+        "key_text": "Losartan potassium 與 aliskiren 不可合併使用於糖尿病病人或腎功能不全病人(GFR<60 ml/min/1.73 m²)",
+        "evidence_span": {
+          "text": "Losartan potassium 與 aliskiren 不可合併使用於糖尿病病人或腎功能不全病人(GFR<60 ml/min/1.73 m²)(參見注意事項與藥物交互作用)。",
+          "char_start": 964,
+          "char_end": 1054
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-hetlosar-100-losartan-tablets-100mg",
+      "title": "特釋壓膜衣錠100毫克（Hetlosar 100 (Losartan Tablets 100mg)，losartan）仿單",
+      "rank": 2,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "只有禁忌症一節明確禁止糖尿病病人或GFR<60之腎功能不全病人併用losartan與aliskiren。",
+      "selected": true
+    }
+  },
+  {
+    "query": "新生兒或腎絲球過濾率低於30 mL/min/1.73 m²的兒童病人,是否建議使用特釋壓膜衣錠(Hetlosar, losartan)?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "dose_unit",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "c59161e8c6b42e149351ccc8c1d5ca8337627fa490861e6fb7dceb2bbca13f36",
+        "version_label": "pdf-meta 2018-11-07（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "小兒之使用〈依文獻記載〉",
+        "key_text": "Losartan potassium 並不建議用於新生兒以及腎絲球過濾率低於30 mL/min/1.73 m²、肝功能不全的兒童病人",
+        "evidence_span": {
+          "text": "Losartan potassium 並不建議用於新生兒以及腎絲球過濾率低於30 mL/min/1.73 m²、肝功能不全的兒童病人,因目前尚無這方面的研究資料。",
+          "char_start": 3799,
+          "char_end": 3880
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-hetlosar-100-losartan-tablets-100mg",
+      "title": "特釋壓膜衣錠100毫克（Hetlosar 100 (Losartan Tablets 100mg)，losartan）仿單",
+      "rank": 3,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "只有小兒之使用一節說明因缺乏研究資料,不建議將losartan potassium用於新生兒及腎絲球過濾率低於30 mL/min/1.73 m²或肝功能不全的兒童病人。",
+      "selected": true
+    }
+  },
+  {
+    "query": "特釋壓膜衣錠(Hetlosar, losartan)藥物過量時,能否以血液透析方式清除藥物及其活性代謝物?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "c59161e8c6b42e149351ccc8c1d5ca8337627fa490861e6fb7dceb2bbca13f36",
+        "version_label": "pdf-meta 2018-11-07（未见版本行）",
+        "page": 2,
+        "printed_page_label": null,
+        "section": "藥物過量〈依文獻記載〉",
+        "key_text": "Losartan 及其活性代謝物均無法藉血液透析來排除",
+        "evidence_span": {
+          "text": "Losartan 及其活性代謝物均無法藉血液透析來排除。",
+          "char_start": 1537,
+          "char_end": 1565
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-hetlosar-100-losartan-tablets-100mg",
+      "title": "特釋壓膜衣錠100毫克（Hetlosar 100 (Losartan Tablets 100mg)，losartan）仿單",
+      "rank": 4,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "只有藥物過量一節說明losartan及其活性代謝物無法透過血液透析排除。",
+      "selected": true
+    }
+  },
+  {
+    "query": "第II型糖尿病腎病變病人使用特釋壓膜衣錠(Hetlosar, losartan)的起始劑量為何?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "drug_name_zh",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "c59161e8c6b42e149351ccc8c1d5ca8337627fa490861e6fb7dceb2bbca13f36",
+        "version_label": "pdf-meta 2018-11-07（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "劑量及用法",
+        "key_text": "治療第 II 型糖尿病腎病變一般起始劑量為每次 50 毫克,每日一次。",
+        "evidence_span": {
+          "text": "治療第 II 型糖尿病腎病變一般起始劑量為每次 50 毫克,每日一次。視血壓下降情形,可將劑量增加至每次 100 毫克,每日一次。",
+          "char_start": 722,
+          "char_end": 787
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-hetlosar-100-losartan-tablets-100mg",
+      "title": "特釋壓膜衣錠100毫克（Hetlosar 100 (Losartan Tablets 100mg)，losartan）仿單",
+      "rank": 5,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "只有劑量及用法一節針對第II型糖尿病腎病變病人給出每次50毫克、每日一次的起始劑量及可增量至100毫克之依據。",
+      "selected": false
+    }
+  },
+  {
+    "query": "肝功能受損病史之病人使用特釋壓膜衣錠(Hetlosar, losartan)時,劑量上需要注意什麼?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "c59161e8c6b42e149351ccc8c1d5ca8337627fa490861e6fb7dceb2bbca13f36",
+        "version_label": "pdf-meta 2018-11-07（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "注意事項〈依文獻記載〉",
+        "key_text": "肝硬化病人其血漿中 losartan 之濃度顯著增加;故對有肝功能受損病史之病人,須使用較低之劑量",
+        "evidence_span": {
+          "text": "肝功能受損者依藥物動力學資料證實肝硬化病人其血漿中 losartan 之濃度顯著增加;故對有肝功能受損病史之病人,須使用較低之劑量(參見劑量及用法)。",
+          "char_start": 1539,
+          "char_end": 1614
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-hetlosar-100-losartan-tablets-100mg",
+      "title": "特釋壓膜衣錠100毫克（Hetlosar 100 (Losartan Tablets 100mg)，losartan）仿單",
+      "rank": 6,
+      "status": "ok",
+      "problems": [],
+      "warnings": [
+        "dose_unit: no numeral+unit/frequency pattern in span"
+      ],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "只有注意事項之肝功能受損者段落說明肝硬化病人血漿losartan濃度增加,故須對有肝功能受損病史者使用較低劑量。",
+      "selected": false
+    }
+  },
+  {
+    "query": "「安星」伊風柔錠300毫克用於一般成人痛風治療時，起始劑量為何，每日最大劑量不可超過多少？",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "dose_unit",
+      "negation"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "8988edefb2825b18a9d5ebdb53b6f3bd09b7b75410d24814dd8f5ee2c8c7dfe7",
+        "version_label": "pdf-meta 2015-07-15（未见版本行）",
+        "page": 2,
+        "printed_page_label": null,
+        "section": "用法用量(一般成人及青少年劑量-抗痛風劑Antigout agent)",
+        "key_text": "不得超過每日 800mg 之最大建議劑量",
+        "evidence_span": {
+          "text": "初始劑量─口服,100mg,一天一次,在一星期的間隔期間每天增加 100mg 直到達到所需要的血清尿酸濃度為止。不得超過每日 800mg 之最大建議劑量。",
+          "char_start": 1594,
+          "char_end": 1671
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-ifonol-tablets-300mg-astar",
+      "title": "\"安星\"伊風柔錠300毫克（Ifonol Tablets 300mg \"Astar\"，allopurinol）仿單",
+      "rank": 1,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "頁2用法用量中僅此段給出成人抗痛風治療的起始劑量遞增方式與每日最大建議劑量上限。",
+      "selected": true
+    }
+  },
+  {
+    "query": "「安星」伊風柔錠300毫克應如何保存？",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "8988edefb2825b18a9d5ebdb53b6f3bd09b7b75410d24814dd8f5ee2c8c7dfe7",
+        "version_label": "pdf-meta 2015-07-15（未见版本行）",
+        "page": 9,
+        "printed_page_label": null,
+        "section": "【保存條件】",
+        "key_text": "緊密容器中,室溫下、避光保存",
+        "evidence_span": {
+          "text": "緊密容器中,室溫下、避光保存。",
+          "char_start": 630,
+          "char_end": 645
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-ifonol-tablets-300mg-astar",
+      "title": "\"安星\"伊風柔錠300毫克（Ifonol Tablets 300mg \"Astar\"，allopurinol）仿單",
+      "rank": 2,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "頁9【保存條件】是全文唯一說明本藥儲存方式的條款，商品名「安星」使檢索對象唯一。",
+      "selected": true
+    }
+  },
+  {
+    "query": "「安星」伊風柔錠300毫克可以用於治療急性痛風性關節炎發作嗎？",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "negation"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "8988edefb2825b18a9d5ebdb53b6f3bd09b7b75410d24814dd8f5ee2c8c7dfe7",
+        "version_label": "pdf-meta 2015-07-15（未见版本行）",
+        "page": 2,
+        "printed_page_label": null,
+        "section": "【適應症】慢性痛風性關節炎(Chronic Gouty arthritis)[治療]",
+        "key_text": "它必須不得使用於痛風性關節炎的急性發作",
+        "evidence_span": {
+          "text": "Allopurinol 沒有抗發炎的效力。它必須不得使用於痛風性關節炎的急性發作。",
+          "char_start": 601,
+          "char_end": 642
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-ifonol-tablets-300mg-astar",
+      "title": "\"安星\"伊風柔錠300毫克（Ifonol Tablets 300mg \"Astar\"，allopurinol）仿單",
+      "rank": 3,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "頁2適應症段落中僅此句明確說明本藥不得用於痛風性關節炎急性發作，具唯一否定語義。",
+      "selected": true
+    }
+  },
+  {
+    "query": "「安星」伊風柔錠300毫克用於預防化學治療或放射治療所致高尿酸血症時，應在治療開始前多久給藥，劑量為何？",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "dose_unit",
+      "time_window"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "8988edefb2825b18a9d5ebdb53b6f3bd09b7b75410d24814dd8f5ee2c8c7dfe7",
+        "version_label": "pdf-meta 2015-07-15（未见版本行）",
+        "page": 3,
+        "printed_page_label": null,
+        "section": "用法用量(贅瘤疾病治療Neoplastic disease therapy)",
+        "key_text": "在化學治療或放射治療開始之前的 12 小時到 3 天(最好是 2 至 3 天),每天 600mg 至 800mg",
+        "evidence_span": {
+          "text": "初始劑量─口服,在化學治療或放射治療開始之前的 12 小時到 3 天(最好是 2 至 3 天),每天 600mg 至 800mg。",
+          "char_start": 160,
+          "char_end": 225
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-ifonol-tablets-300mg-astar",
+      "title": "\"安星\"伊風柔錠300毫克（Ifonol Tablets 300mg \"Astar\"，allopurinol）仿單",
+      "rank": 4,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "頁3用法用量中僅此條款給出化療/放療前給藥時間窗與對應的初始劑量。",
+      "selected": true
+    }
+  },
+  {
+    "query": "長期使用「安星」伊風柔錠300毫克且無不良反應的病人，是否建議進行HLA-B*5801基因篩檢？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "8988edefb2825b18a9d5ebdb53b6f3bd09b7b75410d24814dd8f5ee2c8c7dfe7",
+        "version_label": "pdf-meta 2015-07-15（未见版本行）",
+        "page": 7,
+        "printed_page_label": null,
+        "section": "12. 嚴重皮膚反應",
+        "key_text": "長期使用沒有不良反應的病人不建議基因篩檢",
+        "evidence_span": {
+          "text": "長期使用沒有不良反應的病人不建議基因篩檢,無論是否帶有 HLA-B*5801 基因,發生史蒂文生氏強生症候群的危險在治療開始之後幾個月最大,基因篩檢並不能取代適當的臨床安全監視及病患處置。",
+          "char_start": 1202,
+          "char_end": 1296
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-ifonol-tablets-300mg-astar",
+      "title": "\"安星\"伊風柔錠300毫克（Ifonol Tablets 300mg \"Astar\"，allopurinol）仿單",
+      "rank": 5,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "頁7嚴重皮膚反應段落中僅此句說明對長期使用無不良反應病人不建議進行HLA-B*5801基因篩檢。",
+      "selected": false
+    }
+  },
+  {
+    "query": "腎功能不全病人使用「安星」伊風柔錠300毫克時，應如何依肌酸酐清除率調整劑量？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "8988edefb2825b18a9d5ebdb53b6f3bd09b7b75410d24814dd8f5ee2c8c7dfe7",
+        "version_label": "pdf-meta 2015-07-15（未见版本行）",
+        "page": 3,
+        "printed_page_label": null,
+        "section": "用法用量(抗尿酸結石-腎功能不全劑量調整)",
+        "key_text": "肌胺酸酐清除率(Creatinine clearance)mL/min 劑量 10 至 20 每日 200mg 3 至 10 每日不超過 100mg <3 100mg 超過 24 小時間隔,可能是必要的",
+        "evidence_span": {
+          "text": "由於 Oxipurine 主要是經由腎臟排泄,所以在有腎衰竭的病人,可能會發生蓄積。在接受透析的病人,可能需要使用一般治療劑量的 Allopurinol;不過,在未接受透析的病人則建議依下表所列的劑量減低之: 肌胺酸酐清除率(Creatinine clearance)mL/min 劑量 10 至 20 每日 200mg 3 至 10 每日不超過 100mg <3 100mg 超過 24 小時間隔,可能是必要的。有些腎功能不全的病人,可能需要甚至更低的劑量,或是更長的劑量間的間隔時間。某些情況下,300mg 每週兩次或更少,可能就足夠。",
+          "char_start": 352,
+          "char_end": 622
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-ifonol-tablets-300mg-astar",
+      "title": "\"安星\"伊風柔錠300毫克（Ifonol Tablets 300mg \"Astar\"，allopurinol）仿單",
+      "rank": 6,
+      "status": "ok",
+      "problems": [],
+      "warnings": [
+        "negation: no negation/limitation word in span"
+      ],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "頁3用法用量中僅此段依肌酸酐清除率列出未接受透析腎功能不全病人的劑量調整表。",
+      "selected": false
+    }
+  },
+  {
+    "query": "病患先前因服用Lamotrigine產生皮疹而停藥，醫師是否建議該病患再次開始使用樂癲活持續釋放膜衣錠(Lamofree ER Tablets)？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "drug_name_zh",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "ad8b0ba2d6c9421349f86080b4a35218088fb6895493ae13fbb3aa32f0fd7ae2",
+        "version_label": "pdf-meta 2015-09-07（未见版本行）",
+        "page": 2,
+        "printed_page_label": null,
+        "section": "2.1 一般給藥的顧慮",
+        "key_text": "建議先前因為服用 Lamotrigine 產生皮疹而停藥的病患不要再開始使用 Lamofree ER Tablets",
+        "evidence_span": {
+          "text": "建議先前因為服用 Lamotrigine 產生皮疹而停藥的病患不要再開始使用 Lamofree ER Tablets。",
+          "char_start": 921,
+          "char_end": 980
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-lamofree-er-tablets-25mg",
+      "title": "樂癲活持續釋放膜衣錠25毫克（Lamofree ER Tablets 25mg，lamotrigine）仿單",
+      "rank": 1,
+      "status": "ok",
+      "problems": [],
+      "warnings": [
+        "negation: no negation/limitation word in span"
+      ],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "頁面中僅此句明確就先前因皮疹停藥的病患是否應再次使用本藥給出否定建議，其他段落均未針對此特定情境作答。",
+      "selected": true
+    }
+  },
+  {
+    "query": "病患併用其他抗癲癇藥物(AEDs)且決定停用樂癲活持續釋放膜衣錠時，建議如何逐步減量？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "time_window",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "ad8b0ba2d6c9421349f86080b4a35218088fb6895493ae13fbb3aa32f0fd7ae2",
+        "version_label": "pdf-meta 2015-09-07（未见版本行）",
+        "page": 3,
+        "printed_page_label": null,
+        "section": "2.1 一般給藥的顧慮／停藥對策",
+        "key_text": "建議採取至少 2 周的逐步減少劑量 ( 每週將近 50%)",
+        "evidence_span": {
+          "text": "如果病情控制有變化或是出現不良反應的惡化時,對於將 Lamofree ER Tablets 與其他 AEDs 合併使用治療之病人,需對其所有的 AEDs 藥物進行再次評估,假使已經決定停止使用 Lamofree ER Tablets 的話,建議採取至少 2 周的逐步減少劑量 ( 每週將近 50%),除非基於安全的考量而須採取更快速的減量 [ 參閱警告與注意事項 (5.9)]。",
+          "char_start": 1171,
+          "char_end": 1360
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-lamofree-er-tablets-25mg",
+      "title": "樂癲活持續釋放膜衣錠25毫克（Lamofree ER Tablets 25mg，lamotrigine）仿單",
+      "rank": 2,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "本頁僅此段落針對併用其他AEDs之病人停藥時的逐步減量時程與比例給出具體建議，為唯一可回答該問題的條款。",
+      "selected": true
+    }
+  },
+  {
+    "query": "對樂癲活持續釋放膜衣錠(Lamofree ER Tablets)或其組成成分曾有過敏反應的病患，是否可以使用此藥？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "drug_name_zh",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "ad8b0ba2d6c9421349f86080b4a35218088fb6895493ae13fbb3aa32f0fd7ae2",
+        "version_label": "pdf-meta 2015-09-07（未见版本行）",
+        "page": 4,
+        "printed_page_label": null,
+        "section": "4 禁忌症",
+        "key_text": "病人對 Lamofree ER Tablets 或其組成成份會產生過敏反應者,應禁止使用",
+        "evidence_span": {
+          "text": "病人對 Lamofree ER Tablets 或其組成成份會產生過敏反應者,應禁止使用 ( 例如︰皮疹、血管性水腫、急性蕁麻疹、大規模的搔癢、黏膜潰瘍)[ 見警語及注意事項 (5.1, 5.2)]。",
+          "char_start": 44,
+          "char_end": 144
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-lamofree-er-tablets-25mg",
+      "title": "樂癲活持續釋放膜衣錠25毫克（Lamofree ER Tablets 25mg，lamotrigine）仿單",
+      "rank": 3,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "本頁禁忌症章節僅此條款明確規定對本藥或其成分過敏者禁止使用，為該問題的唯一答案。",
+      "selected": true
+    }
+  },
+  {
+    "query": "中度或重度肝功能不全(Child-Pugh Grade B/C)的病患使用樂癲活持續釋放膜衣錠時，起始及維持劑量應如何調整？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "drug_name_zh",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "ad8b0ba2d6c9421349f86080b4a35218088fb6895493ae13fbb3aa32f0fd7ae2",
+        "version_label": "pdf-meta 2015-09-07（未见版本行）",
+        "page": 9,
+        "printed_page_label": null,
+        "section": "8.6 肝功能不全的病患",
+        "key_text": "對於中度肝功能不全 (Child-Pugh Grade B) 的病患,其起始、增加及維持劑量應減少約 50%,而對於重度肝功能不全 (Child-Pugh Grade C) 的病患則要減少 75%",
+        "evidence_span": {
+          "text": "一般而言,對於中度肝功能不全 (Child-Pugh Grade B) 的病患,其起始、增加及維持劑量應減少約 50%,而對於重度肝功能不全 (Child-Pugh Grade C) 的病患則要減少 75%。增加及維持劑量的調整需依據臨床反應。",
+          "char_start": 885,
+          "char_end": 1007
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-lamofree-er-tablets-25mg",
+      "title": "樂癲活持續釋放膜衣錠25毫克（Lamofree ER Tablets 25mg，lamotrigine）仿單",
+      "rank": 4,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "本頁8.6節僅此條款針對Child-Pugh B/C級肝功能不全病患的劑量減少比例給出具體建議，為唯一可回答該問題的條款。",
+      "selected": true
+    }
+  },
+  {
+    "query": "併用valproate的病患使用樂癲活持續釋放膜衣錠時，劑量應如何調整？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "drug_name_zh",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "ad8b0ba2d6c9421349f86080b4a35218088fb6895493ae13fbb3aa32f0fd7ae2",
+        "version_label": "pdf-meta 2015-09-07（未见版本行）",
+        "page": 6,
+        "printed_page_label": null,
+        "section": "5.11 在含有 Valproate 的多重藥物療法添加 Lamofree ER Tablets",
+        "key_text": "當 valproate 存在時, Lamotrigine 的劑量應減少為沒有 valproate 存在時所需的一半",
+        "evidence_span": {
+          "text": "因為 valproate 會減低 Lamotrigine 的清除率,故當 valproate 存在時, Lamotrigine 的劑量應減少為沒有 valproate 存在時所需的一半 [ 參閱劑量和用法 (2.1,2.2),藥物交互作用 (7)]。",
+          "char_start": 313,
+          "char_end": 438
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-lamofree-er-tablets-25mg",
+      "title": "樂癲活持續釋放膜衣錠25毫克（Lamofree ER Tablets 25mg，lamotrigine）仿單",
+      "rank": 5,
+      "status": "ok",
+      "problems": [],
+      "warnings": [
+        "dose_unit: no numeral+unit/frequency pattern in span"
+      ],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "本頁5.11節僅此條款說明併用valproate時本藥劑量應減半的具體建議，為唯一可回答該問題的條款。",
+      "selected": false
+    }
+  },
+  {
+    "query": "服用速放型Lamotrigine過量達15公克時，可能造成哪些症狀？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "ad8b0ba2d6c9421349f86080b4a35218088fb6895493ae13fbb3aa32f0fd7ae2",
+        "version_label": "pdf-meta 2015-09-07（未见版本行）",
+        "page": 9,
+        "printed_page_label": null,
+        "section": "10.1 人體服藥過量經驗",
+        "key_text": "服用速放型 Lamotrigine 過量達 15g,部分案例會導致死亡",
+        "evidence_span": {
+          "text": "曾有報告指出,服用速放型 Lamotrigine 過量達 15g,部分案例會導致死亡,用藥過量會造成運動失調、眼球震顫、癲癇發作增加、清醒程度下降、昏迷、心室傳導失調。",
+          "char_start": 1402,
+          "char_end": 1486
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-lamofree-er-tablets-25mg",
+      "title": "樂癲活持續釋放膜衣錠25毫克（Lamofree ER Tablets 25mg，lamotrigine）仿單",
+      "rank": 6,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "本頁10.1節僅此條款描述速放型Lamotrigine過量達15g所導致的臨床症狀，為唯一可回答該問題的條款。",
+      "selected": false
+    }
+  },
+  {
+    "query": "成人及10歲以上兒童使用隆我心錠進行快速口服負荷量給藥時,建議一次給予多少劑量?",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "dose_unit",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "cb1abe12731f9292a0a49937fb33ba1fe79e1e775883af4be74741c5eaf978ce",
+        "version_label": "pdf-meta 2021-06-08（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "用法用量",
+        "key_text": "一次給藥 750 至 1500 微毫克(μg)(0.75~1.5 毫克)",
+        "evidence_span": {
+          "text": "成人及 10 歲以上兒童快速口服負荷量:以下列方式正確用藥,病人可快速被毛地黃化(digitalisation ):一次給藥 750 至 1500 微毫克(μg)(0.75~1.5 毫克)。",
+          "char_start": 1041,
+          "char_end": 1136
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-lanoxin-digoxin-tablets-0-25mg-b-p",
+      "title": "隆我心錠（LANOXIN DIGOXIN TABLETS 0.25MG B.P.，digoxin）仿單",
+      "rank": 1,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "只有此處針對成人及10歲以上兒童的快速口服負荷量給出750至1500微毫克的具體劑量,頁內其他劑量段落均對應不同族群或情境。",
+      "selected": true
+    }
+  },
+  {
+    "query": "病人已知或懷疑存在副房室路徑但過去無上心室性心律不整病史時,是否可以使用隆我心錠?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "drug_name_zh",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "cb1abe12731f9292a0a49937fb33ba1fe79e1e775883af4be74741c5eaf978ce",
+        "version_label": "pdf-meta 2021-06-08（未见版本行）",
+        "page": 2,
+        "printed_page_label": null,
+        "section": "禁忌症",
+        "key_text": "若已知或懷疑存在副路徑而無上心室性心律不整病史,同樣也禁用 LANOXIN",
+        "evidence_span": {
+          "text": "伴有副房室路徑之上心室性心律不整,例如 Wolff-Parkinson-White 症候群,除非曾評估過該副路徑之電生理特性及 digoxin 對這類特性可能造成之有害作用。若已知或懷疑存在副路徑而無上心室性心律不整病史,同樣也禁用 LANOXIN。",
+          "char_start": 1012,
+          "char_end": 1137
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-lanoxin-digoxin-tablets-0-25mg-b-p",
+      "title": "隆我心錠（LANOXIN DIGOXIN TABLETS 0.25MG B.P.，digoxin）仿單",
+      "rank": 2,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "禁忌症一節中僅此段特別針對「已知或懷疑存在副路徑但無上心室性心律不整病史」此情境明訂禁用LANOXIN,其他禁忌條款均對應不同臨床情境。",
+      "selected": true
+    }
+  },
+  {
+    "query": "正在服用隆我心錠的病人若要接受選擇性直流電心臟電擊,應在電擊前多久停用digoxin?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "time_window",
+      "drug_name_zh",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "cb1abe12731f9292a0a49937fb33ba1fe79e1e775883af4be74741c5eaf978ce",
+        "version_label": "pdf-meta 2021-06-08（未见版本行）",
+        "page": 3,
+        "printed_page_label": null,
+        "section": "警語和注意事項-直流電心臟電擊",
+        "key_text": "應在電擊前停用 digoxin 24 小時",
+        "evidence_span": {
+          "text": "對於正在服用 digoxin 的病人選擇性使用直流電心臟電擊時,應在電擊前停用 digoxin 24 小時。",
+          "char_start": 586,
+          "char_end": 640
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-lanoxin-digoxin-tablets-0-25mg-b-p",
+      "title": "隆我心錠（LANOXIN DIGOXIN TABLETS 0.25MG B.P.，digoxin）仿單",
+      "rank": 3,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "全文僅此句明確規定選擇性直流電心臟電擊前需停用digoxin的具體時間窗(24小時),其他段落僅泛論電擊風險而未給出時限。",
+      "selected": true
+    }
+  },
+  {
+    "query": "老年病人使用隆我心錠時,建議的劑量應如何調整?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "drug_name_zh",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "cb1abe12731f9292a0a49937fb33ba1fe79e1e775883af4be74741c5eaf978ce",
+        "version_label": "pdf-meta 2021-06-08（未见版本行）",
+        "page": 2,
+        "printed_page_label": null,
+        "section": "用法用量-老年人",
+        "key_text": "對於老年人應使用低於非老年人的 LANOXIN 劑量",
+        "evidence_span": {
+          "text": "對於老年人應使用低於非老年人的 LANOXIN 劑量,否則會因老年人常有之腎功能障礙及低精瘦體重而影響 LANOXIN 之藥物動力學,之後產生高血清 digoxin 濃度及相關之毒性。應定期監測血清 digoxin 濃度及避免低血鉀。",
+          "char_start": 786,
+          "char_end": 903
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-lanoxin-digoxin-tablets-0-25mg-b-p",
+      "title": "隆我心錠（LANOXIN DIGOXIN TABLETS 0.25MG B.P.，digoxin）仿單",
+      "rank": 4,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "此段是文件中唯一針對「老年人」族群給出隆我心錠劑量調整原則與監測建議的條款,其他劑量段落均對應不同族群。",
+      "selected": true
+    }
+  },
+  {
+    "query": "甲狀腺功能低下的病人使用隆我心錠時,劑量應如何調整?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "drug_name_zh",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "cb1abe12731f9292a0a49937fb33ba1fe79e1e775883af4be74741c5eaf978ce",
+        "version_label": "pdf-meta 2021-06-08（未见版本行）",
+        "page": 3,
+        "printed_page_label": null,
+        "section": "警語和注意事項-甲狀腺疾病",
+        "key_text": "甲狀腺功能不全時應減少 digoxin 初始及維持劑量",
+        "evidence_span": {
+          "text": "甲狀腺疾病病人使用 digoxin 須小心。甲狀腺功能不全時應減少 digoxin 初始及維持劑量。甲狀腺亢進病人具有相當的 digoxin 抗藥性故須增加劑量。",
+          "char_start": 354,
+          "char_end": 435
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-lanoxin-digoxin-tablets-0-25mg-b-p",
+      "title": "隆我心錠（LANOXIN DIGOXIN TABLETS 0.25MG B.P.，digoxin）仿單",
+      "rank": 5,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "此段是唯一針對甲狀腺功能不全病人明確指出應減少digoxin初始及維持劑量的條款,與同段落中甲狀腺亢進病人需增加劑量的條款相區隔。",
+      "selected": false
+    }
+  },
+  {
+    "query": "美洛醣膜衣錠850毫克於病人接受非急需大手術前,應於術前多久停止服用?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "time_window",
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "b6af0d88b1f0e3b5660e6e3c6678e18c40616073bc082b6cb7214604b2f81f98",
+        "version_label": "pdf-meta 2015-10-06（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "警語與注意事項",
+        "key_text": "在非急需手術前的48小時必須停止服用metformin",
+        "evidence_span": {
+          "text": "大手術: 在非急需手術前的48小時必須停止服用metformin。在手術後的48小時,且腎功能經再評估且確定已恢復正常後,才可再次服用本品。",
+          "char_start": 1897,
+          "char_end": 1967
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-loformin-850mg",
+      "title": "美洛醣膜衣錠850毫克（Loformin Film-coated Tablets 850mg, metformin hydrochloride）仿單",
+      "rank": 1,
+      "status": "ok",
+      "problems": [],
+      "warnings": [
+        "negation: no negation/limitation word in span"
+      ],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "只有此段明確給出非急需大手術前後停用metformin的時間窗規定,頁面其他手術相關敘述均在此條款內。",
+      "selected": true
+    }
+  },
+  {
+    "query": "美洛醣膜衣錠850毫克一般成人的建議服用頻次與每次劑量為何?",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "dose_unit"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "b6af0d88b1f0e3b5660e6e3c6678e18c40616073bc082b6cb7214604b2f81f98",
+        "version_label": "pdf-meta 2015-10-06（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "用法用量",
+        "key_text": "每日服用二次,每次服用一錠",
+        "evidence_span": {
+          "text": "通常,每日服用二次,每次服用一錠。於用餐時或餐後服用。",
+          "char_start": 284,
+          "char_end": 311
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-loformin-850mg",
+      "title": "美洛醣膜衣錠850毫克（Loformin Film-coated Tablets 850mg, metformin hydrochloride）仿單",
+      "rank": 2,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "頁面中只有此句明確給出metformin一般每日服用次數與每次錠數的用法用量規定。",
+      "selected": true
+    }
+  },
+  {
+    "query": "美洛醣膜衣錠850毫克於病人腎絲球體過濾率(eGFR)小於多少時屬於絕對禁忌?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "dose_unit",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "b6af0d88b1f0e3b5660e6e3c6678e18c40616073bc082b6cb7214604b2f81f98",
+        "version_label": "pdf-meta 2015-10-06（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "禁忌",
+        "key_text": "腎絲球體過濾率(eGFR)小於30 ml/min/1.73 m2禁用",
+        "evidence_span": {
+          "text": "腎衰竭或腎臟功能障礙(肌氨酸酐清除率(creatinine clearance)低於 60ml/min )。腎絲球體過濾率(eGFR)小於30 ml/min/1.73 m2禁用。",
+          "char_start": 656,
+          "char_end": 745
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-loformin-850mg",
+      "title": "美洛醣膜衣錠850毫克（Loformin Film-coated Tablets 850mg, metformin hydrochloride）仿單",
+      "rank": 3,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "頁面僅此段明確列出eGFR小於30 ml/min/1.73 m2為metformin之絕對禁忌閾值,與30-45之減量條款不同。",
+      "selected": false
+    }
+  },
+  {
+    "query": "病人於接受含碘顯影劑檢查前後,美洛醣膜衣錠850毫克應如何暫停使用?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "time_window",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "b6af0d88b1f0e3b5660e6e3c6678e18c40616073bc082b6cb7214604b2f81f98",
+        "version_label": "pdf-meta 2015-10-06（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "藥物間的交互作用",
+        "key_text": "在接受放射性影像檢查前、檢查當時、檢查後的48 小時內,必須先停用metformin",
+        "evidence_span": {
+          "text": "禁止合併服用: 含碘顯影劑: 依腎功能的狀況,在接受放射性影像檢查前、檢查當時、檢查後的48 小時內,必須先停用metformin。唯有腎功能經評估且確定已恢復正常後,才能再服用本品。",
+          "char_start": 2135,
+          "char_end": 2227
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-loformin-850mg",
+      "title": "美洛醣膜衣錠850毫克（Loformin Film-coated Tablets 850mg, metformin hydrochloride）仿單",
+      "rank": 4,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "頁面在藥物間交互作用一節中僅此段以「禁止合併服用」明確規範含碘顯影劑檢查前後48小時內須停用metformin的時間窗。",
+      "selected": false
+    }
+  },
+  {
+    "query": "Losacar治療高血壓的一般起始劑量及維持劑量是多少?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "drug_name_zh",
+      "dose_unit",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "3981295da5a68ef3bf43b30c4d7783b9ebfa351319c134bb2f5710a11ac14d5b",
+        "version_label": "修訂日期 2016.12.2",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "劑量及用法",
+        "key_text": "高血壓大多數病人的一般起始劑量及維持劑量為每次 50 毫克,每日一次",
+        "evidence_span": {
+          "text": "高血壓大多數病人的一般起始劑量及維持劑量為每次 50 毫克,每日一次;在治療後 3-6 週可獲得最大降壓效果;有些病人在劑量增加至每次 100 毫克,每日一次後,其療效更佳。",
+          "char_start": 474,
+          "char_end": 561
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-losacar-100-tablets",
+      "title": "緩壓膜衣錠100毫克（Losacar 100 Tablets，losartan）仿單",
+      "rank": 1,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "此段落是「劑量及用法」中專門針對高血壓適應症的起始及維持劑量說明，全文僅此處回答高血壓病人的50毫克起始劑量方案。",
+      "selected": true
+    }
+  },
+  {
+    "query": "Losacar用於治療第II型糖尿病腎病變時的起始劑量及可調整之最大劑量為何?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "drug_name_zh",
+      "dose_unit",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "3981295da5a68ef3bf43b30c4d7783b9ebfa351319c134bb2f5710a11ac14d5b",
+        "version_label": "修訂日期 2016.12.2",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "劑量及用法",
+        "key_text": "治療第 II 型糖尿病腎病變一般起始劑量為每次 50 毫克,每日一次",
+        "evidence_span": {
+          "text": "治療第 II 型糖尿病腎病變一般起始劑量為每次 50 毫克,每日一次。視血壓下降情形,可將劑量增加至每次 100 毫克,每日一次。",
+          "char_start": 715,
+          "char_end": 780
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-losacar-100-tablets",
+      "title": "緩壓膜衣錠100毫克（Losacar 100 Tablets，losartan）仿單",
+      "rank": 2,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "此句是「劑量及用法」中唯一針對第II型糖尿病腎病變適應症所述之起始與可調整劑量條款，與高血壓劑量條款分開陳述。",
+      "selected": true
+    }
+  },
+  {
+    "query": "Losacar是否禁止與含aliskiren成分藥品合併使用於糖尿病患或腎功能不全患者?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "drug_name_zh",
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "3981295da5a68ef3bf43b30c4d7783b9ebfa351319c134bb2f5710a11ac14d5b",
+        "version_label": "修訂日期 2016.12.2",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "禁忌症〈依文獻記載〉",
+        "key_text": "合併使用本品及含 aliskiren 成分藥品於糖尿病患或腎功能不全患者 (GFR<60 ml/min/1.73 m2)",
+        "evidence_span": {
+          "text": "Losartan potassium 禁用於對本項產品任何組成過敏者。合併使用本品及含 aliskiren 成分藥品於糖尿病患或腎功能不全患者 (GFR<60 ml/min/1.73 m2)。",
+          "char_start": 921,
+          "char_end": 1017
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-losacar-100-tablets",
+      "title": "緩壓膜衣錠100毫克（Losacar 100 Tablets，losartan）仿單",
+      "rank": 3,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "此句是「禁忌症」項下唯一明確說明本品與含aliskiren成分藥品併用於糖尿病或腎功能不全患者（GFR<60）屬絕對禁忌的條款。",
+      "selected": true
+    }
+  },
+  {
+    "query": "是否建議Losacar與ACEIs、ARBs或含aliskiren成分藥品合併使用以雙重阻斷RAAS?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "drug_name_zh",
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "3981295da5a68ef3bf43b30c4d7783b9ebfa351319c134bb2f5710a11ac14d5b",
+        "version_label": "修訂日期 2016.12.2",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "警語及注意事項〈依文獻記載〉",
+        "key_text": "故不建議合併使用 ACEIs、 ARBs 或今 aliskiren 成分藥品來雙重阻斷 RAAS",
+        "evidence_span": {
+          "text": "有證據顯示,合併使用 ACEIs、ARBs 或含 aliskiren 成分藥品會增加低血壓、高鉀血症及腎功能下降(包括急性腎衰竭)之風險,故不建議合併使用 ACEIs、 ARBs 或今 aliskiren 成分藥品來雙重阻斷 RAAS,若確有必要使用雙阻斷治療,應密切監測患者之腎功能、電解質及血壓。",
+          "char_start": 1094,
+          "char_end": 1244
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-losacar-100-tablets",
+      "title": "緩壓膜衣錠100毫克（Losacar 100 Tablets，losartan）仿單",
+      "rank": 4,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "此段是「警語及注意事項」中唯一針對雙重阻斷RAAS（合併ACEIs/ARBs/aliskiren）明確表示不建議並說明必要時應密切監測的條款。",
+      "selected": true
+    }
+  },
+  {
+    "query": "血管內體液缺乏之患者（如以高劑量利尿劑治療者）服用Losacar的起始劑量建議為何?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "drug_name_zh",
+      "dose_unit",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "3981295da5a68ef3bf43b30c4d7783b9ebfa351319c134bb2f5710a11ac14d5b",
+        "version_label": "修訂日期 2016.12.2",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "劑量及用法",
+        "key_text": "起始劑量需考慮改用每次25 毫克,每日一次",
+        "evidence_span": {
+          "text": "對血管內體液缺乏(intravascularly volume -depleted)之患者(如以高劑量利尿劑治療者),其起始劑量需考慮改用每次25 毫克,每日一次(參見注意事項)。",
+          "char_start": 561,
+          "char_end": 651
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-losacar-100-tablets",
+      "title": "緩壓膜衣錠100毫克（Losacar 100 Tablets，losartan）仿單",
+      "rank": 5,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "此句是「劑量及用法」中唯一針對血管內體液缺乏患者（如高劑量利尿劑治療者）建議起始劑量改為每次25毫克的條款。",
+      "selected": false
+    }
+  },
+  {
+    "query": "Losacar是否建議用於新生兒高血壓患者或嚴重腎功能不全之兒童病患?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "drug_name_zh",
+      "negation",
+      "dose_unit",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "3981295da5a68ef3bf43b30c4d7783b9ebfa351319c134bb2f5710a11ac14d5b",
+        "version_label": "修訂日期 2016.12.2",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "小兒之使用〈依文獻記載〉",
+        "key_text": "並不建議用於新生兒以及腎絲球過濾率低於30 mL/min/1.73 m2、肝功能不全的兒童病患",
+        "evidence_span": {
+          "text": "Losartan potassium 並不建議用於新生兒以及腎絲球過濾率低於30 mL/min/1.73 m2、肝功能不全的兒童病患,因目前尚無這方面的研究資料。",
+          "char_start": 3115,
+          "char_end": 3196
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-losacar-100-tablets",
+      "title": "緩壓膜衣錠100毫克（Losacar 100 Tablets，losartan）仿單",
+      "rank": 6,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "此句是「小兒之使用」項下唯一明確說明本品不建議用於新生兒及腎絲球過濾率低於30 mL/min/1.73 m2或肝功能不全兒童病患的條款。",
+      "selected": false
+    }
+  },
+  {
+    "query": "脈得服錠10公絲(伊那拉普利)治療高血壓或心臟衰竭時,每日常用劑量範圍為何?",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "dose_unit"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "0879f3f5e1a1b31a420dddc8510817aee8b57abe074ab656de7fc7da2afe5d4c",
+        "version_label": "pdf-meta 2018-02-09（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "用法用量",
+        "key_text": "每日常用劑量範圍為:10~40mg,分依次或兩次服用",
+        "evidence_span": {
+          "text": "每日常用劑量範圍為:10~40mg,分依次或兩次服用。",
+          "char_start": 155,
+          "char_end": 182
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-perisafe-tablets-10mg-enalapil",
+      "title": "脈得服錠１０公絲（伊那拉普利）（PERISAFE TABLETS 10MG (ENALAPIL)，enalapril）仿單",
+      "rank": 1,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "該頁用法用量段落是全文檔唯一給出脈得服每日常用劑量範圍的條款,故僅此可答該劑量問題。",
+      "selected": true
+    }
+  },
+  {
+    "query": "脈得服錠(伊那拉普利)禁忌使用於哪些病人?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "0879f3f5e1a1b31a420dddc8510817aee8b57abe074ab656de7fc7da2afe5d4c",
+        "version_label": "pdf-meta 2018-02-09（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "禁忌症",
+        "key_text": "PERISAFE禁用於對該品任何成分過敏的病人",
+        "evidence_span": {
+          "text": "PERISAFE禁用於對該品任何成分過敏的病人,及以前曾有過以升壓素轉化酵素抑制劑治療而引起血管神經性水腫之病史者。",
+          "char_start": 754,
+          "char_end": 812
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-perisafe-tablets-10mg-enalapil",
+      "title": "脈得服錠１０公絲（伊那拉普利）（PERISAFE TABLETS 10MG (ENALAPIL)，enalapril）仿單",
+      "rank": 2,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "禁忌症段落是全文檔唯一列出PERISAFE禁忌人群的條款,故僅此可答該問題。",
+      "selected": true
+    }
+  },
+  {
+    "query": "脈得服錠(伊那拉普利)藥物過量時,大約服藥後多久會出現血壓明顯滑落等症狀?",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "time_window"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "0879f3f5e1a1b31a420dddc8510817aee8b57abe074ab656de7fc7da2afe5d4c",
+        "version_label": "pdf-meta 2018-02-09（未见版本行）",
+        "page": 4,
+        "printed_page_label": null,
+        "section": "藥物過量",
+        "key_text": "服藥後6 小時左右,血壓開始明顯滑落",
+        "evidence_span": {
+          "text": "目前所知藥物過量最顯著之特徵為服藥後6 小時左右,血壓開始明顯滑落,伴隨著腎素- 升壓素系統之阻斷,及昏睡。",
+          "char_start": 226,
+          "char_end": 280
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-perisafe-tablets-10mg-enalapil",
+      "title": "脈得服錠１０公絲（伊那拉普利）（PERISAFE TABLETS 10MG (ENALAPIL)，enalapril）仿單",
+      "rank": 3,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "tolerant",
+      "span_status": "tolerant",
+      "query_en": null,
+      "rationale": "藥物過量段落唯一描述服藥後血壓滑落起始時間,故僅此條款可答該時限問題。",
+      "selected": true
+    }
+  },
+  {
+    "query": "高血壓患者單獨使用PERISAFE治療達48週後,血清鉀值平均會有何變化?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "time_window",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "0879f3f5e1a1b31a420dddc8510817aee8b57abe074ab656de7fc7da2afe5d4c",
+        "version_label": "pdf-meta 2018-02-09（未见版本行）",
+        "page": 3,
+        "printed_page_label": null,
+        "section": "藥物交互作用",
+        "key_text": "達48週後,發現其血清鉀值平均約增加0.2mEq",
+        "evidence_span": {
+          "text": "高血壓患者單獨以PERISAFE治療達48週後,發現其血清鉀值平均約增加0.2mEq。",
+          "char_start": 241,
+          "char_end": 284
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-perisafe-tablets-10mg-enalapil",
+      "title": "脈得服錠１０公絲（伊那拉普利）（PERISAFE TABLETS 10MG (ENALAPIL)，enalapril）仿單",
+      "rank": 4,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "血清鉀段落唯一給出48週治療後血清鉀平均變化數值,故僅此條款可答該問題。",
+      "selected": false
+    }
+  },
+  {
+    "query": "哺乳期婦女服用脈得服錠(伊那拉普利)時需要特別注意什麼?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "drug_name_zh",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "0879f3f5e1a1b31a420dddc8510817aee8b57abe074ab656de7fc7da2afe5d4c",
+        "version_label": "pdf-meta 2018-02-09（未见版本行）",
+        "page": 3,
+        "printed_page_label": null,
+        "section": "哺乳婦女",
+        "key_text": "Enalapril及Enalaprilate均可微量分泌於人乳中",
+        "evidence_span": {
+          "text": "哺乳婦女 Enalapril及Enalaprilate均可微量分泌於人乳中,當哺乳婦女服用PERISAFE時需特別注意。",
+          "char_start": 94,
+          "char_end": 154
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-perisafe-tablets-10mg-enalapil",
+      "title": "脈得服錠１０公絲（伊那拉普利）（PERISAFE TABLETS 10MG (ENALAPIL)，enalapril）仿單",
+      "rank": 5,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "哺乳婦女段落是全文檔唯一說明哺乳期使用PERISAFE需特別注意之條款,故僅此可答該問題。",
+      "selected": false
+    }
+  },
+  {
+    "query": "拔痛酸錠(Allopurinol)作為抗痛風劑使用時,初始劑量的每日最大建議劑量是多少?不得超過多少mg?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "dose_unit",
+      "drug_name_zh",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "4c21c14e2cedd67e401aedf2f678a9fceaf9d3935751cb19d40bf62117c89dd9",
+        "version_label": "pdf-meta 2014-05-15（未见版本行）",
+        "page": 2,
+        "printed_page_label": null,
+        "section": "用法用量",
+        "key_text": "不得超過每日 800 mg 之最大建議劑量",
+        "evidence_span": {
+          "text": "初始劑量—口服,100 mg,一天一次,在一星期的間隔期間每天增加 100 mg 直到達到所需要的血清尿酸濃度為止。不得超過每日 800 mg 之最大建議劑量。",
+          "char_start": 1437,
+          "char_end": 1517
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-purinol-tablets",
+      "title": "拔痛酸錠（PURINOL TABLETS，allopurinol）仿單",
+      "rank": 1,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "僅此處規定抗痛風劑初始劑量的每日最大建議劑量上限,頁中其他800 mg數值出自不同用途(排泄量、贅瘤治療、處方限量)。",
+      "selected": true
+    }
+  },
+  {
+    "query": "服用拔痛酸錠(Allopurinol)後,停止治療多久血清尿酸濃度會回復到治療前的數值?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "time_window",
+      "drug_name_zh",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "4c21c14e2cedd67e401aedf2f678a9fceaf9d3935751cb19d40bf62117c89dd9",
+        "version_label": "pdf-meta 2014-05-15（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "臨床藥理",
+        "key_text": "治療停止之後的 1 至 2 週,血清尿酸濃度會回復到治療前的數值",
+        "evidence_span": {
+          "text": "作用期間:通常在治療停止之後的 1 至 2 週,血清尿酸濃度會回復到治療前的數值。",
+          "char_start": 1640,
+          "char_end": 1681
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-purinol-tablets",
+      "title": "拔痛酸錠（PURINOL TABLETS，allopurinol）仿單",
+      "rank": 2,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "該頁僅此段說明停藥後血清尿酸濃度回復治療前數值所需的時間窗。",
+      "selected": true
+    }
+  },
+  {
+    "query": "拔痛酸錠(Allopurinol)可以用於治療痛風性關節炎的急性發作嗎?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "drug_name_zh",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "4c21c14e2cedd67e401aedf2f678a9fceaf9d3935751cb19d40bf62117c89dd9",
+        "version_label": "pdf-meta 2014-05-15（未见版本行）",
+        "page": 2,
+        "printed_page_label": null,
+        "section": "適應症",
+        "key_text": "它必須不得使用於痛風性關節炎的急性發作",
+        "evidence_span": {
+          "text": "Allopurinol 沒有抗發炎的效力。它必須不得使用於痛風性關節炎的急性發作。",
+          "char_start": 446,
+          "char_end": 487
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-purinol-tablets",
+      "title": "拔痛酸錠（PURINOL TABLETS，allopurinol）仿單",
+      "rank": 3,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "僅此處明確說明Allopurinol不得使用於痛風性關節炎急性發作的禁止性用法。",
+      "selected": true
+    }
+  },
+  {
+    "query": "拔痛酸錠(Allopurinol)用於6至12歲兒童治療贅瘤疾病引起的高尿酸血症時,口服劑量如何給予?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "drug_name_zh",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "4c21c14e2cedd67e401aedf2f678a9fceaf9d3935751cb19d40bf62117c89dd9",
+        "version_label": "pdf-meta 2014-05-15（未见版本行）",
+        "page": 3,
+        "printed_page_label": null,
+        "section": "一般孩童劑量",
+        "key_text": "年齡 6 至 12 歲的孩童:口服,100 mg,一天三次;或 300 mg 當作一個單一劑量,一天一次",
+        "evidence_span": {
+          "text": "年齡 6 至 12 歲的孩童:口服,100 mg,一天三次;或 300 mg 當作一個單一劑量,一天一次。",
+          "char_start": 50,
+          "char_end": 103
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-purinol-tablets",
+      "title": "拔痛酸錠（PURINOL TABLETS，allopurinol）仿單",
+      "rank": 4,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "該頁僅此句給出6至12歲兒童在贅瘤疾病高尿酸血症治療上的具體口服劑量。",
+      "selected": true
+    }
+  },
+  {
+    "query": "長期使用拔痛酸錠(Allopurinol)且未發生不良反應的病人,是否建議進行HLA-B*5801基因篩檢?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "drug_name_zh",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "4c21c14e2cedd67e401aedf2f678a9fceaf9d3935751cb19d40bf62117c89dd9",
+        "version_label": "pdf-meta 2014-05-15（未见版本行）",
+        "page": 6,
+        "printed_page_label": null,
+        "section": "嚴重皮膚反應",
+        "key_text": "長期使用沒有不良反應的病人不建議基因篩撿",
+        "evidence_span": {
+          "text": "長期使用沒有不良反應的病人不建議基因篩撿,無論是否帶有HLA-B*5801 基因,發生史蒂文生氏強生症候群的危險在治療開始之後幾個月最大,基因篩檢並不能取代適當的臨床安全監視及病患處置。",
+          "char_start": 843,
+          "char_end": 936
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-purinol-tablets",
+      "title": "拔痛酸錠（PURINOL TABLETS，allopurinol）仿單",
+      "rank": 5,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "該頁僅此處說明長期使用且無不良反應病人不建議進行HLA-B*5801基因篩檢的立場。",
+      "selected": false
+    }
+  },
+  {
+    "query": "喜樂平（Quetiapine）用於老年思覺失調症病人時，起始劑量建議為多少？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "6e54ef6f412df596ff6b2e1fe58aabbedde6264cdcb2028c322852370015f4e7",
+        "version_label": "pdf-meta 2020-03-11（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "3.2 老年人",
+        "key_text": "老年病人剛開始服用 Quetiapine 的劑量,應為每日 25 mg",
+        "evidence_span": {
+          "text": "老年病人剛開始服用 Quetiapine 的劑量,應為每日 25 mg。劑量應該每日增加 25-50 mg,至達到有效劑量為止。但老年病人的有效劑量可能較年輕病人為低。",
+          "char_start": 534,
+          "char_end": 618
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-quetialin-f-c-tablets-100mg-quetiapine",
+      "title": "喜樂平膜衣錠100毫克（Quetialin F.C. Tablets 100mg  (Quetiapine)，quetiapine）仿單",
+      "rank": 1,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "只有3.2老年人段落規定老年病人的起始劑量為每日25mg，與3.4腎肝功能不全段落的相同劑量以不同人群限定詞區分，问题限定老年即唯一對應此條款。",
+      "selected": true
+    }
+  },
+  {
+    "query": "喜樂平（Quetiapine）是否核准使用於18歲以下的兒童及青少年？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "6e54ef6f412df596ff6b2e1fe58aabbedde6264cdcb2028c322852370015f4e7",
+        "version_label": "pdf-meta 2020-03-11（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "3.3 孩童及青少年",
+        "key_text": "Quetiapine 不適用於 18 歲以下的兒童及青少年",
+        "evidence_span": {
+          "text": "本品未核准使用於兒童及青少年。Quetiapine 不適用於 18 歲以下的兒童及青少年。",
+          "char_start": 629,
+          "char_end": 674
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-quetialin-f-c-tablets-100mg-quetiapine",
+      "title": "喜樂平膜衣錠100毫克（Quetialin F.C. Tablets 100mg  (Quetiapine)，quetiapine）仿單",
+      "rank": 2,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "全文中僅3.3孩童及青少年段落明確聲明本品不適用於18歲以下兒童及青少年，是唯一能回答此問題的條款。",
+      "selected": true
+    }
+  },
+  {
+    "query": "使用喜樂平（Quetiapine）時，應避免併用哪些會延長QT期間的藥物？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "6e54ef6f412df596ff6b2e1fe58aabbedde6264cdcb2028c322852370015f4e7",
+        "version_label": "pdf-meta 2020-03-11（未见版本行）",
+        "page": 7,
+        "printed_page_label": null,
+        "section": "5.13 QT 期間延長",
+        "key_text": "Quetiapine 應避免與其他會延長 QT 的藥物併用,包括 1A 類抗心律不整藥",
+        "evidence_span": {
+          "text": "Quetiapine 應避免與其他會延長 QT 的藥物併用,包括 1A 類抗心律不整藥(例如 Quinidine, Procainamide)或 III 類抗心律不整藥(例如 Amiodarone, Sotalol),抗精神病藥物(例如 Ziprasidone, Chlorpromazine, Thioridazine),抗生素(例如 Gatifloxacin, Moxifloxacin),或其他會延長 QT 期間的藥物類別(例如 Pentamidine,Levomethadyl acetate, Methadone)。",
+          "char_start": 392,
+          "char_end": 655
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-quetialin-f-c-tablets-100mg-quetiapine",
+      "title": "喜樂平膜衣錠100毫克（Quetialin F.C. Tablets 100mg  (Quetiapine)，quetiapine）仿單",
+      "rank": 3,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "此段列舉Quetiapine應避免併用的延長QT藥物清單，是文中唯一針對此問題給出具體藥物類別的條款。",
+      "selected": true
+    }
+  },
+  {
+    "query": "服用喜樂平（Quetiapine）期間，是否建議授乳婦哺乳？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "6e54ef6f412df596ff6b2e1fe58aabbedde6264cdcb2028c322852370015f4e7",
+        "version_label": "pdf-meta 2020-03-11（未见版本行）",
+        "page": 18,
+        "printed_page_label": null,
+        "section": "8.3 授乳婦",
+        "key_text": "建議婦女在服用 Quetiapine 期間不要餵母奶",
+        "evidence_span": {
+          "text": "Quetiapine 會分泌到人類乳汁中,因此建議婦女在服用 Quetiapine 期間不要餵母奶。",
+          "char_start": 44,
+          "char_end": 94
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-quetialin-f-c-tablets-100mg-quetiapine",
+      "title": "喜樂平膜衣錠100毫克（Quetialin F.C. Tablets 100mg  (Quetiapine)，quetiapine）仿單",
+      "rank": 4,
+      "status": "ok",
+      "problems": [],
+      "warnings": [
+        "negation: no negation/limitation word in span"
+      ],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "8.3授乳婦段落是文中唯一對哺乳建議作出明確規定的條款。",
+      "selected": true
+    }
+  },
+  {
+    "query": "為降低喜樂平（Quetiapine）造成姿勢性低血壓與昏厥的風險，建議的起始劑量為何？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "6e54ef6f412df596ff6b2e1fe58aabbedde6264cdcb2028c322852370015f4e7",
+        "version_label": "pdf-meta 2020-03-11（未见版本行）",
+        "page": 6,
+        "printed_page_label": null,
+        "section": "5.8 姿勢性低血壓",
+        "key_text": "將起始劑量限制在 25mg 每天兩次,可將姿勢性低血壓和昏厥的風險減至最小",
+        "evidence_span": {
+          "text": "將起始劑量限制在 25mg 每天兩次,可將姿勢性低血壓和昏厥的風險減至最小【請參閱使用劑量與用法(3)】。",
+          "char_start": 295,
+          "char_end": 348
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-quetialin-f-c-tablets-100mg-quetiapine",
+      "title": "喜樂平膜衣錠100毫克（Quetialin F.C. Tablets 100mg  (Quetiapine)，quetiapine）仿單",
+      "rank": 5,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "此句是5.8姿勢性低血壓段落中唯一針對降低該風險提出具體起始劑量建議的條款。",
+      "selected": false
+    }
+  },
+  {
+    "query": "使用喜樂平（Quetiapine）長期治療時，建議多久進行一次水晶體檢查以偵測白內障？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "time_window",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "6e54ef6f412df596ff6b2e1fe58aabbedde6264cdcb2028c322852370015f4e7",
+        "version_label": "pdf-meta 2020-03-11（未见版本行）",
+        "page": 7,
+        "printed_page_label": null,
+        "section": "5.12 白內障",
+        "key_text": "建議在治療之初及每隔 6 個月,要以能偵測白內障形成的適當方法",
+        "evidence_span": {
+          "text": "因此建議在治療之初及每隔 6 個月,要以能偵測白內障形成的適當方法,例如裂隙燈檢查或其他適當的靈敏方法來檢查水晶體。",
+          "char_start": 158,
+          "char_end": 216
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-quetialin-f-c-tablets-100mg-quetiapine",
+      "title": "喜樂平膜衣錠100毫克（Quetialin F.C. Tablets 100mg  (Quetiapine)，quetiapine）仿單",
+      "rank": 6,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "5.12白內障段落是文中唯一規定水晶體檢查時間間隔（每隔6個月）的條款。",
+      "selected": false
+    }
+  },
+  {
+    "query": "「華盛頓」洛得敏糖漿(loratadine)成人及十二歲以上兒童的建議劑量是多少?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "drug_name_zh",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "0c80faec13d3404834be06c3212ccdf81b5e63af80064009d93106ecca47f293",
+        "version_label": "pdf-meta 2015-09-21（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "用法用量",
+        "key_text": "成人及十二歲(含)以上兒童:每日兩茶匙 Rodamine Syrup(10mg)",
+        "evidence_span": {
+          "text": "成人及十二歲(含)以上兒童:每日兩茶匙 Rodamine Syrup(10mg)。",
+          "char_start": 344,
+          "char_end": 385
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-rodamine-syrup-w-p",
+      "title": "〝華盛頓〞洛得敏糖漿（RODAMINE SYRUP \"W.P.\"，loratadine）仿單",
+      "rank": 1,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "該頁用法用量段落中僅此句針對成人及十二歲以上兒童族群給出劑量,其餘為不同年齡/體重族群之條款,故此為唯一答案。",
+      "selected": true
+    }
+  },
+  {
+    "query": "「華盛頓」洛得敏糖漿有哪些禁忌症?",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "negation",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "0c80faec13d3404834be06c3212ccdf81b5e63af80064009d93106ecca47f293",
+        "version_label": "pdf-meta 2015-09-21（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "禁忌",
+        "key_text": "凡對本品糖漿劑所含成分會發生過敏反應者,皆不適合投以本劑",
+        "evidence_span": {
+          "text": "凡對本品糖漿劑所含成分會發生過敏反應者,皆不適合投以本劑。",
+          "char_start": 1587,
+          "char_end": 1616
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-rodamine-syrup-w-p",
+      "title": "〝華盛頓〞洛得敏糖漿（RODAMINE SYRUP \"W.P.\"，loratadine）仿單",
+      "rank": 2,
+      "status": "ok",
+      "problems": [],
+      "warnings": [
+        "negation: no negation/limitation word in span"
+      ],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "該頁僅有一條禁忌條款,明確說明對成分過敏者不適合使用本品,為唯一可回答禁忌症提問的條款。",
+      "selected": true
+    }
+  },
+  {
+    "query": "使用「華盛頓」洛得敏糖漿的病人若要做皮膚過敏測試(skin test),應提前多久停藥?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "time_window",
+      "drug_name_zh",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "0c80faec13d3404834be06c3212ccdf81b5e63af80064009d93106ecca47f293",
+        "version_label": "pdf-meta 2015-09-21（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "藥物交互作用",
+        "key_text": "在進行 skin test 之前 48 小時起應停止使用本品",
+        "evidence_span": {
+          "text": "對實驗室檢驗的交互作用;在進行 skin test 之前 48 小時起應停止使用本品,因為抗組織胺可能會預防或降低引起皮膚過敏的試劑之反應。",
+          "char_start": 1323,
+          "char_end": 1393
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-rodamine-syrup-w-p",
+      "title": "〝華盛頓〞洛得敏糖漿（RODAMINE SYRUP \"W.P.\"，loratadine）仿單",
+      "rank": 3,
+      "status": "ok",
+      "problems": [],
+      "warnings": [
+        "negation: no negation/limitation word in span"
+      ],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "該頁僅此處規定進行皮膚過敏測試前需停用本品之時間窗,是唯一能回答該問題的條款。",
+      "selected": true
+    }
+  },
+  {
+    "query": "兩歲至十二歲、體重不足三十公斤的兒童服用「華盛頓」洛得敏糖漿時,建議劑量為何?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "drug_name_zh",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "0c80faec13d3404834be06c3212ccdf81b5e63af80064009d93106ecca47f293",
+        "version_label": "pdf-meta 2015-09-21（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "用法用量",
+        "key_text": "體重不及三十公斤者每日一茶匙 Rodamine Syrup(5mg)",
+        "evidence_span": {
+          "text": "兩歲至十二歲兒童:體重大於三十公斤者每日兩茶匙 Rodamine Syrup(10mg) ,體重不及三十公斤者每日一茶匙 Rodamine Syrup(5mg)。",
+          "char_start": 385,
+          "char_end": 466
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-rodamine-syrup-w-p",
+      "title": "〝華盛頓〞洛得敏糖漿（RODAMINE SYRUP \"W.P.\"，loratadine）仿單",
+      "rank": 4,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "該頁僅此句針對兩歲至十二歲兒童依體重分層之用法用量,為唯一能回答體重不足三十公斤族群提問的條款。",
+      "selected": false
+    }
+  },
+  {
+    "query": "「華盛頓」洛得敏糖漿用於肝功能嚴重受損病人時,建議的起始劑量調整為何?",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "dose_unit",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "0c80faec13d3404834be06c3212ccdf81b5e63af80064009d93106ecca47f293",
+        "version_label": "pdf-meta 2015-09-21（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "注意事項",
+        "key_text": "建議劑量為每 5mg 或每隔一日 10mg",
+        "evidence_span": {
+          "text": "對肝功能嚴重受損的病人,其初始劑量應該降低,因為 Loratadine 的清除率可能降低,建議劑量為每 5mg 或每隔一日 10mg。",
+          "char_start": 1623,
+          "char_end": 1690
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-rodamine-syrup-w-p",
+      "title": "〝華盛頓〞洛得敏糖漿（RODAMINE SYRUP \"W.P.\"，loratadine）仿單",
+      "rank": 5,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "該頁僅此句針對肝功能嚴重受損病人給出起始劑量調整建議,為唯一能回答該問題的條款。",
+      "selected": false
+    }
+  },
+  {
+    "query": "賜痛寧注射液(diclofenac)成人常用的劑量與注射方式為何?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "drug_name_zh",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "0e8e316abd1fcd16b0890516b340fa47311dea7e2fb8313e625db1e4fb1150d1",
+        "version_label": "pdf-meta 2016-12-02（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "用法用量",
+        "key_text": "成人一次 75 mg ,一日一次,行外側臀部肌肉深部緩慢注射之",
+        "evidence_span": {
+          "text": "通常成人一次 75 mg ,一日一次,行外側臀部肌肉深部緩慢注射之,並應時常改換左右臀部注射部位。",
+          "char_start": 497,
+          "char_end": 546
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-staren-injection-n-k-diclofenac",
+      "title": "\"南光\" 賜痛寧注射液（待克菲那）（STAREN INJECTION \"N.K.\"(DICLOFENAC)，diclofenac）仿單",
+      "rank": 1,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "本頁用法用量段落僅此一條成人劑量、頻次與注射部位之規定,可唯一回答此問題。",
+      "selected": true
+    }
+  },
+  {
+    "query": "賜痛寧注射液(diclofenac)在病人做完冠狀動脈繞道手術(CABG)後,術後多久內禁止使用?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "time_window",
+      "drug_name_zh",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "0e8e316abd1fcd16b0890516b340fa47311dea7e2fb8313e625db1e4fb1150d1",
+        "version_label": "pdf-meta 2016-12-02（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "心血管栓塞事件",
+        "key_text": "進行冠狀動脈繞道手術 (Coronary artery bypass graft, CABG) 之後 14 天內禁用本藥",
+        "evidence_span": {
+          "text": "進行冠狀動脈繞道手術 (Coronary artery bypass graft, CABG) 之後 14 天內禁用本藥。",
+          "char_start": 160,
+          "char_end": 221
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-staren-injection-n-k-diclofenac",
+      "title": "\"南光\" 賜痛寧注射液（待克菲那）（STAREN INJECTION \"N.K.\"(DICLOFENAC)，diclofenac）仿單",
+      "rank": 2,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "本頁僅此段以未重複疊字之原文明確規定CABG術後14天內禁用本藥,唯此條款可回答此問題。",
+      "selected": true
+    }
+  },
+  {
+    "query": "賜痛寧注射液(diclofenac)的核准適應症為何?適用於什麼情況下的病人?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "drug_name_zh",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "0e8e316abd1fcd16b0890516b340fa47311dea7e2fb8313e625db1e4fb1150d1",
+        "version_label": "pdf-meta 2016-12-02（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "適應症",
+        "key_text": "無法口服情況下,短期使用於緩解發炎及因發炎引起之疼痛",
+        "evidence_span": {
+          "text": "無法口服情況下,短期使用於緩解發炎及因發炎引起之疼痛。",
+          "char_start": 418,
+          "char_end": 445
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-staren-injection-n-k-diclofenac",
+      "title": "\"南光\" 賜痛寧注射液（待克菲那）（STAREN INJECTION \"N.K.\"(DICLOFENAC)，diclofenac）仿單",
+      "rank": 3,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "本頁適應症段落只有這一句說明本藥核准之使用情境,為唯一答案。",
+      "selected": true
+    }
+  },
+  {
+    "query": "賜痛寧注射液(diclofenac)應如何儲存?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "drug_name_zh",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "0e8e316abd1fcd16b0890516b340fa47311dea7e2fb8313e625db1e4fb1150d1",
+        "version_label": "pdf-meta 2016-12-02（未见版本行）",
+        "page": 2,
+        "printed_page_label": null,
+        "section": "儲藏",
+        "key_text": "本品應於 25 °C以下陰涼處儲存",
+        "evidence_span": {
+          "text": "本品應於 25 °C以下陰涼處儲存。",
+          "char_start": 8333,
+          "char_end": 8351
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-staren-injection-n-k-diclofenac",
+      "title": "\"南光\" 賜痛寧注射液（待克菲那）（STAREN INJECTION \"N.K.\"(DICLOFENAC)，diclofenac）仿單",
+      "rank": 4,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "本頁僅儲藏段落說明本藥品之儲存條件,為唯一可回答此問題之條款。",
+      "selected": true
+    }
+  },
+  {
+    "query": "賜痛寧注射液(diclofenac)每支安瓿的包裝容量與盒裝規格為何?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "drug_name_zh",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "0e8e316abd1fcd16b0890516b340fa47311dea7e2fb8313e625db1e4fb1150d1",
+        "version_label": "pdf-meta 2016-12-02（未见版本行）",
+        "page": 2,
+        "printed_page_label": null,
+        "section": "包裝",
+        "key_text": "3毫升安瓿裝, 100 支以下盒裝",
+        "evidence_span": {
+          "text": "3毫升安瓿裝, 100 支以下盒裝。",
+          "char_start": 8361,
+          "char_end": 8379
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-staren-injection-n-k-diclofenac",
+      "title": "\"南光\" 賜痛寧注射液（待克菲那）（STAREN INJECTION \"N.K.\"(DICLOFENAC)，diclofenac）仿單",
+      "rank": 5,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "本頁僅包裝段落說明每支安瓿容量與盒裝支數上限,為唯一答案來源。",
+      "selected": false
+    }
+  },
+  {
+    "query": "衛欣保（valsartan）病人若出現血管性水腫，臨床上該如何處置？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "4c211906545934a9ea4a41ce0cdaeed1ce9d882da06b7e5fd376d50f4a94d794",
+        "version_label": "pdf-meta 2021-07-26（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "血管性水腫病人",
+        "key_text": "對於出現血管性水腫的病人,應立即停用valsartan,並且不宜再次施用",
+        "evidence_span": {
+          "text": "對於出現血管性水腫的病人,應立即停用valsartan,並且不宜再次施用。",
+          "char_start": 1917,
+          "char_end": 1954
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-vaks-f-c-tablets-80mg",
+      "title": "衛欣保膜衣錠80毫克（Vaks F.C. Tablets 80mg，valsartan）仿單",
+      "rank": 1,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "全文中只有此句明確規定血管性水腫病人須立即停用valsartan且不得再次施用，是唯一能回答此處置問題的條款。",
+      "selected": true
+    }
+  },
+  {
+    "query": "衛欣保（valsartan）用於心肌梗塞後病人，最早可於何時開始給藥？起始劑量為何？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "time_window",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "4c211906545934a9ea4a41ce0cdaeed1ce9d882da06b7e5fd376d50f4a94d794",
+        "version_label": "pdf-meta 2021-07-26（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "心肌梗塞",
+        "key_text": "心肌梗塞12小時後即開始進行治療。以 20mg每日兩次的初步劑量治療",
+        "evidence_span": {
+          "text": "V alsartan可儘早於心肌梗塞12小時後即開始進行治療。以 20mg每日兩次的初步劑量治療之後,在往後的數週期間 valsartan的治療可提高劑量至40mg、 80mg,以及160mg 每日兩次。",
+          "char_start": 889,
+          "char_end": 991
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-vaks-f-c-tablets-80mg",
+      "title": "衛欣保膜衣錠80毫克（Vaks F.C. Tablets 80mg，valsartan）仿單",
+      "rank": 2,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "只有此條款界定了心肌梗塞後病人開始valsartan治療的時間窗（12小時後）與初步劑量（20mg每日兩次），為唯一答案來源。",
+      "selected": true
+    }
+  },
+  {
+    "query": "衛欣保（valsartan）用於成人高血壓治療時，建議的起始劑量為何？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "4c211906545934a9ea4a41ce0cdaeed1ce9d882da06b7e5fd376d50f4a94d794",
+        "version_label": "pdf-meta 2021-07-26（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "高血壓",
+        "key_text": "每天一次,每次80mg或 160mg",
+        "evidence_span": {
+          "text": "V alsartan建議使用劑量為( 每天一次,每次80mg或 160mg),不論種族、年齡、性別。",
+          "char_start": 549,
+          "char_end": 599
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-vaks-f-c-tablets-80mg",
+      "title": "衛欣保膜衣錠80毫克（Vaks F.C. Tablets 80mg，valsartan）仿單",
+      "rank": 3,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "此句是文檔中唯一針對成人高血壓病人給出建議起始劑量（每天一次，每次80mg或160mg）的條款。",
+      "selected": true
+    }
+  },
+  {
+    "query": "衛欣保（valsartan）是否建議與ACEIs或ARBs合併使用以雙重阻斷RAAS系統？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "4c211906545934a9ea4a41ce0cdaeed1ce9d882da06b7e5fd376d50f4a94d794",
+        "version_label": "pdf-meta 2021-07-26（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "雙重阻斷腎素―血管昇壓素―醛固酮系統 (renin- angiotensin-aldosterone, RAAS)",
+        "key_text": "不建議合併使用ACEIs、 ARBs 或含 aliskiren成分藥品來雙重阻斷RAAS",
+        "evidence_span": {
+          "text": "有證據顯示,合併使用ACEIs、ARBs 或含 aliskiren 成分藥品會增加低血壓、高鉀血症及腎功能下降( 包括急性腎衰竭) 之風險,故不建議合併使用ACEIs、 ARBs 或含 aliskiren成分藥品來雙重阻斷RAAS,若確有必要使用雙重阻斷治療,應密切監測病人之腎功能、電解質及血壓。",
+          "char_start": 2012,
+          "char_end": 2161
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-vaks-f-c-tablets-80mg",
+      "title": "衛欣保膜衣錠80毫克（Vaks F.C. Tablets 80mg，valsartan）仿單",
+      "rank": 4,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "此段是【注意事項/警語】中唯一明確表述不建議合併使用ACEIs、ARBs或aliskiren以雙重阻斷RAAS之條款。",
+      "selected": true
+    }
+  },
+  {
+    "query": "衛欣保（valsartan）用於6至18歲高血壓兒童病人，體重未滿35公斤者的起始劑量為何？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "4c211906545934a9ea4a41ce0cdaeed1ce9d882da06b7e5fd376d50f4a94d794",
+        "version_label": "pdf-meta 2021-07-26（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "6-18歲的兒童/ 青少年",
+        "key_text": "對於體重未滿35kg的兒童,初始劑量為40mg錠劑,每日一次",
+        "evidence_span": {
+          "text": "對於體重未滿35kg的兒童,初始劑量為40mg錠劑,每日一次;對於體重滿35kg以上的兒童,初始劑量為 80mg,每日一次。",
+          "char_start": 2871,
+          "char_end": 2933
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-vaks-f-c-tablets-80mg",
+      "title": "衛欣保膜衣錠80毫克（Vaks F.C. Tablets 80mg，valsartan）仿單",
+      "rank": 5,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "此句是文檔中唯一依體重分層規定6-18歲兒童高血壓病人起始劑量的條款，體重未滿35kg者對應40mg。",
+      "selected": false
+    }
+  },
+  {
+    "query": "哺乳期間是否建議使用衛欣保（valsartan）？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "4c211906545934a9ea4a41ce0cdaeed1ce9d882da06b7e5fd376d50f4a94d794",
+        "version_label": "pdf-meta 2021-07-26（未见版本行）",
+        "page": 2,
+        "printed_page_label": null,
+        "section": "授乳風險摘要",
+        "key_text": "因此,授乳期間不建議使用valsartan",
+        "evidence_span": {
+          "text": "尚未知 valsartan 是否會分泌至人類乳汁中,但已知 valsartan 會分泌至大白鼠乳汁中。因此,授乳期間不建議使用valsartan。",
+          "char_start": 201,
+          "char_end": 274
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-vaks-f-c-tablets-80mg",
+      "title": "衛欣保膜衣錠80毫克（Vaks F.C. Tablets 80mg，valsartan）仿單",
+      "rank": 6,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "此為文檔中唯一針對授乳期婦女是否可使用valsartan的明確建議（不建議使用）。",
+      "selected": false
+    }
+  },
+  {
+    "query": "免痛注射液(待克菲那)成人肌肉注射的建議劑量與頻次為何?",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "dose_unit"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "3b1d0b7fb71d65e81493f10a46bb1640d2a5635e70621a5e6a38867d8f65aab3",
+        "version_label": "pdf-meta 2019-02-21（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "用法用量",
+        "key_text": "通常成人一次 75mg,一日一次,行外側臀部肌肉深部緩慢注射之",
+        "evidence_span": {
+          "text": "本藥限由醫師使用。為降低不良反應之風險,應使用最低有效劑量,並作為期最短之治療。通常成人一次 75mg,一日一次,行外側臀部肌肉深部緩慢注射之,並應時常改換左右臀部注射部位。",
+          "char_start": 419,
+          "char_end": 506
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-venton-injection-diclofenac-lita",
+      "title": "免痛注射液（待克菲那）（VENTON INJECTION (DICLOFENAC) \"LITA\"，diclofenac）仿單",
+      "rank": 1,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "第1頁用法用量段落是本文件中唯一說明成人肌肉注射劑量與頻次的條款。",
+      "selected": true
+    }
+  },
+  {
+    "query": "病人剛完成冠狀動脈繞道手術(CABG),術後多久內禁止使用免痛注射液(待克菲那)?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "time_window",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "3b1d0b7fb71d65e81493f10a46bb1640d2a5635e70621a5e6a38867d8f65aab3",
+        "version_label": "pdf-meta 2019-02-21（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "禁忌",
+        "key_text": "進行冠狀動脈繞道手術 (Coronary artery bypass graft, CABG) 之後 14 天內禁用本藥",
+        "evidence_span": {
+          "text": "進行冠狀動脈繞道手術 (Coronary artery bypass graft, CABG) 之後 14 天內禁用本藥。",
+          "char_start": 974,
+          "char_end": 1035
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-venton-injection-diclofenac-lita",
+      "title": "免痛注射液（待克菲那）（VENTON INJECTION (DICLOFENAC) \"LITA\"，diclofenac）仿單",
+      "rank": 2,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "第1頁禁忌第7項是本文件中唯一明確規定CABG術後14天內禁用本藥的條款。",
+      "selected": true
+    }
+  },
+  {
+    "query": "使用免痛注射液(待克菲那,diclofenac)期間可以併用aspirin嗎?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "3b1d0b7fb71d65e81493f10a46bb1640d2a5635e70621a5e6a38867d8f65aab3",
+        "version_label": "pdf-meta 2019-02-21（未见版本行）",
+        "page": 2,
+        "printed_page_label": null,
+        "section": "藥物交互作用",
+        "key_text": "一般而言不建議同時使用 aspirin與diclofenac進行治療",
+        "evidence_span": {
+          "text": "由於可能增加不良反應(包括腸胃道出血)發生的風險,一般而言不建議同時使用 aspirin與diclofenac進行治療。",
+          "char_start": 2025,
+          "char_end": 2085
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-venton-injection-diclofenac-lita",
+      "title": "免痛注射液（待克菲那）（VENTON INJECTION (DICLOFENAC) \"LITA\"，diclofenac）仿單",
+      "rank": 3,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "第2頁藥物交互作用第1項是本文件中唯一說明本藥與aspirin併用建議的條款。",
+      "selected": true
+    }
+  },
+  {
+    "query": "長期使用免痛注射液(待克菲那,diclofenac)治療的病人,應於治療後何時檢測肝臟轉氨酶?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "time_window",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "3b1d0b7fb71d65e81493f10a46bb1640d2a5635e70621a5e6a38867d8f65aab3",
+        "version_label": "pdf-meta 2019-02-21（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "警語(肝臟作用)",
+        "key_text": "應於治療後的第4到第8週內進行檢測",
+        "evidence_span": {
+          "text": "長期使用diclofenac治療的病人應定期檢測肝臟轉氨酶 (transaminase),依據臨床試驗數據和上市後經驗,應於治療後的第4到第8週內進行檢測。",
+          "char_start": 2775,
+          "char_end": 2853
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-venton-injection-diclofenac-lita",
+      "title": "免痛注射液（待克菲那）（VENTON INJECTION (DICLOFENAC) \"LITA\"，diclofenac）仿單",
+      "rank": 4,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "第1頁警語肝臟作用段落是本文件中唯一說明長期使用時應於第4-8週檢測肝臟轉氨酶的條款。",
+      "selected": true
+    }
+  },
+  {
+    "query": "具有aspirin三症狀(aspirin triad)的氣喘病人可以使用免痛注射液(待克菲那,diclofenac)嗎?",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "3b1d0b7fb71d65e81493f10a46bb1640d2a5635e70621a5e6a38867d8f65aab3",
+        "version_label": "pdf-meta 2019-02-21（未见版本行）",
+        "page": 2,
+        "printed_page_label": null,
+        "section": "注意事項",
+        "key_text": "具有aspirin三症狀 (aspirin triad)的病人不可投予 diclofenac治療",
+        "evidence_span": {
+          "text": "具有aspirin三症狀 (aspirin triad)的病人不可投予 diclofenac治療。",
+          "char_start": 790,
+          "char_end": 839
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-venton-injection-diclofenac-lita",
+      "title": "免痛注射液（待克菲那）（VENTON INJECTION (DICLOFENAC) \"LITA\"，diclofenac）仿單",
+      "rank": 5,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "第2頁注意事項第9(2)項是本文件中唯一明確禁止aspirin三症狀病人使用diclofenac的條款。",
+      "selected": false
+    }
+  },
+  {
+    "query": "使用莫尼茲(Vomiz)注射劑治療化學治療引起之噁心嘔吐(CINV)時，中度或重度肝功能不全病人的靜脈注射或口服每日總劑量上限為何？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "c96703065f145c812f38466a545fe62d0dbe6c566d380892d1702a720dd6c1ce",
+        "version_label": "pdf-meta 2021-01-07（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "用法、用量—化學治療或放射線治療引起之噁心及嘔吐(CINV與RINV)—肝功能不全病人",
+        "key_text": "用於這類病人時,靜脈注射或口服的每日總劑量不可超過8毫克。",
+        "evidence_span": {
+          "text": "• 肝功能不全病人:中度或重度肝功能不全者的 ondansetron 清除率顯著降低,血清半衰期顯著延長。用於這類病人時,靜脈注射或口服的每日總劑量不可超過8毫克。",
+          "char_start": 2827,
+          "char_end": 2909
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-vomiz-for-iv-injection-2mg-ml",
+      "title": "莫尼茲靜脈注射劑2毫克/毫升（VOMIZ for IV INJECTION 2MG/ML，ondansetron）仿單",
+      "rank": 1,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "該頁僅此句針對CINV情境下肝功能不全病人給出每日總劑量上限，PONV情境下的同類句子用語不同（「在這類病人使用時」），可據此唯一鎖定本條款。",
+      "selected": true
+    }
+  },
+  {
+    "query": "成人接受致吐性化學治療時，莫尼茲注射劑靜脈或肌肉注射的建議起始劑量以及給藥後多久可改為口服給藥？",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "dose_unit",
+      "time_window"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "c96703065f145c812f38466a545fe62d0dbe6c566d380892d1702a720dd6c1ce",
+        "version_label": "pdf-meta 2021-01-07（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "用法、用量—化學治療或放射線治療引起之噁心及嘔吐(CINV與RINV)—成人:致吐性化學治療及放射線治療",
+        "key_text": "24 小時之後,建議以口服方式給藥,以預防遲發性或長時間嘔吐。",
+        "evidence_span": {
+          "text": "Ondansetron 的靜脈注射(IV)或肌肉注射(IM)建議劑量為 8 毫克,於即將進行治療之前緩慢注射給藥。 24 小時之後,建議以口服方式給藥,以預防遲發性或長時間嘔吐。",
+          "char_start": 990,
+          "char_end": 1079
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-vomiz-for-iv-injection-2mg-ml",
+      "title": "莫尼茲靜脈注射劑2毫克/毫升（VOMIZ for IV INJECTION 2MG/ML，ondansetron）仿單",
+      "rank": 2,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "該頁僅此段明確給出成人IV/IM起始劑量與24小時後轉為口服給藥的時間窗規定，與後文提及化療24小時後遲發性嘔吐的敘述用詞不同，可唯一鎖定。",
+      "selected": true
+    }
+  },
+  {
+    "query": "年滿75歲以上病人因化學治療引起噁心嘔吐使用莫尼茲注射劑時，起始靜脈輸注劑量上限與追加給藥的間隔時間為何？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "negation",
+      "time_window",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "c96703065f145c812f38466a545fe62d0dbe6c566d380892d1702a720dd6c1ce",
+        "version_label": "pdf-meta 2021-01-07（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "用法、用量—老年人:化學治療或放射治療引起之噁心嘔吐(CINV與RINV)",
+        "key_text": "對年滿75歲或以上之病人,ondansetron 起始劑量不可超過8毫克,其輸注時間亦應超過 15分鐘。",
+        "evidence_span": {
+          "text": "對年滿75歲或以上之病人,ondansetron 起始劑量不可超過8毫克,其輸注時間亦應超過 15分鐘。在此8 毫克之起始劑量後,可追加2 劑8毫克15分鐘以上之靜脈輸注,每劑間隔時間須至少4小時(詳見特殊病人群體,老年人)。",
+          "char_start": 2682,
+          "char_end": 2795
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-vomiz-for-iv-injection-2mg-ml",
+      "title": "莫尼茲靜脈注射劑2毫克/毫升（VOMIZ for IV INJECTION 2MG/ML，ondansetron）仿單",
+      "rank": 3,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "該頁僅此條款針對75歲以上高齡病人設定起始劑量上限、輸注時間及追加劑量的間隔規定，與61至74歲族群的劑量規定不同，問題中的年齡限定使答案唯一。",
+      "selected": true
+    }
+  },
+  {
+    "query": "孕婦在懷孕第一孕期是否可以使用莫尼茲(ondansetron)注射劑？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "c96703065f145c812f38466a545fe62d0dbe6c566d380892d1702a720dd6c1ce",
+        "version_label": "pdf-meta 2021-01-07（未见版本行）",
+        "page": 2,
+        "printed_page_label": null,
+        "section": "懷孕、泌乳、具生育能力之女性與男性—懷孕",
+        "key_text": "懷孕第一孕期不應使用 ondansetron。",
+        "evidence_span": {
+          "text": "懷孕第一孕期不應使用 ondansetron。",
+          "char_start": 593,
+          "char_end": 616
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-vomiz-for-iv-injection-2mg-ml",
+      "title": "莫尼茲靜脈注射劑2毫克/毫升（VOMIZ for IV INJECTION 2MG/ML，ondansetron）仿單",
+      "rank": 4,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "該頁僅此句明確規定懷孕第一孕期禁止使用ondansetron，是回答此問題的唯一條款。",
+      "selected": true
+    }
+  },
+  {
+    "query": "莫尼茲靜脈注射劑(Vomiz)未開封前應如何儲存，保存期限為多久？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "c96703065f145c812f38466a545fe62d0dbe6c566d380892d1702a720dd6c1ce",
+        "version_label": "pdf-meta 2021-01-07（未见版本行）",
+        "page": 3,
+        "printed_page_label": null,
+        "section": "保存期限及儲存條件",
+        "key_text": "儲存於 25°C以下,保存期限為 2 年",
+        "evidence_span": {
+          "text": "Ondansetron 注射劑:儲存於 25°C以下,保存期限為 2 年。須避光儲存。",
+          "char_start": 1732,
+          "char_end": 1775
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-vomiz-for-iv-injection-2mg-ml",
+      "title": "莫尼茲靜脈注射劑2毫克/毫升（VOMIZ for IV INJECTION 2MG/ML，ondansetron）仿單",
+      "rank": 5,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "該頁僅此條款說明本品的儲存溫度、保存期限與避光要求，是回答儲存問題的唯一依據。",
+      "selected": false
+    }
+  },
+  {
+    "query": "老年人接受手術以預防或治療術後噁心嘔吐時，使用莫尼茲注射劑的臨床經驗與耐受性資料為何？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "c96703065f145c812f38466a545fe62d0dbe6c566d380892d1702a720dd6c1ce",
+        "version_label": "pdf-meta 2021-01-07（未见版本行）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "用法、用量—手術引起之噁心嘔吐(PONV)—老年人",
+        "key_text": "Ondansetron 用於老年人,以預防或治療手術引起之噁心嘔吐的經驗有限,但接受化療的 65 歲以上病人對 ondansetron 的耐受性良好。",
+        "evidence_span": {
+          "text": "Ondansetron 用於老年人,以預防或治療手術引起之噁心嘔吐的經驗有限,但接受化療的 65 歲以上病人對 ondansetron 的耐受性良好。",
+          "char_start": 546,
+          "char_end": 621
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-vomiz-for-iv-injection-2mg-ml",
+      "title": "莫尼茲靜脈注射劑2毫克/毫升（VOMIZ for IV INJECTION 2MG/ML，ondansetron）仿單",
+      "rank": 6,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "該頁僅此句描述老年人於術後噁心嘔吐情境下使用ondansetron的臨床經驗與耐受性資料，為唯一相關條款。",
+      "selected": false
+    }
+  },
+  {
+    "query": "穩壓膜衣錠50毫克對本項產品成分過敏的病人可以使用嗎?",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "negation",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "81069adaf87d21e640d9b5cbc83a799a59a33acbdc4ead46ed338c9ad6d06b3a",
+        "version_label": "B版 104.10.27（2015-10-27）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "禁忌症",
+        "key_text": "本藥禁用於對本項產品任何組成過敏者",
+        "evidence_span": {
+          "text": "禁忌症:本藥禁用於對本項產品任何組成過敏者。",
+          "char_start": 2979,
+          "char_end": 3001
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-zosaa-50mg",
+      "title": "穩壓膜衣錠50毫克（Zosaa F.C. Tablets 50mg, losartan potassium）仿單",
+      "rank": 1,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "頁文本中僅有此條款明確規範對本產品任何組成過敏者之禁忌,可唯一回答此問題。",
+      "selected": true
+    }
+  },
+  {
+    "query": "穩壓膜衣錠50毫克用於治療第Ⅱ型糖尿病腎病變時,起始劑量應如何給予?",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "dose_unit",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "81069adaf87d21e640d9b5cbc83a799a59a33acbdc4ead46ed338c9ad6d06b3a",
+        "version_label": "B版 104.10.27（2015-10-27）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "劑量及用法",
+        "key_text": "治療第 Ⅱ型糖尿病腎病變:一般起始劑量為每次 50mg,每日一次",
+        "evidence_span": {
+          "text": "治療第 Ⅱ型糖尿病腎病變:一般起始劑量為每次 50mg,每日一次。視血壓下降情形,可將劑量增加至每次 100mg,每日一次。",
+          "char_start": 2361,
+          "char_end": 2423
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-zosaa-50mg",
+      "title": "穩壓膜衣錠50毫克（Zosaa F.C. Tablets 50mg, losartan potassium）仿單",
+      "rank": 2,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "頁文本中僅此條款針對第Ⅱ型糖尿病腎病變適應症給出起始劑量與調整方式,為唯一答案。",
+      "selected": true
+    }
+  },
+  {
+    "query": "穩壓膜衣錠50毫克治療高血壓後,大約多久可達到最大降壓效果?",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "time_window",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "81069adaf87d21e640d9b5cbc83a799a59a33acbdc4ead46ed338c9ad6d06b3a",
+        "version_label": "B版 104.10.27（2015-10-27）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "劑量及用法",
+        "key_text": "治療後 3~6 週可獲得最大降壓效果",
+        "evidence_span": {
+          "text": "在治療後 3~6 週可獲得最大降壓效果",
+          "char_start": 2140,
+          "char_end": 2159
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-zosaa-50mg",
+      "title": "穩壓膜衣錠50毫克（Zosaa F.C. Tablets 50mg, losartan potassium）仿單",
+      "rank": 3,
+      "status": "ok",
+      "problems": [],
+      "warnings": [],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "頁文本中僅此處說明本藥達到最大降壓效果所需之時間窗,可唯一回答此問題。",
+      "selected": false
+    }
+  },
+  {
+    "query": "穩壓膜衣錠50毫克用於腎功能受損患者(包括洗腎病人)時,是否需要調整起始劑量?",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "negation",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": null,
+        "source_hash": "81069adaf87d21e640d9b5cbc83a799a59a33acbdc4ead46ed338c9ad6d06b3a",
+        "version_label": "B版 104.10.27（2015-10-27）",
+        "page": 1,
+        "printed_page_label": null,
+        "section": "劑量及用法",
+        "key_text": "老年患者或腎功能受損患者,包括洗腎病人,毋須調整其起始劑量",
+        "evidence_span": {
+          "text": "對老年患者或腎功能受損患者,包括洗腎病人,毋須調整其起始劑量;但對有肝功能受損病史之患者,需考慮改用較低之劑量(參見注意事項)。",
+          "char_start": 2283,
+          "char_end": 2347
+        }
+      }
+    ],
+    "notes": "",
+    "_draft": {
+      "document_key": "tfda-label-zosaa-50mg",
+      "title": "穩壓膜衣錠50毫克（Zosaa F.C. Tablets 50mg, losartan potassium）仿單",
+      "rank": 4,
+      "status": "ok",
+      "problems": [],
+      "warnings": [
+        "negation: no negation/limitation word in span"
+      ],
+      "key_status": "exact",
+      "span_status": "exact",
+      "query_en": null,
+      "rationale": "頁文本中僅此條款明確指出腎功能受損患者(含洗腎病人)毋須調整起始劑量,為唯一可回答此問題之條款。",
+      "selected": false
+    }
+  }
+]

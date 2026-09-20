@@ -1,0 +1,229 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://medy.local/evals/main_set/candidate.schema.json",
+  "title": "CorpusCandidateList",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "candidate_list_version",
+    "policy",
+    "compiled_at",
+    "compiled_by",
+    "candidates"
+  ],
+  "properties": {
+    "candidate_list_version": {
+      "type": "string",
+      "pattern": "^v[0-9]+(\\.[0-9]+)?$"
+    },
+    "policy": {
+      "const": "ADR-0003"
+    },
+    "compiled_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "compiled_by": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "candidates": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/candidate"
+      }
+    }
+  },
+  "$defs": {
+    "status": {
+      "enum": [
+        "eligible",
+        "research_only",
+        "needs_review",
+        "rejected"
+      ]
+    },
+    "candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "candidate_id",
+        "title",
+        "publisher",
+        "language",
+        "doc_type",
+        "owner_dept",
+        "landing_url",
+        "pdf_url",
+        "version_or_date",
+        "registry_id",
+        "license_status",
+        "license_evidence",
+        "third_party_note",
+        "reasoning",
+        "fetch_verified",
+        "fetched_at",
+        "reviewer_decision",
+        "reviewer_note",
+        "notes"
+      ],
+      "properties": {
+        "candidate_id": {
+          "type": "string",
+          "pattern": "^cand-[0-9]{4}$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 300
+        },
+        "publisher": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "language": {
+          "enum": [
+            "zh-Hans",
+            "zh-Hant",
+            "en",
+            "mixed"
+          ]
+        },
+        "doc_type": {
+          "enum": [
+            "label",
+            "protocol",
+            "sop",
+            "guideline"
+          ]
+        },
+        "owner_dept": {
+          "enum": [
+            "MA",
+            "PV",
+            "CO"
+          ]
+        },
+        "landing_url": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https?://"
+        },
+        "pdf_url": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^https?://"
+        },
+        "version_or_date": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "registry_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 60
+        },
+        "license_status": {
+          "$ref": "#/$defs/status"
+        },
+        "third_party_note": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "reasoning": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 800,
+          "not": {
+            "pattern": "^\\s*(As cand|Same as|同上)"
+          }
+        },
+        "fetch_verified": {
+          "const": true
+        },
+        "fetched_at": {
+          "type": "string",
+          "format": "date"
+        },
+        "reviewer_decision": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/status"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reviewer_note": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 800
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "license_evidence": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "url",
+              "locator",
+              "quote"
+            ],
+            "properties": {
+              "url": {
+                "type": "string",
+                "format": "uri",
+                "pattern": "^https?://"
+              },
+              "locator": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 300
+              },
+              "quote": {
+                "type": "string",
+                "minLength": 5,
+                "maxLength": 2000,
+                "not": {
+                  "pattern": "^\\s*([Ss]ame as|[Ss]ame platform|同上|同 cand|见 cand|見 cand|As cand)"
+                }
+              }
+            }
+          }
+        }
+      },
+      "if": {
+        "properties": {
+          "owner_dept": {
+            "const": "PV"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "notes": {
+            "type": "string",
+            "minLength": 10
+          }
+        }
+      }
+    }
+  }
+}

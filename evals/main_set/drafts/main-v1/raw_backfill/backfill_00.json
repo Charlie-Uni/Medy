@@ -1,0 +1,30 @@
+{
+  "handles": [
+    "ema-gvp-module-ii-rev2#3",
+    "ema-gvp-module-ii-rev2#5",
+    "ema-gvp-module-vi-addendum-ii#3",
+    "ema-gvp-module-vi-addendum-ii#4",
+    "fda-e6r3-gcp-2025#1",
+    "fda-e6r3-gcp-2025#2",
+    "fda-e6r3-gcp-2025#4",
+    "fda-e6r3-gcp-2025#5",
+    "ich-e2c-r2-step4-2012#3",
+    "ich-e2c-r2-step4-2012#4",
+    "ich-e2c-r2-step4-2012#5"
+  ],
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:31:06+00:00",
+  "finished_at": "2026-09-20T16:31:15+00:00",
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "medium",
+  "session_id": "a02775f8-de50-42b5-a55a-51bcc373e274",
+  "input_tokens": 2,
+  "output_tokens": 1078,
+  "cost_usd": 0.03514125,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "f0501266458b803cf6c0a3ffa41c305deaf102394eaf9aa74c09f1c738c7b541",
+  "tools_disabled": true,
+  "reply": "```json\n[\n {\n  \"handle\": \"ema-gvp-module-ii-rev2#3\",\n  \"query_en\": \"For homeopathic medicinal products registered through the simplified registration procedure, is it necessary to maintain and submit a Pharmacovigilance System Master File (PSMF)?\"\n },\n {\n  \"handle\": \"ema-gvp-module-ii-rev2#5\",\n  \"query_en\": \"Do applicants for the simplified registration of traditional herbal medicinal products need to submit a summary of the pharmacovigilance system in the marketing authorisation application?\"\n },\n {\n  \"handle\": \"ema-gvp-module-vi-addendum-ii#3\",\n  \"query_en\": \"How should senders handle the 11 data elements listed in Table VI.Add.II.2 of GVP Module VI Addendum II when submitting ICSRs to EudraVigilance?\"\n },\n {\n  \"handle\": \"ema-gvp-module-vi-addendum-ii#4\",\n  \"query_en\": \"For the data elements in Table VI.Add.II.3 of GVP Module VI Addendum II that may contain personal identifiable information but are needed for signal management and duplicate detection, can senders mask them or leave them blank?\"\n },\n {\n  \"handle\": \"fda-e6r3-gcp-2025#1\",\n  \"query_en\": \"According to ICH E6(R3), under what circumstances can a deviation from or change to the approved trial protocol occur without prior written IRB/IEC approval?\"\n },\n {\n  \"handle\": \"fda-e6r3-gcp-2025#2\",\n  \"query_en\": \"According to ICH E6(R3), can the investigator or institution staff put pressure on subjects to continue participating in a clinical trial?\"\n },\n {\n  \"handle\": \"fda-e6r3-gcp-2025#4\",\n  \"query_en\": \"According to ICH E6(R3), when an IRB/IEC reviews payments to subjects for trial participation, can the amount be entirely contingent upon the subject completing the entire trial?\"\n },\n {\n  \"handle\": \"fda-e6r3-gcp-2025#5\",\n  \"query_en\": \"According to ICH E6(R3), is a subject obligated to provide a reason to the investigator when withdrawing early from a clinical trial?\"\n },\n {\n  \"handle\": \"ich-e2c-r2-step4-2012#3\",\n  \"query_en\": \"Which annex of the ICH E2C(R2) guideline lists the PBRER sections that can be shared with the DSUR (ICH E2F) or the Safety Specification of the Risk Management Plan (ICH E2E)?\"\n },\n {\n  \"handle\": \"ich-e2c-r2-step4-2012#4\",\n  \"query_en\": \"For how long after approval, at minimum, do most regions require newly approved products to submit PBRERs on a 6-month periodicity?\"\n },\n {\n  \"handle\": \"ich-e2c-r2-step4-2012#5\",\n  \"query_en\": \"In Section 14 (Late-Breaking Information) of the PBRER, under what conditions should new individual case reports be included in the report?\"\n }\n]\n```"
+}

@@ -95,3 +95,60 @@ def test_report_renders_systems_groups_and_paired_lines(tmp_path):
         and "| MA | 1 | 1.000 (diagnostic: n < 8) |" in md
     )
     json.dumps(results)  # serialisable as written
+
+
+def test_main_set_flags_split_no_answer_conflict_and_probe_subsets():
+    queries = QUERIES + [
+        Query("ms-0001", "PV", "conflict q", ("negation", "version_conflict"), ("g4",), "en", language="en"),
+        Query("ms-0002", "MA", "no answer q", ("no_answer",), (), "", language="zh"),
+        Query("ms-0003", "CO", "no answer q2", ("no_answer",), (), "", language="zh"),
+    ]
+    mapping = {**MAPPING, "g4": ["c4"]}
+    outcomes = {
+        "pc-0001": outcome("pc-0001", "MA", ["c1"]),
+        "pc-0002": outcome("pc-0002", "PV", ["c2"]),
+        "pc-0003": outcome("pc-0003", "CO", ["c3"]),
+        "ms-0001": outcome("ms-0001", "PV", ["c4"], non_current=1),  # cited, but a historical version leaked too
+        "ms-0002": outcome("ms-0002", "MA", []),  # nothing survives the re-check -> abstains at any threshold
+        "ms-0003": outcome("ms-0003", "CO", ["z1"]),
+    }
+    outcomes["ms-0003"].reranked = [["z1"]] * 2
+    outcomes["ms-0003"].top_score = 0.25
+    flags = {
+        "ms-0001": e.SampleFlags(answerable=True, conflict=True, imported=False),
+        "ms-0002": e.SampleFlags(answerable=False),
+        "ms-0003": e.SampleFlags(answerable=False),
+        **{q.sample_id: e.SampleFlags(imported=True) for q in QUERIES},
+    }
+    s = e.summarize("A2+V", queries, outcomes, mapping, flags=flags, abstain_threshold=0.3)
+    s.pop("_per_query_recall_at_5")
+    assert s["all"]["queries"] == 4  # no-answer samples never enter the Recall@5 denominator
+    assert s["subsets"]["probe_imported"]["queries"] == 3 and s["subsets"]["main_new"]["queries"] == 1
+    assert s["subsets"]["conflict"]["queries"] == 1
+    labels = [g["label"] for g in s["all"]["by_slice"]]
+    assert labels[-1] == "version_conflict" and "long_context" not in labels  # only slices present in the set
+    cf = s["conflict"]
+    assert cf["current_cited_rate"] == 1.0 and cf["historical_not_cited_rate"] == 0.0
+    assert cf["current_cited_and_historical_not_cited_rate"] == 0.0
+    na = s["no_answer"]
+    assert na["queries"] == 2 and na["abstention_accuracy"] == 1.0  # empty list, and 0.25 < 0.3
+    sweep = {r["threshold"]: r["no_answer_accuracy"] for r in na["threshold_sweep"]}
+    assert sweep[0.0] == 0.5 and sweep[0.3] == 1.0 and sweep[0.5] == 1.0
+    assert na["false_abstention_rate_answerable"] == 0.0  # answerable outcomes carry no reranker score here
+    gate = e.gate_view({**s, "leak_violations": []})
+    assert gate["checks"]["abstention_accuracy_ge_0.9"] is True
+    assert gate["checks"]["conflict_current_cited_and_historical_not_cited_rate_is_1"] is False
+    assert gate["scale"] == "probe" and gate["passes_gate"] is False
+
+
+def test_load_sample_flags_reads_answerable_conflict_and_imported(tmp_path):
+    lines = [
+        {"sample_id": "pc-0001", "slices": ["dose_unit"]},
+        {"sample_id": "ms-0001", "slices": ["negation", "version_conflict"]},
+        {"sample_id": "ms-0002", "slices": ["no_answer"], "answerable": False},
+    ]
+    (tmp_path / "samples.jsonl").write_text("".join(json.dumps(x) + "\n" for x in lines), encoding="utf-8")
+    flags = e.load_sample_flags(tmp_path)
+    assert flags["pc-0001"] == e.SampleFlags(answerable=True, conflict=False, imported=True)
+    assert flags["ms-0001"] == e.SampleFlags(answerable=True, conflict=True, imported=False)
+    assert flags["ms-0002"] == e.SampleFlags(answerable=False, conflict=False, imported=False)

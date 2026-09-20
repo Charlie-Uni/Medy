@@ -1,0 +1,25 @@
+{
+  "document_key": "tfda-label-esomepsun-40mg-tablets-sunyet",
+  "source_hash": "70d3d976a3b4ef70d192755440066618dd538d1bdf16659daa255b6f04dcaa81",
+  "pages_sent": [
+    1,
+    2
+  ],
+  "drafting_prompt_sha256": "6ddf3154781b57b9f694350ca27addf18c709543b76c13e946275da0c43fd685",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:41:47+00:00",
+  "finished_at": "2026-09-20T16:42:34+00:00",
+  "prompt_chars": 14292,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "d62d4d2a-2c43-4e08-98e4-7a86126ea67f",
+  "input_tokens": 1,
+  "output_tokens": 4350,
+  "cost_usd": 0.19474875,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "b3ac6badf660d860f698e9ad004e4a995501f5819bbec03598b8519312c6458e",
+  "tools_disabled": true,
+  "reply": "[{\"query\": \"若病患忘記服用一次怡胃適腸溶錠，應該立即補服，還是等到下次服藥時間再正常服用？\", \"query_en\": null, \"topic\": \"忘記服藥處理方式\", \"absence_terms\": [\"忘記服用\", \"漏服\", \"補服\"], \"nearest_clause\": null, \"rationale\": \"文档详细规定了各适应症的每日服药次数与疗程，但完全未说明漏服一次后应如何补救，这是仿单给药信息通常会涵盖却未在本文档中提供的内容。\"}, {\"query\": \"服用怡胃適腸溶錠（Esomeprazole）期間，飲用葡萄柚汁是否會影響其血中濃度或治療效果？\", \"query_en\": null, \"topic\": \"葡萄柚汁交互作用\", \"absence_terms\": [\"葡萄柚\", \"grapefruit\"], \"nearest_clause\": {\"page\": 2, \"text\": \"食物的攝取會延緩並降低esomeprazole的吸收,雖然其對esomeprazole對胃內酸度的作用並無顯著的影響。\"}, \"rationale\": \"文档的药物动力学与交互作用章节列举了众多药物及一般食物对esomeprazole吸收的影响，但完全未提及葡萄柚汁这一常见CYP3A4抑制饮品的相关信息。\"}]"
+}

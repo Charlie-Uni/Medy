@@ -1,0 +1,30 @@
+{
+  "document_key": "tfda-label-lanoxin-digoxin-tablets-0-25mg-b-p",
+  "source_hash": "cb1abe12731f9292a0a49937fb33ba1fe79e1e775883af4be74741c5eaf978ce",
+  "quota": 4,
+  "pages_sent": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "drafting_prompt_sha256": "dacbe907888f4ed16470887911c7529c53ec055928e0f94d003ab9d65b6abf07",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:28:48+00:00",
+  "finished_at": "2026-09-20T16:29:57+00:00",
+  "prompt_chars": 16162,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "c1dc725a-a3fd-46d7-aee4-2eb0b3531f1c",
+  "input_tokens": 1,
+  "output_tokens": 6483,
+  "cost_usd": 0.26213000000000003,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "657440852c14c3a373e3a6c12d5ffab311646bab58e6d4a2ee26280c041e8731",
+  "tools_disabled": true,
+  "reply": "[{\"query\": \"成人及10歲以上兒童使用隆我心錠進行快速口服負荷量給藥時,建議一次給予多少劑量?\", \"query_en\": null, \"slices\": [\"dose_unit\", \"drug_name_zh\"], \"page\": 1, \"section\": \"用法用量\", \"key_text\": \"一次給藥 750 至 1500 微毫克(μg)(0.75~1.5 毫克)\", \"span\": \"成人及 10 歲以上兒童快速口服負荷量:以下列方式正確用藥,病人可快速被毛地黃化(digitalisation ):一次給藥 750 至 1500 微毫克(μg)(0.75~1.5 毫克)。\", \"rationale\": \"只有此處針對成人及10歲以上兒童的快速口服負荷量給出750至1500微毫克的具體劑量,頁內其他劑量段落均對應不同族群或情境。\"}, {\"query\": \"病人已知或懷疑存在副房室路徑但過去無上心室性心律不整病史時,是否可以使用隆我心錠?\", \"query_en\": null, \"slices\": [\"negation\", \"drug_name_zh\"], \"page\": 2, \"section\": \"禁忌症\", \"key_text\": \"若已知或懷疑存在副路徑而無上心室性心律不整病史,同樣也禁用 LANOXIN\", \"span\": \"伴有副房室路徑之上心室性心律不整,例如 Wolff-Parkinson-White 症候群,除非曾評估過該副路徑之電生理特性及 digoxin 對這類特性可能造成之有害作用。若已知或懷疑存在副路徑而無上心室性心律不整病史,同樣也禁用 LANOXIN。\", \"rationale\": \"禁忌症一節中僅此段特別針對「已知或懷疑存在副路徑但無上心室性心律不整病史」此情境明訂禁用LANOXIN,其他禁忌條款均對應不同臨床情境。\"}, {\"query\": \"正在服用隆我心錠的病人若要接受選擇性直流電心臟電擊,應在電擊前多久停用digoxin?\", \"query_en\": null, \"slices\": [\"time_window\", \"drug_name_zh\"], \"page\": 3, \"section\": \"警語和注意事項-直流電心臟電擊\", \"key_text\": \"應在電擊前停用 digoxin 24 小時\", \"span\": \"對於正在服用 digoxin 的病人選擇性使用直流電心臟電擊時,應在電擊前停用 digoxin 24 小時。\", \"rationale\": \"全文僅此句明確規定選擇性直流電心臟電擊前需停用digoxin的具體時間窗(24小時),其他段落僅泛論電擊風險而未給出時限。\"}, {\"query\": \"老年病人使用隆我心錠時,建議的劑量應如何調整?\", \"query_en\": null, \"slices\": [\"drug_name_zh\"], \"page\": 2, \"section\": \"用法用量-老年人\", \"key_text\": \"對於老年人應使用低於非老年人的 LANOXIN 劑量\", \"span\": \"對於老年人應使用低於非老年人的 LANOXIN 劑量,否則會因老年人常有之腎功能障礙及低精瘦體重而影響 LANOXIN 之藥物動力學,之後產生高血清 digoxin 濃度及相關之毒性。應定期監測血清 digoxin 濃度及避免低血鉀。\", \"rationale\": \"此段是文件中唯一針對「老年人」族群給出隆我心錠劑量調整原則與監測建議的條款,其他劑量段落均對應不同族群。\"}, {\"query\": \"甲狀腺功能低下的病人使用隆我心錠時,劑量應如何調整?\", \"query_en\": null, \"slices\": [\"drug_name_zh\"], \"page\": 3, \"section\": \"警語和注意事項-甲狀腺疾病\", \"key_text\": \"甲狀腺功能不全時應減少 digoxin 初始及維持劑量\", \"span\": \"甲狀腺疾病病人使用 digoxin 須小心。甲狀腺功能不全時應減少 digoxin 初始及維持劑量。甲狀腺亢進病人具有相當的 digoxin 抗藥性故須增加劑量。\", \"rationale\": \"此段是唯一針對甲狀腺功能不全病人明確指出應減少digoxin初始及維持劑量的條款,與同段落中甲狀腺亢進病人需增加劑量的條款相區隔。\"}]"
+}

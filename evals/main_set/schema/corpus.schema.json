@@ -1,0 +1,255 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://medy.local/evals/main_set/corpus.schema.json",
+  "title": "PreciseClauseProbeCorpus",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "dataset_version",
+    "documents"
+  ],
+  "properties": {
+    "dataset_version": {
+      "type": "string",
+      "pattern": "^(v|main-v)[0-9]+(\\.[0-9]+)?(-provisional)?$",
+      "description": "Probe set versions `v<N>`; main evaluation set versions `main-v<N>` (spec-m1), `-provisional` while a required review stage is incomplete."
+    },
+    "documents": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/document"
+      }
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "document": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "document_key",
+        "title",
+        "doc_type",
+        "owner_dept",
+        "language",
+        "source_url",
+        "publisher",
+        "license_status",
+        "license_or_terms",
+        "terms_url",
+        "retrieved_at",
+        "version_label",
+        "source_hash",
+        "byte_size",
+        "mime",
+        "pages",
+        "pii_scan",
+        "notes"
+      ],
+      "properties": {
+        "document_key": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{2,63}$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 300
+        },
+        "doc_type": {
+          "enum": [
+            "label",
+            "protocol",
+            "sop",
+            "guideline"
+          ]
+        },
+        "owner_dept": {
+          "enum": [
+            "MA",
+            "PV",
+            "CO"
+          ]
+        },
+        "language": {
+          "enum": [
+            "zh-Hans",
+            "zh-Hant",
+            "en",
+            "mixed"
+          ]
+        },
+        "source_url": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https?://"
+        },
+        "publisher": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "license_status": {
+          "const": "eligible"
+        },
+        "license_or_terms": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "name_or_summary",
+            "permitted_scope",
+            "attribution_required",
+            "attribution_text",
+            "third_party_content_checked",
+            "third_party_note",
+            "verified_at",
+            "verified_by"
+          ],
+          "properties": {
+            "name_or_summary": {
+              "type": "string",
+              "minLength": 5,
+              "maxLength": 300,
+              "not": {
+                "enum": [
+                  "政府公开信息",
+                  "官方来源",
+                  "公开可下载",
+                  "unknown",
+                  "N/A"
+                ]
+              }
+            },
+            "permitted_scope": {
+              "type": "string",
+              "minLength": 5,
+              "maxLength": 300
+            },
+            "attribution_required": {
+              "type": "boolean"
+            },
+            "attribution_text": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "maxLength": 300
+            },
+            "third_party_content_checked": {
+              "const": true
+            },
+            "third_party_note": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "maxLength": 500
+            },
+            "verified_at": {
+              "type": "string",
+              "format": "date"
+            },
+            "verified_by": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64
+            }
+          },
+          "if": {
+            "properties": {
+              "attribution_required": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "attribution_text": {
+                "type": "string",
+                "minLength": 3
+              }
+            }
+          }
+        },
+        "terms_url": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https?://"
+        },
+        "retrieved_at": {
+          "type": "string",
+          "format": "date"
+        },
+        "version_label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "source_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "byte_size": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "mime": {
+          "const": "application/pdf"
+        },
+        "pages": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "pii_scan": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "method",
+            "ruleset_version",
+            "scanned_at"
+          ],
+          "properties": {
+            "status": {
+              "const": "clean"
+            },
+            "method": {
+              "type": "string",
+              "minLength": 1
+            },
+            "ruleset_version": {
+              "type": "string",
+              "minLength": 1
+            },
+            "scanned_at": {
+              "type": "string",
+              "format": "date"
+            }
+          }
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      },
+      "if": {
+        "properties": {
+          "owner_dept": {
+            "const": "PV"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "notes": {
+            "type": "string",
+            "minLength": 10
+          }
+        }
+      }
+    }
+  }
+}

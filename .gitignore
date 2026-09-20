@@ -28,3 +28,8 @@ evals/probe/precise_clause/drafts/*/review/**/input_*.jsonl
 evals/main_set/sources/
 evals/main_set/sources_staging/
 evals/main_set/pages/
+# main-set drafting inputs (full page texts sent to the LLM drafter/reviewer; regenerate with evals/main_set/tools/*.py)
+evals/main_set/drafts/*/inputs/
+evals/main_set/drafts/*/review/input_*.jsonl
+evals/main_set/drafts/*/review/**/input_*.jsonl
+evals/main_set/conflict_fixtures/sources/

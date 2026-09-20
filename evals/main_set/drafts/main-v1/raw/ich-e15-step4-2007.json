@@ -1,0 +1,33 @@
+{
+  "document_key": "ich-e15-step4-2007",
+  "source_hash": "40516566c939436147ade1b076a2e46d716755d3062c1102732ae394cf8e02fc",
+  "quota": 5,
+  "pages_sent": [
+    1,
+    2,
+    3,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "drafting_prompt_sha256": "dacbe907888f4ed16470887911c7529c53ec055928e0f94d003ab9d65b6abf07",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:27:16+00:00",
+  "finished_at": "2026-09-20T16:29:14+00:00",
+  "prompt_chars": 19682,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "cc30b4b9-4638-469d-9102-5b9e88c69d32",
+  "input_tokens": 1,
+  "output_tokens": 13375,
+  "cost_usd": 0.38541125,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "f750ced4a066590ebb64067ceab502ff2f4e86ff86f5f9ce552abbc062e74551",
+  "tools_disabled": true,
+  "reply": "[{\"query\": \"根据ICH E15指南，基因组生物标志物（genomic biomarker）的定义是什么？\", \"query_en\": \"According to the ICH E15 guideline, what is the definition of a genomic biomarker?\", \"slices\": [\"protocol_id\"], \"page\": 5, \"section\": \"2.1 Genomic Biomarker / 2.1.1 Definition\", \"key_text\": \"A measurable DNA and/or RNA characteristic that is an indicator of normal biologic processes, pathogenic processes, and/or response to therapeutic or other interventions.\", \"span\": \"A genomic biomarker is defined as follows: A measurable DNA and/or RNA characteristic that is an indicator of normal biologic processes, pathogenic processes, and/or response to therapeutic or other interventions.\", \"rationale\": \"全文档中只有此处给出“基因组生物标志物”的正式定义，其他章节均未重复该定义句。\"}, {\"query\": \"根据ICH E15，药物遗传学（Pharmacogenetics, PGt）的定义是什么？\", \"query_en\": \"According to ICH E15, how is pharmacogenetics (PGt) defined?\", \"slices\": [\"protocol_id\"], \"page\": 6, \"section\": \"2.2 Pharmacogenomics and Pharmacogenetics / 2.2.1.2 Pharmacogenetics\", \"key_text\": \"The study of variations in DNA sequence as related to drug response.\", \"span\": \"Pharmacogenetics (PGt) is a subset of pharmacogenomics (PGx) and is defined as: The study of variations in DNA sequence as related to drug response.\", \"rationale\": \"该页同时给出PGx与PGt两条定义，问题明确指定PGt，使该条款成为唯一答案。\"}, {\"query\": \"根据ICH E15，已识别（identified）数据和样本是否一般被认为适合用于药物开发的临床试验？\", \"query_en\": \"According to ICH E15, are identified data and samples generally considered appropriate for use in clinical trials in drug development?\", \"slices\": [\"negation\", \"protocol_id\"], \"page\": 7, \"section\": \"2.3.1 Identified Data and Samples\", \"key_text\": \"Identified data and samples are generally not considered appropriate for purposes of clinical trials in drug development.\", \"span\": \"Identified data and samples are generally not considered appropriate for purposes of clinical trials in drug development.\", \"rationale\": \"该页仅有此句明确说明“已识别数据和样本一般不适合用于临床试验”，是唯一能回答该问题的条款。\"}, {\"query\": \"根据ICH E15，匿名化（anonymised）数据和样本是否可以用于对受试者进行临床监测或随访？\", \"query_en\": \"According to ICH E15, can anonymised data and samples be used for clinical monitoring or subject follow-up?\", \"slices\": [\"negation\", \"protocol_id\"], \"page\": 8, \"section\": \"2.3.3 Anonymised Data and Samples\", \"key_text\": \"The use of anonymised data and samples does not allow for clinical monitoring, subject follow-up or the addition of new data from the subject.\", \"span\": \"As anonymised samples and associated data are not traceable back to the subject, it is not possible to undertake actions such as sample withdrawal, or the return of individual results, even at the subject’s request. The use of anonymised data and samples does not allow for clinical monitoring, subject follow-up or the addition of new data from the subject.\", \"rationale\": \"页面中匿名化与匿名两类别均有类似限制句，但仅此句明确限定为“anonymised”类别，使问题答案唯一。\"}, {\"query\": \"根据ICH E15，在某些情况下匿名（anonymous）基因组样本可以关联哪些有限的临床数据？\", \"query_en\": \"According to ICH E15, what limited clinical data can be associated with anonymous genomic samples in some instances?\", \"slices\": [\"dose_unit\", \"protocol_id\"], \"page\": 8, \"section\": \"2.3.4 Anonymous Data and Samples\", \"key_text\": \"samples from subjects with diabetes, male, age 50-55, cholesterol>240 mg/dl\", \"span\": \"In some instances only limited clinical data can be associated with anonymous samples (e.g., samples from subjects with diabetes, male, age 50-55, cholesterol>240 mg/dl).\", \"rationale\": \"该页仅此句给出匿名样本可关联的有限临床数据示例，且含数值单位mg/dl，是唯一符合的条款。\"}, {\"query\": \"根据ICH E15，单一编码（single coded）数据和样本如何追溯回具体受试者？\", \"query_en\": \"According to ICH E15, how can single coded data and samples be traced back to a specific subject?\", \"slices\": [\"protocol_id\"], \"page\": 7, \"section\": \"2.3.2.1 Single Coded Data and Samples\", \"key_text\": \"It is possible to trace the data or samples back to a given individual with the use of a single coding key.\", \"span\": \"Single coded data and samples are usually labelled with a single specific code and do not carry any personal identifiers. It is possible to trace the data or samples back to a given individual with the use of a single coding key. In general, the clinical investigator is responsible fo r maintaining the coding key.\", \"rationale\": \"该页仅此段说明单一编码数据如何借助单一编码密钥追溯至受试者，双重编码的追溯方式在别处描述，故不冲突。\"}, {\"query\": \"根据ICH E15，要将双重编码（double coded）数据或样本追溯回受试者身份，需要具备什么条件？\", \"query_en\": \"According to ICH E15, what is required to trace double coded data or samples back to a subject's identity?\", \"slices\": [\"protocol_id\"], \"page\": 8, \"section\": \"2.3.2.2 Double Coded Data and Samples\", \"key_text\": \"Access to both coding keys is needed to link any data or samples back to a subject identifier.\", \"span\": \"The use of the second code provides additional confidentiality and privacy protection for subjects over the use of a single code. Access to both coding keys is needed to link any data or samples back to a subject identifier.\", \"rationale\": \"只有该句明确指出双重编码需要同时获取两把编码密钥才能追溯至受试者身份，是唯一对应条款。\"}]"
+}

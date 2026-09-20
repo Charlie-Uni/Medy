@@ -1,0 +1,947 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://medy.local/evals/main_set/manifest.schema.json",
+  "title": "MainSetManifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "dataset_id",
+    "dataset_version",
+    "spec_version",
+    "status",
+    "created_at",
+    "frozen_at",
+    "purpose",
+    "source_store",
+    "extraction",
+    "normalization",
+    "minimums",
+    "counts",
+    "reviewers",
+    "review_policy",
+    "pii_ruleset_version",
+    "files",
+    "dataset_hash",
+    "supersedes",
+    "change_reason",
+    "gates",
+    "imported_samples",
+    "second_human_review",
+    "conflict_fixtures"
+  ],
+  "properties": {
+    "dataset_id": {
+      "const": "precise_clause_main"
+    },
+    "dataset_version": {
+      "type": "string",
+      "pattern": "^main-v[0-9]+(\\.[0-9]+)?(-provisional)?$"
+    },
+    "spec_version": {
+      "enum": [
+        "spec-m1"
+      ]
+    },
+    "status": {
+      "enum": [
+        "draft",
+        "frozen"
+      ]
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "frozen_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date"
+    },
+    "purpose": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 500
+    },
+    "source_store": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "location"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "local_path",
+            "object_store"
+          ]
+        },
+        "location": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "extraction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "extractor",
+        "extractor_version",
+        "params",
+        "params_hash"
+      ],
+      "properties": {
+        "extractor": {
+          "type": "string",
+          "minLength": 1
+        },
+        "extractor_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "params": {
+          "type": "object"
+        },
+        "params_hash": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "normalization": {
+      "const": "norm-v1"
+    },
+    "minimums": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "answerable_samples",
+        "no_answer_samples",
+        "conflict_samples",
+        "per_slice",
+        "per_dept",
+        "max_samples_per_document",
+        "documents",
+        "documents_per_dept",
+        "zh_hans_samples",
+        "zh_hant_samples",
+        "en_samples"
+      ],
+      "properties": {
+        "answerable_samples": {
+          "const": 300
+        },
+        "no_answer_samples": {
+          "const": 40
+        },
+        "conflict_samples": {
+          "const": 20
+        },
+        "per_slice": {
+          "const": 20
+        },
+        "per_dept": {
+          "const": 60
+        },
+        "max_samples_per_document": {
+          "const": 8
+        },
+        "documents": {
+          "const": 10
+        },
+        "documents_per_dept": {
+          "const": 3
+        },
+        "zh_hans_samples": {
+          "const": 20
+        },
+        "zh_hant_samples": {
+          "const": 80
+        },
+        "en_samples": {
+          "const": 150
+        }
+      }
+    },
+    "counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "samples",
+        "answerable",
+        "no_answer",
+        "conflict",
+        "derived",
+        "imported",
+        "documents",
+        "per_slice",
+        "per_dept",
+        "per_language"
+      ],
+      "properties": {
+        "samples": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "documents": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "per_slice": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "drug_name_zh",
+            "dose_unit",
+            "negation",
+            "time_window",
+            "protocol_id",
+            "mixed_zh_en",
+            "version_conflict",
+            "no_answer",
+            "long_context"
+          ],
+          "properties": {
+            "drug_name_zh": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "dose_unit": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "negation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "time_window": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "protocol_id": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "mixed_zh_en": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "version_conflict": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "no_answer": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "long_context": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "per_dept": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "MA",
+            "PV",
+            "CO"
+          ],
+          "properties": {
+            "MA": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "PV": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "CO": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "per_language": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "zh-Hans",
+            "zh-Hant",
+            "en",
+            "mixed"
+          ],
+          "properties": {
+            "zh-Hans": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "zh-Hant": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "en": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "mixed": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "answerable": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "no_answer": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "conflict": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "derived": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "imported": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "reviewers": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "$ref": "#/$defs/reviewer"
+      },
+      "allOf": [
+        {
+          "contains": {
+            "required": [
+              "role",
+              "kind"
+            ],
+            "properties": {
+              "role": {
+                "const": "annotator"
+              },
+              "kind": {
+                "const": "human"
+              }
+            }
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "required": [
+              "role",
+              "kind"
+            ],
+            "properties": {
+              "role": {
+                "const": "second_reviewer"
+              },
+              "kind": {
+                "const": "llm"
+              }
+            }
+          },
+          "minContains": 1,
+          "maxContains": 1
+        }
+      ]
+    },
+    "review_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "human_reviewers",
+        "llm_reviewers",
+        "statement"
+      ],
+      "properties": {
+        "human_reviewers": {
+          "const": 1
+        },
+        "llm_reviewers": {
+          "const": 1
+        },
+        "statement": {
+          "const": "人工标注加 LLM 独立复核；不等同于两名独立人工复核。"
+        }
+      }
+    },
+    "review_provenance": {
+      "$ref": "#/$defs/reviewProvenance"
+    },
+    "pii_ruleset_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "files": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 5,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "sha256"
+        ],
+        "properties": {
+          "path": {
+            "enum": [
+              "corpus.json",
+              "samples.jsonl",
+              "review_prompt.md",
+              "acl_probes.jsonl",
+              "pii_exceptions.json"
+            ]
+          },
+          "sha256": {
+            "$ref": "#/$defs/sha256"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "contains": {
+            "properties": {
+              "path": {
+                "const": "corpus.json"
+              }
+            }
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "path": {
+                "const": "samples.jsonl"
+              }
+            }
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "path": {
+                "const": "review_prompt.md"
+              }
+            }
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "path": {
+                "const": "acl_probes.jsonl"
+              }
+            }
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "path": {
+                "const": "pii_exceptions.json"
+              }
+            }
+          },
+          "minContains": 0,
+          "maxContains": 1
+        }
+      ]
+    },
+    "dataset_hash": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/sha256"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "supersedes": {
+      "oneOf": [
+        {
+          "type": "string",
+          "pattern": "^(v|main-v)[0-9]+(\\.[0-9]+)?(-provisional)?$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "change_reason": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 1000
+    },
+    "derived_samples": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rule",
+        "count",
+        "query_language",
+        "drafted_by",
+        "human_confirmation"
+      ],
+      "properties": {
+        "rule": {
+          "type": "string",
+          "minLength": 20
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "query_language": {
+          "const": "en"
+        },
+        "drafted_by": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "id",
+            "model"
+          ],
+          "properties": {
+            "kind": {
+              "const": "llm"
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "model": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "human_confirmation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "annotator_id",
+            "confirmed_on"
+          ],
+          "properties": {
+            "status": {
+              "enum": [
+                "pending",
+                "confirmed"
+              ]
+            },
+            "annotator_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "confirmed_on": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "format": "date"
+            }
+          }
+        }
+      }
+    },
+    "gates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "recall_at_5",
+        "abstention_accuracy",
+        "invalid_version_citation_rate",
+        "conflict_current_cited_rate"
+      ],
+      "properties": {
+        "recall_at_5": {
+          "const": 0.85
+        },
+        "abstention_accuracy": {
+          "const": 0.9
+        },
+        "invalid_version_citation_rate": {
+          "const": 0.0
+        },
+        "conflict_current_cited_rate": {
+          "const": 1.0
+        }
+      }
+    },
+    "imported_samples": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "dataset_id",
+        "dataset_version",
+        "dataset_hash",
+        "path",
+        "samples_sha256",
+        "count",
+        "prompt_hash",
+        "reviewer_id",
+        "statement"
+      ],
+      "properties": {
+        "dataset_id": {
+          "const": "precise_clause_probe"
+        },
+        "dataset_version": {
+          "type": "string",
+          "pattern": "^v[0-9]+(\\.[0-9]+)?$"
+        },
+        "dataset_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "path": {
+          "type": "string",
+          "pattern": "^evals/probe/precise_clause/v[0-9]+(\\.[0-9]+)?/samples\\.jsonl$"
+        },
+        "samples_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "prompt_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "reviewer_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "statement": {
+          "type": "string",
+          "minLength": 20,
+          "maxLength": 600
+        }
+      },
+      "description": "spec-m1 §2: the frozen probe samples merged verbatim (their review blocks keep the probe review prompt hash)"
+    },
+    "second_human_review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "reviewer_id",
+        "statement"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "pending",
+            "complete"
+          ]
+        },
+        "reviewer_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "statement": {
+          "type": "string",
+          "minLength": 20,
+          "maxLength": 600
+        }
+      }
+    },
+    "conflict_fixtures": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "document_key",
+          "archived_document_keys",
+          "synthetic",
+          "source"
+        ],
+        "properties": {
+          "document_key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "archived_document_keys": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "synthetic": {
+            "type": "boolean"
+          },
+          "source": {
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 300
+          }
+        }
+      },
+      "description": "spec-m1 §5: families with an archived version available to version_conflict samples"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "reviewers": {
+            "contains": {
+              "required": [
+                "kind",
+                "model_version"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "llm"
+                },
+                "model_version": {
+                  "pattern": "^service-alias:|backend-version:"
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "review_provenance"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "frozen"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "frozen_at": {
+            "type": "string"
+          },
+          "dataset_hash": {
+            "$ref": "#/$defs/sha256"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "supersedes": {
+            "type": "string"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "change_reason": {
+            "type": "string",
+            "minLength": 5
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "second_human_review": {
+            "properties": {
+              "status": {
+                "const": "pending"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "dataset_version": {
+            "pattern": "-provisional$"
+          }
+        }
+      },
+      "$comment": "spec-m1 §4 item 4: without the second human review the set can only run as main-v<N>-provisional"
+    }
+  ],
+  "$defs": {
+    "reviewProvenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reviewer_id",
+        "version_source",
+        "backend_model_version",
+        "reproducibility_limitations",
+        "artifacts"
+      ],
+      "properties": {
+        "reviewer_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "version_source": {
+          "enum": [
+            "service_alias",
+            "pinned_model_id"
+          ]
+        },
+        "backend_model_version": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "null for a service alias whose backend version is not exposed; the pinned model identifier otherwise (spec-v1.1)"
+        },
+        "reproducibility_limitations": {
+          "type": "string",
+          "minLength": 20,
+          "maxLength": 1000
+        },
+        "artifacts": {
+          "type": "array",
+          "minItems": 12,
+          "maxItems": 12,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "path",
+              "sha256"
+            ],
+            "properties": {
+              "path": {
+                "enum": [
+                  "review_evidence/run_MA.json",
+                  "review_evidence/run_PV.json",
+                  "review_evidence/run_CO.json",
+                  "review_evidence/run_EN.json",
+                  "review_evidence/run_NA.json",
+                  "review_evidence/verdicts_MA.jsonl",
+                  "review_evidence/verdicts_PV.jsonl",
+                  "review_evidence/verdicts_CO.jsonl",
+                  "review_evidence/verdicts_EN.jsonl",
+                  "review_evidence/verdicts_NA.jsonl",
+                  "review_evidence/resolutions.json",
+                  "review_evidence/reviewer_runtime_metadata.json"
+                ]
+              },
+              "sha256": {
+                "$ref": "#/$defs/sha256"
+              }
+            }
+          }
+        },
+        "reasoning_effort": {
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "max"
+          ],
+          "description": "spec-v1.1: the reasoning effort every recorded invocation used; defaults to high when absent"
+        }
+      }
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "reviewer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "role",
+        "kind",
+        "id"
+      ],
+      "properties": {
+        "role": {
+          "enum": [
+            "annotator",
+            "second_reviewer"
+          ]
+        },
+        "kind": {
+          "enum": [
+            "human",
+            "llm"
+          ]
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "model": {
+          "type": "string",
+          "minLength": 1
+        },
+        "model_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "prompt_hash": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "llm"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "model",
+          "model_version",
+          "prompt_hash"
+        ]
+      }
+    }
+  }
+}

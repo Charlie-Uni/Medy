@@ -1,0 +1,29 @@
+{
+  "document_key": "tfda-label-lanoxin-digoxin-tablets-0-25mg-b-p",
+  "source_hash": "cb1abe12731f9292a0a49937fb33ba1fe79e1e775883af4be74741c5eaf978ce",
+  "pages_sent": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "drafting_prompt_sha256": "6ddf3154781b57b9f694350ca27addf18c709543b76c13e946275da0c43fd685",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:41:50+00:00",
+  "finished_at": "2026-09-20T16:42:24+00:00",
+  "prompt_chars": 14842,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "509759ac-4184-48a6-a2e5-e074b01e7c82",
+  "input_tokens": 1,
+  "output_tokens": 2721,
+  "cost_usd": 0.16107375000000002,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "b087f9f953c1d9b76ab036a19d2eb84657090afd183a06d924a845d69e901372",
+  "tools_disabled": true,
+  "reply": "```json\n[\n  {\"query\": \"服用隆我心錠（LANOXIN, digoxin）期間，若同時飲用葡萄柚汁，是否會影響其血中濃度或產生交互作用？\", \"query_en\": null, \"topic\": \"葡萄柚汁交互作用\", \"absence_terms\": [\"葡萄柚\", \"grapefruit\", \"葡萄柚汁\"], \"nearest_clause\": {\"page\": 3, \"text\": \"Digoxin 是 P-糖蛋白(P-glycoprotein)的受質。因此,P-糖蛋白抑制劑可能會強化 digoxin 的吸收及/或降低其腎臟廓清率,進而增加 digoxin 的血液濃度。誘導 P-糖蛋白則會降低 digoxin 血中濃度。\"}, \"rationale\": \"藥師常需確認常見飲食（如葡萄柚汁）對 digoxin 血中濃度的影響，但仿單的藥物交互作用段落雖列出多種 P-糖蛋白抑制劑／誘導劑，卻未提及葡萄柚汁，屬於文件本應涵蓋卻缺漏之事項。\"},\n  {\"query\": \"隆我心錠（LANOXIN Digoxin Tablets）在保存時，除了溫度限制外，是否需要避光保存？\", \"query_en\": null, \"topic\": \"避光保存要求\", \"absence_terms\": [\"避光\", \"遮光\", \"光照\", \"protect from light\"], \"nearest_clause\": {\"page\": 6, \"text\": \"保存期限:詳見外包裝標示。保存條件:請於 25oC 以下儲存。包裝:6-1000 錠瓶裝\"}, \"rationale\": \"藥品保存條件是仿單標準應載明事項，病人/藥師常關心是否需避光，但本文件僅載明溫度上限，未提及是否需避光保存，故無法回答此問題。\"}\n]\n```"
+}

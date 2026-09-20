@@ -1,0 +1,28 @@
+{
+  "document_key": "tfda-label-esomen-40mg",
+  "source_hash": "f80b904f4e2f15a59cb78fe1baed5c1c06b8b975d43dc0291217d64c43e43fbb",
+  "quota": 2,
+  "pages_sent": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "drafting_prompt_sha256": "dacbe907888f4ed16470887911c7529c53ec055928e0f94d003ab9d65b6abf07",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T15:34:30+00:00",
+  "finished_at": "2026-09-20T15:35:32+00:00",
+  "prompt_chars": 16927,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "41b1d3cc-e8e5-4c3d-8708-70d31d4e57d7",
+  "input_tokens": 1,
+  "output_tokens": 5820,
+  "cost_usd": 0.25028,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "e9c8d15d7e32f3434af6804bd4baf5fc0d8b541d998b678c40d1028d05f774db",
+  "tools_disabled": true,
+  "reply": "[\n  {\"query\": \"正在服用「胃所樂」腸溶膜衣錠40毫克的病患，可以併用clopidogrel嗎？\", \"query_en\": null, \"slices\": [\"negation\", \"drug_name_zh\"], \"page\": 1, \"section\": \"警語及注意之事項\", \"key_text\": \"應避免同時使用esomeprazole 和 clopidogrel\", \"span\": \"根據這些數據,應避免同時使用esomeprazole 和 clopidogrel (請參見【與其他藥物之交互作用及其他形式之交互作用】)。\", \"rationale\": \"全文件中僅「警語及注意之事項」段落明確給出應避免esomeprazole與clopidogrel同時使用的建議，其餘章節僅描述交互作用試驗數據，未提出此項限制建議。\"},\n  {\"query\": \"Zollinger Ellison Syndrome (ZES)患者使用「胃所樂」（Esomeprazole）的起始劑量為多少？\", \"query_en\": null, \"slices\": [\"dose_unit\", \"drug_name_zh\"], \"page\": 1, \"section\": \"用法用量－Zollinger Ellison Syndrome (ZES) 之治療\", \"key_text\": \"建議起始起始起始起始劑量為服用 Esomeprazole 40mg 每日 2次\", \"span\": \"Zollinger Ellison Syndrome (ZES) 之治療之治療之治療之治療建議起始起始起始起始劑量為服用 Esomeprazole 40mg 每日 2次,然後再依個別情況調整劑量,並視臨床表徵決定是否需繼續治療。根據臨床試驗結果所示,每日服用 80 至 160mg esomeprazole ,大部分病人之病情可獲得控制。如每日服用劑量達 80mg 以上,需分為每日 2次給藥。\", \"rationale\": \"文件中只有此段針對Zollinger Ellison Syndrome (ZES)之治療給出起始劑量與後續調整方式，其他適應症段落的劑量規定均不適用於ZES。\"},\n  {\"query\": \"使用非類固醇抗發炎藥(NSAID)相關胃潰瘍治療時，胃所樂（Esomeprazole）的劑量與療程為何？\", \"query_en\": null, \"slices\": [\"dose_unit\", \"time_window\", \"drug_name_zh\"], \"page\": 1, \"section\": \"用法用量－需要持續使用非類固醇抗發炎藥(NSAID) 之病患\", \"key_text\": \"NSAID 治療相關之胃潰瘍的治療:一般劑量為20 mg 每天 1次,為期 4-8週\", \"span\": \"-NSAID 治療相關之胃潰瘍的治療:一般劑量為20 mg 每天 1次,為期 4-8週。\", \"rationale\": \"此為文件中唯一針對NSAID治療相關胃潰瘍給出的具體劑量（20 mg每天1次）與療程（4-8週）之條款，與其他適應症之劑量規定互不相同。\"}\n]"
+}

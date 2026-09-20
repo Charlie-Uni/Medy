@@ -1,0 +1,25 @@
+{
+  "document_key": "tfda-label-venton-injection-diclofenac-lita",
+  "source_hash": "3b1d0b7fb71d65e81493f10a46bb1640d2a5635e70621a5e6a38867d8f65aab3",
+  "pages_sent": [
+    1,
+    2
+  ],
+  "drafting_prompt_sha256": "6ddf3154781b57b9f694350ca27addf18c709543b76c13e946275da0c43fd685",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:40:07+00:00",
+  "finished_at": "2026-09-20T16:40:32+00:00",
+  "prompt_chars": 8120,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "20b1124f-d1ba-4751-8986-e9ffe303ced6",
+  "input_tokens": 1,
+  "output_tokens": 2027,
+  "cost_usd": 0.10481750000000001,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "d66f0cf57ba73eb7a8beafa3349db0aa97663cf580aba30cd5dca2f4b79f232c",
+  "tools_disabled": true,
+  "reply": "[{\"query\": \"免痛注射液（待克菲那）與葡萄柚汁併用是否會產生交互作用而影響藥效？\", \"query_en\": null, \"topic\": \"葡萄柚汁交互作用\", \"absence_terms\": [\"葡萄柚\", \"grapefruit\", \"果汁\"], \"nearest_clause\": null, \"rationale\": \"藥物交互作用段落僅列出aspirin、抗凝血劑、ACE抑制劑、利尿劑、鋰鹽、methotrexate、cyclosporine等品項，未提及葡萄柚汁或食物相關交互作用，故無法回答此問題。\"}, {\"query\": \"免痛注射液（待克菲那）安瓿的保存效期（有效期限）為多久？\", \"query_en\": null, \"topic\": \"保存效期\", \"absence_terms\": [\"有效期\", \"保存期限\", \"效期\", \"expiry\"], \"nearest_clause\": {\"page\": 2, \"text\": \"避光儲存於 25°C以下。\"}, \"rationale\": \"文件僅說明儲存溫度與避光條件，未載明產品自製造日起可保存多久的有效期限，故此問題在文件中無答案。\"}]"
+}

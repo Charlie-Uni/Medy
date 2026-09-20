@@ -1,0 +1,26 @@
+{
+  "document_key": "tfda-label-hetlosar-100-losartan-tablets-100mg",
+  "source_hash": "c59161e8c6b42e149351ccc8c1d5ca8337627fa490861e6fb7dceb2bbca13f36",
+  "pages_sent": [
+    1,
+    2,
+    3
+  ],
+  "drafting_prompt_sha256": "6ddf3154781b57b9f694350ca27addf18c709543b76c13e946275da0c43fd685",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:41:20+00:00",
+  "finished_at": "2026-09-20T16:41:50+00:00",
+  "prompt_chars": 13852,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "dabb39d6-c7a6-4f0b-8bb5-e7e2f9dc1c94",
+  "input_tokens": 1,
+  "output_tokens": 2284,
+  "cost_usd": 0.13868,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "7429e1f27331d859416079d399a362c76d7031e512c0912511b0d40809739dec",
+  "tools_disabled": true,
+  "reply": "[{\"query\": \"Hetlosar 100（losartan potassium 100 毫克）口服後的生體可用率（bioavailability）及血漿半衰期為何？\", \"query_en\": null, \"topic\": \"生體可用率與半衰期資料\", \"absence_terms\": [\"生體可用率\", \"bioavailability\", \"半衰期\", \"half-life\"], \"nearest_clause\": {\"page\": 1, \"text\": \"每日一次 losartan (平均劑量約為 0.54-0.77 mg/kg)的藥物動力學已在 50 位年齡大於 1 個月至小於 16 歲患有高血壓的兒孩童上被研究。\"}, \"rationale\": \"藥品仿單通常應載明成人的吸收、生體可用率、半衰期等藥物動力學參數，但本文件僅提及兒童族群的劑量研究，並未給出成人的相關數值，故無法回答此問題。\"}, {\"query\": \"服用 Hetlosar 100 錠劑時若不慎忘記服用一劑，應如何補救或處理？\", \"query_en\": null, \"topic\": \"忘記服藥之處理方式\", \"absence_terms\": [\"忘記服藥\", \"漏服\", \"補服\", \"missed dose\"], \"nearest_clause\": {\"page\": 1, \"text\": \"高血壓大多數病人的一般起始劑量及維持劑量為每次 50 毫克,每日一次;在治療後 3-6 週可獲得最大降壓效果;有些病人在劑量增加至每次100 毫克,每日一次後,其療效更佳。\"}, \"rationale\": \"文件的劑量及用法段落僅說明起始劑量與調整方式，未提及漏服或忘記服藥時應如何補救，屬病人常見但文件未涵蓋的用藥指引問題。\"}]"
+}

@@ -1,0 +1,26 @@
+{
+  "document_key": "tfda-label-vomiz-for-iv-injection-2mg-ml",
+  "source_hash": "c96703065f145c812f38466a545fe62d0dbe6c566d380892d1702a720dd6c1ce",
+  "pages_sent": [
+    1,
+    2,
+    3
+  ],
+  "drafting_prompt_sha256": "6ddf3154781b57b9f694350ca27addf18c709543b76c13e946275da0c43fd685",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:40:55+00:00",
+  "finished_at": "2026-09-20T16:41:21+00:00",
+  "prompt_chars": 15316,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "3d8874ef-92df-4cc2-8203-f92f9d3d7458",
+  "input_tokens": 1,
+  "output_tokens": 2312,
+  "cost_usd": 0.15165499999999998,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "ee1fc072ba41f6e4c85c7936f91c234ff6817351fee79c941683e27dc63eb48c",
+  "tools_disabled": true,
+  "reply": "```json\n[\n  {\"query\": \"莫尼茲靜脈注射劑（ondansetron）與葡萄柚汁併用時，藥物動力學是否會受影響？\", \"query_en\": null, \"topic\": \"葡萄柚汁交互作用\", \"absence_terms\": [\"葡萄柚\", \"grapefruit\", \"西柚\"], \"nearest_clause\": {\"page\": 1, \"text\": \"由於 ondansetron 是經由多種酵素進行代謝,若其中一種酵素的活性被誘導或抑制時(例如:CYP2D6 基因缺乏),會經由其他酵素的代償作用,使得 ondansetron 的整體廓清率或需求劑量幾乎不受影響。\"}, \"rationale\": \"藥物交互作用是仿單常規涵蓋範圍，但文中僅列出 apomorphine、phenytoin/carbamazepine/rifampicin、酒精等具體藥物，未提及葡萄柚汁（CYP3A4 抑制劑）之影響，無條款可回答。\"},\n  {\"query\": \"莫尼茲靜脈注射劑用於未滿1個月的新生兒病患時，建議劑量為何？\", \"query_en\": null, \"topic\": \"新生兒劑量\", \"absence_terms\": [\"新生兒\", \"未滿1個月\", \"neonate\"], \"nearest_clause\": {\"page\": 1, \"text\": \"兒童與青少年(1 個月大至 17 歲)用於在全身麻醉下接受手術的兒童病人,以預防或治療手術引起之噁心嘔吐:ondansetron 可在麻醉誘導之前、期間或之後,或手術之後,由緩慢靜脈注射投予(時間不少於 30 秒),劑量為 0.1 毫克/公斤,最多可給到 4 毫克。\"}, \"rationale\": \"劑量用法段落明確將兒童劑量範圍限定為「1個月大至17歲」，對未滿1個月之新生兒族群未提供任何劑量建議或安全性資訊，屬文件應涵蓋卻未觸及之事項。\"}\n]\n```"
+}

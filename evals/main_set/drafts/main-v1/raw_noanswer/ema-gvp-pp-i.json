@@ -1,0 +1,33 @@
+{
+  "document_key": "ema-gvp-pp-i",
+  "source_hash": "0d68ef884e7293e1ef0fb09fbdbc23f646948c4c9627401336ff98d47886c412",
+  "pages_sent": [
+    1,
+    4,
+    5,
+    8,
+    11,
+    14,
+    20,
+    21,
+    23,
+    24
+  ],
+  "drafting_prompt_sha256": "6ddf3154781b57b9f694350ca27addf18c709543b76c13e946275da0c43fd685",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:42:34+00:00",
+  "finished_at": "2026-09-20T16:43:22+00:00",
+  "prompt_chars": 37635,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "0421741b-a7cc-4445-9849-f4d614fc8426",
+  "input_tokens": 1,
+  "output_tokens": 4452,
+  "cost_usd": 0.19234875,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "d710c1c3d1be595369c018a25261c1b3ac23522525450ac537647f5721b7c307",
+  "tools_disabled": true,
+  "reply": "```json\n[\n  {\n    \"query\": \"根据本指南（GVP P.I），针对疫苗的安全性信号应在收到报告后多少天内完成验证（signal validation）？\",\n    \"query_en\": \"According to this GVP P.I guideline, within how many days after receiving a report should a vaccine safety signal be validated?\",\n    \"topic\": \"疫苗信号验证具体时限\",\n    \"absence_terms\": [\"days\", \"time limit\", \"validate within\", \"timeframe\"],\n    \"nearest_clause\": {\"page\": 24, \"text\": \"Where a signal is based on a single report of a serious adverse event following vaccination, the signal should be validated by the signal identifier (see GVP Module IX and P.I.B.4.).\"},\n    \"rationale\": \"该章节说明疫苗信号应由信号识别人验证，但仅指引参照 GVP Module IX，并未在本文档中给出具体的天数或时限，因此该数值问题在本文档条款中无法作答。\"\n  },\n  {\n    \"query\": \"本指南对疫苗冷链储存所需维持的具体温度范围（如摄氏度）有何规定？\",\n    \"query_en\": \"What specific temperature range (e.g., in Celsius) does this guideline specify for maintaining the vaccine cold chain?\",\n    \"topic\": \"疫苗冷链储存温度范围\",\n    \"absence_terms\": [\"°C\", \"temperature range\", \"storage condition\", \"degrees\"],\n    \"nearest_clause\": {\"page\": 20, \"text\": \"due to possible cold chain and handling deviations, localised action should be considered before escalation to a national recall or quarantine.\"},\n    \"rationale\": \"文档仅在讨论批次质量偏差时提及“冷链偏差”作为潜在原因，但从未给出疫苗储存所需维持的具体温度范围或数值要求，该技术细节不在本章节覆盖范围内。\"\n  }\n]\n```"
+}

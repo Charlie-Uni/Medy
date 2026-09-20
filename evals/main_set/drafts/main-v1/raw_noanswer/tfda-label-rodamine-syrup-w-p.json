@@ -1,0 +1,24 @@
+{
+  "document_key": "tfda-label-rodamine-syrup-w-p",
+  "source_hash": "0c80faec13d3404834be06c3212ccdf81b5e63af80064009d93106ecca47f293",
+  "pages_sent": [
+    1
+  ],
+  "drafting_prompt_sha256": "6ddf3154781b57b9f694350ca27addf18c709543b76c13e946275da0c43fd685",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:40:41+00:00",
+  "finished_at": "2026-09-20T16:40:55+00:00",
+  "prompt_chars": 4145,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "a5f2b419-6639-4251-82c1-6f265f6d4993",
+  "input_tokens": 1,
+  "output_tokens": 1308,
+  "cost_usd": 0.05752375,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "b2dc9e6a7c0499b035cec958954b5b898c723abeb403a07521a8cd1336f624ff",
+  "tools_disabled": true,
+  "reply": "[{\"query\":\"「華盛頓」洛得敏糖漿對於腎功能不全的病人是否需要調整劑量？\",\"query_en\":null,\"topic\":\"腎功能不全劑量調整\",\"absence_terms\":[\"腎功能\",\"腎臟\",\"renal\",\"creatinine clearance\"],\"nearest_clause\":{\"page\":1,\"text\":\"對肝功能嚴重受損的病人,其初始劑量應該降低,因為 Loratadine 的清除率可能降低,建議劑量為每 5mg 或每隔一日 10mg。\"},\"rationale\":\"仿單僅說明肝功能嚴重受損病人的劑量調整，完全未提及腎功能不全病人是否需調整劑量，屬藥師/醫師常會查詢但文件未涵蓋的事項。\"},{\"query\":\"「華盛頓」洛得敏糖漿開瓶後的有效期限（保存期限）是多久？\",\"query_en\":null,\"topic\":\"有效期限\",\"absence_terms\":[\"有效期限\",\"保存期限\",\"expiry\",\"expiration date\"],\"nearest_clause\":{\"page\":1,\"text\":\"【儲存條件】請於室溫(25°C)保存。\"},\"rationale\":\"仿單僅提供儲存溫度條件，未載明產品或開瓶後的有效期限/保存期限，是使用者常會查詢但文件未回答的事項。\"}]"
+}

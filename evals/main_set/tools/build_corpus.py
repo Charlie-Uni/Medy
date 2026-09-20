@@ -239,6 +239,15 @@ def build(
                 "notes": f"候选 {c['candidate_id']}（DEC-011 v0.8，决策人 2026-09-21 确认）；原件 main_set/sources/{sha[:12]}…pdf；pypdf {e['extractor_version']} 抽取 {e['pages']} 页，空白页 {[i for i, n in enumerate(e.get('chars_per_page', []), 1) if n == 0]}",
             }
         )
+    fixtures = REPO / "evals/main_set/conflict_fixtures/corpus_fixture.json"
+    if fixtures.is_file():
+        # synthetic version-conflict fixtures (record 50): only the current records are gold-eligible corpus documents
+        known = {d["document_key"] for d in docs}
+        for rec in json.loads(fixtures.read_text(encoding="utf-8"))["documents"]:
+            if not rec["document_key"].endswith("--synthetic-old") and rec["document_key"] not in known:
+                if only_keys and rec["document_key"] not in only_keys:
+                    continue
+                docs.append(rec)
     corpus = {"dataset_version": "main-v1-provisional", "documents": docs}
     schema = json.loads((REPO / "evals/probe/precise_clause/schema/corpus.schema.json").read_text(encoding="utf-8"))
     jsonschema.validate(corpus, schema)

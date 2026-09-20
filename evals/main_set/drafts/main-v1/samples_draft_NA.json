@@ -1,0 +1,3420 @@
+[
+  {
+    "query": "根据GVP Annex I中Individual case safety report相关定义，严重不良反应ICSR提交给EudraVigilance的具体时限（天数）是多少？",
+    "dept": "PV",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "ema-gvp-annex-i-rev4",
+      "topic": "ICSR提交时限天数",
+      "absence_check": "absence_terms ['15 days', '90 days', 'timeline', 'submission deadline'] 在 ema-gvp-annex-i-rev4 全部 33 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'15 days': 4, '90 days': 1, 'timeline': 20, 'submission deadline': 0}",
+      "document_pages": [
+        1,
+        2,
+        3,
+        7,
+        10,
+        19,
+        20,
+        21,
+        25,
+        26,
+        30,
+        33
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0462",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ema-gvp-annex-i-rev4",
+      "title": "Guideline on good pharmacovigilance practices (GVP) – Annex I – Definitions (Rev 4)",
+      "rank": 2,
+      "warnings": [
+        "some absence_terms are common elsewhere in the corpus (generic term?)"
+      ],
+      "rationale": "该页仅定义ICSR所需的最少数据元素，未给出任何提交时限的具体天数，此类操作性时限属于GVP其他程序性模块内容，不在本定义附录范围内。",
+      "absence_hits": {
+        "15 days": 4,
+        "90 days": 1,
+        "timeline": 20,
+        "submission deadline": 0
+      },
+      "nearest_clause": {
+        "page": 19,
+        "text": "For the purpose of reporting cases of suspected adverse reactions, the minimum data elements for a case are: an identifiable reporter, an identifiable patient, an adverse reaction and a suspect medicinal product (see GVP Annex IV, ICH-E2D Guideline).",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "GVP Module I 规定上市许可持有人将严重不良反应报告提交给主管机关的具体时限是多少天？",
+    "dept": "PV",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "protocol_id"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "ema-gvp-module-i",
+      "topic": "不良反应报告提交时限天数",
+      "absence_check": "absence_terms ['days', '15 days', 'calendar days', 'time limit of'] 在 ema-gvp-module-i 全部 25 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'days': 22, '15 days': 4, 'calendar days': 9, 'time limit of': 0}",
+      "document_pages": [
+        4,
+        8,
+        9,
+        13,
+        14,
+        18,
+        20,
+        22,
+        23,
+        24
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0463",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ema-gvp-module-i",
+      "title": "Guideline on good pharmacovigilance practices (GVP) – GVP Module I – Pharmacovigilance systems and their quality systems",
+      "rank": 2,
+      "warnings": [
+        "some absence_terms are common elsewhere in the corpus (generic term?)"
+      ],
+      "rationale": "文档仅笼统提到“within the legally required time-limits”并指向其他Module，从未在提供页文本中给出具体的天数或计算方式，而这是PV人员会自然关心的操作性问题。",
+      "absence_hits": {
+        "days": 22,
+        "15 days": 4,
+        "calendar days": 9,
+        "time limit of": 0
+      },
+      "nearest_clause": {
+        "page": 8,
+        "text": "the submission of accurate and verifiable data on serious and non-serious adverse reactions to the competent authorities within the legally required time-limits [IR Art 11(1)(c)]",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "根据GVP Module IV,如果被稽核方(auditee)不认同稽核发现被评为critical或major的分级结果,是否存在正式的申诉或复议程序供其提出异议?",
+    "dept": "PV",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "protocol_id"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "ema-gvp-module-iv-rev1",
+      "topic": "被稽核方对稽核发现分级的申诉机制",
+      "absence_check": "absence_terms ['appeal', 'dispute', 'challenge the grading', 'reconsideration'] 在 ema-gvp-module-iv-rev1 全部 12 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'appeal': 3, 'dispute': 1, 'challenge the grading': 0, 'reconsideration': 0}",
+      "document_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0464",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ema-gvp-module-iv-rev1",
+      "title": "Guideline on good pharmacovigilance practices (GVP) – GVP Module IV – Pharmacovigilance audits (Rev 1)",
+      "rank": 2,
+      "warnings": [],
+      "rationale": "文档仅规定审计过程应包含向被稽核方沟通发现并接收反馈的机制,并未说明是否存在或如何启动针对分级结果的正式申诉或复议程序,而这是被稽核方在实务中会关切的问题。",
+      "absence_hits": {
+        "appeal": 3,
+        "dispute": 1,
+        "challenge the grading": 0,
+        "reconsideration": 0
+      },
+      "nearest_clause": {
+        "page": 8,
+        "text": "The audit process should include mechanisms for communicating the audit findings to the auditee and receiving feedback, and reporting the audit findings to management and relevant parties",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "根据GVP Module IX Addendum I，针对妊娠期（pregnancy）患者报告的可疑不良反应，本附录是否规定了专门的signal detection方法？",
+    "dept": "PV",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "protocol_id"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "ema-gvp-module-ix-addendum-i",
+      "topic": "妊娠人群信号检测方法",
+      "absence_check": "absence_terms ['pregnancy', 'pregnant', 'fetal', 'lactation'] 在 ema-gvp-module-ix-addendum-i 全部 10 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'pregnancy': 24, 'pregnant': 14, 'fetal': 4, 'lactation': 6}",
+      "document_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0465",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ema-gvp-module-ix-addendum-i",
+      "title": "Guideline on good pharmacovigilance practices (GVP) – GVP Module IX Addendum I – Methodological aspects of signal detection from spontaneous reports",
+      "rank": 1,
+      "warnings": [
+        "some absence_terms are common elsewhere in the corpus (generic term?)"
+      ],
+      "rationale": "该问题属于Addendum I 'IX.Add I.4 特定患者群体'方法章节的自然延伸范畴，但文档在明确列举'两个可区分群体'时仅提及儿科与老年人群，从未讨论妊娠或哺乳期患者的信号检测方法。",
+      "absence_hits": {
+        "pregnancy": 24,
+        "pregnant": 14,
+        "fetal": 4,
+        "lactation": 6
+      },
+      "nearest_clause": {
+        "page": 8,
+        "text": "Two such groups that can be differentiated in most databases are the youngest and oldest patients.",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "根据GVP Module VI Addendum I，如果上市许可持有人未按规定与EMA或成员国主管当局协作检测重复病例报告，会受到何种处罚或制裁？",
+    "dept": "PV",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "protocol_id"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "ema-gvp-module-vi-addendum-i",
+      "topic": "重复病例协作失职的处罚",
+      "absence_check": "absence_terms ['penalty', 'sanction', 'infringement', 'non-compliance'] 在 ema-gvp-module-vi-addendum-i 全部 19 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'penalty': 3, 'sanction': 1, 'infringement': 3, 'non-compliance': 7}",
+      "document_pages": [
+        3,
+        4,
+        5,
+        8,
+        9,
+        10,
+        12,
+        13,
+        14,
+        16,
+        17,
+        18
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0466",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ema-gvp-module-vi-addendum-i",
+      "title": "Guideline on good pharmacovigilance practices (GVP) – GVP Module VI Addendum I – Duplicate management of suspected adverse reaction reports",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "文档引用了Directive 2001/83/EC中关于重复病例检测协作义务的条款，但通篇未规定不履行该协作义务时应承担的处罚或制裁措施。",
+      "absence_hits": {
+        "penalty": 3,
+        "sanction": 1,
+        "infringement": 3,
+        "non-compliance": 7
+      },
+      "nearest_clause": {
+        "page": 3,
+        "text": "Marketing authorisation holders shall collaborate with the Agency and the Member States in the detection of duplicates of suspected adverse reaction reports",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "根据GVP Module VI Addendum II，EudraVigilance系统中保留的经遮蔽（masked）个人数据的留存期限（retention period）具体是多久？",
+    "dept": "PV",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "protocol_id"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "ema-gvp-module-vi-addendum-ii",
+      "topic": "遮蔽个人数据的留存期限",
+      "absence_check": "absence_terms ['retention period', 'storage period', 'retain', 'data retention'] 在 ema-gvp-module-vi-addendum-ii 全部 14 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'retention period': 4, 'storage period': 0, 'retain': 18, 'data retention': 5}",
+      "document_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0467",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ema-gvp-module-vi-addendum-ii",
+      "title": "Guideline on good pharmacovigilance practices (GVP) – GVP Module VI Addendum II – Masking personal data in ICSRs submitted to EudraVigilance",
+      "rank": 1,
+      "warnings": [
+        "some absence_terms are common elsewhere in the corpus (generic term?)"
+      ],
+      "rationale": "该指南详细规定了哪些字段要遮蔽/留空，属于PV部门用户合理关心的话题，但全文未给出任何关于个人数据在EudraVigilance中保存多久或何时删除的具体期限或规则。",
+      "absence_hits": {
+        "retention period": 4,
+        "storage period": 0,
+        "retain": 18,
+        "data retention": 5
+      },
+      "nearest_clause": {
+        "page": 3,
+        "text": "XML files of ICSRs as submitted by senders will be preserved in their original form by the Agency for regulatory and audit purposes.",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "根据 GVP Module VII，MAH 在 EU 单一评估（single assessment）程序中需要向 EMA 支付多少评估费用（fee）？",
+    "dept": "PV",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "protocol_id"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "ema-gvp-module-vii-rev1",
+      "topic": "EU单一评估程序费用",
+      "absence_check": "absence_terms ['fee', 'cost recovery', 'invoice', '费用'] 在 ema-gvp-module-vii-rev1 全部 68 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'fee': 14, 'cost recovery': 0, 'invoice': 0, '费用': 0}",
+      "document_pages": [
+        5,
+        18,
+        22,
+        23,
+        37,
+        40,
+        41,
+        53,
+        55,
+        56,
+        57
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0468",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ema-gvp-module-vii-rev1",
+      "title": "Guideline on good pharmacovigilance practices (GVP) – GVP Module VII – Periodic safety update report (Rev 1)",
+      "rank": 2,
+      "warnings": [
+        "some absence_terms are common elsewhere in the corpus (generic term?)"
+      ],
+      "rationale": "文件详细描述了EU单一评估的程序时限与角色分工，但作为程序性guideline，从未提及需缴纳的评估费用金额，此类费用由独立的EMA收费法规规定，不属本文件内容。",
+      "absence_hits": {
+        "fee": 14,
+        "cost recovery": 0,
+        "invoice": 0,
+        "费用": 0
+      },
+      "nearest_clause": {
+        "page": 53,
+        "text": "Following receipt of comments, the PRAC Rapporteur/Member State shall prepare an updated assessment report [DIR Art 107e (3)] within 15 days (i.e. by Day 105).",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "GVP Module VIII对非介入性上市后安全性研究（PASS）中患者知情同意书（informed consent form）应包含哪些具体内容有何规定？",
+    "dept": "PV",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "protocol_id"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "ema-gvp-module-viii-rev3",
+      "topic": "知情同意书具体内容要求",
+      "absence_check": "absence_terms ['informed consent form', 'consent content', 'information sheet', '知情同意书'] 在 ema-gvp-module-viii-rev3 全部 28 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'informed consent form': 6, 'consent content': 0, 'information sheet': 2, '知情同意书': 0}",
+      "document_pages": [
+        1,
+        4,
+        11,
+        12,
+        13,
+        19,
+        20,
+        24,
+        26,
+        27
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0469",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ema-gvp-module-viii-rev3",
+      "title": "Guideline on good pharmacovigilance practices (GVP) – GVP Module VIII – Post-authorisation safety studies (Rev 3)",
+      "rank": 2,
+      "warnings": [],
+      "rationale": "该问题询问知情同意书应载明的具体内容要素，但文档第10项仅笼统要求“遵守国家及欧盟关于保障参与者福祉与权利的要求”，未列出知情同意书应包含的任何具体信息条款，因此文档未回答该问题。",
+      "absence_hits": {
+        "informed consent form": 6,
+        "consent content": 0,
+        "information sheet": 2,
+        "知情同意书": 0
+      },
+      "nearest_clause": {
+        "page": 11,
+        "text": "10. Protection of human subjects: safeguards in order to comply with national and European Union requirements for ensuring the well-being and rights of participants in non-interventional post- authorisation safety studies.",
+        "located": "tolerant"
+      }
+    }
+  },
+  {
+    "query": "对于强制性纳入范围内、已届满五年监测期的药品，从额外监测清单中移除需满足哪些具体评估标准或经过何种审核程序？",
+    "dept": "PV",
+    "language": "zh",
+    "slices": [
+      "no_answer"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "ema-gvp-module-x",
+      "topic": "五年期满后移除清单的具体标准",
+      "absence_check": "absence_terms ['removal criteria', 'review', 'assessment for removal', '移除标准'] 在 ema-gvp-module-x 全部 9 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'removal criteria': 0, 'review': 41, 'assessment for removal': 0, '移除标准': 0}",
+      "document_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0470",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ema-gvp-module-x",
+      "title": "Guideline on good pharmacovigilance practices (GVP) – GVP Module X – Additional monitoring",
+      "rank": 2,
+      "warnings": [
+        "some absence_terms are common elsewhere in the corpus (generic term?)"
+      ],
+      "rationale": "文档仅说明Agency负责在预定期限后移除产品，但未说明移除决定所依据的具体评估标准或审核程序，属于文档按体裁本应但未覆盖的操作细节。",
+      "absence_hits": {
+        "removal criteria": 0,
+        "review": 41,
+        "assessment for removal": 0,
+        "移除标准": 0
+      },
+      "nearest_clause": {
+        "page": 6,
+        "text": "is responsible for removing medicinal products from the list after a pre-determined time period;",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "根据GVP Module XV，如果药品上市许可持有人未按约定的时间表发布DHPC或未遵守安全沟通协调要求，将面临何种处罚或制裁？",
+    "dept": "PV",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "protocol_id"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "ema-gvp-module-xv-rev1",
+      "topic": "DHPC违规处罚措施",
+      "absence_check": "absence_terms ['penalty', 'fine', 'sanction', 'infringement'] 在 ema-gvp-module-xv-rev1 全部 20 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'penalty': 3, 'fine': 41, 'sanction': 1, 'infringement': 3}",
+      "document_pages": [
+        1,
+        4,
+        7,
+        10,
+        11,
+        12,
+        13,
+        15,
+        16,
+        17,
+        18,
+        20
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0471",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ema-gvp-module-xv-rev1",
+      "title": "Guideline on good pharmacovigilance practices (GVP) – GVP Module XV – Safety communication (Rev 1)",
+      "rank": 1,
+      "warnings": [
+        "some absence_terms are common elsewhere in the corpus (generic term?)"
+      ],
+      "rationale": "该指南规定了通报与协调的程序性义务，但未涉及不遵守这些义务时应受到的具体处罚或制裁，这属于成员国执法立法范畴而非本指南内容。",
+      "absence_hits": {
+        "penalty": 3,
+        "fine": 41,
+        "sanction": 1,
+        "infringement": 3
+      },
+      "nearest_clause": {
+        "page": 13,
+        "text": "the marketing authorisation holder shall be required to inform the competent authorities in the Member States, the Agency and the European Commission [DIR Art 106a].",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "GVP Module XVI (Rev 3) 是否在文件中列出了可用于包装说明书（package leaflet）的具体核准图案或象形图（pictogram）清单及其各自含义？",
+    "dept": "PV",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "protocol_id"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "ema-gvp-module-xvi-rev3",
+      "topic": "包装说明书核准图案清单",
+      "absence_check": "absence_terms ['approved list', 'pictogram list', 'symbol meaning', '图案清单'] 在 ema-gvp-module-xvi-rev3 全部 43 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'approved list': 0, 'pictogram list': 0, 'symbol meaning': 0, '图案清单': 0}",
+      "document_pages": [
+        1,
+        6,
+        7,
+        11,
+        18,
+        19,
+        31,
+        36,
+        37,
+        38,
+        40
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0472",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ema-gvp-module-xvi-rev3",
+      "title": "Guideline on good pharmacovigilance practices (GVP) – GVP Module XVI – Risk minimisation measures (Rev 3)",
+      "rank": 2,
+      "warnings": [],
+      "rationale": "该问题针对本指南关于包装说明书图案/象形图使用的具体清单，是从事标签合规工作的PV/监管用户会自然提出的问题，但文档只是引用外部的可读性指南来说明原则性要求，并未在本文件内列出具体核准的图案清单及其含义。",
+      "absence_hits": {
+        "approved list": 0,
+        "pictogram list": 0,
+        "symbol meaning": 0,
+        "图案清单": 0
+      },
+      "nearest_clause": {
+        "page": 37,
+        "text": "The Guideline on the Readability of the Labelling and Package Leaflet of Medicinal Products for Human Use32 includes guidance on the use of symbols and pictograms to support text in the PL in ways useful to the patient [DIR Art 62], provided the size of the graphic provides for easy legibility and the meaning of the symbol is clear beyond any doubt.",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "本指南对疫苗冷链储存所需维持的具体温度范围（如摄氏度）有何规定？",
+    "dept": "PV",
+    "language": "zh",
+    "slices": [
+      "no_answer"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "ema-gvp-pp-i",
+      "topic": "疫苗冷链储存温度范围",
+      "absence_check": "absence_terms ['°C', 'temperature range', 'storage condition', 'degrees'] 在 ema-gvp-pp-i 全部 25 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'°C': 21, 'temperature range': 1, 'storage condition': 3, 'degrees': 5}",
+      "document_pages": [
+        1,
+        4,
+        5,
+        8,
+        11,
+        14,
+        20,
+        21,
+        23,
+        24
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0473",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ema-gvp-pp-i",
+      "title": "Guideline on good pharmacovigilance practices (GVP) – Product- or Population-Specific Considerations I: Vaccines for prophylaxis against infectious diseases",
+      "rank": 2,
+      "warnings": [
+        "some absence_terms are common elsewhere in the corpus (generic term?)"
+      ],
+      "rationale": "文档仅在讨论批次质量偏差时提及“冷链偏差”作为潜在原因，但从未给出疫苗储存所需维持的具体温度范围或数值要求，该技术细节不在本章节覆盖范围内。",
+      "absence_hits": {
+        "°C": 21,
+        "temperature range": 1,
+        "storage condition": 3,
+        "degrees": 5
+      },
+      "nearest_clause": {
+        "page": 20,
+        "text": "due to possible cold chain and handling deviations, localised action should be considered before escalation to a national recall or quarantine.",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "本指南对研究者的财务披露（Financial Disclosure，21 CFR Part 54）具体要求是什么？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "protocol_id"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "fda-investigator-responsibilities-2009",
+      "topic": "研究者财务披露要求",
+      "absence_check": "absence_terms ['financial disclosure', 'Part 54', 'conflict of interest'] 在 fda-investigator-responsibilities-2009 全部 18 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'financial disclosure': 0, 'Part 54': 0, 'conflict of interest': 1}",
+      "document_pages": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0474",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "fda-investigator-responsibilities-2009",
+      "title": "Investigator Responsibilities — Protecting the Rights, Safety, and Welfare of Study Subjects (Final, October 2009)",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "文档仅将21 CFR Part 54作为参考条款号列出，并未展开说明财务披露的具体内容或标准，因此该问题在本文档中无法找到答案。",
+      "absence_hits": {
+        "financial disclosure": 0,
+        "Part 54": 0,
+        "conflict of interest": 1
+      },
+      "nearest_clause": {
+        "page": 5,
+        "text": "Investigators and sponsors should refer to 21 CFR Parts 11, 50, 54, 56, and 312 for a more comprehensive listing of FDA's requirements for the conduct of drug and biologics studies.",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "如果研究者未能及时向申办者报告严重不良事件（SAE），FDA会对该研究者采取哪些处罚或资格取消（disqualification）措施？",
+    "dept": "PV",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "fda-investigator-safety-reporting-2021",
+      "topic": "研究者未履行报告义务的处罚",
+      "absence_check": "absence_terms ['disqualification', 'penalty', 'warning letter', 'noncompliance'] 在 fda-investigator-safety-reporting-2021 全部 14 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'disqualification': 0, 'penalty': 3, 'warning letter': 1, 'noncompliance': 7}",
+      "document_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0475",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "fda-investigator-safety-reporting-2021",
+      "title": "Investigator Responsibilities — Safety Reporting for Investigational Drugs and Devices (Final, September 2021)",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "文档详细规定了研究者向申办者报告SAE的时限与内容要求，但完全未涉及研究者未按要求报告时FDA可能采取的处罚、警告信或资格取消程序，这是该指南体裁常涉及但本文档未覆盖的合规后果问题。",
+      "absence_hits": {
+        "disqualification": 0,
+        "penalty": 3,
+        "warning letter": 1,
+        "noncompliance": 7
+      },
+      "nearest_clause": null
+    }
+  },
+  {
+    "query": "根据本指南，申办者的重要方案偏离（important protocol deviation）信息是否需要纳入IND年度报告（21 CFR 312.33 annual report）中提交给FDA？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "protocol_id"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "fda-protocol-deviations-draft-2024",
+      "topic": "方案偏离与IND年度报告",
+      "absence_check": "absence_terms ['annual report', '312.33', 'IND annual report'] 在 fda-protocol-deviations-draft-2024 全部 13 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'annual report': 5, '312.33': 1, 'IND annual report': 2}",
+      "document_pages": [
+        1,
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0476",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "fda-protocol-deviations-draft-2024",
+      "title": "Protocol Deviations for Clinical Investigations of Drugs, Biological Products, and Devices — Guidance for Industry (Draft Guidance)",
+      "rank": 1,
+      "warnings": [
+        "nearest_clause not located (missing)"
+      ],
+      "rationale": "文档详细说明了方案偏离应纳入临床研究报告、DV域及严重不良事件强制报告（312.32等），是申办者自然会追问的报告渠道问题，但全文未提及IND年度报告（312.33）是否需要包含方案偏离信息，属于覆盖空白。",
+      "absence_hits": {
+        "annual report": 5,
+        "312.33": 1,
+        "IND annual report": 2
+      },
+      "nearest_clause": {
+        "page": 10,
+        "text": "In addition to including protocol deviation information in their clinical study reports (see section III.B.1), during the conduct of the clinical investigation, sponsors must report serious and unexpected suspected adverse reactions for drug products under 21 CFR 312.32",
+        "located": "missing"
+      }
+    }
+  },
+  {
+    "query": "根据FDA这份《风险为本临床试验监查》问答指南（2023年4月），发起人在监查中发现重大问题后，须在多少天或多少个工作日内向FDA报告？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "fda-rbm-qa-2023",
+      "topic": "重大监查问题报告FDA的时限",
+      "absence_check": "absence_terms ['days', 'business days', 'timeframe', 'deadline'] 在 fda-rbm-qa-2023 全部 13 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'days': 22, 'business days': 2, 'timeframe': 15, 'deadline': 14}",
+      "document_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0477",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "fda-rbm-qa-2023",
+      "title": "A Risk-Based Approach to Monitoring of Clinical Investigations: Questions and Answers (Final, April 2023)",
+      "rank": 1,
+      "warnings": [
+        "some absence_terms are common elsewhere in the corpus (generic term?)"
+      ],
+      "rationale": "该问题询问指南是否规定向FDA报告重大监查发现的具体时限，属于监查后续沟通范围内的自然问题，但文档仅要求以“timely manner”通报，未给出任何天数或截止时限。",
+      "absence_hits": {
+        "days": 22,
+        "business days": 2,
+        "timeframe": 15,
+        "deadline": 14
+      },
+      "nearest_clause": {
+        "page": 12,
+        "text": "Significant issues identified through monitoring and oversight activities and the actions to be taken should be documented and communicated to the appropriate parties, which may include, but are not limited to (1) sponsor management; (2) sponsor teams; (3) clinical sites; (4) institutional review boards; (5) other relevant parties (for example, DMCs and relevant contract research organizations); and (6) applicable regulatory agencies, including FDA, when appropriate.",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "根据本指南（Oversight of Clinical Investigations — A Risk-Based Approach to Monitoring, 2013），负责集中监测（centralized monitoring）的监测人员应具备哪些资质或培训要求？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "fda-risk-based-monitoring-2013",
+      "topic": "集中监测人员资质培训要求",
+      "absence_check": "absence_terms ['monitor qualifications', 'monitor training', 'credentialing', 'certified'] 在 fda-risk-based-monitoring-2013 全部 22 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'monitor qualifications': 0, 'monitor training': 0, 'credentialing': 0, 'certified': 2}",
+      "document_pages": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        11,
+        12,
+        13,
+        15,
+        16,
+        22
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0478",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "fda-risk-based-monitoring-2013",
+      "title": "Oversight of Clinical Investigations — A Risk-Based Approach to Monitoring (Final, August 2013)",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "该指南多处提及由统计/数据管理人员执行集中监测，但提供的页文本从未规定这些人员应具备的资质或培训标准，属于该指南体裁本应覆盖但未覆盖的事项。",
+      "absence_hits": {
+        "monitor qualifications": 0,
+        "monitor training": 0,
+        "credentialing": 0,
+        "certified": 2
+      },
+      "nearest_clause": {
+        "page": 6,
+        "text": "centralized monitoring of clinical data by statistical and data management personnel",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "根据ICH E10，非劣效性临床试验中确定non-inferiority margin所需的具体样本量计算公式（sample size formula）是什么？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "protocol_id"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "ich-e10-step4-2000",
+      "topic": "非劣效性试验样本量计算公式",
+      "absence_check": "absence_terms ['sample size formula', 'power calculation', 'statistical formula'] 在 ich-e10-step4-2000 全部 35 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'sample size formula': 0, 'power calculation': 1, 'statistical formula': 0}",
+      "document_pages": [
+        10,
+        11,
+        16,
+        19,
+        20,
+        25,
+        27,
+        28,
+        30,
+        32,
+        34
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0479",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e10-step4-2000",
+      "title": "ICH E10: Choice of Control Group and Related Issues in Clinical Trials",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "文档多次讨论非劣效性试验需要较大样本量的概念，属于该指南自然会被问到的问题，但提供的页文本只描述样本量趋势而未给出任何具体计算公式，且该指南明确将统计学细节归于ICH E9，因此这一具体统计公式内容未被涵盖。",
+      "absence_hits": {
+        "sample size formula": 0,
+        "power calculation": 1,
+        "statistical formula": 0
+      },
+      "nearest_clause": {
+        "page": 30,
+        "text": "Because the choice of the margin will therefore be conservative, sample si zes may be very large.",
+        "located": "tolerant"
+      }
+    }
+  },
+  {
+    "query": "ICH E11(R1)对于判定儿科药物开发中应采用完全外推(full extrapolation)、部分外推(partial extrapolation)还是不外推(no extrapolation)的具体标准是什么？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "protocol_id"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "ich-e11-r1-step4-2017",
+      "topic": "外推程度判定标准（完全/部分/不外推）",
+      "absence_check": "absence_terms ['full extrapolation', 'partial extrapolation', 'no extrapolation'] 在 ich-e11-r1-step4-2017 全部 25 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'full extrapolation': 0, 'partial extrapolation': 0, 'no extrapolation': 0}",
+      "document_pages": [
+        2,
+        5,
+        7,
+        8,
+        10,
+        11,
+        12,
+        16,
+        18,
+        22,
+        25
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0480",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e11-r1-step4-2017",
+      "title": "ICH E11(R1): Addendum: Clinical Investigation of Medicinal Products in the Pediatric Population",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "文档明确指出外推的详细判定标准放在第5节，但提供的页文本仅提及该节的主题范围，未给出full/partial/no extrapolation的具体判定标准，故这份文档（就已提供页而言）无法回答该问题。",
+      "absence_hits": {
+        "full extrapolation": 0,
+        "partial extrapolation": 0,
+        "no extrapolation": 0
+      },
+      "nearest_clause": {
+        "page": 16,
+        "text": "Section 5 on APPROACHES TO OPTIMIZE PEDIATRIC DRUG DEVELOPMENT includes enhancement to the topic of pediatric extrapolation, and introduces modelling and simulation (M&S).",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "根据E12A，评估新抗高血压药物时是否需要纳入患者生活质量（quality of life）或患者报告结局的评估？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "ich-e12a-principle-2000",
+      "topic": "生活质量/患者报告结局评估要求",
+      "absence_check": "absence_terms ['quality of life', 'QoL', 'patient-reported outcome'] 在 ich-e12a-principle-2000 全部 10 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'quality of life': 5, 'QoL': 0, 'patient-reported outcome': 5}",
+      "document_pages": [
+        1,
+        2,
+        3,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0481",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e12a-principle-2000",
+      "title": "ICH E12A: Principles for Clinical Evaluation of New Antihypertensive Drugs (ICH consensus principle document)",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "文档详细规定了血压、剂量反应、安全性与联合用药等评估原则，是该体裁指南本应覆盖生活质量或患者报告结局这类疗效补充指标，但提供页文本从未提及此类评估，属明显未覆盖事项。",
+      "absence_hits": {
+        "quality of life": 5,
+        "QoL": 0,
+        "patient-reported outcome": 5
+      },
+      "nearest_clause": null
+    }
+  },
+  {
+    "query": "根据ICH E14,‘thorough QT/QTc study’应纳入多少受试者(sample size)才能保证足够的统计把握度(statistical power)?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "protocol_id"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "ich-e14-step4-2005",
+      "topic": "Thorough QT study样本量要求",
+      "absence_check": "absence_terms ['sample size', 'number of subjects', 'statistical power'] 在 ich-e14-step4-2005 全部 18 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'sample size': 12, 'number of subjects': 7, 'statistical power': 2}",
+      "document_pages": [
+        6,
+        7,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0482",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e14-step4-2005",
+      "title": "ICH E14: The Clinical Evaluation of QT/QTc Interval Prolongation and Proarrhythmic Potential for Non-Antiarrhythmic Drugs",
+      "rank": 1,
+      "warnings": [
+        "some absence_terms are common elsewhere in the corpus (generic term?)"
+      ],
+      "rationale": "文档反复强调该研究须有'high degree of confidence'以侦测临床意义差异,但提供的页文本从未给出具体受试者人数或统计把握度的量化要求,故该问题无法从文档中得到解答。",
+      "absence_hits": {
+        "sample size": 12,
+        "number of subjects": 7,
+        "statistical power": 2
+      },
+      "nearest_clause": {
+        "page": 7,
+        "text": "The confidence in the ability of the study to detect QT/QTc prolongation can be greatly enhanced by the use of a",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "根据ICH E15,双重编码(double coding)中用于连接第一把与第二把编码密钥的具体保存期限是多久?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "protocol_id"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "ich-e15-step4-2007",
+      "topic": "编码密钥保存期限",
+      "absence_check": "absence_terms ['retention period', 'storage duration', 'retained for', 'years'] 在 ich-e15-step4-2007 全部 10 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'retention period': 4, 'storage duration': 0, 'retained for': 4, 'years': 26}",
+      "document_pages": [
+        1,
+        2,
+        3,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0483",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e15-step4-2007",
+      "title": "ICH E15: Definitions for Genomic Biomarkers, Pharmacogenomics, Pharmacogenetics, Genomic Data and Sample Coding Categories",
+      "rank": 1,
+      "warnings": [
+        "some absence_terms are common elsewhere in the corpus (generic term?)"
+      ],
+      "rationale": "文档详细定义了单重/双重编码的追溯机制,但从未规定编码密钥应保存多长时间,而该问题是实际操作中数据管理者会关心的事项。",
+      "absence_hits": {
+        "retention period": 4,
+        "storage duration": 0,
+        "retained for": 4,
+        "years": 26
+      },
+      "nearest_clause": {
+        "page": 8,
+        "text": "In general, the clinical investigator is responsible for maintaining the first coding key and does not have access to the second coding key.",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "根据 ICH E17,多区域临床试验(MRCT)的独立数据监查委员会(DMC)应设置多少名成员或具体组成比例?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "protocol_id"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "ich-e17-step4-2017",
+      "topic": "DMC人数与组成比例",
+      "absence_check": "absence_terms ['number of members', 'composition ratio', 'membership size'] 在 ich-e17-step4-2017 全部 29 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'number of members': 3, 'composition ratio': 0, 'membership size': 0}",
+      "document_pages": [
+        2,
+        4,
+        7,
+        9,
+        11,
+        14,
+        15,
+        16,
+        18,
+        19,
+        21,
+        22,
+        24,
+        28
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0484",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e17-step4-2017",
+      "title": "ICH E17: General Principles for Planning and Design of Multi-Regional Clinical Trials",
+      "rank": 1,
+      "warnings": [
+        "nearest_clause not located (missing)"
+      ],
+      "rationale": "文档多次强调DMC应具代表性并监督MRCT安全性,但从未给出具体人数或各区域代表比例等量化组成要求,提供页面无法回答该问题。",
+      "absence_hits": {
+        "number of members": 3,
+        "composition ratio": 0,
+        "membership size": 0
+      },
+      "nearest_clause": {
+        "page": 22,
+        "text": "the use of a central independent data monitoring committee (with representation from participating regions to adequately assess the context of the trial) should be considered, in order to monitor the accumulating efficacy and/or safety information from the MRCT while maintaining integrity of the ong",
+        "located": "missing"
+      }
+    }
+  },
+  {
+    "query": "根据ICH E19，若在试验中需要从选择性安全性数据收集（selective safety data collection）转为全面安全性数据收集（comprehensive safety data collection），应满足哪些具体的触发标准或决策流程（reversion criteria）？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "protocol_id"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "ich-e19-step4-2022",
+      "topic": "转为全面收集的触发标准",
+      "absence_check": "absence_terms ['trigger', 'threshold', 'reversion criteria', 'decision process'] 在 ich-e19-step4-2022 全部 15 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'trigger': 13, 'threshold': 13, 'reversion criteria': 0, 'decision process': 1}",
+      "document_pages": [
+        1,
+        2,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0485",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e19-step4-2022",
+      "title": "ICH E19: A Selective Approach to Safety Data Collection in Specific Late-Stage Pre-Approval or Post-Approval Clinical Trials",
+      "rank": 1,
+      "warnings": [
+        "some absence_terms are common elsewhere in the corpus (generic term?)"
+      ],
+      "rationale": "指南承认可能需要恢复至全面数据收集，但仅泛泛提及“可能出现担忧”，并未给出任何具体的触发指标、阈值或决策流程，而这是申办方在实施该方法时自然会追问的操作性问题。",
+      "absence_hits": {
+        "trigger": 13,
+        "threshold": 13,
+        "reversion criteria": 0,
+        "decision process": 1
+      },
+      "nearest_clause": {
+        "page": 12,
+        "text": "Concerns may emerge during the conduct of clinical trials utilising selective safety data collection that will require intensification of safety monitoring or reversion to comprehensive safety data collection.",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "若申办者未能在ICH E2A规定的时限内提交快速安全报告，将面临何种监管处罚或制裁？",
+    "dept": "PV",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "ich-e2a-step4-1994",
+      "topic": "逾期报告的处罚措施",
+      "absence_check": "absence_terms ['penalty', 'sanction', 'non-compliance', 'enforcement action'] 在 ich-e2a-step4-1994 全部 12 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'penalty': 3, 'sanction': 1, 'non-compliance': 7, 'enforcement action': 1}",
+      "document_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0486",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e2a-step4-1994",
+      "title": "ICH E2A: Clinical Safety Data Management: Definitions and Standards for Expedited Reporting",
+      "rank": 2,
+      "warnings": [],
+      "rationale": "文档详细规定了快速报告的时限要求，但全文未提及未按时提交时监管机构可采取的处罚或制裁措施，这是PV部门在合规执行层面会关心、但该定义与标准类指南未覆盖的事项。",
+      "absence_hits": {
+        "penalty": 3,
+        "sanction": 1,
+        "non-compliance": 7,
+        "enforcement action": 1
+      },
+      "nearest_clause": {
+        "page": 7,
+        "text": "Regulatory agencies should be notified (e.g., by telephone, facsimile transmission, or in writing) as soon as possible but no later than 7 calendar days after first knowledge by the sponsor that a case qualifies, followed by as complete a report as possible within 8 additional calendar days.",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "根据ICH E2C(R2)，PBRER的Executive Summary（执行摘要）部分具体应包含哪些内容要素？",
+    "dept": "PV",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "protocol_id"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "ich-e2c-r2-step4-2012",
+      "topic": "Executive Summary内容要求",
+      "absence_check": "absence_terms ['Executive Summary should', 'executive summary content', 'summary should include'] 在 ich-e2c-r2-step4-2012 全部 41 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'Executive Summary should': 1, 'executive summary content': 0, 'summary should include': 1}",
+      "document_pages": [
+        2,
+        6,
+        7,
+        8,
+        11,
+        12,
+        13,
+        22,
+        23,
+        25,
+        35,
+        38,
+        41
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0487",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e2c-r2-step4-2012",
+      "title": "ICH E2C(R2): Periodic Benefit-Risk Evaluation Report (PBRER)",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "文档将Executive Summary列为PBRER必备章节标题，但提供的页文本仅列出目录条目，未说明该章节应包含的具体内容要素，属于该体裁应覆盖却未提供的事项。",
+      "absence_hits": {
+        "Executive Summary should": 1,
+        "executive summary content": 0,
+        "summary should include": 1
+      },
+      "nearest_clause": {
+        "page": 13,
+        "text": "Title Page Executive Summary Table of Contents 1. Introduction 2. Worldwide Marketing Approval Status 3. Actions Taken in the Reporting Interval for Safety Reasons",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "根据ICH E2D，定期安全性更新报告（PSUR）应按照多长的时间间隔提交？",
+    "dept": "PV",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "protocol_id"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "ich-e2d-step4-2003",
+      "topic": "PSUR提交频率",
+      "absence_check": "absence_terms ['PSUR submission interval', 'periodic safety update report frequency', 'every six months', 'annual report'] 在 ich-e2d-step4-2003 全部 15 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'PSUR submission interval': 0, 'periodic safety update report frequency': 0, 'every six months': 0, 'annual report': 5}",
+      "document_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0488",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e2d-step4-2003",
+      "title": "ICH E2D: Post-Approval Safety Data Management: Definitions and Standards for Expedited Reporting",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "E2D仅提及非严重ADR应纳入PSUR并援引E2C指南，未给出PSUR的具体提交频率或时间间隔，该信息只能在E2C中找到。",
+      "absence_hits": {
+        "PSUR submission interval": 0,
+        "periodic safety update report frequency": 0,
+        "every six months": 0,
+        "annual report": 5
+      },
+      "nearest_clause": {
+        "page": 10,
+        "text": "Non-serious ADRs should be included in the periodic safety update report according to the ICH E2C guideline.",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "根据ICH E2E指南，定期安全性更新报告（PSUR）应以多长的时间间隔提交给监管机构？",
+    "dept": "PV",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "protocol_id"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "ich-e2e-step4-2004",
+      "topic": "PSUR提交频率",
+      "absence_check": "absence_terms ['PSUR frequency', 'submission interval', 'every six months', 'periodicity'] 在 ich-e2e-step4-2004 全部 20 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'PSUR frequency': 2, 'submission interval': 0, 'every six months': 0, 'periodicity': 8}",
+      "document_pages": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        13,
+        14,
+        15,
+        16,
+        17,
+        19
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0489",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e2e-step4-2004",
+      "title": "ICH E2E: Pharmacovigilance Planning",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "文档在常规药物警戒实践部分仅列出需准备PSUR这一要求，但未规定其具体提交周期或频率，因此该问题在提供页文本中没有答案。",
+      "absence_hits": {
+        "PSUR frequency": 2,
+        "submission interval": 0,
+        "every six months": 0,
+        "periodicity": 8
+      },
+      "nearest_clause": {
+        "page": 10,
+        "text": "o Periodic Safety Update Reports (PSURs).",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "ICH E2F是否规定DSUR文本必须使用申办方所在国官方语言或英语提交?",
+    "dept": "PV",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "ich-e2f-step4-2010",
+      "topic": "DSUR提交所需语言",
+      "absence_check": "absence_terms ['language', 'translation', 'English', 'local language'] 在 ich-e2f-step4-2010 全部 35 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'language': 19, 'translation': 16, 'English': 7, 'local language': 3}",
+      "document_pages": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        16,
+        20,
+        30,
+        31,
+        32,
+        34,
+        35
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0490",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e2f-step4-2010",
+      "title": "ICH E2F: Development Safety Update Report",
+      "rank": 2,
+      "warnings": [
+        "some absence_terms are common elsewhere in the corpus (generic term?)"
+      ],
+      "rationale": "指南仅讨论了DSUR的格式与eCTD结构放置问题,并未提及提交DSUR文本应使用何种语言,该事项显然留给各国/地区法规规定,提供的页文本未涵盖。",
+      "absence_hits": {
+        "language": 19,
+        "translation": 16,
+        "English": 7,
+        "local language": 3
+      },
+      "nearest_clause": {
+        "page": 10,
+        "text": "If a sponsor intends to submit a DSUR in eCTD format, the sponsor should consult with the relevant regulatory authority regarding the appropriate placement of the DSUR in the eCTD structure.",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "根据ICH E3，用于对不良事件进行分组编码的标准不良反应/事件词典（如MedDRA）应采用哪个具体版本？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "protocol_id"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "ich-e3-step4-1995",
+      "topic": "不良事件编码词典版本要求",
+      "absence_check": "absence_terms ['MedDRA', 'dictionary version', 'coding version'] 在 ich-e3-step4-1995 全部 49 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'MedDRA': 22, 'dictionary version': 0, 'coding version': 0}",
+      "document_pages": [
+        10,
+        13,
+        14,
+        21,
+        24,
+        25,
+        28,
+        30,
+        33,
+        34,
+        36,
+        37,
+        41,
+        46
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0491",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e3-step4-1995",
+      "title": "ICH E3: Structure and Content of Clinical Study Reports",
+      "rank": 1,
+      "warnings": [
+        "some absence_terms are common elsewhere in the corpus (generic term?)"
+      ],
+      "rationale": "指南提到应使用标准不良反应/事件词典对不良事件分组，但未指明具体词典名称或版本，属于该体裁文件常被追问却未在提供页文本中解答的技术细节。",
+      "absence_hits": {
+        "MedDRA": 22,
+        "dictionary version": 0,
+        "coding version": 0
+      },
+      "nearest_clause": {
+        "page": 30,
+        "text": "One way to do this is with a standard adverse reaction/events dictionary.",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "根据ICH E6(R3)指南,受试者参与临床试验应获得的具体报酬金额或支付标准是什么?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "protocol_id"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "ich-e6-r3-step4-2025",
+      "topic": "受试者报酬具体金额标准",
+      "absence_check": "absence_terms ['specific amount', 'payment schedule', 'compensation rate', 'monetary sum'] 在 ich-e6-r3-step4-2025 全部 86 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'specific amount': 0, 'payment schedule': 0, 'compensation rate': 0, 'monetary sum': 0}",
+      "document_pages": [
+        2,
+        10,
+        12,
+        16,
+        17,
+        22,
+        23,
+        28,
+        30,
+        50,
+        54,
+        65,
+        69,
+        77
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0492",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e6-r3-step4-2025",
+      "title": "ICH Harmonised Guideline: Guideline for Good Clinical Practice E6(R3) — Final version, adopted 06 January 2025",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "该问题询问受试者报酬的具体金额,而文档仅要求IRB/IEC审查报酬金额与支付方式是否存在胁迫风险(1.2.8),未给出任何具体数额或计算标准,此类具体金额本就超出该原则性指南的规定范畴。",
+      "absence_hits": {
+        "specific amount": 0,
+        "payment schedule": 0,
+        "compensation rate": 0,
+        "monetary sum": 0
+      },
+      "nearest_clause": {
+        "page": 16,
+        "text": "If the trial participants are compensated for their participation in the trial, the IRB/IEC should review both the amount and method of payment to participants to assure that neither presents problems of coercion or undue influence on the trial participants.",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "根据 ICH E7,是否规定在老年人临床试验中必须使用特定的功能状态或衰弱评估量表(如 Karnofsky 或 ADL 量表)来筛选或分层受试者?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "protocol_id"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "ich-e7-step4-1993",
+      "topic": "功能状态/衰弱评估量表要求",
+      "absence_check": "absence_terms ['frailty', 'functional status', 'Karnofsky', 'activities of daily living'] 在 ich-e7-step4-1993 全部 6 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'frailty': 1, 'functional status': 1, 'Karnofsky': 0, 'activities of daily living': 0}",
+      "document_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0493",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e7-step4-1993",
+      "title": "ICH E7: Studies in Support of Special Populations: Geriatrics",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "文档讨论了纳入老年及合并疾病患者的一般原则,但从未提及使用任何具体的功能状态或衰弱评估量表来筛选或分层受试者。",
+      "absence_hits": {
+        "frailty": 1,
+        "functional status": 1,
+        "Karnofsky": 0,
+        "activities of daily living": 0
+      },
+      "nearest_clause": {
+        "page": 4,
+        "text": "It is also important not to exclude unnecessarily patients with concomitant illnesses; it is only by observing such patients that drug-disease interactions can be detected.",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "根据ICH E8(R1)，独立数据监查委员会（DMC）应包含多少名成员及其具体组成要求是什么？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "protocol_id"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "ich-e8-r1-step4-2021",
+      "topic": "DMC成员组成要求",
+      "absence_check": "absence_terms ['number of members', 'composition', 'voting member', 'independent members'] 在 ich-e8-r1-step4-2021 全部 29 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'number of members': 3, 'composition': 13, 'voting member': 0, 'independent members': 0}",
+      "document_pages": [
+        1,
+        3,
+        7,
+        8,
+        9,
+        11,
+        16,
+        19,
+        20,
+        22,
+        24,
+        25
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0494",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e8-r1-step4-2021",
+      "title": "ICH Harmonised Guideline E8(R1): General Considerations for Clinical Studies",
+      "rank": 1,
+      "warnings": [
+        "some absence_terms are common elsewhere in the corpus (generic term?)"
+      ],
+      "rationale": "文档确认研究中需设立独立数据监查委员会并说明其职能及建立时机，但未规定其人数或具体组成要求。",
+      "absence_hits": {
+        "number of members": 3,
+        "composition": 13,
+        "voting member": 0,
+        "independent members": 0
+      },
+      "nearest_clause": {
+        "page": 25,
+        "text": "This group monitors accumulating data while the study is be ing conducted to make recommendations on whether to continue, modify, or terminate a study.",
+        "located": "tolerant"
+      }
+    }
+  },
+  {
+    "query": "根据 ICH E9(R1)，遗漏数据（missing data）比例达到多少百分比或门槛时才需要额外启动更严格的敏感度分析，指南是否给出具体数值标准？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "protocol_id"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "ich-e9-r1-step4-2019",
+      "topic": "遗漏数据比例数值门槛",
+      "absence_check": "absence_terms ['threshold', 'percentage', '%', 'cutoff'] 在 ich-e9-r1-step4-2019 全部 22 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'threshold': 13, 'percentage': 3, '%': 0, 'cutoff': 2}",
+      "document_pages": [
+        1,
+        2,
+        5,
+        8,
+        9,
+        10,
+        14,
+        15,
+        16,
+        18,
+        20,
+        22
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0495",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e9-r1-step4-2019",
+      "title": "ICH E9(R1): Addendum on Estimands and Sensitivity Analysis in Clinical Trials",
+      "rank": 1,
+      "warnings": [
+        "some absence_terms are common elsewhere in the corpus (generic term?)"
+      ],
+      "rationale": "文档仅定性说明遗漏数据比例会影响结果稳健性，从未给出触发额外敏感度分析所需的具体数值门槛。",
+      "absence_hits": {
+        "threshold": 13,
+        "percentage": 3,
+        "%": 0,
+        "cutoff": 2
+      },
+      "nearest_clause": {
+        "page": 16,
+        "text": "depending on the proportion of missing data, this may undermine the robustness of the results (see A.5.).",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "根据本文档，各标准 MedDRA 分析查询(SMQ)（如 SMQ 急性胰腺炎、SMQ 速发严重过敏反应等）的灵敏度、特异度和阳性预测值等验证性能指标具体数值是多少？",
+    "dept": "PV",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "meddra-data-retrieval-ptc-3-26-zh-hans",
+      "topic": "SMQ验证性能指标数值",
+      "absence_check": "absence_terms ['灵敏度', '特异度', '阳性预测值'] 在 meddra-data-retrieval-ptc-3-26-zh-hans 全部 49 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'灵敏度': 0, '特异度': 1, '阳性预测值': 0}",
+      "document_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        44,
+        45,
+        47,
+        48,
+        49
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0496",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "meddra-data-retrieval-ptc-3-26-zh-hans",
+      "title": "MedDRA 数据检索和展示：考虑要点（ICH 认可的 MedDRA 用户数据输出指南，发布版本 3.26）",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "文档在讨论 SMQ 优势时仅笼统提及其“经过验证”，但从未给出任何具体 SMQ 的灵敏度、特异度或阳性预测值等量化验证数据或其计算方法，而这正是用户评估某 SMQ 检索效能时会关心的问题。",
+      "absence_hits": {
+        "灵敏度": 0,
+        "特异度": 1,
+        "阳性预测值": 0
+      },
+      "nearest_clause": {
+        "page": 25,
+        "text": "SMQ 的优势包括 • 应用于多个治疗领域 • 经过验证可重复使用的搜索逻辑 • 交流安全性信息的标准化 • 数据检索的一致性 • 由 MSSO 和 JMO 维护",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "订阅使用 MedDRA 术语集需要缴纳的具体费用标准是多少？",
+    "dept": "PV",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "meddra-intro-guide-25-zh-hans",
+      "topic": "订阅费用标准",
+      "absence_check": "absence_terms ['费用', '订阅费', 'fee', '价格'] 在 meddra-intro-guide-25-zh-hans 全部 62 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'费用': 0, '订阅费': 0, 'fee': 14, '价格': 0}",
+      "document_pages": [
+        8,
+        9,
+        15,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        39,
+        42,
+        50
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0497",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "meddra-intro-guide-25-zh-hans",
+      "title": "MedDRA 入门指南 第 25.0 版（简体中文）",
+      "rank": 1,
+      "warnings": [
+        "some absence_terms are common elsewhere in the corpus (generic term?)"
+      ],
+      "rationale": "订阅方（药企、监管机构）常需了解 MedDRA 授权使用的费用标准，但本指南只描述术语集的内容、结构与编制规则，未提供任何费用或定价相关条款。",
+      "absence_hits": {
+        "费用": 0,
+        "订阅费": 0,
+        "fee": 14,
+        "价格": 0
+      },
+      "nearest_clause": null
+    }
+  },
+  {
+    "query": "使用标准 MedDRA 分析查询 (SMQ) 是否需要向 MSSO 或 ICH 支付额外的许可费用或订阅费？",
+    "dept": "PV",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "meddra-smq-intro-guide-25-zh-hans",
+      "topic": "SMQ使用许可费用",
+      "absence_check": "absence_terms ['许可费', '收费', '订阅费用'] 在 meddra-smq-intro-guide-25-zh-hans 全部 301 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'许可费': 0, '收费': 0, '订阅费用': 0}",
+      "document_pages": [
+        9,
+        10,
+        19,
+        50,
+        74,
+        128,
+        207,
+        295,
+        296,
+        297,
+        298,
+        299,
+        300,
+        301
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0498",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "meddra-smq-intro-guide-25-zh-hans",
+      "title": "标准 MedDRA 分析查询（SMQ）入门指南 第 25.0 版（简体中文）",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "PV用户可能想了解使用SMQ是否涉及额外商业成本,但本指南仅说明该文档随MedDRA发布内容一并提供及可在网站查阅,并未涉及任何许可费用或收费条款,属于该指南体裁本不涵盖的商业事项。",
+      "absence_hits": {
+        "许可费": 0,
+        "收费": 0,
+        "订阅费用": 0
+      },
+      "nearest_clause": {
+        "page": 9,
+        "text": "该文档包含在每次的 MedDRA 发布内容中,还可在 MedDRA 网站的支持性文档页面查阅。",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "MedDRA第25.0版新增的“非感染性心肌炎/心包炎”SMQ具体包含哪些PT术语，其窄搜索和广搜索算法是怎样定义的？",
+    "dept": "PV",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "meddra-whats-new-25-zh-hans",
+      "topic": "新SMQ心肌炎/心包炎算法细节",
+      "absence_check": "absence_terms ['窄搜索', '广搜索', '纳入术语', '算法'] 在 meddra-whats-new-25-zh-hans 全部 18 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'窄搜索': 0, '广搜索': 0, '纳入术语': 0, '算法': 2}",
+      "document_pages": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0499",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "meddra-whats-new-25-zh-hans",
+      "title": "更新内容 MedDRA 第 25.0 版（简体中文）",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "文档只说明该SMQ已新增及其临床用途，并明确将具体纳入术语和搜索算法细节留给另一份《SMQ入门指南》，本文档未给出该信息。",
+      "absence_hits": {
+        "窄搜索": 0,
+        "广搜索": 0,
+        "纳入术语": 0,
+        "算法": 2
+      },
+      "nearest_clause": {
+        "page": 9,
+        "text": "请查看《MedDRA 第 25.0 版 SMQ 入门指南》,了解新 SMQ 非感染性心肌炎/心包炎的详细信息。",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "根據本指引,若通報單位逾期未依「藥品嚴重不良反應通報辦法」規定時限完成通報,將面臨多少罰鍰金額?",
+    "dept": "PV",
+    "language": "zh",
+    "slices": [
+      "no_answer"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "tfda-adr-report-form-guide-4th",
+      "topic": "逾期通報罰鍰金額",
+      "absence_check": "absence_terms ['罰鍰', '罰則', '裁罰'] 在 tfda-adr-report-form-guide-4th 全部 19 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'罰鍰': 0, '罰則': 0, '裁罰': 0}",
+      "document_pages": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0500",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "tfda-adr-report-form-guide-4th",
+      "title": "藥品不良反應通報表填寫指引（第四版）",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "本指引僅說明逾期通報由通報者自行負責,但未提供具體罰鍰金額或裁罰標準,而此為通報單位實際關心的合規後果問題。",
+      "absence_hits": {
+        "罰鍰": 0,
+        "罰則": 0,
+        "裁罰": 0
+      },
+      "nearest_clause": {
+        "page": 6,
+        "text": "未按規定填寫之通報案件,將不予收件或予以退件,退件即代表該案件並未正式通報完成,若因此延誤「藥品嚴重不良反應通報辦法」之通報時限,由通報者自行負責。",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "服用瑪爾胰（glimepiride）期間，飲用葡萄柚汁是否會影響藥效或增加副作用風險？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "tfda-label-amaryl-2-0-tablets",
+      "topic": "葡萄柚汁交互作用",
+      "absence_check": "absence_terms ['葡萄柚', 'grapefruit'] 在 tfda-label-amaryl-2-0-tablets 全部 4 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'葡萄柚': 0, 'grapefruit': 1}",
+      "document_pages": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0501",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "tfda-label-amaryl-2-0-tablets",
+      "title": "瑪爾胰２．０錠（AMARYL 2.0 TABLETS，glimepiride）仿單",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "病患常詢問特定食物（如葡萄柚汁）與口服降血糖藥的交互作用，但本仿單僅泛述飲食對吸收速率的影響，並未列出葡萄柚汁或其他特定果汁的交互作用資訊。",
+      "absence_hits": {
+        "葡萄柚": 0,
+        "grapefruit": 1
+      },
+      "nearest_clause": {
+        "page": 4,
+        "text": "Glimepiride 口服後生體可用率完全。飲食不會影響吸收,僅吸收速率稍微減慢。",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "服用「明德」心壓暢錠100毫克（美托普洛）的病患，若同時服用fluoxetine或paroxetine等CYP2D6抑制劑，是否需要調整劑量？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "tfda-label-cancliol-100mg",
+      "topic": "CYP2D6抑制劑交互作用",
+      "absence_check": "absence_terms ['CYP2D6', 'fluoxetine', 'paroxetine', '抑制劑'] 在 tfda-label-cancliol-100mg 全部 2 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'CYP2D6': 5, 'fluoxetine': 5, 'paroxetine': 0, '抑制劑': 19}",
+      "document_pages": [
+        1,
+        2
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0502",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "tfda-label-cancliol-100mg",
+      "title": "\"明德\"心壓暢錠100毫克（美托普洛）（Cancliol Tablets 100mg, metoprolol tartrate）仿單",
+      "rank": 1,
+      "warnings": [
+        "some absence_terms are common elsewhere in the corpus (generic term?)"
+      ],
+      "rationale": "文檔僅提及與verapamil併用之禁忌，未涵蓋CYP2D6抑制劑（如SSRIs）對本藥代謝之影響，此為醫師處方時常需了解的交互作用事項，但全文未有相關條款。",
+      "absence_hits": {
+        "CYP2D6": 5,
+        "fluoxetine": 5,
+        "paroxetine": 0,
+        "抑制劑": 19
+      },
+      "nearest_clause": {
+        "page": 2,
+        "text": "像其他β-blocker 一樣,本劑不可與 verapamil 倂用。因同時投與 verapamil 和β -blocker 可能引起心搏過緩、低血壓和心收縮不全 (asystole)。",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "服用固栓宜（Carvetone，clopidogrel）期間喝葡萄柚汁，會不會影響藥效或增加出血風險？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "tfda-label-carvetone-f-c-tablets-75-mg",
+      "topic": "葡萄柚汁交互作用",
+      "absence_check": "absence_terms ['葡萄柚', '葡萄柚汁', 'grapefruit'] 在 tfda-label-carvetone-f-c-tablets-75-mg 全部 2 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'葡萄柚': 0, '葡萄柚汁': 0, 'grapefruit': 1}",
+      "document_pages": [
+        1,
+        2
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0503",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "tfda-label-carvetone-f-c-tablets-75-mg",
+      "title": "固栓宜膜衣錠 75 毫克（Carvetone F.C. Tablets 75 mg，clopidogrel）仿單",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "仿單詳列多種藥物交互作用與食物併服建議，但完全未提及葡萄柚汁對clopidogrel代謝或藥效的影響，這是仿單體裁下病人常問卻未涵蓋之飲食交互作用事項。",
+      "absence_hits": {
+        "葡萄柚": 0,
+        "葡萄柚汁": 0,
+        "grapefruit": 1
+      },
+      "nearest_clause": {
+        "page": 1,
+        "text": "Clopidogrel 的建議劑量為每天 75 mg,一天一次,可和食物同時服用或分開服用。",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "使用「信諾隆」靜脈輸注液（ciprofloxacin）治療期間，若同時飲用葡萄柚汁，是否會影響藥效或產生交互作用？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "tfda-label-cinolone-iv-infusion-10-mg-ml",
+      "topic": "葡萄柚汁交互作用",
+      "absence_check": "absence_terms ['葡萄柚', 'grapefruit', '柑橘類果汁'] 在 tfda-label-cinolone-iv-infusion-10-mg-ml 全部 2 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'葡萄柚': 0, 'grapefruit': 1, '柑橘類果汁': 0}",
+      "document_pages": [
+        1,
+        2
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0504",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "tfda-label-cinolone-iv-infusion-10-mg-ml",
+      "title": "“信東”信諾隆靜脈輸注液 10 毫克/毫升（Cinolone IV Infusion 10 mg/mL，ciprofloxacin）仿單",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "文件【藥物交互作用】段落詳列多種藥品（如Theophylline、Tizanidine、Probenecid等）與Ciprofloxacin的交互作用，但完全未提及葡萄柚汁或柑橘類果汁此類常見的食品交互作用議題，屬於仿單體裁本應涵蓋卻未見於本文件的內容。",
+      "absence_hits": {
+        "葡萄柚": 0,
+        "grapefruit": 1,
+        "柑橘類果汁": 0
+      },
+      "nearest_clause": null
+    }
+  },
+  {
+    "query": "服用康肯®（bisoprolol）期間飲用葡萄柚汁，是否會影響其代謝或藥效？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "tfda-label-concor-5",
+      "topic": "葡萄柚汁交互作用",
+      "absence_check": "absence_terms ['葡萄柚', 'grapefruit', '果汁'] 在 tfda-label-concor-5 全部 6 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'葡萄柚': 0, 'grapefruit': 1, '果汁': 0}",
+      "document_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0505",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "tfda-label-concor-5",
+      "title": "康肯５毫克（CONCOR 5，bisoprolol）仿單",
+      "rank": 2,
+      "warnings": [],
+      "rationale": "雖然文件說明 bisoprolol 主要經 CYP3A4 代謝，但交互作用章節僅列出藥物類別（如鈣離子拮抗劑、抗心律不整藥），從未提及葡萄柚汁這類常見的 CYP3A4 抑制食物，故無法回答此問題。",
+      "absence_hits": {
+        "葡萄柚": 0,
+        "grapefruit": 1,
+        "果汁": 0
+      },
+      "nearest_clause": {
+        "page": 1,
+        "text": "bisoprolol fumarate 主要是經由 CYP3A4 所代謝(~95%),經由 CYP2D6 代謝只佔了一小部分。",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "痛風停錠（allopurinol）對於肝功能不全的病人，建議如何調整劑量？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "tfda-label-deurinol-300mg",
+      "topic": "肝功能不全劑量調整",
+      "absence_check": "absence_terms ['肝功能不全', '肝臟疾病劑量', 'hepatic impairment'] 在 tfda-label-deurinol-300mg 全部 10 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'肝功能不全': 10, '肝臟疾病劑量': 0, 'hepatic impairment': 6}",
+      "document_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0506",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "tfda-label-deurinol-300mg",
+      "title": "痛風停錠300毫克（Deurinol Tablets 300mg, allopurinol）仿單",
+      "rank": 1,
+      "warnings": [
+        "some absence_terms are common elsewhere in the corpus (generic term?)"
+      ],
+      "rationale": "仿單提供了依腎功能（肌酸酐清除率）調整劑量的詳細表格，但完全未提及肝功能不全病人應如何調整劑量，屬於仿單應涵蓋卻未涵蓋的劑量調整事項。",
+      "absence_hits": {
+        "肝功能不全": 10,
+        "肝臟疾病劑量": 0,
+        "hepatic impairment": 6
+      },
+      "nearest_clause": {
+        "page": 3,
+        "text": "肌胺酸酐清除率(Creatinine clearance)mL/min 劑量 10 至20 每日200mg 3 至10 每日不超過100mg <3 100mg 超過24 小時間隔,可能是必須的。",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "「胃所樂」腸溶膜衣錠40毫克在建議儲存條件下的有效期限（保存期限）為多久？",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "no_answer",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "tfda-label-esomen-40mg",
+      "topic": "藥品有效期限",
+      "absence_check": "absence_terms ['有效期限', '保存期限', 'expiry', 'shelf life'] 在 tfda-label-esomen-40mg 全部 4 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'有效期限': 2, '保存期限': 5, 'expiry': 3, 'shelf life': 2}",
+      "document_pages": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0507",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "tfda-label-esomen-40mg",
+      "title": "胃所樂腸溶膜衣錠40毫克（Esomen Enteric-Coated Tablets 40mg, esomeprazole）仿單",
+      "rank": 2,
+      "warnings": [],
+      "rationale": "【貯存】一節仅说明储存温度与避光要求，并未标示该药品自制造或包装起算的有效期限或保存期限长度，属于文档未覆盖的规范性事项。",
+      "absence_hits": {
+        "有效期限": 2,
+        "保存期限": 5,
+        "expiry": 3,
+        "shelf life": 2
+      },
+      "nearest_clause": {
+        "page": 4,
+        "text": "儲於 25 °C乾燥避光且孩童不易取得處所。",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "若病患忘記服用一次怡胃適腸溶錠，應該立即補服，還是等到下次服藥時間再正常服用？",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "no_answer",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "tfda-label-esomepsun-40mg-tablets-sunyet",
+      "topic": "忘記服藥處理方式",
+      "absence_check": "absence_terms ['忘記服用', '漏服', '補服'] 在 tfda-label-esomepsun-40mg-tablets-sunyet 全部 2 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'忘記服用': 1, '漏服': 1, '補服': 0}",
+      "document_pages": [
+        1,
+        2
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0508",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "tfda-label-esomepsun-40mg-tablets-sunyet",
+      "title": "怡胃適腸溶錠40毫克（Esomepsun 40mg tablets \"SUNYET\"，esomeprazole）仿單",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "文档详细规定了各适应症的每日服药次数与疗程，但完全未说明漏服一次后应如何补救，这是仿单给药信息通常会涵盖却未在本文档中提供的内容。",
+      "absence_hits": {
+        "忘記服用": 1,
+        "漏服": 1,
+        "補服": 0
+      },
+      "nearest_clause": null
+    }
+  },
+  {
+    "query": "革理蔓錠（Glimepiride）口服後的藥物動力學參數，如吸收速率、半衰期與代謝排除途徑為何？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "tfda-label-glimaryl-tablets-2mg-glimepiride",
+      "topic": "Glimepiride藥物動力學參數",
+      "absence_check": "absence_terms ['半衰期', '吸收', '代謝', '血中濃度'] 在 tfda-label-glimaryl-tablets-2mg-glimepiride 全部 2 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'半衰期': 17, '吸收': 22, '代謝': 25, '血中濃度': 12}",
+      "document_pages": [
+        1,
+        2
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0509",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "tfda-label-glimaryl-tablets-2mg-glimepiride",
+      "title": "\"信東\" 革理蔓錠２毫克（GLIMARYL TABLETS 2MG (GLIMEPIRIDE)，glimepiride）仿單",
+      "rank": 1,
+      "warnings": [
+        "some absence_terms are common elsewhere in the corpus (generic term?)"
+      ],
+      "rationale": "仿單作為藥品核准標籤文件，理應包含藥物動力學章節，但提供的兩頁內容僅涵蓋成分、適應症、劑量調整、交互作用與不良反應，完全未提及吸收、半衰期或代謝排除等藥動學數據。",
+      "absence_hits": {
+        "半衰期": 17,
+        "吸收": 22,
+        "代謝": 25,
+        "血中濃度": 12
+      },
+      "nearest_clause": null
+    }
+  },
+  {
+    "query": "Hetlosar 100（losartan potassium 100 毫克）口服後的生體可用率（bioavailability）及血漿半衰期為何？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "tfda-label-hetlosar-100-losartan-tablets-100mg",
+      "topic": "生體可用率與半衰期資料",
+      "absence_check": "absence_terms ['生體可用率', 'bioavailability', '半衰期', 'half-life'] 在 tfda-label-hetlosar-100-losartan-tablets-100mg 全部 3 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'生體可用率': 10, 'bioavailability': 12, '半衰期': 17, 'half-life': 3}",
+      "document_pages": [
+        1,
+        2,
+        3
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0510",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "tfda-label-hetlosar-100-losartan-tablets-100mg",
+      "title": "特釋壓膜衣錠100毫克（Hetlosar 100 (Losartan Tablets 100mg)，losartan）仿單",
+      "rank": 1,
+      "warnings": [
+        "some absence_terms are common elsewhere in the corpus (generic term?)"
+      ],
+      "rationale": "藥品仿單通常應載明成人的吸收、生體可用率、半衰期等藥物動力學參數，但本文件僅提及兒童族群的劑量研究，並未給出成人的相關數值，故無法回答此問題。",
+      "absence_hits": {
+        "生體可用率": 10,
+        "bioavailability": 12,
+        "半衰期": 17,
+        "half-life": 3
+      },
+      "nearest_clause": {
+        "page": 1,
+        "text": "每日一次 losartan (平均劑量約為 0.54-0.77 mg/kg)的藥物動力學已在 50 位年齡大於 1 個月至小於 16 歲患有高血壓的兒孩童上被研究。",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "服用「安星」伊風柔錠300毫克（allopurinol）期間，是否會影響駕駛或操作機械的能力？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "tfda-label-ifonol-tablets-300mg-astar",
+      "topic": "駕駛/操作機械能力影響",
+      "absence_check": "absence_terms ['駕駛', '操作機械', 'driving', 'machinery'] 在 tfda-label-ifonol-tablets-300mg-astar 全部 9 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'駕駛': 6, '操作機械': 6, 'driving': 0, 'machinery': 0}",
+      "document_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0511",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "tfda-label-ifonol-tablets-300mg-astar",
+      "title": "\"安星\"伊風柔錠300毫克（Ifonol Tablets 300mg \"Astar\"，allopurinol）仿單",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "仿單雖提及嗜睡為可能不良反應之一，但未就其對駕駛或操作機械能力之影響作出任何說明或警語，屬仿單常見章節但本文件未涵蓋的事項。",
+      "absence_hits": {
+        "駕駛": 6,
+        "操作機械": 6,
+        "driving": 0,
+        "machinery": 0
+      },
+      "nearest_clause": {
+        "page": 6,
+        "text": "如有嗜睡(睏倦)發生時要留意。",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "根據樂癲活持續釋放膜衣錠25毫克（Lamofree ER Tablets 25mg）仿單，服用本藥期間是否會影響病患駕駛車輛或操作機械的能力？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "tfda-label-lamofree-er-tablets-25mg",
+      "topic": "駕駛/操作機械能力影響",
+      "absence_check": "absence_terms ['駕駛', '操作機械', 'machinery'] 在 tfda-label-lamofree-er-tablets-25mg 全部 15 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'駕駛': 6, '操作機械': 6, 'machinery': 0}",
+      "document_pages": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0512",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "tfda-label-lamofree-er-tablets-25mg",
+      "title": "樂癲活持續釋放膜衣錠25毫克（Lamofree ER Tablets 25mg，lamotrigine）仿單",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "文档列出頭暈、複視、顫抖等神經系統不良反應，但全篇未就這些反應對駕駛或操作機械能力提出任何具體警語或建議，此為仿單常見但本文檔提供頁面未涵蓋之事項。",
+      "absence_hits": {
+        "駕駛": 6,
+        "操作機械": 6,
+        "machinery": 0
+      },
+      "nearest_clause": {
+        "page": 6,
+        "text": "觀察到最常見的不良反應 Lamotrigine 持續釋放劑型與安慰劑的治療差異 4% 為 ( 順序為發生率遞減 ) ︰頭暈、顫抖 / 意向性顫抖、嘔吐及複視。",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "服用隆我心錠（LANOXIN, digoxin）期間，若同時飲用葡萄柚汁，是否會影響其血中濃度或產生交互作用？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "tfda-label-lanoxin-digoxin-tablets-0-25mg-b-p",
+      "topic": "葡萄柚汁交互作用",
+      "absence_check": "absence_terms ['葡萄柚', 'grapefruit', '葡萄柚汁'] 在 tfda-label-lanoxin-digoxin-tablets-0-25mg-b-p 全部 6 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'葡萄柚': 0, 'grapefruit': 1, '葡萄柚汁': 0}",
+      "document_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0513",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "tfda-label-lanoxin-digoxin-tablets-0-25mg-b-p",
+      "title": "隆我心錠（LANOXIN DIGOXIN TABLETS 0.25MG B.P.，digoxin）仿單",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "藥師常需確認常見飲食（如葡萄柚汁）對 digoxin 血中濃度的影響，但仿單的藥物交互作用段落雖列出多種 P-糖蛋白抑制劑／誘導劑，卻未提及葡萄柚汁，屬於文件本應涵蓋卻缺漏之事項。",
+      "absence_hits": {
+        "葡萄柚": 0,
+        "grapefruit": 1,
+        "葡萄柚汁": 0
+      },
+      "nearest_clause": {
+        "page": 3,
+        "text": "Digoxin 是 P-糖蛋白(P-glycoprotein)的受質。因此,P-糖蛋白抑制劑可能會強化 digoxin 的吸收及/或降低其腎臟廓清率,進而增加 digoxin 的血液濃度。誘導 P-糖蛋白則會降低 digoxin 血中濃度。",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "服用美洛醣膜衣錠850毫克（Loformin, metformin）期間，飲用葡萄柚汁是否會影響藥效或增加副作用風險？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "tfda-label-loformin-850mg",
+      "topic": "葡萄柚汁交互作用",
+      "absence_check": "absence_terms ['葡萄柚', 'grapefruit', '柚汁'] 在 tfda-label-loformin-850mg 全部 2 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'葡萄柚': 0, 'grapefruit': 1, '柚汁': 1}",
+      "document_pages": [
+        1,
+        2
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0514",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "tfda-label-loformin-850mg",
+      "title": "美洛醣膜衣錠850毫克（Loformin Film-coated Tablets 850mg, metformin hydrochloride）仿單",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "仿單的藥物交互作用僅列出含碘顯影劑、酒精、升血糖藥物、利尿劑及ACE抑制劑等，完全未提及葡萄柚汁或其他果汁類食物交互作用，但此為病患常見的用藥諮詢問題。",
+      "absence_hits": {
+        "葡萄柚": 0,
+        "grapefruit": 1,
+        "柚汁": 1
+      },
+      "nearest_clause": null
+    }
+  },
+  {
+    "query": "若病人服用 Losacar 100（losartan）緩壓膜衣錠時忘記服用一劑，仿單是否說明應如何補服或跳過該劑？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "tfda-label-losacar-100-tablets",
+      "topic": "忘記服藥之補服方式",
+      "absence_check": "absence_terms ['忘記服用', '補服', '漏服'] 在 tfda-label-losacar-100-tablets 全部 2 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'忘記服用': 1, '補服': 0, '漏服': 1}",
+      "document_pages": [
+        1,
+        2
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0515",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "tfda-label-losacar-100-tablets",
+      "title": "緩壓膜衣錠100毫克（Losacar 100 Tablets，losartan）仿單",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "忘記服藥後如何補救是「劑量及用法」項下常見延伸問題，但文件僅說明起始與維持劑量及調整方式，未提供漏服或補服之處理原則。",
+      "absence_hits": {
+        "忘記服用": 1,
+        "補服": 0,
+        "漏服": 1
+      },
+      "nearest_clause": {
+        "page": 1,
+        "text": "高血壓大多數病人的一般起始劑量及維持劑量為每次 50 毫克,每日一次;在治療後 3-6 週可獲得最大降壓效果;有些病人在劑量增加至每次 100 毫克,每日一次後,其療效更佳。",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "脈得服錠10公絲（PERISAFE，enalapril）應如何貯藏，是否需要避光或冷藏？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "tfda-label-perisafe-tablets-10mg-enalapil",
+      "topic": "貯藏條件",
+      "absence_check": "absence_terms ['貯藏', '室溫', '遮光', '有效期限'] 在 tfda-label-perisafe-tablets-10mg-enalapil 全部 4 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'貯藏': 1, '室溫': 8, '遮光': 0, '有效期限': 2}",
+      "document_pages": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0516",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "tfda-label-perisafe-tablets-10mg-enalapil",
+      "title": "脈得服錠１０公絲（伊那拉普利）（PERISAFE TABLETS 10MG (ENALAPIL)，enalapril）仿單",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "仿單全篇未提供貯藏溫度、避光或有效期限等儲存條件說明，屬仿單應載明卻未見於本文件頁面的事項。",
+      "absence_hits": {
+        "貯藏": 1,
+        "室溫": 8,
+        "遮光": 0,
+        "有效期限": 2
+      },
+      "nearest_clause": null
+    }
+  },
+  {
+    "query": "服用「居禮」拔痛酸錠（Allopurinol）期間，是否會影響病人駕駛或操作機械的能力？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "tfda-label-purinol-tablets",
+      "topic": "駕駛/操作機械能力影響",
+      "absence_check": "absence_terms ['駕駛', '操作機械', 'driving', 'machinery'] 在 tfda-label-purinol-tablets 全部 7 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'駕駛': 6, '操作機械': 6, 'driving': 0, 'machinery': 0}",
+      "document_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0517",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "tfda-label-purinol-tablets",
+      "title": "拔痛酸錠（PURINOL TABLETS，allopurinol）仿單",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "仿單常規會說明藥品對駕駛/操作機械能力之影響，本文件僅提及注意嗜睡副作用，未明確說明對駕駛或操作機械能力的具體建議或警語。",
+      "absence_hits": {
+        "駕駛": 6,
+        "操作機械": 6,
+        "driving": 0,
+        "machinery": 0
+      },
+      "nearest_clause": {
+        "page": 5,
+        "text": "*e. 如有嗜睡(睏倦)發生時要留意。",
+        "located": "tolerant"
+      }
+    }
+  },
+  {
+    "query": "服用喜樂平膜衣錠（Quetiapine）期間，是否需要避免飲用葡萄柚汁以免影響藥物血中濃度？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "tfda-label-quetialin-f-c-tablets-100mg-quetiapine",
+      "topic": "葡萄柚汁交互作用",
+      "absence_check": "absence_terms ['葡萄柚', 'grapefruit', '葡萄柚汁'] 在 tfda-label-quetialin-f-c-tablets-100mg-quetiapine 全部 24 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'葡萄柚': 0, 'grapefruit': 1, '葡萄柚汁': 0}",
+      "document_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0518",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "tfda-label-quetialin-f-c-tablets-100mg-quetiapine",
+      "title": "喜樂平膜衣錠100毫克（Quetialin F.C. Tablets 100mg  (Quetiapine)，quetiapine）仿單",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "仿單7藥物交互作用及12.3藥物動力學已詳列多種P450 3A4抑制劑（Ketoconazole、Itraconazole等）對Quetiapine的影響，這是用藥人員自然會延伸詢問常見CYP3A4抑制物葡萄柚汁的問題，但文中始終未提及葡萄柚汁，因此無條款可答。",
+      "absence_hits": {
+        "葡萄柚": 0,
+        "grapefruit": 1,
+        "葡萄柚汁": 0
+      },
+      "nearest_clause": {
+        "page": 16,
+        "text": "因此當 Quetiapin 與 Ketoconazole 或其他細胞色素 P450 3A 抑制劑(例如 Itraconazole fluconazole、Erythromycin、蛋白酶抑制劑)併服時應小心(減低 Quetiapine 劑量)。",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "「華盛頓」洛得敏糖漿對於腎功能不全的病人是否需要調整劑量？",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "no_answer",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "tfda-label-rodamine-syrup-w-p",
+      "topic": "腎功能不全劑量調整",
+      "absence_check": "absence_terms ['腎功能', '腎臟', 'renal', 'creatinine clearance'] 在 tfda-label-rodamine-syrup-w-p 全部 1 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'腎功能': 24, '腎臟': 21, 'renal': 29, 'creatinine clearance': 6}",
+      "document_pages": [
+        1
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0519",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "tfda-label-rodamine-syrup-w-p",
+      "title": "〝華盛頓〞洛得敏糖漿（RODAMINE SYRUP \"W.P.\"，loratadine）仿單",
+      "rank": 1,
+      "warnings": [
+        "some absence_terms are common elsewhere in the corpus (generic term?)"
+      ],
+      "rationale": "仿單僅說明肝功能嚴重受損病人的劑量調整，完全未提及腎功能不全病人是否需調整劑量，屬藥師/醫師常會查詢但文件未涵蓋的事項。",
+      "absence_hits": {
+        "腎功能": 24,
+        "腎臟": 21,
+        "renal": 29,
+        "creatinine clearance": 6
+      },
+      "nearest_clause": {
+        "page": 1,
+        "text": "對肝功能嚴重受損的病人,其初始劑量應該降低,因為 Loratadine 的清除率可能降低,建議劑量為每 5mg 或每隔一日 10mg。",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "腎功能不全的病人使用〝南光〞賜痛寧注射液（diclofenac）時，是否需要調整劑量？建議如何調整？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "tfda-label-staren-injection-n-k-diclofenac",
+      "topic": "腎功能不全劑量調整建議",
+      "absence_check": "absence_terms ['劑量調整', '腎功能不全', '肌酐廓清率'] 在 tfda-label-staren-injection-n-k-diclofenac 全部 2 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'劑量調整': 7, '腎功能不全': 13, '肌酐廓清率': 0}",
+      "document_pages": [
+        1,
+        2
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0520",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "tfda-label-staren-injection-n-k-diclofenac",
+      "title": "\"南光\" 賜痛寧注射液（待克菲那）（STAREN INJECTION \"N.K.\"(DICLOFENAC)，diclofenac）仿單",
+      "rank": 1,
+      "warnings": [
+        "some absence_terms are common elsewhere in the corpus (generic term?)",
+        "nearest_clause not located (missing)"
+      ],
+      "rationale": "仿單雖警示腎功能受損者應謹慎投予，但僅止於警語層級，未提供依腎功能程度調整劑量的具體建議，此為臨床用藥時醫師自然會查詢的事項。",
+      "absence_hits": {
+        "劑量調整": 7,
+        "腎功能不全": 13,
+        "肌酐廓清率": 0
+      },
+      "nearest_clause": {
+        "page": 1,
+        "text": "對於發生這類反應的高危險族群(年長者、腎功能受損、心衰竭、肝功能不全及使用利尿劑與 ACE 抑制劑的病人)應謹慎投予。",
+        "located": "missing"
+      }
+    }
+  },
+  {
+    "query": "服用衛欣保膜衣錠80毫克（valsartan）期間，飲用葡萄柚汁是否會影響藥效或增加副作用風險？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "tfda-label-vaks-f-c-tablets-80mg",
+      "topic": "葡萄柚汁交互作用",
+      "absence_check": "absence_terms ['葡萄柚', 'grapefruit', '柚子'] 在 tfda-label-vaks-f-c-tablets-80mg 全部 2 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'葡萄柚': 0, 'grapefruit': 1, '柚子': 0}",
+      "document_pages": [
+        1,
+        2
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0521",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "tfda-label-vaks-f-c-tablets-80mg",
+      "title": "衛欣保膜衣錠80毫克（Vaks F.C. Tablets 80mg，valsartan）仿單",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "使用者常會詢問常見食物（如葡萄柚汁）與藥物的交互作用，但本仿單交互作用段落僅列出特定藥物與運輸蛋白抑制劑，未提及葡萄柚汁或相關果汁類交互作用，因此無法回答。",
+      "absence_hits": {
+        "葡萄柚": 0,
+        "grapefruit": 1,
+        "柚子": 0
+      },
+      "nearest_clause": {
+        "page": 1,
+        "text": "曾與下列成分進行臨床試驗證實,並未有臨床上明顯藥物交互作用,包括:cimetidine, warfarin, furosemide, digoxin, atenolol, indomethacin, hydrochlorothiazide, amlodipine, glibenclamide。",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "免痛注射液（待克菲那）與葡萄柚汁併用是否會產生交互作用而影響藥效？",
+    "dept": "MA",
+    "language": "zh",
+    "slices": [
+      "no_answer",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "tfda-label-venton-injection-diclofenac-lita",
+      "topic": "葡萄柚汁交互作用",
+      "absence_check": "absence_terms ['葡萄柚', 'grapefruit', '果汁'] 在 tfda-label-venton-injection-diclofenac-lita 全部 2 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'葡萄柚': 0, 'grapefruit': 1, '果汁': 0}",
+      "document_pages": [
+        1,
+        2
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0522",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "tfda-label-venton-injection-diclofenac-lita",
+      "title": "免痛注射液（待克菲那）（VENTON INJECTION (DICLOFENAC) \"LITA\"，diclofenac）仿單",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "藥物交互作用段落僅列出aspirin、抗凝血劑、ACE抑制劑、利尿劑、鋰鹽、methotrexate、cyclosporine等品項，未提及葡萄柚汁或食物相關交互作用，故無法回答此問題。",
+      "absence_hits": {
+        "葡萄柚": 0,
+        "grapefruit": 1,
+        "果汁": 0
+      },
+      "nearest_clause": null
+    }
+  },
+  {
+    "query": "莫尼茲靜脈注射劑（ondansetron）與葡萄柚汁併用時，藥物動力學是否會受影響？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "tfda-label-vomiz-for-iv-injection-2mg-ml",
+      "topic": "葡萄柚汁交互作用",
+      "absence_check": "absence_terms ['葡萄柚', 'grapefruit', '西柚'] 在 tfda-label-vomiz-for-iv-injection-2mg-ml 全部 3 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'葡萄柚': 0, 'grapefruit': 1, '西柚': 1}",
+      "document_pages": [
+        1,
+        2,
+        3
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0523",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "tfda-label-vomiz-for-iv-injection-2mg-ml",
+      "title": "莫尼茲靜脈注射劑2毫克/毫升（VOMIZ for IV INJECTION 2MG/ML，ondansetron）仿單",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "藥物交互作用是仿單常規涵蓋範圍，但文中僅列出 apomorphine、phenytoin/carbamazepine/rifampicin、酒精等具體藥物，未提及葡萄柚汁（CYP3A4 抑制劑）之影響，無條款可回答。",
+      "absence_hits": {
+        "葡萄柚": 0,
+        "grapefruit": 1,
+        "西柚": 1
+      },
+      "nearest_clause": {
+        "page": 1,
+        "text": "由於 ondansetron 是經由多種酵素進行代謝,若其中一種酵素的活性被誘導或抑制時(例如:CYP2D6 基因缺乏),會經由其他酵素的代償作用,使得 ondansetron 的整體廓清率或需求劑量幾乎不受影響。",
+        "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "服用穩壓膜衣錠50毫克（Zosaa F.C. Tablets 50mg, losartan potassium）期間，可否同時飲用葡萄柚汁？是否會影響藥效？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "tfda-label-zosaa-50mg",
+      "topic": "與葡萄柚汁之交互作用",
+      "absence_check": "absence_terms ['葡萄柚', 'grapefruit', '柑橘'] 在 tfda-label-zosaa-50mg 全部 1 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'葡萄柚': 0, 'grapefruit': 1, '柑橘': 0}",
+      "document_pages": [
+        1
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0524",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "tfda-label-zosaa-50mg",
+      "title": "穩壓膜衣錠50毫克（Zosaa F.C. Tablets 50mg, losartan potassium）仿單",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "仿單藥物交互作用段落僅列舉特定藥物（如利尿劑、毛地黃、warfarin 等）與 rifampin、fluconazole、保鉀利尿劑、非固醇類消炎劑，並未提及食物（葡萄柚汁）之交互作用，屬於患者常見詢問但文件未涵蓋之事項。",
+      "absence_hits": {
+        "葡萄柚": 0,
+        "grapefruit": 1,
+        "柑橘": 0
+      },
+      "nearest_clause": {
+        "page": 1,
+        "text": "藥物交互作用:在臨床之藥物動力學試驗中,尚無具臨床意義之證據可確認 losartan 與 hydrochlorothiazide , digoxin , warfarin , cimetidine , phenobarbital , ketoconazole 及 erythromycin 之藥物交互作用。",
+        "located": "exact"
+      }
+    }
+  }
+]

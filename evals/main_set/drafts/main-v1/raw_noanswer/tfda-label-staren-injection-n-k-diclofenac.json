@@ -1,0 +1,25 @@
+{
+  "document_key": "tfda-label-staren-injection-n-k-diclofenac",
+  "source_hash": "0e8e316abd1fcd16b0890516b340fa47311dea7e2fb8313e625db1e4fb1150d1",
+  "pages_sent": [
+    1,
+    2
+  ],
+  "drafting_prompt_sha256": "6ddf3154781b57b9f694350ca27addf18c709543b76c13e946275da0c43fd685",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:40:20+00:00",
+  "finished_at": "2026-09-20T16:40:50+00:00",
+  "prompt_chars": 21685,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "dc040afe-a766-40c2-875d-14b526c0a47b",
+  "input_tokens": 1,
+  "output_tokens": 2563,
+  "cost_usd": 0.22154875000000002,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "8c616debc6aab85f25af0ae072dd4f8675847fdb5d251e90521e4c6edc0a69c3",
+  "tools_disabled": true,
+  "reply": "```json\n[\n  {\"query\": \"腎功能不全的病人使用〝南光〞賜痛寧注射液（diclofenac）時，是否需要調整劑量？建議如何調整？\", \"query_en\": null, \"topic\": \"腎功能不全劑量調整建議\", \"absence_terms\": [\"劑量調整\", \"腎功能不全\", \"肌酐廓清率\"], \"nearest_clause\": {\"page\": 1, \"text\": \"對於發生這類反應的高危險族群(年長者、腎功能受損、心衰竭、肝功能不全及使用利尿劑與 ACE 抑制劑的病人)應謹慎投予。\"}, \"rationale\": \"仿單雖警示腎功能受損者應謹慎投予，但僅止於警語層級，未提供依腎功能程度調整劑量的具體建議，此為臨床用藥時醫師自然會查詢的事項。\"},\n  {\"query\": \"〝南光〞賜痛寧注射液（diclofenac）與毛地黃類強心藥物（digoxin）併用時是否會產生交互作用？\", \"query_en\": null, \"topic\": \"與digoxin之藥物交互作用\", \"absence_terms\": [\"digoxin\", \"毛地黃\"], \"nearest_clause\": {\"page\": 2, \"text\": \"Cyclosporine：合併使用 diclofenac 治療時可能會增加 cyclosporine 之腎毒性，同時投予時須特別注意。\"}, \"rationale\": \"藥物交互作用一節僅列出 aspirin、抗凝血劑、ACE抑制劑、利尿劑、鋰鹽、methotrexate、cyclosporine，完全未提及與digoxin或毛地黃類藥物之交互作用，屬同類問題但文件未涵蓋。\"}\n]\n```"
+}

@@ -1,0 +1,25 @@
+{
+  "document_key": "tfda-label-loformin-850mg",
+  "source_hash": "b6af0d88b1f0e3b5660e6e3c6678e18c40616073bc082b6cb7214604b2f81f98",
+  "pages_sent": [
+    1,
+    2
+  ],
+  "drafting_prompt_sha256": "6ddf3154781b57b9f694350ca27addf18c709543b76c13e946275da0c43fd685",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:29:00+00:00",
+  "finished_at": "2026-09-20T16:29:23+00:00",
+  "prompt_chars": 8622,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "499b7b4c-6c85-4cda-b42c-20b3c3bb350e",
+  "input_tokens": 1,
+  "output_tokens": 1929,
+  "cost_usd": 0.10046125,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "4355ffdb4f7a6f77133c5c372a64162e87555c22aa6ec263a9204af5dc92b85c",
+  "tools_disabled": true,
+  "reply": "```json\n[\n  {\"query\": \"服用美洛醣膜衣錠850毫克（Loformin, metformin）期間，飲用葡萄柚汁是否會影響藥效或增加副作用風險？\", \"query_en\": null, \"topic\": \"葡萄柚汁交互作用\", \"absence_terms\": [\"葡萄柚\", \"grapefruit\", \"柚汁\"], \"nearest_clause\": null, \"rationale\": \"仿單的藥物交互作用僅列出含碘顯影劑、酒精、升血糖藥物、利尿劑及ACE抑制劑等，完全未提及葡萄柚汁或其他果汁類食物交互作用，但此為病患常見的用藥諮詢問題。\"},\n  {\"query\": \"美洛醣膜衣錠850毫克（Loformin, metformin）用於10至16歲兒童及青少年病患時，建議的起始劑量與每日最高劑量為何？\", \"query_en\": null, \"topic\": \"兒童及青少年建議劑量\", \"absence_terms\": [\"兒童\", \"青少年\", \"10-16\", \"劑量\"], \"nearest_clause\": {\"page\": 2, \"text\": \"小孩和青少年: 在已發表、上市後的臨床資料,以及限定在10-16 歲族群、治療一年之有條件控制臨床試驗中,所出現的副作用與嚴重度和成人的反應是相似的。\"}, \"rationale\": \"仿單僅在不良反應段落提及10-16歲族群的副作用嚴重度與成人相似，但【用法用量】章節完全未給出兒童或青少年的具體起始劑量或每日最高劑量，屬於處方醫師會實際查詢卻查無資料的事項。\"}\n]\n```"
+}

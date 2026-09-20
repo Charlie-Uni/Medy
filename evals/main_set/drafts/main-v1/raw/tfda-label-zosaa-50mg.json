@@ -1,0 +1,25 @@
+{
+  "document_key": "tfda-label-zosaa-50mg",
+  "source_hash": "81069adaf87d21e640d9b5cbc83a799a59a33acbdc4ead46ed338c9ad6d06b3a",
+  "quota": 2,
+  "pages_sent": [
+    1
+  ],
+  "drafting_prompt_sha256": "dacbe907888f4ed16470887911c7529c53ec055928e0f94d003ab9d65b6abf07",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T15:34:04+00:00",
+  "finished_at": "2026-09-20T15:34:53+00:00",
+  "prompt_chars": 7336,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "d5f57181-1bd7-4d3c-84e1-4ae1a79b39e7",
+  "input_tokens": 1,
+  "output_tokens": 4788,
+  "cost_usd": 0.16438624999999998,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "a03094bc32a85289f5fa6cb552173be8d97c83e9f8be41c682bf38429020c27d",
+  "tools_disabled": true,
+  "reply": "[{\"query\": \"穩壓膜衣錠50毫克對本項產品成分過敏的病人可以使用嗎?\", \"query_en\": null, \"slices\": [\"negation\", \"drug_name_zh\"], \"page\": 1, \"section\": \"禁忌症\", \"key_text\": \"本藥禁用於對本項產品任何組成過敏者\", \"span\": \"禁忌症:本藥禁用於對本項產品任何組成過敏者。\", \"rationale\": \"頁文本中僅有此條款明確規範對本產品任何組成過敏者之禁忌,可唯一回答此問題。\"}, {\"query\": \"穩壓膜衣錠50毫克用於治療第Ⅱ型糖尿病腎病變時,起始劑量應如何給予?\", \"query_en\": null, \"slices\": [\"dose_unit\", \"drug_name_zh\"], \"page\": 1, \"section\": \"劑量及用法\", \"key_text\": \"治療第 Ⅱ型糖尿病腎病變:一般起始劑量為每次 50mg,每日一次\", \"span\": \"治療第 Ⅱ型糖尿病腎病變:一般起始劑量為每次 50mg,每日一次。視血壓下降情形,可將劑量增加至每次 100mg,每日一次。\", \"rationale\": \"頁文本中僅此條款針對第Ⅱ型糖尿病腎病變適應症給出起始劑量與調整方式,為唯一答案。\"}, {\"query\": \"穩壓膜衣錠50毫克治療高血壓後,大約多久可達到最大降壓效果?\", \"query_en\": null, \"slices\": [\"time_window\", \"drug_name_zh\"], \"page\": 1, \"section\": \"劑量及用法\", \"key_text\": \"治療後 3~6 週可獲得最大降壓效果\", \"span\": \"在治療後 3~6 週可獲得最大降壓效果\", \"rationale\": \"頁文本中僅此處說明本藥達到最大降壓效果所需之時間窗,可唯一回答此問題。\"}, {\"query\": \"穩壓膜衣錠50毫克用於腎功能受損患者(包括洗腎病人)時,是否需要調整起始劑量?\", \"query_en\": null, \"slices\": [\"negation\", \"drug_name_zh\"], \"page\": 1, \"section\": \"劑量及用法\", \"key_text\": \"老年患者或腎功能受損患者,包括洗腎病人,毋須調整其起始劑量\", \"span\": \"對老年患者或腎功能受損患者,包括洗腎病人,毋須調整其起始劑量;但對有肝功能受損病史之患者,需考慮改用較低之劑量(參見注意事項)。\", \"rationale\": \"頁文本中僅此條款明確指出腎功能受損患者(含洗腎病人)毋須調整起始劑量,為唯一可回答此問題之條款。\"}]"
+}

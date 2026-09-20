@@ -1,0 +1,28 @@
+{
+  "document_key": "tfda-label-perisafe-tablets-10mg-enalapil",
+  "source_hash": "0879f3f5e1a1b31a420dddc8510817aee8b57abe074ab656de7fc7da2afe5d4c",
+  "quota": 3,
+  "pages_sent": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "drafting_prompt_sha256": "dacbe907888f4ed16470887911c7529c53ec055928e0f94d003ab9d65b6abf07",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:28:09+00:00",
+  "finished_at": "2026-09-20T16:29:02+00:00",
+  "prompt_chars": 7385,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "577b8e16-9a54-423b-9b7f-80821d22528d",
+  "input_tokens": 1,
+  "output_tokens": 5947,
+  "cost_usd": 0.19648000000000002,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "48ceda7eb409d0c3453274d50be6cf2b1e9a76196477bf046df7186355ee256e",
+  "tools_disabled": true,
+  "reply": "[{\"query\": \"脈得服錠10公絲(伊那拉普利)治療高血壓或心臟衰竭時,每日常用劑量範圍為何?\", \"query_en\": null, \"slices\": [\"dose_unit\"], \"page\": 1, \"section\": \"用法用量\", \"key_text\": \"每日常用劑量範圍為:10~40mg,分依次或兩次服用\", \"span\": \"每日常用劑量範圍為:10~40mg,分依次或兩次服用。\", \"rationale\": \"該頁用法用量段落是全文檔唯一給出脈得服每日常用劑量範圍的條款,故僅此可答該劑量問題。\"}, {\"query\": \"脈得服錠(伊那拉普利)禁忌使用於哪些病人?\", \"query_en\": null, \"slices\": [\"negation\"], \"page\": 1, \"section\": \"禁忌症\", \"key_text\": \"PERISAFE禁用於對該品任何成分過敏的病人\", \"span\": \"PERISAFE禁用於對該品任何成分過敏的病人,及以前曾有過以升壓素轉化酵素抑制劑治療而引起血管神經性水腫之病史者。\", \"rationale\": \"禁忌症段落是全文檔唯一列出PERISAFE禁忌人群的條款,故僅此可答該問題。\"}, {\"query\": \"脈得服錠(伊那拉普利)藥物過量時,大約服藥後多久會出現血壓明顯滑落等症狀?\", \"query_en\": null, \"slices\": [\"time_window\"], \"page\": 4, \"section\": \"藥物過量\", \"key_text\": \"服藥後6小時左右,血壓開始明顯滑落\", \"span\": \"目前所知藥物過量最顯著之特徵為服藥後6小時左右,血壓開始明顯滑落,伴隨著腎素- 升壓素系統之阻斷,及昏睡。\", \"rationale\": \"藥物過量段落唯一描述服藥後血壓滑落起始時間,故僅此條款可答該時限問題。\"}, {\"query\": \"高血壓患者單獨使用PERISAFE治療達48週後,血清鉀值平均會有何變化?\", \"query_en\": null, \"slices\": [\"dose_unit\", \"time_window\"], \"page\": 3, \"section\": \"藥物交互作用\", \"key_text\": \"達48週後,發現其血清鉀值平均約增加0.2mEq\", \"span\": \"高血壓患者單獨以PERISAFE治療達48週後,發現其血清鉀值平均約增加0.2mEq。\", \"rationale\": \"血清鉀段落唯一給出48週治療後血清鉀平均變化數值,故僅此條款可答該問題。\"}, {\"query\": \"哺乳期婦女服用脈得服錠(伊那拉普利)時需要特別注意什麼?\", \"query_en\": null, \"slices\": [\"drug_name_zh\"], \"page\": 3, \"section\": \"哺乳婦女\", \"key_text\": \"Enalapril及Enalaprilate均可微量分泌於人乳中\", \"span\": \"哺乳婦女 Enalapril及Enalaprilate均可微量分泌於人乳中,當哺乳婦女服用PERISAFE時需特別注意。\", \"rationale\": \"哺乳婦女段落是全文檔唯一說明哺乳期使用PERISAFE需特別注意之條款,故僅此可答該問題。\"}]"
+}

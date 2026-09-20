@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://medy.local/evals/main_set/acl_probe.schema.json",
+  "title": "PreciseClauseAclProbe",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "probe_id",
+    "requesting_dept",
+    "query",
+    "forbidden_source_hashes",
+    "derived_from_sample",
+    "notes"
+  ],
+  "properties": {
+    "probe_id": {
+      "type": "string",
+      "pattern": "^acl-[0-9]{4}$"
+    },
+    "requesting_dept": {
+      "enum": [
+        "MA",
+        "PV",
+        "CO"
+      ]
+    },
+    "query": {
+      "type": "string",
+      "minLength": 4,
+      "maxLength": 300
+    },
+    "forbidden_source_hashes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{64}$"
+      }
+    },
+    "derived_from_sample": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^(pc|ms)-[0-9]{4}$"
+    },
+    "notes": {
+      "type": "string",
+      "maxLength": 500
+    }
+  }
+}

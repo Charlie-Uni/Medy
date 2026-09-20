@@ -1,0 +1,25 @@
+{
+  "document_key": "tfda-label-glimaryl-tablets-2mg-glimepiride",
+  "source_hash": "b1756268da31c9205cea8766181345921bdbec9c1930137428c79c5c3d8729f7",
+  "pages_sent": [
+    1,
+    2
+  ],
+  "drafting_prompt_sha256": "6ddf3154781b57b9f694350ca27addf18c709543b76c13e946275da0c43fd685",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:40:55+00:00",
+  "finished_at": "2026-09-20T16:42:13+00:00",
+  "prompt_chars": 6471,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "ebc37cec-34e0-4403-8551-4b2be73848e9",
+  "input_tokens": 1,
+  "output_tokens": 6674,
+  "cost_usd": 0.2253925,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "d188d7e9566457d79b2a94653b7517db0d6612b53aee111795700dafa26c307e",
+  "tools_disabled": true,
+  "reply": "[{\"query\":\"革理蔓錠（Glimepiride）口服後的藥物動力學參數，如吸收速率、半衰期與代謝排除途徑為何？\",\"query_en\":null,\"topic\":\"Glimepiride藥物動力學參數\",\"absence_terms\":[\"半衰期\",\"吸收\",\"代謝\",\"血中濃度\"],\"nearest_clause\":null,\"rationale\":\"仿單作為藥品核准標籤文件，理應包含藥物動力學章節，但提供的兩頁內容僅涵蓋成分、適應症、劑量調整、交互作用與不良反應，完全未提及吸收、半衰期或代謝排除等藥動學數據。\"},{\"query\":\"革理蔓錠（Glimepiride）用於兒童或青少年糖尿病患者的建議劑量與安全性資料為何？\",\"query_en\":null,\"topic\":\"兒童／青少年使用之劑量與安全性\",\"absence_terms\":[\"兒童\",\"青少年\",\"小兒\"],\"nearest_clause\":null,\"rationale\":\"文件雖詳述成人劑量調整方案與特殊族群（孕婦、哺乳、腎功能不全）之用藥限制，卻完全未提及兒童或青少年族群之建議劑量、療效或安全性資訊，此為藥品仿單常見但本文件未涵蓋之範疇。\"}]"
+}

@@ -1,0 +1,33 @@
+{
+  "document_key": "ema-gvp-pp-iv",
+  "source_hash": "e5225fabe9ae7fb363bbfc683e2c7e802ba909d102c56e1c222f48dcf24f4cd4",
+  "pages_sent": [
+    3,
+    4,
+    5,
+    6,
+    9,
+    10,
+    11,
+    12,
+    13,
+    17
+  ],
+  "drafting_prompt_sha256": "6ddf3154781b57b9f694350ca27addf18c709543b76c13e946275da0c43fd685",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:37:50+00:00",
+  "finished_at": "2026-09-20T16:38:32+00:00",
+  "prompt_chars": 37655,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "0960b428-af3e-4099-941c-0f51ac9cd3bf",
+  "input_tokens": 1,
+  "output_tokens": 4081,
+  "cost_usd": 0.18363625,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "c6ca0ff0ada1fa4eff6748829b03f5ec2164913f39ad9f4a999faa283a96ce28",
+  "tools_disabled": true,
+  "reply": "```json\n[\n  {\"query\": \"根据本指南，儿科委员会（PDCO）在评估儿科风险管理计划（RMP）时具体承担什么角色？\", \"query_en\": \"According to this guideline, what specific role does the Paediatric Committee (PDCO) play in the assessment of paediatric risk management plans (RMPs)?\", \"topic\": \"PDCO对儿科RMP的审查角色\", \"absence_terms\": [\"PDCO\", \"Paediatric Committee\", \"risk management plan assessment\", \"RMP review\"], \"nearest_clause\": {\"page\": 11, \"text\": \"this risk should have been included as an important potential risk in the RMP (see P.IV.B.1.)).\"}, \"rationale\": \"本指南在多处提及RMP应纳入儿科风险（如P.IV.B.1、P.IV.B.4），且在P.IV.C部分对PASS、信号管理、安全沟通均设有“欧盟监管网络内”专节，暗示RMP也应有对应的EU网络专节，但提供的页文本完全未出现PDCO对RMP的具体审查机制或职责描述。\"},\n  {\"query\": \"根据本指南，儿科病例安全报告（ICSR）在欧盟监管网络内是否有特定的递交时限要求？\", \"query_en\": \"According to this guideline, are there specific submission timeframes for paediatric ICSRs within the EU regulatory network?\", \"topic\": \"儿科ICSR在欧盟网络内的递交时限\", \"absence_terms\": [\"submission timeframe\", \"reporting deadline\", \"EU regulatory network\", \"electronic submission\"], \"nearest_clause\": {\"page\": 9, \"text\": \"If no age-related information is provided by the initial reporter, the marketing authorisation holder or the competent authority should request, as appropriate, follow-up information on age.\"}, \"rationale\": \"P.IV.B.2部分详述了ICSR中年龄及其他信息的完整性要求，P.IV.C部分对PASS、信号管理、安全沟通均专设“欧盟监管网络内”章节，暗示ICSR递交也应有对应EU网络专节，但提供页文本未给出任何关于儿科ICSR具体递交时限的规定。\"}\n]\n```"
+}

@@ -1,0 +1,26 @@
+{
+  "document_key": "tfda-label-cinolone-iv-infusion-10-mg-ml",
+  "source_hash": "5ef121b394cb2d28407c17ddb29655abfbda65e030e6dee83e5ba148abfef276",
+  "quota": 4,
+  "pages_sent": [
+    1,
+    2
+  ],
+  "drafting_prompt_sha256": "dacbe907888f4ed16470887911c7529c53ec055928e0f94d003ab9d65b6abf07",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:23:16+00:00",
+  "finished_at": "2026-09-20T16:24:39+00:00",
+  "prompt_chars": 20808,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "48e7d3cd-9017-4826-8c54-62123235e8bd",
+  "input_tokens": 1,
+  "output_tokens": 8459,
+  "cost_usd": 0.33642375,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "a4f19611f6f8a5565588d431fd888fc29dbc6b12250b6079da35563f20a1f4f9",
+  "tools_disabled": true,
+  "reply": "[{\"query\":\"信諾隆（ciprofloxacin）靜脈輸注液可以與Tizanidine併用嗎？\",\"query_en\":null,\"slices\":[\"negation\",\"drug_name_zh\"],\"page\":1,\"section\":\"【禁忌】\",\"key_text\":\"禁止同時使用 Ciprofloxacin 和 Tizanidine\",\"span\":\"禁止同時使用 Ciprofloxacin 和 Tizanidine (參見“【藥物交互作用】”)。\",\"rationale\":\"页文本中只有【禁忌】段落这一条款明确禁止Ciprofloxacin与Tizanidine併用。\"},\n\n{\"query\":\"需要血液透析且creatinine清除率低於30 ml/min/1.73m2的病人，靜脈注射Ciprofloxacin的每日最大劑量為何？\",\"query_en\":null,\"slices\":[\"dose_unit\"],\"page\":1,\"section\":\"用法用量-特殊族群-腎及肝功能受損的病患-2.腎功能受損且須血液透析\",\"key_text\":\"靜脈注射每日最大劑量為一天 400 毫克,於透析完再給藥\",\"span\":\"2-2 當 creatinine 清除率少於 30 ml/min/1.73m2 或血漿中 creatinine 的濃度等於或高於 2.0 mg/100 ml 時,靜脈注射每日最大劑量為一天 400 毫克,於透析完再給藥。\",\"rationale\":\"仅此条款针对需血液透析且creatinine清除率<30的病人给出静脉注射每日最大剂量400毫克并于透析后给药的规定，页面上其他类似条款均无“於透析完再給藥”这一附加限定。\"},\n\n{\"query\":\"吸入性炭疽病暴露後,使用Ciprofloxacin治療的總治療期為多久？\",\"query_en\":null,\"slices\":[\"time_window\"],\"page\":1,\"section\":\"用法用量-治療期\",\"key_text\":\"治療炭疽桿菌(接觸後)的總治療期是 60 天\",\"span\":\"成人和小孩-吸入性炭疽病(接觸後) Ciprofloxacin (靜脈注射或口服)治療炭疽桿菌(接觸後)的總治療期是 60 天。\",\"rationale\":\"页文本中仅此条款说明吸入性炭疽病(接触后)Ciprofloxacin治疗的总疗程为60天。\"},\n\n{\"query\":\"信諾隆是否可用於重症肌無力患者？\",\"query_en\":null,\"slices\":[\"negation\",\"drug_name_zh\"],\"page\":1,\"section\":\"警語及注意事項-肌肉骨骼系統\",\"key_text\":\"具有重症肌無力患者應避免使用\",\"span\":\"本藥品具有使重症肌無力惡化之風險,具有重症肌無力患者應避免使用。\",\"rationale\":\"仅【警語及注意事項】肌肉骨骼系統段落明确指出重症肌无力患者应避免使用本药，页面其他处仅提及重症肌无力惡化作为不良反应，未含此禁止性建议。\"},\n\n{\"query\":\"信諾隆靜脈輸注液10毫克/毫升的衛署藥製字號是多少？\",\"query_en\":null,\"slices\":[\"protocol_id\",\"drug_name_zh\"],\"page\":2,\"section\":\"【包裝】\",\"key_text\":\"衛署藥製字第 049276 號\",\"span\":\"“信東”信諾隆靜脈輸注液 10 毫克/毫升衛署藥製字第 049276 號 40 毫升玻璃瓶裝,100 支以下盒裝。\",\"rationale\":\"仅【包裝】段落中10毫克/毫升规格对应的许可证字号为衛署藥製字第049276號，与2毫克/毫升规格的字号不同。\"},\n\n{\"query\":\"信諾隆與Zolpidem是否可以併用？\",\"query_en\":null,\"slices\":[\"negation\",\"drug_name_zh\"],\"page\":2,\"section\":\"【藥物交互作用】\",\"key_text\":\"Zolpidem 和 Ciprofloxacin 併用可能會增加 Zolpidem 的血中濃度,因此不建議併用\",\"span\":\"Zolpidem 和 Ciprofloxacin 併用可能會增加 Zolpidem 的血中濃度,因此不建議併用。\",\"rationale\":\"页文本中仅此条款说明Ciprofloxacin与Zolpidem併用会增加其血中浓度并因此不建议併用。\"}]"
+}

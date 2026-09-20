@@ -1,0 +1,33 @@
+{
+  "document_key": "ich-e9-step4-1998",
+  "source_hash": "0c0ddc93cb427a70265dbcb0e7c25bfc9a3f7b52e178212b3630ea2408ad9c7e",
+  "quota": 4,
+  "pages_sent": [
+    11,
+    12,
+    13,
+    17,
+    19,
+    20,
+    22,
+    27,
+    35
+  ],
+  "drafting_prompt_sha256": "dacbe907888f4ed16470887911c7529c53ec055928e0f94d003ab9d65b6abf07",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T15:37:53+00:00",
+  "finished_at": "2026-09-20T15:44:08+00:00",
+  "prompt_chars": 39023,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "819a38a7-b913-472e-abc1-48f98723d982",
+  "input_tokens": 1,
+  "output_tokens": 24967,
+  "cost_usd": 0.7080550000000001,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "3431ab87d5e42c60b11a6557a89bb568eda0817baa67ca4d53c6791dc40bb5c0",
+  "tools_disabled": true,
+  "reply": "[\n  {\"query\": \"在双盲临床试验中，为什么药品包装标签只标示受试者编号和治疗期，而不使用代码字母等其他识别方式？\", \"query_en\": \"In a double-blind clinical trial, why should drug packaging be labelled only with the subject number and treatment period rather than using a code letter or other identifying marks?\", \"slices\": [\"negation\"], \"page\": 12, \"section\": \"2.3 Design Techniques to Avoid Bias\", \"key_text\": \"so that no one involved in the conduct of the trial is aware of the specific treatment allocated to any particular subject, not even as a code letter\", \"span\": \"Most such trials follow a double-blind approach in which treatments are pre-packed in accordance with a suitable randomisation schedule, and supplied to the trial centre(s) labelled only with the subject number and the treatment period so that no one involved in the conduct of the trial is aware of the specific treatment allocated to any particular subject, not even as a code letter.\", \"rationale\": \"This is the only sentence on the page specifying that double-blind trial packaging is labelled solely with subject number and treatment period so that no one, not even by a code letter, can identify the treatment.\"},\n  {\"query\": \"在使用全分析集(full analysis set)进行分析时，若因方案违背而排除了某些已随机受试者，是否可以不评估这些排除对结果可能造成的偏倚？\", \"query_en\": \"When performing an analysis based on the full analysis set, if certain randomised subjects are excluded due to protocol violations, is it acceptable to omit assessment of the potential bias arising from such exclusions?\", \"slices\": [\"negation\"], \"page\": 27, \"section\": \"5.2.1 Full Analysis Set\", \"key_text\": \"No analysis is complete unless the potential biases arising from these specific exclusions, or any others, are addressed.\", \"span\": \"No analysis is complete unless the potential biases arising from these specific exclusions, or any others, are addressed.\", \"rationale\": \"This is the only statement on the page requiring that any exclusions from the full analysis set have their potential biases addressed for an analysis to be considered complete.\"},\n  {\"query\": \"根据ICH E9，若对多中心临床试验中'中心'(centre)一词的定义存有疑问，可参考哪份ICH指南以获得相关指导？\", \"query_en\": \"According to ICH E9, if there is doubt about the definition of 'centre' in a multicentre clinical trial, which ICH guideline can be consulted for relevant guidance?\", \"slices\": [\"protocol_id\"], \"page\": 17, \"section\": \"Multicentre Trials\", \"key_text\": \"In most instances centres can be satisfactorily defined through the investigators and ICH E6 provides relevant guidance in this respect.\", \"span\": \"In most instances centres can be satisfactorily defined through the investigators and ICH E6 provides relevant guidance in this respect.\", \"rationale\": \"Only this sentence identifies ICH E6 as the guideline providing relevant guidance for defining 'centre' in multicentre trials.\"},\n  {\"query\": \"在开放标签(open-label)试验中，治疗分配的身份对哪些人是已知的？\", \"query_en\": \"In an open-label trial, who knows the identity of the treatment assignment?\", \"slices\": [\"mixed_zh_en\"], \"page\": 12, \"section\": \"2.3.1 Blinding\", \"key_text\": \"In an open-label trial the identity of treatment is known to all.\", \"span\": \"In an open-label trial the identity of treatment is known to all.\", \"rationale\": \"This is the only sentence on the page defining the open-label trial arrangement, stating that treatment identity is known to all parties.\"},\n  {\"query\": \"在非劣效性试验中，能否仅根据新药与阳性对照组间差异无统计学显著性，就得出等效或非劣效的结论？\", \"query_en\": \"In a non-inferiority trial, can equivalence or non-inferiority be concluded simply because the difference between the investigational product and the active comparator is not statistically significant?\", \"slices\": [\"negation\"], \"page\": 20, \"section\": \"Trials to Show Equivalence or Non-inferiority\", \"key_text\": \"observing a non-significant test result of the null hypothesis that there is no difference between the investigational product and the active comparator is inappropriate\", \"span\": \"Concluding equivalence or non-inferiority based on observing a non-significant test result of the null hypothesis that there is no difference between the investigational product and the active comparator is inappropriate.\", \"rationale\": \"Only this sentence explicitly states that concluding equivalence or non-inferiority from a non-significant difference test is inappropriate.\"},\n  {\"query\": \"根据ICH E9，临床试验数据采集直到数据库定案的整个流程，应依循哪份ICH指南(如ICH E6)中关于GCP的规定？\", \"query_en\": \"According to ICH E9, the entire process from clinical trial data capture through database finalisation should follow the GCP requirements set out in which ICH guideline (e.g. ICH E6)?\", \"slices\": [\"protocol_id\"], \"page\": 22, \"section\": \"3.6 Data Capture and Processing\", \"key_text\": \"The process of data capture through to database finalisation should be carried out in accordance with GCP (see ICH E6, Section 5).\", \"span\": \"The process of data capture through to database finalisation should be carried out in accordance with GCP (see ICH E6, Section 5).\", \"rationale\": \"Only this sentence specifies that the data capture through database finalisation process must follow GCP as set out in ICH E6, Section 5.\"}\n]"
+}

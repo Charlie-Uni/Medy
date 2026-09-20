@@ -1,0 +1,30 @@
+{
+  "document_key": "tfda-label-concor-5",
+  "source_hash": "8f274dc347f717feba8b9745949dd8ef4d17ea1ff35995fbbe41848fef93c171",
+  "quota": 4,
+  "pages_sent": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "drafting_prompt_sha256": "dacbe907888f4ed16470887911c7529c53ec055928e0f94d003ab9d65b6abf07",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T15:31:05+00:00",
+  "finished_at": "2026-09-20T15:32:34+00:00",
+  "prompt_chars": 10147,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "43f40448-8d4d-4580-825a-4fc8326f0f5a",
+  "input_tokens": 1,
+  "output_tokens": 9103,
+  "cost_usd": 0.29203625,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "b0bd640933d5eb750c733b1b8595f8392333a93950936d72f766d1033e4264df",
+  "tools_disabled": true,
+  "reply": "[{\"query\": \"醫師想確認：開始使用康肯®治療穩定型慢性中度至重度心衰竭前，病人需在過去多久內沒有發生急性心衰竭才符合治療條件？\", \"query_en\": null, \"slices\": [\"time_window\"], \"page\": 1, \"section\": \"治療穩定型慢性中度至重度心衰竭\", \"key_text\": \"在過去 6 週內不曾發生過急性心衰竭之穩定型慢性心衰竭病人\", \"span\": \"在過去 6 週內不曾發生過急性心衰竭之穩定型慢性心衰竭病人\", \"rationale\": \"本頁僅此一條列出「過去6週內未發生急性心衰竭」的時間窗條件，用於界定適合開始接受康肯®治療的穩定型慢性心衰竭病人。\"}, {\"query\": \"康肯®用於治療穩定型慢性心衰竭時，第1週的起始劑量應如何給予？\", \"query_en\": null, \"slices\": [\"dose_unit\"], \"page\": 2, \"section\": \"治療穩定型慢性心衰竭劑量調整\", \"key_text\": \"第 1 週:1.25 毫克 bisoprolol fumarate 每日一次\", \"span\": \"第 1 週:1.25 毫克 bisoprolol fumarate 每日一次\", \"rationale\": \"本頁劑量調整表中僅此一條專門說明第1週的康肯®起始劑量，其他週次劑量各不相同。\"}, {\"query\": \"康肯®（bisoprolol fumarate）是否建議用於兒童病人？\", \"query_en\": null, \"slices\": [\"negation\"], \"page\": 3, \"section\": \"特殊族群\", \"key_text\": \"康肯®不建議兒童使用\", \"span\": \"Bisoprolol fumarate 使用於兒童尚無足夠的經驗,因此康肯®不建議兒童使用。\", \"rationale\": \"此句明確說明因兒童使用經驗不足，仿單不建議兒童使用康肯®，為本頁唯一涉及兒童用藥建議的條款。\"}, {\"query\": \"嚴重腎功能不全（肌酐酸廓清率小於20毫升/分鐘）病人使用康肯®治療高血壓或狹心症時，每日劑量上限是多少？\", \"query_en\": null, \"slices\": [\"dose_unit\", \"negation\"], \"page\": 2, \"section\": \"腎或肝功能不全的病人\", \"key_text\": \"bisoprolol fumarate 的每日劑量不可超過 10 毫克\", \"span\": \"嚴重腎功能不全(肌酐酸廓清率<20 毫升 /分鐘)及嚴重肝功能不全的病人,bisoprolol fumarate 的每日劑量不可超過 10 毫克。\", \"rationale\": \"此句同時限定嚴重腎/肝功能不全病人於治療高血壓或狹心症時的康肯®每日劑量上限，為本頁唯一此類劑量限制條款。\"}, {\"query\": \"老年病人使用康肯®是否需要調整劑量？\", \"query_en\": null, \"slices\": [\"negation\"], \"page\": 2, \"section\": \"老年人\", \"key_text\": \"老年人:不需要調整劑量\", \"span\": \"老年人:不需要調整劑量。\", \"rationale\": \"此句明確指出老年病人使用康肯®不需調整劑量，為本頁唯一提及老年族群劑量調整之條款。\"}]"
+}

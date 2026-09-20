@@ -1,0 +1,25 @@
+{
+  "document_key": "tfda-label-cancliol-100mg",
+  "source_hash": "2b8ab3b1bfea619d8eba938864e10614313dfa92e036bdba6a8fec2cb5fd2425",
+  "pages_sent": [
+    1,
+    2
+  ],
+  "drafting_prompt_sha256": "6ddf3154781b57b9f694350ca27addf18c709543b76c13e946275da0c43fd685",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:29:31+00:00",
+  "finished_at": "2026-09-20T16:29:46+00:00",
+  "prompt_chars": 4184,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "b9ceb780-3b10-49b9-a844-e1ac6e781e63",
+  "input_tokens": 1,
+  "output_tokens": 1163,
+  "cost_usd": 0.054198750000000004,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "400ec9c08387706d33078215b5f5e0b64715bbc859989a52b78f8bb3fa248b98",
+  "tools_disabled": true,
+  "reply": "[{\"query\": \"服用「明德」心壓暢錠100毫克（美托普洛）的病患，若同時服用fluoxetine或paroxetine等CYP2D6抑制劑，是否需要調整劑量？\", \"query_en\": null, \"topic\": \"CYP2D6抑制劑交互作用\", \"absence_terms\": [\"CYP2D6\", \"fluoxetine\", \"paroxetine\", \"抑制劑\"], \"nearest_clause\": {\"page\": 2, \"text\": \"像其他β-blocker 一樣,本劑不可與 verapamil 倂用。因同時投與 verapamil 和β -blocker 可能引起心搏過緩、低血壓和心收縮不全 (asystole)。\"}, \"rationale\": \"文檔僅提及與verapamil併用之禁忌，未涵蓋CYP2D6抑制劑（如SSRIs）對本藥代謝之影響，此為醫師處方時常需了解的交互作用事項，但全文未有相關條款。\"}, {\"query\": \"「明德」心壓暢錠100毫克（美托普洛）用於肝功能不全的病患時，是否需要調整劑量？\", \"query_en\": null, \"topic\": \"肝功能不全劑量調整\", \"absence_terms\": [\"肝功能不全\", \"肝硬化\", \"劑量調整\"], \"nearest_clause\": null, \"rationale\": \"文檔【用法用量】僅依適應症區分劑量，未提及任何肝功能不全患者之劑量調整建議，屬於仿單常見但此份文件未涵蓋的用藥安全事項。\"}]"
+}

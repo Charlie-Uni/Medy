@@ -1,0 +1,25 @@
+{
+  "document_key": "tfda-label-losacar-100-tablets",
+  "source_hash": "3981295da5a68ef3bf43b30c4d7783b9ebfa351319c134bb2f5710a11ac14d5b",
+  "pages_sent": [
+    1,
+    2
+  ],
+  "drafting_prompt_sha256": "6ddf3154781b57b9f694350ca27addf18c709543b76c13e946275da0c43fd685",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:41:15+00:00",
+  "finished_at": "2026-09-20T16:41:47+00:00",
+  "prompt_chars": 12849,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "73dadabe-2828-400b-b6b9-1578f4f05fbd",
+  "input_tokens": 1,
+  "output_tokens": 2692,
+  "cost_usd": 0.14243,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "d25f79cc9fbc320e4790376f7228a7b712dc2da01ec1fb129a9c90961fcfcb1c",
+  "tools_disabled": true,
+  "reply": "[{\"query\": \"若病人服用 Losacar 100（losartan）緩壓膜衣錠時忘記服用一劑，仿單是否說明應如何補服或跳過該劑？\", \"query_en\": null, \"topic\": \"忘記服藥之補服方式\", \"absence_terms\": [\"忘記服用\", \"補服\", \"漏服\"], \"nearest_clause\": {\"page\": 1, \"text\": \"高血壓大多數病人的一般起始劑量及維持劑量為每次 50 毫克,每日一次;在治療後 3-6 週可獲得最大降壓效果;有些病人在劑量增加至每次 100 毫克,每日一次後,其療效更佳。\"}, \"rationale\": \"忘記服藥後如何補救是「劑量及用法」項下常見延伸問題，但文件僅說明起始與維持劑量及調整方式，未提供漏服或補服之處理原則。\"}, {\"query\": \"服用 Losacar 100（losartan）是否會影響病人駕駛車輛或操作機械之能力，仿單中是否有相關警語？\", \"query_en\": null, \"topic\": \"對駕駛與操作機械能力之影響\", \"absence_terms\": [\"駕駛\", \"操作機械\", \"機器\"], \"nearest_clause\": {\"page\": 1, \"text\": \"神經∕精神系統頭暈 4.1 2.4 頭痛 14.1 17.2 失眠 1.1 0.7\"}, \"rationale\": \"頭暈為常見副作用，用藥安全性文件常評估其對駕駛或操作機械之影響，但本仿單僅列出頭暈等副作用發生率，未提及對駕駛或操作機械能力之警語或建議。\"}]"
+}

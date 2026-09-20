@@ -1,0 +1,26 @@
+{
+  "document_key": "tfda-label-cancliol-100mg",
+  "source_hash": "2b8ab3b1bfea619d8eba938864e10614313dfa92e036bdba6a8fec2cb5fd2425",
+  "quota": 2,
+  "pages_sent": [
+    1,
+    2
+  ],
+  "drafting_prompt_sha256": "dacbe907888f4ed16470887911c7529c53ec055928e0f94d003ab9d65b6abf07",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T15:34:13+00:00",
+  "finished_at": "2026-09-20T15:34:45+00:00",
+  "prompt_chars": 5504,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "927fabf6-a9a8-4c84-8889-f8a05ddbc890",
+  "input_tokens": 1,
+  "output_tokens": 3201,
+  "cost_usd": 0.112155,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "72235dc5fa614fe5fdd553d4905d198cbac040d6b10fea7ecf766141a469c9d5",
+  "tools_disabled": true,
+  "reply": "[{\"query\": \"心壓暢錠用於狹心症時，每日建議如何分次服用？\", \"query_en\": null, \"slices\": [\"dose_unit\", \"drug_name_zh\"], \"page\": 1, \"section\": \"【用法用量】\", \"key_text\": \"狹心症:每日投與 100〜200mg,應分成二次劑量於早、晚服用。\", \"span\": \"狹心症:每日投與 100〜200mg,應分成二次劑量於早、晚服用。對於較嚴重病患應增加其劑量。\", \"rationale\": \"頁一用法用量段落中僅狹心症項目載明100〜200mg分二次早晚服用之劑量規定，與高血壓項目劑量說明不同，故此條款唯一能回答此問題。\"}, {\"query\": \"心壓暢錠可以和verapamil併用嗎？\", \"query_en\": null, \"slices\": [\"negation\"], \"page\": 2, \"section\": \"【注意事項】\", \"key_text\": \"本劑不可與 verapamil 倂用\", \"span\": \"像其他β-blocker 一樣,本劑不可與 verapamil 倂用。因同時投與 verapamil 和β -blocker 可能引起心搏過緩、低血壓和心收縮不全 (asystole)。\", \"rationale\": \"頁二注意事項第八點是文件中唯一明確禁止本劑與verapamil併用並說明理由之條款。\"}, {\"query\": \"心壓暢錠停藥時應如何處理以避免突然停藥造成的危害？\", \"query_en\": null, \"slices\": [\"time_window\"], \"page\": 1, \"section\": \"【注意事項】\", \"key_text\": \"停用本劑時需逐漸停用,例如於 7〜10 天之期間\", \"span\": \"停用本劑時需逐漸停用,例如於 7〜10 天之期間,因突然停藥會導致急性損害患者身體狀況,尤其是罹患心臟局部缺血者。\", \"rationale\": \"頁一注意事項第二點是文件中唯一說明停藥應逐漸進行並給出7〜10天期限之條款。\"}, {\"query\": \"服用心壓暢錠的病患若須接受麻醉手術，應提前多久停藥？\", \"query_en\": null, \"slices\": [\"time_window\"], \"page\": 1, \"section\": \"【注意事項】\", \"key_text\": \"在麻醉前至少 48 小時即應停止服用本劑\", \"span\": \"對於即將進行麻醉開刀的病患,在麻醉前至少 48 小時即應停止服用本劑。\", \"rationale\": \"頁一注意事項第三點是文件中唯一說明麻醉前應提前48小時停藥之條款。\"}]"
+}

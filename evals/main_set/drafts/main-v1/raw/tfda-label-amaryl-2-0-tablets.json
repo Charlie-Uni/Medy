@@ -1,0 +1,28 @@
+{
+  "document_key": "tfda-label-amaryl-2-0-tablets",
+  "source_hash": "35ae3bb3cb14ba859cfc2ee006aba20762f79fc80834d19e8c606badbf07dc59",
+  "quota": 4,
+  "pages_sent": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "drafting_prompt_sha256": "dacbe907888f4ed16470887911c7529c53ec055928e0f94d003ab9d65b6abf07",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:26:02+00:00",
+  "finished_at": "2026-09-20T16:27:04+00:00",
+  "prompt_chars": 11168,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "b1344d00-565d-47c4-9e2a-bd0c2d8074fe",
+  "input_tokens": 1,
+  "output_tokens": 7002,
+  "cost_usd": 0.24462375000000003,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "5832f957e9b2d773e278416b776c87f9ec60bb2c09cf2f57eaeb9a3ecb08538c",
+  "tools_disabled": true,
+  "reply": "```json\n[\n  {\"query\": \"瑪爾胰(glimepiride)每日最高建議劑量是多少?\", \"query_en\": null, \"slices\": [\"dose_unit\", \"drug_name_zh\"], \"page\": 1, \"section\": \"[說明]\", \"key_text\": \"Glimepiride 每日最高之建議劑量為 8mg\", \"span\": \"Glimepiride 每日最高之建議劑量為 8mg。\", \"rationale\": \"页1[說明]仅此句给出glimepiride的每日最高建议剂量，其余剂量描述均针对不同治疗阶段或联合用药情形，不能回答此问题。\"},\n  {\"query\": \"瑪爾胰對於嚴重腎臟或肝臟功能異常的病患是否可以使用?\", \"query_en\": null, \"slices\": [\"negation\", \"drug_name_zh\"], \"page\": 1, \"section\": \"[禁忌]\", \"key_text\": \"嚴重腎臟或肝臟功能異常\", \"span\": \"下列情況禁用 Amaryl:胰島素依賴型糖尿病、糖尿性昏迷、酮酸中毒、嚴重腎臟或肝臟功能異常、對 glimepiride、其它 sulphonylurea 類、sulphonamides 類藥物或對所含賦形劑過敏之病患、懷孕、授乳。\", \"rationale\": \"页1[禁忌]明确列出严重肾脏或肝脏功能异常患者禁用Amaryl，为唯一给出该禁忌的条款。\"},\n  {\"query\": \"瑪爾胰藥物過量後,服藥多久可能仍無低血糖症狀出現?\", \"query_en\": null, \"slices\": [\"time_window\", \"drug_name_zh\"], \"page\": 3, \"section\": \"[藥物過量]\", \"key_text\": \"服藥後 24 小時可能尚無症狀出現\", \"span\": \"劑量過量及長期使用過高劑量治療可能發生低血糖症,持續 12-72 小時,恢復後可能再發。服藥後 24 小時可能尚無症狀出現。\", \"rationale\": \"页3[藥物過量]仅此处说明服药过量后症状可能延迟24小时才出现，为文档中唯一相关时间窗描述。\"},\n  {\"query\": \"瑪爾胰開始治療的建議起始劑量是多少?\", \"query_en\": null, \"slices\": [\"dose_unit\", \"drug_name_zh\"], \"page\": 1, \"section\": \"[說明]\", \"key_text\": \"開始時每天服用 1mg glimepiride\", \"span\": \"開始時每天服用 1mg glimepiride,如病情控制良好,可維持此劑量繼續治療。\", \"rationale\": \"页1[說明]仅此句说明glimepiride起始治疗的每日建议剂量为1mg，为该问题唯一答案。\"},\n  {\"query\": \"瑪爾胰仿單所依據的CCDS版本編號是什麼?\", \"query_en\": null, \"slices\": [\"protocol_id\"], \"page\": 4, \"section\": \"页尾资讯\", \"key_text\": \"Ref. CCDS v14_12 May 2016\", \"span\": \"Ref. CCDS v14_12 May 2016\", \"rationale\": \"页4末尾仅此处给出仿单所依据的CCDS版本编号，为唯一答案。\"}\n]\n```"
+}

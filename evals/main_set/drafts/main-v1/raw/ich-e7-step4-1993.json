@@ -1,0 +1,30 @@
+{
+  "document_key": "ich-e7-step4-1993",
+  "source_hash": "cbe681cf342eeefb477c1a30770d12798fadcf2d00079faa0aa66047ce4ca330",
+  "quota": 5,
+  "pages_sent": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "drafting_prompt_sha256": "dacbe907888f4ed16470887911c7529c53ec055928e0f94d003ab9d65b6abf07",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:23:33+00:00",
+  "finished_at": "2026-09-20T16:27:16+00:00",
+  "prompt_chars": 15985,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "dd221dff-ec00-4839-be9c-59b504c365a9",
+  "input_tokens": 1,
+  "output_tokens": 26136,
+  "cost_usd": 0.69703625,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "b5a1ac2f8ae2e2784dfa9e0bb07cceea40ddb46d12a4b4f434337e7f87ed2b66",
+  "tools_disabled": true,
+  "reply": "```json\n[\n  {\"query\": \"根据ICH E7,在制定老年患者临床试验方案时,是否应该因患者合并症而将其排除出试验?\", \"query_en\": \"According to ICH E7, should patients with concomitant illnesses be excluded from geriatric clinical trial protocols?\", \"slices\": [\"negation\"], \"page\": 4, \"section\": \"IV. Definition of the Population\", \"key_text\": \"important not to exclude unnecessarily patients with concomitant illnesses\", \"span\": \"It is also important not to exclude unnecessarily patients with concomitant illnesses; it is only by observing such patients that drug-disease interactions can be detected.\", \"rationale\": \"该页仅此一处明确说明不应因合并症而不必要地排除老年患者,是唯一能回答此问题的条款。\"},\n  {\"query\": \"根据ICH E7,已上市药品的新剂型或新复方制剂,如果说明书未充分涵盖老年患者常见状况,是否仍适用本指导原则?\", \"query_en\": \"According to ICH E7, does the guideline apply to new formulations or combinations of established drugs when conditions common in the elderly are not already addressed in current labelling?\", \"slices\": [\"negation\"], \"page\": 3, \"section\": \"III. Scope of Guideline\", \"key_text\": \"are likely to be encountered and are not already dealt with in current labelling\", \"span\": \"The guideline applies also to new formulations and new combinations of established medicinal products when there is specific reason to expect that conditions common in the elderly (e.g., renal or hepatic impairment, impaired cardiac function, concomitant illnesses or concomitant medications) are likely to be encountered and are not already dealt with in current labelling.\", \"rationale\": \"该页仅此一句明确规定指南适用于说明书尚未涵盖老年常见状况的新剂型/新复方,是回答该问题的唯一条款。\"},\n  {\"query\": \"根据ICH E7的一般原则,新药临床试验是否应涵盖包括老年人在内的所有相关年龄组?\", \"query_en\": \"According to the General Principle of ICH E7, should new drugs be studied in all relevant age groups, including the elderly?\", \"slices\": [], \"page\": 3, \"section\": \"II. General Principle\", \"key_text\": \"should be studied in all age groups, including the elderly\", \"span\": \"Drugs should be studied in all age groups, including the elderly, for which they will have significant utility.\", \"rationale\": \"此为General Principle章节唯一陈述药物应在所有年龄组(含老年人)中进行研究的条款,别无重复。\"},\n  {\"query\": \"根据ICH E7,申办方若不单独进行老年人药代动力学评价,可以采用什么替代方法?\", \"query_en\": \"According to ICH E7, what alternative approach can sponsors use instead of conducting a separate pharmacokinetic evaluation in the elderly?\", \"slices\": [], \"page\": 5, \"section\": \"B. Pharmacokinetic Screening Approach\", \"key_text\": \"utilize a Pharmacokinetic Screen in conjunction with the main Phase 3\", \"span\": \"Sponsors may opt, instead of conducting a separate PK evaluation of the elderly, to utilize a Pharmacokinetic Screen in conjunction with the main Phase 3 (and Phase 2, if the sponsor wishes) clinical trials program.\", \"rationale\": \"该页唯一说明可用Pharmacokinetic Screen替代单独老年人PK评价方法的条款,能唯一回答此问题。\"},\n  {\"query\": \"根据ICH E7,认知功能相关的评估是否建议单独设计临床试验,而非与主要试验合并进行?\", \"query_en\": \"According to ICH E7, should assessments such as cognitive function studies be conducted as separate trials rather than combined with the main studies?\", \"slices\": [], \"page\": 4, \"section\": \"V. Clinical Experience\", \"key_text\": \"studies of cognitive function, require special planning and can be best accomplished in separate studies\", \"span\": \"Certain assessments, however, e.g., studies of cognitive function, require special planning and can be best accomplished in separate studies.\", \"rationale\": \"该页仅此一句明确指出认知功能等评估需特别规划并最好单独进行,是回答该问题的唯一条款。\"},\n  {\"query\": \"根据ICH E7,经显著肝脏代谢或具有活性代谢物的药物,在老年患者中是否可能带来特殊问题?\", \"query_en\": \"According to ICH E7, may drugs subject to significant hepatic metabolism or with active metabolites pose special problems in elderly patients?\", \"slices\": [], \"page\": 5, \"section\": \"VII. Pharmacokinetics in Renally or Hepatically Impaired Patients\", \"key_text\": \"drugs subject to significant hepatic metabolism and/or excretion, or that have active metabolites, may pose special problems in the elderly\", \"span\": \"Similarly, drugs subject to significant hepatic metabolism and/or excretion, or that have active metabolites, may pose special problems in the elderly.\", \"rationale\": \"该页唯一说明经显著肝代谢或有活性代谢物的药物在老年人中可能构成特殊问题的条款。\"},\n  {\"query\": \"根据ICH E7,针对镇静/催眠药等具有重要中枢神经系统作用的药物,是否建议在老年人群中进行独立的药效学研究?\", \"query_en\": \"According to ICH E7, are separate pharmacodynamic studies recommended in the elderly for sedative/hypnotic agents and other drugs with important CNS effects?\", \"slices\": [], \"page\": 6, \"section\": \"VIII. Pharmacodynamic/Dose Response Studies\", \"key_text\": \"Sedative/hypnotic agents and other psychoactive drugs or drugs with important CNS effects\", \"span\": \"Separate studies are, however, recommended in the following situations: • Sedative/hypnotic agents and other psychoactive drugs or drugs with important CNS effects, such as sedating antihistamines\", \"rationale\": \"该页此条列举镇静/催眠及具重要中枢神经作用药物为唯一明确建议单独进行药效学研究的情形。\"}\n]\n```"
+}

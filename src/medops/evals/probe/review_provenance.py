@@ -22,13 +22,27 @@ if TYPE_CHECKING:
 
 BATCHES = ("MA", "PV", "CO")
 DERIVED_BATCH = "EN"  # spec-v1.1: derived English twins are reviewed as their own batch
+NO_ANSWER_BATCH = "NA"  # spec-m1: no-answer samples are reviewed as their own batch (different record shape)
+
+
+def is_main_set(manifest: Mapping[str, Any]) -> bool:
+    return manifest.get("spec_version") == "spec-m1"
 
 
 def batches_for(manifest: Mapping[str, Any]) -> tuple[str, ...]:
+    if is_main_set(manifest):
+        return BATCHES + (DERIVED_BATCH, NO_ANSWER_BATCH)
     return BATCHES + (DERIVED_BATCH,) if manifest.get("spec_version") == "spec-v1.1" else BATCHES
 
 
+def imported_sample(sample: Mapping[str, Any]) -> bool:
+    """spec-m1: merged probe samples keep their `pc-` ids and their probe review evidence (validator PR-16)."""
+    return str(sample["sample_id"]).startswith("pc-")
+
+
 def batch_of(sample: Mapping[str, Any]) -> str:
+    if sample.get("answerable", True) is False:
+        return NO_ANSWER_BATCH
     return DERIVED_BATCH if sample.get("derived_from") else str(sample["dept"])
 
 
@@ -43,6 +57,7 @@ def evidence_names(batches: tuple[str, ...]) -> tuple[str, ...]:
 EVIDENCE_NAMES = evidence_names(BATCHES)
 EVIDENCE_PATHS = tuple(f"review_evidence/{name}" for name in EVIDENCE_NAMES)
 ITEM_KEYS = {"query", "slices", "key_text", "evidence_span", "dept"}
+ITEM_KEYS_NO_ANSWER = {"query", "absence", "slices", "dept"}  # spec-m1 no-answer verdicts
 _SHA256 = re.compile(r"[0-9a-f]{64}\Z")
 
 
@@ -90,7 +105,9 @@ def _verdicts(rows: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
         sid = row["sample_id"]
         _require(isinstance(sid, str) and sid not in result, "duplicate or invalid verdict sample_id")
         items = row["items"]
-        _require(isinstance(items, dict) and set(items) == ITEM_KEYS, f"{sid}: invalid verdict items")
+        _require(
+            isinstance(items, dict) and set(items) in (ITEM_KEYS, ITEM_KEYS_NO_ANSWER), f"{sid}: invalid verdict items"
+        )
         _require(all(value in ("ok", "issue") for value in items.values()), f"{sid}: invalid verdict item value")
         expected = "dispute" if "issue" in items.values() else "agree"
         _require(row["verdict"] == expected, f"{sid}: verdict disagrees with its issue items")
@@ -137,14 +154,27 @@ def _current_records(
         return None
     corpus = _json((version_dir / "corpus.json").read_bytes())
     docs = {d["source_hash"]: d for d in corpus["documents"]}
+    by_key = {d["document_key"]: d for d in corpus["documents"]}
+    by_id = {s["sample_id"]: s for s in samples}
+    main_set = any(str(s["sample_id"]).startswith("ms-") for s in samples)
     result = {}
     for sample in samples:
+        if sample.get("answerable", True) is False:
+            # spec-m1 no-answer record: the scope document's packed pages instead of a gold page
+            record = _no_answer_record(sample, by_key, pages)
+            if record is None:
+                return None
+            result[sample["sample_id"]] = record
+            continue
         _require(len(sample["required_gold_evidence"]) == 1, "recorded review protocol requires one gold per sample")
         gold = sample["required_gold_evidence"][0]
         doc = docs[gold["source_hash"]]
         text = pages.page_text(gold["source_hash"], gold["page"])
         if text is None:
             return None
+        if main_set and sample.get("derived_from"):
+            parent = by_id.get(sample["derived_from"])
+            _require(parent is not None, f"{sample['sample_id']}: derived_from parent missing from the review scope")
         result[sample["sample_id"]] = {
             "sample_id": sample["sample_id"],
             "query": sample["query"],
@@ -165,10 +195,50 @@ def _current_records(
             },
             "page_text": text,
         }
+        if main_set and sample.get("derived_from"):
+            result[sample["sample_id"]]["parent_query"] = by_id[sample["derived_from"]]["query"]
     return result
 
 
+def no_answer_document_text(pages: PageTextProvider, source_hash: str, page_numbers: list[int]) -> str | None:
+    parts = []
+    for p in page_numbers:
+        text = pages.page_text(source_hash, p)
+        if text is None:
+            return None
+        parts.append(f"=== 第 {p} 页 ===\n{text}")
+    return "\n".join(parts)
+
+
+def _no_answer_record(
+    sample: Mapping[str, Any], by_key: Mapping[str, Any], pages: PageTextProvider
+) -> dict[str, Any] | None:
+    ab = sample["abstention"]
+    doc = by_key[ab["scope_document_key"]]
+    text = no_answer_document_text(pages, doc["source_hash"], list(ab["document_pages"]))
+    if text is None:
+        return None
+    return {
+        "sample_id": sample["sample_id"],
+        "query": sample["query"],
+        "dept": sample["dept"],
+        "language": sample["language"],
+        "slices": sample["slices"],
+        "answerable": False,
+        "abstention": {k: ab[k] for k in ("scope_document_key", "topic", "absence_check")},
+        "document": {
+            "document_key": doc["document_key"],
+            "title": doc["title"],
+            "doc_type": doc["doc_type"],
+            "language": doc["language"],
+        },
+        "document_text": text,
+    }
+
+
 def _span_variants(record: dict[str, Any]) -> list[dict[str, Any]]:
+    if "gold" not in record:
+        return [record]
     """The two serialisations an input pack may have used for evidence_span: the explicit
     (text, char_start, char_end) order of the v1 drafting tools, or canonical sorted keys when the pack
     was re-exported from a canonical samples.jsonl (v2). Content is identical; only key order differs."""
@@ -248,10 +318,14 @@ def _validate(
     )
     batches = batches_for(manifest)
     artifacts = _read_artifacts(version_dir, provenance, batches)
-    samples = _jsonl((version_dir / "samples.jsonl").read_bytes())
-    sample_ids = [s["sample_id"] for s in samples]
+    all_samples = _jsonl((version_dir / "samples.jsonl").read_bytes())
+    sample_ids = [s["sample_id"] for s in all_samples]
+    main_set = is_main_set(manifest)
+    # spec-m1: imported probe samples carry probe review evidence (validator PR-16), not this version's
+    samples = [s for s in all_samples if not (main_set and imported_sample(s))]
+    expected_total = manifest["counts"]["samples"] - (manifest["counts"]["imported"] if main_set else 0)
     _require(
-        len(set(sample_ids)) == len(samples) and len(samples) == manifest["counts"]["samples"],
+        len(set(sample_ids)) == len(all_samples) and len(samples) == expected_total,
         "review evidence sample coverage differs from manifest",
     )
     _require(all(batch_of(s) in batches for s in samples), "review evidence has an unknown sample batch")
@@ -267,7 +341,20 @@ def _validate(
     all_chunks = []
     for batch in batches:
         group = {s["sample_id"]: s for s in samples if batch_of(s) == batch}
-        if batch == DERIVED_BATCH:
+        if main_set:
+            if batch == DERIVED_BATCH:
+                expected_size = int(manifest.get("derived_samples", {}).get("count", 0)) - sum(
+                    1 for s in all_samples if imported_sample(s) and s.get("derived_from")
+                )
+            elif batch == NO_ANSWER_BATCH:
+                expected_size = int(manifest["counts"]["no_answer"])
+            else:
+                expected_size = sum(
+                    1
+                    for s in samples
+                    if s["dept"] == batch and not s.get("derived_from") and s.get("answerable", True) is not False
+                )
+        elif batch == DERIVED_BATCH:
             expected_size = int(manifest.get("derived_samples", {}).get("count", 0))
         elif manifest.get("spec_version") == "spec-v1.1":
             expected_size = sum(1 for s in samples if s["dept"] == batch and not s.get("derived_from"))

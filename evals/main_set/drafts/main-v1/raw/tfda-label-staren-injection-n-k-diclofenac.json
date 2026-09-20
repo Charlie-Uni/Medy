@@ -1,0 +1,26 @@
+{
+  "document_key": "tfda-label-staren-injection-n-k-diclofenac",
+  "source_hash": "0e8e316abd1fcd16b0890516b340fa47311dea7e2fb8313e625db1e4fb1150d1",
+  "quota": 4,
+  "pages_sent": [
+    1,
+    2
+  ],
+  "drafting_prompt_sha256": "dacbe907888f4ed16470887911c7529c53ec055928e0f94d003ab9d65b6abf07",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:23:57+00:00",
+  "finished_at": "2026-09-20T16:26:43+00:00",
+  "prompt_chars": 23005,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "2d33e286-76cc-4ab1-a42f-11f3c49d8739",
+  "input_tokens": 1,
+  "output_tokens": 16672,
+  "cost_usd": 0.58128,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "d45bcbf33bcc0fcd87dd6a147c4bd8fbf45792ac4528a30bde363a7a0a68456d",
+  "tools_disabled": true,
+  "reply": "[\n  {\"query\": \"賜痛寧注射液(diclofenac)成人常用的劑量與注射方式為何?\", \"query_en\": null, \"slices\": [\"dose_unit\", \"drug_name_zh\"], \"page\": 1, \"section\": \"用法用量\", \"key_text\": \"成人一次 75 mg ,一日一次,行外側臀部肌肉深部緩慢注射之\", \"span\": \"通常成人一次 75 mg ,一日一次,行外側臀部肌肉深部緩慢注射之,並應時常改換左右臀部注射部位。\", \"rationale\": \"本頁用法用量段落僅此一條成人劑量、頻次與注射部位之規定,可唯一回答此問題。\"},\n  {\"query\": \"賜痛寧注射液(diclofenac)在病人做完冠狀動脈繞道手術(CABG)後,術後多久內禁止使用?\", \"query_en\": null, \"slices\": [\"negation\", \"time_window\", \"drug_name_zh\"], \"page\": 1, \"section\": \"心血管栓塞事件\", \"key_text\": \"進行冠狀動脈繞道手術 (Coronary artery bypass graft, CABG) 之後 14 天內禁用本藥\", \"span\": \"進行冠狀動脈繞道手術 (Coronary artery bypass graft, CABG) 之後 14 天內禁用本藥。\", \"rationale\": \"本頁僅此段以未重複疊字之原文明確規定CABG術後14天內禁用本藥,唯此條款可回答此問題。\"},\n  {\"query\": \"賜痛寧注射液(diclofenac)的核准適應症為何?適用於什麼情況下的病人?\", \"query_en\": null, \"slices\": [\"drug_name_zh\"], \"page\": 1, \"section\": \"適應症\", \"key_text\": \"無法口服情況下,短期使用於緩解發炎及因發炎引起之疼痛\", \"span\": \"無法口服情況下,短期使用於緩解發炎及因發炎引起之疼痛。\", \"rationale\": \"本頁適應症段落只有這一句說明本藥核准之使用情境,為唯一答案。\"},\n  {\"query\": \"賜痛寧注射液(diclofenac)應如何儲存?\", \"query_en\": null, \"slices\": [\"drug_name_zh\"], \"page\": 2, \"section\": \"儲藏\", \"key_text\": \"本品應於 25 °C以下陰涼處儲存\", \"span\": \"本品應於 25 °C以下陰涼處儲存。\", \"rationale\": \"本頁僅儲藏段落說明本藥品之儲存條件,為唯一可回答此問題之條款。\"},\n  {\"query\": \"賜痛寧注射液(diclofenac)每支安瓿的包裝容量與盒裝規格為何?\", \"query_en\": null, \"slices\": [\"dose_unit\", \"drug_name_zh\"], \"page\": 2, \"section\": \"包裝\", \"key_text\": \"3毫升安瓿裝, 100 支以下盒裝\", \"span\": \"3毫升安瓿裝, 100 支以下盒裝。\", \"rationale\": \"本頁僅包裝段落說明每支安瓿容量與盒裝支數上限,為唯一答案來源。\"}\n]"
+}

@@ -1,0 +1,25 @@
+{
+  "document_key": "tfda-label-rodamine-syrup-w-p",
+  "source_hash": "0c80faec13d3404834be06c3212ccdf81b5e63af80064009d93106ecca47f293",
+  "quota": 3,
+  "pages_sent": [
+    1
+  ],
+  "drafting_prompt_sha256": "dacbe907888f4ed16470887911c7529c53ec055928e0f94d003ab9d65b6abf07",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:25:10+00:00",
+  "finished_at": "2026-09-20T16:26:04+00:00",
+  "prompt_chars": 5465,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "4ad519da-8037-4d9f-b9be-d777e4e7369b",
+  "input_tokens": 1,
+  "output_tokens": 5992,
+  "cost_usd": 0.18162999999999999,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "1b42b887c587a8738d08d103e19b1ed910e076d312224290da7c5a8ef26a87a3",
+  "tools_disabled": true,
+  "reply": "[{\"query\": \"「華盛頓」洛得敏糖漿(loratadine)成人及十二歲以上兒童的建議劑量是多少?\", \"query_en\": null, \"slices\": [\"dose_unit\", \"drug_name_zh\"], \"page\": 1, \"section\": \"用法用量\", \"key_text\": \"成人及十二歲(含)以上兒童:每日兩茶匙 Rodamine Syrup(10mg)\", \"span\": \"成人及十二歲(含)以上兒童:每日兩茶匙 Rodamine Syrup(10mg)。\", \"rationale\": \"該頁用法用量段落中僅此句針對成人及十二歲以上兒童族群給出劑量,其餘為不同年齡/體重族群之條款,故此為唯一答案。\"}, {\"query\": \"「華盛頓」洛得敏糖漿有哪些禁忌症?\", \"query_en\": null, \"slices\": [\"negation\", \"drug_name_zh\"], \"page\": 1, \"section\": \"禁忌\", \"key_text\": \"凡對本品糖漿劑所含成分會發生過敏反應者,皆不適合投以本劑\", \"span\": \"凡對本品糖漿劑所含成分會發生過敏反應者,皆不適合投以本劑。\", \"rationale\": \"該頁僅有一條禁忌條款,明確說明對成分過敏者不適合使用本品,為唯一可回答禁忌症提問的條款。\"}, {\"query\": \"使用「華盛頓」洛得敏糖漿的病人若要做皮膚過敏測試(skin test),應提前多久停藥?\", \"query_en\": null, \"slices\": [\"negation\", \"time_window\", \"drug_name_zh\"], \"page\": 1, \"section\": \"藥物交互作用\", \"key_text\": \"在進行 skin test 之前 48 小時起應停止使用本品\", \"span\": \"對實驗室檢驗的交互作用;在進行 skin test 之前 48 小時起應停止使用本品,因為抗組織胺可能會預防或降低引起皮膚過敏的試劑之反應。\", \"rationale\": \"該頁僅此處規定進行皮膚過敏測試前需停用本品之時間窗,是唯一能回答該問題的條款。\"}, {\"query\": \"兩歲至十二歲、體重不足三十公斤的兒童服用「華盛頓」洛得敏糖漿時,建議劑量為何?\", \"query_en\": null, \"slices\": [\"dose_unit\", \"drug_name_zh\"], \"page\": 1, \"section\": \"用法用量\", \"key_text\": \"體重不及三十公斤者每日一茶匙 Rodamine Syrup(5mg)\", \"span\": \"兩歲至十二歲兒童:體重大於三十公斤者每日兩茶匙 Rodamine Syrup(10mg) ,體重不及三十公斤者每日一茶匙 Rodamine Syrup(5mg)。\", \"rationale\": \"該頁僅此句針對兩歲至十二歲兒童依體重分層之用法用量,為唯一能回答體重不足三十公斤族群提問的條款。\"}, {\"query\": \"「華盛頓」洛得敏糖漿用於肝功能嚴重受損病人時,建議的起始劑量調整為何?\", \"query_en\": null, \"slices\": [\"dose_unit\", \"drug_name_zh\"], \"page\": 1, \"section\": \"注意事項\", \"key_text\": \"建議劑量為每 5mg 或每隔一日 10mg\", \"span\": \"對肝功能嚴重受損的病人,其初始劑量應該降低,因為 Loratadine 的清除率可能降低,建議劑量為每 5mg 或每隔一日 10mg。\", \"rationale\": \"該頁僅此句針對肝功能嚴重受損病人給出起始劑量調整建議,為唯一能回答該問題的條款。\"}]"
+}

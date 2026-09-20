@@ -1,0 +1,27 @@
+{
+  "document_key": "tfda-label-vomiz-for-iv-injection-2mg-ml",
+  "source_hash": "c96703065f145c812f38466a545fe62d0dbe6c566d380892d1702a720dd6c1ce",
+  "quota": 4,
+  "pages_sent": [
+    1,
+    2,
+    3
+  ],
+  "drafting_prompt_sha256": "dacbe907888f4ed16470887911c7529c53ec055928e0f94d003ab9d65b6abf07",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:26:43+00:00",
+  "finished_at": "2026-09-20T16:28:37+00:00",
+  "prompt_chars": 16636,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "d90a7883-04fd-493a-abc2-8e441de4015e",
+  "input_tokens": 1,
+  "output_tokens": 11512,
+  "cost_usd": 0.38866124999999996,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "82cdabfb63b0b29b037b4774e84c8e9845bf504953992593f3cf37010aedb6e5",
+  "tools_disabled": true,
+  "reply": "[{\"query\": \"使用莫尼茲(Vomiz)注射劑治療化學治療引起之噁心嘔吐(CINV)時，中度或重度肝功能不全病人的靜脈注射或口服每日總劑量上限為何？\", \"query_en\": null, \"slices\": [\"dose_unit\", \"negation\"], \"page\": 1, \"section\": \"用法、用量—化學治療或放射線治療引起之噁心及嘔吐(CINV與RINV)—肝功能不全病人\", \"key_text\": \"用於這類病人時,靜脈注射或口服的每日總劑量不可超過8毫克。\", \"span\": \"• 肝功能不全病人:中度或重度肝功能不全者的 ondansetron 清除率顯著降低,血清半衰期顯著延長。用於這類病人時,靜脈注射或口服的每日總劑量不可超過8毫克。\", \"rationale\": \"該頁僅此句針對CINV情境下肝功能不全病人給出每日總劑量上限，PONV情境下的同類句子用語不同（「在這類病人使用時」），可據此唯一鎖定本條款。\"}, {\"query\": \"成人接受致吐性化學治療時，莫尼茲注射劑靜脈或肌肉注射的建議起始劑量以及給藥後多久可改為口服給藥？\", \"query_en\": null, \"slices\": [\"dose_unit\", \"time_window\"], \"page\": 1, \"section\": \"用法、用量—化學治療或放射線治療引起之噁心及嘔吐(CINV與RINV)—成人:致吐性化學治療及放射線治療\", \"key_text\": \"24 小時之後,建議以口服方式給藥,以預防遲發性或長時間嘔吐。\", \"span\": \"Ondansetron 的靜脈注射(IV)或肌肉注射(IM)建議劑量為 8 毫克,於即將進行治療之前緩慢注射給藥。 24 小時之後,建議以口服方式給藥,以預防遲發性或長時間嘔吐。\", \"rationale\": \"該頁僅此段明確給出成人IV/IM起始劑量與24小時後轉為口服給藥的時間窗規定，與後文提及化療24小時後遲發性嘔吐的敘述用詞不同，可唯一鎖定。\"}, {\"query\": \"年滿75歲以上病人因化學治療引起噁心嘔吐使用莫尼茲注射劑時，起始靜脈輸注劑量上限與追加給藥的間隔時間為何？\", \"query_en\": null, \"slices\": [\"dose_unit\", \"negation\", \"time_window\"], \"page\": 1, \"section\": \"用法、用量—老年人:化學治療或放射治療引起之噁心嘔吐(CINV與RINV)\", \"key_text\": \"對年滿75歲或以上之病人,ondansetron 起始劑量不可超過8毫克,其輸注時間亦應超過 15分鐘。\", \"span\": \"對年滿75歲或以上之病人,ondansetron 起始劑量不可超過8毫克,其輸注時間亦應超過 15分鐘。在此8 毫克之起始劑量後,可追加2 劑8毫克15分鐘以上之靜脈輸注,每劑間隔時間須至少4小時(詳見特殊病人群體,老年人)。\", \"rationale\": \"該頁僅此條款針對75歲以上高齡病人設定起始劑量上限、輸注時間及追加劑量的間隔規定，與61至74歲族群的劑量規定不同，問題中的年齡限定使答案唯一。\"}, {\"query\": \"孕婦在懷孕第一孕期是否可以使用莫尼茲(ondansetron)注射劑？\", \"query_en\": null, \"slices\": [\"negation\"], \"page\": 2, \"section\": \"懷孕、泌乳、具生育能力之女性與男性—懷孕\", \"key_text\": \"懷孕第一孕期不應使用 ondansetron。\", \"span\": \"懷孕第一孕期不應使用 ondansetron。\", \"rationale\": \"該頁僅此句明確規定懷孕第一孕期禁止使用ondansetron，是回答此問題的唯一條款。\"}, {\"query\": \"莫尼茲靜脈注射劑(Vomiz)未開封前應如何儲存，保存期限為多久？\", \"query_en\": null, \"slices\": [], \"page\": 3, \"section\": \"保存期限及儲存條件\", \"key_text\": \"儲存於 25°C以下,保存期限為 2 年\", \"span\": \"Ondansetron 注射劑:儲存於 25°C以下,保存期限為 2 年。須避光儲存。\", \"rationale\": \"該頁僅此條款說明本品的儲存溫度、保存期限與避光要求，是回答儲存問題的唯一依據。\"}, {\"query\": \"老年人接受手術以預防或治療術後噁心嘔吐時，使用莫尼茲注射劑的臨床經驗與耐受性資料為何？\", \"query_en\": null, \"slices\": [], \"page\": 1, \"section\": \"用法、用量—手術引起之噁心嘔吐(PONV)—老年人\", \"key_text\": \"Ondansetron 用於老年人,以預防或治療手術引起之噁心嘔吐的經驗有限,但接受化療的 65 歲以上病人對 ondansetron 的耐受性良好。\", \"span\": \"Ondansetron 用於老年人,以預防或治療手術引起之噁心嘔吐的經驗有限,但接受化療的 65 歲以上病人對 ondansetron 的耐受性良好。\", \"rationale\": \"該頁僅此句描述老年人於術後噁心嘔吐情境下使用ondansetron的臨床經驗與耐受性資料，為唯一相關條款。\"}]"
+}

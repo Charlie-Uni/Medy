@@ -1,0 +1,29 @@
+{
+  "document_key": "ich-e7-step4-1993",
+  "source_hash": "cbe681cf342eeefb477c1a30770d12798fadcf2d00079faa0aa66047ce4ca330",
+  "pages_sent": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "drafting_prompt_sha256": "6ddf3154781b57b9f694350ca27addf18c709543b76c13e946275da0c43fd685",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:41:55+00:00",
+  "finished_at": "2026-09-20T16:42:19+00:00",
+  "prompt_chars": 14665,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "435ed85b-6733-462d-a652-b64e2c24bd1a",
+  "input_tokens": 1,
+  "output_tokens": 2246,
+  "cost_usd": 0.09278,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "13309dca88a3321b650d5fcf4a328fdcbf4c82767905567270a953bca48aaad4",
+  "tools_disabled": true,
+  "reply": "[{\"query\": \"根据 ICH E7,是否规定在老年人临床试验中必须使用特定的功能状态或衰弱评估量表(如 Karnofsky 或 ADL 量表)来筛选或分层受试者?\", \"query_en\": \"According to ICH E7, is there a requirement to use specific functional status or frailty assessment scales (e.g., Karnofsky or ADL) to screen or stratify elderly trial subjects?\", \"topic\": \"功能状态/衰弱评估量表要求\", \"absence_terms\": [\"frailty\", \"functional status\", \"Karnofsky\", \"activities of daily living\"], \"nearest_clause\": {\"page\": 4, \"text\": \"It is also important not to exclude unnecessarily patients with concomitant illnesses; it is only by observing such patients that drug-disease interactions can be detected.\"}, \"rationale\": \"文档讨论了纳入老年及合并疾病患者的一般原则,但从未提及使用任何具体的功能状态或衰弱评估量表来筛选或分层受试者。\"}, {\"query\": \"ICH E7 是否对养老院或长期照护机构中的老年受试者的纳入或特殊照护提出了专门规定?\", \"query_en\": \"Does ICH E7 provide specific provisions for enrolling or caring for elderly subjects residing in nursing homes or long-term care facilities?\", \"topic\": \"养老院/长期照护受试者规定\", \"absence_terms\": [\"nursing home\", \"institutionalized\", \"long-term care\", \"care facility\"], \"nearest_clause\": {\"page\": 4, \"text\": \"The geriatric population is arbitrarily defined, for the purpose of this guideline, as comprising patients aged 65 years or older.\"}, \"rationale\": \"文档仅按年龄界定老年人群并讨论纳入合并疾病患者的一般原则,并未涉及养老院或长期照护机构受试者的特殊纳入或照护安排。\"}]"
+}

@@ -1,0 +1,27 @@
+{
+  "document_key": "tfda-label-hetlosar-100-losartan-tablets-100mg",
+  "source_hash": "c59161e8c6b42e149351ccc8c1d5ca8337627fa490861e6fb7dceb2bbca13f36",
+  "quota": 4,
+  "pages_sent": [
+    1,
+    2,
+    3
+  ],
+  "drafting_prompt_sha256": "dacbe907888f4ed16470887911c7529c53ec055928e0f94d003ab9d65b6abf07",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:27:45+00:00",
+  "finished_at": "2026-09-20T16:28:48+00:00",
+  "prompt_chars": 15172,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "23de650b-4366-4cc2-b2f1-588a3cc2b1b6",
+  "input_tokens": 1,
+  "output_tokens": 6944,
+  "cost_usd": 0.26218625,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "f60b0eca3e54526b5f8af7285a6f33534a74ec638a8c5117c2a5f2d63c666feb",
+  "tools_disabled": true,
+  "reply": "[\n{\"query\": \"血管內體液缺乏(如使用高劑量利尿劑)之高血壓病人服用特釋壓膜衣錠(Hetlosar, losartan)時,起始劑量應如何調整?\", \"query_en\": null, \"slices\": [\"dose_unit\"], \"page\": 1, \"section\": \"劑量及用法\", \"key_text\": \"其起始劑量需考慮改用每次25 毫克,每日一次\", \"span\": \"對血管內體液缺乏(intravascularly volume-depleted)之病人(如以高劑量利尿劑治療者),其起始劑量需考慮改用每次25 毫克,每日一次(參見注意事項)。\", \"rationale\": \"只有劑量及用法一節針對血管內體液缺乏之高血壓病人給出改用每次25毫克、每日一次的起始劑量調整。\"},\n{\"query\": \"糖尿病病人使用特釋壓膜衣錠(Hetlosar, losartan)時,是否可以併用aliskiren?\", \"query_en\": null, \"slices\": [\"negation\", \"drug_name_zh\"], \"page\": 1, \"section\": \"禁忌症〈依文獻記載〉\", \"key_text\": \"Losartan potassium 與 aliskiren 不可合併使用於糖尿病病人或腎功能不全病人(GFR<60 ml/min/1.73 m²)\", \"span\": \"Losartan potassium 與 aliskiren 不可合併使用於糖尿病病人或腎功能不全病人(GFR<60 ml/min/1.73 m²)(參見注意事項與藥物交互作用)。\", \"rationale\": \"只有禁忌症一節明確禁止糖尿病病人或GFR<60之腎功能不全病人併用losartan與aliskiren。\"},\n{\"query\": \"新生兒或腎絲球過濾率低於30 mL/min/1.73 m²的兒童病人,是否建議使用特釋壓膜衣錠(Hetlosar, losartan)?\", \"query_en\": null, \"slices\": [\"negation\", \"dose_unit\"], \"page\": 1, \"section\": \"小兒之使用〈依文獻記載〉\", \"key_text\": \"Losartan potassium 並不建議用於新生兒以及腎絲球過濾率低於30 mL/min/1.73 m²、肝功能不全的兒童病人\", \"span\": \"Losartan potassium 並不建議用於新生兒以及腎絲球過濾率低於30 mL/min/1.73 m²、肝功能不全的兒童病人,因目前尚無這方面的研究資料。\", \"rationale\": \"只有小兒之使用一節說明因缺乏研究資料,不建議將losartan potassium用於新生兒及腎絲球過濾率低於30 mL/min/1.73 m²或肝功能不全的兒童病人。\"},\n{\"query\": \"特釋壓膜衣錠(Hetlosar, losartan)藥物過量時,能否以血液透析方式清除藥物及其活性代謝物?\", \"query_en\": null, \"slices\": [\"negation\"], \"page\": 2, \"section\": \"藥物過量〈依文獻記載〉\", \"key_text\": \"Losartan 及其活性代謝物均無法藉血液透析來排除\", \"span\": \"Losartan 及其活性代謝物均無法藉血液透析來排除。\", \"rationale\": \"只有藥物過量一節說明losartan及其活性代謝物無法透過血液透析排除。\"},\n{\"query\": \"第II型糖尿病腎病變病人使用特釋壓膜衣錠(Hetlosar, losartan)的起始劑量為何?\", \"query_en\": null, \"slices\": [\"dose_unit\", \"drug_name_zh\"], \"page\": 1, \"section\": \"劑量及用法\", \"key_text\": \"治療第 II 型糖尿病腎病變一般起始劑量為每次 50 毫克,每日一次。\", \"span\": \"治療第 II 型糖尿病腎病變一般起始劑量為每次 50 毫克,每日一次。視血壓下降情形,可將劑量增加至每次 100 毫克,每日一次。\", \"rationale\": \"只有劑量及用法一節針對第II型糖尿病腎病變病人給出每次50毫克、每日一次的起始劑量及可增量至100毫克之依據。\"},\n{\"query\": \"肝功能受損病史之病人使用特釋壓膜衣錠(Hetlosar, losartan)時,劑量上需要注意什麼?\", \"query_en\": null, \"slices\": [\"dose_unit\"], \"page\": 1, \"section\": \"注意事項〈依文獻記載〉\", \"key_text\": \"肝硬化病人其血漿中 losartan 之濃度顯著增加;故對有肝功能受損病史之病人,須使用較低之劑量\", \"span\": \"肝功能受損者依藥物動力學資料證實肝硬化病人其血漿中 losartan 之濃度顯著增加;故對有肝功能受損病史之病人,須使用較低之劑量(參見劑量及用法)。\", \"rationale\": \"只有注意事項之肝功能受損者段落說明肝硬化病人血漿losartan濃度增加,故須對有肝功能受損病史者使用較低劑量。\"}\n]"
+}

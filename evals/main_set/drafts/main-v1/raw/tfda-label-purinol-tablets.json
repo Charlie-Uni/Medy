@@ -1,0 +1,31 @@
+{
+  "document_key": "tfda-label-purinol-tablets",
+  "source_hash": "4c21c14e2cedd67e401aedf2f678a9fceaf9d3935751cb19d40bf62117c89dd9",
+  "quota": 4,
+  "pages_sent": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "drafting_prompt_sha256": "dacbe907888f4ed16470887911c7529c53ec055928e0f94d003ab9d65b6abf07",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:24:56+00:00",
+  "finished_at": "2026-09-20T16:26:06+00:00",
+  "prompt_chars": 15895,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "37bd84c7-a55b-4f24-9d29-641472868837",
+  "input_tokens": 1,
+  "output_tokens": 7671,
+  "cost_usd": 0.2894925,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "f51780e1bb00d045e2a47e2153b3b25ae53738cb56deac1988ecc13820563258",
+  "tools_disabled": true,
+  "reply": "[{\"query\":\"拔痛酸錠(Allopurinol)作為抗痛風劑使用時,初始劑量的每日最大建議劑量是多少?不得超過多少mg?\",\"query_en\":null,\"slices\":[\"negation\",\"dose_unit\",\"drug_name_zh\"],\"page\":2,\"section\":\"用法用量\",\"key_text\":\"不得超過每日 800 mg 之最大建議劑量\",\"span\":\"初始劑量—口服,100 mg,一天一次,在一星期的間隔期間每天增加 100 mg 直到達到所需要的血清尿酸濃度為止。不得超過每日 800 mg 之最大建議劑量。\",\"rationale\":\"僅此處規定抗痛風劑初始劑量的每日最大建議劑量上限,頁中其他800 mg數值出自不同用途(排泄量、贅瘤治療、處方限量)。\"},{\"query\":\"服用拔痛酸錠(Allopurinol)後,停止治療多久血清尿酸濃度會回復到治療前的數值?\",\"query_en\":null,\"slices\":[\"time_window\",\"drug_name_zh\"],\"page\":1,\"section\":\"臨床藥理\",\"key_text\":\"治療停止之後的 1 至 2 週,血清尿酸濃度會回復到治療前的數值\",\"span\":\"作用期間:通常在治療停止之後的 1 至 2 週,血清尿酸濃度會回復到治療前的數值。\",\"rationale\":\"該頁僅此段說明停藥後血清尿酸濃度回復治療前數值所需的時間窗。\"},{\"query\":\"拔痛酸錠(Allopurinol)可以用於治療痛風性關節炎的急性發作嗎?\",\"query_en\":null,\"slices\":[\"negation\",\"drug_name_zh\"],\"page\":2,\"section\":\"適應症\",\"key_text\":\"它必須不得使用於痛風性關節炎的急性發作\",\"span\":\"Allopurinol 沒有抗發炎的效力。它必須不得使用於痛風性關節炎的急性發作。\",\"rationale\":\"僅此處明確說明Allopurinol不得使用於痛風性關節炎急性發作的禁止性用法。\"},{\"query\":\"拔痛酸錠(Allopurinol)用於6至12歲兒童治療贅瘤疾病引起的高尿酸血症時,口服劑量如何給予?\",\"query_en\":null,\"slices\":[\"dose_unit\",\"drug_name_zh\"],\"page\":3,\"section\":\"一般孩童劑量\",\"key_text\":\"年齡 6 至 12 歲的孩童:口服,100 mg,一天三次;或 300 mg 當作一個單一劑量,一天一次\",\"span\":\"年齡 6 至 12 歲的孩童:口服,100 mg,一天三次;或 300 mg 當作一個單一劑量,一天一次。\",\"rationale\":\"該頁僅此句給出6至12歲兒童在贅瘤疾病高尿酸血症治療上的具體口服劑量。\"},{\"query\":\"長期使用拔痛酸錠(Allopurinol)且未發生不良反應的病人,是否建議進行HLA-B*5801基因篩檢?\",\"query_en\":null,\"slices\":[\"negation\",\"drug_name_zh\"],\"page\":6,\"section\":\"嚴重皮膚反應\",\"key_text\":\"長期使用沒有不良反應的病人不建議基因篩撿\",\"span\":\"長期使用沒有不良反應的病人不建議基因篩撿,無論是否帶有HLA-B*5801 基因,發生史蒂文生氏強生症候群的危險在治療開始之後幾個月最大,基因篩檢並不能取代適當的臨床安全監視及病患處置。\",\"rationale\":\"該頁僅此處說明長期使用且無不良反應病人不建議進行HLA-B*5801基因篩檢的立場。\"}]"
+}

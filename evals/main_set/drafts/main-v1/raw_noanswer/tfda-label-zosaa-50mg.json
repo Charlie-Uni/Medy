@@ -1,0 +1,24 @@
+{
+  "document_key": "tfda-label-zosaa-50mg",
+  "source_hash": "81069adaf87d21e640d9b5cbc83a799a59a33acbdc4ead46ed338c9ad6d06b3a",
+  "pages_sent": [
+    1
+  ],
+  "drafting_prompt_sha256": "6ddf3154781b57b9f694350ca27addf18c709543b76c13e946275da0c43fd685",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:29:23+00:00",
+  "finished_at": "2026-09-20T16:29:40+00:00",
+  "prompt_chars": 6016,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "776dca24-dedd-48eb-90c8-daa27017c003",
+  "input_tokens": 1,
+  "output_tokens": 1205,
+  "cost_usd": 0.067805,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "d6c5680f4b864c614c7d3be342acd53a04abc79ed5afd8d9a8e7d17d751c663f",
+  "tools_disabled": true,
+  "reply": "```json\n[\n  {\"query\": \"服用穩壓膜衣錠50毫克（Zosaa F.C. Tablets 50mg, losartan potassium）期間，可否同時飲用葡萄柚汁？是否會影響藥效？\", \"query_en\": null, \"topic\": \"與葡萄柚汁之交互作用\", \"absence_terms\": [\"葡萄柚\", \"grapefruit\", \"柑橘\"], \"nearest_clause\": {\"page\": 1, \"text\": \"藥物交互作用:在臨床之藥物動力學試驗中,尚無具臨床意義之證據可確認 losartan 與 hydrochlorothiazide , digoxin , warfarin , cimetidine , phenobarbital , ketoconazole 及 erythromycin 之藥物交互作用。\"}, \"rationale\": \"仿單藥物交互作用段落僅列舉特定藥物（如利尿劑、毛地黃、warfarin 等）與 rifampin、fluconazole、保鉀利尿劑、非固醇類消炎劑，並未提及食物（葡萄柚汁）之交互作用，屬於患者常見詢問但文件未涵蓋之事項。\"},\n  {\"query\": \"服用穩壓膜衣錠50毫克（Zosaa F.C. Tablets 50mg, losartan potassium）時若忘記服藥一次，應如何補服？\", \"query_en\": null, \"topic\": \"漏服藥物之處理方式\", \"absence_terms\": [\"忘記\", \"漏服\", \"補服\", \"missed dose\"], \"nearest_clause\": {\"page\": 1, \"text\": \"高血壓:大多數病人的一般起始劑量及維持劑量為每次 50mg,每日一次;在治療後 3~6 週可獲得最大降壓效果;有些病人在劑量增加至每次 100 mg,每日一次後,其療效更佳。\"}, \"rationale\": \"劑量及用法段落僅說明起始劑量、維持劑量與調整方式，並未提及若病人漏服一次應如何處理，此為病人實際用藥時常見疑問，但文件未涵蓋。\"}\n]\n```"
+}

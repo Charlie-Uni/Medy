@@ -1,0 +1,33 @@
+{
+  "document_key": "ema-gvp-module-ix-addendum-i",
+  "source_hash": "7a649643af0a390cfb0246714325cb1adf11ebc1d6980b6039c8b643a2f5d674",
+  "pages_sent": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "drafting_prompt_sha256": "6ddf3154781b57b9f694350ca27addf18c709543b76c13e946275da0c43fd685",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:37:19+00:00",
+  "finished_at": "2026-09-20T16:37:58+00:00",
+  "prompt_chars": 32598,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "e80d8348-7338-4fe9-a24a-920b2ae1bac1",
+  "input_tokens": 1,
+  "output_tokens": 4046,
+  "cost_usd": 0.17164875000000002,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "332acf3dacfd323977d3c95b8fd79e1ffed607e3b4c84f8dd404ef2e785b703b",
+  "tools_disabled": true,
+  "reply": "```json\n[\n  {\"query\": \"根据GVP Module IX Addendum I，针对妊娠期（pregnancy）患者报告的可疑不良反应，本附录是否规定了专门的signal detection方法？\", \"query_en\": \"According to GVP Module IX Addendum I, does this addendum specify dedicated signal detection methods for adverse reaction reports from pregnant patients?\", \"topic\": \"妊娠人群信号检测方法\", \"absence_terms\": [\"pregnancy\", \"pregnant\", \"fetal\", \"lactation\"], \"nearest_clause\": {\"page\": 8, \"text\": \"Two such groups that can be differentiated in most databases are the youngest and oldest patients.\"}, \"rationale\": \"该问题属于Addendum I 'IX.Add I.4 特定患者群体'方法章节的自然延伸范畴，但文档在明确列举'两个可区分群体'时仅提及儿科与老年人群，从未讨论妊娠或哺乳期患者的信号检测方法。\"},\n  {\"query\": \"GVP Module IX Addendum I 是否说明了上市许可持有人（MAH）与监管机构（competent authority）在实施本附录所述统计signal detection方法时各自应承担的职责？\", \"query_en\": \"Does GVP Module IX Addendum I specify the respective responsibilities of the marketing authorisation holder (MAH) and the competent authority in implementing the statistical signal detection methods described in this addendum?\", \"topic\": \"MAH与监管机构职责划分\", \"absence_terms\": [\"marketing authorisation holder\", \"MAH\", \"competent authority\", \"responsible\"], \"nearest_clause\": {\"page\": 3, \"text\": \"So far as possible the decision process should be formally pre-specified and validated. In each case it should be fully documented.\"}, \"rationale\": \"作为GVP系列文件下的方法学附录，读者自然会关心执行这些统计方法的责任主体，但全文只描述统计与决策流程本身，从未提及MAH、监管机构或任何职责分配安排。\"}\n]\n```"
+}

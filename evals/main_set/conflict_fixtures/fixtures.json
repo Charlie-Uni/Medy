@@ -1,0 +1,41 @@
+{
+  "created_at": "2026-09-21",
+  "rule": "spec-m1 v1.0 §5：合成冲突——同一文档以两个 document_key、不同 version_label 与 effective_from 入库并归档旧版；样本 conflict.synthetic=true",
+  "fixtures": [
+    {
+      "document_key": "ich-e7-step4-1993",
+      "synthetic_old_key": "ich-e7-step4-1993--synthetic-old",
+      "source_hash": "cbe681cf342eeefb477c1a30770d12798fadcf2d00079faa0aa66047ce4ca330",
+      "effective_from_old": "1991-06-24",
+      "effective_from_current": "1993-06-24"
+    },
+    {
+      "document_key": "ich-e12a-principle-2000",
+      "synthetic_old_key": "ich-e12a-principle-2000--synthetic-old",
+      "source_hash": "d09627c2d02dc3c6675be445232a7312e0aa295f6b1748da68fc9d771405a9ac",
+      "effective_from_old": "1998-03-02",
+      "effective_from_current": "2000-03-02"
+    },
+    {
+      "document_key": "ich-e15-step4-2007",
+      "synthetic_old_key": "ich-e15-step4-2007--synthetic-old",
+      "source_hash": "40516566c939436147ade1b076a2e46d716755d3062c1102732ae394cf8e02fc",
+      "effective_from_old": "2005-11-01",
+      "effective_from_current": "2007-11-01"
+    },
+    {
+      "document_key": "ema-gvp-annex-i-rev4",
+      "synthetic_old_key": "ema-gvp-annex-i-rev4--synthetic-old",
+      "source_hash": "93435355242b002f23e966d1f08454614c405ce4e286e6979b5de44692bab4fe",
+      "effective_from_old": "2015-10-09",
+      "effective_from_current": "2017-10-09"
+    },
+    {
+      "document_key": "ema-gvp-pp-i",
+      "synthetic_old_key": "ema-gvp-pp-i--synthetic-old",
+      "source_hash": "0d68ef884e7293e1ef0fb09fbdbc23f646948c4c9627401336ff98d47886c412",
+      "effective_from_old": "2011-12-09",
+      "effective_from_current": "2013-12-09"
+    }
+  ]
+}

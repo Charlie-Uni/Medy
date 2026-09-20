@@ -1,0 +1,26 @@
+{
+  "document_key": "tfda-label-esomepsun-40mg-tablets-sunyet",
+  "source_hash": "70d3d976a3b4ef70d192755440066618dd538d1bdf16659daa255b6f04dcaa81",
+  "quota": 4,
+  "pages_sent": [
+    1,
+    2
+  ],
+  "drafting_prompt_sha256": "dacbe907888f4ed16470887911c7529c53ec055928e0f94d003ab9d65b6abf07",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:28:37+00:00",
+  "finished_at": "2026-09-20T16:29:33+00:00",
+  "prompt_chars": 15612,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "32d3932c-9488-4d52-ac7f-2658ee8ee585",
+  "input_tokens": 1,
+  "output_tokens": 6432,
+  "cost_usd": 0.253805,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "61bced76bf2ae0537870a0e14e2c2084fc362b9f57b5262226bbf73e1115a494",
+  "tools_disabled": true,
+  "reply": "[{\"query\": \"怡胃適腸溶錠(esomeprazole)用於治療成人及12歲以上青少年之糜爛性逆流性食道炎，起始劑量與療程為何？\", \"query_en\": null, \"slices\": [\"dose_unit\"], \"page\": 1, \"section\": \"【劑量及給藥法】\", \"key_text\": \"40mg每天1次,為期4週\", \"span\": \"-糜爛性逆流性食道炎之治療:40mg每天1次,為期4週。對食道炎尚未痊癒或尚有症狀之患者,建議另外再給予4週療程。\", \"rationale\": \"本頁劑量及給藥法中僅此段描述成人及12歲以上青少年糜爛性逆流性食道炎之劑量與療程。\"}, {\"query\": \"怡胃適腸溶錠(esomeprazole)可以與nelfinavir併用嗎？\", \"query_en\": null, \"slices\": [\"negation\"], \"page\": 1, \"section\": \"【禁忌】\", \"key_text\": \"Esomeprazole不可與nelfinavir併用\", \"span\": \"Esomeprazole不可與nelfinavir併用(請參閱【與其他藥物之交互作用及其他形式之交互作用】)。\", \"rationale\": \"禁忌章節僅此句明確禁止esomeprazole與nelfinavir併用。\"}, {\"query\": \"esomeprazole用於肝功能嚴重不良的病人時，最高使用劑量限制為何？\", \"query_en\": null, \"slices\": [\"dose_unit\", \"negation\"], \"page\": 1, \"section\": \"【劑量及給藥法】肝功能不良\", \"key_text\": \"Esomeprazole的最高使用劑量不應超過20 mg\", \"span\": \"肝功能嚴重不良的病人,Esomeprazole的最高使用劑量不應超過20 mg。\", \"rationale\": \"劑量及給藥法中僅此句規定肝功能嚴重不良病人之esomeprazole最高劑量。\"}, {\"query\": \"長期使用PPI類藥品(如esomeprazole)可能出現低血鎂症，通常在使用多久之後才會出現此不良反應？\", \"query_en\": null, \"slices\": [\"time_window\"], \"page\": 1, \"section\": \"警語及注意之事項－低血鎂症\", \"key_text\": \"長期使用PPI類成分藥品(至少使用3個月,大部分在使用1年以上)\", \"span\": \"曾有通報案件顯示,當長期使用PPI類成分藥品(至少使用3個月,大部分在使用1年以上),可能出現罕見低血鎂之不良反應,可能無症狀或嚴重之不良反應症狀,包括手足抽搐、心律不整、癲癇發作等。\", \"rationale\": \"警語及注意事項中僅此段說明長期使用PPI類藥品出現低血鎂症之典型使用期間。\"}, {\"query\": \"esomeprazole治療Zollinger Ellison Syndrome (ZES)的建議起始劑量為何？\", \"query_en\": null, \"slices\": [\"dose_unit\"], \"page\": 1, \"section\": \"【劑量及給藥法】\", \"key_text\": \"建議起始劑量為服用esomeprazole 40mg每日2次\", \"span\": \"Zollinger Ellison Syndrome (ZES)之治療建議起始劑量為服用esomeprazole 40mg每日2次,然後再依個別情況調整劑量,並視臨床表徵決定是否需繼續治療。\", \"rationale\": \"劑量及給藥法中僅此段說明ZES治療之建議起始劑量。\"}, {\"query\": \"esomeprazole是否可用於哺乳期間之婦女？\", \"query_en\": null, \"slices\": [\"negation\"], \"page\": 2, \"section\": \"懷孕及授乳\", \"key_text\": \"在哺乳期間不應使用esomeprazole\", \"span\": \"目前並不知道esomeprazole是否會由人類乳汁中排出;亦未曾對哺乳中婦女進行研究。因此,在哺乳期間不應使用esomeprazole。\", \"rationale\": \"懷孕及授乳章節中僅此段明確說明哺乳期間不應使用esomeprazole。\"}]"
+}

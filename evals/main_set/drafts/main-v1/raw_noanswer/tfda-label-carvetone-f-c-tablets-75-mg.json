@@ -1,0 +1,25 @@
+{
+  "document_key": "tfda-label-carvetone-f-c-tablets-75-mg",
+  "source_hash": "662b69e6044ed9746280815bc3bb5e45a2911c9f5edebf610a5a26aac44e95c9",
+  "pages_sent": [
+    1,
+    2
+  ],
+  "drafting_prompt_sha256": "6ddf3154781b57b9f694350ca27addf18c709543b76c13e946275da0c43fd685",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:40:55+00:00",
+  "finished_at": "2026-09-20T16:41:20+00:00",
+  "prompt_chars": 21957,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "1429d25f-4008-4fde-882e-9b4b803350d1",
+  "input_tokens": 1,
+  "output_tokens": 2133,
+  "cost_usd": 0.18454874999999998,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "59c6ffe783b97cd00966697687fe7567bec38230050ca78c5b2bc175c7254b27",
+  "tools_disabled": true,
+  "reply": "```json\n[\n  {\"query\": \"服用固栓宜（Carvetone，clopidogrel）期間喝葡萄柚汁，會不會影響藥效或增加出血風險？\", \"query_en\": null, \"topic\": \"葡萄柚汁交互作用\", \"absence_terms\": [\"葡萄柚\", \"葡萄柚汁\", \"grapefruit\"], \"nearest_clause\": {\"page\": 1, \"text\": \"Clopidogrel 的建議劑量為每天 75 mg,一天一次,可和食物同時服用或分開服用。\"}, \"rationale\": \"仿單詳列多種藥物交互作用與食物併服建議，但完全未提及葡萄柚汁對clopidogrel代謝或藥效的影響，這是仿單體裁下病人常問卻未涵蓋之飲食交互作用事項。\"},\n  {\"query\": \"固栓宜（clopidogrel）能否與新型口服抗凝血劑（如rivaroxaban或dabigatran）併用？\", \"query_en\": null, \"topic\": \"與新型口服抗凝血劑之交互作用\", \"absence_terms\": [\"rivaroxaban\", \"dabigatran\", \"新型口服抗凝血劑\", \"NOAC\"], \"nearest_clause\": {\"page\": 1, \"text\": \"口服抗凝血劑:由於可能增加出血的危險,不建議clopidogrel與warfarin併用。請參考”警語及注意事項”欄。\"}, \"rationale\": \"仿單交互作用欄僅具體討論warfarin此一口服抗凝血劑，對於rivaroxaban、dabigatran等新型口服抗凝血劑之併用風險並未提及，屬於仿單本應涵蓋但提供頁面未覆蓋之藥物交互作用事項。\"}\n]\n```"
+}

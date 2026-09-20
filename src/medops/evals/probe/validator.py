@@ -32,6 +32,8 @@ from medops.retrieval.lexical.normalization import NORMALIZATION_VERSION, normal
 Mode = Literal["draft", "frozen"]
 Level = Literal["error", "warning"]
 SLICES = ("drug_name_zh", "dose_unit", "negation", "time_window", "protocol_id", "mixed_zh_en")
+NEW_SLICES = ("version_conflict", "no_answer", "long_context")  # spec-m1 (evals/main_set/SPEC.md section 2)
+LONG_CONTEXT_CHARS = 1500
 DEPTS = ("MA", "PV", "CO")
 LANGS = ("zh-Hans", "zh-Hant", "en", "mixed")
 REQUIRED_FILES = ("manifest.json", "corpus.json", "samples.jsonl", "review_prompt.md")
@@ -151,7 +153,7 @@ class ProbeSetValidator:
         docs = self._pr01_corpus_index(manifest, corpus, add)
         self._pr02_ids(samples, acl_probes, add)
         report.counts = self._pr03_counts(manifest, samples, docs, mode, add)
-        self._pr04_corpus_refs(samples, docs, mode, add)
+        self._pr04_corpus_refs(manifest, samples, docs, mode, add)
         self._pr05_anchoring(samples, mode, add)
         self._pr06_dept(samples, docs, add)
         self._pr07_pii(manifest, samples, add, exceptions=exceptions, version_dir=version_dir)
@@ -162,6 +164,11 @@ class ProbeSetValidator:
         self._pr15_derived(manifest, samples, docs, add)
         self._pr13_corpus_license(manifest, corpus, mode, add)
         self._pr14_selfcheck(manifest, add)
+        if self._is_m1(manifest):
+            self._pr16_imported(manifest, samples, add)
+            self._pr17_answerable(samples, docs, add)
+            self._pr18_conflict(manifest, samples, docs, add)
+            self._pr19_long_context(samples, add)
         if mode == "frozen":
             self._pr10_frozen(manifest, version_dir, add)
             self._pr12_mappings(manifest, samples, mappings, add)
@@ -294,28 +301,66 @@ class ProbeSetValidator:
                 add(Finding("PR-02", "error", f"derived_from_sample {ref} does not exist", p["probe_id"]))
 
     @staticmethod
-    def _sample_language(sample, docs) -> str:
-        langs = {
-            docs[g["source_hash"]]["language"] for g in sample["required_gold_evidence"] if g["source_hash"] in docs
-        }
+    def _is_m1(manifest) -> bool:
+        return manifest.get("spec_version") == "spec-m1"
+
+    @staticmethod
+    def _answerable(sample) -> bool:
+        return sample.get("answerable", True) is not False
+
+    @staticmethod
+    def _imported(sample) -> bool:
+        """spec-m1: probe samples merged verbatim keep their `pc-` ids and their probe-era review records."""
+        return str(sample["sample_id"]).startswith("pc-")
+
+    @staticmethod
+    def _by_key(docs) -> dict[str, dict[str, Any]]:
+        return {d["document_key"]: d for d in docs.values()}
+
+    @staticmethod
+    def _sample_language(sample, docs, by_key=None) -> str:
+        golds = sample["required_gold_evidence"]
+        if not golds and by_key is not None and sample.get("abstention"):
+            scope = by_key.get(sample["abstention"].get("scope_document_key"))
+            return scope["language"] if scope else "mixed"
+        langs = {docs[g["source_hash"]]["language"] for g in golds if g["source_hash"] in docs}
         return langs.pop() if len(langs) == 1 else "mixed"
 
     def _pr03_counts(self, manifest, samples, docs, mode: Mode, add: Add) -> dict[str, Any]:
         level: Level = "error" if mode == "frozen" else "warning"
         mins = manifest["minimums"]
+        m1 = self._is_m1(manifest)
+        slices = SLICES + NEW_SLICES if m1 else SLICES
+        by_key = self._by_key(docs)
         per_slice = Counter(sl for s in samples for sl in s["slices"])
         per_dept = Counter(s["dept"] for s in samples)
-        per_language = Counter(self._sample_language(s, docs) for s in samples)
+        per_language = Counter(self._sample_language(s, docs, by_key) for s in samples)
         actual: dict[str, Any] = {
             "samples": len(samples),
             "documents": len(docs),
-            "per_slice": {k: per_slice.get(k, 0) for k in SLICES},
+            "per_slice": {k: per_slice.get(k, 0) for k in slices},
             "per_dept": {k: per_dept.get(k, 0) for k in DEPTS},
             "per_language": {k: per_language.get(k, 0) for k in LANGS},
         }
-        if len(samples) < mins["samples"]:
+        if m1:
+            actual["answerable"] = sum(self._answerable(s) for s in samples)
+            actual["no_answer"] = len(samples) - actual["answerable"]
+            actual["conflict"] = sum("version_conflict" in s["slices"] for s in samples)
+            actual["derived"] = sum(bool(s.get("derived_from")) for s in samples)
+            actual["imported"] = sum(self._imported(s) for s in samples)
+            for name, key in (
+                ("answerable", "answerable_samples"),
+                ("no_answer", "no_answer_samples"),
+                ("conflict", "conflict_samples"),
+            ):
+                if actual[name] < mins[key]:
+                    add(Finding("PR-03", level, f"{name} samples {actual[name]} < minimum {mins[key]}"))
+            for lang, key in (("zh-Hant", "zh_hant_samples"), ("en", "en_samples")):
+                if actual["per_language"][lang] < mins[key]:
+                    add(Finding("PR-03", level, f"{lang} samples {actual['per_language'][lang]} < {mins[key]}"))
+        elif len(samples) < mins["samples"]:
             add(Finding("PR-03", level, f"{len(samples)} samples < minimum {mins['samples']}"))
-        for k in SLICES:
+        for k in slices:
             if actual["per_slice"][k] < mins["per_slice"]:
                 add(Finding("PR-03", level, f"slice {k} has {actual['per_slice'][k]} < {mins['per_slice']}"))
         for k in DEPTS:
@@ -335,8 +380,9 @@ class ProbeSetValidator:
             )
         return actual
 
-    def _pr04_corpus_refs(self, samples, docs, mode: Mode, add: Add) -> None:
+    def _pr04_corpus_refs(self, manifest, samples, docs, mode: Mode, add: Add) -> None:
         level: Level = "error" if mode == "frozen" else "warning"
+        cap = int(manifest["minimums"]["max_samples_per_document"])  # 6 for the probe, 8 for spec-m1
         per_doc: Counter[str] = Counter()
         for s in samples:
             for g in s["required_gold_evidence"]:
@@ -368,8 +414,8 @@ class ProbeSetValidator:
                 for h in {g["source_hash"] for g in s["required_gold_evidence"]}:
                     per_doc[h] += 1
         for h, n in per_doc.items():
-            if n > 6:
-                add(Finding("PR-04", "error", f"document {h[:12]} contributes {n} samples > 6"))
+            if n > cap:
+                add(Finding("PR-04", "error", f"document {h[:12]} contributes {n} samples > {cap}"))
         if len(docs) < 10:
             add(Finding("PR-04", level, f"{len(docs)} documents < minimum 10"))
         docs_per_dept = Counter(d["owner_dept"] for d in docs.values())
@@ -419,7 +465,19 @@ class ProbeSetValidator:
                     )
 
     def _pr06_dept(self, samples, docs, add: Add) -> None:
+        by_key = self._by_key(docs)
         for s in samples:
+            if not s["required_gold_evidence"] and s.get("abstention"):
+                scope = by_key.get(s["abstention"].get("scope_document_key"))
+                if scope and scope["owner_dept"] != s["dept"]:
+                    add(
+                        Finding(
+                            "PR-06",
+                            "error",
+                            f"sample dept {s['dept']} != scope document owner_dept {scope['owner_dept']}",
+                            s["sample_id"],
+                        )
+                    )
             for g in s["required_gold_evidence"]:
                 doc = docs.get(g["source_hash"])
                 if doc and doc["owner_dept"] != s["dept"]:
@@ -617,11 +675,21 @@ class ProbeSetValidator:
             )
         elif policy["human_reviewers"] != 1 or policy["llm_reviewers"] != 1:
             add(Finding("PR-09", "error", "review_policy inconsistent with reviewers", "manifest.json/review_policy"))
+        imported = manifest.get("imported_samples") if self._is_m1(manifest) else None
         for s in samples:
             rv = s["review"]
             if annot and rv["annotator"]["id"] != annot["id"]:
                 add(Finding("PR-09", "error", "sample annotator id differs from manifest", s["sample_id"]))
-            if second:
+            if imported and self._imported(s):
+                # spec-m1: merged probe samples keep the probe reviewer binding (PR-16 checks byte identity)
+                sr = rv["second_reviewer"]
+                if sr.get("prompt_hash") != imported["prompt_hash"] or sr.get("id") != imported["reviewer_id"]:
+                    add(
+                        Finding(
+                            "PR-09", "error", "imported sample review differs from imported_samples", s["sample_id"]
+                        )
+                    )
+            elif second:
                 sr = rv["second_reviewer"]
                 for key in ("id", "model", "model_version", "prompt_hash"):
                     if sr.get(key) != second.get(key):
@@ -746,6 +814,134 @@ class ProbeSetValidator:
                     add(Finding("PR-15", "error", "derived twins are only allowed for English gold documents", loc))
             if normalize_text(s["query"]) == normalize_text(parent["query"]):
                 add(Finding("PR-15", "error", "derived twin query equals the parent query", loc))
+
+    # ---------------------------------------------------------------- spec-m1 rules (evals/main_set/SPEC.md)
+    def _pr16_imported(self, manifest, samples, add: Add) -> None:
+        """PR-16: the merged probe samples (`pc-` ids) are exactly the frozen probe version named in
+        manifest.imported_samples, byte-identical after canonicalization; the probe manifest agrees."""
+        imp = manifest["imported_samples"]
+        imported = [s for s in samples if self._imported(s)]
+        if len(imported) != imp["count"]:
+            add(
+                Finding(
+                    "PR-16",
+                    "error",
+                    f"{len(imported)} imported samples != declared {imp['count']}",
+                    "manifest.json/imported_samples",
+                )
+            )
+        path = (self.approval_records_root / imp["path"]).resolve()
+        if not path.is_relative_to(self.approval_records_root) or not path.is_file():
+            add(Finding("PR-16", "error", f"imported samples file {imp['path']} not found under the repository root"))
+            return
+        raw = path.read_bytes()
+        if hashlib.sha256(raw).hexdigest() != imp["samples_sha256"]:
+            add(Finding("PR-16", "error", "imported samples file SHA-256 differs from manifest", imp["path"]))
+        source: dict[str, str] = {}
+        for line in raw.decode("utf-8").splitlines():
+            if line.strip():
+                obj = json.loads(line)
+                source[obj["sample_id"]] = canonical_json(obj)
+        if set(source) != {s["sample_id"] for s in imported}:
+            add(Finding("PR-16", "error", "imported samples must be exactly the samples of the frozen probe version"))
+        for s in imported:
+            if source.get(s["sample_id"]) != canonical_json(s):
+                add(Finding("PR-16", "error", "imported sample differs from the frozen probe sample", s["sample_id"]))
+        probe_manifest = path.parent / "manifest.json"
+        if not probe_manifest.is_file():
+            add(Finding("PR-16", "error", "frozen probe manifest not found next to the imported samples", imp["path"]))
+            return
+        pm = json.loads(probe_manifest.read_text(encoding="utf-8"))
+        for key in ("dataset_id", "dataset_version", "dataset_hash"):
+            if pm.get(key) != imp[key]:
+                add(
+                    Finding(
+                        "PR-16",
+                        "error",
+                        f"imported_samples.{key} differs from the probe manifest",
+                        "manifest.json/imported_samples",
+                    )
+                )
+        if pm.get("status") != "frozen":
+            add(Finding("PR-16", "error", "imported probe version is not frozen", imp["path"]))
+
+    def _pr17_answerable(self, samples, docs, add: Add) -> None:
+        """PR-17: no-answer samples name an in-corpus scope document, carry no gold, no twin and the
+        `no_answer` slice; answerable samples carry at least one gold."""
+        by_key = self._by_key(docs)
+        for s in samples:
+            loc = s["sample_id"]
+            if self._answerable(s):
+                if not s["required_gold_evidence"]:
+                    add(Finding("PR-17", "error", "answerable sample without gold evidence", loc))
+                if "no_answer" in s["slices"] or s.get("abstention"):
+                    add(Finding("PR-17", "error", "answerable sample carries no_answer/abstention", loc))
+                continue
+            ab = s.get("abstention") or {}
+            if ab.get("scope_document_key") not in by_key:
+                add(Finding("PR-17", "error", "abstention.scope_document_key is not a corpus document", loc))
+            if s["required_gold_evidence"]:
+                add(Finding("PR-17", "error", "no-answer sample must not carry gold evidence", loc))
+            if s.get("expected_behaviour") not in ("insufficient_evidence", "refuse"):
+                add(
+                    Finding(
+                        "PR-17", "error", "no-answer sample needs expected_behaviour insufficient_evidence|refuse", loc
+                    )
+                )
+            if "no_answer" not in s["slices"]:
+                add(Finding("PR-17", "error", "no-answer sample must carry the no_answer slice", loc))
+            if s.get("derived_from"):
+                add(Finding("PR-17", "error", "no-answer samples cannot be derived twins", loc))
+
+    def _pr18_conflict(self, manifest, samples, docs, add: Add) -> None:
+        """PR-18: version_conflict samples reference a registered conflict fixture family, their gold lies in
+        the current version only, and synthetic conflicts say so in `notes`."""
+        by_key = self._by_key(docs)
+        fixtures = {f["document_key"]: f for f in manifest.get("conflict_fixtures", [])}
+        for s in samples:
+            loc = s["sample_id"]
+            c = s.get("conflict")
+            if bool(c) != ("version_conflict" in s["slices"]):
+                add(Finding("PR-18", "error", "conflict block and version_conflict slice must appear together", loc))
+            if not c:
+                continue
+            doc = by_key.get(c["current_document_key"])
+            if doc is None:
+                add(Finding("PR-18", "error", "conflict.current_document_key is not a corpus document", loc))
+                continue
+            golds = s["required_gold_evidence"]
+            if not golds or any(g["source_hash"] != doc["source_hash"] for g in golds):
+                add(Finding("PR-18", "error", "gold must lie in the current version of the conflict family", loc))
+            fx = fixtures.get(c["current_document_key"])
+            if fx is None:
+                add(Finding("PR-18", "error", f"no conflict fixture registered for {c['current_document_key']}", loc))
+            else:
+                if set(c["family_document_keys"]) != {c["current_document_key"], *fx["archived_document_keys"]}:
+                    add(
+                        Finding(
+                            "PR-18", "error", "conflict.family_document_keys differ from the registered fixture", loc
+                        )
+                    )
+                if bool(c["synthetic"]) != bool(fx["synthetic"]):
+                    add(Finding("PR-18", "error", "conflict.synthetic differs from the registered fixture", loc))
+            if c["synthetic"] and "合成" not in s["notes"] and "synthetic" not in s["notes"].lower():
+                add(Finding("PR-18", "error", "synthetic conflict must be declared in notes", loc))
+
+    def _pr19_long_context(self, samples, add: Add) -> None:
+        """PR-19: `long_context` is mechanical: any gold span longer than 1,500 characters or golds on two or
+        more pages. Imported probe samples keep the probe rules and are exempt."""
+        for s in samples:
+            if self._imported(s):
+                continue
+            golds = s["required_gold_evidence"]
+            is_long = (
+                any(len(g["evidence_span"]["text"]) > LONG_CONTEXT_CHARS for g in golds)
+                or len({g["page"] for g in golds}) >= 2
+            )
+            if is_long != ("long_context" in s["slices"]):
+                add(
+                    Finding("PR-19", "error", "long_context slice must match the span-length/page rule", s["sample_id"])
+                )
 
     def _pr12_mappings(self, manifest, samples, mappings, add: Add) -> None:
         gold_ids = {g["gold_id"] for s in samples for g in s["required_gold_evidence"]}

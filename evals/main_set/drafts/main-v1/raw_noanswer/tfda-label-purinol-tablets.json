@@ -1,0 +1,30 @@
+{
+  "document_key": "tfda-label-purinol-tablets",
+  "source_hash": "4c21c14e2cedd67e401aedf2f678a9fceaf9d3935751cb19d40bf62117c89dd9",
+  "pages_sent": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "drafting_prompt_sha256": "6ddf3154781b57b9f694350ca27addf18c709543b76c13e946275da0c43fd685",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:40:33+00:00",
+  "finished_at": "2026-09-20T16:40:55+00:00",
+  "prompt_chars": 14575,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "e9d28fbb-767a-4e7d-8a1d-140799051a44",
+  "input_tokens": 1,
+  "output_tokens": 2046,
+  "cost_usd": 0.14186125,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "795eda3d6aaf697e7d871994544a3a0a160b9fb19e3c17f578ba0154dfb8275c",
+  "tools_disabled": true,
+  "reply": "```json\n[\n  {\"query\": \"服用「居禮」拔痛酸錠（Allopurinol）期間，是否會影響病人駕駛或操作機械的能力？\", \"query_en\": null, \"topic\": \"駕駛/操作機械能力影響\", \"absence_terms\": [\"駕駛\", \"操作機械\", \"driving\", \"machinery\"], \"nearest_clause\": {\"page\": 5, \"text\": \"*e.如有嗜睡(睏倦)發生時要留意。\"}, \"rationale\": \"仿單常規會說明藥品對駕駛/操作機械能力之影響，本文件僅提及注意嗜睡副作用，未明確說明對駕駛或操作機械能力的具體建議或警語。\"},\n  {\"query\": \"拔痛酸錠（Allopurinol）用於肝功能不全病人時，應如何調整劑量？\", \"query_en\": null, \"topic\": \"肝功能不全劑量調整\", \"absence_terms\": [\"肝功能不全\", \"hepatic impairment\", \"肝功能不良\", \"劑量調整\"], \"nearest_clause\": {\"page\": 2, \"text\": \"肌胺酸酐清除率(Creatinine clearance)mL/min 劑量 10 至 20 每日 200 mg 3 至 10 每日不超過 100 mg < 3 100 mg 超過 24 小時間隔,可能是必需的。有些腎功能不全的病人,可能需要甚至更低的劑量,或是更長的劑量間的間隔時間。\"}, \"rationale\": \"文件詳細提供腎功能不全時依肌酸酐清除率調整劑量之表格，但完全未提及肝功能不全病人應如何調整劑量，屬於仿單常見卻在此文件中缺漏的事項。\"}\n]\n```"
+}

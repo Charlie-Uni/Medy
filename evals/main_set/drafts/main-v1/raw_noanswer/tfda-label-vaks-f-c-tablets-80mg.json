@@ -1,0 +1,25 @@
+{
+  "document_key": "tfda-label-vaks-f-c-tablets-80mg",
+  "source_hash": "4c211906545934a9ea4a41ce0cdaeed1ce9d882da06b7e5fd376d50f4a94d794",
+  "pages_sent": [
+    1,
+    2
+  ],
+  "drafting_prompt_sha256": "6ddf3154781b57b9f694350ca27addf18c709543b76c13e946275da0c43fd685",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:39:35+00:00",
+  "finished_at": "2026-09-20T16:39:54+00:00",
+  "prompt_chars": 18921,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "4b1b510b-b7be-42f2-bbd3-562207468475",
+  "input_tokens": 1,
+  "output_tokens": 1436,
+  "cost_usd": 0.1561675,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "4a5d06f2b64e0f361d3e6a11bc41c9cf919e4d4bb77200e86212c25bff6e56e9",
+  "tools_disabled": true,
+  "reply": "```json\n[\n  {\"query\": \"服用衛欣保膜衣錠80毫克（valsartan）期間，飲用葡萄柚汁是否會影響藥效或增加副作用風險？\", \"query_en\": null, \"topic\": \"葡萄柚汁交互作用\", \"absence_terms\": [\"葡萄柚\", \"grapefruit\", \"柚子\"], \"nearest_clause\": {\"page\": 1, \"text\": \"曾與下列成分進行臨床試驗證實,並未有臨床上明顯藥物交互作用,包括:cimetidine, warfarin, furosemide, digoxin, atenolol, indomethacin, hydrochlorothiazide, amlodipine, glibenclamide。\"}, \"rationale\": \"使用者常會詢問常見食物（如葡萄柚汁）與藥物的交互作用，但本仿單交互作用段落僅列出特定藥物與運輸蛋白抑制劑，未提及葡萄柚汁或相關果汁類交互作用，因此無法回答。\"},\n  {\"query\": \"服用衛欣保膜衣錠80毫克（valsartan）後，是否會影響病人駕駛車輛或操作機械的能力？\", \"query_en\": null, \"topic\": \"駕駛與操作機械能力影響\", \"absence_terms\": [\"駕駛\", \"操作機械\", \"driving\", \"machines\"], \"nearest_clause\": null, \"rationale\": \"藥品仿單通常會說明對駕駛或操作機械能力的影響，但本文件提供的頁面中完全未提及此議題，也無相關警語段落可供推論。\"}\n]\n```"
+}

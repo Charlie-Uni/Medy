@@ -1,0 +1,27 @@
+{
+  "document_key": "tfda-label-amaryl-2-0-tablets",
+  "source_hash": "35ae3bb3cb14ba859cfc2ee006aba20762f79fc80834d19e8c606badbf07dc59",
+  "pages_sent": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "drafting_prompt_sha256": "6ddf3154781b57b9f694350ca27addf18c709543b76c13e946275da0c43fd685",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:40:50+00:00",
+  "finished_at": "2026-09-20T16:41:15+00:00",
+  "prompt_chars": 9848,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "98ee55c2-1fe5-4d37-a6f1-a27bedfca9bc",
+  "input_tokens": 1,
+  "output_tokens": 1883,
+  "cost_usd": 0.10964249999999999,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "9f807705770cff5ed3d15bd80b45b48fb4c01b97f9b8c41b9520838e5212578a",
+  "tools_disabled": true,
+  "reply": "```json\n[\n  {\"query\": \"服用瑪爾胰（glimepiride）期間，飲用葡萄柚汁是否會影響藥效或增加副作用風險？\", \"query_en\": null, \"topic\": \"葡萄柚汁交互作用\", \"absence_terms\": [\"葡萄柚\", \"grapefruit\"], \"nearest_clause\": {\"page\": 4, \"text\": \"Glimepiride 口服後生體可用率完全。飲食不會影響吸收,僅吸收速率稍微減慢。\"}, \"rationale\": \"病患常詢問特定食物（如葡萄柚汁）與口服降血糖藥的交互作用，但本仿單僅泛述飲食對吸收速率的影響，並未列出葡萄柚汁或其他特定果汁的交互作用資訊。\"},\n  {\"query\": \"老年（65歲以上）第2型糖尿病患者使用瑪爾胰時，建議的起始劑量是否需要特別調整？\", \"query_en\": null, \"topic\": \"老年患者起始劑量調整建議\", \"absence_terms\": [\"老年\", \"起始劑量\", \"elderly\", \"dose adjustment\"], \"nearest_clause\": {\"page\": 4, \"text\": \"男性與女性,以及年輕人與老年人(超過 65 歲)之藥動學類似。\"}, \"rationale\": \"仿單「特殊族群」僅列出兒童及腎功能受損兩類，並於藥動性質中提及老年人與年輕人藥動學相似，但未提供老年患者具體起始劑量調整之處方建議，而這是臨床醫師開方時會關切的事項。\"}\n]\n```"
+}

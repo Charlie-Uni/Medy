@@ -1,0 +1,26 @@
+{
+  "document_key": "tfda-label-vaks-f-c-tablets-80mg",
+  "source_hash": "4c211906545934a9ea4a41ce0cdaeed1ce9d882da06b7e5fd376d50f4a94d794",
+  "quota": 4,
+  "pages_sent": [
+    1,
+    2
+  ],
+  "drafting_prompt_sha256": "dacbe907888f4ed16470887911c7529c53ec055928e0f94d003ab9d65b6abf07",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:22:18+00:00",
+  "finished_at": "2026-09-20T16:23:57+00:00",
+  "prompt_chars": 20241,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "de2b8998-8556-42ac-a599-d0000825ddd2",
+  "input_tokens": 1,
+  "output_tokens": 9505,
+  "cost_usd": 0.36489874999999994,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "cb497704370ea44e6ee306fba9795175dae12c7883542fdb303d2887267003fe",
+  "tools_disabled": true,
+  "reply": "[{\"query\": \"衛欣保（valsartan）病人若出現血管性水腫，臨床上該如何處置？\", \"query_en\": null, \"slices\": [\"negation\"], \"page\": 1, \"section\": \"血管性水腫病人\", \"key_text\": \"對於出現血管性水腫的病人,應立即停用valsartan,並且不宜再次施用\", \"span\": \"對於出現血管性水腫的病人,應立即停用valsartan,並且不宜再次施用。\", \"rationale\": \"全文中只有此句明確規定血管性水腫病人須立即停用valsartan且不得再次施用，是唯一能回答此處置問題的條款。\"}, {\"query\": \"衛欣保（valsartan）用於心肌梗塞後病人，最早可於何時開始給藥？起始劑量為何？\", \"query_en\": null, \"slices\": [\"dose_unit\", \"time_window\"], \"page\": 1, \"section\": \"心肌梗塞\", \"key_text\": \"心肌梗塞12小時後即開始進行治療。以 20mg每日兩次的初步劑量治療\", \"span\": \"V alsartan可儘早於心肌梗塞12小時後即開始進行治療。以 20mg每日兩次的初步劑量治療之後,在往後的數週期間 valsartan的治療可提高劑量至40mg、 80mg,以及160mg 每日兩次。\", \"rationale\": \"只有此條款界定了心肌梗塞後病人開始valsartan治療的時間窗（12小時後）與初步劑量（20mg每日兩次），為唯一答案來源。\"}, {\"query\": \"衛欣保（valsartan）用於成人高血壓治療時，建議的起始劑量為何？\", \"query_en\": null, \"slices\": [\"dose_unit\"], \"page\": 1, \"section\": \"高血壓\", \"key_text\": \"每天一次,每次80mg或 160mg\", \"span\": \"V alsartan建議使用劑量為( 每天一次,每次80mg或 160mg),不論種族、年齡、性別。\", \"rationale\": \"此句是文檔中唯一針對成人高血壓病人給出建議起始劑量（每天一次，每次80mg或160mg）的條款。\"}, {\"query\": \"衛欣保（valsartan）是否建議與ACEIs或ARBs合併使用以雙重阻斷RAAS系統？\", \"query_en\": null, \"slices\": [\"negation\"], \"page\": 1, \"section\": \"雙重阻斷腎素―血管昇壓素―醛固酮系統 (renin- angiotensin-aldosterone, RAAS)\", \"key_text\": \"不建議合併使用ACEIs、 ARBs 或含 aliskiren成分藥品來雙重阻斷RAAS\", \"span\": \"有證據顯示,合併使用ACEIs、ARBs 或含 aliskiren 成分藥品會增加低血壓、高鉀血症及腎功能下降( 包括急性腎衰竭) 之風險,故不建議合併使用ACEIs、 ARBs 或含 aliskiren成分藥品來雙重阻斷RAAS,若確有必要使用雙重阻斷治療,應密切監測病人之腎功能、電解質及血壓。\", \"rationale\": \"此段是【注意事項/警語】中唯一明確表述不建議合併使用ACEIs、ARBs或aliskiren以雙重阻斷RAAS之條款。\"}, {\"query\": \"衛欣保（valsartan）用於6至18歲高血壓兒童病人，體重未滿35公斤者的起始劑量為何？\", \"query_en\": null, \"slices\": [\"dose_unit\"], \"page\": 1, \"section\": \"6-18歲的兒童/ 青少年\", \"key_text\": \"對於體重未滿35kg的兒童,初始劑量為40mg錠劑,每日一次\", \"span\": \"對於體重未滿35kg的兒童,初始劑量為40mg錠劑,每日一次;對於體重滿35kg以上的兒童,初始劑量為 80mg,每日一次。\", \"rationale\": \"此句是文檔中唯一依體重分層規定6-18歲兒童高血壓病人起始劑量的條款，體重未滿35kg者對應40mg。\"}, {\"query\": \"哺乳期間是否建議使用衛欣保（valsartan）？\", \"query_en\": null, \"slices\": [\"negation\"], \"page\": 2, \"section\": \"授乳風險摘要\", \"key_text\": \"因此,授乳期間不建議使用valsartan\", \"span\": \"尚未知 valsartan 是否會分泌至人類乳汁中,但已知 valsartan 會分泌至大白鼠乳汁中。因此,授乳期間不建議使用valsartan。\", \"rationale\": \"此為文檔中唯一針對授乳期婦女是否可使用valsartan的明確建議（不建議使用）。\"}]"
+}

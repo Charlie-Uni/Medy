@@ -1,0 +1,33 @@
+{
+  "document_key": "tfda-label-ifonol-tablets-300mg-astar",
+  "source_hash": "8988edefb2825b18a9d5ebdb53b6f3bd09b7b75410d24814dd8f5ee2c8c7dfe7",
+  "quota": 4,
+  "pages_sent": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "drafting_prompt_sha256": "dacbe907888f4ed16470887911c7529c53ec055928e0f94d003ab9d65b6abf07",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:24:39+00:00",
+  "finished_at": "2026-09-20T16:26:02+00:00",
+  "prompt_chars": 16148,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "b22d8f92-d47f-42e3-8b87-113807f6e035",
+  "input_tokens": 1,
+  "output_tokens": 8225,
+  "cost_usd": 0.3042925,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "54856bc1f48a2421fdb33b1770229e05cc89e99092baf12225ff4d2c9611ddf9",
+  "tools_disabled": true,
+  "reply": "[{\"query\": \"「安星」伊風柔錠300毫克用於一般成人痛風治療時，起始劑量為何，每日最大劑量不可超過多少？\", \"query_en\": null, \"slices\": [\"dose_unit\", \"negation\"], \"page\": 2, \"section\": \"用法用量(一般成人及青少年劑量-抗痛風劑Antigout agent)\", \"key_text\": \"不得超過每日 800mg 之最大建議劑量\", \"span\": \"初始劑量─口服,100mg,一天一次,在一星期的間隔期間每天增加 100mg 直到達到所需要的血清尿酸濃度為止。不得超過每日 800mg 之最大建議劑量。\", \"rationale\": \"頁2用法用量中僅此段給出成人抗痛風治療的起始劑量遞增方式與每日最大建議劑量上限。\"}, {\"query\": \"「安星」伊風柔錠300毫克應如何保存？\", \"query_en\": null, \"slices\": [\"drug_name_zh\"], \"page\": 9, \"section\": \"【保存條件】\", \"key_text\": \"緊密容器中,室溫下、避光保存\", \"span\": \"緊密容器中,室溫下、避光保存。\", \"rationale\": \"頁9【保存條件】是全文唯一說明本藥儲存方式的條款，商品名「安星」使檢索對象唯一。\"}, {\"query\": \"「安星」伊風柔錠300毫克可以用於治療急性痛風性關節炎發作嗎？\", \"query_en\": null, \"slices\": [\"negation\"], \"page\": 2, \"section\": \"【適應症】慢性痛風性關節炎(Chronic Gouty arthritis)[治療]\", \"key_text\": \"它必須不得使用於痛風性關節炎的急性發作\", \"span\": \"Allopurinol 沒有抗發炎的效力。它必須不得使用於痛風性關節炎的急性發作。\", \"rationale\": \"頁2適應症段落中僅此句明確說明本藥不得用於痛風性關節炎急性發作，具唯一否定語義。\"}, {\"query\": \"「安星」伊風柔錠300毫克用於預防化學治療或放射治療所致高尿酸血症時，應在治療開始前多久給藥，劑量為何？\", \"query_en\": null, \"slices\": [\"dose_unit\", \"time_window\"], \"page\": 3, \"section\": \"用法用量(贅瘤疾病治療Neoplastic disease therapy)\", \"key_text\": \"在化學治療或放射治療開始之前的 12 小時到 3 天(最好是 2 至 3 天),每天 600mg 至 800mg\", \"span\": \"初始劑量─口服,在化學治療或放射治療開始之前的 12 小時到 3 天(最好是 2 至 3 天),每天 600mg 至 800mg。\", \"rationale\": \"頁3用法用量中僅此條款給出化療/放療前給藥時間窗與對應的初始劑量。\"}, {\"query\": \"長期使用「安星」伊風柔錠300毫克且無不良反應的病人，是否建議進行HLA-B*5801基因篩檢？\", \"query_en\": null, \"slices\": [\"negation\"], \"page\": 7, \"section\": \"12. 嚴重皮膚反應\", \"key_text\": \"長期使用沒有不良反應的病人不建議基因篩檢\", \"span\": \"長期使用沒有不良反應的病人不建議基因篩檢,無論是否帶有 HLA-B*5801 基因,發生史蒂文生氏強生症候群的危險在治療開始之後幾個月最大,基因篩檢並不能取代適當的臨床安全監視及病患處置。\", \"rationale\": \"頁7嚴重皮膚反應段落中僅此句說明對長期使用無不良反應病人不建議進行HLA-B*5801基因篩檢。\"}, {\"query\": \"腎功能不全病人使用「安星」伊風柔錠300毫克時，應如何依肌酸酐清除率調整劑量？\", \"query_en\": null, \"slices\": [\"dose_unit\", \"negation\"], \"page\": 3, \"section\": \"用法用量(抗尿酸結石-腎功能不全劑量調整)\", \"key_text\": \"肌胺酸酐清除率(Creatinine clearance)mL/min 劑量 10 至 20 每日 200mg 3 至 10 每日不超過 100mg <3 100mg 超過 24 小時間隔,可能是必要的\", \"span\": \"由於 Oxipurine 主要是經由腎臟排泄,所以在有腎衰竭的病人,可能會發生蓄積。在接受透析的病人,可能需要使用一般治療劑量的 Allopurinol;不過,在未接受透析的病人則建議依下表所列的劑量減低之: 肌胺酸酐清除率(Creatinine clearance)mL/min 劑量 10 至 20 每日 200mg 3 至 10 每日不超過 100mg <3 100mg 超過 24 小時間隔,可能是必要的。有些腎功能不全的病人,可能需要甚至更低的劑量,或是更長的劑量間的間隔時間。某些情況下,300mg 每週兩次或更少,可能就足夠。\", \"rationale\": \"頁3用法用量中僅此段依肌酸酐清除率列出未接受透析腎功能不全病人的劑量調整表。\"}]"
+}

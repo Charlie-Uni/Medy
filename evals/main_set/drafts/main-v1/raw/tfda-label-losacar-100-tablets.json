@@ -1,0 +1,26 @@
+{
+  "document_key": "tfda-label-losacar-100-tablets",
+  "source_hash": "3981295da5a68ef3bf43b30c4d7783b9ebfa351319c134bb2f5710a11ac14d5b",
+  "quota": 4,
+  "pages_sent": [
+    1,
+    2
+  ],
+  "drafting_prompt_sha256": "dacbe907888f4ed16470887911c7529c53ec055928e0f94d003ab9d65b6abf07",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:27:04+00:00",
+  "finished_at": "2026-09-20T16:28:09+00:00",
+  "prompt_chars": 14169,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "4891fddd-eb5c-4c78-949c-d8f36294d977",
+  "input_tokens": 1,
+  "output_tokens": 7396,
+  "cost_usd": 0.26703625000000003,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "8da18cc567b2c40fa8f1ba190ad1ad42732b3eb109ecfda1219f55d591890d29",
+  "tools_disabled": true,
+  "reply": "[{\"query\": \"Losacar治療高血壓的一般起始劑量及維持劑量是多少?\", \"query_en\": null, \"slices\": [\"drug_name_zh\", \"dose_unit\"], \"page\": 1, \"section\": \"劑量及用法\", \"key_text\": \"高血壓大多數病人的一般起始劑量及維持劑量為每次 50 毫克,每日一次\", \"span\": \"高血壓大多數病人的一般起始劑量及維持劑量為每次 50 毫克,每日一次;在治療後 3-6 週可獲得最大降壓效果;有些病人在劑量增加至每次 100 毫克,每日一次後,其療效更佳。\", \"rationale\": \"此段落是「劑量及用法」中專門針對高血壓適應症的起始及維持劑量說明，全文僅此處回答高血壓病人的50毫克起始劑量方案。\"}, {\"query\": \"Losacar用於治療第II型糖尿病腎病變時的起始劑量及可調整之最大劑量為何?\", \"query_en\": null, \"slices\": [\"drug_name_zh\", \"dose_unit\"], \"page\": 1, \"section\": \"劑量及用法\", \"key_text\": \"治療第 II 型糖尿病腎病變一般起始劑量為每次 50 毫克,每日一次\", \"span\": \"治療第 II 型糖尿病腎病變一般起始劑量為每次 50 毫克,每日一次。視血壓下降情形,可將劑量增加至每次 100 毫克,每日一次。\", \"rationale\": \"此句是「劑量及用法」中唯一針對第II型糖尿病腎病變適應症所述之起始與可調整劑量條款，與高血壓劑量條款分開陳述。\"}, {\"query\": \"Losacar是否禁止與含aliskiren成分藥品合併使用於糖尿病患或腎功能不全患者?\", \"query_en\": null, \"slices\": [\"drug_name_zh\", \"negation\"], \"page\": 1, \"section\": \"禁忌症〈依文獻記載〉\", \"key_text\": \"合併使用本品及含 aliskiren 成分藥品於糖尿病患或腎功能不全患者 (GFR<60 ml/min/1.73 m2)\", \"span\": \"Losartan potassium 禁用於對本項產品任何組成過敏者。合併使用本品及含 aliskiren 成分藥品於糖尿病患或腎功能不全患者 (GFR<60 ml/min/1.73 m2)。\", \"rationale\": \"此句是「禁忌症」項下唯一明確說明本品與含aliskiren成分藥品併用於糖尿病或腎功能不全患者（GFR<60）屬絕對禁忌的條款。\"}, {\"query\": \"是否建議Losacar與ACEIs、ARBs或含aliskiren成分藥品合併使用以雙重阻斷RAAS?\", \"query_en\": null, \"slices\": [\"drug_name_zh\", \"negation\"], \"page\": 1, \"section\": \"警語及注意事項〈依文獻記載〉\", \"key_text\": \"故不建議合併使用 ACEIs、 ARBs 或今 aliskiren 成分藥品來雙重阻斷 RAAS\", \"span\": \"有證據顯示,合併使用 ACEIs、ARBs 或含 aliskiren 成分藥品會增加低血壓、高鉀血症及腎功能下降(包括急性腎衰竭)之風險,故不建議合併使用 ACEIs、 ARBs 或今 aliskiren 成分藥品來雙重阻斷 RAAS,若確有必要使用雙阻斷治療,應密切監測患者之腎功能、電解質及血壓。\", \"rationale\": \"此段是「警語及注意事項」中唯一針對雙重阻斷RAAS（合併ACEIs/ARBs/aliskiren）明確表示不建議並說明必要時應密切監測的條款。\"}, {\"query\": \"血管內體液缺乏之患者（如以高劑量利尿劑治療者）服用Losacar的起始劑量建議為何?\", \"query_en\": null, \"slices\": [\"drug_name_zh\", \"dose_unit\"], \"page\": 1, \"section\": \"劑量及用法\", \"key_text\": \"起始劑量需考慮改用每次25 毫克,每日一次\", \"span\": \"對血管內體液缺乏(intravascularly volume -depleted)之患者(如以高劑量利尿劑治療者),其起始劑量需考慮改用每次25 毫克,每日一次(參見注意事項)。\", \"rationale\": \"此句是「劑量及用法」中唯一針對血管內體液缺乏患者（如高劑量利尿劑治療者）建議起始劑量改為每次25毫克的條款。\"}, {\"query\": \"Losacar是否建議用於新生兒高血壓患者或嚴重腎功能不全之兒童病患?\", \"query_en\": null, \"slices\": [\"drug_name_zh\", \"negation\", \"dose_unit\"], \"page\": 1, \"section\": \"小兒之使用〈依文獻記載〉\", \"key_text\": \"並不建議用於新生兒以及腎絲球過濾率低於30 mL/min/1.73 m2、肝功能不全的兒童病患\", \"span\": \"Losartan potassium 並不建議用於新生兒以及腎絲球過濾率低於30 mL/min/1.73 m2、肝功能不全的兒童病患,因目前尚無這方面的研究資料。\", \"rationale\": \"此句是「小兒之使用」項下唯一明確說明本品不建議用於新生兒及腎絲球過濾率低於30 mL/min/1.73 m2或肝功能不全兒童病患的條款。\"}]"
+}

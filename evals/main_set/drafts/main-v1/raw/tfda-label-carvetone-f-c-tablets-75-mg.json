@@ -1,0 +1,26 @@
+{
+  "document_key": "tfda-label-carvetone-f-c-tablets-75-mg",
+  "source_hash": "662b69e6044ed9746280815bc3bb5e45a2911c9f5edebf610a5a26aac44e95c9",
+  "quota": 4,
+  "pages_sent": [
+    1,
+    2
+  ],
+  "drafting_prompt_sha256": "dacbe907888f4ed16470887911c7529c53ec055928e0f94d003ab9d65b6abf07",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:26:06+00:00",
+  "finished_at": "2026-09-20T16:27:45+00:00",
+  "prompt_chars": 23277,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "395df39c-c0b9-41ec-843b-111d55909731",
+  "input_tokens": 1,
+  "output_tokens": 11132,
+  "cost_usd": 0.41652999999999996,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "de767c21e0be4625295641a22e6e128223af114dae8d877c9f21551a3f04c571",
+  "tools_disabled": true,
+  "reply": "[{\"query\": \"ST段上升急性心肌梗塞病人若已超過75歲，開始使用Carvetone（clopidogrel）治療時是否應給予預載劑量（loading dose）？\", \"query_en\": null, \"slices\": [\"negation\", \"dose_unit\"], \"page\": 1, \"section\": \"劑量和用法\", \"key_text\": \"超過 75 歲的病患開始治療時,不應給予預載劑量\", \"span\": \"ST 段上升之急性心肌梗塞:不論是否使用血栓溶解劑,Clopidogrel 應給予每日單一劑量 75 mg,開始時可給予或不給予預載劑量(loading dose),同時併用 aspirin。超過 75 歲的病患開始治療時,不應給予預載劑量。\", \"rationale\": \"此段是頁文本中唯一針對ST段上升急性心肌梗塞且年齡超過75歲病患是否給予預載劑量作出規定的條款，其他劑量段落不涉及此年齡限制。\"}, {\"query\": \"孕婦是否建議使用Carvetone（clopidogrel）？\", \"query_en\": null, \"slices\": [\"negation\"], \"page\": 1, \"section\": \"生育能力、懷孕和授乳\", \"key_text\": \"懷孕期間不建議使用clopidogrel\", \"span\": \"懷孕:目前尚未有針對孕婦的對照試驗研究,由於資料不足,懷孕期間不建議使用clopidogrel。動物試驗結果並未顯示對懷孕期間、胚胎/胎兒的發展,分娩或生產的發展,有直接或間接的傷害 (請參考 ” 禁忌 ”欄)。\", \"rationale\": \"此段是頁文本中唯一明確說明懷孕期間是否建議使用clopidogrel的條款，其他段落未針對懷孕給出用藥建議。\"}, {\"query\": \"病人接受手術前若不希望有抗血小板作用，應於術前幾天停止使用Carvetone（clopidogrel）？\", \"query_en\": null, \"slices\": [\"time_window\"], \"page\": 1, \"section\": \"警語及注意事項\", \"key_text\": \"應於手術進行前 7天停止使用 clopidogrel\", \"span\": \"若病人選擇手術治療並且不希望在手術期間有抗血小板作用,應於手術進行前 7天停止使用 clopidogrel 。\", \"rationale\": \"此段是頁文本中唯一說明病人術前應提前幾天停止使用clopidogrel的條款，其他段落未提及具體天數。\"}, {\"query\": \"成人與老年人使用Carvetone（clopidogrel）的建議劑量為何？\", \"query_en\": null, \"slices\": [\"dose_unit\"], \"page\": 1, \"section\": \"劑量和用法\", \"key_text\": \"建議劑量為每天 75 mg,一天一次\", \"span\": \"本藥須由醫師處方使用成人和老年人:Clopidogrel 的建議劑量為每天 75 mg,一天一次,可和食物同時服用或分開服用。\", \"rationale\": \"此段是頁文本中唯一列出成人與老年人clopidogrel標準建議劑量的條款，其他劑量段落均針對特定適應症或特殊族群。\"}, {\"query\": \"Carvetone（clopidogrel）是否建議與warfarin併用？\", \"query_en\": null, \"slices\": [\"negation\"], \"page\": 1, \"section\": \"交互作用\", \"key_text\": \"不建議clopidogrel與warfarin併用\", \"span\": \"口服抗凝血劑:由於可能增加出血的危險,不建議clopidogrel與warfarin併用。請參考”警語及注意事項”欄。\", \"rationale\": \"此段是頁文本中唯一明確指出不建議clopidogrel與warfarin併用的條款，其他交互作用段落涉及不同藥品。\"}, {\"query\": \"服用Carvetone（clopidogrel）過量會產生什麼後果？\", \"query_en\": null, \"slices\": [\"negation\"], \"page\": 2, \"section\": \"過量\", \"key_text\": \"目前並未發現 clopidogrel 的解毒劑\", \"span\": \"服用過量的 clopidogrel 會導致出血時間延長及其他出血的併發症。若發生出血應採取適當之治療,目前並未發現 clopidogrel 的解毒劑,若需要立即校正過長的出血時間,輸血小板可能可以校正 clopidogrel 的作用。\", \"rationale\": \"此段是頁文本中唯一描述clopidogrel過量後果及處置方式的條款，僅出現於【過量】一節。\"}]"
+}

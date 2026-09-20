@@ -1,0 +1,33 @@
+{
+  "document_key": "ema-gvp-module-x",
+  "source_hash": "15eb6d4ef94b955204fbe276f11a98f08e712a19d9f0e1b6599f8d11d2e55baf",
+  "quota": 4,
+  "pages_sent": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "drafting_prompt_sha256": "dacbe907888f4ed16470887911c7529c53ec055928e0f94d003ab9d65b6abf07",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:13:46+00:00",
+  "finished_at": "2026-09-20T16:15:03+00:00",
+  "prompt_chars": 29997,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "e3f91570-9e3a-4e65-b087-377ade4ef0e2",
+  "input_tokens": 1,
+  "output_tokens": 8548,
+  "cost_usd": 0.28118,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "b5bdafd7147514276f78ac23ca7208e1d9b331ded86bec4dd88ee6136e656fb3",
+  "tools_disabled": true,
+  "reply": "[{\"query\": \"根据GVP Module X强制纳入范围（Article 23(1)）,如果一款药品所含新活性成分在2011年1月1日前未曾在欧盟获批准的任何药品中出现过，是否必须列入additional monitoring list？\", \"query_en\": \"Under GVP Module X mandatory scope (Article 23(1)), must a medicinal product be included in the additional monitoring list if it contains a new active substance not previously contained in any medicinal product authorised in the EU as of 1 January 2011?\", \"slices\": [\"negation\", \"protocol_id\"], \"page\": 5, \"section\": \"X.C.1.1. Mandatory scope\", \"key_text\": \"was not contained in any medicinal product authorised in the EU\", \"span\": \"medicinal products authorised in the EU that contain a new active substance which, on 1 January 2011, was not contained in any medicinal product authorised in the EU;\", \"rationale\": \"只有此项条款界定了因含未曾于2011年1月1日前在欧盟获批的新活性成分而被强制纳入清单的判定标准，含否定表达“not contained”。\"}, {\"query\": \"对于2011年1月1日之后获批的新活性成分或生物制品，根据GVP Module X其在additional monitoring list中的初始纳入期限是多长？\", \"query_en\": \"For new active substances or biological medicinal products approved after 1 January 2011, what is the initial period for inclusion in the additional monitoring list under GVP Module X?\", \"slices\": [\"time_window\", \"protocol_id\"], \"page\": 6, \"section\": \"X.C.2.1. Mandatory scope\", \"key_text\": \"the initial period of time for inclusion is five years after the Union Reference Date (URD)\", \"span\": \"For medicinal products containing new active substances as well as for all biological medicinal products approved after 1 January 2011 the initial period of time for inclusion is five years after the Union Reference Date (URD) referred to in Article 107c(5) of Directive 2001/83/EC.\", \"rationale\": \"本页仅此一句规定了强制纳入范围内新活性成分及生物制品在additional monitoring list中的五年初始期限及其起算点（URD）。\"}, {\"query\": \"在互认或分散上市许可程序下，成员国主管机关须在国家层面批准上市许可后多久内通知EMA以便将该产品列入additional monitoring list？\", \"query_en\": \"Under mutual recognition or decentralised procedures, within how many days must a national competent authority inform the Agency after granting a national marketing authorisation, for inclusion in the additional monitoring list?\", \"slices\": [\"time_window\"], \"page\": 8, \"section\": \"X.C.4.2.1. Inclusion of medicinal products in the list – Mandatory scope\", \"key_text\": \"inform the Agency, within 15 days of granting the marketing authorisation nationally\", \"span\": \"In addition, each national competent authority included in such procedures should inform the Agency, within 15 days of granting the marketing authorisation nationally, and provide the electronic links to their national web-portal where the product information and the summary of the RMP are publicly available.\", \"rationale\": \"本页仅此句规定了互认/分散程序下国家主管机关须在国家批准后15天内通知EMA的时限要求。\"}, {\"query\": \"根据GVP Module X, PRAC在Article 23(2) of Regulation (EC) 726/2004所述附条件药品的清单纳入问题上承担什么职责？\", \"query_en\": \"Under GVP Module X, what is the PRAC's role regarding medicinal products subject to conditions under Article 23(2) of Regulation (EC) 726/2004 with respect to inclusion in the additional monitoring list?\", \"slices\": [\"protocol_id\"], \"page\": 7, \"section\": \"X.C.3.4. The Pharmacovigilance Risk Assessment Committee (PRAC)\", \"key_text\": \"recommends, upon request of the European Commission or a national competent authority, as appropriate, if a medicinal product which is subject to conditions\", \"span\": \"recommends, upon request of the European Commission or a national competent authority, as appropriate, if a medicinal product which is subject to conditions as set out in Article 23(2) of Regulation (EC) 726/2004 should be included in the list.\", \"rationale\": \"本页仅X.C.3.4节此句描述了PRAC就Article 23(2)所述附条件药品是否应纳入清单提出建议的职责。\"}, {\"query\": \"对于中央审批产品，根据GVP Module X的optional scope（Article 23(2)），EMA须在收到欧盟委员会决定后多久内将该产品列入additional monitoring list？\", \"query_en\": \"For centrally authorised products under the optional scope (Article 23(2)) of GVP Module X, within how many days after receiving the European Commission decision must the Agency include the product in the additional monitoring list?\", \"slices\": [\"time_window\", \"protocol_id\"], \"page\": 9, \"section\": \"X.C.4.2.1. Inclusion of medicinal products in the list – Optional scope\", \"key_text\": \"The Agency will include centrally authorised products in the list within 15 days of receipt of the European Commission decision.\", \"span\": \"The Agency will include centrally authorised products in the list within 15 days of receipt of the European Commission decision.\", \"rationale\": \"本页仅此句规定了optional scope下EMA收到欧盟委员会决定后须在15天内将中央审批产品列入清单的时限。\"}]"
+}

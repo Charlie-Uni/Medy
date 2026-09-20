@@ -1,0 +1,33 @@
+{
+  "document_key": "tfda-label-deurinol-300mg",
+  "source_hash": "42f20f2b5b0ea0ed7afe8bb709699a58b222985b70ccada6e0c470f5c3f58a7f",
+  "pages_sent": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "drafting_prompt_sha256": "6ddf3154781b57b9f694350ca27addf18c709543b76c13e946275da0c43fd685",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:29:14+00:00",
+  "finished_at": "2026-09-20T16:29:31+00:00",
+  "prompt_chars": 14446,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "a093feca-6ce5-46af-a18a-f1506e80988c",
+  "input_tokens": 1,
+  "output_tokens": 1431,
+  "cost_usd": 0.12553625000000002,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "7c35cbe7f0e834a56e3a2ee4f3d32a08c5d1b5fbc029a67cc6f08b74ae4ae12a",
+  "tools_disabled": true,
+  "reply": "[{\"query\": \"痛風停錠（allopurinol）對於肝功能不全的病人，建議如何調整劑量？\", \"query_en\": null, \"topic\": \"肝功能不全劑量調整\", \"absence_terms\": [\"肝功能不全\", \"肝臟疾病劑量\", \"hepatic impairment\"], \"nearest_clause\": {\"page\": 3, \"text\": \"肌胺酸酐清除率(Creatinine clearance)mL/min 劑量 10 至20 每日200mg 3 至10 每日不超過100mg <3 100mg 超過24 小時間隔,可能是必須的。\"}, \"rationale\": \"仿單提供了依腎功能（肌酸酐清除率）調整劑量的詳細表格，但完全未提及肝功能不全病人應如何調整劑量，屬於仿單應涵蓋卻未涵蓋的劑量調整事項。\"}, {\"query\": \"服用痛風停錠（allopurinol）期間，是否需要避免同時飲用葡萄柚汁？\", \"query_en\": null, \"topic\": \"與葡萄柚汁之交互作用\", \"absence_terms\": [\"葡萄柚\", \"grapefruit\", \"柑橘\"], \"nearest_clause\": null, \"rationale\": \"仿單的藥物交互作用章節逐項列出多種藥物（如抗凝血劑、Azathioprine、Thiazide利尿劑等）與飲食因素（如酒精），但完全未提及葡萄柚汁，屬於病人常見詢問卻未被涵蓋的飲食交互作用事項。\"}]"
+}

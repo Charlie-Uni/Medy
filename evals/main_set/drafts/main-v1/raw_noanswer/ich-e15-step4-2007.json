@@ -1,0 +1,32 @@
+{
+  "document_key": "ich-e15-step4-2007",
+  "source_hash": "40516566c939436147ade1b076a2e46d716755d3062c1102732ae394cf8e02fc",
+  "pages_sent": [
+    1,
+    2,
+    3,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "drafting_prompt_sha256": "6ddf3154781b57b9f694350ca27addf18c709543b76c13e946275da0c43fd685",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:42:19+00:00",
+  "finished_at": "2026-09-20T16:42:43+00:00",
+  "prompt_chars": 18362,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "c6e27295-41e7-4718-8245-56ed91742869",
+  "input_tokens": 1,
+  "output_tokens": 2273,
+  "cost_usd": 0.100855,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "f4fa573a459ebfa1bd994fde4feed62ac7cfefd42baa4668a8212e8110a5ccb4",
+  "tools_disabled": true,
+  "reply": "[{\"query\": \"根据ICH E15,双重编码(double coding)中用于连接第一把与第二把编码密钥的具体保存期限是多久?\", \"query_en\": \"According to ICH E15, what is the specific retention period for the coding keys used to link double coded genomic data and samples back to a subject?\", \"topic\": \"编码密钥保存期限\", \"absence_terms\": [\"retention period\", \"storage duration\", \"retained for\", \"years\"], \"nearest_clause\": {\"page\": 8, \"text\": \"In general, the clinical investigator is responsible for maintaining the first coding key and does not have access to the second coding key.\"}, \"rationale\": \"文档详细定义了单重/双重编码的追溯机制,但从未规定编码密钥应保存多长时间,而该问题是实际操作中数据管理者会关心的事项。\"}, {\"query\": \"ICH E15对提交给监管机构的基因组生物标志物(PGx)数据规定了哪些具体的电子数据格式或提交标准?\", \"query_en\": \"What specific electronic data format or submission standards does ICH E15 specify for genomic biomarker (PGx) data submitted to regulatory authorities?\", \"topic\": \"基因组数据提交格式标准\", \"absence_terms\": [\"data format\", \"submission standard\", \"electronic\", \"file format\"], \"nearest_clause\": {\"page\": 5, \"text\": \"The validation and qualification processes for genomic biomarkers, evidence for their intended use and acceptance criteria across ICH regions are outside of the scope of this guideline.\"}, \"rationale\": \"该指南仅界定术语与数据/样本编码分类,明确将验证与资格认定等技术性内容排除在范围外,但从未涉及数据提交的具体电子格式或标准,而这是申办方在监管提交时会关心的问题。\"}]"
+}

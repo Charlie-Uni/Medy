@@ -1,0 +1,31 @@
+{
+  "document_key": "ich-e7-step4-1993",
+  "source_hash": "cbe681cf342eeefb477c1a30770d12798fadcf2d00079faa0aa66047ce4ca330",
+  "quota": 1,
+  "mode": "long",
+  "pages_sent": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "drafting_prompt_sha256": "dacbe907888f4ed16470887911c7529c53ec055928e0f94d003ab9d65b6abf07",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:52:31+00:00",
+  "finished_at": "2026-09-20T16:53:45+00:00",
+  "prompt_chars": 16197,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "f49a7dc3-9b77-43f2-a1ea-90578f464a34",
+  "input_tokens": 1,
+  "output_tokens": 10488,
+  "cost_usd": 0.3070425,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "27b681e41ca5172656a9a70a2aaba35228b974ddb2d50e6b567d812b4a52b457",
+  "tools_disabled": true,
+  "reply": "```json\n[\n  {\"query\": \"ICH E7指南中,针对老年患者用药方案,建议在哪些具体情况下常规开展药物-药物交互作用研究,应涵盖哪些研究类型?\", \"query_en\": \"According to the ICH E7 guideline, under what circumstances are drug-drug interaction studies ordinarily recommended for geriatric patients, and what specific types of studies should be included?\", \"slices\": [\"negation\"], \"page\": 6, \"section\": \"IX. Drug-Drug Interaction Studies\", \"key_text\": \"the following are ordinarily recommended:\", \"span\": \"Such interactions are of particular impo rtance to geriatric patients, who are more likely to be using concomitant me dications than younger patients, but of course are not limited to this age group. Therefore it is a general principle, not specific to these guidelines, that in cases where the therapeutic range (i.e., range of toxic to therapeutic doses) of the drug or likely concomitant drugs is narrow, and the likelihood of the concomitant ther apy is great, that specific drug-drug interaction studies be considered. The studies needed must be determined case- by-case, but the following are ordinarily recommended: • Digoxin and oral anticoagulant interacti on studies, because so many drugs alter serum concentrations of these drugs, they are widely prescribed in the elderly, and they have narrow therapeutic ranges • For drugs that undergo extensive hepa tic metabolism, determination of the effects of hepatic-enzyme inducers (e.g ., phenobarbital) and inhibitors (e.g., cimetidine) • For drugs metabolized by cytochrome P- 450 enzymes, it is critical to examine the effects of known inhibitors, such as quinidine (for cytochrome P-450 2D6) or ketoconazole and macrolide antibiotics (for drugs metabolized by cytochrome P-450 3A4). There is a rapidly growing list of drugs that can interfere with other drugs that metabolism, and sponsors should remain aware of it. • Interaction studies with other drugs that are likely to be used with the test drug (unless important interactions have been ruled out by a Pharmacokinetic Screen)\", \"rationale\": \"只有第6页此段完整列出了ICH E7指南针对老年人药物交互作用研究所推荐的全部具体研究类别及其触发情形,文档其他部分未重复该清单。\"}\n]\n```"
+}

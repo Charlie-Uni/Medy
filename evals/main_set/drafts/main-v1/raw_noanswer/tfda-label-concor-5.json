@@ -1,0 +1,29 @@
+{
+  "document_key": "tfda-label-concor-5",
+  "source_hash": "8f274dc347f717feba8b9745949dd8ef4d17ea1ff35995fbbe41848fef93c171",
+  "pages_sent": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "drafting_prompt_sha256": "6ddf3154781b57b9f694350ca27addf18c709543b76c13e946275da0c43fd685",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:41:33+00:00",
+  "finished_at": "2026-09-20T16:41:55+00:00",
+  "prompt_chars": 8827,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "3a206713-b0f1-4a80-908e-c8e2c001da8d",
+  "input_tokens": 1,
+  "output_tokens": 2183,
+  "cost_usd": 0.11202999999999999,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "d74490d7ec1b4e75a36f8a5d515eddb91be91f9c709d1af1bedcfd648a0115e9",
+  "tools_disabled": true,
+  "reply": "```json\n[\n  {\"query\": \"康肯® 5 毫克（bisoprolol fumarate）膜衣錠的實際保存期限（有效期限）是幾年或幾個月？\", \"query_en\": null, \"topic\": \"保存期限（有效期限）長度\", \"absence_terms\": [\"有效期限為\", \"保存期限\", \"個月\", \"年\"], \"nearest_clause\": {\"page\": 6, \"text\": \"請勿使用超過有效期限之藥物。\"}, \"rationale\": \"使用者自然會想知道康肯®實際可保存多久，但文件僅要求不要使用過期藥物及30°C以下儲存，從未列出具體的有效期限天數或年限，因此無法回答。\"},\n  {\"query\": \"服用康肯®（bisoprolol）期間飲用葡萄柚汁，是否會影響其代謝或藥效？\", \"query_en\": null, \"topic\": \"葡萄柚汁交互作用\", \"absence_terms\": [\"葡萄柚\", \"grapefruit\", \"果汁\"], \"nearest_clause\": {\"page\": 1, \"text\": \"bisoprolol fumarate 主要是經由 CYP3A4 所代謝(~95%),經由 CYP2D6 代謝只佔了一小部分。\"}, \"rationale\": \"雖然文件說明 bisoprolol 主要經 CYP3A4 代謝，但交互作用章節僅列出藥物類別（如鈣離子拮抗劑、抗心律不整藥），從未提及葡萄柚汁這類常見的 CYP3A4 抑制食物，故無法回答此問題。\"}\n]\n```"
+}

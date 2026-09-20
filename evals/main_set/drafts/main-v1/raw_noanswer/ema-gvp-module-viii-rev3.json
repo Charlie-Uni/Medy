@@ -1,0 +1,33 @@
+{
+  "document_key": "ema-gvp-module-viii-rev3",
+  "source_hash": "847b0c095bc647e02aa577e2116a03b14ff237982af6b850d88e77fcc69e343e",
+  "pages_sent": [
+    1,
+    4,
+    11,
+    12,
+    13,
+    19,
+    20,
+    24,
+    26,
+    27
+  ],
+  "drafting_prompt_sha256": "6ddf3154781b57b9f694350ca27addf18c709543b76c13e946275da0c43fd685",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:37:14+00:00",
+  "finished_at": "2026-09-20T16:37:47+00:00",
+  "prompt_chars": 36869,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "82bbd952-57f9-4a1a-b2ca-20f9337a317b",
+  "input_tokens": 1,
+  "output_tokens": 2992,
+  "cost_usd": 0.15285500000000002,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "0bb41f30c00d316cc229824d78a9da4144ccb566dd41d376dc47a0d84f8910c2",
+  "tools_disabled": true,
+  "reply": "[{\"query\": \"根据GVP Module VIII，若上市许可持有人未在规定时限内提交最终研究报告（final study report），主管当局可对其处以何种罰款（fine/penalty）？\", \"query_en\": \"According to GVP Module VIII, what fine or penalty can the competent authority impose if the marketing authorisation holder fails to submit the final study report within the required timeline?\", \"topic\": \"逾期提交最终研究报告的罚款\", \"absence_terms\": [\"fine\", \"penalty\", \"financial sanction\", \"罰款\"], \"nearest_clause\": {\"page\": 13, \"text\": \"the final study report shall follow the format described in this section [IR Annex III) and shall be submitted within 12 months of the end of data collection [DIR Art 107p(1)]\"}, \"rationale\": \"该问题询问逾期提交最终研究报告的具体罰款金额，但文档仅规定了提交时限（12个月）及豁免、PRAC监督等程序性要求，未提及任何具体罰款或财务制裁措施，此类内容通常由各成员国国内法而非本指南规定，超出本文档条款范围。\"}, {\"query\": \"GVP Module VIII对非介入性上市后安全性研究（PASS）中患者知情同意书（informed consent form）应包含哪些具体内容有何规定？\", \"query_en\": \"What specific content requirements does GVP Module VIII set out for the informed consent form used in non-interventional PASS?\", \"topic\": \"知情同意书具体内容要求\", \"absence_terms\": [\"informed consent form\", \"consent content\", \"information sheet\", \"知情同意书\"], \"nearest_clause\": {\"page\": 11, \"text\": \"10. Protection of human subjects: safeguards in order to comply with national and European Union requirements for ensuring the well-being and rights of participants in non-interventional post-authorisation safety studies.\"}, \"rationale\": \"该问题询问知情同意书应载明的具体内容要素，但文档第10项仅笼统要求“遵守国家及欧盟关于保障参与者福祉与权利的要求”，未列出知情同意书应包含的任何具体信息条款，因此文档未回答该问题。\"}]"
+}

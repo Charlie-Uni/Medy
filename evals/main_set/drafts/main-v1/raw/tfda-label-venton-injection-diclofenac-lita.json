@@ -1,0 +1,26 @@
+{
+  "document_key": "tfda-label-venton-injection-diclofenac-lita",
+  "source_hash": "3b1d0b7fb71d65e81493f10a46bb1640d2a5635e70621a5e6a38867d8f65aab3",
+  "quota": 4,
+  "pages_sent": [
+    1,
+    2
+  ],
+  "drafting_prompt_sha256": "dacbe907888f4ed16470887911c7529c53ec055928e0f94d003ab9d65b6abf07",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:23:54+00:00",
+  "finished_at": "2026-09-20T16:24:56+00:00",
+  "prompt_chars": 9440,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "5e6da133-f621-440d-a0f4-958277ac59ac",
+  "input_tokens": 1,
+  "output_tokens": 7241,
+  "cost_usd": 0.24217375,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "e8497ca2ad76dc9996a9ade2f25a7f51256903159d0cd1fc3b88cd0ea17d6337",
+  "tools_disabled": true,
+  "reply": "[{\"query\": \"免痛注射液(待克菲那)成人肌肉注射的建議劑量與頻次為何?\", \"query_en\": null, \"slices\": [\"dose_unit\"], \"page\": 1, \"section\": \"用法用量\", \"key_text\": \"通常成人一次 75mg,一日一次,行外側臀部肌肉深部緩慢注射之\", \"span\": \"本藥限由醫師使用。為降低不良反應之風險,應使用最低有效劑量,並作為期最短之治療。通常成人一次 75mg,一日一次,行外側臀部肌肉深部緩慢注射之,並應時常改換左右臀部注射部位。\", \"rationale\": \"第1頁用法用量段落是本文件中唯一說明成人肌肉注射劑量與頻次的條款。\"}, {\"query\": \"病人剛完成冠狀動脈繞道手術(CABG),術後多久內禁止使用免痛注射液(待克菲那)?\", \"query_en\": null, \"slices\": [\"negation\", \"time_window\"], \"page\": 1, \"section\": \"禁忌\", \"key_text\": \"進行冠狀動脈繞道手術 (Coronary artery bypass graft, CABG) 之後 14 天內禁用本藥\", \"span\": \"進行冠狀動脈繞道手術 (Coronary artery bypass graft, CABG) 之後 14 天內禁用本藥。\", \"rationale\": \"第1頁禁忌第7項是本文件中唯一明確規定CABG術後14天內禁用本藥的條款。\"}, {\"query\": \"使用免痛注射液(待克菲那,diclofenac)期間可以併用aspirin嗎?\", \"query_en\": null, \"slices\": [\"negation\"], \"page\": 2, \"section\": \"藥物交互作用\", \"key_text\": \"一般而言不建議同時使用 aspirin與diclofenac進行治療\", \"span\": \"由於可能增加不良反應(包括腸胃道出血)發生的風險,一般而言不建議同時使用 aspirin與diclofenac進行治療。\", \"rationale\": \"第2頁藥物交互作用第1項是本文件中唯一說明本藥與aspirin併用建議的條款。\"}, {\"query\": \"長期使用免痛注射液(待克菲那,diclofenac)治療的病人,應於治療後何時檢測肝臟轉氨酶?\", \"query_en\": null, \"slices\": [\"time_window\"], \"page\": 1, \"section\": \"警語(肝臟作用)\", \"key_text\": \"應於治療後的第4到第8週內進行檢測\", \"span\": \"長期使用diclofenac治療的病人應定期檢測肝臟轉氨酶 (transaminase),依據臨床試驗數據和上市後經驗,應於治療後的第4到第8週內進行檢測。\", \"rationale\": \"第1頁警語肝臟作用段落是本文件中唯一說明長期使用時應於第4-8週檢測肝臟轉氨酶的條款。\"}, {\"query\": \"具有aspirin三症狀(aspirin triad)的氣喘病人可以使用免痛注射液(待克菲那,diclofenac)嗎?\", \"query_en\": null, \"slices\": [\"negation\"], \"page\": 2, \"section\": \"注意事項\", \"key_text\": \"具有aspirin三症狀 (aspirin triad)的病人不可投予 diclofenac治療\", \"span\": \"具有aspirin三症狀 (aspirin triad)的病人不可投予 diclofenac治療。\", \"rationale\": \"第2頁注意事項第9(2)項是本文件中唯一明確禁止aspirin三症狀病人使用diclofenac的條款。\"}]"
+}

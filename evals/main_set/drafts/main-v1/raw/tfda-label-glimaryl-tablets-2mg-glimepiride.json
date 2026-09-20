@@ -1,0 +1,26 @@
+{
+  "document_key": "tfda-label-glimaryl-tablets-2mg-glimepiride",
+  "source_hash": "b1756268da31c9205cea8766181345921bdbec9c1930137428c79c5c3d8729f7",
+  "quota": 3,
+  "pages_sent": [
+    1,
+    2
+  ],
+  "drafting_prompt_sha256": "dacbe907888f4ed16470887911c7529c53ec055928e0f94d003ab9d65b6abf07",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T16:26:04+00:00",
+  "finished_at": "2026-09-20T16:30:08+00:00",
+  "prompt_chars": 7791,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "a2e37429-7d9f-41d7-bb39-97ec58a88fc7",
+  "input_tokens": 1,
+  "output_tokens": 20961,
+  "cost_usd": 0.58957375,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "da1e35ea1e7bb229ec519ba3ee7a5b29c2cd7d12c7b8614d4668753b9b8ac784",
+  "tools_disabled": true,
+  "reply": "```json\n[\n  {\"query\": \"革理蔓錠2毫克(Glimepiride)每日剂量最高可以调整到多少毫克?\", \"query_en\": null, \"slices\": [\"dose_unit\", \"drug_name_zh\"], \"page\": 1, \"section\": \"ĪϡڱĆϡณī\", \"key_text\": \"1 ̳කę2 ̳කę3 ̳කę4 ̳කę6ҌΞአፋҌՏ͟ 8 ̳කĄ\", \"span\": \"˘͟˘ѨĂՏѨ˘̳ක GlimepirideॡĂΞᆧΐՏ͟጗ณĄЇң጗ณ̝ᆧΐӮᑕ ҖĂͷᑕ႙ซአፋĂϺӈĂม࿣˘Ҍ˟ฉĂుՎซҖአፋт˭Ĉ 1 ̳කę2 ̳කę3 ̳කę4 ̳කę6ҌΞአፋҌՏ͟ 8 ̳කĄ\", \"rationale\": \"只有此段列出革理蔓錠自1毫克逐步调整、最高可增至每日8毫克的完整剂量调整方案，页内其他段落均未给出该具体数值序列。\"},\n  {\"query\": \"革理蔓錠2毫克(Glimepiride)可以用于第1型糖尿病或糖尿病酮酸中毒、糖尿病昏迷的病患吗?\", \"query_en\": null, \"slices\": [\"negation\", \"drug_name_zh\"], \"page\": 2, \"section\": \"Ī༰ԟাī\", \"key_text\": \"Glimepiride ̙ዋϡٺڼᒚ਍फ৵ֶᏥݭ(ௐ 1ݭ)ᎤԌঽ\", \"span\": \"Glimepiride ̙ዋϡٺڼᒚ਍फ৵ֶᏥݭ(ௐ 1ݭ)ᎤԌঽ(ּтڼᒚѣ♖ᅕ߲̚ঽΫ̝ᎤԌঽ)ăᎤԌঽ ♖ᅕ߲̚Diabetic ketoacidosis)ٕᎤԌঽڃਜ਼(Diabetic coma)Ą\", \"rationale\": \"禁忌段落中仅此句明确指出革理蔓不适用于需胰岛素治疗的第1型糖尿病、糖尿病酮酸中毒或糖尿病昏迷患者，为页内唯一对应条款。\"},\n  {\"query\": \"服用革理蔓錠2毫克(Glimepiride)的病患应随身携带多少公克的葡萄糖以预防严重低血糖?\", \"query_en\": null, \"slices\": [\"dose_unit\", \"drug_name_zh\"], \"page\": 1, \"section\": \"Īڦຍְีī\", \"key_text\": \"ᑕᐌॡᛸ૲Ҍ͌ 20 ̳ҹ۞ཬ෈Ꭴ\", \"span\": \"Яѩঽଈᑕᐌॡᛸ૲Ҍ͌ 20 ̳ҹ۞ཬ෈Ꭴć΁ࣇΞਕᅮࢋ΁ˠ۞םӄĂͽᔖҺ൴Ϡ׀൴াĄ\", \"rationale\": \"此句是页内唯一具体说明患者应随身携带至少20公克葡萄糖以应对严重低血糖的条款。\"},\n  {\"query\": \"革理蔓錠2毫克(Glimepiride)是否有严重肾功能不全或肝功能不全病患的使用经验?\", \"query_en\": null, \"slices\": [\"negation\", \"drug_name_zh\"], \"page\": 2, \"section\": \"Ī༰ԟাī\", \"key_text\": \"Glimepirideإ൑ֹϡٺᚑࢦքΑਕຫच̝ଈ۰̈́߾ඪଈ۰۞གྷរ\", \"span\": \"Glimepirideإ൑ֹϡٺᚑࢦքΑਕຫच̝ଈ۰̈́߾ඪଈ۰۞གྷរĄ၆ᚑࢦքٕඪΑਕຫच۞ঽଈĂ ᑕԼϡ਍फ৵Ă̖ਕ྿זநຐ۞΃ᔁଠטĄ\", \"rationale\": \"此句是页内唯一明确指出革理蔓正式无严重肾/肝功能不全病患使用经验、并建议改用胰岛素的条款。\"}\n]\n```"
+}

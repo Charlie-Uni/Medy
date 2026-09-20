@@ -1,0 +1,26 @@
+{
+  "document_key": "tfda-label-loformin-850mg",
+  "source_hash": "b6af0d88b1f0e3b5660e6e3c6678e18c40616073bc082b6cb7214604b2f81f98",
+  "quota": 2,
+  "pages_sent": [
+    1,
+    2
+  ],
+  "drafting_prompt_sha256": "dacbe907888f4ed16470887911c7529c53ec055928e0f94d003ab9d65b6abf07",
+  "cli_version": "2.1.79 (Claude Code)",
+  "started_at": "2026-09-20T15:33:02+00:00",
+  "finished_at": "2026-09-20T15:33:28+00:00",
+  "prompt_chars": 9942,
+  "cli": "claude-code",
+  "model_requested": "claude-sonnet-5",
+  "model_observed": "claude-sonnet-5",
+  "reasoning_effort_requested": "high",
+  "session_id": "ff232406-3721-401d-a9a4-fde4988c77a5",
+  "input_tokens": 1,
+  "output_tokens": 2779,
+  "cost_usd": 0.12871749999999998,
+  "system_prompt_sha256": "88b9e53a821512eca334eda31472af210e247e5f55f649c679461f452bb1acf0",
+  "prompt_sha256": "10dc79b02e424f6b87d9ad9e09a2fa22a20eefc46ca758e83b4c8f22365d1712",
+  "tools_disabled": true,
+  "reply": "[\n{\"query\": \"美洛醣膜衣錠850毫克於病人接受非急需大手術前,應於術前多久停止服用?\", \"query_en\": null, \"slices\": [\"time_window\", \"negation\"], \"page\": 1, \"section\": \"警語與注意事項\", \"key_text\": \"在非急需手術前的48小時必須停止服用metformin\", \"span\": \"大手術: 在非急需手術前的48小時必須停止服用metformin。在手術後的48小時,且腎功能經再評估且確定已恢復正常後,才可再次服用本品。\", \"rationale\": \"只有此段明確給出非急需大手術前後停用metformin的時間窗規定,頁面其他手術相關敘述均在此條款內。\"},\n{\"query\": \"美洛醣膜衣錠850毫克一般成人的建議服用頻次與每次劑量為何?\", \"query_en\": null, \"slices\": [\"dose_unit\"], \"page\": 1, \"section\": \"用法用量\", \"key_text\": \"每日服用二次,每次服用一錠\", \"span\": \"通常,每日服用二次,每次服用一錠。於用餐時或餐後服用。\", \"rationale\": \"頁面中只有此句明確給出metformin一般每日服用次數與每次錠數的用法用量規定。\"},\n{\"query\": \"美洛醣膜衣錠850毫克於病人腎絲球體過濾率(eGFR)小於多少時屬於絕對禁忌?\", \"query_en\": null, \"slices\": [\"negation\", \"dose_unit\"], \"page\": 1, \"section\": \"禁忌\", \"key_text\": \"腎絲球體過濾率(eGFR)小於30 ml/min/1.73 m2禁用\", \"span\": \"腎衰竭或腎臟功能障礙(肌氨酸酐清除率(creatinine clearance)低於 60ml/min )。腎絲球體過濾率(eGFR)小於30 ml/min/1.73 m2禁用。\", \"rationale\": \"頁面僅此段明確列出eGFR小於30 ml/min/1.73 m2為metformin之絕對禁忌閾值,與30-45之減量條款不同。\"},\n{\"query\": \"病人於接受含碘顯影劑檢查前後,美洛醣膜衣錠850毫克應如何暫停使用?\", \"query_en\": null, \"slices\": [\"negation\", \"time_window\"], \"page\": 1, \"section\": \"藥物間的交互作用\", \"key_text\": \"在接受放射性影像檢查前、檢查當時、檢查後的48 小時內,必須先停用metformin\", \"span\": \"禁止合併服用: 含碘顯影劑: 依腎功能的狀況,在接受放射性影像檢查前、檢查當時、檢查後的48 小時內,必須先停用metformin。唯有腎功能經評估且確定已恢復正常後,才能再服用本品。\", \"rationale\": \"頁面在藥物間交互作用一節中僅此段以「禁止合併服用」明確規範含碘顯影劑檢查前後48小時內須停用metformin的時間窗。\"}\n]"
+}
