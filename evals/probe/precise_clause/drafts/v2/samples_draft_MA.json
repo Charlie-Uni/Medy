@@ -216,7 +216,6 @@
     "sample_id": "pc-0008",
     "slices": [
       "dose_unit",
-      "negation",
       "mixed_zh_en"
     ]
   },
@@ -324,8 +323,7 @@
     ],
     "sample_id": "pc-0012",
     "slices": [
-      "protocol_id",
-      "negation"
+      "protocol_id"
     ]
   },
   {
@@ -599,8 +597,7 @@
     "sample_id": "pc-0022",
     "slices": [
       "time_window",
-      "drug_name_zh",
-      "negation"
+      "drug_name_zh"
     ]
   },
   {
@@ -616,7 +613,7 @@
           "text": "過量中毒時之處裡:本劑服用過量時會導致明顯的低血壓和心搏過緩。初步的急救方法,係靜脈注射1〜2mg Atropine sulfate;倘若還未能達到滿意效果時,在使用 Atropine 後可接著投與升壓劑,例如metaraminol 或 noradrenaline。此外如果任何β-blocket 過量中毒的時候,亦可投與一次劑量1〜5(10)mg 的 glucagon 施救。"
         },
         "gold_id": "pc-0023-g1",
-        "key_text": "靜脈注射1〜2mg Atropine sulfate",
+        "key_text": "初步的急救方法,係靜脈注射1〜2mg Atropine sulfate;倘若還未能達到滿意效果時,在使用 Atropine 後可接著投與升壓劑,例如metaraminol 或 noradrenaline",
         "page": 2,
         "printed_page_label": null,
         "section": "過量處理",
@@ -717,16 +714,16 @@
     "dept": "MA",
     "language": "zh",
     "notes": "",
-    "query": "胃所樂腸溶膜衣錠用於食道未發炎的胃食道逆流症狀治療，劑量和療程是多少",
+    "query": "依胃所樂腸溶膜衣錠仿單，成人及 12 歲以上青少年若有胃食道逆流症狀、但食道沒有發炎，每日用量如何安排？治療多久仍有症狀時應進一步檢查？",
     "required_gold_evidence": [
       {
         "evidence_span": {
-          "char_end": 1245,
+          "text": "胃食道逆流性疾病之症狀治療:對食道未發炎之患者 20 mg 每天 1次;若 4週後仍有症狀時,則應進一步檢查患者。",
           "char_start": 1053,
-          "text": "胃食道逆流性疾病之症狀治療:對食道未發炎之患者 20 mg 每天 1次;若 4週後仍有症狀時,則應進一步檢查患者。一旦症狀獲得緩解後,可以每天 1次 20 mg 之療法來做後續的症狀控制。就成人而言,如需要時,可以給予 20 mg 每天 1次之療法。對於使用非類固醇抗發炎藥 (NSAID) 治療而有誘發胃潰瘍和十二指腸潰瘍危險之病患,不建議以有需要時才服藥的方式作為後續的症狀控制。"
+          "char_end": 1110
         },
         "gold_id": "pc-0027-g1",
-        "key_text": "食道未發炎之患者 20 mg 每天 1次",
+        "key_text": "對食道未發炎之患者 20 mg 每天 1次;若 4週後仍有症狀時,則應進一步檢查患者",
         "page": 1,
         "printed_page_label": null,
         "section": "用法用量",

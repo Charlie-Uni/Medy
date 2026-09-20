@@ -1,0 +1,110 @@
+{
+  "changed": {
+    "pc-0008": [
+      "slices"
+    ],
+    "pc-0012": [
+      "slices"
+    ],
+    "pc-0022": [
+      "slices"
+    ],
+    "pc-0036": [
+      "slices"
+    ],
+    "pc-0027": [
+      "evidence_span",
+      "key_text",
+      "query"
+    ],
+    "pc-0044": [
+      "key_text"
+    ],
+    "pc-0079": [
+      "key_text"
+    ],
+    "pc-0045": [
+      "key_text"
+    ],
+    "pc-0080": [
+      "key_text"
+    ],
+    "pc-0050": [
+      "key_text"
+    ],
+    "pc-0085": [
+      "key_text"
+    ],
+    "pc-0058": [
+      "key_text"
+    ],
+    "pc-0067": [
+      "key_text"
+    ],
+    "pc-0099": [
+      "key_text"
+    ],
+    "pc-0069": [
+      "key_text"
+    ],
+    "pc-0101": [
+      "key_text"
+    ],
+    "pc-0060": [
+      "key_text"
+    ],
+    "pc-0092": [
+      "key_text",
+      "query"
+    ],
+    "pc-0023": [
+      "key_text"
+    ],
+    "pc-0033": [
+      "query"
+    ],
+    "pc-0047": [
+      "query"
+    ]
+  },
+  "kept_with_resolution": [
+    "pc-0088",
+    "pc-0089",
+    "pc-0090"
+  ],
+  "slices": {
+    "pc-0008": [
+      "dose_unit",
+      "mixed_zh_en"
+    ],
+    "pc-0012": [
+      "protocol_id"
+    ],
+    "pc-0022": [
+      "time_window",
+      "drug_name_zh"
+    ],
+    "pc-0036": [
+      "mixed_zh_en",
+      "negation"
+    ]
+  },
+  "key_texts": {
+    "K1": "does not include the exposure to one of the ingredients during the manufacturing process before the release as finished product",
+    "K2": "This should be done by the PRAC Rapporteur or the (lead) Member State within 30 days from receipt of the validated signal",
+    "K3": "the two IND safety reporting provisions (§ 312.32(c)(1)(i)(C) and (c)(1)(iv)) that require assessment of aggregate data",
+    "K4": "投予劑量、劑量單位,例如:「10mg」、「5mg/kg」",
+    "K5": "Essential records should be retained securely by sponsors and investigators for the required period in accordance with applicable regulatory requirements",
+    "K6": "Investigational products should be used in accordance with the protocol and relevant trial documents",
+    "K7": "all study procedures and assessments are necessary from a scientific viewpoint and do not place undue burden on study participants",
+    "A23": "初步的急救方法,係靜脈注射1〜2mg Atropine sulfate;倘若還未能達到滿意效果時,在使用 Atropine 後可接著投與升壓劑,例如metaraminol 或 noradrenaline",
+    "B27": "對食道未發炎之患者 20 mg 每天 1次;若 4週後仍有症狀時,則應進一步檢查患者"
+  },
+  "queries": {
+    "pc-0033": "编码时发现现有 MedDRA 术语不能准确表达个案内容，团队可以自行制定临时处理规则吗？",
+    "pc-0047": "按 GVP Module IX，收到信号确认结果后，能否在流程记录中把该信号标记为“完整评估已完成”？",
+    "pc-0092": "When selecting procedures and assessments for a study, what does ICH E8(R1) require the team to consider about why they are needed and the demands they place on participants?",
+    "pc-0027": "依胃所樂腸溶膜衣錠仿單，成人及 12 歲以上青少年若有胃食道逆流症狀、但食道沒有發炎，每日用量如何安排？治療多久仍有症狀時應進一步檢查？"
+  },
+  "pc-0027_span": "胃食道逆流性疾病之症狀治療:對食道未發炎之患者 20 mg 每天 1次;若 4週後仍有症狀時,則應進一步檢查患者。"
+}

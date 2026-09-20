@@ -1,0 +1,47 @@
+{
+  "pc-0027": {
+    "approval_source": "drafts/v2/review/owner_adjudication_2026-09-20.md 补充方案 B / C（annotator-01 已书面裁决的同一争点）",
+    "issue_scope": [
+      "evidence_span"
+    ],
+    "resolution_note": "保留现有 evidence_span：决策人 2026-09-20 裁决文档补充方案 B 明确“原文的年龄范围由上方‘成人及 12 歲以上之青少年’标题提供，年龄标题应保留在章节/上下文元数据中，不要跳过中间段落把不连续标题硬拼进连续 evidence_span”；query 中的人群限定来自该标题，属文档上下文，不因此扩大 span，也不删去 query 的人群限定。",
+    "sample_input_sha256": "1138751508aa8a6e1b098d200b760161a16144d34e73a57bd26a12e795518417",
+    "verdict_sha256": "7247d95ba8ed4627852c06db18b723beaee05baebe1520efbeaadee23a6f5c9d"
+  },
+  "pc-0036": {
+    "approval_source": "drafts/v2/review/owner_adjudication_2026-09-20.md 补充方案 B / C（annotator-01 已书面裁决的同一争点）",
+    "issue_scope": [
+      "slices"
+    ],
+    "resolution_note": "不补加 dose_unit：决策人 2026-09-20 裁决文档补充方案 C 明确口径：dose_unit 为剂量/给药频次，time_window 为有边界的时间窗；肝酶检查频次既非给药频次亦非有边界时间窗，SPEC 第 7 节未把监测周期纳入 time_window，故本条最终 slices 为 [mixed_zh_en, negation]。该口径对 3.15 节同类样本同样适用。",
+    "sample_input_sha256": "a2044d7f9c29c9ca85158b182324bd580ab6cfccad06f49191320c556c4a90a0",
+    "verdict_sha256": "4848244c9f0eeee8af39eb4b4c60b377ecc09e9235016574410eaf2729f6d5c1"
+  },
+  "pc-0088": {
+    "approval_source": "drafts/v2/review/owner_adjudication_2026-09-20.md（annotator-01，2026-09-20 “好了”）",
+    "issue_scope": [
+      "slices"
+    ],
+    "resolution_note": "保留 negation：“no later than 7 calendar days”含不可越过的时间上限；time_window 与 negation 分别标记时间约束与否定式边界，不能仅以已有前者为由删除后者。保留起算点、首次通知与后续补报的区别。若 SPEC 明文排除纯比较上限，应先统一修改规则并按同族重标。",
+    "sample_input_sha256": "77eb7453b2348fd545de3e3e938ae620652a7cda939a354a6c1ebc353b8224a5",
+    "verdict_sha256": "ae9826282ce30f9c5c2093d46943be89995c97a63e70d564e0d25972ff93c574"
+  },
+  "pc-0089": {
+    "approval_source": "drafts/v2/review/owner_adjudication_2026-09-20.md（annotator-01，2026-09-20 “好了”）",
+    "issue_scope": [
+      "slices"
+    ],
+    "resolution_note": "保留 negation：“no longer than one year”是下一份 DSUR 覆盖期的否定式上限，不是提交期限。不能仅因它可改写为“至多一年”就断言不存在否定语义。",
+    "sample_input_sha256": "1cf935b6df2dc58d2f13fe45eb3f7ea36b3516123ebc93e9864699854e6068a6",
+    "verdict_sha256": "bcc1875980239c103fd0e9378a63186b6d7b6afe29b4633f637dc56f551dfa29"
+  },
+  "pc-0090": {
+    "approval_source": "drafts/v2/review/owner_adjudication_2026-09-20.md（annotator-01，2026-09-20 “好了”）",
+    "issue_scope": [
+      "slices"
+    ],
+    "resolution_note": "保留 negation：“no later than 60 calendar days”是以数据锁定点为起点的否定式截止限制；与 pc-0088/0089 采用同一切片解释，不以标签重叠为由局部删除。",
+    "sample_input_sha256": "d140c74c00a17fefcd30ae54b7970e1eff038380395f57b935d640c8bfabf169",
+    "verdict_sha256": "19bea755f87120e147b028c4620063c1b808d9ec731a79a29471dc6e173c5e57"
+  }
+}

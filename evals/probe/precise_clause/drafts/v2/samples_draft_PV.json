@@ -57,7 +57,7 @@
     "dept": "PV",
     "language": "mixed",
     "notes": "",
-    "query": "MedDRA 缺少能充分反映报告信息的术语时，可以用机构自身的解决方法来处理这一不足吗？",
+    "query": "编码时发现现有 MedDRA 术语不能准确表达个案内容，团队可以自行制定临时处理规则吗？",
     "required_gold_evidence": [
       {
         "evidence_span": {
@@ -157,9 +157,7 @@
     ],
     "sample_id": "pc-0036",
     "slices": [
-      "time_window",
       "mixed_zh_en",
-      "dose_unit",
       "negation"
     ]
   },
@@ -363,7 +361,7 @@
           "text": "Occupational exposure: This refers to the exposure to a medicinal product (see definition in VI.A.1.3.), as a result of one’s professional or non-professional occupation. It does not include the exposure to one of the ingredients during the manufacturing process before the release as finished product."
         },
         "gold_id": "pc-0044-g1",
-        "key_text": "does not include the exposure to one of the ingredients",
+        "key_text": "does not include the exposure to one of the ingredients during the manufacturing process before the release as finished product",
         "page": 7,
         "printed_page_label": null,
         "section": "VI.A.1.2. Overdose, off-label use, misuse, abuse, occupational exposure, medication error, falsified medicinal product",
@@ -390,7 +388,7 @@
           "text": "Signal confirmation by the PRAC Rapporteur or (lead) Member State: The process of deciding whether or not a validated signal entered in the European Pharmacovigilance Issues Tracking Tool (EPITT) requires further analysis and prioritisation by the PRAC. This should be done by the PRAC Rapporteur or the (lead) Member State within 30 days from receipt of the validated signal."
         },
         "gold_id": "pc-0045-g1",
-        "key_text": "within 30 days from receipt of the validated signal",
+        "key_text": "This should be done by the PRAC Rapporteur or the (lead) Member State within 30 days from receipt of the validated signal",
         "page": 6,
         "printed_page_label": null,
         "section": "IX.A.1.2. Terminology specific to the EU signal management process with oversight of the Pharmacovigilance Risk Assessment Committee (PRAC)",
@@ -436,7 +434,7 @@
     "dept": "PV",
     "language": "mixed",
     "notes": "",
-    "query": "按照 GVP Module IX，信号确认是否等同于对信号的完整评估？",
+    "query": "按 GVP Module IX，收到信号确认结果后，能否在流程记录中把该信号标记为“完整评估已完成”？",
     "required_gold_evidence": [
       {
         "evidence_span": {
@@ -526,7 +524,7 @@
           "text": "To facilitate appropriate IND safety reporting practices, this guidance also provides recommendations related to the two IND safety reporting provisions (§ 312.32(c)(1)(i)(C) and (c)(1)(iv)) that require assessment of aggregate data."
         },
         "gold_id": "pc-0050-g1",
-        "key_text": "§ 312.32(c)(1)(i)(C) and (c)(1)(iv)",
+        "key_text": "the two IND safety reporting provisions (§ 312.32(c)(1)(i)(C) and (c)(1)(iv)) that require assessment of aggregate data",
         "page": 5,
         "printed_page_label": null,
         "section": "I. INTRODUCTION",
@@ -743,7 +741,7 @@
           "text": "請填寫通報藥品或產品之投予劑量、劑量單位,例如:「10mg」、「5mg/kg」。"
         },
         "gold_id": "pc-0058-g1",
-        "key_text": "「10mg」、「5mg/kg」",
+        "key_text": "投予劑量、劑量單位,例如:「10mg」、「5mg/kg」",
         "page": 17,
         "printed_page_label": null,
         "section": "6.10 劑量",
