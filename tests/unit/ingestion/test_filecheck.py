@@ -59,6 +59,25 @@ def test_pdf_lookalike_names_and_uri_links_are_allowed():
     assert filecheck.scan("pdf", ok).clean
 
 
+def test_open_action_destinations_and_goto_are_allowed_but_other_actions_are_not():
+    assert filecheck.scan("pdf", _pdf_with_catalog(b"/OpenAction [4 0 R /Fit]")).clean
+    assert filecheck.scan("pdf", _pdf_with_catalog(b"/OpenAction << /S /GoTo /D [4 0 R /XYZ 0 792 0] >>")).clean
+    for action in (
+        b"/S /Launch /F (cmd.exe)",
+        b"/S /URI /URI (https://example.invalid)",
+        b"/S /GoToR /F (other.pdf)",
+        b"/S /JavaScript /JS (1)",
+    ):
+        assert (
+            "pdf.open_action" in filecheck.scan("pdf", _pdf_with_catalog(b"/OpenAction << " + action + b" >>")).rules
+        ), action
+
+
+def test_large_but_ordinary_object_graphs_are_not_refused():
+    pages = [f"Page {i} text." for i in range(400)]
+    assert filecheck.scan("pdf", make_pdf(pages)).clean
+
+
 def test_encrypted_or_unparseable_pdf_is_refused():
     enc = CLEAN_PDF.replace(b"/Root 1 0 R", b"/Root 1 0 R /Encrypt 9 0 R")
     assert "pdf.encrypted" in filecheck.scan("pdf", enc).rules

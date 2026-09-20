@@ -31,7 +31,6 @@ DOCX_MAIN_PART = "word/document.xml"
 PDF_FORBIDDEN_NAMES: dict[str, str] = {
     "/JavaScript": "pdf.javascript",
     "/JS": "pdf.javascript",
-    "/OpenAction": "pdf.open_action",
     "/AA": "pdf.additional_actions",
     "/Launch": "pdf.launch",
     "/EmbeddedFile": "pdf.embedded_file",
@@ -42,7 +41,9 @@ PDF_FORBIDDEN_NAMES: dict[str, str] = {
     "/ImportData": "pdf.form_import",
     "/Encrypt": "pdf.encrypted",
 }
-PDF_MAX_OBJECTS_WALKED = 20_000
+PDF_MAX_OBJECTS_WALKED = (
+    500_000  # a 300-page guideline has ~10^4–10^5 objects; the budget only stops pathological graphs
+)
 
 ZIP_MAX_ENTRIES = 2_000
 ZIP_MAX_TOTAL_UNCOMPRESSED = 200 * 1024 * 1024
@@ -109,6 +110,30 @@ def _pdf_raw_names(data: bytes) -> set[str]:
     return hits
 
 
+BENIGN_OPEN_ACTION_TYPES = {
+    "/GoTo"
+}  # open the document at a destination; anything else (JavaScript, Launch, URI, GoToR, SubmitForm…) is refused
+
+
+def _benign_open_action(value: Any) -> bool:
+    """ADR-0009 §3 refinement (record 49): `/OpenAction` is common in ordinary PDFs as a plain destination
+    (`[page /Fit]`) or a `/GoTo` action; only action types other than GoTo are active content."""
+    try:
+        if isinstance(value, IndirectObject):
+            value = value.get_object()
+        if isinstance(value, ArrayObject):
+            return True
+        if isinstance(value, DictionaryObject):
+            return (
+                str(value.get("/S", "")) in BENIGN_OPEN_ACTION_TYPES
+                and "/JS" not in value
+                and "/JavaScript" not in value
+            )
+    except PyPdfError:
+        return False
+    return False
+
+
 def _walk(obj: Any, seen: set[int], hits: set[str], budget: list[int]) -> None:
     if budget[0] <= 0:
         return
@@ -124,6 +149,9 @@ def _walk(obj: Any, seen: set[int], hits: set[str], budget: list[int]) -> None:
     budget[0] -= 1
     if isinstance(obj, DictionaryObject):
         for k, v in obj.items():
+            if str(k) == "/OpenAction":
+                if not _benign_open_action(v):
+                    hits.add("pdf.open_action")
             rule = PDF_FORBIDDEN_NAMES.get(str(k))
             if rule:
                 hits.add(rule)

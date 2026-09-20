@@ -1,0 +1,40 @@
+{
+ "reviewed_on": "2026-09-21",
+ "reviewer": "Claude Fable 5.1（决策人 2026-09-21 授权扩语料入库）",
+ "ruleset": "pii-rules-v1",
+ "classification": "全部命中为机构职能信箱（FDA druginfo/ocod/dsmica/gcpquestions/combination/CDRH 组信箱、EMA duplicates 与 emerging-safety-issue 信箱、MedDRA MSSO 帮助台），不指向自然人，属 INV-DATA-01 的误报；与实现记录 21 对 GVP VI/IX、FDA 安全报告指南的复核口径一致。",
+ "false_positives": {
+  "cand-0056": [
+   "duplicates@ema.europa.eu"
+  ],
+  "cand-0059": [
+   "P-PV-emerging-safety-issue@ema.europa.eu"
+  ],
+  "cand-0066": [
+   "druginfo@fda.hhs.gov",
+   "industry.biologics@fda.hhs.gov",
+   "CDRHClinicalEvidence@fda.hhs.gov",
+   "combination@fda.gov"
+  ],
+  "cand-0067": [
+   "druginfo@fda.hhs.gov",
+   "ocod@fda.hhs.gov",
+   "dsmica@fda.hhs.gov"
+  ],
+  "cand-0068": [
+   "gcpquestions@fda.hhs.gov"
+  ],
+  "cand-0069": [
+   "druginfo@fda.hhs.gov",
+   "industry.biologics@fda.hhs.gov"
+  ],
+  "cand-0071": [
+   "druginfo@fda.hhs.gov",
+   "ocod@fda.hhs.gov",
+   "CDRH-Guidance@fda.hhs.gov"
+  ],
+  "cand-0074": [
+   "mssohelp@meddra.org"
+  ]
+ }
+}

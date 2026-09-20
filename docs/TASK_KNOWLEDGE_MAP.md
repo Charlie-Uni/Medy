@@ -1,6 +1,6 @@
 # Medy 全量任务、当前进度与八股知识点对照
 
-> 核查日期：2026-09-21（[实现记录 48](reviews/2026-09-21-implementation-48-glossary-eval-and-main-set-spec.md)）。编号与 [开发路线图](DEVELOPMENT_ROADMAP.md) 一致，验收文字以 [工程基线 v0.6](ENGINEERING_BASELINE.md) 为准；本文只补每个任务对应的基础知识，不新增门禁。
+> 核查日期：2026-09-21（[实现记录 49](reviews/2026-09-21-implementation-49-main-set-corpus-ingested.md)）。编号与 [开发路线图](DEVELOPMENT_ROADMAP.md) 一致，验收文字以 [工程基线 v0.6](ENGINEERING_BASELINE.md) 为准；本文只补每个任务对应的基础知识，不新增门禁。
 > 状态口径同路线图：已实现（小范围产物有代码与证据，不等于整体验收完成）、部分、待做、阻塞、选做、未验收。基线 99 个复选项目前 1 项勾选（M1-01 探针冻结）。
 > `tests/unit/docs/test_baseline_roadmap_consistency.py` 机械检查本文与路线图、基线的编号数量一致。
 
@@ -75,7 +75,7 @@ M1-01 同时是“部分”和“阻塞”，上表按“部分”计。P1/P2 11
 | M1-17 | 部分（融合 + 重排 + 回查已实现；并行/超时/降级随 M2 执行器，记录 45） | RRF、Reranker、候选上限、并行超时 | RRF 公式；bi-encoder 与 cross-encoder；asyncio 并发与超时取消；显式降级 |
 | M1-18 | 已实现（回查模块与 RLS 下的集成证明；`evidence_log` 落库随 M2） | 事实回查：状态、生效时间、ACL、完整性、解析质量 | 事实源与索引的分离；JOIN 校验；时间点查询；完整性状态 |
 | M1-19 | 已实现（候选缓存、命中仍回查、outbox 按部门纪元失效、Redis 存储） | 缓存键含权限与版本指纹，可靠失效 | cache-aside 与 TTL；穿透/击穿/雪崩；权限变化后的失效；缓存不得绕过授权 |
-| M1-20 | 待做（候选清单 v0.7 待签字，记录 47） | 不少于 300 条主评测集 | IR 评测集构建；gold 标注与分层复核；数据切片设计 |
+| M1-20 | 待做（语料 74 份就绪、规范 v1.0 已定、样本起草待开始，记录 49） | 不少于 300 条主评测集 | IR 评测集构建；gold 标注与分层复核；数据切片设计 |
 | M1-21 | 部分（端到端运行工具、事实回查后 Recall@5 报告与分部门/语言切片已有；门禁在探针规模未过，主评测集待 M1-20，记录 45） | 严格宏平均 Recall@5 报告 | Recall/Precision/Hit/MRR/nDCG；宏平均与微平均；可复现报告 |
 
 ## 4. M2 Harness、Verifier、Safety 与 Skills（16 项）

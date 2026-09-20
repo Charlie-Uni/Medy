@@ -23,3 +23,8 @@ uv.lock
 evals/probe/precise_clause/drafts/*/review/input_*.jsonl
 evals/probe/precise_clause/drafts/*/review/**/input_*.jsonl
 .constraints-main.tmp
+
+# main evaluation set: source PDFs and extracted page texts never enter Git (same rule as the probe set)
+evals/main_set/sources/
+evals/main_set/sources_staging/
+evals/main_set/pages/

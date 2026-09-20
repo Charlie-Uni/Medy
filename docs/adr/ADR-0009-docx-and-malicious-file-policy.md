@@ -20,3 +20,12 @@
 - 不做 OCR、不做版面分析；`.doc`（二进制 Word）、`.rtf`、`.odt` 不支持。
 - 追踪修订（`w:ins`/`w:del`）按"接受全部修订"读取；批注忽略；此规则写入解析器版本。
 - ClamAV 的部署（容器与病毒库更新）属 M3 部署基线。
+
+## 修订 1（2026-09-21，实施方按授权作出，实现记录 49）：`/OpenAction` 与对象图上限
+
+首次对 58 份已签字文档运行结构性门禁时，6 份被误拒：3 份因 `/OpenAction`（GVP Module X 与两份 TFDA 仿單，动作均为打开文档时跳转到目的地），3 份因对象图超过 20,000 个对象（ICH E3 49 页、FDA E6(R3) 86 页、MedDRA SMQ 入门指南 301 页）。修订：
+
+1. `/OpenAction` 不再按名字出现即拒绝，而按其动作判定：目的地数组（`[page /Fit]`）与 `/S /GoTo` 允许；`/JavaScript`、`/Launch`、`/URI`、`/GoToR`、`/SubmitForm`、`/ImportData` 等任何其他动作类型仍拒绝（`pdf.open_action`）。`/AA`（附加动作）维持一律拒绝。
+2. 对象图遍历上限提高到 500,000，只用于阻止病态图；正常 300 页文档不再触发。
+
+原始字节名字扫描仍覆盖 JavaScript/JS/Launch/EmbeddedFile/RichMedia/XFA/SubmitForm/ImportData/Encrypt（含 `#xx` 转义）。单元测试新增目的地/GoTo 放行、其他动作拒绝与 400 页大文档放行。
