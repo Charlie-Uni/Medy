@@ -277,3 +277,58 @@ def test_batch_loader_reports_each_document_and_exit_code(migrated, tmp_path, ca
         ("batch-dirty", "ingested"),
     }
     assert load.main([*base, "--accept-pii", "broken"]) == 2
+
+
+def test_extractor_warnings_give_low_trust_unless_a_reviewer_override_is_audited(admin, tmp_path, monkeypatch):
+    pdf, data = write_pdf(tmp_path, "w.pdf", [PAGES[0] + " First synthetic warning file.", PAGES[1]])
+    real = pipeline.extract_and_check
+
+    def with_warnings(data, source_hash, pages_dir):
+        texts, _ = real(data, source_hash, pages_dir)
+        return texts, ["fontTools is required to fully parse the encoding of a CFF Type1 font"] * 3
+
+    monkeypatch.setattr(pipeline, "extract_and_check", with_warnings)
+    low = ingest_document(admin, spec_for(data, key="test-warn-low"), pdf, actor="ingest-01")
+    assert low.parse_quality == "low_trust"
+    job = admin.execute(
+        "select parse_quality, extractor_warnings from ingestion_jobs where job_id = %s", (low.job_id,)
+    ).fetchone()
+    assert job == ("low_trust", 3)
+    details = admin.execute(
+        "select details from doc_audit where doc_id = %s and action = 'ingest'", (low.doc_id,)
+    ).fetchone()[0]
+    assert details["extractor_warning_messages"] == [
+        {"message": "fontTools is required to fully parse the encoding of a CFF Type1 font", "count": 3}
+    ]
+    assert details["quality_review_override"] is False
+
+    pdf2, data2 = write_pdf(tmp_path, "w2.pdf", [PAGES[0] + " Second synthetic file.", PAGES[1]])
+    ok = ingest_document(
+        admin,
+        spec_for(data2, key="test-warn-ok"),
+        pdf2,
+        actor="reviewer-01",
+        quality_override_reason="page texts verified against the frozen pages; warnings are skipped CFF font encoding only",
+    )
+    assert ok.parse_quality == "trusted"
+    assert admin.execute("select parse_quality from documents where doc_id = %s", (ok.doc_id,)).fetchone() == (
+        "trusted",
+    )
+    audit = admin.execute(
+        "select action, actor, reason, details from doc_audit where doc_id = %s order by id", (ok.doc_id,)
+    ).fetchall()
+    assert [a[0] for a in audit] == ["ingest", "quality_review_override"]
+    assert audit[1][1] == "reviewer-01" and audit[1][2].startswith("page texts verified")
+    assert (
+        audit[1][3]["from"] == "low_trust" and audit[1][3]["to"] == "trusted" and audit[1][3]["extractor_warnings"] == 3
+    )
+    # an override without warnings is a no-op (no audit row, no upgrade needed)
+    monkeypatch.setattr(pipeline, "extract_and_check", real)
+    pdf3, data3 = write_pdf(tmp_path, "w3.pdf", [PAGES[0] + " Third synthetic file.", PAGES[1]])
+    clean = ingest_document(
+        admin, spec_for(data3, key="test-warn-clean"), pdf3, actor="reviewer-01", quality_override_reason="unused"
+    )
+    assert clean.parse_quality == "trusted"
+    assert admin.execute(
+        "select count(*) from doc_audit where doc_id = %s and action = 'quality_review_override'", (clean.doc_id,)
+    ).fetchone() == (0,)

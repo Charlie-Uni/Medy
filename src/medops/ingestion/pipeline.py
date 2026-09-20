@@ -115,8 +115,8 @@ def validate_pdf(data: bytes, spec: DocumentSpec) -> str:
     return digest
 
 
-def extract_and_check(data: bytes, source_hash: str, pages_dir: Path | None) -> tuple[list[str], int]:
-    texts, warnings = extract.extract_pages(data)
+def extract_and_check(data: bytes, source_hash: str, pages_dir: Path | None) -> tuple[list[str], list[str]]:
+    texts, warnings = extract.extract_pages_detailed(data)
     if pages_dir is not None:
         stored = Path(pages_dir) / source_hash
         if stored.is_dir():
@@ -140,6 +140,14 @@ def scan_pii(texts: list[str]) -> tuple[tuple[str, str], ...]:
     return tuple(hits)
 
 
+def _message_counts(messages: list[str]) -> list[dict[str, object]]:
+    """Distinct warning texts with their counts, in first-occurrence order."""
+    counts: dict[str, int] = {}
+    for m in messages:
+        counts[m] = counts.get(m, 0) + 1
+    return [{"message": m, "count": n} for m, n in counts.items()]
+
+
 def _existing_document(conn: psycopg.Connection, source_hash: str) -> list[tuple[uuid.UUID, str, str, uuid.UUID]]:
     return conn.execute(
         """select d.doc_id, d.document_key, d.version, s.source_object_id
@@ -157,9 +165,14 @@ def ingest_document(
     actor: str,
     pages_dir: Path | None = None,
     pii_override_reason: str | None = None,
+    quality_override_reason: str | None = None,
     storage_uri: str | None = None,
     family_id: uuid.UUID | None = None,
 ) -> IngestResult:
+    """Ingest one PDF as a draft document. `quality_override_reason` is the audited reviewer decision that
+    upgrades an extraction with pypdf warnings from `low_trust` to `trusted` (INV-DATA-05 stays the default);
+    it is only meaningful when the stored page texts were verified (extraction drift check) and is written to
+    doc_audit as `quality_review_override` together with the warning messages."""
     data = Path(pdf_path).read_bytes()
     source_hash = validate_pdf(data, spec)
 
@@ -178,7 +191,8 @@ def ingest_document(
             "source object needs administrator confirmation (baseline 3.3)"
         )
 
-    texts, warnings = extract_and_check(data, source_hash, pages_dir)
+    texts, warning_messages = extract_and_check(data, source_hash, pages_dir)
+    warnings = len(warning_messages)
     hits = scan_pii(texts)
     if hits and not pii_override_reason:
         summary = "; ".join(f"{rule}: {match}" for rule, match in hits[:5])
@@ -186,7 +200,8 @@ def ingest_document(
     chunks = chunk_pages(texts)
     if not chunks:
         raise IngestRefused("chunker produced no chunks")
-    parse_quality = "trusted" if warnings == 0 else "low_trust"
+    quality_overridden = warnings > 0 and bool(quality_override_reason)
+    parse_quality = "trusted" if warnings == 0 or quality_overridden else "low_trust"
     empty_pages = sum(1 for t in texts if not t.strip())
 
     if source_object_id is None:
@@ -254,7 +269,9 @@ def ingest_document(
         "chunker_version": CHUNKER_VERSION,
         "normalization": NORMALIZATION_VERSION,
         "extractor_warnings": warnings,
+        "extractor_warning_messages": _message_counts(warning_messages),
         "parse_quality": parse_quality,
+        "quality_review_override": quality_overridden,
         "pii_ruleset": PII_RULESET_VERSION,
         "pii_hits": len(hits),
     }
@@ -262,6 +279,24 @@ def ingest_document(
         "insert into doc_audit (doc_id, action, actor, details) values (%s, 'ingest', %s, %s::jsonb)",
         (doc_id, actor, json.dumps(details, ensure_ascii=False)),
     )
+    if quality_overridden:
+        conn.execute(
+            "insert into doc_audit (doc_id, action, actor, reason, details) values (%s, 'quality_review_override', %s, %s, %s::jsonb)",
+            (
+                doc_id,
+                actor,
+                quality_override_reason,
+                json.dumps(
+                    {
+                        "extractor_warnings": warnings,
+                        "messages": _message_counts(warning_messages),
+                        "from": "low_trust",
+                        "to": "trusted",
+                    },
+                    ensure_ascii=False,
+                ),
+            ),
+        )
     if hits:
         conn.execute(
             "insert into doc_audit (doc_id, action, actor, reason, details) values (%s, 'pii_review_override', %s, %s, %s::jsonb)",

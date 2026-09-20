@@ -1,7 +1,7 @@
 """Batch loader: ingest the documents of a probe corpus.json into the fact plane.
 
     python -m medops.ingestion.load --corpus <corpus.json> --sources-dir <dir> --pages-dir <dir> --actor <id>
-                                    [--only key,key] [--accept-pii key=reason ...] [--admin-url <dsn>]
+                                    [--only key,key] [--accept-pii key=reason ...] [--accept-quality key=reason ...] [--admin-url <dsn>]
 
 Runs as the admin role (MEDOPS_MIGRATION_URL, else Settings DATABASE_ADMIN_URL / DATABASE_URL). One
 transaction per document; a refusal leaves that document untouched and is reported, the run continues
@@ -48,6 +48,13 @@ def main(argv: list[str] | None = None) -> int:
         metavar="KEY=REASON",
         help="override a PII refusal for one document, with the review reason",
     )
+    parser.add_argument(
+        "--accept-quality",
+        action="append",
+        default=[],
+        metavar="KEY=REASON",
+        help="reviewer decision that upgrades a document with pypdf warnings from low_trust to trusted (audited)",
+    )
     parser.add_argument("--admin-url", default=None)
     args = parser.parse_args(argv)
 
@@ -60,6 +67,13 @@ def main(argv: list[str] | None = None) -> int:
             print(f"--accept-pii needs KEY=REASON, got {item!r}")
             return 2
         overrides[key] = reason.strip()
+    quality_overrides: dict[str, str] = {}
+    for item in args.accept_quality:
+        key, _, reason = item.partition("=")
+        if not key or not reason.strip():
+            print(f"--accept-quality needs KEY=REASON, got {item!r}")
+            return 2
+        quality_overrides[key] = reason.strip()
 
     refused = 0
     with psycopg.connect(args.admin_url or _admin_url()) as conn:
@@ -78,6 +92,7 @@ def main(argv: list[str] | None = None) -> int:
                         actor=args.actor,
                         pages_dir=args.pages_dir,
                         pii_override_reason=overrides.get(spec.document_key),
+                        quality_override_reason=quality_overrides.get(spec.document_key),
                     )
                 line.update(
                     status=result.status,

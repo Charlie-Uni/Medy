@@ -1,14 +1,18 @@
 """Deterministic, page-anchored chunking of extracted page texts (M1-10; baseline 5.1, SPEC section 6).
 
-`chunker-v1` works on the norm-v1 normalised text of each page, which is the coordinate system the
+`chunker-v2` works on the norm-v1 normalised text of each page, which is the coordinate system the
 probe validator and the hit rule use: every chunk is exactly `normalized_page[char_start:char_end]`,
 so a gold `key_text` position found in the normalised page can be tested against chunk spans without
-any re-normalisation. Chunks never cross pages in v1 (one span per chunk), boundaries fall on sentence
-ends, a chunk closes once it reaches TARGET_CHARS and never exceeds MAX_CHARS except when an
-unbreakable run has no whitespace to split at, and a short tail is merged into the previous chunk when
-that still fits. The
+any re-normalisation. Chunks never cross pages (one span per chunk), boundaries fall on sentence ends,
+a chunk closes once it reaches TARGET_CHARS and never exceeds MAX_CHARS except when an unbreakable run
+has nothing to split at, and a short tail is merged into the previous chunk when that still fits. The
 section label is a best-effort heading heuristic carried forward across pages; citations rely on
 page and chunk_id, not on the label. Any change to these rules is a new CHUNKER_VERSION.
+
+v2 changes (record 34, 2026-09-20), decided before the second DEC-001 run: a semicolon is a clause mark,
+not a sentence end (v1 cut `...in the DSUR; however, it should not...` between the two halves of one
+clause), and an over-long run is split at the last clause mark (`, ; : ， ； ： 、`) in the final
+LONG_RUN_LOOKBACK characters of the window before falling back to whitespace and then to a hard cut.
 """
 
 from __future__ import annotations
@@ -20,12 +24,14 @@ from dataclasses import dataclass
 
 from medops.retrieval.lexical.normalization import NORMALIZATION_VERSION, normalize_text
 
-CHUNKER_VERSION = "chunker-v1"
+CHUNKER_VERSION = "chunker-v2"
 TARGET_CHARS = 400
 MAX_CHARS = 600
 MIN_TAIL_CHARS = 120
+LONG_RUN_LOOKBACK = 200
 
-_SENTENCE_END = re.compile(r"(?<=[。！？；])|(?<=[.!?;])(?=\s)")
+_SENTENCE_END = re.compile(r"(?<=[。！？])|(?<=[.!?])(?=\s)")
+_CLAUSE_MARK = re.compile(r"[,;:，；：、]\s*")
 _ZH_SECTIONS = (
     "適應症",
     "适应症",
@@ -95,7 +101,7 @@ def content_hash(text: str) -> str:
 
 
 def _segments(text: str) -> list[tuple[int, int]]:
-    """Sentence-ish segments covering `text` completely; runs longer than MAX_CHARS are split at whitespace."""
+    """Sentence segments covering `text` completely; runs longer than MAX_CHARS are split by `_long_run_cut`."""
     cuts = [0, *[m.start() for m in _SENTENCE_END.finditer(text) if 0 < m.start() < len(text)], len(text)]
     raw = [(s, e) for s, e in zip(cuts, cuts[1:], strict=False) if e > s]
     out: list[tuple[int, int]] = []
@@ -105,13 +111,21 @@ def _segments(text: str) -> list[tuple[int, int]]:
         if s >= e:
             continue
         while e - s > MAX_CHARS:
-            window = text[s : s + MAX_CHARS]
-            cut = window.rfind(" ", MAX_CHARS - 100)
-            cut = s + (cut if cut > 0 else MAX_CHARS)
+            cut = s + _long_run_cut(text[s : s + MAX_CHARS])
             out.append((s, cut))
             s = cut
         out.append((s, e))
     return out
+
+
+def _long_run_cut(window: str) -> int:
+    """Offset inside a MAX_CHARS window at which an over-long run is split: after the last clause mark
+    in the final LONG_RUN_LOOKBACK characters, else at the last whitespace in the final 100, else MAX_CHARS."""
+    marks = [m.end() for m in _CLAUSE_MARK.finditer(window) if m.start() >= MAX_CHARS - LONG_RUN_LOOKBACK]
+    if marks:
+        return marks[-1]
+    cut = window.rfind(" ", MAX_CHARS - 100)
+    return cut if cut > 0 else MAX_CHARS
 
 
 def _pack(text: str) -> list[tuple[int, int]]:

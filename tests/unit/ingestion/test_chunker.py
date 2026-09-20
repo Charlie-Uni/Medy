@@ -111,3 +111,30 @@ def test_deterministic_and_versioned():
     raw = ["".join(EN_SENTENCE for _ in range(25)), ZH_SENTENCE * 30]
     assert chunk_pages(raw) == chunk_pages(list(raw))
     assert chunker_record() == {"chunker_version": CHUNKER_VERSION, "normalization": "norm-v1"}
+
+
+def test_v2_semicolon_is_a_clause_mark_not_a_sentence_end():
+    clause = (
+        "The DSUR should discuss it in the text; however, it should not be used to provide the initial notification. "
+    )
+    raw = clause * 8
+    chunks = chunk_pages([raw])
+    for c in chunks:
+        assert "text; however" in c.content or not c.content.startswith("however"), c.content[:60]
+        assert not c.content.startswith("however"), "a chunk must not start right after the semicolon"
+    assert CHUNKER_VERSION == "chunker-v2"
+
+
+def test_v2_long_runs_are_split_after_a_clause_mark_before_falling_back_to_whitespace():
+    # no sentence terminator at all; commas every ~90 chars -> cuts land right after a comma
+    piece = "definitions of protocol deviation and important protocol deviation are adopted from E3 R1 guidance, "
+    raw = piece * 12
+    chunks = chunk_pages([raw])
+    assert len(chunks) > 1
+    for c in chunks[:-1]:
+        assert c.content.endswith(","), c.content[-40:]
+        assert len(c.content) <= MAX_CHARS
+    assert _covered(normalize_text(raw), [c.spans[0] for c in chunks])
+    # a run without clause marks still splits at whitespace, and one without whitespace is hard cut (v1 behaviour kept)
+    words = " ".join(f"token{i:04d}" for i in range(400))
+    assert all(len(c.content) <= MAX_CHARS and " " not in (c.content[0], c.content[-1]) for c in chunk_pages([words]))

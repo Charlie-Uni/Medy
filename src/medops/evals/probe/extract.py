@@ -48,15 +48,22 @@ class ExtractionResult:
         return tuple(i for i, n in enumerate(self.chars_per_page, 1) if n == 0)
 
 
+MAX_WARNING_MESSAGES = 100
+
+
 class _WarningCounter(logging.Handler):
-    """Counts pypdf warnings without silencing them: they signal skipped font parsing and mandate a quality review."""
+    """Counts pypdf warnings without silencing them: they signal skipped font parsing and mandate a quality
+    review. The first MAX_WARNING_MESSAGES message texts are kept so the review can see what was skipped."""
 
     def __init__(self) -> None:
         super().__init__(level=logging.WARNING)
         self.count = 0
+        self.messages: list[str] = []
 
     def emit(self, record: logging.LogRecord) -> None:
         self.count += 1
+        if len(self.messages) < MAX_WARNING_MESSAGES:
+            self.messages.append(record.getMessage()[:300])
 
 
 def extraction_record() -> dict[str, object]:
@@ -69,11 +76,15 @@ def extraction_record() -> dict[str, object]:
 
 
 def extract_pages(pdf_bytes: bytes) -> tuple[list[str], int]:
-    """Raw text per physical page (1-based order) and the number of pypdf warnings emitted while extracting.
+    """Raw text per physical page (1-based order) and the number of pypdf warnings emitted while extracting."""
+    texts, messages = extract_pages_detailed(pdf_bytes)
+    return texts, len(messages)
 
-    Warnings stay on the pypdf logger (visible to the caller); they are only counted here. Unreadable files raise
-    ValueError.
-    """
+
+def extract_pages_detailed(pdf_bytes: bytes) -> tuple[list[str], list[str]]:
+    """Raw text per physical page and the pypdf warning messages emitted while extracting (one entry per
+    warning, texts capped at MAX_WARNING_MESSAGES). Warnings stay on the pypdf logger (visible to the
+    caller); they are only recorded here. Unreadable files raise ValueError."""
     counter = _WarningCounter()
     logger = logging.getLogger("pypdf")
     logger.addHandler(counter)
@@ -86,7 +97,9 @@ def extract_pages(pdf_bytes: bytes) -> tuple[list[str], int]:
         raise ValueError(f"unreadable PDF: {exc}") from exc
     finally:
         logger.removeHandler(counter)
-    return texts, counter.count
+    if counter.count > len(counter.messages):
+        counter.messages.append(f"... {counter.count - len(counter.messages)} more warnings not recorded")
+    return texts, counter.messages
 
 
 def _write_file(path: Path, data: bytes) -> None:
