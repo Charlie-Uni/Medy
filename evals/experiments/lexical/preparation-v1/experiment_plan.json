@@ -193,7 +193,7 @@
       },
       "image_digest": null,
       "adapter_runtime_verified": true,
-      "release_status": "release_blocked",
+      "release_status": "excluded_by_decision",
       "license_approval": null,
       "source_evidence": [
         "https://github.com/paradedb/paradedb/releases/expanded_assets/v0.25.9",
@@ -259,7 +259,8 @@
         "evidence": "tests/integration/test_lexical_pg_search_bm25.py on the local candidate C server",
         "record": "docs/reviews/2026-09-20-implementation-30-candidate-b-c-adapters.md"
       },
-      "matching_predicate": "OR (|||) across distinct query terms passed as text[] (whitespace/punctuation tokens dropped)"
+      "matching_predicate": "OR (|||) across distinct query terms passed as text[] (whitespace/punctuation tokens dropped)",
+      "release_status_note": "ADR-0002 amendment 4 (2026-09-20): excluded from production candidates on licence-policy grounds under the owner's delegated decision; kept as experimental control"
     }
   ],
   "readiness_blockers": [
@@ -269,11 +270,13 @@
     },
     {
       "code": "end_to_end_configuration_unfixed",
-      "detail": "Embedding/reranker and end-to-end Recall@5/P95 configuration for the final selection gates have not been fixed"
+      "detail": "Embedding/reranker fixed by ADR-0007 (2026-09-20); end-to-end Recall@5/P95 gates per baseline M1-21; hybrid run pending M1-16/M1-17 implementation",
+      "status": "partially_resolved"
     },
     {
       "code": "production_license_review_pending",
-      "detail": "C remains release_blocked; direct/transitive component and dictionary licensing requires independent review"
+      "detail": "Resolved 2026-09-20 by ADR-0002 amendment 4: C excluded_by_decision (licence policy); A/B family dictionary licensing (zhparser/SCWS BSD, jieba MIT) recorded in the licence dossier",
+      "status": "resolved"
     },
     {
       "code": "esomen_low_trust_and_two_unmappable_golds_cap_recall",
@@ -567,5 +570,6 @@
       "conclusion": "stopword removal lifts A/B by 8-11 pp and halves latency but no candidate passes; remaining misses are ranking (no IDF) and Traditional-Chinese drug-name segmentation"
     }
   },
-  "owner_decision_2026_09_20_amendment_3": "DEC-001 final selection deferred to the end-to-end experiment; lexical gates and three run results kept as the lexical-channel baseline; M1 slices independent of the lexical engine proceed (M1-11 publish/outbox, vector prep after DEC-002, fact re-check, cache invalidation); production lexical_retriever and version pinning still wait for the decision; C licence review in parallel"
+  "owner_decision_2026_09_20_amendment_3": "DEC-001 final selection deferred to the end-to-end experiment; lexical gates and three run results kept as the lexical-channel baseline; M1 slices independent of the lexical engine proceed (M1-11 publish/outbox, vector prep after DEC-002, fact re-check, cache invalidation); production lexical_retriever and version pinning still wait for the decision; C licence review in parallel",
+  "owner_delegation_2026_09_20": "Owner: '我需要的是结果 你来决定'. Decisions taken by the implementer: ADR-0007 (DEC-002 bge-m3 dense 1024 + bge-reranker-v2-m3, local inference), ADR-0008 (DEC-005 glossary sources), ADR-0009 (DOCX + malicious-file policy), ADR-0002 amendment 4 (C excluded). See docs/reviews/2026-09-20-implementation-41-delegated-decisions.md"
 }
