@@ -74,10 +74,11 @@ INSTALL_SQL = META_DDL + tsvector_index_ddl(INDEX_TABLE)
 SEARCH_SQL = tsvector_search_sql(INDEX_TABLE)
 
 
-def install(conn: psycopg.Connection[Any]) -> None:
+def install(conn: psycopg.Connection[Any], *, table: str = INDEX_TABLE) -> None:
     """Create the candidate A tables, policies and grants (idempotent). Needs CREATE on schema public
-    and must run as the migration/admin owner, never as an application role."""
-    conn.execute(INSTALL_SQL)
+    and must run as the migration/admin owner, never as an application role. `table` selects a variant
+    index table (amendment 2: `lexical_index_a2` for tok-jieba-v2) that coexists with the default one."""
+    conn.execute(META_DDL + tsvector_index_ddl(table))
 
 
 def configured_versions(tokenizer: Tokenizer) -> LexicalVersions:
@@ -90,7 +91,13 @@ def configured_versions(tokenizer: Tokenizer) -> LexicalVersions:
 
 
 def build_index(
-    conn: psycopg.Connection[Any], tokenizer: Tokenizer, *, built_by: str, batch: int = 500
+    conn: psycopg.Connection[Any],
+    tokenizer: Tokenizer,
+    *,
+    built_by: str,
+    batch: int = 500,
+    index_name: str = INDEX_NAME,
+    table: str = INDEX_TABLE,
 ) -> IndexBuildReport:
     """(Re)build `lexical_index_a` over EVERY chunk visible to the connection's role (the admin role sees
     all; status/effective filtering is applied at query time, exactly as production would).
@@ -102,10 +109,10 @@ def build_index(
         raise ValueError("built_by is required (audit)")
     versions = configured_versions(tokenizer)
     with conn.transaction():
-        conn.execute(f"delete from {INDEX_TABLE}")
+        conn.execute(f"delete from {table}")
         rows: list[tuple[Any, str]] = []
         count = skipped = 0
-        cursor = conn.cursor(name="lexical_a_build")  # server-side cursor: chunks are read in batches
+        cursor = conn.cursor(name=f"lexical_{index_name}_build")  # server-side cursor: chunks are read in batches
         cursor.itersize = batch
         cursor.execute("select chunk_id, content from chunks order by chunk_id")
         for chunk_id, content in cursor:
@@ -115,19 +122,19 @@ def build_index(
                 continue
             rows.append((chunk_id, tsvector_literal(tokens)))
             if len(rows) >= batch:
-                count += _flush(conn, rows)
+                count += _flush(conn, rows, table)
                 rows = []
         cursor.close()
-        count += _flush(conn, rows)
-        upsert_meta(conn, INDEX_NAME, versions, chunk_count=count, built_by=built_by)
-    return IndexBuildReport(index_name=INDEX_NAME, chunk_count=count, skipped_empty=skipped, versions=versions)
+        count += _flush(conn, rows, table)
+        upsert_meta(conn, index_name, versions, chunk_count=count, built_by=built_by)
+    return IndexBuildReport(index_name=index_name, chunk_count=count, skipped_empty=skipped, versions=versions)
 
 
-def _flush(conn: psycopg.Connection[Any], rows: list[tuple[Any, str]]) -> int:
+def _flush(conn: psycopg.Connection[Any], rows: list[tuple[Any, str]], table: str = INDEX_TABLE) -> int:
     if not rows:
         return 0
     with conn.cursor() as cur:
-        cur.executemany(f"insert into {INDEX_TABLE} (chunk_id, tsv) values (%s, %s::tsvector)", rows)
+        cur.executemany(f"insert into {table} (chunk_id, tsv) values (%s, %s::tsvector)", rows)
     return len(rows)
 
 
@@ -139,10 +146,20 @@ class PgSimpleFtsRetriever:
 
     `as_of` fixes the effective-time filter (default: today) so an experiment run is reproducible."""
 
-    def __init__(self, conn: psycopg.Connection[Any], tokenizer: Tokenizer, *, as_of: date | None = None) -> None:
+    def __init__(
+        self,
+        conn: psycopg.Connection[Any],
+        tokenizer: Tokenizer,
+        *,
+        as_of: date | None = None,
+        index_name: str = INDEX_NAME,
+        table: str = INDEX_TABLE,
+    ) -> None:
         self._conn = conn
         self._tokenizer = tokenizer
         self._as_of = as_of
+        self._index_name = index_name
+        self._search_sql = tsvector_search_sql(table)
 
     @property
     def configured(self) -> LexicalVersions:
@@ -152,7 +169,7 @@ class PgSimpleFtsRetriever:
     @property
     def versions(self) -> LexicalVersions:
         """Versions the index in the database was BUILT with (meta row), never the query configuration."""
-        return read_built_versions(self._conn, INDEX_NAME)
+        return read_built_versions(self._conn, self._index_name)
 
     def _query_tokens(self, query: str) -> list[str]:
         return list(dict.fromkeys(self._tokenizer.tokenize(query)))
@@ -165,7 +182,7 @@ class PgSimpleFtsRetriever:
         tokens = self._query_tokens(query)
         if not tokens:
             return empty_result(k, built)
-        rows = self._conn.execute(SEARCH_SQL, search_params(tokens, k, self._as_of)).fetchall()
+        rows = self._conn.execute(self._search_sql, search_params(tokens, k, self._as_of)).fetchall()
         return page_to_result(rows, k, built)
 
     def explain(self, query: str, k: int) -> str:
@@ -175,7 +192,7 @@ class PgSimpleFtsRetriever:
         tokens = self._query_tokens(query)
         if not tokens:
             return ""
-        return explain_json(self._conn, SEARCH_SQL, search_params(tokens, k, self._as_of))
+        return explain_json(self._conn, self._search_sql, search_params(tokens, k, self._as_of))
 
 
 def main(argv: Sequence[str] | None = None) -> int:
@@ -183,7 +200,13 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("action", choices=("install", "build"))
     parser.add_argument("--admin-url", help="admin DSN (default: DATABASE_ADMIN_URL from settings)")
     parser.add_argument("--built-by", default="dec001-a-build", help="audit label stored in the meta row")
+    parser.add_argument(
+        "--variant", choices=("a", "a2"), default="a", help="a2 = tok-jieba-v2 with the pinned English stopword list"
+    )
+    parser.add_argument("--stopwords", default="evals/experiments/lexical/resources/english.stop")
     args = parser.parse_args(argv)
+    index_name = args.variant
+    table = f"lexical_index_{index_name}"
     dsn = args.admin_url
     if not dsn:
         from medops.core.config import Settings
@@ -193,11 +216,19 @@ def main(argv: Sequence[str] | None = None) -> int:
         dsn = secret.get_secret_value()
     with psycopg.connect(dsn) as conn:
         if args.action == "install":
-            install(conn)
+            install(conn, table=table)
             conn.commit()
-            print(json.dumps({"installed": [META_TABLE, INDEX_TABLE]}))
+            print(json.dumps({"installed": [META_TABLE, table]}))
             return 0
-        report = build_index(conn, JiebaTokenizerV1(), built_by=args.built_by)
+        if args.variant == "a2":
+            from pathlib import Path
+
+            from medops.retrieval.lexical.tokenizer import JiebaTokenizerV2
+
+            tokenizer: Tokenizer = JiebaTokenizerV2(stopwords=Path(args.stopwords))
+        else:
+            tokenizer = JiebaTokenizerV1()
+        report = build_index(conn, tokenizer, built_by=args.built_by, index_name=index_name, table=table)
         print(json.dumps(report.as_dict(), ensure_ascii=False))
     return 0
 

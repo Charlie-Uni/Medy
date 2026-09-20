@@ -45,7 +45,8 @@ from medops.retrieval.lexical.boundary import run_lexical_search
 
 SLICES = ("drug_name_zh", "dose_unit", "negation", "time_window", "protocol_id", "mixed_zh_en")
 MIN_SLICE_SUPPORT = 8
-CANDIDATES = ("A", "B", "C")
+CANDIDATES = ("A", "A2", "B", "B2", "C")  # A2/B2: ADR-0002 amendment 2 stopword variants
+STOPWORDS = Path("evals/experiments/lexical/resources/english.stop")
 
 # ------------------------------------------------------------------------------- inputs
 
@@ -172,6 +173,8 @@ def resolve_servers(repo: Path, mappings: Mapping[str, Path], plan: Mapping[str,
     settings = Settings(_env_file=repo / ".env")  # type: ignore[call-arg]
     app_password = settings.db_app_password.get_secret_value() if settings.db_app_password else ""
     images = {c["id"]: c.get("image_local_id") for c in plan["candidates"]}
+    images.setdefault("A2", images.get("A"))
+    images.setdefault("B2", images.get("B"))
     servers = {
         "A": CandidateServer(
             "A",
@@ -194,6 +197,11 @@ def resolve_servers(repo: Path, mappings: Mapping[str, Path], plan: Mapping[str,
             servers[cand] = CandidateServer(
                 cand, _with_user(admin, "medops_app_user", app_password), admin, mappings[cand], images.get(cand)
             )
+    # variants live on the same server and database as their base candidate (own index table)
+    for variant, base in (("A2", "A"), ("B2", "B")):
+        if base in servers and variant in mappings:
+            b = servers[base]
+            servers[variant] = CandidateServer(variant, b.app_dsn, b.admin_dsn, mappings[variant], b.image_local_id)
     return servers
 
 
@@ -210,11 +218,25 @@ def _jieba_tokenizer() -> Any:
     return _TOKENIZERS["A"]
 
 
+def _jieba_v2_tokenizer() -> Any:
+    if "A2" not in _TOKENIZERS:
+        from medops.retrieval.lexical.tokenizer import JiebaTokenizerV2
+
+        _TOKENIZERS["A2"] = JiebaTokenizerV2(stopwords=STOPWORDS)
+    return _TOKENIZERS["A2"]
+
+
 def make_retriever(candidate: str, conn: psycopg.Connection[Any], as_of: date) -> Any:
     if candidate == "A":
         return pg_simple_fts.PgSimpleFtsRetriever(conn, _jieba_tokenizer(), as_of=as_of)
+    if candidate == "A2":
+        return pg_simple_fts.PgSimpleFtsRetriever(
+            conn, _jieba_v2_tokenizer(), as_of=as_of, index_name="a2", table="lexical_index_a2"
+        )
     if candidate == "B":
         return pg_zhparser_fts.PgZhparserFtsRetriever(conn, as_of=as_of)
+    if candidate == "B2":
+        return pg_zhparser_fts.PgZhparserFtsRetriever(conn, as_of=as_of, variant=pg_zhparser_fts.VARIANT_B2)
     if candidate == "C":
         return pg_search_bm25.PgSearchBm25Retriever(conn, as_of=as_of)
     raise ValueError(candidate)
@@ -238,7 +260,7 @@ def _git_head(repo: Path) -> str | None:
 
 def server_facts(admin_dsn: str, candidate: str) -> dict[str, Any]:
     """Read-only facts for the manifest: server version, extensions, built index versions, document states."""
-    index_name = {"A": "a", "B": "b", "C": "c"}[candidate]
+    index_name = {"A": "a", "A2": "a2", "B": "b", "B2": "b2", "C": "c"}[candidate]
     with psycopg.connect(admin_dsn) as conn:
         with conn.transaction():
             conn.execute("set transaction read only")
@@ -640,7 +662,9 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--warmup", type=int, default=5)
     parser.add_argument("--measured", type=int, default=10)
     parser.add_argument("--seed", type=int, default=20260920)
-    parser.add_argument("--candidates", default="A,B,C")
+    parser.add_argument(
+        "--candidates", default="A,B,C", help="e.g. A,A2,B,B2,C (A2/B2 = amendment 2 stopword variants)"
+    )
     parser.add_argument(
         "--mapping-a", type=Path, default=Path("evals/experiments/lexical/preparation-v1/chunk_mapping.chunker-v1.json")
     )
@@ -666,6 +690,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     )
     wanted = [c.strip() for c in args.candidates.split(",") if c.strip()]
     mappings = {"A": args.mapping_a.resolve(), "B": args.mapping_b.resolve(), "C": args.mapping_c.resolve()}
+    mappings["A2"], mappings["B2"] = mappings["A"], mappings["B"]
     servers = {c: s for c, s in resolve_servers(repo, mappings, plan).items() if c in wanted}
     if args.database:
         servers = {

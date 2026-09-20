@@ -82,6 +82,26 @@ class JiebaTokenizerV1:
         return tokens
 
 
+class JiebaTokenizerV2(JiebaTokenizerV1):
+    """`tok-jieba-v2` (ADR-0002 amendment 2, DEC-001 variant A2): every rule of v1 plus removal of ASCII
+    tokens that appear in a pinned English stopword list. The list bytes are hashed into
+    `dictionary_version`, so index and query sides must use the same file (baseline 3.6). Identifier
+    and numeric tokens are never stopwords; CJK tokens are never affected."""
+
+    tokenizer_version = "tok-jieba-v2"
+
+    def __init__(self, stopwords: Path, user_dictionary: Path | None = None) -> None:
+        super().__init__(user_dictionary=user_dictionary)
+        data = Path(stopwords).read_bytes()
+        self._stopwords = {line.strip().lower() for line in data.decode("utf-8").splitlines() if line.strip()}
+        if not self._stopwords:
+            raise ValueError("stopword list is empty")
+        self.dictionary_version = f"{self.dictionary_version}+stop:{hashlib.sha256(data).hexdigest()[:16]}"
+
+    def tokenize(self, text: str) -> list[str]:
+        return [t for t in super().tokenize(text) if not (t.isascii() and t in self._stopwords)]
+
+
 class RegexTokenizerV1:
     """Dependency-free tokenizer, version `tok-regex-v1`: one token per CJK character plus
     ASCII words and numbers. Intended for unit tests and as an explicit, separately versioned

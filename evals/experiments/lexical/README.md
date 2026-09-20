@@ -4,6 +4,8 @@
 
 修订 1（2026-09-20，决策人批准）后：门禁改在语言一致子集计算，探针 v2 派生 32 条英文孪生查询（`drafts/v2/`），chunker-v2 与 esomen 质量复核落地，三服务器新建 `medops_v2`（`preparation-v1/servers_v2/`，75 mapped / 0 unmappable）。第二次运行 [runs/2026-09-20-run2-provisional](runs/2026-09-20-run2-provisional/report.md) 为临时结果：语言一致 43 条上 A 81.4%、B 93.0%、C 95.3%，未复核孪生叠加 A/B 59.4%、C 90.6%；决策人选择方案 2：v2 全部 107 条由固定模型 claude-opus-5 重新复核，annotator-01 确认孪生并裁决三轮争议后 v2 冻结（`1fc5089f…0321`）。第二次正式运行 [runs/2026-09-20-run2-final](runs/2026-09-20-run2-final/report.md)：语言一致 75 条上 A 69.3%、B 76.0%、C 88.0%，均未通过硬门禁；DEC-001 与 M1 保持阻塞（记录 35）。
 
+修订 2（2026-09-20）：预登记英文停用词变体 A2（tok-jieba-v2）与 B2（dec001_b2），第三次运行 [runs/2026-09-20-run3-stopword-variants](runs/2026-09-20-run3-stopword-variants/report.md)：A2 77.3%、B2 80.0%（A 69.3%、B 76.0%、C 88.0% 对照不变），P95 减半，仍无候选通过（记录 36）。C 的许可证审核材料见 docs/reviews/2026-09-20-licence-dossier-pg-search.md。
+
 ## 输入与当前结果
 
 - 冻结探针：75 条，Git commit `213dbe8ead8ff92d8919b201460ac3a961176c8c`；dataset_hash 和独立 manifest SHA-256 见 [experiment_plan.json](preparation-v1/experiment_plan.json)。后续数据修正必须新建版本。

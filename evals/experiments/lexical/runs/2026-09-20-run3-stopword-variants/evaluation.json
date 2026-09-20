@@ -1,0 +1,336 @@
+{
+  "candidates": {
+    "A": {
+      "macro": 0.6933333333333334,
+      "gate_queries": 75,
+      "slices": {
+        "drug_name_zh": {
+          "recall": 0.6666666666666666,
+          "support": 18,
+          "passed": false,
+          "note": ""
+        },
+        "dose_unit": {
+          "recall": 0.8947368421052632,
+          "support": 19,
+          "passed": true,
+          "note": ""
+        },
+        "negation": {
+          "recall": 0.6842105263157895,
+          "support": 38,
+          "passed": false,
+          "note": ""
+        },
+        "time_window": {
+          "recall": 0.7368421052631579,
+          "support": 19,
+          "passed": false,
+          "note": ""
+        },
+        "protocol_id": {
+          "recall": 0.6470588235294118,
+          "support": 17,
+          "passed": false,
+          "note": ""
+        },
+        "mixed_zh_en": {
+          "recall": 0.6981132075471698,
+          "support": 53,
+          "passed": false,
+          "note": ""
+        }
+      },
+      "gates": {
+        "macro_recall_at_20_ge_90": false,
+        "all_six_slices_ge_85": false,
+        "zero_leakage": true,
+        "no_silent_shortfall": true,
+        "reproducible_rankings": true
+      },
+      "passes_hard_gates": false,
+      "p95_ms": 37.95575,
+      "release_blocked": false
+    },
+    "A2": {
+      "macro": 0.7733333333333333,
+      "gate_queries": 75,
+      "slices": {
+        "drug_name_zh": {
+          "recall": 0.6666666666666666,
+          "support": 18,
+          "passed": false,
+          "note": ""
+        },
+        "dose_unit": {
+          "recall": 0.8947368421052632,
+          "support": 19,
+          "passed": true,
+          "note": ""
+        },
+        "negation": {
+          "recall": 0.8157894736842105,
+          "support": 38,
+          "passed": false,
+          "note": ""
+        },
+        "time_window": {
+          "recall": 0.8421052631578947,
+          "support": 19,
+          "passed": false,
+          "note": ""
+        },
+        "protocol_id": {
+          "recall": 0.7058823529411765,
+          "support": 17,
+          "passed": false,
+          "note": ""
+        },
+        "mixed_zh_en": {
+          "recall": 0.8113207547169812,
+          "support": 53,
+          "passed": false,
+          "note": ""
+        }
+      },
+      "gates": {
+        "macro_recall_at_20_ge_90": false,
+        "all_six_slices_ge_85": false,
+        "zero_leakage": true,
+        "no_silent_shortfall": true,
+        "reproducible_rankings": true
+      },
+      "passes_hard_gates": false,
+      "p95_ms": 21.292833,
+      "release_blocked": false
+    },
+    "B": {
+      "macro": 0.76,
+      "gate_queries": 75,
+      "slices": {
+        "drug_name_zh": {
+          "recall": 0.9444444444444444,
+          "support": 18,
+          "passed": true,
+          "note": ""
+        },
+        "dose_unit": {
+          "recall": 0.9473684210526315,
+          "support": 19,
+          "passed": true,
+          "note": ""
+        },
+        "negation": {
+          "recall": 0.7368421052631579,
+          "support": 38,
+          "passed": false,
+          "note": ""
+        },
+        "time_window": {
+          "recall": 0.8421052631578947,
+          "support": 19,
+          "passed": false,
+          "note": ""
+        },
+        "protocol_id": {
+          "recall": 0.6470588235294118,
+          "support": 17,
+          "passed": false,
+          "note": ""
+        },
+        "mixed_zh_en": {
+          "recall": 0.6981132075471698,
+          "support": 53,
+          "passed": false,
+          "note": ""
+        }
+      },
+      "gates": {
+        "macro_recall_at_20_ge_90": false,
+        "all_six_slices_ge_85": false,
+        "zero_leakage": true,
+        "no_silent_shortfall": true,
+        "reproducible_rankings": true
+      },
+      "passes_hard_gates": false,
+      "p95_ms": 39.172542,
+      "release_blocked": false
+    },
+    "B2": {
+      "macro": 0.8,
+      "gate_queries": 75,
+      "slices": {
+        "drug_name_zh": {
+          "recall": 0.9444444444444444,
+          "support": 18,
+          "passed": true,
+          "note": ""
+        },
+        "dose_unit": {
+          "recall": 0.9473684210526315,
+          "support": 19,
+          "passed": true,
+          "note": ""
+        },
+        "negation": {
+          "recall": 0.8157894736842105,
+          "support": 38,
+          "passed": false,
+          "note": ""
+        },
+        "time_window": {
+          "recall": 0.8947368421052632,
+          "support": 19,
+          "passed": true,
+          "note": ""
+        },
+        "protocol_id": {
+          "recall": 0.6470588235294118,
+          "support": 17,
+          "passed": false,
+          "note": ""
+        },
+        "mixed_zh_en": {
+          "recall": 0.7547169811320755,
+          "support": 53,
+          "passed": false,
+          "note": ""
+        }
+      },
+      "gates": {
+        "macro_recall_at_20_ge_90": false,
+        "all_six_slices_ge_85": false,
+        "zero_leakage": true,
+        "no_silent_shortfall": true,
+        "reproducible_rankings": true
+      },
+      "passes_hard_gates": false,
+      "p95_ms": 22.148458,
+      "release_blocked": false
+    },
+    "C": {
+      "macro": 0.88,
+      "gate_queries": 75,
+      "slices": {
+        "drug_name_zh": {
+          "recall": 0.8888888888888888,
+          "support": 18,
+          "passed": true,
+          "note": ""
+        },
+        "dose_unit": {
+          "recall": 1.0,
+          "support": 19,
+          "passed": true,
+          "note": ""
+        },
+        "negation": {
+          "recall": 0.9473684210526315,
+          "support": 38,
+          "passed": true,
+          "note": ""
+        },
+        "time_window": {
+          "recall": 0.9473684210526315,
+          "support": 19,
+          "passed": true,
+          "note": ""
+        },
+        "protocol_id": {
+          "recall": 0.7058823529411765,
+          "support": 17,
+          "passed": false,
+          "note": ""
+        },
+        "mixed_zh_en": {
+          "recall": 0.8679245283018868,
+          "support": 53,
+          "passed": true,
+          "note": ""
+        }
+      },
+      "gates": {
+        "macro_recall_at_20_ge_90": false,
+        "all_six_slices_ge_85": false,
+        "zero_leakage": true,
+        "no_silent_shortfall": true,
+        "reproducible_rankings": true
+      },
+      "passes_hard_gates": false,
+      "p95_ms": 32.944917,
+      "release_blocked": true
+    }
+  },
+  "selection": {
+    "A2": {
+      "paired_gain_pp": 8.0,
+      "ci95": [
+        2.6666666666666665,
+        14.666666666666666
+      ],
+      "gain_criterion_met": true,
+      "lexical_p95_within_125pct_of_A": true,
+      "hard_gates": false,
+      "licence_blocks_selection": false,
+      "not_evaluated_here": [
+        "end_to_end_recall_at_5_drop_le_1pp",
+        "key_slice_drop_le_5pp_end_to_end",
+        "end_to_end_p95_le_8s"
+      ],
+      "could_replace_A_on_lexical_evidence": false
+    },
+    "B": {
+      "paired_gain_pp": 6.666666666666667,
+      "ci95": [
+        1.3333333333333333,
+        13.333333333333334
+      ],
+      "gain_criterion_met": true,
+      "lexical_p95_within_125pct_of_A": true,
+      "hard_gates": false,
+      "licence_blocks_selection": false,
+      "not_evaluated_here": [
+        "end_to_end_recall_at_5_drop_le_1pp",
+        "key_slice_drop_le_5pp_end_to_end",
+        "end_to_end_p95_le_8s"
+      ],
+      "could_replace_A_on_lexical_evidence": false
+    },
+    "B2": {
+      "paired_gain_pp": 10.666666666666666,
+      "ci95": [
+        2.6666666666666665,
+        18.666666666666668
+      ],
+      "gain_criterion_met": true,
+      "lexical_p95_within_125pct_of_A": true,
+      "hard_gates": false,
+      "licence_blocks_selection": false,
+      "not_evaluated_here": [
+        "end_to_end_recall_at_5_drop_le_1pp",
+        "key_slice_drop_le_5pp_end_to_end",
+        "end_to_end_p95_le_8s"
+      ],
+      "could_replace_A_on_lexical_evidence": false
+    },
+    "C": {
+      "paired_gain_pp": 18.666666666666668,
+      "ci95": [
+        8.0,
+        29.333333333333332
+      ],
+      "gain_criterion_met": true,
+      "lexical_p95_within_125pct_of_A": true,
+      "hard_gates": false,
+      "licence_blocks_selection": true,
+      "not_evaluated_here": [
+        "end_to_end_recall_at_5_drop_le_1pp",
+        "key_slice_drop_le_5pp_end_to_end",
+        "end_to_end_p95_le_8s"
+      ],
+      "could_replace_A_on_lexical_evidence": false
+    }
+  },
+  "gate_scope": "language_matched",
+  "lexical_conclusion": "no candidate passes the hard gates: DEC-001 and M1 stay blocked; gates are not lowered"
+}

@@ -25,6 +25,7 @@ import os
 import re
 import sys
 from collections.abc import Sequence
+from dataclasses import dataclass
 from datetime import date
 from typing import Any
 
@@ -70,6 +71,42 @@ DICTIONARY_FILES: dict[
 DICTIONARY_VERSION = "scws-dict-utf8:fd76a689f996c4e6+rules-utf8:45395f794226581f+scws-" + SCWS_VERSION
 INSTALL_SQL = META_DDL + tsvector_index_ddl(INDEX_TABLE)
 SEARCH_SQL = tsvector_search_sql(INDEX_TABLE)
+
+# Variant B2 (ADR-0002 amendment 2): same parser and POS mapping, but the lexemes go through a `simple`
+# dictionary with PostgreSQL's English stopword list, so English function words are dropped on the index
+# and query side alike. The stopword file bytes are verified by install() and pinned in dictionary_version.
+STOPWORD_FILE = "/usr/share/postgresql/16/tsearch_data/english.stop"
+STOPWORD_SHA256 = "b3f772a000465cb76e23adb03b47073c591c156fad8f7af09c8b8e80d6bd8eac"
+
+
+@dataclass(frozen=True)
+class ZhparserVariant:
+    index_name: str
+    table: str
+    ts_config: str
+    dictionary: str  # PostgreSQL text search dictionary the token types map to
+    dictionary_version: str
+    stopwords: bool
+
+    @property
+    def install_sql(self) -> str:
+        return META_DDL + tsvector_index_ddl(self.table)
+
+    @property
+    def search_sql(self) -> str:
+        return tsvector_search_sql(self.table)
+
+
+VARIANT_B = ZhparserVariant("b", INDEX_TABLE, TS_CONFIG, "simple", DICTIONARY_VERSION, False)
+VARIANT_B2 = ZhparserVariant(
+    "b2",
+    "lexical_index_b2",
+    "dec001_b2",
+    "dec001_simple_en_stop",
+    DICTIONARY_VERSION + "+stop-english:" + STOPWORD_SHA256[:16],
+    True,
+)
+VARIANTS = {"b": VARIANT_B, "b2": VARIANT_B2}
 _PUNCT_ONLY = re.compile(r"^[\W_]+$")
 
 
@@ -85,11 +122,11 @@ def _extension_version(conn: psycopg.Connection[Any]) -> str | None:
     return None if row is None else str(row[0])
 
 
-def _mapping(conn: psycopg.Connection[Any]) -> list[tuple[str, int, str]]:
+def _mapping(conn: psycopg.Connection[Any], ts_config: str = TS_CONFIG) -> list[tuple[str, int, str]]:
     rows = conn.execute(
         "select chr(maptokentype), mapseqno, mapdict::regdictionary::text from pg_ts_config_map "
         "where mapcfg = %s::regconfig order by maptokentype, mapseqno",
-        (TS_CONFIG,),
+        (ts_config,),
     ).fetchall()
     return [(str(t), int(n), str(d)) for t, n, d in rows]
 
@@ -103,7 +140,7 @@ def verify_dictionary_files(conn: psycopg.Connection[Any], expected: dict[str, s
             raise InstallError(f"dictionary file {path} sha256 {actual} != expected {digest}")
 
 
-def install(conn: psycopg.Connection[Any]) -> None:
+def install(conn: psycopg.Connection[Any], variant: ZhparserVariant = VARIANT_B) -> None:
     """Create/verify the extension at the fixed version, the fixed text search configuration and the
     candidate B tables (idempotent). Must run as the superuser owner: it reads dictionary bytes."""
     conn.execute(f"create extension if not exists {EXTENSION} version '{EXPECTED_EXTENSION_VERSION}'")
@@ -111,72 +148,84 @@ def install(conn: psycopg.Connection[Any]) -> None:
     if version != EXPECTED_EXTENSION_VERSION:
         raise InstallError(f"{EXTENSION} version {version} != expected {EXPECTED_EXTENSION_VERSION}")
     verify_dictionary_files(conn)
-    exists = conn.execute("select 1 from pg_ts_config where cfgname = %s", (TS_CONFIG,)).fetchone()
+    if variant.stopwords:
+        verify_dictionary_files(conn, {STOPWORD_FILE: STOPWORD_SHA256})
+        if conn.execute("select 1 from pg_ts_dict where dictname = %s", (variant.dictionary,)).fetchone() is None:
+            conn.execute(f"create text search dictionary {variant.dictionary} (template = simple, stopwords = english)")
+    exists = conn.execute("select 1 from pg_ts_config where cfgname = %s", (variant.ts_config,)).fetchone()
     if exists is None:
-        conn.execute(f"create text search configuration {TS_CONFIG} (parser = {EXTENSION})")
+        conn.execute(f"create text search configuration {variant.ts_config} (parser = {EXTENSION})")
         conn.execute(
-            f"alter text search configuration {TS_CONFIG} add mapping for {', '.join(MAPPED_TOKEN_TYPES)} with simple"
+            f"alter text search configuration {variant.ts_config} add mapping for {', '.join(MAPPED_TOKEN_TYPES)} "
+            f"with {variant.dictionary}"
         )
-    mapping = _mapping(conn)
-    expected = [(t, 1, "simple") for t in MAPPED_TOKEN_TYPES]
+    mapping = _mapping(conn, variant.ts_config)
+    expected = [(t, 1, variant.dictionary) for t in MAPPED_TOKEN_TYPES]
     if mapping != expected:
-        raise InstallError(f"text search configuration {TS_CONFIG} mapping {mapping} != fixed {expected}")
-    conn.execute(INSTALL_SQL)
+        raise InstallError(f"text search configuration {variant.ts_config} mapping {mapping} != fixed {expected}")
+    conn.execute(variant.install_sql)
 
 
-def runtime_tokenizer_version(conn: psycopg.Connection[Any]) -> str:
+def runtime_tokenizer_version(conn: psycopg.Connection[Any], ts_config: str = TS_CONFIG) -> str:
     """Live identity of the database-side tokenizer, readable by the ordinary role."""
-    conn.execute(f"select to_tsvector('{TS_CONFIG}', 'x')")  # loads the parser library so its GUCs are visible
+    conn.execute(f"select to_tsvector('{ts_config}', 'x')")  # loads the parser library so its GUCs are visible
     version = _extension_version(conn)
     if version is None:
         raise InstallError(f"{EXTENSION} is not installed in this database")
-    mapping = _mapping(conn)
+    mapping = _mapping(conn, ts_config)
     gucs = conn.execute(
         "select name, setting from pg_settings where name like %s order by name", (f"{EXTENSION}.%",)
     ).fetchall()
     map_hash = hashlib.sha256(json.dumps(mapping).encode()).hexdigest()[:8]
     guc_hash = hashlib.sha256(json.dumps([(str(n), str(s)) for n, s in gucs]).encode()).hexdigest()[:8]
-    return f"{EXTENSION}-{version}+scws-{SCWS_VERSION}+cfg-{TS_CONFIG}:{map_hash}+guc:{guc_hash}"
+    return f"{EXTENSION}-{version}+scws-{SCWS_VERSION}+cfg-{ts_config}:{map_hash}+guc:{guc_hash}"
 
 
 def configured_versions(
-    conn: psycopg.Connection[Any], *, dictionary_version: str = DICTIONARY_VERSION
+    conn: psycopg.Connection[Any],
+    *,
+    dictionary_version: str = DICTIONARY_VERSION,
+    variant: ZhparserVariant = VARIANT_B,
 ) -> LexicalVersions:
     return LexicalVersions(
         retriever_version=RETRIEVER_VERSION,
-        tokenizer_version=runtime_tokenizer_version(conn),
+        tokenizer_version=runtime_tokenizer_version(conn, variant.ts_config),
         dictionary_version=dictionary_version,
         normalization_version=NORMALIZATION_VERSION,
     )
 
 
-def query_tokens(conn: psycopg.Connection[Any], text: str) -> list[str]:
+def query_tokens(conn: psycopg.Connection[Any], text: str, ts_config: str = TS_CONFIG) -> list[str]:
     """norm-v1, then the database tokenizer; distinct lexemes with punctuation-only ones dropped."""
     normalized = normalize_text(text)
     if not normalized:
         return []
-    row = conn.execute(f"select tsvector_to_array(to_tsvector('{TS_CONFIG}', %s))", (normalized,)).fetchone()
+    row = conn.execute(f"select tsvector_to_array(to_tsvector('{ts_config}', %s))", (normalized,)).fetchone()
     lexemes = [] if row is None else [str(t) for t in row[0]]
     return [t for t in lexemes if not _PUNCT_ONLY.match(t)]
 
 
-def build_index(conn: psycopg.Connection[Any], *, built_by: str) -> IndexBuildReport:
-    """(Re)build `lexical_index_b` over every chunk visible to the connection's role, tokenizing in SQL.
-    All-or-nothing in one transaction; chunks whose tsvector is empty are skipped and counted."""
+def build_index(
+    conn: psycopg.Connection[Any], *, built_by: str, variant: ZhparserVariant = VARIANT_B
+) -> IndexBuildReport:
+    """(Re)build the variant's index table over every chunk visible to the connection's role, tokenizing in
+    SQL. All-or-nothing in one transaction; chunks whose tsvector is empty are skipped and counted."""
     if not built_by:
         raise ValueError("built_by is required (audit)")
     with conn.transaction():
-        versions = configured_versions(conn)
-        conn.execute(f"delete from {INDEX_TABLE}")
+        versions = configured_versions(conn, dictionary_version=variant.dictionary_version, variant=variant)
+        conn.execute(f"delete from {variant.table}")
         total = int(conn.execute("select count(*) from chunks").fetchone()[0])  # type: ignore[index]
         cur = conn.execute(
-            f"insert into {INDEX_TABLE} (chunk_id, tsv) "
-            f"select chunk_id, tsv from (select chunk_id, to_tsvector('{TS_CONFIG}', content) as tsv from chunks) s "
+            f"insert into {variant.table} (chunk_id, tsv) "
+            f"select chunk_id, tsv from (select chunk_id, to_tsvector('{variant.ts_config}', content) as tsv from chunks) s "
             f"where tsv <> ''::tsvector"
         )
         count = cur.rowcount
-        upsert_meta(conn, INDEX_NAME, versions, chunk_count=count, built_by=built_by)
-    return IndexBuildReport(index_name=INDEX_NAME, chunk_count=count, skipped_empty=total - count, versions=versions)
+        upsert_meta(conn, variant.index_name, versions, chunk_count=count, built_by=built_by)
+    return IndexBuildReport(
+        index_name=variant.index_name, chunk_count=count, skipped_empty=total - count, versions=versions
+    )
 
 
 # ------------------------------------------------------------------------------- retriever
@@ -188,37 +237,43 @@ class PgZhparserFtsRetriever:
     is a version drift and is refused against an index built with the fixed one."""
 
     def __init__(
-        self, conn: psycopg.Connection[Any], *, as_of: date | None = None, dictionary_version: str = DICTIONARY_VERSION
+        self,
+        conn: psycopg.Connection[Any],
+        *,
+        as_of: date | None = None,
+        dictionary_version: str | None = None,
+        variant: ZhparserVariant = VARIANT_B,
     ) -> None:
         self._conn = conn
         self._as_of = as_of
-        self._dictionary_version = dictionary_version
+        self._variant = variant
+        self._dictionary_version = dictionary_version or variant.dictionary_version
 
     @property
     def configured(self) -> LexicalVersions:
-        return configured_versions(self._conn, dictionary_version=self._dictionary_version)
+        return configured_versions(self._conn, dictionary_version=self._dictionary_version, variant=self._variant)
 
     @property
     def versions(self) -> LexicalVersions:
-        return read_built_versions(self._conn, INDEX_NAME)
+        return read_built_versions(self._conn, self._variant.index_name)
 
     def search(self, query: str, k: int) -> LexicalSearchResult:
         check_k(k)
         require_identity(self._conn)
         built = self.versions
         check_versions_match(built, self.configured)
-        tokens = query_tokens(self._conn, query)
+        tokens = query_tokens(self._conn, query, self._variant.ts_config)
         if not tokens:
             return empty_result(k, built)
-        rows = self._conn.execute(SEARCH_SQL, search_params(tokens, k, self._as_of)).fetchall()
+        rows = self._conn.execute(self._variant.search_sql, search_params(tokens, k, self._as_of)).fetchall()
         return page_to_result(rows, k, built)
 
     def explain(self, query: str, k: int) -> str:
         require_identity(self._conn)
-        tokens = query_tokens(self._conn, query)
+        tokens = query_tokens(self._conn, query, self._variant.ts_config)
         if not tokens:
             return ""
-        return explain_json(self._conn, SEARCH_SQL, search_params(tokens, k, self._as_of))
+        return explain_json(self._conn, self._variant.search_sql, search_params(tokens, k, self._as_of))
 
 
 # ------------------------------------------------------------------------------- CLI
@@ -229,17 +284,21 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("action", choices=("install", "build"))
     parser.add_argument("--admin-url", help="superuser DSN of the candidate B server (default: $DEC001_B_ADMIN_URL)")
     parser.add_argument("--built-by", default="dec001-b-build")
+    parser.add_argument(
+        "--variant", choices=tuple(VARIANTS), default="b", help="b2 = English stopwords via a simple dictionary"
+    )
     args = parser.parse_args(argv)
+    variant = VARIANTS[args.variant]
     dsn = args.admin_url or os.environ.get("DEC001_B_ADMIN_URL")
     if not dsn:
         parser.error("--admin-url or DEC001_B_ADMIN_URL is required (candidate B runs on its own server)")
     with psycopg.connect(dsn) as conn:
         if args.action == "install":
-            install(conn)
+            install(conn, variant)
             conn.commit()
-            print(json.dumps({"installed": [META_TABLE, INDEX_TABLE, TS_CONFIG]}))
+            print(json.dumps({"installed": [META_TABLE, variant.table, variant.ts_config, variant.dictionary]}))
             return 0
-        report = build_index(conn, built_by=args.built_by)
+        report = build_index(conn, built_by=args.built_by, variant=variant)
         print(json.dumps(report.as_dict(), ensure_ascii=False))
     return 0
 

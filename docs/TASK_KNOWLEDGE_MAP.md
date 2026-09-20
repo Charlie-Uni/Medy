@@ -1,6 +1,6 @@
 # Medy 全量任务、当前进度与八股知识点对照
 
-> 核查日期：2026-09-20（[实现记录 35](reviews/2026-09-20-implementation-35-probe-v2-review-and-run2-final.md)）。编号与 [开发路线图](DEVELOPMENT_ROADMAP.md) 一致，验收文字以 [工程基线 v0.6](ENGINEERING_BASELINE.md) 为准；本文只补每个任务对应的基础知识，不新增门禁。
+> 核查日期：2026-09-20（[实现记录 36](reviews/2026-09-20-implementation-36-stopword-variants-run3.md)）。编号与 [开发路线图](DEVELOPMENT_ROADMAP.md) 一致，验收文字以 [工程基线 v0.6](ENGINEERING_BASELINE.md) 为准；本文只补每个任务对应的基础知识，不新增门禁。
 > 状态口径同路线图：已实现（小范围产物有代码与证据，不等于整体验收完成）、部分、待做、阻塞、选做、未验收。基线 99 个复选项目前 1 项勾选（M1-01 探针冻结）。
 > `tests/unit/docs/test_baseline_roadmap_consistency.py` 机械检查本文与路线图、基线的编号数量一致。
 
@@ -60,7 +60,7 @@ M1-01 同时是“部分”和“阻塞”，上表按“部分”计。P1/P2 11
 | M1-02 | 部分（镜像、配置、三服务器映射与运行清单工具就绪；正式清单待激活后冻结） | 冻结实验清单（候选、镜像 digest、硬件、参数） | 实验预登记；可复现性（种子、digest、环境）；消融实验；避免事后改判据 |
 | M1-03 | 已实现（契约范围，待审核；A/B/C 三候选适配器已过同一契约测试） | LexicalRetriever 统一契约 | 接口与适配器模式；Protocol 结构化子类型；契约测试；rank 与 raw_score 的职责分离 |
 | M1-04 | 部分（零泄漏已证明；三候选零静默不足已在合成数据证明，真实探针待跑） | 最小 schema 上的 RLS 零泄漏与零静默不足测试 | PostgreSQL RLS 策略、FORCE RLS、BYPASSRLS；连接池与 SET LOCAL；LIMIT 下推导致候选不足 |
-| M1-05 | 阻塞（两次预登记运行均未通过硬门禁；后续变体待预登记） | 三候选对比实验与许可证审核 | BM25 与 ts_rank 的区别；Tantivy 倒排；配对 bootstrap 置信区间；统计显著性；AGPL 义务 |
+| M1-05 | 阻塞（三次预登记运行均未通过硬门禁；排序侧变体或架构决定待决策人） | 三候选对比实验与许可证审核 | BM25 与 ts_rank 的区别；Tantivy 倒排；配对 bootstrap 置信区间；统计显著性；AGPL 义务 |
 | M1-06 | 已实现（首个迁移 0001） | 文档、chunk、ACL、审计、source object、ingestion job 的 migration | DDL 与外键；索引类型（B-tree、GIN、HNSW）；Alembic 迁移与回滚 |
 | M1-07 | 已实现 | 同一 family 只有一个 active 的数据库约束 | 唯一部分索引；事务隔离级别与写冲突；并发竞态测试 |
 | M1-08 | 已实现（数据库层） | 正式 RLS、安全视图与角色权限测试 | 数据库角色与最小权限；NOSUPERUSER/NOBYPASSRLS；池连接身份清理；跨部门隔离证明 |

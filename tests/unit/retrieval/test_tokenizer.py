@@ -64,3 +64,28 @@ def test_default_instance_is_unaffected_by_later_dictionary_loads(tmp_path):
     assert first.tokenize(SYNTHETIC_TERM) == before
     assert first.dictionary_version == version
     assert JiebaTokenizerV1().tokenize(SYNTHETIC_TERM) == before
+
+
+def test_jieba_v2_drops_pinned_english_stopwords_and_hashes_the_list(tmp_path):
+    pytest.importorskip("jieba")
+    from medops.retrieval.lexical.tokenizer import JiebaTokenizerV1, JiebaTokenizerV2
+
+    stop = tmp_path / "english.stop"
+    stop.write_text("the\nof\nunder\nwhat\n", encoding="utf-8")
+    v1 = JiebaTokenizerV1()
+    v2 = JiebaTokenizerV2(stopwords=stop)
+    text = "Under GVP Module VI, what are the minimum elements of an ICSR? 研究 PROT-2024-017 30 mg"
+    t1, t2 = v1.tokenize(text), v2.tokenize(text)
+    assert "under" in t1 and "the" in t1 and "what" in t1
+    assert not {"under", "the", "of", "what"} & set(t2)
+    assert {"gvp", "module", "vi", "icsr", "研究", "prot-2024-017", "30", "mg"} <= set(t2)
+    assert v2.tokenizer_version == "tok-jieba-v2" and v2.normalization_version == "norm-v1"
+    assert (
+        v2.dictionary_version.startswith(v1.dictionary_version + "+stop:")
+        and len(v2.dictionary_version.split("+stop:")[1]) == 16
+    )
+    other = tmp_path / "other.stop"
+    other.write_text("the\n", encoding="utf-8")
+    assert JiebaTokenizerV2(stopwords=other).dictionary_version != v2.dictionary_version
+    with pytest.raises(ValueError):
+        JiebaTokenizerV2(stopwords=tmp_path / "empty.stop") if (tmp_path / "empty.stop").write_text("\n") else None

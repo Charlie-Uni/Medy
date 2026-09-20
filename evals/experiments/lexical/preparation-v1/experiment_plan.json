@@ -1,6 +1,6 @@
 {
   "experiment_id": "DEC-001-preparation-v1",
-  "status": "run_2_final_completed_no_candidate_passed_hard_gates",
+  "status": "run_3_completed_no_candidate_passed_hard_gates",
   "created_on": "2026-09-20",
   "protocol": "docs/adr/ADR-0002-lexical-retrieval-selection.md",
   "dataset": {
@@ -484,6 +484,87 @@
         ]
       },
       "conclusion": "no candidate passes; DEC-001 and M1 stay blocked; next experiments need new pre-registration (A/B English stopword or ts_rank normalization variants; C licence review)"
+    }
+  },
+  "run_3_preregistration": {
+    "approved_by_owner": "2026-09-20 (同意 继续)",
+    "protocol_amendment": "ADR-0002 修订 2",
+    "variants": {
+      "A2": {
+        "implementation": "pg-simple-fts-v1 + tok-jieba-v2 (ASCII tokens in the pinned English stopword list removed on index and query side)",
+        "stopwords_file": "evals/experiments/lexical/resources/english.stop",
+        "stopwords_sha256": "b3f772a000465cb76e23adb03b47073c591c156fad8f7af09c8b8e80d6bd8eac",
+        "index_table": "lexical_index_a2"
+      },
+      "B2": {
+        "implementation": "zhparser 2.3, ts config dec001_b2, POS a-z except w mapped to dictionary dec001_simple_en_stop (simple template, stopwords = english)",
+        "stopwords_file_in_image": "/usr/share/postgresql/16/tsearch_data/english.stop",
+        "stopwords_sha256": "b3f772a000465cb76e23adb03b47073c591c156fad8f7af09c8b8e80d6bd8eac",
+        "index_table": "lexical_index_b2"
+      }
+    },
+    "controls": [
+      "A",
+      "B",
+      "C"
+    ],
+    "unchanged": [
+      "probe v2 frozen (1fc5089f…0321)",
+      "medops_v2 databases and chunker-v2 mappings",
+      "K=20, concurrency 1, warmup 5 / measured 10, seed 20260920",
+      "paired bootstrap 10000 / seed 20260920 / 0.95",
+      "language_matched gate scope"
+    ],
+    "decision_rule": "A2/B2 judged on hard gates 1-5; A2 replaces A as complexity baseline if it passes; B2/C still need the full selection rule; C remains release_blocked",
+    "status": "executed",
+    "result": {
+      "run_id": "2026-09-20-run3-stopword-variants",
+      "directory": "evals/experiments/lexical/runs/2026-09-20-run3-stopword-variants",
+      "language_matched_75": {
+        "A": 0.693,
+        "A2": 0.773,
+        "B": 0.76,
+        "B2": 0.8,
+        "C": 0.88
+      },
+      "paired_vs_A_pp": {
+        "A2": [
+          8.0,
+          2.7,
+          14.7
+        ],
+        "B": [
+          6.7,
+          1.3,
+          13.3
+        ],
+        "B2": [
+          10.7,
+          2.7,
+          18.7
+        ],
+        "C": [
+          18.7,
+          8.0,
+          29.3
+        ]
+      },
+      "lexical_p95_ms": {
+        "A": 38.0,
+        "A2": 21.3,
+        "B": 39.2,
+        "B2": 22.1,
+        "C": 32.9
+      },
+      "leak_violations": 0,
+      "hard_gates_passed": {
+        "A": false,
+        "A2": false,
+        "B": false,
+        "B2": false,
+        "C": false
+      },
+      "conclusion": "stopword removal lifts A/B by 8-11 pp and halves latency but no candidate passes; remaining misses are ranking (no IDF) and Traditional-Chinese drug-name segmentation"
     }
   }
 }
