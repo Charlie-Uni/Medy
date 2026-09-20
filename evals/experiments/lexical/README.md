@@ -2,7 +2,7 @@
 
 当前阶段：`preparation-v1` 已完成一次正式运行 [runs/2026-09-20-m1-05-lexical](runs/2026-09-20-m1-05-lexical/report.md)：三候选严格宏平均 Lexical Recall@20 为 A 48.0%、B 52.0%、C 53.3%，均未通过 ADR-0002 硬门禁；零泄漏、排名可复现；DEC-001 与 M1 保持阻塞，判据不降低，未选择生产实现。结果与归因见 ADR-0002 结果回填。
 
-修订 1（2026-09-20，决策人批准）后：门禁改在语言一致子集计算，探针 v2 派生 32 条英文孪生查询（`drafts/v2/`），chunker-v2 与 esomen 质量复核落地，三服务器新建 `medops_v2`（`preparation-v1/servers_v2/`，75 mapped / 0 unmappable）。第二次运行 [runs/2026-09-20-run2-provisional](runs/2026-09-20-run2-provisional/report.md) 为临时结果：语言一致 43 条上 A 81.4%、B 93.0%、C 95.3%，未复核孪生叠加 A/B 59.4%、C 90.6%；因 Codex 额度耗尽（2026-09-26 恢复）孪生的 LLM 复核与 v2 冻结尚未完成，正式判定待重跑。
+修订 1（2026-09-20，决策人批准）后：门禁改在语言一致子集计算，探针 v2 派生 32 条英文孪生查询（`drafts/v2/`），chunker-v2 与 esomen 质量复核落地，三服务器新建 `medops_v2`（`preparation-v1/servers_v2/`，75 mapped / 0 unmappable）。第二次运行 [runs/2026-09-20-run2-provisional](runs/2026-09-20-run2-provisional/report.md) 为临时结果：语言一致 43 条上 A 81.4%、B 93.0%、C 95.3%，未复核孪生叠加 A/B 59.4%、C 90.6%；决策人选择方案 2：v2 全部 107 条由固定模型 claude-opus-5 重新复核（`drafts/v2/tooling/run_claude_review.py`），冻结待 annotator-01 确认 32 条英文问题，正式判定待重跑。
 
 ## 输入与当前结果
 

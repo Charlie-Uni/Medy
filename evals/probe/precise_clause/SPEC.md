@@ -179,6 +179,11 @@ evals/probe/precise_clause/
 - `review.status` 为 `agreed` 或 `disputed_resolved`；后者必须由人工裁决并填写 `resolution_note`。
 - 如实标注：`manifest.review_policy` 固定为 `human_reviewers=1`、`llm_reviewers=1`，并声明这不等同于两名独立人工复核。任何报告引用本集时沿用该表述。并入主评测集后，按基线 5.9 补第二人工复核。
 
+### 8.1 spec-v1.1：固定模型标识的 LLM 复核人（2026-09-20 修订）
+
+- 当复核 CLI 回显固定的模型标识（如 Claude Code CLI 的 `modelUsage` 键）时，`model_version` 直接使用该标识，manifest `review_provenance.version_source = pinned_model_id`，`backend_model_version` 等于该标识，`reasoning_effort` 记录实际请求的强度；运行元数据须写明"标识由 CLI 回显、CLI 版本单独记录、服务端权重不保证永不变化"。校验器按声明的强度而不是固定的 `high` 校验各批次与运行元数据的一致性。
+- 复核人更换（例如 v2 由 gpt-6-astra 改为 claude-opus-5）时，同一版本内所有样本必须由同一复核人复核；不得在一个版本内混用两个 LLM 复核人。复核人不得是该版本任何样本的起草者。
+
 ## 9. 冻结流程
 
 1. 校验器按第 10 节全部规则通过。

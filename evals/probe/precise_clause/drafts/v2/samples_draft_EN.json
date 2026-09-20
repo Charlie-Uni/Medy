@@ -28,7 +28,7 @@
   },
   {
     "sample_id": "pc-0077",
-    "query": "Under GVP Module VI, if a case first submitted as serious is downgraded to non-serious by follow-up information, within how many days must that follow-up be submitted?",
+    "query": "Under GVP Module VI, if an ICSR previously submitted as serious is reclassified as non-serious following new follow-up information, within how many days should that follow-up information still be submitted?",
     "dept": "PV",
     "language": "en",
     "slices": [
@@ -84,7 +84,7 @@
   },
   {
     "sample_id": "pc-0079",
-    "query": "Under GVP Module VI, does exposure to an ingredient during the manufacturing process before release count as occupational exposure?",
+    "query": "Under GVP Module VI, does exposure to a medicinal product ingredient during manufacturing, before the finished product is released, fall within the definition of occupational exposure?",
     "dept": "PV",
     "language": "en",
     "slices": [
@@ -112,7 +112,7 @@
   },
   {
     "sample_id": "pc-0080",
-    "query": "Under GVP Module IX, within how many days of receiving a validated signal should the PRAC Rapporteur or lead Member State complete signal confirmation?",
+    "query": "Under GVP Module IX, within how many days of receiving a validated signal should the PRAC Rapporteur or the (lead) Member State complete signal confirmation?",
     "dept": "PV",
     "language": "en",
     "slices": [
@@ -140,7 +140,7 @@
   },
   {
     "sample_id": "pc-0081",
-    "query": "Under GVP Module IX, how soon must an EU marketing authorisation holder notify the competent authorities once it establishes that a validated signal meets the definition of an emerging safety issue?",
+    "query": "Under GVP Module IX, what is the deadline for an EU marketing authorisation holder to notify the relevant regulatory authorities after determining that a validated signal or a safety issue from any source qualifies as an emerging safety issue?",
     "dept": "PV",
     "language": "en",
     "slices": [
@@ -169,7 +169,7 @@
   },
   {
     "sample_id": "pc-0082",
-    "query": "Under GVP Module IX, is signal confirmation meant to be a full assessment of the signal?",
+    "query": "Under GVP Module IX, does confirming a signal mean that a full assessment of that signal has been completed?",
     "dept": "PV",
     "language": "en",
     "slices": [
@@ -197,7 +197,7 @@
   },
   {
     "sample_id": "pc-0083",
-    "query": "Under FDA IND safety reporting requirements, what is the latest a sponsor may notify FDA after first receiving information about an unexpected fatal or life-threatening suspected adverse reaction?",
+    "query": "Under FDA IND safety reporting requirements, what is the deadline for a sponsor to notify FDA after first receiving information about an unexpected fatal or life-threatening suspected adverse reaction?",
     "dept": "PV",
     "language": "en",
     "slices": [
@@ -336,7 +336,7 @@
   },
   {
     "sample_id": "pc-0088",
-    "query": "Under ICH E2A, how soon after first knowledge must the sponsor notify regulatory agencies of a fatal or life-threatening unexpected ADR that qualifies for expedited reporting?",
+    "query": "Under ICH E2A, once a sponsor first learns that a case from a clinical investigation meets the expedited reporting criteria for a fatal or life-threatening unexpected ADR, how long does it have to make the initial notification to regulatory agencies?",
     "dept": "PV",
     "language": "en",
     "slices": [
@@ -394,7 +394,7 @@
   },
   {
     "sample_id": "pc-0090",
-    "query": "Under ICH E2F, within how many calendar days after the data lock point must the DSUR be submitted to regulatory authorities?",
+    "query": "Under ICH E2F, within how many calendar days after the data lock point should the DSUR be submitted to regulatory authorities?",
     "dept": "PV",
     "language": "en",
     "slices": [
@@ -423,7 +423,7 @@
   },
   {
     "sample_id": "pc-0091",
-    "query": "Under ICH E2F, can the DSUR be used to give the initial notification of significant new safety information?",
+    "query": "Under ICH E2F, is a DSUR an appropriate way to first communicate significant new safety information?",
     "dept": "PV",
     "language": "en",
     "slices": [
@@ -451,7 +451,7 @@
   },
   {
     "sample_id": "pc-0092",
-    "query": "What does ICH E8(R1) require regarding the scientific necessity of study procedures and the burden placed on study participants?",
+    "query": "What does ICH E8(R1) require regarding the scientific necessity of study procedures and assessments and the burden placed on study participants?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -509,7 +509,7 @@
   },
   {
     "sample_id": "pc-0094",
-    "query": "Under ICH E8(R1), what should the critical to quality factors not be cluttered with?",
+    "query": "Under ICH E8(R1), what types of issues should be excluded from a study's list of critical to quality factors?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -566,7 +566,7 @@
   },
   {
     "sample_id": "pc-0096",
-    "query": "Under ICH E8(R1), into which parts of a study does quality by design build quality proactively?",
+    "query": "Under ICH E8(R1), which parts of a study should have quality built in from the outset through a quality-by-design approach?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -594,7 +594,7 @@
   },
   {
     "sample_id": "pc-0097",
-    "query": "Under ICH E6(R3), how should a sponsor treat the burden placed on participants and investigators when designing trial processes?",
+    "query": "Under ICH E6(R3), how should a sponsor manage the additional burden on participants and investigators when designing trial processes?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -623,7 +623,7 @@
   },
   {
     "sample_id": "pc-0098",
-    "query": "Under ICH E6(R3), does reasonable reimbursement of participants' travel and lodging expenses count as coercion?",
+    "query": "Under ICH E6(R3), if a study site plans to reimburse participants for reasonable travel and lodging costs actually incurred for study visits, can the IRB/IEC regard this reimbursement alone as coercion?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -652,7 +652,7 @@
   },
   {
     "sample_id": "pc-0099",
-    "query": "Under ICH E6(R3), who must retain essential records securely, and what determines the retention period?",
+    "query": "Under ICH E6(R3), who should retain essential records securely, and what determines the retention period?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -819,7 +819,7 @@
   },
   {
     "sample_id": "pc-0105",
-    "query": "Under FDA's 2024 draft guidance on protocol deviations, within how many working days after an emergency must an investigator in a device investigation notify the sponsor and IRB of a deviation made to protect a subject?",
+    "query": "Under FDA's 2024 draft protocol deviations guidance, if an investigator in a device study departs from the investigational plan to protect a subject's life or physical well-being in an emergency, within how many working days after the emergency must the investigator notify the sponsor and IRB?",
     "dept": "CO",
     "language": "en",
     "slices": [

@@ -1,0 +1,823 @@
+{
+  "batch": "MA",
+  "reviewer_cli": "claude-code",
+  "cli_binary": "/Users/leaf/.local/bin/claude",
+  "cli_version": "2.1.79 (Claude Code)",
+  "model": "claude-opus-5",
+  "model_version_source": "pinned_model_id",
+  "reasoning_effort_requested": "high",
+  "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+  "review_prompt_sha256": "f4a3804e969b23ec9ab467406937e62f0b9e30933d6a680d4b00ee59b2631c38",
+  "sample_input_sha256": {
+    "pc-0001": "8d45d6544d4f3c829aaf58f90bb85cf19988d8adc02c310ec72bad841979967d",
+    "pc-0002": "809423a9d75875a4758cd041cfb870a30df9ecdcc0942ac099f8459ef0e87976",
+    "pc-0003": "d69b1b6756a5a1d8ac0a7fa0382b43dc6916c6e3b5add8ca6a0bd9f12e0dae67",
+    "pc-0004": "fd5d6a7f4edd254a795200534f6d5bd8d56ef96ef70c63b460f5b1e0ca78351d",
+    "pc-0005": "c76e596e09fa8caea68784a416f82a4a8b792fe46f607e0533c715b537109fbc",
+    "pc-0006": "d8374be0ad102990848d8dfbc93f2f6681f366309f89a27bc8bfec2fde21f936",
+    "pc-0007": "34392a70a9e9f2163d66752f534ab93e738c1041d0f69aa593f3c158a768071d",
+    "pc-0008": "64ffb16eb8d7d6d967c3128ee01b1a76b086a7849fc9bc9b8266c758e99820d7",
+    "pc-0009": "2ab2fea68c1c8686f94b7a2ad14637e8157adb325a336cec6f7207a04b8fce47",
+    "pc-0010": "445d3cefb9b95009a830ea33e489ca9a92b0b04af2158cc55f4cad7e3a48f029",
+    "pc-0011": "0373fa0af7d152b95c87709be34aee37110963b7908475325704d5f1b381637f",
+    "pc-0012": "5976858b21ec8c3ef9be41fd319775af85d00702cc26b151197d7a7571245f72",
+    "pc-0013": "759642c4ea5ff6a763d9f8934c30bed45abfd80030b38b1179fcd50286a25c31",
+    "pc-0014": "13a00f51d7eddab0b1076cbeb7139089c328b3cb99804f944a18519fcf53ce8b",
+    "pc-0015": "22488391c793654c32b241674a602311cbea802b6be3ac75b7dd4b44947902e9",
+    "pc-0016": "be801f52f1cdbbe9672280f973ac00d1589a44acdd41905dd0b40cfb2b325624",
+    "pc-0017": "998c181d1c8c8e158ef514e21c586a87afc31150f24c055c2670690de830a2b1",
+    "pc-0018": "7c475e836c9a68cd5abf56b495e72ec5c1d525fa2fd3079fd1874bb9c9414064",
+    "pc-0019": "bb2182717c98d4782d0f07797f3e581129799b1ccb41e91b2415019e907edf64",
+    "pc-0020": "94a0913f36ff7df93b041a3e2effb1fb7c2aef3d30cc35c9421725ea7b556ecb",
+    "pc-0021": "1d6703f25835a88fa87832c7dbaf7c6af2f077dcd8317fee937733036bf9f8f5",
+    "pc-0022": "fb5506313e4625a5f8c481fdb4bceb7e0b364f379ea41966b6c997bcedb71a25",
+    "pc-0023": "bbed86cd1895184b811ee71207062c78387c466e706803f1ba42dcce5d91aeab",
+    "pc-0024": "69587f5bdc5d9f6d9b4c90d1040007c540a85f58ccfd75a16372a1bf161fc711",
+    "pc-0025": "69724e3d4dfc3152dc192ca528d227158c135b42ae87a0285a0e31ad075e5d52",
+    "pc-0026": "4eecac3c3379da3f1770d41f50d13b55a79ae3b1d5ec898e23798df6f6e01e2e",
+    "pc-0027": "096a0bd33f7a1633f84ea9950c8f053214cdf881a92212971798c18b66279d13",
+    "pc-0028": "56fc54ef4e117db2d7b692de061e758c71641660b8d794bdade7bd6a25e6bae2",
+    "pc-0029": "3b09719b3d9ebfd306f1542ef37541166adf5a0b118f141a8860b0cd0e0386c1",
+    "pc-0030": "4422e34f9ffd27937726ba9dfcce56c9d2d614a5b8d5c620f14b45ed64ee24e4"
+  },
+  "chunks": [
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "b1172e1f-4e12-49ab-b222-588ecbac23ea",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "5699",
+      "cost_usd": 0.26982875,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "pc-0001",
+        "pc-0002",
+        "pc-0003",
+        "pc-0004",
+        "pc-0005"
+      ],
+      "started_at": "2026-09-20T05:59:08+00:00",
+      "finished_at": "2026-09-20T06:00:12+00:00",
+      "prompt_chars": 21996,
+      "prompt_sha256": "faa8e438b1ba01725796a5fb54575a6dbb6723ff3028cb3e6d1cbb70dcdd7042",
+      "verdicts": [
+        {
+          "sample_id": "pc-0001",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0002",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0003",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0004",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0005",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_faa8e438b1ba01725796a5fb54575a6dbb6723ff3028cb3e6d1cbb70dcdd7042.jsonl",
+      "sample_input_sha256": {
+        "pc-0001": "8d45d6544d4f3c829aaf58f90bb85cf19988d8adc02c310ec72bad841979967d",
+        "pc-0002": "809423a9d75875a4758cd041cfb870a30df9ecdcc0942ac099f8459ef0e87976",
+        "pc-0003": "d69b1b6756a5a1d8ac0a7fa0382b43dc6916c6e3b5add8ca6a0bd9f12e0dae67",
+        "pc-0004": "fd5d6a7f4edd254a795200534f6d5bd8d56ef96ef70c63b460f5b1e0ca78351d",
+        "pc-0005": "c76e596e09fa8caea68784a416f82a4a8b792fe46f607e0533c715b537109fbc"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "4091205b-c19f-42db-9908-990cb52bedc4",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "7126",
+      "cost_usd": 0.25395375000000003,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "pc-0006",
+        "pc-0007",
+        "pc-0008",
+        "pc-0009",
+        "pc-0010"
+      ],
+      "started_at": "2026-09-20T06:00:12+00:00",
+      "finished_at": "2026-09-20T06:01:28+00:00",
+      "prompt_chars": 14039,
+      "prompt_sha256": "d0495a0866a8e7bdc553306db80c344ab5fcdd8728577292dbe1333cc4e3096f",
+      "verdicts": [
+        {
+          "sample_id": "pc-0006",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0007",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0008",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "issue",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "negation 标签按完整 evidence_span 判定不成立：span 全文为「一般成人處方限量:每一劑量300mg;每天800mg」，其中并无「禁用、不得、不推荐、无需、除外」一类否定或限制性否定表达，「處方限量」是名词化的上限说明，不含需要保留的否定语义；本页真正带否定的句子是「不得超過每日800mg 之最大建議劑量。」，但不在本条 span 内。dose_unit（300mg、800mg）与 mixed_zh_en（query 含 allopurinol）成立。",
+          "suggestion": "建议删除 negation 标签，slices 保留 [\"dose_unit\", \"mixed_zh_en\"]；若确需 negation 切片，另立一条以「不得超過每日800mg 之最大建議劑量」为 key_text、以「初始劑量:口服,100mg,一天一次,在一星期的間隔期間每天增加100mg 直到達到所需要的血清尿酸濃度為止。不得超過每日800mg 之最大建議劑量。」为 span 的样本，而不要扩大本条 span。"
+        },
+        {
+          "sample_id": "pc-0009",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0010",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_d0495a0866a8e7bdc553306db80c344ab5fcdd8728577292dbe1333cc4e3096f.jsonl",
+      "sample_input_sha256": {
+        "pc-0006": "d8374be0ad102990848d8dfbc93f2f6681f366309f89a27bc8bfec2fde21f936",
+        "pc-0007": "34392a70a9e9f2163d66752f534ab93e738c1041d0f69aa593f3c158a768071d",
+        "pc-0008": "64ffb16eb8d7d6d967c3128ee01b1a76b086a7849fc9bc9b8266c758e99820d7",
+        "pc-0009": "2ab2fea68c1c8686f94b7a2ad14637e8157adb325a336cec6f7207a04b8fce47",
+        "pc-0010": "445d3cefb9b95009a830ea33e489ca9a92b0b04af2158cc55f4cad7e3a48f029"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "3cc0a44c-163a-42bd-90ae-61e85cc9e30c",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "9489",
+      "cost_usd": 0.35798500000000005,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "pc-0011",
+        "pc-0012",
+        "pc-0013",
+        "pc-0014",
+        "pc-0015"
+      ],
+      "started_at": "2026-09-20T06:01:28+00:00",
+      "finished_at": "2026-09-20T06:03:07+00:00",
+      "prompt_chars": 20181,
+      "prompt_sha256": "7b24879b8af2a18b09790681743868792233c38691063131590dc04ba14e47b8",
+      "verdicts": [
+        {
+          "sample_id": "pc-0011",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0012",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "issue",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "negation 标签不成立：evidence_span「本藥須由醫師處方使用衛署藥製字第 048564 號」中没有“禁用、不得、不推薦、無需、除外”等否定表达，“須由醫師處方使用”是正向的要求陈述，命中不含需保留的否定语义。protocol_id 按 P3 成立（query 依赖「衛署藥製字第 048564 號」精确匹配，页内证据也同时包含该编号与所问字段）；key_text「本藥須由醫師處方使用」在页文本中仅出现一次且逐字原文，偏移长度与 text 一致。",
+          "suggestion": "删除 negation 标签，slices 保留为 [\"protocol_id\"]；若需保留 negation 切片覆盖，可另选本页含否定表达的条款（如页内其他“不建議/罕有”类条款）另建样本。"
+        },
+        {
+          "sample_id": "pc-0013",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0014",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0015",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_7b24879b8af2a18b09790681743868792233c38691063131590dc04ba14e47b8.jsonl",
+      "sample_input_sha256": {
+        "pc-0011": "0373fa0af7d152b95c87709be34aee37110963b7908475325704d5f1b381637f",
+        "pc-0012": "5976858b21ec8c3ef9be41fd319775af85d00702cc26b151197d7a7571245f72",
+        "pc-0013": "759642c4ea5ff6a763d9f8934c30bed45abfd80030b38b1179fcd50286a25c31",
+        "pc-0014": "13a00f51d7eddab0b1076cbeb7139089c328b3cb99804f944a18519fcf53ce8b",
+        "pc-0015": "22488391c793654c32b241674a602311cbea802b6be3ac75b7dd4b44947902e9"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "b8a880ae-39d1-4511-9993-ccb796556c5e",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "6720",
+      "cost_usd": 0.291185,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "pc-0016",
+        "pc-0017",
+        "pc-0018",
+        "pc-0019",
+        "pc-0020"
+      ],
+      "started_at": "2026-09-20T06:03:07+00:00",
+      "finished_at": "2026-09-20T06:04:21+00:00",
+      "prompt_chars": 20673,
+      "prompt_sha256": "5d31d897897e2a37ff3494810830049dbb5a08f9db19a47011470bd2c84fa8fe",
+      "verdicts": [
+        {
+          "sample_id": "pc-0016",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "query 为 MA 用药咨询式提问，页内仅「1、禁忌症:合併使用本品及含 aliskiren 成分藥品於糖尿病患或腎功能不全患者 (GFR < 60 ml/min/1.73 m 2 )。」能回答糖尿病患者合用 aliskiren 的问题；key_text 在页文本中仅出现一次且逐字，保留「禁忌症」否定语义与「糖尿病患」对象，符合 P1；evidence_span 为完整禁忌条款并含 key_text，未遗漏肾功能限定；negation 由「禁忌症」成立，dose_unit 由 span 内「GFR < 60 ml/min/1.73 m 2」的数值加单位成立，drug_name_zh 由 query 依赖「穩壓膜衣錠」成立，mixed_zh_en 由 query 含英文成分名 aliskiren 成立；仿單归 MA 正确。",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0017",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "query 是临床实务提问，非 key_text 改写；页内仅「ACEIs 及 ARBs 不應合併使用於糖尿病腎病變患者」直接回答糖尿病肾病变患者 ACEI 加 ARB 的问题，第 3 点交互作用仅述不良反应发生率，不构成同等答案。key_text 页内唯一、逐字，保留否定词「不應」与人群「糖尿病腎病變患者」，已最小。evidence_span 为警语第 2 点完整条款，含 key_text 且保留监测条件，未扩张至整节。slices 中 negation 由「不建議」「不應合併使用」成立，mixed_zh_en 按 P2 由 query 与 key_text 含 ACEI/ARB 缩写成立；span 无数值加单位与时间窗，未多标签。仿單归 MA 正确。",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0018",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "按 P3，query 含许可证编号「衛署藥製字第 047911 號」并问对应药品，检索依赖编号精确匹配，protocol_id 成立；页首「G-9053 衛署藥製字第 047911 號穩壓膜衣錠 50 毫克 Zosaa F.C. Tablets 50 mg」确实支持所问字段（该编号对应的药品名与含量）。key_text「穩壓膜衣錠 50 毫克」页内仅出现一次、逐字，同时保留品名与含量，符合 P1 最小性。evidence_span 与页首文本一致并含 key_text；dose_unit 按完整 span 判定，含「50 毫克」「50 mg」成立；query 与 key_text 均无英文术语，故未标 mixed_zh_en 正确，query 亦未依赖中文药名检索故未标 drug_name_zh 正确。仿單归 MA 正确。",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0019",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "query 指明适应证「高血壓」与药名，页内只有「高血壓:每日投與 100〜200mg」条款回答，狹心症同剂量条款因适应证不同不构成混淆。key_text 逐字且因含「高血壓:」前缀在页内唯一（若去掉前缀则与狹心症句重复），同时保留适应证对象与剂量约束，符合 P1。evidence_span 为完整用法用量条款，含 key_text 与给药方式限定，偏移长度 71 与文本一致。dose_unit 由「100〜200mg」及「每日」频次成立，drug_name_zh 由 query 依赖「明德心壓暢錠」成立；span 无否定与时间窗，未缺标签。仿單归 MA 正确。",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0020",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "query 是常见 MA 安全性提问，非 key_text 改写；页内仅「【注意事項】一、禁忌:房室神經傳導阻斷第二和第三期,非代償性心衰竭,心原性休克,顯著的心搏過緩等症狀者禁用此劑。」列出禁用人群，其余如麻醉前停药为注意事项而非禁忌。key_text 页内唯一、逐字，四类人群与「禁用此劑」否定语义均须保留，不可再缩短。evidence_span 为完整禁忌条款并含 key_text，偏移长度 56 与文本一致。negation 由「禁用此劑」成立，drug_name_zh 由 query 依赖中文品名成立；span 无数值加单位与时间窗，未缺标签。仿單归 MA 正确。",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_5d31d897897e2a37ff3494810830049dbb5a08f9db19a47011470bd2c84fa8fe.jsonl",
+      "sample_input_sha256": {
+        "pc-0016": "be801f52f1cdbbe9672280f973ac00d1589a44acdd41905dd0b40cfb2b325624",
+        "pc-0017": "998c181d1c8c8e158ef514e21c586a87afc31150f24c055c2670690de830a2b1",
+        "pc-0018": "7c475e836c9a68cd5abf56b495e72ec5c1d525fa2fd3079fd1874bb9c9414064",
+        "pc-0019": "bb2182717c98d4782d0f07797f3e581129799b1ccb41e91b2415019e907edf64",
+        "pc-0020": "94a0913f36ff7df93b041a3e2effb1fb7c2aef3d30cc35c9421725ea7b556ecb"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "acfedf3c-c4e6-4987-9c1e-e89a74545517",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "7611",
+      "cost_usd": 0.2741975,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "pc-0021",
+        "pc-0022",
+        "pc-0023",
+        "pc-0024",
+        "pc-0025"
+      ],
+      "started_at": "2026-09-20T06:04:21+00:00",
+      "finished_at": "2026-09-20T06:05:45+00:00",
+      "prompt_chars": 14630,
+      "prompt_sha256": "71f8e08abf6d6d7a93a465121080aaa8dbafa9fd4b4cde8e672a9c9932893a63",
+      "verdicts": [
+        {
+          "sample_id": "pc-0021",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "query 為臨床停藥方式提問，頁內僅「二、停用本劑時需逐漸停用,例如於 7〜10 天之期間」可回答；key_text 在頁文本中僅出現一次且同時保留「逐漸停用」與「7〜10 天」；span 為完整條款並含突然停藥的風險限定；time_window（7〜10 天）與 drug_name_zh（query 依賴「明德心壓暢錠」中文商品名）均成立；仿單歸 MA。",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0022",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "issue",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "slices 多標 negation。evidence_span 全文為「三、對於即將進行麻醉開刀的病患,在麻醉前至少 48 小時即應停止服用本劑。」，其中「應停止服用」為肯定式的停藥指示，並無「禁用、不得、不推薦、無需、除外」等否定或限制表達，「至少」亦屬時間下限而非否定；且同文件 pc-0021 的「停用本劑時需逐漸停用」未標 negation，標準不一致。其餘四項無誤：key_text「麻醉前至少 48 小時即應停止服用」頁內僅一次並保留對象與時限，span 偏移長度 37 與文字一致，time_window 與 drug_name_zh 成立，仿單歸 MA。",
+          "suggestion": "刪除 negation 標籤，保留 [\"time_window\", \"drug_name_zh\"]。"
+        },
+        {
+          "sample_id": "pc-0023",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "issue",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "slices 多標 negation。span 內唯一帶否定字面的是條件句「倘若還未能達到滿意效果時」，屬條件描述而非禁用／不得／不推薦類限制，且命中 key_text「靜脈注射1〜2mg Atropine sulfate」完全不承載否定語義，不符合「命中必須保留否定語義」的要求。另提醒：gold 頁（第 2 頁）全文未出現「心壓暢錠」，drug_name_zh 僅能依文件層級的名稱依賴成立，頁級精確匹配無法命中，建議記錄此限制。其餘：key_text 頁內僅出現一次，dose_unit（1〜2mg）、mixed_zh_en（key_text 含 Atropine sulfate）成立，span 偏移 668–857 共 189 字與 text 一致且為完整過量處理條款，仿單歸 MA。",
+          "suggestion": "刪除 negation 標籤，保留 [\"dose_unit\", \"drug_name_zh\", \"mixed_zh_en\"]。"
+        },
+        {
+          "sample_id": "pc-0024",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "依已批准 P3，query 含許可證編號「衛署藥製字第 029301 號」並反查品項，protocol_id 依 query 檢索依賴成立；頁首該編號與品名相鄰，證據確實支持所問欄位。key_text「心壓暢錠 100 毫克」在頁文本中僅出現一次且保留品名與含量；span「衛署藥製字第 029301 號 GMP-G-0462 號 \"明德\"心壓暢錠 100 毫克(美托普洛) CANCLIOL TABLETS 100mg (Metoprolol) \"Meider\"」同時含編號與答案，dose_unit（100 毫克／100mg）成立；仿單歸 MA。",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0025",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "query 為用藥方式提問，非 key_text 改寫；頁內「本錠劑應整粒以液體吞服,不可嚼破或壓破本錠劑。」為唯一直接回答者（後文「小藥球不可咬碎或壓碎」針對崩散後小藥球，不構成重複答案）。key_text「不可嚼破或壓破本錠劑」頁內僅出現一次，保留否定詞與對象且無法再縮短；span 偏移長度 23 與 text 一致，為完整條款並含「應整粒以液體吞服」的前提；negation、drug_name_zh 均成立，未見應補之標籤；仿單歸 MA。",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_71f8e08abf6d6d7a93a465121080aaa8dbafa9fd4b4cde8e672a9c9932893a63.jsonl",
+      "sample_input_sha256": {
+        "pc-0021": "1d6703f25835a88fa87832c7dbaf7c6af2f077dcd8317fee937733036bf9f8f5",
+        "pc-0022": "fb5506313e4625a5f8c481fdb4bceb7e0b364f379ea41966b6c997bcedb71a25",
+        "pc-0023": "bbed86cd1895184b811ee71207062c78387c466e706803f1ba42dcce5d91aeab",
+        "pc-0024": "69587f5bdc5d9f6d9b4c90d1040007c540a85f58ccfd75a16372a1bf161fc711",
+        "pc-0025": "69724e3d4dfc3152dc192ca528d227158c135b42ae87a0285a0e31ad075e5d52"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "a869be0a-006c-4190-8511-ad729b33296d",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "9736",
+      "cost_usd": 0.38456,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "pc-0026",
+        "pc-0027",
+        "pc-0028",
+        "pc-0029",
+        "pc-0030"
+      ],
+      "started_at": "2026-09-20T06:05:45+00:00",
+      "finished_at": "2026-09-20T06:07:24+00:00",
+      "prompt_chars": 23606,
+      "prompt_sha256": "a381e4e5e49917bc2e0756681941ee6894d972ee7a3b1e0dc64bb2cfb819ad4c",
+      "verdicts": [
+        {
+          "sample_id": "pc-0026",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0027",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "issue",
+            "key_text": "ok",
+            "evidence_span": "issue",
+            "dept": "ok"
+          },
+          "reason": "negation 标签仅由 span 末句“對於使用非類固醇抗發炎藥 (NSAID) 治療而有誘發胃潰瘍和十二指腸潰瘍危險之病患,不建議以有需要時才服藥的方式作為後續的症狀控制。”支撑，而该句针对的是 NSAID 高危病患的“有需要時才服藥”方式，与 query 所问“食道未發炎之患者”的剂量/疗程不是同一条款；evidence_span 因此被扩大到该小节末尾，违反“span 应围绕一个条款保留必要限定条件，不为增加标签扩大到整节”的判定口径。key_text“食道未發炎之患者 20 mg 每天 1次”页内唯一且逐字，dose_unit、time_window（“若 4週後仍有症狀時”）成立，偏移长度与 text 一致。",
+          "suggestion": "将 evidence_span 收缩为“胃食道逆流性疾病之症狀治療:對食道未發炎之患者 20 mg 每天 1次;若 4週後仍有症狀時,則應進一步檢查患者。”（相应调整 char_start/char_end），并从 slices 中删除 negation；若确需保留 negation，应另建以该 NSAID 句为 key_text 的样本。"
+        },
+        {
+          "sample_id": "pc-0028",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0029",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0030",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_a381e4e5e49917bc2e0756681941ee6894d972ee7a3b1e0dc64bb2cfb819ad4c.jsonl",
+      "sample_input_sha256": {
+        "pc-0026": "4eecac3c3379da3f1770d41f50d13b55a79ae3b1d5ec898e23798df6f6e01e2e",
+        "pc-0027": "096a0bd33f7a1633f84ea9950c8f053214cdf881a92212971798c18b66279d13",
+        "pc-0028": "56fc54ef4e117db2d7b692de061e758c71641660b8d794bdade7bd6a25e6bae2",
+        "pc-0029": "3b09719b3d9ebfd306f1542ef37541166adf5a0b118f141a8860b0cd0e0386c1",
+        "pc-0030": "4422e34f9ffd27937726ba9dfcce56c9d2d614a5b8d5c620f14b45ed64ee24e4"
+      }
+    }
+  ],
+  "provenance_version": 2,
+  "latest": {
+    "pc-0001": {
+      "chunk_index": 0,
+      "sample_input_sha256": "8d45d6544d4f3c829aaf58f90bb85cf19988d8adc02c310ec72bad841979967d",
+      "prompt_sha256": "faa8e438b1ba01725796a5fb54575a6dbb6723ff3028cb3e6d1cbb70dcdd7042",
+      "verdict_sha256": "fefc03d9682ddeefe7dde605b2dbb0e26fa4a6f70c10a567f5f66c6af814f672"
+    },
+    "pc-0002": {
+      "chunk_index": 0,
+      "sample_input_sha256": "809423a9d75875a4758cd041cfb870a30df9ecdcc0942ac099f8459ef0e87976",
+      "prompt_sha256": "faa8e438b1ba01725796a5fb54575a6dbb6723ff3028cb3e6d1cbb70dcdd7042",
+      "verdict_sha256": "f9344d5b4642d1c5acc2d2fac2ee144a9d1f63f06330686e9ce9dda385d9a9f5"
+    },
+    "pc-0003": {
+      "chunk_index": 0,
+      "sample_input_sha256": "d69b1b6756a5a1d8ac0a7fa0382b43dc6916c6e3b5add8ca6a0bd9f12e0dae67",
+      "prompt_sha256": "faa8e438b1ba01725796a5fb54575a6dbb6723ff3028cb3e6d1cbb70dcdd7042",
+      "verdict_sha256": "6b35add913ec883a8fcbfac9a2c49682f2fc4d42fdf92e66fe01c673e3bb28f8"
+    },
+    "pc-0004": {
+      "chunk_index": 0,
+      "sample_input_sha256": "fd5d6a7f4edd254a795200534f6d5bd8d56ef96ef70c63b460f5b1e0ca78351d",
+      "prompt_sha256": "faa8e438b1ba01725796a5fb54575a6dbb6723ff3028cb3e6d1cbb70dcdd7042",
+      "verdict_sha256": "4f69a9bd2290418cfa73aa12f2fe6166415778645b318504dae2936aaff318f5"
+    },
+    "pc-0005": {
+      "chunk_index": 0,
+      "sample_input_sha256": "c76e596e09fa8caea68784a416f82a4a8b792fe46f607e0533c715b537109fbc",
+      "prompt_sha256": "faa8e438b1ba01725796a5fb54575a6dbb6723ff3028cb3e6d1cbb70dcdd7042",
+      "verdict_sha256": "a90264e8e42f9ef26c45032291bca67e2ff6bb6e0786da41f4613ab705f810f5"
+    },
+    "pc-0006": {
+      "chunk_index": 1,
+      "sample_input_sha256": "d8374be0ad102990848d8dfbc93f2f6681f366309f89a27bc8bfec2fde21f936",
+      "prompt_sha256": "d0495a0866a8e7bdc553306db80c344ab5fcdd8728577292dbe1333cc4e3096f",
+      "verdict_sha256": "afeef661197acadb76515473e221323a0296baf01421d0081343d35d6adbcff4"
+    },
+    "pc-0007": {
+      "chunk_index": 1,
+      "sample_input_sha256": "34392a70a9e9f2163d66752f534ab93e738c1041d0f69aa593f3c158a768071d",
+      "prompt_sha256": "d0495a0866a8e7bdc553306db80c344ab5fcdd8728577292dbe1333cc4e3096f",
+      "verdict_sha256": "951f2f4c497542639120aadbfc3be5048ca1f15a2de93598499a145b7340d90c"
+    },
+    "pc-0008": {
+      "chunk_index": 1,
+      "sample_input_sha256": "64ffb16eb8d7d6d967c3128ee01b1a76b086a7849fc9bc9b8266c758e99820d7",
+      "prompt_sha256": "d0495a0866a8e7bdc553306db80c344ab5fcdd8728577292dbe1333cc4e3096f",
+      "verdict_sha256": "299d42e13dc7412a06180c3e0f18fe132e5ab7e7bace58468a11588f28102727"
+    },
+    "pc-0009": {
+      "chunk_index": 1,
+      "sample_input_sha256": "2ab2fea68c1c8686f94b7a2ad14637e8157adb325a336cec6f7207a04b8fce47",
+      "prompt_sha256": "d0495a0866a8e7bdc553306db80c344ab5fcdd8728577292dbe1333cc4e3096f",
+      "verdict_sha256": "db9089b6836f97d308e8fc68c982bf4e34dacda28542335d06c6ff8ea3d8aba0"
+    },
+    "pc-0010": {
+      "chunk_index": 1,
+      "sample_input_sha256": "445d3cefb9b95009a830ea33e489ca9a92b0b04af2158cc55f4cad7e3a48f029",
+      "prompt_sha256": "d0495a0866a8e7bdc553306db80c344ab5fcdd8728577292dbe1333cc4e3096f",
+      "verdict_sha256": "d5f34d06f50b76c78e4da097181f4c66badf2129741654c92ffcf87582e9ebee"
+    },
+    "pc-0011": {
+      "chunk_index": 2,
+      "sample_input_sha256": "0373fa0af7d152b95c87709be34aee37110963b7908475325704d5f1b381637f",
+      "prompt_sha256": "7b24879b8af2a18b09790681743868792233c38691063131590dc04ba14e47b8",
+      "verdict_sha256": "9c9add20e77ce491944c546f7691aa2843ef4d1eaf98d27675ddf925f07d1059"
+    },
+    "pc-0012": {
+      "chunk_index": 2,
+      "sample_input_sha256": "5976858b21ec8c3ef9be41fd319775af85d00702cc26b151197d7a7571245f72",
+      "prompt_sha256": "7b24879b8af2a18b09790681743868792233c38691063131590dc04ba14e47b8",
+      "verdict_sha256": "1b5015bf876273068d2d73fbbb93d8574307ae0aacd8e7d19b01ae3e7861fcd2"
+    },
+    "pc-0013": {
+      "chunk_index": 2,
+      "sample_input_sha256": "759642c4ea5ff6a763d9f8934c30bed45abfd80030b38b1179fcd50286a25c31",
+      "prompt_sha256": "7b24879b8af2a18b09790681743868792233c38691063131590dc04ba14e47b8",
+      "verdict_sha256": "6bb2d427f42f8d4155546f0703a2f32b576dec534b84b06611acbfde1251f742"
+    },
+    "pc-0014": {
+      "chunk_index": 2,
+      "sample_input_sha256": "13a00f51d7eddab0b1076cbeb7139089c328b3cb99804f944a18519fcf53ce8b",
+      "prompt_sha256": "7b24879b8af2a18b09790681743868792233c38691063131590dc04ba14e47b8",
+      "verdict_sha256": "e0e2a08f340370f6d49ca7e4460fde526af06c4562c44fa5ca4795d64984859b"
+    },
+    "pc-0015": {
+      "chunk_index": 2,
+      "sample_input_sha256": "22488391c793654c32b241674a602311cbea802b6be3ac75b7dd4b44947902e9",
+      "prompt_sha256": "7b24879b8af2a18b09790681743868792233c38691063131590dc04ba14e47b8",
+      "verdict_sha256": "8070b5c094f375de3abc494d6bed74fd00b9894330be0dc47fae8658d17b2139"
+    },
+    "pc-0016": {
+      "chunk_index": 3,
+      "sample_input_sha256": "be801f52f1cdbbe9672280f973ac00d1589a44acdd41905dd0b40cfb2b325624",
+      "prompt_sha256": "5d31d897897e2a37ff3494810830049dbb5a08f9db19a47011470bd2c84fa8fe",
+      "verdict_sha256": "02162df5296f9ff41743c67afe84af4bbf54a666b01b8351cc5b00455617a4c0"
+    },
+    "pc-0017": {
+      "chunk_index": 3,
+      "sample_input_sha256": "998c181d1c8c8e158ef514e21c586a87afc31150f24c055c2670690de830a2b1",
+      "prompt_sha256": "5d31d897897e2a37ff3494810830049dbb5a08f9db19a47011470bd2c84fa8fe",
+      "verdict_sha256": "6bf31cdc755d205fd59bc811f476464b0509d133b5e23c00de9434682105b9f9"
+    },
+    "pc-0018": {
+      "chunk_index": 3,
+      "sample_input_sha256": "7c475e836c9a68cd5abf56b495e72ec5c1d525fa2fd3079fd1874bb9c9414064",
+      "prompt_sha256": "5d31d897897e2a37ff3494810830049dbb5a08f9db19a47011470bd2c84fa8fe",
+      "verdict_sha256": "c79b0da732333310a32683d5e16a559aefdb0fcd268fee80db89a99451546960"
+    },
+    "pc-0019": {
+      "chunk_index": 3,
+      "sample_input_sha256": "bb2182717c98d4782d0f07797f3e581129799b1ccb41e91b2415019e907edf64",
+      "prompt_sha256": "5d31d897897e2a37ff3494810830049dbb5a08f9db19a47011470bd2c84fa8fe",
+      "verdict_sha256": "a1ec0e1edad0fcb6175245366c433c7b7a6cce39d297b62932af9b018861f62b"
+    },
+    "pc-0020": {
+      "chunk_index": 3,
+      "sample_input_sha256": "94a0913f36ff7df93b041a3e2effb1fb7c2aef3d30cc35c9421725ea7b556ecb",
+      "prompt_sha256": "5d31d897897e2a37ff3494810830049dbb5a08f9db19a47011470bd2c84fa8fe",
+      "verdict_sha256": "75c5f639af71dab4c71e9d89af23bd16204f4a189c384e3ff549b9baf898714b"
+    },
+    "pc-0021": {
+      "chunk_index": 4,
+      "sample_input_sha256": "1d6703f25835a88fa87832c7dbaf7c6af2f077dcd8317fee937733036bf9f8f5",
+      "prompt_sha256": "71f8e08abf6d6d7a93a465121080aaa8dbafa9fd4b4cde8e672a9c9932893a63",
+      "verdict_sha256": "878179436be521091e3686bd43541802809ec366028327474a9fa73a18c7430b"
+    },
+    "pc-0022": {
+      "chunk_index": 4,
+      "sample_input_sha256": "fb5506313e4625a5f8c481fdb4bceb7e0b364f379ea41966b6c997bcedb71a25",
+      "prompt_sha256": "71f8e08abf6d6d7a93a465121080aaa8dbafa9fd4b4cde8e672a9c9932893a63",
+      "verdict_sha256": "0f6acdb47a8674cdd9877f74cfbdf429f0e94cb8645e7de384b54930645836f2"
+    },
+    "pc-0023": {
+      "chunk_index": 4,
+      "sample_input_sha256": "bbed86cd1895184b811ee71207062c78387c466e706803f1ba42dcce5d91aeab",
+      "prompt_sha256": "71f8e08abf6d6d7a93a465121080aaa8dbafa9fd4b4cde8e672a9c9932893a63",
+      "verdict_sha256": "22be68509188d9f4993c46aafc7ec9c6d2a701c04f4fda1280538dc1520efdea"
+    },
+    "pc-0024": {
+      "chunk_index": 4,
+      "sample_input_sha256": "69587f5bdc5d9f6d9b4c90d1040007c540a85f58ccfd75a16372a1bf161fc711",
+      "prompt_sha256": "71f8e08abf6d6d7a93a465121080aaa8dbafa9fd4b4cde8e672a9c9932893a63",
+      "verdict_sha256": "83113d1f34ae660b5689fe8556b585dedd7255391d724d5e89173d52795277ef"
+    },
+    "pc-0025": {
+      "chunk_index": 4,
+      "sample_input_sha256": "69724e3d4dfc3152dc192ca528d227158c135b42ae87a0285a0e31ad075e5d52",
+      "prompt_sha256": "71f8e08abf6d6d7a93a465121080aaa8dbafa9fd4b4cde8e672a9c9932893a63",
+      "verdict_sha256": "b6ec826336dbb212407ca9410970b9a26180e6bcf34e2c3907c16a3414d603c8"
+    },
+    "pc-0026": {
+      "chunk_index": 5,
+      "sample_input_sha256": "4eecac3c3379da3f1770d41f50d13b55a79ae3b1d5ec898e23798df6f6e01e2e",
+      "prompt_sha256": "a381e4e5e49917bc2e0756681941ee6894d972ee7a3b1e0dc64bb2cfb819ad4c",
+      "verdict_sha256": "2e380a12336fe23482af3e0b739063e85d123e7981c5b9e5290199b343dae3ff"
+    },
+    "pc-0027": {
+      "chunk_index": 5,
+      "sample_input_sha256": "096a0bd33f7a1633f84ea9950c8f053214cdf881a92212971798c18b66279d13",
+      "prompt_sha256": "a381e4e5e49917bc2e0756681941ee6894d972ee7a3b1e0dc64bb2cfb819ad4c",
+      "verdict_sha256": "c71a98073bbe2c24208c3c2a4b7b2b0a6b0667f667285ba15d74c679246f739b"
+    },
+    "pc-0028": {
+      "chunk_index": 5,
+      "sample_input_sha256": "56fc54ef4e117db2d7b692de061e758c71641660b8d794bdade7bd6a25e6bae2",
+      "prompt_sha256": "a381e4e5e49917bc2e0756681941ee6894d972ee7a3b1e0dc64bb2cfb819ad4c",
+      "verdict_sha256": "a7ff36ebdb508ba968d43210d8a94d6406c8bde13f56972fb5d78b97bdbaef57"
+    },
+    "pc-0029": {
+      "chunk_index": 5,
+      "sample_input_sha256": "3b09719b3d9ebfd306f1542ef37541166adf5a0b118f141a8860b0cd0e0386c1",
+      "prompt_sha256": "a381e4e5e49917bc2e0756681941ee6894d972ee7a3b1e0dc64bb2cfb819ad4c",
+      "verdict_sha256": "3bc60f5c43a9286393a1ec13a1ad220de0707404f18e90df831a86ade5ceb0c1"
+    },
+    "pc-0030": {
+      "chunk_index": 5,
+      "sample_input_sha256": "4422e34f9ffd27937726ba9dfcce56c9d2d614a5b8d5c620f14b45ed64ee24e4",
+      "prompt_sha256": "a381e4e5e49917bc2e0756681941ee6894d972ee7a3b1e0dc64bb2cfb819ad4c",
+      "verdict_sha256": "1bbe4fd9c244ed46a6df7575a3cff8dfddb3ed25407adc14d127e5eec73ea362"
+    }
+  },
+  "active_review": null
+}

@@ -16,6 +16,7 @@ from medops.retrieval.lexical.normalization import normalize_text
 REPO = pathlib.Path(__file__).resolve().parents[6]
 V1 = REPO / "evals/probe/precise_clause/v2"  # version directory under construction (name kept from the v1 tooling)
 PAGES = REPO / "evals/probe/precise_clause/v1/pages"  # page texts are shared with v1 (same extraction)
+CORPUS = REPO / "evals/probe/precise_clause/v1/corpus.json"  # v2 corpus is byte-identical to v1
 DRAFTS = REPO / "evals/probe/precise_clause/drafts/v2"
 OUT = DRAFTS / "review"
 
@@ -54,7 +55,7 @@ def pack_samples(samples: list[dict], corpus: dict, pages_dir: pathlib.Path) -> 
 
 
 def main(batches: list[str]) -> None:
-    corpus = {d["source_hash"]: d for d in json.loads((V1 / "corpus.json").read_text(encoding="utf-8"))["documents"]}
+    corpus = {d["source_hash"]: d for d in json.loads(CORPUS.read_text(encoding="utf-8"))["documents"]}
     OUT.mkdir(parents=True, exist_ok=True)
     for batch in batches:
         samples = json.loads((DRAFTS / f"samples_draft_{batch}.json").read_text(encoding="utf-8"))

@@ -400,7 +400,7 @@
     },
     "corpus_identity_v2": "16 documents active and trusted on all three medops_v2 databases; 2,662 chunker-v2 chunks each; fingerprint md5 2b06246a2ad072b97857a034c1a52b11; one audited quality_review_override (esomen) per database",
     "mapping_result_v2": "75 mapped / 0 unmappable on every server (chunker-v2 keeps pc-0056-g1 and pc-0072-g1 inside one chunk)",
-    "llm_review_blocker": "codex/gpt-6-astra usage limit exhausted on 2026-09-20 (resets 2026-09-26 21:00 local); the English twins cannot receive their LLM second review before then, so probe v2 cannot be frozen; run 2 is executed as a provisional run with the twins as an unreviewed overlay",
+    "llm_review_blocker": "codex/gpt-6-astra usage limit exhausted on 2026-09-20 (resets 2026-09-26 21:00 local); the English twins cannot receive their LLM second review before then, so probe v2 cannot be frozen; run 2 is executed as a provisional run with the twins as an unreviewed overlay — superseded on 2026-09-20 by owner decision (option 2): all 107 v2 samples are re-reviewed by one pinned reviewer, claude-opus-5 via the Claude Code CLI (tools off, no session persistence, neutral system prompt); gpt-6-astra verdicts stay archived with v1",
     "provisional_run": {
       "run_id": "2026-09-20-run2-provisional",
       "directory": "evals/experiments/lexical/runs/2026-09-20-run2-provisional",
@@ -426,6 +426,14 @@
         "C": 0
       },
       "verdict": "not decidable: v1 language_matched subset below ADR minimums (CO 0, protocol_id 5); repeat on frozen probe v2"
+    },
+    "second_reviewer_v2": {
+      "id": "reviewer-llm-02",
+      "model": "claude-opus-5",
+      "model_version_source": "pinned_model_id",
+      "cli": "claude-code",
+      "effort": "high",
+      "drafter_of_twins": "claude-fable-5-1 (different model; reviewer is not the drafter)"
     }
   }
 }

@@ -187,19 +187,30 @@ def _validate(
     version_dir: Path, manifest: dict[str, Any], second: dict[str, Any], pages: PageTextProvider | None
 ) -> bool:
     model = second["model"]
-    _require(
-        second["model_version"] == service_alias_version(model),
-        "model_version must exactly describe the observed service alias and unexposed backend",
-    )
     provenance = manifest.get("review_provenance")
     if not isinstance(provenance, dict):
-        raise ValueError("service-alias model_version requires review_provenance")
+        raise ValueError("LLM review evidence requires review_provenance")
+    source = provenance.get("version_source")
+    _require(source in ("service_alias", "pinned_model_id"), "unknown review_provenance version_source")
+    pinned = source == "pinned_model_id"
+    if pinned:
+        # spec-v1.1 (record 35): the CLI exposes a fixed model identifier, so model_version IS that identifier
+        _require(
+            second["model_version"] == model == provenance.get("backend_model_version"),
+            "pinned model_version must equal the model identifier and backend_model_version",
+        )
+    else:
+        _require(
+            second["model_version"] == service_alias_version(model),
+            "model_version must exactly describe the observed service alias and unexposed backend",
+        )
+        _require(
+            "backend_model_version" in provenance and provenance["backend_model_version"] is None,
+            "unexposed backend_model_version must be explicitly null",
+        )
+    effort = provenance.get("reasoning_effort", "high")
+    _require(isinstance(effort, str) and bool(effort.strip()), "review_provenance must declare the reasoning effort")
     _require(provenance["reviewer_id"] == second["id"], "review_provenance reviewer_id differs from manifest")
-    _require(provenance["version_source"] == "service_alias", "review_provenance version_source must be service_alias")
-    _require(
-        "backend_model_version" in provenance and provenance["backend_model_version"] is None,
-        "unexposed backend_model_version must be explicitly null",
-    )
     limitation = provenance["reproducibility_limitations"]
     _require(
         isinstance(limitation, str) and len(limitation.strip()) >= 20,
@@ -239,7 +250,7 @@ def _validate(
         )
         _require(run["active_review"] is None, f"{batch}: review is unfinished")
         _require(
-            run["model"] == model and run["reasoning_effort_requested"] == "high", f"{batch}: model or effort mismatch"
+            run["model"] == model and run["reasoning_effort_requested"] == effort, f"{batch}: model or effort mismatch"
         )
         _require(run["review_prompt_sha256"] == second["prompt_hash"], f"{batch}: review prompt hash mismatch")
         _require(
@@ -258,7 +269,7 @@ def _validate(
         _require(set(current) == set(group), f"{batch}: verdict coverage mismatch")
         for chunk in chunks:
             _require(
-                chunk["model"] == model and chunk["reasoning_effort"] == "high" and chunk["returncode"] == 0,
+                chunk["model"] == model and chunk["reasoning_effort"] == effort and chunk["returncode"] == 0,
                 f"{batch}: unsuccessful or mismatched invocation",
             )
             _require(
@@ -341,15 +352,24 @@ def _validate(
             )
     _require(set(resolutions) == disputed, "resolutions must cover exactly the current disputed samples")
     runtime = _json(artifacts["reviewer_runtime_metadata.json"])
-    _require(
-        runtime["model_service_alias"] == model and runtime["backend_model_version"] is None,
-        "runtime model identity differs from manifest",
-    )
-    _require(
-        "not exposed" in runtime["backend_model_version_status"].lower(),
-        "runtime must disclose the unexposed backend version",
-    )
-    _require(runtime["reasoning_effort"] == "high", "runtime effort differs from invocations")
+    if pinned:
+        _require(
+            runtime.get("model") == model and runtime["backend_model_version"] == model,
+            "runtime model identity differs from manifest",
+        )
+        _require(
+            "pinned" in str(runtime["backend_model_version_status"]).lower(), "runtime must state the pinned identifier"
+        )
+    else:
+        _require(
+            runtime["model_service_alias"] == model and runtime["backend_model_version"] is None,
+            "runtime model identity differs from manifest",
+        )
+        _require(
+            "not exposed" in runtime["backend_model_version_status"].lower(),
+            "runtime must disclose the unexposed backend version",
+        )
+    _require(runtime["reasoning_effort"] == effort, "runtime effort differs from invocations")
     _require(
         runtime["cli_versions"] == sorted({chunk["cli_version"] for chunk in all_chunks}),
         "runtime CLI versions differ from invocations",

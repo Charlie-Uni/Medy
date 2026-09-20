@@ -1,0 +1,439 @@
+[
+  {
+    "dept": "CO",
+    "language": "mixed",
+    "notes": "",
+    "query": "ICH E8(R1) 对研究程序和评估的科学必要性及受试者负担有什么要求？",
+    "required_gold_evidence": [
+      {
+        "evidence_span": {
+          "char_end": 1528,
+          "char_start": 1337,
+          "text": "Throughout drug development, care should be taken to ensure all study procedures and assessments are necessary from a scientific viewpoint and do not place undue burden on study participants."
+        },
+        "gold_id": "pc-0060-g1",
+        "key_text": "do not place undue burden on study participants",
+        "page": 8,
+        "printed_page_label": null,
+        "section": "2.1 Protection of Clinical Study Participants",
+        "source_hash": "99d56638828c823bb603ff3ef451fcfafc607de8a5b3926136d64980f27baa13",
+        "version_label": "Step 4, 2021-10-06"
+      }
+    ],
+    "sample_id": "pc-0060",
+    "slices": [
+      "negation",
+      "mixed_zh_en",
+      "protocol_id"
+    ]
+  },
+  {
+    "dept": "CO",
+    "language": "mixed",
+    "notes": "",
+    "query": "按照 ICH E8(R1)，回顾性开展的文件和数据审查、监查，即使结合稽查，是否足以保证临床研究质量？",
+    "required_gold_evidence": [
+      {
+        "evidence_span": {
+          "char_end": 3463,
+          "char_start": 3217,
+          "text": "Activities such as document and data review and monitoring, where conducted retrospectively, are an important part of a quality assurance process; but, even when combined with audits, they are not sufficient to ensure quality of a clinical study."
+        },
+        "gold_id": "pc-0061-g1",
+        "key_text": "not sufficient to ensure quality of a clinical study",
+        "page": 9,
+        "printed_page_label": null,
+        "section": "3.1 Quality by Design of Clinical Studies",
+        "source_hash": "99d56638828c823bb603ff3ef451fcfafc607de8a5b3926136d64980f27baa13",
+        "version_label": "Step 4, 2021-10-06"
+      }
+    ],
+    "sample_id": "pc-0061",
+    "slices": [
+      "negation",
+      "mixed_zh_en",
+      "protocol_id"
+    ]
+  },
+  {
+    "dept": "CO",
+    "language": "mixed",
+    "notes": "",
+    "query": "按照 ICH E8(R1)，关键质量因素（critical to quality factors）应避免混入哪类事项？",
+    "required_gold_evidence": [
+      {
+        "evidence_span": {
+          "char_end": 801,
+          "char_start": 538,
+          "text": "The critical to quality factors should be clear and should not be cluttered with minor issues (e.g., due to extensive secondary objectives or processes/data collection not linked to the proper protection of the study participants and/or primary study objectives)."
+        },
+        "gold_id": "pc-0062-g1",
+        "key_text": "critical to quality factors should be clear and should not be cluttered with minor issues",
+        "page": 11,
+        "printed_page_label": null,
+        "section": "3.2 Critical to Quality Factors",
+        "source_hash": "99d56638828c823bb603ff3ef451fcfafc607de8a5b3926136d64980f27baa13",
+        "version_label": "Step 4, 2021-10-06"
+      }
+    ],
+    "sample_id": "pc-0062",
+    "slices": [
+      "negation",
+      "mixed_zh_en",
+      "protocol_id"
+    ]
+  },
+  {
+    "dept": "CO",
+    "language": "mixed",
+    "notes": "",
+    "query": "ICH E8(R1) 的 Section 6 讨论哪些内容？",
+    "required_gold_evidence": [
+      {
+        "evidence_span": {
+          "char_end": 2160,
+          "char_start": 2061,
+          "text": "Section 6 addresses study conduct, ensuring the safety of study participants , and study reporting."
+        },
+        "gold_id": "pc-0063-g1",
+        "key_text": "Section 6 addresses study conduct",
+        "page": 7,
+        "printed_page_label": null,
+        "section": "1. OBJECTIVES OF THIS DOCUMENT",
+        "source_hash": "99d56638828c823bb603ff3ef451fcfafc607de8a5b3926136d64980f27baa13",
+        "version_label": "Step 4, 2021-10-06"
+      }
+    ],
+    "sample_id": "pc-0063",
+    "slices": [
+      "protocol_id",
+      "mixed_zh_en"
+    ]
+  },
+  {
+    "dept": "CO",
+    "language": "mixed",
+    "notes": "",
+    "query": "按照 ICH E8(R1)，quality by design 要把质量主动设计进研究的哪些部分？",
+    "required_gold_evidence": [
+      {
+        "evidence_span": {
+          "char_end": 2512,
+          "char_start": 2344,
+          "text": "Quality by design in clinical research sets out to ensure that the quality of a study is driven proactively by designing quality into the study protocol and processes ."
+        },
+        "gold_id": "pc-0064-g1",
+        "key_text": "study protocol and processes",
+        "page": 8,
+        "printed_page_label": null,
+        "section": "2.2 Scientific Approach in Clinical Study Design, Planning, Conduct, Analysis, and Reporting",
+        "source_hash": "99d56638828c823bb603ff3ef451fcfafc607de8a5b3926136d64980f27baa13",
+        "version_label": "Step 4, 2021-10-06"
+      }
+    ],
+    "sample_id": "pc-0064",
+    "slices": [
+      "mixed_zh_en",
+      "protocol_id"
+    ]
+  },
+  {
+    "dept": "CO",
+    "language": "mixed",
+    "notes": "",
+    "query": "按 ICH E6(R3) 设计研究流程时，申办方应如何控制受试者和研究者的额外负担？",
+    "required_gold_evidence": [
+      {
+        "evidence_span": {
+          "char_end": 127,
+          "char_start": 45,
+          "text": "The sponsor should not place unnecessary burden on participants and investigators."
+        },
+        "gold_id": "pc-0065-g1",
+        "key_text": "sponsor should not place unnecessary burden on participants and investigators",
+        "page": 13,
+        "printed_page_label": null,
+        "section": "II. PRINCIPLES OF ICH GCP / 7.4",
+        "source_hash": "e6ce19e36ce7d2e294f89ee89492b9e035178c3cca48984392bbd92eec9b002c",
+        "version_label": "E6(R3) Step 4, 2025-01-06"
+      }
+    ],
+    "sample_id": "pc-0065",
+    "slices": [
+      "negation",
+      "mixed_zh_en",
+      "protocol_id"
+    ]
+  },
+  {
+    "dept": "CO",
+    "language": "mixed",
+    "notes": "",
+    "query": "按照 ICH E6(R3)，研究中心拟实报实销受试者因到访产生的合理路费和住宿费，伦理审查能否仅因这种报销就认定存在胁迫？",
+    "required_gold_evidence": [
+      {
+        "evidence_span": {
+          "char_end": 1780,
+          "char_start": 1668,
+          "text": "Reasonable r eimbursement of expenses incurred by participants, such as for travel and lodging, is not coercive."
+        },
+        "gold_id": "pc-0066-g1",
+        "key_text": "Reasonable r eimbursement of expenses incurred by participants, such as for travel and lodging, is not coercive",
+        "page": 16,
+        "printed_page_label": null,
+        "section": "III. ANNEX 1 / 1.2 Responsibilities / 1.2.8",
+        "source_hash": "e6ce19e36ce7d2e294f89ee89492b9e035178c3cca48984392bbd92eec9b002c",
+        "version_label": "E6(R3) Step 4, 2025-01-06"
+      }
+    ],
+    "sample_id": "pc-0066",
+    "slices": [
+      "negation",
+      "mixed_zh_en",
+      "protocol_id"
+    ]
+  },
+  {
+    "dept": "CO",
+    "language": "mixed",
+    "notes": "",
+    "query": "按照 ICH E6(R3)，必要记录应由哪些主体安全保存，保存期限依据什么确定？",
+    "required_gold_evidence": [
+      {
+        "evidence_span": {
+          "char_end": 2112,
+          "char_start": 1958,
+          "text": "Essential records should be retained securely by sponsors and investigators for the required period in accordance with applicable regulatory requirements."
+        },
+        "gold_id": "pc-0067-g1",
+        "key_text": "retained securely by sponsors and investigators",
+        "page": 13,
+        "printed_page_label": null,
+        "section": "II. PRINCIPLES OF ICH GCP / 9.5",
+        "source_hash": "e6ce19e36ce7d2e294f89ee89492b9e035178c3cca48984392bbd92eec9b002c",
+        "version_label": "E6(R3) Step 4, 2025-01-06"
+      }
+    ],
+    "sample_id": "pc-0067",
+    "slices": [
+      "mixed_zh_en",
+      "protocol_id"
+    ]
+  },
+  {
+    "dept": "CO",
+    "language": "mixed",
+    "notes": "",
+    "query": "ICH E6(R3) 与 ICH E8(R1) 是什么关系？",
+    "required_gold_evidence": [
+      {
+        "evidence_span": {
+          "char_end": 1032,
+          "char_start": 925,
+          "text": "This guideline builds on key conce pts outlined in ICH E8 (R1) General Considerations for Clinical Studies."
+        },
+        "gold_id": "pc-0068-g1",
+        "key_text": "This guideline builds on key conce pts outlined in ICH E8 (R1)",
+        "page": 8,
+        "printed_page_label": null,
+        "section": "I. INTRODUCTION",
+        "source_hash": "e6ce19e36ce7d2e294f89ee89492b9e035178c3cca48984392bbd92eec9b002c",
+        "version_label": "E6(R3) Step 4, 2025-01-06"
+      }
+    ],
+    "sample_id": "pc-0068",
+    "slices": [
+      "protocol_id",
+      "mixed_zh_en"
+    ]
+  },
+  {
+    "dept": "CO",
+    "language": "mixed",
+    "notes": "",
+    "query": "按照 ICH E6(R3)，试验用药品应依据哪些文件使用？",
+    "required_gold_evidence": [
+      {
+        "evidence_span": {
+          "char_end": 1393,
+          "char_start": 1292,
+          "text": "Investigational products should be used in accordance with the protocol and relevant trial documents."
+        },
+        "gold_id": "pc-0069-g1",
+        "key_text": "protocol and relevant trial documents",
+        "page": 14,
+        "printed_page_label": null,
+        "section": "II. PRINCIPLES OF ICH GCP / 11.3",
+        "source_hash": "e6ce19e36ce7d2e294f89ee89492b9e035178c3cca48984392bbd92eec9b002c",
+        "version_label": "E6(R3) Step 4, 2025-01-06"
+      }
+    ],
+    "sample_id": "pc-0069",
+    "slices": [
+      "mixed_zh_en",
+      "protocol_id"
+    ]
+  },
+  {
+    "dept": "CO",
+    "language": "mixed",
+    "notes": "",
+    "query": "ICH E6(R3) 对 IRB/IEC 应保留的相关记录列举了哪些例子？",
+    "required_gold_evidence": [
+      {
+        "evidence_span": {
+          "char_end": 1147,
+          "char_start": 818,
+          "text": "The IRB/IEC should retain all relevant records (e.g. , documented procedures, membership lists, lists of occupations/affiliations of members, submitted documents, minutes of meetings and correspondence) in accordance with applicable regulatory requirements and make them available upon request from the regulatory authority(ies)."
+        },
+        "gold_id": "pc-0070-g1",
+        "key_text": "retain all relevant records",
+        "page": 18,
+        "printed_page_label": null,
+        "section": "III. ANNEX 1 / 1.5 Records / 1.5.1",
+        "source_hash": "e6ce19e36ce7d2e294f89ee89492b9e035178c3cca48984392bbd92eec9b002c",
+        "version_label": "E6(R3) Step 4, 2025-01-06"
+      }
+    ],
+    "sample_id": "pc-0070",
+    "slices": [
+      "mixed_zh_en",
+      "protocol_id"
+    ]
+  },
+  {
+    "dept": "CO",
+    "language": "mixed",
+    "notes": "",
+    "query": "FDA 2024 年《方案偏离》指南草案如何定义 important protocol deviation？",
+    "required_gold_evidence": [
+      {
+        "evidence_span": {
+          "char_end": 517,
+          "char_start": 235,
+          "text": "As noted above, in this guidance an important protocol deviation is a subset of protocol 118 deviations that might significantly affect the completeness, accuracy, and/or reliability of the 119 study data or that might significantly affect a subject’s rights, safety, or well-being."
+        },
+        "gold_id": "pc-0071-g1",
+        "key_text": "important protocol deviation is a subset of protocol 118 deviations that might significantly affect the completeness, accuracy, and/or reliability of the 119 study data",
+        "page": 7,
+        "printed_page_label": null,
+        "section": "III.A.1. Important Protocol Deviations",
+        "source_hash": "3b172d83fd5310029d0933a2efdb821c31d77c31d874e292dff7fb7da9abd42f",
+        "version_label": "Draft, December 2024 (FDA-2023-D-5016)"
+      }
+    ],
+    "sample_id": "pc-0071",
+    "slices": [
+      "mixed_zh_en"
+    ]
+  },
+  {
+    "dept": "CO",
+    "language": "mixed",
+    "notes": "",
+    "query": "FDA 2024 年《方案偏离》指南草案采用了 ICH E3(R1) 的哪些定义？",
+    "required_gold_evidence": [
+      {
+        "evidence_span": {
+          "char_end": 2402,
+          "char_start": 2283,
+          "text": "In this guidance, FDA is adopting the ICH E3(R1) 62 definitions of protocol deviation and important protocol deviation."
+        },
+        "gold_id": "pc-0072-g1",
+        "key_text": "ICH E3(R1) 62 definitions of protocol deviation and important protocol deviation",
+        "page": 5,
+        "printed_page_label": null,
+        "section": "II. BACKGROUND",
+        "source_hash": "3b172d83fd5310029d0933a2efdb821c31d77c31d874e292dff7fb7da9abd42f",
+        "version_label": "Draft, December 2024 (FDA-2023-D-5016)"
+      }
+    ],
+    "sample_id": "pc-0072",
+    "slices": [
+      "protocol_id",
+      "mixed_zh_en"
+    ]
+  },
+  {
+    "dept": "CO",
+    "language": "mixed",
+    "notes": "",
+    "query": "按照 FDA 2024 年《方案偏离》指南草案，医疗器械研究为紧急保护受试者生命或身体健康而偏离研究计划时，研究者最迟应在紧急情况发生后几个工作日内通知申办方和 IRB？",
+    "required_gold_evidence": [
+      {
+        "evidence_span": {
+          "char_end": 2089,
+          "char_start": 1689,
+          "text": "Similarly, for device investigations, investigators must keep records of each protocol deviation 209 (21 CFR 812.140(a)(4)) and must notify the sponsor and the IRB of any deviation from the 210 investigational plan to protect the life or physical well-being of a subject in an emergency as 211 soon as possible but no later than 5 working days after the emergency occurred (21 CFR 212 812.150(a)(4))."
+        },
+        "gold_id": "pc-0073-g1",
+        "key_text": "any deviation from the 210 investigational plan to protect the life or physical well-being of a subject in an emergency as 211 soon as possible but no later than 5 working days",
+        "page": 9,
+        "printed_page_label": null,
+        "section": "III.B.1. Role of the Investigator in Monitoring, Mitigating, and Reporting Protocol Deviations",
+        "source_hash": "3b172d83fd5310029d0933a2efdb821c31d77c31d874e292dff7fb7da9abd42f",
+        "version_label": "Draft, December 2024 (FDA-2023-D-5016)"
+      }
+    ],
+    "sample_id": "pc-0073",
+    "slices": [
+      "time_window",
+      "mixed_zh_en",
+      "negation"
+    ]
+  },
+  {
+    "dept": "CO",
+    "language": "mixed",
+    "notes": "",
+    "query": "按照 FDA 2024 年《方案偏离》指南草案，未被归类为 important 且不对受试者构成明显即时危险的方案偏离，需要立即报告给 IRB 吗？",
+    "required_gold_evidence": [
+      {
+        "evidence_span": {
+          "char_end": 1125,
+          "char_start": 940,
+          "text": "All other protocol deviations that are not classified as important and do not present an apparent 355 immediate hazard to participants do not need to be immediately reported to the IRB."
+        },
+        "gold_id": "pc-0074-g1",
+        "key_text": "protocol deviations that are not classified as important and do not present an apparent 355 immediate hazard to participants do not need to be immediately reported to the IRB",
+        "page": 13,
+        "printed_page_label": null,
+        "section": "III.B.3. Role of the IRB in Evaluating Protocol Deviations",
+        "source_hash": "3b172d83fd5310029d0933a2efdb821c31d77c31d874e292dff7fb7da9abd42f",
+        "version_label": "Draft, December 2024 (FDA-2023-D-5016)"
+      }
+    ],
+    "sample_id": "pc-0074",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ]
+  },
+  {
+    "dept": "CO",
+    "language": "mixed",
+    "notes": "",
+    "query": "根据 FDA 2024 年《方案偏离》指南草案的说明，FDA 法规是否给 protocol deviation 下了定义？",
+    "required_gold_evidence": [
+      {
+        "evidence_span": {
+          "char_end": 1119,
+          "char_start": 908,
+          "text": "FDA regulations do not include a definition of the term protocol 17 deviation or provide a system for classifying the various types of deviations that may occur 18 during the conduct of a clinical investigation."
+        },
+        "gold_id": "pc-0075-g1",
+        "key_text": "FDA regulations do not include a definition of the term protocol 17 deviation",
+        "page": 4,
+        "printed_page_label": null,
+        "section": "I. INTRODUCTION",
+        "source_hash": "3b172d83fd5310029d0933a2efdb821c31d77c31d874e292dff7fb7da9abd42f",
+        "version_label": "Draft, December 2024 (FDA-2023-D-5016)"
+      }
+    ],
+    "sample_id": "pc-0075",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ]
+  }
+]
