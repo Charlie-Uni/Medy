@@ -45,7 +45,7 @@
     "confidence_method": "paired query-level percentile bootstrap of strict macro recall difference",
     "repeated_rankings": "must be identical for all repeated executions of each query; otherwise fail reproducibility gate",
     "tie_break": "chunk_id ascending",
-    "matching_predicate": "OR across tokenized query terms; empty tokens yield zero eligible candidates",
+    "matching_predicate": "OR across tokenized query terms per candidate (see candidates[].matching_predicate); empty term lists yield zero eligible candidates",
     "query_rewrite": false,
     "custom_dictionary": false,
     "cold_cache_measurement": "not included in this warm-cache lexical measurement; report limitation"
@@ -85,7 +85,8 @@
         "count_and_page": "one statement, count(*) over () on the same predicate and filters",
         "evidence": "tests/integration/test_lexical_pg_simple_fts.py (isolated database, real LOGIN users)",
         "record": "docs/reviews/2026-09-20-implementation-29-candidate-a-adapter.md"
-      }
+      },
+      "matching_predicate": "OR across distinct tok-jieba-v1 tokens (punctuation-only tokens are never produced by the tokenizer)"
     },
     {
       "id": "B",
@@ -116,7 +117,7 @@
         "rules.utf8.ini": "45395f794226581fb1cc02b44ae1481804152511fc59fa677e2f7b755440479c"
       },
       "image_digest": null,
-      "adapter_runtime_verified": false,
+      "adapter_runtime_verified": true,
       "source_evidence": [
         "https://github.com/amutu/zhparser/blob/dd292fd591edbcb7ebee79d3c3cdc969e9cddced/zhparser.control",
         "https://github.com/hightman/scws/tree/a04ef5e655213eb6b07fb57761d0eac72c281ad4"
@@ -146,7 +147,23 @@
         "evidence": "evals/experiments/lexical/builds/b/evidence-2026-09-20/metadata.json",
         "fresh_connection_outputs_equal": true,
         "probe_queries_read_or_executed": 0
-      }
+      },
+      "adapter": {
+        "module": "medops.retrieval.lexical.pg_zhparser_fts",
+        "retriever_version": "pg-zhparser-fts-v1",
+        "index_tables": [
+          "lexical_index_meta",
+          "lexical_index_b"
+        ],
+        "text_search_configuration": "dec001_b (parser zhparser; POS a-z except w mapped to simple)",
+        "tokenizer_version_source": "runtime: extension version + configuration mapping hash + zhparser.* GUC hash; SCWS 1.2.3 pinned from build evidence",
+        "dictionary_version": "scws-dict-utf8:fd76a689f996c4e6+rules-utf8:45395f794226581f+scws-1.2.3 (install() verifies file bytes)",
+        "pre_run_query_rule": "norm-v1 then to_tsvector('dec001_b'); punctuation-only lexemes dropped from the query; index untouched",
+        "known_property": "SCWS dictionary has no Traditional Chinese entries: zh-Hant clauses tokenize per character",
+        "evidence": "tests/integration/test_lexical_pg_zhparser_fts.py on the local candidate B server",
+        "record": "docs/reviews/2026-09-20-implementation-30-candidate-b-c-adapters.md"
+      },
+      "matching_predicate": "OR across distinct query lexemes (punctuation-only lexemes dropped)"
     },
     {
       "id": "C",
@@ -175,7 +192,7 @@
         "normalizer": null
       },
       "image_digest": null,
-      "adapter_runtime_verified": false,
+      "adapter_runtime_verified": true,
       "release_status": "release_blocked",
       "license_approval": null,
       "source_evidence": [
@@ -226,7 +243,23 @@
         "evidence": "evals/experiments/lexical/builds/c/build-metadata.json",
         "bootstrap_role": "postgres superuser; not ordinary-role gate evidence",
         "true_probes_used": false
-      }
+      },
+      "adapter": {
+        "module": "medops.retrieval.lexical.pg_search_bm25",
+        "retriever_version": "pg-search-bm25-v1",
+        "index_tables": [
+          "lexical_index_meta",
+          "lexical_index_c"
+        ],
+        "bm25_index": "lexical_index_c_bm25 on (chunk_id, content::pdb.jieba(lowercase=true, ascii_folding=false, alpha_num_only=false, trim=false)) key_field chunk_id",
+        "tokenizer_version_source": "runtime: extension version + fixed tokenizer configuration hash",
+        "dictionary_version": "jieba-rs-0.10.1+tantivy-jieba-0.20.0+pg_search.so:74e90e4f8015246a (install() verifies the shared object bytes)",
+        "pre_run_query_rule": "norm-v1 then the same pdb.jieba configuration in SQL; whitespace- and punctuation-only tokens dropped; predicate is ||| over the remaining terms as text[]",
+        "ranking": "paradedb.score() descending, chunk_id ascending on ties",
+        "evidence": "tests/integration/test_lexical_pg_search_bm25.py on the local candidate C server",
+        "record": "docs/reviews/2026-09-20-implementation-30-candidate-b-c-adapters.md"
+      },
+      "matching_predicate": "OR (|||) across distinct query terms passed as text[] (whitespace/punctuation tokens dropped)"
     }
   ],
   "readiness_blockers": [
@@ -235,8 +268,8 @@
       "detail": "B/C images are built and version-verified locally (record 28) but have no registry digest; B whitespace/OR predicate and C retained-whitespace token behaviour must be fixed in the adapters before the run"
     },
     {
-      "code": "adapters_unimplemented",
-      "detail": "A adapter implemented and contract-tested under the ordinary role with FORCE RLS on synthetic data (record 29); B/C adapters and their execution-plan evidence remain to be implemented"
+      "code": "candidate_servers_not_loaded",
+      "detail": "B and C servers (local ports 5433/5434) have no migrated schema, login users or ingested corpus yet; the run needs the same 16 documents with identical chunk UUIDs on all three servers (or a documented per-server mapping)"
     },
     {
       "code": "corpus_not_publishable",

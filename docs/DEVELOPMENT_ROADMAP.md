@@ -1,6 +1,6 @@
 # Medy 开发任务、当前进度与边做边学路线
 
-> 核查日期：2026-09-20（[实现记录 29](reviews/2026-09-20-implementation-29-candidate-a-adapter.md)；本轮 577 passed，含 84 项 PostgreSQL 集成测试）。依据：工作区中的[工程基线 v0.6](ENGINEERING_BASELINE.md)、ADR、SPEC、代码、复核记录与本机测试。历史实现证据见记录 13～28。
+> 核查日期：2026-09-20（[实现记录 30](reviews/2026-09-20-implementation-30-candidate-b-c-adapters.md)；本轮 632 passed，含 131 项 PostgreSQL 集成测试，其中 B/C 候选服务器上的 47 项仅本地运行）。依据：工作区中的[工程基线 v0.6](ENGINEERING_BASELINE.md)、ADR、SPEC、代码、复核记录与本机测试。历史实现证据见记录 13～29。
 > 本文件是基线的执行进度视图，不是第二份需求契约。范围、阈值和安全约束仍以基线为准；不新增 P0 门禁，不代替正式验收。
 > Git 归档：`2a4aef6` 为工程基础，`213dbe8` 为冻结探针 v1；归档提交已在独立 checkout 复验。本轮后续实验准备与回填文档单独提交，冻结 v1 原始字节不变。
 
@@ -118,8 +118,8 @@ P0 加权进度：24.1%（19.0/79）；按 99 项计 19.2%。分项：M0 10/11�
 | --- | --- | --- |
 | M1-01 | 已实现（冻结与 Git 归档完成） | 16 份语料、75 条样本；71 agree、4 disputed_resolved、0 待决。冻结提交 `213dbe8`、双哈希和复核链已归档，独立 checkout 校验通过；该项基线已勾选（记录 27） |
 | M1-02 | 部分（实验准备草案已建，尚未冻结运行清单） | [准备说明](../evals/experiments/lexical/README.md)：A 现有环境已测，B/C 源码及资产版本、硬件和测量参数已记录；仍需构建镜像并固定全部配置、补适配器/运行证据与端到端参数。gold 映射 73 mapped、2 unmappable 原样计 miss |
-| M1-03 | 契约切片已复核通过（Codex，2026-09-11），整项不勾选 | `LexicalVersions`、`LexicalRetriever` Protocol、`run_lexical_search` 边界与可复用适配器契约测试已有（实现记录 10），离线 BM25 两种分词器通过；候选 A 适配器 `pg_simple_fts` 在真实 schema、普通 LOGIN 用户 + FORCE RLS 下通过同一契约（实现记录 29）；缺 B/C 适配器与真实语料运行证据，不勾选 |
-| M1-04 | 部分（权限半边已证明；候选对比半边依赖 M1-01/02） | 真实 schema 上以 LOGIN 用户证明：普通角色 + FORCE RLS 零跨部门泄漏、按主键无存在性泄露、LIMIT/排序/join 下推不丢可见行、连接池身份切换与 RESET/DISCARD 清除（实现记录 18）；"零静默候选不足"与三候选词法对比等真实探针集与 DEC-001 适配器；候选 A 的零静默不足（同一语句精确计数 + 分页，k 小于/等于/大于合格数、两种执行计划）、无身份拒绝、连接复用清除、版本拒绝与执行计划留证已在合成数据上通过（实现记录 29） |
+| M1-03 | 契约切片已复核通过（Codex，2026-09-11），整项不勾选 | `LexicalVersions`、`LexicalRetriever` Protocol、`run_lexical_search` 边界与可复用适配器契约测试已有（实现记录 10），离线 BM25 两种分词器通过；候选 A/B/C 适配器（`pg_simple_fts`、`pg_zhparser_fts`、`pg_search_bm25`）在真实 schema、普通 LOGIN 用户 + FORCE RLS 下通过同一契约与共享门禁套件（实现记录 29、30）；缺真实语料运行证据，不勾选 |
+| M1-04 | 部分（权限半边已证明；候选对比半边依赖 M1-01/02） | 真实 schema 上以 LOGIN 用户证明：普通角色 + FORCE RLS 零跨部门泄漏、按主键无存在性泄露、LIMIT/排序/join 下推不丢可见行、连接池身份切换与 RESET/DISCARD 清除（实现记录 18）；"零静默候选不足"与三候选词法对比等真实探针集与 DEC-001 适配器；三候选的零静默不足（同一语句精确计数 + 分页，k 小于/等于/大于合格数、两种执行计划）、无身份拒绝、连接复用清除、版本拒绝与执行计划留证已在合成数据上通过，C 的 ParadeDB 自定义扫描在普通角色下未绕过 RLS（实现记录 29、30）；真实探针待跑 |
 | M1-05 | 阻塞 | 按 ADR-0002 完成候选 A/B/C 对比及独立许可证审核，回填结果、执行计划、复现命令。端到端对照所需向量/重排配置固定后再测，不把未测门禁算通过 |
 | M1-06 | 已实现（首个迁移 0001；evidence_log、outbox 等随其里程碑追加） | Alembic 原生 SQL 迁移建 source_objects、ingestion_jobs、documents、chunks、chunk_spans、document_acl、doc_audit，字段落点按基线 3.3/3.4/4.2 与设计文档 3.3；不可变性、状态机、审计追加写、chunk 哈希由触发器强制；15 项集成测试（实现记录 17，ADR-0006）；无 tsvector/vector 列 |
 | M1-07 | 已实现 | `documents_one_active_per_family` 部分唯一索引；集成测试证明同 family 第二个 active 被拒，且两会话并发激活时第二个阻塞、首个提交后失败，最终只剩一个 active（实现记录 17） |
