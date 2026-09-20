@@ -1,6 +1,6 @@
 # Medy 全量任务、当前进度与八股知识点对照
 
-> 核查日期：2026-09-20（[实现记录 31](reviews/2026-09-20-implementation-31-run-harness-and-servers.md)）。编号与 [开发路线图](DEVELOPMENT_ROADMAP.md) 一致，验收文字以 [工程基线 v0.6](ENGINEERING_BASELINE.md) 为准；本文只补每个任务对应的基础知识，不新增门禁。
+> 核查日期：2026-09-20（[实现记录 32](reviews/2026-09-20-implementation-32-activation-tool-and-plan.md)）。编号与 [开发路线图](DEVELOPMENT_ROADMAP.md) 一致，验收文字以 [工程基线 v0.6](ENGINEERING_BASELINE.md) 为准；本文只补每个任务对应的基础知识，不新增门禁。
 > 状态口径同路线图：已实现（小范围产物有代码与证据，不等于整体验收完成）、部分、待做、阻塞、选做、未验收。基线 99 个复选项目前 1 项勾选（M1-01 探针冻结）。
 > `tests/unit/docs/test_baseline_roadmap_consistency.py` 机械检查本文与路线图、基线的编号数量一致。
 
@@ -66,7 +66,7 @@ M1-01 同时是“部分”和“阻塞”，上表按“部分”计。P1/P2 11
 | M1-08 | 已实现（数据库层） | 正式 RLS、安全视图与角色权限测试 | 数据库角色与最小权限；NOSUPERUSER/NOBYPASSRLS；池连接身份清理；跨部门隔离证明 |
 | M1-09 | 部分（PDF 校验、去重、PII 默认拒绝已实现） | 文件校验、PII 扫描、去重、不可变保存 | MIME 嗅探与文件签名；正则 PII 的召回与误报；内容寻址去重；WORM 存储 |
 | M1-10 | 已实现（chunker-v1 与入库） | 抽取 page/section/seq/offset 与 chunk_content_hash | PDF 文本抽取原理（内容流、字体映射）；字符偏移 vs 字节偏移；切分策略；内容哈希 |
-| M1-11 | 待做（effective_from 口径已定） | 发布/归档同事务并经 outbox 失效索引缓存 | 事务性 outbox；至少一次投递与幂等消费；缓存失效时序 |
+| M1-11 | 部分（draft→active 激活工具与审计已有；归档、outbox 与索引/缓存消费待做） | 发布/归档同事务并经 outbox 失效索引缓存 | 事务性 outbox；至少一次投递与幂等消费；缓存失效时序 |
 | M1-12 | 部分 | 医学术语表及版本 | INN/通用名/商品名体系；同义词映射；字典版本化与许可；jieba 用户词典 |
 | M1-13 | 待做 | 1 到 3 条有界 Query Rewrite | 查询扩展与同义改写；会话实体与指代；用户文本不得生成过滤条件（注入） |
 | M1-14 | 待做 | 实现 DEC-001 选定的 lexical_retriever | GIN 全文索引；tsvector 位置信息；tokenizer 版本一致性；版本不匹配拒绝 |

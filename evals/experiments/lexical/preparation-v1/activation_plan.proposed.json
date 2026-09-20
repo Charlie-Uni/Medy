@@ -1,0 +1,122 @@
+{
+  "status": "proposed_awaiting_owner_confirmation",
+  "rule": "决策人 2026-09-17（路线图 M1-11）：说明书取文内修订日期，其次 TFDA 许可证异动日期，再次 PDF 元数据日期；指南取文内发布或生效日期。月份粒度的日期按月初取值并在理由中注明（待决策人确认此约定）。",
+  "as_of_for_run": "2026-09-20",
+  "actor": "reviewer-01",
+  "documents": [
+    {
+      "document_key": "tfda-label-zosaa-50mg",
+      "dept": "MA",
+      "effective_from": "2015-10-27",
+      "source": "文内修订日期 B版 104.10.27（民国 104 年 = 2015）",
+      "tier": "in_text_revision"
+    },
+    {
+      "document_key": "tfda-label-deurinol-300mg",
+      "dept": "MA",
+      "effective_from": "2026-07-20",
+      "source": "无文内版本行；TFDA 许可证 衛署藥製字第048564號 異動日期 2026/07/20（export/36 2026-09-17 快照）；PDF 元数据 2018-02-09 仅作备注",
+      "tier": "licence_change_date",
+      "flag": "许可证异动不一定对应本 PDF 修订；如决策人认为应取 PDF 元数据日期 2018-02-09，请改此行"
+    },
+    {
+      "document_key": "tfda-label-loformin-850mg",
+      "dept": "MA",
+      "effective_from": "2015-10-06",
+      "source": "无文内版本行、无异动日期记录；PDF 元数据 CreationDate 2015-10-06",
+      "tier": "pdf_metadata"
+    },
+    {
+      "document_key": "tfda-label-cancliol-100mg",
+      "dept": "MA",
+      "effective_from": "2015-12-27",
+      "source": "无文内版本行、无异动日期记录；PDF 元数据 CreationDate 2015-12-27",
+      "tier": "pdf_metadata"
+    },
+    {
+      "document_key": "tfda-label-esomen-40mg",
+      "dept": "MA",
+      "effective_from": null,
+      "source": "parse_quality=low_trust（8 条 pypdf 抽取告警，记录 20），INV-DATA-05 禁止激活",
+      "tier": "blocked",
+      "flag": "选项 A：保持 draft，pc-0025～pc-0030 计 miss；选项 B：先解决抽取告警并重新入库后再激活（日期将为 PDF 元数据 2013-11-08）"
+    },
+    {
+      "document_key": "meddra-term-selection-ptc-4-26-zh-hans",
+      "dept": "PV",
+      "effective_from": "2026-03-01",
+      "source": "文内 发布版本 4.26，2026 年 3 月（月份粒度，取月初；站点日期 2026-03-14 备选）",
+      "tier": "in_text_publication_month"
+    },
+    {
+      "document_key": "meddra-data-retrieval-ptc-3-26-zh-hans",
+      "dept": "PV",
+      "effective_from": "2026-03-01",
+      "source": "文内 发布版本 3.26，2026 年 3 月（月份粒度，取月初；站点日期 2026-03-14 备选）",
+      "tier": "in_text_publication_month"
+    },
+    {
+      "document_key": "ema-gvp-module-vi-rev2",
+      "dept": "PV",
+      "effective_from": "2017-07-28",
+      "source": "文内 EMA/873138/2011 Rev 2, 28 July 2017",
+      "tier": "in_text_publication"
+    },
+    {
+      "document_key": "ema-gvp-module-ix-rev1",
+      "dept": "PV",
+      "effective_from": "2017-10-09",
+      "source": "文内 EMA/827661/2011 Rev 1, 9 October 2017",
+      "tier": "in_text_publication"
+    },
+    {
+      "document_key": "fda-sponsor-safety-reporting-2025",
+      "dept": "PV",
+      "effective_from": "2025-12-01",
+      "source": "文内 Final, December 2025（月份粒度，取月初）",
+      "tier": "in_text_publication_month"
+    },
+    {
+      "document_key": "ich-e2a-step4-1994",
+      "dept": "PV",
+      "effective_from": "1994-10-27",
+      "source": "文内 Step 4, 27 October 1994",
+      "tier": "in_text_publication"
+    },
+    {
+      "document_key": "ich-e2f-step4-2010",
+      "dept": "PV",
+      "effective_from": "2010-08-17",
+      "source": "文内 Step 4, 17 August 2010",
+      "tier": "in_text_publication"
+    },
+    {
+      "document_key": "tfda-adr-report-form-guide-4th",
+      "dept": "PV",
+      "effective_from": "2025-03-01",
+      "source": "文内 第四版，2025 年 3 月（月份粒度，取月初）",
+      "tier": "in_text_publication_month"
+    },
+    {
+      "document_key": "ich-e8-r1-step4-2021",
+      "dept": "CO",
+      "effective_from": "2021-10-06",
+      "source": "文内 Final version, adopted 6 October 2021 (Step 4)",
+      "tier": "in_text_publication"
+    },
+    {
+      "document_key": "ich-e6-r3-step4-2025",
+      "dept": "CO",
+      "effective_from": "2025-01-06",
+      "source": "文内 E6(R3) Step 4, adopted 2025-01-06",
+      "tier": "in_text_publication"
+    },
+    {
+      "document_key": "fda-protocol-deviations-draft-2024",
+      "dept": "CO",
+      "effective_from": "2024-12-01",
+      "source": "文内 Draft, December 2024（月份粒度，取月初）；草案文件，version_label 已标 draft",
+      "tier": "in_text_publication_month"
+    }
+  ]
+}
