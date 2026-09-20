@@ -27,6 +27,8 @@ EXPECTED_TABLES = {
     "outbox_consumer_acks",
     "embedding_index_meta",
     "chunk_embeddings",
+    "lexical_index_meta",
+    "chunk_lexical_tsv",
 }
 EXPECTED_TYPES = {
     "dept",
@@ -162,7 +164,7 @@ def set_actor(conn: psycopg.Connection, actor: str = "reviewer-01", reason: str 
 
 def test_single_head_and_offline_sql_render(migrated):
     heads = ScriptDirectory.from_config(alembic_config(migrated)).get_heads()
-    assert heads == ["0006"]
+    assert heads == ["0007"]
 
 
 def test_upgrade_downgrade_upgrade_round_trip_leaves_nothing_behind(scratch_database):
@@ -196,13 +198,13 @@ def test_upgrade_downgrade_upgrade_round_trip_leaves_nothing_behind(scratch_data
     assert _inventory(scratch_database)["tables"] == EXPECTED_TABLES | {"alembic_version"}
 
 
-def test_only_the_decided_vector_column_exists_and_no_tsvector_before_dec_001(conn):
-    """DEC-002 is decided (ADR-0007): exactly one vector(1024) column, in chunk_embeddings. DEC-001 is still
-    open, so no tsvector column may exist in a migration (candidate index tables are experiment-scoped)."""
+def test_only_the_decided_vector_and_tsvector_columns_exist(conn):
+    """DEC-002 (ADR-0007): exactly one vector(1024) column in chunk_embeddings. DEC-001 final (ADR-0002): exactly
+    one tsvector column, the production index chunk_lexical_tsv; candidate B/C tables stay experiment-scoped."""
     rows = conn.execute(
-        "select table_name, column_name, udt_name from information_schema.columns where table_schema = 'public' and udt_name in ('vector', 'tsvector')"
+        "select table_name, column_name, udt_name from information_schema.columns where table_schema = 'public' and udt_name in ('vector', 'tsvector') order by 1"
     ).fetchall()
-    assert rows == [("chunk_embeddings", "embedding", "vector")]
+    assert rows == [("chunk_embeddings", "embedding", "vector"), ("chunk_lexical_tsv", "tsv", "tsvector")]
     dim = conn.execute(
         "select atttypmod from pg_attribute where attrelid = 'chunk_embeddings'::regclass and attname = 'embedding'"
     ).fetchone()[0]

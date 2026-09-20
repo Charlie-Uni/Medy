@@ -1,6 +1,6 @@
 # Medy 全量任务、当前进度与八股知识点对照
 
-> 核查日期：2026-09-20（[实现记录 43](reviews/2026-09-20-implementation-43-docx-and-malicious-files.md)）。编号与 [开发路线图](DEVELOPMENT_ROADMAP.md) 一致，验收文字以 [工程基线 v0.6](ENGINEERING_BASELINE.md) 为准；本文只补每个任务对应的基础知识，不新增门禁。
+> 核查日期：2026-09-20（[实现记录 45](reviews/2026-09-20-implementation-45-e2e-and-dec001-final.md)）。编号与 [开发路线图](DEVELOPMENT_ROADMAP.md) 一致，验收文字以 [工程基线 v0.6](ENGINEERING_BASELINE.md) 为准；本文只补每个任务对应的基础知识，不新增门禁。
 > 状态口径同路线图：已实现（小范围产物有代码与证据，不等于整体验收完成）、部分、待做、阻塞、选做、未验收。基线 99 个复选项目前 1 项勾选（M1-01 探针冻结）。
 > `tests/unit/docs/test_baseline_roadmap_consistency.py` 机械检查本文与路线图、基线的编号数量一致。
 
@@ -67,16 +67,16 @@ M1-01 同时是“部分”和“阻塞”，上表按“部分”计。P1/P2 11
 | M1-09 | 已实现（签名判定、结构性恶意内容门禁、clamd 钩子、DOCX 章节入库、同源确认，记录 40/43） | 文件校验、PII 扫描、去重、不可变保存 | MIME 嗅探与文件签名；正则 PII 的召回与误报；内容寻址去重；WORM 存储 |
 | M1-10 | 已实现（chunker-v2、入库与质量复核放行） | 抽取 page/section/seq/offset 与 chunk_content_hash | PDF 文本抽取原理（内容流、字体映射）；字符偏移 vs 字节偏移；切分策略；内容哈希 |
 | M1-11 | 已实现（发布/归档/审计/outbox 同事务，索引消费者幂等；缓存消费者随 M1-19） | 发布/归档同事务并经 outbox 失效索引缓存 | 事务性 outbox；至少一次投递与幂等消费；缓存失效时序 |
-| M1-12 | 部分 | 医学术语表及版本 | INN/通用名/商品名体系；同义词映射；字典版本化与许可；jieba 用户词典 |
+| M1-12 | 部分（术语表初版 glossary-20260920，记录 44；分词词典不变） | 医学术语表及版本 | INN/通用名/商品名体系；同义词映射；字典版本化与许可；jieba 用户词典 |
 | M1-13 | 部分（规则型有界改写 `qr-rules-v1`，记录 40；术语内容待 DEC-005） | 1 到 3 条有界 Query Rewrite | 查询扩展与同义改写；会话实体与指代；用户文本不得生成过滤条件（注入） |
-| M1-14 | 待做 | 实现 DEC-001 选定的 lexical_retriever | GIN 全文索引；tsvector 位置信息；tokenizer 版本一致性；版本不匹配拒绝 |
-| M1-15 | 部分（复合哈希函数已实现，取值待选型） | 固化 tokenizer、词典、规范化版本进入 retrieval_version 与缓存键 | 复合版本哈希；缓存键设计；可复现性证明 |
+| M1-14 | 已实现（DEC-001 最终判定 A2；迁移 0007 生产词法索引 + `medops.retrieval.production`，记录 45） | 实现 DEC-001 选定的 lexical_retriever | GIN 全文索引；tsvector 位置信息；tokenizer 版本一致性；版本不匹配拒绝 |
+| M1-15 | 已实现（生产取值固定，复合 retrieval_version 由测试钉住，记录 45） | 固化 tokenizer、词典、规范化版本进入 retrieval_version 与缓存键 | 复合版本哈希；缓存键设计；可复现性证明 |
 | M1-16 | 已实现（迁移 0006、pgvector 适配器、bge-m3 本地提供者；探针 v2 向量通道 82.7% / 65.6%，记录 42） | DEC-002 后实现 pgvector 召回 | 余弦/内积相似度；ANN（HNSW、IVFFlat）与召回率；过滤后召回不足；embedding 维度与归一化 |
-| M1-17 | 部分 | RRF、Reranker、候选上限、并行超时 | RRF 公式；bi-encoder 与 cross-encoder；asyncio 并发与超时取消；显式降级 |
+| M1-17 | 部分（融合 + 重排 + 回查已实现；并行/超时/降级随 M2 执行器，记录 45） | RRF、Reranker、候选上限、并行超时 | RRF 公式；bi-encoder 与 cross-encoder；asyncio 并发与超时取消；显式降级 |
 | M1-18 | 已实现（回查模块与 RLS 下的集成证明；`evidence_log` 落库随 M2） | 事实回查：状态、生效时间、ACL、完整性、解析质量 | 事实源与索引的分离；JOIN 校验；时间点查询；完整性状态 |
 | M1-19 | 已实现（候选缓存、命中仍回查、outbox 按部门纪元失效、Redis 存储） | 缓存键含权限与版本指纹，可靠失效 | cache-aside 与 TTL；穿透/击穿/雪崩；权限变化后的失效；缓存不得绕过授权 |
 | M1-20 | 待做 | 不少于 300 条主评测集 | IR 评测集构建；gold 标注与分层复核；数据切片设计 |
-| M1-21 | 待做 | 严格宏平均 Recall@5 报告 | Recall/Precision/Hit/MRR/nDCG；宏平均与微平均；可复现报告 |
+| M1-21 | 部分（端到端运行工具、事实回查后 Recall@5 报告与分部门/语言切片已有；门禁在探针规模未过，主评测集待 M1-20，记录 45） | 严格宏平均 Recall@5 报告 | Recall/Precision/Hit/MRR/nDCG；宏平均与微平均；可复现报告 |
 
 ## 4. M2 Harness、Verifier、Safety 与 Skills（16 项）
 

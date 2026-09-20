@@ -1,0 +1,691 @@
+{
+  "version": "glossary-20260920-f569611ab3dd",
+  "built_at": "2026-09-20T11:59:41+00:00",
+  "adr": "docs/adr/ADR-0008-medical-glossary-sources.md",
+  "sources": {
+    "tfda": {
+      "dataset": "全部藥品許可證資料集（衛生福利部食品藥物管理署）",
+      "url": "https://data.fda.gov.tw/data/opendata/export/36/csv",
+      "licence": "政府資料開放授權條款－第1版（相容 CC BY 4.0）；署名：衛生福利部食品藥物管理署",
+      "snapshot_sha256": "70ccaece72c239f5418648f76fa40d11c2534d742e2a939abc25aec24283e8ff",
+      "rows": 72057,
+      "licence_numbers_in_pages": 6,
+      "licences_in_corpus": 6,
+      "entries": 12
+    },
+    "corpus_abbreviations": {
+      "curated_file": "evals/glossary/sources/abbreviations_curated.json",
+      "corpus": "/Users/leaf/Documents/GitHub/Medy/evals/probe/precise_clause/v2/corpus.json",
+      "documents_with_pages": 16,
+      "kept": 37,
+      "rejected": [
+        {
+          "term": "IB",
+          "expansion": "Investigator's Brochure",
+          "reason": "abbreviation and expansion never co-occur on a corpus page"
+        },
+        {
+          "term": "NSAID",
+          "expansion": "non-steroidal anti-inflammatory drug",
+          "reason": "abbreviation and expansion never co-occur on a corpus page"
+        },
+        {
+          "term": "DLP",
+          "expansion": "data lock point",
+          "reason": "abbreviation and expansion never co-occur on a corpus page"
+        }
+      ]
+    }
+  },
+  "entries": {
+    "total": 49,
+    "brand": 12,
+    "abbreviation": 37
+  },
+  "entry_evidence": [
+    {
+      "term": "美洛醣膜衣錠850毫克",
+      "kind": "brand",
+      "source": "tfda",
+      "evidence": [
+        {
+          "document_key": "tfda-label-loformin-850mg",
+          "page": 1
+        },
+        {
+          "document_key": "tfda-label-loformin-850mg",
+          "page": 2
+        }
+      ],
+      "licence_no": "衛部藥製字第058257號",
+      "status": ""
+    },
+    {
+      "term": "Loformin Film-coated Tablets 850mg (Metformin)",
+      "kind": "brand",
+      "source": "tfda",
+      "evidence": [
+        {
+          "document_key": "tfda-label-loformin-850mg",
+          "page": 1
+        },
+        {
+          "document_key": "tfda-label-loformin-850mg",
+          "page": 2
+        }
+      ],
+      "licence_no": "衛部藥製字第058257號",
+      "status": ""
+    },
+    {
+      "term": "\"育生\"美洛醣錠500毫克(二甲二脈)",
+      "kind": "brand",
+      "source": "tfda",
+      "evidence": [
+        {
+          "document_key": "tfda-label-loformin-850mg",
+          "page": 1
+        },
+        {
+          "document_key": "tfda-label-loformin-850mg",
+          "page": 2
+        }
+      ],
+      "licence_no": "衛署藥製字第034549號",
+      "status": ""
+    },
+    {
+      "term": "LOFORMIN TABLETS 500MG \"ENSAFE\" (METFORMIN)",
+      "kind": "brand",
+      "source": "tfda",
+      "evidence": [
+        {
+          "document_key": "tfda-label-loformin-850mg",
+          "page": 1
+        },
+        {
+          "document_key": "tfda-label-loformin-850mg",
+          "page": 2
+        }
+      ],
+      "licence_no": "衛署藥製字第034549號",
+      "status": ""
+    },
+    {
+      "term": "胃所樂腸溶膜衣錠40毫克",
+      "kind": "brand",
+      "source": "tfda",
+      "evidence": [
+        {
+          "document_key": "tfda-label-esomen-40mg",
+          "page": 4
+        }
+      ],
+      "licence_no": "衛部藥製字第058102號",
+      "status": ""
+    },
+    {
+      "term": "Esomen Enteric-Coated Tablets 40mg (Esomeprazole)",
+      "kind": "brand",
+      "source": "tfda",
+      "evidence": [
+        {
+          "document_key": "tfda-label-esomen-40mg",
+          "page": 4
+        }
+      ],
+      "licence_no": "衛部藥製字第058102號",
+      "status": ""
+    },
+    {
+      "term": "穩壓膜衣錠50毫克",
+      "kind": "brand",
+      "source": "tfda",
+      "evidence": [
+        {
+          "document_key": "tfda-label-zosaa-50mg",
+          "page": 1
+        }
+      ],
+      "licence_no": "衛署藥製字第047911號",
+      "status": ""
+    },
+    {
+      "term": "Zosaa F.C. Tablets 50mg",
+      "kind": "brand",
+      "source": "tfda",
+      "evidence": [
+        {
+          "document_key": "tfda-label-zosaa-50mg",
+          "page": 1
+        }
+      ],
+      "licence_no": "衛署藥製字第047911號",
+      "status": ""
+    },
+    {
+      "term": "\"明德\" 心壓暢錠100毫克(美托普洛)",
+      "kind": "brand",
+      "source": "tfda",
+      "evidence": [
+        {
+          "document_key": "tfda-label-cancliol-100mg",
+          "page": 1
+        }
+      ],
+      "licence_no": "衛署藥製字第029301號",
+      "status": ""
+    },
+    {
+      "term": "CANCLIOL TABLETS 100MG (METOPROLOL) \"MEIDER\"",
+      "kind": "brand",
+      "source": "tfda",
+      "evidence": [
+        {
+          "document_key": "tfda-label-cancliol-100mg",
+          "page": 1
+        }
+      ],
+      "licence_no": "衛署藥製字第029301號",
+      "status": ""
+    },
+    {
+      "term": "痛風停錠300毫克",
+      "kind": "brand",
+      "source": "tfda",
+      "evidence": [
+        {
+          "document_key": "tfda-label-deurinol-300mg",
+          "page": 10
+        }
+      ],
+      "licence_no": "衛署藥製字第048564號",
+      "status": ""
+    },
+    {
+      "term": "Deurinol Tablets 300mg",
+      "kind": "brand",
+      "source": "tfda",
+      "evidence": [
+        {
+          "document_key": "tfda-label-deurinol-300mg",
+          "page": 10
+        }
+      ],
+      "licence_no": "衛署藥製字第048564號",
+      "status": ""
+    },
+    {
+      "term": "GVP",
+      "kind": "abbreviation",
+      "source": "corpus",
+      "evidence": [
+        {
+          "document_key": "ema-gvp-module-vi-rev2",
+          "page": 1
+        },
+        {
+          "document_key": "ema-gvp-module-ix-rev1",
+          "page": 1
+        }
+      ]
+    },
+    {
+      "term": "ICSR",
+      "kind": "abbreviation",
+      "source": "corpus",
+      "evidence": [
+        {
+          "document_key": "ema-gvp-module-vi-rev2",
+          "page": 2
+        },
+        {
+          "document_key": "fda-sponsor-safety-reporting-2025",
+          "page": 36
+        }
+      ]
+    },
+    {
+      "term": "PSUR",
+      "kind": "abbreviation",
+      "source": "corpus",
+      "evidence": [
+        {
+          "document_key": "ema-gvp-module-ix-rev1",
+          "page": 3
+        },
+        {
+          "document_key": "ich-e2f-step4-2010",
+          "page": 7
+        }
+      ]
+    },
+    {
+      "term": "DSUR",
+      "kind": "abbreviation",
+      "source": "corpus",
+      "evidence": [
+        {
+          "document_key": "ich-e2f-step4-2010",
+          "page": 3
+        }
+      ]
+    },
+    {
+      "term": "GCP",
+      "kind": "abbreviation",
+      "source": "corpus",
+      "evidence": [
+        {
+          "document_key": "ich-e6-r3-step4-2025",
+          "page": 3
+        },
+        {
+          "document_key": "fda-protocol-deviations-draft-2024",
+          "page": 6
+        }
+      ]
+    },
+    {
+      "term": "ICH",
+      "kind": "abbreviation",
+      "source": "corpus",
+      "evidence": [
+        {
+          "document_key": "ich-e8-r1-step4-2021",
+          "page": 1
+        },
+        {
+          "document_key": "ema-gvp-module-vi-rev2",
+          "page": 6
+        },
+        {
+          "document_key": "fda-sponsor-safety-reporting-2025",
+          "page": 9
+        }
+      ]
+    },
+    {
+      "term": "CIOMS",
+      "kind": "abbreviation",
+      "source": "corpus",
+      "evidence": [
+        {
+          "document_key": "ema-gvp-module-vi-rev2",
+          "page": 21
+        },
+        {
+          "document_key": "ema-gvp-module-ix-rev1",
+          "page": 4
+        }
+      ]
+    },
+    {
+      "term": "PRAC",
+      "kind": "abbreviation",
+      "source": "corpus",
+      "evidence": [
+        {
+          "document_key": "ema-gvp-module-ix-rev1",
+          "page": 3
+        }
+      ]
+    },
+    {
+      "term": "SAE",
+      "kind": "abbreviation",
+      "source": "corpus",
+      "evidence": [
+        {
+          "document_key": "fda-sponsor-safety-reporting-2025",
+          "page": 24
+        },
+        {
+          "document_key": "ich-e6-r3-step4-2025",
+          "page": 77
+        }
+      ]
+    },
+    {
+      "term": "ADR",
+      "kind": "abbreviation",
+      "source": "corpus",
+      "evidence": [
+        {
+          "document_key": "ich-e2a-step4-1994",
+          "page": 4
+        },
+        {
+          "document_key": "tfda-adr-report-form-guide-4th",
+          "page": 4
+        },
+        {
+          "document_key": "ich-e6-r3-step4-2025",
+          "page": 77
+        }
+      ]
+    },
+    {
+      "term": "AE",
+      "kind": "abbreviation",
+      "source": "corpus",
+      "evidence": [
+        {
+          "document_key": "fda-sponsor-safety-reporting-2025",
+          "page": 43
+        },
+        {
+          "document_key": "ich-e2a-step4-1994",
+          "page": 4
+        },
+        {
+          "document_key": "ich-e6-r3-step4-2025",
+          "page": 77
+        }
+      ]
+    },
+    {
+      "term": "SUSAR",
+      "kind": "abbreviation",
+      "source": "corpus",
+      "evidence": [
+        {
+          "document_key": "ich-e6-r3-step4-2025",
+          "page": 71
+        }
+      ]
+    },
+    {
+      "term": "MAH",
+      "kind": "abbreviation",
+      "source": "corpus",
+      "evidence": [
+        {
+          "document_key": "ema-gvp-module-vi-rev2",
+          "page": 82
+        },
+        {
+          "document_key": "ema-gvp-module-ix-rev1",
+          "page": 16
+        }
+      ]
+    },
+    {
+      "term": "IEC",
+      "kind": "abbreviation",
+      "source": "corpus",
+      "evidence": [
+        {
+          "document_key": "ich-e6-r3-step4-2025",
+          "page": 3
+        }
+      ]
+    },
+    {
+      "term": "IRB",
+      "kind": "abbreviation",
+      "source": "corpus",
+      "evidence": [
+        {
+          "document_key": "ich-e6-r3-step4-2025",
+          "page": 3
+        }
+      ]
+    },
+    {
+      "term": "EPITT",
+      "kind": "abbreviation",
+      "source": "corpus",
+      "evidence": [
+        {
+          "document_key": "ema-gvp-module-ix-rev1",
+          "page": 3
+        }
+      ]
+    },
+    {
+      "term": "CDER",
+      "kind": "abbreviation",
+      "source": "corpus",
+      "evidence": [
+        {
+          "document_key": "fda-sponsor-safety-reporting-2025",
+          "page": 1
+        },
+        {
+          "document_key": "fda-protocol-deviations-draft-2024",
+          "page": 1
+        }
+      ]
+    },
+    {
+      "term": "CBER",
+      "kind": "abbreviation",
+      "source": "corpus",
+      "evidence": [
+        {
+          "document_key": "fda-sponsor-safety-reporting-2025",
+          "page": 1
+        },
+        {
+          "document_key": "fda-protocol-deviations-draft-2024",
+          "page": 1
+        }
+      ]
+    },
+    {
+      "term": "CDRH",
+      "kind": "abbreviation",
+      "source": "corpus",
+      "evidence": [
+        {
+          "document_key": "fda-protocol-deviations-draft-2024",
+          "page": 1
+        }
+      ]
+    },
+    {
+      "term": "OCE",
+      "kind": "abbreviation",
+      "source": "corpus",
+      "evidence": [
+        {
+          "document_key": "fda-protocol-deviations-draft-2024",
+          "page": 1
+        }
+      ]
+    },
+    {
+      "term": "EVPM",
+      "kind": "abbreviation",
+      "source": "corpus",
+      "evidence": [
+        {
+          "document_key": "ema-gvp-module-vi-rev2",
+          "page": 44
+        }
+      ]
+    },
+    {
+      "term": "EVCTM",
+      "kind": "abbreviation",
+      "source": "corpus",
+      "evidence": [
+        {
+          "document_key": "ema-gvp-module-vi-rev2",
+          "page": 44
+        }
+      ]
+    },
+    {
+      "term": "MSSO",
+      "kind": "abbreviation",
+      "source": "corpus",
+      "evidence": [
+        {
+          "document_key": "ema-gvp-module-vi-rev2",
+          "page": 23
+        }
+      ]
+    },
+    {
+      "term": "UMC",
+      "kind": "abbreviation",
+      "source": "corpus",
+      "evidence": [
+        {
+          "document_key": "ema-gvp-module-vi-rev2",
+          "page": 42
+        }
+      ]
+    },
+    {
+      "term": "UCUM",
+      "kind": "abbreviation",
+      "source": "corpus",
+      "evidence": [
+        {
+          "document_key": "ema-gvp-module-vi-rev2",
+          "page": 57
+        }
+      ]
+    },
+    {
+      "term": "RSI",
+      "kind": "abbreviation",
+      "source": "corpus",
+      "evidence": [
+        {
+          "document_key": "ich-e6-r3-step4-2025",
+          "page": 43
+        }
+      ]
+    },
+    {
+      "term": "CRF",
+      "kind": "abbreviation",
+      "source": "corpus",
+      "evidence": [
+        {
+          "document_key": "ich-e6-r3-step4-2025",
+          "page": 29
+        }
+      ]
+    },
+    {
+      "term": "SOC",
+      "kind": "abbreviation",
+      "source": "corpus",
+      "evidence": [
+        {
+          "document_key": "meddra-data-retrieval-ptc-3-26-zh-hans",
+          "page": 44
+        },
+        {
+          "document_key": "ich-e2f-step4-2010",
+          "page": 16
+        }
+      ]
+    },
+    {
+      "term": "SMQ",
+      "kind": "abbreviation",
+      "source": "corpus",
+      "evidence": [
+        {
+          "document_key": "meddra-data-retrieval-ptc-3-26-zh-hans",
+          "page": 5
+        }
+      ]
+    },
+    {
+      "term": "LLT",
+      "kind": "abbreviation",
+      "source": "corpus",
+      "evidence": [
+        {
+          "document_key": "ema-gvp-module-vi-rev2",
+          "page": 23
+        }
+      ]
+    },
+    {
+      "term": "PT",
+      "kind": "abbreviation",
+      "source": "corpus",
+      "evidence": [
+        {
+          "document_key": "fda-sponsor-safety-reporting-2025",
+          "page": 22
+        }
+      ]
+    },
+    {
+      "term": "IMP",
+      "kind": "abbreviation",
+      "source": "corpus",
+      "evidence": [
+        {
+          "document_key": "ema-gvp-module-vi-rev2",
+          "page": 26
+        }
+      ]
+    },
+    {
+      "term": "QPPV",
+      "kind": "abbreviation",
+      "source": "corpus",
+      "evidence": [
+        {
+          "document_key": "ema-gvp-module-ix-rev1",
+          "page": 22
+        }
+      ]
+    },
+    {
+      "term": "IND",
+      "kind": "abbreviation",
+      "source": "corpus",
+      "evidence": [
+        {
+          "document_key": "fda-sponsor-safety-reporting-2025",
+          "page": 5
+        }
+      ]
+    },
+    {
+      "term": "ZES",
+      "kind": "abbreviation",
+      "source": "corpus",
+      "evidence": [
+        {
+          "document_key": "tfda-label-esomen-40mg",
+          "page": 1
+        }
+      ]
+    },
+    {
+      "term": "AUC",
+      "kind": "abbreviation",
+      "source": "corpus",
+      "evidence": [
+        {
+          "document_key": "tfda-label-loformin-850mg",
+          "page": 2
+        }
+      ]
+    },
+    {
+      "term": "RMP",
+      "kind": "abbreviation",
+      "source": "corpus",
+      "evidence": [
+        {
+          "document_key": "ema-gvp-module-ix-rev1",
+          "page": 8
+        }
+      ]
+    }
+  ],
+  "matching_note": "the rewriter matches ASCII terms as whole words (case-insensitive) and CJK terms as substrings, outside protected spans"
+}

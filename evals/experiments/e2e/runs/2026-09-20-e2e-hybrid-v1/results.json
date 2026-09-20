@@ -1,0 +1,6214 @@
+{
+  "run_id": "2026-09-20-e2e-hybrid-v1",
+  "run_manifest_sha256": "cdd7aca21ebd63ec0a19ada9fa6f839953663415eb4afbfacf42fdf5fc9f3a4c",
+  "started_at": "2026-09-20T11:57:40+00:00",
+  "systems": {
+    "A2+V": {
+      "system": "A2+V",
+      "queries": 107,
+      "all": {
+        "queries": 107,
+        "recall_at_5": 0.5420560747663551,
+        "hit_at_5": 0.5420560747663551,
+        "fused_recall_at_20": 0.794392523364486,
+        "lexical_only_recall_at_5": 0.38317757009345793,
+        "vector_only_recall_at_5": 0.7009345794392523,
+        "by_department": [
+          {
+            "label": "CO",
+            "support": 32,
+            "recall": 0.28125,
+            "diagnostic_only": false
+          },
+          {
+            "label": "MA",
+            "support": 30,
+            "recall": 0.8,
+            "diagnostic_only": false
+          },
+          {
+            "label": "PV",
+            "support": 45,
+            "recall": 0.5555555555555556,
+            "diagnostic_only": false
+          }
+        ],
+        "by_slice": [
+          {
+            "label": "dose_unit",
+            "support": 19,
+            "recall": 0.8421052631578947,
+            "diagnostic_only": false
+          },
+          {
+            "label": "drug_name_zh",
+            "support": 18,
+            "recall": 0.7222222222222222,
+            "diagnostic_only": false
+          },
+          {
+            "label": "mixed_zh_en",
+            "support": 85,
+            "recall": 0.5176470588235295,
+            "diagnostic_only": false
+          },
+          {
+            "label": "negation",
+            "support": 56,
+            "recall": 0.5535714285714286,
+            "diagnostic_only": false
+          },
+          {
+            "label": "protocol_id",
+            "support": 29,
+            "recall": 0.3103448275862069,
+            "diagnostic_only": false
+          },
+          {
+            "label": "time_window",
+            "support": 28,
+            "recall": 0.8571428571428571,
+            "diagnostic_only": false
+          }
+        ],
+        "by_gold_script": [
+          {
+            "label": "en",
+            "support": 64,
+            "recall": 0.390625,
+            "diagnostic_only": false
+          },
+          {
+            "label": "zh-Hans",
+            "support": 10,
+            "recall": 0.8,
+            "diagnostic_only": false
+          },
+          {
+            "label": "zh-Hant",
+            "support": 33,
+            "recall": 0.7575757575757576,
+            "diagnostic_only": false
+          }
+        ],
+        "sample_ids": [
+          "pc-0001",
+          "pc-0002",
+          "pc-0003",
+          "pc-0004",
+          "pc-0005",
+          "pc-0006",
+          "pc-0007",
+          "pc-0008",
+          "pc-0009",
+          "pc-0010",
+          "pc-0011",
+          "pc-0012",
+          "pc-0013",
+          "pc-0014",
+          "pc-0015",
+          "pc-0016",
+          "pc-0017",
+          "pc-0018",
+          "pc-0019",
+          "pc-0020",
+          "pc-0021",
+          "pc-0022",
+          "pc-0023",
+          "pc-0024",
+          "pc-0025",
+          "pc-0026",
+          "pc-0027",
+          "pc-0028",
+          "pc-0029",
+          "pc-0030",
+          "pc-0031",
+          "pc-0032",
+          "pc-0033",
+          "pc-0034",
+          "pc-0035",
+          "pc-0036",
+          "pc-0037",
+          "pc-0038",
+          "pc-0039",
+          "pc-0040",
+          "pc-0041",
+          "pc-0042",
+          "pc-0043",
+          "pc-0044",
+          "pc-0045",
+          "pc-0046",
+          "pc-0047",
+          "pc-0048",
+          "pc-0049",
+          "pc-0050",
+          "pc-0051",
+          "pc-0052",
+          "pc-0053",
+          "pc-0054",
+          "pc-0055",
+          "pc-0056",
+          "pc-0057",
+          "pc-0058",
+          "pc-0059",
+          "pc-0060",
+          "pc-0061",
+          "pc-0062",
+          "pc-0063",
+          "pc-0064",
+          "pc-0065",
+          "pc-0066",
+          "pc-0067",
+          "pc-0068",
+          "pc-0069",
+          "pc-0070",
+          "pc-0071",
+          "pc-0072",
+          "pc-0073",
+          "pc-0074",
+          "pc-0075",
+          "pc-0076",
+          "pc-0077",
+          "pc-0078",
+          "pc-0079",
+          "pc-0080",
+          "pc-0081",
+          "pc-0082",
+          "pc-0083",
+          "pc-0084",
+          "pc-0085",
+          "pc-0086",
+          "pc-0087",
+          "pc-0088",
+          "pc-0089",
+          "pc-0090",
+          "pc-0091",
+          "pc-0092",
+          "pc-0093",
+          "pc-0094",
+          "pc-0095",
+          "pc-0096",
+          "pc-0097",
+          "pc-0098",
+          "pc-0099",
+          "pc-0100",
+          "pc-0101",
+          "pc-0102",
+          "pc-0103",
+          "pc-0104",
+          "pc-0105",
+          "pc-0106",
+          "pc-0107"
+        ]
+      },
+      "scopes": {
+        "language_matched": {
+          "queries": 75,
+          "recall_at_5": 0.64,
+          "hit_at_5": 0.64,
+          "fused_recall_at_20": 0.8533333333333334,
+          "lexical_only_recall_at_5": 0.52,
+          "vector_only_recall_at_5": 0.7466666666666667,
+          "by_department": [
+            {
+              "label": "CO",
+              "support": 16,
+              "recall": 0.4375,
+              "diagnostic_only": false
+            },
+            {
+              "label": "MA",
+              "support": 30,
+              "recall": 0.8,
+              "diagnostic_only": false
+            },
+            {
+              "label": "PV",
+              "support": 29,
+              "recall": 0.5862068965517241,
+              "diagnostic_only": false
+            }
+          ],
+          "by_slice": [
+            {
+              "label": "dose_unit",
+              "support": 19,
+              "recall": 0.8421052631578947,
+              "diagnostic_only": false
+            },
+            {
+              "label": "drug_name_zh",
+              "support": 18,
+              "recall": 0.7222222222222222,
+              "diagnostic_only": false
+            },
+            {
+              "label": "mixed_zh_en",
+              "support": 53,
+              "recall": 0.6415094339622641,
+              "diagnostic_only": false
+            },
+            {
+              "label": "negation",
+              "support": 38,
+              "recall": 0.6578947368421053,
+              "diagnostic_only": false
+            },
+            {
+              "label": "protocol_id",
+              "support": 17,
+              "recall": 0.47058823529411764,
+              "diagnostic_only": false
+            },
+            {
+              "label": "time_window",
+              "support": 19,
+              "recall": 0.8947368421052632,
+              "diagnostic_only": false
+            }
+          ],
+          "by_gold_script": [
+            {
+              "label": "en",
+              "support": 32,
+              "recall": 0.46875,
+              "diagnostic_only": false
+            },
+            {
+              "label": "zh-Hans",
+              "support": 10,
+              "recall": 0.8,
+              "diagnostic_only": false
+            },
+            {
+              "label": "zh-Hant",
+              "support": 33,
+              "recall": 0.7575757575757576,
+              "diagnostic_only": false
+            }
+          ],
+          "sample_ids": [
+            "pc-0001",
+            "pc-0002",
+            "pc-0003",
+            "pc-0004",
+            "pc-0005",
+            "pc-0006",
+            "pc-0007",
+            "pc-0008",
+            "pc-0009",
+            "pc-0010",
+            "pc-0011",
+            "pc-0012",
+            "pc-0013",
+            "pc-0014",
+            "pc-0015",
+            "pc-0016",
+            "pc-0017",
+            "pc-0018",
+            "pc-0019",
+            "pc-0020",
+            "pc-0021",
+            "pc-0022",
+            "pc-0023",
+            "pc-0024",
+            "pc-0025",
+            "pc-0026",
+            "pc-0027",
+            "pc-0028",
+            "pc-0029",
+            "pc-0030",
+            "pc-0031",
+            "pc-0032",
+            "pc-0033",
+            "pc-0034",
+            "pc-0035",
+            "pc-0036",
+            "pc-0037",
+            "pc-0038",
+            "pc-0039",
+            "pc-0040",
+            "pc-0057",
+            "pc-0058",
+            "pc-0059",
+            "pc-0076",
+            "pc-0077",
+            "pc-0078",
+            "pc-0079",
+            "pc-0080",
+            "pc-0081",
+            "pc-0082",
+            "pc-0083",
+            "pc-0084",
+            "pc-0085",
+            "pc-0086",
+            "pc-0087",
+            "pc-0088",
+            "pc-0089",
+            "pc-0090",
+            "pc-0091",
+            "pc-0092",
+            "pc-0093",
+            "pc-0094",
+            "pc-0095",
+            "pc-0096",
+            "pc-0097",
+            "pc-0098",
+            "pc-0099",
+            "pc-0100",
+            "pc-0101",
+            "pc-0102",
+            "pc-0103",
+            "pc-0104",
+            "pc-0105",
+            "pc-0106",
+            "pc-0107"
+          ]
+        },
+        "cross_lingual": {
+          "queries": 32,
+          "recall_at_5": 0.3125,
+          "hit_at_5": 0.3125,
+          "fused_recall_at_20": 0.65625,
+          "lexical_only_recall_at_5": 0.0625,
+          "vector_only_recall_at_5": 0.59375,
+          "by_department": [
+            {
+              "label": "CO",
+              "support": 16,
+              "recall": 0.125,
+              "diagnostic_only": false
+            },
+            {
+              "label": "MA",
+              "support": 0,
+              "recall": null,
+              "diagnostic_only": true
+            },
+            {
+              "label": "PV",
+              "support": 16,
+              "recall": 0.5,
+              "diagnostic_only": false
+            }
+          ],
+          "by_slice": [
+            {
+              "label": "dose_unit",
+              "support": 0,
+              "recall": null,
+              "diagnostic_only": true
+            },
+            {
+              "label": "drug_name_zh",
+              "support": 0,
+              "recall": null,
+              "diagnostic_only": true
+            },
+            {
+              "label": "mixed_zh_en",
+              "support": 32,
+              "recall": 0.3125,
+              "diagnostic_only": false
+            },
+            {
+              "label": "negation",
+              "support": 18,
+              "recall": 0.3333333333333333,
+              "diagnostic_only": false
+            },
+            {
+              "label": "protocol_id",
+              "support": 12,
+              "recall": 0.08333333333333333,
+              "diagnostic_only": false
+            },
+            {
+              "label": "time_window",
+              "support": 9,
+              "recall": 0.7777777777777778,
+              "diagnostic_only": false
+            }
+          ],
+          "by_gold_script": [
+            {
+              "label": "en",
+              "support": 32,
+              "recall": 0.3125,
+              "diagnostic_only": false
+            }
+          ],
+          "sample_ids": [
+            "pc-0041",
+            "pc-0042",
+            "pc-0043",
+            "pc-0044",
+            "pc-0045",
+            "pc-0046",
+            "pc-0047",
+            "pc-0048",
+            "pc-0049",
+            "pc-0050",
+            "pc-0051",
+            "pc-0052",
+            "pc-0053",
+            "pc-0054",
+            "pc-0055",
+            "pc-0056",
+            "pc-0060",
+            "pc-0061",
+            "pc-0062",
+            "pc-0063",
+            "pc-0064",
+            "pc-0065",
+            "pc-0066",
+            "pc-0067",
+            "pc-0068",
+            "pc-0069",
+            "pc-0070",
+            "pc-0071",
+            "pc-0072",
+            "pc-0073",
+            "pc-0074",
+            "pc-0075"
+          ]
+        }
+      },
+      "invalid_version_citation_rate": 0.0,
+      "top5_evidence_total": 535,
+      "dropped_by_recheck_total": {},
+      "not_reproducible_queries": [],
+      "latency_ms": {
+        "measured_executions": 321,
+        "p95": 164.913,
+        "mean": 116.63248192523365,
+        "max": 532.425417
+      },
+      "per_query": [
+        {
+          "sample_id": "pc-0001",
+          "dept": "MA",
+          "slices": [
+            "dose_unit",
+            "drug_name_zh"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            72.678,
+            129.887,
+            88.676
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0002",
+          "dept": "MA",
+          "slices": [
+            "dose_unit",
+            "drug_name_zh"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            64.953,
+            107.574,
+            96.469
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0003",
+          "dept": "MA",
+          "slices": [
+            "negation",
+            "drug_name_zh"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            75.963,
+            96.771,
+            96.562
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0004",
+          "dept": "MA",
+          "slices": [
+            "time_window",
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "mixed",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            64.106,
+            124.231,
+            100.082
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0005",
+          "dept": "MA",
+          "slices": [
+            "time_window",
+            "drug_name_zh",
+            "dose_unit"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            69.803,
+            156.985,
+            99.691
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0006",
+          "dept": "MA",
+          "slices": [
+            "protocol_id",
+            "dose_unit",
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "mixed",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            67.651,
+            85.044,
+            95.704
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0007",
+          "dept": "MA",
+          "slices": [
+            "dose_unit",
+            "drug_name_zh",
+            "time_window",
+            "negation"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            66.077,
+            95.819,
+            100.245
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0008",
+          "dept": "MA",
+          "slices": [
+            "dose_unit",
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "mixed",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            64.428,
+            123.492,
+            93.504
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0009",
+          "dept": "MA",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "mixed",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            67.89,
+            104.833,
+            91.389
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0010",
+          "dept": "MA",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "mixed",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            66.886,
+            85.947,
+            95.19
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0011",
+          "dept": "MA",
+          "slices": [
+            "dose_unit",
+            "negation",
+            "drug_name_zh"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            68.987,
+            532.425,
+            94.44
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0012",
+          "dept": "MA",
+          "slices": [
+            "protocol_id"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            65.437,
+            84.845,
+            99.857
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0013",
+          "dept": "MA",
+          "slices": [
+            "dose_unit",
+            "drug_name_zh",
+            "time_window"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            64.471,
+            90.485,
+            91.573
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0014",
+          "dept": "MA",
+          "slices": [
+            "time_window",
+            "drug_name_zh",
+            "dose_unit"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            73.355,
+            84.794,
+            91.782
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0015",
+          "dept": "MA",
+          "slices": [
+            "dose_unit",
+            "drug_name_zh"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            70.321,
+            110.276,
+            95.492
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0016",
+          "dept": "MA",
+          "slices": [
+            "negation",
+            "drug_name_zh",
+            "dose_unit",
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "mixed",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            65.004,
+            83.356,
+            94.157
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0017",
+          "dept": "MA",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "mixed",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            71.826,
+            82.746,
+            95.424
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0018",
+          "dept": "MA",
+          "slices": [
+            "protocol_id",
+            "dose_unit"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            63.709,
+            86.532,
+            94.521
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0019",
+          "dept": "MA",
+          "slices": [
+            "dose_unit",
+            "drug_name_zh"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            64.853,
+            88.004,
+            92.671
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0020",
+          "dept": "MA",
+          "slices": [
+            "negation",
+            "drug_name_zh"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            67.26,
+            88.25,
+            89.511
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0021",
+          "dept": "MA",
+          "slices": [
+            "time_window",
+            "drug_name_zh"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            63.117,
+            82.253,
+            120.902
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0022",
+          "dept": "MA",
+          "slices": [
+            "time_window",
+            "drug_name_zh"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            63.793,
+            101.772,
+            89.745
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0023",
+          "dept": "MA",
+          "slices": [
+            "dose_unit",
+            "drug_name_zh",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "mixed",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            65.279,
+            106.741,
+            99.008
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0024",
+          "dept": "MA",
+          "slices": [
+            "protocol_id",
+            "dose_unit"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            67.615,
+            92.061,
+            92.834
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0025",
+          "dept": "MA",
+          "slices": [
+            "negation",
+            "drug_name_zh"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            63.709,
+            121.66,
+            90.263
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0026",
+          "dept": "MA",
+          "slices": [
+            "time_window",
+            "drug_name_zh"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            64.934,
+            85.904,
+            97.262
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0027",
+          "dept": "MA",
+          "slices": [
+            "dose_unit",
+            "time_window",
+            "drug_name_zh",
+            "negation"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            85.985,
+            133.181,
+            126.387
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0028",
+          "dept": "MA",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "mixed",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            70.015,
+            88.783,
+            91.076
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0029",
+          "dept": "MA",
+          "slices": [
+            "dose_unit",
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "mixed",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            76.011,
+            132.021,
+            113.38
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0030",
+          "dept": "MA",
+          "slices": [
+            "protocol_id"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            72.875,
+            92.272,
+            101.511
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0031",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hans",
+          "language": "mixed",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            93.818,
+            127.805,
+            129.337
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0032",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hans",
+          "language": "mixed",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            103.419,
+            131.889,
+            130.194
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0033",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hans",
+          "language": "mixed",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            90.413,
+            101.097,
+            132.031
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0034",
+          "dept": "PV",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hans",
+          "language": "mixed",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            99.062,
+            110.967,
+            138.487
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0035",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "dose_unit"
+          ],
+          "gold_script": "zh-Hans",
+          "language": "mixed",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            113.64,
+            131.484,
+            166.059
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0036",
+          "dept": "PV",
+          "slices": [
+            "mixed_zh_en",
+            "negation"
+          ],
+          "gold_script": "zh-Hans",
+          "language": "mixed",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            92.792,
+            118.264,
+            121.814
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0037",
+          "dept": "PV",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hans",
+          "language": "mixed",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            92.4,
+            125.901,
+            128.302
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0038",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hans",
+          "language": "mixed",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            88.592,
+            146.717,
+            118.578
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0039",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hans",
+          "language": "mixed",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            102.577,
+            144.341,
+            161.039
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0040",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hans",
+          "language": "mixed",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            92.888,
+            114.137,
+            120.004
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0041",
+          "dept": "PV",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            96.462,
+            106.201,
+            124.352
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0042",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            137.72,
+            125.626,
+            160.972
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0043",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            120.185,
+            329.516,
+            156.315
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0044",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            119.455,
+            210.412,
+            132.029
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0045",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            107.56,
+            142.995,
+            148.911
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0046",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            127.718,
+            186.281,
+            164.866
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0047",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            120.577,
+            133.887,
+            142.919
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0048",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            117.11,
+            206.593,
+            143.622
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0049",
+          "dept": "PV",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            120.487,
+            132.569,
+            148.275
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0050",
+          "dept": "PV",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            90.314,
+            121.566,
+            118.668
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0051",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            90.569,
+            114.818,
+            132.759
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0052",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            88.76,
+            108.278,
+            133.184
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0053",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            118.117,
+            142.077,
+            158.469
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0054",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            110.948,
+            161.592,
+            145.763
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0055",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            110.088,
+            170.868,
+            139.782
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0056",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            90.449,
+            118.465,
+            132.808
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0057",
+          "dept": "PV",
+          "slices": [
+            "negation"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            105.755,
+            163.337,
+            143.751
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0058",
+          "dept": "PV",
+          "slices": [
+            "dose_unit"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            95.906,
+            127.785,
+            127.692
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0059",
+          "dept": "PV",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "mixed",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            92.203,
+            109.944,
+            127.961
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0060",
+          "dept": "CO",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            85.168,
+            107.071,
+            121.334
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0061",
+          "dept": "CO",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            93.863,
+            114.074,
+            123.34
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0062",
+          "dept": "CO",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            89.659,
+            118.515,
+            100.63
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0063",
+          "dept": "CO",
+          "slices": [
+            "protocol_id",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            76.89,
+            144.977,
+            110.084
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0064",
+          "dept": "CO",
+          "slices": [
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            76.198,
+            121.689,
+            112.194
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0065",
+          "dept": "CO",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            93.522,
+            105.352,
+            131.188
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0066",
+          "dept": "CO",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            106.812,
+            118.01,
+            145.781
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0067",
+          "dept": "CO",
+          "slices": [
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            89.177,
+            158.575,
+            102.969
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0068",
+          "dept": "CO",
+          "slices": [
+            "protocol_id",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            93.945,
+            103.493,
+            111.441
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0069",
+          "dept": "CO",
+          "slices": [
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            76.413,
+            129.867,
+            103.271
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0070",
+          "dept": "CO",
+          "slices": [
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            79.731,
+            111.175,
+            106.961
+          ],
+          "unmappable_golds": [
+            "pc-0070-g1"
+          ]
+        },
+        {
+          "sample_id": "pc-0071",
+          "dept": "CO",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            86.192,
+            121.219,
+            118.162
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0072",
+          "dept": "CO",
+          "slices": [
+            "protocol_id",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            79.683,
+            164.913,
+            113.822
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0073",
+          "dept": "CO",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            94.885,
+            128.083,
+            135.277
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0074",
+          "dept": "CO",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            101.115,
+            113.517,
+            139.84
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0075",
+          "dept": "CO",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            81.446,
+            146.202,
+            113.787
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0076",
+          "dept": "PV",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            94.156,
+            114.406,
+            225.046
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0077",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            147.708,
+            153.451,
+            156.69
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0078",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            129.723,
+            159.89,
+            159.596
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0079",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            134.497,
+            150.105,
+            143.882
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0080",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            109.057,
+            127.875,
+            147.891
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0081",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            125.887,
+            140.989,
+            154.629
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0082",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            93.854,
+            125.473,
+            118.724
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0083",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            116.345,
+            189.867,
+            157.915
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0084",
+          "dept": "PV",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            125.504,
+            128.486,
+            149.012
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0085",
+          "dept": "PV",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            96.183,
+            203.521,
+            123.09
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0086",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            93.815,
+            115.663,
+            126.631
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0087",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            107.98,
+            123.808,
+            133.453
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0088",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            119.162,
+            438.661,
+            151.987
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0089",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            110.435,
+            133.357,
+            131.843
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0090",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            111.826,
+            115.648,
+            135.342
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0091",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            94.356,
+            283.719,
+            132.103
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0092",
+          "dept": "CO",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            94.445,
+            149.559,
+            133.91
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0093",
+          "dept": "CO",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            124.545,
+            113.166,
+            138.953
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0094",
+          "dept": "CO",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            79.517,
+            110.538,
+            114.534
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0095",
+          "dept": "CO",
+          "slices": [
+            "protocol_id",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            75.576,
+            175.389,
+            108.023
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0096",
+          "dept": "CO",
+          "slices": [
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            111.055,
+            117.02,
+            130.712
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0097",
+          "dept": "CO",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            81.026,
+            111.833,
+            109.09
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0098",
+          "dept": "CO",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            126.428,
+            190.866,
+            138.776
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0099",
+          "dept": "CO",
+          "slices": [
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            74.294,
+            133.692,
+            115.314
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0100",
+          "dept": "CO",
+          "slices": [
+            "protocol_id",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            74.42,
+            104.273,
+            101.881
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0101",
+          "dept": "CO",
+          "slices": [
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            75.405,
+            203.938,
+            107.621
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0102",
+          "dept": "CO",
+          "slices": [
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            85.756,
+            109.709,
+            111.332
+          ],
+          "unmappable_golds": [
+            "pc-0102-g1"
+          ]
+        },
+        {
+          "sample_id": "pc-0103",
+          "dept": "CO",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            77.59,
+            106.841,
+            103.998
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0104",
+          "dept": "CO",
+          "slices": [
+            "protocol_id",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            85.016,
+            184.157,
+            108.853
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0105",
+          "dept": "CO",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            127.511,
+            138.796,
+            154.265
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0106",
+          "dept": "CO",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            109.177,
+            140.968,
+            138.135
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0107",
+          "dept": "CO",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            88.057,
+            102.669,
+            104.062
+          ],
+          "unmappable_golds": []
+        }
+      ],
+      "leak_violations": []
+    },
+    "B2+V": {
+      "system": "B2+V",
+      "queries": 107,
+      "all": {
+        "queries": 107,
+        "recall_at_5": 0.5887850467289719,
+        "hit_at_5": 0.5887850467289719,
+        "fused_recall_at_20": 0.794392523364486,
+        "lexical_only_recall_at_5": 0.411214953271028,
+        "vector_only_recall_at_5": 0.7009345794392523,
+        "by_department": [
+          {
+            "label": "CO",
+            "support": 32,
+            "recall": 0.34375,
+            "diagnostic_only": false
+          },
+          {
+            "label": "MA",
+            "support": 30,
+            "recall": 0.9,
+            "diagnostic_only": false
+          },
+          {
+            "label": "PV",
+            "support": 45,
+            "recall": 0.5555555555555556,
+            "diagnostic_only": false
+          }
+        ],
+        "by_slice": [
+          {
+            "label": "dose_unit",
+            "support": 19,
+            "recall": 0.8947368421052632,
+            "diagnostic_only": false
+          },
+          {
+            "label": "drug_name_zh",
+            "support": 18,
+            "recall": 0.9444444444444444,
+            "diagnostic_only": false
+          },
+          {
+            "label": "mixed_zh_en",
+            "support": 85,
+            "recall": 0.5176470588235295,
+            "diagnostic_only": false
+          },
+          {
+            "label": "negation",
+            "support": 56,
+            "recall": 0.625,
+            "diagnostic_only": false
+          },
+          {
+            "label": "protocol_id",
+            "support": 29,
+            "recall": 0.3103448275862069,
+            "diagnostic_only": false
+          },
+          {
+            "label": "time_window",
+            "support": 28,
+            "recall": 0.8571428571428571,
+            "diagnostic_only": false
+          }
+        ],
+        "by_gold_script": [
+          {
+            "label": "en",
+            "support": 64,
+            "recall": 0.390625,
+            "diagnostic_only": false
+          },
+          {
+            "label": "zh-Hans",
+            "support": 10,
+            "recall": 0.8,
+            "diagnostic_only": false
+          },
+          {
+            "label": "zh-Hant",
+            "support": 33,
+            "recall": 0.9090909090909091,
+            "diagnostic_only": false
+          }
+        ],
+        "sample_ids": [
+          "pc-0001",
+          "pc-0002",
+          "pc-0003",
+          "pc-0004",
+          "pc-0005",
+          "pc-0006",
+          "pc-0007",
+          "pc-0008",
+          "pc-0009",
+          "pc-0010",
+          "pc-0011",
+          "pc-0012",
+          "pc-0013",
+          "pc-0014",
+          "pc-0015",
+          "pc-0016",
+          "pc-0017",
+          "pc-0018",
+          "pc-0019",
+          "pc-0020",
+          "pc-0021",
+          "pc-0022",
+          "pc-0023",
+          "pc-0024",
+          "pc-0025",
+          "pc-0026",
+          "pc-0027",
+          "pc-0028",
+          "pc-0029",
+          "pc-0030",
+          "pc-0031",
+          "pc-0032",
+          "pc-0033",
+          "pc-0034",
+          "pc-0035",
+          "pc-0036",
+          "pc-0037",
+          "pc-0038",
+          "pc-0039",
+          "pc-0040",
+          "pc-0041",
+          "pc-0042",
+          "pc-0043",
+          "pc-0044",
+          "pc-0045",
+          "pc-0046",
+          "pc-0047",
+          "pc-0048",
+          "pc-0049",
+          "pc-0050",
+          "pc-0051",
+          "pc-0052",
+          "pc-0053",
+          "pc-0054",
+          "pc-0055",
+          "pc-0056",
+          "pc-0057",
+          "pc-0058",
+          "pc-0059",
+          "pc-0060",
+          "pc-0061",
+          "pc-0062",
+          "pc-0063",
+          "pc-0064",
+          "pc-0065",
+          "pc-0066",
+          "pc-0067",
+          "pc-0068",
+          "pc-0069",
+          "pc-0070",
+          "pc-0071",
+          "pc-0072",
+          "pc-0073",
+          "pc-0074",
+          "pc-0075",
+          "pc-0076",
+          "pc-0077",
+          "pc-0078",
+          "pc-0079",
+          "pc-0080",
+          "pc-0081",
+          "pc-0082",
+          "pc-0083",
+          "pc-0084",
+          "pc-0085",
+          "pc-0086",
+          "pc-0087",
+          "pc-0088",
+          "pc-0089",
+          "pc-0090",
+          "pc-0091",
+          "pc-0092",
+          "pc-0093",
+          "pc-0094",
+          "pc-0095",
+          "pc-0096",
+          "pc-0097",
+          "pc-0098",
+          "pc-0099",
+          "pc-0100",
+          "pc-0101",
+          "pc-0102",
+          "pc-0103",
+          "pc-0104",
+          "pc-0105",
+          "pc-0106",
+          "pc-0107"
+        ]
+      },
+      "scopes": {
+        "language_matched": {
+          "queries": 75,
+          "recall_at_5": 0.6933333333333334,
+          "hit_at_5": 0.6933333333333334,
+          "fused_recall_at_20": 0.8666666666666667,
+          "lexical_only_recall_at_5": 0.56,
+          "vector_only_recall_at_5": 0.7466666666666667,
+          "by_department": [
+            {
+              "label": "CO",
+              "support": 16,
+              "recall": 0.4375,
+              "diagnostic_only": false
+            },
+            {
+              "label": "MA",
+              "support": 30,
+              "recall": 0.9,
+              "diagnostic_only": false
+            },
+            {
+              "label": "PV",
+              "support": 29,
+              "recall": 0.6206896551724138,
+              "diagnostic_only": false
+            }
+          ],
+          "by_slice": [
+            {
+              "label": "dose_unit",
+              "support": 19,
+              "recall": 0.8947368421052632,
+              "diagnostic_only": false
+            },
+            {
+              "label": "drug_name_zh",
+              "support": 18,
+              "recall": 0.9444444444444444,
+              "diagnostic_only": false
+            },
+            {
+              "label": "mixed_zh_en",
+              "support": 53,
+              "recall": 0.6226415094339622,
+              "diagnostic_only": false
+            },
+            {
+              "label": "negation",
+              "support": 38,
+              "recall": 0.7105263157894737,
+              "diagnostic_only": false
+            },
+            {
+              "label": "protocol_id",
+              "support": 17,
+              "recall": 0.4117647058823529,
+              "diagnostic_only": false
+            },
+            {
+              "label": "time_window",
+              "support": 19,
+              "recall": 0.8947368421052632,
+              "diagnostic_only": false
+            }
+          ],
+          "by_gold_script": [
+            {
+              "label": "en",
+              "support": 32,
+              "recall": 0.4375,
+              "diagnostic_only": false
+            },
+            {
+              "label": "zh-Hans",
+              "support": 10,
+              "recall": 0.8,
+              "diagnostic_only": false
+            },
+            {
+              "label": "zh-Hant",
+              "support": 33,
+              "recall": 0.9090909090909091,
+              "diagnostic_only": false
+            }
+          ],
+          "sample_ids": [
+            "pc-0001",
+            "pc-0002",
+            "pc-0003",
+            "pc-0004",
+            "pc-0005",
+            "pc-0006",
+            "pc-0007",
+            "pc-0008",
+            "pc-0009",
+            "pc-0010",
+            "pc-0011",
+            "pc-0012",
+            "pc-0013",
+            "pc-0014",
+            "pc-0015",
+            "pc-0016",
+            "pc-0017",
+            "pc-0018",
+            "pc-0019",
+            "pc-0020",
+            "pc-0021",
+            "pc-0022",
+            "pc-0023",
+            "pc-0024",
+            "pc-0025",
+            "pc-0026",
+            "pc-0027",
+            "pc-0028",
+            "pc-0029",
+            "pc-0030",
+            "pc-0031",
+            "pc-0032",
+            "pc-0033",
+            "pc-0034",
+            "pc-0035",
+            "pc-0036",
+            "pc-0037",
+            "pc-0038",
+            "pc-0039",
+            "pc-0040",
+            "pc-0057",
+            "pc-0058",
+            "pc-0059",
+            "pc-0076",
+            "pc-0077",
+            "pc-0078",
+            "pc-0079",
+            "pc-0080",
+            "pc-0081",
+            "pc-0082",
+            "pc-0083",
+            "pc-0084",
+            "pc-0085",
+            "pc-0086",
+            "pc-0087",
+            "pc-0088",
+            "pc-0089",
+            "pc-0090",
+            "pc-0091",
+            "pc-0092",
+            "pc-0093",
+            "pc-0094",
+            "pc-0095",
+            "pc-0096",
+            "pc-0097",
+            "pc-0098",
+            "pc-0099",
+            "pc-0100",
+            "pc-0101",
+            "pc-0102",
+            "pc-0103",
+            "pc-0104",
+            "pc-0105",
+            "pc-0106",
+            "pc-0107"
+          ]
+        },
+        "cross_lingual": {
+          "queries": 32,
+          "recall_at_5": 0.34375,
+          "hit_at_5": 0.34375,
+          "fused_recall_at_20": 0.625,
+          "lexical_only_recall_at_5": 0.0625,
+          "vector_only_recall_at_5": 0.59375,
+          "by_department": [
+            {
+              "label": "CO",
+              "support": 16,
+              "recall": 0.25,
+              "diagnostic_only": false
+            },
+            {
+              "label": "MA",
+              "support": 0,
+              "recall": null,
+              "diagnostic_only": true
+            },
+            {
+              "label": "PV",
+              "support": 16,
+              "recall": 0.4375,
+              "diagnostic_only": false
+            }
+          ],
+          "by_slice": [
+            {
+              "label": "dose_unit",
+              "support": 0,
+              "recall": null,
+              "diagnostic_only": true
+            },
+            {
+              "label": "drug_name_zh",
+              "support": 0,
+              "recall": null,
+              "diagnostic_only": true
+            },
+            {
+              "label": "mixed_zh_en",
+              "support": 32,
+              "recall": 0.34375,
+              "diagnostic_only": false
+            },
+            {
+              "label": "negation",
+              "support": 18,
+              "recall": 0.4444444444444444,
+              "diagnostic_only": false
+            },
+            {
+              "label": "protocol_id",
+              "support": 12,
+              "recall": 0.16666666666666666,
+              "diagnostic_only": false
+            },
+            {
+              "label": "time_window",
+              "support": 9,
+              "recall": 0.7777777777777778,
+              "diagnostic_only": false
+            }
+          ],
+          "by_gold_script": [
+            {
+              "label": "en",
+              "support": 32,
+              "recall": 0.34375,
+              "diagnostic_only": false
+            }
+          ],
+          "sample_ids": [
+            "pc-0041",
+            "pc-0042",
+            "pc-0043",
+            "pc-0044",
+            "pc-0045",
+            "pc-0046",
+            "pc-0047",
+            "pc-0048",
+            "pc-0049",
+            "pc-0050",
+            "pc-0051",
+            "pc-0052",
+            "pc-0053",
+            "pc-0054",
+            "pc-0055",
+            "pc-0056",
+            "pc-0060",
+            "pc-0061",
+            "pc-0062",
+            "pc-0063",
+            "pc-0064",
+            "pc-0065",
+            "pc-0066",
+            "pc-0067",
+            "pc-0068",
+            "pc-0069",
+            "pc-0070",
+            "pc-0071",
+            "pc-0072",
+            "pc-0073",
+            "pc-0074",
+            "pc-0075"
+          ]
+        }
+      },
+      "invalid_version_citation_rate": 0.0,
+      "top5_evidence_total": 535,
+      "dropped_by_recheck_total": {},
+      "not_reproducible_queries": [],
+      "latency_ms": {
+        "measured_executions": 321,
+        "p95": 186.136167,
+        "mean": 130.47222885981304,
+        "max": 266.049834
+      },
+      "per_query": [
+        {
+          "sample_id": "pc-0001",
+          "dept": "MA",
+          "slices": [
+            "dose_unit",
+            "drug_name_zh"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            97.586,
+            92.249,
+            97.182
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0002",
+          "dept": "MA",
+          "slices": [
+            "dose_unit",
+            "drug_name_zh"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            143.191,
+            150.054,
+            89.864
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0003",
+          "dept": "MA",
+          "slices": [
+            "negation",
+            "drug_name_zh"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            100.885,
+            104.423,
+            117.564
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0004",
+          "dept": "MA",
+          "slices": [
+            "time_window",
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "mixed",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            118.85,
+            97.816,
+            121.48
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0005",
+          "dept": "MA",
+          "slices": [
+            "time_window",
+            "drug_name_zh",
+            "dose_unit"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            105.656,
+            112.952,
+            90.373
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0006",
+          "dept": "MA",
+          "slices": [
+            "protocol_id",
+            "dose_unit",
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "mixed",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            96.248,
+            98.893,
+            113.912
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0007",
+          "dept": "MA",
+          "slices": [
+            "dose_unit",
+            "drug_name_zh",
+            "time_window",
+            "negation"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            100.387,
+            117.234,
+            97.415
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0008",
+          "dept": "MA",
+          "slices": [
+            "dose_unit",
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "mixed",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            100.861,
+            115.234,
+            86.926
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0009",
+          "dept": "MA",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "mixed",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            95.633,
+            111.397,
+            94.855
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0010",
+          "dept": "MA",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "mixed",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            100.002,
+            91.042,
+            94.637
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0011",
+          "dept": "MA",
+          "slices": [
+            "dose_unit",
+            "negation",
+            "drug_name_zh"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            103.713,
+            92.503,
+            90.568
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0012",
+          "dept": "MA",
+          "slices": [
+            "protocol_id"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            151.974,
+            91.566,
+            88.059
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0013",
+          "dept": "MA",
+          "slices": [
+            "dose_unit",
+            "drug_name_zh",
+            "time_window"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            110.419,
+            96.027,
+            110.375
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0014",
+          "dept": "MA",
+          "slices": [
+            "time_window",
+            "drug_name_zh",
+            "dose_unit"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            103.352,
+            91.282,
+            155.576
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0015",
+          "dept": "MA",
+          "slices": [
+            "dose_unit",
+            "drug_name_zh"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            110.184,
+            101.224,
+            98.81
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0016",
+          "dept": "MA",
+          "slices": [
+            "negation",
+            "drug_name_zh",
+            "dose_unit",
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "mixed",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            123.855,
+            92.963,
+            90.635
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0017",
+          "dept": "MA",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "mixed",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            99.608,
+            89.86,
+            109.911
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0018",
+          "dept": "MA",
+          "slices": [
+            "protocol_id",
+            "dose_unit"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            144.93,
+            94.994,
+            98.952
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0019",
+          "dept": "MA",
+          "slices": [
+            "dose_unit",
+            "drug_name_zh"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            100.144,
+            99.148,
+            89.566
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0020",
+          "dept": "MA",
+          "slices": [
+            "negation",
+            "drug_name_zh"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            98.929,
+            91.583,
+            105.844
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0021",
+          "dept": "MA",
+          "slices": [
+            "time_window",
+            "drug_name_zh"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            150.144,
+            93.267,
+            107.776
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0022",
+          "dept": "MA",
+          "slices": [
+            "time_window",
+            "drug_name_zh"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            122.475,
+            89.915,
+            113.979
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0023",
+          "dept": "MA",
+          "slices": [
+            "dose_unit",
+            "drug_name_zh",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "mixed",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            104.952,
+            96.865,
+            108.602
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0024",
+          "dept": "MA",
+          "slices": [
+            "protocol_id",
+            "dose_unit"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            97.658,
+            114.794,
+            110.886
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0025",
+          "dept": "MA",
+          "slices": [
+            "negation",
+            "drug_name_zh"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            97.41,
+            88.296,
+            111.66
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0026",
+          "dept": "MA",
+          "slices": [
+            "time_window",
+            "drug_name_zh"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            102.913,
+            93.695,
+            87.654
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0027",
+          "dept": "MA",
+          "slices": [
+            "dose_unit",
+            "time_window",
+            "drug_name_zh",
+            "negation"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            148.685,
+            137.079,
+            111.261
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0028",
+          "dept": "MA",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "mixed",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            104.069,
+            99.003,
+            108.566
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0029",
+          "dept": "MA",
+          "slices": [
+            "dose_unit",
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "mixed",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            101.128,
+            93.016,
+            91.388
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0030",
+          "dept": "MA",
+          "slices": [
+            "protocol_id"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            96.093,
+            129.325,
+            107.13
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0031",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hans",
+          "language": "mixed",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            130.559,
+            120.775,
+            157.678
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0032",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hans",
+          "language": "mixed",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            129.072,
+            170.732,
+            113.494
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0033",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hans",
+          "language": "mixed",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            125.017,
+            118.003,
+            128.769
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0034",
+          "dept": "PV",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hans",
+          "language": "mixed",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            130.3,
+            122.226,
+            115.769
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0035",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "dose_unit"
+          ],
+          "gold_script": "zh-Hans",
+          "language": "mixed",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            225.889,
+            167.811,
+            142.74
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0036",
+          "dept": "PV",
+          "slices": [
+            "mixed_zh_en",
+            "negation"
+          ],
+          "gold_script": "zh-Hans",
+          "language": "mixed",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            130.921,
+            126.739,
+            117.706
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0037",
+          "dept": "PV",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hans",
+          "language": "mixed",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            126.539,
+            126.298,
+            116.143
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0038",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hans",
+          "language": "mixed",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            118.666,
+            137.643,
+            121.178
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0039",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hans",
+          "language": "mixed",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            198.09,
+            159.287,
+            129.214
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0040",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hans",
+          "language": "mixed",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            128.974,
+            119.302,
+            144.867
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0041",
+          "dept": "PV",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            182.002,
+            121.237,
+            163.247
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0042",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            164.589,
+            146.266,
+            155.654
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0043",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            158.655,
+            161.957,
+            147.246
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0044",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            157.948,
+            135.432,
+            157.304
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0045",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            154.525,
+            168.916,
+            138.685
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0046",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            226.017,
+            196.692,
+            168.769
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0047",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            161.948,
+            147.833,
+            132.297
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0048",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            181.892,
+            180.652,
+            138.467
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0049",
+          "dept": "PV",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            235.211,
+            146.659,
+            189.114
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0050",
+          "dept": "PV",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            134.536,
+            122.395,
+            135.845
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0051",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            135.298,
+            124.526,
+            144.593
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0052",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            124.726,
+            155.108,
+            127.856
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0053",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            225.415,
+            154.519,
+            142.633
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0054",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            169.805,
+            186.136,
+            133.603
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0055",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            185.428,
+            143.45,
+            129.696
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0056",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            173.715,
+            132.766,
+            116.506
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0057",
+          "dept": "PV",
+          "slices": [
+            "negation"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            185.456,
+            156.571,
+            136.723
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0058",
+          "dept": "PV",
+          "slices": [
+            "dose_unit"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            136.479,
+            126.263,
+            117.461
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0059",
+          "dept": "PV",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "mixed",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            137.271,
+            119.433,
+            120.58
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0060",
+          "dept": "CO",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            115.937,
+            123.619,
+            135.229
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0061",
+          "dept": "CO",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            132.362,
+            127.16,
+            116.856
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0062",
+          "dept": "CO",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            123.817,
+            106.164,
+            121.394
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0063",
+          "dept": "CO",
+          "slices": [
+            "protocol_id",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            107.874,
+            114.05,
+            104.212
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0064",
+          "dept": "CO",
+          "slices": [
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            162.554,
+            129.259,
+            101.632
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0065",
+          "dept": "CO",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            118.355,
+            100.604,
+            103.652
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0066",
+          "dept": "CO",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            131.134,
+            120.338,
+            232.804
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0067",
+          "dept": "CO",
+          "slices": [
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            125.436,
+            128.624,
+            124.046
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0068",
+          "dept": "CO",
+          "slices": [
+            "protocol_id",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            118.581,
+            102.726,
+            99.272
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0069",
+          "dept": "CO",
+          "slices": [
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            122.187,
+            113.433,
+            103.569
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0070",
+          "dept": "CO",
+          "slices": [
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            118.186,
+            121.475,
+            98.358
+          ],
+          "unmappable_golds": [
+            "pc-0070-g1"
+          ]
+        },
+        {
+          "sample_id": "pc-0071",
+          "dept": "CO",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            109.867,
+            113.276,
+            108.465
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0072",
+          "dept": "CO",
+          "slices": [
+            "protocol_id",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            110.225,
+            105.09,
+            98.485
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0073",
+          "dept": "CO",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            235.763,
+            126.76,
+            132.549
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0074",
+          "dept": "CO",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            142.295,
+            128.813,
+            140.184
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0075",
+          "dept": "CO",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            112.865,
+            128.942,
+            121.882
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0076",
+          "dept": "PV",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            134.329,
+            131.893,
+            120.284
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0077",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            162.473,
+            173.63,
+            145.964
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0078",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            156.394,
+            207.592,
+            229.858
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0079",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            163.867,
+            157.821,
+            135.124
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0080",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            266.05,
+            137.549,
+            153.026
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0081",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            243.043,
+            153.729,
+            140.998
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0082",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            182.428,
+            121.185,
+            130.383
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0083",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            161.161,
+            187.987,
+            150.459
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0084",
+          "dept": "PV",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            160.81,
+            135.866,
+            137.69
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0085",
+          "dept": "PV",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            179.777,
+            144.011,
+            121.259
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0086",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            138.334,
+            118.672,
+            136.035
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0087",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            147.034,
+            138.917,
+            160.282
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0088",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            167.066,
+            187.655,
+            180.378
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0089",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            144.454,
+            142.579,
+            174.108
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0090",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            158.309,
+            121.116,
+            124.752
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0091",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            134.169,
+            123.391,
+            164.606
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0092",
+          "dept": "CO",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            155.348,
+            142.062,
+            134.495
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0093",
+          "dept": "CO",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            148.894,
+            128.101,
+            118.435
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0094",
+          "dept": "CO",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            118.349,
+            116.992,
+            101.616
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0095",
+          "dept": "CO",
+          "slices": [
+            "protocol_id",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            129.964,
+            121.903,
+            100.077
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0096",
+          "dept": "CO",
+          "slices": [
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            218.566,
+            126.007,
+            120.794
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0097",
+          "dept": "CO",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            117.083,
+            121.261,
+            103.848
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0098",
+          "dept": "CO",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            142.756,
+            136.151,
+            128.307
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0099",
+          "dept": "CO",
+          "slices": [
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            146.517,
+            134.935,
+            123.511
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0100",
+          "dept": "CO",
+          "slices": [
+            "protocol_id",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            105.289,
+            118.247,
+            104.001
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0101",
+          "dept": "CO",
+          "slices": [
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            120.904,
+            127.925,
+            105.826
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0102",
+          "dept": "CO",
+          "slices": [
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 0.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 0.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            113.187,
+            155.806,
+            122.054
+          ],
+          "unmappable_golds": [
+            "pc-0102-g1"
+          ]
+        },
+        {
+          "sample_id": "pc-0103",
+          "dept": "CO",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            132.319,
+            106.963,
+            97.133
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0104",
+          "dept": "CO",
+          "slices": [
+            "protocol_id",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            121.437,
+            101.087,
+            102.11
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0105",
+          "dept": "CO",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            171.114,
+            164.498,
+            138.706
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0106",
+          "dept": "CO",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 1.0,
+          "hit_at_5": 1.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 1.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            138.379,
+            159.086,
+            130.139
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0107",
+          "dept": "CO",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "recall_at_5": 0.0,
+          "hit_at_5": 0.0,
+          "fused_recall_at_20": 1.0,
+          "lexical_only_recall_at_5": 0.0,
+          "vector_only_recall_at_5": 1.0,
+          "dropped_by_recheck": {},
+          "non_current_in_top5": 0,
+          "latency_ms_measured": [
+            136.732,
+            107.219,
+            101.149
+          ],
+          "unmappable_golds": []
+        }
+      ],
+      "leak_violations": []
+    }
+  },
+  "gates": {
+    "A2+V": {
+      "recall_at_5_all": 0.5420560747663551,
+      "recall_at_5_language_matched": 0.64,
+      "recall_at_5_cross_lingual": 0.3125,
+      "recall_at_5_by_department": {
+        "CO": 0.28125,
+        "MA": 0.8,
+        "PV": 0.5555555555555556
+      },
+      "checks": {
+        "recall_at_5_all_ge_0.85": false,
+        "recall_at_5_language_matched_ge_0.85": false,
+        "invalid_version_citation_rate_zero": true,
+        "reproducible": true,
+        "zero_leaks": true
+      },
+      "passes_probe_scale_gate": false,
+      "note": "probe-scale evidence (107 samples); the M1-21 gate is finally decided on the >=300-sample main set (M1-20)"
+    },
+    "B2+V": {
+      "recall_at_5_all": 0.5887850467289719,
+      "recall_at_5_language_matched": 0.6933333333333334,
+      "recall_at_5_cross_lingual": 0.34375,
+      "recall_at_5_by_department": {
+        "CO": 0.34375,
+        "MA": 0.9,
+        "PV": 0.5555555555555556
+      },
+      "checks": {
+        "recall_at_5_all_ge_0.85": false,
+        "recall_at_5_language_matched_ge_0.85": false,
+        "invalid_version_citation_rate_zero": true,
+        "reproducible": true,
+        "zero_leaks": true
+      },
+      "passes_probe_scale_gate": false,
+      "note": "probe-scale evidence (107 samples); the M1-21 gate is finally decided on the >=300-sample main set (M1-20)"
+    }
+  },
+  "paired": {
+    "B2+V minus A2+V": {
+      "point": 4.672897196261682,
+      "ci_low": -1.8691588785046729,
+      "ci_high": 11.214953271028037,
+      "resamples": 10000,
+      "seed": 20260920,
+      "level": 0.95
+    }
+  },
+  "finished_at": "2026-09-20T11:59:51+00:00"
+}

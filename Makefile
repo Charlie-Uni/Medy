@@ -1,4 +1,4 @@
-.PHONY: help install install-check install-embed lock schemas lint format format-check typecheck test test-integration check migrate migrate-down migration-check db-users load-corpus lexical-index-a activate-docs validate-probe canonicalize-probe up down ps
+.PHONY: help install install-check install-embed lock schemas lint format format-check typecheck test test-integration check migrate migrate-down migration-check db-users load-corpus lexical-index-a lexical-index activate-docs validate-probe canonicalize-probe up down ps
 
 # venv lives in a NON-dot directory on purpose: ~/Documents is an iCloud Drive domain that marks every file
 # inside dot-directories as hidden, and CPython >= 3.11.16 skips hidden .pth files, which silently breaks
@@ -19,6 +19,7 @@ help:
 	@echo "make db-users        create/rotate LOGIN users for the 0002 group roles (DB_*_PASSWORD from .env)"
 	@echo "make load-corpus CORPUS=<corpus.json> SOURCES=<dir> PAGES=<dir> ACTOR=<id> [ARGS=...]   ingest documents into the fact plane"
 	@echo "make lexical-index-a ACTOR=<id>          install and (re)build the DEC-001 candidate A lexical index (admin DSN)"
+	@echo "make lexical-index ACTOR=<id>            (re)build the PRODUCTION lexical index chunk_lexical_tsv (migration 0007, admin DSN)"
 	@echo "make activate-docs PLAN=<plan.json> ACTOR=<id> ADMIN_URL=<dsn>   activate draft documents all-or-nothing with audited reasons"
 	@echo "make check           lint + format-check + typecheck + test + schema drift (CI gate)"
 	@echo "make validate-probe DIR=<version_dir> [MODE=draft|frozen] [PAGES=<pages_dir>]"
@@ -88,6 +89,9 @@ load-corpus:
 lexical-index-a:
 	$(PY) -m medops.retrieval.lexical.pg_simple_fts install
 	$(PY) -m medops.retrieval.lexical.pg_simple_fts build --built-by $(ACTOR)
+
+lexical-index:
+	$(PY) -m medops.retrieval.production build-lexical --built-by $(ACTOR)
 
 activate-docs:
 	$(PY) -m medops.ingestion.activate --plan $(PLAN) --actor $(ACTOR) --admin-url $(ADMIN_URL)

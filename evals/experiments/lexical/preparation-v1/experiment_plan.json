@@ -1,6 +1,6 @@
 {
   "experiment_id": "DEC-001-preparation-v1",
-  "status": "run_3_completed_no_candidate_passed_hard_gates",
+  "status": "final_selection_A2_2026_09_20",
   "created_on": "2026-09-20",
   "protocol": "docs/adr/ADR-0002-lexical-retrieval-selection.md",
   "dataset": {
@@ -270,8 +270,8 @@
     },
     {
       "code": "end_to_end_configuration_unfixed",
-      "detail": "Embedding/reranker fixed by ADR-0007 (2026-09-20); end-to-end Recall@5/P95 gates per baseline M1-21; hybrid run pending M1-16/M1-17 implementation",
-      "status": "partially_resolved"
+      "detail": "Fixed by ADR-0007 and record 45: RRF k=60 over top-20/top-20, fused limit 20, recheck, bge-reranker-v2-m3 output 8; end-to-end gate at probe scale 75.7% (< 85%), main set pending (M1-20)",
+      "status": "resolved"
     },
     {
       "code": "production_license_review_pending",
@@ -284,11 +284,51 @@
     },
     {
       "code": "cross_lingual_samples_fail_lexically",
-      "detail": "32 samples with English gold documents and Chinese queries score 12.5-15.6% on every candidate; a follow-up experiment design is the owner's decision"
+      "detail": "Carried by the vector channel (ADR-0007): cross_lingual Recall@20 65.6% alone, Recall@5 59-63% after fusion + rerank (record 42/45)",
+      "status": "resolved"
     }
   ],
   "no_quality_results_observed": false,
-  "production_selection": null,
+  "production_selection": {
+    "candidate": "A2",
+    "decided_on": "2026-09-20",
+    "decided_by": "implementer under the owner's delegation (record 41)",
+    "rule": "ADR-0002 selection rule: challenger needs >=5pp paired-bootstrap gain over the A family with CI lower bound >0; otherwise the simplest implementation is selected",
+    "evidence": {
+      "lexical_language_matched_recall_at_20": {
+        "A2": 0.773,
+        "B2": 0.8
+      },
+      "e2e_no_rerank_recall_at_5": {
+        "A2+V": 0.542,
+        "B2+V": 0.589,
+        "paired_pp": 4.67,
+        "ci95": [
+          -1.87,
+          11.21
+        ]
+      },
+      "e2e_rerank_recall_at_5": {
+        "A2+V": 0.757,
+        "B2+V": 0.757,
+        "paired_pp": 0.0,
+        "ci95": [
+          -2.8,
+          2.8
+        ]
+      },
+      "runs": [
+        "evals/experiments/e2e/runs/2026-09-20-e2e-hybrid-v1",
+        "evals/experiments/e2e/runs/2026-09-20-e2e-hybrid-rerank-v1"
+      ]
+    },
+    "production_wiring": {
+      "migration": "0007",
+      "module": "medops.retrieval.production",
+      "retrieval_version": "90b57e4e86b4bb462fc4de58f7f7749666fb6f50a588c129bd5f9aa50585ab18"
+    },
+    "revisit": "on the >=300-sample main evaluation set (M1-20) if B2 then meets the selection rule"
+  },
   "build_evidence": {
     "record": "docs/reviews/2026-09-20-implementation-28-candidate-builds.md",
     "a": "evals/experiments/lexical/builds/a/smoke_result.json",

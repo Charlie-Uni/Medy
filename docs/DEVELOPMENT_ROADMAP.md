@@ -1,6 +1,6 @@
 # Medy 开发任务、当前进度与边做边学路线
 
-> 核查日期：2026-09-20（[实现记录 43](reviews/2026-09-20-implementation-43-docx-and-malicious-files.md)；本轮 836 passed，含 222 项 PostgreSQL/Redis 集成测试，其中 B/B2/C 候选服务器上的集成测试仅本地运行）。依据：工作区中的[工程基线 v0.6](ENGINEERING_BASELINE.md)、ADR、SPEC、代码、复核记录与本机测试。历史实现证据见记录 13～42。
+> 核查日期：2026-09-20（[实现记录 45](reviews/2026-09-20-implementation-45-e2e-and-dec001-final.md)；本轮 872 passed，含 243 项 PostgreSQL/Redis 集成测试，其中 B/B2/C 候选服务器上的集成测试仅本地运行）。依据：工作区中的[工程基线 v0.6](ENGINEERING_BASELINE.md)、ADR、SPEC、代码、复核记录与本机测试。历史实现证据见记录 13～44。
 > 本文件是基线的执行进度视图，不是第二份需求契约。范围、阈值和安全约束仍以基线为准；不新增 P0 门禁，不代替正式验收。
 > Git 归档：`2a4aef6` 为工程基础，`213dbe8` 为冻结探针 v1；归档提交已在独立 checkout 复验。本轮后续实验准备与回填文档单独提交，冻结 v1 原始字节不变。
 
@@ -19,7 +19,7 @@
 
 决策人要求每个阶段汇报"离总目标百分之多少"。口径固定为：[任务知识对照](TASK_KNOWLEDGE_MAP.md) 中 79 个 P0 任务行的状态加权和（已实现 1、部分 0.5、阻塞与待做 0）除以 79；另报除以 99 个基线复选项的数值。状态只随实现记录的证据变更，基线勾选只依据完整证据更新，最终验收仍是第 11 节九条门禁的二元结果。`tests/unit/docs/test_baseline_roadmap_consistency.py` 重算并比对下面这行数字：
 
-P0 加权进度：30.4%（24.0/79）；按 99 项计 24.2%。分项：M0 10/11、M1 14/21、M2 0/16、M3 0/13、M4 0/10、M5 0/8。
+P0 加权进度：32.9%（26.0/79）；按 99 项计 26.3%。分项：M0 10/11、M1 16/21、M2 0/16、M3 0/13、M4 0/10、M5 0/8。
 
 ### 状态与计数
 
@@ -120,23 +120,23 @@ P0 加权进度：30.4%（24.0/79）；按 99 项计 24.2%。分项：M0 10/11�
 | M1-02 | 部分（镜像、配置、三服务器映射与运行清单工具已就绪；正式运行清单在文档激活后冻结） | [准备说明](../evals/experiments/lexical/README.md)：B/C 镜像已构建实测（记录 28），三候选适配器与前置查询规则已固定并写入 experiment_plan.json（记录 29、30），三服务器语料一致、各自映射 73 mapped/2 unmappable，`dec001_run` 在查询前写出冻结的 run_manifest.json（记录 31）；端到端参数仍未固定 |
 | M1-03 | 契约切片已复核通过（Codex，2026-09-11），整项不勾选 | `LexicalVersions`、`LexicalRetriever` Protocol、`run_lexical_search` 边界与可复用适配器契约测试已有（实现记录 10），离线 BM25 两种分词器通过；候选 A/B/C 适配器（`pg_simple_fts`、`pg_zhparser_fts`、`pg_search_bm25`）在真实 schema、普通 LOGIN 用户 + FORCE RLS 下通过同一契约与共享门禁套件（实现记录 29、30）；缺真实语料运行证据，不勾选 |
 | M1-04 | 部分（权限半边已证明；候选对比半边依赖 M1-01/02） | 真实 schema 上以 LOGIN 用户证明：普通角色 + FORCE RLS 零跨部门泄漏、按主键无存在性泄露、LIMIT/排序/join 下推不丢可见行、连接池身份切换与 RESET/DISCARD 清除（实现记录 18）；"零静默候选不足"与三候选词法对比等真实探针集与 DEC-001 适配器；三候选的零静默不足（同一语句精确计数 + 分页，k 小于/等于/大于合格数、两种执行计划）、无身份拒绝、连接复用清除、版本拒绝与执行计划留证已在合成数据上通过，C 的 ParadeDB 自定义扫描在普通角色下未绕过 RLS（实现记录 29、30）；真实探针运行中管理侧逐 chunk 核对零泄漏，A/C 各 3 条查询显式 `candidate_exhausted=true`（实现记录 33） |
-| M1-05 | 阻塞（三次预登记运行均未通过硬门禁） | 运行 1（记录 33）：跨语言样本是主要失败面；运行 2（记录 35，冻结探针 v2，语言一致 75 条）：A 69.3%、B 76.0%、C 88.0%；运行 3（记录 36，修订 2 停用词变体）：A2 77.3%、B2 80.0%，P95 减半，C 不变。零泄漏、可复现；相对 A 的配对提升均显著。无候选通过 90% 门禁，DEC-001 与 M1 保持阻塞，判据不降低（ADR-0002 三次回填）。剩余差距来自排序函数无 IDF 与繁体药名切分；C 许可证审核材料已备（licence dossier）。下一步路径待决策人预登记。决策人 2026-09-20 批准 ADR-0002 修订 3：最终判定推迟到端到端实验，M1 其余切片继续 |
+| M1-05 | 阻塞（三次预登记运行均未通过硬门禁） | 运行 1（记录 33）：跨语言样本是主要失败面；运行 2（记录 35，冻结探针 v2，语言一致 75 条）：A 69.3%、B 76.0%、C 88.0%；运行 3（记录 36，修订 2 停用词变体）：A2 77.3%、B2 80.0%，P95 减半，C 不变。零泄漏、可复现；相对 A 的配对提升均显著。无候选通过 90% 门禁，DEC-001 与 M1 保持阻塞，判据不降低（ADR-0002 三次回填）。剩余差距来自排序函数无 IDF 与繁体药名切分；C 许可证审核材料已备（licence dossier）。下一步路径待决策人预登记。决策人 2026-09-20 批准 ADR-0002 修订 3：最终判定推迟到端到端实验，M1 其余切片继续；2026-09-20 最终判定 A2（记录 45，ADR-0002 最终判定节） |
 | M1-06 | 已实现（首个迁移 0001；evidence_log、outbox 等随其里程碑追加） | Alembic 原生 SQL 迁移建 source_objects、ingestion_jobs、documents、chunks、chunk_spans、document_acl、doc_audit，字段落点按基线 3.3/3.4/4.2 与设计文档 3.3；不可变性、状态机、审计追加写、chunk 哈希由触发器强制；15 项集成测试（实现记录 17，ADR-0006）；无 tsvector/vector 列；迁移 0005 追加 outbox 两表（记录 37） |
 | M1-07 | 已实现 | `documents_one_active_per_family` 部分唯一索引；集成测试证明同 family 第二个 active 被拒，且两会话并发激活时第二个阻塞、首个提交后失败，最终只剩一个 active（实现记录 17） |
 | M1-08 | 已实现（数据库层；API 注入接线在 M3） | 迁移 0002：三组 NOLOGIN 角色、登录用户供应脚本、七表 FORCE RLS、按 document_acl 与部门的策略、无身份默认拒绝、草稿不可见、owner 分离；37 项集成测试覆盖 SET LOCAL 作用域、非 owner、非 superuser、无 BYPASSRLS、只读无写路径、管理角色不能改 schema（实现记录 18）；本机 .env 已切到受限用户 |
 | M1-09 | 已实现（ADR-0009；ClamAV 部署随 M3） | `medops.ingestion.pipeline`：按签名判定 PDF/DOCX、大小与哈希校验、`filecheck` 结构性恶意内容门禁（PDF 主动内容/嵌入文件/加密，DOCX 宏/OLE/ActiveX/外部关系/字段码/ZIP 炸弹，`defusedxml`）、可选 clamd INSTREAM 扫描（prod 必配，失败关闭）、`pii-rules-v1` 默认拒绝与审计覆盖、同源第二文档默认拒绝 + `SharedSourceApproval` 审计确认、重复入库幂等；DOCX 以顶级标题切章节，`page` 为章节序号、无标题即 low_trust（实现记录 20、40、43） |
 | M1-10 | 已实现（chunker-v2、入库、质量复核放行与映射工具） | 16 份文档、2,661 个 chunk 与原页重建逐条一致；新增 gold 映射器按来源/版本/页/区间校验。75 条中 73 mapped、2 unmappable，切分边界缺陷保留并计 miss；low_trust 禁止 active 的约束不变（记录 20、27）；chunker-v2（分号为子句标记、超长片段按子句标点切分）与受审计的 parse_quality 复核放行 `--accept-quality`（记录 34） |
 | M1-11 | 已实现（发布/归档/审计/outbox 同事务 + 索引消费者；缓存消费者随 M1-19） | 迁移 0005 `outbox_events`/`outbox_consumer_acks`（追加写、管理角色专用、FORCE RLS）；`publish_version` 一次事务归档旧版（写 effective_to）、激活新版、触发器审计、两条事件；`activate_document` 首次激活亦发事件；`ingest_document(supersedes=)` 建版本链；outbox `claim`（SKIP LOCKED）/`ack`/`run` 按消费者幂等；`index_consumer` 增删候选索引行；集成测试证明模拟失败整体回滚、并发领取互斥、以及发布后消费者未运行时旧版已不可见（查询内 status 过滤，索引延迟不产生失效证据）（实现记录 37）。激活 `effective_from` 口径不变 |
-| M1-12 | 部分 | 分词器支持词典版本，但无正式医学词典；完成 DEC-005 的来源审核、通用名/商品名/缩写映射与版本更新方式 |
+| M1-12 | 部分（术语表初版已建，ADR-0008；分词词典不变，术语表进入生产前需离线评测） | 分词器支持词典版本（`dictionary_version` 含 jieba 词典与停用词表哈希）；`evals/glossary/tools/build_glossary.py` 由 TFDA 開放資料（按许可证字号锚定到语料）与语料内定义的缩写（同页共现验证）构建内容寻址版本的术语表，初版 `glossary-20260920-f569611ab3dd`（12 品名 + 37 缩写，provenance 含快照哈希与逐条证据）（实现记录 44）；DrugBank Open Data 待决策人下载 |
 | M1-13 | 部分（规则型 `qr-rules-v1` 已实现；术语表内容待 DEC-005，LLM 改写与节点接线待 M2） | `medops.retrieval.rewrite`：1–3 条只追加不删改的文本查询（规范化原查询 / +可信会话实体 ≤3 / +术语同义词 ≤5），剂量、单位、否定、时间窗、编号为显式受保护片段并在返回前核验；术语表版本化且只在受保护片段外整词匹配；结果模型无任何过滤字段；测试覆盖四类不被改写错与实体不跨调用残留（实现记录 40） |
-| M1-14 | 待做 | 实现 DEC-001 选定的数据库内 lexical_retriever；A 方案入库/查询同规则，simple FTS 保留位置；版本不匹配拒绝、升级重建 |
-| M1-15 | 部分（复合哈希函数已实现，实现记录 14；生产取值待 DEC-001/002） | norm-v1 与原型版本字段已有；基线 3.6 的复合 `retrieval_version` 由 [versioning.py](../src/medops/retrieval/versioning.py) 计算（八个成员、封闭输入、任一成员或嵌套参数变化即换版本，已知答案已固定）；仍待：固定生产 tokenizer/词典/规范化取值，写入索引元数据与缓存键，证明相同版本可复现 |
+| M1-14 | 已实现（DEC-001 最终判定 A2，实现记录 45） | 迁移 0007 `chunk_lexical_tsv`（GIN、FORCE RLS）与 `lexical_index_meta`；`medops.retrieval.production`：固定 tokenizer `tok-jieba-v2` + 包内停用词表（SHA-256 固定校验）、索引名 `production-lexical`、`build_production_lexical_index`、`production_lexical_retriever`、outbox 索引消费者目标；入库/查询同一 tokenizer 与规范化，版本不匹配拒绝（沿用适配器套件 14 项集成测试）；`make lexical-index` |
+| M1-15 | 已实现 | 生产取值固定于 `medops.retrieval.production`：retriever `pg-simple-fts-v1`、tokenizer `tok-jieba-v2`、词典 `jieba-0.42.1+default+stop:b3f772a0…`、norm-v1、embedding `emb-bge-m3-dense-v1`、RRF k=60、bge-reranker-v2-m3 参数、候选上限；复合 `retrieval_version = 90b57e4e…ab18` 由单元测试固定，任一成员变化即失败；索引元数据写入 `lexical_index_meta`/`embedding_index_meta`，缓存键使用该复合版本（实现记录 45） |
 | M1-16 | 已实现（ADR-0007；向量通道运行结果见记录 42） | 迁移 0006 `chunk_embeddings(vector(1024))` + `embedding_index_meta`（模型/修订/维度/归一化/截断/框架）、HNSW 余弦、FORCE RLS；`PgVectorRetriever` 在应用角色身份事务内以 iterative scan 检索、同事务精确合格计数、页长 ≠ min(K, 合格数) 即失败关闭、spec 全字段不匹配拒绝；`BgeM3EmbeddingProvider` 本地推理（可选 extra `embed`，独立哈希锁）；探针 v2 运行：language_matched 82.7%、cross_lingual 65.6%、零泄漏（实现记录 42） |
-| M1-17 | 部分 | RRF 纯函数与离线 BM25 已有；补生产词法/向量并行、Reranker、候选上限、总超时与显式降级；RRF 不使用原始分数融合 |
+| M1-17 | 部分（融合、重排与回查已实现；并行执行、总超时与显式降级随 M2 执行器） | `medops.retrieval.hybrid`：两通道经各自边界、RRF 只用排名（k=60）、融合上限 20、`retrieve_evidence` 融合后回查；`medops.retrieval.rerank`：bge-reranker-v2-m3 只对已回查的 Evidence 打分（输入 ≤20、输出 8、并列按 chunk_id）；端到端运行见记录 45 |
 | M1-18 | 已实现（`evidence_log` 落库随 M2 Trace） | `medops.retrieval.recheck`：候选在应用角色的身份事务内一条语句回读事实平面，按固定顺序判定可见性（RLS，越权/草稿/撤回/不存在一律 `not_visible`）、状态（历史需显式 `as_of` 并标 `historical`）、生效窗口、`integrity_status=verified`、`parse_quality=trusted`、应用侧重算内容哈希、页锚点存在；通过者构造领域 `Evidence`，其余带原因与名次返回；superuser/BYPASSRLS/管理角色连接拒绝运行；与候选 A 串接的集成测试证明索引仍返回的完整性未验证、篡改、无锚点 chunk 被回查拦下（实现记录 38） |
 | M1-19 | 已实现（ACL 单独变更事件待有发布后改 ACL 的工具时补） | `medops.retrieval.cache`：键 `rcache-v1:<dept>:<epoch>:sha256(规范化查询、权限指纹（部门/角色/scope，不含 user_id）、会话上下文指纹、as_of、历史标志、复合 retrieval_version、policy_version)`；缓存值为融合候选而非证据，`fetch_evidence` 命中后仍在身份事务内执行 M1-18 回查（撤权即时生效）；`cache_consumer` 消费 outbox 事件按读者部门提升纪元实现精确失效；进程内与 Redis 两种存储同一协议，故障降级为未命中；集成测试覆盖撤权、归档/换版本、版本/日期换键、身份隔离与真实 Redis（实现记录 39） |
 | M1-20 | 待做 | >=300 条主评测样本与 doc/version/page gold；执行人工 + LLM 及分层第二人工复核，探针并入后补复核；覆盖无答案与冲突场景 |
-| M1-21 | 待做 | 事实回查后的严格宏平均 Recall@5 >=85%，另报 Hit@5，失效版本引用率 0；按部门、语言及其他关键切片输出可复现报告 |
+| M1-21 | 部分（工具与报告已有；门禁在探针规模未过） | `medops.evals.experiments.e2e_run`：融合 → 回查 → 重排 → top-5 的严格宏平均 Recall@5，分部门/语言/切片、Hit@5、融合 R@20、通道单独 R@5、失效版本引用率、泄漏与复现检查、配对 bootstrap；探针 v2（107 条）上 A2+V 与 B2+V 重排后均为 75.7%（语言一致 81–83%，跨语言 59–63%），失效版本引用 0、泄漏 0；85% 门禁未过，主评测集（M1-20）建立后重判（实现记录 45） |
 
 实验选择不改口径：A 为应用预分词 + FTS，B 为数据库中文分词 + FTS，C 为数据库内 BM25；进程内 BM25 仅离线参考。基础门禁为 Lexical Recall@20 >=90%、六切片各 >=85%、零泄漏与零静默候选不足等。B/C 替代合格 A 需满足预登记的 +5pp、配对 CI 下界 >0 等全部条件，详见 ADR-0002；不在本表重新制定阈值。
 
