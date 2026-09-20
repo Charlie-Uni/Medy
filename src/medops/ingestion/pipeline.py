@@ -13,7 +13,9 @@ One document per call, everything inside the caller's transaction (an admin-role
 
 parse_quality is `trusted` only when the extractor raised no warnings; otherwise `low_trust`, which the
 database will not let become active (INV-DATA-05). A second document on the same source object is
-refused (baseline 3.3: needs administrator confirmation) except when it is the same document_key and
+refused (baseline 3.3: needs administrator confirmation) unless the caller passes a `SharedSourceApproval`
+(the administrator's surrogate id and reason), which is written to doc_audit as `source_share_confirmed`
+together with the documents already backed by that source; the exception stays: the same document_key and
 version, which returns the existing row instead of writing.
 """
 
@@ -89,6 +91,19 @@ class DocumentSpec:
             attribution_text=terms.get("attribution_text") or "",
             notes=record.get("notes") or "",
         )
+
+
+@dataclass(frozen=True)
+class SharedSourceApproval:
+    """An administrator's explicit confirmation that a further document may reference an existing source
+    object (baseline 3.3). Both fields are audited; neither may be empty."""
+
+    approved_by: str
+    reason: str
+
+    def __post_init__(self) -> None:
+        if not self.approved_by.strip() or not self.reason.strip():
+            raise ValueError("shared-source approval needs approved_by and reason")
 
 
 @dataclass(frozen=True)
@@ -169,6 +184,7 @@ def ingest_document(
     storage_uri: str | None = None,
     family_id: uuid.UUID | None = None,
     supersedes: uuid.UUID | None = None,
+    shared_source: SharedSourceApproval | None = None,
 ) -> IngestResult:
     """Ingest one PDF as a draft document. `quality_override_reason` is the audited reviewer decision that
     upgrades an extraction with pypdf warnings from `low_trust` to `trusted` (INV-DATA-05 stays the default);
@@ -190,18 +206,23 @@ def ingest_document(
 
     rows = _existing_document(conn, source_hash)
     source_object_id = rows[0][3] if rows else None
+    existing: list[dict[str, str]] = []
     for doc_id, key, version, _ in rows:
-        if doc_id is None:
-            continue
-        if key == spec.document_key and version == spec.version_label:
+        # idempotency first: the same document_key/version on this source is a no-op, whatever else shares it
+        if doc_id is not None and key == spec.document_key and version == spec.version_label:
             assert source_object_id is not None
             quality = _first(conn.execute("select parse_quality from documents where doc_id = %s", (doc_id,)))
             count = _first(conn.execute("select count(*) from chunks where doc_id = %s", (doc_id,)))
             return IngestResult("exists", doc_id, source_object_id, None, count, quality, ())
-        raise IngestRefused(
-            f"source {source_hash[:12]} already backs document {key} {version}; a second document on the same "
-            "source object needs administrator confirmation (baseline 3.3)"
-        )
+    for doc_id, key, version, _ in rows:
+        if doc_id is None:
+            continue
+        if shared_source is None:
+            raise IngestRefused(
+                f"source {source_hash[:12]} already backs document {key} {version}; a second document on the same "
+                "source object needs administrator confirmation (baseline 3.3)"
+            )
+        existing.append({"doc_id": str(doc_id), "document_key": key, "version": version})
 
     texts, warning_messages = extract_and_check(data, source_hash, pages_dir)
     warnings = len(warning_messages)
@@ -287,11 +308,32 @@ def ingest_document(
         "quality_review_override": quality_overridden,
         "pii_ruleset": PII_RULESET_VERSION,
         "pii_hits": len(hits),
+        "shared_source": bool(existing),
     }
     conn.execute(
         "insert into doc_audit (doc_id, action, actor, details) values (%s, 'ingest', %s, %s::jsonb)",
         (doc_id, actor, json.dumps(details, ensure_ascii=False)),
     )
+    if existing:
+        assert shared_source is not None
+        conn.execute(
+            "insert into doc_audit (doc_id, action, actor, reason, details) values (%s, 'source_share_confirmed', %s, %s, %s::jsonb)",
+            (
+                doc_id,
+                shared_source.approved_by,
+                shared_source.reason,
+                json.dumps(
+                    {
+                        "source_object_id": str(source_object_id),
+                        "source_hash": source_hash,
+                        "existing_documents": existing,
+                        "confirmed_document_key": spec.document_key,
+                        "ingested_by": actor,
+                    },
+                    ensure_ascii=False,
+                ),
+            ),
+        )
     if quality_overridden:
         conn.execute(
             "insert into doc_audit (doc_id, action, actor, reason, details) values (%s, 'quality_review_override', %s, %s, %s::jsonb)",

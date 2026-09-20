@@ -332,3 +332,73 @@ def test_extractor_warnings_give_low_trust_unless_a_reviewer_override_is_audited
     assert admin.execute(
         "select count(*) from doc_audit where doc_id = %s and action = 'quality_review_override'", (clean.doc_id,)
     ).fetchone() == (0,)
+
+
+def test_a_second_document_on_the_same_source_needs_an_audited_administrator_confirmation(admin, tmp_path):
+    # unique content: the loader test commits a document on the shared PAGES hash in this session's database
+    pdf, data = write_pdf(tmp_path, "shared.pdf", [PAGES[0] + "Shared source object test. ", PAGES[1]])
+    first = ingest_document(admin, spec_for(data, key="shared-label-ma"), pdf, actor="ingest-01")
+    second_spec = spec_for(data, key="shared-label-pv", dept="PV")
+    with pytest.raises(IngestRefused, match="administrator confirmation"):
+        ingest_document(admin, second_spec, pdf, actor="ingest-01")
+    with pytest.raises(ValueError, match="approved_by and reason"):
+        pipeline.SharedSourceApproval(approved_by="admin-01", reason=" ")
+    approval = pipeline.SharedSourceApproval(
+        approved_by="admin-01", reason="same PDF serves PV as a separate label family"
+    )
+    second = ingest_document(admin, second_spec, pdf, actor="ingest-01", shared_source=approval)
+    assert second.status == "ingested" and second.doc_id != first.doc_id
+    assert second.source_object_id == first.source_object_id
+    assert (
+        admin.execute(
+            "select count(*) from source_objects where source_hash = %s", (second_spec.source_hash,)
+        ).fetchone()[0]
+        == 1
+    )
+    rows = admin.execute(
+        "select action, actor, reason, details from doc_audit where doc_id = %s order by id", (second.doc_id,)
+    ).fetchall()
+    assert [r[0] for r in rows] == ["ingest", "source_share_confirmed"]
+    assert rows[0][3]["shared_source"] is True
+    action, actor, reason, details = rows[1]
+    assert (actor, reason) == ("admin-01", approval.reason)
+    assert details["existing_documents"] == [
+        {"doc_id": str(first.doc_id), "document_key": "shared-label-ma", "version": "2026-01"}
+    ]
+    assert details["confirmed_document_key"] == "shared-label-pv" and details["ingested_by"] == "ingest-01"
+    assert details["source_object_id"] == str(first.source_object_id)
+    # the first document's audit trail is untouched, and each document keeps its own department ACL
+    assert counts(admin, first.doc_id)["doc_audit"] == 1
+    acl = admin.execute(
+        "select doc_id, dept::text from document_acl where doc_id in (%s, %s) order by dept",
+        (first.doc_id, second.doc_id),
+    ).fetchall()
+    assert acl == [(first.doc_id, "MA"), (second.doc_id, "PV")]
+    # re-ingesting the confirmed document is idempotent, with or without the approval
+    again = ingest_document(admin, second_spec, pdf, actor="ingest-01")
+    assert again.status == "exists" and again.doc_id == second.doc_id
+    # a third document without a fresh approval is refused again
+    with pytest.raises(IngestRefused, match="administrator confirmation"):
+        ingest_document(admin, spec_for(data, key="shared-label-co", dept="CO"), pdf, actor="ingest-01")
+
+
+def test_loader_share_source_flag_is_validated_before_connecting(tmp_path, capsys):
+    corpus = tmp_path / "corpus.json"
+    corpus.write_text('{"documents": []}', encoding="utf-8")
+    for bad in ("shared-label-pv", "shared-label-pv=admin-01", "shared-label-pv=:reason", "=admin-01:reason"):
+        code = load.main(
+            [
+                "--corpus",
+                str(corpus),
+                "--sources-dir",
+                str(tmp_path),
+                "--actor",
+                "a",
+                "--share-source",
+                bad,
+                "--admin-url",
+                "postgresql://invalid:invalid@127.0.0.1:1/none",
+            ]
+        )
+        assert code == 2, bad
+        assert "KEY=ADMIN:REASON" in capsys.readouterr().out

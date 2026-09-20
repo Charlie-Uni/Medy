@@ -19,7 +19,7 @@ from pathlib import Path
 
 import psycopg
 
-from medops.ingestion.pipeline import DocumentSpec, IngestRefused, ingest_document
+from medops.ingestion.pipeline import DocumentSpec, IngestRefused, SharedSourceApproval, ingest_document
 
 
 def _admin_url() -> str:
@@ -62,8 +62,23 @@ def main(argv: list[str] | None = None) -> int:
         metavar="NEWKEY=OLDKEY",
         help="ingest NEWKEY as the next version of OLDKEY's family (M1-11 publish chain)",
     )
+    parser.add_argument(
+        "--share-source",
+        action="append",
+        default=[],
+        metavar="KEY=ADMIN:REASON",
+        help="administrator confirmation that KEY may reference a source object already backing another document (audited)",
+    )
     parser.add_argument("--admin-url", default=None)
     args = parser.parse_args(argv)
+    shared: dict[str, SharedSourceApproval] = {}
+    for item in args.share_source:
+        key, _, decision = item.partition("=")
+        approver, _, reason = decision.partition(":")
+        if not key or not approver.strip() or not reason.strip():
+            print(f"--share-source needs KEY=ADMIN:REASON, got {item!r}")
+            return 2
+        shared[key] = SharedSourceApproval(approved_by=approver.strip(), reason=reason.strip())
     supersedes_keys: dict[str, str] = {}
     for item in args.supersedes:
         new_key, _, old_key = item.partition("=")
@@ -117,6 +132,7 @@ def main(argv: list[str] | None = None) -> int:
                         pii_override_reason=overrides.get(spec.document_key),
                         quality_override_reason=quality_overrides.get(spec.document_key),
                         supersedes=supersedes_id,
+                        shared_source=shared.get(spec.document_key),
                     )
                 line.update(
                     status=result.status,
