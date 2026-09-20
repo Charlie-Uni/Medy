@@ -1,0 +1,151 @@
+{
+  "candidate": "C",
+  "status": "build_and_synthetic_smoke_verified",
+  "release_status": "release_blocked",
+  "protocol": "docs/adr/ADR-0002-lexical-retrieval-selection.md",
+  "record": "docs/reviews/2026-09-20-implementation-28-candidate-builds.md",
+  "candidate_version": "0.25.9",
+  "source_commit": "c727757be0aab7fbb17c6cc5f0360f22efdd3776",
+  "source_url": "https://github.com/paradedb/paradedb/tree/c727757be0aab7fbb17c6cc5f0360f22efdd3776",
+  "asset": {
+    "url": "https://github.com/paradedb/paradedb/releases/download/v0.25.9/postgresql-16-pg-search_0.25.9-1PARADEDB-bookworm_arm64.deb",
+    "sha256": "69ac9f7ade7ec66b3e062d823e023f28440b5c87be30d6ee85b16f51eab549a9",
+    "size_bytes": 65546104,
+    "downloaded_bytes_verified": true,
+    "cosign_bundle_verified": false,
+    "package_version": "0.25.9",
+    "package_architecture": "arm64",
+    "package_depends": [
+      "postgresql-16",
+      "libopenblas0"
+    ]
+  },
+  "image": {
+    "base": "pgvector/pgvector:pg16@sha256:ccc6e83d6e35e931dc7c5def2022729d5a6c370318d099181995567ff1fb4d6b",
+    "local_tag": "medy-dec001-c:pg16-pgsearch-0.25.9-r28",
+    "docker_inspect_id": "sha256:f564d490dfa01b0d95b6f4f446d51ce188d537a18a2aac67c33a42466ea945ec",
+    "descriptor": {
+      "mediaType": "application/vnd.oci.image.index.v1+json",
+      "digest": "sha256:f564d490dfa01b0d95b6f4f446d51ce188d537a18a2aac67c33a42466ea945ec",
+      "size": 856
+    },
+    "local_repo_digests": [
+      "medy-dec001-c@sha256:f564d490dfa01b0d95b6f4f446d51ce188d537a18a2aac67c33a42466ea945ec"
+    ],
+    "config_digest_from_buildkit": "sha256:e9852729aff0222b14d9e6d834d48589e8713b59ced153c97d82b118718327fc",
+    "platform_manifest_digest_from_buildkit": "sha256:cc7657cd6adfb42cb375518605bdac5ada22ba98f7c3cfa16a6cbb2468104901",
+    "registry_digest": null,
+    "pushed": false,
+    "size_bytes": 1045220118,
+    "architecture": "arm64",
+    "os": "linux",
+    "build_log_sha256": "194cd0f133f8285b9359d99af03a8b1906e363754dd1651895198a8003c5b8c9"
+  },
+  "build_arguments": {
+    "platform": "linux/arm64",
+    "dockerfile": "evals/experiments/lexical/builds/c/Dockerfile",
+    "context": "temporary directory containing verified pg_search.deb",
+    "openblas_package_version": "0.3.21+ds-4",
+    "postgresql_package_version_asserted": "16.15-1.pgdg12+2",
+    "apt_transitive_dependency_inventory": "runtime-smoke.json:installed_packages_tsv",
+    "apt_repository_snapshot_pinned": false
+  },
+  "tokenizer": {
+    "type": "pdb.jieba",
+    "tantivy_jieba": "0.20.0",
+    "jieba_rs": "0.10.1",
+    "dictionary": "embedded default dictionary from fixed binary; no custom dictionary",
+    "extension_binary_sha256": "74e90e4f8015246af4a03b15201abf092efd238b5552556dcf1daa604c4fd50b",
+    "filters": {
+      "lowercase": true,
+      "ascii_folding": false,
+      "alpha_num_only": false,
+      "trim": false,
+      "remove_short": null,
+      "remove_long": null,
+      "stemmer": null,
+      "stopwords_language": null,
+      "stopwords": null,
+      "normalizer": null
+    },
+    "chinese_convert": null,
+    "ordinal_position_mode": true,
+    "null_means": "optional setting omitted and disabled according to fixed source; actual index schema recorded in runtime smoke",
+    "sql_type": "pdb.jieba('lowercase=true', 'ascii_folding=false', 'alpha_num_only=false', 'trim=false')",
+    "input_normalization": "norm-v1 is the planned adapter precondition; smoke literals are already norm-v1 and no normalization implementation is added here"
+  },
+  "observations": {
+    "postgresql": "16.15",
+    "pg_search": "0.25.9",
+    "vector": "0.8.6",
+    "load_dependency": "CREATE EXTENSION vector before CREATE EXTENSION pg_search",
+    "multiword_or": {
+      "query": "alpha gamma",
+      "tokens": [
+        "alpha",
+        " ",
+        "gamma"
+      ],
+      "matching_ids": [
+        1,
+        2,
+        3
+      ],
+      "reason": "Whitespace is a retained token shared by all three synthetic rows. No filter was changed after observing this."
+    },
+    "synthetic_identifier_tokens": {
+      "text": "PROT-2042-123",
+      "tokens": [
+        "prot-2042",
+        "-",
+        "123"
+      ]
+    },
+    "index_execution": "ParadeDB Base Scan / TopKScanExecState with score desc, id asc",
+    "bootstrap_role": "postgres superuser; not ordinary-role gate evidence"
+  },
+  "verification": {
+    "smoke_passed": true,
+    "runtime_verified_at": "2026-09-19T14:50:48+00:00",
+    "temporary_containers_removed": true,
+    "true_probes_used": false,
+    "production_service_changed": false,
+    "rls_gate_passed": null,
+    "candidate_count_gate_passed": null,
+    "ordinary_role_tested": false,
+    "latency_evaluation_run": false,
+    "production_selection": null,
+    "license_approval": null,
+    "lint": "ruff check passed; ruff format checked"
+  },
+  "development_failures": [
+    {
+      "step": "first CREATE EXTENSION smoke",
+      "finding": "required extension vector is not installed",
+      "resolution": "Explicitly enable already-pinned vector 0.8.6 in ephemeral database before pg_search."
+    },
+    {
+      "step": "initial multiword OR assertion",
+      "finding": "Expected [1,3], but actual default Jieba whitespace token matches [1,2,3].",
+      "resolution": "Preserved tokenizer configuration and recorded actual OR diagnostic. Minimum smoke asserts single-term Chinese, English and zero-match behavior; OR/count gate remains unverified."
+    },
+    {
+      "step": "metadata writing with system Python",
+      "finding": "system Python 3.9 lacks datetime.UTC",
+      "resolution": "Run the helper with repository venv Python3.11.16, consistent with project environment."
+    }
+  ],
+  "limitations": [
+    "Registry digest remains null because no image was pushed; local RepoDigest is not a remotely retrievable registry artifact.",
+    "Package publisher SHA256 and runtime version verified; detached cosign attestation not verified.",
+    "APT transitive package versions are captured, but repository snapshot is not pinned; a later rebuild may differ and must receive new identity and verification.",
+    "This bootstrap superuser synthetic smoke does not prove ACL/RLS, candidate counts, reproducibility, latency, quality, or license approval.",
+    "C remains release_blocked pending independent direct/transitive licensing review."
+  ],
+  "files_sha256": {
+    "Dockerfile": "325289a715664aed329f3ba1e1186c717ee819f6b247362b5344d6cf61ac815b",
+    "run_smoke.py": "ac050f3cdae35924d7a40a4a810eac5695d36cd36413d952b182f9f30a8170cf",
+    "smoke.sql": "8e8ee54bc666859cb1959b27d9e194d664801af4eb78aabe79d73b612af1eca1",
+    "runtime-smoke.json": "3e50b0a3f912252ad87fa3c8592cf01d8c87f11b7b8bbcf053e84d504f77dfff"
+  }
+}

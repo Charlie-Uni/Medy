@@ -1,0 +1,130 @@
+The files belonging to this database system will be owned by user "postgres".
+This user must also own the server process.
+
+The database cluster will be initialized with locale "en_US.utf8".
+The default database encoding has accordingly been set to "UTF8".
+The default text search configuration will be set to "english".
+
+Data page checksums are disabled.
+
+fixing permissions on existing directory /var/lib/postgresql/data ... ok
+creating subdirectories ... ok
+selecting dynamic shared memory implementation ... posix
+selecting default max_connections ... 100
+selecting default shared_buffers ... 128MB
+selecting default time zone ... Etc/UTC
+creating configuration files ... ok
+running bootstrap script ... ok
+performing post-bootstrap initialization ... ok
+syncing data to disk ... ok
+
+
+Success. You can now start the database server using:
+
+    pg_ctl -D /var/lib/postgresql/data -l logfile start
+
+waiting for server to start....2026-09-19 14:50:32.356 UTC [63] LOG:  starting PostgreSQL 16.15 (Debian 16.15-1.pgdg12+2) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit
+2026-09-19 14:50:32.356 UTC [63] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2026-09-19 14:50:32.357 UTC [66] LOG:  database system was shut down at 2026-09-19 14:50:32 UTC
+2026-09-19 14:50:32.359 UTC [63] LOG:  database system is ready to accept connections
+ done
+server started
+CREATE DATABASE
+
+
+/usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+
+waiting for server to shut down....2026-09-19 14:50:32.496 UTC [63] LOG:  received fast shutdown request
+2026-09-19 14:50:32.496 UTC [63] LOG:  aborting any active transactions
+2026-09-19 14:50:32.497 UTC [63] LOG:  background worker "logical replication launcher" (PID 69) exited with exit code 1
+2026-09-19 14:50:32.497 UTC [64] LOG:  shutting down
+2026-09-19 14:50:32.497 UTC [64] LOG:  checkpoint starting: shutdown immediate
+2026-09-19 14:50:32.502 UTC [64] LOG:  checkpoint complete: wrote 922 buffers (5.6%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.005 s, sync=0.001 s, total=0.006 s; sync files=301, longest=0.001 s, average=0.000 s; distance=4255 kB, estimate=4255 kB; lsn=0/1911FE8, redo lsn=0/1911FE8
+2026-09-19 14:50:32.506 UTC [63] LOG:  database system is shut down
+ done
+server stopped
+
+PostgreSQL init process complete; ready for start up.
+
+********************************************************************************
+WARNING: POSTGRES_HOST_AUTH_METHOD has been set to "trust". This will allow
+         anyone with access to the Postgres port to access your database without
+         a password, even if POSTGRES_PASSWORD is set. See PostgreSQL
+         documentation about "trust":
+         https://www.postgresql.org/docs/current/auth-trust.html
+         In Docker's default configuration, this is effectively any other
+         container on the same system.
+
+         It is not recommended to use POSTGRES_HOST_AUTH_METHOD=trust. Replace
+         it with "-e POSTGRES_PASSWORD=password" instead to set a password in
+         "docker run".
+********************************************************************************
+initdb: warning: enabling "trust" authentication for local connections
+initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+2026-09-19 14:50:32.616 UTC [1] LOG:  starting PostgreSQL 16.15 (Debian 16.15-1.pgdg12+2) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit
+2026-09-19 14:50:32.616 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+2026-09-19 14:50:32.616 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+2026-09-19 14:50:32.616 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2026-09-19 14:50:32.617 UTC [79] LOG:  database system was shut down at 2026-09-19 14:50:32 UTC
+2026-09-19 14:50:32.620 UTC [1] LOG:  database system is ready to accept connections
+2026-09-19 14:50:32.707 UTC [96] LOG:  zhparser add dict : "/var/lib/postgresql/data/base/zhprs_dict_dec001_b.txt" failed! May not config custom dict, omit this
+2026-09-19 14:50:32.707 UTC [96] STATEMENT:  CREATE TABLE synthetic_vectors AS
+	  SELECT id, to_tsvector('dec001_b', body) AS vector FROM synthetic_inputs;
+2026-09-19 14:50:32.766 UTC [103] LOG:  zhparser add dict : "/var/lib/postgresql/data/base/zhprs_dict_dec001_b.txt" failed! May not config custom dict, omit this
+2026-09-19 14:50:32.766 UTC [103] STATEMENT:  SELECT json_build_object(
+	  'postgresql', version(),
+	  'server_version', current_setting('server_version'),
+	  'server_version_num', current_setting('server_version_num'),
+	  'server_encoding', current_setting('server_encoding'),
+	  'lc_collate', (SELECT datcollate FROM pg_database WHERE datname = current_database()),
+	  'lc_ctype', (SELECT datctype FROM pg_database WHERE datname = current_database()),
+	  'extension', (SELECT row_to_json(e) FROM
+	      (SELECT extname, extversion FROM pg_extension WHERE extname = 'zhparser') e),
+	  'guc', (SELECT json_agg(g ORDER BY name) FROM
+	      (SELECT name, setting, boot_val, reset_val, source, context
+	       FROM pg_settings WHERE name LIKE 'zhparser.%') g),
+	  'token_types', (SELECT json_agg(t ORDER BY tokid) FROM ts_token_type('zhparser') t),
+	  'pos_mapping', (SELECT json_agg(m ORDER BY maptokentype, mapseqno) FROM
+	      (SELECT maptokentype, mapseqno, mapdict::regdictionary::text AS dictionary
+	       FROM pg_ts_config_map WHERE mapcfg = 'dec001_b'::regconfig) m),
+	  'custom_dictionary_rows', (SELECT count(*) FROM zhparser.zhprs_custom_word),
+	  'synthetic_results', (SELECT json_agg(s ORDER BY id) FROM
+	      (SELECT id, body,
+	          (SELECT json_agg(p ORDER BY ordinal) FROM ts_parse('zhparser', body)
+	            WITH ORDINALITY AS p(tokid, token, ordinal)) AS parser_tokens,
+	          to_tsvector('dec001_b', body)::text AS vector
+	       FROM synthetic_inputs) s),
+	  'synthetic_or_query', to_tsquery('dec001_b', 'synthetic | protocol')::text,
+	  'synthetic_ranked_ids', (SELECT json_agg(r ORDER BY score DESC, id) FROM
+	      (SELECT id, ts_rank_cd(vector, to_tsquery('dec001_b', 'synthetic | protocol'), 0) AS score
+	       FROM synthetic_vectors WHERE vector @@ to_tsquery('dec001_b', 'synthetic | protocol')) r)
+	);
+2026-09-19 14:50:32.822 UTC [109] LOG:  zhparser add dict : "/var/lib/postgresql/data/base/zhprs_dict_dec001_b.txt" failed! May not config custom dict, omit this
+2026-09-19 14:50:32.822 UTC [109] STATEMENT:  SELECT json_build_object(
+	  'postgresql', version(),
+	  'server_version', current_setting('server_version'),
+	  'server_version_num', current_setting('server_version_num'),
+	  'server_encoding', current_setting('server_encoding'),
+	  'lc_collate', (SELECT datcollate FROM pg_database WHERE datname = current_database()),
+	  'lc_ctype', (SELECT datctype FROM pg_database WHERE datname = current_database()),
+	  'extension', (SELECT row_to_json(e) FROM
+	      (SELECT extname, extversion FROM pg_extension WHERE extname = 'zhparser') e),
+	  'guc', (SELECT json_agg(g ORDER BY name) FROM
+	      (SELECT name, setting, boot_val, reset_val, source, context
+	       FROM pg_settings WHERE name LIKE 'zhparser.%') g),
+	  'token_types', (SELECT json_agg(t ORDER BY tokid) FROM ts_token_type('zhparser') t),
+	  'pos_mapping', (SELECT json_agg(m ORDER BY maptokentype, mapseqno) FROM
+	      (SELECT maptokentype, mapseqno, mapdict::regdictionary::text AS dictionary
+	       FROM pg_ts_config_map WHERE mapcfg = 'dec001_b'::regconfig) m),
+	  'custom_dictionary_rows', (SELECT count(*) FROM zhparser.zhprs_custom_word),
+	  'synthetic_results', (SELECT json_agg(s ORDER BY id) FROM
+	      (SELECT id, body,
+	          (SELECT json_agg(p ORDER BY ordinal) FROM ts_parse('zhparser', body)
+	            WITH ORDINALITY AS p(tokid, token, ordinal)) AS parser_tokens,
+	          to_tsvector('dec001_b', body)::text AS vector
+	       FROM synthetic_inputs) s),
+	  'synthetic_or_query', to_tsquery('dec001_b', 'synthetic | protocol')::text,
+	  'synthetic_ranked_ids', (SELECT json_agg(r ORDER BY score DESC, id) FROM
+	      (SELECT id, ts_rank_cd(vector, to_tsquery('dec001_b', 'synthetic | protocol'), 0) AS score
+	       FROM synthetic_vectors WHERE vector @@ to_tsquery('dec001_b', 'synthetic | protocol')) r)
+	);

@@ -1,0 +1,776 @@
+{
+  "candidate": "B",
+  "status": "synthetic_smoke_passed_not_selection_evidence",
+  "created_at": "2026-09-19T14:50:33.236414+00:00",
+  "sources": {
+    "zhparser": {
+      "commit": "dd292fd591edbcb7ebee79d3c3cdc969e9cddced",
+      "url": "https://codeload.github.com/amutu/zhparser/tar.gz/dd292fd591edbcb7ebee79d3c3cdc969e9cddced",
+      "sha256": "ae670786b1372337d0527917692e7b40910fff0e3e9a727b3cccc09b73bd5584"
+    },
+    "scws": {
+      "commit": "a04ef5e655213eb6b07fb57761d0eac72c281ad4",
+      "url": "https://codeload.github.com/hightman/scws/tar.gz/a04ef5e655213eb6b07fb57761d0eac72c281ad4",
+      "sha256": "c4f83883bf453aa9829a36abea76a11d546016fe639838b72b66bfca9f7f4d0d"
+    }
+  },
+  "base_image": "pgvector/pgvector:pg16@sha256:ccc6e83d6e35e931dc7c5def2022729d5a6c370318d099181995567ff1fb4d6b",
+  "image": {
+    "Id": "sha256:00ce3abb08ccb0289b133471335cf327cd7b1f2860f6ac876cc689658af6245b",
+    "RepoTags": [
+      "medy-dec001-b:zhparser2.3-scws1.2.3"
+    ],
+    "RepoDigests": [
+      "medy-dec001-b@sha256:00ce3abb08ccb0289b133471335cf327cd7b1f2860f6ac876cc689658af6245b"
+    ],
+    "Architecture": "arm64",
+    "Os": "linux",
+    "Created": "2026-09-19T14:47:55.674575793Z"
+  },
+  "image_id_semantics": "Docker inspect Id; RepoDigests separately recorded, no registry push",
+  "container": {
+    "name": "medy-dec001-b-smoke-a9ee6275415a",
+    "network": "none",
+    "port_bindings": {},
+    "mounts": [],
+    "read_only_rootfs": true,
+    "removed": true
+  },
+  "runtime": {
+    "postgresql": "PostgreSQL 16.15 (Debian 16.15-1.pgdg12+2) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit",
+    "server_version": "16.15 (Debian 16.15-1.pgdg12+2)",
+    "server_version_num": "160015",
+    "server_encoding": "UTF8",
+    "lc_collate": "en_US.utf8",
+    "lc_ctype": "en_US.utf8",
+    "extension": {
+      "extname": "zhparser",
+      "extversion": "2.3"
+    },
+    "guc": [
+      {
+        "name": "zhparser.dict_in_memory",
+        "setting": "off",
+        "boot_val": "off",
+        "reset_val": "off",
+        "source": "default",
+        "context": "backend"
+      },
+      {
+        "name": "zhparser.extra_dicts",
+        "setting": "",
+        "boot_val": null,
+        "reset_val": null,
+        "source": "default",
+        "context": "backend"
+      },
+      {
+        "name": "zhparser.multi_duality",
+        "setting": "off",
+        "boot_val": "off",
+        "reset_val": "off",
+        "source": "default",
+        "context": "user"
+      },
+      {
+        "name": "zhparser.multi_short",
+        "setting": "off",
+        "boot_val": "off",
+        "reset_val": "off",
+        "source": "default",
+        "context": "user"
+      },
+      {
+        "name": "zhparser.multi_zall",
+        "setting": "off",
+        "boot_val": "off",
+        "reset_val": "off",
+        "source": "default",
+        "context": "user"
+      },
+      {
+        "name": "zhparser.multi_zmain",
+        "setting": "off",
+        "boot_val": "off",
+        "reset_val": "off",
+        "source": "default",
+        "context": "user"
+      },
+      {
+        "name": "zhparser.punctuation_ignore",
+        "setting": "off",
+        "boot_val": "off",
+        "reset_val": "off",
+        "source": "default",
+        "context": "user"
+      },
+      {
+        "name": "zhparser.seg_with_duality",
+        "setting": "off",
+        "boot_val": "off",
+        "reset_val": "off",
+        "source": "default",
+        "context": "user"
+      }
+    ],
+    "token_types": [
+      {
+        "tokid": 97,
+        "alias": "a",
+        "description": "adjective,形容词"
+      },
+      {
+        "tokid": 98,
+        "alias": "b",
+        "description": "differentiation,区别词"
+      },
+      {
+        "tokid": 99,
+        "alias": "c",
+        "description": "conjunction,连词"
+      },
+      {
+        "tokid": 100,
+        "alias": "d",
+        "description": "adverb,副词"
+      },
+      {
+        "tokid": 101,
+        "alias": "e",
+        "description": "exclamation,感叹词"
+      },
+      {
+        "tokid": 102,
+        "alias": "f",
+        "description": "position,方位词"
+      },
+      {
+        "tokid": 103,
+        "alias": "g",
+        "description": "root,词根"
+      },
+      {
+        "tokid": 104,
+        "alias": "h",
+        "description": "head,前连接成分"
+      },
+      {
+        "tokid": 105,
+        "alias": "i",
+        "description": "idiom,成语"
+      },
+      {
+        "tokid": 106,
+        "alias": "j",
+        "description": "abbreviation,简称"
+      },
+      {
+        "tokid": 107,
+        "alias": "k",
+        "description": "tail,后连接成分"
+      },
+      {
+        "tokid": 108,
+        "alias": "l",
+        "description": "tmp,习用语"
+      },
+      {
+        "tokid": 109,
+        "alias": "m",
+        "description": "numeral,数词"
+      },
+      {
+        "tokid": 110,
+        "alias": "n",
+        "description": "noun,名词"
+      },
+      {
+        "tokid": 111,
+        "alias": "o",
+        "description": "onomatopoeia,拟声词"
+      },
+      {
+        "tokid": 112,
+        "alias": "p",
+        "description": "prepositional,介词"
+      },
+      {
+        "tokid": 113,
+        "alias": "q",
+        "description": "quantity,量词"
+      },
+      {
+        "tokid": 114,
+        "alias": "r",
+        "description": "pronoun,代词"
+      },
+      {
+        "tokid": 115,
+        "alias": "s",
+        "description": "space,处所词"
+      },
+      {
+        "tokid": 116,
+        "alias": "t",
+        "description": "time,时语素"
+      },
+      {
+        "tokid": 117,
+        "alias": "u",
+        "description": "auxiliary,助词"
+      },
+      {
+        "tokid": 118,
+        "alias": "v",
+        "description": "verb,动词"
+      },
+      {
+        "tokid": 119,
+        "alias": "w",
+        "description": "punctuation,标点符号"
+      },
+      {
+        "tokid": 120,
+        "alias": "x",
+        "description": "unknown,未知词"
+      },
+      {
+        "tokid": 121,
+        "alias": "y",
+        "description": "modal,语气词"
+      },
+      {
+        "tokid": 122,
+        "alias": "z",
+        "description": "status,状态词"
+      }
+    ],
+    "pos_mapping": [
+      {
+        "maptokentype": 97,
+        "mapseqno": 1,
+        "dictionary": "simple"
+      },
+      {
+        "maptokentype": 98,
+        "mapseqno": 1,
+        "dictionary": "simple"
+      },
+      {
+        "maptokentype": 99,
+        "mapseqno": 1,
+        "dictionary": "simple"
+      },
+      {
+        "maptokentype": 100,
+        "mapseqno": 1,
+        "dictionary": "simple"
+      },
+      {
+        "maptokentype": 101,
+        "mapseqno": 1,
+        "dictionary": "simple"
+      },
+      {
+        "maptokentype": 102,
+        "mapseqno": 1,
+        "dictionary": "simple"
+      },
+      {
+        "maptokentype": 103,
+        "mapseqno": 1,
+        "dictionary": "simple"
+      },
+      {
+        "maptokentype": 104,
+        "mapseqno": 1,
+        "dictionary": "simple"
+      },
+      {
+        "maptokentype": 105,
+        "mapseqno": 1,
+        "dictionary": "simple"
+      },
+      {
+        "maptokentype": 106,
+        "mapseqno": 1,
+        "dictionary": "simple"
+      },
+      {
+        "maptokentype": 107,
+        "mapseqno": 1,
+        "dictionary": "simple"
+      },
+      {
+        "maptokentype": 108,
+        "mapseqno": 1,
+        "dictionary": "simple"
+      },
+      {
+        "maptokentype": 109,
+        "mapseqno": 1,
+        "dictionary": "simple"
+      },
+      {
+        "maptokentype": 110,
+        "mapseqno": 1,
+        "dictionary": "simple"
+      },
+      {
+        "maptokentype": 111,
+        "mapseqno": 1,
+        "dictionary": "simple"
+      },
+      {
+        "maptokentype": 112,
+        "mapseqno": 1,
+        "dictionary": "simple"
+      },
+      {
+        "maptokentype": 113,
+        "mapseqno": 1,
+        "dictionary": "simple"
+      },
+      {
+        "maptokentype": 114,
+        "mapseqno": 1,
+        "dictionary": "simple"
+      },
+      {
+        "maptokentype": 115,
+        "mapseqno": 1,
+        "dictionary": "simple"
+      },
+      {
+        "maptokentype": 116,
+        "mapseqno": 1,
+        "dictionary": "simple"
+      },
+      {
+        "maptokentype": 117,
+        "mapseqno": 1,
+        "dictionary": "simple"
+      },
+      {
+        "maptokentype": 118,
+        "mapseqno": 1,
+        "dictionary": "simple"
+      },
+      {
+        "maptokentype": 120,
+        "mapseqno": 1,
+        "dictionary": "simple"
+      },
+      {
+        "maptokentype": 121,
+        "mapseqno": 1,
+        "dictionary": "simple"
+      },
+      {
+        "maptokentype": 122,
+        "mapseqno": 1,
+        "dictionary": "simple"
+      }
+    ],
+    "custom_dictionary_rows": 0,
+    "synthetic_results": [
+      {
+        "id": "ascii",
+        "body": "Synthetic NOT approved protocol SYN-2026-A 12.5 mg/kg",
+        "parser_tokens": [
+          {
+            "tokid": 101,
+            "token": "Synthetic",
+            "ordinal": 1
+          },
+          {
+            "tokid": 101,
+            "token": "NOT",
+            "ordinal": 2
+          },
+          {
+            "tokid": 101,
+            "token": "approved",
+            "ordinal": 3
+          },
+          {
+            "tokid": 101,
+            "token": "protocol",
+            "ordinal": 4
+          },
+          {
+            "tokid": 101,
+            "token": "SYN",
+            "ordinal": 5
+          },
+          {
+            "tokid": 117,
+            "token": "-",
+            "ordinal": 6
+          },
+          {
+            "tokid": 101,
+            "token": "2026",
+            "ordinal": 7
+          },
+          {
+            "tokid": 117,
+            "token": "-",
+            "ordinal": 8
+          },
+          {
+            "tokid": 101,
+            "token": "A",
+            "ordinal": 9
+          },
+          {
+            "tokid": 101,
+            "token": "12.5",
+            "ordinal": 10
+          },
+          {
+            "tokid": 101,
+            "token": "mg",
+            "ordinal": 11
+          },
+          {
+            "tokid": 117,
+            "token": "/",
+            "ordinal": 12
+          },
+          {
+            "tokid": 101,
+            "token": "kg",
+            "ordinal": 13
+          }
+        ],
+        "vector": "'-':6,8 '/':12 '12.5':10 '2026':7 'a':9 'approved':3 'kg':13 'mg':11 'not':2 'protocol':4 'syn':5 'synthetic':1"
+      },
+      {
+        "id": "empty",
+        "body": "   ",
+        "parser_tokens": null,
+        "vector": ""
+      },
+      {
+        "id": "mixed",
+        "body": "合成文档：不得自动提交；示例数值 12.5 mg，观察时间 48 h。Protocol SYN-2026-A uses 10 mg/kg.",
+        "parser_tokens": [
+          {
+            "tokid": 118,
+            "token": "合成",
+            "ordinal": 1
+          },
+          {
+            "tokid": 110,
+            "token": "文档",
+            "ordinal": 2
+          },
+          {
+            "tokid": 117,
+            "token": "：",
+            "ordinal": 3
+          },
+          {
+            "tokid": 118,
+            "token": "不得",
+            "ordinal": 4
+          },
+          {
+            "tokid": 100,
+            "token": "自动",
+            "ordinal": 5
+          },
+          {
+            "tokid": 118,
+            "token": "提交",
+            "ordinal": 6
+          },
+          {
+            "tokid": 117,
+            "token": "；",
+            "ordinal": 7
+          },
+          {
+            "tokid": 110,
+            "token": "示例",
+            "ordinal": 8
+          },
+          {
+            "tokid": 110,
+            "token": "数值",
+            "ordinal": 9
+          },
+          {
+            "tokid": 101,
+            "token": "12.5",
+            "ordinal": 10
+          },
+          {
+            "tokid": 101,
+            "token": "mg",
+            "ordinal": 11
+          },
+          {
+            "tokid": 117,
+            "token": "，",
+            "ordinal": 12
+          },
+          {
+            "tokid": 118,
+            "token": "观察",
+            "ordinal": 13
+          },
+          {
+            "tokid": 110,
+            "token": "时间",
+            "ordinal": 14
+          },
+          {
+            "tokid": 101,
+            "token": "48",
+            "ordinal": 15
+          },
+          {
+            "tokid": 101,
+            "token": "h",
+            "ordinal": 16
+          },
+          {
+            "tokid": 117,
+            "token": "。",
+            "ordinal": 17
+          },
+          {
+            "tokid": 101,
+            "token": "Protocol",
+            "ordinal": 18
+          },
+          {
+            "tokid": 101,
+            "token": "SYN",
+            "ordinal": 19
+          },
+          {
+            "tokid": 117,
+            "token": "-",
+            "ordinal": 20
+          },
+          {
+            "tokid": 101,
+            "token": "2026",
+            "ordinal": 21
+          },
+          {
+            "tokid": 117,
+            "token": "-",
+            "ordinal": 22
+          },
+          {
+            "tokid": 101,
+            "token": "A",
+            "ordinal": 23
+          },
+          {
+            "tokid": 101,
+            "token": "uses",
+            "ordinal": 24
+          },
+          {
+            "tokid": 101,
+            "token": "10",
+            "ordinal": 25
+          },
+          {
+            "tokid": 101,
+            "token": "mg",
+            "ordinal": 26
+          },
+          {
+            "tokid": 117,
+            "token": "/",
+            "ordinal": 27
+          },
+          {
+            "tokid": 101,
+            "token": "kg",
+            "ordinal": 28
+          },
+          {
+            "tokid": 117,
+            "token": ".",
+            "ordinal": 29
+          }
+        ],
+        "vector": "'-':20,22 '.':29 '/':27 '10':25 '12.5':10 '2026':21 '48':15 'a':23 'h':16 'kg':28 'mg':11,26 'protocol':18 'syn':19 'uses':24 '。':17 '不得':4 '合成':1 '提交':6 '数值':9 '文档':2 '时间':14 '示例':8 '自动':5 '观察':13 '，':12 '：':3 '；':7"
+      },
+      {
+        "id": "traditional",
+        "body": "合成紀錄：不得自動提交；觀察時間 48 小時。Synthetic report is not approved.",
+        "parser_tokens": [
+          {
+            "tokid": 118,
+            "token": "合成",
+            "ordinal": 1
+          },
+          {
+            "tokid": 110,
+            "token": "紀",
+            "ordinal": 2
+          },
+          {
+            "tokid": 120,
+            "token": "錄",
+            "ordinal": 3
+          },
+          {
+            "tokid": 117,
+            "token": "：",
+            "ordinal": 4
+          },
+          {
+            "tokid": 118,
+            "token": "不得",
+            "ordinal": 5
+          },
+          {
+            "tokid": 112,
+            "token": "自",
+            "ordinal": 6
+          },
+          {
+            "tokid": 118,
+            "token": "動",
+            "ordinal": 7
+          },
+          {
+            "tokid": 118,
+            "token": "提交",
+            "ordinal": 8
+          },
+          {
+            "tokid": 117,
+            "token": "；",
+            "ordinal": 9
+          },
+          {
+            "tokid": 120,
+            "token": "觀",
+            "ordinal": 10
+          },
+          {
+            "tokid": 106,
+            "token": "察",
+            "ordinal": 11
+          },
+          {
+            "tokid": 102,
+            "token": "時",
+            "ordinal": 12
+          },
+          {
+            "tokid": 102,
+            "token": "間",
+            "ordinal": 13
+          },
+          {
+            "tokid": 101,
+            "token": "48",
+            "ordinal": 14
+          },
+          {
+            "tokid": 97,
+            "token": "小",
+            "ordinal": 15
+          },
+          {
+            "tokid": 102,
+            "token": "時",
+            "ordinal": 16
+          },
+          {
+            "tokid": 117,
+            "token": "。",
+            "ordinal": 17
+          },
+          {
+            "tokid": 101,
+            "token": "Synthetic",
+            "ordinal": 18
+          },
+          {
+            "tokid": 101,
+            "token": "report",
+            "ordinal": 19
+          },
+          {
+            "tokid": 101,
+            "token": "is",
+            "ordinal": 20
+          },
+          {
+            "tokid": 101,
+            "token": "not",
+            "ordinal": 21
+          },
+          {
+            "tokid": 101,
+            "token": "approved",
+            "ordinal": 22
+          },
+          {
+            "tokid": 117,
+            "token": ".",
+            "ordinal": 23
+          }
+        ],
+        "vector": "'.':23 '48':14 'approved':22 'is':20 'not':21 'report':19 'synthetic':18 '。':17 '不得':5 '動':7 '合成':1 '察':11 '小':15 '提交':8 '時':12,16 '紀':2 '自':6 '觀':10 '錄':3 '間':13 '：':4 '；':9"
+      }
+    ],
+    "synthetic_or_query": "'synthetic' | 'protocol'",
+    "synthetic_ranked_ids": [
+      {
+        "id": "ascii",
+        "score": 0.2
+      },
+      {
+        "id": "mixed",
+        "score": 0.1
+      },
+      {
+        "id": "traditional",
+        "score": 0.1
+      }
+    ]
+  },
+  "fresh_connection_outputs_equal": true,
+  "elapsed_seconds": 1.315,
+  "source_and_config_files_sha256": {
+    "Dockerfile": "8f69a9b3814625f4ad0090a8e1e124730b49cdcbc0fbecda6e89f78a3072af96",
+    "build.sh": "63a407eff869c4523b82c32982dc8092834df714496251752bf80dd7660e0ba2",
+    "smoke.sql": "ebb62cb1df848a5b434a51aa0e132d8ae86a6fbdf87d7a01204ca179b5f2077a",
+    "metadata.sql": "264167362822e62b28d9c00f6a431e9d3873b75e4bf51f78b379c32594786566",
+    "collect.py": "a5f37acbefe6d7789c506ce5cde003e58c1eb9bb17e344e182e68a274ba33df7"
+  },
+  "evidence_files_sha256": {
+    "build_packages.tsv": "49cb2d6f4ecc2510d10a4c6fedf6f52466c4f5c5a0f0e5860e1dc9eaefa2107c",
+    "custom_dictionary_files.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "dynamic_linking.txt": "62073feb0c66409aba6f3a363673647755f219c532c5e5bdf110f9cca9542598",
+    "gcc_version.txt": "8c59c3b7b9051484db9a6b6576edf12a3aca7381a06a174a2d4dbfd6ce08681f",
+    "installed_sha256sums.txt": "b98c29e8e680f8e0d920e17d29fcc30a6c4e8ea30feae27b81d13006dd877b68",
+    "os_release.txt": "59a77b5f2666d9c85c489bd1911a6eebbd91ef22fe48b90a3b75f1b21f3844d4",
+    "pg_config.txt": "3b9af14b9aad18047c0fa897c64b5ee152890a82416da9f63567b1dd64fa5aca",
+    "runtime_packages.tsv": "c8be75066a883b5b43af5d60e5a79cbf46c8d6133c9fc204ebc6ed11751e8c03",
+    "scws_config.log": "4f7df2c786561b6305f3e9324456f0996c958f5ab99d1f0b337d2ee1dc3c5c50",
+    "scws_version.txt": "25c0e0b6626f7c296499acad82f36e046a3cba8bfbdfc86a7bbf98b973d90f54",
+    "container.log": "d71e29b2265fba6d5203753221ca38af5550a776cf34e97329aa25e1510f3799"
+  },
+  "probe_queries_read_or_executed": 0,
+  "production_license_approval": null,
+  "unverified": [
+    "ordinary-role/RLS/count/version adapter contract",
+    "75-query retrieval and latency gates",
+    "production dictionary license clearance",
+    "bit-for-bit rebuild from moving apt repositories"
+  ]
+}

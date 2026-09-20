@@ -52,4 +52,3 @@
 - [实验准备说明](../../evals/experiments/lexical/README.md)、[准备清单](../../evals/experiments/lexical/preparation-v1/experiment_plan.json)、[映射诊断](../../evals/experiments/lexical/preparation-v1/mapping.audit.json)已交付。
 - 按既有授权直接启动下一轮独立候选构建，见[记录 28](2026-09-20-implementation-28-candidate-builds.md)。只使用合成输入做 smoke，继续补齐实际配置与镜像身份。
 - 已向学习者提出“两块各有半段锚点为什么仍不算命中”的知识确认，尚未收到回答；不把静默记为掌握，也不阻塞实施。
-

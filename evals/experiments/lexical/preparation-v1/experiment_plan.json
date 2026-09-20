@@ -64,8 +64,28 @@
       "ranking": "ts_rank_cd with default weights and normalization=0; chunk_id ascending for ties",
       "index": "position-preserving tsvector, GIN",
       "image_digest": "sha256:ccc6e83d6e35e931dc7c5def2022729d5a6c370318d099181995567ff1fb4d6b",
-      "adapter_runtime_verified": false,
-      "license_evidence": "https://github.com/fxsjy/jieba/blob/v0.42.1/LICENSE"
+      "adapter_runtime_verified": true,
+      "license_evidence": "https://github.com/fxsjy/jieba/blob/v0.42.1/LICENSE",
+      "synthetic_smoke": {
+        "status": "synthetic_smoke_passed",
+        "evidence": "evals/experiments/lexical/builds/a/smoke_result.json",
+        "postgresql": "16.15 (Debian 16.15-1.pgdg12+2)",
+        "rls_verified": false,
+        "production_adapter_implemented": false
+      },
+      "adapter": {
+        "module": "medops.retrieval.lexical.pg_simple_fts",
+        "retriever_version": "pg-simple-fts-v1",
+        "index_tables": [
+          "lexical_index_meta",
+          "lexical_index_a"
+        ],
+        "schema_scope": "experiment-scoped DDL installed by the admin connection (not an Alembic revision until DEC-001 is decided)",
+        "filters_in_query": "RLS chain lexical_index_a -> chunks -> documents -> document_acl, plus status = active and effective window at as_of",
+        "count_and_page": "one statement, count(*) over () on the same predicate and filters",
+        "evidence": "tests/integration/test_lexical_pg_simple_fts.py (isolated database, real LOGIN users)",
+        "record": "docs/reviews/2026-09-20-implementation-29-candidate-a-adapter.md"
+      }
     },
     {
       "id": "B",
@@ -78,10 +98,23 @@
       "scws_commit": "a04ef5e655213eb6b07fb57761d0eac72c281ad4",
       "normalization": "norm-v1",
       "ranking": "ts_rank_cd with default weights and normalization=0; chunk_id ascending for ties",
-      "pos_mapping": null,
-      "guc_snapshot": null,
-      "dictionary_sha256": null,
-      "rules_sha256": null,
+      "pos_mapping": "all zhparser token types mapped to dictionary simple (see builds/b/evidence-2026-09-20/metadata.json runtime.pos_mapping)",
+      "guc_snapshot": {
+        "zhparser.dict_in_memory": "off",
+        "zhparser.extra_dicts": "",
+        "zhparser.multi_duality": "off",
+        "zhparser.multi_short": "off",
+        "zhparser.multi_zall": "off",
+        "zhparser.multi_zmain": "off",
+        "zhparser.punctuation_ignore": "off",
+        "zhparser.seg_with_duality": "off"
+      },
+      "dictionary_sha256": {
+        "dict.utf8.xdb": "fd76a689f996c4e68ce53325a6a24dc652a678b1e7f676e4c5ca76265609a3e2"
+      },
+      "rules_sha256": {
+        "rules.utf8.ini": "45395f794226581fb1cc02b44ae1481804152511fc59fa677e2f7b755440479c"
+      },
       "image_digest": null,
       "adapter_runtime_verified": false,
       "source_evidence": [
@@ -91,7 +124,29 @@
       "license_evidence": [
         "https://github.com/amutu/zhparser/blob/dd292fd591edbcb7ebee79d3c3cdc969e9cddced/COPYRIGHT",
         "https://github.com/hightman/scws/blob/a04ef5e655213eb6b07fb57761d0eac72c281ad4/COPYING"
-      ]
+      ],
+      "image_local_id": "sha256:00ce3abb08ccb0289b133471335cf327cd7b1f2860f6ac876cc689658af6245b",
+      "image_local_tag": "medy-dec001-b:zhparser2.3-scws1.2.3",
+      "image_digest_note": "no registry push; local docker inspect Id only, rebuild from moving apt repositories is not bit-for-bit",
+      "base_image": "pgvector/pgvector:pg16@sha256:ccc6e83d6e35e931dc7c5def2022729d5a6c370318d099181995567ff1fb4d6b",
+      "runtime_verified": {
+        "postgresql": "16.15 (Debian 16.15-1.pgdg12+2)",
+        "extension_version": "2.3",
+        "scws_version": "1.2.3",
+        "lc_collate": "en_US.utf8",
+        "encoding": "UTF8"
+      },
+      "custom_dictionary": "none (custom_dictionary_files.txt empty)",
+      "source_tarball_sha256": {
+        "zhparser": "ae670786b1372337d0527917692e7b40910fff0e3e9a727b3cccc09b73bd5584",
+        "scws": "c4f83883bf453aa9829a36abea76a11d546016fe639838b72b66bfca9f7f4d0d"
+      },
+      "synthetic_smoke": {
+        "status": "synthetic_smoke_passed_not_selection_evidence",
+        "evidence": "evals/experiments/lexical/builds/b/evidence-2026-09-20/metadata.json",
+        "fresh_connection_outputs_equal": true,
+        "probe_queries_read_or_executed": 0
+      }
     },
     {
       "id": "C",
@@ -101,13 +156,24 @@
       "expected_extension_version": "0.25.9",
       "asset": "postgresql-16-pg-search_0.25.9-1PARADEDB-bookworm_arm64.deb",
       "asset_sha256_from_publisher": "69ac9f7ade7ec66b3e062d823e023f28440b5c87be30d6ee85b16f51eab549a9",
-      "downloaded_asset_verified": false,
+      "downloaded_asset_verified": true,
       "tokenizer": "pdb.jieba",
       "tantivy_jieba": "0.20.0",
       "jieba_rs": "0.10.1",
       "chinese_convert": null,
       "normalization": "norm-v1",
-      "full_filter_config": null,
+      "full_filter_config": {
+        "lowercase": true,
+        "ascii_folding": false,
+        "alpha_num_only": false,
+        "trim": false,
+        "remove_short": null,
+        "remove_long": null,
+        "stemmer": null,
+        "stopwords_language": null,
+        "stopwords": null,
+        "normalizer": null
+      },
       "image_digest": null,
       "adapter_runtime_verified": false,
       "release_status": "release_blocked",
@@ -117,17 +183,60 @@
         "https://github.com/paradedb/paradedb/blob/c727757be0aab7fbb17c6cc5f0360f22efdd3776/Cargo.lock",
         "https://github.com/paradedb/paradedb/blob/c727757be0aab7fbb17c6cc5f0360f22efdd3776/tokenizers/src/manager.rs"
       ],
-      "license_evidence": "https://github.com/paradedb/paradedb/blob/c727757be0aab7fbb17c6cc5f0360f22efdd3776/LICENSE"
+      "license_evidence": "https://github.com/paradedb/paradedb/blob/c727757be0aab7fbb17c6cc5f0360f22efdd3776/LICENSE",
+      "asset_size_bytes": 65546104,
+      "cosign_bundle_verified": false,
+      "image_local_id": "sha256:f564d490dfa01b0d95b6f4f446d51ce188d537a18a2aac67c33a42466ea945ec",
+      "image_local_tag": "medy-dec001-c:pg16-pgsearch-0.25.9-r28",
+      "image_digest_note": "no registry push; local docker inspect Id only, apt repository snapshot not pinned",
+      "base_image": "pgvector/pgvector:pg16@sha256:ccc6e83d6e35e931dc7c5def2022729d5a6c370318d099181995567ff1fb4d6b",
+      "runtime_verified": {
+        "postgresql": "16.15",
+        "extension_version": "0.25.9",
+        "vector": "0.8.6",
+        "load_dependency": "CREATE EXTENSION vector before CREATE EXTENSION pg_search"
+      },
+      "extension_binary_sha256": "74e90e4f8015246af4a03b15201abf092efd238b5552556dcf1daa604c4fd50b",
+      "tokenizer_observations": {
+        "multiword_or": {
+          "query": "alpha gamma",
+          "tokens": [
+            "alpha",
+            " ",
+            "gamma"
+          ],
+          "matching_ids": [
+            1,
+            2,
+            3
+          ],
+          "reason": "Whitespace is a retained token shared by all three synthetic rows. No filter was changed after observing this."
+        },
+        "synthetic_identifier_tokens": {
+          "text": "PROT-2042-123",
+          "tokens": [
+            "prot-2042",
+            "-",
+            "123"
+          ]
+        }
+      },
+      "synthetic_smoke": {
+        "status": "build_and_synthetic_smoke_verified",
+        "evidence": "evals/experiments/lexical/builds/c/build-metadata.json",
+        "bootstrap_role": "postgres superuser; not ordinary-role gate evidence",
+        "true_probes_used": false
+      }
     }
   ],
   "readiness_blockers": [
     {
-      "code": "candidate_builds_unverified",
-      "detail": "B/C exact images and extension runtime versions are not yet built/verified; B dictionary/POS/GUC and C full filter config are not frozen"
+      "code": "candidate_images_local_only",
+      "detail": "B/C images are built and version-verified locally (record 28) but have no registry digest; B whitespace/OR predicate and C retained-whitespace token behaviour must be fixed in the adapters before the run"
     },
     {
       "code": "adapters_unimplemented",
-      "detail": "A/B/C ordinary-role adapters and actual FORCE RLS/count/version/execution-plan contract runs remain to be implemented"
+      "detail": "A adapter implemented and contract-tested under the ordinary role with FORCE RLS on synthetic data (record 29); B/C adapters and their execution-plan evidence remain to be implemented"
     },
     {
       "code": "corpus_not_publishable",
@@ -151,5 +260,11 @@
     }
   ],
   "no_quality_results_observed": true,
-  "production_selection": null
+  "production_selection": null,
+  "build_evidence": {
+    "record": "docs/reviews/2026-09-20-implementation-28-candidate-builds.md",
+    "a": "evals/experiments/lexical/builds/a/smoke_result.json",
+    "b": "evals/experiments/lexical/builds/b/evidence-2026-09-20/metadata.json",
+    "c": "evals/experiments/lexical/builds/c/build-metadata.json"
+  }
 }

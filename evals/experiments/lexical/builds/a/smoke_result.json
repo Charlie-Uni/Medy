@@ -1,0 +1,68 @@
+{
+  "status": "synthetic_smoke_passed",
+  "postgresql": "16.15 (Debian 16.15-1.pgdg12+2)",
+  "tokenizer": "tok-jieba-v1",
+  "jieba": "0.42.1",
+  "dictionary_sha256": "7197c3211ddd98962b036cdf40324d1ea2bfaa12bd028e68faa70111a88e12a8",
+  "query_predicate": "OR of simple-FTS lexemes from identical application-pretokenized input",
+  "ranking": "ts_rank_cd normalization=0, then id ASC",
+  "checks": [
+    {
+      "query": "alpha",
+      "dept": "MA",
+      "k": 1,
+      "ids": [
+        "a-1"
+      ],
+      "eligible_count": 2
+    },
+    {
+      "query": "研究",
+      "dept": "MA",
+      "k": 20,
+      "ids": [
+        "a-1",
+        "a-3"
+      ],
+      "eligible_count": 2
+    },
+    {
+      "query": "PROT-2024-017",
+      "dept": "PV",
+      "k": 20,
+      "ids": [
+        "a-2"
+      ],
+      "eligible_count": 1
+    },
+    {
+      "query": "unmatched",
+      "dept": "MA",
+      "k": 20,
+      "ids": [],
+      "eligible_count": 0
+    },
+    {
+      "query": "!!!",
+      "dept": "MA",
+      "k": 20,
+      "ids": [],
+      "eligible_count": 0
+    },
+    {
+      "query": "alpha | beta",
+      "dept": "MA",
+      "k": 20,
+      "ids": [
+        "a-1",
+        "a-3",
+        "a-4"
+      ],
+      "eligible_count": 3
+    }
+  ],
+  "temporary_tables_rolled_back": true,
+  "real_probe_used": false,
+  "rls_verified": false,
+  "production_adapter_implemented": false
+}

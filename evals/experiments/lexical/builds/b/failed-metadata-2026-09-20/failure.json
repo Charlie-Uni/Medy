@@ -1,0 +1,6 @@
+{
+  "exception": "CalledProcessError",
+  "message": "Command '('docker', 'exec', '-i', 'medy-dec001-b-smoke-96c67496166b', 'psql', '-X', '-qAt', '-U', 'postgres', '-d', 'dec001_b')' returned non-zero exit status 3.",
+  "stdout": "",
+  "stderr": "ERROR:  unrecognized configuration parameter \"lc_collate\"\n"
+}

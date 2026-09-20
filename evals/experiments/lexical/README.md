@@ -1,6 +1,6 @@
 # DEC-001 实验准备
 
-当前阶段：`preparation-v1`。探针已完成 Git 冻结归档，实验清单仍是准备草案，尚未运行 A/B/C 召回对比，也未选择生产实现。
+当前阶段：`preparation-v1`。探针已完成 Git 冻结归档，B/C 候选镜像已本地构建并验证版本，实验清单仍是准备草案，尚未运行 A/B/C 召回对比，也未选择生产实现。
 
 ## 输入与当前结果
 
@@ -16,9 +16,9 @@
 
 | 候选 | 准备值 | 尚缺的实际证据 |
 | --- | --- | --- |
-| A | 现有 PG 16.15 固定镜像，应用层 `jieba==0.42.1` + `simple` FTS；默认词典哈希已实测 | 候选适配器、索引配置和普通角色契约实测 |
-| B | zhparser v2.3 + SCWS 1.2.3，两个源码 commit 已记录 | arm64 构建、最终镜像、词典/规则哈希、词性映射/GUC 与运行版本 |
-| C | pg_search v0.25.9 + `pdb.jieba`，bookworm/PG16/arm64 发布资产和发布者 SHA-256 已记录 | 资产下载校验、安装、最终镜像、完整 filters 与运行版本；生产许可仍为 release_blocked |
+| A | 现有 PG 16.15 固定镜像，应用层 `jieba==0.42.1` + `simple` FTS；默认词典哈希已实测；临时表合成 smoke 通过（[builds/a](builds/a/smoke_result.json)）；适配器 `medops.retrieval.lexical.pg_simple_fts`（`pg-simple-fts-v1`，索引表 `lexical_index_a` + `lexical_index_meta`）在普通 LOGIN 用户 + FORCE RLS 下通过契约、零泄漏、零静默不足、版本拒绝与执行计划测试（实现记录 29） | 真实语料运行（需文档激活）与 75 条对比 |
+| B | zhparser v2.3 + SCWS 1.2.3 已在 arm64/PG 16.15 构建并实测扩展版本 2.3；词典 `dict.utf8.xdb`、`rules.utf8.ini` 哈希、GUC 快照、词性映射（全部映射到 simple）已记录；本地镜像 `medy-dec001-b:zhparser2.3-scws1.2.3`（[证据](builds/b/evidence-2026-09-20/metadata.json)） | 候选适配器与普通角色契约实测；无镜像仓库 digest，apt 依赖不可逐位复现 |
+| C | pg_search v0.25.9 资产按发布者 SHA-256 校验后安装；实测扩展 0.25.9、需先建 `vector`；`pdb.jieba` 过滤器配置已固定；本地镜像 `medy-dec001-c:pg16-pgsearch-0.25.9-r28`（[证据](builds/c/build-metadata.json)） | 候选适配器与普通角色契约实测；空白字符被保留为词元，OR 谓词需在适配器中处理；生产许可仍为 release_blocked |
 
 B 选择 zhparser 是基于官方 PG16 构建说明和较清楚的固定版本身份，未使用探针得分。C 的固定源码标签中的官方 PG16 Dockerfile 实际引用 0.25.8，因此不能把 Dockerfile 标签当作安装版本；应使用计划所记录的精确 0.25.9 资产，在本机 bookworm 基础镜像安装后实际核验扩展版本。来源：[zhparser 固定 control](https://github.com/amutu/zhparser/blob/dd292fd591edbcb7ebee79d3c3cdc969e9cddced/zhparser.control)、[ParadeDB 发布资产](https://github.com/paradedb/paradedb/releases/expanded_assets/v0.25.9)、[对应 Dockerfile](https://github.com/paradedb/paradedb/blob/c727757be0aab7fbb17c6cc5f0360f22efdd3776/docker/Dockerfile.official-16)。
 
@@ -44,4 +44,4 @@ env -u DEBUG -u PYTHONPATH venv/bin/python -m medops.evals.probe.chunk_mapping \
 
 导出需要本机受控管理连接，在 repeatable-read / read-only 事务中执行，不修改文档状态。映射不访问数据库：退出码 0 为全部映射，1 为完整合法产物已写出且存在必须计 miss 的 unmappable，2 为输入或输出非法且未发布产物。
 
-下一步依次是：补齐并构建 B/C 的固定配置，用合成数据验证三候选适配器；核查 low_trust 的解析问题与实验数据发布条件；冻结完整运行清单，再执行全部 75 条对比。两条 unmappable 原样进入报告，不单独针对这两条调整切分器。
+下一步依次是：用合成数据验证三候选适配器（B/C 固定配置与镜像已在[实现记录 28](../../../docs/reviews/2026-09-20-implementation-28-candidate-builds.md)构建验证）；核查 low_trust 的解析问题与实验数据发布条件；冻结完整运行清单，再执行全部 75 条对比。两条 unmappable 原样进入报告，不单独针对这两条调整切分器。
