@@ -1,6 +1,6 @@
 {
   "experiment_id": "DEC-001-preparation-v1",
-  "status": "draft_not_ready_for_comparison",
+  "status": "run_completed_no_candidate_passed_hard_gates",
   "created_on": "2026-09-20",
   "protocol": "docs/adr/ADR-0002-lexical-retrieval-selection.md",
   "dataset": {
@@ -268,27 +268,23 @@
       "detail": "B/C images are built and version-verified locally (record 28) but have no registry digest; B whitespace/OR predicate and C retained-whitespace token behaviour must be fixed in the adapters before the run"
     },
     {
-      "code": "corpus_not_publishable",
-      "detail": "All 16 development documents are draft; tfda-label-esomen-40mg remains low_trust. Do not activate or remove the six affected samples to force a passing experiment",
-      "affected_samples": [
-        "pc-0025",
-        "pc-0026",
-        "pc-0027",
-        "pc-0028",
-        "pc-0029",
-        "pc-0030"
-      ]
-    },
-    {
       "code": "end_to_end_configuration_unfixed",
       "detail": "Embedding/reranker and end-to-end Recall@5/P95 configuration for the final selection gates have not been fixed"
     },
     {
       "code": "production_license_review_pending",
       "detail": "C remains release_blocked; direct/transitive component and dictionary licensing requires independent review"
+    },
+    {
+      "code": "esomen_low_trust_and_two_unmappable_golds_cap_recall",
+      "detail": "8 forced misses make the 90% macro gate unreachable until esomen is re-parsed and the two boundary-crossing golds get a chunker decision + new mapping"
+    },
+    {
+      "code": "cross_lingual_samples_fail_lexically",
+      "detail": "32 samples with English gold documents and Chinese queries score 12.5-15.6% on every candidate; a follow-up experiment design is the owner's decision"
     }
   ],
-  "no_quality_results_observed": true,
+  "no_quality_results_observed": false,
   "production_selection": null,
   "build_evidence": {
     "record": "docs/reviews/2026-09-20-implementation-28-candidate-builds.md",
@@ -331,5 +327,32 @@
       "result": "75/75 queries returned 0 candidates with candidate_exhausted=true on A, B and C; 0 leak violations; 0 non-reproducible queries; the run is a plumbing check only and is not kept as evidence"
     },
     "caveat_fixed_before_run": "candidate A's tokenizer is instantiated once per process (jieba dictionary load ~200 ms is start-up cost, not query latency)"
+  },
+  "run": {
+    "run_id": "2026-09-20-m1-05-lexical",
+    "directory": "evals/experiments/lexical/runs/2026-09-20-m1-05-lexical",
+    "run_manifest_sha256": "a582225f5b39e24b3cb709708c53aadca54f095518a0a1ebc02c116c295926f0",
+    "strict_macro_recall_at_20": {
+      "A": 0.48,
+      "B": 0.52,
+      "C": 0.5333
+    },
+    "lexical_p95_ms": {
+      "A": 17.23,
+      "B": 19.26,
+      "C": 92.25
+    },
+    "leak_violations": {
+      "A": 0,
+      "B": 0,
+      "C": 0
+    },
+    "hard_gates_passed": {
+      "A": false,
+      "B": false,
+      "C": false
+    },
+    "ceiling_under_option_A": "67/75 = 89.3% because esomen (6 samples, low_trust, draft) and 2 unmappable golds are forced misses",
+    "conclusion": "DEC-001 and M1 remain blocked; gates not lowered; owner decision needed on the next pre-registered experiment (see ADR-0002 backfill)"
   }
 }

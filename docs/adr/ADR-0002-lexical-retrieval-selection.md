@@ -4,7 +4,7 @@
 | --- | --- |
 | 状态 | 协议已决；生产实现待 M1 入口实验 |
 | 日期 | 2026-09-03 |
-| 最后修订 | 2026-09-20：完成探针 Git 归档，追加映射与实验准备状态，预登记判据不变；2026-09-10：增加 zh-Hans 样本最低数量与脚本变体分开报告（第七轮记录）；2026-09-08：复核方式、gold 命中规则与切片门禁作用域按第五轮审核记录修订 |
+| 最后修订 | 2026-09-20（晚）：回填 M1-05 词法对比运行结果，三候选均未通过硬门禁，判据不变；2026-09-20：完成探针 Git 归档，追加映射与实验准备状态，预登记判据不变；2026-09-10：增加 zh-Hans 样本最低数量与脚本变体分开报告（第七轮记录）；2026-09-08：复核方式、gold 命中规则与切片门禁作用域按第五轮审核记录修订 |
 | 关联 | 基线 DEC-001、3.1、3.6、3.7、5.2、5.9、M1 Checklist |
 | 决策人 | Qihan Zhu |
 
@@ -97,7 +97,7 @@ LexicalSearchResult
 
 M1 实验完成后在本节追加：探针集版本与哈希、候选版本/镜像 digest、各指标与置信区间、RLS/候选数测试、许可证结论、最终选择和复现命令。回填不得删除本次预登记内容。
 
-当前状态：尚未运行，无生产实现选择。
+当前状态：2026-09-20 已按预登记完成一次词法对比运行，三候选均未通过硬门禁 1、2；DEC-001 与 M1 保持阻塞，判据不降低，无生产实现选择（见下文结果回填）。
 
 ### 2026-09-20：实验输入已冻结并完成 Git 归档
 
@@ -123,6 +123,63 @@ PII 规则保持 `pii-rules-v1`。`pc-0046` 的 EMA 机构联系邮箱沿用已�
 已建立 [DEC-001 准备目录](../../evals/experiments/lexical/README.md)，记录 A/B/C 固定源码候选、实测环境和测量参数草案。B/C 镜像及部分配置尚未构建验证，三候选适配器、端到端配置及独立许可证审核未完成，实验清单状态仍为 draft，尚未观察检索得分。
 
 只读导出当前 2,661 个 chunk，和冻结页文本重新切分后逐条内容/哈希/来源区间相同。75 条 gold 中 73 条 mapped，pc-0056-g1 与 pc-0072-g1 跨切分边界，按既有规则记录 unmappable 并计 miss，不删除或改写样本。该统计不等于 Lexical Recall@20。另有既存 low_trust 文档及 draft 发布状态需要在正式实验前处理；本次管理侧导出不作为 RLS 或生产可用性证据。
+
+### 2026-09-20：M1-05 词法对比运行结果（三候选均未通过硬门禁）
+
+运行目录 [evals/experiments/lexical/runs/2026-09-20-m1-05-lexical/](../../evals/experiments/lexical/runs/2026-09-20-m1-05-lexical/)：`run_manifest.json`（查询前写出，SHA-256 `a582225f5b39e24b3cb709708c53aadca54f095518a0a1ebc02c116c295926f0`）、`results.json`、`evaluation.json`、`report.md`、`miss_diagnostics.json`。Git HEAD `7c11833`。输入：探针 v1（dataset_hash `5561bee5…db7e`），75 条；15 份文档按决策人 2026-09-20 确认的激活计划转为 active，`tfda-label-esomen-40mg` 因 low_trust 保持 draft（决策人选项 A，pc-0025～pc-0030 计 miss）；`as_of` 2026-09-20；K=20；并发 1；预热 5 遍、测量 10 遍；查询顺序按 `seed 20260920 + pass_index` 洗牌；配对 bootstrap 10,000 次、种子 20260920。
+
+| 候选 | 镜像/服务器 | 索引版本 | 分词器版本 | 词典版本 |
+| --- | --- | --- | --- | --- |
+| A | 开发集群 pgvector/pgvector:pg16@sha256:ccc6e83d…4d6b | `pg-simple-fts-v1` | `tok-jieba-v1` | `jieba-0.42.1+default` |
+| B | `medy-dec001-b:zhparser2.3-scws1.2.3`（本地 ID `00ce3abb08cc`） | `pg-zhparser-fts-v1` | `zhparser-2.3+scws-1.2.3+cfg-dec001_b:8d420cfb+guc:3ff9eb8a` | `scws-dict-utf8:fd76a689…+rules-utf8:45395f79…+scws-1.2.3` |
+| C | `medy-dec001-c:pg16-pgsearch-0.25.9-r28`（本地 ID `f564d490dfa0`） | `pg-search-bm25-v1` | `pg_search-0.25.9+pdb.jieba:6c256ba3` | `jieba-rs-0.10.1+tantivy-jieba-0.20.0+pg_search.so:74e90e4f…` |
+
+**硬门禁 1、2（严格宏平均 Lexical Recall@20 ≥90%，六切片各 ≥85%）：**
+
+| 候选 | 宏平均 | drug_name_zh (18) | dose_unit (20) | negation (41) | time_window (20) | protocol_id (17) | mixed_zh_en (53) | 结论 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| A | 48.0% | 55.6% | 80.0% | 41.5% | 35.0% | 41.2% | 43.4% | 未通过 |
+| B | 52.0% | 77.8% | 85.0% | 48.8% | 40.0% | 35.3% | 41.5% | 未通过 |
+| C | 53.3% | 77.8% | 90.0% | 51.2% | 45.0% | 29.4% | 43.4% | 未通过 |
+
+**硬门禁 3～5：** 管理侧逐 chunk 核对，三候选跨部门泄漏为 0；候选不足由适配器契约保证（分页 ≠ min(合格数, K) 即失败），本次运行 A/C 各 3 条查询合格候选少于 K 并显式 `candidate_exhausted=true`，B 为 0 条；版本不匹配拒绝已由集成测试证明；三候选 75 条 × 15 遍排名逐项一致。
+
+**按部门与脚本变体：**
+
+| 候选 | MA (30) | PV (29) | CO (16) | gold zh-Hans (10) | gold zh-Hant (33) | gold en (32) | drug_name_zh/zh-Hant (18) |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| A | 63.3% | 41.4% | 31.2% | 90.0% | 66.7% | 15.6% | 55.6% |
+| B | 76.7% | 41.4% | 25.0% | 90.0% | 78.8% | 12.5% | 77.8% |
+| C | 76.7% | 44.8% | 25.0% | 100.0% | 78.8% | 12.5% | 77.8% |
+
+drug_name_zh 切片没有 zh-Hans 样本，繁体结果不证明简体达标（SPEC 第 3 节）。
+
+**词法延迟（P95 最近秩，预热除外，750 次测量）：** A 17.2 ms、B 19.3 ms、C 92.2 ms（均值 7.3 / 9.2 / 41.7 ms）。C 的 P95 为 A 的 5.4 倍，超过选择规则的 25% 上限。
+
+**相对 A 的配对提升（pp，query 级 bootstrap 95% CI）：** B +4.0 [−1.3, +10.7]；C +5.3 [−1.3, +12.0]。两者 CI 均包含 0，不满足"≥5pp 且下界 >0"。端到端 Recall@5、端到端 P95 与独立许可证审核未在本次评估；C 仍为 `release_blocked`。
+
+**未命中归因（`miss_diagnostics.json`，只读复算，不调参）：**
+
+| 候选 | 未命中 | gold 合格但名次 >20 | gold 与查询无词元重叠 | esomen 隐藏（选项 A） | unmappable |
+| --- | --- | --- | --- | --- | --- |
+| A | 39 | 21 | 10 | 6 | 2 |
+| B | 36 | 18 | 10 | 6 | 2 |
+| C | 35 | 17 | 10 | 6 | 2 |
+
+主要失败面是 gold 文档为英文的 32 条样本（PV/CO 指南，查询为中文加英文术语）：三候选在该子集的召回为 12.5%～15.6%。中文查询词元在英文条款中不存在，能重叠的只有 `ICH`、`GVP`、`module`、`E2A` 等出现在数百个 chunk 里的通用词元，因此 gold 要么不合格，要么名次远在 20 之外。这是词法阶段对跨语言查询的固有限制，而不是某个 tokenizer 的缺陷；zh-Hant 仿單子集上 B/C（78.8%）优于 A（66.7%），说明 jieba 默认词典对繁体药名切分更差。
+
+**必须记录的结构性上限：** 选项 A 下 esomen 的 6 条与 2 条 unmappable 共 8 条必然 miss，宏平均上限为 67/75 = 89.3%，低于 90% 门禁。本次三候选在 48%～53%，上限不是失败原因，但任何重跑要有通过的可能，必须先解决这 8 条（esomen 重新解析入库；unmappable 两条需要切分器决策并重生成映射，见 SPEC 第 6 节）。
+
+**结论：** 按预登记规则，三个候选均未通过硬门禁，DEC-001 与 M1 保持阻塞，不降低门禁，不选型。后续路径需要决策人另行决定并作为新的预登记实验：（1）保持词法门禁不变，承认跨语言样本由后续向量阶段承担，为词法门禁另建查询语言与文档语言一致的探针版本，跨语言样本单独报告；（2）为候选增加双语医学词典或查询改写（`custom_dictionary`/`query_rewrite` 目前均为 false），作为新变体完整重跑；（3）先解决 esomen 与两条 unmappable 再重跑同一实验（只能消除上限问题，不会改变跨语言失败面）。
+
+复现命令（仓库根，B/C 服务器 DSN 来自本机 `.env.dec001`）：
+
+```sh
+make activate-docs PLAN=evals/experiments/lexical/preparation-v1/activation_plan.proposed.json ACTOR=reviewer-01 ADMIN_URL=<各服务器管理 DSN>
+env -u DEBUG -u PYTHONPATH venv/bin/python -m medops.evals.experiments.dec001_run \
+  --out evals/experiments/lexical/runs/<new-run-id> --as-of 2026-09-20 --purpose "M1-05 comparison"
+env -u DEBUG -u PYTHONPATH venv/bin/python -m medops.evals.experiments.dec001_report evals/experiments/lexical/runs/<new-run-id>
+```
 
 ## 后果
 

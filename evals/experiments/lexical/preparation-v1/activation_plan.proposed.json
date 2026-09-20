@@ -1,5 +1,5 @@
 {
-  "status": "proposed_awaiting_owner_confirmation",
+  "status": "confirmed_by_owner",
   "rule": "决策人 2026-09-17（路线图 M1-11）：说明书取文内修订日期，其次 TFDA 许可证异动日期，再次 PDF 元数据日期；指南取文内发布或生效日期。月份粒度的日期按月初取值并在理由中注明（待决策人确认此约定）。",
   "as_of_for_run": "2026-09-20",
   "actor": "reviewer-01",
@@ -118,5 +118,10 @@
       "source": "文内 Draft, December 2024（月份粒度，取月初）；草案文件，version_label 已标 draft",
       "tier": "in_text_publication_month"
     }
-  ]
+  ],
+  "owner_confirmation": {
+    "date": "2026-09-20",
+    "quote": "可以 继续",
+    "scope": "按提案：月份粒度取月初；deurinol 取许可证异动日期 2026-07-20；esomen 选项 A（保持 draft，pc-0025～pc-0030 计 miss）"
+  }
 }

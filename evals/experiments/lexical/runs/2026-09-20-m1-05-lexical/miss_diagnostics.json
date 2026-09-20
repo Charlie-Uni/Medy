@@ -1,0 +1,3177 @@
+{
+  "run_id": "2026-09-20-m1-05-lexical",
+  "run_manifest_sha256": "a582225f5b39e24b3cb709708c53aadca54f095518a0a1ebc02c116c295926f0",
+  "method": "read-only: for every miss, rerun the candidate's own predicate and filters under the app role without LIMIT and locate the gold chunk; categories are exclusive",
+  "candidates": {
+    "A": {
+      "misses": 39,
+      "by_category": {
+        "gold_eligible_rank_above_20": 21,
+        "esomen_hidden_option_A": 6,
+        "gold_not_eligible_no_term_overlap": 10,
+        "unmappable": 2
+      },
+      "details": [
+        {
+          "sample_id": "pc-0003",
+          "dept": "MA",
+          "gold_script": "zh-Hant",
+          "slices": [
+            "negation",
+            "drug_name_zh"
+          ],
+          "query_tokens": [
+            "超過",
+            "八十",
+            "歲",
+            "的",
+            "老人家",
+            "可以",
+            "開始",
+            "用",
+            "美洛",
+            "醣",
+            "嗎"
+          ],
+          "eligible_candidates": 62,
+          "gold_rank_without_limit": 26,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0014",
+          "dept": "MA",
+          "gold_script": "zh-Hant",
+          "slices": [
+            "time_window",
+            "drug_name_zh",
+            "dose_unit"
+          ],
+          "query_tokens": [
+            "穩壓",
+            "膜",
+            "衣錠",
+            "吃",
+            "多久",
+            "才",
+            "會",
+            "有",
+            "最大",
+            "的",
+            "降壓",
+            "效果"
+          ],
+          "eligible_candidates": 64,
+          "gold_rank_without_limit": 51,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0019",
+          "dept": "MA",
+          "gold_script": "zh-Hant",
+          "slices": [
+            "dose_unit",
+            "drug_name_zh"
+          ],
+          "query_tokens": [
+            "高血壓",
+            "患者",
+            "每天",
+            "用",
+            "明德",
+            "心壓",
+            "暢錠",
+            "治療",
+            "用量",
+            "範圍",
+            "是",
+            "多少"
+          ],
+          "eligible_candidates": 57,
+          "gold_rank_without_limit": 29,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0020",
+          "dept": "MA",
+          "gold_script": "zh-Hant",
+          "slices": [
+            "negation",
+            "drug_name_zh"
+          ],
+          "query_tokens": [
+            "哪些",
+            "病人",
+            "禁止",
+            "使用",
+            "明德",
+            "心壓",
+            "暢錠"
+          ],
+          "eligible_candidates": 49,
+          "gold_rank_without_limit": 47,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0022",
+          "dept": "MA",
+          "gold_script": "zh-Hant",
+          "slices": [
+            "time_window",
+            "drug_name_zh",
+            "negation"
+          ],
+          "query_tokens": [
+            "要",
+            "開刀",
+            "麻醉",
+            "的",
+            "病人",
+            "手術",
+            "前",
+            "多久",
+            "停",
+            "用心",
+            "壓暢",
+            "錠"
+          ],
+          "eligible_candidates": 61,
+          "gold_rank_without_limit": 43,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0025",
+          "dept": "MA",
+          "gold_script": "zh-Hant",
+          "slices": [
+            "negation",
+            "drug_name_zh"
+          ],
+          "category": "esomen_hidden_option_A"
+        },
+        {
+          "sample_id": "pc-0026",
+          "dept": "MA",
+          "gold_script": "zh-Hant",
+          "slices": [
+            "time_window",
+            "drug_name_zh"
+          ],
+          "category": "esomen_hidden_option_A"
+        },
+        {
+          "sample_id": "pc-0027",
+          "dept": "MA",
+          "gold_script": "zh-Hant",
+          "slices": [
+            "dose_unit",
+            "time_window",
+            "drug_name_zh",
+            "negation"
+          ],
+          "category": "esomen_hidden_option_A"
+        },
+        {
+          "sample_id": "pc-0028",
+          "dept": "MA",
+          "gold_script": "zh-Hant",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "category": "esomen_hidden_option_A"
+        },
+        {
+          "sample_id": "pc-0029",
+          "dept": "MA",
+          "gold_script": "zh-Hant",
+          "slices": [
+            "dose_unit",
+            "negation",
+            "mixed_zh_en"
+          ],
+          "category": "esomen_hidden_option_A"
+        },
+        {
+          "sample_id": "pc-0030",
+          "dept": "MA",
+          "gold_script": "zh-Hant",
+          "slices": [
+            "protocol_id"
+          ],
+          "category": "esomen_hidden_option_A"
+        },
+        {
+          "sample_id": "pc-0031",
+          "dept": "PV",
+          "gold_script": "zh-Hans",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "query_tokens": [
+            "meddra",
+            "的",
+            "术语",
+            "层级",
+            "结构",
+            "可以",
+            "由",
+            "使用",
+            "机构",
+            "自行",
+            "更改",
+            "吗"
+          ],
+          "eligible_candidates": 244,
+          "gold_rank_without_limit": 30,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0041",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "query_tokens": [
+            "按照",
+            "gvp",
+            "module",
+            "vi",
+            "一份",
+            "有效",
+            "的",
+            "icsr",
+            "至少",
+            "需要",
+            "包含",
+            "哪些",
+            "要素"
+          ],
+          "eligible_candidates": 825,
+          "gold_rank_without_limit": 197,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0042",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "time_window",
+            "mixed_zh_en"
+          ],
+          "query_tokens": [
+            "按照",
+            "gvp",
+            "module",
+            "vi",
+            "已",
+            "按",
+            "严重",
+            "个案",
+            "提交",
+            "的",
+            "icsr",
+            "因",
+            "本次",
+            "随访",
+            "改判",
+            "为",
+            "非",
+            "这次",
+            "信息",
+            "仍应",
+            "在",
+            "多少",
+            "天",
+            "内"
+          ],
+          "eligible_candidates": 830,
+          "gold_rank_without_limit": 749,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0043",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "time_window",
+            "mixed_zh_en"
+          ],
+          "query_tokens": [
+            "按照",
+            "gvp",
+            "module",
+            "vi",
+            "对于",
+            "需在",
+            "欧盟",
+            "提交",
+            "的",
+            "非",
+            "严重",
+            "有效",
+            "icsr",
+            "成员国",
+            "主管机构",
+            "或",
+            "上市",
+            "许可",
+            "持有人",
+            "应",
+            "在",
+            "收到",
+            "报告",
+            "后",
+            "多少",
+            "天",
+            "内"
+          ],
+          "eligible_candidates": 844,
+          "gold_rank_without_limit": 384,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0044",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "query_tokens": [
+            "按照",
+            "gvp",
+            "module",
+            "vi",
+            "在",
+            "成品",
+            "放行",
+            "前",
+            "的",
+            "生产",
+            "过程",
+            "中",
+            "接触",
+            "药品",
+            "某一",
+            "成分",
+            "是否",
+            "属于",
+            "这里",
+            "定义",
+            "职业",
+            "暴露"
+          ],
+          "eligible_candidates": 724,
+          "gold_rank_without_limit": null,
+          "category": "gold_not_eligible_no_term_overlap"
+        },
+        {
+          "sample_id": "pc-0045",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "time_window",
+            "mixed_zh_en"
+          ],
+          "query_tokens": [
+            "按照",
+            "gvp",
+            "module",
+            "ix",
+            "prac",
+            "报告员",
+            "或",
+            "负责",
+            "的",
+            "成员国",
+            "应",
+            "在",
+            "收到",
+            "已",
+            "验证",
+            "信号",
+            "后",
+            "多少",
+            "天",
+            "内",
+            "完成",
+            "确认"
+          ],
+          "eligible_candidates": 535,
+          "gold_rank_without_limit": 203,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0046",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "query_tokens": [
+            "按照",
+            "gvp",
+            "module",
+            "ix",
+            "欧盟",
+            "上市",
+            "许可",
+            "持有人",
+            "确认",
+            "某个",
+            "经验",
+            "证",
+            "的",
+            "信号",
+            "或",
+            "其他",
+            "来源",
+            "安全",
+            "问题",
+            "符合",
+            "emerging",
+            "safety",
+            "issue",
+            "定义",
+            "后",
+            "最迟",
+            "多久",
+            "应",
+            "通知",
+            "有关",
+            "监管",
+            "机构"
+          ],
+          "eligible_candidates": 933,
+          "gold_rank_without_limit": 81,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0047",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "query_tokens": [
+            "按照",
+            "gvp",
+            "module",
+            "ix",
+            "信号",
+            "确认",
+            "是否",
+            "等同于",
+            "对",
+            "的",
+            "完整",
+            "评估"
+          ],
+          "eligible_candidates": 504,
+          "gold_rank_without_limit": null,
+          "category": "gold_not_eligible_no_term_overlap"
+        },
+        {
+          "sample_id": "pc-0048",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "query_tokens": [
+            "按照",
+            "fda",
+            "的",
+            "ind",
+            "安全",
+            "报告",
+            "要求",
+            "申办",
+            "方",
+            "首次",
+            "收到",
+            "未",
+            "预期",
+            "致死",
+            "或",
+            "危及",
+            "生命",
+            "可疑",
+            "不良反应",
+            "信息",
+            "后",
+            "最迟",
+            "多久",
+            "必须",
+            "通知"
+          ],
+          "eligible_candidates": 381,
+          "gold_rank_without_limit": 268,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0049",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "query_tokens": [
+            "按照",
+            "fda",
+            "这份",
+            "申办",
+            "方",
+            "安全",
+            "报告",
+            "指南",
+            "需要",
+            "通过",
+            "汇总",
+            "分析",
+            "来",
+            "判断",
+            "是否",
+            "满足",
+            "ind",
+            "标准",
+            "的",
+            "两类",
+            "事件",
+            "是",
+            "什么"
+          ],
+          "eligible_candidates": 383,
+          "gold_rank_without_limit": null,
+          "category": "gold_not_eligible_no_term_overlap"
+        },
+        {
+          "sample_id": "pc-0050",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "query_tokens": [
+            "21",
+            "cfr",
+            "312.32",
+            "中",
+            "哪",
+            "两条",
+            "ind",
+            "安全",
+            "报告",
+            "条款",
+            "要求",
+            "评估",
+            "汇总",
+            "数据"
+          ],
+          "eligible_candidates": 356,
+          "gold_rank_without_limit": 151,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0051",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "query_tokens": [
+            "按照",
+            "ich",
+            "e2a",
+            "不良",
+            "事件",
+            "的",
+            "定义",
+            "是否",
+            "要求",
+            "与",
+            "治疗",
+            "存在",
+            "因果关系"
+          ],
+          "eligible_candidates": 404,
+          "gold_rank_without_limit": null,
+          "category": "gold_not_eligible_no_term_overlap"
+        },
+        {
+          "sample_id": "pc-0052",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "query_tokens": [
+            "按",
+            "ich",
+            "e2a",
+            "修订",
+            "安全性",
+            "报告",
+            "模板",
+            "时",
+            "术语",
+            "栏里",
+            "沿用",
+            "side",
+            "effect",
+            "这个",
+            "旧称",
+            "是否",
+            "合适"
+          ],
+          "eligible_candidates": 391,
+          "gold_rank_without_limit": 239,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0053",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "query_tokens": [
+            "按照",
+            "ich",
+            "e2a",
+            "申办",
+            "方",
+            "首次",
+            "获知",
+            "临床",
+            "研究",
+            "病例",
+            "符合",
+            "致死",
+            "或",
+            "危及",
+            "生命",
+            "的",
+            "未",
+            "预期",
+            "不良反应",
+            "快速",
+            "报告",
+            "条件",
+            "后",
+            "最迟",
+            "多久",
+            "应",
+            "通知",
+            "监管",
+            "机构"
+          ],
+          "eligible_candidates": 394,
+          "gold_rank_without_limit": null,
+          "category": "gold_not_eligible_no_term_overlap"
+        },
+        {
+          "sample_id": "pc-0054",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "query_tokens": [
+            "按照",
+            "ich",
+            "e2f",
+            "同步",
+            "dsur",
+            "与",
+            "psur",
+            "的",
+            "数据",
+            "锁定",
+            "点时",
+            "下",
+            "一份",
+            "最",
+            "多",
+            "可以",
+            "覆盖",
+            "多长时间"
+          ],
+          "eligible_candidates": 454,
+          "gold_rank_without_limit": 91,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0055",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "query_tokens": [
+            "按照",
+            "ich",
+            "e2f",
+            "dsur",
+            "最迟",
+            "应",
+            "在",
+            "数据",
+            "锁定",
+            "点后",
+            "多少",
+            "个",
+            "日历",
+            "日内",
+            "提交",
+            "给",
+            "监管",
+            "机构"
+          ],
+          "eligible_candidates": 402,
+          "gold_rank_without_limit": 41,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0056",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "category": "unmappable"
+        },
+        {
+          "sample_id": "pc-0060",
+          "dept": "CO",
+          "gold_script": "en",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "query_tokens": [
+            "ich",
+            "e8",
+            "r1",
+            "对",
+            "研究",
+            "程序",
+            "和",
+            "评估",
+            "的",
+            "科学",
+            "必要性",
+            "及",
+            "受试者",
+            "负担",
+            "有",
+            "什么",
+            "要求"
+          ],
+          "eligible_candidates": 177,
+          "gold_rank_without_limit": null,
+          "category": "gold_not_eligible_no_term_overlap"
+        },
+        {
+          "sample_id": "pc-0061",
+          "dept": "CO",
+          "gold_script": "en",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "query_tokens": [
+            "按照",
+            "ich",
+            "e8",
+            "r1",
+            "回顾性",
+            "开展",
+            "的",
+            "文件",
+            "和",
+            "数据",
+            "审查",
+            "监查",
+            "即使",
+            "结合",
+            "稽查",
+            "是否",
+            "足以",
+            "保证",
+            "临床",
+            "研究",
+            "质量"
+          ],
+          "eligible_candidates": 177,
+          "gold_rank_without_limit": null,
+          "category": "gold_not_eligible_no_term_overlap"
+        },
+        {
+          "sample_id": "pc-0065",
+          "dept": "CO",
+          "gold_script": "en",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "query_tokens": [
+            "按",
+            "ich",
+            "e6",
+            "r3",
+            "设计",
+            "研究",
+            "流程",
+            "时",
+            "申办",
+            "方应",
+            "如何",
+            "控制",
+            "受试者",
+            "和",
+            "研究者",
+            "的",
+            "额外负担"
+          ],
+          "eligible_candidates": 177,
+          "gold_rank_without_limit": 55,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0066",
+          "dept": "CO",
+          "gold_script": "en",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "query_tokens": [
+            "按照",
+            "ich",
+            "e6",
+            "r3",
+            "研究",
+            "中心",
+            "拟",
+            "实报实销",
+            "受试者",
+            "因",
+            "到访",
+            "产生",
+            "的",
+            "合理",
+            "路费",
+            "和",
+            "住宿费",
+            "伦理",
+            "审查",
+            "能否",
+            "仅",
+            "这种",
+            "报销",
+            "就",
+            "认定",
+            "存在",
+            "胁迫"
+          ],
+          "eligible_candidates": 177,
+          "gold_rank_without_limit": null,
+          "category": "gold_not_eligible_no_term_overlap"
+        },
+        {
+          "sample_id": "pc-0067",
+          "dept": "CO",
+          "gold_script": "en",
+          "slices": [
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "query_tokens": [
+            "按照",
+            "ich",
+            "e6",
+            "r3",
+            "必要",
+            "记录",
+            "应由",
+            "哪些",
+            "主体",
+            "安全",
+            "保存",
+            "期限",
+            "依据",
+            "什么",
+            "确定"
+          ],
+          "eligible_candidates": 177,
+          "gold_rank_without_limit": null,
+          "category": "gold_not_eligible_no_term_overlap"
+        },
+        {
+          "sample_id": "pc-0068",
+          "dept": "CO",
+          "gold_script": "en",
+          "slices": [
+            "protocol_id",
+            "mixed_zh_en"
+          ],
+          "query_tokens": [
+            "ich",
+            "e6",
+            "r3",
+            "与",
+            "e8",
+            "r1",
+            "是",
+            "什么",
+            "关系"
+          ],
+          "eligible_candidates": 178,
+          "gold_rank_without_limit": 41,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0069",
+          "dept": "CO",
+          "gold_script": "en",
+          "slices": [
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "query_tokens": [
+            "按照",
+            "ich",
+            "e6",
+            "r3",
+            "试验",
+            "用",
+            "药品",
+            "应",
+            "依据",
+            "哪些",
+            "文件",
+            "使用"
+          ],
+          "eligible_candidates": 177,
+          "gold_rank_without_limit": null,
+          "category": "gold_not_eligible_no_term_overlap"
+        },
+        {
+          "sample_id": "pc-0070",
+          "dept": "CO",
+          "gold_script": "en",
+          "slices": [
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "query_tokens": [
+            "ich",
+            "e6",
+            "r3",
+            "对",
+            "irb",
+            "iec",
+            "应",
+            "保留",
+            "的",
+            "相关",
+            "记录",
+            "列举",
+            "了",
+            "哪些",
+            "例子"
+          ],
+          "eligible_candidates": 252,
+          "gold_rank_without_limit": 40,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0072",
+          "dept": "CO",
+          "gold_script": "en",
+          "slices": [
+            "protocol_id",
+            "mixed_zh_en"
+          ],
+          "category": "unmappable"
+        },
+        {
+          "sample_id": "pc-0073",
+          "dept": "CO",
+          "gold_script": "en",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "query_tokens": [
+            "按照",
+            "fda",
+            "2024",
+            "年",
+            "方案",
+            "偏离",
+            "指南",
+            "草案",
+            "医疗器械",
+            "研究",
+            "为",
+            "紧急",
+            "保护",
+            "受试者",
+            "生命",
+            "或",
+            "身体健康",
+            "而",
+            "计划",
+            "时",
+            "研究者",
+            "最迟",
+            "应",
+            "在",
+            "紧急情况",
+            "发生",
+            "后",
+            "几个",
+            "工作日内",
+            "通知",
+            "申办",
+            "方",
+            "和",
+            "irb"
+          ],
+          "eligible_candidates": 114,
+          "gold_rank_without_limit": 49,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0075",
+          "dept": "CO",
+          "gold_script": "en",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "query_tokens": [
+            "根据",
+            "fda",
+            "2024",
+            "年",
+            "方案",
+            "偏离",
+            "指南",
+            "草案",
+            "的",
+            "说明",
+            "法规",
+            "是否",
+            "给",
+            "protocol",
+            "deviation",
+            "下",
+            "了",
+            "定义"
+          ],
+          "eligible_candidates": 184,
+          "gold_rank_without_limit": 26,
+          "category": "gold_eligible_rank_above_20"
+        }
+      ]
+    },
+    "B": {
+      "misses": 36,
+      "by_category": {
+        "gold_eligible_rank_above_20": 18,
+        "esomen_hidden_option_A": 6,
+        "gold_not_eligible_no_term_overlap": 10,
+        "unmappable": 2
+      },
+      "details": [
+        {
+          "sample_id": "pc-0014",
+          "dept": "MA",
+          "gold_script": "zh-Hant",
+          "slices": [
+            "time_window",
+            "drug_name_zh",
+            "dose_unit"
+          ],
+          "query_tokens": [
+            "吃",
+            "壓",
+            "多久",
+            "才",
+            "效果",
+            "最大",
+            "會",
+            "有",
+            "的",
+            "穩",
+            "膜",
+            "衣",
+            "錠",
+            "降"
+          ],
+          "eligible_candidates": 64,
+          "gold_rank_without_limit": 37,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0025",
+          "dept": "MA",
+          "gold_script": "zh-Hant",
+          "slices": [
+            "negation",
+            "drug_name_zh"
+          ],
+          "category": "esomen_hidden_option_A"
+        },
+        {
+          "sample_id": "pc-0026",
+          "dept": "MA",
+          "gold_script": "zh-Hant",
+          "slices": [
+            "time_window",
+            "drug_name_zh"
+          ],
+          "category": "esomen_hidden_option_A"
+        },
+        {
+          "sample_id": "pc-0027",
+          "dept": "MA",
+          "gold_script": "zh-Hant",
+          "slices": [
+            "dose_unit",
+            "time_window",
+            "drug_name_zh",
+            "negation"
+          ],
+          "category": "esomen_hidden_option_A"
+        },
+        {
+          "sample_id": "pc-0028",
+          "dept": "MA",
+          "gold_script": "zh-Hant",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "category": "esomen_hidden_option_A"
+        },
+        {
+          "sample_id": "pc-0029",
+          "dept": "MA",
+          "gold_script": "zh-Hant",
+          "slices": [
+            "dose_unit",
+            "negation",
+            "mixed_zh_en"
+          ],
+          "category": "esomen_hidden_option_A"
+        },
+        {
+          "sample_id": "pc-0030",
+          "dept": "MA",
+          "gold_script": "zh-Hant",
+          "slices": [
+            "protocol_id"
+          ],
+          "category": "esomen_hidden_option_A"
+        },
+        {
+          "sample_id": "pc-0031",
+          "dept": "PV",
+          "gold_script": "zh-Hans",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "query_tokens": [
+            "meddra",
+            "使用",
+            "可以",
+            "吗",
+            "层级",
+            "更改",
+            "术语",
+            "机构",
+            "由",
+            "的",
+            "结构",
+            "自行"
+          ],
+          "eligible_candidates": 242,
+          "gold_rank_without_limit": 29,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0041",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "query_tokens": [
+            "gvp",
+            "icsr",
+            "module",
+            "vi",
+            "一",
+            "份",
+            "包含",
+            "哪些",
+            "按照",
+            "有效",
+            "的",
+            "至少",
+            "要素",
+            "需要"
+          ],
+          "eligible_candidates": 849,
+          "gold_rank_without_limit": 302,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0042",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "time_window",
+            "mixed_zh_en"
+          ],
+          "query_tokens": [
+            "gvp",
+            "icsr",
+            "module",
+            "vi",
+            "严重",
+            "个案",
+            "为",
+            "仍",
+            "信息",
+            "内",
+            "因",
+            "在",
+            "多少",
+            "天",
+            "已",
+            "应",
+            "按",
+            "按照",
+            "提交",
+            "改判",
+            "本次",
+            "的",
+            "这次",
+            "随访",
+            "非"
+          ],
+          "eligible_candidates": 851,
+          "gold_rank_without_limit": 738,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0043",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "time_window",
+            "mixed_zh_en"
+          ],
+          "query_tokens": [
+            "gvp",
+            "icsr",
+            "module",
+            "vi",
+            "上市",
+            "严重",
+            "主管",
+            "内",
+            "后",
+            "在",
+            "多少",
+            "天",
+            "对于",
+            "应",
+            "成员国",
+            "或",
+            "报告",
+            "持有人",
+            "按照",
+            "提交",
+            "收到",
+            "有效",
+            "机构",
+            "欧盟",
+            "的",
+            "许可",
+            "需",
+            "非"
+          ],
+          "eligible_candidates": 864,
+          "gold_rank_without_limit": 358,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0044",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "query_tokens": [
+            "gvp",
+            "module",
+            "vi",
+            "一成",
+            "中",
+            "分",
+            "前",
+            "在",
+            "定义",
+            "属于",
+            "成品",
+            "按照",
+            "接触",
+            "放行",
+            "是否",
+            "暴露",
+            "某",
+            "生产过程",
+            "的",
+            "职业",
+            "药品",
+            "这里"
+          ],
+          "eligible_candidates": 749,
+          "gold_rank_without_limit": null,
+          "category": "gold_not_eligible_no_term_overlap"
+        },
+        {
+          "sample_id": "pc-0045",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "time_window",
+            "mixed_zh_en"
+          ],
+          "query_tokens": [
+            "gvp",
+            "ix",
+            "module",
+            "prac",
+            "信号",
+            "内",
+            "后",
+            "在",
+            "多少",
+            "天",
+            "完成",
+            "已",
+            "应",
+            "成员国",
+            "或",
+            "报告员",
+            "按照",
+            "收到",
+            "的",
+            "确认",
+            "负责",
+            "验证"
+          ],
+          "eligible_candidates": 535,
+          "gold_rank_without_limit": 215,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0046",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "query_tokens": [
+            "emerging",
+            "gvp",
+            "issue",
+            "ix",
+            "module",
+            "safety",
+            "上市",
+            "信号",
+            "其他",
+            "后",
+            "多久",
+            "安全",
+            "定义",
+            "应",
+            "或",
+            "持有人",
+            "按照",
+            "最",
+            "有关",
+            "机构",
+            "来源",
+            "某个",
+            "欧盟",
+            "的",
+            "监管",
+            "确认",
+            "符合",
+            "经验",
+            "许可",
+            "证",
+            "迟",
+            "通知",
+            "问题"
+          ],
+          "eligible_candidates": 935,
+          "gold_rank_without_limit": 93,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0047",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "query_tokens": [
+            "gvp",
+            "ix",
+            "module",
+            "信号",
+            "同于",
+            "完整",
+            "对",
+            "按照",
+            "是否",
+            "的",
+            "确认",
+            "等",
+            "评估"
+          ],
+          "eligible_candidates": 514,
+          "gold_rank_without_limit": null,
+          "category": "gold_not_eligible_no_term_overlap"
+        },
+        {
+          "sample_id": "pc-0048",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "query_tokens": [
+            "fda",
+            "ind",
+            "不良",
+            "信息",
+            "危及",
+            "反应",
+            "可疑",
+            "后",
+            "多久",
+            "安全",
+            "必须",
+            "或",
+            "报告",
+            "按照",
+            "收到",
+            "方",
+            "最",
+            "未",
+            "次",
+            "生命",
+            "申办",
+            "的",
+            "致死",
+            "要求",
+            "迟",
+            "通知",
+            "预期",
+            "首"
+          ],
+          "eligible_candidates": 394,
+          "gold_rank_without_limit": 238,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0049",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "query_tokens": [
+            "fda",
+            "ind",
+            "两",
+            "事件",
+            "什么",
+            "分析",
+            "判断",
+            "安全",
+            "报告",
+            "指南",
+            "按照",
+            "方",
+            "是",
+            "是否",
+            "来",
+            "标准",
+            "汇总",
+            "满足",
+            "申办",
+            "的",
+            "类",
+            "这份",
+            "通过",
+            "需要"
+          ],
+          "eligible_candidates": 383,
+          "gold_rank_without_limit": null,
+          "category": "gold_not_eligible_no_term_overlap"
+        },
+        {
+          "sample_id": "pc-0050",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "query_tokens": [
+            "21",
+            "312.32",
+            "cfr",
+            "ind",
+            "两",
+            "中",
+            "哪",
+            "安全",
+            "报告",
+            "数据",
+            "条",
+            "条款",
+            "汇总",
+            "要求",
+            "评估"
+          ],
+          "eligible_candidates": 363,
+          "gold_rank_without_limit": 150,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0051",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "query_tokens": [
+            "e2a",
+            "ich",
+            "不良",
+            "与",
+            "事件",
+            "因果关系",
+            "存在",
+            "定义",
+            "按照",
+            "是否",
+            "治疗",
+            "的",
+            "要求"
+          ],
+          "eligible_candidates": 268,
+          "gold_rank_without_limit": null,
+          "category": "gold_not_eligible_no_term_overlap"
+        },
+        {
+          "sample_id": "pc-0052",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "query_tokens": [
+            "e2a",
+            "effect",
+            "ich",
+            "side",
+            "个旧",
+            "修订",
+            "合适",
+            "安全性",
+            "报告",
+            "按",
+            "时",
+            "是否",
+            "术语",
+            "栏",
+            "模板",
+            "沿用",
+            "称",
+            "这",
+            "里"
+          ],
+          "eligible_candidates": 254,
+          "gold_rank_without_limit": 131,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0053",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "query_tokens": [
+            "e2a",
+            "ich",
+            "不良",
+            "临床",
+            "危及",
+            "反应",
+            "后",
+            "多久",
+            "应",
+            "快速",
+            "或",
+            "报告",
+            "按照",
+            "方",
+            "最",
+            "未",
+            "机构",
+            "条件",
+            "次",
+            "生命",
+            "申办",
+            "病例",
+            "的",
+            "监管",
+            "研究",
+            "符合",
+            "致死",
+            "获知",
+            "迟",
+            "通知",
+            "预期",
+            "首"
+          ],
+          "eligible_candidates": 271,
+          "gold_rank_without_limit": null,
+          "category": "gold_not_eligible_no_term_overlap"
+        },
+        {
+          "sample_id": "pc-0054",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "query_tokens": [
+            "dsur",
+            "e2f",
+            "ich",
+            "psur",
+            "一",
+            "下",
+            "与",
+            "份",
+            "可以",
+            "同步",
+            "多",
+            "多长",
+            "按照",
+            "数据",
+            "时",
+            "时间",
+            "最",
+            "点",
+            "的",
+            "覆盖",
+            "锁定"
+          ],
+          "eligible_candidates": 326,
+          "gold_rank_without_limit": 97,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0055",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "query_tokens": [
+            "dsur",
+            "e2f",
+            "ich",
+            "个",
+            "内",
+            "后",
+            "在",
+            "多少",
+            "应",
+            "按照",
+            "提交",
+            "数据",
+            "日",
+            "日历",
+            "最",
+            "机构",
+            "点",
+            "监管",
+            "给",
+            "迟",
+            "锁定"
+          ],
+          "eligible_candidates": 264,
+          "gold_rank_without_limit": 38,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0056",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "category": "unmappable"
+        },
+        {
+          "sample_id": "pc-0060",
+          "dept": "CO",
+          "gold_script": "en",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "query_tokens": [
+            "e8",
+            "ich",
+            "r1",
+            "什么",
+            "及",
+            "受试者",
+            "和",
+            "对",
+            "必要性",
+            "有",
+            "的",
+            "研究",
+            "科学",
+            "程序",
+            "要求",
+            "评估",
+            "负担"
+          ],
+          "eligible_candidates": 177,
+          "gold_rank_without_limit": null,
+          "category": "gold_not_eligible_no_term_overlap"
+        },
+        {
+          "sample_id": "pc-0061",
+          "dept": "CO",
+          "gold_script": "en",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "query_tokens": [
+            "e8",
+            "ich",
+            "r1",
+            "临床",
+            "保证",
+            "即使",
+            "和",
+            "回顾性",
+            "审查",
+            "开展",
+            "按照",
+            "数据",
+            "文件",
+            "是否",
+            "的",
+            "监查",
+            "研究",
+            "稽查",
+            "结合",
+            "质量",
+            "足以"
+          ],
+          "eligible_candidates": 177,
+          "gold_rank_without_limit": null,
+          "category": "gold_not_eligible_no_term_overlap"
+        },
+        {
+          "sample_id": "pc-0063",
+          "dept": "CO",
+          "gold_script": "en",
+          "slices": [
+            "protocol_id",
+            "mixed_zh_en"
+          ],
+          "query_tokens": [
+            "6",
+            "e8",
+            "ich",
+            "r1",
+            "section",
+            "内容",
+            "哪些",
+            "的",
+            "讨论"
+          ],
+          "eligible_candidates": 254,
+          "gold_rank_without_limit": 21,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0065",
+          "dept": "CO",
+          "gold_script": "en",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "query_tokens": [
+            "e6",
+            "ich",
+            "r3",
+            "受试者",
+            "和",
+            "如何",
+            "应",
+            "按",
+            "控制",
+            "方",
+            "时",
+            "流程",
+            "申办",
+            "的",
+            "研究",
+            "研究者",
+            "设计",
+            "负担",
+            "额外"
+          ],
+          "eligible_candidates": 177,
+          "gold_rank_without_limit": 95,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0066",
+          "dept": "CO",
+          "gold_script": "en",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "query_tokens": [
+            "e6",
+            "ich",
+            "r3",
+            "产生",
+            "仅",
+            "伦理",
+            "住宿费",
+            "到访",
+            "受试者",
+            "合理",
+            "和",
+            "因",
+            "存在",
+            "实报实销",
+            "审查",
+            "就",
+            "报销",
+            "拟",
+            "按照",
+            "的",
+            "研究中心",
+            "胁迫",
+            "能否",
+            "认定",
+            "路费",
+            "这种"
+          ],
+          "eligible_candidates": 177,
+          "gold_rank_without_limit": null,
+          "category": "gold_not_eligible_no_term_overlap"
+        },
+        {
+          "sample_id": "pc-0067",
+          "dept": "CO",
+          "gold_script": "en",
+          "slices": [
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "query_tokens": [
+            "e6",
+            "ich",
+            "r3",
+            "主体",
+            "什么",
+            "依据",
+            "保存",
+            "哪些",
+            "安全",
+            "应",
+            "必要",
+            "按照",
+            "期限",
+            "由",
+            "确定",
+            "记录"
+          ],
+          "eligible_candidates": 177,
+          "gold_rank_without_limit": null,
+          "category": "gold_not_eligible_no_term_overlap"
+        },
+        {
+          "sample_id": "pc-0068",
+          "dept": "CO",
+          "gold_script": "en",
+          "slices": [
+            "protocol_id",
+            "mixed_zh_en"
+          ],
+          "query_tokens": [
+            "e6",
+            "e8",
+            "ich",
+            "r1",
+            "r3",
+            "与",
+            "什么",
+            "关系",
+            "是"
+          ],
+          "eligible_candidates": 178,
+          "gold_rank_without_limit": 112,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0069",
+          "dept": "CO",
+          "gold_script": "en",
+          "slices": [
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "query_tokens": [
+            "e6",
+            "ich",
+            "r3",
+            "使用",
+            "依据",
+            "哪些",
+            "应",
+            "按照",
+            "文件",
+            "用",
+            "药品",
+            "试验"
+          ],
+          "eligible_candidates": 177,
+          "gold_rank_without_limit": null,
+          "category": "gold_not_eligible_no_term_overlap"
+        },
+        {
+          "sample_id": "pc-0070",
+          "dept": "CO",
+          "gold_script": "en",
+          "slices": [
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "query_tokens": [
+            "e6",
+            "ich",
+            "iec",
+            "irb",
+            "r3",
+            "了",
+            "例子",
+            "保留",
+            "列举",
+            "哪些",
+            "对",
+            "应",
+            "的",
+            "相关",
+            "记录"
+          ],
+          "eligible_candidates": 251,
+          "gold_rank_without_limit": 30,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0072",
+          "dept": "CO",
+          "gold_script": "en",
+          "slices": [
+            "protocol_id",
+            "mixed_zh_en"
+          ],
+          "category": "unmappable"
+        },
+        {
+          "sample_id": "pc-0073",
+          "dept": "CO",
+          "gold_script": "en",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "query_tokens": [
+            "2024",
+            "fda",
+            "irb",
+            "个",
+            "为",
+            "保护",
+            "偏离",
+            "健康",
+            "内",
+            "几",
+            "医疗器械",
+            "发生",
+            "受试者",
+            "后",
+            "和",
+            "在",
+            "工作日",
+            "年",
+            "应",
+            "情况",
+            "或",
+            "指南",
+            "按照",
+            "方",
+            "方案",
+            "时",
+            "最",
+            "生命",
+            "申办",
+            "研究",
+            "研究者",
+            "紧急",
+            "而",
+            "草案",
+            "计划",
+            "身体",
+            "迟",
+            "通知"
+          ],
+          "eligible_candidates": 113,
+          "gold_rank_without_limit": 76,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0075",
+          "dept": "CO",
+          "gold_script": "en",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "query_tokens": [
+            "2024",
+            "deviation",
+            "fda",
+            "protocol",
+            "下",
+            "了",
+            "偏离",
+            "定义",
+            "年",
+            "指南",
+            "方案",
+            "是否",
+            "根据",
+            "法规",
+            "的",
+            "给",
+            "草案",
+            "说明"
+          ],
+          "eligible_candidates": 182,
+          "gold_rank_without_limit": 23,
+          "category": "gold_eligible_rank_above_20"
+        }
+      ]
+    },
+    "C": {
+      "misses": 35,
+      "by_category": {
+        "gold_eligible_rank_above_20": 17,
+        "esomen_hidden_option_A": 6,
+        "gold_not_eligible_no_term_overlap": 10,
+        "unmappable": 2
+      },
+      "details": [
+        {
+          "sample_id": "pc-0020",
+          "dept": "MA",
+          "gold_script": "zh-Hant",
+          "slices": [
+            "negation",
+            "drug_name_zh"
+          ],
+          "query_tokens": [
+            "哪些",
+            "病人",
+            "禁止",
+            "使用",
+            "明德",
+            "心壓",
+            "暢錠"
+          ],
+          "eligible_candidates": 49,
+          "gold_rank_without_limit": 49,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0025",
+          "dept": "MA",
+          "gold_script": "zh-Hant",
+          "slices": [
+            "negation",
+            "drug_name_zh"
+          ],
+          "category": "esomen_hidden_option_A"
+        },
+        {
+          "sample_id": "pc-0026",
+          "dept": "MA",
+          "gold_script": "zh-Hant",
+          "slices": [
+            "time_window",
+            "drug_name_zh"
+          ],
+          "category": "esomen_hidden_option_A"
+        },
+        {
+          "sample_id": "pc-0027",
+          "dept": "MA",
+          "gold_script": "zh-Hant",
+          "slices": [
+            "dose_unit",
+            "time_window",
+            "drug_name_zh",
+            "negation"
+          ],
+          "category": "esomen_hidden_option_A"
+        },
+        {
+          "sample_id": "pc-0028",
+          "dept": "MA",
+          "gold_script": "zh-Hant",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "category": "esomen_hidden_option_A"
+        },
+        {
+          "sample_id": "pc-0029",
+          "dept": "MA",
+          "gold_script": "zh-Hant",
+          "slices": [
+            "dose_unit",
+            "negation",
+            "mixed_zh_en"
+          ],
+          "category": "esomen_hidden_option_A"
+        },
+        {
+          "sample_id": "pc-0030",
+          "dept": "MA",
+          "gold_script": "zh-Hant",
+          "slices": [
+            "protocol_id"
+          ],
+          "category": "esomen_hidden_option_A"
+        },
+        {
+          "sample_id": "pc-0041",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "query_tokens": [
+            "按照",
+            "gvp",
+            "module",
+            "vi",
+            "一份",
+            "有效",
+            "的",
+            "icsr",
+            "至少",
+            "需要",
+            "包含",
+            "哪些",
+            "要素"
+          ],
+          "eligible_candidates": 825,
+          "gold_rank_without_limit": 263,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0042",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "time_window",
+            "mixed_zh_en"
+          ],
+          "query_tokens": [
+            "按照",
+            "gvp",
+            "module",
+            "vi",
+            "已",
+            "按",
+            "严重",
+            "个案",
+            "提交",
+            "的",
+            "icsr",
+            "因",
+            "本次",
+            "随访",
+            "改判",
+            "为",
+            "非",
+            "这次",
+            "信息",
+            "仍应",
+            "在",
+            "多少",
+            "天",
+            "内"
+          ],
+          "eligible_candidates": 830,
+          "gold_rank_without_limit": 774,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0043",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "time_window",
+            "mixed_zh_en"
+          ],
+          "query_tokens": [
+            "按照",
+            "gvp",
+            "module",
+            "vi",
+            "对于",
+            "需在",
+            "欧盟",
+            "提交",
+            "的",
+            "非",
+            "严重",
+            "有效",
+            "icsr",
+            "成员",
+            "成员国",
+            "主管",
+            "机构",
+            "主管机构",
+            "或",
+            "上市",
+            "许可",
+            "持有",
+            "有人",
+            "持有人",
+            "应",
+            "在",
+            "收到",
+            "报告",
+            "后",
+            "多少",
+            "天",
+            "内"
+          ],
+          "eligible_candidates": 844,
+          "gold_rank_without_limit": 358,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0044",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "query_tokens": [
+            "按照",
+            "gvp",
+            "module",
+            "vi",
+            "在",
+            "成品",
+            "放行",
+            "前",
+            "的",
+            "生产",
+            "过程",
+            "中",
+            "接触",
+            "药品",
+            "某一",
+            "成分",
+            "是否",
+            "属于",
+            "这里",
+            "定义",
+            "职业",
+            "暴露"
+          ],
+          "eligible_candidates": 724,
+          "gold_rank_without_limit": null,
+          "category": "gold_not_eligible_no_term_overlap"
+        },
+        {
+          "sample_id": "pc-0045",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "time_window",
+            "mixed_zh_en"
+          ],
+          "query_tokens": [
+            "按照",
+            "gvp",
+            "module",
+            "ix",
+            "prac",
+            "报告",
+            "报告员",
+            "或",
+            "负责",
+            "的",
+            "成员",
+            "成员国",
+            "应",
+            "在",
+            "收到",
+            "已",
+            "验证",
+            "信号",
+            "后",
+            "多少",
+            "天",
+            "内",
+            "完成",
+            "确认"
+          ],
+          "eligible_candidates": 538,
+          "gold_rank_without_limit": 215,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0046",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "query_tokens": [
+            "按照",
+            "gvp",
+            "module",
+            "ix",
+            "欧盟",
+            "上市",
+            "许可",
+            "持有",
+            "有人",
+            "持有人",
+            "确认",
+            "某个",
+            "经验",
+            "证",
+            "的",
+            "信号",
+            "或",
+            "其他",
+            "来源",
+            "安全",
+            "问题",
+            "符合",
+            "emerging",
+            "safety",
+            "issue",
+            "定义",
+            "后",
+            "最迟",
+            "多久",
+            "应",
+            "通知",
+            "有关",
+            "监管",
+            "机构"
+          ],
+          "eligible_candidates": 933,
+          "gold_rank_without_limit": 31,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0047",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "query_tokens": [
+            "按照",
+            "gvp",
+            "module",
+            "ix",
+            "信号",
+            "确认",
+            "是否",
+            "等同",
+            "同于",
+            "等同于",
+            "对",
+            "的",
+            "完整",
+            "评估"
+          ],
+          "eligible_candidates": 504,
+          "gold_rank_without_limit": null,
+          "category": "gold_not_eligible_no_term_overlap"
+        },
+        {
+          "sample_id": "pc-0048",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "query_tokens": [
+            "按照",
+            "fda",
+            "的",
+            "ind",
+            "安全",
+            "报告",
+            "要求",
+            "申办",
+            "方",
+            "首次",
+            "收到",
+            "未",
+            "预期",
+            "致死",
+            "或",
+            "危及",
+            "生命",
+            "可疑",
+            "不良",
+            "反应",
+            "不良反应",
+            "信息",
+            "后",
+            "最迟",
+            "多久",
+            "必须",
+            "通知"
+          ],
+          "eligible_candidates": 393,
+          "gold_rank_without_limit": 208,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0049",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "query_tokens": [
+            "按照",
+            "fda",
+            "这份",
+            "申办",
+            "方",
+            "安全",
+            "报告",
+            "指南",
+            "需要",
+            "通过",
+            "汇总",
+            "分析",
+            "来",
+            "判断",
+            "是否",
+            "满足",
+            "ind",
+            "标准",
+            "的",
+            "两类",
+            "事件",
+            "是",
+            "什么"
+          ],
+          "eligible_candidates": 383,
+          "gold_rank_without_limit": null,
+          "category": "gold_not_eligible_no_term_overlap"
+        },
+        {
+          "sample_id": "pc-0050",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "query_tokens": [
+            "21",
+            "cfr",
+            "312.32",
+            "中",
+            "哪",
+            "两条",
+            "ind",
+            "安全",
+            "报告",
+            "条款",
+            "要求",
+            "评估",
+            "汇总",
+            "数据"
+          ],
+          "eligible_candidates": 360,
+          "gold_rank_without_limit": 131,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0051",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "query_tokens": [
+            "按照",
+            "ich",
+            "e2a",
+            "不良",
+            "事件",
+            "的",
+            "定义",
+            "是否",
+            "要求",
+            "与",
+            "治疗",
+            "存在",
+            "因果",
+            "关系",
+            "因果关系"
+          ],
+          "eligible_candidates": 404,
+          "gold_rank_without_limit": null,
+          "category": "gold_not_eligible_no_term_overlap"
+        },
+        {
+          "sample_id": "pc-0052",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "query_tokens": [
+            "按",
+            "ich",
+            "e2a",
+            "修订",
+            "安全",
+            "安全性",
+            "报告",
+            "模板",
+            "时",
+            "术语",
+            "栏里",
+            "沿用",
+            "side",
+            "effect",
+            "这个",
+            "旧称",
+            "是否",
+            "合适"
+          ],
+          "eligible_candidates": 392,
+          "gold_rank_without_limit": 62,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0053",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "query_tokens": [
+            "按照",
+            "ich",
+            "e2a",
+            "申办",
+            "方",
+            "首次",
+            "获知",
+            "临床",
+            "研究",
+            "病例",
+            "符合",
+            "致死",
+            "或",
+            "危及",
+            "生命",
+            "的",
+            "未",
+            "预期",
+            "不良",
+            "反应",
+            "不良反应",
+            "快速",
+            "报告",
+            "条件",
+            "后",
+            "最迟",
+            "多久",
+            "应",
+            "通知",
+            "监管",
+            "机构"
+          ],
+          "eligible_candidates": 406,
+          "gold_rank_without_limit": null,
+          "category": "gold_not_eligible_no_term_overlap"
+        },
+        {
+          "sample_id": "pc-0054",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "query_tokens": [
+            "按照",
+            "ich",
+            "e2f",
+            "同步",
+            "dsur",
+            "与",
+            "psur",
+            "的",
+            "数据",
+            "锁定",
+            "点时",
+            "下",
+            "一份",
+            "最",
+            "多",
+            "可以",
+            "覆盖",
+            "多长",
+            "时间",
+            "长时间",
+            "多长时间"
+          ],
+          "eligible_candidates": 454,
+          "gold_rank_without_limit": 43,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0055",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "query_tokens": [
+            "按照",
+            "ich",
+            "e2f",
+            "dsur",
+            "最迟",
+            "应",
+            "在",
+            "数据",
+            "锁定",
+            "点后",
+            "多少",
+            "个",
+            "日历",
+            "日内",
+            "提交",
+            "给",
+            "监管",
+            "机构"
+          ],
+          "eligible_candidates": 404,
+          "gold_rank_without_limit": 89,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0056",
+          "dept": "PV",
+          "gold_script": "en",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "category": "unmappable"
+        },
+        {
+          "sample_id": "pc-0060",
+          "dept": "CO",
+          "gold_script": "en",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "query_tokens": [
+            "ich",
+            "e8",
+            "r1",
+            "对",
+            "研究",
+            "程序",
+            "和",
+            "评估",
+            "的",
+            "科学",
+            "必要",
+            "必要性",
+            "及",
+            "受试者",
+            "负担",
+            "有",
+            "什么",
+            "要求"
+          ],
+          "eligible_candidates": 177,
+          "gold_rank_without_limit": null,
+          "category": "gold_not_eligible_no_term_overlap"
+        },
+        {
+          "sample_id": "pc-0061",
+          "dept": "CO",
+          "gold_script": "en",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "query_tokens": [
+            "按照",
+            "ich",
+            "e8",
+            "r1",
+            "回顾",
+            "回顾性",
+            "开展",
+            "的",
+            "文件",
+            "和",
+            "数据",
+            "审查",
+            "监查",
+            "即使",
+            "结合",
+            "稽查",
+            "是否",
+            "足以",
+            "保证",
+            "临床",
+            "研究",
+            "质量"
+          ],
+          "eligible_candidates": 177,
+          "gold_rank_without_limit": null,
+          "category": "gold_not_eligible_no_term_overlap"
+        },
+        {
+          "sample_id": "pc-0063",
+          "dept": "CO",
+          "gold_script": "en",
+          "slices": [
+            "protocol_id",
+            "mixed_zh_en"
+          ],
+          "query_tokens": [
+            "ich",
+            "e8",
+            "r1",
+            "的",
+            "section",
+            "6",
+            "讨论",
+            "哪些",
+            "内容"
+          ],
+          "eligible_candidates": 246,
+          "gold_rank_without_limit": 47,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0064",
+          "dept": "CO",
+          "gold_script": "en",
+          "slices": [
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "query_tokens": [
+            "按照",
+            "ich",
+            "e8",
+            "r1",
+            "quality",
+            "by",
+            "design",
+            "要",
+            "把",
+            "质量",
+            "主动",
+            "设计",
+            "进",
+            "研究",
+            "的",
+            "哪些",
+            "部分"
+          ],
+          "eligible_candidates": 426,
+          "gold_rank_without_limit": 41,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0065",
+          "dept": "CO",
+          "gold_script": "en",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "query_tokens": [
+            "按",
+            "ich",
+            "e6",
+            "r3",
+            "设计",
+            "研究",
+            "流程",
+            "时",
+            "申办",
+            "方应",
+            "如何",
+            "控制",
+            "受试者",
+            "和",
+            "研究者",
+            "的",
+            "额外",
+            "负担",
+            "额外负担"
+          ],
+          "eligible_candidates": 177,
+          "gold_rank_without_limit": 45,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0066",
+          "dept": "CO",
+          "gold_script": "en",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "query_tokens": [
+            "按照",
+            "ich",
+            "e6",
+            "r3",
+            "研究",
+            "中心",
+            "拟",
+            "实报",
+            "实销",
+            "实报实销",
+            "受试者",
+            "因",
+            "到访",
+            "产生",
+            "的",
+            "合理",
+            "路费",
+            "和",
+            "住宿",
+            "宿费",
+            "住宿费",
+            "伦理",
+            "审查",
+            "能否",
+            "仅",
+            "这种",
+            "报销",
+            "就",
+            "认定",
+            "存在",
+            "胁迫"
+          ],
+          "eligible_candidates": 177,
+          "gold_rank_without_limit": null,
+          "category": "gold_not_eligible_no_term_overlap"
+        },
+        {
+          "sample_id": "pc-0067",
+          "dept": "CO",
+          "gold_script": "en",
+          "slices": [
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "query_tokens": [
+            "按照",
+            "ich",
+            "e6",
+            "r3",
+            "必要",
+            "记录",
+            "应由",
+            "哪些",
+            "主体",
+            "安全",
+            "保存",
+            "期限",
+            "依据",
+            "什么",
+            "确定"
+          ],
+          "eligible_candidates": 177,
+          "gold_rank_without_limit": null,
+          "category": "gold_not_eligible_no_term_overlap"
+        },
+        {
+          "sample_id": "pc-0068",
+          "dept": "CO",
+          "gold_script": "en",
+          "slices": [
+            "protocol_id",
+            "mixed_zh_en"
+          ],
+          "query_tokens": [
+            "ich",
+            "e6",
+            "r3",
+            "与",
+            "e8",
+            "r1",
+            "是",
+            "什么",
+            "关系"
+          ],
+          "eligible_candidates": 178,
+          "gold_rank_without_limit": 23,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0069",
+          "dept": "CO",
+          "gold_script": "en",
+          "slices": [
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "query_tokens": [
+            "按照",
+            "ich",
+            "e6",
+            "r3",
+            "试验",
+            "用",
+            "药品",
+            "应",
+            "依据",
+            "哪些",
+            "文件",
+            "使用"
+          ],
+          "eligible_candidates": 177,
+          "gold_rank_without_limit": null,
+          "category": "gold_not_eligible_no_term_overlap"
+        },
+        {
+          "sample_id": "pc-0070",
+          "dept": "CO",
+          "gold_script": "en",
+          "slices": [
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "query_tokens": [
+            "ich",
+            "e6",
+            "r3",
+            "对",
+            "irb",
+            "iec",
+            "应",
+            "保留",
+            "的",
+            "相关",
+            "记录",
+            "列举",
+            "了",
+            "哪些",
+            "例子"
+          ],
+          "eligible_candidates": 252,
+          "gold_rank_without_limit": 27,
+          "category": "gold_eligible_rank_above_20"
+        },
+        {
+          "sample_id": "pc-0072",
+          "dept": "CO",
+          "gold_script": "en",
+          "slices": [
+            "protocol_id",
+            "mixed_zh_en"
+          ],
+          "category": "unmappable"
+        },
+        {
+          "sample_id": "pc-0073",
+          "dept": "CO",
+          "gold_script": "en",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "query_tokens": [
+            "按照",
+            "fda",
+            "2024",
+            "年",
+            "方案",
+            "偏离",
+            "指南",
+            "草案",
+            "医疗",
+            "器械",
+            "医疗器械",
+            "研究",
+            "为",
+            "紧急",
+            "保护",
+            "受试者",
+            "生命",
+            "或",
+            "身体",
+            "体健",
+            "健康",
+            "身体健康",
+            "而",
+            "计划",
+            "时",
+            "研究者",
+            "最迟",
+            "应",
+            "在",
+            "急情",
+            "情况",
+            "紧急情况",
+            "发生",
+            "后",
+            "几个",
+            "工作",
+            "工作日",
+            "工作日内",
+            "通知",
+            "申办",
+            "方",
+            "和",
+            "irb"
+          ],
+          "eligible_candidates": 114,
+          "gold_rank_without_limit": 84,
+          "category": "gold_eligible_rank_above_20"
+        }
+      ]
+    }
+  }
+}
