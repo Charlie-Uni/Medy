@@ -72,6 +72,37 @@ def admin_dsn() -> str:
     return dsn
 
 
+def _redis_url() -> str | None:
+    explicit = os.environ.get("MEDOPS_TEST_REDIS_URL")
+    if explicit:
+        return explicit
+    env_file = REPO / ".env"
+    if not env_file.is_file():
+        return None
+    from medops.core.config import Settings
+
+    try:
+        settings = Settings(_env_file=env_file)
+    except Exception:  # noqa: BLE001 - any config problem means "no Redis here"
+        return None
+    return settings.redis_url.get_secret_value()
+
+
+@pytest.fixture(scope="session")
+def redis_url() -> str:
+    """A reachable Redis for the cache-store tests: MEDOPS_TEST_REDIS_URL, else REDIS_URL from `.env`."""
+    url = _redis_url()
+    if not url:
+        pytest.skip("integration: no MEDOPS_TEST_REDIS_URL and no usable .env (REDIS_URL)")
+    import redis
+
+    try:
+        redis.Redis.from_url(url, socket_connect_timeout=2, socket_timeout=2).ping()
+    except redis.RedisError as exc:
+        pytest.skip(f"integration: Redis unreachable ({type(exc).__name__}); start it with `make up`")
+    return url
+
+
 @pytest.fixture(scope="session")
 def fresh_database(admin_dsn: str) -> Iterator[str]:
     """A brand-new database for this session, dropped afterwards."""

@@ -78,6 +78,8 @@ class Settings(BaseSettings):
     database_url: SecretStr
     database_admin_url: SecretStr | None = None
     redis_url: SecretStr
+    # Retrieval candidate cache TTL (M1-19). Entries also die with the department epoch on publish events.
+    retrieval_cache_ttl_seconds: int = Field(default=300, ge=1, le=86400)
 
     # Compose bootstrap values (docker-compose.yml reads the same .env); optional for the app itself.
     postgres_db: str | None = None

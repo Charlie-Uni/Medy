@@ -22,9 +22,20 @@ jobs:
           --health-interval 5s
           --health-timeout 5s
           --health-retries 12
+      redis:
+        # same 7.2 line as docker-compose.yml (BSD-3-Clause); the cache-store tests use it (M1-19)
+        image: redis:7.2-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 12
     env:
       # integration tests create and drop throwaway databases through this admin DSN (tests/integration/conftest.py)
       MEDOPS_TEST_ADMIN_URL: postgresql://medops_admin:ci-only-password@localhost:5432/medops
+      MEDOPS_TEST_REDIS_URL: redis://localhost:6379/0
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

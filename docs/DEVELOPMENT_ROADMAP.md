@@ -1,6 +1,6 @@
 # Medy 开发任务、当前进度与边做边学路线
 
-> 核查日期：2026-09-20（[实现记录 38](reviews/2026-09-20-implementation-38-fact-recheck.md)；本轮 732 passed，含 191 项 PostgreSQL 集成测试，其中 B/B2/C 候选服务器上的集成测试仅本地运行）。依据：工作区中的[工程基线 v0.6](ENGINEERING_BASELINE.md)、ADR、SPEC、代码、复核记录与本机测试。历史实现证据见记录 13～37。
+> 核查日期：2026-09-20（[实现记录 39](reviews/2026-09-20-implementation-39-candidate-cache.md)；本轮 765 passed，含 200 项 PostgreSQL/Redis 集成测试，其中 B/B2/C 候选服务器上的集成测试仅本地运行）。依据：工作区中的[工程基线 v0.6](ENGINEERING_BASELINE.md)、ADR、SPEC、代码、复核记录与本机测试。历史实现证据见记录 13～38。
 > 本文件是基线的执行进度视图，不是第二份需求契约。范围、阈值和安全约束仍以基线为准；不新增 P0 门禁，不代替正式验收。
 > Git 归档：`2a4aef6` 为工程基础，`213dbe8` 为冻结探针 v1；归档提交已在独立 checkout 复验。本轮后续实验准备与回填文档单独提交，冻结 v1 原始字节不变。
 
@@ -19,7 +19,7 @@
 
 决策人要求每个阶段汇报"离总目标百分之多少"。口径固定为：[任务知识对照](TASK_KNOWLEDGE_MAP.md) 中 79 个 P0 任务行的状态加权和（已实现 1、部分 0.5、阻塞与待做 0）除以 79；另报除以 99 个基线复选项的数值。状态只随实现记录的证据变更，基线勾选只依据完整证据更新，最终验收仍是第 11 节九条门禁的二元结果。`tests/unit/docs/test_baseline_roadmap_consistency.py` 重算并比对下面这行数字：
 
-P0 加权进度：26.6%（21.0/79）；按 99 项计 21.2%。分项：M0 10/11、M1 11/21、M2 0/16、M3 0/13、M4 0/10、M5 0/8。
+P0 加权进度：27.8%（22.0/79）；按 99 项计 22.2%。分项：M0 10/11、M1 12/21、M2 0/16、M3 0/13、M4 0/10、M5 0/8。
 
 ### 状态与计数
 
@@ -99,7 +99,7 @@ P0 加权进度：26.6%（21.0/79）；按 99 项计 21.2%。分项：M0 10/11�
 | ID | 状态 | 要做的工作与剩余验收 |
 | --- | --- | --- |
 | M0-01 | 已实现（结构范围） | `src/tests/migrations/evals/deploy/docs` 均已存在且有内容（`migrations/` 与 `tests/integration/` 随实现记录 17 建立）；保持模块化单体，不预建空目录或拆微服务 |
-| M0-02 | 已实现（Codex 已复核；uv/pip 已由 ADR-0004 批准；Redis 7.2 与 digest 已于 2026-09-17 固定） | Python >= 3.11、`requirements.lock` 与 `requirements-build.lock`（带哈希）、固定 pip、无构建隔离安装、`Settings` 与 `.env.example`、`.env` 忽略规则与仓库卫生测试已有（实现记录 08）；本机干净环境安装已实测，远端 CI 未运行，不勾选 |
+| M0-02 | 已实现（Codex 已复核；uv/pip 已由 ADR-0004 批准；Redis 7.2 与 digest 已于 2026-09-17 固定） | Python >= 3.11、`requirements.lock` 与 `requirements-build.lock`（带哈希）、固定 pip、无构建隔离安装、`Settings` 与 `.env.example`、`.env` 忽略规则与仓库卫生测试已有（实现记录 08）；本机干净环境安装已实测，远端 CI 未运行，不勾选；记录 39 依赖锁新增 `redis==6.4.0`（MIT）与 `async-timeout==5.0.1` |
 | M0-03 | 已实现（本地门禁齐全；远端 CI 首次运行待提交推送） | lint、format-check、typecheck、单元 + 集成测试、Schema 漂移检查与 migration check（单一 head + 空库升降级往返）均在 `make check`/`make migration-check` 与 CI（实现记录 15、17） |
 | M0-04 | 部分（单元、集成、契约漂移、迁移、评测 smoke 已配置；安全阶段与首次远端运行待补） | CI 含 PostgreSQL 服务容器与集成测试、Schema 漂移、migration check、探针示例校验（实现记录 17）；安全测试阶段随 M2 安全集加入；镜像扫描仍为 P1 |
 | M0-05 | 已实现（核心范围，Codex 两轮反馈已按记录 06 第三版关闭，待复核） | `src/medops/core/{errors,tracing,logging}.py` 与 18 个测试已有（实现记录 06）：业务/基础设施错误分离、detail 不外泄、trace_id contextvars 传播、JSON 脱敏日志；缺 API/worker 接线与观测后端，不勾选 |
@@ -134,7 +134,7 @@ P0 加权进度：26.6%（21.0/79）；按 99 项计 21.2%。分项：M0 10/11�
 | M1-16 | 待做 | DEC-002 选 embedding 后建对应维度 migration；记录模型/归一化/版本，pgvector 检索在权限过滤下采用 over-fetch 或 iterative scan 并报告实际候选数 |
 | M1-17 | 部分 | RRF 纯函数与离线 BM25 已有；补生产词法/向量并行、Reranker、候选上限、总超时与显式降级；RRF 不使用原始分数融合 |
 | M1-18 | 已实现（`evidence_log` 落库随 M2 Trace） | `medops.retrieval.recheck`：候选在应用角色的身份事务内一条语句回读事实平面，按固定顺序判定可见性（RLS，越权/草稿/撤回/不存在一律 `not_visible`）、状态（历史需显式 `as_of` 并标 `historical`）、生效窗口、`integrity_status=verified`、`parse_quality=trusted`、应用侧重算内容哈希、页锚点存在；通过者构造领域 `Evidence`，其余带原因与名次返回；superuser/BYPASSRLS/管理角色连接拒绝运行；与候选 A 串接的集成测试证明索引仍返回的完整性未验证、篡改、无锚点 chunk 被回查拦下（实现记录 38） |
-| M1-19 | 待做 | 缓存纳入身份权限指纹、文档/策略/检索版本与相关会话上下文；测试撤权、归档、换版本后的缓存失效 |
+| M1-19 | 已实现（ACL 单独变更事件待有发布后改 ACL 的工具时补） | `medops.retrieval.cache`：键 `rcache-v1:<dept>:<epoch>:sha256(规范化查询、权限指纹（部门/角色/scope，不含 user_id）、会话上下文指纹、as_of、历史标志、复合 retrieval_version、policy_version)`；缓存值为融合候选而非证据，`fetch_evidence` 命中后仍在身份事务内执行 M1-18 回查（撤权即时生效）；`cache_consumer` 消费 outbox 事件按读者部门提升纪元实现精确失效；进程内与 Redis 两种存储同一协议，故障降级为未命中；集成测试覆盖撤权、归档/换版本、版本/日期换键、身份隔离与真实 Redis（实现记录 39） |
 | M1-20 | 待做 | >=300 条主评测样本与 doc/version/page gold；执行人工 + LLM 及分层第二人工复核，探针并入后补复核；覆盖无答案与冲突场景 |
 | M1-21 | 待做 | 事实回查后的严格宏平均 Recall@5 >=85%，另报 Hit@5，失效版本引用率 0；按部门、语言及其他关键切片输出可复现报告 |
 
