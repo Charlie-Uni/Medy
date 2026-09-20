@@ -33,3 +33,5 @@ evals/main_set/drafts/*/inputs/
 evals/main_set/drafts/*/review/input_*.jsonl
 evals/main_set/drafts/*/review/**/input_*.jsonl
 evals/main_set/conflict_fixtures/sources/
+# friendly-name symlinks to the local PDFs (not in Git; regenerate with evals/main_set/tools/pdf_index.py)
+evals/main_set/pdf_by_key/
