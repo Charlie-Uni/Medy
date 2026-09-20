@@ -268,10 +268,6 @@
       "detail": "B/C images are built and version-verified locally (record 28) but have no registry digest; B whitespace/OR predicate and C retained-whitespace token behaviour must be fixed in the adapters before the run"
     },
     {
-      "code": "candidate_servers_not_loaded",
-      "detail": "B and C servers (local ports 5433/5434) have no migrated schema, login users or ingested corpus yet; the run needs the same 16 documents with identical chunk UUIDs on all three servers (or a documented per-server mapping)"
-    },
-    {
       "code": "corpus_not_publishable",
       "detail": "All 16 development documents are draft; tfda-label-esomen-40mg remains low_trust. Do not activate or remove the six affected samples to force a passing experiment",
       "affected_samples": [
@@ -299,5 +295,41 @@
     "a": "evals/experiments/lexical/builds/a/smoke_result.json",
     "b": "evals/experiments/lexical/builds/b/evidence-2026-09-20/metadata.json",
     "c": "evals/experiments/lexical/builds/c/build-metadata.json"
+  },
+  "servers": {
+    "A": {
+      "server": "localhost:5432 (medops-postgres, development cluster)",
+      "mapping": "preparation-v1/chunk_mapping.chunker-v1.json",
+      "mapping_sha256": "b818733e1835587e4ac0cf01d2209cc7ab8ac55b2314892487425dbd9ac5f5ce"
+    },
+    "B": {
+      "server": "localhost:5433 (medy-dec001-b-exp from image 00ce3abb08cc)",
+      "snapshot": "preparation-v1/servers/b/chunks.snapshot.json",
+      "mapping": "preparation-v1/servers/b/chunk_mapping.chunker-v1.json",
+      "mapping_sha256": "be57fe5f53edf51cf6558111a7243f9709b89c0621a81a9997fe9ab6368eb06d"
+    },
+    "C": {
+      "server": "localhost:5434 (medy-dec001-c-exp from image f564d490dfa0, shared_preload_libraries=pg_search)",
+      "snapshot": "preparation-v1/servers/c/chunks.snapshot.json",
+      "mapping": "preparation-v1/servers/c/chunk_mapping.chunker-v1.json",
+      "mapping_sha256": "a5f9cbd80288939676c577a8a61a55b256ea18ca9a43c797b98a6108db0638fb"
+    },
+    "corpus_identity": "all three servers hold the same 16 documents and 2,661 chunks; md5 over (source_hash, version, seq, page, chunk_content_hash) = 5ecb04a53fe0ca0557363a21b1782471 on each; chunk UUIDs differ per server, so each server has its own gold->chunk mapping (73 mapped / 2 unmappable on each)",
+    "indexes_built": {
+      "A": "pg-simple-fts-v1, 2661 chunks",
+      "B": "pg-zhparser-fts-v1, 2661 chunks",
+      "C": "pg-search-bm25-v1, 2661 chunks"
+    }
+  },
+  "run_harness": {
+    "module": "medops.evals.experiments.dec001_run",
+    "scoring": "medops.evals.experiments.scoring",
+    "behaviour": "frozen run_manifest.json written before any query; per-pass seeded order; warm-up excluded from latency; one ordinary-role connection per candidate with per-transaction department identity; admin-side leak check of every returned chunk; strict recall against the server's own mapping; paired query-level bootstrap against A",
+    "pipeline_smoke": {
+      "date": "2026-09-20",
+      "state": "all 16 documents draft on all servers",
+      "result": "75/75 queries returned 0 candidates with candidate_exhausted=true on A, B and C; 0 leak violations; 0 non-reproducible queries; the run is a plumbing check only and is not kept as evidence"
+    },
+    "caveat_fixed_before_run": "candidate A's tokenizer is instantiated once per process (jieba dictionary load ~200 ms is start-up cost, not query latency)"
   }
 }

@@ -44,4 +44,4 @@ env -u DEBUG -u PYTHONPATH venv/bin/python -m medops.evals.probe.chunk_mapping \
 
 导出需要本机受控管理连接，在 repeatable-read / read-only 事务中执行，不修改文档状态。映射不访问数据库：退出码 0 为全部映射，1 为完整合法产物已写出且存在必须计 miss 的 unmappable，2 为输入或输出非法且未发布产物。
 
-三候选适配器均已用合成数据通过普通角色门禁（实现记录 29、30）。下一步依次是：在 B/C 服务器迁移 schema、建立登录用户并入库同一语料；核查 low_trust 的解析问题与实验数据发布条件；冻结完整运行清单，再执行全部 75 条对比。两条 unmappable 原样进入报告，不单独针对这两条调整切分器。
+三候选适配器均已用合成数据通过普通角色门禁（实现记录 29、30）；B/C 服务器已迁移、建立登录用户并入库同一语料（chunk 指纹与开发库一致），三服务器各有自己的 gold→chunk 映射（`preparation-v1/servers/`），运行工具 `medops.evals.experiments.dec001_run` 已用全 draft 状态做管道 smoke（实现记录 31）。下一步依次是：核查 low_trust 的解析问题与实验数据发布条件；冻结完整运行清单，再执行全部 75 条对比。两条 unmappable 原样进入报告，不单独针对这两条调整切分器。

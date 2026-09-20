@@ -51,7 +51,7 @@ class _CachedRawPages(PageTextProvider):
         return result
 
 
-def export(version: Path, pages: Path, out: Path) -> dict:
+def export(version: Path, pages: Path, out: Path, *, dsn: str | None = None) -> dict:
     if out.resolve().is_relative_to(version.resolve()):
         raise ValueError("output must be outside the frozen dataset")
     if out.exists() or out.is_symlink():
@@ -70,11 +70,13 @@ def export(version: Path, pages: Path, out: Path) -> dict:
     manifest = json.loads(manifest_bytes)
     corpus = json.loads(before["corpus.json"])
     extraction = {k: manifest["extraction"][k] for k in ("extractor", "extractor_version", "params_hash")}
-    settings = Settings()
-    secret = settings.database_admin_url or settings.database_url
+    if dsn is None:
+        settings = Settings()
+        secret = settings.database_admin_url or settings.database_url
+        dsn = secret.get_secret_value()
     chunks: list[dict] = []
     documents: list[dict] = []
-    with psycopg.connect(secret.get_secret_value(), row_factory=dict_row) as conn:
+    with psycopg.connect(dsn, row_factory=dict_row) as conn:
         conn.execute("set transaction isolation level repeatable read, read only")
         db_version = conn.execute("show server_version").fetchone()["server_version"]
         migration = conn.execute("select version_num from alembic_version").fetchone()["version_num"]
@@ -172,9 +174,10 @@ def main() -> int:
     parser.add_argument("--dataset", required=True, type=Path)
     parser.add_argument("--pages", required=True, type=Path)
     parser.add_argument("--out", required=True, type=Path)
+    parser.add_argument("--admin-url", default=None, help="admin DSN of another server (default: settings)")
     args = parser.parse_args()
     try:
-        summary = export(args.dataset, args.pages, args.out)
+        summary = export(args.dataset, args.pages, args.out, dsn=args.admin_url)
     except (OSError, ValueError, psycopg.Error) as exc:
         # Do not print exception arguments: a driver/config exception can contain a credential.
         print(json.dumps({"status": "failed", "error_type": type(exc).__name__}))
