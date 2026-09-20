@@ -1,0 +1,161 @@
+{
+  "change_reason": "ADR-0002 修订 1（2026-09-20）：门禁改按语言一致子集计算；为英文 gold 样本派生英文查询孪生；第二复核人改为固定模型 claude-opus-5 并对全部样本重新复核（决策人方案 2）。",
+  "counts": {
+    "documents": 16,
+    "per_dept": {
+      "CO": 32,
+      "MA": 30,
+      "PV": 45
+    },
+    "per_language": {
+      "en": 64,
+      "mixed": 0,
+      "zh-Hans": 10,
+      "zh-Hant": 33
+    },
+    "per_slice": {
+      "dose_unit": 19,
+      "drug_name_zh": 18,
+      "mixed_zh_en": 85,
+      "negation": 56,
+      "protocol_id": 29,
+      "time_window": 28
+    },
+    "samples": 107
+  },
+  "created_at": "2026-09-20",
+  "dataset_hash": "1fc5089f6fa7f80a1a5e23940826b0d4c811cde29e225dd8305241a33beb0321",
+  "dataset_id": "precise_clause_probe",
+  "dataset_version": "v2",
+  "derived_samples": {
+    "count": 32,
+    "drafted_by": {
+      "id": "drafter-llm-01",
+      "kind": "llm",
+      "model": "claude-fable-5-1"
+    },
+    "human_confirmation": {
+      "annotator_id": "annotator-01",
+      "confirmed_on": "2026-09-20",
+      "status": "confirmed"
+    },
+    "query_language": "en",
+    "rule": "32 English query twins of the v1 samples whose gold document is English; gold, dept and slices inherited unchanged; language=en (SPEC 5.1)"
+  },
+  "extraction": {
+    "extractor": "pypdf",
+    "extractor_version": "6.18.1",
+    "params": {
+      "extraction_mode": "plain"
+    },
+    "params_hash": "7c3f1766ee925cd0175429abce29a029d834b8be9ffa33f45813e3a4944f6b8d"
+  },
+  "files": [
+    {
+      "path": "corpus.json",
+      "sha256": "72c5b801213900372f13aac4b1dcf76e444dabc49bbb4555b6a476cb501c37b5"
+    },
+    {
+      "path": "pii_exceptions.json",
+      "sha256": "7b2c16e5142098a218c26deb964c61f0f3e8460e3b29d5e31de0419cf122dbf8"
+    },
+    {
+      "path": "review_prompt.md",
+      "sha256": "f4a3804e969b23ec9ab467406937e62f0b9e30933d6a680d4b00ee59b2631c38"
+    },
+    {
+      "path": "samples.jsonl",
+      "sha256": "3fc8e77ee2d6a8d6cbc456d95dd4dd23bd52666e0d4f76334ead16fa6a00e96e"
+    }
+  ],
+  "frozen_at": "2026-09-20",
+  "minimums": {
+    "documents": 10,
+    "documents_per_dept": 3,
+    "max_samples_per_document": 6,
+    "per_dept": 15,
+    "per_slice": 8,
+    "samples": 60,
+    "target_samples": 72,
+    "zh_hans_samples": 8
+  },
+  "normalization": "norm-v1",
+  "pii_ruleset_version": "pii-rules-v1",
+  "purpose": "精确条款探针集 v2：v1 的 75 条冻结样本原样保留，另为 32 条英文 gold 样本派生英文查询孪生（spec-v1.1），全部 107 条由同一固定模型 LLM 第二复核人重新复核；用于 ADR-0002 修订 1 的语言一致门禁与跨语言切片分报。",
+  "review_policy": {
+    "human_reviewers": 1,
+    "llm_reviewers": 1,
+    "statement": "人工标注加 LLM 独立复核；不等同于两名独立人工复核。"
+  },
+  "review_provenance": {
+    "artifacts": [
+      {
+        "path": "review_evidence/resolutions.json",
+        "sha256": "0116ca14bf10dae400461ebc2f9348590dfb7d2ed3dad26d7a41393cc726ab84"
+      },
+      {
+        "path": "review_evidence/reviewer_runtime_metadata.json",
+        "sha256": "bedbe4a3b40b27d2efb090616b78e551e289e5a58a1b603992d9b94369eb5b13"
+      },
+      {
+        "path": "review_evidence/run_CO.json",
+        "sha256": "3347bde7d6dcd668bc0c8d85af3e58a4c3128fd4e9ed26362d5d4f79ca70bd1f"
+      },
+      {
+        "path": "review_evidence/run_EN.json",
+        "sha256": "3df51c6c6767c0182be9f349b73f03aaa55ee1bfe8770a9409bc7b7cb0e9600a"
+      },
+      {
+        "path": "review_evidence/run_MA.json",
+        "sha256": "056baa31da774d4f8259286ccfdb120111472b8df5c04aa4e4fbf868bdb86e00"
+      },
+      {
+        "path": "review_evidence/run_PV.json",
+        "sha256": "637cf0362d43a9859fb21237dc5023aa343e839a0e1cd44a3e0e7ffdae96a705"
+      },
+      {
+        "path": "review_evidence/verdicts_CO.jsonl",
+        "sha256": "6b086ecf7901f2e660d8ae7eb1cf99faeb0c960cbaab0b0ea3e1a6d5ebc9db5c"
+      },
+      {
+        "path": "review_evidence/verdicts_EN.jsonl",
+        "sha256": "2e546947921d4d5935c77f5e337582d911cc8bb0d75464a76c4a051e826901f8"
+      },
+      {
+        "path": "review_evidence/verdicts_MA.jsonl",
+        "sha256": "b452c45ddd015e3d82ac8f5436d832daa0f6e8540f91f756113b41b96e99962d"
+      },
+      {
+        "path": "review_evidence/verdicts_PV.jsonl",
+        "sha256": "4fc77f09f648befb808576088e31db569186c46af5c93c1e92f80bcc457435c9"
+      }
+    ],
+    "backend_model_version": "claude-opus-5",
+    "reasoning_effort": "high",
+    "reproducibility_limitations": "复核通过 Claude Code CLI 以固定模型标识 claude-opus-5 调用，标识由 CLI 在 modelUsage 中回显；工具关闭、会话不持久化、不加载用户设置、固定中性系统提示（哈希已记录）；reasoning effort 为请求参数，CLI 不回显。同一标识不保证服务端权重永不变化；复核输入与实际提示的哈希已逐条绑定，可据此复核一致性。",
+    "reviewer_id": "reviewer-llm-02",
+    "version_source": "pinned_model_id"
+  },
+  "reviewers": [
+    {
+      "id": "annotator-01",
+      "kind": "human",
+      "role": "annotator"
+    },
+    {
+      "id": "reviewer-llm-02",
+      "kind": "llm",
+      "model": "claude-opus-5",
+      "model_version": "claude-opus-5",
+      "prompt_hash": "f4a3804e969b23ec9ab467406937e62f0b9e30933d6a680d4b00ee59b2631c38",
+      "role": "second_reviewer"
+    }
+  ],
+  "source_store": {
+    "kind": "local_path",
+    "location": "v1/sources（本地目录，不进入 Git；完整性由 corpus.json 的 source_hash 校验）"
+  },
+  "spec_version": "spec-v1.1",
+  "status": "frozen",
+  "supersedes": "v1"
+}

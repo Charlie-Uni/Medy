@@ -604,10 +604,17 @@
           "maxLength": 64
         },
         "version_source": {
-          "const": "service_alias"
+          "enum": [
+            "service_alias",
+            "pinned_model_id"
+          ]
         },
         "backend_model_version": {
-          "const": null
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "null for a service alias whose backend version is not exposed; the pinned model identifier otherwise (spec-v1.1)"
         },
         "reproducibility_limitations": {
           "type": "string",
@@ -617,7 +624,7 @@
         "artifacts": {
           "type": "array",
           "minItems": 8,
-          "maxItems": 8,
+          "maxItems": 10,
           "uniqueItems": true,
           "items": {
             "type": "object",
@@ -632,9 +639,11 @@
                   "review_evidence/run_MA.json",
                   "review_evidence/run_PV.json",
                   "review_evidence/run_CO.json",
+                  "review_evidence/run_EN.json",
                   "review_evidence/verdicts_MA.jsonl",
                   "review_evidence/verdicts_PV.jsonl",
                   "review_evidence/verdicts_CO.jsonl",
+                  "review_evidence/verdicts_EN.jsonl",
                   "review_evidence/resolutions.json",
                   "review_evidence/reviewer_runtime_metadata.json"
                 ]
@@ -644,6 +653,15 @@
               }
             }
           }
+        },
+        "reasoning_effort": {
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "max"
+          ],
+          "description": "spec-v1.1: the reasoning effort every recorded invocation used; defaults to high when absent"
         }
       }
     },

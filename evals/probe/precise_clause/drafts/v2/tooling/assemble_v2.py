@@ -18,7 +18,6 @@ import hashlib
 import importlib.util
 import json
 import pathlib
-import shutil
 import sys
 from collections import Counter
 
@@ -102,7 +101,9 @@ def main() -> None:
         raise SystemExit("refusing to overwrite a non-draft manifest")
 
     v1_manifest = json.loads((V1 / "manifest.json").read_text(encoding="utf-8"))
-    v1_samples = [json.loads(l) for l in (V1 / "samples.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
+    # originals come from the adjudicated drafts (samples_draft_{MA,PV,CO}.json), not from v1/samples.jsonl:
+    # the annotator's 2026-09-20 decisions changed key_texts, spans, slices and queries of v1 samples for v2
+    v1_samples = [s for b in ("MA", "PV", "CO") for s in json.loads((DRAFTS / f"samples_draft_{b}.json").read_text(encoding="utf-8"))]
     twins = json.loads((DRAFTS / "samples_draft_EN.json").read_text(encoding="utf-8"))
     corpus = json.loads((V1 / "corpus.json").read_text(encoding="utf-8"))
     docs = {d["source_hash"]: d for d in corpus["documents"]}
@@ -168,10 +169,23 @@ def main() -> None:
     (out / "review_evidence").mkdir(exist_ok=True)
     for name, data in evidence.items():
         (out / "review_evidence" / name).write_bytes(data)
-    shutil.copyfile(V1 / "corpus.json", out / "corpus.json")
+    corpus_v2 = dict(corpus)
+    corpus_v2["dataset_version"] = "v2"
+    (out / "corpus.json").write_text(json.dumps(corpus_v2, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (out / "review_prompt.md").write_bytes(prompt_raw)
     pii = json.loads((V1 / "pii_exceptions.json").read_text(encoding="utf-8"))
     pii["dataset_version"] = "v2"
+    # a twin inherits its parent's gold byte for byte, so it inherits the parent's reviewed PII exception too
+    twin_of_parent = {t["derived_from"]: t["sample_id"] for t in twins}
+    extra = []
+    for e in pii["exceptions"]:
+        twin_id = twin_of_parent.get(e["sample_id"])
+        if twin_id:
+            e2 = dict(e)
+            e2["sample_id"] = twin_id
+            e2["gold_id"] = e["gold_id"].replace(e["sample_id"], twin_id, 1)
+            extra.append(e2)
+    pii["exceptions"] = sorted(pii["exceptions"] + extra, key=lambda e: (e["sample_id"], e["gold_id"], e["char_start"]))
     (out / "pii_exceptions.json").write_text(canonical_json(pii) + "\n", encoding="utf-8")
     (out / "samples.jsonl").write_text("".join(canonical_json(s) + "\n" for s in samples), encoding="utf-8")
     files = ["corpus.json", "pii_exceptions.json", "review_prompt.md", "samples.jsonl"]

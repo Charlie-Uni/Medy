@@ -139,6 +139,7 @@ evals/probe/precise_clause/
 - manifest 必须含 `derived_samples`：规则、数量、`query_language=en`、起草者（`kind=llm`，含模型标识）与 `human_confirmation`（`pending` 或 `confirmed`，含 `annotator_id` 与 `confirmed_on`）。起草者为 LLM 时，人工标注人在确认前数据集不得冻结；`pending` 状态下的运行只能标为临时结果。
 - 复核：孪生样本作为独立批次 `EN` 由 LLM 第二复核人复核，证据文件为 `run_EN.json` 与 `verdicts_EN.jsonl`；`review_evidence/` 共 10 个工件（三部门批次各两个、`EN` 两个、`resolutions.json`、`reviewer_runtime_metadata.json`）。父样本批次仍按部门划分，只含非派生样本。
 - 门禁作用域（ADR-0002 修订）：语言一致 = gold 文档为 `en` 且样本 `language=en`，或 gold 文档为 `zh-Hans`/`zh-Hant` 且样本 `language` 为 `zh`/`mixed`；跨语言 = gold 文档为 `en` 且样本 `language` 为 `zh`/`mixed`。硬门禁与最低数量在语言一致子集内计算，跨语言子集按切片单独报告。
+- 每文档不超过 6 条的上限（PR-04）只统计非派生样本：孪生复用父样本的 gold，不增加文档层面的 gold 集中度。孪生继承父样本 gold 上已批准的 PII 例外（同一字段哈希与命中区间，`sample_id`/`gold_id` 换为孪生标识）。
 - 校验规则 PR-15：`derived_from` 指向存在且非派生的样本；`language=en`；`dept`、`slices`、gold 与父样本一致；父样本 gold 文档为英文；查询与父样本不同；数量与 `derived_samples.count` 一致；`spec-v1` 数据集不得含派生样本。
 
 ## 6. Gold 锚定与命中规则

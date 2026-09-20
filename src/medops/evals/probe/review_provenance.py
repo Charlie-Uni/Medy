@@ -8,6 +8,7 @@ human resolutions and the eight hashed execution artifacts copied into the versi
 from __future__ import annotations
 
 import hashlib
+import itertools
 import json
 import re
 from collections.abc import Mapping
@@ -167,6 +168,35 @@ def _current_records(
     return result
 
 
+def _span_variants(record: dict[str, Any]) -> list[dict[str, Any]]:
+    """The two serialisations an input pack may have used for evidence_span: the explicit
+    (text, char_start, char_end) order of the v1 drafting tools, or canonical sorted keys when the pack
+    was re-exported from a canonical samples.jsonl (v2). Content is identical; only key order differs."""
+    span = record["gold"]["evidence_span"]
+    ordered = {"text": span["text"], "char_start": span["char_start"], "char_end": span["char_end"]}
+    canonical = {k: span[k] for k in sorted(span)}
+    out = []
+    for variant in (ordered, canonical):
+        r = dict(record)
+        r["gold"] = dict(record["gold"])
+        r["gold"]["evidence_span"] = variant
+        out.append(r)
+    return out
+
+
+def _actual_prompt_hashes(prompt_text: str, records: list[dict[str, Any]]) -> set[str]:
+    """Prompt hashes for every per-record key-order combination of evidence_span (a pack may mix records
+    re-exported from canonical JSON with records edited by the drafting tools). Chunks are at most a
+    handful of records, so the product stays small; larger packs fall back to the two uniform variants."""
+    variants = [_span_variants(r) for r in records]
+    if len(records) > 8:
+        return {_actual_prompt_hash(prompt_text, [v[i] for v in variants]) for i in range(2)}
+    return {
+        _actual_prompt_hash(prompt_text, [v[i] for v, i in zip(variants, choice, strict=True)])
+        for choice in itertools.product((0, 1), repeat=len(records))
+    }
+
+
 def _actual_prompt_hash(prompt_text: str, records: list[dict[str, Any]]) -> str:
     """Frozen v2 invocation wire format; keep its byte order, including JSON key order."""
     parts = [
@@ -321,7 +351,7 @@ def _validate(
                     f"{sid}: latest invocation also contains superseded input; rereview before freezing",
                 )
                 _require(
-                    _actual_prompt_hash(prompt_text, inputs) == chunk["prompt_sha256"],
+                    chunk["prompt_sha256"] in _actual_prompt_hashes(prompt_text, inputs),
                     f"{sid}: actual prompt hash differs from current input",
                 )
             reviewer = sample["review"]["second_reviewer"]

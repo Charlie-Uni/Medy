@@ -78,13 +78,24 @@
   "allOf": [
     {
       "if": {
-        "properties": {
-          "slices": {
-            "contains": {
-              "const": "mixed_zh_en"
+        "allOf": [
+          {
+            "properties": {
+              "slices": {
+                "contains": {
+                  "const": "mixed_zh_en"
+                }
+              }
+            }
+          },
+          {
+            "not": {
+              "required": [
+                "derived_from"
+              ]
             }
           }
-        }
+        ]
       },
       "then": {
         "properties": {
@@ -92,7 +103,8 @@
             "const": "mixed"
           }
         }
-      }
+      },
+      "$comment": "spec-v1.1: derived English twins inherit the parent's slices (PR-15) and are exempt from language=mixed"
     },
     {
       "if": {

@@ -364,8 +364,9 @@ class ProbeSetValidator:
                             g["gold_id"],
                         )
                     )
-            for h in {g["source_hash"] for g in s["required_gold_evidence"]}:
-                per_doc[h] += 1
+            if not s.get("derived_from"):  # spec-v1.1: twins reuse the parent's gold, so they do not add concentration
+                for h in {g["source_hash"] for g in s["required_gold_evidence"]}:
+                    per_doc[h] += 1
         for h, n in per_doc.items():
             if n > 6:
                 add(Finding("PR-04", "error", f"document {h[:12]} contributes {n} samples > 6"))
