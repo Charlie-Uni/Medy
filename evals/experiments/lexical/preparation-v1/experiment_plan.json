@@ -354,5 +354,78 @@
     },
     "ceiling_under_option_A": "67/75 = 89.3% because esomen (6 samples, low_trust, draft) and 2 unmappable golds are forced misses",
     "conclusion": "DEC-001 and M1 remain blocked; gates not lowered; owner decision needed on the next pre-registered experiment (see ADR-0002 backfill)"
+  },
+  "run_2_preregistration": {
+    "approved_by_owner": "2026-09-20 (按照你的建议来 直接大阶段实现)",
+    "protocol_amendment": "ADR-0002 修订 1",
+    "gate_scope": "language_matched: (gold doc en and sample language en) or (gold doc zh-Hans/zh-Hant and sample language zh/mixed); cross_lingual reported separately without gate",
+    "dataset": "precise_clause probe v2 (spec-v1.1): v1 samples verbatim + 32 English query twins (derived_from); frozen only after LLM second review and annotator-01 confirmation; runs before that are provisional",
+    "chunker": "chunker-v2",
+    "esomen": "quality_review_override (CFF font encoding warnings only; page texts verified) then activation with effective_from 2013-11-08 (pdf_metadata tier)",
+    "databases": {
+      "A": "localhost:5432/medops_v2",
+      "B": "localhost:5433/medops_v2",
+      "C": "localhost:5434/medops_v2"
+    },
+    "unchanged": [
+      "candidate adapters and pre-run query rules",
+      "K=20",
+      "concurrency 1",
+      "warmup 5 / measured 10",
+      "seed 20260920",
+      "paired bootstrap 10000 / seed 20260920 / 0.95",
+      "tie-break chunk_id asc",
+      "admin-side leak check"
+    ],
+    "status": "provisional_run_executed_awaiting_probe_v2_freeze",
+    "servers_v2": {
+      "A": {
+        "database": "medops_v2",
+        "snapshot": "preparation-v1/servers_v2/a/chunks.snapshot.json",
+        "mapping": "preparation-v1/servers_v2/a/chunk_mapping.chunker-v2.json",
+        "mapping_sha256": "e45ba61a319b47aa198b2676274398d5f2c767be77df113da989c20b615cc9bb"
+      },
+      "B": {
+        "database": "medops_v2",
+        "snapshot": "preparation-v1/servers_v2/b/chunks.snapshot.json",
+        "mapping": "preparation-v1/servers_v2/b/chunk_mapping.chunker-v2.json",
+        "mapping_sha256": "104ce9b6a820f759f47ab13e742e5631c1b27967a8cfda0e0830c82234de4e5f"
+      },
+      "C": {
+        "database": "medops_v2",
+        "snapshot": "preparation-v1/servers_v2/c/chunks.snapshot.json",
+        "mapping": "preparation-v1/servers_v2/c/chunk_mapping.chunker-v2.json",
+        "mapping_sha256": "1b8ea7b0bb2fca966d055b2bfa006ad093fcb8c91cb379aecfa9fb2ccf90d964"
+      }
+    },
+    "corpus_identity_v2": "16 documents active and trusted on all three medops_v2 databases; 2,662 chunker-v2 chunks each; fingerprint md5 2b06246a2ad072b97857a034c1a52b11; one audited quality_review_override (esomen) per database",
+    "mapping_result_v2": "75 mapped / 0 unmappable on every server (chunker-v2 keeps pc-0056-g1 and pc-0072-g1 inside one chunk)",
+    "llm_review_blocker": "codex/gpt-6-astra usage limit exhausted on 2026-09-20 (resets 2026-09-26 21:00 local); the English twins cannot receive their LLM second review before then, so probe v2 cannot be frozen; run 2 is executed as a provisional run with the twins as an unreviewed overlay",
+    "provisional_run": {
+      "run_id": "2026-09-20-run2-provisional",
+      "directory": "evals/experiments/lexical/runs/2026-09-20-run2-provisional",
+      "run_manifest_sha256": "76e6ab0827061d3b87d30920a4dd2dbad3611ecdcb216a7dc21f1ce70b14e5ce",
+      "language_matched_43": {
+        "A": 0.814,
+        "B": 0.93,
+        "C": 0.953
+      },
+      "cross_lingual_32": {
+        "A": 0.156,
+        "B": 0.125,
+        "C": 0.125
+      },
+      "provisional_twins_32": {
+        "A": 0.594,
+        "B": 0.594,
+        "C": 0.906
+      },
+      "leak_violations": {
+        "A": 0,
+        "B": 0,
+        "C": 0
+      },
+      "verdict": "not decidable: v1 language_matched subset below ADR minimums (CO 0, protocol_id 5); repeat on frozen probe v2"
+    }
   }
 }

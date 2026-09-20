@@ -130,6 +130,17 @@ evals/probe/precise_clause/
 | `review` | 标注与复核记录，见第 8 节 |
 | `notes` | 标注说明，可为空字符串 |
 
+### 5.1 spec-v1.1：派生英文查询孪生样本（2026-09-20 修订）
+
+背景：DEC-001 第一次词法对比（ADR-0002 结果回填）显示，gold 文档为英文而查询为中文的 32 条样本在任何词法候选上只有 12.5%～15.6% 的召回，因为中文查询词元不会出现在英文条款中。决策人于 2026-09-20 批准：词法硬门禁只对"查询语言与 gold 文档语言一致"的样本计算，跨语言样本作为独立切片单独报告，由后续向量阶段承担。为了在不放宽 ADR-0002 最低数量（每部门 ≥15、每切片 ≥8）的前提下得到语言一致的 PV/CO 样本，spec-v1.1 允许派生孪生样本：
+
+- 字段 `derived_from`（可选，`pc-` 加 4 位序号）指向一条已确认的父样本；孪生样本的 `dept`、`slices` 与全部 gold（除 `gold_id` 前缀外逐字段相同）从父样本继承，`language` 固定为 `en`，只有 `query` 不同（英文提问）。父样本的 gold 文档 `language` 必须为 `en`。
+- 孪生样本继承 `mixed_zh_en` 等切片标签以便与父样本逐切片对比；PR-11 对 `derived_from` 非空的样本不再要求 `language=mixed`。
+- manifest 必须含 `derived_samples`：规则、数量、`query_language=en`、起草者（`kind=llm`，含模型标识）与 `human_confirmation`（`pending` 或 `confirmed`，含 `annotator_id` 与 `confirmed_on`）。起草者为 LLM 时，人工标注人在确认前数据集不得冻结；`pending` 状态下的运行只能标为临时结果。
+- 复核：孪生样本作为独立批次 `EN` 由 LLM 第二复核人复核，证据文件为 `run_EN.json` 与 `verdicts_EN.jsonl`；`review_evidence/` 共 10 个工件（三部门批次各两个、`EN` 两个、`resolutions.json`、`reviewer_runtime_metadata.json`）。父样本批次仍按部门划分，只含非派生样本。
+- 门禁作用域（ADR-0002 修订）：语言一致 = gold 文档为 `en` 且样本 `language=en`，或 gold 文档为 `zh-Hans`/`zh-Hant` 且样本 `language` 为 `zh`/`mixed`；跨语言 = gold 文档为 `en` 且样本 `language` 为 `zh`/`mixed`。硬门禁与最低数量在语言一致子集内计算，跨语言子集按切片单独报告。
+- 校验规则 PR-15：`derived_from` 指向存在且非派生的样本；`language=en`；`dept`、`slices`、gold 与父样本一致；父样本 gold 文档为英文；查询与父样本不同；数量与 `derived_samples.count` 一致；`spec-v1` 数据集不得含派生样本。
+
 ## 6. Gold 锚定与命中规则
 
 - 锚定字段：`source_hash`、`version_label`、`page`、`section`、`key_text`。`evidence_span` 提供完整条款与偏移量。gold 不引用 `chunk_id`。
@@ -197,6 +208,7 @@ evals/probe/precise_clause/
 | PR-12 | 映射文件的 `dataset_version` 与 `dataset_hash` 等于当前版本，`extraction`（extractor、extractor_version、params_hash）与 `normalization` 等于 manifest；每条 gold 恰有一条映射记录 |
 | PR-13 | `corpus.json` 中每份文档 `license_status=eligible`，`license_or_terms` 各字段齐全且 `third_party_content_checked=true`，`verified_at` 不晚于 `frozen_at`，`terms_url`、`source_url` 齐全，`pii_scan.status=clean`；`owner_dept=PV` 的文档不少于 3 份且 `document_key`、`source_hash` 两两不同 |
 | PR-14 | 校验器自检：其 norm-v1 实现通过 `tests/norm_v1_vectors.json` 全部 fold 与 preserve 用例；`extraction.params_hash` 与 `params` 重算一致 |
+| PR-15 | 派生孪生样本（spec-v1.1，见 5.1）：引用、继承字段、英文 gold 文档、查询不同、数量与 manifest 一致 |
 
 PR-07 机构邮箱误报裁决（2026-09-20）：依据[实现记录 21](../../../docs/reviews/2026-09-17-implementation-21-pii-release-withdrawn-status.md)的人工决定，公开机构功能邮箱可逐命中确认为非个人数据；不修改 `pii-rules-v1`，不从样本或 corpus 的自由文本 `notes` 推断放行。
 

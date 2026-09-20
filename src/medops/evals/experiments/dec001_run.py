@@ -50,6 +50,18 @@ CANDIDATES = ("A", "B", "C")
 # ------------------------------------------------------------------------------- inputs
 
 
+LANGUAGE_MATCHED = "language_matched"
+CROSS_LINGUAL = "cross_lingual"
+
+
+def gate_scope(language: str, gold_script: str) -> str:
+    """ADR-0002 amendment 1: gold en + query en, or gold zh + query zh/mixed -> language_matched;
+    gold en + Chinese query -> cross_lingual (reported, not gated)."""
+    if gold_script == "en":
+        return LANGUAGE_MATCHED if language == "en" else CROSS_LINGUAL
+    return LANGUAGE_MATCHED
+
+
 @dataclass(frozen=True)
 class Query:
     sample_id: str
@@ -58,6 +70,13 @@ class Query:
     slices: tuple[str, ...]
     gold_ids: tuple[str, ...]
     gold_script: str  # language of the gold document (zh-Hans / zh-Hant / en / mixed)
+    language: str = "zh"
+    derived_from: str | None = None
+    provisional: bool = False  # unreviewed/unconfirmed twin overlay: reported separately, never a gate input
+
+    @property
+    def scope(self) -> str:
+        return gate_scope(self.language, self.gold_script)
 
 
 def load_queries(dataset_dir: Path) -> list[Query]:
@@ -78,9 +97,34 @@ def load_queries(dataset_dir: Path) -> list[Query]:
                 slices=tuple(s["slices"]),
                 gold_ids=tuple(g["gold_id"] for g in golds),
                 gold_script="+".join(sorted(scripts)),
+                language=s.get("language", "zh"),
+                derived_from=s.get("derived_from"),
             )
         )
     return sorted(queries, key=lambda q: q.sample_id)
+
+
+def load_twin_overlay(path: Path, base: Sequence[Query]) -> list[Query]:
+    """Provisional English twins (drafts/v2/samples_draft_EN.json) evaluated against the PARENT's golds:
+    they are not part of the frozen dataset, carry `provisional=True`, and are reported separately."""
+    by_id = {q.sample_id: q for q in base}
+    twins = []
+    for t in json.loads(path.read_text(encoding="utf-8")):
+        parent = by_id[t["derived_from"]]
+        twins.append(
+            Query(
+                sample_id=t["sample_id"],
+                dept=t["dept"],
+                query=t["query"],
+                slices=tuple(t["slices"]),
+                gold_ids=parent.gold_ids,
+                gold_script=parent.gold_script,
+                language=t.get("language", "en"),
+                derived_from=t["derived_from"],
+                provisional=True,
+            )
+        )
+    return twins
 
 
 def load_mapping(path: Path) -> dict[str, list[str]]:
@@ -99,6 +143,11 @@ class CandidateServer:
     admin_dsn: str
     mapping_path: Path
     image_local_id: str | None = None
+
+
+def _with_database(url: str, name: str) -> str:
+    parts = urlsplit(url)
+    return urlunsplit((parts.scheme, parts.netloc, "/" + name, parts.query, parts.fragment))
 
 
 def _with_user(url: str, user: str, password: str) -> str:
@@ -385,6 +434,13 @@ def leak_check(admin_dsn: str, outcomes: Mapping[str, QueryOutcome], as_of: date
 # ------------------------------------------------------------------------------- aggregation
 
 
+def _labels_script(subset: Sequence[Query]) -> dict[str, list[str]]:
+    labels: dict[str, list[str]] = {}
+    for q in subset:
+        labels.setdefault(q.gold_script, []).append(q.sample_id)
+    return labels
+
+
 def summarize(
     candidate: str, queries: Sequence[Query], outcomes: Mapping[str, QueryOutcome], mapping: Mapping[str, list[str]]
 ) -> dict[str, Any]:
@@ -408,6 +464,10 @@ def summarize(
                 "dept": q.dept,
                 "slices": list(q.slices),
                 "gold_script": q.gold_script,
+                "language": q.language,
+                "scope": q.scope,
+                "provisional": q.provisional,
+                "derived_from": q.derived_from,
                 "recall": recall,
                 "gold_ranks": ranks,
                 "returned_count": out.returned_count,
@@ -432,10 +492,32 @@ def summarize(
     def group(labels: Mapping[str, Sequence[str]]) -> list[dict[str, Any]]:
         return [g.__dict__ for g in scoring.grouped_recall(per_query, labels, min_support=MIN_SLICE_SUPPORT)]
 
+    def group_block(subset: Sequence[Query]) -> dict[str, Any]:
+        ids_ = [q.sample_id for q in subset]
+        return {
+            "queries": len(subset),
+            "strict_macro_recall": scoring.macro_mean([per_query[i] for i in ids_]),
+            "by_department": group({d: [q.sample_id for q in subset if q.dept == d] for d in ("MA", "PV", "CO")}),
+            "by_slice": group({sl: [q.sample_id for q in subset if sl in q.slices] for sl in SLICES}),
+            "by_gold_script": group(_labels_script(subset)),
+            "sample_ids": ids_,
+        }
+
+    frozen = [q for q in queries if not q.provisional]
+    matched = [q for q in frozen if q.scope == LANGUAGE_MATCHED]
+    cross = [q for q in frozen if q.scope == CROSS_LINGUAL]
+    provisional = [q for q in queries if q.provisional]
+
     return {
         "candidate": candidate,
         "queries": len(queries),
-        "strict_macro_recall": scoring.macro_mean(list(per_query.values())),
+        "strict_macro_recall": scoring.macro_mean([per_query[q.sample_id] for q in frozen]),
+        "scopes": {
+            LANGUAGE_MATCHED: group_block(matched),
+            CROSS_LINGUAL: group_block(cross),
+            "provisional_twins": group_block(provisional),
+            "language_matched_plus_provisional_twins": group_block(matched + provisional),
+        },
         "by_department": group(labels_dept),
         "by_slice": group(labels_slice),
         "by_gold_script": group(labels_script),
@@ -472,10 +554,13 @@ def run(
     purpose: str,
     searcher_factory: Callable[[CandidateServer], Any] | None = None,
     leak_checker: Callable[[CandidateServer, Mapping[str, QueryOutcome]], list[dict[str, Any]]] | None = None,
+    twins_path: Path | None = None,
 ) -> dict[str, Any]:
     if out_dir.exists():
         raise FileExistsError(f"refusing to overwrite an existing run directory: {out_dir}")
     queries = load_queries(dataset_dir)
+    if twins_path is not None:
+        queries = sorted(queries + load_twin_overlay(twins_path, queries), key=lambda q: q.sample_id)
     run_id = out_dir.name
     manifest = build_manifest(
         run_id=run_id,
@@ -490,6 +575,16 @@ def run(
         seed=seed,
         purpose=purpose,
     )
+    if twins_path is not None:
+        manifest["provisional_twin_overlay"] = {
+            "file": str(twins_path.relative_to(repo)) if twins_path.is_relative_to(repo) else str(twins_path),
+            "sha256": _sha256(twins_path),
+            "count": sum(1 for q in queries if q.provisional),
+            "status": "unreviewed and unconfirmed: reported separately, never a gate input",
+        }
+    manifest["gate_scope_rule"] = (
+        "ADR-0002 amendment 1: hard gates on language_matched frozen samples; cross_lingual reported separately"
+    )
     out_dir.mkdir(parents=True)
     manifest_bytes = (canonical_json(manifest) + "\n").encode("utf-8")
     (out_dir / "run_manifest.json").write_bytes(manifest_bytes)
@@ -500,6 +595,7 @@ def run(
         "candidates": {},
     }
     per_query_by_candidate: dict[str, dict[str, float]] = {}
+    gate_ids = {q.sample_id for q in queries if not q.provisional and q.scope == LANGUAGE_MATCHED}
     for cand, server in sorted(servers.items()):
         mapping = load_mapping(server.mapping_path)
         search = searcher_factory(server) if searcher_factory else db_searcher(server, as_of)
@@ -510,12 +606,13 @@ def run(
             if close:
                 close()
         summary = summarize(cand, queries, outcomes, mapping)
-        per_query_by_candidate[cand] = summary.pop("_per_query_recall")
+        per_query_by_candidate[cand] = {k: v for k, v in summary.pop("_per_query_recall").items() if k in gate_ids}
         summary["leak_violations"] = (
             leak_checker(server, outcomes) if leak_checker else leak_check(server.admin_dsn, outcomes, as_of)
         )
         results["candidates"][cand] = summary
     results["paired_against_A"] = {}
+    results["paired_scope"] = LANGUAGE_MATCHED
     if "A" in per_query_by_candidate:
         boot = manifest["measurement"]["paired_bootstrap"]
         for cand in sorted(per_query_by_candidate):
@@ -560,6 +657,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument(
         "--purpose", required=True, help="e.g. 'pipeline smoke (all documents draft)' or 'M1-05 comparison'"
     )
+    parser.add_argument("--twins", type=Path, default=None, help="provisional English twin overlay JSON")
+    parser.add_argument("--database", default=None, help="database name to use on every server")
     args = parser.parse_args(argv)
     repo = Path.cwd()
     plan = json.loads(
@@ -568,6 +667,17 @@ def main(argv: Sequence[str] | None = None) -> int:
     wanted = [c.strip() for c in args.candidates.split(",") if c.strip()]
     mappings = {"A": args.mapping_a.resolve(), "B": args.mapping_b.resolve(), "C": args.mapping_c.resolve()}
     servers = {c: s for c, s in resolve_servers(repo, mappings, plan).items() if c in wanted}
+    if args.database:
+        servers = {
+            c: CandidateServer(
+                s.candidate,
+                _with_database(s.app_dsn, args.database),
+                _with_database(s.admin_dsn, args.database),
+                s.mapping_path,
+                s.image_local_id,
+            )
+            for c, s in servers.items()
+        }
     missing = [c for c in wanted if c not in servers]
     if missing:
         parser.error(f"no server configured for candidates {missing}")
@@ -583,6 +693,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         measured=args.measured,
         seed=args.seed,
         purpose=args.purpose,
+        twins_path=args.twins.resolve() if args.twins else None,
     )
     brief = {
         c: {

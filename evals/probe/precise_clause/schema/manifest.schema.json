@@ -34,7 +34,10 @@
       "pattern": "^v[0-9]+(\\.[0-9]+)?$"
     },
     "spec_version": {
-      "const": "spec-v1"
+      "enum": [
+        "spec-v1",
+        "spec-v1.1"
+      ]
     },
     "status": {
       "enum": [
@@ -442,6 +445,80 @@
         "null"
       ],
       "maxLength": 1000
+    },
+    "derived_samples": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rule",
+        "count",
+        "query_language",
+        "drafted_by",
+        "human_confirmation"
+      ],
+      "properties": {
+        "rule": {
+          "type": "string",
+          "minLength": 20
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "query_language": {
+          "const": "en"
+        },
+        "drafted_by": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "id",
+            "model"
+          ],
+          "properties": {
+            "kind": {
+              "const": "llm"
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "model": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "human_confirmation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "annotator_id",
+            "confirmed_on"
+          ],
+          "properties": {
+            "status": {
+              "enum": [
+                "pending",
+                "confirmed"
+              ]
+            },
+            "annotator_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "confirmed_on": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "format": "date"
+            }
+          }
+        }
+      }
     }
   },
   "allOf": [
@@ -450,16 +527,27 @@
         "properties": {
           "reviewers": {
             "contains": {
-              "required": ["kind", "model_version"],
+              "required": [
+                "kind",
+                "model_version"
+              ],
               "properties": {
-                "kind": {"const": "llm"},
-                "model_version": {"pattern": "^service-alias:|backend-version:"}
+                "kind": {
+                  "const": "llm"
+                },
+                "model_version": {
+                  "pattern": "^service-alias:|backend-version:"
+                }
               }
             }
           }
         }
       },
-      "then": {"required": ["review_provenance"]}
+      "then": {
+        "required": [
+          "review_provenance"
+        ]
+      }
     },
     {
       "if": {
@@ -502,12 +590,30 @@
     "reviewProvenance": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["reviewer_id", "version_source", "backend_model_version", "reproducibility_limitations", "artifacts"],
+      "required": [
+        "reviewer_id",
+        "version_source",
+        "backend_model_version",
+        "reproducibility_limitations",
+        "artifacts"
+      ],
       "properties": {
-        "reviewer_id": {"type": "string", "minLength": 1, "maxLength": 64},
-        "version_source": {"const": "service_alias"},
-        "backend_model_version": {"const": null},
-        "reproducibility_limitations": {"type": "string", "minLength": 20, "maxLength": 1000},
+        "reviewer_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "version_source": {
+          "const": "service_alias"
+        },
+        "backend_model_version": {
+          "const": null
+        },
+        "reproducibility_limitations": {
+          "type": "string",
+          "minLength": 20,
+          "maxLength": 1000
+        },
         "artifacts": {
           "type": "array",
           "minItems": 8,
@@ -516,7 +622,10 @@
           "items": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["path", "sha256"],
+            "required": [
+              "path",
+              "sha256"
+            ],
             "properties": {
               "path": {
                 "enum": [
@@ -530,7 +639,9 @@
                   "review_evidence/reviewer_runtime_metadata.json"
                 ]
               },
-              "sha256": {"$ref": "#/$defs/sha256"}
+              "sha256": {
+                "$ref": "#/$defs/sha256"
+              }
             }
           }
         }

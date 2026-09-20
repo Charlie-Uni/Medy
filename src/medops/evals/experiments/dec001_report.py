@@ -27,10 +27,29 @@ def _pct(value: float | None) -> str:
     return "n/a" if value is None else f"{100 * value:.1f}%"
 
 
+def _blk(block: Mapping[str, Any]) -> str:
+    return f"{_pct(block['strict_macro_recall'])} (n={block['queries']})"
+
+
+def gate_view(r: Mapping[str, Any]) -> Mapping[str, Any]:
+    """The block the hard gates are computed on: the language_matched scope when the run recorded scopes
+    (ADR-0002 amendment 1), else the whole candidate result (run 1 format)."""
+    scopes = r.get("scopes")
+    if scopes and scopes.get("language_matched"):
+        return scopes["language_matched"]
+    return r
+
+
 def evaluate(results: Mapping[str, Any]) -> dict[str, Any]:
-    out: dict[str, Any] = {"candidates": {}, "selection": {}}
+    scoped = any("scopes" in r for r in results["candidates"].values())
+    out: dict[str, Any] = {
+        "candidates": {},
+        "selection": {},
+        "gate_scope": "language_matched" if scoped else "all_samples",
+    }
     for cand, r in sorted(results["candidates"].items()):
-        slices = {g["label"]: g for g in r["by_slice"]}
+        view = gate_view(r)
+        slices = {g["label"]: g for g in view["by_slice"]}
         slice_verdicts = {}
         for name in SLICES:
             g = slices.get(name)
@@ -44,7 +63,7 @@ def evaluate(results: Mapping[str, Any]) -> dict[str, Any]:
                 "passed": (g["recall"] >= SLICE_MIN) and not insufficient,
                 "note": "support below 8: gate cannot be evaluated" if insufficient else "",
             }
-        macro = r["strict_macro_recall"]
+        macro = view["strict_macro_recall"]
         gates = {
             "macro_recall_at_20_ge_90": macro is not None and macro >= MACRO_MIN,
             "all_six_slices_ge_85": all(v["passed"] for v in slice_verdicts.values()),
@@ -54,6 +73,7 @@ def evaluate(results: Mapping[str, Any]) -> dict[str, Any]:
         }
         out["candidates"][cand] = {
             "macro": macro,
+            "gate_queries": view.get("queries", r.get("queries")),
             "slices": slice_verdicts,
             "gates": gates,
             "passes_hard_gates": all(gates.values()),
@@ -140,9 +160,44 @@ def render_markdown(manifest: Mapping[str, Any], results: Mapping[str, Any], eva
             + " | ".join(cells)
             + f" | {len(r['leak_violations'])} | {'是' if ev['gates']['reproducible_rankings'] else '否'} | {'通过' if ev['passes_hard_gates'] else '未通过'} |"
         )
+    if evaluation.get("gate_scope") == "language_matched":
+        n_gate = next(iter(evaluation["candidates"].values()))["gate_queries"]
+        lines += ["", f"硬门禁按 ADR-0002 修订 1 在语言一致子集内计算（每候选 {n_gate} 条冻结样本）。", ""]
+        lines += [
+            "## 作用域分报（冻结样本）",
+            "",
+            "| 候选 | 语言一致 宏平均 (n) | 跨语言 宏平均 (n) | 全部冻结样本 (n) |",
+            "| --- | --- | --- | --- |",
+        ]
+        for cand, r in sorted(results["candidates"].items()):
+            sc = r["scopes"]
+            frozen_n = sum(1 for q in r["per_query"] if not q.get("provisional"))
+            lines.append(
+                f"| {cand} | {_blk(sc['language_matched'])} | {_blk(sc['cross_lingual'])} | "
+                f"{_pct(r['strict_macro_recall'])} (n={frozen_n}) |"
+            )
+        if any(r["scopes"]["provisional_twins"]["queries"] for r in results["candidates"].values()):
+            lines += [
+                "",
+                "### 临时叠加：未复核、未经人工确认的英文孪生查询（不进入门禁）",
+                "",
+                "| 候选 | 孪生 宏平均 (n) | 语言一致 + 孪生 宏平均 (n) | 孪生按部门 |",
+                "| --- | --- | --- | --- |",
+            ]
+            for cand, r in sorted(results["candidates"].items()):
+                sc = r["scopes"]
+                dept_cells = ", ".join(
+                    f"{g['label']} {_pct(g['recall'])} (n={g['support']})"
+                    for g in sc["provisional_twins"]["by_department"]
+                    if g["support"]
+                )
+                lines.append(
+                    f"| {cand} | {_blk(sc['provisional_twins'])} | "
+                    f"{_blk(sc['language_matched_plus_provisional_twins'])} | {dept_cells} |"
+                )
     lines += [
         "",
-        "## 部门与脚本变体",
+        "## 部门与脚本变体（全部冻结样本）",
         "",
         "| 候选 | MA | PV | CO | zh-Hans | zh-Hant | en | drug_name_zh/zh-Hans | drug_name_zh/zh-Hant |",
         "| --- | --- | --- | --- | --- | --- | --- | --- | --- |",
@@ -190,7 +245,10 @@ def render_markdown(manifest: Mapping[str, Any], results: Mapping[str, Any], eva
         misses = [q for q in r["per_query"] if q["recall"] < 1.0]
         lines.append(
             f"- {cand}：{len(misses)} 条 — "
-            + ", ".join(f"{q['sample_id']}{'(unmappable)' if q['unmappable_golds'] else ''}" for q in misses)
+            + ", ".join(
+                f"{q['sample_id']}{'(unmappable)' if q['unmappable_golds'] else ''}{'(cross)' if q.get('scope') == 'cross_lingual' else ''}{'(twin)' if q.get('provisional') else ''}"
+                for q in misses
+            )
         )
     return "\n".join(lines) + "\n"
 

@@ -1,4 +1,4 @@
-"""Probe set validator implementing PR-01 .. PR-14 of evals/probe/precise_clause/SPEC.md.
+"""Probe set validator implementing PR-01 .. PR-15 of evals/probe/precise_clause/SPEC.md.
 
 A version directory holds manifest.json, corpus.json, samples.jsonl, review_prompt.md and
 optionally acl_probes.jsonl, SHA256SUMS and mappings/. Page texts for PR-05 are read from a
@@ -159,6 +159,7 @@ class ProbeSetValidator:
         self._pr09_review(manifest, samples, version_dir, add)
         report.findings.extend(validate_review_provenance(version_dir, manifest, pages=self.pages))
         self._pr11_language(samples, add)
+        self._pr15_derived(manifest, samples, docs, add)
         self._pr13_corpus_license(manifest, corpus, mode, add)
         self._pr14_selfcheck(manifest, add)
         if mode == "frozen":
@@ -686,10 +687,64 @@ class ProbeSetValidator:
 
     def _pr11_language(self, samples, add: Add) -> None:
         for s in samples:
-            if "mixed_zh_en" in s["slices"] and s["language"] != "mixed":
+            if "mixed_zh_en" in s["slices"] and s["language"] != "mixed" and not s.get("derived_from"):
+                # spec-v1.1: derived English twins inherit the parent's slices for comparability (PR-15)
                 add(Finding("PR-11", "error", "mixed_zh_en samples must have language=mixed", s["sample_id"]))
             if s["language"] == "en" and "drug_name_zh" in s["slices"]:
                 add(Finding("PR-11", "error", "language=en samples must not carry drug_name_zh", s["sample_id"]))
+
+    def _pr15_derived(self, manifest, samples, docs, add: Add) -> None:
+        """spec-v1.1 derived English twins: same gold (new gold_id prefix), dept and slices as a confirmed
+        parent whose gold document is English; language=en; count matches manifest.derived_samples."""
+        by_id = {s["sample_id"]: s for s in samples}
+        derived = [s for s in samples if s.get("derived_from")]
+        declared = manifest.get("derived_samples")
+        if manifest["spec_version"] == "spec-v1":
+            if derived or declared:
+                add(Finding("PR-15", "error", "derived samples require spec-v1.1", "manifest.json/spec_version"))
+            return
+        if declared is None:
+            if derived:
+                add(
+                    Finding(
+                        "PR-15",
+                        "error",
+                        "derived samples present but manifest.derived_samples missing",
+                        "manifest.json",
+                    )
+                )
+            return
+        if declared["count"] != len(derived):
+            add(
+                Finding(
+                    "PR-15",
+                    "error",
+                    f"manifest.derived_samples.count {declared['count']} != actual {len(derived)}",
+                    "manifest.json/derived_samples",
+                )
+            )
+        for s in derived:
+            loc = s["sample_id"]
+            parent = by_id.get(s["derived_from"])
+            if parent is None or parent.get("derived_from"):
+                add(Finding("PR-15", "error", "derived_from must name an existing non-derived sample", loc))
+                continue
+            if s["language"] != "en":
+                add(Finding("PR-15", "error", "derived twins must have language=en", loc))
+            if s["dept"] != parent["dept"] or list(s["slices"]) != list(parent["slices"]):
+                add(Finding("PR-15", "error", "derived twins must inherit dept and slices unchanged", loc))
+            if len(s["required_gold_evidence"]) != len(parent["required_gold_evidence"]):
+                add(Finding("PR-15", "error", "derived twins must carry the same number of golds", loc))
+                continue
+            for mine, theirs in zip(s["required_gold_evidence"], parent["required_gold_evidence"], strict=True):
+                if {k: v for k, v in mine.items() if k != "gold_id"} != {
+                    k: v for k, v in theirs.items() if k != "gold_id"
+                }:
+                    add(Finding("PR-15", "error", "derived twin gold differs from the parent gold", loc))
+                if theirs["source_hash"] in docs and docs[theirs["source_hash"]]["language"] != "en":
+                    add(Finding("PR-15", "error", "derived twins are only allowed for English gold documents", loc))
+            if normalize_text(s["query"]) == normalize_text(parent["query"]):
+                add(Finding("PR-15", "error", "derived twin query equals the parent query", loc))
 
     def _pr12_mappings(self, manifest, samples, mappings, add: Add) -> None:
         gold_ids = {g["gold_id"] for s in samples for g in s["required_gold_evidence"]}

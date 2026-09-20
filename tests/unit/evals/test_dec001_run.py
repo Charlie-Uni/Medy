@@ -80,6 +80,14 @@ def test_summarize_scores_strictly_and_groups_by_dept_slice_and_script():
     assert row["pc-0003"]["gold_ranks"] == {"pc-0003-g1": 1, "pc-0003-g2": None}
     assert summary["not_reproducible_queries"] == []
     assert summary["latency_ms"]["measured_executions"] == 3
+    scopes = summary["scopes"]
+    # pc-0003 has an English gold document and a Chinese query -> cross_lingual; the others are language_matched
+    assert (
+        scopes["cross_lingual"]["sample_ids"] == ["pc-0003"] and scopes["cross_lingual"]["strict_macro_recall"] == 0.5
+    )
+    assert scopes["language_matched"]["sample_ids"] == ["pc-0001", "pc-0002"]
+    assert scopes["language_matched"]["strict_macro_recall"] == 0.5
+    assert scopes["provisional_twins"]["queries"] == 0 and scopes["provisional_twins"]["strict_macro_recall"] is None
 
 
 def test_non_identical_repeated_rankings_are_reported():
@@ -133,4 +141,53 @@ def test_run_refuses_an_existing_output_directory(tmp_path):
 def test_with_user_rewrites_only_the_credentials():
     assert r._with_user("postgresql://admin:pw@localhost:5433/medops", "medops_app_user", "p@ss") == (
         "postgresql://medops_app_user:p%40ss@localhost:5433/medops"
+    )
+
+
+def test_gate_scope_rule_and_twin_overlay(tmp_path):
+    assert r.gate_scope("zh", "zh-Hant") == "language_matched"
+    assert r.gate_scope("mixed", "zh-Hans") == "language_matched"
+    assert r.gate_scope("mixed", "en") == "cross_lingual"
+    assert r.gate_scope("zh", "en") == "cross_lingual"
+    assert r.gate_scope("en", "en") == "language_matched"
+    twins_file = tmp_path / "twins.json"
+    twins_file.write_text(
+        json.dumps(
+            [
+                {
+                    "sample_id": "pc-0090",
+                    "derived_from": "pc-0003",
+                    "dept": "CO",
+                    "language": "en",
+                    "slices": ["protocol_id"],
+                    "query": "English twin",
+                }
+            ]
+        ),
+        encoding="utf-8",
+    )
+    twins = r.load_twin_overlay(twins_file, QUERIES)
+    assert len(twins) == 1 and twins[0].provisional is True and twins[0].scope == "language_matched"
+    assert twins[0].gold_ids == QUERIES[2].gold_ids and twins[0].gold_script == "en"
+
+    def search(q: r.Query, k: int) -> LexicalSearchResult:
+        return result(
+            {"pc-0001": ["c1"], "pc-0002": ["c2"], "pc-0003": ["c9"], "pc-0090": ["c3a", "c4"]}[q.sample_id], k
+        )
+
+    outcomes = r.execute_passes(QUERIES + twins, search, k=20, warmup=0, measured=1, seed=1)
+    summary = r.summarize("C", QUERIES + twins, outcomes, MAPPING)
+    scopes = summary["scopes"]
+    assert scopes["provisional_twins"]["strict_macro_recall"] == 1.0 and scopes["provisional_twins"]["queries"] == 1
+    assert scopes["cross_lingual"]["strict_macro_recall"] == 0.0
+    assert scopes["language_matched_plus_provisional_twins"]["queries"] == 3
+    # provisional rows never enter the frozen macro
+    assert summary["strict_macro_recall"] == pytest.approx((1.0 + 0.0 + 0.0) / 3)
+    rows = {x["sample_id"]: x for x in summary["per_query"]}
+    assert rows["pc-0090"]["provisional"] is True and rows["pc-0003"]["scope"] == "cross_lingual"
+
+
+def test_with_database_rewrites_only_the_path():
+    assert r._with_database("postgresql://u:p@localhost:5433/medops?sslmode=disable", "medops_v2") == (
+        "postgresql://u:p@localhost:5433/medops_v2?sslmode=disable"
     )

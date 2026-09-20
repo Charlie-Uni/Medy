@@ -1,6 +1,6 @@
 # Medy 全量任务、当前进度与八股知识点对照
 
-> 核查日期：2026-09-20（[实现记录 33](reviews/2026-09-20-implementation-33-m1-05-lexical-run.md)）。编号与 [开发路线图](DEVELOPMENT_ROADMAP.md) 一致，验收文字以 [工程基线 v0.6](ENGINEERING_BASELINE.md) 为准；本文只补每个任务对应的基础知识，不新增门禁。
+> 核查日期：2026-09-20（[实现记录 34](reviews/2026-09-20-implementation-34-amendment1-stage.md)）。编号与 [开发路线图](DEVELOPMENT_ROADMAP.md) 一致，验收文字以 [工程基线 v0.6](ENGINEERING_BASELINE.md) 为准；本文只补每个任务对应的基础知识，不新增门禁。
 > 状态口径同路线图：已实现（小范围产物有代码与证据，不等于整体验收完成）、部分、待做、阻塞、选做、未验收。基线 99 个复选项目前 1 项勾选（M1-01 探针冻结）。
 > `tests/unit/docs/test_baseline_roadmap_consistency.py` 机械检查本文与路线图、基线的编号数量一致。
 
@@ -60,12 +60,12 @@ M1-01 同时是“部分”和“阻塞”，上表按“部分”计。P1/P2 11
 | M1-02 | 部分（镜像、配置、三服务器映射与运行清单工具就绪；正式清单待激活后冻结） | 冻结实验清单（候选、镜像 digest、硬件、参数） | 实验预登记；可复现性（种子、digest、环境）；消融实验；避免事后改判据 |
 | M1-03 | 已实现（契约范围，待审核；A/B/C 三候选适配器已过同一契约测试） | LexicalRetriever 统一契约 | 接口与适配器模式；Protocol 结构化子类型；契约测试；rank 与 raw_score 的职责分离 |
 | M1-04 | 部分（零泄漏已证明；三候选零静默不足已在合成数据证明，真实探针待跑） | 最小 schema 上的 RLS 零泄漏与零静默不足测试 | PostgreSQL RLS 策略、FORCE RLS、BYPASSRLS；连接池与 SET LOCAL；LIMIT 下推导致候选不足 |
-| M1-05 | 阻塞（已运行一次，三候选均未通过硬门禁；后续实验待决策） | 三候选对比实验与许可证审核 | BM25 与 ts_rank 的区别；Tantivy 倒排；配对 bootstrap 置信区间；统计显著性；AGPL 义务 |
+| M1-05 | 阻塞（修订 1 后第二次运行为临时结果；待孪生复核、人工确认、v2 冻结后正式判定） | 三候选对比实验与许可证审核 | BM25 与 ts_rank 的区别；Tantivy 倒排；配对 bootstrap 置信区间；统计显著性；AGPL 义务 |
 | M1-06 | 已实现（首个迁移 0001） | 文档、chunk、ACL、审计、source object、ingestion job 的 migration | DDL 与外键；索引类型（B-tree、GIN、HNSW）；Alembic 迁移与回滚 |
 | M1-07 | 已实现 | 同一 family 只有一个 active 的数据库约束 | 唯一部分索引；事务隔离级别与写冲突；并发竞态测试 |
 | M1-08 | 已实现（数据库层） | 正式 RLS、安全视图与角色权限测试 | 数据库角色与最小权限；NOSUPERUSER/NOBYPASSRLS；池连接身份清理；跨部门隔离证明 |
 | M1-09 | 部分（PDF 校验、去重、PII 默认拒绝已实现） | 文件校验、PII 扫描、去重、不可变保存 | MIME 嗅探与文件签名；正则 PII 的召回与误报；内容寻址去重；WORM 存储 |
-| M1-10 | 已实现（chunker-v1 与入库） | 抽取 page/section/seq/offset 与 chunk_content_hash | PDF 文本抽取原理（内容流、字体映射）；字符偏移 vs 字节偏移；切分策略；内容哈希 |
+| M1-10 | 已实现（chunker-v2、入库与质量复核放行） | 抽取 page/section/seq/offset 与 chunk_content_hash | PDF 文本抽取原理（内容流、字体映射）；字符偏移 vs 字节偏移；切分策略；内容哈希 |
 | M1-11 | 部分（draft→active 激活工具与审计已有；归档、outbox 与索引/缓存消费待做） | 发布/归档同事务并经 outbox 失效索引缓存 | 事务性 outbox；至少一次投递与幂等消费；缓存失效时序 |
 | M1-12 | 部分 | 医学术语表及版本 | INN/通用名/商品名体系；同义词映射；字典版本化与许可；jieba 用户词典 |
 | M1-13 | 待做 | 1 到 3 条有界 Query Rewrite | 查询扩展与同义改写；会话实体与指代；用户文本不得生成过滤条件（注入） |

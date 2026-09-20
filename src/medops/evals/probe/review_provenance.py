@@ -20,11 +20,26 @@ if TYPE_CHECKING:
     from medops.evals.probe.validator import Finding, PageTextProvider
 
 BATCHES = ("MA", "PV", "CO")
-EVIDENCE_NAMES = (
-    tuple(f"run_{batch}.json" for batch in BATCHES)
-    + tuple(f"verdicts_{batch}.jsonl" for batch in BATCHES)
-    + ("resolutions.json", "reviewer_runtime_metadata.json")
-)
+DERIVED_BATCH = "EN"  # spec-v1.1: derived English twins are reviewed as their own batch
+
+
+def batches_for(manifest: Mapping[str, Any]) -> tuple[str, ...]:
+    return BATCHES + (DERIVED_BATCH,) if manifest.get("spec_version") == "spec-v1.1" else BATCHES
+
+
+def batch_of(sample: Mapping[str, Any]) -> str:
+    return DERIVED_BATCH if sample.get("derived_from") else str(sample["dept"])
+
+
+def evidence_names(batches: tuple[str, ...]) -> tuple[str, ...]:
+    return (
+        tuple(f"run_{batch}.json" for batch in batches)
+        + tuple(f"verdicts_{batch}.jsonl" for batch in batches)
+        + ("resolutions.json", "reviewer_runtime_metadata.json")
+    )
+
+
+EVIDENCE_NAMES = evidence_names(BATCHES)
 EVIDENCE_PATHS = tuple(f"review_evidence/{name}" for name in EVIDENCE_NAMES)
 ITEM_KEYS = {"query", "slices", "key_text", "evidence_span", "dept"}
 _SHA256 = re.compile(r"[0-9a-f]{64}\Z")
@@ -84,16 +99,18 @@ def _verdicts(rows: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
     return result
 
 
-def _read_artifacts(version_dir: Path, provenance: dict[str, Any]) -> dict[str, bytes]:
+def _read_artifacts(version_dir: Path, provenance: dict[str, Any], batches: tuple[str, ...]) -> dict[str, bytes]:
+    names = evidence_names(batches)
+    required_paths = tuple(f"review_evidence/{name}" for name in names)
     entries = provenance["artifacts"]
     _require(
-        isinstance(entries, list) and len(entries) == len(EVIDENCE_PATHS),
-        "review evidence must contain eight artifacts",
+        isinstance(entries, list) and len(entries) == len(required_paths),
+        f"review evidence must contain {len(names)} artifacts",
     )
     paths = [entry["path"] for entry in entries]
     _require(
-        len(set(paths)) == len(paths) and set(paths) == set(EVIDENCE_PATHS),
-        "review evidence paths must match the eight required files",
+        len(set(paths)) == len(paths) and set(paths) == set(required_paths),
+        "review evidence paths must match the required files",
     )
     root = version_dir.resolve()
     evidence_dir = version_dir / "review_evidence"
@@ -188,14 +205,15 @@ def _validate(
         isinstance(limitation, str) and len(limitation.strip()) >= 20,
         "review_provenance needs an explicit reproducibility limitation",
     )
-    artifacts = _read_artifacts(version_dir, provenance)
+    batches = batches_for(manifest)
+    artifacts = _read_artifacts(version_dir, provenance, batches)
     samples = _jsonl((version_dir / "samples.jsonl").read_bytes())
     sample_ids = [s["sample_id"] for s in samples]
     _require(
         len(set(sample_ids)) == len(samples) and len(samples) == manifest["counts"]["samples"],
         "review evidence sample coverage differs from manifest",
     )
-    _require(all(s["dept"] in BATCHES for s in samples), "review evidence has an unknown sample department")
+    _require(all(batch_of(s) in batches for s in samples), "review evidence has an unknown sample batch")
     records = _current_records(version_dir, samples, pages)
     prompt_raw = (version_dir / "review_prompt.md").read_bytes()
     _require(
@@ -206,9 +224,15 @@ def _validate(
     _require(isinstance(resolutions, dict), "resolutions must be an object")
     disputed = set()
     all_chunks = []
-    for batch in BATCHES:
-        group = {s["sample_id"]: s for s in samples if s["dept"] == batch}
-        _require(bool(group) and len(group) == manifest["counts"]["per_dept"][batch], f"{batch}: sample count mismatch")
+    for batch in batches:
+        group = {s["sample_id"]: s for s in samples if batch_of(s) == batch}
+        if batch == DERIVED_BATCH:
+            expected_size = int(manifest.get("derived_samples", {}).get("count", 0))
+        elif manifest.get("spec_version") == "spec-v1.1":
+            expected_size = sum(1 for s in samples if s["dept"] == batch and not s.get("derived_from"))
+        else:
+            expected_size = manifest["counts"]["per_dept"][batch]
+        _require(bool(group) and len(group) == expected_size, f"{batch}: sample count mismatch")
         run = _json(artifacts[f"run_{batch}.json"])
         _require(
             run["batch"] == batch and run["provenance_version"] == 2, f"{batch}: requires matching v2 run evidence"

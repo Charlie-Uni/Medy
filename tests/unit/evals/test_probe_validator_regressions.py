@@ -225,3 +225,92 @@ def test_unmodified_fixture_still_passes(frozen):
     version, pages = frozen
     report = _run(version, pages)
     assert report.passed, [f.__dict__ for f in report.errors]
+
+
+def _rewrite_samples(version, mutate):
+    import json as _json
+
+    from medops.core.canonical import canonical_json
+
+    samples = [_json.loads(line) for line in (version / "samples.jsonl").read_text(encoding="utf-8").splitlines()]
+    mutate(samples)
+    (version / "samples.jsonl").write_text("".join(canonical_json(s) + "\n" for s in samples), encoding="utf-8")
+
+
+def _first_en_sample(samples, corpus_docs):
+    en = {d["source_hash"] for d in corpus_docs if d["language"] == "en"}
+    return next(s for s in samples if s["required_gold_evidence"][0]["source_hash"] in en)
+
+
+def _add_twin(version, *, mutate_twin=None, spec="spec-v1.1"):
+    import json as _json
+
+    manifest = _json.loads((version / "manifest.json").read_text(encoding="utf-8"))
+    corpus = _json.loads((version / "corpus.json").read_text(encoding="utf-8"))["documents"]
+    manifest["spec_version"] = spec
+    manifest["derived_samples"] = {
+        "rule": "English query twins of English-gold samples; gold/dept/slices inherited",
+        "count": 1,
+        "query_language": "en",
+        "drafted_by": {"kind": "llm", "id": "drafter-llm-01", "model": "claude-fable-5-1"},
+        "human_confirmation": {"status": "pending", "annotator_id": "annotator-01", "confirmed_on": None},
+    }
+
+    def mutate(samples):
+        parent = _first_en_sample(samples, corpus)
+        sid = f"pc-{max(int(s['sample_id'][3:]) for s in samples) + 1:04d}"
+        twin = _json.loads(_json.dumps(parent))
+        twin.update(
+            sample_id=sid,
+            query="An English twin question that differs from the parent?",
+            language="en",
+            derived_from=parent["sample_id"],
+        )
+        for g in twin["required_gold_evidence"]:
+            g["gold_id"] = g["gold_id"].replace(parent["sample_id"], sid, 1)
+        if mutate_twin:
+            mutate_twin(twin, parent)
+        samples.append(twin)
+        manifest["counts"]["samples"] += 1
+        manifest["counts"]["per_dept"][twin["dept"]] += 1
+        manifest["counts"]["per_language"]["en"] += 1
+        for sl in twin["slices"]:
+            manifest["counts"]["per_slice"][sl] += 1
+
+    _rewrite_samples(version, mutate)
+    (version / "manifest.json").write_text(_json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    refreeze(version)
+
+
+def _pr15(version, pages):
+    report = ProbeSetValidator(SCHEMA_DIR, PageTextProvider(pages)).validate(version, mode="draft")
+    return [f.message for f in report.findings if f.rule == "PR-15"], report
+
+
+def test_pr15_accepts_a_well_formed_english_twin_under_spec_v1_1(frozen):
+    version, pages = frozen
+    _add_twin(version)
+    findings, report = _pr15(version, pages)
+    assert findings == []
+    assert not [f for f in report.errors if f.rule == "PR-11"], "twins inherit mixed_zh_en without language=mixed"
+
+
+def test_pr15_rejects_twins_under_spec_v1_and_malformed_twins(frozen):
+    version, pages = frozen
+    _add_twin(version, spec="spec-v1")
+    findings, _ = _pr15(version, pages)
+    assert any("require spec-v1.1" in m for m in findings)
+
+
+def test_pr15_rejects_changed_gold_dept_language_or_parent(frozen):
+    version, pages = frozen
+
+    def bad(twin, parent):
+        twin["dept"] = "MA" if twin["dept"] != "MA" else "PV"
+        twin["language"] = "zh"
+        twin["required_gold_evidence"][0]["key_text"] = twin["required_gold_evidence"][0]["key_text"][:-1] + "x"
+        twin["derived_from"] = "pc-9999"
+
+    _add_twin(version, mutate_twin=bad)
+    findings, _ = _pr15(version, pages)
+    assert any("existing non-derived sample" in m for m in findings)

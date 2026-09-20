@@ -1,0 +1,943 @@
+{
+  "run_id": "2026-09-20-run2-provisional",
+  "run_manifest_sha256": "76e6ab0827061d3b87d30920a4dd2dbad3611ecdcb216a7dc21f1ce70b14e5ce",
+  "method": "read-only rerun of each candidate's own predicate without LIMIT under the app role; categories exclusive; only language_matched frozen samples and provisional twins",
+  "candidates": {
+    "A": {
+      "by_group": {
+        "language_matched": {
+          "rank_21_50": 5,
+          "rank_over_50": 3
+        },
+        "provisional_twins": {
+          "rank_over_50": 11,
+          "rank_21_50": 2
+        }
+      },
+      "details": [
+        {
+          "sample_id": "pc-0003",
+          "group": "language_matched",
+          "dept": "MA",
+          "gold_script": "zh-Hant",
+          "eligible_candidates": 94,
+          "gold_rank_without_limit": 30,
+          "query_tokens": [
+            "超過",
+            "八十",
+            "歲",
+            "的",
+            "老人家",
+            "可以",
+            "開始",
+            "用",
+            "美洛",
+            "醣",
+            "嗎"
+          ]
+        },
+        {
+          "sample_id": "pc-0014",
+          "group": "language_matched",
+          "dept": "MA",
+          "gold_script": "zh-Hant",
+          "eligible_candidates": 97,
+          "gold_rank_without_limit": 71,
+          "query_tokens": [
+            "穩壓",
+            "膜",
+            "衣錠",
+            "吃",
+            "多久",
+            "才",
+            "會",
+            "有",
+            "最大",
+            "的",
+            "降壓",
+            "效果"
+          ]
+        },
+        {
+          "sample_id": "pc-0019",
+          "group": "language_matched",
+          "dept": "MA",
+          "gold_script": "zh-Hant",
+          "eligible_candidates": 86,
+          "gold_rank_without_limit": 36,
+          "query_tokens": [
+            "高血壓",
+            "患者",
+            "每天",
+            "用",
+            "明德",
+            "心壓",
+            "暢錠",
+            "治療",
+            "用量",
+            "範圍",
+            "是",
+            "多少"
+          ]
+        },
+        {
+          "sample_id": "pc-0020",
+          "group": "language_matched",
+          "dept": "MA",
+          "gold_script": "zh-Hant",
+          "eligible_candidates": 74,
+          "gold_rank_without_limit": 51,
+          "query_tokens": [
+            "哪些",
+            "病人",
+            "禁止",
+            "使用",
+            "明德",
+            "心壓",
+            "暢錠"
+          ]
+        },
+        {
+          "sample_id": "pc-0022",
+          "group": "language_matched",
+          "dept": "MA",
+          "gold_script": "zh-Hant",
+          "eligible_candidates": 93,
+          "gold_rank_without_limit": 49,
+          "query_tokens": [
+            "要",
+            "開刀",
+            "麻醉",
+            "的",
+            "病人",
+            "手術",
+            "前",
+            "多久",
+            "停",
+            "用心",
+            "壓暢",
+            "錠"
+          ]
+        },
+        {
+          "sample_id": "pc-0026",
+          "group": "language_matched",
+          "dept": "MA",
+          "gold_script": "zh-Hant",
+          "eligible_candidates": 75,
+          "gold_rank_without_limit": 62,
+          "query_tokens": [
+            "胃所樂",
+            "泡",
+            "在",
+            "水裡",
+            "崩",
+            "散後要",
+            "多久",
+            "之內",
+            "喝完"
+          ]
+        },
+        {
+          "sample_id": "pc-0030",
+          "group": "language_matched",
+          "dept": "MA",
+          "gold_script": "zh-Hant",
+          "eligible_candidates": 95,
+          "gold_rank_without_limit": 49,
+          "query_tokens": [
+            "衛部",
+            "藥",
+            "製",
+            "字",
+            "第",
+            "058102",
+            "號藥品",
+            "的",
+            "造",
+            "廠",
+            "址",
+            "在"
+          ]
+        },
+        {
+          "sample_id": "pc-0031",
+          "group": "language_matched",
+          "dept": "PV",
+          "gold_script": "zh-Hans",
+          "eligible_candidates": 245,
+          "gold_rank_without_limit": 34,
+          "query_tokens": [
+            "meddra",
+            "的",
+            "术语",
+            "层级",
+            "结构",
+            "可以",
+            "由",
+            "使用",
+            "机构",
+            "自行",
+            "更改",
+            "吗"
+          ]
+        },
+        {
+          "sample_id": "pc-0076",
+          "group": "provisional_twins",
+          "dept": "PV",
+          "gold_script": "en",
+          "eligible_candidates": 1558,
+          "gold_rank_without_limit": 535,
+          "query_tokens": [
+            "under",
+            "gvp",
+            "module",
+            "vi",
+            "what",
+            "are",
+            "the",
+            "minimum",
+            "elements",
+            "an",
+            "icsr",
+            "must"
+          ]
+        },
+        {
+          "sample_id": "pc-0081",
+          "group": "provisional_twins",
+          "dept": "PV",
+          "gold_script": "en",
+          "eligible_candidates": 1597,
+          "gold_rank_without_limit": 27,
+          "query_tokens": [
+            "under",
+            "gvp",
+            "module",
+            "ix",
+            "how",
+            "soon",
+            "must",
+            "an",
+            "eu",
+            "marketing",
+            "authorisation",
+            "holder"
+          ]
+        },
+        {
+          "sample_id": "pc-0083",
+          "group": "provisional_twins",
+          "dept": "PV",
+          "gold_script": "en",
+          "eligible_candidates": 1587,
+          "gold_rank_without_limit": 23,
+          "query_tokens": [
+            "under",
+            "fda",
+            "ind",
+            "safety",
+            "reporting",
+            "requirements",
+            "what",
+            "is",
+            "the",
+            "latest",
+            "a",
+            "sponsor"
+          ]
+        },
+        {
+          "sample_id": "pc-0084",
+          "group": "provisional_twins",
+          "dept": "PV",
+          "gold_script": "en",
+          "eligible_candidates": 1594,
+          "gold_rank_without_limit": 121,
+          "query_tokens": [
+            "in",
+            "fda",
+            "s",
+            "sponsor",
+            "safety",
+            "reporting",
+            "guidance",
+            "which",
+            "two",
+            "categories",
+            "of",
+            "events"
+          ]
+        },
+        {
+          "sample_id": "pc-0086",
+          "group": "provisional_twins",
+          "dept": "PV",
+          "gold_script": "en",
+          "eligible_candidates": 1578,
+          "gold_rank_without_limit": 90,
+          "query_tokens": [
+            "under",
+            "ich",
+            "e2a",
+            "must",
+            "an",
+            "adverse",
+            "event",
+            "have",
+            "a",
+            "causal",
+            "relationship",
+            "with"
+          ]
+        },
+        {
+          "sample_id": "pc-0087",
+          "group": "provisional_twins",
+          "dept": "PV",
+          "gold_script": "en",
+          "eligible_candidates": 1599,
+          "gold_rank_without_limit": 301,
+          "query_tokens": [
+            "when",
+            "updating",
+            "a",
+            "safety",
+            "reporting",
+            "template",
+            "to",
+            "ich",
+            "e2a",
+            "terminology",
+            "is",
+            "it"
+          ]
+        },
+        {
+          "sample_id": "pc-0088",
+          "group": "provisional_twins",
+          "dept": "PV",
+          "gold_script": "en",
+          "eligible_candidates": 1609,
+          "gold_rank_without_limit": 74,
+          "query_tokens": [
+            "under",
+            "ich",
+            "e2a",
+            "how",
+            "soon",
+            "after",
+            "first",
+            "knowledge",
+            "must",
+            "the",
+            "sponsor",
+            "notify"
+          ]
+        },
+        {
+          "sample_id": "pc-0092",
+          "group": "provisional_twins",
+          "dept": "CO",
+          "gold_script": "en",
+          "eligible_candidates": 732,
+          "gold_rank_without_limit": 54,
+          "query_tokens": [
+            "what",
+            "does",
+            "ich",
+            "e8",
+            "r1",
+            "require",
+            "regarding",
+            "the",
+            "scientific",
+            "necessity",
+            "of",
+            "study"
+          ]
+        },
+        {
+          "sample_id": "pc-0094",
+          "group": "provisional_twins",
+          "dept": "CO",
+          "gold_script": "en",
+          "eligible_candidates": 709,
+          "gold_rank_without_limit": 63,
+          "query_tokens": [
+            "under",
+            "ich",
+            "e8",
+            "r1",
+            "what",
+            "should",
+            "the",
+            "critical",
+            "to",
+            "quality",
+            "factors",
+            "not"
+          ]
+        },
+        {
+          "sample_id": "pc-0099",
+          "group": "provisional_twins",
+          "dept": "CO",
+          "gold_script": "en",
+          "eligible_candidates": 722,
+          "gold_rank_without_limit": 86,
+          "query_tokens": [
+            "under",
+            "ich",
+            "e6",
+            "r3",
+            "who",
+            "must",
+            "retain",
+            "essential",
+            "records",
+            "securely",
+            "and",
+            "what"
+          ]
+        },
+        {
+          "sample_id": "pc-0100",
+          "group": "provisional_twins",
+          "dept": "CO",
+          "gold_script": "en",
+          "eligible_candidates": 608,
+          "gold_rank_without_limit": 206,
+          "query_tokens": [
+            "how",
+            "does",
+            "ich",
+            "e6",
+            "r3",
+            "relate",
+            "to",
+            "e8",
+            "r1"
+          ]
+        },
+        {
+          "sample_id": "pc-0102",
+          "group": "provisional_twins",
+          "dept": "CO",
+          "gold_script": "en",
+          "eligible_candidates": 718,
+          "gold_rank_without_limit": 110,
+          "query_tokens": [
+            "what",
+            "examples",
+            "of",
+            "relevant",
+            "records",
+            "does",
+            "ich",
+            "e6",
+            "r3",
+            "list",
+            "that",
+            "the"
+          ]
+        },
+        {
+          "sample_id": "pc-0107",
+          "group": "provisional_twins",
+          "dept": "CO",
+          "gold_script": "en",
+          "eligible_candidates": 703,
+          "gold_rank_without_limit": 55,
+          "query_tokens": [
+            "according",
+            "to",
+            "fda",
+            "s",
+            "2024",
+            "draft",
+            "guidance",
+            "on",
+            "protocol",
+            "deviations",
+            "do",
+            "regulations"
+          ]
+        }
+      ]
+    },
+    "B": {
+      "by_group": {
+        "language_matched": {
+          "rank_21_50": 3
+        },
+        "provisional_twins": {
+          "rank_over_50": 9,
+          "rank_21_50": 4
+        }
+      },
+      "details": [
+        {
+          "sample_id": "pc-0014",
+          "group": "language_matched",
+          "dept": "MA",
+          "gold_script": "zh-Hant",
+          "eligible_candidates": 97,
+          "gold_rank_without_limit": 50,
+          "query_tokens": [
+            "吃",
+            "壓",
+            "多久",
+            "才",
+            "效果",
+            "最大",
+            "會",
+            "有",
+            "的",
+            "穩",
+            "膜",
+            "衣"
+          ]
+        },
+        {
+          "sample_id": "pc-0030",
+          "group": "language_matched",
+          "dept": "MA",
+          "gold_script": "zh-Hant",
+          "eligible_candidates": 96,
+          "gold_rank_without_limit": 35,
+          "query_tokens": [
+            "058102",
+            "品",
+            "哪",
+            "在",
+            "址",
+            "字",
+            "廠",
+            "的",
+            "第",
+            "藥",
+            "號",
+            "衛"
+          ]
+        },
+        {
+          "sample_id": "pc-0031",
+          "group": "language_matched",
+          "dept": "PV",
+          "gold_script": "zh-Hans",
+          "eligible_candidates": 243,
+          "gold_rank_without_limit": 31,
+          "query_tokens": [
+            "meddra",
+            "使用",
+            "可以",
+            "吗",
+            "层级",
+            "更改",
+            "术语",
+            "机构",
+            "由",
+            "的",
+            "结构",
+            "自行"
+          ]
+        },
+        {
+          "sample_id": "pc-0076",
+          "group": "provisional_twins",
+          "dept": "PV",
+          "gold_script": "en",
+          "eligible_candidates": 1558,
+          "gold_rank_without_limit": 559,
+          "query_tokens": [
+            "an",
+            "are",
+            "be",
+            "considered",
+            "contain",
+            "elements",
+            "gvp",
+            "icsr",
+            "minimum",
+            "module",
+            "must",
+            "the"
+          ]
+        },
+        {
+          "sample_id": "pc-0081",
+          "group": "provisional_twins",
+          "dept": "PV",
+          "gold_script": "en",
+          "eligible_candidates": 1588,
+          "gold_rank_without_limit": 24,
+          "query_tokens": [
+            "a",
+            "an",
+            "authorisation",
+            "authorities",
+            "competent",
+            "definition",
+            "emerging",
+            "establishes",
+            "eu",
+            "gvp",
+            "holder",
+            "how"
+          ]
+        },
+        {
+          "sample_id": "pc-0083",
+          "group": "provisional_twins",
+          "dept": "PV",
+          "gold_script": "en",
+          "eligible_candidates": 1586,
+          "gold_rank_without_limit": 43,
+          "query_tokens": [
+            "a",
+            "about",
+            "adverse",
+            "after",
+            "an",
+            "fatal",
+            "fda",
+            "first",
+            "ind",
+            "information",
+            "is",
+            "latest"
+          ]
+        },
+        {
+          "sample_id": "pc-0084",
+          "group": "provisional_twins",
+          "dept": "PV",
+          "gold_script": "en",
+          "eligible_candidates": 1587,
+          "gold_rank_without_limit": 126,
+          "query_tokens": [
+            "aggregate",
+            "an",
+            "analysis",
+            "are",
+            "categories",
+            "criteria",
+            "decide",
+            "events",
+            "fda's",
+            "guidance",
+            "in",
+            "ind"
+          ]
+        },
+        {
+          "sample_id": "pc-0086",
+          "group": "provisional_twins",
+          "dept": "PV",
+          "gold_script": "en",
+          "eligible_candidates": 1576,
+          "gold_rank_without_limit": 84,
+          "query_tokens": [
+            "a",
+            "adverse",
+            "an",
+            "causal",
+            "definition",
+            "e2a",
+            "event",
+            "have",
+            "ich",
+            "meet",
+            "must",
+            "relationship"
+          ]
+        },
+        {
+          "sample_id": "pc-0087",
+          "group": "provisional_twins",
+          "dept": "PV",
+          "gold_script": "en",
+          "eligible_candidates": 1597,
+          "gold_rank_without_limit": 267,
+          "query_tokens": [
+            "a",
+            "acceptable",
+            "e2a",
+            "effect",
+            "ich",
+            "is",
+            "it",
+            "keep",
+            "old",
+            "reporting",
+            "safety",
+            "side"
+          ]
+        },
+        {
+          "sample_id": "pc-0088",
+          "group": "provisional_twins",
+          "dept": "PV",
+          "gold_script": "en",
+          "eligible_candidates": 1609,
+          "gold_rank_without_limit": 89,
+          "query_tokens": [
+            "a",
+            "adr",
+            "after",
+            "agencies",
+            "e2a",
+            "expedited",
+            "fatal",
+            "first",
+            "for",
+            "how",
+            "ich",
+            "knowledge"
+          ]
+        },
+        {
+          "sample_id": "pc-0092",
+          "group": "provisional_twins",
+          "dept": "CO",
+          "gold_script": "en",
+          "eligible_candidates": 732,
+          "gold_rank_without_limit": 46,
+          "query_tokens": [
+            "and",
+            "burden",
+            "does",
+            "e8",
+            "ich",
+            "necessity",
+            "of",
+            "on",
+            "participants",
+            "placed",
+            "procedures",
+            "r1"
+          ]
+        },
+        {
+          "sample_id": "pc-0094",
+          "group": "provisional_twins",
+          "dept": "CO",
+          "gold_script": "en",
+          "eligible_candidates": 709,
+          "gold_rank_without_limit": 64,
+          "query_tokens": [
+            "be",
+            "cluttered",
+            "critical",
+            "e8",
+            "factors",
+            "ich",
+            "not",
+            "quality",
+            "r1",
+            "should",
+            "the",
+            "to"
+          ]
+        },
+        {
+          "sample_id": "pc-0099",
+          "group": "provisional_twins",
+          "dept": "CO",
+          "gold_script": "en",
+          "eligible_candidates": 722,
+          "gold_rank_without_limit": 89,
+          "query_tokens": [
+            "and",
+            "determines",
+            "e6",
+            "essential",
+            "ich",
+            "must",
+            "period",
+            "r3",
+            "records",
+            "retain",
+            "retention",
+            "securely"
+          ]
+        },
+        {
+          "sample_id": "pc-0100",
+          "group": "provisional_twins",
+          "dept": "CO",
+          "gold_script": "en",
+          "eligible_candidates": 607,
+          "gold_rank_without_limit": 203,
+          "query_tokens": [
+            "does",
+            "e6",
+            "e8",
+            "how",
+            "ich",
+            "r1",
+            "r3",
+            "relate",
+            "to"
+          ]
+        },
+        {
+          "sample_id": "pc-0102",
+          "group": "provisional_twins",
+          "dept": "CO",
+          "gold_script": "en",
+          "eligible_candidates": 718,
+          "gold_rank_without_limit": 109,
+          "query_tokens": [
+            "does",
+            "e6",
+            "examples",
+            "ich",
+            "iec",
+            "irb",
+            "list",
+            "of",
+            "r3",
+            "records",
+            "relevant",
+            "retain"
+          ]
+        },
+        {
+          "sample_id": "pc-0107",
+          "group": "provisional_twins",
+          "dept": "CO",
+          "gold_script": "en",
+          "eligible_candidates": 701,
+          "gold_rank_without_limit": 36,
+          "query_tokens": [
+            "2024",
+            "according",
+            "define",
+            "deviation",
+            "deviations",
+            "do",
+            "draft",
+            "fda",
+            "fda's",
+            "guidance",
+            "on",
+            "protocol"
+          ]
+        }
+      ]
+    },
+    "C": {
+      "by_group": {
+        "language_matched": {
+          "rank_over_50": 2
+        },
+        "provisional_twins": {
+          "rank_over_50": 1,
+          "rank_21_50": 2
+        }
+      },
+      "details": [
+        {
+          "sample_id": "pc-0020",
+          "group": "language_matched",
+          "dept": "MA",
+          "gold_script": "zh-Hant",
+          "eligible_candidates": 74,
+          "gold_rank_without_limit": 74,
+          "query_tokens": [
+            "哪些",
+            "病人",
+            "禁止",
+            "使用",
+            "明德",
+            "心壓",
+            "暢錠"
+          ]
+        },
+        {
+          "sample_id": "pc-0026",
+          "group": "language_matched",
+          "dept": "MA",
+          "gold_script": "zh-Hant",
+          "eligible_candidates": 75,
+          "gold_rank_without_limit": 66,
+          "query_tokens": [
+            "胃所樂",
+            "泡",
+            "在",
+            "水裡",
+            "崩",
+            "散後要",
+            "多久",
+            "之內",
+            "喝完"
+          ]
+        },
+        {
+          "sample_id": "pc-0076",
+          "group": "provisional_twins",
+          "dept": "PV",
+          "gold_script": "en",
+          "eligible_candidates": 1558,
+          "gold_rank_without_limit": 84,
+          "query_tokens": [
+            "under",
+            "gvp",
+            "module",
+            "vi",
+            "what",
+            "are",
+            "the",
+            "minimum",
+            "elements",
+            "an",
+            "icsr",
+            "must"
+          ]
+        },
+        {
+          "sample_id": "pc-0095",
+          "group": "provisional_twins",
+          "dept": "CO",
+          "gold_script": "en",
+          "eligible_candidates": 661,
+          "gold_rank_without_limit": 49,
+          "query_tokens": [
+            "which",
+            "topics",
+            "does",
+            "section",
+            "6",
+            "of",
+            "ich",
+            "e8",
+            "r1",
+            "address"
+          ]
+        },
+        {
+          "sample_id": "pc-0100",
+          "group": "provisional_twins",
+          "dept": "CO",
+          "gold_script": "en",
+          "eligible_candidates": 608,
+          "gold_rank_without_limit": 27,
+          "query_tokens": [
+            "how",
+            "does",
+            "ich",
+            "e6",
+            "r3",
+            "relate",
+            "to",
+            "e8",
+            "r1"
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,6 +1,6 @@
 # Medy 开发任务、当前进度与边做边学路线
 
-> 核查日期：2026-09-20（[实现记录 33](reviews/2026-09-20-implementation-33-m1-05-lexical-run.md)；本轮 650 passed，含 136 项 PostgreSQL 集成测试，其中 B/C 候选服务器上的 47 项仅本地运行）。依据：工作区中的[工程基线 v0.6](ENGINEERING_BASELINE.md)、ADR、SPEC、代码、复核记录与本机测试。历史实现证据见记录 13～32。
+> 核查日期：2026-09-20（[实现记录 34](reviews/2026-09-20-implementation-34-amendment1-stage.md)；本轮 659 passed，含 137 项 PostgreSQL 集成测试，其中 B/C 候选服务器上的 47 项仅本地运行）。依据：工作区中的[工程基线 v0.6](ENGINEERING_BASELINE.md)、ADR、SPEC、代码、复核记录与本机测试。历史实现证据见记录 13～33。
 > 本文件是基线的执行进度视图，不是第二份需求契约。范围、阈值和安全约束仍以基线为准；不新增 P0 门禁，不代替正式验收。
 > Git 归档：`2a4aef6` 为工程基础，`213dbe8` 为冻结探针 v1；归档提交已在独立 checkout 复验。本轮后续实验准备与回填文档单独提交，冻结 v1 原始字节不变。
 
@@ -120,12 +120,12 @@ P0 加权进度：24.7%（19.5/79）；按 99 项计 19.7%。分项：M0 10/11�
 | M1-02 | 部分（镜像、配置、三服务器映射与运行清单工具已就绪；正式运行清单在文档激活后冻结） | [准备说明](../evals/experiments/lexical/README.md)：B/C 镜像已构建实测（记录 28），三候选适配器与前置查询规则已固定并写入 experiment_plan.json（记录 29、30），三服务器语料一致、各自映射 73 mapped/2 unmappable，`dec001_run` 在查询前写出冻结的 run_manifest.json（记录 31）；端到端参数仍未固定 |
 | M1-03 | 契约切片已复核通过（Codex，2026-09-11），整项不勾选 | `LexicalVersions`、`LexicalRetriever` Protocol、`run_lexical_search` 边界与可复用适配器契约测试已有（实现记录 10），离线 BM25 两种分词器通过；候选 A/B/C 适配器（`pg_simple_fts`、`pg_zhparser_fts`、`pg_search_bm25`）在真实 schema、普通 LOGIN 用户 + FORCE RLS 下通过同一契约与共享门禁套件（实现记录 29、30）；缺真实语料运行证据，不勾选 |
 | M1-04 | 部分（权限半边已证明；候选对比半边依赖 M1-01/02） | 真实 schema 上以 LOGIN 用户证明：普通角色 + FORCE RLS 零跨部门泄漏、按主键无存在性泄露、LIMIT/排序/join 下推不丢可见行、连接池身份切换与 RESET/DISCARD 清除（实现记录 18）；"零静默候选不足"与三候选词法对比等真实探针集与 DEC-001 适配器；三候选的零静默不足（同一语句精确计数 + 分页，k 小于/等于/大于合格数、两种执行计划）、无身份拒绝、连接复用清除、版本拒绝与执行计划留证已在合成数据上通过，C 的 ParadeDB 自定义扫描在普通角色下未绕过 RLS（实现记录 29、30）；真实探针运行中管理侧逐 chunk 核对零泄漏，A/C 各 3 条查询显式 `candidate_exhausted=true`（实现记录 33） |
-| M1-05 | 阻塞（已按预登记运行一次，三候选均未通过硬门禁） | 2026-09-20 运行 `2026-09-20-m1-05-lexical`：A 48.0%、B 52.0%、C 53.3%（门禁 90%），六切片均有未达 85% 项；零泄漏、可复现；C P95 为 A 的 5.4 倍；配对提升 CI 均含 0。结果、归因与复现命令已回填 ADR-0002。英文 gold 文档子集三候选仅 12.5%～15.6%，选项 A 下上限 89.3%。后续实验设计待决策人决定；独立许可证审核与端到端配置仍未完成 |
+| M1-05 | 阻塞（第一次运行三候选未通过；修订 1 后第二次运行为临时结果，正式判定待探针 v2 冻结） | 第一次运行 `2026-09-20-m1-05-lexical`：A 48.0%、B 52.0%、C 53.3%，跨语言样本是主要失败面（记录 33）。决策人批准 ADR-0002 修订 1（门禁按语言一致子集计算、探针 v2 孪生、chunker-v2、esomen 质量复核）。第二次运行 `2026-09-20-run2-provisional`（medops_v2，75 mapped/0 unmappable）：语言一致 43 条上 A 81.4%、B 93.0%、C 95.3%，零泄漏、可复现；v1 语言一致子集不满足最低数量（CO 0、protocol_id 5），不能判定通过；未复核英文孪生叠加 A/B 59.4%、C 90.6%（ts_rank_cd 无 IDF，英文停用词稀释）。阻塞：Codex 额度至 2026-09-26 才能做孪生 LLM 复核，随后需 annotator-01 确认 32 条英文查询并冻结 v2 重跑（记录 34）。独立许可证审核与端到端配置仍未完成 |
 | M1-06 | 已实现（首个迁移 0001；evidence_log、outbox 等随其里程碑追加） | Alembic 原生 SQL 迁移建 source_objects、ingestion_jobs、documents、chunks、chunk_spans、document_acl、doc_audit，字段落点按基线 3.3/3.4/4.2 与设计文档 3.3；不可变性、状态机、审计追加写、chunk 哈希由触发器强制；15 项集成测试（实现记录 17，ADR-0006）；无 tsvector/vector 列 |
 | M1-07 | 已实现 | `documents_one_active_per_family` 部分唯一索引；集成测试证明同 family 第二个 active 被拒，且两会话并发激活时第二个阻塞、首个提交后失败，最终只剩一个 active（实现记录 17） |
 | M1-08 | 已实现（数据库层；API 注入接线在 M3） | 迁移 0002：三组 NOLOGIN 角色、登录用户供应脚本、七表 FORCE RLS、按 document_acl 与部门的策略、无身份默认拒绝、草稿不可见、owner 分离；37 项集成测试覆盖 SET LOCAL 作用域、非 owner、非 superuser、无 BYPASSRLS、只读无写路径、管理角色不能改 schema（实现记录 18）；本机 .env 已切到受限用户 |
 | M1-09 | 部分（PDF 校验、哈希去重、PII 默认拒绝与留痕覆盖、同源第二文档拒绝已实现；DOCX、恶意文件扫描、管理员确认流程待做） | `medops.ingestion.pipeline`：PDF 魔数、大小上限、声明哈希与字节数比对、`pii-rules-v1` 命中默认拒绝且覆盖须写 `pii_review_override` 审计、同 source 第二文档拒绝、重复入库幂等（实现记录 20） |
-| M1-10 | 已实现（chunker-v1、入库与映射工具） | 16 份文档、2,661 个 chunk 与原页重建逐条一致；新增 gold 映射器按来源/版本/页/区间校验。75 条中 73 mapped、2 unmappable，切分边界缺陷保留并计 miss；low_trust 禁止 active 的约束不变（记录 20、27） |
+| M1-10 | 已实现（chunker-v2、入库、质量复核放行与映射工具） | 16 份文档、2,661 个 chunk 与原页重建逐条一致；新增 gold 映射器按来源/版本/页/区间校验。75 条中 73 mapped、2 unmappable，切分边界缺陷保留并计 miss；low_trust 禁止 active 的约束不变（记录 20、27）；chunker-v2（分号为子句标记、超长片段按子句标点切分）与受审计的 parse_quality 复核放行 `--accept-quality`（记录 34） |
 | M1-11 | 部分（draft→active 激活工具已有，归档/outbox 待做） | `medops.ingestion.activate`：单份或计划文件全有或全无地把 draft 转为 active，`medops.actor`/`medops.reason` 事务内注入并由触发器写 doc_audit；拒绝 low_trust（INV-DATA-05）、非 draft、无作业与同 family 已有 active（实现记录 32）。仍缺：新版发布同事务归档旧版、outbox、可靠触发索引更新与缓存失效；索引延迟不能令旧版本成为有效证据。激活时 `effective_from` 取值优先级（决策人 2026-09-17）：说明书取文内修订日期，其次 TFDA 许可证异动日期，再次 PDF 元数据日期，备注写明层级；指南取文内发布或生效日期 |
 | M1-12 | 部分 | 分词器支持词典版本，但无正式医学词典；完成 DEC-005 的来源审核、通用名/商品名/缩写映射与版本更新方式 |
 | M1-13 | 待做 | 1–3 条有界 Query Rewrite，接入术语与会话实体；测试剂量、否定、时间窗、编号不被改写错，实体不跨会话污染 |
