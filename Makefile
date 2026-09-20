@@ -1,4 +1,4 @@
-.PHONY: help install install-check lock schemas lint format format-check typecheck test test-integration check migrate migrate-down migration-check db-users load-corpus validate-probe canonicalize-probe up down ps
+.PHONY: help install install-check lock schemas lint format format-check typecheck test test-integration check migrate migrate-down migration-check db-users load-corpus lexical-index-a validate-probe canonicalize-probe up down ps
 
 # venv lives in a NON-dot directory on purpose: ~/Documents is an iCloud Drive domain that marks every file
 # inside dot-directories as hidden, and CPython >= 3.11.16 skips hidden .pth files, which silently breaks
@@ -18,6 +18,7 @@ help:
 	@echo "make migrate | migrate-down | migration-check   alembic upgrade head | downgrade -1 | single head + round-trip tests"
 	@echo "make db-users        create/rotate LOGIN users for the 0002 group roles (DB_*_PASSWORD from .env)"
 	@echo "make load-corpus CORPUS=<corpus.json> SOURCES=<dir> PAGES=<dir> ACTOR=<id> [ARGS=...]   ingest documents into the fact plane"
+	@echo "make lexical-index-a ACTOR=<id>          install and (re)build the DEC-001 candidate A lexical index (admin DSN)"
 	@echo "make check           lint + format-check + typecheck + test + schema drift (CI gate)"
 	@echo "make validate-probe DIR=<version_dir> [MODE=draft|frozen] [PAGES=<pages_dir>]"
 	@echo "make canonicalize-probe DIR=<draft_dir> [PAGES=<pages_dir>] [CHECK=1]  rewrite draft JSONL to canonical form, then validate"
@@ -73,6 +74,10 @@ db-users:
 
 load-corpus:
 	$(PY) -m medops.ingestion.load --corpus $(CORPUS) --sources-dir $(SOURCES) $(if $(PAGES),--pages-dir $(PAGES),) --actor $(ACTOR) $(ARGS)
+
+lexical-index-a:
+	$(PY) -m medops.retrieval.lexical.pg_simple_fts install
+	$(PY) -m medops.retrieval.lexical.pg_simple_fts build --built-by $(ACTOR)
 
 migration-check:
 	@test "$$($(PY) -m alembic heads | wc -l | tr -d ' ')" = "1" && echo "migration-check: single head"
