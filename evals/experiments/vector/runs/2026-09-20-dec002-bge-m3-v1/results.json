@@ -1,0 +1,4741 @@
+{
+  "run_id": "2026-09-20-dec002-bge-m3-v1",
+  "run_manifest_sha256": "90f435810d731f6f2579528891181add7ce853383e8d71b18effde4980098b8a",
+  "started_at": "2026-09-20T11:24:09+00:00",
+  "candidates": {
+    "V": {
+      "candidate": "V",
+      "queries": 107,
+      "strict_macro_recall": 0.7757009345794392,
+      "scopes": {
+        "language_matched": {
+          "queries": 75,
+          "strict_macro_recall": 0.8266666666666667,
+          "by_department": [
+            {
+              "label": "CO",
+              "support": 16,
+              "recall": 0.5625,
+              "diagnostic_only": false
+            },
+            {
+              "label": "MA",
+              "support": 30,
+              "recall": 1.0,
+              "diagnostic_only": false
+            },
+            {
+              "label": "PV",
+              "support": 29,
+              "recall": 0.7931034482758621,
+              "diagnostic_only": false
+            }
+          ],
+          "by_slice": [
+            {
+              "label": "dose_unit",
+              "support": 19,
+              "recall": 1.0,
+              "diagnostic_only": false
+            },
+            {
+              "label": "drug_name_zh",
+              "support": 18,
+              "recall": 1.0,
+              "diagnostic_only": false
+            },
+            {
+              "label": "mixed_zh_en",
+              "support": 53,
+              "recall": 0.7547169811320755,
+              "diagnostic_only": false
+            },
+            {
+              "label": "negation",
+              "support": 38,
+              "recall": 0.8947368421052632,
+              "diagnostic_only": false
+            },
+            {
+              "label": "protocol_id",
+              "support": 17,
+              "recall": 0.5882352941176471,
+              "diagnostic_only": false
+            },
+            {
+              "label": "time_window",
+              "support": 19,
+              "recall": 1.0,
+              "diagnostic_only": false
+            }
+          ],
+          "by_gold_script": [
+            {
+              "label": "en",
+              "support": 32,
+              "recall": 0.59375,
+              "diagnostic_only": false
+            },
+            {
+              "label": "zh-Hans",
+              "support": 10,
+              "recall": 1.0,
+              "diagnostic_only": false
+            },
+            {
+              "label": "zh-Hant",
+              "support": 33,
+              "recall": 1.0,
+              "diagnostic_only": false
+            }
+          ],
+          "sample_ids": [
+            "pc-0001",
+            "pc-0002",
+            "pc-0003",
+            "pc-0004",
+            "pc-0005",
+            "pc-0006",
+            "pc-0007",
+            "pc-0008",
+            "pc-0009",
+            "pc-0010",
+            "pc-0011",
+            "pc-0012",
+            "pc-0013",
+            "pc-0014",
+            "pc-0015",
+            "pc-0016",
+            "pc-0017",
+            "pc-0018",
+            "pc-0019",
+            "pc-0020",
+            "pc-0021",
+            "pc-0022",
+            "pc-0023",
+            "pc-0024",
+            "pc-0025",
+            "pc-0026",
+            "pc-0027",
+            "pc-0028",
+            "pc-0029",
+            "pc-0030",
+            "pc-0031",
+            "pc-0032",
+            "pc-0033",
+            "pc-0034",
+            "pc-0035",
+            "pc-0036",
+            "pc-0037",
+            "pc-0038",
+            "pc-0039",
+            "pc-0040",
+            "pc-0057",
+            "pc-0058",
+            "pc-0059",
+            "pc-0076",
+            "pc-0077",
+            "pc-0078",
+            "pc-0079",
+            "pc-0080",
+            "pc-0081",
+            "pc-0082",
+            "pc-0083",
+            "pc-0084",
+            "pc-0085",
+            "pc-0086",
+            "pc-0087",
+            "pc-0088",
+            "pc-0089",
+            "pc-0090",
+            "pc-0091",
+            "pc-0092",
+            "pc-0093",
+            "pc-0094",
+            "pc-0095",
+            "pc-0096",
+            "pc-0097",
+            "pc-0098",
+            "pc-0099",
+            "pc-0100",
+            "pc-0101",
+            "pc-0102",
+            "pc-0103",
+            "pc-0104",
+            "pc-0105",
+            "pc-0106",
+            "pc-0107"
+          ]
+        },
+        "cross_lingual": {
+          "queries": 32,
+          "strict_macro_recall": 0.65625,
+          "by_department": [
+            {
+              "label": "CO",
+              "support": 16,
+              "recall": 0.5625,
+              "diagnostic_only": false
+            },
+            {
+              "label": "MA",
+              "support": 0,
+              "recall": null,
+              "diagnostic_only": true
+            },
+            {
+              "label": "PV",
+              "support": 16,
+              "recall": 0.75,
+              "diagnostic_only": false
+            }
+          ],
+          "by_slice": [
+            {
+              "label": "dose_unit",
+              "support": 0,
+              "recall": null,
+              "diagnostic_only": true
+            },
+            {
+              "label": "drug_name_zh",
+              "support": 0,
+              "recall": null,
+              "diagnostic_only": true
+            },
+            {
+              "label": "mixed_zh_en",
+              "support": 32,
+              "recall": 0.65625,
+              "diagnostic_only": false
+            },
+            {
+              "label": "negation",
+              "support": 18,
+              "recall": 0.8333333333333334,
+              "diagnostic_only": false
+            },
+            {
+              "label": "protocol_id",
+              "support": 12,
+              "recall": 0.4166666666666667,
+              "diagnostic_only": false
+            },
+            {
+              "label": "time_window",
+              "support": 9,
+              "recall": 1.0,
+              "diagnostic_only": false
+            }
+          ],
+          "by_gold_script": [
+            {
+              "label": "en",
+              "support": 32,
+              "recall": 0.65625,
+              "diagnostic_only": false
+            }
+          ],
+          "sample_ids": [
+            "pc-0041",
+            "pc-0042",
+            "pc-0043",
+            "pc-0044",
+            "pc-0045",
+            "pc-0046",
+            "pc-0047",
+            "pc-0048",
+            "pc-0049",
+            "pc-0050",
+            "pc-0051",
+            "pc-0052",
+            "pc-0053",
+            "pc-0054",
+            "pc-0055",
+            "pc-0056",
+            "pc-0060",
+            "pc-0061",
+            "pc-0062",
+            "pc-0063",
+            "pc-0064",
+            "pc-0065",
+            "pc-0066",
+            "pc-0067",
+            "pc-0068",
+            "pc-0069",
+            "pc-0070",
+            "pc-0071",
+            "pc-0072",
+            "pc-0073",
+            "pc-0074",
+            "pc-0075"
+          ]
+        },
+        "provisional_twins": {
+          "queries": 0,
+          "strict_macro_recall": null,
+          "by_department": [
+            {
+              "label": "CO",
+              "support": 0,
+              "recall": null,
+              "diagnostic_only": true
+            },
+            {
+              "label": "MA",
+              "support": 0,
+              "recall": null,
+              "diagnostic_only": true
+            },
+            {
+              "label": "PV",
+              "support": 0,
+              "recall": null,
+              "diagnostic_only": true
+            }
+          ],
+          "by_slice": [
+            {
+              "label": "dose_unit",
+              "support": 0,
+              "recall": null,
+              "diagnostic_only": true
+            },
+            {
+              "label": "drug_name_zh",
+              "support": 0,
+              "recall": null,
+              "diagnostic_only": true
+            },
+            {
+              "label": "mixed_zh_en",
+              "support": 0,
+              "recall": null,
+              "diagnostic_only": true
+            },
+            {
+              "label": "negation",
+              "support": 0,
+              "recall": null,
+              "diagnostic_only": true
+            },
+            {
+              "label": "protocol_id",
+              "support": 0,
+              "recall": null,
+              "diagnostic_only": true
+            },
+            {
+              "label": "time_window",
+              "support": 0,
+              "recall": null,
+              "diagnostic_only": true
+            }
+          ],
+          "by_gold_script": [],
+          "sample_ids": []
+        },
+        "language_matched_plus_provisional_twins": {
+          "queries": 75,
+          "strict_macro_recall": 0.8266666666666667,
+          "by_department": [
+            {
+              "label": "CO",
+              "support": 16,
+              "recall": 0.5625,
+              "diagnostic_only": false
+            },
+            {
+              "label": "MA",
+              "support": 30,
+              "recall": 1.0,
+              "diagnostic_only": false
+            },
+            {
+              "label": "PV",
+              "support": 29,
+              "recall": 0.7931034482758621,
+              "diagnostic_only": false
+            }
+          ],
+          "by_slice": [
+            {
+              "label": "dose_unit",
+              "support": 19,
+              "recall": 1.0,
+              "diagnostic_only": false
+            },
+            {
+              "label": "drug_name_zh",
+              "support": 18,
+              "recall": 1.0,
+              "diagnostic_only": false
+            },
+            {
+              "label": "mixed_zh_en",
+              "support": 53,
+              "recall": 0.7547169811320755,
+              "diagnostic_only": false
+            },
+            {
+              "label": "negation",
+              "support": 38,
+              "recall": 0.8947368421052632,
+              "diagnostic_only": false
+            },
+            {
+              "label": "protocol_id",
+              "support": 17,
+              "recall": 0.5882352941176471,
+              "diagnostic_only": false
+            },
+            {
+              "label": "time_window",
+              "support": 19,
+              "recall": 1.0,
+              "diagnostic_only": false
+            }
+          ],
+          "by_gold_script": [
+            {
+              "label": "en",
+              "support": 32,
+              "recall": 0.59375,
+              "diagnostic_only": false
+            },
+            {
+              "label": "zh-Hans",
+              "support": 10,
+              "recall": 1.0,
+              "diagnostic_only": false
+            },
+            {
+              "label": "zh-Hant",
+              "support": 33,
+              "recall": 1.0,
+              "diagnostic_only": false
+            }
+          ],
+          "sample_ids": [
+            "pc-0001",
+            "pc-0002",
+            "pc-0003",
+            "pc-0004",
+            "pc-0005",
+            "pc-0006",
+            "pc-0007",
+            "pc-0008",
+            "pc-0009",
+            "pc-0010",
+            "pc-0011",
+            "pc-0012",
+            "pc-0013",
+            "pc-0014",
+            "pc-0015",
+            "pc-0016",
+            "pc-0017",
+            "pc-0018",
+            "pc-0019",
+            "pc-0020",
+            "pc-0021",
+            "pc-0022",
+            "pc-0023",
+            "pc-0024",
+            "pc-0025",
+            "pc-0026",
+            "pc-0027",
+            "pc-0028",
+            "pc-0029",
+            "pc-0030",
+            "pc-0031",
+            "pc-0032",
+            "pc-0033",
+            "pc-0034",
+            "pc-0035",
+            "pc-0036",
+            "pc-0037",
+            "pc-0038",
+            "pc-0039",
+            "pc-0040",
+            "pc-0057",
+            "pc-0058",
+            "pc-0059",
+            "pc-0076",
+            "pc-0077",
+            "pc-0078",
+            "pc-0079",
+            "pc-0080",
+            "pc-0081",
+            "pc-0082",
+            "pc-0083",
+            "pc-0084",
+            "pc-0085",
+            "pc-0086",
+            "pc-0087",
+            "pc-0088",
+            "pc-0089",
+            "pc-0090",
+            "pc-0091",
+            "pc-0092",
+            "pc-0093",
+            "pc-0094",
+            "pc-0095",
+            "pc-0096",
+            "pc-0097",
+            "pc-0098",
+            "pc-0099",
+            "pc-0100",
+            "pc-0101",
+            "pc-0102",
+            "pc-0103",
+            "pc-0104",
+            "pc-0105",
+            "pc-0106",
+            "pc-0107"
+          ]
+        }
+      },
+      "by_department": [
+        {
+          "label": "CO",
+          "support": 32,
+          "recall": 0.5625,
+          "diagnostic_only": false
+        },
+        {
+          "label": "MA",
+          "support": 30,
+          "recall": 1.0,
+          "diagnostic_only": false
+        },
+        {
+          "label": "PV",
+          "support": 45,
+          "recall": 0.7777777777777778,
+          "diagnostic_only": false
+        }
+      ],
+      "by_slice": [
+        {
+          "label": "dose_unit",
+          "support": 19,
+          "recall": 1.0,
+          "diagnostic_only": false
+        },
+        {
+          "label": "drug_name_zh",
+          "support": 18,
+          "recall": 1.0,
+          "diagnostic_only": false
+        },
+        {
+          "label": "mixed_zh_en",
+          "support": 85,
+          "recall": 0.7176470588235294,
+          "diagnostic_only": false
+        },
+        {
+          "label": "negation",
+          "support": 56,
+          "recall": 0.875,
+          "diagnostic_only": false
+        },
+        {
+          "label": "protocol_id",
+          "support": 29,
+          "recall": 0.5172413793103449,
+          "diagnostic_only": false
+        },
+        {
+          "label": "time_window",
+          "support": 28,
+          "recall": 1.0,
+          "diagnostic_only": false
+        }
+      ],
+      "by_gold_script": [
+        {
+          "label": "en",
+          "support": 64,
+          "recall": 0.625,
+          "diagnostic_only": false
+        },
+        {
+          "label": "zh-Hans",
+          "support": 10,
+          "recall": 1.0,
+          "diagnostic_only": false
+        },
+        {
+          "label": "zh-Hant",
+          "support": 33,
+          "recall": 1.0,
+          "diagnostic_only": false
+        }
+      ],
+      "drug_name_zh_by_script": [
+        {
+          "label": "drug_name_zh/zh-Hant",
+          "support": 18,
+          "recall": 1.0,
+          "diagnostic_only": false
+        }
+      ],
+      "candidate_exhausted_queries": 0,
+      "zero_result_queries": 0,
+      "not_reproducible_queries": [],
+      "latency_ms": {
+        "measured_executions": 1070,
+        "p95": 138.429792,
+        "mean": 100.1375184971963,
+        "max": 898.762208
+      },
+      "per_query": [
+        {
+          "sample_id": "pc-0001",
+          "dept": "MA",
+          "slices": [
+            "dose_unit",
+            "drug_name_zh"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0001-g1": 4
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            61.25,
+            66.822,
+            67.036,
+            88.399,
+            83.698,
+            84.055,
+            80.581,
+            87.969,
+            87.635,
+            91.587
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0002",
+          "dept": "MA",
+          "slices": [
+            "dose_unit",
+            "drug_name_zh"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0002-g1": 5
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            59.79,
+            62.133,
+            65.024,
+            80.63,
+            87.173,
+            88.109,
+            84.05,
+            85.161,
+            93.276,
+            96.093
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0003",
+          "dept": "MA",
+          "slices": [
+            "negation",
+            "drug_name_zh"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0003-g1": 12
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            62.456,
+            67.12,
+            67.223,
+            65.379,
+            86.081,
+            62.352,
+            84.836,
+            90.124,
+            91.164,
+            102.227
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0004",
+          "dept": "MA",
+          "slices": [
+            "time_window",
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "mixed",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0004-g1": 1
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            66.43,
+            63.842,
+            68.107,
+            59.476,
+            86.921,
+            65.081,
+            82.87,
+            87.315,
+            90.705,
+            89.58
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0005",
+          "dept": "MA",
+          "slices": [
+            "time_window",
+            "drug_name_zh",
+            "dose_unit"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0005-g1": 1
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            64.002,
+            68.797,
+            65.372,
+            64.422,
+            94.571,
+            90.181,
+            83.048,
+            86.656,
+            85.127,
+            88.583
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0006",
+          "dept": "MA",
+          "slices": [
+            "protocol_id",
+            "dose_unit",
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "mixed",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0006-g1": 1
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            63.589,
+            62.716,
+            66.076,
+            74.498,
+            83.931,
+            64.201,
+            84.203,
+            89.699,
+            88.926,
+            91.908
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0007",
+          "dept": "MA",
+          "slices": [
+            "dose_unit",
+            "drug_name_zh",
+            "time_window",
+            "negation"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0007-g1": 1
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            75.801,
+            60.615,
+            63.725,
+            62.901,
+            82.696,
+            62.679,
+            86.646,
+            89.145,
+            91.105,
+            99.597
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0008",
+          "dept": "MA",
+          "slices": [
+            "dose_unit",
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "mixed",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0008-g1": 1
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            62.459,
+            60.272,
+            66.059,
+            85.536,
+            92.876,
+            86.809,
+            84.73,
+            87.599,
+            88.864,
+            98.888
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0009",
+          "dept": "MA",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "mixed",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0009-g1": 2
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            62.97,
+            62.805,
+            64.048,
+            68.653,
+            89.155,
+            63.989,
+            85.996,
+            86.888,
+            89.273,
+            89.366
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0010",
+          "dept": "MA",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "mixed",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0010-g1": 1
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            65.493,
+            67.748,
+            65.224,
+            71.478,
+            86.23,
+            72.317,
+            86.428,
+            91.722,
+            93.916,
+            101.174
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0011",
+          "dept": "MA",
+          "slices": [
+            "dose_unit",
+            "negation",
+            "drug_name_zh"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0011-g1": 11
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            82.692,
+            61.387,
+            73.688,
+            70.432,
+            83.871,
+            65.824,
+            88.513,
+            88.263,
+            96.107,
+            141.277
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0012",
+          "dept": "MA",
+          "slices": [
+            "protocol_id"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0012-g1": 19
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            67.026,
+            65.728,
+            65.782,
+            66.579,
+            87.617,
+            90.892,
+            83.569,
+            87.921,
+            96.681,
+            94.074
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0013",
+          "dept": "MA",
+          "slices": [
+            "dose_unit",
+            "drug_name_zh",
+            "time_window"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0013-g1": 1
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            62.675,
+            64.287,
+            64.765,
+            66.131,
+            77.174,
+            86.557,
+            80.959,
+            87.776,
+            100.205,
+            92.026
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0014",
+          "dept": "MA",
+          "slices": [
+            "time_window",
+            "drug_name_zh",
+            "dose_unit"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0014-g1": 1
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            61.082,
+            62.349,
+            67.189,
+            64.694,
+            84.801,
+            89.808,
+            84.263,
+            88.249,
+            85.016,
+            122.129
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0015",
+          "dept": "MA",
+          "slices": [
+            "dose_unit",
+            "drug_name_zh"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0015-g1": 1
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            72.904,
+            66.385,
+            67.881,
+            91.415,
+            81.244,
+            90.623,
+            87.323,
+            88.307,
+            90.364,
+            97.99
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0016",
+          "dept": "MA",
+          "slices": [
+            "negation",
+            "drug_name_zh",
+            "dose_unit",
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "mixed",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0016-g1": 1
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            64.88,
+            62.634,
+            63.753,
+            86.088,
+            85.123,
+            89.082,
+            79.113,
+            84.804,
+            92.409,
+            93.102
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0017",
+          "dept": "MA",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "mixed",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0017-g1": 1
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            69.341,
+            61.69,
+            65.809,
+            73.242,
+            84.837,
+            92.387,
+            84.537,
+            90.099,
+            92.899,
+            100.165
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0018",
+          "dept": "MA",
+          "slices": [
+            "protocol_id",
+            "dose_unit"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0018-g1": 3
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            66.058,
+            64.85,
+            66.978,
+            63.143,
+            84.023,
+            94.159,
+            81.433,
+            87.293,
+            87.326,
+            91.995
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0019",
+          "dept": "MA",
+          "slices": [
+            "dose_unit",
+            "drug_name_zh"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0019-g1": 3
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            65.844,
+            61.204,
+            63.986,
+            68.723,
+            86.584,
+            84.425,
+            87.502,
+            92.696,
+            90.276,
+            105.311
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0020",
+          "dept": "MA",
+          "slices": [
+            "negation",
+            "drug_name_zh"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0020-g1": 3
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            64.163,
+            64.425,
+            65.606,
+            68.183,
+            66.043,
+            89.662,
+            83.848,
+            88.309,
+            92.615,
+            94.051
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0021",
+          "dept": "MA",
+          "slices": [
+            "time_window",
+            "drug_name_zh"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0021-g1": 4
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            61.861,
+            65.513,
+            69.938,
+            68.407,
+            82.963,
+            93.161,
+            83.215,
+            89.051,
+            91.957,
+            91.098
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0022",
+          "dept": "MA",
+          "slices": [
+            "time_window",
+            "drug_name_zh"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0022-g1": 2
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            64.222,
+            61.832,
+            65.962,
+            84.807,
+            88.181,
+            83.839,
+            83.321,
+            84.451,
+            90.743,
+            94.553
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0023",
+          "dept": "MA",
+          "slices": [
+            "dose_unit",
+            "drug_name_zh",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "mixed",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0023-g1": 4
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            66.292,
+            64.86,
+            71.901,
+            83.911,
+            85.737,
+            67.077,
+            87.661,
+            89.275,
+            99.348,
+            95.911
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0024",
+          "dept": "MA",
+          "slices": [
+            "protocol_id",
+            "dose_unit"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0024-g1": 4
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            66.371,
+            65.675,
+            87.418,
+            73.782,
+            85.005,
+            84.617,
+            83.37,
+            90.245,
+            92.213,
+            106.223
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0025",
+          "dept": "MA",
+          "slices": [
+            "negation",
+            "drug_name_zh"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0025-g1": 2
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            68.452,
+            64.575,
+            66.056,
+            82.282,
+            74.084,
+            87.048,
+            81.353,
+            87.004,
+            86.048,
+            97.993
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0026",
+          "dept": "MA",
+          "slices": [
+            "time_window",
+            "drug_name_zh"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0026-g1": 5
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            64.558,
+            61.051,
+            64.032,
+            61.177,
+            79.733,
+            83.577,
+            83.519,
+            89.872,
+            90.059,
+            100.022
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0027",
+          "dept": "MA",
+          "slices": [
+            "dose_unit",
+            "time_window",
+            "drug_name_zh",
+            "negation"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0027-g1": 1
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            88.849,
+            76.369,
+            91.713,
+            98.785,
+            95.861,
+            112.107,
+            103.986,
+            142.159,
+            109.841,
+            447.061
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0028",
+          "dept": "MA",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "mixed",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0028-g1": 3
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            65.808,
+            60.628,
+            68.999,
+            72.685,
+            85.365,
+            86.429,
+            81.41,
+            92.802,
+            90.573,
+            101.566
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0029",
+          "dept": "MA",
+          "slices": [
+            "dose_unit",
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "mixed",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0029-g1": 2
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            62.357,
+            62.861,
+            65.06,
+            78.541,
+            85.317,
+            80.854,
+            81.723,
+            87.461,
+            93.76,
+            105.414
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0030",
+          "dept": "MA",
+          "slices": [
+            "protocol_id"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0030-g1": 4
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            61.87,
+            63.488,
+            66.909,
+            68.924,
+            65.48,
+            87.251,
+            88.612,
+            87.101,
+            88.611,
+            98.547
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0031",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hans",
+          "language": "mixed",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0031-g1": 2
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            92.373,
+            82.11,
+            78.159,
+            98.701,
+            108.505,
+            105.618,
+            126.286,
+            109.126,
+            116.488,
+            131.924
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0032",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hans",
+          "language": "mixed",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0032-g1": 1
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            83.537,
+            82.619,
+            76.165,
+            89.349,
+            103.331,
+            113.331,
+            112.388,
+            117.843,
+            114.46,
+            127.26
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0033",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hans",
+          "language": "mixed",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0033-g1": 4
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            91.344,
+            81.714,
+            78.426,
+            103.257,
+            103.748,
+            108.241,
+            115.357,
+            111.904,
+            113.839,
+            126.309
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0034",
+          "dept": "PV",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hans",
+          "language": "mixed",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0034-g1": 1
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            84.843,
+            85.214,
+            76.99,
+            77.472,
+            101.964,
+            110.742,
+            108.286,
+            113.986,
+            115.782,
+            129.543
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0035",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "dose_unit"
+          ],
+          "gold_script": "zh-Hans",
+          "language": "mixed",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0035-g1": 1
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            97.317,
+            102.507,
+            95.926,
+            115.518,
+            115.959,
+            134.983,
+            157.34,
+            133.393,
+            144.268,
+            141.623
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0036",
+          "dept": "PV",
+          "slices": [
+            "mixed_zh_en",
+            "negation"
+          ],
+          "gold_script": "zh-Hans",
+          "language": "mixed",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0036-g1": 1
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            84.525,
+            81.11,
+            80.095,
+            78.21,
+            100.941,
+            86.719,
+            117.213,
+            120.766,
+            122.031,
+            152.032
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0037",
+          "dept": "PV",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hans",
+          "language": "mixed",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0037-g1": 7
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            81.845,
+            84.714,
+            77.345,
+            95.347,
+            102.768,
+            109.6,
+            108.18,
+            114.347,
+            117.649,
+            117.728
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0038",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hans",
+          "language": "mixed",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0038-g1": 1
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            84.571,
+            82.305,
+            77.737,
+            91.964,
+            105.759,
+            106.691,
+            107.42,
+            106.785,
+            111.68,
+            134.083
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0039",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hans",
+          "language": "mixed",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0039-g1": 19
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            98.559,
+            104.852,
+            93.362,
+            103.227,
+            122.043,
+            133.711,
+            130.255,
+            134.182,
+            129.603,
+            143.364
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0040",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hans",
+          "language": "mixed",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0040-g1": 1
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            91.313,
+            83.252,
+            78.498,
+            76.364,
+            109.714,
+            103.749,
+            117.686,
+            123.724,
+            120.16,
+            126.485
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0041",
+          "dept": "PV",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 0.0,
+          "gold_ranks": {
+            "pc-0041-g1": null
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            98.241,
+            88.166,
+            78.398,
+            107.583,
+            102.515,
+            111.933,
+            101.056,
+            120.5,
+            121.044,
+            117.396
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0042",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0042-g1": 1
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            109.594,
+            97.833,
+            108.895,
+            95.293,
+            116.139,
+            106.888,
+            125.007,
+            136.53,
+            135.387,
+            898.762
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0043",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0043-g1": 1
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            116.547,
+            103.901,
+            99.543,
+            104.481,
+            125.488,
+            128.053,
+            130.788,
+            131.505,
+            135.27,
+            147.5
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0044",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0044-g1": 5
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            100.213,
+            83.871,
+            84.186,
+            102.063,
+            80.513,
+            107.817,
+            110.523,
+            119.262,
+            120.625,
+            128.882
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0045",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0045-g1": 3
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            105.96,
+            93.275,
+            93.923,
+            96.154,
+            115.167,
+            106.418,
+            120.335,
+            128.673,
+            144.865,
+            237.248
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0046",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0046-g1": 1
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            101.048,
+            108.669,
+            96.826,
+            97.452,
+            123.374,
+            134.005,
+            128.763,
+            130.301,
+            142.002,
+            142.21
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0047",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 0.0,
+          "gold_ranks": {
+            "pc-0047-g1": null
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            98.728,
+            101.883,
+            94.41,
+            110.639,
+            128.333,
+            128.882,
+            124.717,
+            127.024,
+            141.914,
+            144.199
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0048",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0048-g1": 4
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            111.75,
+            103.621,
+            107.698,
+            96.123,
+            118.936,
+            135.853,
+            121.531,
+            146.211,
+            142.741,
+            164.184
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0049",
+          "dept": "PV",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 0.0,
+          "gold_ranks": {
+            "pc-0049-g1": null
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            95.951,
+            104.026,
+            98.407,
+            93.92,
+            123.361,
+            112.039,
+            128.568,
+            124.361,
+            138.814,
+            318.836
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0050",
+          "dept": "PV",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0050-g1": 19
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            85.027,
+            80.734,
+            89.226,
+            101.23,
+            80.633,
+            118.191,
+            114.575,
+            116.68,
+            115.068,
+            119.25
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0051",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 0.0,
+          "gold_ranks": {
+            "pc-0051-g1": null
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            103.08,
+            81.866,
+            84.204,
+            102.999,
+            98.616,
+            109.903,
+            107.234,
+            118.856,
+            132.325,
+            122.971
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0052",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0052-g1": 2
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            83.368,
+            84.431,
+            79.772,
+            93.382,
+            102.457,
+            101.734,
+            101.5,
+            119.917,
+            123.292,
+            146.107
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0053",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0053-g1": 2
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            107.153,
+            100.162,
+            106.256,
+            117.401,
+            102.001,
+            134.668,
+            127.714,
+            131.146,
+            137.254,
+            165.727
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0054",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0054-g1": 1
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            100.407,
+            101.45,
+            96.658,
+            94.525,
+            117.991,
+            111.849,
+            125.304,
+            138.43,
+            136.458,
+            182.125
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0055",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0055-g1": 1
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            103.585,
+            96.19,
+            103.84,
+            119.544,
+            123.969,
+            116.095,
+            119.312,
+            123.878,
+            163.319,
+            138.051
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0056",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0056-g1": 3
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            90.749,
+            84.665,
+            79.148,
+            78.994,
+            108.851,
+            97.061,
+            110.126,
+            115.186,
+            121.741,
+            122.822
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0057",
+          "dept": "PV",
+          "slices": [
+            "negation"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0057-g1": 1
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            103.896,
+            108.024,
+            98.54,
+            94.848,
+            122.917,
+            130.749,
+            131.967,
+            132.371,
+            132.317,
+            139.317
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0058",
+          "dept": "PV",
+          "slices": [
+            "dose_unit"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "zh",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0058-g1": 1
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            97.806,
+            96.447,
+            76.599,
+            81.094,
+            107.606,
+            122.187,
+            150.532,
+            107.713,
+            115.157,
+            127.225
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0059",
+          "dept": "PV",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "gold_script": "zh-Hant",
+          "language": "mixed",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0059-g1": 1
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            82.206,
+            89.521,
+            92.799,
+            95.844,
+            102.456,
+            108.313,
+            121.393,
+            118.465,
+            117.643,
+            128.495
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0060",
+          "dept": "CO",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 0.0,
+          "gold_ranks": {
+            "pc-0060-g1": null
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            73.5,
+            68.675,
+            70.891,
+            70.811,
+            102.905,
+            94.221,
+            87.61,
+            99.14,
+            110.451,
+            110.598
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0061",
+          "dept": "CO",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0061-g1": 14
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            92.234,
+            87.373,
+            90.022,
+            88.574,
+            86.88,
+            111.717,
+            111.946,
+            113.899,
+            117.486,
+            138.234
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0062",
+          "dept": "CO",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0062-g1": 2
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            76.583,
+            71.238,
+            76.186,
+            92.035,
+            108.22,
+            100.699,
+            97.064,
+            105.885,
+            100.606,
+            109.934
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0063",
+          "dept": "CO",
+          "slices": [
+            "protocol_id",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 0.0,
+          "gold_ranks": {
+            "pc-0063-g1": null
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            75.209,
+            75.079,
+            67.525,
+            85.39,
+            94.653,
+            94.107,
+            92.826,
+            95.674,
+            98.62,
+            104.795
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0064",
+          "dept": "CO",
+          "slices": [
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 0.0,
+          "gold_ranks": {
+            "pc-0064-g1": null
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            73.21,
+            72.117,
+            72.454,
+            90.337,
+            96.238,
+            80.033,
+            101.298,
+            94.772,
+            107.641,
+            106.129
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0065",
+          "dept": "CO",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0065-g1": 5
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            79.37,
+            76.611,
+            69.812,
+            74.41,
+            103.884,
+            85.143,
+            97.14,
+            108.174,
+            107.071,
+            106.866
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0066",
+          "dept": "CO",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0066-g1": 2
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            92.794,
+            90.15,
+            95.7,
+            91.342,
+            118.204,
+            111.876,
+            119.211,
+            119.221,
+            162.126,
+            199.556
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0067",
+          "dept": "CO",
+          "slices": [
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 0.0,
+          "gold_ranks": {
+            "pc-0067-g1": null
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            75.774,
+            73.368,
+            70.464,
+            73.986,
+            98.233,
+            103.768,
+            104.491,
+            102.968,
+            103.519,
+            117.161
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0068",
+          "dept": "CO",
+          "slices": [
+            "protocol_id",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 0.0,
+          "gold_ranks": {
+            "pc-0068-g1": null
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            76.365,
+            69.866,
+            81.297,
+            90.877,
+            98.903,
+            98.048,
+            98.165,
+            100.034,
+            103.598,
+            105.846
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0069",
+          "dept": "CO",
+          "slices": [
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 0.0,
+          "gold_ranks": {
+            "pc-0069-g1": null
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            72.296,
+            66.986,
+            69.953,
+            70.22,
+            89.966,
+            71.581,
+            93.527,
+            102.0,
+            104.706,
+            111.859
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0070",
+          "dept": "CO",
+          "slices": [
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 0.0,
+          "gold_ranks": {
+            "pc-0070-g1": null
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            73.811,
+            71.303,
+            103.194,
+            95.334,
+            101.727,
+            94.489,
+            99.673,
+            102.331,
+            105.527,
+            149.792
+          ],
+          "unmappable_golds": [
+            "pc-0070-g1"
+          ]
+        },
+        {
+          "sample_id": "pc-0071",
+          "dept": "CO",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0071-g1": 5
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            73.122,
+            73.68,
+            72.283,
+            69.543,
+            96.944,
+            101.092,
+            92.873,
+            100.998,
+            96.997,
+            107.535
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0072",
+          "dept": "CO",
+          "slices": [
+            "protocol_id",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0072-g1": 1
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            70.355,
+            72.938,
+            70.102,
+            86.708,
+            96.542,
+            98.322,
+            96.589,
+            98.711,
+            108.608,
+            102.333
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0073",
+          "dept": "CO",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0073-g1": 1
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            90.453,
+            91.332,
+            96.387,
+            112.035,
+            108.251,
+            89.985,
+            115.781,
+            124.366,
+            128.534,
+            192.907
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0074",
+          "dept": "CO",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0074-g1": 1
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            83.964,
+            91.879,
+            91.472,
+            110.657,
+            111.132,
+            125.993,
+            109.564,
+            118.585,
+            123.719,
+            131.74
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0075",
+          "dept": "CO",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "mixed",
+          "scope": "cross_lingual",
+          "provisional": false,
+          "derived_from": null,
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0075-g1": 3
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            68.657,
+            71.554,
+            72.203,
+            92.877,
+            98.961,
+            70.917,
+            93.526,
+            98.68,
+            104.75,
+            114.063
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0076",
+          "dept": "PV",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": "pc-0041",
+          "recall": 0.0,
+          "gold_ranks": {
+            "pc-0076-g1": null
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            81.908,
+            79.867,
+            81.802,
+            98.802,
+            114.517,
+            109.935,
+            108.332,
+            117.44,
+            125.329,
+            117.548
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0077",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": "pc-0042",
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0077-g1": 1
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            104.974,
+            100.232,
+            97.423,
+            126.11,
+            128.569,
+            138.997,
+            131.278,
+            137.357,
+            134.446,
+            159.595
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0078",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": "pc-0043",
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0078-g1": 1
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            116.778,
+            110.912,
+            97.777,
+            101.226,
+            115.431,
+            130.585,
+            128.579,
+            135.111,
+            138.005,
+            150.402
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0079",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": "pc-0044",
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0079-g1": 3
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            96.947,
+            98.75,
+            94.584,
+            95.21,
+            123.134,
+            100.958,
+            125.681,
+            140.366,
+            135.711,
+            154.978
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0080",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": "pc-0045",
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0080-g1": 2
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            114.157,
+            101.773,
+            96.111,
+            105.385,
+            129.082,
+            132.197,
+            165.357,
+            133.327,
+            145.572,
+            141.388
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0081",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": "pc-0046",
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0081-g1": 5
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            103.417,
+            114.671,
+            95.808,
+            101.905,
+            121.252,
+            132.758,
+            118.69,
+            135.583,
+            133.463,
+            158.779
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0082",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": "pc-0047",
+          "recall": 0.0,
+          "gold_ranks": {
+            "pc-0082-g1": null
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            106.36,
+            90.911,
+            77.212,
+            96.947,
+            95.124,
+            107.832,
+            109.12,
+            115.508,
+            128.548,
+            123.249
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0083",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": "pc-0048",
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0083-g1": 2
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            107.096,
+            97.954,
+            97.569,
+            97.165,
+            111.381,
+            119.456,
+            129.237,
+            131.106,
+            141.565,
+            134.808
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0084",
+          "dept": "PV",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": "pc-0049",
+          "recall": 0.0,
+          "gold_ranks": {
+            "pc-0084-g1": null
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            110.288,
+            111.408,
+            104.204,
+            109.849,
+            94.806,
+            130.575,
+            129.691,
+            142.197,
+            134.528,
+            141.832
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0085",
+          "dept": "PV",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": "pc-0050",
+          "recall": 0.0,
+          "gold_ranks": {
+            "pc-0085-g1": null
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            78.215,
+            91.367,
+            78.013,
+            104.922,
+            109.361,
+            105.837,
+            118.46,
+            116.311,
+            120.856,
+            121.593
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0086",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": "pc-0051",
+          "recall": 0.0,
+          "gold_ranks": {
+            "pc-0086-g1": null
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            83.13,
+            119.633,
+            79.525,
+            84.52,
+            109.403,
+            108.129,
+            100.069,
+            120.862,
+            118.256,
+            115.611
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0087",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": "pc-0052",
+          "recall": 0.0,
+          "gold_ranks": {
+            "pc-0087-g1": null
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            100.531,
+            83.223,
+            85.981,
+            77.518,
+            100.29,
+            101.792,
+            108.082,
+            116.308,
+            120.112,
+            126.306
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0088",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": "pc-0053",
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0088-g1": 1
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            115.605,
+            111.509,
+            102.852,
+            99.707,
+            120.745,
+            131.958,
+            129.637,
+            139.695,
+            147.142,
+            148.149
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0089",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": "pc-0054",
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0089-g1": 1
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            97.014,
+            96.456,
+            92.357,
+            94.203,
+            119.426,
+            122.753,
+            123.438,
+            125.348,
+            134.204,
+            138.091
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0090",
+          "dept": "PV",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": "pc-0055",
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0090-g1": 1
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            87.109,
+            85.893,
+            84.664,
+            105.329,
+            113.288,
+            108.294,
+            99.005,
+            118.094,
+            121.701,
+            137.455
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0091",
+          "dept": "PV",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": "pc-0056",
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0091-g1": 4
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            85.934,
+            93.284,
+            77.12,
+            82.33,
+            106.107,
+            81.339,
+            112.243,
+            109.691,
+            110.374,
+            244.152
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0092",
+          "dept": "CO",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": "pc-0060",
+          "recall": 0.0,
+          "gold_ranks": {
+            "pc-0092-g1": null
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            111.101,
+            85.422,
+            88.546,
+            88.012,
+            95.648,
+            96.005,
+            111.306,
+            112.849,
+            119.074,
+            137.521
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0093",
+          "dept": "CO",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": "pc-0061",
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0093-g1": 1
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            86.085,
+            87.6,
+            91.089,
+            107.272,
+            107.968,
+            96.78,
+            113.568,
+            118.121,
+            121.468,
+            137.882
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0094",
+          "dept": "CO",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": "pc-0062",
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0094-g1": 5
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            81.524,
+            79.518,
+            88.831,
+            72.474,
+            99.403,
+            92.096,
+            101.325,
+            98.38,
+            106.921,
+            106.804
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0095",
+          "dept": "CO",
+          "slices": [
+            "protocol_id",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": "pc-0063",
+          "recall": 0.0,
+          "gold_ranks": {
+            "pc-0095-g1": null
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            68.071,
+            76.701,
+            76.843,
+            67.583,
+            95.304,
+            97.446,
+            89.714,
+            101.072,
+            101.555,
+            105.353
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0096",
+          "dept": "CO",
+          "slices": [
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": "pc-0064",
+          "recall": 0.0,
+          "gold_ranks": {
+            "pc-0096-g1": null
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            99.067,
+            90.726,
+            90.98,
+            114.322,
+            118.853,
+            117.894,
+            110.568,
+            114.244,
+            130.008,
+            134.728
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0097",
+          "dept": "CO",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": "pc-0065",
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0097-g1": 9
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            75.891,
+            69.361,
+            74.025,
+            71.148,
+            98.718,
+            94.0,
+            100.87,
+            97.889,
+            103.74,
+            116.151
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0098",
+          "dept": "CO",
+          "slices": [
+            "negation",
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": "pc-0066",
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0098-g1": 1
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            96.785,
+            94.156,
+            89.605,
+            115.14,
+            111.772,
+            116.226,
+            117.532,
+            123.813,
+            126.385,
+            126.616
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0099",
+          "dept": "CO",
+          "slices": [
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": "pc-0067",
+          "recall": 0.0,
+          "gold_ranks": {
+            "pc-0099-g1": null
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            78.611,
+            70.722,
+            71.346,
+            89.237,
+            89.781,
+            84.252,
+            90.812,
+            102.434,
+            102.529,
+            106.865
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0100",
+          "dept": "CO",
+          "slices": [
+            "protocol_id",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": "pc-0068",
+          "recall": 0.0,
+          "gold_ranks": {
+            "pc-0100-g1": null
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            80.932,
+            73.198,
+            70.49,
+            93.035,
+            87.035,
+            114.1,
+            96.135,
+            98.306,
+            105.628,
+            108.147
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0101",
+          "dept": "CO",
+          "slices": [
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": "pc-0069",
+          "recall": 0.0,
+          "gold_ranks": {
+            "pc-0101-g1": null
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            75.956,
+            75.416,
+            74.209,
+            72.989,
+            94.482,
+            104.125,
+            95.642,
+            100.936,
+            102.533,
+            113.495
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0102",
+          "dept": "CO",
+          "slices": [
+            "mixed_zh_en",
+            "protocol_id"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": "pc-0070",
+          "recall": 0.0,
+          "gold_ranks": {
+            "pc-0102-g1": null
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            71.599,
+            69.816,
+            71.589,
+            91.911,
+            80.586,
+            105.094,
+            101.481,
+            99.993,
+            102.497,
+            152.225
+          ],
+          "unmappable_golds": [
+            "pc-0102-g1"
+          ]
+        },
+        {
+          "sample_id": "pc-0103",
+          "dept": "CO",
+          "slices": [
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": "pc-0071",
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0103-g1": 4
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            74.444,
+            80.594,
+            70.549,
+            73.622,
+            95.851,
+            100.831,
+            99.747,
+            103.138,
+            106.72,
+            122.119
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0104",
+          "dept": "CO",
+          "slices": [
+            "protocol_id",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": "pc-0072",
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0104-g1": 1
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            72.38,
+            78.615,
+            73.726,
+            95.553,
+            102.825,
+            94.47,
+            98.709,
+            102.489,
+            109.016,
+            109.851
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0105",
+          "dept": "CO",
+          "slices": [
+            "time_window",
+            "mixed_zh_en",
+            "negation"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": "pc-0073",
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0105-g1": 1
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            107.326,
+            109.655,
+            105.833,
+            108.533,
+            123.894,
+            141.359,
+            144.373,
+            138.725,
+            146.733,
+            188.524
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0106",
+          "dept": "CO",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": "pc-0074",
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0106-g1": 1
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            84.327,
+            89.849,
+            92.217,
+            104.669,
+            90.941,
+            103.064,
+            112.505,
+            115.984,
+            120.299,
+            137.415
+          ],
+          "unmappable_golds": []
+        },
+        {
+          "sample_id": "pc-0107",
+          "dept": "CO",
+          "slices": [
+            "negation",
+            "mixed_zh_en"
+          ],
+          "gold_script": "en",
+          "language": "en",
+          "scope": "language_matched",
+          "provisional": false,
+          "derived_from": "pc-0075",
+          "recall": 1.0,
+          "gold_ranks": {
+            "pc-0107-g1": 2
+          },
+          "returned_count": 20,
+          "candidate_exhausted": false,
+          "latency_ms_measured": [
+            81.924,
+            72.26,
+            73.17,
+            76.328,
+            90.112,
+            72.472,
+            97.665,
+            103.526,
+            99.065,
+            107.284
+          ],
+          "unmappable_golds": []
+        }
+      ],
+      "leak_violations": [],
+      "wall_seconds_all_passes": 153.9
+    }
+  },
+  "plan_evidence": [
+    {
+      "sample_id": "pc-0001",
+      "dept": "MA",
+      "plan": [
+        {
+          "Plan": {
+            "Node Type": "Limit",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Startup Cost": 3165.25,
+            "Total Cost": 3165.26,
+            "Plan Rows": 4,
+            "Plan Width": 24,
+            "Plans": [
+              {
+                "Node Type": "Sort",
+                "Parent Relationship": "Outer",
+                "Parallel Aware": false,
+                "Async Capable": false,
+                "Startup Cost": 3165.25,
+                "Total Cost": 3165.26,
+                "Plan Rows": 4,
+                "Plan Width": 24,
+                "Sort Key": [
+                  "((e.embedding <=> '[0.016639084,0.0010528171,-0.018887488,-0.038882196,-0.01622541,-0.007916166,0.019715417,-0.045113344,-0.019597134,-0.0012244777,-0.052063983,0.023517948,-0.008859225,-0.013575315,0.033106726,-0.031988695,-0.05442401,-0.03970372,0.009407575,-0.019880649,-0.0021770296,0.0031567723,-0.030527826,0.028443124,0.02659873,0.015219757,-0.024574649,0.03883397,0.013960178,0.035410196,-0.02091454,-0.018037569,0.05401923,-0.040351514,0.02280494,-0.023925748,0.02052033,-0.019729884,-0.037473682,-0.0032070847,0.028343674,-0.010251135,-0.009036187,0.020306142,-0.03558839,-0.03350766,0.056925494,-0.022909356,0.044276208,-0.042234845,-0.019895544,0.011868988,-0.018577753,-0.05188132,0.0043660905,0.006206717,-0.005215937,0.014131351,0.0017048252,-0.026826516,-0.028800387,-0.01174206,-0.016226424,0.0039088586,-0.006505321,0.06402869,0.019355923,-0.0057500433,0.0057435627,-0.020360157,-0.028507994,0.002209958,0.0334594,-0.0038143215,-0.06677647,-0.0027931246,0.024002802,-0.0030624454,-0.021691876,-0.004203693,0.06931475,0.062326886,-0.033380527,0.029000392,-0.027239254,0.053014133,0.007990821,-0.0045869774,-0.0059741475,-0.024564994,0.01455635,-0.019312572,-0.036194745,-0.045706347,0.019099008,-0.020518258,-0.033197224,-0.0138957985,0.050363254,0.0012331078,0.019781334,-0.012366373,0.04233666,-0.01746304,0.041298855,0.04664884,0.0047709593,-0.013797233,-0.004891751,0.013730251,0.023086421,0.035325877,-0.0022824001,-0.001600223,-0.0035963873,-0.0359434,-0.02604427,-0.050276168,0.018333111,-0.021298893,0.00629305,0.048439756,-0.0022940258,-0.06906744,-0.0559118,0.0031378318,0.016110212,0.044924375,-0.0075405133,0.016477628,0.004439493,0.00821029,-0.03110829,-0.0029145111,-0.022150239,0.03218663,-0.017592164,0.014446401,0.023736592,-0.056173228,0.035049792,-0.02123665,0.038225736,-0.029996354,0.0026350087,-0.0017369335,-0.049646016,-0.041313313,0.0074883006,-0.038486324,-0.002572811,0.0022607506,0.083765686,-0.0014432442,-0.0127670895,-0.01167781,0.005210332,0.044903472,-0.04549886,0.0020135865,0.09404042,0.032635774,-0.05910992,0.029534588,0.012662321,-0.0435696,-0.017661218,0.052928742,-0.00038768997,-0.017592575,0.014140477,-0.036293678,-0.019833535,-0.031815805,-0.014623433,0.0029720457,0.03261108,-0.012372916,-0.046924543,-0.030234339,-0.08482404,-0.0027251341,-0.0015388229,0.0052447966,-0.030203128,-0.035405353,-0.0057389247,-0.03162356,-0.013998712,0.04132565,0.02026742,-0.00012693262,-0.013293056,0.0047962056,0.0298383,0.015556959,0.02154216,0.007248443,-0.018557811,0.030862115,-0.0373785,0.021337664,0.00940282,0.025480589,-0.021382708,0.0030830188,-0.002781412,-0.020591456,-0.012654961,0.010131379,0.046869367,-0.0187099,-0.0022320065,-0.006374298,-0.0039110854,-0.012857813,0.059944768,0.04236873,0.018283993,-0.015227322,0.01799939,0.06911096,0.022607079,-0.055487704,0.017649092,-0.041576535,0.00019136518,0.027962033,0.028634505,-0.039592575,-0.014649887,0.039615493,-0.017773733,0.015758112,0.032412622,-0.023400474,-0.015095292,0.052621014,0.009077102,-0.0154967075,-0.015093589,-0.002248365,0.02110114,-0.0116817085,-0.047303375,0.021396276,0.050097916,0.040960424,-0.037818037,0.01706316,0.011682361,-0.029043408,-0.083515614,0.042097185,0.024596812,0.008727219,-0.007039823,-0.016737442,-0.01231479,-0.024104279,0.037721694,0.06960259,0.035164688,0.007233471,-0.017561749,0.004410869,-0.01465431,0.020700524,0.027441466,0.0060236985,0.0058808355,0.0005822854,-0.015829116,0.008436413,-0.04802196,-0.04581224,-0.0058308607,-0.027591653,0.021107925,-0.018398149,-0.03325084,0.012979958,0.011930063,-0.0444102,0.019586382,-0.0071123443,-0.04485909,-0.016810717,-0.024219722,-0.024333244,0.009496943,0.0058394093,0.066988684,0.009212414,0.0008371398,-0.018945046,-0.0029723507,-0.14736989,0.021758791,-0.023900814,0.011313555,-0.03241442,-0.005755865,-0.090861715,0.0046248217,-0.010942491,0.030978903,0.009739927,-0.038999192,-0.018921928,0.019661436,0.002665702,-0.012945642,0.006729444,-0.017085273,-0.008175295,-0.064357705,-0.026705302,-0.0395634,0.03830675,-0.03361896,-0.034130186,0.016154034,0.03141645,0.016595308,-0.059129346,-0.050491206,-0.027261011,0.009094048,-0.0018099664,0.002407173,0.033271834,0.026505541,-0.012177834,-0.024194326,0.023301817,0.010894945,0.0307629,0.023225483,0.008414534,0.013513574,0.022406496,-0.022980182,0.020294996,-0.021380488,-0.023510424,-0.047890656,0.050575133,0.017109048,0.03844837,-0.026727572,-0.032636482,0.021967072,0.010822374,-9.992875e-05,0.023494942,-0.024141358,-0.012471665,0.0104795545,0.08494018,0.0020864876,-0.044210594,-0.04323986,0.043772593,0.03476306,0.038971543,-0.046473604,0.040534567,0.007483238,0.010998597,-0.049250796,0.0101185795,0.024084102,0.021094926,-0.04076841,0.010851145,-0.12253539,-0.07737646,0.063056245,0.008788771,0.0321953,-0.004991988,-0.024193946,-0.02741996,0.0773152,0.03164185,0.24147975,0.016049465,-0.0070774453,-0.02337079,0.037428256,0.0035759718,-0.0065598856,0.01115259,-0.03635879,-0.013392461,-0.024343928,-0.024247723,0.034549035,-0.008656717,0.005135486,0.021471333,-0.06475875,0.021477519,0.037947826,-0.009904908,0.0065188706,0.0014415543,-0.018729832,-0.024541574,-0.032969385,-0.0231921,-0.007526145,0.061008498,0.007479309,0.010752403,-0.04759364,-0.03437976,0.04686084,0.026915722,0.03667839,-0.0032010793,0.047907345,0.02742337,-0.0064428034,0.010912089,0.020714635,-0.029869404,0.053823363,-0.04970667,0.026839893,-0.0025363993,-0.003323435,-0.02284411,0.031304106,-0.041025322,0.021677922,0.031115882,-0.0008659811,0.020905504,0.036875255,-0.021076836,-0.018699642,0.017237054,-0.054011993,0.02580118,0.004122753,0.024544379,-0.024426395,0.036560778,-0.039543465,0.0064287744,-0.030921036,0.027339607,-0.059301823,-0.012732208,-0.052629083,-0.04509904,0.008008678,0.009897475,0.0051553315,-0.022488935,0.010795514,0.0419476,-0.003052223,0.010143754,-0.006990276,0.041816015,-0.022975916,-0.026442243,-0.0007512911,-0.006549319,0.012431273,-0.03844785,-0.0051933564,-0.05068636,0.011863774,-0.018709572,-0.033893894,-0.012013574,-0.019873789,0.012842033,-0.010734277,-0.01220524,-0.052477073,0.02030424,-0.0032365448,-0.0019759862,-0.046327785,-0.021359675,-0.0026573834,-0.02005032,-0.0297428,0.030398967,-0.048281822,-0.009149032,-0.045403183,0.017353866,0.020390842,-0.0032005128,0.023403421,0.036640476,-0.04895114,-0.03197069,0.025405355,0.071049325,0.0021763188,0.008047337,-0.016588442,0.0045638466,0.01837327,0.018946106,-0.035338152,-0.018416451,-0.049752228,0.02510929,-0.03544433,-0.0027189595,-0.0049048145,-0.027641883,0.035141364,0.004327046,0.012621981,0.0052512162,0.0017471652,0.056714717,-0.03329753,-0.039039657,-0.03158783,0.011302385,0.019349424,0.0005498329,0.022554511,-0.010921201,0.051532544,0.015257106,0.02160916,0.0036769365,-0.025112528,-0.03386411,-0.015758153,-0.058510013,-0.026499812,-0.022995953,0.036705334,-0.024715006,0.02853364,0.00058421027,-0.008688041,0.05701571,0.000808438,-0.01009808,-0.024456948,0.07511313,0.022621911,-0.027562752,0.07140618,0.015404959,-0.033919096,-0.03146339,-0.0007096918,0.017171655,-0.020492502,0.04854408,-0.020497054,-0.034007303,0.038123008,-0.021265693,0.017704453,0.055929143,0.014234316,0.080457345,0.009811153,-0.03326503,0.049561698,-0.006932973,-0.035949532,0.05580849,-0.02984317,-0.031838957,0.048738778,0.013187126,-0.015312464,-0.02648054,-0.0022042028,-0.0107163275,0.024571152,0.0726289,0.028415065,-0.0037010508,0.044541568,-0.00047758606,-0.0004924412,-0.00072932395,-0.0062018037,0.065370806,-0.001932318,-0.024492597,0.011437102,-0.026434047,0.039124962,-0.010601203,0.026202865,0.08256909,0.018336354,-0.024198024,-0.0441404,-0.0008219464,0.000283593,-0.026986696,0.014392623,0.069913484,0.022983264,-0.015388211,-0.0068839574,-0.005206962,0.0007143066,0.042325135,-0.007574846,0.01744974,0.016794242,-0.004941287,0.03259611,0.026703257,0.0010175828,0.006690681,-0.0029343353,-0.04320064,-0.018554587,0.029238354,-0.020564146,0.01689871,-0.0017883177,0.027960792,0.02567083,0.039995648,-0.009716505,0.041175567,0.019108037,-0.0036013224,-0.013761771,-0.011873277,-0.031245615,-0.009963463,-0.024366077,0.01749217,-0.04556461,0.035775095,-0.02274692,0.00595661,-0.060585104,-0.060333338,0.013510656,0.012308828,-0.017828306,-0.015391238,-0.034970965,0.018841991,-0.028992038,-0.034996703,0.025597319,0.052707553,0.01797574,-0.011833039,0.020373628,-0.044110265,0.042402543,-0.02679279,-0.01849628,0.021067942,-0.036870442,0.027830888,0.043279342,0.037642516,-0.018454678,-0.015715765,-0.03359447,0.032565147,-0.025166309,0.07601823,-0.018125854,0.021983331,-0.038078867,-0.04929213,0.003290058,0.01477772,-0.018155653,-0.01878307,-0.03354255,-0.04196211,0.014323155,-0.0048293443,0.011812171,-0.046712097,0.03305907,-0.031065246,0.00887641,0.015562334,-0.051973063,0.03946053,-0.022498883,-0.00044648923,0.04787586,-0.027273735,-0.0197475,-0.0075479723,0.02233446,0.0060778027,0.025557475,-0.0545887,0.045003235,-0.009191974,0.014930793,0.008867185,-0.033032652,-0.00011064167,-0.03273408,-0.016454333,-0.037633613,-0.04312462,0.021118402,0.018173568,0.04100586,0.013035628,0.040994238,0.011784636,-0.012004644,0.007237402,0.043993644,-0.01445941,-0.00274415,0.0009796437,0.010482524,-0.0012985843,-0.020182893,0.023726251,0.016606707,0.03750146,-0.05889777,-0.05669643,0.03904839,-0.008746103,-0.018910436,0.024690486,0.043837596,0.03927741,-0.01507467,-0.027080562,-0.041745156,0.034955766,0.007199268,0.050615374,0.019012189,-0.00329712,0.015277987,-0.0069097667,0.000618196,0.02721045,-0.0068478636,0.04526069,-0.0169343,0.035762027,0.07206609,-0.06462714,0.028149698,-0.026777547,-0.011361987,-0.05354803,-0.039415173,-0.058443893,0.046877272,-0.011011001,-0.018967167,0.034235183,0.05663216,-0.009576713,-0.010671482,0.026571313,-0.015074364,0.016628746,-0.12222498,0.009420499,0.03439152,-0.019409494,-0.03001708,-0.008044078,0.013227229,-0.011524436,-0.035142113,-0.00036857364,0.008261482,-0.008529048,0.027617682,-0.044791766,-0.021370545,-0.01696272,-0.011696785,-0.018202122,-0.013591653,0.031234877,-0.001718795,0.0037999726,-0.0026735477,-0.008783712,-0.0073729306,0.01045836,0.028079636,0.013778441,-0.027308334,-0.017198803,-0.0101679275,0.0031851407,0.028158182,0.029184004,-0.0016192147,-0.012194684,-0.009810705,-0.00045324402,-0.031862292,-0.03453848,0.014802905,0.010913932,0.027484901,-0.03770785,0.002257688,0.059023753,0.02632996,0.022135029,-0.01628042,-0.008211883,-0.044356488,-0.00011676632,-0.015618579,-0.038272977,0.0042185546,-0.015497414,-0.012831406,-0.00886973,0.03424186,0.05072601,0.005509746,-0.0019943926,-0.02748304,-0.017077243,-0.009791358,-0.0045006275,-0.060745694,0.028011926,0.0136119425,0.013370714,-0.020567514,0.04060329,0.02477707,-0.0033485596,-0.029329382,-0.016622204,-0.018275037,-0.032303903,0.049137603,0.014608074,0.014500972,-0.012186189,0.0052889483,0.026106806,0.019217655,0.00393618,-0.02812292,-0.06087921,0.027985066,-0.0031804352,-0.031166766,-0.05386343,0.010397091,-0.01174593,-0.04082795,0.03635178,-0.006214013,-0.044594422,-0.024361499,0.0014425756,0.020242078,-0.047140468,0.013068216,-0.0011886304,0.010192528,-0.018174987,-0.0057803276,-0.012910324,-0.013919758,0.00016824143,-0.012277682,-0.007891831,-0.005339163,0.01261557,-0.05107465,-0.017524213,-0.021353574,0.0043453444,0.042050112,-0.03276703,-0.01518986,-0.0031583775,0.05523189,-0.02509334,-0.027631441,-0.045816235,0.033026226,3.6613394e-05,-0.01861689,-0.0029521931,0.028375486,-0.010370743,-0.027012108,-0.025506256,-0.008308975,0.020053927,-0.023617636,0.02561236,-0.022216357,-0.04774876,0.01980858,0.013885474,0.014390601,-0.01669205,0.03158927,-0.0067608273,0.031507105,0.0043944777,-0.04709901,-0.008480646,-0.060861018,0.023458643,0.04895385,0.005688999,-0.0021704359,0.013945148,0.029920911,-0.008287193,0.037355024,-0.0046948856,-0.0015428213,-0.021890534,-0.0024872555,0.023442226,-0.02079995,0.0035341675,0.0222255,-0.00386331,0.0044055176,-0.0020511742,-0.028121544,0.024364948,-0.041184783,0.0223582,0.013226403,0.001724528,-0.0065622684,-0.026217109,-0.00883398,0.0076810317,0.001022399,0.027834618,-0.037022144,0.018155195,0.002180166,0.031100933,-0.021338146,0.00025363188,0.010655245,0.0069059776,0.007830184,0.0029951315,0.034903403,-0.03827925,0.048975166,0.008751312,-0.008675691,0.026191521,0.02732614,0.07272685,-0.014739268,-0.06990812,0.014074934,0.0060315323,-0.009515475,-0.00043852066,0.074808404,-0.031097556,-0.013048597,-0.0137386825,-0.04545038,-0.012605243,-0.01788525,-0.011316896,0.028086329,0.01729964,0.008381733,0.058067527,0.00042849832,0.0078633465,0.016150184,-0.027150944,0.013613834,-0.0049665463,0.0004823646,-0.08790451,-0.0038279044,0.052729327,-0.031994484,0.0032649047,-0.032253977,-0.0385719,-0.049065296,-0.005244952,0.022901807,0.004050904,0.043112163,0.038999658,0.027315533,-0.003845844,0.0037621446,-0.0048207366,-0.014169334,0.025062453]'::vector))"
+                ],
+                "Plans": [
+                  {
+                    "Node Type": "Nested Loop",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Join Type": "Inner",
+                    "Startup Cost": 9.97,
+                    "Total Cost": 3165.21,
+                    "Plan Rows": 4,
+                    "Plan Width": 24,
+                    "Inner Unique": true,
+                    "Plans": [
+                      {
+                        "Node Type": "Nested Loop",
+                        "Parent Relationship": "Outer",
+                        "Parallel Aware": false,
+                        "Async Capable": false,
+                        "Join Type": "Inner",
+                        "Startup Cost": 9.69,
+                        "Total Cost": 2964.25,
+                        "Plan Rows": 8,
+                        "Plan Width": 16,
+                        "Inner Unique": false,
+                        "Plans": [
+                          {
+                            "Node Type": "Index Scan",
+                            "Parent Relationship": "Outer",
+                            "Parallel Aware": false,
+                            "Async Capable": false,
+                            "Scan Direction": "Forward",
+                            "Index Name": "documents_one_active_per_family",
+                            "Relation Name": "documents",
+                            "Alias": "d",
+                            "Startup Cost": 0.14,
+                            "Total Cost": 16.36,
+                            "Plan Rows": 1,
+                            "Plan Width": 16,
+                            "Filter": "((effective_from <= '2026-09-20'::date) AND ((effective_to IS NULL) OR (effective_to > '2026-09-20'::date)) AND (SubPlan 21))",
+                            "Plans": [
+                              {
+                                "Node Type": "Index Only Scan",
+                                "Parent Relationship": "SubPlan",
+                                "Subplan Name": "SubPlan 21",
+                                "Parallel Aware": false,
+                                "Async Capable": false,
+                                "Scan Direction": "Forward",
+                                "Index Name": "document_acl_pkey",
+                                "Relation Name": "document_acl",
+                                "Alias": "a_2",
+                                "Startup Cost": 0.16,
+                                "Total Cost": 8.2,
+                                "Plan Rows": 1,
+                                "Plan Width": 0,
+                                "Index Cond": "((doc_id = d.doc_id) AND (dept = (NULLIF(current_setting('medops.dept'::text, true), ''::text))::dept))",
+                                "Filter": "((permission = 'read'::acl_permission) AND (dept = (NULLIF(current_setting('medops.dept'::text, true), ''::text))::dept))"
+                              }
+                            ]
+                          },
+                          {
+                            "Node Type": "Bitmap Heap Scan",
+                            "Parent Relationship": "Inner",
+                            "Parallel Aware": false,
+                            "Async Capable": false,
+                            "Relation Name": "chunks",
+                            "Alias": "c",
+                            "Startup Cost": 9.55,
+                            "Total Cost": 2947.06,
+                            "Plan Rows": 83,
+                            "Plan Width": 32,
+                            "Recheck Cond": "(doc_id = d.doc_id)",
+                            "Filter": "(hashed SubPlan 20)",
+                            "Plans": [
+                              {
+                                "Node Type": "Bitmap Index Scan",
+                                "Parent Relationship": "Outer",
+                                "Parallel Aware": false,
+                                "Async Capable": false,
+                                "Index Name": "chunks_doc_seq_unique",
+                                "Startup Cost": 0.0,
+                                "Total Cost": 9.52,
+                                "Plan Rows": 166,
+                                "Plan Width": 0,
+                                "Index Cond": "(doc_id = d.doc_id)"
+                              },
+                              {
+                                "Node Type": "Seq Scan",
+                                "Parent Relationship": "SubPlan",
+                                "Subplan Name": "SubPlan 20",
+                                "Parallel Aware": false,
+                                "Async Capable": false,
+                                "Relation Name": "documents",
+                                "Alias": "d_2",
+                                "Startup Cost": 0.0,
+                                "Total Cost": 1323.2,
+                                "Plan Rows": 1,
+                                "Plan Width": 16,
+                                "Filter": "((status = ANY ('{active,archived}'::doc_status[])) AND (SubPlan 18))",
+                                "Plans": [
+                                  {
+                                    "Node Type": "Index Only Scan",
+                                    "Parent Relationship": "SubPlan",
+                                    "Subplan Name": "SubPlan 18",
+                                    "Parallel Aware": false,
+                                    "Async Capable": false,
+                                    "Scan Direction": "Forward",
+                                    "Index Name": "document_acl_pkey",
+                                    "Relation Name": "document_acl",
+                                    "Alias": "a_1",
+                                    "Startup Cost": 0.16,
+                                    "Total Cost": 8.2,
+                                    "Plan Rows": 1,
+                                    "Plan Width": 0,
+                                    "Index Cond": "((doc_id = d_2.doc_id) AND (dept = (NULLIF(current_setting('medops.dept'::text, true), ''::text))::dept))",
+                                    "Filter": "((permission = 'read'::acl_permission) AND (dept = (NULLIF(current_setting('medops.dept'::text, true), ''::text))::dept))"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "Node Type": "Index Scan",
+                        "Parent Relationship": "Inner",
+                        "Parallel Aware": false,
+                        "Async Capable": false,
+                        "Scan Direction": "Forward",
+                        "Index Name": "chunk_embeddings_pkey",
+                        "Relation Name": "chunk_embeddings",
+                        "Alias": "e",
+                        "Startup Cost": 0.28,
+                        "Total Cost": 25.11,
+                        "Plan Rows": 1,
+                        "Plan Width": 34,
+                        "Index Cond": "((chunk_id = c.chunk_id) AND (embedding_version = 'emb-bge-m3-dense-v1'::text))",
+                        "Filter": "(SubPlan 7)",
+                        "Plans": [
+                          {
+                            "Node Type": "Index Scan",
+                            "Parent Relationship": "SubPlan",
+                            "Subplan Name": "SubPlan 7",
+                            "Parallel Aware": false,
+                            "Async Capable": false,
+                            "Scan Direction": "Forward",
+                            "Index Name": "chunks_pkey",
+                            "Relation Name": "chunks",
+                            "Alias": "c_1",
+                            "Startup Cost": 0.28,
+                            "Total Cost": 24.66,
+                            "Plan Rows": 1,
+                            "Plan Width": 0,
+                            "Index Cond": "(chunk_id = e.chunk_id)",
+                            "Filter": "(SubPlan 3)",
+                            "Plans": [
+                              {
+                                "Node Type": "Index Scan",
+                                "Parent Relationship": "SubPlan",
+                                "Subplan Name": "SubPlan 3",
+                                "Parallel Aware": false,
+                                "Async Capable": false,
+                                "Scan Direction": "Forward",
+                                "Index Name": "documents_pkey",
+                                "Relation Name": "documents",
+                                "Alias": "d_1",
+                                "Startup Cost": 0.14,
+                                "Total Cost": 16.36,
+                                "Plan Rows": 1,
+                                "Plan Width": 0,
+                                "Index Cond": "(doc_id = c_1.doc_id)",
+                                "Filter": "((status = ANY ('{active,archived}'::doc_status[])) AND (SubPlan 1))",
+                                "Plans": [
+                                  {
+                                    "Node Type": "Index Only Scan",
+                                    "Parent Relationship": "SubPlan",
+                                    "Subplan Name": "SubPlan 1",
+                                    "Parallel Aware": false,
+                                    "Async Capable": false,
+                                    "Scan Direction": "Forward",
+                                    "Index Name": "document_acl_pkey",
+                                    "Relation Name": "document_acl",
+                                    "Alias": "a",
+                                    "Startup Cost": 0.16,
+                                    "Total Cost": 8.2,
+                                    "Plan Rows": 1,
+                                    "Plan Width": 0,
+                                    "Index Cond": "((doc_id = d_1.doc_id) AND (dept = (NULLIF(current_setting('medops.dept'::text, true), ''::text))::dept))",
+                                    "Filter": "((permission = 'read'::acl_permission) AND (dept = (NULLIF(current_setting('medops.dept'::text, true), ''::text))::dept))"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "sample_id": "pc-0031",
+      "dept": "PV",
+      "plan": [
+        {
+          "Plan": {
+            "Node Type": "Limit",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Startup Cost": 3165.25,
+            "Total Cost": 3165.26,
+            "Plan Rows": 4,
+            "Plan Width": 24,
+            "Plans": [
+              {
+                "Node Type": "Sort",
+                "Parent Relationship": "Outer",
+                "Parallel Aware": false,
+                "Async Capable": false,
+                "Startup Cost": 3165.25,
+                "Total Cost": 3165.26,
+                "Plan Rows": 4,
+                "Plan Width": 24,
+                "Sort Key": [
+                  "((e.embedding <=> '[-0.0051938654,-0.037040923,0.006767097,-0.02021196,0.0023125836,-0.060647693,-0.003227197,-0.0066399476,0.013139264,-0.021834405,-0.034539994,0.03683741,-0.024123063,0.005926031,0.005967034,-0.048834037,-5.379658e-05,-0.014847576,-0.002943399,-0.010369326,-0.05410678,-0.045768745,-0.046908375,0.01569892,-0.022367321,0.048811045,-0.007858278,0.009890969,0.026636757,0.015659072,-0.032338075,-0.02226008,0.032926086,-0.009399978,0.053187583,-0.042392932,-0.010063053,-0.029919315,-0.028909074,0.011933803,-0.0034700073,-0.014646446,0.01857865,-0.024988664,0.042650934,-0.025415689,0.027449531,-0.044253632,0.03740405,-0.01345438,-0.037007693,9.073723e-06,0.0028793279,-0.03519893,-0.012627046,0.04232496,-0.048300605,-0.051174767,-0.04402786,0.012594648,0.0056220726,-0.0034702155,-0.009856388,0.017745938,0.05230984,0.011938747,0.027124865,-0.042429525,0.008541487,-0.03825667,-0.031931896,0.02150762,0.007344445,-0.0054090107,-0.059473474,0.028385272,0.033674866,-0.055132918,-0.023643902,0.011594372,0.016333384,0.008738576,-0.002005417,0.024947261,0.012448241,0.06817885,-0.032523807,0.01899873,0.01880721,-0.026960082,0.0017473451,0.020248584,-0.027498158,-0.0053162854,-0.033696175,0.027874896,0.000681713,0.022510963,-0.0035426212,0.014699858,0.041077178,0.0014744926,0.04037603,-0.0023620091,0.058303617,-0.03347053,0.008085779,0.019914798,0.038650334,0.0067347935,-0.03076832,0.034352794,0.00018917055,0.0029389206,0.011722648,-0.043926675,-0.026775394,-0.024827797,0.045330323,-0.02066807,0.04266333,0.013681551,0.041126195,-0.030471569,-0.0221039,0.042893507,0.030117074,0.020309135,0.0017468636,0.03295815,0.016832018,0.027540786,-0.01108457,-0.002574764,-0.004614928,-0.025730874,0.029557232,0.0016825594,-0.02708587,-0.053319804,0.020849332,0.039772213,0.013520239,-0.012363371,-0.00914789,-0.07192698,0.024234675,0.022173364,-0.004193116,0.04431914,-0.013610994,0.0076198187,0.01449742,-0.0060134456,0.036220454,-0.010922898,-0.020244451,0.06990998,-0.004344261,0.01295966,0.020091848,0.08300003,-0.011846996,-0.019568373,0.05506562,-0.026278088,0.008704654,0.03886506,0.0146596,-0.016020734,-0.02606261,0.022102775,0.016841898,-0.006707794,0.0031911551,0.0022196076,0.028017197,0.019355986,-0.00160359,-0.037521437,-0.024191944,0.03431943,-0.05776819,0.0016154061,-0.024142664,-0.017376726,-0.049930975,-0.039754312,0.0134920385,-0.02156262,-0.029702175,-0.0004523949,-0.0053434945,0.063835055,0.029761259,-0.00066804304,-0.063641645,0.01846364,-0.010122248,0.01424208,0.01222368,0.042041827,0.011608084,-0.031110208,-0.01606549,-0.008147521,-0.049699273,-0.022071583,0.011867121,0.016731901,-0.004015401,0.006588582,-0.010236341,0.0012013925,-0.037621684,-0.047228448,0.026816182,0.0068100328,-0.025767995,-0.06060822,-0.043276977,0.03571087,0.00201671,-0.043034296,0.006093148,-0.0021406605,-0.045664206,0.019742541,0.006827132,0.016245533,-0.044614714,0.018998288,0.014923822,-0.019789245,0.05181247,0.024193475,-0.017414004,0.039814986,0.02499258,-0.045045722,-0.022909567,-0.021008437,-0.0132753095,0.0033789566,-0.02893845,0.03225644,0.026628736,-0.005024004,-0.011281211,-0.000119223565,0.019929415,0.0033719172,-0.023616401,0.026877837,0.05884878,-0.01426895,0.046859346,-0.03448158,-0.012037794,0.03336331,-0.0009332185,0.028028967,-0.022606403,0.014363389,-0.024423927,-0.027949747,0.029451594,0.019769212,0.013139462,0.03922002,0.00044788336,0.03914316,0.011687168,0.017555743,0.03559979,0.03081046,-0.034342874,-0.011543032,0.06293125,0.018983066,-0.050541095,0.052916706,0.026231702,-0.02400679,0.008366161,-0.05975902,-0.027082698,-0.03448231,-0.027414069,-0.028863998,-0.010879386,-0.0144127235,0.094566636,0.0152435675,-0.021965954,-0.049252976,-0.0028909661,-0.14699005,0.01211091,-0.025329065,0.039498318,-0.006183762,-0.009867848,-0.037161715,0.0041967863,-0.043761093,0.008705903,-0.019564135,-0.06766313,-0.026902078,-0.004355908,-0.015006112,-0.008522678,0.0013372763,0.028501388,-0.014068534,-0.019530345,-0.0048772427,-0.030358324,0.03199562,-0.017644206,-0.024299357,-0.0082250945,0.032482978,0.025905564,-0.056097653,-0.053127963,-0.031728808,-0.002266173,0.0064637847,0.027508134,-0.00922857,0.0248265,-0.019390669,-0.00045023242,-0.03995837,-0.041532595,0.036325965,0.051578443,0.04435536,0.056279715,-0.01373088,0.013176923,0.011309085,-0.038626276,-0.013649973,0.0056854393,-0.026762458,-0.024988974,-0.0016773946,-0.04715441,-0.042176582,-0.015557226,-0.021265626,0.03421477,0.0039346856,0.027120955,-0.016557422,0.035450224,0.013976744,-0.023088163,-0.041201547,-0.010141273,0.026393713,-0.01323129,0.06776058,-0.024197401,5.215065e-06,0.007965109,-0.00602805,-0.016748626,-0.07647857,0.03567927,-0.023311865,0.005689364,-0.05244261,-0.09842122,-0.01669431,0.03135295,-0.0020532103,0.018901762,-0.03435657,0.00057887373,-0.009274273,0.029202528,0.000953877,0.1999743,0.0045149243,0.0006322171,0.049918484,0.051625006,0.008533704,0.060830124,0.02491319,0.026824826,0.008027328,0.029376294,-0.0019607488,0.010552921,0.021249035,0.037690196,-0.014540789,-0.051269453,-0.0010015651,0.05630823,-0.0014397178,0.034319717,0.047774658,0.0035216385,-0.022385685,-0.0741438,-0.021988025,-0.02493541,0.0019505522,-0.045244772,0.0012428442,0.006757072,-0.001956248,0.04650271,-0.08556661,-0.024679868,0.020140562,-0.012688752,-0.003036039,-0.039182324,0.044526983,-0.028140943,-0.04193893,0.033213764,-0.022144813,0.019395042,-0.021822903,-0.010288309,-0.030823758,0.018082375,-0.00044638338,0.032981444,0.0037697968,-0.0024968938,0.009536844,0.0047350037,0.003098067,-0.04335369,0.022589067,-0.027629653,0.014280404,0.0003499271,-0.022793403,-0.05309802,0.0043765246,-0.010775414,0.011498722,0.0037122602,0.03299034,-0.04266088,0.031016063,0.0129533755,-0.027976794,0.033787645,-0.008246199,0.07307527,0.0007029178,0.007891561,0.03986951,0.036654845,0.018083373,0.009041196,0.03790243,-0.006356655,-0.018731523,0.046810243,-0.0031726526,0.004485912,-0.017666476,-0.022234278,0.0013360592,0.015339856,0.008420682,-0.017140582,0.038474075,-0.068964794,-0.013843476,0.026393004,-0.03869097,-0.057486136,-0.035122357,-0.033445876,0.006415479,-0.03521152,-0.04517284,0.023270484,0.0026792567,0.017034482,0.02274531,-0.026522491,0.04486467,0.00085897447,0.016114887,-0.0077678454,-0.03209034,-0.0014196993,0.018360352,-0.027858661,0.013973996,0.054158144,0.037870813,-0.019006478,-0.027155142,-0.04240074,0.0104762325,-0.038876574,-0.0020554631,-0.023992931,0.027455777,-0.062719755,0.030544916,-0.018182002,-0.01864457,0.024323406,-0.010360874,-0.019111857,0.0007201564,-0.031309623,0.027833888,-0.008610104,-0.0009736124,-0.017101357,-0.030668039,-0.08064268,-0.0145732965,0.0082700215,0.050942656,0.02448278,0.030750355,-0.006644604,-0.00010651781,0.005792479,0.038056757,-0.0071459054,-0.06531952,0.016960863,-0.013089258,-0.024886243,0.038944542,0.046184227,-0.0351871,0.010774241,0.009880053,0.013865214,0.05278239,0.013608636,0.022218257,0.01362582,0.017622476,0.024268687,0.01453168,0.035966117,0.018641597,-0.052848686,0.01687703,0.04272078,-0.013885314,-0.090466626,-0.023807094,0.016968837,0.008746446,0.03791533,-0.027058747,-0.01332698,-0.04870236,-0.037411075,0.021136729,-0.0073766736,-0.0015297793,-0.00088542816,-0.0071714777,0.010407764,0.066246755,-0.0071180067,0.013022819,0.030108081,0.030157784,0.0019287601,0.039408967,-0.0076871226,0.005892253,0.01949287,0.03725667,0.026856586,0.010010684,0.014363304,0.03411662,-0.016698096,0.02756872,-0.02244145,-0.0011405622,-0.013769629,0.00031167513,-0.07153619,0.029908884,0.025195116,-0.009964165,-0.011947913,0.049882233,0.004889802,-0.014824732,0.01080462,-0.015623038,-0.018269576,-0.06780321,0.010455177,-0.0012235556,0.011886767,-0.0022755829,0.042667605,0.018497977,0.004616016,0.06006603,-0.018147929,-0.0030594124,0.014040927,-0.00864467,0.037378285,0.021984087,-0.020707346,-0.033606835,-0.00613493,-0.054367714,0.017969383,0.014632926,-0.00247875,-0.017507121,-0.023547983,-0.012207241,0.034439757,0.061704647,-0.043518286,0.013938641,0.035342798,-0.009457902,-0.034375027,-0.0047730054,0.040327374,-0.001867006,-0.051090878,0.0046598534,-0.016363451,0.043031875,0.036994405,-0.0351709,-0.011332542,0.016993916,0.052083626,0.0072223004,-0.040197186,-0.004288849,0.021331193,-0.013312471,-0.062225178,-0.040616773,-0.03560264,-0.025598956,-0.056886137,-0.0061641494,-0.0054214294,-0.0042989324,-0.016858405,-0.015638739,0.005200895,0.0015671164,-0.055863783,0.020120796,0.06911723,0.027697716,-0.0041321195,-0.016325885,0.01509426,0.025422342,-0.040931024,0.031398352,-0.0056134514,0.023102818,0.0026095111,0.009100743,-0.014733407,0.017028818,-0.019554036,0.02575725,-0.016020551,-0.0033029711,-0.021469869,0.01235913,-0.011557411,-0.036394868,0.029085724,0.01545659,-0.011300329,-0.03961739,0.029422252,0.0042382623,0.044474345,-0.00063665805,0.038313705,-0.0318557,-0.029404175,0.018782414,0.019912379,0.023638578,-0.024417318,-0.04085861,-0.01570519,-0.0061068693,-0.03621738,0.0035962886,-0.05282627,-0.013630863,-0.043583605,-0.023424912,0.008784271,-0.037424754,0.011849577,0.015802521,0.03009832,-0.014993502,-0.008696352,0.015859328,0.015218015,-0.14850885,0.009573105,-0.01085958,0.019622525,-0.012641535,0.024206502,-0.022851683,-0.046466153,0.008501419,-0.0029454336,0.02018571,0.00050193147,-0.056655474,-0.00026044805,0.0032004078,-0.031297836,0.034501623,0.035676856,0.03948714,-0.037302036,-0.0015430615,0.014584599,0.0105115995,0.020789212,-0.032368347,0.014056827,0.022733916,0.014501689,-0.02416269,-0.0080575645,-0.010424215,-0.029092861,-0.00080800295,-0.03189773,0.00999046,0.023162466,0.033253055,0.019343413,-0.038620573,0.0042112735,-0.014995564,0.025846355,-0.0467404,0.022046776,-0.02602567,0.008855807,-0.031035995,0.005990596,0.014520308,0.0195679,-0.004036519,-0.0033782043,0.021093246,-0.14280075,-0.032929882,-0.0052932627,-0.008444483,-0.051523235,0.017460654,-0.034170777,0.037922464,0.0140533,-0.018903099,-0.060174607,-0.020875204,0.05342561,-0.018064741,0.023882627,0.015985927,-0.016514627,-0.039653108,-0.009112919,0.02140583,-0.022499736,-0.011887876,0.06972986,0.03913527,0.07156631,-0.026498664,-0.05076427,0.036634464,-0.06506312,-0.017517941,0.0055059977,0.025194269,0.046228647,0.04870592,0.00024282243,-0.0381086,-0.0036004963,-0.039964993,-0.007868928,0.019753978,-0.03091215,0.013165115,0.015899297,0.028709501,-0.0106366575,0.041737653,-0.008415821,-0.007224382,0.033186372,-0.03353266,-0.004630712,0.012575286,-0.050234426,-0.013005219,-0.0077187596,0.027750386,-0.018632155,0.0021436089,-0.0007020319,0.07062463,0.014878776,-0.0054322598,0.0066266763,-0.014355807,-0.033937775,0.0099574905,-0.0434634,0.04934006,-0.0014917146,0.06611471,0.00018472875,-0.043653566,-0.019658316,-0.059857056,-0.0037235217,-0.026769552,0.009678985,-0.008283639,0.022034662,-0.03386733,-0.011340807,0.027126066,-0.07333294,-0.006192072,0.028280597,-0.010923187,0.023232155,0.0042424863,0.0077564316,0.041009348,-0.024307307,0.00279481,0.01854955,0.018554358,-0.008674659,0.050852112,-0.00997757,-0.009395245,-0.000735601,-0.0332383,-0.0053379885,0.014808294,0.01142577,0.005814006,-0.012143677,0.053752843,0.022159107,-0.021121494,-0.023428416,-0.002114515,-0.012155989,-0.013032574,0.028245855,0.0060515655,-0.009923727,0.02623702,-0.022323826,-0.007791425,-0.015456428,0.054709937,-0.0067818905,0.009923628,0.018704893,-0.044558592,-0.027841264,0.004853163,0.0316018,-0.028154697,0.016794993,-0.005536824,0.014127152,0.025503026,-0.013235813,0.0020788575,0.048693195,-0.05272792,0.025631163,0.054567724,-0.0053857965,-0.024130141,-0.06508903,-0.0018413172,-0.0033379751,-0.016418435,0.010534787,-0.017803514,-0.029445099,0.04374258,-0.034370676,-0.007651546,0.02505245,-0.0018431969,0.038109172,-0.013599972,-0.03667512,0.033064857,0.0010351609,-0.020064507,0.008280254,0.0627043,-0.0035351384,-0.03205582,-0.03894576,-0.044393335,0.006570022,-0.07248868,0.037060075,-0.007110759,-0.0039874334,0.049388234,-0.012119498,-0.024363123,-0.030938264,-0.031980492,0.04788999,-0.03571301,0.00030856562,-0.0022135049,0.07841291,0.01457898,0.015608031,-0.02210459,0.024510235,-0.011674602,-0.008149135,0.04107371,-0.004399877,0.02576345,0.039867416,0.033362053,0.020131264,-0.008898167,0.02571281,-0.027879354,0.039809886,-0.022947043,0.023999682,0.0025261727,-0.037816,0.0015542291,0.006657657,-0.029958969,-0.035616826,0.01729177,-0.021685915,0.00082615716,-0.0069107297,-0.04925505,-0.02270626,0.044850398,-0.019520681,-0.022173235,-0.0209689,0.017182015,0.03494942,0.010986005,0.044980384,0.03400768,-0.0071230577,0.004031872,0.009451893,0.034521345,0.07347552,-0.037893105,-0.04486991,-0.03772838,0.015443983,0.0017863655,-0.030815804,-0.061401304,-0.006057055,0.025372343,-0.02815039,0.04113885,0.03749811,-0.0028752743,0.046819404,0.015682254,-0.0078648,-0.038782254,0.04674211,-0.043644346,0.0005448623,0.02475148]'::vector))"
+                ],
+                "Plans": [
+                  {
+                    "Node Type": "Nested Loop",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Join Type": "Inner",
+                    "Startup Cost": 9.97,
+                    "Total Cost": 3165.21,
+                    "Plan Rows": 4,
+                    "Plan Width": 24,
+                    "Inner Unique": true,
+                    "Plans": [
+                      {
+                        "Node Type": "Nested Loop",
+                        "Parent Relationship": "Outer",
+                        "Parallel Aware": false,
+                        "Async Capable": false,
+                        "Join Type": "Inner",
+                        "Startup Cost": 9.69,
+                        "Total Cost": 2964.25,
+                        "Plan Rows": 8,
+                        "Plan Width": 16,
+                        "Inner Unique": false,
+                        "Plans": [
+                          {
+                            "Node Type": "Index Scan",
+                            "Parent Relationship": "Outer",
+                            "Parallel Aware": false,
+                            "Async Capable": false,
+                            "Scan Direction": "Forward",
+                            "Index Name": "documents_one_active_per_family",
+                            "Relation Name": "documents",
+                            "Alias": "d",
+                            "Startup Cost": 0.14,
+                            "Total Cost": 16.36,
+                            "Plan Rows": 1,
+                            "Plan Width": 16,
+                            "Filter": "((effective_from <= '2026-09-20'::date) AND ((effective_to IS NULL) OR (effective_to > '2026-09-20'::date)) AND (SubPlan 21))",
+                            "Plans": [
+                              {
+                                "Node Type": "Index Only Scan",
+                                "Parent Relationship": "SubPlan",
+                                "Subplan Name": "SubPlan 21",
+                                "Parallel Aware": false,
+                                "Async Capable": false,
+                                "Scan Direction": "Forward",
+                                "Index Name": "document_acl_pkey",
+                                "Relation Name": "document_acl",
+                                "Alias": "a_2",
+                                "Startup Cost": 0.16,
+                                "Total Cost": 8.2,
+                                "Plan Rows": 1,
+                                "Plan Width": 0,
+                                "Index Cond": "((doc_id = d.doc_id) AND (dept = (NULLIF(current_setting('medops.dept'::text, true), ''::text))::dept))",
+                                "Filter": "((permission = 'read'::acl_permission) AND (dept = (NULLIF(current_setting('medops.dept'::text, true), ''::text))::dept))"
+                              }
+                            ]
+                          },
+                          {
+                            "Node Type": "Bitmap Heap Scan",
+                            "Parent Relationship": "Inner",
+                            "Parallel Aware": false,
+                            "Async Capable": false,
+                            "Relation Name": "chunks",
+                            "Alias": "c",
+                            "Startup Cost": 9.55,
+                            "Total Cost": 2947.06,
+                            "Plan Rows": 83,
+                            "Plan Width": 32,
+                            "Recheck Cond": "(doc_id = d.doc_id)",
+                            "Filter": "(hashed SubPlan 20)",
+                            "Plans": [
+                              {
+                                "Node Type": "Bitmap Index Scan",
+                                "Parent Relationship": "Outer",
+                                "Parallel Aware": false,
+                                "Async Capable": false,
+                                "Index Name": "chunks_doc_seq_unique",
+                                "Startup Cost": 0.0,
+                                "Total Cost": 9.52,
+                                "Plan Rows": 166,
+                                "Plan Width": 0,
+                                "Index Cond": "(doc_id = d.doc_id)"
+                              },
+                              {
+                                "Node Type": "Seq Scan",
+                                "Parent Relationship": "SubPlan",
+                                "Subplan Name": "SubPlan 20",
+                                "Parallel Aware": false,
+                                "Async Capable": false,
+                                "Relation Name": "documents",
+                                "Alias": "d_2",
+                                "Startup Cost": 0.0,
+                                "Total Cost": 1323.2,
+                                "Plan Rows": 1,
+                                "Plan Width": 16,
+                                "Filter": "((status = ANY ('{active,archived}'::doc_status[])) AND (SubPlan 18))",
+                                "Plans": [
+                                  {
+                                    "Node Type": "Index Only Scan",
+                                    "Parent Relationship": "SubPlan",
+                                    "Subplan Name": "SubPlan 18",
+                                    "Parallel Aware": false,
+                                    "Async Capable": false,
+                                    "Scan Direction": "Forward",
+                                    "Index Name": "document_acl_pkey",
+                                    "Relation Name": "document_acl",
+                                    "Alias": "a_1",
+                                    "Startup Cost": 0.16,
+                                    "Total Cost": 8.2,
+                                    "Plan Rows": 1,
+                                    "Plan Width": 0,
+                                    "Index Cond": "((doc_id = d_2.doc_id) AND (dept = (NULLIF(current_setting('medops.dept'::text, true), ''::text))::dept))",
+                                    "Filter": "((permission = 'read'::acl_permission) AND (dept = (NULLIF(current_setting('medops.dept'::text, true), ''::text))::dept))"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "Node Type": "Index Scan",
+                        "Parent Relationship": "Inner",
+                        "Parallel Aware": false,
+                        "Async Capable": false,
+                        "Scan Direction": "Forward",
+                        "Index Name": "chunk_embeddings_pkey",
+                        "Relation Name": "chunk_embeddings",
+                        "Alias": "e",
+                        "Startup Cost": 0.28,
+                        "Total Cost": 25.11,
+                        "Plan Rows": 1,
+                        "Plan Width": 34,
+                        "Index Cond": "((chunk_id = c.chunk_id) AND (embedding_version = 'emb-bge-m3-dense-v1'::text))",
+                        "Filter": "(SubPlan 7)",
+                        "Plans": [
+                          {
+                            "Node Type": "Index Scan",
+                            "Parent Relationship": "SubPlan",
+                            "Subplan Name": "SubPlan 7",
+                            "Parallel Aware": false,
+                            "Async Capable": false,
+                            "Scan Direction": "Forward",
+                            "Index Name": "chunks_pkey",
+                            "Relation Name": "chunks",
+                            "Alias": "c_1",
+                            "Startup Cost": 0.28,
+                            "Total Cost": 24.66,
+                            "Plan Rows": 1,
+                            "Plan Width": 0,
+                            "Index Cond": "(chunk_id = e.chunk_id)",
+                            "Filter": "(SubPlan 3)",
+                            "Plans": [
+                              {
+                                "Node Type": "Index Scan",
+                                "Parent Relationship": "SubPlan",
+                                "Subplan Name": "SubPlan 3",
+                                "Parallel Aware": false,
+                                "Async Capable": false,
+                                "Scan Direction": "Forward",
+                                "Index Name": "documents_pkey",
+                                "Relation Name": "documents",
+                                "Alias": "d_1",
+                                "Startup Cost": 0.14,
+                                "Total Cost": 16.36,
+                                "Plan Rows": 1,
+                                "Plan Width": 0,
+                                "Index Cond": "(doc_id = c_1.doc_id)",
+                                "Filter": "((status = ANY ('{active,archived}'::doc_status[])) AND (SubPlan 1))",
+                                "Plans": [
+                                  {
+                                    "Node Type": "Index Only Scan",
+                                    "Parent Relationship": "SubPlan",
+                                    "Subplan Name": "SubPlan 1",
+                                    "Parallel Aware": false,
+                                    "Async Capable": false,
+                                    "Scan Direction": "Forward",
+                                    "Index Name": "document_acl_pkey",
+                                    "Relation Name": "document_acl",
+                                    "Alias": "a",
+                                    "Startup Cost": 0.16,
+                                    "Total Cost": 8.2,
+                                    "Plan Rows": 1,
+                                    "Plan Width": 0,
+                                    "Index Cond": "((doc_id = d_1.doc_id) AND (dept = (NULLIF(current_setting('medops.dept'::text, true), ''::text))::dept))",
+                                    "Filter": "((permission = 'read'::acl_permission) AND (dept = (NULLIF(current_setting('medops.dept'::text, true), ''::text))::dept))"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "sample_id": "pc-0060",
+      "dept": "CO",
+      "plan": [
+        {
+          "Plan": {
+            "Node Type": "Limit",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Startup Cost": 3165.25,
+            "Total Cost": 3165.26,
+            "Plan Rows": 4,
+            "Plan Width": 24,
+            "Plans": [
+              {
+                "Node Type": "Sort",
+                "Parent Relationship": "Outer",
+                "Parallel Aware": false,
+                "Async Capable": false,
+                "Startup Cost": 3165.25,
+                "Total Cost": 3165.26,
+                "Plan Rows": 4,
+                "Plan Width": 24,
+                "Sort Key": [
+                  "((e.embedding <=> '[-0.04719621,-0.04225403,-0.019677559,0.00016573703,0.027581219,-0.036611795,-0.039474435,-0.02235685,-0.03275985,-0.007662986,-0.054287698,-0.0065487693,0.0010098164,-0.014452273,-0.014439167,0.0057736384,-0.003060249,0.0170303,-0.011182034,-0.02201779,-0.038245503,0.012867803,-0.0155049525,0.0007336089,-0.011943048,0.035607986,0.009510784,-0.025490949,-0.003607091,-0.012904157,-0.03276142,-0.0060647186,0.0018691295,-0.03813255,0.0043878467,0.006915724,-0.011563559,-0.024123454,-0.04202508,-0.023661567,0.020386498,-0.03777932,0.03555792,0.014156405,0.06838446,-0.014306003,0.028726853,-0.019895276,-0.039638102,-0.013689179,-0.012157852,-0.007913715,0.01697822,-0.054973274,0.034365967,0.006090608,-0.0016049269,-0.0070763673,-0.06568988,-0.026482522,-0.067481324,0.008575557,-0.023794904,-0.01573441,0.046072368,-0.013923957,-0.019135082,0.004969666,0.017263833,-0.03044646,-0.029715184,-0.003743381,-0.006996066,0.0071297674,-0.08317291,0.010841418,-0.004815171,0.0052280095,-0.013254977,0.04224864,-0.017772406,-0.022211706,-0.0036248178,0.023584208,-0.008765944,0.011386166,-0.023530861,0.029510532,-0.005711243,-0.05442751,-0.053433012,-0.0044622244,-0.048432343,-0.032364577,-0.03457331,-0.0377452,-0.052671805,0.005826366,-0.049803484,0.010490906,0.0146332495,0.016950224,0.00161953,-0.009338607,0.01923256,-0.028364679,-0.000111004156,0.042669665,-0.013710327,-0.0013537826,-0.023814525,-0.015056498,0.0065796855,0.026893828,0.0069765574,-0.007354203,-0.0005421968,0.01656681,0.012765501,-0.011713115,0.04786698,-0.0056521366,0.0070410795,-0.008691012,0.0016239238,-0.046955734,0.0022929006,0.0063365176,0.0376447,0.022561513,-0.017135698,0.010236295,-0.020406099,0.0008004357,-0.0236206,-0.043535836,-0.0031324083,0.030994821,-0.08928169,-0.0483257,0.016714297,0.025986755,-0.038673267,-0.01174366,0.0076236655,-0.038548965,0.011715819,0.01608498,0.00058499223,0.024053501,-0.01363361,0.01891292,-0.016276324,0.0141995,0.032658372,-0.01284184,0.0005845503,0.024577325,0.021279734,0.02339247,0.011254062,-0.013216143,0.020699752,-0.078413606,0.017528145,0.042115226,-0.030582054,0.034636576,-0.04416819,-0.002209507,-0.004287886,-0.04554602,0.01046448,-0.022523742,-0.0030165943,-0.0018775172,0.067934796,0.017804818,-0.0092905415,-0.05381152,-0.006505804,0.0062086894,-0.043975916,-0.03930247,-0.0496067,0.017491559,0.023744004,-0.04292374,0.00027139435,0.04203705,0.04062911,-0.029502306,0.007433033,0.048768245,-0.0218663,-0.0081991125,-0.0006646777,-0.00713952,0.039993692,-0.030705504,0.008838827,0.02568525,-0.011751878,0.0076738494,-0.0482661,-0.011919386,-0.015563205,-0.0030655626,0.006739718,-0.056878496,-0.0025789763,-0.018490544,0.009935587,0.031017153,-0.01742602,-0.028777396,0.0011803709,0.032799274,-0.016947364,-0.051906314,0.034624364,0.030971216,0.045784485,-0.012941075,0.024844456,0.03523588,-0.01866799,0.037143182,0.017303672,-0.03448123,0.014391125,0.037217773,0.024275225,-0.03274484,0.035120513,0.018264359,0.0053386865,-0.0027049924,0.036274865,0.0048448113,-0.028732788,-0.038492106,-0.0010335608,0.018299952,-0.018633202,-0.044135686,0.005162754,0.010259929,-0.021449165,-0.012791284,0.02194459,-0.037117425,-0.049993057,-0.003893856,0.029349228,0.008415873,0.002765755,-0.0029596784,0.00038877781,0.07159784,0.009843267,0.00824124,0.019767975,0.012023334,0.019675205,-0.05730993,-0.03683022,0.024873344,0.020790184,-0.010965697,0.019481294,0.0015858504,-0.0075343475,0.022785641,-0.01179751,0.010462079,0.0075474884,-0.015382774,0.045560934,0.012285368,-0.031956248,0.04793728,-0.008033395,-0.006074329,0.0025152946,-0.026420776,-0.011583385,-0.03650673,-0.00061824906,-0.021154381,-0.005521666,-0.005156107,0.10643297,-0.01971736,-0.054039873,-0.013072345,-0.008484358,-0.14764358,-0.028715063,-0.053130522,0.018742628,-0.010199332,0.04043059,-0.03874816,-0.03619898,-0.06008057,0.026940983,-0.019742632,-0.055690296,-0.039215475,-0.024601862,0.02167631,0.001517457,-0.0335782,-0.003980902,0.0068765115,-0.04591372,-0.04534708,-0.027604913,0.04448658,-0.007364093,-0.025769344,0.016257195,0.025514018,0.00310724,-0.051715206,-0.020589262,-0.040293857,0.034284,0.0011983751,0.047381964,0.021411354,0.02642885,0.058138765,-0.015929896,0.022354454,-0.02962853,0.0887815,0.029173557,-0.015355582,0.026912633,-0.0070751617,0.019842966,0.04116535,-0.0134336455,0.00720944,0.006908459,0.023480345,-0.03305107,0.03806558,-0.009144838,-0.05441032,-0.031959962,-0.04007837,-0.010642169,0.0013926275,0.055428714,0.0067027425,-0.034211736,-0.04436691,0.014663334,-0.0034615754,-0.031015456,-0.022618875,0.016655413,-0.014923356,0.009952072,-0.012914896,-0.001342338,-0.028085941,-0.022586185,-0.020750038,0.03974649,0.0076059625,-0.023134056,-0.017967243,-0.03273738,-0.0026406667,0.03948927,0.04727639,0.031684257,-0.051983766,-0.013125857,0.06977526,0.04297831,-0.00057866564,0.20904799,-0.040696386,0.012365795,-0.007131687,0.0081916265,-0.004936515,-0.02003939,0.03650936,0.0093642045,-0.018924654,-0.0014811982,-0.019416558,-0.016581805,0.030381812,0.026818398,-0.009411358,-0.033733953,-0.02690047,0.10733675,-0.005568742,0.04489586,-0.012009405,-0.0062924246,-0.008944936,-0.018013535,-0.024312973,0.027961893,0.052684065,-0.018182969,-0.00093313656,0.020084027,0.036274128,0.038998,0.017126808,0.005255627,0.03202838,-0.055390988,0.015854746,-0.007120112,-0.013805551,0.027593805,-0.038507957,-0.020884441,-0.0066152606,0.011521207,-0.026208196,-0.0034602217,-0.037492502,-0.004295334,0.043349132,-0.03369628,0.037286185,-0.011123092,-7.010998e-05,0.058882367,0.039351802,-0.09374145,-0.008231161,0.0188632,0.046340473,0.025368728,-0.02408654,-0.0072817015,0.040608976,-0.027753495,0.03542466,-0.05292365,0.0068052905,0.012448604,-0.00692341,0.007878775,0.036460575,-0.03162886,-0.011732423,-0.008296584,0.01138365,0.05063821,0.07038794,0.05349929,0.008083742,-0.014873361,-0.016855074,-0.024460731,-0.044755124,0.030918641,0.020315833,0.022638403,0.01128197,-0.03713805,-0.035872575,-0.0024268574,-0.041951373,-0.06183437,-0.005538485,0.018899338,0.016064445,0.02608696,-0.023965599,-0.06702687,-0.035572562,0.0018996311,-0.04412322,0.006446802,-0.021765174,0.010145426,0.0293335,0.036011904,-0.021634653,0.008799129,0.014143695,-0.041331165,0.0011407849,0.035212643,-0.06236989,0.01532456,0.0042433706,0.0005814881,0.020342717,0.01664028,0.019339792,0.0049176607,0.03712545,0.014854388,-0.011866218,0.0256629,-0.016720489,0.013186567,-0.04524153,0.0036049644,0.008771853,-0.002861226,0.00909869,-0.01943652,0.00041745775,-0.007208084,-0.0229312,0.019896166,0.0015703418,-0.012074487,0.04489248,-0.025007596,-0.047001995,-0.013782758,0.02190958,-0.0138042215,0.020951435,-0.041280303,-0.0021764203,-0.028125236,0.00781526,-0.011632558,-0.022872124,-0.0036888432,-0.04780816,-0.0015913083,-0.012528963,-0.01567126,-0.00038367452,0.004563347,-0.027108083,0.021953672,0.037579957,0.011017274,0.06752138,0.0017019603,0.02228334,0.022661336,0.009563752,-0.0007296518,-0.054433472,-0.005422307,0.04360102,0.0001392208,0.009136673,0.013762254,0.01623754,-0.058483865,0.05533418,0.062291067,-0.010368371,-0.0131185455,0.0035752738,0.026413519,0.03031721,-0.002284972,-0.049197737,-0.03308,-0.03235085,0.0546872,-0.048229042,-0.002242368,0.07807879,-0.010699049,-0.004382075,0.026089348,0.013071055,0.033776138,-0.03130329,-0.02746955,0.0036534609,-0.00505891,0.0141123505,-0.010085366,0.011143702,-0.0028555507,0.020929426,-0.012916229,-0.0012016215,-0.044288557,0.029017055,-0.0073602977,-0.022467995,0.012600486,-0.004807475,-0.054231018,0.04990432,-0.0023339433,0.04452256,0.02720308,-0.017746147,0.066917226,-0.03380045,0.0355345,-0.029797751,0.026303312,0.043385234,0.025533494,0.019129045,0.04644588,0.0014967303,0.0028645734,-0.03229677,0.0014622746,-0.016236136,0.0013361714,-0.014251034,-0.014405056,0.023951696,-0.008408382,-0.0024219747,-0.010421446,-0.037827026,0.004071259,0.011832862,0.0512276,-0.007253481,0.02099671,-4.56418e-05,-0.0067891222,0.04478615,0.07328117,-0.025725259,-0.011886368,-0.032891907,0.074943915,0.013028919,-0.054890182,0.022602554,-0.029528992,0.02098855,-0.010252836,0.012496714,-0.006941555,0.015961701,-0.03980867,-0.04606933,-0.022379367,0.035222437,-0.03187231,-9.4035575e-05,0.00024213198,-0.0571721,-0.0759293,-0.04735823,-0.001801339,-0.009700539,-0.004166048,0.0374198,-0.015321907,0.004924677,0.03524402,-0.006858272,-0.00025808028,0.0051957793,0.03904111,0.008285744,0.018561184,0.0026207091,-0.010406484,-0.015037547,0.04145866,0.021620465,-0.014262912,0.0348956,-0.007927867,0.030770117,-0.029096065,0.011202249,0.00055154425,0.012344263,-0.007412023,0.017429186,-0.031547077,-0.010253717,-0.0005722177,0.015766742,0.02352713,-0.015221263,0.04262798,0.06979439,0.002943178,-0.04242618,-0.004945034,-0.0012132169,0.0013005016,-0.022966996,-0.0032776075,-0.01693644,-0.008274315,0.0271874,0.0014171668,-0.000759363,-0.018979114,-0.02103368,0.0019115866,0.019885506,0.020886945,0.01963431,-0.011531794,-0.019887038,-0.04122472,0.0053773844,-0.07388459,0.002352063,0.054581866,0.020862127,0.013337492,-0.028386857,0.07163576,0.031403974,0.0030085144,-0.06963314,0.059872814,-0.007108811,-0.0021256825,-0.051984403,0.014674566,-0.033418424,-0.027582638,-0.0066481587,0.0006658525,-0.034943633,-0.0031112179,-0.05479913,-0.00052666134,0.044906534,-0.01955492,0.076473124,0.05236858,0.019160664,0.030743182,0.046195876,0.038265377,0.019496083,-0.012486881,0.026242763,0.029831653,-0.034347206,0.01463206,0.0024429553,-0.004663122,0.027680762,-0.01503347,0.0027510636,-0.033466507,0.0005682726,0.022799479,0.005515329,0.0016708244,0.043670073,0.021399222,-0.034884457,-0.014220074,0.002197359,0.018303309,0.04457785,0.0042962325,0.0059081404,0.0027020373,0.02504196,-0.022703728,0.00047092812,-0.07449908,-0.022007547,-0.13594648,-0.033904612,0.017410051,-0.018605234,-0.025480047,-0.004587238,-0.022908093,-0.009652608,-0.0033224854,0.00070313516,-0.0033630624,0.027178327,0.011074256,-0.022306528,-0.064357,0.008966823,-0.025537971,-0.0059634517,-0.0042445045,-0.013933786,-0.010466589,-0.0068939896,0.024053585,0.05956926,-0.019155692,-0.006535993,-0.05620405,-0.012682838,-0.04538587,-0.015845392,0.024617987,0.011429005,0.035974164,0.044391684,-0.009085076,0.00020981535,-0.023597594,-0.008028735,-0.043755714,-0.00078587706,-0.027862899,0.0014182731,0.00840537,0.006322962,-0.00011473218,0.047786366,0.010546752,0.01460467,-0.04113539,-0.009051657,-0.053658087,0.019454863,-0.0360105,-0.0016813382,0.02954596,-0.020852972,0.00650715,0.045059606,-0.046153873,0.06474187,0.0014889203,0.0015536075,-0.056914695,-0.030430319,-0.045613505,0.002408129,-0.07572875,0.009343987,-0.023652807,0.022349551,-0.038188647,0.0125366375,0.0118112955,-0.05693347,0.039006993,0.03197246,0.07324151,-0.0051474883,0.026887815,-0.045800094,0.020156441,-0.046556488,-0.03399093,-0.017459024,0.044645447,-0.01644328,-0.0114978,0.0127730705,-0.013424114,0.007711129,-0.07214111,-0.021188544,0.013518281,-0.047711268,-0.008164014,0.037290417,-0.0035800461,-0.01986382,0.007286952,0.004879003,-0.012155734,0.03357555,0.016924152,-0.024124322,0.019365415,0.052139863,0.022385512,-0.027177313,0.009043654,-0.017486652,-0.012024095,-0.028070476,-0.00028066992,0.0052096206,-0.05851877,0.03089771,-0.029994592,0.006833091,-0.020155977,-0.023003979,-0.029132782,-0.0014684243,0.005417722,-0.04104464,0.021574037,0.025014121,0.06275298,-0.0042610345,0.0017211179,0.0139076775,0.027003873,0.019441051,-0.0070101866,-0.007546678,0.054295316,0.0033529943,-0.0021501393,0.042834513,0.0011713924,-0.02011229,-0.08791494,-0.029888952,-0.004931485,0.0076807975,0.0020538813,0.017211907,-0.019204272,0.016662315,-0.037576772,-0.007836809,0.04815694,-0.0144581115,0.030749239,0.034599423,0.014959692,0.022587704,0.0142814,0.06326031,0.02255721,0.072998896,0.008135485,-0.05096343,-0.026965357,-0.0211831,-0.011314398,0.027775586,-0.003617567,0.014870976,-0.05503951,0.025348956,0.013850793,0.06343156,-0.027710563,0.059916284,0.06911834,-0.0032351853,-0.010724677,0.043899763,0.04479405,-0.015622069,0.03293811,0.009264385,-0.011139542,-0.023848904,0.0018280811,0.029816618,-0.030993229,0.03334898,0.001543901,0.04810996,0.01822573,-0.0062308875,0.042188052,0.00075217604,0.046943273,-0.013154076,0.03156976,0.029921358,-0.0016572498,0.034441903,0.0062687467,0.049587283,-0.05779997,-0.014374452,-0.00945647,0.006326376,-0.025803676,-0.042065084,-0.04362608,-0.06447489,-0.06468445,0.030332869,-0.045975756,0.010275235,0.024438709,0.020805573,0.0036576586,0.030932952,0.038872432,-0.031043775,0.029343832,0.067861274,0.054034162,-0.026428131,0.00818746,-0.041733306,0.020767473,0.019157315,0.008674765,0.0110793365,0.047410168,-0.00362397,-0.039674327,-0.0005253242,-0.009290266,-0.008396893,0.0257215,-0.005313531,-0.010264987,0.010560856,0.025266372,-0.013182597,0.022905177,0.023478461]'::vector))"
+                ],
+                "Plans": [
+                  {
+                    "Node Type": "Nested Loop",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Join Type": "Inner",
+                    "Startup Cost": 9.97,
+                    "Total Cost": 3165.21,
+                    "Plan Rows": 4,
+                    "Plan Width": 24,
+                    "Inner Unique": true,
+                    "Plans": [
+                      {
+                        "Node Type": "Nested Loop",
+                        "Parent Relationship": "Outer",
+                        "Parallel Aware": false,
+                        "Async Capable": false,
+                        "Join Type": "Inner",
+                        "Startup Cost": 9.69,
+                        "Total Cost": 2964.25,
+                        "Plan Rows": 8,
+                        "Plan Width": 16,
+                        "Inner Unique": false,
+                        "Plans": [
+                          {
+                            "Node Type": "Index Scan",
+                            "Parent Relationship": "Outer",
+                            "Parallel Aware": false,
+                            "Async Capable": false,
+                            "Scan Direction": "Forward",
+                            "Index Name": "documents_one_active_per_family",
+                            "Relation Name": "documents",
+                            "Alias": "d",
+                            "Startup Cost": 0.14,
+                            "Total Cost": 16.36,
+                            "Plan Rows": 1,
+                            "Plan Width": 16,
+                            "Filter": "((effective_from <= '2026-09-20'::date) AND ((effective_to IS NULL) OR (effective_to > '2026-09-20'::date)) AND (SubPlan 21))",
+                            "Plans": [
+                              {
+                                "Node Type": "Index Only Scan",
+                                "Parent Relationship": "SubPlan",
+                                "Subplan Name": "SubPlan 21",
+                                "Parallel Aware": false,
+                                "Async Capable": false,
+                                "Scan Direction": "Forward",
+                                "Index Name": "document_acl_pkey",
+                                "Relation Name": "document_acl",
+                                "Alias": "a_2",
+                                "Startup Cost": 0.16,
+                                "Total Cost": 8.2,
+                                "Plan Rows": 1,
+                                "Plan Width": 0,
+                                "Index Cond": "((doc_id = d.doc_id) AND (dept = (NULLIF(current_setting('medops.dept'::text, true), ''::text))::dept))",
+                                "Filter": "((permission = 'read'::acl_permission) AND (dept = (NULLIF(current_setting('medops.dept'::text, true), ''::text))::dept))"
+                              }
+                            ]
+                          },
+                          {
+                            "Node Type": "Bitmap Heap Scan",
+                            "Parent Relationship": "Inner",
+                            "Parallel Aware": false,
+                            "Async Capable": false,
+                            "Relation Name": "chunks",
+                            "Alias": "c",
+                            "Startup Cost": 9.55,
+                            "Total Cost": 2947.06,
+                            "Plan Rows": 83,
+                            "Plan Width": 32,
+                            "Recheck Cond": "(doc_id = d.doc_id)",
+                            "Filter": "(hashed SubPlan 20)",
+                            "Plans": [
+                              {
+                                "Node Type": "Bitmap Index Scan",
+                                "Parent Relationship": "Outer",
+                                "Parallel Aware": false,
+                                "Async Capable": false,
+                                "Index Name": "chunks_doc_seq_unique",
+                                "Startup Cost": 0.0,
+                                "Total Cost": 9.52,
+                                "Plan Rows": 166,
+                                "Plan Width": 0,
+                                "Index Cond": "(doc_id = d.doc_id)"
+                              },
+                              {
+                                "Node Type": "Seq Scan",
+                                "Parent Relationship": "SubPlan",
+                                "Subplan Name": "SubPlan 20",
+                                "Parallel Aware": false,
+                                "Async Capable": false,
+                                "Relation Name": "documents",
+                                "Alias": "d_2",
+                                "Startup Cost": 0.0,
+                                "Total Cost": 1323.2,
+                                "Plan Rows": 1,
+                                "Plan Width": 16,
+                                "Filter": "((status = ANY ('{active,archived}'::doc_status[])) AND (SubPlan 18))",
+                                "Plans": [
+                                  {
+                                    "Node Type": "Index Only Scan",
+                                    "Parent Relationship": "SubPlan",
+                                    "Subplan Name": "SubPlan 18",
+                                    "Parallel Aware": false,
+                                    "Async Capable": false,
+                                    "Scan Direction": "Forward",
+                                    "Index Name": "document_acl_pkey",
+                                    "Relation Name": "document_acl",
+                                    "Alias": "a_1",
+                                    "Startup Cost": 0.16,
+                                    "Total Cost": 8.2,
+                                    "Plan Rows": 1,
+                                    "Plan Width": 0,
+                                    "Index Cond": "((doc_id = d_2.doc_id) AND (dept = (NULLIF(current_setting('medops.dept'::text, true), ''::text))::dept))",
+                                    "Filter": "((permission = 'read'::acl_permission) AND (dept = (NULLIF(current_setting('medops.dept'::text, true), ''::text))::dept))"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "Node Type": "Index Scan",
+                        "Parent Relationship": "Inner",
+                        "Parallel Aware": false,
+                        "Async Capable": false,
+                        "Scan Direction": "Forward",
+                        "Index Name": "chunk_embeddings_pkey",
+                        "Relation Name": "chunk_embeddings",
+                        "Alias": "e",
+                        "Startup Cost": 0.28,
+                        "Total Cost": 25.11,
+                        "Plan Rows": 1,
+                        "Plan Width": 34,
+                        "Index Cond": "((chunk_id = c.chunk_id) AND (embedding_version = 'emb-bge-m3-dense-v1'::text))",
+                        "Filter": "(SubPlan 7)",
+                        "Plans": [
+                          {
+                            "Node Type": "Index Scan",
+                            "Parent Relationship": "SubPlan",
+                            "Subplan Name": "SubPlan 7",
+                            "Parallel Aware": false,
+                            "Async Capable": false,
+                            "Scan Direction": "Forward",
+                            "Index Name": "chunks_pkey",
+                            "Relation Name": "chunks",
+                            "Alias": "c_1",
+                            "Startup Cost": 0.28,
+                            "Total Cost": 24.66,
+                            "Plan Rows": 1,
+                            "Plan Width": 0,
+                            "Index Cond": "(chunk_id = e.chunk_id)",
+                            "Filter": "(SubPlan 3)",
+                            "Plans": [
+                              {
+                                "Node Type": "Index Scan",
+                                "Parent Relationship": "SubPlan",
+                                "Subplan Name": "SubPlan 3",
+                                "Parallel Aware": false,
+                                "Async Capable": false,
+                                "Scan Direction": "Forward",
+                                "Index Name": "documents_pkey",
+                                "Relation Name": "documents",
+                                "Alias": "d_1",
+                                "Startup Cost": 0.14,
+                                "Total Cost": 16.36,
+                                "Plan Rows": 1,
+                                "Plan Width": 0,
+                                "Index Cond": "(doc_id = c_1.doc_id)",
+                                "Filter": "((status = ANY ('{active,archived}'::doc_status[])) AND (SubPlan 1))",
+                                "Plans": [
+                                  {
+                                    "Node Type": "Index Only Scan",
+                                    "Parent Relationship": "SubPlan",
+                                    "Subplan Name": "SubPlan 1",
+                                    "Parallel Aware": false,
+                                    "Async Capable": false,
+                                    "Scan Direction": "Forward",
+                                    "Index Name": "document_acl_pkey",
+                                    "Relation Name": "document_acl",
+                                    "Alias": "a",
+                                    "Startup Cost": 0.16,
+                                    "Total Cost": 8.2,
+                                    "Plan Rows": 1,
+                                    "Plan Width": 0,
+                                    "Index Cond": "((doc_id = d_1.doc_id) AND (dept = (NULLIF(current_setting('medops.dept'::text, true), ''::text))::dept))",
+                                    "Filter": "((permission = 'read'::acl_permission) AND (dept = (NULLIF(current_setting('medops.dept'::text, true), ''::text))::dept))"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "finished_at": "2026-09-20T11:26:43+00:00"
+}

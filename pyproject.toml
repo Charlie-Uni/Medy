@@ -13,9 +13,14 @@ dependencies = [
   "sqlalchemy>=2.0,<3",
   "psycopg[binary]>=3.2,<4",
   "redis>=5.0,<7",
+  "defusedxml>=0.7,<1",
 ]
 
 [project.optional-dependencies]
+# local embedding/reranker inference (ADR-0007); separate hashed lock, never part of the API/CI install
+embed = [
+  "sentence-transformers>=3.0,<6",
+]
 dev = [
   "pytest>=8.0",
   "ruff>=0.6",

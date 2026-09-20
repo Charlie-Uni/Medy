@@ -80,6 +80,11 @@ class Settings(BaseSettings):
     redis_url: SecretStr
     # Retrieval candidate cache TTL (M1-19). Entries also die with the department epoch on publish events.
     retrieval_cache_ttl_seconds: int = Field(default=300, ge=1, le=86400)
+    # Antivirus hook for ingestion (ADR-0009 §4): clamd INSTREAM at tcp://host:port or unix:///path.
+    # Optional in dev/test (the ingest audit records `av_scan: skipped`); required in prod.
+    clamd_address: str | None = Field(default=None, pattern=r"^(tcp://[^/\s]+:\d{1,5}|unix:///\S+)$")
+    # Local model cache for the optional embedding/reranker stack (ADR-0007); default ~/.cache/medops-models.
+    model_cache_dir: str | None = None
 
     # Compose bootstrap values (docker-compose.yml reads the same .env); optional for the app itself.
     postgres_db: str | None = None
@@ -103,6 +108,8 @@ class Settings(BaseSettings):
         "db_app_password",
         "db_readonly_password",
         "db_admin_password",
+        "clamd_address",
+        "model_cache_dir",
         mode="before",
     )
     @classmethod
@@ -133,4 +140,6 @@ class Settings(BaseSettings):
                 raise ValueError("prod forbids DEBUG log level")
             if self.identity_pseudonym_key is None:
                 raise ValueError("prod requires identity_pseudonym_key (INV-OBS-02)")
+            if self.clamd_address is None:
+                raise ValueError("prod requires clamd_address: ingested files must be virus-scanned (ADR-0009)")
         return self

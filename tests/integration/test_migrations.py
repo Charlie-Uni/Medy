@@ -25,6 +25,8 @@ EXPECTED_TABLES = {
     "doc_audit",
     "outbox_events",
     "outbox_consumer_acks",
+    "embedding_index_meta",
+    "chunk_embeddings",
 }
 EXPECTED_TYPES = {
     "dept",
@@ -160,7 +162,7 @@ def set_actor(conn: psycopg.Connection, actor: str = "reviewer-01", reason: str 
 
 def test_single_head_and_offline_sql_render(migrated):
     heads = ScriptDirectory.from_config(alembic_config(migrated)).get_heads()
-    assert heads == ["0005"]
+    assert heads == ["0006"]
 
 
 def test_upgrade_downgrade_upgrade_round_trip_leaves_nothing_behind(scratch_database):
@@ -194,11 +196,17 @@ def test_upgrade_downgrade_upgrade_round_trip_leaves_nothing_behind(scratch_data
     assert _inventory(scratch_database)["tables"] == EXPECTED_TABLES | {"alembic_version"}
 
 
-def test_no_vector_or_tsvector_columns_before_dec_001_and_002(conn):
+def test_only_the_decided_vector_column_exists_and_no_tsvector_before_dec_001(conn):
+    """DEC-002 is decided (ADR-0007): exactly one vector(1024) column, in chunk_embeddings. DEC-001 is still
+    open, so no tsvector column may exist in a migration (candidate index tables are experiment-scoped)."""
     rows = conn.execute(
         "select table_name, column_name, udt_name from information_schema.columns where table_schema = 'public' and udt_name in ('vector', 'tsvector')"
     ).fetchall()
-    assert rows == []
+    assert rows == [("chunk_embeddings", "embedding", "vector")]
+    dim = conn.execute(
+        "select atttypmod from pg_attribute where attrelid = 'chunk_embeddings'::regclass and attname = 'embedding'"
+    ).fetchone()[0]
+    assert dim == 1024
 
 
 def test_one_active_per_family_is_a_partial_unique_index(conn):

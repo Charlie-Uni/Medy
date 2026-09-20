@@ -21,6 +21,12 @@
 
 ## 批准边界
 
-- 不做微调、不做蒸馏；不使用外部 API；模型缓存目录在仓库外（`MEDOPS_MODEL_CACHE`），模型权重不进入 Git。
+- 不做微调、不做蒸馏；不使用外部 API；模型缓存目录在仓库外（`MODEL_CACHE_DIR`，默认 `~/.cache/medops-models`），模型权重不进入 Git。
 - 未来更换 embedding 模型或维度必须另开 ADR 修订并重建索引。
 - 本决策不包含 LLM 的托管与数据出境（DEC-009 其余部分）与 Verifier 模型（DEC-003）。
+
+## 结果回填
+
+### 2026-09-20：向量通道运行 `2026-09-20-dec002-bge-m3-v1`（实现记录 42）
+
+探针 v2（107 条）、`medops_v2`（2,662 chunk 全部嵌入）、K=20、CPU：language_matched 严格宏平均 Recall@20 **82.7%**（MA 100%、PV 79.3%、CO 56.2%），cross_lingual **65.6%**（诊断阈值 50% 达到）；切片 dose_unit / drug_name_zh / time_window 100%，negation 89.5%，mixed_zh_en 75.5%，protocol_id 58.8%；泄漏 0、不可复现 0、无候选耗尽；P95 138.4 ms（含查询嵌入）。与词法基线对比：A2 77.3% / 15.6%，B2 80.0% / 12.5%。结论：向量通道承担跨语言查询的预期成立；编号与英文指南为弱项，由词法通道互补，端到端融合按基线 M1-21 门禁判定。

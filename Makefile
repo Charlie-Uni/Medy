@@ -1,4 +1,4 @@
-.PHONY: help install install-check lock schemas lint format format-check typecheck test test-integration check migrate migrate-down migration-check db-users load-corpus lexical-index-a activate-docs validate-probe canonicalize-probe up down ps
+.PHONY: help install install-check install-embed lock schemas lint format format-check typecheck test test-integration check migrate migrate-down migration-check db-users load-corpus lexical-index-a activate-docs validate-probe canonicalize-probe up down ps
 
 # venv lives in a NON-dot directory on purpose: ~/Documents is an iCloud Drive domain that marks every file
 # inside dot-directories as hidden, and CPython >= 3.11.16 skips hidden .pth files, which silently breaks
@@ -24,6 +24,7 @@ help:
 	@echo "make validate-probe DIR=<version_dir> [MODE=draft|frozen] [PAGES=<pages_dir>]"
 	@echo "make canonicalize-probe DIR=<draft_dir> [PAGES=<pages_dir>] [CHECK=1]  rewrite draft JSONL to canonical form, then validate"
 	@echo "make lock            regenerate requirements.lock from pyproject (uv pip compile, hashed)"
+	@echo "make install-embed   install the optional local embedding stack from requirements-embed.lock (ADR-0007)"
 	@echo "make schemas         export API/MCP JSON Schemas and openapi.json to schemas/ (check runs the drift test)"
 	@echo "make up | down | ps  local PostgreSQL/pgvector + Redis via docker compose (needs .env)"
 
@@ -42,6 +43,14 @@ install:
 lock:
 	uv pip compile pyproject.toml --extra dev --python-version 3.11 --generate-hashes -o requirements.lock
 	uv pip compile requirements-build.in --python-version 3.11 --generate-hashes -o requirements-build.lock
+	# the embed lock is pinned to the main lock's versions (constraints derived from it) so `install-embed` never upgrades a base package
+	grep -E '^[A-Za-z0-9_.-]+==' requirements.lock | sed 's/ \\$$//' > .constraints-main.tmp
+	uv pip compile pyproject.toml --extra embed --constraint .constraints-main.tmp --python-version 3.11 --generate-hashes -o requirements-embed.lock
+	rm -f .constraints-main.tmp
+
+install-embed:
+	# optional local inference stack (ADR-0007): PyTorch + sentence-transformers, hashed, on top of `make install`
+	$(PY) -m pip install --no-build-isolation --require-hashes -r requirements-embed.lock
 
 install-check:
 	@cd /tmp && $(CURDIR)/$(PY) -c "import medops.evals.probe.validator" && echo "install-check: medops importable outside the repo"

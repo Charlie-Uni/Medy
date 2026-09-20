@@ -39,8 +39,21 @@ def test_prod_hardening(monkeypatch):
         _settings(monkeypatch, APP_ENV="prod", DOCS_ENABLED="false", DEBUG="false")
     with pytest.raises(ValidationError, match="identity_pseudonym_key"):  # empty value is unset, not a key
         _settings(monkeypatch, APP_ENV="prod", DOCS_ENABLED="false", DEBUG="false", IDENTITY_PSEUDONYM_KEY="   ")
-    ok = _settings(monkeypatch, APP_ENV="prod", DOCS_ENABLED="false", DEBUG="false", IDENTITY_PSEUDONYM_KEY="k" * 64)
-    assert ok.app_env is AppEnv.prod
+    with pytest.raises(ValidationError, match="clamd_address"):
+        _settings(monkeypatch, APP_ENV="prod", DOCS_ENABLED="false", DEBUG="false", IDENTITY_PSEUDONYM_KEY="k" * 64)
+    ok = _settings(
+        monkeypatch,
+        APP_ENV="prod",
+        DOCS_ENABLED="false",
+        DEBUG="false",
+        IDENTITY_PSEUDONYM_KEY="k" * 64,
+        CLAMD_ADDRESS="tcp://clamav:3310",
+    )
+    assert ok.app_env is AppEnv.prod and ok.clamd_address == "tcp://clamav:3310"
+    with pytest.raises(ValidationError):
+        _settings(monkeypatch, CLAMD_ADDRESS="http://clamav:3310")
+    assert _settings(monkeypatch, CLAMD_ADDRESS="").clamd_address is None
+    assert _settings(monkeypatch, CLAMD_ADDRESS="unix:///var/run/clamav/clamd.ctl").clamd_address.startswith("unix://")
 
 
 def test_secrets_are_masked_in_repr_and_dump(monkeypatch):

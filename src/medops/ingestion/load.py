@@ -19,7 +19,24 @@ from pathlib import Path
 
 import psycopg
 
+from medops.ingestion.av import ClamdScanner
 from medops.ingestion.pipeline import DocumentSpec, IngestRefused, SharedSourceApproval, ingest_document
+
+
+def _source_file(sources_dir: Path, source_hash: str) -> Path:
+    """`<hash>.pdf` or `<hash>.docx` (the pipeline decides the format by signature, not by extension)."""
+    for ext in ("pdf", "docx"):
+        candidate = sources_dir / f"{source_hash}.{ext}"
+        if candidate.is_file():
+            return candidate
+    return sources_dir / f"{source_hash}.pdf"  # reported as missing by the pipeline
+
+
+def _scanner() -> ClamdScanner | None:
+    from medops.core.config import Settings
+
+    settings = Settings()  # type: ignore[call-arg]
+    return ClamdScanner(settings.clamd_address) if settings.clamd_address else None
 
 
 def _admin_url() -> str:
@@ -70,6 +87,11 @@ def main(argv: list[str] | None = None) -> int:
         help="administrator confirmation that KEY may reference a source object already backing another document (audited)",
     )
     parser.add_argument("--admin-url", default=None)
+    parser.add_argument(
+        "--no-av",
+        action="store_true",
+        help="skip the clamd scan even if CLAMD_ADDRESS is set (dev only; audited as skipped)",
+    )
     args = parser.parse_args(argv)
     shared: dict[str, SharedSourceApproval] = {}
     for item in args.share_source:
@@ -105,12 +127,13 @@ def main(argv: list[str] | None = None) -> int:
         quality_overrides[key] = reason.strip()
 
     refused = 0
+    scanner = None if args.no_av else _scanner()
     with psycopg.connect(args.admin_url or _admin_url()) as conn:
         for record in corpus["documents"]:
             spec = DocumentSpec.from_corpus_record(record)
             if only is not None and spec.document_key not in only:
                 continue
-            pdf = args.sources_dir / f"{spec.source_hash}.pdf"
+            pdf = _source_file(args.sources_dir, spec.source_hash)
             line: dict[str, object] = {"document_key": spec.document_key}
             try:
                 with conn.transaction():
@@ -133,6 +156,7 @@ def main(argv: list[str] | None = None) -> int:
                         quality_override_reason=quality_overrides.get(spec.document_key),
                         supersedes=supersedes_id,
                         shared_source=shared.get(spec.document_key),
+                        scanner=scanner,
                     )
                 line.update(
                     status=result.status,

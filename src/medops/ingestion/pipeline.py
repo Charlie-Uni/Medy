@@ -2,7 +2,8 @@
 
 One document per call, everything inside the caller's transaction (an admin-role connection):
 
-1. validate the file: PDF magic, size limit, SHA-256 equal to the declared `source_hash`;
+1. validate the file: PDF or DOCX signature, size limit, SHA-256 equal to the declared `source_hash`; then the
+   structural malicious-content gate and the optional clamd scan (ADR-0009), both before any write;
 2. extract page texts with the locked extractor (pypdf, extraction-v1) and, when a pages directory is
    given, require them to be byte-identical to the stored `<pages>/<sha256>/<n>.txt` files;
 3. scan the normalised page texts with `pii-rules-v1`; any hit refuses the document (INV-DATA-01) unless
@@ -25,7 +26,7 @@ import hashlib
 import json
 import uuid
 from collections.abc import Mapping
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import date
 from pathlib import Path
 from typing import Any
@@ -34,12 +35,14 @@ import psycopg
 
 from medops.evals.probe import extract
 from medops.evals.probe.pii import PII_RULESET_VERSION, find_pii_matches
+from medops.ingestion import av, docx, filecheck
 from medops.ingestion.chunker import CHUNKER_VERSION, Chunk, chunk_pages
 from medops.retrieval.lexical.normalization import NORMALIZATION_VERSION, normalize_text
 
-MAX_PDF_BYTES = 50 * 1024 * 1024
+MAX_PDF_BYTES = 50 * 1024 * 1024  # applies to every accepted format
 PDF_MAGIC = b"%PDF-"
 MIME_PDF = "application/pdf"
+MIME_BY_KIND = {"pdf": MIME_PDF, "docx": docx.MIME_DOCX}
 
 
 def _first(cursor: Any) -> Any:
@@ -117,9 +120,11 @@ class IngestResult:
     pii_hits: tuple[tuple[str, str], ...]
 
 
-def validate_pdf(data: bytes, spec: DocumentSpec) -> str:
-    if not data.startswith(PDF_MAGIC):
-        raise IngestRefused("file is not a PDF (magic bytes)")
+def validate_file(data: bytes, spec: DocumentSpec) -> tuple[str, str]:
+    """`(kind, sha256)`; kind is `pdf` or `docx` by file signature (ADR-0009 §5), never by file name."""
+    kind = filecheck.sniff(data)
+    if kind is None:
+        raise IngestRefused("file is neither a PDF nor a DOCX package (signature)")
     if len(data) > MAX_PDF_BYTES:
         raise IngestRefused(f"file exceeds {MAX_PDF_BYTES} bytes")
     if len(data) != spec.byte_size:
@@ -127,7 +132,37 @@ def validate_pdf(data: bytes, spec: DocumentSpec) -> str:
     digest = hashlib.sha256(data).hexdigest()
     if digest != spec.source_hash:
         raise IngestRefused("sha256 does not match declared source_hash")
+    return kind, digest
+
+
+def validate_pdf(data: bytes, spec: DocumentSpec) -> str:
+    kind, digest = validate_file(data, spec)
+    if kind != "pdf":
+        raise IngestRefused("file is not a PDF (magic bytes)")
     return digest
+
+
+def check_malicious_content(kind: str, data: bytes, scanner: av.Scanner | None) -> av.ScanVerdict:
+    """Structural gate (mandatory) then the optional antivirus scan; both refuse before any write."""
+    findings = filecheck.scan(kind, data)
+    if not findings.clean:
+        raise IngestRefused(f"malicious-content policy (ADR-0009): {filecheck.describe(findings.rules)}")
+    try:
+        verdict = (scanner or av.NoScanner()).scan(data)
+    except av.ScanUnavailable as exc:
+        raise IngestRefused(f"virus scan unavailable ({exc}); refusing to ingest unscanned content") from None
+    if verdict.status == "infected":
+        raise IngestRefused(f"virus scan reported {verdict.signature} ({verdict.scanner})")
+    return verdict
+
+
+def extract_docx(data: bytes) -> tuple[list[str], list[str], list[docx.Section]]:
+    """Section texts as the chunker's "pages" (page = section ordinal, ADR-0009 §2), warnings, sections."""
+    try:
+        sections, warnings = docx.extract_sections(data)
+    except ValueError as exc:
+        raise IngestRefused(str(exc)) from None
+    return [sec.text for sec in sections], warnings, sections
 
 
 def extract_and_check(data: bytes, source_hash: str, pages_dir: Path | None) -> tuple[list[str], list[str]]:
@@ -185,13 +220,15 @@ def ingest_document(
     family_id: uuid.UUID | None = None,
     supersedes: uuid.UUID | None = None,
     shared_source: SharedSourceApproval | None = None,
+    scanner: av.Scanner | None = None,
 ) -> IngestResult:
     """Ingest one PDF as a draft document. `quality_override_reason` is the audited reviewer decision that
     upgrades an extraction with pypdf warnings from `low_trust` to `trusted` (INV-DATA-05 stays the default);
     it is only meaningful when the stored page texts were verified (extraction drift check) and is written to
     doc_audit as `quality_review_override` together with the warning messages."""
     data = Path(pdf_path).read_bytes()
-    source_hash = validate_pdf(data, spec)
+    kind, source_hash = validate_file(data, spec)
+    verdict = check_malicious_content(kind, data, scanner)
     if supersedes is not None:
         # a new version joins the superseded document's family (M1-11); the chain is fixed at insert time
         # because documents.supersedes is an immutable identity column (INV-DATA-04)
@@ -224,7 +261,11 @@ def ingest_document(
             )
         existing.append({"doc_id": str(doc_id), "document_key": key, "version": version})
 
-    texts, warning_messages = extract_and_check(data, source_hash, pages_dir)
+    sections: list[docx.Section] = []
+    if kind == "docx":
+        texts, warning_messages, sections = extract_docx(data)
+    else:
+        texts, warning_messages = extract_and_check(data, source_hash, pages_dir)
     warnings = len(warning_messages)
     hits = scan_pii(texts)
     if hits and not pii_override_reason:
@@ -233,8 +274,17 @@ def ingest_document(
     chunks = chunk_pages(texts)
     if not chunks:
         raise IngestRefused("chunker produced no chunks")
-    quality_overridden = warnings > 0 and bool(quality_override_reason)
-    parse_quality = "trusted" if warnings == 0 or quality_overridden else "low_trust"
+    if kind == "docx":
+        # ADR-0009 §2: no headings -> no reliable sections -> low_trust; not overridable by a reviewer
+        chunks = [
+            replace(c, section=sections[c.page - 1].label or c.section) if c.page - 1 < len(sections) else c
+            for c in chunks
+        ]
+        quality_overridden = False
+        parse_quality = "low_trust" if docx.NO_HEADINGS in warning_messages else "trusted"
+    else:
+        quality_overridden = warnings > 0 and bool(quality_override_reason)
+        parse_quality = "trusted" if warnings == 0 or quality_overridden else "low_trust"
     empty_pages = sum(1 for t in texts if not t.strip())
 
     if source_object_id is None:
@@ -242,7 +292,7 @@ def ingest_document(
             conn.execute(
                 """insert into source_objects (source_hash, storage_uri, byte_size, mime, integrity_status, last_verified_at, created_by)
                values (%s, %s, %s, %s, 'verified', now(), %s) returning source_object_id""",
-                (source_hash, storage_uri or Path(pdf_path).resolve().as_uri(), len(data), MIME_PDF, actor),
+                (source_hash, storage_uri or Path(pdf_path).resolve().as_uri(), len(data), MIME_BY_KIND[kind], actor),
             )
         )
     job_id = _first(
@@ -252,8 +302,10 @@ def ingest_document(
            values (%s, 'succeeded', 1, %s, %s, %s, %s, %s, %s, now(), now()) returning job_id""",
             (
                 source_object_id,
-                f"{extract.EXTRACTOR} {extract.EXTRACTOR_VERSION}",
-                extract.PARAMS_HASH,
+                f"{docx.PARSER} {docx.PARSER_VERSION}"
+                if kind == "docx"
+                else f"{extract.EXTRACTOR} {extract.EXTRACTOR_VERSION}",
+                docx.PARAMS_HASH if kind == "docx" else extract.PARAMS_HASH,
                 parse_quality,
                 round(1 - empty_pages / len(texts), 4),
                 warnings,
@@ -309,6 +361,10 @@ def ingest_document(
         "pii_ruleset": PII_RULESET_VERSION,
         "pii_hits": len(hits),
         "shared_source": bool(existing),
+        "format": kind,
+        "structural_scan": "clean",
+        "av_scan": verdict.as_dict(),
+        "sections": len(sections) if kind == "docx" else None,
     }
     conn.execute(
         "insert into doc_audit (doc_id, action, actor, details) values (%s, 'ingest', %s, %s::jsonb)",

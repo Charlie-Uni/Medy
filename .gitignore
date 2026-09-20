@@ -22,3 +22,4 @@ uv.lock
 # derived reviewer input packs (page texts of the gold pages; regenerate with drafts/v1/tooling/review_pack.py)
 evals/probe/precise_clause/drafts/*/review/input_*.jsonl
 evals/probe/precise_clause/drafts/*/review/**/input_*.jsonl
+.constraints-main.tmp

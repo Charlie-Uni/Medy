@@ -32,7 +32,7 @@ from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass, field
 from datetime import date
 from pathlib import Path
-from typing import Any
+from typing import Any, Protocol
 from urllib.parse import quote, urlsplit, urlunsplit
 
 import psycopg
@@ -387,7 +387,20 @@ class QueryOutcome:
     candidate_exhausted: bool | None = None
 
 
-Searcher = Callable[[Query, int], LexicalSearchResult]
+class SearchOutcome(Protocol):
+    """What the pass executor reads from any retriever result (lexical or vector)."""
+
+    @property
+    def candidates(self) -> Sequence[Any]: ...
+
+    @property
+    def returned_count(self) -> int: ...
+
+    @property
+    def candidate_exhausted(self) -> bool: ...
+
+
+Searcher = Callable[[Query, int], SearchOutcome]
 
 
 def execute_passes(

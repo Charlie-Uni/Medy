@@ -164,7 +164,7 @@ def test_file_validation_refuses_before_any_write(admin, tmp_path, monkeypatch):
         ingest_document(admin, wrong_size, pdf, actor="x")
     not_pdf = tmp_path / "b.pdf"
     not_pdf.write_bytes(b"%!PS-Adobe not a pdf")
-    with pytest.raises(IngestRefused, match="not a PDF"):
+    with pytest.raises(IngestRefused, match="neither a PDF nor a DOCX"):
         ingest_document(admin, spec_for(not_pdf.read_bytes()), not_pdf, actor="x")
     monkeypatch.setattr(pipeline, "MAX_PDF_BYTES", 10)
     with pytest.raises(IngestRefused, match="exceeds"):
@@ -402,3 +402,144 @@ def test_loader_share_source_flag_is_validated_before_connecting(tmp_path, capsy
         )
         assert code == 2, bad
         assert "KEY=ADMIN:REASON" in capsys.readouterr().out
+
+
+# ------------------------------------------------------------------------------- ADR-0009: DOCX + malicious files
+
+
+def _write_docx(tmp_path: Path, name: str, data: bytes) -> Path:
+    path = tmp_path / name
+    path.write_bytes(data)
+    return path
+
+
+def test_docx_is_ingested_by_sections_with_section_ordinals_as_pages(admin, tmp_path):
+    from medops.ingestion import docx
+    from tests.unit.ingestion.docx_factory import make_docx, paragraph, table
+
+    body = (
+        paragraph("Preamble before the first heading, kept as section one.")
+        + paragraph("1 Indications", heading=1)
+        + paragraph("Adults with essential hypertension. " * 6)
+        + paragraph("2 Dosage and administration", heading=1)
+        + table([["Population", "Dose"], ["Adults", "500 mg twice daily"]])
+        + paragraph("Do not exceed 3 g per day. " * 6)
+    )
+    data = make_docx(body)
+    path = _write_docx(tmp_path, "label.docx", data)
+    spec = spec_for(data, key="docx-label-a")
+    result = ingest_document(admin, spec, path, actor="ingest-01")
+    assert result.status == "ingested" and result.parse_quality == "trusted"
+    (mime,) = admin.execute(
+        "select mime from source_objects where source_object_id = %s", (result.source_object_id,)
+    ).fetchone()
+    assert mime == docx.MIME_DOCX
+    parser, params = admin.execute(
+        "select parser_version, extraction_params_hash from ingestion_jobs where job_id = %s", (result.job_id,)
+    ).fetchone()
+    assert parser == "docx-ooxml docx-ooxml-v1" and params == docx.PARAMS_HASH
+    rows = admin.execute(
+        "select page, section, content from chunks where doc_id = %s order by seq", (result.doc_id,)
+    ).fetchall()
+    assert {r[0] for r in rows} == {1, 2, 3}  # page = section ordinal
+    by_page = {}
+    for page, section, content in rows:
+        by_page.setdefault(page, (section, []))[1].append(content)
+    assert by_page[1][0] is None and "Preamble" in by_page[1][1][0]
+    assert by_page[2][0] == "1 Indications" and by_page[3][0] == "2 Dosage and administration"
+    assert any("Population | Dose" in c for c in by_page[3][1])
+    spans = admin.execute(
+        "select s.page, s.char_start, s.char_end, c.content from chunk_spans s join chunks c using (chunk_id) where c.doc_id = %s",
+        (result.doc_id,),
+    ).fetchall()
+    sections, _ = docx.extract_sections(data)
+    for page, start, end, content in spans:
+        assert normalize_text(sections[page - 1].text)[start:end] == content  # offsets relative to the section text
+    details = admin.execute(
+        "select details from doc_audit where doc_id = %s and action = 'ingest'", (result.doc_id,)
+    ).fetchone()[0]
+    assert details["format"] == "docx" and details["sections"] == 3 and details["structural_scan"] == "clean"
+    assert details["av_scan"] == {"status": "skipped", "scanner": "none", "signature": None}
+
+
+def test_docx_without_headings_is_low_trust_and_cannot_be_overridden(admin, tmp_path):
+    from tests.unit.ingestion.docx_factory import make_docx, paragraph
+
+    data = make_docx(paragraph("Only body text without any heading. " * 8))
+    path = _write_docx(tmp_path, "flat.docx", data)
+    result = ingest_document(
+        admin, spec_for(data, key="docx-flat"), path, actor="ingest-01", quality_override_reason="reviewer says fine"
+    )
+    assert result.parse_quality == "low_trust"
+    assert (
+        admin.execute(
+            "select count(*) from doc_audit where doc_id = %s and action = 'quality_review_override'", (result.doc_id,)
+        ).fetchone()[0]
+        == 0
+    )
+
+
+def test_malicious_content_is_refused_before_any_write(admin, tmp_path):
+    from tests.unit.ingestion.docx_factory import field, make_docx, paragraph
+
+    before = admin.execute("select count(*) from source_objects").fetchone()[0]
+    evil_docx = make_docx(paragraph("t", heading=1) + paragraph("body"), macro=True)
+    with pytest.raises(IngestRefused, match="malicious-content policy.*docx.macro"):
+        ingest_document(
+            admin, spec_for(evil_docx, key="evil-docx"), _write_docx(tmp_path, "m.docx", evil_docx), actor="ingest-01"
+        )
+    dde = make_docx(paragraph("t", heading=1) + field("DDEAUTO c:\\\\cmd.exe"))
+    with pytest.raises(IngestRefused, match="docx.field_code"):
+        ingest_document(admin, spec_for(dde, key="dde-docx"), _write_docx(tmp_path, "d.docx", dde), actor="ingest-01")
+    evil_pdf = make_pdf(PAGES).replace(
+        b"<< /Type /Catalog /Pages 2 0 R >>",
+        b"<< /Type /Catalog /Pages 2 0 R /OpenAction << /S /JavaScript /JS (app.alert(1)) >> >>",
+    )
+    with pytest.raises(IngestRefused, match="pdf.javascript"):
+        ingest_document(
+            admin, spec_for(evil_pdf, key="evil-pdf"), _write_docx(tmp_path, "e.pdf", evil_pdf), actor="ingest-01"
+        )
+    txt = b"just text, neither pdf nor docx"
+    with pytest.raises(IngestRefused, match="signature"):
+        ingest_document(admin, spec_for(txt, key="txt"), _write_docx(tmp_path, "x.pdf", txt), actor="ingest-01")
+    assert admin.execute("select count(*) from source_objects").fetchone()[0] == before
+
+
+def test_virus_scanner_verdicts_are_enforced_and_recorded(admin, tmp_path):
+    from medops.ingestion.av import ScanUnavailable, ScanVerdict
+
+    class Infected:
+        def scan(self, data):
+            return ScanVerdict("infected", "fake", "Eicar-Test-Signature")
+
+    class Down:
+        def scan(self, data):
+            raise ScanUnavailable("ConnectionRefusedError")
+
+    class Clean:
+        def scan(self, data):
+            return ScanVerdict("clean", "fake-clamd")
+
+    pdf, data = write_pdf(tmp_path, "av.pdf", [PAGES[0] + "Virus scan test. ", PAGES[1]])
+    with pytest.raises(IngestRefused, match="Eicar-Test-Signature"):
+        ingest_document(admin, spec_for(data, key="av-a"), pdf, actor="ingest-01", scanner=Infected())
+    with pytest.raises(IngestRefused, match="virus scan unavailable"):
+        ingest_document(admin, spec_for(data, key="av-a"), pdf, actor="ingest-01", scanner=Down())
+    result = ingest_document(admin, spec_for(data, key="av-a"), pdf, actor="ingest-01", scanner=Clean())
+    details = admin.execute(
+        "select details from doc_audit where doc_id = %s and action = 'ingest'", (result.doc_id,)
+    ).fetchone()[0]
+    assert (
+        details["av_scan"] == {"status": "clean", "scanner": "fake-clamd", "signature": None}
+        and details["format"] == "pdf"
+    )
+
+
+def test_loader_resolves_docx_sources_and_flags(tmp_path, capsys):
+    from medops.ingestion.load import _source_file
+
+    (tmp_path / "abc.docx").write_bytes(b"x")
+    assert _source_file(tmp_path, "abc").name == "abc.docx"
+    (tmp_path / "abc.pdf").write_bytes(b"x")
+    assert _source_file(tmp_path, "abc").name == "abc.pdf"
+    assert _source_file(tmp_path, "missing").name == "missing.pdf"

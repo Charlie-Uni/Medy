@@ -1,6 +1,6 @@
 # Medy 开发任务、当前进度与边做边学路线
 
-> 核查日期：2026-09-20（[实现记录 40](reviews/2026-09-20-implementation-40-shared-source-and-query-rewrite.md)；本轮 782 passed，含 202 项 PostgreSQL/Redis 集成测试，其中 B/B2/C 候选服务器上的集成测试仅本地运行）。依据：工作区中的[工程基线 v0.6](ENGINEERING_BASELINE.md)、ADR、SPEC、代码、复核记录与本机测试。历史实现证据见记录 13～39。
+> 核查日期：2026-09-20（[实现记录 43](reviews/2026-09-20-implementation-43-docx-and-malicious-files.md)；本轮 836 passed，含 222 项 PostgreSQL/Redis 集成测试，其中 B/B2/C 候选服务器上的集成测试仅本地运行）。依据：工作区中的[工程基线 v0.6](ENGINEERING_BASELINE.md)、ADR、SPEC、代码、复核记录与本机测试。历史实现证据见记录 13～42。
 > 本文件是基线的执行进度视图，不是第二份需求契约。范围、阈值和安全约束仍以基线为准；不新增 P0 门禁，不代替正式验收。
 > Git 归档：`2a4aef6` 为工程基础，`213dbe8` 为冻结探针 v1；归档提交已在独立 checkout 复验。本轮后续实验准备与回填文档单独提交，冻结 v1 原始字节不变。
 
@@ -19,7 +19,7 @@
 
 决策人要求每个阶段汇报"离总目标百分之多少"。口径固定为：[任务知识对照](TASK_KNOWLEDGE_MAP.md) 中 79 个 P0 任务行的状态加权和（已实现 1、部分 0.5、阻塞与待做 0）除以 79；另报除以 99 个基线复选项的数值。状态只随实现记录的证据变更，基线勾选只依据完整证据更新，最终验收仍是第 11 节九条门禁的二元结果。`tests/unit/docs/test_baseline_roadmap_consistency.py` 重算并比对下面这行数字：
 
-P0 加权进度：28.5%（22.5/79）；按 99 项计 22.7%。分项：M0 10/11、M1 12.5/21、M2 0/16、M3 0/13、M4 0/10、M5 0/8。
+P0 加权进度：30.4%（24.0/79）；按 99 项计 24.2%。分项：M0 10/11、M1 14/21、M2 0/16、M3 0/13、M4 0/10、M5 0/8。
 
 ### 状态与计数
 
@@ -99,7 +99,7 @@ P0 加权进度：28.5%（22.5/79）；按 99 项计 22.7%。分项：M0 10/11�
 | ID | 状态 | 要做的工作与剩余验收 |
 | --- | --- | --- |
 | M0-01 | 已实现（结构范围） | `src/tests/migrations/evals/deploy/docs` 均已存在且有内容（`migrations/` 与 `tests/integration/` 随实现记录 17 建立）；保持模块化单体，不预建空目录或拆微服务 |
-| M0-02 | 已实现（Codex 已复核；uv/pip 已由 ADR-0004 批准；Redis 7.2 与 digest 已于 2026-09-17 固定） | Python >= 3.11、`requirements.lock` 与 `requirements-build.lock`（带哈希）、固定 pip、无构建隔离安装、`Settings` 与 `.env.example`、`.env` 忽略规则与仓库卫生测试已有（实现记录 08）；本机干净环境安装已实测，远端 CI 未运行，不勾选；记录 39 依赖锁新增 `redis==6.4.0`（MIT）与 `async-timeout==5.0.1` |
+| M0-02 | 已实现（Codex 已复核；uv/pip 已由 ADR-0004 批准；Redis 7.2 与 digest 已于 2026-09-17 固定） | Python >= 3.11、`requirements.lock` 与 `requirements-build.lock`（带哈希）、固定 pip、无构建隔离安装、`Settings` 与 `.env.example`、`.env` 忽略规则与仓库卫生测试已有（实现记录 08）；本机干净环境安装已实测，远端 CI 未运行，不勾选；记录 39 依赖锁新增 `redis==6.4.0`（MIT）与 `async-timeout==5.0.1`；记录 42/43 新增 `defusedxml==0.7.1`（PSF）与可选 extra `embed` 的独立哈希锁 `requirements-embed.lock`（以主锁为约束） |
 | M0-03 | 已实现（本地门禁齐全；远端 CI 首次运行待提交推送） | lint、format-check、typecheck、单元 + 集成测试、Schema 漂移检查与 migration check（单一 head + 空库升降级往返）均在 `make check`/`make migration-check` 与 CI（实现记录 15、17） |
 | M0-04 | 部分（单元、集成、契约漂移、迁移、评测 smoke 已配置；安全阶段与首次远端运行待补） | CI 含 PostgreSQL 服务容器与集成测试、Schema 漂移、migration check、探针示例校验（实现记录 17）；安全测试阶段随 M2 安全集加入；镜像扫描仍为 P1 |
 | M0-05 | 已实现（核心范围，Codex 两轮反馈已按记录 06 第三版关闭，待复核） | `src/medops/core/{errors,tracing,logging}.py` 与 18 个测试已有（实现记录 06）：业务/基础设施错误分离、detail 不外泄、trace_id contextvars 传播、JSON 脱敏日志；缺 API/worker 接线与观测后端，不勾选 |
@@ -124,14 +124,14 @@ P0 加权进度：28.5%（22.5/79）；按 99 项计 22.7%。分项：M0 10/11�
 | M1-06 | 已实现（首个迁移 0001；evidence_log、outbox 等随其里程碑追加） | Alembic 原生 SQL 迁移建 source_objects、ingestion_jobs、documents、chunks、chunk_spans、document_acl、doc_audit，字段落点按基线 3.3/3.4/4.2 与设计文档 3.3；不可变性、状态机、审计追加写、chunk 哈希由触发器强制；15 项集成测试（实现记录 17，ADR-0006）；无 tsvector/vector 列；迁移 0005 追加 outbox 两表（记录 37） |
 | M1-07 | 已实现 | `documents_one_active_per_family` 部分唯一索引；集成测试证明同 family 第二个 active 被拒，且两会话并发激活时第二个阻塞、首个提交后失败，最终只剩一个 active（实现记录 17） |
 | M1-08 | 已实现（数据库层；API 注入接线在 M3） | 迁移 0002：三组 NOLOGIN 角色、登录用户供应脚本、七表 FORCE RLS、按 document_acl 与部门的策略、无身份默认拒绝、草稿不可见、owner 分离；37 项集成测试覆盖 SET LOCAL 作用域、非 owner、非 superuser、无 BYPASSRLS、只读无写路径、管理角色不能改 schema（实现记录 18）；本机 .env 已切到受限用户 |
-| M1-09 | 部分（PDF 校验、哈希去重、PII 默认拒绝与留痕覆盖、同源第二文档默认拒绝 + 管理员确认流程已实现；DOCX、恶意文件扫描待选型） | `medops.ingestion.pipeline`：PDF 魔数、大小上限、声明哈希与字节数比对、`pii-rules-v1` 命中默认拒绝且覆盖须写 `pii_review_override` 审计、同 source 第二文档拒绝、重复入库幂等（实现记录 20）；`SharedSourceApproval` 显式确认后复用来源对象并写 `source_share_confirmed` 审计（批准人、理由、已有文档列表），loader `--share-source KEY=ADMIN:REASON`（实现记录 40） |
+| M1-09 | 已实现（ADR-0009；ClamAV 部署随 M3） | `medops.ingestion.pipeline`：按签名判定 PDF/DOCX、大小与哈希校验、`filecheck` 结构性恶意内容门禁（PDF 主动内容/嵌入文件/加密，DOCX 宏/OLE/ActiveX/外部关系/字段码/ZIP 炸弹，`defusedxml`）、可选 clamd INSTREAM 扫描（prod 必配，失败关闭）、`pii-rules-v1` 默认拒绝与审计覆盖、同源第二文档默认拒绝 + `SharedSourceApproval` 审计确认、重复入库幂等；DOCX 以顶级标题切章节，`page` 为章节序号、无标题即 low_trust（实现记录 20、40、43） |
 | M1-10 | 已实现（chunker-v2、入库、质量复核放行与映射工具） | 16 份文档、2,661 个 chunk 与原页重建逐条一致；新增 gold 映射器按来源/版本/页/区间校验。75 条中 73 mapped、2 unmappable，切分边界缺陷保留并计 miss；low_trust 禁止 active 的约束不变（记录 20、27）；chunker-v2（分号为子句标记、超长片段按子句标点切分）与受审计的 parse_quality 复核放行 `--accept-quality`（记录 34） |
 | M1-11 | 已实现（发布/归档/审计/outbox 同事务 + 索引消费者；缓存消费者随 M1-19） | 迁移 0005 `outbox_events`/`outbox_consumer_acks`（追加写、管理角色专用、FORCE RLS）；`publish_version` 一次事务归档旧版（写 effective_to）、激活新版、触发器审计、两条事件；`activate_document` 首次激活亦发事件；`ingest_document(supersedes=)` 建版本链；outbox `claim`（SKIP LOCKED）/`ack`/`run` 按消费者幂等；`index_consumer` 增删候选索引行；集成测试证明模拟失败整体回滚、并发领取互斥、以及发布后消费者未运行时旧版已不可见（查询内 status 过滤，索引延迟不产生失效证据）（实现记录 37）。激活 `effective_from` 口径不变 |
 | M1-12 | 部分 | 分词器支持词典版本，但无正式医学词典；完成 DEC-005 的来源审核、通用名/商品名/缩写映射与版本更新方式 |
 | M1-13 | 部分（规则型 `qr-rules-v1` 已实现；术语表内容待 DEC-005，LLM 改写与节点接线待 M2） | `medops.retrieval.rewrite`：1–3 条只追加不删改的文本查询（规范化原查询 / +可信会话实体 ≤3 / +术语同义词 ≤5），剂量、单位、否定、时间窗、编号为显式受保护片段并在返回前核验；术语表版本化且只在受保护片段外整词匹配；结果模型无任何过滤字段；测试覆盖四类不被改写错与实体不跨调用残留（实现记录 40） |
 | M1-14 | 待做 | 实现 DEC-001 选定的数据库内 lexical_retriever；A 方案入库/查询同规则，simple FTS 保留位置；版本不匹配拒绝、升级重建 |
 | M1-15 | 部分（复合哈希函数已实现，实现记录 14；生产取值待 DEC-001/002） | norm-v1 与原型版本字段已有；基线 3.6 的复合 `retrieval_version` 由 [versioning.py](../src/medops/retrieval/versioning.py) 计算（八个成员、封闭输入、任一成员或嵌套参数变化即换版本，已知答案已固定）；仍待：固定生产 tokenizer/词典/规范化取值，写入索引元数据与缓存键，证明相同版本可复现 |
-| M1-16 | 待做 | DEC-002 选 embedding 后建对应维度 migration；记录模型/归一化/版本，pgvector 检索在权限过滤下采用 over-fetch 或 iterative scan 并报告实际候选数 |
+| M1-16 | 已实现（ADR-0007；向量通道运行结果见记录 42） | 迁移 0006 `chunk_embeddings(vector(1024))` + `embedding_index_meta`（模型/修订/维度/归一化/截断/框架）、HNSW 余弦、FORCE RLS；`PgVectorRetriever` 在应用角色身份事务内以 iterative scan 检索、同事务精确合格计数、页长 ≠ min(K, 合格数) 即失败关闭、spec 全字段不匹配拒绝；`BgeM3EmbeddingProvider` 本地推理（可选 extra `embed`，独立哈希锁）；探针 v2 运行：language_matched 82.7%、cross_lingual 65.6%、零泄漏（实现记录 42） |
 | M1-17 | 部分 | RRF 纯函数与离线 BM25 已有；补生产词法/向量并行、Reranker、候选上限、总超时与显式降级；RRF 不使用原始分数融合 |
 | M1-18 | 已实现（`evidence_log` 落库随 M2 Trace） | `medops.retrieval.recheck`：候选在应用角色的身份事务内一条语句回读事实平面，按固定顺序判定可见性（RLS，越权/草稿/撤回/不存在一律 `not_visible`）、状态（历史需显式 `as_of` 并标 `historical`）、生效窗口、`integrity_status=verified`、`parse_quality=trusted`、应用侧重算内容哈希、页锚点存在；通过者构造领域 `Evidence`，其余带原因与名次返回；superuser/BYPASSRLS/管理角色连接拒绝运行；与候选 A 串接的集成测试证明索引仍返回的完整性未验证、篡改、无锚点 chunk 被回查拦下（实现记录 38） |
 | M1-19 | 已实现（ACL 单独变更事件待有发布后改 ACL 的工具时补） | `medops.retrieval.cache`：键 `rcache-v1:<dept>:<epoch>:sha256(规范化查询、权限指纹（部门/角色/scope，不含 user_id）、会话上下文指纹、as_of、历史标志、复合 retrieval_version、policy_version)`；缓存值为融合候选而非证据，`fetch_evidence` 命中后仍在身份事务内执行 M1-18 回查（撤权即时生效）；`cache_consumer` 消费 outbox 事件按读者部门提升纪元实现精确失效；进程内与 Redis 两种存储同一协议，故障降级为未命中；集成测试覆盖撤权、归档/换版本、版本/日期换键、身份隔离与真实 Redis（实现记录 39） |
