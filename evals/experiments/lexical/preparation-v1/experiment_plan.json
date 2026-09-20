@@ -566,5 +566,6 @@
       },
       "conclusion": "stopword removal lifts A/B by 8-11 pp and halves latency but no candidate passes; remaining misses are ranking (no IDF) and Traditional-Chinese drug-name segmentation"
     }
-  }
+  },
+  "owner_decision_2026_09_20_amendment_3": "DEC-001 final selection deferred to the end-to-end experiment; lexical gates and three run results kept as the lexical-channel baseline; M1 slices independent of the lexical engine proceed (M1-11 publish/outbox, vector prep after DEC-002, fact re-check, cache invalidation); production lexical_retriever and version pinning still wait for the decision; C licence review in parallel"
 }

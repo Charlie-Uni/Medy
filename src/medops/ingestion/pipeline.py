@@ -168,6 +168,7 @@ def ingest_document(
     quality_override_reason: str | None = None,
     storage_uri: str | None = None,
     family_id: uuid.UUID | None = None,
+    supersedes: uuid.UUID | None = None,
 ) -> IngestResult:
     """Ingest one PDF as a draft document. `quality_override_reason` is the audited reviewer decision that
     upgrades an extraction with pypdf warnings from `low_trust` to `trusted` (INV-DATA-05 stays the default);
@@ -175,6 +176,17 @@ def ingest_document(
     doc_audit as `quality_review_override` together with the warning messages."""
     data = Path(pdf_path).read_bytes()
     source_hash = validate_pdf(data, spec)
+    if supersedes is not None:
+        # a new version joins the superseded document's family (M1-11); the chain is fixed at insert time
+        # because documents.supersedes is an immutable identity column (INV-DATA-04)
+        prev = conn.execute("select family_id, status::text from documents where doc_id = %s", (supersedes,)).fetchone()
+        if prev is None:
+            raise IngestRefused(f"supersedes {supersedes} does not exist")
+        if prev[1] == "withdrawn":
+            raise IngestRefused("a withdrawn document cannot be superseded")
+        if family_id is not None and family_id != prev[0]:
+            raise IngestRefused("family_id differs from the superseded document's family")
+        family_id = prev[0]
 
     rows = _existing_document(conn, source_hash)
     source_object_id = rows[0][3] if rows else None
@@ -232,8 +244,8 @@ def ingest_document(
         conn.execute(
             """insert into documents (family_id, document_key, title, doc_type, version, status, source_object_id, active_ingestion_job_id,
                                   parse_quality, owner_dept, language, source_url, publisher, retrieved_at, license_name, terms_url,
-                                  attribution_text, created_by)
-           values (%s, %s, %s, %s, %s, 'draft', %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) returning doc_id""",
+                                  attribution_text, created_by, supersedes)
+           values (%s, %s, %s, %s, %s, 'draft', %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) returning doc_id""",
             (
                 family_id or uuid.uuid4(),
                 spec.document_key,
@@ -252,6 +264,7 @@ def ingest_document(
                 spec.terms_url,
                 spec.attribution_text or None,
                 actor,
+                supersedes,
             ),
         )
     )

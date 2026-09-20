@@ -23,6 +23,8 @@ EXPECTED_TABLES = {
     "chunk_spans",
     "document_acl",
     "doc_audit",
+    "outbox_events",
+    "outbox_consumer_acks",
 }
 EXPECTED_TYPES = {
     "dept",
@@ -158,7 +160,7 @@ def set_actor(conn: psycopg.Connection, actor: str = "reviewer-01", reason: str 
 
 def test_single_head_and_offline_sql_render(migrated):
     heads = ScriptDirectory.from_config(alembic_config(migrated)).get_heads()
-    assert heads == ["0004"]
+    assert heads == ["0005"]
 
 
 def test_upgrade_downgrade_upgrade_round_trip_leaves_nothing_behind(scratch_database):
@@ -174,6 +176,8 @@ def test_upgrade_downgrade_upgrade_round_trip_leaves_nothing_behind(scratch_data
         "medops_documents_delete_guard",
         "medops_chunks_hash",
         "medops_current_dept",
+        "medops_outbox_guard",
+        "medops_outbox_acks_guard",
     }
     assert _policies(scratch_database) > 0 and _rls_forced(scratch_database) == EXPECTED_TABLES
     run_alembic(scratch_database, "downgrade", "base")

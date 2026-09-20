@@ -55,8 +55,22 @@ def main(argv: list[str] | None = None) -> int:
         metavar="KEY=REASON",
         help="reviewer decision that upgrades a document with pypdf warnings from low_trust to trusted (audited)",
     )
+    parser.add_argument(
+        "--supersedes",
+        action="append",
+        default=[],
+        metavar="NEWKEY=OLDKEY",
+        help="ingest NEWKEY as the next version of OLDKEY's family (M1-11 publish chain)",
+    )
     parser.add_argument("--admin-url", default=None)
     args = parser.parse_args(argv)
+    supersedes_keys: dict[str, str] = {}
+    for item in args.supersedes:
+        new_key, _, old_key = item.partition("=")
+        if not new_key or not old_key.strip():
+            print(f"--supersedes needs NEWKEY=OLDKEY, got {item!r}")
+            return 2
+        supersedes_keys[new_key] = old_key.strip()
 
     corpus = json.loads(args.corpus.read_text(encoding="utf-8"))
     only = set(args.only.split(",")) if args.only else None
@@ -85,6 +99,15 @@ def main(argv: list[str] | None = None) -> int:
             line: dict[str, object] = {"document_key": spec.document_key}
             try:
                 with conn.transaction():
+                    supersedes_id = None
+                    if spec.document_key in supersedes_keys:
+                        row = conn.execute(
+                            "select doc_id from documents where document_key = %s",
+                            (supersedes_keys[spec.document_key],),
+                        ).fetchone()
+                        if row is None:
+                            raise IngestRefused(f"--supersedes target {supersedes_keys[spec.document_key]} not found")
+                        supersedes_id = row[0]
                     result = ingest_document(
                         conn,
                         spec,
@@ -93,6 +116,7 @@ def main(argv: list[str] | None = None) -> int:
                         pages_dir=args.pages_dir,
                         pii_override_reason=overrides.get(spec.document_key),
                         quality_override_reason=quality_overrides.get(spec.document_key),
+                        supersedes=supersedes_id,
                     )
                 line.update(
                     status=result.status,
