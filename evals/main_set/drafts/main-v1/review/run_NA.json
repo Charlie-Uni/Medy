@@ -1652,6 +1652,526 @@
         "ms-0472": "419e43e90d6e9fa74b17c768ace96f3609c4e668e9e16164ebd7c6a706f4616e",
         "ms-0473": "af39b9a1ea3d46038d08f7efe2a4a05b9b5e8e1e8bf0fb4e65896da9e6768eec"
       }
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "c7af7aad-8e13-4db2-b2cd-d02c1d9684d9",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "1950",
+      "cost_usd": 0.23990375,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0474",
+        "ms-0476"
+      ],
+      "started_at": "2026-09-21T14:49:36+00:00",
+      "finished_at": "2026-09-21T14:50:00+00:00",
+      "prompt_chars": 85893,
+      "prompt_sha256": "1be5bf90db44af72f193b6832c5849a000b923e7cffbdae950712c2e9c74bd5a",
+      "verdicts": [
+        {
+          "sample_id": "ms-0474",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "absence": "ok",
+            "slices": "ok",
+            "dept": "ok"
+          },
+          "reason": "第 5 页仅有交叉引用“Investigators and sponsors should refer to 21 CFR Parts 11, 50, 54, 56, and 312 for a more comprehensive listing of FDA's requirements for the conduct of drug and biologics studies.”，只是指向其他法规，并未陈述任何财务披露的具体要求，不构成对该问题的直接回答；全文其余部分（监督职责、受试者权益保护、1572 表、器械研究者职责附件）均未涉及财务披露或利益冲突。query 针对该指南主题、CO 用户会合理期望在研究者职责指南中找到；no_answer、mixed_zh_en（Financial Disclosure、21 CFR Part 54）、protocol_id（依赖法规条号精确匹配）三个标签均成立；研究者职责指南归 CO 恰当。",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0476",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "absence": "ok",
+            "slices": "ok",
+            "dept": "ok"
+          },
+          "reason": "通读 13 页未见任何条款提及 IND 年度报告或 21 CFR 312.33。申办者报告义务只涉及临床研究报告（NDA/BLA 正文与附录 Patient Data Listing、SDTM DV 域）、器械 PMA，以及“sponsors must report serious and unexpected suspected adverse reactions for drug products under 21 CFR 312.32; serious adverse events under 21 CFR 320.31(d)(3) for IND-exempt bioavailability/bioequivalence studies; and unanticipated adverse device effects under 21 CFR 812.150 (b)(1).”，均不回答是否须纳入年度报告，也无“未涉及”类表述。query 在文档主题范围内且为 CO 用户自然提问；no_answer、mixed_zh_en（important protocol deviation、annual report）、protocol_id（依赖 21 CFR 312.33 条号）标签均成立；方案偏离指南归 CO 恰当。",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_1be5bf90db44af72f193b6832c5849a000b923e7cffbdae950712c2e9c74bd5a.jsonl",
+      "sample_input_sha256": {
+        "ms-0474": "fef4a8774434bb1c18e6bb22b7759d3852dc233078645ac2d5ca9800bd38ef4a",
+        "ms-0476": "3771cc606111421ce97d95ad46de8a30ebeb1b2eef8eb76cd54f6fa234b5b237"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "cf746678-9eeb-499a-9056-6e65d18b46dc",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "4452",
+      "cost_usd": 0.45194750000000006,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0478",
+        "ms-0479"
+      ],
+      "started_at": "2026-09-21T14:50:00+00:00",
+      "finished_at": "2026-09-21T14:50:59+00:00",
+      "prompt_chars": 168805,
+      "prompt_sha256": "22fcda10f0ac141440c0eba4a7d6ca9186973d3da91608b27ced0530e8ecd559",
+      "verdicts": [
+        {
+          "sample_id": "ms-0478",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "absence": "issue",
+            "slices": "ok",
+            "dept": "ok"
+          },
+          "reason": "文档第 19 页 IV.D.4 “Ensuring Quality Monitoring” 直接回应了集中监测人员的培训要求：“Description of any specific training required for personnel carrying out monitoring activities, including personnel conducting internal data monitoring, statistical monitoring, or other centralized review activities. Training should include principles of clinical investigations and human subject protection. In addition, study-specific training should include discussion of the trial design, protocol requirements, the study monitoring plan, applicable standard operating procedures, appropriate monitoring techniques, and applicable electronic systems.” 该条款明确覆盖“centralized review activities”人员的培训内容，故本问题在文档内可被回答，不满足 no_answer 条件；absence_check 只检索了 'monitor training'、'credentialing' 等词，未命中 'training required for personnel carrying out monitoring activities' 这一表述。query 本身在范围内且自然，切片与部门无误。",
+          "suggestion": "改为有答案样本（gold 落在第 19 页该条款，slices 可含 mixed_zh_en），或把 query 改为文档确实未涉及的事项，例如监测人员的从业年限/认证资格（credentialing）等，并在 absence_terms 中加入 'training required for personnel'、'centralized review activities' 等表述重新核查。"
+        },
+        {
+          "sample_id": "ms-0479",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "absence": "issue",
+            "slices": "issue",
+            "dept": "ok"
+          },
+          "reason": "第 15 页 1.5.1.1 节以明确表述回应了“如何确定 non-inferiority margin”这一事项：“Note that exactly how to calculate the margin is not described in this document”，属于复核提示第 2 项所列“以 not addressed 之类明确表述回应该事项”的情形；query 中“确定 non-inferiority margin 所需的……”正落在这一表述所覆盖的范围，模型可直接引用该句作答，而非真正的语料无对应条款。另外，query 以“ICH E10”这一指南编号作为检索锚点，按切片定义“protocol_id（召回依赖……指南编号……的精确匹配）”应补 protocol_id 标签；no_answer 与 mixed_zh_en 标签本身成立。文档确实未给出任何样本量计算公式，第 30 页 2.4.7.2 仅定性讨论“sample sizes may be very large”。部门归属 CO 无误。",
+          "suggestion": "将 query 限定为纯样本量计算公式，避免与“确定 margin”的表述重叠，例如“根据 ICH E10，非劣效性试验的样本量应按什么公式计算（给出具体计算式）？”；并在 slices 中补 protocol_id，absence_terms 增加 'how to calculate the margin' 以记录该句已被人工评估。"
+        }
+      ],
+      "input_path": "chunk_inputs/input_22fcda10f0ac141440c0eba4a7d6ca9186973d3da91608b27ced0530e8ecd559.jsonl",
+      "sample_input_sha256": {
+        "ms-0478": "b16fe009d6ce07ea900a457520b4cf31051c20ffe75dd4deebc0be22a5361394",
+        "ms-0479": "65111bb2eed92478f3a0ce4fc5fe13b1895184055f95e30bbad38d957065f543"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "6a47c824-b5dd-425c-90b2-1c09ceb3e15a",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "1328",
+      "cost_usd": 0.31294750000000005,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0480",
+        "ms-0482"
+      ],
+      "started_at": "2026-09-21T14:50:59+00:00",
+      "finished_at": "2026-09-21T14:51:16+00:00",
+      "prompt_chars": 134273,
+      "prompt_sha256": "936f41e9e598b08ef130a2f66d96bce4aef16f5ba0d373f4b9d0ca61bcbd1ecd",
+      "verdicts": [
+        {
+          "sample_id": "ms-0480",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "absence": "ok",
+            "slices": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0482",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "absence": "ok",
+            "slices": "issue",
+            "dept": "ok"
+          },
+          "reason": "缺 protocol_id 标签。query「ICH E14 是否为 thorough QT/QTc study 规定了固定的受试者例数…」的召回明显依赖指南编号「ICH E14」的精确匹配，符合切片定义「召回依赖…指南编号或版本号的精确匹配」；同批次同类样本 ms-0480（query 含「ICH E11(R1)」）即标注了 protocol_id，此处口径不一致。文档确无固定样本量或统一公式，正文仅有「They usually call for smaller numbers of subjects than parallel group studies」等定性表述（第 8 页），absence 成立。",
+          "suggestion": "slices 增补 protocol_id，改为 [\"no_answer\", \"mixed_zh_en\", \"protocol_id\"]；若判定单独「E14」不构成编号依赖，则应同步复核 ms-0480 的 protocol_id 标注以统一口径。"
+        }
+      ],
+      "input_path": "chunk_inputs/input_936f41e9e598b08ef130a2f66d96bce4aef16f5ba0d373f4b9d0ca61bcbd1ecd.jsonl",
+      "sample_input_sha256": {
+        "ms-0480": "3b175568a27e3ee908bcf2f86792b5486298321ef57145d96b5a31a97e746838",
+        "ms-0482": "bd45f607497dce44a512a700679825311b50e257e61ccbc8ab87750071184b1f"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "e6058c1f-483f-4a74-8a31-9275948c023c",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "1401",
+      "cost_usd": 0.25856625,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0484",
+        "ms-0485"
+      ],
+      "started_at": "2026-09-21T14:51:16+00:00",
+      "finished_at": "2026-09-21T14:51:35+00:00",
+      "prompt_chars": 108283,
+      "prompt_sha256": "bf63a23dc2c8a805300fb879856791574562a34f58617f97054cfc524461ee5b",
+      "verdicts": [
+        {
+          "sample_id": "ms-0484",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "absence": "ok",
+            "slices": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": "第 21 页有“the use of a central independent data monitoring committee (with representation from participating regions to adequately assess the context of the trial) should be considered”，仅为定性建议，未给成员人数或区域代表比例，故收窄后的问题仍无答案；建议在 absence_check 备注该句以便后续裁决留痕。"
+        },
+        {
+          "sample_id": "ms-0485",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "absence": "ok",
+            "slices": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": "第 12 页仅有“Concerns may emerge during the conduct of clinical trials utilising selective safety data collection that will require intensification of safety monitoring or reversion to comprehensive safety data collection.”，未给出任何量化阈值或固定决策算法，收窄后的问题确无答案；建议在 absence_check 中补记该句。"
+        }
+      ],
+      "input_path": "chunk_inputs/input_bf63a23dc2c8a805300fb879856791574562a34f58617f97054cfc524461ee5b.jsonl",
+      "sample_input_sha256": {
+        "ms-0484": "b3b0d1a1b7cb745071467ec8975d69797ad8cbd68023b1ffa6947cc0ef902028",
+        "ms-0485": "b5adbb8cb79fd07ef56de1007276afa572cdadc62afb2a615fea49163d711d52"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "55498d66-8ffd-4e2f-b4c5-28882eb8d79b",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "1088",
+      "cost_usd": 0.32165375,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0489",
+        "ms-0490"
+      ],
+      "started_at": "2026-09-21T14:51:35+00:00",
+      "finished_at": "2026-09-21T14:51:50+00:00",
+      "prompt_chars": 139697,
+      "prompt_sha256": "7aa0762991dd93c3be72efede82a33004ae90e0453c5e0b6f9ba5f62e9c9ff1c",
+      "verdicts": [
+        {
+          "sample_id": "ms-0489",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "absence": "ok",
+            "slices": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0490",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "absence": "ok",
+            "slices": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_7aa0762991dd93c3be72efede82a33004ae90e0453c5e0b6f9ba5f62e9c9ff1c.jsonl",
+      "sample_input_sha256": {
+        "ms-0489": "711f74d6954498879eb846482d64b356d869de16c3f8ec39b1a309b4ba5fb7c4",
+        "ms-0490": "f7f8007d577b3a4e4b1b8ae390aee55ee68e636cc2b836ad8f9ca8a9c85c74f0"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "3aec82a8-f41b-4e09-af71-2fc3d7998ad2",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "3614",
+      "cost_usd": 0.504435,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0491",
+        "ms-0492"
+      ],
+      "started_at": "2026-09-21T14:51:50+00:00",
+      "finished_at": "2026-09-21T14:52:40+00:00",
+      "prompt_chars": 206754,
+      "prompt_sha256": "e3526e2cda75a30d5ba5510c489cde1b20403a3a6b98fb3acbb00cd8bb3a47dd",
+      "verdicts": [
+        {
+          "sample_id": "ms-0491",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "absence": "ok",
+            "slices": "issue",
+            "dept": "ok"
+          },
+          "reason": "缺席判定成立：全文仅在第 30 页出现“One way to do this is with a standard adverse reaction/events dictionary.”，未提及任何词典名称或版本要求，其余页也无相关条款。问题在切片标签：query 以“根据ICH E3”限定范围，召回依赖指南编号“ICH E3”的精确匹配，按切片定义（指南编号的精确匹配）应含 protocol_id；同批样本 ms-0492 对“ICH E6(R3)”即标注了 protocol_id，本样本缺该标签，前后口径不一致。",
+          "suggestion": "将 slices 改为 [\"no_answer\", \"mixed_zh_en\", \"protocol_id\"]；若判定认为“ICH E3”不构成检索依赖，则需同时撤销 ms-0492 的 protocol_id 以保持口径一致。"
+        },
+        {
+          "sample_id": "ms-0492",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "absence": "ok",
+            "slices": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_e3526e2cda75a30d5ba5510c489cde1b20403a3a6b98fb3acbb00cd8bb3a47dd.jsonl",
+      "sample_input_sha256": {
+        "ms-0491": "27c2f3bd64b046deb6e38ece2b20d839f01b5364e75b61d5639ced31316205b8",
+        "ms-0492": "40c37241b46325a30737b674a082a6b60694b6a38d20dc1f834c2b16b4abeccc"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "52e3aaa1-f392-4bc1-9850-c65bb7db7319",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "1094",
+      "cost_usd": 0.3127725,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0494",
+        "ms-0495"
+      ],
+      "started_at": "2026-09-21T14:52:40+00:00",
+      "finished_at": "2026-09-21T14:52:56+00:00",
+      "prompt_chars": 147947,
+      "prompt_sha256": "f4a57a9efdedd649d64572e40bed876acd1e9f84a980683129945c12a25ba970",
+      "verdicts": [
+        {
+          "sample_id": "ms-0494",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "absence": "ok",
+            "slices": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0495",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "absence": "ok",
+            "slices": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_f4a57a9efdedd649d64572e40bed876acd1e9f84a980683129945c12a25ba970.jsonl",
+      "sample_input_sha256": {
+        "ms-0494": "a84922422f30d9fc7487f93ee0dd68c6f0150dd872cf705a95c6c20df7306965",
+        "ms-0495": "49076ceb53ba8959d5f4ea86e1f59dfeb1af6569913a4a7f46857feeeb05b08a"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "a9352cd9-2c84-4866-b0f1-a1e15107e0b1",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "2494",
+      "cost_usd": 0.5308725,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0496",
+        "ms-0497"
+      ],
+      "started_at": "2026-09-21T14:52:56+00:00",
+      "finished_at": "2026-09-21T14:53:30+00:00",
+      "prompt_chars": 93864,
+      "prompt_sha256": "b37842ce9427552128afdd7af7525263dda8626d5cf53b56c8037d3f6878b91a",
+      "verdicts": [
+        {
+          "sample_id": "ms-0496",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "absence": "ok",
+            "slices": "ok",
+            "dept": "ok"
+          },
+          "reason": "通读全文 49 页，文档仅对 SMQ 检索特性作定性描述（第 30 页“狭义 PT 倾向于仅识别出关注的事件(高特异性),广义术语目的是发现所有其他可能的事件(高敏感性)”、第 25 页“经过验证可重复使用的搜索逻辑”），未给出任何灵敏度/特异度/阳性预测值的数值，也未以“未建立”等表述回应；query 针对 SMQ 主题、PV 用户会问且合理期望在该 SMQ 指南中查找；no_answer 成立，query 含 MedDRA、SMQ 英文缩写，mixed_zh_en 成立；MedDRA 指南归 PV。",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0497",
+          "verdict": "dispute",
+          "items": {
+            "query": "issue",
+            "absence": "ok",
+            "slices": "ok",
+            "dept": "ok"
+          },
+          "reason": "absence 成立：全文未出现任何费用/价格条款，仅有第 2 页“本《入门指南》旨在与 MedDRA 浏览器配合使用,包含在 MedDRA 订阅中”及多处“订户”，不构成对费用标准的回答。但 query 属商业/许可性质的行政问题，与本文档自述用途不符——第 7 页“本指南对该术语集的编制、范围和结构作了说明”，PV 用户不会合理期望在术语集入门指南中找到订阅收费标准（该信息属 MedDRA 网站订阅页面），该问句使弃答过于显而易见，削弱了无答案样本的检验价值。",
+          "suggestion": "改为与文档主题相关、用户确有理由在本指南中查找但文档未涵盖的问题，例如“MedDRA 新版本发布后，机构应在多长时间内完成版本更新切换？”或“提交 MedDRA 变更申请后，MSSO 的审评时限是多久？”（本指南未规定时限），以保持范围内且非平凡的弃答场景。"
+        }
+      ],
+      "input_path": "chunk_inputs/input_b37842ce9427552128afdd7af7525263dda8626d5cf53b56c8037d3f6878b91a.jsonl",
+      "sample_input_sha256": {
+        "ms-0496": "40dc55ddc506399ca2caafab2902829614b5534bc7f167d7cbca7244022e85cb",
+        "ms-0497": "0144615d4d84cf65df011298d3ebd5eea72be16a43af2f971eb31735fbfc610f"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "05961ee7-4f04-4c8e-9630-4bb5537dcd7d",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "7288",
+      "cost_usd": 0.87090375,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0498",
+        "ms-0499"
+      ],
+      "started_at": "2026-09-21T14:53:30+00:00",
+      "finished_at": "2026-09-21T14:55:13+00:00",
+      "prompt_chars": 120778,
+      "prompt_sha256": "b360c2a4f2422970b943c10e814d2364223d2beeb787a5df7d93b81005704043",
+      "verdicts": [
+        {
+          "sample_id": "ms-0498",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "absence": "ok",
+            "slices": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0499",
+          "verdict": "dispute",
+          "items": {
+            "query": "issue",
+            "absence": "ok",
+            "slices": "ok",
+            "dept": "ok"
+          },
+          "reason": "文档确实没有 PT 清单与窄/广搜索算法定义：第 9 页 3.2 节只写“MedDRA 第 25.0 版中增加了一个新 SMQ——SMQ 非感染性心肌炎/心包炎。此 SMQ 重点旨在识别可能与药物、疫苗和生物制剂的暴露有关的非感染性心肌炎和/或心包炎病例”，并明确指引“请查看《MedDRA 第 25.0 版 SMQ 入门指南》,了解新 SMQ 非感染性心肌炎/心包炎的详细信息”，absence 一项成立。但 query 不满足“合理期望在这份文档里找到答案”：它问的是“具体包含哪些PT术语”“窄搜索和广搜索算法是怎样定义的”，属 SMQ 入门指南的 PT 级内容，本文档自身即把该细节外指；18 页的发布说明（《更新内容》）按其用途不承载 SMQ 术语表与算法。且 absence_check 记录“语料内其他文档命中数 {'算法': 2}”，说明语料内另有文档含“算法”表述，若《SMQ 入门指南》第 2.72 节在语料范围内，系统据其正确作答反而会被判为违反 no_answer，abstention 期望行为存疑。",
+          "suggestion": "把 query 收窄为面向本文档的问法，例如“《更新内容 MedDRA 第 25.0 版》是否列出了新增非感染性心肌炎/心包炎 SMQ 的纳入 PT 清单与算法类别？”，或改用本文档范围内真正缺席的主题（如该 SMQ 的测试数据/发布时间表细节）；同时由人工确认语料中不存在可回答 PT 清单与窄/广搜索算法的《SMQ 入门指南》第 2.72 节，若存在则本样本应改为有答案样本并把 gold 落到该节。"
+        }
+      ],
+      "input_path": "chunk_inputs/input_b360c2a4f2422970b943c10e814d2364223d2beeb787a5df7d93b81005704043.jsonl",
+      "sample_input_sha256": {
+        "ms-0498": "4750a6a30f7049cb242cd898b69e58eeaec3f50a473eb73c66927a18d4fc8b02",
+        "ms-0499": "c3af494b4dc0522df6ed714ece00f7be241be364a7f6bb329da7d99eb513b3be"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "a05c5ee9-51ce-4b33-ba23-39d5a021ee10",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "1204",
+      "cost_usd": 0.37925374999999995,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0500",
+        "ms-0512"
+      ],
+      "started_at": "2026-09-21T14:55:13+00:00",
+      "finished_at": "2026-09-21T14:55:36+00:00",
+      "prompt_chars": 62201,
+      "prompt_sha256": "eda3a2b3e2709ded86efc30e5b011419a8afe7e63329b47c5fa3b0bfe1cfcca7",
+      "verdicts": [
+        {
+          "sample_id": "ms-0500",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "absence": "ok",
+            "slices": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0512",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "absence": "ok",
+            "slices": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_eda3a2b3e2709ded86efc30e5b011419a8afe7e63329b47c5fa3b0bfe1cfcca7.jsonl",
+      "sample_input_sha256": {
+        "ms-0500": "71042bad2a7c4e33950d41ff34415a9f3ae0f3a30033e8961e13b47e34789bc8",
+        "ms-0512": "065f8681142077c311fa99ff82c2d694ec1c85fe2d953b0a18ec58a3e8a3e10f"
+      }
     }
   ],
   "provenance_version": 2,
@@ -1907,60 +2427,127 @@
       "sample_input_sha256": "af39b9a1ea3d46038d08f7efe2a4a05b9b5e8e1e8bf0fb4e65896da9e6768eec",
       "prompt_sha256": "6efd6999eb4eb3aaf8592e9206158888e621f7c4a6905a9af7112eb833607bc7",
       "verdict_sha256": "52bbb3eab14e34248dd649b1b57849fe2a58c6aec2edadfbd6418e443ba01ced"
+    },
+    "ms-0474": {
+      "chunk_index": 25,
+      "sample_input_sha256": "fef4a8774434bb1c18e6bb22b7759d3852dc233078645ac2d5ca9800bd38ef4a",
+      "prompt_sha256": "1be5bf90db44af72f193b6832c5849a000b923e7cffbdae950712c2e9c74bd5a",
+      "verdict_sha256": "fe4a15ee847dd6f54cb7491352da541725549db51e535a1853916d893713e98b"
+    },
+    "ms-0476": {
+      "chunk_index": 25,
+      "sample_input_sha256": "3771cc606111421ce97d95ad46de8a30ebeb1b2eef8eb76cd54f6fa234b5b237",
+      "prompt_sha256": "1be5bf90db44af72f193b6832c5849a000b923e7cffbdae950712c2e9c74bd5a",
+      "verdict_sha256": "709c1add0b23b34e61481af63b9476ec50036ebc378de07840d77ebed5f51bb9"
+    },
+    "ms-0478": {
+      "chunk_index": 26,
+      "sample_input_sha256": "b16fe009d6ce07ea900a457520b4cf31051c20ffe75dd4deebc0be22a5361394",
+      "prompt_sha256": "22fcda10f0ac141440c0eba4a7d6ca9186973d3da91608b27ced0530e8ecd559",
+      "verdict_sha256": "04a1e4229a59310f19215fe3be07c3f14fb263e179278bc983924953721664f9"
+    },
+    "ms-0479": {
+      "chunk_index": 26,
+      "sample_input_sha256": "65111bb2eed92478f3a0ce4fc5fe13b1895184055f95e30bbad38d957065f543",
+      "prompt_sha256": "22fcda10f0ac141440c0eba4a7d6ca9186973d3da91608b27ced0530e8ecd559",
+      "verdict_sha256": "c101d1c4d7c86a6a4b3ec31303a647db9d838cd320b7181cb5b04d2f9f20e5a8"
+    },
+    "ms-0480": {
+      "chunk_index": 27,
+      "sample_input_sha256": "3b175568a27e3ee908bcf2f86792b5486298321ef57145d96b5a31a97e746838",
+      "prompt_sha256": "936f41e9e598b08ef130a2f66d96bce4aef16f5ba0d373f4b9d0ca61bcbd1ecd",
+      "verdict_sha256": "94d3d6732900761a76081025dbdffd3edb1374834626100148ab16902e850938"
+    },
+    "ms-0482": {
+      "chunk_index": 27,
+      "sample_input_sha256": "bd45f607497dce44a512a700679825311b50e257e61ccbc8ab87750071184b1f",
+      "prompt_sha256": "936f41e9e598b08ef130a2f66d96bce4aef16f5ba0d373f4b9d0ca61bcbd1ecd",
+      "verdict_sha256": "99889ac93337a441be2db77f83dfd825f803fb82dc0d57d95baf56ace958c4f3"
+    },
+    "ms-0484": {
+      "chunk_index": 28,
+      "sample_input_sha256": "b3b0d1a1b7cb745071467ec8975d69797ad8cbd68023b1ffa6947cc0ef902028",
+      "prompt_sha256": "bf63a23dc2c8a805300fb879856791574562a34f58617f97054cfc524461ee5b",
+      "verdict_sha256": "d7199a2e8ff16389874b99ce7c6b2a3807429556c677cef4470d6c4cb9b37690"
+    },
+    "ms-0485": {
+      "chunk_index": 28,
+      "sample_input_sha256": "b5adbb8cb79fd07ef56de1007276afa572cdadc62afb2a615fea49163d711d52",
+      "prompt_sha256": "bf63a23dc2c8a805300fb879856791574562a34f58617f97054cfc524461ee5b",
+      "verdict_sha256": "f1c20d477aa9c7ebf84f047234447986e5e54364148af7f574d1f1bdea81c570"
+    },
+    "ms-0489": {
+      "chunk_index": 29,
+      "sample_input_sha256": "711f74d6954498879eb846482d64b356d869de16c3f8ec39b1a309b4ba5fb7c4",
+      "prompt_sha256": "7aa0762991dd93c3be72efede82a33004ae90e0453c5e0b6f9ba5f62e9c9ff1c",
+      "verdict_sha256": "afada4516c6b112cff56cb592ec07bd9a1df460caa136da00a3bf00f8a8de4b2"
+    },
+    "ms-0490": {
+      "chunk_index": 29,
+      "sample_input_sha256": "f7f8007d577b3a4e4b1b8ae390aee55ee68e636cc2b836ad8f9ca8a9c85c74f0",
+      "prompt_sha256": "7aa0762991dd93c3be72efede82a33004ae90e0453c5e0b6f9ba5f62e9c9ff1c",
+      "verdict_sha256": "5fd1ef51f83db89aaaeb46187a672fc09ff57aa47e186dd5c4bc590bafadf7a3"
+    },
+    "ms-0491": {
+      "chunk_index": 30,
+      "sample_input_sha256": "27c2f3bd64b046deb6e38ece2b20d839f01b5364e75b61d5639ced31316205b8",
+      "prompt_sha256": "e3526e2cda75a30d5ba5510c489cde1b20403a3a6b98fb3acbb00cd8bb3a47dd",
+      "verdict_sha256": "9a888cd623f80f6853257187fe5032bf9a60a44a725fb9e9872e332d2cceb5c3"
+    },
+    "ms-0492": {
+      "chunk_index": 30,
+      "sample_input_sha256": "40c37241b46325a30737b674a082a6b60694b6a38d20dc1f834c2b16b4abeccc",
+      "prompt_sha256": "e3526e2cda75a30d5ba5510c489cde1b20403a3a6b98fb3acbb00cd8bb3a47dd",
+      "verdict_sha256": "8c822a460c2885b2c80ca0ad6ee8408de9e578664a882ea1f94a78b9ed541e14"
+    },
+    "ms-0494": {
+      "chunk_index": 31,
+      "sample_input_sha256": "a84922422f30d9fc7487f93ee0dd68c6f0150dd872cf705a95c6c20df7306965",
+      "prompt_sha256": "f4a57a9efdedd649d64572e40bed876acd1e9f84a980683129945c12a25ba970",
+      "verdict_sha256": "bf5316fdaac81266376a2eeb15c26a74d0503ef326633742fb2660f8d328f785"
+    },
+    "ms-0495": {
+      "chunk_index": 31,
+      "sample_input_sha256": "49076ceb53ba8959d5f4ea86e1f59dfeb1af6569913a4a7f46857feeeb05b08a",
+      "prompt_sha256": "f4a57a9efdedd649d64572e40bed876acd1e9f84a980683129945c12a25ba970",
+      "verdict_sha256": "843a4a83e2276757c2eba1943884f6e676e3beeef6b20c32afa100240b187bfc"
+    },
+    "ms-0496": {
+      "chunk_index": 32,
+      "sample_input_sha256": "40dc55ddc506399ca2caafab2902829614b5534bc7f167d7cbca7244022e85cb",
+      "prompt_sha256": "b37842ce9427552128afdd7af7525263dda8626d5cf53b56c8037d3f6878b91a",
+      "verdict_sha256": "7096076088376a9e0cd5c2f0b5a0882725723e7bb71953efbab43e563347b789"
+    },
+    "ms-0497": {
+      "chunk_index": 32,
+      "sample_input_sha256": "0144615d4d84cf65df011298d3ebd5eea72be16a43af2f971eb31735fbfc610f",
+      "prompt_sha256": "b37842ce9427552128afdd7af7525263dda8626d5cf53b56c8037d3f6878b91a",
+      "verdict_sha256": "6ea52487486d4dda89e5a9b74a1681d3827a5b30ab24c41ade11755d2a649b8f"
+    },
+    "ms-0498": {
+      "chunk_index": 33,
+      "sample_input_sha256": "4750a6a30f7049cb242cd898b69e58eeaec3f50a473eb73c66927a18d4fc8b02",
+      "prompt_sha256": "b360c2a4f2422970b943c10e814d2364223d2beeb787a5df7d93b81005704043",
+      "verdict_sha256": "240462c7a19c4a8c68a8cf81ff43ebef63a80a6e217a979a5b320b35f601940d"
+    },
+    "ms-0499": {
+      "chunk_index": 33,
+      "sample_input_sha256": "c3af494b4dc0522df6ed714ece00f7be241be364a7f6bb329da7d99eb513b3be",
+      "prompt_sha256": "b360c2a4f2422970b943c10e814d2364223d2beeb787a5df7d93b81005704043",
+      "verdict_sha256": "2a704bb53ad53a71fa13f1ef8f972271ab45f09a00f75482364c0c2474e2d7b2"
+    },
+    "ms-0500": {
+      "chunk_index": 34,
+      "sample_input_sha256": "71042bad2a7c4e33950d41ff34415a9f3ae0f3a30033e8961e13b47e34789bc8",
+      "prompt_sha256": "eda3a2b3e2709ded86efc30e5b011419a8afe7e63329b47c5fa3b0bfe1cfcca7",
+      "verdict_sha256": "e5a0dbb450a122a11fff6e3273b7a6ced4d40adfb37fc875135170d759f32c92"
+    },
+    "ms-0512": {
+      "chunk_index": 34,
+      "sample_input_sha256": "065f8681142077c311fa99ff82c2d694ec1c85fe2d953b0a18ec58a3e8a3e10f",
+      "prompt_sha256": "eda3a2b3e2709ded86efc30e5b011419a8afe7e63329b47c5fa3b0bfe1cfcca7",
+      "verdict_sha256": "f52707f51370c7a672ce8483d87e4325fdc6bfb194bac4c1318d86fd2c1d075e"
     }
   },
-  "active_review": {
-    "sample_input_sha256": {
-      "ms-0462": "26308dbda985db34f80282317815052921630bd9e4f73ff2adcd01fe47f60b24",
-      "ms-0463": "79a61ea05a333f372ba5277b1d34f57edc93dd214d5d3386b1e248069d509fb8",
-      "ms-0466": "0fee94661151523af1421d31718bf67c251a3a9555c18baeb74192b40fc769bc",
-      "ms-0468": "30de524b82bc8c52474dd5838d0cef4ea3f9e6a6a416bef26c46d9096cebe572",
-      "ms-0469": "cf4b0cf49e735d04238613da97c27860c36329338c6f6a5bcc0169af11e7e3d9",
-      "ms-0471": "fcfe4779cdbde7e8d262f0d2583e72be5bdc2ba7fabbfbc7119940c23ce47053",
-      "ms-0472": "419e43e90d6e9fa74b17c768ace96f3609c4e668e9e16164ebd7c6a706f4616e",
-      "ms-0473": "af39b9a1ea3d46038d08f7efe2a4a05b9b5e8e1e8bf0fb4e65896da9e6768eec",
-      "ms-0474": "fef4a8774434bb1c18e6bb22b7759d3852dc233078645ac2d5ca9800bd38ef4a",
-      "ms-0476": "3771cc606111421ce97d95ad46de8a30ebeb1b2eef8eb76cd54f6fa234b5b237",
-      "ms-0478": "b16fe009d6ce07ea900a457520b4cf31051c20ffe75dd4deebc0be22a5361394",
-      "ms-0479": "65111bb2eed92478f3a0ce4fc5fe13b1895184055f95e30bbad38d957065f543",
-      "ms-0480": "3b175568a27e3ee908bcf2f86792b5486298321ef57145d96b5a31a97e746838",
-      "ms-0482": "bd45f607497dce44a512a700679825311b50e257e61ccbc8ab87750071184b1f",
-      "ms-0484": "b3b0d1a1b7cb745071467ec8975d69797ad8cbd68023b1ffa6947cc0ef902028",
-      "ms-0485": "b5adbb8cb79fd07ef56de1007276afa572cdadc62afb2a615fea49163d711d52",
-      "ms-0489": "711f74d6954498879eb846482d64b356d869de16c3f8ec39b1a309b4ba5fb7c4",
-      "ms-0490": "f7f8007d577b3a4e4b1b8ae390aee55ee68e636cc2b836ad8f9ca8a9c85c74f0",
-      "ms-0491": "27c2f3bd64b046deb6e38ece2b20d839f01b5364e75b61d5639ced31316205b8",
-      "ms-0492": "40c37241b46325a30737b674a082a6b60694b6a38d20dc1f834c2b16b4abeccc",
-      "ms-0494": "a84922422f30d9fc7487f93ee0dd68c6f0150dd872cf705a95c6c20df7306965",
-      "ms-0495": "49076ceb53ba8959d5f4ea86e1f59dfeb1af6569913a4a7f46857feeeb05b08a",
-      "ms-0496": "40dc55ddc506399ca2caafab2902829614b5534bc7f167d7cbca7244022e85cb",
-      "ms-0497": "0144615d4d84cf65df011298d3ebd5eea72be16a43af2f971eb31735fbfc610f",
-      "ms-0498": "4750a6a30f7049cb242cd898b69e58eeaec3f50a473eb73c66927a18d4fc8b02",
-      "ms-0499": "c3af494b4dc0522df6ed714ece00f7be241be364a7f6bb329da7d99eb513b3be",
-      "ms-0500": "71042bad2a7c4e33950d41ff34415a9f3ae0f3a30033e8961e13b47e34789bc8",
-      "ms-0512": "065f8681142077c311fa99ff82c2d694ec1c85fe2d953b0a18ec58a3e8a3e10f"
-    },
-    "pending_ids": [
-      "ms-0474",
-      "ms-0476",
-      "ms-0478",
-      "ms-0479",
-      "ms-0480",
-      "ms-0482",
-      "ms-0484",
-      "ms-0485",
-      "ms-0489",
-      "ms-0490",
-      "ms-0491",
-      "ms-0492",
-      "ms-0494",
-      "ms-0495",
-      "ms-0496",
-      "ms-0497",
-      "ms-0498",
-      "ms-0499",
-      "ms-0500",
-      "ms-0512"
-    ]
-  }
+  "active_review": null
 }

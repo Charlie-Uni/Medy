@@ -50,3 +50,19 @@
 - 复核人（claude-opus-5）在 PV/EN 首批就指出：复核输入缺少样本的 `conflict` 说明块（打包脚本漏带，提示里却说会附上）。已修正 `pack_review.py` 与 PR-09 的输入重建（`conflict` 与非空 `notes` 一并进入复核记录），PV/CO/EN 三批作废重跑（作废的运行记录在 `review/archive_2026-09-22_before_conflict_field/`）。
 - 复核人同时指出 GVP Annex I Rev 4 的页眉写明 "Superseded version (not valid anymore)"。EMA 已发布 Rev 5（2024-07-26），已下载、过门禁并以发布流程作为 Rev 4 的后继版入库（候选 cand-0102，v1.1）：family 现为 合成旧版 → Rev 4 → Rev 5，是一对真实修订。Annex I 的 5 条样本与孪生已重新锚定到 Rev 5（`conflict.synthetic=false`）：3 条原文不变（ms-0086/0088/0090），ms-0092 的 key 因 Rev 5 另页有近似句而加长，ms-0084 因 Rev 5 删除了 Dir 2001/20/EC 的非干预性试验定义、改写为 Reg (EU) 536/2014 的 non-interventional study 定义；无答案 ms-0462 的 scope 迁到 Rev 5 并复查缺席词。这 11 条在各批次复核完成后用 `--only` 单独重跑。
 
+## 2026-09-22 LLM 独立复核结果（reviewer-llm-02 = claude-opus-5）
+
+| 批次 | 样本 | 争议 | 争议率 | 调用次数 | 费用 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| MA | 80 | 3 | 3.8% | 16 | $4.43 |
+| PV | 119 | 21 | 17.6% | 30 | $8.87 |
+| CO | 79 | 20 | 25.3% | 16 | $5.57 |
+| EN | 168 | 19 | 11.3% | 40 | $11.94 |
+| NA | 61 | 8 | 13.1% | 35 | $12.25 |
+| 合计 | 507 | 71 | 14.0% | 137 | **$43.06** |
+
+- 复核中途按复核人的意见做了三处工具侧修正并定向重跑（`--only`）：(1) 复核输入补齐 `conflict` 块与 `notes`（PV/CO/EN 作废重跑，约 $1 沉没）；(2) 第一轮外部审校按"报告长度"重建的 25 条 PV span 边界错位——按复核人争议恢复为起草者原始完整条款（`tools/fix_span_boundaries.py`，孪生同步，PV 25 + EN 23 条重跑）；(3) 无答案样本的复核输入从起草时的选页扩为全文（≤ 10 万字符）或按问题相关度选页（28 条重跑，`tools/na_pages_relevant.py`）。GVP Annex I 换为 Rev 5 后相关 11 条也已重跑。
+- 复核后删除 1 条：NA ms-0509（Glimaryl 文本层乱码，复核人无法核实缺席；`review/dropped_after_review.json`，manifest 将登记）。现为 **614 条**（新 507 + 探针 107）。
+- 争议裁决表：[review/disputes_sheet.md](review/disputes_sheet.md)（71 条），annotator-01 在「决定」列写 `接受`（机械建议：补/删标签、改 key_text）或 `接受：key_text=… | slices=… | query=… | topic=… | span=…`，或 `保留：<理由>`；`tools/apply_resolutions.py` 应用并只对改动样本重跑复核。
+- 复核运行记录：`review/run_{MA,PV,CO,EN,NA}.json`、`verdicts_*.jsonl`（含页文本的输入包与分块输入不入 Git）。
+

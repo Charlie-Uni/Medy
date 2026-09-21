@@ -34,6 +34,7 @@ HERE = pathlib.Path(__file__).resolve().parent
 REVIEW = dc.DRAFTS / "review"
 BATCHES = ("MA", "PV", "CO", "EN", "NA")
 SHEET = REVIEW / "disputes_sheet.md"
+SLICE_NAMES = set(dc.SLICES) | set(dc.NEW_SLICES)
 
 
 def load_drafts() -> dict[str, list[dict]]:
@@ -76,9 +77,12 @@ def parse_accept(decision: str, suggestion: str) -> dict:
     m = re.search(r"删除\s*([a-z_]+)\s*标签", suggestion)
     if m:
         return {"remove_slice": m.group(1)}
-    m = re.search(r"(?:缺|补回?|应加|加上|增加|添加|应标)\s*`?([a-z_]+)`?\s*(?:标签|切片)", suggestion)
-    if m:
+    m = re.search(r"(?:缺|补回?|应加|加上|增加|添加|应标|补齐)\s*`?([a-z_]+)`?", suggestion)
+    if m and m.group(1) in SLICE_NAMES:
         return {"add_slice": m.group(1)}
+    m = re.search(r"(?:删除|去掉|移除|删去)\s*`?([a-z_]+)`?", suggestion)
+    if m and m.group(1) in SLICE_NAMES:
+        return {"remove_slice": m.group(1)}
     m = re.search(r"key_text\s*改为\s*[\"“]([^\"”]+)[\"”]", suggestion)
     if m:
         return {"key_text": m.group(1)}

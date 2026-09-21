@@ -159,9 +159,9 @@
         "section": "International birth date (IBD)",
         "key_text": "If a marketing authorisation holder has no information on the actual IBD for a product, it should first refer to listings of birth dates that some regions develop and make publicly available",
         "evidence_span": {
-          "text": "IV, ICH-E2C(R2) Guideline). If a marketing authorisation holder has no information on the actual IBD for a product, it should first refer to listings of birth dates that some regions develop and make publicly available. If the product is not included in any listing, it should propose to the regulatory authority a birth date that is based on the earliest known marketing authorisation of the substance and then obtain the regulatory authority’s agreement (see GVP",
-          "char_start": 310,
-          "char_end": 774
+          "text": "If a marketing authorisation holder has no information on the actual IBD for a product, it should first refer to listings of birth dates that some regions develop and make publicly available. If the product is not included in any listing, it should propose to the regulatory authority a birth date that is based on the earliest known marketing authorisation of the substance and then obtain the regulatory authority’s agreement (see GVP Annex IV, ICH-E2C(R2) Q&A).",
+          "char_start": 338,
+          "char_end": 802
         }
       }
     ],
@@ -193,7 +193,7 @@
         "problems": [],
         "reason": "IBD指首次上市许可日期而非产品实际首次销售日期；完整保留先查公开日期清单、再依已知最早许可日期提议并取得监管同意两步。has no information是触发背景，不作为禁止/排除型negation。"
       },
-      "decision": "edited (external review); gold moved to Rev 5 (record 50 §11)"
+      "decision": "edited (external review); gold moved to Rev 5 (record 50 §11); span rebuilt on sentence boundaries after review"
     },
     "conflict": {
       "family_document_keys": [
@@ -581,9 +581,9 @@
         "section": "II.B.2.2. Location, registration and maintenance",
         "key_text": "Upon a change in the QPPV or location of the PMSF information, the Article 57 database shall be updated by the marketing authorisation holder immediately and no later than 30 calendar days",
         "evidence_span": {
-          "text": "information about the qualified person responsible for pharmacovigilance (QPPV), name and contact details (telephone and fax numbers, postal address and email addresses) and PSMF location information [based on IR Art 4(4)]. Upon a change in the QPPV or location of the PMSF information, the Article 57 database shall be updated by the marketing authorisation holder immediately and no later than 30 calendar days, in order to have the information in the Article 57 database",
-          "char_start": 2197,
-          "char_end": 2670
+          "text": "Upon a change in the QPPV or location of the PMSF information, the Article 57 database shall be updated by the marketing authorisation holder immediately and no later than 30 calendar days, in order to have the information in the Article 57 database and on the European medicines web-portal referred to in Article 26(1) of Regulation (EC) No 726/2004 updated and to allow continuous supervision by the competent authorities [based on IR Art 4(4), REG Art 57(2)(c)]",
+          "char_start": 2421,
+          "char_end": 2885
         }
       }
     ],
@@ -614,7 +614,7 @@
         "problems": [],
         "reason": "key补足变更触发点、数据库及MAH主体，并保留immediately，不改写为可等待30天。源文此处拼为PMSF，gold照录，query保留正确术语PSMF。"
       },
-      "decision": "edited (external review)"
+      "decision": "edited (external review); span rebuilt on sentence boundaries after review"
     }
   },
   {
@@ -748,9 +748,9 @@
         "section": "II.B.2.1. Summary of the applicant’s pharmacovigilance system",
         "key_text": "are not required to submit a pharmacovigilance system summary",
         "evidence_span": {
-          "text": "medicinal product is kept. Applicants for, and holders of simplified registrations of traditional herbal medicinal products are not required to submit a pharmacovigilance system summary, however, they are required to operate a pharmacovigilance system and prepare, maintain and make available on request a PSMF",
-          "char_start": 2592,
-          "char_end": 2902
+          "text": "Applicants for, and holders of simplified registrations of traditional herbal medicinal products are not required to submit a pharmacovigilance system summary, however, they are required to operate a pharmacovigilance system and prepare, maintain and make available on request a PSMF [based on DIR Art 16g(1)].",
+          "char_start": 2619,
+          "char_end": 2929
         }
       }
     ],
@@ -783,7 +783,7 @@
         "problems": [],
         "reason": "保留不需提交摘要但仍须运行PV系统并建立/维护/按请求提供PSMF的转折，不外推为全面豁免。另附英文提议。"
       },
-      "decision": "edited (external review)"
+      "decision": "edited (external review); span rebuilt on sentence boundaries after review"
     }
   },
   {
@@ -970,9 +970,9 @@
         "section": "III.A. Introduction",
         "key_text": "the Member State concerned shall inform the other Member States, the Agency and the European Commission in accordance with III.C.1.",
         "evidence_span": {
-          "text": "action plan. If the outcome of the inspection is that the marketing authorisation holder does not comply with the pharmacovigilance obligations, the Member State concerned shall inform the other Member States, the Agency and the European Commission in accordance with III.C.1. [DIR",
-          "char_start": 1996,
-          "char_end": 2277
+          "text": "If the outcome of the inspection is that the marketing authorisation holder does not comply with the pharmacovigilance obligations, the Member State concerned shall inform the other Member States, the Agency and the European Commission in accordance with III.C.1. [DIR Art 111(8)].",
+          "char_start": 2009,
+          "char_end": 2290
         }
       }
     ],
@@ -1007,7 +1007,7 @@
         "problems": [],
         "reason": "完整保留违规检查结果及三个通知对象。does not comply是通知义务的触发背景，不是禁止/排除命题，删除negation；法条编号确在query。"
       },
-      "decision": "edited (external review)"
+      "decision": "edited (external review); span rebuilt on sentence boundaries after review"
     }
   },
   {
@@ -1082,9 +1082,9 @@
         "section": "IV.C.4. Transparency",
         "key_text": "The European Commission shall make public a report on the performance of pharmacovigilance tasks by the Agency on 2 January 2014 at the latest",
         "evidence_span": {
-          "text": "legislation on the protection of individuals with regard to the processing of personal data and on the free movement of such data. IV.C.4. Transparency The European Commission shall make public a report on the performance of pharmacovigilance tasks by the Agency on 2 January 2014 at the latest and subsequently every 3 years thereafter [REG Art 29] and on the performance of",
-          "char_start": 580,
-          "char_end": 955
+          "text": "The European Commission shall make public a report on the performance of pharmacovigilance tasks by the Agency on 2 January 2014 at the latest and subsequently every 3 years thereafter [REG Art 29]",
+          "char_start": 732,
+          "char_end": 929
         }
       }
     ],
@@ -1115,7 +1115,7 @@
         "problems": [],
         "reason": "区分EMA任务首报2014-01-02与成员国任务首报2015-07-21；完整句保留后续每3年，不当作新的未来截止时间。"
       },
-      "decision": "edited (external review)"
+      "decision": "edited (external review); span rebuilt on sentence boundaries after review"
     }
   },
   {
@@ -1137,9 +1137,9 @@
         "section": "IV.C.1.1. Requirement to perform an audit",
         "key_text": "required to perform regular risk-based audit(s) of their pharmacovigilance system [DIR Art 104(2)]",
         "evidence_span": {
-          "text": "audit The marketing authorisation holder in the EU is required to perform regular risk-based audit(s) of their pharmacovigilance system [DIR Art 104(2)], including audit(s) of its quality system to ensure that the quality system complies with the quality system requirements [ IR Art 8,10,11,12,13(1)]. The dates and results of audits and follow-up audits shall be documented [IR Art",
-          "char_start": 1513,
-          "char_end": 1896
+          "text": "The marketing authorisation holder in the EU is required to perform regular risk-based audit(s) of their pharmacovigilance system [DIR Art 104(2)], including audit(s) of its quality system to ensure that the quality system complies with the quality system requirements [ IR Art 8,10,11,12,13(1)].",
+          "char_start": 1519,
+          "char_end": 1815
         }
       }
     ],
@@ -1174,7 +1174,7 @@
         "problems": [],
         "reason": "补齐包括质量系统在内的定期风险导向审计，span保留日期结果记录的紧随要求；精确法条是有效query标识。"
       },
-      "decision": "edited (external review)"
+      "decision": "edited (external review); span rebuilt on sentence boundaries after review"
     }
   },
   {
@@ -1196,9 +1196,9 @@
         "section": "IV.C.1.2.3. The Pharmacovigilance Risk Assessment Committee (PRAC)",
         "key_text": "The mandate of the Pharmacovigilance Risk Assessment Committee (PRAC) shall cover all aspects of the risk management of the use of medicinal products for human use , having due regard to the design",
         "evidence_span": {
-          "text": "Committee (PRAC) The mandate of the Pharmacovigilance Risk Assessment Committee (PRAC) shall cover all aspects of the risk management of the use of medicinal products for human use , having due regard to the design and evaluation of pharmacovigilance audits",
-          "char_start": 1310,
-          "char_end": 1567
+          "text": "The mandate of the Pharmacovigilance Risk Assessment Committee (PRAC) shall cover all aspects of the risk management of the use of medicinal products for human use , having due regard to the design and evaluation of pharmacovigilance audits [REG Art 61a(6)].",
+          "char_start": 1327,
+          "char_end": 1585
         }
       }
     ],
@@ -1234,7 +1234,7 @@
         "problems": [],
         "reason": "key补足PRAC职权主体与药物风险管理职责，不留孤立having due regard短语。"
       },
-      "decision": "edited (external review)"
+      "decision": "edited (external review); span rebuilt on sentence boundaries after review"
     }
   },
   {
@@ -1696,8 +1696,8 @@
         "section": "V.B.6.3. RMP part III section “Summary table of additional pharmacovigilance activities”",
         "key_text": "Studies not required by the EMA or a national competent authority should not be included in the pharmacovigilance plan in the RMP.",
         "evidence_span": {
-          "text": "as a condition to the marketing authorisation or as a specific obligation, or required by the Agency or a national competent authority. Studies not required by the EMA or a national competent authority should not be included in the pharmacovigilance plan in the RMP.",
-          "char_start": 2571,
+          "text": "Studies not required by the EMA or a national competent authority should not be included in the pharmacovigilance plan in the RMP.",
+          "char_start": 2707,
           "char_end": 2837
         }
       }
@@ -1728,7 +1728,7 @@
         "problems": [],
         "reason": "span补入不影响按适用法律报告此类研究安全性问题的保留条款；不能从不纳入RMP推出无需报告安全问题。"
       },
-      "decision": "edited (external review)"
+      "decision": "edited (external review); span rebuilt on sentence boundaries after review"
     }
   },
   {
@@ -1983,9 +1983,9 @@
         "section": "VI. Add I.3.2. Confirmation of duplicates cases",
         "key_text": "Population of the ‘Linked reports’ section (ICH-E2B(R2) data field ‘A.1.12’)/ICH-E2B(R3) data field ‘C.1.10.r’) with the numbers of other cases that are linked by a common element or elements",
         "evidence_span": {
-          "text": "of administration, primary source, medical history and concurrent drug fields match, one cannot be certain that reports are true duplicates as it is a common reaction possibly reported for many ‘neonates’ with similar history from the same clinic). Population of the ‘Linked reports’ section (ICH-E2B(R2) data field ‘A.1.12’)/ICH-E2B(R3) data field ‘C.1.10.r’) with the numbers of other cases that are linked by a common element or elements, but are distinct from one another, is a particularly effective method of enabling confirmation that cases are not duplicates of one another. Conversely, population of",
-          "char_start": 130,
-          "char_end": 738
+          "text": "Population of the ‘Linked reports’ section (ICH-E2B(R2) data field ‘A.1.12’)/ICH-E2B(R3) data field ‘C.1.10.r’) with the numbers of other cases that are linked by a common element or elements, but are distinct from one another, is a particularly effective method of enabling confirmation that cases are not duplicates of one another.",
+          "char_start": 379,
+          "char_end": 712
         }
       }
     ],
@@ -2016,7 +2016,7 @@
         "problems": [],
         "reason": "恢复完整首句，不把“填写字段”误当作独立的绝对判定证明；span保留与Report duplicates字段的对比以免混淆两个字段。"
       },
-      "decision": "edited (external review)"
+      "decision": "edited (external review); span rebuilt on sentence boundaries after review"
     }
   },
   {
@@ -2487,9 +2487,9 @@
         "section": "VII.C.3.3.2. Submission of PSURs for generic, well-established use, traditional herbal and homeopathic medicinal products",
         "key_text": "are exempted from submitting PSURs except in the following circumstances",
         "evidence_span": {
-          "text": "the EU reference dates list, PSURs shall be submitted according to the PSUR frequency defined in the marketing authorisation or if not specified, in accordance with the submission schedule specified in DIR Art 107c(2) and REG Art 28(2). VII.C.3.3.2. Submission of PSURs for generic, well-established use, traditional herbal and homeopathic medicinal products By way of derogation, generics (authorised under DIR Art 10(1)), well-established use (authorised under DIR Art 10a), homeopathic (authorised under DIR Art 14) and traditional herbal (authorised under DIR Art 16a) medicinal products are exempted from submitting PSURs except in the following circumstances [DIR Art 107b(3)]: • the marketing authorisation provides for the submission of PSURs as a condition; • PSURs is (are) requested by a competent authority in a Member State on the basis of concerns relating to pharmacovigilance data or due to the lack of PSURs relating to an active substance after the marketing authorisation has been granted (e.g. when the “reference” medicinal product is no longer marketed). The",
-          "char_start": 1327,
-          "char_end": 2407
+          "text": "By way of derogation, generics (authorised under DIR Art 10(1)), well-established use (authorised under DIR Art 10a), homeopathic (authorised under DIR Art 14) and traditional herbal (authorised under DIR Art 16a) medicinal products are exempted from submitting PSURs except in the following circumstances [DIR Art 107b(3)]: • the marketing authorisation provides for the submission of PSURs as a condition; • PSURs is (are) requested by a competent authority in a Member State on the basis of concerns relating to pharmacovigilance data or due to the lack of PSURs relating to an active substance after the marketing authorisation has been granted (e.g. when the “reference” medicinal product is no longer marketed).",
+          "char_start": 1686,
+          "char_end": 2403
         }
       }
     ],
@@ -2525,7 +2525,7 @@
         "problems": [],
         "reason": "修正“同源顺势”；key补齐许可条件及主管机关基于警戒数据担忧/缺少PSUR提出要求两类例外；完整span保留第二项后续报告流转条款。"
       },
-      "decision": "edited (external review)"
+      "decision": "edited (external review); span rebuilt on sentence boundaries after review"
     }
   },
   {
@@ -2715,9 +2715,9 @@
         "section": "VIII.C.2.1. Roles and responsibilities of the marketing authorisation holder",
         "key_text": "at least three months before the due date for the submission of the report",
         "evidence_span": {
-          "text": "or the PRAC, as appropriate [DIR Art 107p(1)]. When the PRAC is responsible for supervision of the PASS, the marketing authorisation holder should request the waiver in writing to the Agency at least three months before the due date for the submission of the report. The request",
-          "char_start": 773,
-          "char_end": 1051
+          "text": "When the PRAC is responsible for supervision of the PASS, the marketing authorisation holder should request the waiver in writing to the Agency at least three months before the due date for the submission of the report. The request should include a justification for the waiver.",
+          "char_start": 820,
+          "char_end": 1098
         }
       }
     ],
@@ -2749,7 +2749,7 @@
         "problems": [],
         "reason": "保留PRAC监督前提、向EMA书面请求、至少提前3个月和以报告提交到期日为基准；原正则漏检three months，time_window有效。"
       },
-      "decision": "edited (external review)"
+      "decision": "edited (external review); span rebuilt on sentence boundaries after review"
     }
   },
   {
@@ -2826,9 +2826,9 @@
         "section": "VIII.C.1.5. Written observations in response to the imposition of an obligation",
         "key_text": "Within 30 days of receipt of the written notification of an obligation imposed",
         "evidence_span": {
-          "text": "of an obligation Within 30 days of receipt of the written notification of an obligation imposed, the marketing authorisation holder may request to present written observations in response to the imposition of the obligation [REG Art 10a(2),",
-          "char_start": 170,
-          "char_end": 410
+          "text": "Within 30 days of receipt of the written notification of an obligation imposed, the marketing authorisation holder may request to present written observations in response to the imposition of the obligation [REG Art 10a(2), DIR Art 22a(2)].",
+          "char_start": 187,
+          "char_end": 427
         }
       }
     ],
@@ -2864,7 +2864,7 @@
         "problems": [],
         "reason": "may request是可行使的请求权，不是必须提出意见；30日针对提出请求，主管机关另设实际提交意见期限，两者不混淆。"
       },
-      "decision": "edited (external review)"
+      "decision": "edited (external review); span rebuilt on sentence boundaries after review"
     }
   },
   {
@@ -2948,9 +2948,9 @@
         "section": "X.C.2.1. Mandatory scope",
         "key_text": "the initial period of time for inclusion is five years after the Union Reference Date (URD)",
         "evidence_span": {
-          "text": "the additional monitoring list X.C.2.1. Mandatory scope For medicinal products containing new active substances as well as for all biological medicinal products approved after 1 January 2011 the initial period of time for inclusion is five years after the Union Reference Date (URD)",
-          "char_start": 1253,
-          "char_end": 1535
+          "text": "For medicinal products containing new active substances as well as for all biological medicinal products approved after 1 January 2011 the initial period of time for inclusion is five years after the Union Reference Date (URD) referred to in Article 107c(5) of Directive 2001/83/EC.",
+          "char_start": 1309,
+          "char_end": 1591
         }
       }
     ],
@@ -2986,7 +2986,7 @@
         "problems": [],
         "reason": "保留five years及URD起算点，不以每个产品本国获批日代替；文字时间表达应保留time_window。"
       },
-      "decision": "edited (external review)"
+      "decision": "edited (external review); span rebuilt on sentence boundaries after review"
     }
   },
   {
@@ -3281,9 +3281,9 @@
         "section": "XV.C.2.2. Translation and dissemination of DHPCs",
         "key_text": "The draft translations should be submitted to the Member States for a language review and such review should be done within a reasonable timeframe which should not exceed 4-5 working days.",
         "evidence_span": {
-          "text": "the Member States where the DHPC is to be distributed. The draft translations should be submitted to the Member States for a language review and such review should be done within a reasonable timeframe which should not exceed 4-5 working days. Member States should aim",
-          "char_start": 269,
-          "char_end": 537
+          "text": "The draft translations should be submitted to the Member States for a language review and such review should be done within a reasonable timeframe which should not exceed 4-5 working days.",
+          "char_start": 324,
+          "char_end": 512
         }
       }
     ],
@@ -3315,7 +3315,7 @@
         "problems": [],
         "reason": "区分指南最长合理审阅期4–5工作日和理想目标48小时；not exceed只表达数值时限上限，不重复计negation。"
       },
-      "decision": "edited (external review)"
+      "decision": "edited (external review); span rebuilt on sentence boundaries after review"
     }
   },
   {
@@ -3608,9 +3608,9 @@
         "section": "P.I.C.2.1. Reporting of vaccination failures",
         "key_text": "Cases of vaccination failures should be reported as cases of lack of therapeutic efficacy within 15 days",
         "evidence_span": {
-          "text": "-EU national competent authorities (see GVP Module XIV). Where a quality defect is suspected, marketing authorisation holders should follow the procedures explained on the EMA website20 as well as the applicable national procedures. P.I.C.2.1.Reporting of vaccination failures Cases of vaccination failures should be reported as cases of lack of therapeutic efficacy within 15 days, in",
-          "char_start": 1263,
-          "char_end": 1648
+          "text": "Cases of vaccination failures should be reported as cases of lack of therapeutic efficacy within 15 days, in particular with the view to highlight potential signals of reduced immu nogenicity in a sub -group of vaccinated individuals, waning immunity or strain replacement.",
+          "char_start": 1540,
+          "char_end": 1813
         }
       }
     ],
@@ -3642,7 +3642,7 @@
         "problems": [],
         "reason": "补全疫苗接种失败作为缺乏疗效报告的对象及15日期限；不从此句额外推断工作日或另一个计时触发点。"
       },
-      "decision": "edited (external review)"
+      "decision": "edited (external review); span rebuilt on sentence boundaries after review"
     },
     "conflict": {
       "family_document_keys": [
@@ -3674,9 +3674,9 @@
         "section": "P.I.B.1.2.3. RMP module SIV “Populations not studied in clinical trials” — Pregnancy",
         "key_text": "most live attenuated vaccines are contraindicated in pregnant women due to the known or suspected risk of tr ansplacental infection of the foetus",
         "evidence_span": {
-          "text": "categories, e.g. hypotonic -hyporesponsive episode s in young children. Furthermore, the frequency of adverse reactions may change in relation to age. Targeted surveillance of adverse reactions in different age groups may be warranted.  Pregnancy Although most live attenuated vaccines are contraindicated in pregnant women due to the known or suspected risk of tr ansplacental infection of the foetus, inadvertent exposure during pregnancy cannot",
-          "char_start": 2900,
-          "char_end": 3348
+          "text": "Although most live attenuated vaccines are contraindicated in pregnant women due to the known or suspected risk of tr ansplacental infection of the foetus, inadvertent exposure during pregnancy cannot be totally excluded.",
+          "char_start": 3148,
+          "char_end": 3369
         }
       }
     ],
@@ -3709,7 +3709,7 @@
         "problems": [],
         "reason": "原key删除most会把大多数误读为全部；补回most、妊娠人群及已知/疑似经胎盘感染风险，非一概判断每种疫苗。"
       },
-      "decision": "edited (external review)"
+      "decision": "edited (external review); span rebuilt on sentence boundaries after review"
     },
     "conflict": {
       "family_document_keys": [
@@ -3741,9 +3741,9 @@
         "section": "P.I.C.2. Reporting of reactions and emerging safety issues",
         "key_text": "Reports of vaccination errors with no associated adverse reaction should not be reported as individual case safety reports.",
         "evidence_span": {
-          "text": "Guideline on good pharmacovigilance practices (GVP) – P I EMA/488220/2012 Page 24/25 Reports of vaccination errors with no associated adverse reaction should not be reported as individual case safety reports. They should be considered in periodic safety update reports as applicable (see GVP Module VII). When those reports and any suspected quality defect or batch -related issues constitute safety concerns which may impact on the benefit-risk balance of the medicinal product or representing a significant hazard to public health, they should be notified immediately in writing to the c",
-          "char_start": 0,
-          "char_end": 589
+          "text": "Reports of vaccination errors with no associated adverse reaction should not be reported as individual case safety reports.",
+          "char_start": 85,
+          "char_end": 208
         }
       }
     ],
@@ -3774,7 +3774,7 @@
         "problems": [],
         "reason": "key原义可接受；span补入适用时PSUR考虑及影响获益风险/显著公共卫生危害时另须立即书面通知，避免不报ICSR被误读成不做任何处理。"
       },
-      "decision": "edited (external review)"
+      "decision": "edited (external review); span rebuilt on sentence boundaries after review"
     },
     "conflict": {
       "family_document_keys": [
@@ -4320,9 +4320,9 @@
         "section": "P.IV.B.5. Signal management",
         "key_text": "A signal is the information arising from one or multiple sources, including observations and experiments, suggesting a new potentially causal association, or a new aspect of a known association,",
         "evidence_span": {
-          "text": "on good pharmacovigilance practices (GVP) – P. IV EMA/572054/2016 Page 12/17 P.IV.B.5. Signal management A signal is the information arising from one or multiple sources, including observations and experiments, suggesting a new potentially causal association, or a new aspect of a known association, between an intervention and an event, or set of related events, either adverse or beneficial that is judged to be of sufficient likelihood to justify verificatory action",
-          "char_start": 10,
-          "char_end": 479
+          "text": "A signal is the information arising from one or multiple sources, including observations and experiments, suggesting a new potentially causal association, or a new aspect of a known association, between an intervention and an event, or set of related events, either adverse or beneficial that is judged to be of sufficient likelihood to justify verificatory action [Commission Implementing Regulation (EU) No 520/2012, Art 19(1) (hereafter referred to as IR 520/2012)].",
+          "char_start": 115,
+          "char_end": 584
         }
       }
     ],
@@ -4358,7 +4358,7 @@
         "problems": [],
         "reason": "补全signal一般定义：新关联/已知关联新方面、干预与事件、有害或有益及足够可能性；query所引IR条号恢复protocol_id。后句EV监测仅考虑ADR信号，不能混成一般定义排除有益事件。"
       },
-      "decision": "edited (external review)"
+      "decision": "edited (external review); span rebuilt on sentence boundaries after review"
     }
   },
   {
@@ -4494,9 +4494,9 @@
         "section": "VII. Investigator reporting to sponsors and institutional review boards for IDE studies",
         "key_text": "in no event later than 10 working days after the investigator first learns of the effect",
         "evidence_span": {
-          "text": "812.150(a)(1)). The investigator is required to submit a report of a UADE to the sponsor and the reviewing IRB as soon as possible, but in no event later than 10 working days after the investigator first learns of the effect (§",
-          "char_start": 1967,
-          "char_end": 2194
+          "text": "The investigator is required to submit a report of a UADE to the sponsor and the reviewing IRB as soon as possible, but in no event later than 10 working days after the investigator first learns of the effect (§ 812.150(a)(1)).",
+          "char_start": 1983,
+          "char_end": 2210
         }
       }
     ],
@@ -4531,7 +4531,7 @@
         "problems": [],
         "reason": "key补齐向申办者和reviewing IRB的报告动作、as soon as possible及首次获知后10工作日上限，不误成日历日。"
       },
-      "decision": "edited (external review); version_label corrected to December 2025 (record 50 §9)"
+      "decision": "edited (external review); version_label corrected to December 2025 (record 50 §9); span rebuilt on sentence boundaries after review"
     }
   },
   {
@@ -4596,7 +4596,8 @@
     "language": "mixed",
     "slices": [
       "protocol_id",
-      "mixed_zh_en"
+      "mixed_zh_en",
+      "long_context"
     ],
     "required_gold_evidence": [
       {
@@ -4608,9 +4609,9 @@
         "section": "III.A.2. Adverse Reaction and Suspected Adverse Reaction",
         "key_text": "illustrate the meaning of reasonable possibility with respect to a determination that there may be a causal relationship between the drug and the adverse event",
         "evidence_span": {
-          "text": "if no drug has been administered, an adverse event is not reportable under IND safety reporting regulations.9,10 The following examples are also provided in the IND safety reporting regulation (§ 312.32(c)(1)(i)) and illustrate the meaning of reasonable possibility with respect to a determination that there may be a causal relationship between the drug and the adverse event: • A single occurrence of an event that is uncommon and known to be strongly associated with drug exposure (e.g., angioedema, hepatic injury, Stevens-Johnson Syndrome). • One or more occurrences of an event that is not commonly associated with drug exposure but is otherwise uncommon in the population exposed to the drug (e.g., tendon rupture). • An aggregate analysis of specific events observed in a clinical trial that indicates those events occur more frequently in the drug treatment group than in a concurrent or historical control group. Examples of such events are known consequences of the underlying disease or condition or events that commonly occur in the study population independent of drug therapy. For aggregate analysis under § 312.32(c)(1)(i)(C), such",
-          "char_start": 640,
-          "char_end": 1787
+          "text": "Suspected adverse reaction means — any adverse event for which there is a reasonable possibility that the drug caused the adverse event. For the purposes of IND safety reporting, “reasonable possibility” means there is evidence to suggest a causal relationship between the drug and the adverse event. Suspected adverse reaction implies a lesser degree of certainty about causality than adverse reaction[.] (§ 312.32(a)) (emphasis added) Both an adverse reaction and a suspected adverse reaction require evidence of a causal relationship between the drug and the adverse event (§ 312.32(a)). Therefore, if no drug has been administered, an adverse event is not reportable under IND safety reporting regulations.9,10 The following examples are also provided in the IND safety reporting regulation (§ 312.32(c)(1)(i)) and illustrate the meaning of reasonable possibility with respect to a determination that there may be a causal relationship between the drug and the adverse event: • A single occurrence of an event that is uncommon and known to be strongly associated with drug exposure (e.g., angioedema, hepatic injury, Stevens-Johnson Syndrome). • One or more occurrences of an event that is not commonly associated with drug exposure but is otherwise uncommon in the population exposed to the drug (e.g., tendon rupture). • An aggregate analysis of specific events observed in a clinical trial that indicates those events occur more frequently in the drug treatment group than in a concurrent or historical control group. Examples of such events are known consequences of the underlying disease or condition or events that commonly occur in the study population independent of drug therapy. For aggregate analysis under § 312.32(c)(1)(i)(C), such events could also be associated with treatment or therapy that is standard of care for the disease or condition.",
+          "char_start": 38,
+          "char_end": 1900
         }
       }
     ],
@@ -4642,7 +4643,7 @@
         "problems": [],
         "reason": "只选本题所问三类因果关系示例及第三类紧接解释；原表span展示起点位于术语定义段，超出本题示例范围；按PDF另选所问示例，不推定未取得的原JSON终点。key不再只写illustrate。long_context按去除无关前文后的实长决定。 依本地PDF文本实长小于等于1500字符，删除long_context；项目norm-v1长度仍应重算。"
       },
-      "decision": "edited (external review); version_label corrected to December 2025 (record 50 §9)"
+      "decision": "edited (external review); version_label corrected to December 2025 (record 50 §9); span rebuilt on sentence boundaries after review"
     }
   },
   {
@@ -4777,9 +4778,9 @@
         "section": "X.A. BA/BE Study Safety Reporting Requirements (§ 320.31(d)(3))",
         "key_text": "The requirements under § 320.31(d)(3) do not apply to human BA and BE studies that are exempt from IND requirements and conducted outside the United States",
         "evidence_span": {
-          "text": "Office of Generic Drugs as soon as possible but in no case later than 7 calendar days after becoming aware of its occurrence (§ 320.31(d)(3)). In doing so, the company should also notify the appropriate review division in CDER’s Office of New Drugs or the Division of Clinical Safety and Surveillance in CDER’s Office of Generic Drugs. The requirements under § 320.31(d)(3) do not apply to human BA and BE studies that are exempt from IND requirements and conducted outside the United States. However, as part of the information required",
-          "char_start": 1954,
-          "char_end": 2491
+          "text": "The requirements under § 320.31(d)(3) do not apply to human BA and BE studies that are exempt from IND requirements and conducted outside the United States.",
+          "char_start": 2290,
+          "char_end": 2446
         }
       }
     ],
@@ -4816,7 +4817,7 @@
         "problems": [],
         "reason": "span保留境外IND豁免研究不适用本项快速报告，但相应NDA/ANDA仍须包含国外研究不良事件资料的转折；不扩展为一切境外安全资料免报。"
       },
-      "decision": "edited (external review)"
+      "decision": "edited (external review); span rebuilt on sentence boundaries after review"
     }
   },
   {
@@ -5232,9 +5233,9 @@
         "section": "4.3. Reporting Time Frames",
         "key_text": "In general, expedited reporting of serious and unexpected ADRs is required as soon as possible, but in no case later than 15 calendar days of initial receipt of the information by the MAH.",
         "evidence_span": {
-          "text": "Management: Definitions and Standards for Expedited Reporting 6 that the case is considered incomplete; ho wever, MAHs are expected to exercise due diligence to collect the missing data elements. 4.3 Reporting Time Frames In general, expedited reporting of serious and unexpected ADRs is required as soon as possible, but in no case later than 15 calendar days of initial receipt of the information by the MAH. Time frames for other type s of serious reports vary among countries, depending on source, expectedness and outcome. The regulatory reporting time clock",
-          "char_start": 26,
-          "char_end": 589
+          "text": "In general, expedited reporting of serious and unexpected ADRs is required as soon as possible, but in no case later than 15 calendar days of initial receipt of the information by the MAH.",
+          "char_start": 248,
+          "char_end": 436
         }
       }
     ],
@@ -5267,7 +5268,7 @@
         "problems": [],
         "reason": "补入最低资料/快速报告标准的起算限定；span保留MAH任何人员首次收件和day0，不能以PV部门最终接收日改写。"
       },
-      "decision": "edited (external review)"
+      "decision": "edited (external review); span rebuilt on sentence boundaries after review"
     }
   },
   {
@@ -5289,9 +5290,9 @@
         "section": "4.1.2.2. Overdose",
         "key_text": "Reports of overdose with no associated adverse outcome should not be reported as adverse reactions.",
         "evidence_span": {
-          "text": "contraceptiv es are examples of classes of medicinal products where lack of efficacy should be considered for expedited reporting. Clinical judgment should be used in reporting, with consideration of the local product labeling and disease being treated. 4.1.2.2 Overdose Reports of overdose with no associated adverse outcome should not be reported as adverse reactions. Cases associated with serious adverse reactions are considered subject to expedited reporting, unless",
-          "char_start": 1929,
-          "char_end": 2401
+          "text": "Reports of overdose with no associated adverse outcome should not be reported as adverse reactions.",
+          "char_start": 2200,
+          "char_end": 2299
         }
       }
     ],
@@ -5322,7 +5323,7 @@
         "problems": [],
         "reason": "不作为ADR报告不等于不收集/随访；span补齐局部条款的严重ADR报告及本产品过量信息收集要求。"
       },
-      "decision": "edited (external review)"
+      "decision": "edited (external review); span rebuilt on sentence boundaries after review"
     }
   },
   {
@@ -5506,9 +5507,9 @@
         "section": "2. Safety Specification",
         "key_text": "the Overview of Safety [2.5.5], Benefits and Risks Conclusions [2.5.6], and the Summary of Clinical Safety [2.7.4] sections",
         "evidence_span": {
-          "text": "3 approval is sought, it should reflect the stat us of issues that were being followed during development. The Common Technical Document (CTD), especially the Overview of Safety [2.5.5], Benefits and Risks Conclusions [2.5.6], and the Summary of Clinical Safety [2.7.4] sections, includes information relating to the safety of the product, and should be the basis of the safety issues identified in the Safety Specification. Sponsors should",
-          "char_start": 27,
-          "char_end": 467
+          "text": "The Common Technical Document (CTD), especially the Overview of Safety [2.5.5], Benefits and Risks Conclusions [2.5.6], and the Summary of Clinical Safety [2.7.4] sections, includes information relating to the safety of the product, and should be the basis of the safety issues identified in the Safety Specification.",
+          "char_start": 134,
+          "char_end": 451
         }
       }
     ],
@@ -5540,7 +5541,7 @@
         "problems": [],
         "reason": "完整key覆盖CTD三个章节及作为Safety Specification基础的关系；具体编号只在答案，query普通ICH E2E标记不计精确查号切片。"
       },
-      "decision": "edited (external review)"
+      "decision": "edited (external review); span rebuilt on sentence boundaries after review"
     }
   },
   {
@@ -5937,9 +5938,9 @@
         "section": "4.2 缩略语",
         "key_text": "为避免歧义,在不同 ICH 地区有不同含义的缩略语(abbreviation)或首字母缩写词(acronyms)未收入本术语集。",
         "evidence_span": {
-          "text": "3 月 000707 15 ECG 心电图以下缩略语仅限于 HLT 和 HLGT 层级(少数非现行 LLT 例外): NEC 不另分类以下缩略语仅限于 LLT 层级: NOS 未特指缩略语的字母间不以句点分隔。为避免歧义,在不同 ICH 地区有不同含义的缩略语(abbreviation)或首字母缩写词(acronyms)未收入本术语集。在标准缩略语参考书中有多种解释的缩略语和首字母缩写词通常不允许加入本术语集。个别首字母缩写词虽然有多种解释,但仍可添加在 LLT 层级以代表其在全球最常见的用法,如",
-          "char_start": 120,
-          "char_end": 371
+          "text": "为避免歧义,在不同 ICH 地区有不同含义的缩略语(abbreviation)或首字母缩写词(acronyms)未收入本术语集。在标准缩略语参考书中有多种解释的缩略语和首字母缩写词通常不允许加入本术语集。",
+          "char_start": 225,
+          "char_end": 327
         }
       }
     ],
@@ -5971,7 +5972,7 @@
         "problems": [],
         "reason": "原key漏“为什么”的原因；恢复为避免歧义。完整span保留个别多义缩写在LLT代表全球最常用含义的例外，不以“不会收录”作无条件绝对化。"
       },
-      "decision": "edited (external review)"
+      "decision": "edited (external review); span rebuilt on sentence boundaries after review"
     }
   },
   {

@@ -89,3 +89,11 @@ annotator-01 逐条确认五张标注表 → 按改动重算偏移 → `pack_rev
 - 复核人首批即发现两件事，均属实：(1) 复核输入缺 `conflict` 块（打包脚本漏带）——修正 [pack_review.py](../../evals/main_set/tools/pack_review.py) 与 [review_provenance.py](../../src/medops/evals/probe/review_provenance.py) 的输入重建，PV/CO/EN 作废重跑（约 1 美元沉没）；(2) GVP Annex I Rev 4 页眉标注 superseded——EMA 现行版为 Rev 5（2024-07-26），已下载（sha 409f9f85…，32 页，门禁与 PII 通过）、登记候选 cand-0102（v1.1），以 `--supersedes` + `--publish` 入库为 Rev 4 后继版：family 合成旧版（归档）→ Rev 4（归档）→ Rev 5（现行），成为主集中唯一的真实修订对；corpus.json 用 `version_fixes/gvp-annex-i-rev5.json`（`replaces_source_hash`）替换记录；5 条样本与孪生重锚到 Rev 5（ms-0084 因原定义已被删除而改写为 Reg 536/2014 的定义，ms-0092 key 加长以保持页内唯一），NA ms-0462 迁 scope 并复查缺席词；库内 active 76 / archived 7、chunk 11,231，索引与向量已补建。
 - 后续：五批复核完成 → 争议裁决表 → 上述 11 条 `--only` 重跑 → 装配、冻结 `main-v1-provisional`。
 
+## 12. 补记（2026-09-22）：LLM 复核完成，71 条争议待裁决
+
+- 结果：507 条新样本（NA ms-0509 复核后删除：Glimaryl 文本层乱码，复核人无法核实缺席）由 claude-opus-5 复核完毕，71 条争议（14.0%）：MA 3、PV 21、CO 20、EN 19、NA 8；费用合计 43.06 美元（含作废重跑约 1 美元与定向重跑），高于此前 35 美元的估算，差额来自三处工具侧修正后的重跑与无答案输入扩为全文。
+- 复核人指出并已修正的工具缺陷：复核输入漏带 `conflict` 块；第一轮外部审校按报告长度重建的 PV span 边界错位（25 条，恢复起草者原始完整条款后重跑，PV 争议由 41 降至 21，EN 由 37 降至 19）；无答案输入只含起草选页、无法核实缺席（28 条扩页重跑）。
+- 复核后删除样本的机制：manifest 新增 `dropped_after_review`（`make_schemas.py`），PR-09 复核证据校验、装配与运行脚本的覆盖检查容忍已删除样本的历史证据（[review_provenance.py](../../src/medops/evals/probe/review_provenance.py)）；`review/dropped_after_review.json` 记录原因。
+- 争议构成（按裁决方式）：切片增删类可用 `接受` 机械应用；key_text / query / 无答案缺席类需 annotator-01 判断；裁决表 [disputes_sheet.md](../../evals/main_set/drafts/main-v1/review/disputes_sheet.md)。裁决 → `apply_resolutions.py`（改动样本 `--only` 重跑）→ `assemble.py --human-confirmed 2026-09-22` → `freeze.py`（`main-v1-provisional`）→ chunk 映射 → 端到端运行。
+- `env -u DEBUG -u PYTHONPATH make check`：退出码 0，**892 passed**（含复核证据的 dropped_after_review 容忍逻辑）。
+
