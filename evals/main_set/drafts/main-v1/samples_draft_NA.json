@@ -11,22 +11,21 @@
     "answerable": false,
     "expected_behaviour": "insufficient_evidence",
     "abstention": {
-      "scope_document_key": "ema-gvp-annex-i-rev4",
+      "scope_document_key": "ema-gvp-annex-i-rev5",
       "topic": "ICSR提交时限天数",
-      "absence_check": "absence_terms ['15 days', '90 days', 'timeline', 'submission deadline'] 在 ema-gvp-annex-i-rev4 全部 33 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'15 days': 4, '90 days': 1, 'timeline': 20, 'submission deadline': 0}",
+      "absence_check": "absence_terms ['15 days', '90 days', 'timeline', 'submission deadline'] 在 ema-gvp-annex-i-rev5 全部 32 页 norm-v1 页文本中出现 0 次（工具复查 2026-09-22，scope 自 Rev 4 迁至 Rev 5）",
       "document_pages": [
         1,
         2,
-        3,
-        7,
-        10,
+        6,
+        8,
+        9,
+        12,
+        16,
+        18,
         19,
-        20,
-        21,
-        25,
         26,
-        30,
-        33
+        29
       ]
     },
     "notes": "",
@@ -37,7 +36,7 @@
       "model": "claude-sonnet-5"
     },
     "_draft": {
-      "document_key": "ema-gvp-annex-i-rev4",
+      "document_key": "ema-gvp-annex-i-rev5",
       "title": "Guideline on good pharmacovigilance practices (GVP) – Annex I – Definitions (Rev 4)",
       "rank": 2,
       "warnings": [
@@ -63,7 +62,7 @@
         "problems": [],
         "reason": "Annex I Rev 4 defines ICSR/minimum case elements but gives no numeric EudraVigilance submission deadline. The supplied Rev 4 copy is explicitly superseded/historical; no newer Annex I was supplied."
       },
-      "decision": "OK (external review)"
+      "decision": "OK (external review); scope moved to Rev 5"
     }
   },
   {

@@ -1,0 +1,41 @@
+{
+  "dataset_version": "main-v1-provisional",
+  "purpose": "real revision pair (record 50 §11): GVP Annex I Rev 5 supersedes the superseded Rev 4 fixture",
+  "documents": [
+    {
+      "document_key": "ema-gvp-annex-i-rev5",
+      "title": "Guideline on good pharmacovigilance practices (GVP) – Annex I – Definitions (Rev 5)",
+      "doc_type": "guideline",
+      "owner_dept": "PV",
+      "language": "en",
+      "source_url": "https://www.ema.europa.eu/en/documents/scientific-guideline/guideline-good-pharmacovigilance-practices-annex-i-definitions-rev-5_en.pdf",
+      "publisher": "European Medicines Agency / Heads of Medicines Agencies",
+      "license_status": "eligible",
+      "license_or_terms": {
+        "name_or_summary": "EMA 网站法律声明：EMA 网页提供的信息与文档为公开内容，可全部或部分复制与分发，须署名来源",
+        "permitted_scope": "保存、索引、引用、展示；复制与分发",
+        "attribution_required": true,
+        "attribution_text": "Source: European Medicines Agency and Heads of Medicines Agencies (GVP)",
+        "third_party_content_checked": true,
+        "third_party_note": "EMA/HMA 自有指南；MedDRA/ICH/CIOMS 仅为引用；Legal notice 排除第三方内容与标志（渲染时排除）。",
+        "verified_at": "2026-09-21",
+        "verified_by": "reviewer-01"
+      },
+      "terms_url": "https://www.ema.europa.eu/en/about-us/about-website/legal-notice",
+      "retrieved_at": "2026-09-22",
+      "source_hash": "409f9f85c1ff025dfc0a5ff9f0b21afc2c7d09cc1b47484a40c9ee11e1da536f",
+      "byte_size": 343077,
+      "mime": "application/pdf",
+      "pages": 32,
+      "pii_scan": {
+        "status": "clean",
+        "method": "pii-rules-v1 over norm-v1 page text of all pages",
+        "ruleset_version": "pii-rules-v1",
+        "scanned_at": "2026-09-22"
+      },
+      "version_label": "EMA/876333/2011 Rev 5 (2024-07-26)",
+      "notes": "候选 cand-0102（DEC-011 v1.1，决策人授权实现方决定，记录 50 §11）；GVP Annex I 现行版：Rev 4（EMA/876333/2011 Rev 4，PDF 页眉标注 superseded）经 M1-11 发布流程被本版替代并归档，与此前的合成旧版 ema-gvp-annex-i-rev4--synthetic-old 构成同一 family 的真实修订对；原件 main_set/sources/409f9f85c1ff…pdf；pypdf 抽取 32 页，空白页 []",
+      "replaces_source_hash": "93435355242b002f23e966d1f08454614c405ce4e286e6979b5de44692bab4fe"
+    }
+  ]
+}

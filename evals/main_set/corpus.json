@@ -2620,12 +2620,12 @@
       "notes": "候选 cand-0099（DEC-011 v1.0，决策人授权实现方决定，记录 50）；合成冲突 fixture：同一 PDF 以两个 document_key 入库，旧版 ich-e15-step4-2007--synthetic-old（effective_from 2005-11-01）在发布本版时归档，正文与本版相同；原件 main_set/sources/40516566c939…pdf；pypdf 6.18.1 抽取 10 页，空白页 [4]"
     },
     {
-      "document_key": "ema-gvp-annex-i-rev4",
-      "title": "Guideline on good pharmacovigilance practices (GVP) – Annex I – Definitions (Rev 4)",
+      "document_key": "ema-gvp-annex-i-rev5",
+      "title": "Guideline on good pharmacovigilance practices (GVP) – Annex I – Definitions (Rev 5)",
       "doc_type": "guideline",
       "owner_dept": "PV",
       "language": "en",
-      "source_url": "https://www.ema.europa.eu/en/documents/scientific-guideline/guideline-good-pharmacovigilance-practices-annex-i-definitions-rev-4_en.pdf",
+      "source_url": "https://www.ema.europa.eu/en/documents/scientific-guideline/guideline-good-pharmacovigilance-practices-annex-i-definitions-rev-5_en.pdf",
       "publisher": "European Medicines Agency / Heads of Medicines Agencies",
       "license_status": "eligible",
       "license_or_terms": {
@@ -2639,19 +2639,19 @@
         "verified_by": "reviewer-01"
       },
       "terms_url": "https://www.ema.europa.eu/en/about-us/about-website/legal-notice",
-      "retrieved_at": "2026-09-21",
-      "source_hash": "93435355242b002f23e966d1f08454614c405ce4e286e6979b5de44692bab4fe",
-      "byte_size": 366668,
+      "retrieved_at": "2026-09-22",
+      "source_hash": "409f9f85c1ff025dfc0a5ff9f0b21afc2c7d09cc1b47484a40c9ee11e1da536f",
+      "byte_size": 343077,
       "mime": "application/pdf",
-      "pages": 33,
+      "pages": 32,
       "pii_scan": {
         "status": "clean",
         "method": "pii-rules-v1 over norm-v1 page text of all pages",
         "ruleset_version": "pii-rules-v1",
-        "scanned_at": "2026-09-21"
+        "scanned_at": "2026-09-22"
       },
-      "version_label": "EMA/876333/2011 Rev 4 (2017-10-09)",
-      "notes": "候选 cand-0100（DEC-011 v1.0，决策人授权实现方决定，记录 50）；合成冲突 fixture：同一 PDF 以两个 document_key 入库，旧版 ema-gvp-annex-i-rev4--synthetic-old（effective_from 2015-10-09）在发布本版时归档，正文与本版相同；原件 main_set/sources/93435355242b…pdf；pypdf 6.18.1 抽取 33 页，空白页 []"
+      "version_label": "EMA/876333/2011 Rev 5 (2024-07-26)",
+      "notes": "候选 cand-0102（DEC-011 v1.1，决策人授权实现方决定，记录 50 §11）；GVP Annex I 现行版：Rev 4（EMA/876333/2011 Rev 4，PDF 页眉标注 superseded）经 M1-11 发布流程被本版替代并归档，与此前的合成旧版 ema-gvp-annex-i-rev4--synthetic-old 构成同一 family 的真实修订对；原件 main_set/sources/409f9f85c1ff…pdf；pypdf 抽取 32 页，空白页 []"
     },
     {
       "document_key": "ema-gvp-pp-i",

@@ -251,7 +251,10 @@ def build(
     # version-label corrections re-published through the M1-11 flow (record 50 §9): same source object, new key/version
     for fix_file in sorted((REPO / "evals/main_set/version_fixes").glob("*.json")):
         for rec in json.loads(fix_file.read_text(encoding="utf-8"))["documents"]:
-            docs = [rec if d["source_hash"] == rec["source_hash"] else d for d in docs]
+            # a fix either re-labels the same file (same source_hash) or replaces an older file by a newer revision
+            target = rec.get("replaces_source_hash", rec["source_hash"])
+            clean = {k: v for k, v in rec.items() if k != "replaces_source_hash"}
+            docs = [clean if d["source_hash"] == target else d for d in docs]
     corpus = {"dataset_version": "main-v1-provisional", "documents": docs}
     schema = json.loads((REPO / "evals/probe/precise_clause/schema/corpus.schema.json").read_text(encoding="utf-8"))
     jsonschema.validate(corpus, schema)

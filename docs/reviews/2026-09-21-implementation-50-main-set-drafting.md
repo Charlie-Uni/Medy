@@ -83,3 +83,9 @@ annotator-01 逐条确认五张标注表 → 按改动重算偏移 → `pack_rev
 
 决策人补交 NA（63）与 CO（84，重生成版、无逐字段 diff）两份审校并回复"可以了"。处理：审校只描述改法的条目由实现方写出新值并留档（`external_review/implementer_edits_2026-09-22.json`），[apply_external_review_2.py](../../evals/main_set/tools/apply_external_review_2.py) 重新锚定；应用 97 条、删除 6 条（含 ms-0300：审校建议移到 PV，但 PR-06 要求样本部门等于文档部门，故删除）；EN 80 条待定项全部解决（父样本存活者应用成对中文/英文改写，父样本删除者随删）。写回后 615 条（新 508），全部 spec-m1 下限满足，机械检查 0 错误。决策人的"可以了"记为 annotator-01 对五张表的人工确认（2026-09-22）；随后进入固定模型 LLM 复核（claude-opus-5，批次 MA/PV/CO/EN/NA）。
 
+## 11. 补记（2026-09-22）：LLM 复核启动、复核输入修正与 Annex I 换版
+
+- 复核成本实测：MA 10 条 0.61 美元、NA 3 条 0.32 美元 → 全量 508 条估算约 35 美元（与此前报出的 25–35 美元一致），据此启动五批复核（claude-opus-5，块大小 5 / NA 3）。
+- 复核人首批即发现两件事，均属实：(1) 复核输入缺 `conflict` 块（打包脚本漏带）——修正 [pack_review.py](../../evals/main_set/tools/pack_review.py) 与 [review_provenance.py](../../src/medops/evals/probe/review_provenance.py) 的输入重建，PV/CO/EN 作废重跑（约 1 美元沉没）；(2) GVP Annex I Rev 4 页眉标注 superseded——EMA 现行版为 Rev 5（2024-07-26），已下载（sha 409f9f85…，32 页，门禁与 PII 通过）、登记候选 cand-0102（v1.1），以 `--supersedes` + `--publish` 入库为 Rev 4 后继版：family 合成旧版（归档）→ Rev 4（归档）→ Rev 5（现行），成为主集中唯一的真实修订对；corpus.json 用 `version_fixes/gvp-annex-i-rev5.json`（`replaces_source_hash`）替换记录；5 条样本与孪生重锚到 Rev 5（ms-0084 因原定义已被删除而改写为 Reg 536/2014 的定义，ms-0092 key 加长以保持页内唯一），NA ms-0462 迁 scope 并复查缺席词；库内 active 76 / archived 7、chunk 11,231，索引与向量已补建。
+- 后续：五批复核完成 → 争议裁决表 → 上述 11 条 `--only` 重跑 → 装配、冻结 `main-v1-provisional`。
+

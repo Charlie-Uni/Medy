@@ -24,11 +24,17 @@
       "effective_from_current": "2007-11-01"
     },
     {
-      "document_key": "ema-gvp-annex-i-rev4",
+      "document_key": "ema-gvp-annex-i-rev5",
       "synthetic_old_key": "ema-gvp-annex-i-rev4--synthetic-old",
-      "source_hash": "93435355242b002f23e966d1f08454614c405ce4e286e6979b5de44692bab4fe",
+      "source_hash": "409f9f85c1ff025dfc0a5ff9f0b21afc2c7d09cc1b47484a40c9ee11e1da536f",
       "effective_from_old": "2015-10-09",
-      "effective_from_current": "2017-10-09"
+      "effective_from_current": "2024-07-26",
+      "archived_document_keys": [
+        "ema-gvp-annex-i-rev4",
+        "ema-gvp-annex-i-rev4--synthetic-old"
+      ],
+      "synthetic": false,
+      "source": "真实修订对：Rev 4（2017-10-09，页眉 superseded）→ Rev 5（2024-07-26）经发布流程替代；family 另含 Rev 4 的合成旧版（记录 50 §11）"
     },
     {
       "document_key": "ema-gvp-pp-i",

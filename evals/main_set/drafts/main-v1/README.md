@@ -45,3 +45,8 @@
 - 现状：**615 条**（新 508：MA 80、PV 119、CO 79、EN 168、NA 62；探针 107），有答案 553、无答案 62、冲突 52、long_context 23；部门 MA 134 / PV 279 / CO 202；语言 zh-Hant 140 / zh-Hans 30 / en 445；全部下限满足。五张表全部预填了决定，不再有待定项。
 - **确认状态**：决策人（annotator-01）于 2026-09-22 以"可以了"确认以上写回结果作为人工标注（含实现方按审校结论写出的 NA/CO 文本与成对英文）；`drafted_by` 仍记录 LLM 起草者，人工确认日期 2026-09-22。第二人工复核人仍无，版本保持 `main-v1-provisional`。
 
+## 2026-09-22 LLM 复核进行中的两处修正
+
+- 复核人（claude-opus-5）在 PV/EN 首批就指出：复核输入缺少样本的 `conflict` 说明块（打包脚本漏带，提示里却说会附上）。已修正 `pack_review.py` 与 PR-09 的输入重建（`conflict` 与非空 `notes` 一并进入复核记录），PV/CO/EN 三批作废重跑（作废的运行记录在 `review/archive_2026-09-22_before_conflict_field/`）。
+- 复核人同时指出 GVP Annex I Rev 4 的页眉写明 "Superseded version (not valid anymore)"。EMA 已发布 Rev 5（2024-07-26），已下载、过门禁并以发布流程作为 Rev 4 的后继版入库（候选 cand-0102，v1.1）：family 现为 合成旧版 → Rev 4 → Rev 5，是一对真实修订。Annex I 的 5 条样本与孪生已重新锚定到 Rev 5（`conflict.synthetic=false`）：3 条原文不变（ms-0086/0088/0090），ms-0092 的 key 因 Rev 5 另页有近似句而加长，ms-0084 因 Rev 5 删除了 Dir 2001/20/EC 的非干预性试验定义、改写为 Reg (EU) 536/2014 的 non-interventional study 定义；无答案 ms-0462 的 scope 迁到 Rev 5 并复查缺席词。这 11 条在各批次复核完成后用 `--only` 单独重跑。
+

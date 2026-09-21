@@ -684,6 +684,303 @@
         "ms-0032": "d1959d72965a859fdd296720bf5e8ce0219fde6e161612f93c9792b0f3640527",
         "ms-0033": "4c41aa9cc199025070eb7b7912d80ab06eb60d4b0d9efeab3e200da5a2cb2641"
       }
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "120a1a7d-48c0-45cc-9c70-cef466cee8e5",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "6482",
+      "cost_usd": 0.1686605,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0034",
+        "ms-0035",
+        "ms-0036",
+        "ms-0037",
+        "ms-0038"
+      ],
+      "started_at": "2026-09-21T14:27:09+00:00",
+      "finished_at": "2026-09-21T14:28:33+00:00",
+      "prompt_chars": 15406,
+      "prompt_sha256": "2131fe19243f98be27d99a056652fea7a1341a47dba8b5986766f8d82898db5c",
+      "verdicts": [
+        {
+          "sample_id": "ms-0034",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0035",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0036",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0037",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0038",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_2131fe19243f98be27d99a056652fea7a1341a47dba8b5986766f8d82898db5c.jsonl",
+      "sample_input_sha256": {
+        "ms-0034": "8ee7a5158c5ebcd53fd231275cf366e9ee8ac99705811afd3cd29bf84d32ddc4",
+        "ms-0035": "edcb887663f3c195a4de1a5459c0c21215f4b4f0c078e9dabd8621f15c919083",
+        "ms-0036": "ed30ee2e9111d8994d581337051826628beec52f251fe3fbb1456e11b4029285",
+        "ms-0037": "827d82cbb029f299142c7ddec8346ec1e2f9ed897df233ffe533fbcb9ab28064",
+        "ms-0038": "8be60b4a7cf5041baf527dab682172e98e84a5c005c55aa0206b49ea1fc84ae6"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "9322a030-dcda-4512-b173-09b1ae71b6bc",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "5010",
+      "cost_usd": 0.2402475,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0039",
+        "ms-0040",
+        "ms-0041",
+        "ms-0042",
+        "ms-0043"
+      ],
+      "started_at": "2026-09-21T14:28:33+00:00",
+      "finished_at": "2026-09-21T14:29:45+00:00",
+      "prompt_chars": 20502,
+      "prompt_sha256": "5f59533c8ec71b3c4f421dcebecc0dc83a5fd593b94acb94cdbe453bc4981547",
+      "verdicts": [
+        {
+          "sample_id": "ms-0039",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0040",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0041",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0042",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0043",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_5f59533c8ec71b3c4f421dcebecc0dc83a5fd593b94acb94cdbe453bc4981547.jsonl",
+      "sample_input_sha256": {
+        "ms-0039": "9c3ab06b9f36a1b8d1bcb3df46a37f50aa5cadecc311ce2a4abd2782b863bd8a",
+        "ms-0040": "b50452d66d242249d522afd95cfd27b8329c8689f55e398a3ad57956571639ba",
+        "ms-0041": "9ef95120e94d50456229b8bbe1a7a9ab7c510776366e346e79de3921a0b3810b",
+        "ms-0042": "ddaf05da83109dc7461b08e5e771fcecc7cb2a76d49edb7e355357509e0ad033",
+        "ms-0043": "1f5033cc6162d876a46600abc14bd1072ee488218e975f8103f8da7031485d6b"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "b7b89675-7cf8-4984-8eef-b2997f1c5741",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "2788",
+      "cost_usd": 0.20743499999999998,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0044",
+        "ms-0045",
+        "ms-0046",
+        "ms-0047",
+        "ms-0048"
+      ],
+      "started_at": "2026-09-21T14:29:45+00:00",
+      "finished_at": "2026-09-21T14:30:18+00:00",
+      "prompt_chars": 23983,
+      "prompt_sha256": "715df605613e08d393c2790cee4859ca10703fc2b0ab2fcc32f6a600c78d314b",
+      "verdicts": [
+        {
+          "sample_id": "ms-0044",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0045",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0046",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0047",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0048",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_715df605613e08d393c2790cee4859ca10703fc2b0ab2fcc32f6a600c78d314b.jsonl",
+      "sample_input_sha256": {
+        "ms-0044": "7cda85b57e65658b07ff64e439b049ab997e3f7294a0a12659b214ed611a31a2",
+        "ms-0045": "65e0fa40f7555d3115156edc19e73f6457d4985fd01293dc9e81de5dcda88f5d",
+        "ms-0046": "a33b610f3aabb11735af92987abc7e1360b678ec54467a9c5b690ecfe90bb4cd",
+        "ms-0047": "b0a2edfe68a57e3ab770e84b1ce5b6a75d84b7d9468081ae146e9fb2fcc27615",
+        "ms-0048": "690d2196c3b1a89e637002909f1e2e494944740bc50772b1b8896101eab12fbf"
+      }
     }
   ],
   "provenance_version": 2,
@@ -867,6 +1164,96 @@
       "sample_input_sha256": "4c41aa9cc199025070eb7b7912d80ab06eb60d4b0d9efeab3e200da5a2cb2641",
       "prompt_sha256": "ce983136af56ca7b9c2c269d53b662087ebcae5fa16cbe57e88a370dd66008ee",
       "verdict_sha256": "7dada293d67eb2e9aeefad93c8e2a8485543f0b679c633e53020640be072b090"
+    },
+    "ms-0034": {
+      "chunk_index": 6,
+      "sample_input_sha256": "8ee7a5158c5ebcd53fd231275cf366e9ee8ac99705811afd3cd29bf84d32ddc4",
+      "prompt_sha256": "2131fe19243f98be27d99a056652fea7a1341a47dba8b5986766f8d82898db5c",
+      "verdict_sha256": "5cce9b61784a74c39b27654724abd3a5d8959fb3204adbc69d9a5c24158575f0"
+    },
+    "ms-0035": {
+      "chunk_index": 6,
+      "sample_input_sha256": "edcb887663f3c195a4de1a5459c0c21215f4b4f0c078e9dabd8621f15c919083",
+      "prompt_sha256": "2131fe19243f98be27d99a056652fea7a1341a47dba8b5986766f8d82898db5c",
+      "verdict_sha256": "5c0dbee8108d4292d726c79f4c2ae619935385c76605e84b49eb7134706c9f7b"
+    },
+    "ms-0036": {
+      "chunk_index": 6,
+      "sample_input_sha256": "ed30ee2e9111d8994d581337051826628beec52f251fe3fbb1456e11b4029285",
+      "prompt_sha256": "2131fe19243f98be27d99a056652fea7a1341a47dba8b5986766f8d82898db5c",
+      "verdict_sha256": "9d88f215e5f554673081fecf900cbfbd57145c729cd92271f5c368dc591ae325"
+    },
+    "ms-0037": {
+      "chunk_index": 6,
+      "sample_input_sha256": "827d82cbb029f299142c7ddec8346ec1e2f9ed897df233ffe533fbcb9ab28064",
+      "prompt_sha256": "2131fe19243f98be27d99a056652fea7a1341a47dba8b5986766f8d82898db5c",
+      "verdict_sha256": "52294b4226acdc563bba24fb3de5598f7a0ddfcc82dbaa6ce45cbfca8d084e09"
+    },
+    "ms-0038": {
+      "chunk_index": 6,
+      "sample_input_sha256": "8be60b4a7cf5041baf527dab682172e98e84a5c005c55aa0206b49ea1fc84ae6",
+      "prompt_sha256": "2131fe19243f98be27d99a056652fea7a1341a47dba8b5986766f8d82898db5c",
+      "verdict_sha256": "95534758e31cc2288096fe4e43b7ef5e8f556f2d1cf6d0bdeb4434a28dde29a1"
+    },
+    "ms-0039": {
+      "chunk_index": 7,
+      "sample_input_sha256": "9c3ab06b9f36a1b8d1bcb3df46a37f50aa5cadecc311ce2a4abd2782b863bd8a",
+      "prompt_sha256": "5f59533c8ec71b3c4f421dcebecc0dc83a5fd593b94acb94cdbe453bc4981547",
+      "verdict_sha256": "61b9580033012873318458d6acc58dff13e1b047e7468073153276ccc34540c2"
+    },
+    "ms-0040": {
+      "chunk_index": 7,
+      "sample_input_sha256": "b50452d66d242249d522afd95cfd27b8329c8689f55e398a3ad57956571639ba",
+      "prompt_sha256": "5f59533c8ec71b3c4f421dcebecc0dc83a5fd593b94acb94cdbe453bc4981547",
+      "verdict_sha256": "0b4469f8bb21f73f2f662d2651476379985e4492f2b2c4ab2d4d70c4b97fed65"
+    },
+    "ms-0041": {
+      "chunk_index": 7,
+      "sample_input_sha256": "9ef95120e94d50456229b8bbe1a7a9ab7c510776366e346e79de3921a0b3810b",
+      "prompt_sha256": "5f59533c8ec71b3c4f421dcebecc0dc83a5fd593b94acb94cdbe453bc4981547",
+      "verdict_sha256": "a6c94a8e35b76ed75afe8f642fafd6cd2d54eb08b5e14859ff85aed64829bc80"
+    },
+    "ms-0042": {
+      "chunk_index": 7,
+      "sample_input_sha256": "ddaf05da83109dc7461b08e5e771fcecc7cb2a76d49edb7e355357509e0ad033",
+      "prompt_sha256": "5f59533c8ec71b3c4f421dcebecc0dc83a5fd593b94acb94cdbe453bc4981547",
+      "verdict_sha256": "2960f91e1b3cb51e0fe9b6c9cb20813ce87033118a4ef23d79d079f080013d7e"
+    },
+    "ms-0043": {
+      "chunk_index": 7,
+      "sample_input_sha256": "1f5033cc6162d876a46600abc14bd1072ee488218e975f8103f8da7031485d6b",
+      "prompt_sha256": "5f59533c8ec71b3c4f421dcebecc0dc83a5fd593b94acb94cdbe453bc4981547",
+      "verdict_sha256": "93181e946f28f39fba624039a3c1f7b268e0ddfd95cff00ae1f7631de183b251"
+    },
+    "ms-0044": {
+      "chunk_index": 8,
+      "sample_input_sha256": "7cda85b57e65658b07ff64e439b049ab997e3f7294a0a12659b214ed611a31a2",
+      "prompt_sha256": "715df605613e08d393c2790cee4859ca10703fc2b0ab2fcc32f6a600c78d314b",
+      "verdict_sha256": "957666ad4eec9c4cf2e99345b5eb0012664eabca78bdc1c9e3dcd82fc06d9170"
+    },
+    "ms-0045": {
+      "chunk_index": 8,
+      "sample_input_sha256": "65e0fa40f7555d3115156edc19e73f6457d4985fd01293dc9e81de5dcda88f5d",
+      "prompt_sha256": "715df605613e08d393c2790cee4859ca10703fc2b0ab2fcc32f6a600c78d314b",
+      "verdict_sha256": "1aa213400c3f3b8509d8e8e910df5c331542d3d1c248d2dcc755e729259cb433"
+    },
+    "ms-0046": {
+      "chunk_index": 8,
+      "sample_input_sha256": "a33b610f3aabb11735af92987abc7e1360b678ec54467a9c5b690ecfe90bb4cd",
+      "prompt_sha256": "715df605613e08d393c2790cee4859ca10703fc2b0ab2fcc32f6a600c78d314b",
+      "verdict_sha256": "cc9f35acb8f0ef6ea9e771bb928c84ae5f09c0fa41ef5af0fb9b49b952d15bf6"
+    },
+    "ms-0047": {
+      "chunk_index": 8,
+      "sample_input_sha256": "b0a2edfe68a57e3ab770e84b1ce5b6a75d84b7d9468081ae146e9fb2fcc27615",
+      "prompt_sha256": "715df605613e08d393c2790cee4859ca10703fc2b0ab2fcc32f6a600c78d314b",
+      "verdict_sha256": "0af35f136a518fc554d4e72682a959496927667c5824755043ab4877173f5acd"
+    },
+    "ms-0048": {
+      "chunk_index": 8,
+      "sample_input_sha256": "690d2196c3b1a89e637002909f1e2e494944740bc50772b1b8896101eab12fbf",
+      "prompt_sha256": "715df605613e08d393c2790cee4859ca10703fc2b0ab2fcc32f6a600c78d314b",
+      "verdict_sha256": "a58444f7f0c978bd03191dbce1126d499060c640b08b2a2e2f78f3821b79314d"
     }
   },
   "active_review": {
@@ -953,21 +1340,6 @@
       "ms-0083": "97c00254fcbe984c8646e1374e1744e56967613fec6cd7de564b1119750687e6"
     },
     "pending_ids": [
-      "ms-0034",
-      "ms-0035",
-      "ms-0036",
-      "ms-0037",
-      "ms-0038",
-      "ms-0039",
-      "ms-0040",
-      "ms-0041",
-      "ms-0042",
-      "ms-0043",
-      "ms-0044",
-      "ms-0045",
-      "ms-0046",
-      "ms-0047",
-      "ms-0048",
       "ms-0049",
       "ms-0050",
       "ms-0051",

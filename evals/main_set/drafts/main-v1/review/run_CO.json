@@ -89,9 +89,269 @@
     "ms-0458": "b6209dbb03707ff41df76d335f69360d28e501ed0e120e4ab52c7b1e05ce1042",
     "ms-0460": "a67c20ab1f9c807842d139a6ab7af7a421f32bfdf2ca2d02909f74669fcf6626"
   },
-  "chunks": [],
+  "chunks": [
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "18f7e32e-f1a6-4bf7-851b-8ae0eea13346",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "13133",
+      "cost_usd": 0.332967,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0298",
+        "ms-0299",
+        "ms-0302",
+        "ms-0305",
+        "ms-0307"
+      ],
+      "started_at": "2026-09-21T14:27:16+00:00",
+      "finished_at": "2026-09-21T14:29:30+00:00",
+      "prompt_chars": 22133,
+      "prompt_sha256": "bbd8ad30ccee3fa5a8f6f73542b7ae269f9f43bb92e47aa885a005f4898ae4ee",
+      "verdicts": [
+        {
+          "sample_id": "ms-0298",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "issue",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "query 问的是“在什么情况下可以不经 IRB/IEC 事先书面批准就偏离或变更方案”，即例外情形；但 key_text 只截取了禁止性主句“no deviations from or changes to the protocol should be initiated without prior documented IRB/IEC approval/favorable opinion of an appropriate protocol amendment”，不含任何例外表述，无法构成该 query 的命中文本（对象在、但所问的约束条件缺失）。evidence_span 本身包含例外，范围正确。",
+          "suggestion": "将 key_text 改为页内唯一且直接回答该问的例外从句：“except when necessary to eliminate immediate hazards to the participants or, in accordance with applicable regulatory requirements, when the change(s) involves only logistical or administrative aspects of the trial”（该串在第 18 页仅出现一次）；evidence_span 与切片保持不变。"
+        },
+        {
+          "sample_id": "ms-0299",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0302",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0305",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0307",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_bbd8ad30ccee3fa5a8f6f73542b7ae269f9f43bb92e47aa885a005f4898ae4ee.jsonl",
+      "sample_input_sha256": {
+        "ms-0298": "19f8308d4b7bcf90058eb9a67b11a7a8f13f51b2f40e6897158d4a4146c11cd3",
+        "ms-0299": "4fa44b6e0a2dda875ad68ed864f0360b26d3be52a5a1a740eff0c9ee9529f411",
+        "ms-0302": "4b478b6aa71975a8267b23a3985ede9be2dc532b5935bf9bf9121074b0fbeeef",
+        "ms-0305": "e0eaa6195dd2290daff96d5baf479eeef316af8309fc164f90761b49a96e9f40",
+        "ms-0307": "78abc47dceb47b597767d2cbd1af8973805f525100015560560135a27ac36bbb"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "8e9119aa-a023-4eef-b7c1-d7692593ca03",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "14799",
+      "cost_usd": 0.37519600000000003,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0309",
+        "ms-0311",
+        "ms-0313",
+        "ms-0314",
+        "ms-0316"
+      ],
+      "started_at": "2026-09-21T14:29:30+00:00",
+      "finished_at": "2026-09-21T14:31:53+00:00",
+      "prompt_chars": 25682,
+      "prompt_sha256": "86ed6b412f8534d6cc806726d2a88d5c39b37692b7cc3f8799b016b2bd01d59c",
+      "verdicts": [
+        {
+          "sample_id": "ms-0309",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0311",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0313",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "issue",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "key_text 与 query 的命中不对应。query 问的是 advocate 的「资格与独立性要求」以及「在哪些情况下不要求指定 advocate」，而 key_text「the IRB must require that an advocate be appointed for each child who is a ward」只说明在 50.56(a) 下须指定 advocate，既未含资格要件，也未含独立性限制或豁免情形，属于铺垫句而非答案最小命中。页内直接回答该 query 的原文为「The advocate must be an individual who has the background and experience to act in, and agrees to act in, the best interest of the child for the duration of the child's participation in the clinical investigation」「The advocate must not be associated in any way (except in the role as advocate or member of the IRB) with the clinical investigation, the investigator(s), or the guardian organization」与「FDA regulations do not require the appointment of an advocate for children who are wards involved in clinical investigations approved under these sections」。evidence_span 本身覆盖了两问，偏移与文本一致（1062–2812，长度 1750，long_context 成立），故仅 key_text 需改。",
+          "suggestion": "将 key_text 改为答案句，如「The advocate must be an individual who has the background and experience to act in, and agrees to act in, the best interest of the child」（页内唯一）；若希望单条 key_text 覆盖双问过难，建议把 query 拆为只问资格与独立性要求（去掉 50.51/50.52 豁免一问），并相应保留同一 evidence_span。"
+        },
+        {
+          "sample_id": "ms-0314",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0316",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_86ed6b412f8534d6cc806726d2a88d5c39b37692b7cc3f8799b016b2bd01d59c.jsonl",
+      "sample_input_sha256": {
+        "ms-0309": "404372966bc1880416e1d9a30b79152aec029ae5a1c79e1e7e4d9d85bc7db1fe",
+        "ms-0311": "0139450fef3bc4a5604be8a3f099c7d9f98885cd16461587e298560b3410dfbc",
+        "ms-0313": "cd50b891a5fa1476a6569e5ed0a1a1eb942a76a881ee6020b4027e67cfb4c6b7",
+        "ms-0314": "b1f9c005b314388747c5989904acf2c9125a99eedcd64883c396670d7215f1b3",
+        "ms-0316": "0f5eef5b31d849edcb25e6c8c53a4871f68f809b07cd2c634d4e21c46384ac5d"
+      }
+    }
+  ],
   "provenance_version": 2,
-  "latest": {},
+  "latest": {
+    "ms-0298": {
+      "chunk_index": 0,
+      "sample_input_sha256": "19f8308d4b7bcf90058eb9a67b11a7a8f13f51b2f40e6897158d4a4146c11cd3",
+      "prompt_sha256": "bbd8ad30ccee3fa5a8f6f73542b7ae269f9f43bb92e47aa885a005f4898ae4ee",
+      "verdict_sha256": "e84678b77e61096ad9a98fc9571fdd96952f2a7c5f7e76a7d993ae20b776a04e"
+    },
+    "ms-0299": {
+      "chunk_index": 0,
+      "sample_input_sha256": "4fa44b6e0a2dda875ad68ed864f0360b26d3be52a5a1a740eff0c9ee9529f411",
+      "prompt_sha256": "bbd8ad30ccee3fa5a8f6f73542b7ae269f9f43bb92e47aa885a005f4898ae4ee",
+      "verdict_sha256": "0650d080b6977ecd5a5025929879a44492141cb9bc5aa1bc9db6ad7258b668d5"
+    },
+    "ms-0302": {
+      "chunk_index": 0,
+      "sample_input_sha256": "4b478b6aa71975a8267b23a3985ede9be2dc532b5935bf9bf9121074b0fbeeef",
+      "prompt_sha256": "bbd8ad30ccee3fa5a8f6f73542b7ae269f9f43bb92e47aa885a005f4898ae4ee",
+      "verdict_sha256": "bb33aafba4167f2390b6f453527ff2d09117ec4a9e0fa779d436563db6207b82"
+    },
+    "ms-0305": {
+      "chunk_index": 0,
+      "sample_input_sha256": "e0eaa6195dd2290daff96d5baf479eeef316af8309fc164f90761b49a96e9f40",
+      "prompt_sha256": "bbd8ad30ccee3fa5a8f6f73542b7ae269f9f43bb92e47aa885a005f4898ae4ee",
+      "verdict_sha256": "c284f36d61159cb499c686098d42a0c6d2efb3665cc8ab0bd9ec746db640f540"
+    },
+    "ms-0307": {
+      "chunk_index": 0,
+      "sample_input_sha256": "78abc47dceb47b597767d2cbd1af8973805f525100015560560135a27ac36bbb",
+      "prompt_sha256": "bbd8ad30ccee3fa5a8f6f73542b7ae269f9f43bb92e47aa885a005f4898ae4ee",
+      "verdict_sha256": "4470c3bb5d81da9705c4f1440056327063e2e31ba617d4b2b37b5b6f5a89929d"
+    },
+    "ms-0309": {
+      "chunk_index": 1,
+      "sample_input_sha256": "404372966bc1880416e1d9a30b79152aec029ae5a1c79e1e7e4d9d85bc7db1fe",
+      "prompt_sha256": "86ed6b412f8534d6cc806726d2a88d5c39b37692b7cc3f8799b016b2bd01d59c",
+      "verdict_sha256": "a02391e90b970987fab4ca0af5c5aca9604edbb82f577265788c33f1da05755f"
+    },
+    "ms-0311": {
+      "chunk_index": 1,
+      "sample_input_sha256": "0139450fef3bc4a5604be8a3f099c7d9f98885cd16461587e298560b3410dfbc",
+      "prompt_sha256": "86ed6b412f8534d6cc806726d2a88d5c39b37692b7cc3f8799b016b2bd01d59c",
+      "verdict_sha256": "c4e838d7f8c60be398f0920ee84f7cc5412eb1d6896eca6d62a9d8364f795521"
+    },
+    "ms-0313": {
+      "chunk_index": 1,
+      "sample_input_sha256": "cd50b891a5fa1476a6569e5ed0a1a1eb942a76a881ee6020b4027e67cfb4c6b7",
+      "prompt_sha256": "86ed6b412f8534d6cc806726d2a88d5c39b37692b7cc3f8799b016b2bd01d59c",
+      "verdict_sha256": "43a10e01f551c2371bd3cd3c37dff1246499faf1010a8a2f3c5dd111c6fcddbf"
+    },
+    "ms-0314": {
+      "chunk_index": 1,
+      "sample_input_sha256": "b1f9c005b314388747c5989904acf2c9125a99eedcd64883c396670d7215f1b3",
+      "prompt_sha256": "86ed6b412f8534d6cc806726d2a88d5c39b37692b7cc3f8799b016b2bd01d59c",
+      "verdict_sha256": "72771ef153a0ad66a826f7f08e6c54220f14ca8134b63386baf268dda0599a1b"
+    },
+    "ms-0316": {
+      "chunk_index": 1,
+      "sample_input_sha256": "0f5eef5b31d849edcb25e6c8c53a4871f68f809b07cd2c634d4e21c46384ac5d",
+      "prompt_sha256": "86ed6b412f8534d6cc806726d2a88d5c39b37692b7cc3f8799b016b2bd01d59c",
+      "verdict_sha256": "af7f381d160d4844116799aad1a316b884e10d6ff5915a5b257d23084d9146eb"
+    }
+  },
   "active_review": {
     "sample_input_sha256": {
       "ms-0298": "19f8308d4b7bcf90058eb9a67b11a7a8f13f51b2f40e6897158d4a4146c11cd3",
@@ -175,16 +435,6 @@
       "ms-0460": "a67c20ab1f9c807842d139a6ab7af7a421f32bfdf2ca2d02909f74669fcf6626"
     },
     "pending_ids": [
-      "ms-0298",
-      "ms-0299",
-      "ms-0302",
-      "ms-0305",
-      "ms-0307",
-      "ms-0309",
-      "ms-0311",
-      "ms-0313",
-      "ms-0314",
-      "ms-0316",
       "ms-0318",
       "ms-0320",
       "ms-0322",

@@ -35,7 +35,17 @@ _spec.loader.exec_module(codex)
 PROBE_V2 = dc.REPO / "evals/probe/precise_clause/v2"
 REVIEW = dc.DRAFTS / "review"
 BATCHES = ("MA", "PV", "CO", "EN", "NA")
-SLICES = ["drug_name_zh", "dose_unit", "negation", "time_window", "protocol_id", "mixed_zh_en", "version_conflict", "no_answer", "long_context"]
+SLICES = [
+    "drug_name_zh",
+    "dose_unit",
+    "negation",
+    "time_window",
+    "protocol_id",
+    "mixed_zh_en",
+    "version_conflict",
+    "no_answer",
+    "long_context",
+]
 DEPTS = ["MA", "PV", "CO"]
 LANGS = ["zh-Hans", "zh-Hant", "en", "mixed"]
 ANNOTATOR = {"id": "annotator-01", "kind": "human"}
@@ -94,12 +104,16 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", required=True, type=pathlib.Path)
     ap.add_argument("--created-at", default=dt.date.today().isoformat())
-    ap.add_argument("--human-confirmed", required=True, help="date annotator-01 confirmed the draft sheets (all batches)")
+    ap.add_argument(
+        "--human-confirmed", required=True, help="date annotator-01 confirmed the draft sheets (all batches)"
+    )
     args = ap.parse_args()
     out = args.out
     if (out / "SHA256SUMS").exists():
         raise SystemExit("refusing to write into a frozen version directory")
-    if (out / "manifest.json").exists() and json.loads((out / "manifest.json").read_text(encoding="utf-8")).get("status") != "draft":
+    if (out / "manifest.json").exists() and json.loads((out / "manifest.json").read_text(encoding="utf-8")).get(
+        "status"
+    ) != "draft":
         raise SystemExit("refusing to overwrite a non-draft manifest")
 
     probe_manifest = json.loads((PROBE_V2 / "manifest.json").read_text(encoding="utf-8"))
@@ -117,7 +131,11 @@ def main() -> None:
     runs, verdicts, evidence = load_runs()
     models = {run["model"] for run in runs.values()}
     efforts = {run["reasoning_effort_requested"] for run in runs.values()}
-    if len(models) != 1 or len(efforts) != 1 or any(run["review_prompt_sha256"] != prompt_hash for run in runs.values()):
+    if (
+        len(models) != 1
+        or len(efforts) != 1
+        or any(run["review_prompt_sha256"] != prompt_hash for run in runs.values())
+    ):
         raise SystemExit("all batches must share one model, one effort and the main-set review prompt hash")
     model, effort = models.pop(), efforts.pop()
     resolutions_path = REVIEW / "resolutions.json"
@@ -133,7 +151,9 @@ def main() -> None:
         raise SystemExit("verdict coverage differs from the assembled new samples")
     disputed = {s["sample_id"] for s in new_samples if s["review"]["status"] == "disputed_resolved"}
     if set(resolutions) != disputed:
-        raise SystemExit(f"resolutions must cover exactly the disputed samples (extra: {sorted(set(resolutions) - disputed)[:5]})")
+        raise SystemExit(
+            f"resolutions must cover exactly the disputed samples (extra: {sorted(set(resolutions) - disputed)[:5]})"
+        )
     samples = sorted(imported + new_samples, key=lambda s: s["sample_id"])
 
     def language_of(s: dict) -> str:
@@ -210,24 +230,50 @@ def main() -> None:
         "extraction": probe_manifest["extraction"],
         "normalization": probe_manifest["normalization"],
         "minimums": {
-            "answerable_samples": 300, "no_answer_samples": 40, "conflict_samples": 20, "per_slice": 20, "per_dept": 60,
-            "max_samples_per_document": 8, "documents": 10, "documents_per_dept": 3, "zh_hans_samples": 20,
-            "zh_hant_samples": 80, "en_samples": 150,
+            "answerable_samples": 300,
+            "no_answer_samples": 40,
+            "conflict_samples": 20,
+            "per_slice": 20,
+            "per_dept": 60,
+            "max_samples_per_document": 8,
+            "documents": 10,
+            "documents_per_dept": 3,
+            "zh_hans_samples": 20,
+            "zh_hant_samples": 80,
+            "en_samples": 150,
         },
-        "gates": {"recall_at_5": 0.85, "abstention_accuracy": 0.9, "invalid_version_citation_rate": 0.0, "conflict_current_cited_rate": 1.0},
+        "gates": {
+            "recall_at_5": 0.85,
+            "abstention_accuracy": 0.9,
+            "invalid_version_citation_rate": 0.0,
+            "conflict_current_cited_rate": 1.0,
+        },
         "counts": counts,
         "reviewers": [
             {**ANNOTATOR, "role": "annotator"},
-            {"id": REVIEWER_ID, "kind": "llm", "model": model, "model_version": model, "prompt_hash": prompt_hash, "role": "second_reviewer"},
+            {
+                "id": REVIEWER_ID,
+                "kind": "llm",
+                "model": model,
+                "model_version": model,
+                "prompt_hash": prompt_hash,
+                "role": "second_reviewer",
+            },
         ],
-        "review_policy": {"human_reviewers": 1, "llm_reviewers": 1, "statement": "人工标注加 LLM 独立复核；不等同于两名独立人工复核。"},
+        "review_policy": {
+            "human_reviewers": 1,
+            "llm_reviewers": 1,
+            "statement": "人工标注加 LLM 独立复核；不等同于两名独立人工复核。",
+        },
         "review_provenance": {
             "reviewer_id": REVIEWER_ID,
             "version_source": "pinned_model_id",
             "backend_model_version": model,
             "reasoning_effort": effort,
             "reproducibility_limitations": LIMITATION,
-            "artifacts": [{"path": f"review_evidence/{name}", "sha256": sha(data)} for name, data in sorted(evidence.items())],
+            "artifacts": [
+                {"path": f"review_evidence/{name}", "sha256": sha(data)} for name, data in sorted(evidence.items())
+            ],
         },
         "pii_ruleset_version": probe_manifest["pii_ruleset_version"],
         "files": [{"path": name, "sha256": sha((out / name).read_bytes())} for name in files],
@@ -242,7 +288,11 @@ def main() -> None:
             "count": len(derived),
             "query_language": "en",
             "drafted_by": {"kind": "llm", "id": "drafter-llm-03", "model": "claude-sonnet-5"},
-            "human_confirmation": {"status": "confirmed", "annotator_id": "annotator-01", "confirmed_on": args.human_confirmed},
+            "human_confirmation": {
+                "status": "confirmed",
+                "annotator_id": "annotator-01",
+                "confirmed_on": args.human_confirmed,
+            },
         },
         "imported_samples": {
             "dataset_id": probe_manifest["dataset_id"],
@@ -251,7 +301,9 @@ def main() -> None:
             "path": "evals/probe/precise_clause/v2/samples.jsonl",
             "samples_sha256": sha(probe_raw),
             "count": len(imported),
-            "prompt_hash": next(r["prompt_hash"] for r in probe_manifest["reviewers"] if r["role"] == "second_reviewer"),
+            "prompt_hash": next(
+                r["prompt_hash"] for r in probe_manifest["reviewers"] if r["role"] == "second_reviewer"
+            ),
             "reviewer_id": next(r["id"] for r in probe_manifest["reviewers"] if r["role"] == "second_reviewer"),
             "statement": "探针 v2 的 107 条样本原样并入（canonical 字节一致），保留其探针复核记录与提示哈希；报告中探针子集单列。",
         },
@@ -263,15 +315,20 @@ def main() -> None:
         "conflict_fixtures": [
             {
                 "document_key": f["document_key"],
-                "archived_document_keys": [f["synthetic_old_key"]],
-                "synthetic": True,
-                "source": f"同一 PDF 以两个 document_key 入库；旧版 effective_from {f['effective_from_old']}，发布现行版（{f['effective_from_current']}）时归档（记录 50）",
+                "archived_document_keys": f.get("archived_document_keys", [f["synthetic_old_key"]]),
+                "synthetic": f.get("synthetic", True),
+                "source": f.get(
+                    "source",
+                    f"同一 PDF 以两个 document_key 入库；旧版 effective_from {f['effective_from_old']}，发布现行版（{f['effective_from_current']}）时归档（记录 50）",
+                ),
             }
             for f in fixtures
         ],
     }
     (out / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"assembled {len(samples)} samples ({len(imported)} imported, {len(new_samples)} new, {len(derived)} derived, {counts['no_answer']} no-answer, {counts['conflict']} conflict) -> {out}")
+    print(
+        f"assembled {len(samples)} samples ({len(imported)} imported, {len(new_samples)} new, {len(derived)} derived, {counts['no_answer']} no-answer, {counts['conflict']} conflict) -> {out}"
+    )
     print(json.dumps(counts, ensure_ascii=False))
 
 

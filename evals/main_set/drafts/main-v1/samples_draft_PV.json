@@ -1,39 +1,39 @@
 [
   {
     "sample_id": "ms-0084",
-    "query": "按 GVP Annex I Rev 4 所引 Directive 2001/20/EC Art 2(c)，非干预性试验（non-interventional trial）在处方、治疗分配、入组决定、额外检查和数据分析方面须满足哪些条件？",
+    "query": "按 GVP Annex I Rev 5 所引 Regulation (EU) No 536/2014 Art 2(2)(4)，非干预性研究（non-interventional study）如何定义，是否属于该法规的适用范围？",
     "dept": "PV",
     "language": "mixed",
     "slices": [
       "negation",
-      "version_conflict",
       "protocol_id",
-      "mixed_zh_en"
+      "mixed_zh_en",
+      "version_conflict"
     ],
     "required_gold_evidence": [
       {
         "gold_id": "ms-0084-g1",
-        "source_hash": "93435355242b002f23e966d1f08454614c405ce4e286e6979b5de44692bab4fe",
-        "version_label": "EMA/876333/2011 Rev 4 (2017-10-09)",
-        "page": 20,
+        "source_hash": "409f9f85c1ff025dfc0a5ff9f0b21afc2c7d09cc1b47484a40c9ee11e1da536f",
+        "version_label": "EMA/876333/2011 Rev 5 (2024-07-26)",
+        "page": 19,
         "printed_page_label": null,
-        "section": "Non-interventional trial; synonym: Non-interventional study",
-        "key_text": "No additional diagnostic or monitoring procedures shall be applied to the patients",
+        "section": "Non-interventional study",
+        "key_text": "A clinical study other than a clinical trial",
         "evidence_span": {
-          "text": "A study where the medicinal product(s) is (are) prescribed in the usual manner in accordance with the terms of the marketing authorisation. The assignment of the patient to a particular therapeutic strategy is not decided in advance by a trial protocol but falls within current practice and the prescription of the medicine is clearly separated from the decision to include the patient in the study. No additional diagnostic or monitoring procedures shall be applied to the patients and epidemiological methods shall be used for the analysis of collected data [Dir 2001/20/EC Art 2(c)].",
-          "char_start": 1495,
-          "char_end": 2081
+          "text": "Non-interventional study A clinical study other than a clinical trial [Reg (EU) No 536/2014 Art 2(2)(4)]. Non-interventional studies do not fall in the scope of Regulation (EU) No 536/2014 [Reg (EU) No 536/2014 Art 1].",
+          "char_start": 657,
+          "char_end": 875
         }
       }
     ],
-    "notes": "合成冲突（spec-m1 §5）：ema-gvp-annex-i-rev4--synthetic-old 为同一 PDF 的合成旧版（effective_from 2015-10-09），发布现行版（effective_from 2017-10-09）时归档；正文相同，检验版本状态与时效过滤（INV-DATA-03），不检验内容差异。",
+    "notes": "真实修订对（记录 50 §11）：GVP Annex I Rev 4（EMA/876333/2011 Rev 4，PDF 页眉标注 superseded）经 M1-11 发布流程被 Rev 5（2024-07-26）替代并归档，family 中另有 Rev 4 的合成旧版 ema-gvp-annex-i-rev4--synthetic-old（正文与 Rev 4 相同，2026-09-21 归档）；gold 落在现行版 Rev 5，检验版本状态与时效过滤（INV-DATA-03）。",
     "drafted_by": {
       "kind": "llm",
       "id": "drafter-llm-03",
       "model": "claude-sonnet-5"
     },
     "_draft": {
-      "document_key": "ema-gvp-annex-i-rev4",
+      "document_key": "ema-gvp-annex-i-rev5",
       "title": "Guideline on good pharmacovigilance practices (GVP) – Annex I – Definitions (Rev 4)",
       "rank": 2,
       "warnings": [
@@ -57,16 +57,17 @@
         "problems": [],
         "reason": "原 key 只回答额外检查，未覆盖所问完整定义；恢复三句定义及所有累计条件。后面的 Thus 清单为等义复述，问题限定所引法条定义段，不将该复述另算独立答案。"
       },
-      "decision": "edited (external review)"
+      "decision": "edited (external review); rewritten on the Rev 5 definition (Reg 536/2014); the Dir 2001/20/EC clause no longer exists in the current version (record 50 §11)"
     },
     "conflict": {
       "family_document_keys": [
+        "ema-gvp-annex-i-rev5",
         "ema-gvp-annex-i-rev4",
         "ema-gvp-annex-i-rev4--synthetic-old"
       ],
-      "current_document_key": "ema-gvp-annex-i-rev4",
-      "clause_topic": "Non-interventional trial; synonym: Non-interventional study",
-      "synthetic": true
+      "current_document_key": "ema-gvp-annex-i-rev5",
+      "clause_topic": "Non-interventional study",
+      "synthetic": false
     }
   },
   {
@@ -83,27 +84,27 @@
     "required_gold_evidence": [
       {
         "gold_id": "ms-0086-g1",
-        "source_hash": "93435355242b002f23e966d1f08454614c405ce4e286e6979b5de44692bab4fe",
-        "version_label": "EMA/876333/2011 Rev 4 (2017-10-09)",
-        "page": 30,
+        "source_hash": "409f9f85c1ff025dfc0a5ff9f0b21afc2c7d09cc1b47484a40c9ee11e1da536f",
+        "version_label": "EMA/876333/2011 Rev 5 (2024-07-26)",
+        "page": 29,
         "printed_page_label": null,
         "section": "Traditional herbal medicinal product",
         "key_text": "the product must have been in medicinal use throughout a period of at least 30 years, including at least 15 years within the EU",
         "evidence_span": {
           "text": "Regarding (d), the product must have been in medicinal use throughout a period of at least 30 years, including at least 15 years within the EU (see DIR 2001/83/EC Art 16c(1)(c)).",
-          "char_start": 1422,
-          "char_end": 1600
+          "char_start": 2345,
+          "char_end": 2523
         }
       }
     ],
-    "notes": "合成冲突（spec-m1 §5）：ema-gvp-annex-i-rev4--synthetic-old 为同一 PDF 的合成旧版（effective_from 2015-10-09），发布现行版（effective_from 2017-10-09）时归档；正文相同，检验版本状态与时效过滤（INV-DATA-03），不检验内容差异。",
+    "notes": "真实修订对（记录 50 §11）：GVP Annex I Rev 4（EMA/876333/2011 Rev 4，PDF 页眉标注 superseded）经 M1-11 发布流程被 Rev 5（2024-07-26）替代并归档，family 中另有 Rev 4 的合成旧版 ema-gvp-annex-i-rev4--synthetic-old（正文与 Rev 4 相同，2026-09-21 归档）；gold 落在现行版 Rev 5，检验版本状态与时效过滤（INV-DATA-03）。",
     "drafted_by": {
       "kind": "llm",
       "id": "drafter-llm-03",
       "model": "claude-sonnet-5"
     },
     "_draft": {
-      "document_key": "ema-gvp-annex-i-rev4",
+      "document_key": "ema-gvp-annex-i-rev5",
       "title": "Guideline on good pharmacovigilance practices (GVP) – Annex I – Definitions (Rev 4)",
       "rank": 3,
       "warnings": [
@@ -126,16 +127,17 @@
         "problems": [],
         "reason": "恢复总体至少30年及欧盟境内至少15年，不能将key截在within。明确法条编号在query与span均出现，机械protocol_id漏检。"
       },
-      "decision": "edited (external review)"
+      "decision": "edited (external review); gold moved to Rev 5 (record 50 §11)"
     },
     "conflict": {
       "family_document_keys": [
+        "ema-gvp-annex-i-rev5",
         "ema-gvp-annex-i-rev4",
         "ema-gvp-annex-i-rev4--synthetic-old"
       ],
-      "current_document_key": "ema-gvp-annex-i-rev4",
+      "current_document_key": "ema-gvp-annex-i-rev5",
       "clause_topic": "Traditional herbal medicinal product",
-      "synthetic": true
+      "synthetic": false
     }
   },
   {
@@ -150,27 +152,27 @@
     "required_gold_evidence": [
       {
         "gold_id": "ms-0088-g1",
-        "source_hash": "93435355242b002f23e966d1f08454614c405ce4e286e6979b5de44692bab4fe",
-        "version_label": "EMA/876333/2011 Rev 4 (2017-10-09)",
-        "page": 17,
+        "source_hash": "409f9f85c1ff025dfc0a5ff9f0b21afc2c7d09cc1b47484a40c9ee11e1da536f",
+        "version_label": "EMA/876333/2011 Rev 5 (2024-07-26)",
+        "page": 16,
         "printed_page_label": null,
         "section": "International birth date (IBD)",
         "key_text": "If a marketing authorisation holder has no information on the actual IBD for a product, it should first refer to listings of birth dates that some regions develop and make publicly available",
         "evidence_span": {
           "text": "IV, ICH-E2C(R2) Guideline). If a marketing authorisation holder has no information on the actual IBD for a product, it should first refer to listings of birth dates that some regions develop and make publicly available. If the product is not included in any listing, it should propose to the regulatory authority a birth date that is based on the earliest known marketing authorisation of the substance and then obtain the regulatory authority’s agreement (see GVP",
-          "char_start": 754,
-          "char_end": 1218
+          "char_start": 310,
+          "char_end": 774
         }
       }
     ],
-    "notes": "合成冲突（spec-m1 §5）：ema-gvp-annex-i-rev4--synthetic-old 为同一 PDF 的合成旧版（effective_from 2015-10-09），发布现行版（effective_from 2017-10-09）时归档；正文相同，检验版本状态与时效过滤（INV-DATA-03），不检验内容差异。",
+    "notes": "真实修订对（记录 50 §11）：GVP Annex I Rev 4（EMA/876333/2011 Rev 4，PDF 页眉标注 superseded）经 M1-11 发布流程被 Rev 5（2024-07-26）替代并归档，family 中另有 Rev 4 的合成旧版 ema-gvp-annex-i-rev4--synthetic-old（正文与 Rev 4 相同，2026-09-21 归档）；gold 落在现行版 Rev 5，检验版本状态与时效过滤（INV-DATA-03）。",
     "drafted_by": {
       "kind": "llm",
       "id": "drafter-llm-03",
       "model": "claude-sonnet-5"
     },
     "_draft": {
-      "document_key": "ema-gvp-annex-i-rev4",
+      "document_key": "ema-gvp-annex-i-rev5",
       "title": "Guideline on good pharmacovigilance practices (GVP) – Annex I – Definitions (Rev 4)",
       "rank": 5,
       "warnings": [],
@@ -191,16 +193,17 @@
         "problems": [],
         "reason": "IBD指首次上市许可日期而非产品实际首次销售日期；完整保留先查公开日期清单、再依已知最早许可日期提议并取得监管同意两步。has no information是触发背景，不作为禁止/排除型negation。"
       },
-      "decision": "edited (external review)"
+      "decision": "edited (external review); gold moved to Rev 5 (record 50 §11)"
     },
     "conflict": {
       "family_document_keys": [
+        "ema-gvp-annex-i-rev5",
         "ema-gvp-annex-i-rev4",
         "ema-gvp-annex-i-rev4--synthetic-old"
       ],
-      "current_document_key": "ema-gvp-annex-i-rev4",
+      "current_document_key": "ema-gvp-annex-i-rev5",
       "clause_topic": "International birth date (IBD)",
-      "synthetic": true
+      "synthetic": false
     }
   },
   {
@@ -216,27 +219,27 @@
     "required_gold_evidence": [
       {
         "gold_id": "ms-0090-g1",
-        "source_hash": "93435355242b002f23e966d1f08454614c405ce4e286e6979b5de44692bab4fe",
-        "version_label": "EMA/876333/2011 Rev 4 (2017-10-09)",
-        "page": 21,
+        "source_hash": "409f9f85c1ff025dfc0a5ff9f0b21afc2c7d09cc1b47484a40c9ee11e1da536f",
+        "version_label": "EMA/876333/2011 Rev 5 (2024-07-26)",
+        "page": 19,
         "printed_page_label": null,
         "section": "Occupational exposure to a medicinal product",
         "key_text": "It does not include the exposure to one of the ingredients during the manufacturing process before the release as finished product",
         "evidence_span": {
           "text": "For the purpose of reporting cases of suspected adverse reactions, an exposure to a medicinal product as a result of one’s professional or non-professional occupation. It does not include the exposure to one of the ingredients during the manufacturing process before the release as finished product.",
-          "char_start": 1412,
-          "char_end": 1711
+          "char_start": 1841,
+          "char_end": 2140
         }
       }
     ],
-    "notes": "合成冲突（spec-m1 §5）：ema-gvp-annex-i-rev4--synthetic-old 为同一 PDF 的合成旧版（effective_from 2015-10-09），发布现行版（effective_from 2017-10-09）时归档；正文相同，检验版本状态与时效过滤（INV-DATA-03），不检验内容差异。",
+    "notes": "真实修订对（记录 50 §11）：GVP Annex I Rev 4（EMA/876333/2011 Rev 4，PDF 页眉标注 superseded）经 M1-11 发布流程被 Rev 5（2024-07-26）替代并归档，family 中另有 Rev 4 的合成旧版 ema-gvp-annex-i-rev4--synthetic-old（正文与 Rev 4 相同，2026-09-21 归档）；gold 落在现行版 Rev 5，检验版本状态与时效过滤（INV-DATA-03）。",
     "drafted_by": {
       "kind": "llm",
       "id": "drafter-llm-03",
       "model": "claude-sonnet-5"
     },
     "_draft": {
-      "document_key": "ema-gvp-annex-i-rev4",
+      "document_key": "ema-gvp-annex-i-rev5",
       "title": "Guideline on good pharmacovigilance practices (GVP) – Annex I – Definitions (Rev 4)",
       "rank": 6,
       "warnings": [],
@@ -255,16 +258,17 @@
         "problems": [],
         "reason": "恢复before the release as finished product这一关键时间/产品状态限定；不是排除所有药品成分接触。"
       },
-      "decision": "edited (external review)"
+      "decision": "edited (external review); gold moved to Rev 5 (record 50 §11)"
     },
     "conflict": {
       "family_document_keys": [
+        "ema-gvp-annex-i-rev5",
         "ema-gvp-annex-i-rev4",
         "ema-gvp-annex-i-rev4--synthetic-old"
       ],
-      "current_document_key": "ema-gvp-annex-i-rev4",
+      "current_document_key": "ema-gvp-annex-i-rev5",
       "clause_topic": "Occupational exposure to a medicinal product",
-      "synthetic": true
+      "synthetic": false
     }
   },
   {
@@ -280,27 +284,27 @@
     "required_gold_evidence": [
       {
         "gold_id": "ms-0092-g1",
-        "source_hash": "93435355242b002f23e966d1f08454614c405ce4e286e6979b5de44692bab4fe",
-        "version_label": "EMA/876333/2011 Rev 4 (2017-10-09)",
-        "page": 10,
+        "source_hash": "409f9f85c1ff025dfc0a5ff9f0b21afc2c7d09cc1b47484a40c9ee11e1da536f",
+        "version_label": "EMA/876333/2011 Rev 5 (2024-07-26)",
+        "page": 9,
         "printed_page_label": null,
         "section": "Company core safety information (CCSI)",
-        "key_text": "except when the local regulatory authority specifically requires a modification",
+        "key_text": "which the marketing authorisation holder requires to be listed in all countries where the company markets the product, except when the local regulatory authority specifically requires a modification",
         "evidence_span": {
           "text": "For medicinal products, all relevant safety information contained in the company core data sheet prepared by the marketing authorisation holder and which the marketing authorisation holder requires to be listed in all countries where the company markets the product, except when the local regulatory authority specifically requires a modification (see GVP Annex IV, ICH-E2C(R2) Guideline).",
-          "char_start": 2270,
-          "char_end": 2659
+          "char_start": 500,
+          "char_end": 889
         }
       }
     ],
-    "notes": "合成冲突（spec-m1 §5）：ema-gvp-annex-i-rev4--synthetic-old 为同一 PDF 的合成旧版（effective_from 2015-10-09），发布现行版（effective_from 2017-10-09）时归档；正文相同，检验版本状态与时效过滤（INV-DATA-03），不检验内容差异。",
+    "notes": "真实修订对（记录 50 §11）：GVP Annex I Rev 4（EMA/876333/2011 Rev 4，PDF 页眉标注 superseded）经 M1-11 发布流程被 Rev 5（2024-07-26）替代并归档，family 中另有 Rev 4 的合成旧版 ema-gvp-annex-i-rev4--synthetic-old（正文与 Rev 4 相同，2026-09-21 归档）；gold 落在现行版 Rev 5，检验版本状态与时效过滤（INV-DATA-03）。",
     "drafted_by": {
       "kind": "llm",
       "id": "drafter-llm-03",
       "model": "claude-sonnet-5"
     },
     "_draft": {
-      "document_key": "ema-gvp-annex-i-rev4",
+      "document_key": "ema-gvp-annex-i-rev5",
       "title": "Guideline on good pharmacovigilance practices (GVP) – Annex I – Definitions (Rev 4)",
       "rank": 7,
       "warnings": [],
@@ -319,16 +323,17 @@
         "problems": [],
         "reason": "原问“所有安全性信息完全一致”过宽；CCSI规定的是核心安全性信息列示及当地监管明确要求修改的例外。key补足规则本身，不仅摘例外。"
       },
-      "decision": "edited (external review)"
+      "decision": "edited (external review); gold moved to Rev 5, key extended for page uniqueness (record 50 §11)"
     },
     "conflict": {
       "family_document_keys": [
+        "ema-gvp-annex-i-rev5",
         "ema-gvp-annex-i-rev4",
         "ema-gvp-annex-i-rev4--synthetic-old"
       ],
-      "current_document_key": "ema-gvp-annex-i-rev4",
+      "current_document_key": "ema-gvp-annex-i-rev5",
       "clause_topic": "Company core safety information (CCSI)",
-      "synthetic": true
+      "synthetic": false
     }
   },
   {

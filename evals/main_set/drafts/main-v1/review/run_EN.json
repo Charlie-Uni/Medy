@@ -178,9 +178,398 @@
     "ms-0459": "f6d0adac1059d2da1135b51629392d84f64dab908177e027925dde260da5a4cc",
     "ms-0461": "ad52a82381041e2cf483b925137f5c41829fdfd4007e54b4867cc4f3760516b8"
   },
-  "chunks": [],
+  "chunks": [
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "b4bb6378-a0eb-4825-acbb-29f9b4768ae0",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "3286",
+      "cost_usd": 0.15822875,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0085",
+        "ms-0087",
+        "ms-0089",
+        "ms-0091",
+        "ms-0093"
+      ],
+      "started_at": "2026-09-21T14:27:19+00:00",
+      "finished_at": "2026-09-21T14:27:57+00:00",
+      "prompt_chars": 28622,
+      "prompt_sha256": "cb58fa94a57e4c2abdd4e063ab0e11e993d322a521ead8b987e773fe04d48dfe",
+      "verdicts": [
+        {
+          "sample_id": "ms-0085",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0087",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0089",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "issue",
+            "dept": "ok"
+          },
+          "reason": "evidence_span 不是完整条款：起始处切在前一句中间，以残片“IV, ICH-E2C(R2) Guideline). ”开头；结尾又在“then obtain the regulatory authority’s agreement (see GVP”处截断，漏掉页文本原句的“Annex IV, ICH-E2C(R2) Q&A).”。偏移疑似整体左移约 27 字符，导致 span 两端都不在句界上。",
+          "suggestion": "将 evidence_span.text 改为完整两句：“If a marketing authorisation holder has no information on the actual IBD for a product, it should first refer to listings of birth dates that some regions develop and make publicly available. If the product is not included in any listing, it should propose to the regulatory authority a birth date that is based on the earliest known marketing authorisation of the substance and then obtain the regulatory authority’s agreement (see GVP Annex IV, ICH-E2C(R2) Q&A).”，并按该文本重新计算 char_start/char_end。"
+        },
+        {
+          "sample_id": "ms-0091",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0093",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_cb58fa94a57e4c2abdd4e063ab0e11e993d322a521ead8b987e773fe04d48dfe.jsonl",
+      "sample_input_sha256": {
+        "ms-0085": "0ca28d7eb699432da95a7eb7cc5a8ec3b9fedf960b63d3d233c4c1e3aa6d13f8",
+        "ms-0087": "90f4e26ceb3824da00e65a3d2f5fa5e9cb0524014522e4f7a86fcd368b2a96c5",
+        "ms-0089": "bf15235f31881f091ee76cbbbe61d1cab9812817b7f7f17f2accbdb146f8d439",
+        "ms-0091": "888267202f7abb9f05122fc73aea0e52d483d05de4f22d6917e70e0f8e9796c2",
+        "ms-0093": "7ffdcb62dd4857bfc5fbadde92f737118c697f2c4b72e70b9eb5b10a8d6ac6b6"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "fd6a9f69-4a8b-4820-b948-b5bb2eb24289",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "14833",
+      "cost_usd": 0.3766125,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0095",
+        "ms-0097",
+        "ms-0099",
+        "ms-0101",
+        "ms-0103"
+      ],
+      "started_at": "2026-09-21T14:27:57+00:00",
+      "finished_at": "2026-09-21T14:30:12+00:00",
+      "prompt_chars": 29505,
+      "prompt_sha256": "158c6b876357f3e4d564465748628f35451d152d020c7b6bc941e9c7b8922897",
+      "verdicts": [
+        {
+          "sample_id": "ms-0095",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": "span 末尾停在“[IR Art 12(2)”，缺少闭合括号与分号；可将 char_end 由 520 延至 522，使引用标记完整为“[IR Art 12(2)];”。条款实质内容完整，不影响判定。"
+        },
+        {
+          "sample_id": "ms-0097",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0099",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0101",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0103",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "issue",
+            "dept": "ok"
+          },
+          "reason": "evidence_span 两端均在句中截断，不是完整条款：起点落在“information about the qualified person responsible for pharmacovigilance (QPPV)”，切掉了所属主句“Marketing authorisation holders shall continue to ensure that their entries in the Article 57 database for medicinal products for human use are up-to-date, including the ”；末尾停在“in order to have the information in the Article 57 database”，切掉了同一句余下部分“and on the European medicines web-portal referred to in Article 26(1) of Regulation (EC) No 726/2004 updated and to allow continuous supervision by the competent authorities [based on IR Art 4(4), REG Art 57(2)(c)] (see 2).”。偏移与 text 本身一致（长度 473 = 2670-2197），key_text 也在其中，问题仅在于 span 非完整句。",
+          "suggestion": "将 span 调整为两个完整句：自“Marketing authorisation holders shall continue to ensure that their entries in the Article 57 database...”起，至“...to allow continuous supervision by the competent authorities [based on IR Art 4(4), REG Art 57(2)(c)] (see 2).”止，并相应更新 char_start/char_end。"
+        }
+      ],
+      "input_path": "chunk_inputs/input_158c6b876357f3e4d564465748628f35451d152d020c7b6bc941e9c7b8922897.jsonl",
+      "sample_input_sha256": {
+        "ms-0095": "577d020e12c5dfadcfe012fe12513805c3941f0b1f27464b9e26a101f0e361f4",
+        "ms-0097": "7b92efbc5dc15da7ac29d973fbbe8f86ceaced67b477ebed71469d682c2aeb65",
+        "ms-0099": "490ccdcc918509ae04fb2c093c329feaa1e1b5541f204ef0ed0cc0219879c94b",
+        "ms-0101": "d88eb3f8a5d4cf68a564cacb9503c617e13957d4fe4a06119c36141eae39b0da",
+        "ms-0103": "467ecdae2de01d3d2dced2aa945a3538f0c6bb7261d04961dce6ee2c9c2606d8"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "76b00cfe-4f23-447a-b35a-1a4099c12778",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "15991",
+      "cost_usd": 0.46576625,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0105",
+        "ms-0109",
+        "ms-0111",
+        "ms-0113",
+        "ms-0115"
+      ],
+      "started_at": "2026-09-21T14:30:12+00:00",
+      "finished_at": "2026-09-21T14:32:36+00:00",
+      "prompt_chars": 25475,
+      "prompt_sha256": "87f15f616b52922f1423f1519e0244be34b15a3eb07649abec03280076063acc",
+      "verdicts": [
+        {
+          "sample_id": "ms-0105",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0109",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0111",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0113",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0115",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "issue",
+            "dept": "ok"
+          },
+          "reason": "evidence_span 边界不是完整条款：开头带上了上一句的残片“action plan.”，结尾在法规引用中间被截断为“[DIR”，遗漏了“ Art 111(8)].”。query 明确以 DIR Art 111(8) 为检索依据（protocol_id 切片），span 却未包含完整条号，属于遗漏限定/引用不完整。偏移与所给 text 本身一致（1996–2277 长度 281），问题在于所选边界。",
+          "suggestion": "将 span 调整为完整句：“If the outcome of the inspection is that the marketing authorisation holder does not comply with the pharmacovigilance obligations, the Member State concerned shall inform the other Member States, the Agency and the European Commission in accordance with III.C.1. [DIR Art 111(8)].”，即 char_start 由 1996 改为 2009（跳过“action plan. ”），char_end 由 2277 改为 2290（补足“ Art 111(8)].”）。"
+        }
+      ],
+      "input_path": "chunk_inputs/input_87f15f616b52922f1423f1519e0244be34b15a3eb07649abec03280076063acc.jsonl",
+      "sample_input_sha256": {
+        "ms-0105": "2670db8c3bc917b37b2cea5b2a7d553d92caaa7967d30071fa651b774c5a9deb",
+        "ms-0109": "20e034e9b971317d0cb91a31fb4fb2a6bf99403ff7aa4f39a95ebba0945ac912",
+        "ms-0111": "d50e95e646a7120452b674cf6bb34ad43b5e01dd5835120967a25e3468dacfe4",
+        "ms-0113": "dcae7d5fdbf5d3d76917ffa196346408a3d0c78ab5b8a930e3513bc13a2933ce",
+        "ms-0115": "7a3ee71b1befd6023eab8571b9e7408db74de554c9a3c95a6aaf6d863e9aeefc"
+      }
+    }
+  ],
   "provenance_version": 2,
-  "latest": {},
+  "latest": {
+    "ms-0085": {
+      "chunk_index": 0,
+      "sample_input_sha256": "0ca28d7eb699432da95a7eb7cc5a8ec3b9fedf960b63d3d233c4c1e3aa6d13f8",
+      "prompt_sha256": "cb58fa94a57e4c2abdd4e063ab0e11e993d322a521ead8b987e773fe04d48dfe",
+      "verdict_sha256": "819647ce064d13efdc8423f933939b1fb283362c74a9145ecf207c898b4ff47d"
+    },
+    "ms-0087": {
+      "chunk_index": 0,
+      "sample_input_sha256": "90f4e26ceb3824da00e65a3d2f5fa5e9cb0524014522e4f7a86fcd368b2a96c5",
+      "prompt_sha256": "cb58fa94a57e4c2abdd4e063ab0e11e993d322a521ead8b987e773fe04d48dfe",
+      "verdict_sha256": "9e8fa01cabdeec52cc61d837ef185e6da2d2783f2ad8cc307008bf68b92541e6"
+    },
+    "ms-0089": {
+      "chunk_index": 0,
+      "sample_input_sha256": "bf15235f31881f091ee76cbbbe61d1cab9812817b7f7f17f2accbdb146f8d439",
+      "prompt_sha256": "cb58fa94a57e4c2abdd4e063ab0e11e993d322a521ead8b987e773fe04d48dfe",
+      "verdict_sha256": "33deb759030f84d485c7b914aa155f76b1ba4ca59b2e22f1cc0616d0e6f0a876"
+    },
+    "ms-0091": {
+      "chunk_index": 0,
+      "sample_input_sha256": "888267202f7abb9f05122fc73aea0e52d483d05de4f22d6917e70e0f8e9796c2",
+      "prompt_sha256": "cb58fa94a57e4c2abdd4e063ab0e11e993d322a521ead8b987e773fe04d48dfe",
+      "verdict_sha256": "84b1f05bb8e95a687579fc160bfc9c1a467556a8cd44804142cc17284e1153d9"
+    },
+    "ms-0093": {
+      "chunk_index": 0,
+      "sample_input_sha256": "7ffdcb62dd4857bfc5fbadde92f737118c697f2c4b72e70b9eb5b10a8d6ac6b6",
+      "prompt_sha256": "cb58fa94a57e4c2abdd4e063ab0e11e993d322a521ead8b987e773fe04d48dfe",
+      "verdict_sha256": "1c55737e9bea8472457eb2695e95d5fa39470f990e8de173d65ee10b23835ad8"
+    },
+    "ms-0095": {
+      "chunk_index": 1,
+      "sample_input_sha256": "577d020e12c5dfadcfe012fe12513805c3941f0b1f27464b9e26a101f0e361f4",
+      "prompt_sha256": "158c6b876357f3e4d564465748628f35451d152d020c7b6bc941e9c7b8922897",
+      "verdict_sha256": "ef1def88ba01362577389255fb7b420e7acb9bbaf6ed8ec51752032e81e9c60b"
+    },
+    "ms-0097": {
+      "chunk_index": 1,
+      "sample_input_sha256": "7b92efbc5dc15da7ac29d973fbbe8f86ceaced67b477ebed71469d682c2aeb65",
+      "prompt_sha256": "158c6b876357f3e4d564465748628f35451d152d020c7b6bc941e9c7b8922897",
+      "verdict_sha256": "5cb1718dde42e221b764f661dc049ba758b00180b4a5671d534f7a9c156dcb92"
+    },
+    "ms-0099": {
+      "chunk_index": 1,
+      "sample_input_sha256": "490ccdcc918509ae04fb2c093c329feaa1e1b5541f204ef0ed0cc0219879c94b",
+      "prompt_sha256": "158c6b876357f3e4d564465748628f35451d152d020c7b6bc941e9c7b8922897",
+      "verdict_sha256": "759c94a220a4fe33895c0d880bd79e8a4f0ede872dc3ced12ac6cd33de612560"
+    },
+    "ms-0101": {
+      "chunk_index": 1,
+      "sample_input_sha256": "d88eb3f8a5d4cf68a564cacb9503c617e13957d4fe4a06119c36141eae39b0da",
+      "prompt_sha256": "158c6b876357f3e4d564465748628f35451d152d020c7b6bc941e9c7b8922897",
+      "verdict_sha256": "69a94c8bcdda0911c89d6aa0fac16ee15e02b8e38424217fbf552a8e99e14578"
+    },
+    "ms-0103": {
+      "chunk_index": 1,
+      "sample_input_sha256": "467ecdae2de01d3d2dced2aa945a3538f0c6bb7261d04961dce6ee2c9c2606d8",
+      "prompt_sha256": "158c6b876357f3e4d564465748628f35451d152d020c7b6bc941e9c7b8922897",
+      "verdict_sha256": "a778aae8a182b5f1391af165c49cc44b4c01429b7b1d20193cb5efbbc68693cd"
+    },
+    "ms-0105": {
+      "chunk_index": 2,
+      "sample_input_sha256": "2670db8c3bc917b37b2cea5b2a7d553d92caaa7967d30071fa651b774c5a9deb",
+      "prompt_sha256": "87f15f616b52922f1423f1519e0244be34b15a3eb07649abec03280076063acc",
+      "verdict_sha256": "c345135acd8d374ad9a1ab62cb9405413d43f70a98e5853f4a16ffc59163ae11"
+    },
+    "ms-0109": {
+      "chunk_index": 2,
+      "sample_input_sha256": "20e034e9b971317d0cb91a31fb4fb2a6bf99403ff7aa4f39a95ebba0945ac912",
+      "prompt_sha256": "87f15f616b52922f1423f1519e0244be34b15a3eb07649abec03280076063acc",
+      "verdict_sha256": "fe7bddd2245ed558aa7fb35c8ed35b0562600af88901368ffdf66dffe90611bd"
+    },
+    "ms-0111": {
+      "chunk_index": 2,
+      "sample_input_sha256": "d50e95e646a7120452b674cf6bb34ad43b5e01dd5835120967a25e3468dacfe4",
+      "prompt_sha256": "87f15f616b52922f1423f1519e0244be34b15a3eb07649abec03280076063acc",
+      "verdict_sha256": "cf8980f3a48acc39105a1ceb5fd7e5d9b16f8ccddf4de1f9109b8e67b2545af4"
+    },
+    "ms-0113": {
+      "chunk_index": 2,
+      "sample_input_sha256": "dcae7d5fdbf5d3d76917ffa196346408a3d0c78ab5b8a930e3513bc13a2933ce",
+      "prompt_sha256": "87f15f616b52922f1423f1519e0244be34b15a3eb07649abec03280076063acc",
+      "verdict_sha256": "6147ad2d3263da866fea40ae48e4a92aece41c73443b86d6927f5aea2a8c7430"
+    },
+    "ms-0115": {
+      "chunk_index": 2,
+      "sample_input_sha256": "7a3ee71b1befd6023eab8571b9e7408db74de554c9a3c95a6aaf6d863e9aeefc",
+      "prompt_sha256": "87f15f616b52922f1423f1519e0244be34b15a3eb07649abec03280076063acc",
+      "verdict_sha256": "21b8175358c976775e3bf01eef5e00682f9191dd5afe79b11d1af967931ea5cc"
+    }
+  },
   "active_review": {
     "sample_input_sha256": {
       "ms-0085": "0ca28d7eb699432da95a7eb7cc5a8ec3b9fedf960b63d3d233c4c1e3aa6d13f8",
@@ -353,21 +742,6 @@
       "ms-0461": "ad52a82381041e2cf483b925137f5c41829fdfd4007e54b4867cc4f3760516b8"
     },
     "pending_ids": [
-      "ms-0085",
-      "ms-0087",
-      "ms-0089",
-      "ms-0091",
-      "ms-0093",
-      "ms-0095",
-      "ms-0097",
-      "ms-0099",
-      "ms-0101",
-      "ms-0103",
-      "ms-0105",
-      "ms-0109",
-      "ms-0111",
-      "ms-0113",
-      "ms-0115",
       "ms-0117",
       "ms-0119",
       "ms-0121",
