@@ -2,7 +2,7 @@
 
 > PDF 在本机、不进入 Git。友好文件名 `evals/main_set/pdf_by_key/<document_key>.pdf` 是指向原件的符号链接（由 `tools/pdf_index.py` 生成）；原件按 SHA-256 命名。表中「页」为标注表引用的 PDF 物理页序号（从 1 起）。
 
-## MA 批次（83 条，24 份文档）
+## MA 批次（80 条，23 份文档）
 
 | document_key | 标题 | 条数 | 页 | PDF（友好名） | 原件 |
 | --- | --- | ---: | --- | --- | --- |
@@ -14,7 +14,6 @@
 | tfda-label-deurinol-300mg | 痛風停錠300毫克（Deurinol Tablets 300mg, allopurinol）仿單 | 2 | 2, 3 | `evals/main_set/pdf_by_key/tfda-label-deurinol-300mg.pdf` | `evals/probe/precise_clause/v1/sources/42f20f2b5b0ea0ed7afe8bb709699a58b222985b70ccada6e0c470f5c3f58a7f.pdf` |
 | tfda-label-esomen-40mg | 胃所樂腸溶膜衣錠40毫克（Esomen Enteric-Coated Tablets 40mg, esomeprazole）仿單 | 2 | 1 | `evals/main_set/pdf_by_key/tfda-label-esomen-40mg.pdf` | `evals/probe/precise_clause/v1/sources/f80b904f4e2f15a59cb78fe1baed5c1c06b8b975d43dc0291217d64c43e43fbb.pdf` |
 | tfda-label-esomepsun-40mg-tablets-sunyet | 怡胃適腸溶錠40毫克（Esomepsun 40mg tablets "SUNYET"，esomeprazole）仿單 | 4 | 1 | `evals/main_set/pdf_by_key/tfda-label-esomepsun-40mg-tablets-sunyet.pdf` | `evals/main_set/sources_staging/70d3d976a3b4ef70d192755440066618dd538d1bdf16659daa255b6f04dcaa81.pdf` |
-| tfda-label-glimaryl-tablets-2mg-glimepiride | "信東" 革理蔓錠２毫克（GLIMARYL TABLETS 2MG (GLIMEPIRIDE)，glimepiride）仿單 | 3 | 1, 2 | `evals/main_set/pdf_by_key/tfda-label-glimaryl-tablets-2mg-glimepiride.pdf` | `evals/main_set/sources_staging/b1756268da31c9205cea8766181345921bdbec9c1930137428c79c5c3d8729f7.pdf` |
 | tfda-label-hetlosar-100-losartan-tablets-100mg | 特釋壓膜衣錠100毫克（Hetlosar 100 (Losartan Tablets 100mg)，losartan）仿單 | 4 | 1, 2 | `evals/main_set/pdf_by_key/tfda-label-hetlosar-100-losartan-tablets-100mg.pdf` | `evals/main_set/sources_staging/c59161e8c6b42e149351ccc8c1d5ca8337627fa490861e6fb7dceb2bbca13f36.pdf` |
 | tfda-label-ifonol-tablets-300mg-astar | "安星"伊風柔錠300毫克（Ifonol Tablets 300mg "Astar"，allopurinol）仿單 | 4 | 2, 3, 9 | `evals/main_set/pdf_by_key/tfda-label-ifonol-tablets-300mg-astar.pdf` | `evals/main_set/sources_staging/8988edefb2825b18a9d5ebdb53b6f3bd09b7b75410d24814dd8f5ee2c8c7dfe7.pdf` |
 | tfda-label-lamofree-er-tablets-25mg | 樂癲活持續釋放膜衣錠25毫克（Lamofree ER Tablets 25mg，lamotrigine）仿單 | 4 | 2, 3, 4, 9 | `evals/main_set/pdf_by_key/tfda-label-lamofree-er-tablets-25mg.pdf` | `evals/main_set/sources_staging/ad8b0ba2d6c9421349f86080b4a35218088fb6895493ae13fbb3aa32f0fd7ae2.pdf` |
@@ -31,7 +30,7 @@
 | tfda-label-vomiz-for-iv-injection-2mg-ml | 莫尼茲靜脈注射劑2毫克/毫升（VOMIZ for IV INJECTION 2MG/ML，ondansetron）仿單 | 4 | 1, 2 | `evals/main_set/pdf_by_key/tfda-label-vomiz-for-iv-injection-2mg-ml.pdf` | `evals/main_set/sources_staging/c96703065f145c812f38466a545fe62d0dbe6c566d380892d1702a720dd6c1ce.pdf` |
 | tfda-label-zosaa-50mg | 穩壓膜衣錠50毫克（Zosaa F.C. Tablets 50mg, losartan potassium）仿單 | 2 | 1 | `evals/main_set/pdf_by_key/tfda-label-zosaa-50mg.pdf` | `evals/probe/precise_clause/v1/sources/81069adaf87d21e640d9b5cbc83a799a59a33acbdc4ead46ed338c9ad6d06b3a.pdf` |
 
-## PV 批次（120 条，32 份文档）
+## PV 批次（119 条，32 份文档）
 
 | document_key | 标题 | 条数 | 页 | PDF（友好名） | 原件 |
 | --- | --- | ---: | --- | --- | --- |
@@ -49,12 +48,12 @@
 | ema-gvp-module-vii-rev1 | Guideline on good pharmacovigilance practices (GVP) – GVP Module VII – | 5 | 5, 18, 40, 53 | `evals/main_set/pdf_by_key/ema-gvp-module-vii-rev1.pdf` | `evals/main_set/sources_staging/49c5e574e9296c38a5a1ddcb6cf7903a4b91c3b28bd98088c839eea50f0a23a8.pdf` |
 | ema-gvp-module-viii-rev3 | Guideline on good pharmacovigilance practices (GVP) – GVP Module VIII  | 4 | 11, 13, 19, 20 | `evals/main_set/pdf_by_key/ema-gvp-module-viii-rev3.pdf` | `evals/main_set/sources_staging/847b0c095bc647e02aa577e2116a03b14ff237982af6b850d88e77fcc69e343e.pdf` |
 | ema-gvp-module-x | Guideline on good pharmacovigilance practices (GVP) – GVP Module X – A | 4 | 5, 6, 7, 8 | `evals/main_set/pdf_by_key/ema-gvp-module-x.pdf` | `evals/main_set/sources_staging/15eb6d4ef94b955204fbe276f11a98f08e712a19d9f0e1b6599f8d11d2e55baf.pdf` |
-| ema-gvp-module-xv-rev1 | Guideline on good pharmacovigilance practices (GVP) – GVP Module XV –  | 5 | 11, 12, 15, 16, 18 | `evals/main_set/pdf_by_key/ema-gvp-module-xv-rev1.pdf` | `evals/main_set/sources_staging/790ce9ffdcf7a785c9de90904e295f4e228bdd0b0974c40c3d51cd13659af53a.pdf` |
+| ema-gvp-module-xv-rev1 | Guideline on good pharmacovigilance practices (GVP) – GVP Module XV –  | 4 | 11, 12, 15, 16 | `evals/main_set/pdf_by_key/ema-gvp-module-xv-rev1.pdf` | `evals/main_set/sources_staging/790ce9ffdcf7a785c9de90904e295f4e228bdd0b0974c40c3d51cd13659af53a.pdf` |
 | ema-gvp-module-xvi-rev3 | Guideline on good pharmacovigilance practices (GVP) – GVP Module XVI – | 5 | 7, 11, 19, 36, 38 | `evals/main_set/pdf_by_key/ema-gvp-module-xvi-rev3.pdf` | `evals/main_set/sources_staging/9f4ae57fdfa9aba723fdb41b134889e259ec9919d4ba0f363f4d3df35d18fe1b.pdf` |
 | ema-gvp-pp-i | Guideline on good pharmacovigilance practices (GVP) – Product- or Popu | 5 | 8, 11, 14, 24 | `evals/main_set/pdf_by_key/ema-gvp-pp-i.pdf` | `evals/main_set/sources_staging/0d68ef884e7293e1ef0fb09fbdbc23f646948c4c9627401336ff98d47886c412.pdf` |
 | ema-gvp-pp-iii | Guideline on good pharmacovigilance practices (GVP) – GVP Product- or  | 4 | 6, 7, 9 | `evals/main_set/pdf_by_key/ema-gvp-pp-iii.pdf` | `evals/main_set/sources_staging/fab70a9f661fa38f9deef967096f7fc92fcf9730e084a700a4116eba1d273edd.pdf` |
 | ema-gvp-pp-iv | Guideline on good pharmacovigilance practices (GVP) – GVP Product- or  | 5 | 4, 9, 10, 12 | `evals/main_set/pdf_by_key/ema-gvp-pp-iv.pdf` | `evals/main_set/sources_staging/e5225fabe9ae7fb363bbfc683e2c7e802ba909d102c56e1c222f48dcf24f4cd4.pdf` |
-| fda-investigator-safety-reporting-2021 | Investigator Responsibilities — Safety Reporting for Investigational D | 5 | 7, 10, 11, 12 | `evals/main_set/pdf_by_key/fda-investigator-safety-reporting-2021.pdf` | `evals/main_set/sources_staging/c597c1d15d048c48d94be46710658eebdff9c8017f82ec3f04ebd54ad16e577c.pdf` |
+| fda-investigator-safety-reporting-2025 | Investigator Responsibilities — Safety Reporting for Investigational D | 5 | 7, 10, 11, 12 | `evals/main_set/pdf_by_key/fda-investigator-safety-reporting-2025.pdf` | `evals/main_set/sources_staging/c597c1d15d048c48d94be46710658eebdff9c8017f82ec3f04ebd54ad16e577c.pdf` |
 | fda-sponsor-safety-reporting-2025 | Sponsor Responsibilities—Safety Reporting Requirements and Safety Asse | 3 | 37, 40 | `evals/main_set/pdf_by_key/fda-sponsor-safety-reporting-2025.pdf` | `evals/probe/precise_clause/v1/sources/7124849af0417893a1c5d93fa6ccf2c4b4c67d5945e09060ae3977f6e0646bac.pdf` |
 | ich-e2a-step4-1994 | ICH E2A: Clinical Safety Data Management: Definitions and Standards fo | 2 | 7, 9 | `evals/main_set/pdf_by_key/ich-e2a-step4-1994.pdf` | `evals/probe/precise_clause/v1/sources/1c095d80419287187bf5b2db5eba83864adccebf07b9c593bf5925b4ab6f7cf7.pdf` |
 | ich-e2c-r2-step4-2012 | ICH E2C(R2): Periodic Benefit-Risk Evaluation Report (PBRER) | 4 | 8, 11, 13, 18 | `evals/main_set/pdf_by_key/ich-e2c-r2-step4-2012.pdf` | `evals/main_set/sources_staging/0f883c2e4804d8da84883b205755e7795d4e928e69624fafd2cdaa86db73eada.pdf` |
@@ -93,7 +92,7 @@
 | ich-e9-r1-step4-2019 | ICH E9(R1): Addendum on Estimands and Sensitivity Analysis in Clinical | 4 | 9, 10, 14, 20 | `evals/main_set/pdf_by_key/ich-e9-r1-step4-2019.pdf` | `evals/main_set/sources_staging/f7471f411f1c87ee76783d5b2b9faaeca31d01d530213f71b50d136b39e3b0d9.pdf` |
 | ich-e9-step4-1998 | ICH E9: Statistical Principles for Clinical Trials | 4 | 12, 17, 27 | `evals/main_set/pdf_by_key/ich-e9-step4-1998.pdf` | `evals/main_set/sources_staging/0c0ddc93cb427a70265dbcb0e7c25bfc9a3f7b52e178212b3630ea2408ad9c7e.pdf` |
 
-## EN 批次（174 条，46 份文档）
+## EN 批次（173 条，46 份文档）
 
 | document_key | 标题 | 条数 | 页 | PDF（友好名） | 原件 |
 | --- | --- | ---: | --- | --- | --- |
@@ -111,7 +110,7 @@
 | ema-gvp-module-vii-rev1 | Guideline on good pharmacovigilance practices (GVP) – GVP Module VII – | 5 | 5, 18, 40, 53 | `evals/main_set/pdf_by_key/ema-gvp-module-vii-rev1.pdf` | `evals/main_set/sources_staging/49c5e574e9296c38a5a1ddcb6cf7903a4b91c3b28bd98088c839eea50f0a23a8.pdf` |
 | ema-gvp-module-viii-rev3 | Guideline on good pharmacovigilance practices (GVP) – GVP Module VIII  | 4 | 11, 13, 19, 20 | `evals/main_set/pdf_by_key/ema-gvp-module-viii-rev3.pdf` | `evals/main_set/sources_staging/847b0c095bc647e02aa577e2116a03b14ff237982af6b850d88e77fcc69e343e.pdf` |
 | ema-gvp-module-x | Guideline on good pharmacovigilance practices (GVP) – GVP Module X – A | 4 | 5, 6, 7, 8 | `evals/main_set/pdf_by_key/ema-gvp-module-x.pdf` | `evals/main_set/sources_staging/15eb6d4ef94b955204fbe276f11a98f08e712a19d9f0e1b6599f8d11d2e55baf.pdf` |
-| ema-gvp-module-xv-rev1 | Guideline on good pharmacovigilance practices (GVP) – GVP Module XV –  | 5 | 11, 12, 15, 16, 18 | `evals/main_set/pdf_by_key/ema-gvp-module-xv-rev1.pdf` | `evals/main_set/sources_staging/790ce9ffdcf7a785c9de90904e295f4e228bdd0b0974c40c3d51cd13659af53a.pdf` |
+| ema-gvp-module-xv-rev1 | Guideline on good pharmacovigilance practices (GVP) – GVP Module XV –  | 4 | 11, 12, 15, 16 | `evals/main_set/pdf_by_key/ema-gvp-module-xv-rev1.pdf` | `evals/main_set/sources_staging/790ce9ffdcf7a785c9de90904e295f4e228bdd0b0974c40c3d51cd13659af53a.pdf` |
 | ema-gvp-module-xvi-rev3 | Guideline on good pharmacovigilance practices (GVP) – GVP Module XVI – | 5 | 7, 11, 19, 36, 38 | `evals/main_set/pdf_by_key/ema-gvp-module-xvi-rev3.pdf` | `evals/main_set/sources_staging/9f4ae57fdfa9aba723fdb41b134889e259ec9919d4ba0f363f4d3df35d18fe1b.pdf` |
 | ema-gvp-pp-i | Guideline on good pharmacovigilance practices (GVP) – Product- or Popu | 5 | 8, 11, 14, 24 | `evals/main_set/pdf_by_key/ema-gvp-pp-i.pdf` | `evals/main_set/sources_staging/0d68ef884e7293e1ef0fb09fbdbc23f646948c4c9627401336ff98d47886c412.pdf` |
 | ema-gvp-pp-iii | Guideline on good pharmacovigilance practices (GVP) – GVP Product- or  | 4 | 6, 7, 9 | `evals/main_set/pdf_by_key/ema-gvp-pp-iii.pdf` | `evals/main_set/sources_staging/fab70a9f661fa38f9deef967096f7fc92fcf9730e084a700a4116eba1d273edd.pdf` |
@@ -119,7 +118,7 @@
 | fda-e6r3-gcp-2025 | E6(R3) Good Clinical Practice — Guidance for Industry (FDA, September  | 2 | 18, 77 | `evals/main_set/pdf_by_key/fda-e6r3-gcp-2025.pdf` | `evals/main_set/sources_staging/e57e9fc0134abebec409d7144aed6e3047c0939d1bd758163fea4e1169472109.pdf` |
 | fda-informed-consent-2023 | Informed Consent — Guidance for IRBs, Clinical Investigators, and Spon | 4 | 10, 29, 31, 50 | `evals/main_set/pdf_by_key/fda-informed-consent-2023.pdf` | `evals/main_set/sources_staging/96b26b2edb06e20ee2872ca59f4ec7c04cde8a8b1adf98bc150764e3d52f906a.pdf` |
 | fda-investigator-responsibilities-2009 | Investigator Responsibilities — Protecting the Rights, Safety, and Wel | 5 | 6, 16, 17 | `evals/main_set/pdf_by_key/fda-investigator-responsibilities-2009.pdf` | `evals/main_set/sources_staging/140b612e6fe3e830256fc9c47794cdf5708b28f2df5d7abe146e14dfd0efadfc.pdf` |
-| fda-investigator-safety-reporting-2021 | Investigator Responsibilities — Safety Reporting for Investigational D | 5 | 7, 10, 11, 12 | `evals/main_set/pdf_by_key/fda-investigator-safety-reporting-2021.pdf` | `evals/main_set/sources_staging/c597c1d15d048c48d94be46710658eebdff9c8017f82ec3f04ebd54ad16e577c.pdf` |
+| fda-investigator-safety-reporting-2025 | Investigator Responsibilities — Safety Reporting for Investigational D | 5 | 7, 10, 11, 12 | `evals/main_set/pdf_by_key/fda-investigator-safety-reporting-2025.pdf` | `evals/main_set/sources_staging/c597c1d15d048c48d94be46710658eebdff9c8017f82ec3f04ebd54ad16e577c.pdf` |
 | fda-protocol-deviations-draft-2024 | Protocol Deviations for Clinical Investigations of Drugs, Biological P | 1 | 11 | `evals/main_set/pdf_by_key/fda-protocol-deviations-draft-2024.pdf` | `evals/probe/precise_clause/v1/sources/3b172d83fd5310029d0933a2efdb821c31d77c31d874e292dff7fb7da9abd42f.pdf` |
 | fda-rbm-qa-2023 | A Risk-Based Approach to Monitoring of Clinical Investigations: Questi | 5 | 5, 7, 9, 10, 12 | `evals/main_set/pdf_by_key/fda-rbm-qa-2023.pdf` | `evals/main_set/sources_staging/2c0d04faa13f3cfd95bb3b4c5359f699ede4f48dcb055ad2d0ae89d3aa9c423c.pdf` |
 | fda-risk-based-monitoring-2013 | Oversight of Clinical Investigations — A Risk-Based Approach to Monito | 4 | 5, 6, 7, 12 | `evals/main_set/pdf_by_key/fda-risk-based-monitoring-2013.pdf` | `evals/main_set/sources_staging/76556b1dcf148a1929f110bb1bfdf17d554630b665d23ad2b885473c5e8f2561.pdf` |
@@ -161,7 +160,7 @@
 | ema-gvp-module-xvi-rev3 | Guideline on good pharmacovigilance practices (GVP) – GVP Module XVI – | 1 | 全文档 43 页（复核打包页 1, 6, 7, 11, 18, 19, 31, 36, 37, 38, 40） | `evals/main_set/pdf_by_key/ema-gvp-module-xvi-rev3.pdf` | `evals/main_set/sources_staging/9f4ae57fdfa9aba723fdb41b134889e259ec9919d4ba0f363f4d3df35d18fe1b.pdf` |
 | ema-gvp-pp-i | Guideline on good pharmacovigilance practices (GVP) – Product- or Popu | 1 | 全文档 25 页（复核打包页 1, 4, 5, 8, 11, 14, 20, 21, 23, 24） | `evals/main_set/pdf_by_key/ema-gvp-pp-i.pdf` | `evals/main_set/sources_staging/0d68ef884e7293e1ef0fb09fbdbc23f646948c4c9627401336ff98d47886c412.pdf` |
 | fda-investigator-responsibilities-2009 | Investigator Responsibilities — Protecting the Rights, Safety, and Wel | 1 | 全文档 18 页（复核打包页 4, 5, 6, 7, 8, 9, 10, 13, 14, 15, 16, 17, 18） | `evals/main_set/pdf_by_key/fda-investigator-responsibilities-2009.pdf` | `evals/main_set/sources_staging/140b612e6fe3e830256fc9c47794cdf5708b28f2df5d7abe146e14dfd0efadfc.pdf` |
-| fda-investigator-safety-reporting-2021 | Investigator Responsibilities — Safety Reporting for Investigational D | 1 | 全文档 14 页（复核打包页 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14） | `evals/main_set/pdf_by_key/fda-investigator-safety-reporting-2021.pdf` | `evals/main_set/sources_staging/c597c1d15d048c48d94be46710658eebdff9c8017f82ec3f04ebd54ad16e577c.pdf` |
+| fda-investigator-safety-reporting-2025 | Investigator Responsibilities — Safety Reporting for Investigational D | 1 | 全文档 14 页（复核打包页 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14） | `evals/main_set/pdf_by_key/fda-investigator-safety-reporting-2025.pdf` | `evals/main_set/sources_staging/c597c1d15d048c48d94be46710658eebdff9c8017f82ec3f04ebd54ad16e577c.pdf` |
 | fda-protocol-deviations-draft-2024 | Protocol Deviations for Clinical Investigations of Drugs, Biological P | 1 | 全文档 13 页（复核打包页 1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13） | `evals/main_set/pdf_by_key/fda-protocol-deviations-draft-2024.pdf` | `evals/probe/precise_clause/v1/sources/3b172d83fd5310029d0933a2efdb821c31d77c31d874e292dff7fb7da9abd42f.pdf` |
 | fda-rbm-qa-2023 | A Risk-Based Approach to Monitoring of Clinical Investigations: Questi | 1 | 全文档 13 页（复核打包页 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13） | `evals/main_set/pdf_by_key/fda-rbm-qa-2023.pdf` | `evals/main_set/sources_staging/2c0d04faa13f3cfd95bb3b4c5359f699ede4f48dcb055ad2d0ae89d3aa9c423c.pdf` |
 | fda-risk-based-monitoring-2013 | Oversight of Clinical Investigations — A Risk-Based Approach to Monito | 1 | 全文档 22 页（复核打包页 4, 5, 6, 7, 8, 11, 12, 13, 15, 16, 22） | `evals/main_set/pdf_by_key/fda-risk-based-monitoring-2013.pdf` | `evals/main_set/sources_staging/76556b1dcf148a1929f110bb1bfdf17d554630b665d23ad2b885473c5e8f2561.pdf` |

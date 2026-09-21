@@ -752,9 +752,9 @@
     "answerable": false,
     "expected_behaviour": "insufficient_evidence",
     "abstention": {
-      "scope_document_key": "fda-investigator-safety-reporting-2021",
+      "scope_document_key": "fda-investigator-safety-reporting-2025",
       "topic": "研究者未履行报告义务的处罚",
-      "absence_check": "absence_terms ['disqualification', 'penalty', 'warning letter', 'noncompliance'] 在 fda-investigator-safety-reporting-2021 全部 14 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'disqualification': 0, 'penalty': 3, 'warning letter': 1, 'noncompliance': 7}",
+      "absence_check": "absence_terms ['disqualification', 'penalty', 'warning letter', 'noncompliance'] 在 fda-investigator-safety-reporting-2025 全部 14 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'disqualification': 0, 'penalty': 3, 'warning letter': 1, 'noncompliance': 7}",
       "document_pages": [
         1,
         2,
@@ -780,7 +780,7 @@
       "model": "claude-sonnet-5"
     },
     "_draft": {
-      "document_key": "fda-investigator-safety-reporting-2021",
+      "document_key": "fda-investigator-safety-reporting-2025",
       "title": "Investigator Responsibilities — Safety Reporting for Investigational Drugs and Devices (Final, September 2021)",
       "rank": 1,
       "warnings": [],
@@ -791,7 +791,8 @@
         "warning letter": 1,
         "noncompliance": 7
       },
-      "nearest_clause": null
+      "nearest_clause": null,
+      "decision": "version_label corrected to December 2025 (record 50 §9)"
     }
   },
   {

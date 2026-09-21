@@ -41,6 +41,15 @@ def assign(ids: dict[str, str], handle: str) -> str:
 
 
 def main() -> int:
+    if "--sheets-only" in sys.argv[1:]:
+        # regenerate the .md sheets from the (possibly edited) JSON drafts without touching ids or selections
+        for batch in ("MA", "PV", "CO", "EN", "NA"):
+            path = dc.DRAFTS / f"samples_draft_{batch}.json"
+            if path.exists():
+                samples = json.loads(path.read_text(encoding="utf-8"))
+                write_sheet(batch, samples)
+                print(f"{batch}: {len(samples)} samples -> sheet regenerated")
+        return 0
     corpus = dc.load_corpus()
     fixtures = (
         {f["document_key"]: f for f in json.loads(FIXTURES.read_text(encoding="utf-8"))["fixtures"]}
@@ -169,7 +178,7 @@ def write_sheet(batch: str, samples: list[dict]) -> None:
             nc = d.get("nearest_clause") or {}
             nc_cell = f"p{nc.get('page')}: {cell(nc.get('text', ''), 120)}" if nc else "—"
             lines.append(
-                f"| {s['sample_id']} | {d['document_key']} | {', '.join(s['slices'])} | {cell(s['query'], 200)} | {cell(s['abstention']['topic'], 40)} | {cell(hits, 120)} | {nc_cell} | |"
+                f"| {s['sample_id']} | {d['document_key']} | {', '.join(s['slices'])} | {cell(s['query'], 200)} | {cell(s['abstention']['topic'], 40)} | {cell(hits, 120)} | {nc_cell} | {cell(d.get('decision', ''), 60)} |"
             )
     elif batch == "EN":
         lines += [
@@ -182,12 +191,12 @@ def write_sheet(batch: str, samples: list[dict]) -> None:
         for s in samples:
             g = s["required_gold_evidence"][0]
             lines.append(
-                f"| {s['sample_id']} | {s['derived_from']} | {s['_draft']['document_key']} | {g['page']} | {', '.join(s['slices'])} | {cell(s['_draft']['parent_query'], 200)} | {cell(s['query'], 200)} | {cell(g['key_text'], 100)} | |"
+                f"| {s['sample_id']} | {s['derived_from']} | {s['_draft']['document_key']} | {g['page']} | {', '.join(s['slices'])} | {cell(s['_draft']['parent_query'], 200)} | {cell(s['query'], 200)} | {cell(g['key_text'], 100)} | {cell(s['_draft'].get('decision', ''), 60)} |"
             )
     else:
         lines += [
             "> 每条请判断五件事：问题自然且只有这一句能回答；key_text 最短且页内唯一（工具已核对唯一）；span 是完整条款；切片标签；部门归属。",
-            "> 确认方式：在「结论」列填 OK，或直接改写 query / key_text / span / slices；要删除的写 DROP；改动的条目我重新计算偏移并复核唯一性。",
+            "> 确认方式：在「结论」列填 OK，或直接改写 query / key_text / span / slices；要删除的写 DROP；改动的条目我重新计算偏移并复核唯一性。「结论」列已预填的内容是外部审校（ChatGPT，2026-09-21）已应用的状态，覆盖即可。",
             "> 带 `version_conflict` 的样本来自合成冲突 fixture（同一 PDF 的旧版已归档），只需按普通样本判断。",
             "",
             "| ID | 文档 | 页 | 切片 | query | key_text | evidence_span | 章节 | 工具提示 | 结论 |",
@@ -197,7 +206,7 @@ def write_sheet(batch: str, samples: list[dict]) -> None:
             g = s["required_gold_evidence"][0]
             warn = "; ".join(s["_draft"].get("curation", []) + s["_draft"]["warnings"]) or "—"
             lines.append(
-                f"| {s['sample_id']} | {s['_draft']['document_key']} | {g['page']} | {', '.join(s['slices'])} | {cell(s['query'], 200)} | {cell(g['key_text'], 120)} | {cell(g['evidence_span']['text'], 160)} | {cell(g['section'], 40)} | {cell(warn, 80)} | |"
+                f"| {s['sample_id']} | {s['_draft']['document_key']} | {g['page']} | {', '.join(s['slices'])} | {cell(s['query'], 200)} | {cell(g['key_text'], 120)} | {cell(g['evidence_span']['text'], 160)} | {cell(g['section'], 40)} | {cell(warn, 80)} | {cell(s['_draft'].get('decision', ''), 60)} |"
             )
     by_slice = Counter(sl for s in samples for sl in s["slices"])
     lines += [

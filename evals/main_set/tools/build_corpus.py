@@ -248,6 +248,10 @@ def build(
                 if only_keys and rec["document_key"] not in only_keys:
                     continue
                 docs.append(rec)
+    # version-label corrections re-published through the M1-11 flow (record 50 §9): same source object, new key/version
+    for fix_file in sorted((REPO / "evals/main_set/version_fixes").glob("*.json")):
+        for rec in json.loads(fix_file.read_text(encoding="utf-8"))["documents"]:
+            docs = [rec if d["source_hash"] == rec["source_hash"] else d for d in docs]
     corpus = {"dataset_version": "main-v1-provisional", "documents": docs}
     schema = json.loads((REPO / "evals/probe/precise_clause/schema/corpus.schema.json").read_text(encoding="utf-8"))
     jsonschema.validate(corpus, schema)

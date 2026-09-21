@@ -67,3 +67,15 @@
 ## 8. 下一步
 
 annotator-01 逐条确认五张标注表 → 按改动重算偏移 → `pack_review.py` + `run_review.py`（claude-opus-5）→ 争议裁决表 → `assemble.py` → `freeze.py`（`main-v1-provisional`）→ chunk 映射 → `e2e_run.py`（A2+V，重排）判定 M1-21（临时结论）。
+
+## 9. 补记（2026-09-21 晚）：外部审校写回
+
+决策人提交了三份用 ChatGPT 生成的逐条审校（MA 83、PV 120、EN 174；存于 `evals/main_set/drafts/main-v1/external_review/`，SHA-256 见 git），要求"先把这三个文件的修改读取一下"。处理口径：
+
+1. 审校文件是 annotator-01 提交的编辑稿，不是人工签署；写回后的样本仍处于"待 annotator-01 确认"状态（`_draft.decision` 预填在表的「结论」列）。
+2. 每条建议都经 [apply_external_review.py](../../evals/main_set/tools/apply_external_review.py) 在 norm-v1 页文本中重新锚定；不能定位或违反 schema 的建议不写入。审校把整段条款作为 key 的 51 条按 spec P1 处理：条款 → `evidence_span`，`key_text` 保留原最小锚点或从条款首句派生（引导句不作锚点）。PV 审校未给出新 span 原文、只给长度的 15 条，按报告长度在新 key 周围重建 span。
+3. 结果：应用 224 条、删除 4 条（+1 孪生）、EN 80 条待 CO 审校（未应用）、1 条英文由实现方缩短到 300 字符内；机械检查 0 错误；合计 626 条，全部 spec-m1 下限仍满足（有答案 563、无答案 63、冲突 52、long_context 29）。
+4. 新增 2 条 PII 例外（ms-0135/0136 的完整条款含 EMA 机构信箱，沿用记录 21 的机构信箱口径），待 annotator-01 确认后随装配进入 `pii_exceptions.json`。
+5. 审校指出的文档级问题，逐项核实：(a) Glimaryl 仿單（b1756268da31）文本层乱码属实（第 1 页 0 个汉字），无 gold，语料中保留、建议 M2 复核抽取或剔除；(b) `fda-investigator-safety-reporting-2021` 的 PDF 封面为 December 2025，候选清单与 corpus 的 `version_label`（September 2021）有误——`documents.version` 不可变，故按 M1-11 发布流程以同一源对象（`--share-source`）入库 `fda-investigator-safety-reporting-2025`（`Final guidance, December 2025 (FDA media 152530)`，effective_from 2025-12-01，`--accept-pii` 引用 2026-09-21 机构信箱复核）并 `--publish` 归档旧记录（outbox 事件 74–75）；corpus.json 记录替换、10 条样本的 gold `version_label` 同步、索引与向量补建；库内 active 76 / archived 6 / draft 3、chunk 10,992；(c) GVP Annex I Rev 4 的 PDF 第 1–3 页含 superseded 标注，仅作合成冲突 fixture，不代表现行定义。
+6. 尚缺：CO 批次审校（84 条）、NA 批次确认（63 条）、EN 80 条的父样本裁决；决策人确认后进入 LLM 复核。
+
