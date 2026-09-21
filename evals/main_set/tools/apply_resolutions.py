@@ -76,6 +76,9 @@ def parse_accept(decision: str, suggestion: str) -> dict:
     m = re.search(r"删除\s*([a-z_]+)\s*标签", suggestion)
     if m:
         return {"remove_slice": m.group(1)}
+    m = re.search(r"(?:缺|补回?|应加|加上|增加|添加|应标)\s*`?([a-z_]+)`?\s*(?:标签|切片)", suggestion)
+    if m:
+        return {"add_slice": m.group(1)}
     m = re.search(r"key_text\s*改为\s*[\"“]([^\"”]+)[\"”]", suggestion)
     if m:
         return {"key_text": m.group(1)}
@@ -88,6 +91,9 @@ def apply_change(sample: dict, change: dict) -> list[str]:
     fields: list[str] = []
     if "remove_slice" in change and change["remove_slice"] in sample["slices"]:
         sample["slices"] = [s for s in sample["slices"] if s != change["remove_slice"]]
+        fields.append("slices")
+    if "add_slice" in change and change["add_slice"] not in sample["slices"]:
+        sample["slices"] = sample["slices"] + [change["add_slice"]]
         fields.append("slices")
     if "slices" in change:
         sample["slices"] = list(dict.fromkeys(change["slices"]))
@@ -140,7 +146,7 @@ def main() -> int:
     verdicts: dict[str, dict] = {}
     for b in BATCHES:
         verdicts.update(codex.current_verdicts(runs[b]))
-    disputed = {sid for sid, v in verdicts.items() if v["verdict"] == "dispute"}
+    disputed = {sid for sid, v in verdicts.items() if v["verdict"] == "dispute" and sid in by_id}
     decisions = parse_sheet()
     missing = sorted(disputed - set(decisions))
     print(

@@ -143,10 +143,13 @@ def main() -> None:
             selected = set(args.only)
             if not selected or not selected.issubset(all_ids):
                 sys.exit("--only must name existing sample_ids")
-            changed_outside = [
-                sid for sid, h in current.items() if sid not in selected and run["sample_input_sha256"].get(sid) != h
-            ]
-            if changed_outside or set(current) != set(run["sample_input_sha256"]):
+            dropped_path = REVIEW / "dropped_after_review.json"
+            dropped_after = (
+                set(json.loads(dropped_path.read_text(encoding="utf-8"))) if dropped_path.exists() else set()
+            )
+            recorded = {k: v for k, v in run["sample_input_sha256"].items() if k not in dropped_after}
+            changed_outside = [sid for sid, h in current.items() if sid not in selected and recorded.get(sid) != h]
+            if changed_outside or set(current) != set(recorded):
                 sys.exit(f"cannot reuse verdicts: inputs changed outside --only: {changed_outside[:5]}")
             records = codex.start_targeted_review(run, all_records, selected)
         else:

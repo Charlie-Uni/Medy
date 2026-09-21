@@ -475,6 +475,996 @@
         "ms-0113": "dcae7d5fdbf5d3d76917ffa196346408a3d0c78ab5b8a930e3513bc13a2933ce",
         "ms-0115": "7a3ee71b1befd6023eab8571b9e7408db74de554c9a3c95a6aaf6d863e9aeefc"
       }
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "d21f2b2d-f09a-4736-af08-7451ef649add",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "6782",
+      "cost_usd": 0.23561624999999997,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0117",
+        "ms-0119",
+        "ms-0121",
+        "ms-0123",
+        "ms-0125"
+      ],
+      "started_at": "2026-09-21T14:32:36+00:00",
+      "finished_at": "2026-09-21T14:33:51+00:00",
+      "prompt_chars": 25579,
+      "prompt_sha256": "20f9fa0700519d2fc9b3de21a32ee9cfa229da7162f5b52a28df88e4d2cafe9f",
+      "verdicts": [
+        {
+          "sample_id": "ms-0117",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0119",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "issue",
+            "dept": "ok"
+          },
+          "reason": "evidence_span 不是完整条款：开头混入上一节（IV.C.3. Confidentiality）的残句“legislation on the protection of individuals with regard to the processing of personal data and on the free movement of such data.”，结尾在句中被截断为“and subsequently every 3 years thereafter [REG Art 29] and on the performance of”，后半句“pharmacovigilance tasks by the competent authorities in Member States on 21 July 2015 at the latest and then every 3 years thereafter [DIR Art 108(b)].”被切掉，使条款不完整。",
+          "suggestion": "将 span 改为从“The European Commission shall make public a report...”起至“...and then every 3 years thereafter [DIR Art 108(b)].”止的完整整句，并同步修正 char_start/char_end。"
+        },
+        {
+          "sample_id": "ms-0121",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "issue",
+            "dept": "ok"
+          },
+          "reason": "evidence_span 起止不完整：开头带入小节标题残字“audit ”，结尾在法规引用中途截断为“The dates and results of audits and follow-up audits shall be documented [IR Art”，缺“13(2)]”，不构成完整条款。",
+          "suggestion": "将 span 调整为“The marketing authorisation holder in the EU is required to perform regular risk-based audit(s) of their pharmacovigilance system [DIR Art 104(2)], including audit(s) of its quality system to ensure that the quality system complies with the quality system requirements [ IR Art 8,10,11,12,13(1)]. The dates and results of audits and follow-up audits shall be documented [IR Art 13(2)]”，并同步修正偏移。"
+        },
+        {
+          "sample_id": "ms-0123",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "issue",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "key_text 在关键处被截断：“...having due regard to the design”止住，恰好切掉了回答 query 的核心成分“and evaluation of pharmacovigilance audits”，命中含义（PRAC 职责与药物警戒审计的关联）不完整；同时前半段“The mandate of the Pharmacovigilance Risk Assessment Committee (PRAC) shall cover all aspects of the risk management of the use of medicinal products for human use”属于冗余前置。",
+          "suggestion": "key_text 改为“having due regard to the design and evaluation of pharmacovigilance audits”（页内唯一）；并建议 evidence_span 末尾延伸至“[REG Art 61a(6)].”以包含 query 所依赖的法规引用，起点改为“The mandate of the Pharmacovigilance Risk Assessment Committee (PRAC)”，去掉标题残字“Committee (PRAC) ”。"
+        },
+        {
+          "sample_id": "ms-0125",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_20f9fa0700519d2fc9b3de21a32ee9cfa229da7162f5b52a28df88e4d2cafe9f.jsonl",
+      "sample_input_sha256": {
+        "ms-0117": "9d3e2844e0c25e35bb255e9b9e04b83339f6690cee703c5d960396517bd39420",
+        "ms-0119": "9baf298ebce63257daaef4e420c5042559c21d0309cd4b9bfc83aceeb843a93e",
+        "ms-0121": "5c5af4984fab62e5ac246d0342cf189b3d1bb12d492d55b5cc83ee68f60ea2ab",
+        "ms-0123": "8248df480a906aee7d349e5ef8dfa452b93f533eefca67aeb04c05c5f79613ce",
+        "ms-0125": "d495be64fa219a8c16db40b140cb4b3fe0868ab1152fe8e425e2c80c6aaed0bf"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "93ab52ba-4adb-42e6-8734-bbace4f43dfa",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "6461",
+      "cost_usd": 0.23389750000000004,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0127",
+        "ms-0129",
+        "ms-0131",
+        "ms-0133",
+        "ms-0136"
+      ],
+      "started_at": "2026-09-21T14:33:51+00:00",
+      "finished_at": "2026-09-21T14:34:56+00:00",
+      "prompt_chars": 29241,
+      "prompt_sha256": "8966565fac1a2a8b4eb666c3ea67c32568a7d3e023a0c540c3cd3bda466153e3",
+      "verdicts": [
+        {
+          "sample_id": "ms-0127",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0129",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0131",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0133",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0136",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_8966565fac1a2a8b4eb666c3ea67c32568a7d3e023a0c540c3cd3bda466153e3.jsonl",
+      "sample_input_sha256": {
+        "ms-0127": "90bb53e456c310d2ad53269007b5d1c4bbde5e0b17ac2a7d28f29297b01c419f",
+        "ms-0129": "0b338092139e162414faad009362dea60b4a539d79a9d6bb9279b3378e197570",
+        "ms-0131": "0aa84bad26de2596ec838d35cd6390906063f804b9778c714932a4db42ccc68e",
+        "ms-0133": "f36bb06b6a576946d90d971e597c8359a2273c6435ac3cf9ddf139a57f12a0a5",
+        "ms-0136": "98314836e0e66fc7afd247516a7377cda895082554c3275b34c40d772dff552c"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "afa3ea27-711a-4eb1-b00d-ad5057196b4c",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "12672",
+      "cost_usd": 0.38402250000000004,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0138",
+        "ms-0140",
+        "ms-0142",
+        "ms-0144",
+        "ms-0146"
+      ],
+      "started_at": "2026-09-21T14:34:56+00:00",
+      "finished_at": "2026-09-21T14:37:04+00:00",
+      "prompt_chars": 25522,
+      "prompt_sha256": "12e4c461766021dd998a870a687c3a5440692a7108f98402a38ba7149307fea5",
+      "verdicts": [
+        {
+          "sample_id": "ms-0138",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0140",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "issue",
+            "dept": "ok"
+          },
+          "reason": "evidence_span 不是完整条款，起点落在前一句中间：页文本原句为“Studies required in jurisdictions outside the EU should not be included in the RMP unless they are also imposed as a condition to the marketing authorisation or as a specific obligation, or required by the Agency or a national competent authority.”，而 span 从“as a condition to the marketing authorisation…”开始，句首“Studies required in jurisdictions outside the EU should not be included in the RMP unless they are also imposed”被截断，形成语法不完整且易被误读为限定条件的残句。",
+          "suggestion": "将 span 起点前移至“Studies required in jurisdictions outside the EU should not be included in the RMP unless they are also imposed as a condition…”整句开头（并相应修正 char_start），或直接收缩为回答该 query 的完整单句“Studies not required by the EMA or a national competent authority should not be included in the pharmacovigilance plan in the RMP.”"
+        },
+        {
+          "sample_id": "ms-0142",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0144",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0146",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_12e4c461766021dd998a870a687c3a5440692a7108f98402a38ba7149307fea5.jsonl",
+      "sample_input_sha256": {
+        "ms-0138": "e398a0bf5ad5e627b8755363783581199b87b1e81c1dea84db7d157602384eae",
+        "ms-0140": "31f8c6afa47ecda30664dcf9268d6f8c6d9ae8c60cbb05d02a390fd5f55105be",
+        "ms-0142": "222460301c2133d662fe5ce0e75725b128a1c944346c2fe7a21b17a606ee5b20",
+        "ms-0144": "a82c19d54c1328aeec5e52b8c35ad4c45a1d965847707f47788f78aa25466306",
+        "ms-0146": "41eec93b88f20ce5c2f9cd53aa19f1423b16c8eef6df6e988f3992a86a3fca72"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "43086a4f-957a-4858-b7f9-976c07c4639f",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "11323",
+      "cost_usd": 0.358185,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0148",
+        "ms-0150",
+        "ms-0152",
+        "ms-0154",
+        "ms-0158"
+      ],
+      "started_at": "2026-09-21T14:37:04+00:00",
+      "finished_at": "2026-09-21T14:38:58+00:00",
+      "prompt_chars": 28265,
+      "prompt_sha256": "cc86d0efbf2974451dfec67099b59060af4e39a156ad9f897b62239645a3b765",
+      "verdicts": [
+        {
+          "sample_id": "ms-0148",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0150",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "issue",
+            "dept": "ok"
+          },
+          "reason": "evidence_span 偏移(130-738)与页文本一致，但两端都截在句中，不是完整条款：开头为残句“of administration, primary source, medical history and concurrent drug fields match, one cannot be certain that reports are true duplicates…”，结尾停在半句“Conversely, population of”，后接的“the ‘Report duplicates’ section (ICH-E2B(R2) data field ‘A.1.11’…”被切断，读起来不成句。key_text 所在的完整句子本身已能回答 query，无需带入这些残片。",
+          "suggestion": "将 span 收敛为该完整句：“Population of the ‘Linked reports’ section (ICH-E2B(R2) data field ‘A.1.12’)/ICH-E2B(R3) data field ‘C.1.10.r’) with the numbers of other cases that are linked by a common element or elements, but are distinct from one another, is a particularly effective method of enabling confirmation that cases are not duplicates of one another.”，并相应更新 char_start/char_end（起点移至“Population”处，终点移至该句句号后）。"
+        },
+        {
+          "sample_id": "ms-0152",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0154",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0158",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_cc86d0efbf2974451dfec67099b59060af4e39a156ad9f897b62239645a3b765.jsonl",
+      "sample_input_sha256": {
+        "ms-0148": "817cb5d1a8e6a39241c2b14fbe25c3d727e1566641c1c4561459972e52a0059a",
+        "ms-0150": "650a2e3e12a99545d2aa95b21fed528cc473e2ccf5623eabaddcd8e6a2a5f208",
+        "ms-0152": "fa0b74ea4cabe1b98236b5e3a5999188dde0b65183acc2a3c7eaaeb4efe2e94a",
+        "ms-0154": "4ac721146c1850637eb175f50699a45054d47e425e4b36538af9646f38b4a195",
+        "ms-0158": "89a023f24bf41323f2b6f93b0bdbf79da8844d2804db7e392949198fd37ad3ae"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "ba6bc74c-f3c5-492a-91e1-5ccf51632363",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "6845",
+      "cost_usd": 0.24621,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0160",
+        "ms-0162",
+        "ms-0164",
+        "ms-0166",
+        "ms-0168"
+      ],
+      "started_at": "2026-09-21T14:38:58+00:00",
+      "finished_at": "2026-09-21T14:40:11+00:00",
+      "prompt_chars": 29877,
+      "prompt_sha256": "c29e9fea7e190309e12caf734889e35acee7763db1df931c7114f69f583bc8db",
+      "verdicts": [
+        {
+          "sample_id": "ms-0160",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0162",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0164",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0166",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "issue",
+            "dept": "ok"
+          },
+          "reason": "evidence_span 不是完整条款：起点落在上一句中间，以“the EU reference dates list, PSURs shall be submitted according to the PSUR frequency defined in the marketing authorisation”开头（原句为“For medicinal products containing an active substance or a combination of active substances not included in the EU reference dates list, ...”），该句与 query 无关；结尾又以悬空的“The”截断（原文续为“The assessment reports of the requested PSURs shall be communicated to the PRAC...”）。另注：key_text“are exempted from submitting PSURs except in the following circumstances”不含对象（仿制药、well-established use、顺势疗法、传统草药药品），按孪生规则其最小性已在父样本审过，此处不单独计为 issue。",
+          "suggestion": "将 evidence_span 改为自“VII.C.3.3.2. Submission of PSURs for generic, well-established use, traditional herbal and homeopathic medicinal products By way of derogation, generics (authorised under DIR Art 10(1)) ...”起，至“...(e.g. when the “reference” medicinal product is no longer marketed).”止，并同步修正 char_start/char_end；建议 key_text 一并扩为“generics (authorised under DIR Art 10(1)), well-established use (authorised under DIR Art 10a), homeopathic (authorised under DIR Art 14) and traditional herbal (authorised under DIR Art 16a) medicinal products are exempted from submitting PSURs except in the following circumstances [DIR Art 107b(3)]”。"
+        },
+        {
+          "sample_id": "ms-0168",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_c29e9fea7e190309e12caf734889e35acee7763db1df931c7114f69f583bc8db.jsonl",
+      "sample_input_sha256": {
+        "ms-0160": "6b8dba917456c9f8c6d4d165f62be79d4fcb38e7587881cf7570e8e2d4ef5aa4",
+        "ms-0162": "34e08cc97d92cbf6bc70ef2c542dac62b2afe1d2937398e0ee50f4836a4d1e38",
+        "ms-0164": "8409a9b9dc3104d51ee2cda4ecdf7279aaac2680202d6eb720a9910b14d9b142",
+        "ms-0166": "40e09375b8dce1a82df6e6affe6ef45900921bc27fe79c22da6372da70ec03e1",
+        "ms-0168": "3027cac71c82e9075ef08f31534d17faf998535c242a94b267d38e9618375666"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "28602776-55ac-4cb5-9d52-9cbb7df674c1",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "4250",
+      "cost_usd": 0.178435,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0170",
+        "ms-0172",
+        "ms-0174",
+        "ms-0176",
+        "ms-0178"
+      ],
+      "started_at": "2026-09-21T14:40:11+00:00",
+      "finished_at": "2026-09-21T14:40:59+00:00",
+      "prompt_chars": 29718,
+      "prompt_sha256": "340b7e9cd7365c02497a2db657d49fcc9cc7bd12ff0c6eca6bd52950ac19aa71",
+      "verdicts": [
+        {
+          "sample_id": "ms-0170",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0172",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0174",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": "evidence_span 前端保留了上一句尾部“or the PRAC, as appropriate [DIR Art 107p(1)].”、末端停在未完成的“The request”，虽未遗漏任何限定条件，建议改为按句边界截取：“When the PRAC is responsible for supervision of the PASS, the marketing authorisation holder should request the waiver in writing to the Agency at least three months before the due date for the submission of the report. The request should include a justification for the waiver.”"
+        },
+        {
+          "sample_id": "ms-0176",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0178",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "issue",
+            "dept": "ok"
+          },
+          "reason": "evidence_span 不是完整条款：起点切在小节标题尾部“of an obligation”，终点停在未闭合的法条引用“[REG Art 10a(2),”，丢掉了页文本中紧接的“DIR Art 22a(2)]”。query 明确同时依赖 REG Art 10a(2) 与 DIR Art 22a(2) 两个条号（protocol_id 切片正是基于此），而 span 只保留了其中一个且括号未闭合。",
+          "suggestion": "将 span 调整为从“Within 30 days of receipt of the written notification of an obligation imposed, the marketing authorisation holder may request to present written observations in response to the imposition of the obligation [REG Art 10a(2), DIR Art 22a(2)].”开始到句号结束，并相应更新 char_start/char_end。"
+        }
+      ],
+      "input_path": "chunk_inputs/input_340b7e9cd7365c02497a2db657d49fcc9cc7bd12ff0c6eca6bd52950ac19aa71.jsonl",
+      "sample_input_sha256": {
+        "ms-0170": "b4f9a15665f898ddb4b193ff38fa174891aa9e97e1cc6911d71ce4ccaddbc337",
+        "ms-0172": "fb959b864f690e46ecf3f9f23e55a7cf2c85dde70a83a76d63536112dc33cdb4",
+        "ms-0174": "fe2ee1817fa34424d581557881995a44d04bfcbe364f1c9ae649bf16d6932853",
+        "ms-0176": "63dc6d79b1e159691c613749941f97a3d6cf5791ce1fed088ea14bf481c5a6e5",
+        "ms-0178": "b3c370676477be3870cc5b855f8c34d546e438e9e822f95bf8d57acca623f75d"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "a90e27f4-bd73-4e39-bacf-05ca81eae60d",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "10393",
+      "cost_usd": 0.3254475,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0180",
+        "ms-0182",
+        "ms-0184",
+        "ms-0186",
+        "ms-0188"
+      ],
+      "started_at": "2026-09-21T14:40:59+00:00",
+      "finished_at": "2026-09-21T14:42:48+00:00",
+      "prompt_chars": 26174,
+      "prompt_sha256": "3dc4d71dbd44f094cfa3f98d526a0b8f3f7b079b17379d847344ba8310d9c58a",
+      "verdicts": [
+        {
+          "sample_id": "ms-0180",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0182",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "issue",
+            "dept": "ok"
+          },
+          "reason": "evidence_span 不是完整条款：起点落在上一标题的尾部（\"the additional monitoring list X.C.2.1. Mandatory scope\"），终点停在 \"the Union Reference Date (URD)\"，截断了同一句的限定成分 \"referred to in Article 107c(5) of Directive 2001/83/EC.\"，句子未结束。偏移与 text 长度一致（282 字符），但边界选取不当。",
+          "suggestion": "将 span 调整为完整一句：\"For medicinal products containing new active substances as well as for all biological medicinal products approved after 1 January 2011 the initial period of time for inclusion is five years after the Union Reference Date (URD) referred to in Article 107c(5) of Directive 2001/83/EC.\"，并相应重算 char_start/char_end；key_text 可保持不变。"
+        },
+        {
+          "sample_id": "ms-0184",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0186",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": "key_text 末尾的 \"if a medicinal product which is subject to conditions\" 为未完结的从句，去掉后 \"recommends, upon request of the European Commission or a national competent authority, as appropriate\" 在本页仍唯一且保留 PRAC 的职责含义，可考虑采用更短写法。"
+        },
+        {
+          "sample_id": "ms-0188",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_3dc4d71dbd44f094cfa3f98d526a0b8f3f7b079b17379d847344ba8310d9c58a.jsonl",
+      "sample_input_sha256": {
+        "ms-0180": "a74c118a2f19d73c1908285cff5fb15f6f03b46dac86604984c5a62f57f1e6f0",
+        "ms-0182": "04949c1c532612ba826190a8e575e503bc487d111c6db98f3d0ebf7f38786163",
+        "ms-0184": "6492331f8d14759cf48fe8d94bf89dcb261155e8a57b4996f2c798a93bc33279",
+        "ms-0186": "fdfa23fe9c67e21238fa89bd29c36b03a6164a43d27bf7fd335e8af2e6231e43",
+        "ms-0188": "615e500ae62c6cd1c480b1647f5a07303d5311c78e8a10ef67982c424fdcca61"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "77bfbfcb-2cea-4fae-aeb8-91fecd45d1f0",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "11152",
+      "cost_usd": 0.3430725,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0190",
+        "ms-0192",
+        "ms-0194",
+        "ms-0198",
+        "ms-0200"
+      ],
+      "started_at": "2026-09-21T14:42:48+00:00",
+      "finished_at": "2026-09-21T14:44:39+00:00",
+      "prompt_chars": 24809,
+      "prompt_sha256": "ef515bacc3f24a52a7f7878cb9b5b4930a16a38847312d49b161fe7bec8d31de",
+      "verdicts": [
+        {
+          "sample_id": "ms-0190",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0192",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0194",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "issue",
+            "dept": "ok"
+          },
+          "reason": "evidence_span 不是完整条款：起点落在上一句中间（“the Member States where the DHPC is to be distributed.”为上一句“Once the text of the DHPC is agreed, the marketing authorisation holder should prepare translations in the official languages of the Member States, as specified by …”的尾部），终点又停在下一句中途“Member States should aim”，把“Member States should aim at reviewing the translations ideally within 48 hours.”截断，丢失了与审阅时限相关的限定信息。偏移 269–537 与该截断文本一致，即标注本身即为句中窗口。",
+          "suggestion": "将 evidence_span 改为完整句：“The draft translations should be submitted to the Member States for a language review and such review should be done within a reasonable timeframe which should not exceed 4-5 working days. Member States should aim at reviewing the translations ideally within 48 hours.”，对应偏移约 char_start 323、char_end 591（若只保留首句则为 323–511）。"
+        },
+        {
+          "sample_id": "ms-0198",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0200",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_ef515bacc3f24a52a7f7878cb9b5b4930a16a38847312d49b161fe7bec8d31de.jsonl",
+      "sample_input_sha256": {
+        "ms-0190": "ac1fca9e3a4438c8265e6977f2555955d48fcb68d006ccf29edd4d7b5cb2e5b0",
+        "ms-0192": "0a4825c15e466e256ac48e63742417542b331a7cb9e5b609aabb7b86d06d8135",
+        "ms-0194": "252f1a37859de1217b47308b603d1f8535d03712787893f9d3d386ae0d313003",
+        "ms-0198": "0812ca64f0cceeab2aab5b8ce21188ab060caa73988bfda84d49c9af891af775",
+        "ms-0200": "25684f7dcc90d439daedbba74b860c081224c585ed41868704ebba296fcbae29"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "9f186f32-4e9e-478e-93c6-9f8cb980f91e",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "7640",
+      "cost_usd": 0.27086,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0202",
+        "ms-0204",
+        "ms-0206",
+        "ms-0208",
+        "ms-0210"
+      ],
+      "started_at": "2026-09-21T14:44:39+00:00",
+      "finished_at": "2026-09-21T14:46:13+00:00",
+      "prompt_chars": 30889,
+      "prompt_sha256": "49bbe7c0c453c2e2555ac4a2411f097195cc0994fdd24e7b305e6146df920a1f",
+      "verdicts": [
+        {
+          "sample_id": "ms-0202",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "issue",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "key_text 在页文本中虽逐字出现一次，但被截断在词组中间：\"...; or • The medicinal product is frequently and to a\"，页文本原句为 \"• The medicinal product is frequently and to a very wide extent used incorrectly, and as a result is likely to present a direct or indirect danger to human health; or\"。该命中串跨越两个项目符号且第二项残缺，既不是完整语义单元，也无法作为可核对的命中文本（此为片段破损问题，非最小性重复审查）。evidence_span 本身是完整条款（\"Medicinal products shall be subject to medical prescription where: ... [DIR Art 71(1)].\"），包含四项要件与法条引用，判 ok；英文 query 与 parent_query 问同一事、限定一致；protocol_id（依赖 DIR Art 71(1) 精确匹配）与 mixed_zh_en 成立；GVP 指南归 PV 正确。",
+          "suggestion": "把 key_text 改为页内唯一且完整的锚定句 \"Medicinal products shall be subject to medical prescription where\"，或改为某一完整项目符号（如 \"The medicinal product is normally prescribed to be administered parenterally\"），不要停在 \"frequently and to a\"。"
+        },
+        {
+          "sample_id": "ms-0204",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0206",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0208",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "issue",
+            "dept": "ok"
+          },
+          "reason": "evidence_span 不是完整条款：开头从上一段落的词中间切入 \"-EU national competent authorities (see GVP Module XIV).\"（原文为 \"...the WHO and non -EU national competent authorities\"），并夹带与 query 无关的质量缺陷段 \"Where a quality defect is suspected, marketing authorisation holders should follow the procedures explained on the EMA website20 as well as the applicable national procedures.\"；结尾又在句中截断于 \"within 15 days, in\"，丢掉了原句其余部分 \"particular with the view to highlight potential signals of reduced immu nogenicity in a sub -group of vaccinated individuals, waning immunity or strain replacement.\"。key_text 逐字唯一、time_window（15 天）、version_conflict（gold 落在现行版 ema-gvp-pp-i）与 mixed_zh_en 均成立，部门 PV 正确。",
+          "suggestion": "将 span 收缩为该条款的完整句（并可保留小节标题）：\"P.I.C.2.1.Reporting of vaccination failures Cases of vaccination failures should be reported as cases of lack of therapeutic efficacy within 15 days, in particular with the view to highlight potential signals of reduced immu nogenicity in a sub -group of vaccinated individuals, waning immunity or strain replacement.\"，并相应修正 char_start/char_end。"
+        },
+        {
+          "sample_id": "ms-0210",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "issue",
+            "dept": "ok"
+          },
+          "reason": "evidence_span 两端均在句中截断且掺入无关内容：开头为 \"categories, e.g. hypotonic -hyporesponsive episode s in young children. Furthermore, the frequency of adverse reactions may change in relation to age. Targeted surveillance of adverse reactions in different age groups may be warranted.\"，属于上一项“Special age groups”的内容，与 query 的妊娠期禁忌无关；结尾停在 \"inadvertent exposure during pregnancy cannot\"，缺失原文 \"be totally excluded.\"，使条款语义不完整（否定/让步结构被切断）。key_text \"most live attenuated vaccines are contraindicated in pregnant women due to the known or suspected risk of tr ansplacental infection of the foetus\" 逐字唯一；negation、version_conflict（gold 指向现行版）、mixed_zh_en 成立；GVP 文档归 PV 正确。",
+          "suggestion": "将 span 改为 \"Pregnancy Although most live attenuated vaccines are contraindicated in pregnant women due to the known or suspected risk of tr ansplacental infection of the foetus, inadvertent exposure during pregnancy cannot be totally excluded.\"（如需补充可延伸至下一句关于灭活疫苗的理论风险表述），并相应修正偏移。"
+        }
+      ],
+      "input_path": "chunk_inputs/input_49bbe7c0c453c2e2555ac4a2411f097195cc0994fdd24e7b305e6146df920a1f.jsonl",
+      "sample_input_sha256": {
+        "ms-0202": "a04d48dac259e48b2d21b10b4e06466226563f3efee0acad874f76a15bc42388",
+        "ms-0204": "673747a6a24d74f5ce7f51886f05eae3ea1766498f4bb2ca6343ad07f5554be6",
+        "ms-0206": "cc642f33596082a46321822bae59a59267f35e54c51a778517d2caf09a69e064",
+        "ms-0208": "d900fe5628f82a8338b8c3cdb43237f0997006a1c0a13d17aad64838bdd85031",
+        "ms-0210": "070fccf51a9edd1087898e353415a3ceff785d8719a7b7efe22973a03999c2a0"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "6d0eaa37-6056-4472-b92e-2ee61ff40a64",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "11487",
+      "cost_usd": 0.36261625000000003,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0212",
+        "ms-0214",
+        "ms-0216",
+        "ms-0218",
+        "ms-0220"
+      ],
+      "started_at": "2026-09-21T14:46:13+00:00",
+      "finished_at": "2026-09-21T14:48:13+00:00",
+      "prompt_chars": 29110,
+      "prompt_sha256": "7a01de87eb834c7408a6fc6b26d5b1b7931983ff7ed28e586636f46aab270544",
+      "verdicts": [
+        {
+          "sample_id": "ms-0212",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "issue",
+            "dept": "ok"
+          },
+          "reason": "evidence_span 不是完整条款：text 在 char_end=589 处于词中截断，结尾为“they should be notified immediately in writing to the c”，页文本原句为“…notified immediately in writing to the competent authorities in accordance with the recommendations provided in GVP Module VI.”；此外 span 起始处包含页眉“Guideline on good pharmacovigilance practices (GVP) – P I EMA/488220/2012 Page 24/25”，属非条款内容。key_text 逐字命中且页内唯一，negation（should not be reported）、version_conflict（合成旧版归档）与继承的 mixed_zh_en 标签均成立，PV 归属正确。",
+          "suggestion": "将 span 收敛为回答该 query 的完整条款，去掉页眉，取 char_start=85 起至“…should be considered in periodic safety update reports as applicable (see GVP Module VII).”结束；若需保留第三句，则须延至“…in accordance with the recommendations provided in GVP Module VI.”的句号，并同步修正 char_end。"
+        },
+        {
+          "sample_id": "ms-0214",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0216",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0218",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0220",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "issue",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "切片缺 dose_unit：按判定口径 dose_unit 以完整 evidence_span 判定，本 span“Low birth weight: Less than 2,500 grams (up to and including 2,499 g) of body weight of the neonate at time of birth.”含数值加单位（2,500 grams / 2,499 g），符合“条款含数值加单位（mg、g、mL、μg、IU、%）”的定义，应标注而未标注。query 自然、key_text 逐字且页内唯一、偏移（199–316）与文本一致、mixed_zh_en 与 PV 归属成立。",
+          "suggestion": "slices 改为 [\"dose_unit\", \"mixed_zh_en\"]。"
+        }
+      ],
+      "input_path": "chunk_inputs/input_7a01de87eb834c7408a6fc6b26d5b1b7931983ff7ed28e586636f46aab270544.jsonl",
+      "sample_input_sha256": {
+        "ms-0212": "155931d8cff5e9ccfa18e839edaf6a67d56c691429744cc86e4d73b85d589198",
+        "ms-0214": "feeb70566bf3af4794aac5421afcbd29c6f62b3e6121942afe4734dd16bdeb03",
+        "ms-0216": "e0be9c8392f1bd90eb0f71e5334fe50b6a8b429686aae9eb94f51195ea30f644",
+        "ms-0218": "c53912fad7cc96b2c7291af280f2e77362e1ab122d37874935f681ffdb29f2ee",
+        "ms-0220": "e4ca7a01bc1e0b2cb8e2ad4764270e867f71471a0781dfdbeaf220b857aa3088"
+      }
     }
   ],
   "provenance_version": 2,
@@ -568,6 +1558,306 @@
       "sample_input_sha256": "7a3ee71b1befd6023eab8571b9e7408db74de554c9a3c95a6aaf6d863e9aeefc",
       "prompt_sha256": "87f15f616b52922f1423f1519e0244be34b15a3eb07649abec03280076063acc",
       "verdict_sha256": "21b8175358c976775e3bf01eef5e00682f9191dd5afe79b11d1af967931ea5cc"
+    },
+    "ms-0117": {
+      "chunk_index": 3,
+      "sample_input_sha256": "9d3e2844e0c25e35bb255e9b9e04b83339f6690cee703c5d960396517bd39420",
+      "prompt_sha256": "20f9fa0700519d2fc9b3de21a32ee9cfa229da7162f5b52a28df88e4d2cafe9f",
+      "verdict_sha256": "d00f5a8fdc964bedb4b02d9eb04ec5039a6b57595dc67b4b6e10a332a46fb64c"
+    },
+    "ms-0119": {
+      "chunk_index": 3,
+      "sample_input_sha256": "9baf298ebce63257daaef4e420c5042559c21d0309cd4b9bfc83aceeb843a93e",
+      "prompt_sha256": "20f9fa0700519d2fc9b3de21a32ee9cfa229da7162f5b52a28df88e4d2cafe9f",
+      "verdict_sha256": "2d123c4e24275694322ce60b2280c3e2ca229909fa9d39a2259ca03bddd3c71b"
+    },
+    "ms-0121": {
+      "chunk_index": 3,
+      "sample_input_sha256": "5c5af4984fab62e5ac246d0342cf189b3d1bb12d492d55b5cc83ee68f60ea2ab",
+      "prompt_sha256": "20f9fa0700519d2fc9b3de21a32ee9cfa229da7162f5b52a28df88e4d2cafe9f",
+      "verdict_sha256": "5a1ac0a18489cb70ec6d44c9707102eed04c8813200c4ae0e2777eb99bd86f05"
+    },
+    "ms-0123": {
+      "chunk_index": 3,
+      "sample_input_sha256": "8248df480a906aee7d349e5ef8dfa452b93f533eefca67aeb04c05c5f79613ce",
+      "prompt_sha256": "20f9fa0700519d2fc9b3de21a32ee9cfa229da7162f5b52a28df88e4d2cafe9f",
+      "verdict_sha256": "1486f8fbda4ba26e43732af36b814719d07bf23048d485635fcfd705beff9194"
+    },
+    "ms-0125": {
+      "chunk_index": 3,
+      "sample_input_sha256": "d495be64fa219a8c16db40b140cb4b3fe0868ab1152fe8e425e2c80c6aaed0bf",
+      "prompt_sha256": "20f9fa0700519d2fc9b3de21a32ee9cfa229da7162f5b52a28df88e4d2cafe9f",
+      "verdict_sha256": "5ec29429ead33beed8d42a96815ae7b69c54c8e75c5728b5db17b878084b32a7"
+    },
+    "ms-0127": {
+      "chunk_index": 4,
+      "sample_input_sha256": "90bb53e456c310d2ad53269007b5d1c4bbde5e0b17ac2a7d28f29297b01c419f",
+      "prompt_sha256": "8966565fac1a2a8b4eb666c3ea67c32568a7d3e023a0c540c3cd3bda466153e3",
+      "verdict_sha256": "7a9ff8fd45d2742bb63308951a084634f4ca24d40a0d542a37fd1e301a23de0d"
+    },
+    "ms-0129": {
+      "chunk_index": 4,
+      "sample_input_sha256": "0b338092139e162414faad009362dea60b4a539d79a9d6bb9279b3378e197570",
+      "prompt_sha256": "8966565fac1a2a8b4eb666c3ea67c32568a7d3e023a0c540c3cd3bda466153e3",
+      "verdict_sha256": "1c0aacb6d3b8a4e3f4d09572d1eb138ad0e0bd169621201171f831c9ad7a6676"
+    },
+    "ms-0131": {
+      "chunk_index": 4,
+      "sample_input_sha256": "0aa84bad26de2596ec838d35cd6390906063f804b9778c714932a4db42ccc68e",
+      "prompt_sha256": "8966565fac1a2a8b4eb666c3ea67c32568a7d3e023a0c540c3cd3bda466153e3",
+      "verdict_sha256": "761f249d800ac07dda2d5bdd097d55c4783535a6089305147a2b1e26f877e5ea"
+    },
+    "ms-0133": {
+      "chunk_index": 4,
+      "sample_input_sha256": "f36bb06b6a576946d90d971e597c8359a2273c6435ac3cf9ddf139a57f12a0a5",
+      "prompt_sha256": "8966565fac1a2a8b4eb666c3ea67c32568a7d3e023a0c540c3cd3bda466153e3",
+      "verdict_sha256": "fe4b69786b8f484821fb0ad4252de17b96681c1c480e6ebd8decae4f633e6e1b"
+    },
+    "ms-0136": {
+      "chunk_index": 4,
+      "sample_input_sha256": "98314836e0e66fc7afd247516a7377cda895082554c3275b34c40d772dff552c",
+      "prompt_sha256": "8966565fac1a2a8b4eb666c3ea67c32568a7d3e023a0c540c3cd3bda466153e3",
+      "verdict_sha256": "674cde3b0113ead191e4398765dc5196c9a9a16ba08072ffc614e8f7e641be85"
+    },
+    "ms-0138": {
+      "chunk_index": 5,
+      "sample_input_sha256": "e398a0bf5ad5e627b8755363783581199b87b1e81c1dea84db7d157602384eae",
+      "prompt_sha256": "12e4c461766021dd998a870a687c3a5440692a7108f98402a38ba7149307fea5",
+      "verdict_sha256": "3927c23da9e2c929a39c25eca75abf2b844831acf88ba007120798e6f9b2311d"
+    },
+    "ms-0140": {
+      "chunk_index": 5,
+      "sample_input_sha256": "31f8c6afa47ecda30664dcf9268d6f8c6d9ae8c60cbb05d02a390fd5f55105be",
+      "prompt_sha256": "12e4c461766021dd998a870a687c3a5440692a7108f98402a38ba7149307fea5",
+      "verdict_sha256": "a1a6cb6c16841aa6fae783000ceec29a65ef644c742f61a7e5a9c9fed415a9ee"
+    },
+    "ms-0142": {
+      "chunk_index": 5,
+      "sample_input_sha256": "222460301c2133d662fe5ce0e75725b128a1c944346c2fe7a21b17a606ee5b20",
+      "prompt_sha256": "12e4c461766021dd998a870a687c3a5440692a7108f98402a38ba7149307fea5",
+      "verdict_sha256": "8144c4544ece605e3a7de950f7802c5711659bbbd1efe9541f47fc9577553966"
+    },
+    "ms-0144": {
+      "chunk_index": 5,
+      "sample_input_sha256": "a82c19d54c1328aeec5e52b8c35ad4c45a1d965847707f47788f78aa25466306",
+      "prompt_sha256": "12e4c461766021dd998a870a687c3a5440692a7108f98402a38ba7149307fea5",
+      "verdict_sha256": "9e6f48bd03ec879cfa82dea457d446303b21307cbe557a5510ea3531a2d62105"
+    },
+    "ms-0146": {
+      "chunk_index": 5,
+      "sample_input_sha256": "41eec93b88f20ce5c2f9cd53aa19f1423b16c8eef6df6e988f3992a86a3fca72",
+      "prompt_sha256": "12e4c461766021dd998a870a687c3a5440692a7108f98402a38ba7149307fea5",
+      "verdict_sha256": "7ec99706adb9692a9703f7bd2876c4cbb4fe56585818854987f992a8c6918624"
+    },
+    "ms-0148": {
+      "chunk_index": 6,
+      "sample_input_sha256": "817cb5d1a8e6a39241c2b14fbe25c3d727e1566641c1c4561459972e52a0059a",
+      "prompt_sha256": "cc86d0efbf2974451dfec67099b59060af4e39a156ad9f897b62239645a3b765",
+      "verdict_sha256": "59ca1117730343c040593b029ef7866c1a200c3b6f37678ecccf08f28960f37c"
+    },
+    "ms-0150": {
+      "chunk_index": 6,
+      "sample_input_sha256": "650a2e3e12a99545d2aa95b21fed528cc473e2ccf5623eabaddcd8e6a2a5f208",
+      "prompt_sha256": "cc86d0efbf2974451dfec67099b59060af4e39a156ad9f897b62239645a3b765",
+      "verdict_sha256": "868998af611dbacf8d20f8505c026042238fb32c6fcfa958d2eaae26cdb70a22"
+    },
+    "ms-0152": {
+      "chunk_index": 6,
+      "sample_input_sha256": "fa0b74ea4cabe1b98236b5e3a5999188dde0b65183acc2a3c7eaaeb4efe2e94a",
+      "prompt_sha256": "cc86d0efbf2974451dfec67099b59060af4e39a156ad9f897b62239645a3b765",
+      "verdict_sha256": "497d07dbb83f071cb3742f271cfdedae1139dbd5c358ab80009213681484b5cb"
+    },
+    "ms-0154": {
+      "chunk_index": 6,
+      "sample_input_sha256": "4ac721146c1850637eb175f50699a45054d47e425e4b36538af9646f38b4a195",
+      "prompt_sha256": "cc86d0efbf2974451dfec67099b59060af4e39a156ad9f897b62239645a3b765",
+      "verdict_sha256": "d741e8733bc3b95f7b3e21aea79d8eb1b197fb2ea5a5dc537aafba097e110458"
+    },
+    "ms-0158": {
+      "chunk_index": 6,
+      "sample_input_sha256": "89a023f24bf41323f2b6f93b0bdbf79da8844d2804db7e392949198fd37ad3ae",
+      "prompt_sha256": "cc86d0efbf2974451dfec67099b59060af4e39a156ad9f897b62239645a3b765",
+      "verdict_sha256": "1f35bd015a03621c7e8ed164fc422421786d0811ebee6000ed9ec07d8e7e4335"
+    },
+    "ms-0160": {
+      "chunk_index": 7,
+      "sample_input_sha256": "6b8dba917456c9f8c6d4d165f62be79d4fcb38e7587881cf7570e8e2d4ef5aa4",
+      "prompt_sha256": "c29e9fea7e190309e12caf734889e35acee7763db1df931c7114f69f583bc8db",
+      "verdict_sha256": "590a06b4891e7e953688cdacef11535d75e4e76e799e0082ae6188f3632f9f16"
+    },
+    "ms-0162": {
+      "chunk_index": 7,
+      "sample_input_sha256": "34e08cc97d92cbf6bc70ef2c542dac62b2afe1d2937398e0ee50f4836a4d1e38",
+      "prompt_sha256": "c29e9fea7e190309e12caf734889e35acee7763db1df931c7114f69f583bc8db",
+      "verdict_sha256": "ae02c3ed41596893eb39d367f4953013b4648df5b7d4429bbe03b12f18f9c661"
+    },
+    "ms-0164": {
+      "chunk_index": 7,
+      "sample_input_sha256": "8409a9b9dc3104d51ee2cda4ecdf7279aaac2680202d6eb720a9910b14d9b142",
+      "prompt_sha256": "c29e9fea7e190309e12caf734889e35acee7763db1df931c7114f69f583bc8db",
+      "verdict_sha256": "90ff81299aa0c0ae1bbdba72a56013530cc776a014e4648ac05e6020e9c6f9af"
+    },
+    "ms-0166": {
+      "chunk_index": 7,
+      "sample_input_sha256": "40e09375b8dce1a82df6e6affe6ef45900921bc27fe79c22da6372da70ec03e1",
+      "prompt_sha256": "c29e9fea7e190309e12caf734889e35acee7763db1df931c7114f69f583bc8db",
+      "verdict_sha256": "0d1662174699b77743fbcf65940a5c855140c9cd8f5d377ea06d1249ccc3b295"
+    },
+    "ms-0168": {
+      "chunk_index": 7,
+      "sample_input_sha256": "3027cac71c82e9075ef08f31534d17faf998535c242a94b267d38e9618375666",
+      "prompt_sha256": "c29e9fea7e190309e12caf734889e35acee7763db1df931c7114f69f583bc8db",
+      "verdict_sha256": "66d1d1c37e7b8b133fc3a60f4ffe83671f02d1d6350d26cae22e417a8b2341ea"
+    },
+    "ms-0170": {
+      "chunk_index": 8,
+      "sample_input_sha256": "b4f9a15665f898ddb4b193ff38fa174891aa9e97e1cc6911d71ce4ccaddbc337",
+      "prompt_sha256": "340b7e9cd7365c02497a2db657d49fcc9cc7bd12ff0c6eca6bd52950ac19aa71",
+      "verdict_sha256": "4787700dea11506aaca8d681bfef2f75f2cfe1468c8f13bfaf3d843a7d1e1549"
+    },
+    "ms-0172": {
+      "chunk_index": 8,
+      "sample_input_sha256": "fb959b864f690e46ecf3f9f23e55a7cf2c85dde70a83a76d63536112dc33cdb4",
+      "prompt_sha256": "340b7e9cd7365c02497a2db657d49fcc9cc7bd12ff0c6eca6bd52950ac19aa71",
+      "verdict_sha256": "08df219e2e83419f3f9ed6baffff72420a8a7528485220049237036e0d555ddd"
+    },
+    "ms-0174": {
+      "chunk_index": 8,
+      "sample_input_sha256": "fe2ee1817fa34424d581557881995a44d04bfcbe364f1c9ae649bf16d6932853",
+      "prompt_sha256": "340b7e9cd7365c02497a2db657d49fcc9cc7bd12ff0c6eca6bd52950ac19aa71",
+      "verdict_sha256": "30258248316edbb37bf8aa7c0eee61dd99ac8451d3cec7eef9636ae50be2d76d"
+    },
+    "ms-0176": {
+      "chunk_index": 8,
+      "sample_input_sha256": "63dc6d79b1e159691c613749941f97a3d6cf5791ce1fed088ea14bf481c5a6e5",
+      "prompt_sha256": "340b7e9cd7365c02497a2db657d49fcc9cc7bd12ff0c6eca6bd52950ac19aa71",
+      "verdict_sha256": "277126953b13247031c1acb9c243b358dbc4a29b66b75305f145d25672dc568f"
+    },
+    "ms-0178": {
+      "chunk_index": 8,
+      "sample_input_sha256": "b3c370676477be3870cc5b855f8c34d546e438e9e822f95bf8d57acca623f75d",
+      "prompt_sha256": "340b7e9cd7365c02497a2db657d49fcc9cc7bd12ff0c6eca6bd52950ac19aa71",
+      "verdict_sha256": "c836ba7085dc40f6ba306e982a32d9e10c035a556eb87efedc3419fe2d5eaf0d"
+    },
+    "ms-0180": {
+      "chunk_index": 9,
+      "sample_input_sha256": "a74c118a2f19d73c1908285cff5fb15f6f03b46dac86604984c5a62f57f1e6f0",
+      "prompt_sha256": "3dc4d71dbd44f094cfa3f98d526a0b8f3f7b079b17379d847344ba8310d9c58a",
+      "verdict_sha256": "0f9711baccb5efa3b6c4060894c705bf719511388736dd15d3c91eaa4afa4191"
+    },
+    "ms-0182": {
+      "chunk_index": 9,
+      "sample_input_sha256": "04949c1c532612ba826190a8e575e503bc487d111c6db98f3d0ebf7f38786163",
+      "prompt_sha256": "3dc4d71dbd44f094cfa3f98d526a0b8f3f7b079b17379d847344ba8310d9c58a",
+      "verdict_sha256": "b37cb0c418c9a0920c380f532fc0aedddb82ac70b7f4d1c1a52c4421ec02ed35"
+    },
+    "ms-0184": {
+      "chunk_index": 9,
+      "sample_input_sha256": "6492331f8d14759cf48fe8d94bf89dcb261155e8a57b4996f2c798a93bc33279",
+      "prompt_sha256": "3dc4d71dbd44f094cfa3f98d526a0b8f3f7b079b17379d847344ba8310d9c58a",
+      "verdict_sha256": "50d205d7bccf64a22ea5491488e309ac29d8a26d6d0ebdd9cdc22159f3805131"
+    },
+    "ms-0186": {
+      "chunk_index": 9,
+      "sample_input_sha256": "fdfa23fe9c67e21238fa89bd29c36b03a6164a43d27bf7fd335e8af2e6231e43",
+      "prompt_sha256": "3dc4d71dbd44f094cfa3f98d526a0b8f3f7b079b17379d847344ba8310d9c58a",
+      "verdict_sha256": "5fe42942cc02afb5975022249e27b5ac5e78feb8b0e7652406a247be58298a51"
+    },
+    "ms-0188": {
+      "chunk_index": 9,
+      "sample_input_sha256": "615e500ae62c6cd1c480b1647f5a07303d5311c78e8a10ef67982c424fdcca61",
+      "prompt_sha256": "3dc4d71dbd44f094cfa3f98d526a0b8f3f7b079b17379d847344ba8310d9c58a",
+      "verdict_sha256": "89b89f786ba57f6f7151dd96df7bf697d7cdbf82b2c45cef3a55b237e2b7707d"
+    },
+    "ms-0190": {
+      "chunk_index": 10,
+      "sample_input_sha256": "ac1fca9e3a4438c8265e6977f2555955d48fcb68d006ccf29edd4d7b5cb2e5b0",
+      "prompt_sha256": "ef515bacc3f24a52a7f7878cb9b5b4930a16a38847312d49b161fe7bec8d31de",
+      "verdict_sha256": "a15e772ece1cbc7470682dd9152329ca23fa315b6ae090cc251a68bdcd446936"
+    },
+    "ms-0192": {
+      "chunk_index": 10,
+      "sample_input_sha256": "0a4825c15e466e256ac48e63742417542b331a7cb9e5b609aabb7b86d06d8135",
+      "prompt_sha256": "ef515bacc3f24a52a7f7878cb9b5b4930a16a38847312d49b161fe7bec8d31de",
+      "verdict_sha256": "20f4936e0d4f10211c4219536635a75f64f3f80678d16482840801aa8c8a16be"
+    },
+    "ms-0194": {
+      "chunk_index": 10,
+      "sample_input_sha256": "252f1a37859de1217b47308b603d1f8535d03712787893f9d3d386ae0d313003",
+      "prompt_sha256": "ef515bacc3f24a52a7f7878cb9b5b4930a16a38847312d49b161fe7bec8d31de",
+      "verdict_sha256": "b9bfbb06556ad875f68cd4f783a0b72edf8d7723d54c31ecbc99aabf283b5585"
+    },
+    "ms-0198": {
+      "chunk_index": 10,
+      "sample_input_sha256": "0812ca64f0cceeab2aab5b8ce21188ab060caa73988bfda84d49c9af891af775",
+      "prompt_sha256": "ef515bacc3f24a52a7f7878cb9b5b4930a16a38847312d49b161fe7bec8d31de",
+      "verdict_sha256": "a1e5902a8b4bcd4933eb4dc20471b97cf0b91c0413cd5cc4bb31884f142f8a51"
+    },
+    "ms-0200": {
+      "chunk_index": 10,
+      "sample_input_sha256": "25684f7dcc90d439daedbba74b860c081224c585ed41868704ebba296fcbae29",
+      "prompt_sha256": "ef515bacc3f24a52a7f7878cb9b5b4930a16a38847312d49b161fe7bec8d31de",
+      "verdict_sha256": "7f37ff00050a7ed5f5c4753e663c89185d9d7cea9cb6857b9a57f32909e83bf8"
+    },
+    "ms-0202": {
+      "chunk_index": 11,
+      "sample_input_sha256": "a04d48dac259e48b2d21b10b4e06466226563f3efee0acad874f76a15bc42388",
+      "prompt_sha256": "49bbe7c0c453c2e2555ac4a2411f097195cc0994fdd24e7b305e6146df920a1f",
+      "verdict_sha256": "a3959ef3fcba19b8c3d0e70045016077eb02558195977951af0810c9ab018852"
+    },
+    "ms-0204": {
+      "chunk_index": 11,
+      "sample_input_sha256": "673747a6a24d74f5ce7f51886f05eae3ea1766498f4bb2ca6343ad07f5554be6",
+      "prompt_sha256": "49bbe7c0c453c2e2555ac4a2411f097195cc0994fdd24e7b305e6146df920a1f",
+      "verdict_sha256": "501e615dad9144f965f6a5b28e9cd0d3160a8dddbe4ece3c37c55532278aa041"
+    },
+    "ms-0206": {
+      "chunk_index": 11,
+      "sample_input_sha256": "cc642f33596082a46321822bae59a59267f35e54c51a778517d2caf09a69e064",
+      "prompt_sha256": "49bbe7c0c453c2e2555ac4a2411f097195cc0994fdd24e7b305e6146df920a1f",
+      "verdict_sha256": "9f7cb204b714a8c744b3b140f06630343de1dd2db01752254d4b6268f344daf7"
+    },
+    "ms-0208": {
+      "chunk_index": 11,
+      "sample_input_sha256": "d900fe5628f82a8338b8c3cdb43237f0997006a1c0a13d17aad64838bdd85031",
+      "prompt_sha256": "49bbe7c0c453c2e2555ac4a2411f097195cc0994fdd24e7b305e6146df920a1f",
+      "verdict_sha256": "7c28df1450a5dedd48ff90677c493d30c9d96930b6d5191e6b4030ea5d4a26e6"
+    },
+    "ms-0210": {
+      "chunk_index": 11,
+      "sample_input_sha256": "070fccf51a9edd1087898e353415a3ceff785d8719a7b7efe22973a03999c2a0",
+      "prompt_sha256": "49bbe7c0c453c2e2555ac4a2411f097195cc0994fdd24e7b305e6146df920a1f",
+      "verdict_sha256": "1c7038ede8a3a3646891ab437c2d5fa3669c3016c6e79ce7b8bef2e01766f462"
+    },
+    "ms-0212": {
+      "chunk_index": 12,
+      "sample_input_sha256": "155931d8cff5e9ccfa18e839edaf6a67d56c691429744cc86e4d73b85d589198",
+      "prompt_sha256": "7a01de87eb834c7408a6fc6b26d5b1b7931983ff7ed28e586636f46aab270544",
+      "verdict_sha256": "3fb3430a4ec2f0c4d7526c62929e1431d49fd177e56ddd0d485984b73c171dde"
+    },
+    "ms-0214": {
+      "chunk_index": 12,
+      "sample_input_sha256": "feeb70566bf3af4794aac5421afcbd29c6f62b3e6121942afe4734dd16bdeb03",
+      "prompt_sha256": "7a01de87eb834c7408a6fc6b26d5b1b7931983ff7ed28e586636f46aab270544",
+      "verdict_sha256": "276f82f39c4c190b0179931113d6ab15029e1334dacf56535ebb61466cfb02f1"
+    },
+    "ms-0216": {
+      "chunk_index": 12,
+      "sample_input_sha256": "e0be9c8392f1bd90eb0f71e5334fe50b6a8b429686aae9eb94f51195ea30f644",
+      "prompt_sha256": "7a01de87eb834c7408a6fc6b26d5b1b7931983ff7ed28e586636f46aab270544",
+      "verdict_sha256": "3f9b2122b5f2696257961564f1b422a39c8b51516d8f2c6e3feafa2c9a387e32"
+    },
+    "ms-0218": {
+      "chunk_index": 12,
+      "sample_input_sha256": "c53912fad7cc96b2c7291af280f2e77362e1ab122d37874935f681ffdb29f2ee",
+      "prompt_sha256": "7a01de87eb834c7408a6fc6b26d5b1b7931983ff7ed28e586636f46aab270544",
+      "verdict_sha256": "fb11c0dbb25a30403ad27c774b7dc3c59df6c426bdc9139b195173816531c53b"
+    },
+    "ms-0220": {
+      "chunk_index": 12,
+      "sample_input_sha256": "e4ca7a01bc1e0b2cb8e2ad4764270e867f71471a0781dfdbeaf220b857aa3088",
+      "prompt_sha256": "7a01de87eb834c7408a6fc6b26d5b1b7931983ff7ed28e586636f46aab270544",
+      "verdict_sha256": "8faa366995343b1e0fac736bd4d36e3918fb010f53f1e83bb67f42021a5fe104"
     }
   },
   "active_review": {
@@ -742,56 +2032,6 @@
       "ms-0461": "ad52a82381041e2cf483b925137f5c41829fdfd4007e54b4867cc4f3760516b8"
     },
     "pending_ids": [
-      "ms-0117",
-      "ms-0119",
-      "ms-0121",
-      "ms-0123",
-      "ms-0125",
-      "ms-0127",
-      "ms-0129",
-      "ms-0131",
-      "ms-0133",
-      "ms-0136",
-      "ms-0138",
-      "ms-0140",
-      "ms-0142",
-      "ms-0144",
-      "ms-0146",
-      "ms-0148",
-      "ms-0150",
-      "ms-0152",
-      "ms-0154",
-      "ms-0158",
-      "ms-0160",
-      "ms-0162",
-      "ms-0164",
-      "ms-0166",
-      "ms-0168",
-      "ms-0170",
-      "ms-0172",
-      "ms-0174",
-      "ms-0176",
-      "ms-0178",
-      "ms-0180",
-      "ms-0182",
-      "ms-0184",
-      "ms-0186",
-      "ms-0188",
-      "ms-0190",
-      "ms-0192",
-      "ms-0194",
-      "ms-0198",
-      "ms-0200",
-      "ms-0202",
-      "ms-0204",
-      "ms-0206",
-      "ms-0208",
-      "ms-0210",
-      "ms-0212",
-      "ms-0214",
-      "ms-0216",
-      "ms-0218",
-      "ms-0220",
       "ms-0222",
       "ms-0224",
       "ms-0226",

@@ -147,9 +147,14 @@ def main() -> None:
             base = {k: v for k, v in s.items() if k not in ("review", "_draft")}
             base["review"] = review_block(s["sample_id"], verdicts[s["sample_id"]], resolutions, model, prompt_hash)
             new_samples.append(base)
-    if set(verdicts) != {s["sample_id"] for s in new_samples}:
+    dropped_path = REVIEW / "dropped_after_review.json"
+    dropped_after = json.loads(dropped_path.read_text(encoding="utf-8")) if dropped_path.exists() else {}
+    if set(dropped_after) & {s["sample_id"] for s in new_samples}:
+        raise SystemExit("dropped_after_review lists a sample that is still in the drafts")
+    if set(verdicts) - set(dropped_after) != {s["sample_id"] for s in new_samples}:
         raise SystemExit("verdict coverage differs from the assembled new samples")
     disputed = {s["sample_id"] for s in new_samples if s["review"]["status"] == "disputed_resolved"}
+    resolutions = {k: v for k, v in resolutions.items() if k not in dropped_after}
     if set(resolutions) != disputed:
         raise SystemExit(
             f"resolutions must cover exactly the disputed samples (extra: {sorted(set(resolutions) - disputed)[:5]})"
@@ -312,6 +317,7 @@ def main() -> None:
             "reviewer_id": None,
             "statement": "决策人 2026-09-21 答复“第二人工复核人暂无”；基线 5.9 的第二人工复核未完成，本集只能以 provisional 运行，报告须标注。",
         },
+        "dropped_after_review": dropped_after,
         "conflict_fixtures": [
             {
                 "document_key": f["document_key"],

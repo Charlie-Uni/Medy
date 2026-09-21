@@ -38,7 +38,9 @@ def main() -> int:
     if manifest["derived_samples"]["human_confirmation"]["status"] != "confirmed":
         print("derived twins are not human-confirmed; refusing to freeze (spec-v1.1 §5.1)")
         return 2
-    if manifest["second_human_review"]["status"] == "pending" and not manifest["dataset_version"].endswith("-provisional"):
+    if manifest["second_human_review"]["status"] == "pending" and not manifest["dataset_version"].endswith(
+        "-provisional"
+    ):
         print("second human review pending: only a -provisional version may be frozen (spec-m1 §4)")
         return 2
     validator = ProbeSetValidator(SCHEMA_DIR, PageTextProvider(args.pages))
@@ -62,7 +64,9 @@ def main() -> int:
         for f in frozen.errors[:30]:
             print(f"FROZEN ERROR {f.rule} {f.location}: {f.message}")
         return 1
-    print(f"frozen {manifest['dataset_version']} dataset_hash={manifest['dataset_hash']} counts={json.dumps(frozen.counts, ensure_ascii=False)}")
+    print(
+        f"frozen {manifest['dataset_version']} dataset_hash={manifest['dataset_hash']} counts={json.dumps(frozen.counts, ensure_ascii=False)}"
+    )
     return 0
 
 

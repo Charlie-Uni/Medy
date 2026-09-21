@@ -11,41 +11,22 @@
     "answerable": false,
     "expected_behaviour": "insufficient_evidence",
     "abstention": {
-      "scope_document_key": "ema-gvp-annex-i-rev5",
+      "scope_document_key": "ema-gvp-annex-i-rev4",
       "topic": "ICSR提交时限天数",
-      "absence_check": "absence_terms ['15 days', '90 days', 'timeline', 'submission deadline'] 在 ema-gvp-annex-i-rev5 全部 32 页 norm-v1 页文本中出现 0 次（工具复查 2026-09-22，scope 自 Rev 4 迁至 Rev 5）",
+      "absence_check": "absence_terms ['15 days', '90 days', 'timeline', 'submission deadline'] 在 ema-gvp-annex-i-rev4 全部 33 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'15 days': 4, '90 days': 1, 'timeline': 20, 'submission deadline': 0}",
       "document_pages": [
         1,
         2,
         3,
-        4,
-        5,
-        6,
         7,
-        8,
-        9,
         10,
-        11,
-        12,
-        13,
-        14,
-        15,
-        16,
-        17,
-        18,
         19,
         20,
         21,
-        23,
-        24,
         25,
         26,
-        27,
-        28,
-        29,
         30,
-        31,
-        32
+        33
       ]
     },
     "notes": "",
@@ -56,7 +37,7 @@
       "model": "claude-sonnet-5"
     },
     "_draft": {
-      "document_key": "ema-gvp-annex-i-rev5",
+      "document_key": "ema-gvp-annex-i-rev4",
       "title": "Guideline on good pharmacovigilance practices (GVP) – Annex I – Definitions (Rev 4)",
       "rank": 2,
       "warnings": [
@@ -73,16 +54,7 @@
         "page": 19,
         "text": "For the purpose of reporting cases of suspected adverse reactions, the minimum data elements for a case are: an identifiable reporter, an identifiable patient, an adverse reaction and a suspect medicinal product (see GVP Annex IV, ICH-E2D Guideline).",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [],
-        "problems": [],
-        "reason": "Annex I Rev 4 defines ICSR/minimum case elements but gives no numeric EudraVigilance submission deadline. The supplied Rev 4 copy is explicitly superseded/historical; no newer Annex I was supplied."
-      },
-      "decision": "OK (external review); scope moved to Rev 5; reviewer pages widened"
+      }
     }
   },
   {
@@ -91,7 +63,8 @@
     "language": "mixed",
     "slices": [
       "no_answer",
-      "mixed_zh_en"
+      "mixed_zh_en",
+      "protocol_id"
     ],
     "required_gold_evidence": [],
     "answerable": false,
@@ -101,31 +74,16 @@
       "topic": "不良反应报告提交时限天数",
       "absence_check": "absence_terms ['days', '15 days', 'calendar days', 'time limit of'] 在 ema-gvp-module-i 全部 25 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'days': 22, '15 days': 4, 'calendar days': 9, 'time limit of': 0}",
       "document_pages": [
-        1,
-        2,
-        3,
         4,
-        5,
-        6,
-        7,
         8,
         9,
-        10,
-        11,
-        12,
         13,
         14,
-        15,
-        16,
-        17,
         18,
-        19,
         20,
-        21,
         22,
         23,
-        24,
-        25
+        24
       ]
     },
     "notes": "",
@@ -153,18 +111,7 @@
         "page": 8,
         "text": "the submission of accurate and verifiable data on serious and non-serious adverse reactions to the competent authorities within the legally required time-limits [IR Art 11(1)(c)]",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [
-          "slices -['protocol_id']"
-        ],
-        "problems": [],
-        "reason": "Module I requires submission of serious/non-serious adverse reactions within legally required time limits and points to process guidance, but does not state a numeric day count."
-      },
-      "decision": "edited (external review); reviewer pages widened"
+      }
     }
   },
   {
@@ -173,7 +120,8 @@
     "language": "mixed",
     "slices": [
       "no_answer",
-      "mixed_zh_en"
+      "mixed_zh_en",
+      "protocol_id"
     ],
     "required_gold_evidence": [],
     "answerable": false,
@@ -220,18 +168,7 @@
         "page": 8,
         "text": "The audit process should include mechanisms for communicating the audit findings to the auditee and receiving feedback, and reporting the audit findings to management and relevant parties",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [
-          "slices -['protocol_id']"
-        ],
-        "problems": [],
-        "reason": "Module IV provides communication of audit findings, auditee feedback and grading, but no formal appeal/reconsideration mechanism for contesting critical/major grading."
-      },
-      "decision": "edited (external review)"
+      }
     }
   },
   {
@@ -240,7 +177,8 @@
     "language": "mixed",
     "slices": [
       "no_answer",
-      "mixed_zh_en"
+      "mixed_zh_en",
+      "protocol_id"
     ],
     "required_gold_evidence": [],
     "answerable": false,
@@ -287,18 +225,7 @@
         "page": 8,
         "text": "Two such groups that can be differentiated in most databases are the youngest and oldest patients.",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [
-          "slices -['protocol_id']"
-        ],
-        "problems": [],
-        "reason": "Addendum I describes statistical signal-detection methods and specific age groups, but does not prescribe a pregnancy-specific signal-detection method."
-      },
-      "decision": "edited (external review)"
+      }
     }
   },
   {
@@ -307,7 +234,8 @@
     "language": "mixed",
     "slices": [
       "no_answer",
-      "mixed_zh_en"
+      "mixed_zh_en",
+      "protocol_id"
     ],
     "required_gold_evidence": [],
     "answerable": false,
@@ -317,25 +245,18 @@
       "topic": "重复病例协作失职的处罚",
       "absence_check": "absence_terms ['penalty', 'sanction', 'infringement', 'non-compliance'] 在 ema-gvp-module-vi-addendum-i 全部 19 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'penalty': 3, 'sanction': 1, 'infringement': 3, 'non-compliance': 7}",
       "document_pages": [
-        1,
-        2,
         3,
         4,
         5,
-        6,
-        7,
         8,
         9,
         10,
-        11,
         12,
         13,
         14,
-        15,
         16,
         17,
-        18,
-        19
+        18
       ]
     },
     "notes": "",
@@ -361,18 +282,7 @@
         "page": 3,
         "text": "Marketing authorisation holders shall collaborate with the Agency and the Member States in the detection of duplicates of suspected adverse reaction reports",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [
-          "slices -['protocol_id']"
-        ],
-        "problems": [],
-        "reason": "Addendum I states the MAH collaboration duty for duplicate detection, but does not specify a penalty/sanction for failure to collaborate."
-      },
-      "decision": "edited (external review); reviewer pages widened"
+      }
     }
   },
   {
@@ -381,7 +291,8 @@
     "language": "mixed",
     "slices": [
       "no_answer",
-      "mixed_zh_en"
+      "mixed_zh_en",
+      "protocol_id"
     ],
     "required_gold_evidence": [],
     "answerable": false,
@@ -432,18 +343,7 @@
         "page": 3,
         "text": "XML files of ICSRs as submitted by senders will be preserved in their original form by the Agency for regulatory and audit purposes.",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [
-          "slices -['protocol_id']"
-        ],
-        "problems": [],
-        "reason": "Addendum II states that original ICSR XML submissions are preserved for regulatory/audit purposes, but gives no fixed retention period for masked personal data."
-      },
-      "decision": "edited (external review)"
+      }
     }
   },
   {
@@ -452,7 +352,8 @@
     "language": "mixed",
     "slices": [
       "no_answer",
-      "mixed_zh_en"
+      "mixed_zh_en",
+      "protocol_id"
     ],
     "required_gold_evidence": [],
     "answerable": false,
@@ -462,40 +363,17 @@
       "topic": "EU单一评估程序费用",
       "absence_check": "absence_terms ['fee', 'cost recovery', 'invoice', '费用'] 在 ema-gvp-module-vii-rev1 全部 68 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'fee': 14, 'cost recovery': 0, 'invoice': 0, '费用': 0}",
       "document_pages": [
-        3,
         5,
-        6,
-        8,
         18,
         22,
         23,
-        29,
-        31,
-        34,
-        35,
-        36,
         37,
-        38,
         40,
         41,
-        42,
-        45,
-        46,
-        47,
-        48,
-        49,
-        50,
-        51,
-        52,
         53,
         55,
         56,
-        57,
-        60,
-        61,
-        62,
-        63,
-        64
+        57
       ]
     },
     "notes": "",
@@ -523,64 +401,36 @@
         "page": 53,
         "text": "Following receipt of comments, the PRAC Rapporteur/Member State shall prepare an updated assessment report [DIR Art 107e (3)] within 15 days (i.e. by Day 105).",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [
-          "slices -['protocol_id']"
-        ],
-        "problems": [],
-        "reason": "Module VII describes EU PSUR single assessment procedure but does not state the amount of an EMA assessment fee."
-      },
-      "decision": "edited (external review); reviewer pages widened"
+      }
     }
   },
   {
-    "query": "GVP Module VIII 是否为非介入性上市后安全性研究（PASS）的患者知情同意书规定了逐项的必备内容清单？",
+    "query": "GVP Module VIII对非介入性上市后安全性研究（PASS）中患者知情同意书（informed consent form）应包含哪些具体内容有何规定？",
     "dept": "PV",
     "language": "mixed",
     "slices": [
       "no_answer",
-      "mixed_zh_en"
+      "mixed_zh_en",
+      "protocol_id"
     ],
     "required_gold_evidence": [],
     "answerable": false,
     "expected_behaviour": "insufficient_evidence",
     "abstention": {
       "scope_document_key": "ema-gvp-module-viii-rev3",
-      "topic": "知情同意书逐项内容清单",
-      "absence_check": "absence_terms ['informed consent form', 'consent content', 'information sheet', '知情同意书'] 在 ema-gvp-module-viii-rev3 全部 28 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'informed consent form': 6, 'consent content': 0, 'information sheet': 2, '知情同意书': 0}；2026-09-22 问题按外部审校收窄，缺席词未变",
+      "topic": "知情同意书具体内容要求",
+      "absence_check": "absence_terms ['informed consent form', 'consent content', 'information sheet', '知情同意书'] 在 ema-gvp-module-viii-rev3 全部 28 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'informed consent form': 6, 'consent content': 0, 'information sheet': 2, '知情同意书': 0}",
       "document_pages": [
         1,
-        2,
-        3,
         4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
         11,
         12,
         13,
-        14,
-        15,
-        16,
-        17,
-        18,
         19,
         20,
-        21,
-        22,
-        23,
         24,
-        25,
         26,
-        27,
-        28
+        27
       ]
     },
     "notes": "",
@@ -606,37 +456,23 @@
         "page": 11,
         "text": "10. Protection of human subjects: safeguards in order to comply with national and European Union requirements for ensuring the well-being and rights of participants in non-interventional post- authorisation safety studies.",
         "located": "tolerant"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [
-          "query (narrowed per review)",
-          "topic",
-          "slices -['protocol_id']"
-        ],
-        "problems": [],
-        "reason": "Module VIII covers human-subject safeguards and informed-consent compliance at a high level, but does not provide an item-by-item required content list for the PASS consent form."
-      },
-      "decision": "edited (external review); reviewer pages widened"
+      }
     }
   },
   {
-    "query": "对于强制性纳入范围内、五年初始监测期届满的药品，GVP Module X 是否给出了从额外监测清单移除的具体评估标准或审核流程？",
+    "query": "对于强制性纳入范围内、已届满五年监测期的药品，从额外监测清单中移除需满足哪些具体评估标准或经过何种审核程序？",
     "dept": "PV",
-    "language": "mixed",
+    "language": "zh",
     "slices": [
-      "no_answer",
-      "mixed_zh_en"
+      "no_answer"
     ],
     "required_gold_evidence": [],
     "answerable": false,
     "expected_behaviour": "insufficient_evidence",
     "abstention": {
       "scope_document_key": "ema-gvp-module-x",
-      "topic": "五年期满移除的具体标准与流程",
-      "absence_check": "absence_terms ['removal criteria', 'review', 'assessment for removal', '移除标准'] 在 ema-gvp-module-x 全部 9 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'removal criteria': 0, 'review': 41, 'assessment for removal': 0, '移除标准': 0}；2026-09-22 问题按外部审校收窄，缺席词未变",
+      "topic": "五年期满后移除清单的具体标准",
+      "absence_check": "absence_terms ['removal criteria', 'review', 'assessment for removal', '移除标准'] 在 ema-gvp-module-x 全部 9 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'removal criteria': 0, 'review': 41, 'assessment for removal': 0, '移除标准': 0}",
       "document_pages": [
         1,
         2,
@@ -674,19 +510,7 @@
         "page": 6,
         "text": "is responsible for removing medicinal products from the list after a pre-determined time period;",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [
-          "query (narrowed per review)",
-          "topic"
-        ],
-        "problems": [],
-        "reason": "Module X gives the initial five-year period and assigns list maintenance/removal responsibilities, but no specific post-five-year assessment criteria or review workflow for removal."
-      },
-      "decision": "edited (external review)"
+      }
     }
   },
   {
@@ -695,7 +519,8 @@
     "language": "mixed",
     "slices": [
       "no_answer",
-      "mixed_zh_en"
+      "mixed_zh_en",
+      "protocol_id"
     ],
     "required_gold_evidence": [],
     "answerable": false,
@@ -706,24 +531,16 @@
       "absence_check": "absence_terms ['penalty', 'fine', 'sanction', 'infringement'] 在 ema-gvp-module-xv-rev1 全部 20 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'penalty': 3, 'fine': 41, 'sanction': 1, 'infringement': 3}",
       "document_pages": [
         1,
-        2,
-        3,
         4,
-        5,
-        6,
         7,
-        8,
-        9,
         10,
         11,
         12,
         13,
-        14,
         15,
         16,
         17,
         18,
-        19,
         20
       ]
     },
@@ -752,18 +569,7 @@
         "page": 13,
         "text": "the marketing authorisation holder shall be required to inform the competent authorities in the Member States, the Agency and the European Commission [DIR Art 106a].",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [
-          "slices -['protocol_id']"
-        ],
-        "problems": [],
-        "reason": "Module XV sets DHPC coordination obligations but does not specify fines, sanctions, or penalties for missing an agreed dissemination schedule."
-      },
-      "decision": "edited (external review); reviewer pages widened"
+      }
     }
   },
   {
@@ -784,36 +590,16 @@
       "absence_check": "absence_terms ['approved list', 'pictogram list', 'symbol meaning', '图案清单'] 在 ema-gvp-module-xvi-rev3 全部 43 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'approved list': 0, 'pictogram list': 0, 'symbol meaning': 0, '图案清单': 0}",
       "document_pages": [
         1,
-        2,
-        4,
-        5,
         6,
         7,
-        10,
         11,
-        12,
-        13,
-        16,
-        17,
         18,
         19,
-        25,
-        27,
-        28,
-        29,
-        30,
         31,
-        32,
-        33,
-        34,
-        35,
         36,
         37,
         38,
-        39,
-        40,
-        41,
-        42
+        40
       ]
     },
     "notes": "",
@@ -839,16 +625,7 @@
         "page": 37,
         "text": "The Guideline on the Readability of the Labelling and Package Leaflet of Medicinal Products for Human Use32 includes guidance on the use of symbols and pictograms to support text in the PL in ways useful to the patient [DIR Art 62], provided the size of the graphic provides for easy legibility and the meaning of the symbol is clear beyond any doubt.",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [],
-        "problems": [],
-        "reason": "Module XVI refers to package-leaflet readability guidance and possible symbols/pictograms, but does not provide an approved pictogram catalogue with meanings."
-      },
-      "decision": "OK (external review); reviewer pages widened"
+      }
     }
   },
   {
@@ -867,30 +644,15 @@
       "absence_check": "absence_terms ['°C', 'temperature range', 'storage condition', 'degrees'] 在 ema-gvp-pp-i 全部 25 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'°C': 21, 'temperature range': 1, 'storage condition': 3, 'degrees': 5}",
       "document_pages": [
         1,
-        2,
-        3,
         4,
         5,
-        6,
-        7,
         8,
-        9,
-        10,
         11,
-        12,
-        13,
         14,
-        15,
-        16,
-        17,
-        18,
-        19,
         20,
         21,
-        22,
         23,
-        24,
-        25
+        24
       ]
     },
     "notes": "",
@@ -918,16 +680,7 @@
         "page": 20,
         "text": "due to possible cold chain and handling deviations, localised action should be considered before escalation to a national recall or quarantine.",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [],
-        "problems": [],
-        "reason": "The vaccine chapter discusses cold-chain/handling deviations and their pharmacovigilance implications, but does not prescribe a numeric storage temperature range."
-      },
-      "decision": "OK (external review); reviewer pages widened"
+      }
     }
   },
   {
@@ -947,9 +700,6 @@
       "topic": "研究者财务披露要求",
       "absence_check": "absence_terms ['financial disclosure', 'Part 54', 'conflict of interest'] 在 fda-investigator-responsibilities-2009 全部 18 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'financial disclosure': 0, 'Part 54': 0, 'conflict of interest': 1}",
       "document_pages": [
-        1,
-        2,
-        3,
         4,
         5,
         6,
@@ -957,8 +707,6 @@
         8,
         9,
         10,
-        11,
-        12,
         13,
         14,
         15,
@@ -989,16 +737,7 @@
         "page": 5,
         "text": "Investigators and sponsors should refer to 21 CFR Parts 11, 50, 54, 56, and 312 for a more comprehensive listing of FDA's requirements for the conduct of drug and biologics studies.",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [],
-        "problems": [],
-        "reason": "The 2009 FDA investigator-responsibilities guidance refers readers to 21 CFR Part 54 but does not set out the substantive financial-disclosure requirements."
-      },
-      "decision": "OK (external review); reviewer pages widened"
+      }
     }
   },
   {
@@ -1013,9 +752,9 @@
     "answerable": false,
     "expected_behaviour": "insufficient_evidence",
     "abstention": {
-      "scope_document_key": "fda-investigator-safety-reporting-2025",
+      "scope_document_key": "fda-investigator-safety-reporting-2021",
       "topic": "研究者未履行报告义务的处罚",
-      "absence_check": "absence_terms ['disqualification', 'penalty', 'warning letter', 'noncompliance'] 在 fda-investigator-safety-reporting-2025 全部 14 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'disqualification': 0, 'penalty': 3, 'warning letter': 1, 'noncompliance': 7}",
+      "absence_check": "absence_terms ['disqualification', 'penalty', 'warning letter', 'noncompliance'] 在 fda-investigator-safety-reporting-2021 全部 14 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'disqualification': 0, 'penalty': 3, 'warning letter': 1, 'noncompliance': 7}",
       "document_pages": [
         1,
         2,
@@ -1041,7 +780,7 @@
       "model": "claude-sonnet-5"
     },
     "_draft": {
-      "document_key": "fda-investigator-safety-reporting-2025",
+      "document_key": "fda-investigator-safety-reporting-2021",
       "title": "Investigator Responsibilities — Safety Reporting for Investigational Drugs and Devices (Final, September 2021)",
       "rank": 1,
       "warnings": [],
@@ -1052,16 +791,7 @@
         "warning letter": 1,
         "noncompliance": 7
       },
-      "nearest_clause": null,
-      "decision": "OK (external review)",
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [],
-        "problems": [],
-        "reason": "The supplied source corresponding to this document key is the December 2025 final FDA Investigator Responsibilities—Safety Reporting guidance; it states reporting duties/timing but no investigator penalty/disqualification scheme for late SAE reporting."
-      }
+      "nearest_clause": null
     }
   },
   {
@@ -1083,7 +813,6 @@
       "document_pages": [
         1,
         2,
-        3,
         4,
         5,
         6,
@@ -1120,16 +849,7 @@
         "page": 10,
         "text": "In addition to including protocol deviation information in their clinical study reports (see section III.B.1), during the conduct of the clinical investigation, sponsors must report serious and unexpected suspected adverse reactions for drug products under 21 CFR 312.32",
         "located": "missing"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [],
-        "problems": [],
-        "reason": "The December 2024 FDA document is Draft—Not for Implementation. It discusses protocol-deviation information in study/safety reports but does not require important deviations to be submitted specifically in the IND annual report under §312.33."
-      },
-      "decision": "OK (external review); reviewer pages widened"
+      }
     }
   },
   {
@@ -1188,16 +908,7 @@
         "page": 12,
         "text": "Significant issues identified through monitoring and oversight activities and the actions to be taken should be documented and communicated to the appropriate parties, which may include, but are not limited to (1) sponsor management; (2) sponsor teams; (3) clinical sites; (4) institutional review boards; (5) other relevant parties (for example, DMCs and relevant contract research organizations); and (6) applicable regulatory agencies, including FDA, when appropriate.",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [],
-        "problems": [],
-        "reason": "FDA RBM Q&A says significant monitoring issues should be evaluated/documented and acted on timely/promptly, but gives no fixed number of days or business days for reporting them to FDA."
-      },
-      "decision": "OK (external review)"
+      }
     }
   },
   {
@@ -1216,27 +927,16 @@
       "topic": "集中监测人员资质培训要求",
       "absence_check": "absence_terms ['monitor qualifications', 'monitor training', 'credentialing', 'certified'] 在 fda-risk-based-monitoring-2013 全部 22 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'monitor qualifications': 0, 'monitor training': 0, 'credentialing': 0, 'certified': 2}",
       "document_pages": [
-        1,
-        2,
-        3,
         4,
         5,
         6,
         7,
         8,
-        9,
-        10,
         11,
         12,
         13,
-        14,
         15,
         16,
-        17,
-        18,
-        19,
-        20,
-        21,
         22
       ]
     },
@@ -1263,16 +963,7 @@
         "page": 6,
         "text": "centralized monitoring of clinical data by statistical and data management personnel",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [],
-        "problems": [],
-        "reason": "The 2013 risk-based monitoring guidance identifies centralized monitoring personnel/functions but does not prescribe specific credentials, certification, or training requirements for centralized monitors."
-      },
-      "decision": "OK (external review); reviewer pages widened"
+      }
     }
   },
   {
@@ -1281,7 +972,8 @@
     "language": "mixed",
     "slices": [
       "no_answer",
-      "mixed_zh_en"
+      "mixed_zh_en",
+      "protocol_id"
     ],
     "required_gold_evidence": [],
     "answerable": false,
@@ -1291,39 +983,17 @@
       "topic": "非劣效性试验样本量计算公式",
       "absence_check": "absence_terms ['sample size formula', 'power calculation', 'statistical formula'] 在 ich-e10-step4-2000 全部 35 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'sample size formula': 0, 'power calculation': 1, 'statistical formula': 0}",
       "document_pages": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
         10,
         11,
-        12,
-        14,
-        15,
         16,
-        17,
-        18,
         19,
         20,
-        21,
-        22,
-        24,
         25,
-        26,
         27,
         28,
-        29,
         30,
-        31,
         32,
-        33,
-        34,
-        35
+        34
       ]
     },
     "notes": "",
@@ -1348,22 +1018,11 @@
         "page": 30,
         "text": "Because the choice of the margin will therefore be conservative, sample si zes may be very large.",
         "located": "tolerant"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [
-          "slices -['protocol_id']"
-        ],
-        "problems": [],
-        "reason": "ICH E10 discusses non-inferiority margins and implications for sample size but does not provide a specific sample-size formula."
-      },
-      "decision": "edited (external review); reviewer pages widened"
+      }
     }
   },
   {
-    "query": "ICH E11(R1) 是否给出了判定儿科外推程度（完全外推、部分外推或不外推）的固定阈值或决策表？",
+    "query": "ICH E11(R1)对于判定儿科药物开发中应采用完全外推(full extrapolation)、部分外推(partial extrapolation)还是不外推(no extrapolation)的具体标准是什么？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
@@ -1376,33 +1035,19 @@
     "expected_behaviour": "insufficient_evidence",
     "abstention": {
       "scope_document_key": "ich-e11-r1-step4-2017",
-      "topic": "外推程度的固定阈值/决策表",
-      "absence_check": "absence_terms ['full extrapolation', 'partial extrapolation', 'no extrapolation'] 在 ich-e11-r1-step4-2017 全部 25 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'full extrapolation': 0, 'partial extrapolation': 0, 'no extrapolation': 0}；2026-09-22 问题按外部审校收窄，缺席词未变",
+      "topic": "外推程度判定标准（完全/部分/不外推）",
+      "absence_check": "absence_terms ['full extrapolation', 'partial extrapolation', 'no extrapolation'] 在 ich-e11-r1-step4-2017 全部 25 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'full extrapolation': 0, 'partial extrapolation': 0, 'no extrapolation': 0}",
       "document_pages": [
-        1,
         2,
-        3,
-        4,
         5,
-        6,
         7,
         8,
-        9,
         10,
         11,
         12,
-        13,
-        14,
-        15,
         16,
-        17,
         18,
-        19,
-        20,
-        21,
         22,
-        23,
-        24,
         25
       ]
     },
@@ -1428,19 +1073,7 @@
         "page": 16,
         "text": "Section 5 on APPROACHES TO OPTIMIZE PEDIATRIC DRUG DEVELOPMENT includes enhancement to the topic of pediatric extrapolation, and introduces modelling and simulation (M&S).",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [
-          "query (narrowed per review)",
-          "topic"
-        ],
-        "problems": [],
-        "reason": "ICH E11(R1) discusses factors relevant to pediatric extrapolation, but does not provide fixed thresholds/decision table categorising full, partial, or no extrapolation."
-      },
-      "decision": "edited (external review); reviewer pages widened"
+      }
     }
   },
   {
@@ -1488,42 +1121,28 @@
         "QoL": 0,
         "patient-reported outcome": 5
       },
-      "nearest_clause": null,
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [],
-        "problems": [],
-        "reason": "E12A addresses antihypertensive efficacy/safety study principles but does not require quality-of-life or patient-reported outcome assessment."
-      },
-      "decision": "OK (external review)"
+      "nearest_clause": null
     }
   },
   {
-    "query": "ICH E14 是否为 thorough QT/QTc study 规定了固定的受试者例数或统一的样本量计算公式？",
+    "query": "根据ICH E14,‘thorough QT/QTc study’应纳入多少受试者(sample size)才能保证足够的统计把握度(statistical power)?",
     "dept": "CO",
     "language": "mixed",
     "slices": [
       "no_answer",
-      "mixed_zh_en"
+      "mixed_zh_en",
+      "protocol_id"
     ],
     "required_gold_evidence": [],
     "answerable": false,
     "expected_behaviour": "insufficient_evidence",
     "abstention": {
       "scope_document_key": "ich-e14-step4-2005",
-      "topic": "Thorough QT study 固定样本量/公式",
-      "absence_check": "absence_terms ['sample size', 'number of subjects', 'statistical power'] 在 ich-e14-step4-2005 全部 18 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'sample size': 12, 'number of subjects': 7, 'statistical power': 2}；2026-09-22 问题按外部审校收窄，缺席词未变",
+      "topic": "Thorough QT study样本量要求",
+      "absence_check": "absence_terms ['sample size', 'number of subjects', 'statistical power'] 在 ich-e14-step4-2005 全部 18 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'sample size': 12, 'number of subjects': 7, 'statistical power': 2}",
       "document_pages": [
-        1,
-        2,
-        3,
-        4,
-        5,
         6,
         7,
-        8,
         9,
         10,
         11,
@@ -1532,8 +1151,7 @@
         14,
         15,
         16,
-        17,
-        18
+        17
       ]
     },
     "notes": "",
@@ -1560,20 +1178,7 @@
         "page": 7,
         "text": "The confidence in the ability of the study to detect QT/QTc prolongation can be greatly enhanced by the use of a",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [
-          "query (narrowed per review)",
-          "topic",
-          "slices -['protocol_id']"
-        ],
-        "problems": [],
-        "reason": "ICH E14 discusses design, confidence intervals and assay sensitivity of the thorough QT/QTc study, but does not prescribe a fixed sample count or universal sample-size formula."
-      },
-      "decision": "edited (external review); reviewer pages widened"
+      }
     }
   },
   {
@@ -1582,7 +1187,8 @@
     "language": "mixed",
     "slices": [
       "no_answer",
-      "mixed_zh_en"
+      "mixed_zh_en",
+      "protocol_id"
     ],
     "required_gold_evidence": [],
     "answerable": false,
@@ -1628,65 +1234,40 @@
         "page": 8,
         "text": "In general, the clinical investigator is responsible for maintaining the first coding key and does not have access to the second coding key.",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [
-          "slices -['protocol_id']"
-        ],
-        "problems": [],
-        "reason": "ICH E15 explains double-coded samples, coding keys, custody/access, but does not specify a retention duration for the linkage between the first and second keys."
-      },
-      "decision": "edited (external review)"
+      }
     }
   },
   {
-    "query": "ICH E17 是否规定了多区域临床试验（MRCT）独立数据监查委员会（DMC）的成员人数或各区域代表比例？",
+    "query": "根据 ICH E17,多区域临床试验(MRCT)的独立数据监查委员会(DMC)应设置多少名成员或具体组成比例?",
     "dept": "CO",
     "language": "mixed",
     "slices": [
       "no_answer",
-      "mixed_zh_en"
+      "mixed_zh_en",
+      "protocol_id"
     ],
     "required_gold_evidence": [],
     "answerable": false,
     "expected_behaviour": "insufficient_evidence",
     "abstention": {
       "scope_document_key": "ich-e17-step4-2017",
-      "topic": "DMC 成员人数/区域比例",
-      "absence_check": "absence_terms ['number of members', 'composition ratio', 'membership size'] 在 ich-e17-step4-2017 全部 29 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'number of members': 3, 'composition ratio': 0, 'membership size': 0}；2026-09-22 问题按外部审校收窄，缺席词未变",
+      "topic": "DMC人数与组成比例",
+      "absence_check": "absence_terms ['number of members', 'composition ratio', 'membership size'] 在 ich-e17-step4-2017 全部 29 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'number of members': 3, 'composition ratio': 0, 'membership size': 0}",
       "document_pages": [
-        1,
         2,
-        3,
         4,
-        5,
-        6,
         7,
-        8,
         9,
-        10,
         11,
-        12,
-        13,
         14,
         15,
         16,
-        17,
         18,
         19,
-        20,
         21,
         22,
-        23,
         24,
-        25,
-        26,
-        27,
-        28,
-        29
+        28
       ]
     },
     "notes": "",
@@ -1713,42 +1294,28 @@
         "page": 22,
         "text": "the use of a central independent data monitoring committee (with representation from participating regions to adequately assess the context of the trial) should be considered, in order to monitor the accumulating efficacy and/or safety information from the MRCT while maintaining integrity of the ong",
         "located": "missing"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [
-          "query (narrowed per review)",
-          "topic",
-          "slices -['protocol_id']"
-        ],
-        "problems": [],
-        "reason": "ICH E17 recommends a central independent DMC with representation from participating regions in relevant MRCTs, but gives no member count or regional representation ratio."
-      },
-      "decision": "edited (external review); reviewer pages widened"
+      }
     }
   },
   {
-    "query": "ICH E19 是否给出了从选择性安全性数据收集恢复为全面收集的预设量化触发阈值或固定决策算法？",
+    "query": "根据ICH E19，若在试验中需要从选择性安全性数据收集（selective safety data collection）转为全面安全性数据收集（comprehensive safety data collection），应满足哪些具体的触发标准或决策流程（reversion criteria）？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
       "no_answer",
-      "mixed_zh_en"
+      "mixed_zh_en",
+      "protocol_id"
     ],
     "required_gold_evidence": [],
     "answerable": false,
     "expected_behaviour": "insufficient_evidence",
     "abstention": {
       "scope_document_key": "ich-e19-step4-2022",
-      "topic": "恢复全面收集的量化阈值/算法",
-      "absence_check": "absence_terms ['trigger', 'threshold', 'reversion criteria', 'decision process'] 在 ich-e19-step4-2022 全部 15 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'trigger': 13, 'threshold': 13, 'reversion criteria': 0, 'decision process': 1}；2026-09-22 问题按外部审校收窄，缺席词未变",
+      "topic": "转为全面收集的触发标准",
+      "absence_check": "absence_terms ['trigger', 'threshold', 'reversion criteria', 'decision process'] 在 ich-e19-step4-2022 全部 15 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'trigger': 13, 'threshold': 13, 'reversion criteria': 0, 'decision process': 1}",
       "document_pages": [
         1,
         2,
-        3,
-        4,
         5,
         6,
         7,
@@ -1758,8 +1325,7 @@
         11,
         12,
         13,
-        14,
-        15
+        14
       ]
     },
     "notes": "",
@@ -1787,20 +1353,7 @@
         "page": 12,
         "text": "Concerns may emerge during the conduct of clinical trials utilising selective safety data collection that will require intensification of safety monitoring or reversion to comprehensive safety data collection.",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [
-          "query (narrowed per review)",
-          "topic",
-          "slices -['protocol_id']"
-        ],
-        "problems": [],
-        "reason": "ICH E19 explicitly notes that emerging concerns may require intensified monitoring or reversion to comprehensive collection, but does not give preset quantitative triggers or a fixed decision algorithm."
-      },
-      "decision": "edited (external review); reviewer pages widened"
+      }
     }
   },
   {
@@ -1856,16 +1409,64 @@
         "page": 7,
         "text": "Regulatory agencies should be notified (e.g., by telephone, facsimile transmission, or in writing) as soon as possible but no later than 7 calendar days after first knowledge by the sponsor that a case qualifies, followed by as complete a report as possible within 8 additional calendar days.",
         "located": "exact"
+      }
+    }
+  },
+  {
+    "query": "根据ICH E2C(R2)，PBRER的Executive Summary（执行摘要）部分具体应包含哪些内容要素？",
+    "dept": "PV",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "protocol_id"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "ich-e2c-r2-step4-2012",
+      "topic": "Executive Summary内容要求",
+      "absence_check": "absence_terms ['Executive Summary should', 'executive summary content', 'summary should include'] 在 ich-e2c-r2-step4-2012 全部 41 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'Executive Summary should': 1, 'executive summary content': 0, 'summary should include': 1}",
+      "document_pages": [
+        2,
+        6,
+        7,
+        8,
+        11,
+        12,
+        13,
+        22,
+        23,
+        25,
+        35,
+        38,
+        41
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0487",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e2c-r2-step4-2012",
+      "title": "ICH E2C(R2): Periodic Benefit-Risk Evaluation Report (PBRER)",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "文档将Executive Summary列为PBRER必备章节标题，但提供的页文本仅列出目录条目，未说明该章节应包含的具体内容要素，属于该体裁应覆盖却未提供的事项。",
+      "absence_hits": {
+        "Executive Summary should": 1,
+        "executive summary content": 0,
+        "summary should include": 1
       },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [],
-        "problems": [],
-        "reason": "ICH E2A defines expedited-reporting timeframes but does not specify regulatory penalties/sanctions for late submission."
-      },
-      "decision": "OK (external review)"
+      "nearest_clause": {
+        "page": 13,
+        "text": "Title Page Executive Summary Table of Contents 1. Introduction 2. Worldwide Marketing Approval Status 3. Actions Taken in the Reporting Interval for Safety Reasons",
+        "located": "exact"
+      }
     }
   },
   {
@@ -1874,7 +1475,8 @@
     "language": "mixed",
     "slices": [
       "no_answer",
-      "mixed_zh_en"
+      "mixed_zh_en",
+      "protocol_id"
     ],
     "required_gold_evidence": [],
     "answerable": false,
@@ -1924,18 +1526,7 @@
         "page": 10,
         "text": "Non-serious ADRs should be included in the periodic safety update report according to the ICH E2C guideline.",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [
-          "slices -['protocol_id']"
-        ],
-        "problems": [],
-        "reason": "ICH E2D directs non-serious ADRs to periodic safety reporting according to ICH E2C but does not set the PSUR submission periodicity itself."
-      },
-      "decision": "edited (external review)"
+      }
     }
   },
   {
@@ -1944,7 +1535,8 @@
     "language": "mixed",
     "slices": [
       "no_answer",
-      "mixed_zh_en"
+      "mixed_zh_en",
+      "protocol_id"
     ],
     "required_gold_evidence": [],
     "answerable": false,
@@ -1954,25 +1546,18 @@
       "topic": "PSUR提交频率",
       "absence_check": "absence_terms ['PSUR frequency', 'submission interval', 'every six months', 'periodicity'] 在 ich-e2e-step4-2004 全部 20 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'PSUR frequency': 2, 'submission interval': 0, 'every six months': 0, 'periodicity': 8}",
       "document_pages": [
-        1,
-        2,
-        3,
         5,
         6,
         7,
         8,
         9,
         10,
-        11,
-        12,
         13,
         14,
         15,
         16,
         17,
-        18,
-        19,
-        20
+        19
       ]
     },
     "notes": "",
@@ -1998,18 +1583,7 @@
         "page": 10,
         "text": "o Periodic Safety Update Reports (PSURs).",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [
-          "slices -['protocol_id']"
-        ],
-        "problems": [],
-        "reason": "ICH E2E lists PSURs among routine pharmacovigilance activities but does not provide a PSUR submission interval."
-      },
-      "decision": "edited (external review); reviewer pages widened"
+      }
     }
   },
   {
@@ -2028,39 +1602,17 @@
       "topic": "DSUR提交所需语言",
       "absence_check": "absence_terms ['language', 'translation', 'English', 'local language'] 在 ich-e2f-step4-2010 全部 35 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'language': 19, 'translation': 16, 'English': 7, 'local language': 3}",
       "document_pages": [
-        1,
-        2,
-        3,
-        4,
-        5,
         6,
         7,
         8,
         9,
         10,
         11,
-        12,
-        13,
-        14,
-        15,
         16,
-        17,
-        18,
-        19,
         20,
-        21,
-        22,
-        23,
-        24,
-        25,
-        26,
-        27,
-        28,
-        29,
         30,
         31,
         32,
-        33,
         34,
         35
       ]
@@ -2090,16 +1642,7 @@
         "page": 10,
         "text": "If a sponsor intends to submit a DSUR in eCTD format, the sponsor should consult with the relevant regulatory authority regarding the appropriate placement of the DSUR in the eCTD structure.",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [],
-        "problems": [],
-        "reason": "ICH E2F covers DSUR format/presentation and regional consultation but does not mandate a universal submission language such as English or sponsor-country official language."
-      },
-      "decision": "OK (external review); reviewer pages widened"
+      }
     }
   },
   {
@@ -2108,7 +1651,8 @@
     "language": "mixed",
     "slices": [
       "no_answer",
-      "mixed_zh_en"
+      "mixed_zh_en",
+      "protocol_id"
     ],
     "required_gold_evidence": [],
     "answerable": false,
@@ -2118,44 +1662,18 @@
       "topic": "不良事件编码词典版本要求",
       "absence_check": "absence_terms ['MedDRA', 'dictionary version', 'coding version'] 在 ich-e3-step4-1995 全部 49 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'MedDRA': 22, 'dictionary version': 0, 'coding version': 0}",
       "document_pages": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
         10,
-        11,
-        12,
         13,
         14,
-        15,
-        16,
-        17,
-        18,
-        19,
-        20,
         21,
-        22,
-        23,
         24,
         25,
-        26,
-        27,
         28,
-        29,
         30,
-        31,
         33,
         34,
         36,
         37,
-        38,
-        39,
-        40,
         41,
         46
       ]
@@ -2184,22 +1702,11 @@
         "page": 30,
         "text": "One way to do this is with a standard adverse reaction/events dictionary.",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [
-          "slices -['protocol_id']"
-        ],
-        "problems": [],
-        "reason": "ICH E3 recommends use of a standard adverse reaction/events dictionary for grouping events but does not prescribe a specific dictionary version."
-      },
-      "decision": "edited (external review); reviewer pages widened"
+      }
     }
   },
   {
-    "query": "ICH E6(R3) 是否规定了受试者报酬的统一金额、计算公式或固定费率？",
+    "query": "根据ICH E6(R3)指南,受试者参与临床试验应获得的具体报酬金额或支付标准是什么?",
     "dept": "CO",
     "language": "mixed",
     "slices": [
@@ -2212,50 +1719,23 @@
     "expected_behaviour": "insufficient_evidence",
     "abstention": {
       "scope_document_key": "ich-e6-r3-step4-2025",
-      "topic": "受试者报酬的固定金额/公式/费率",
-      "absence_check": "absence_terms ['specific amount', 'payment schedule', 'compensation rate', 'monetary sum'] 在 ich-e6-r3-step4-2025 全部 86 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'specific amount': 0, 'payment schedule': 0, 'compensation rate': 0, 'monetary sum': 0}；2026-09-22 问题按外部审校收窄，缺席词未变",
+      "topic": "受试者报酬具体金额标准",
+      "absence_check": "absence_terms ['specific amount', 'payment schedule', 'compensation rate', 'monetary sum'] 在 ich-e6-r3-step4-2025 全部 86 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'specific amount': 0, 'payment schedule': 0, 'compensation rate': 0, 'monetary sum': 0}",
       "document_pages": [
-        1,
         2,
-        7,
-        8,
-        9,
         10,
         12,
-        13,
         16,
         17,
         22,
         23,
-        24,
-        25,
         28,
-        29,
         30,
-        32,
-        33,
-        36,
-        38,
-        46,
         50,
-        52,
-        53,
         54,
-        56,
-        57,
-        62,
         65,
-        66,
-        67,
-        68,
         69,
-        70,
-        71,
-        72,
-        76,
-        77,
-        78,
-        84
+        77
       ]
     },
     "notes": "",
@@ -2281,19 +1761,7 @@
         "page": 16,
         "text": "If the trial participants are compensated for their participation in the trial, the IRB/IEC should review both the amount and method of payment to participants to assure that neither presents problems of coercion or undue influence on the trial participants.",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [
-          "query (narrowed per review)",
-          "topic"
-        ],
-        "problems": [],
-        "reason": "ICH E6(R3) requires IRB/IEC review of payment amount/method and sets anti-coercion principles, but does not prescribe a uniform monetary amount, formula, or fixed rate."
-      },
-      "decision": "edited (external review); reviewer pages widened"
+      }
     }
   },
   {
@@ -2302,7 +1770,8 @@
     "language": "mixed",
     "slices": [
       "no_answer",
-      "mixed_zh_en"
+      "mixed_zh_en",
+      "protocol_id"
     ],
     "required_gold_evidence": [],
     "answerable": false,
@@ -2343,22 +1812,11 @@
         "page": 4,
         "text": "It is also important not to exclude unnecessarily patients with concomitant illnesses; it is only by observing such patients that drug-disease interactions can be detected.",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [
-          "slices -['protocol_id']"
-        ],
-        "problems": [],
-        "reason": "ICH E7 addresses inclusion/representation of older patients and relevant clinical considerations, but does not mandate a named frailty or functional-status scale such as Karnofsky or ADL."
-      },
-      "decision": "edited (external review)"
+      }
     }
   },
   {
-    "query": "ICH E8(R1) 是否规定了独立数据监查委员会（DMC）的固定成员人数、专业构成比例或角色配额？",
+    "query": "根据ICH E8(R1)，独立数据监查委员会（DMC）应包含多少名成员及其具体组成要求是什么？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
@@ -2371,36 +1829,21 @@
     "expected_behaviour": "insufficient_evidence",
     "abstention": {
       "scope_document_key": "ich-e8-r1-step4-2021",
-      "topic": "DMC 固定人数/构成比例",
-      "absence_check": "absence_terms ['number of members', 'composition', 'voting member', 'independent members'] 在 ich-e8-r1-step4-2021 全部 29 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'number of members': 3, 'composition': 13, 'voting member': 0, 'independent members': 0}；2026-09-22 问题按外部审校收窄，缺席词未变",
+      "topic": "DMC成员组成要求",
+      "absence_check": "absence_terms ['number of members', 'composition', 'voting member', 'independent members'] 在 ich-e8-r1-step4-2021 全部 29 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'number of members': 3, 'composition': 13, 'voting member': 0, 'independent members': 0}",
       "document_pages": [
         1,
         3,
-        4,
-        5,
         7,
         8,
         9,
-        10,
         11,
-        12,
-        13,
-        14,
-        15,
         16,
-        17,
-        18,
         19,
         20,
-        21,
         22,
-        23,
         24,
-        25,
-        26,
-        27,
-        28,
-        29
+        25
       ]
     },
     "notes": "",
@@ -2428,19 +1871,7 @@
         "page": 25,
         "text": "This group monitors accumulating data while the study is be ing conducted to make recommendations on whether to continue, modify, or terminate a study.",
         "located": "tolerant"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [
-          "query (narrowed per review)",
-          "topic"
-        ],
-        "problems": [],
-        "reason": "ICH E8(R1) describes the role and need for an independent DMC, but does not prescribe a fixed member count, professional composition ratio, or role quota."
-      },
-      "decision": "edited (external review); reviewer pages widened"
+      }
     }
   },
   {
@@ -2462,25 +1893,15 @@
       "document_pages": [
         1,
         2,
-        3,
-        4,
         5,
-        6,
-        7,
         8,
         9,
         10,
-        11,
-        12,
-        13,
         14,
         15,
         16,
-        17,
         18,
-        19,
         20,
-        21,
         22
       ]
     },
@@ -2509,16 +1930,7 @@
         "page": 16,
         "text": "depending on the proportion of missing data, this may undermine the robustness of the results (see A.5.).",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [],
-        "problems": [],
-        "reason": "ICH E9(R1) states that the proportion of missing data can undermine robustness and motivates sensitivity analysis, but gives no numeric percentage/cutoff that automatically triggers a stricter analysis."
-      },
-      "decision": "OK (external review); reviewer pages widened"
+      }
     }
   },
   {
@@ -2542,7 +1954,6 @@
         3,
         4,
         5,
-        6,
         7,
         8,
         9,
@@ -2552,7 +1963,6 @@
         13,
         14,
         15,
-        16,
         17,
         18,
         19,
@@ -2578,11 +1988,8 @@
         39,
         40,
         41,
-        42,
-        43,
         44,
         45,
-        46,
         47,
         48,
         49
@@ -2610,16 +2017,7 @@
         "page": 25,
         "text": "SMQ 的优势包括 • 应用于多个治疗领域 • 经过验证可重复使用的搜索逻辑 • 交流安全性信息的标准化 • 数据检索的一致性 • 由 MSSO 和 JMO 维护",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [],
-        "problems": [],
-        "reason": "The MedDRA Data Retrieval PTC describes SMQ validation/use and search approaches, but does not tabulate numeric sensitivity, specificity, or PPV values for individual SMQs."
-      },
-      "decision": "OK (external review); reviewer pages widened"
+      }
     }
   },
   {
@@ -2638,25 +2036,9 @@
       "topic": "订阅费用标准",
       "absence_check": "absence_terms ['费用', '订阅费', 'fee', '价格'] 在 meddra-intro-guide-25-zh-hans 全部 62 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'费用': 0, '订阅费': 0, 'fee': 14, '价格': 0}",
       "document_pages": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
         8,
         9,
-        10,
-        11,
-        12,
-        13,
-        14,
         15,
-        16,
-        17,
-        18,
-        19,
         20,
         21,
         22,
@@ -2665,41 +2047,9 @@
         25,
         26,
         27,
-        28,
-        29,
-        30,
-        31,
-        32,
-        33,
-        34,
-        35,
-        36,
-        37,
-        38,
         39,
-        40,
-        41,
         42,
-        43,
-        44,
-        45,
-        46,
-        47,
-        48,
-        49,
-        50,
-        51,
-        52,
-        53,
-        54,
-        55,
-        56,
-        57,
-        58,
-        59,
-        60,
-        61,
-        62
+        50
       ]
     },
     "notes": "",
@@ -2723,20 +2073,11 @@
         "fee": 14,
         "价格": 0
       },
-      "nearest_clause": null,
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [],
-        "problems": [],
-        "reason": "The MedDRA Introductory Guide notes that it is included with a MedDRA subscription, but does not list subscription fee amounts or pricing rates."
-      },
-      "decision": "OK (external review); reviewer pages widened"
+      "nearest_clause": null
     }
   },
   {
-    "query": "《SMQ 入门指南》是否列出了使用 SMQ 需向 MSSO 或 ICH 另行支付的许可费或订阅费金额或费率？",
+    "query": "使用标准 MedDRA 分析查询 (SMQ) 是否需要向 MSSO 或 ICH 支付额外的许可费用或订阅费？",
     "dept": "PV",
     "language": "mixed",
     "slices": [
@@ -2748,139 +2089,16 @@
     "expected_behaviour": "insufficient_evidence",
     "abstention": {
       "scope_document_key": "meddra-smq-intro-guide-25-zh-hans",
-      "topic": "SMQ 单独许可/订阅费金额",
-      "absence_check": "absence_terms ['许可费', '收费', '订阅费用'] 在 meddra-smq-intro-guide-25-zh-hans 全部 301 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'许可费': 0, '收费': 0, '订阅费用': 0}；2026-09-22 问题按外部审校收窄，缺席词未变",
+      "topic": "SMQ使用许可费用",
+      "absence_check": "absence_terms ['许可费', '收费', '订阅费用'] 在 meddra-smq-intro-guide-25-zh-hans 全部 301 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'许可费': 0, '收费': 0, '订阅费用': 0}",
       "document_pages": [
-        1,
-        2,
         9,
         10,
-        11,
-        12,
-        13,
-        14,
-        15,
-        16,
-        17,
-        18,
         19,
-        20,
-        21,
-        22,
-        24,
-        25,
-        26,
-        28,
-        29,
-        30,
-        31,
-        32,
-        34,
-        35,
-        36,
-        37,
-        38,
-        39,
-        41,
-        42,
-        44,
-        45,
-        46,
-        48,
         50,
-        51,
-        52,
-        53,
-        54,
-        55,
-        56,
-        57,
-        58,
-        59,
-        60,
-        62,
-        63,
-        65,
-        66,
-        67,
-        70,
-        71,
-        73,
         74,
-        75,
-        76,
-        78,
-        79,
-        80,
-        81,
-        82,
-        83,
-        84,
-        86,
-        88,
-        91,
-        92,
-        94,
-        95,
-        97,
-        98,
-        99,
-        101,
-        102,
-        103,
-        104,
-        105,
-        106,
-        108,
-        109,
-        111,
-        112,
-        114,
-        115,
-        123,
-        125,
-        126,
         128,
-        129,
-        133,
-        135,
-        137,
-        140,
-        141,
-        149,
-        150,
-        152,
-        160,
-        163,
-        175,
-        181,
-        182,
-        186,
-        187,
-        202,
-        205,
-        206,
         207,
-        212,
-        218,
-        222,
-        223,
-        225,
-        229,
-        231,
-        234,
-        236,
-        240,
-        244,
-        250,
-        251,
-        260,
-        271,
-        272,
-        275,
-        282,
-        283,
-        290,
         295,
         296,
         297,
@@ -2912,19 +2130,7 @@
         "page": 9,
         "text": "该文档包含在每次的 MedDRA 发布内容中,还可在 MedDRA 网站的支持性文档页面查阅。",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [
-          "query (narrowed per review)",
-          "topic"
-        ],
-        "problems": [],
-        "reason": "The SMQ guide explains availability within MedDRA releases/support documentation but does not list a separate MSSO/ICH licence or subscription fee amount/rate for SMQ use."
-      },
-      "decision": "edited (external review); reviewer pages widened"
+      }
     }
   },
   {
@@ -2943,7 +2149,6 @@
       "topic": "新SMQ心肌炎/心包炎算法细节",
       "absence_check": "absence_terms ['窄搜索', '广搜索', '纳入术语', '算法'] 在 meddra-whats-new-25-zh-hans 全部 18 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'窄搜索': 0, '广搜索': 0, '纳入术语': 0, '算法': 2}",
       "document_pages": [
-        1,
         2,
         3,
         4,
@@ -2986,16 +2191,7 @@
         "page": 9,
         "text": "请查看《MedDRA 第 25.0 版 SMQ 入门指南》,了解新 SMQ 非感染性心肌炎/心包炎的详细信息。",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [],
-        "problems": [],
-        "reason": "The MedDRA v25 What’s New document refers readers to the SMQ Introductory Guide for the new noninfectious myocarditis/pericarditis SMQ; it does not itself list the PT membership and narrow/broad algorithm."
-      },
-      "decision": "OK (external review); reviewer pages widened"
+      }
     }
   },
   {
@@ -3013,7 +2209,6 @@
       "topic": "逾期通報罰鍰金額",
       "absence_check": "absence_terms ['罰鍰', '罰則', '裁罰'] 在 tfda-adr-report-form-guide-4th 全部 19 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'罰鍰': 0, '罰則': 0, '裁罰': 0}",
       "document_pages": [
-        1,
         2,
         3,
         4,
@@ -3056,16 +2251,7 @@
         "page": 6,
         "text": "未按規定填寫之通報案件,將不予收件或予以退件,退件即代表該案件並未正式通報完成,若因此延誤「藥品嚴重不良反應通報辦法」之通報時限,由通報者自行負責。",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [],
-        "problems": [],
-        "reason": "The TFDA guide says an invalid/returned report may delay formal reporting and the reporter bears responsibility, but it gives no fine amount or penalty schedule."
-      },
-      "decision": "OK (external review); reviewer pages widened"
+      }
     }
   },
   {
@@ -3112,16 +2298,7 @@
         "page": 4,
         "text": "Glimepiride 口服後生體可用率完全。飲食不會影響吸收,僅吸收速率稍微減慢。",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [],
-        "problems": [],
-        "reason": "Amaryl label contains dosing/food information but no grapefruit/grapefruit-juice interaction guidance."
-      },
-      "decision": "OK (external review)"
+      }
     }
   },
   {
@@ -3170,16 +2347,7 @@
         "page": 2,
         "text": "像其他β-blocker 一樣,本劑不可與 verapamil 倂用。因同時投與 verapamil 和β -blocker 可能引起心搏過緩、低血壓和心收縮不全 (asystole)。",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [],
-        "problems": [],
-        "reason": "Cancliol label lists contraindications/interactions but no fluoxetine/paroxetine/CYP2D6-inhibitor dose-adjustment instruction."
-      },
-      "decision": "OK (external review)"
+      }
     }
   },
   {
@@ -3225,16 +2393,7 @@
         "page": 1,
         "text": "Clopidogrel 的建議劑量為每天 75 mg,一天一次,可和食物同時服用或分開服用。",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [],
-        "problems": [],
-        "reason": "Carvetone/clopidogrel label discusses multiple drug interactions but no grapefruit-juice interaction."
-      },
-      "decision": "OK (external review)"
+      }
     }
   },
   {
@@ -3276,16 +2435,7 @@
         "grapefruit": 1,
         "柑橘類果汁": 0
       },
-      "nearest_clause": null,
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [],
-        "problems": [],
-        "reason": "Cinolone/ciprofloxacin IV label contains no grapefruit or citrus-juice interaction instruction."
-      },
-      "decision": "OK (external review)"
+      "nearest_clause": null
     }
   },
   {
@@ -3335,16 +2485,7 @@
         "page": 1,
         "text": "bisoprolol fumarate 主要是經由 CYP3A4 所代謝(~95%),經由 CYP2D6 代謝只佔了一小部分。",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [],
-        "problems": [],
-        "reason": "Concor label describes CYP3A4/CYP2D6 metabolism and other pharmacology but no grapefruit-juice advice."
-      },
-      "decision": "OK (external review)"
+      }
     }
   },
   {
@@ -3400,16 +2541,7 @@
         "page": 3,
         "text": "肌胺酸酐清除率(Creatinine clearance)mL/min 劑量 10 至20 每日200mg 3 至10 每日不超過100mg <3 100mg 超過24 小時間隔,可能是必須的。",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [],
-        "problems": [],
-        "reason": "Deurinol label provides renal dose adjustment and liver monitoring information, but no concrete hepatic-impairment dose-adjustment regimen."
-      },
-      "decision": "OK (external review)"
+      }
     }
   },
   {
@@ -3457,16 +2589,7 @@
         "page": 4,
         "text": "儲於 25 °C乾燥避光且孩童不易取得處所。",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [],
-        "problems": [],
-        "reason": "Esomen label gives storage conditions (25°C, dry/protected from light) but no shelf-life/expiry duration under those conditions."
-      },
-      "decision": "OK (external review)"
+      }
     }
   },
   {
@@ -3507,16 +2630,52 @@
         "漏服": 1,
         "補服": 0
       },
-      "nearest_clause": null,
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [],
-        "problems": [],
-        "reason": "Esomepsun label contains no missed-dose instruction telling the patient whether to take or skip a forgotten dose."
+      "nearest_clause": null
+    }
+  },
+  {
+    "query": "革理蔓錠（Glimepiride）口服後的藥物動力學參數，如吸收速率、半衰期與代謝排除途徑為何？",
+    "dept": "MA",
+    "language": "mixed",
+    "slices": [
+      "no_answer",
+      "mixed_zh_en",
+      "drug_name_zh"
+    ],
+    "required_gold_evidence": [],
+    "answerable": false,
+    "expected_behaviour": "insufficient_evidence",
+    "abstention": {
+      "scope_document_key": "tfda-label-glimaryl-tablets-2mg-glimepiride",
+      "topic": "Glimepiride藥物動力學參數",
+      "absence_check": "absence_terms ['半衰期', '吸收', '代謝', '血中濃度'] 在 tfda-label-glimaryl-tablets-2mg-glimepiride 全部 2 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'半衰期': 17, '吸收': 22, '代謝': 25, '血中濃度': 12}",
+      "document_pages": [
+        1,
+        2
+      ]
+    },
+    "notes": "",
+    "sample_id": "ms-0509",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "tfda-label-glimaryl-tablets-2mg-glimepiride",
+      "title": "\"信東\" 革理蔓錠２毫克（GLIMARYL TABLETS 2MG (GLIMEPIRIDE)，glimepiride）仿單",
+      "rank": 1,
+      "warnings": [
+        "some absence_terms are common elsewhere in the corpus (generic term?)"
+      ],
+      "rationale": "仿單作為藥品核准標籤文件，理應包含藥物動力學章節，但提供的兩頁內容僅涵蓋成分、適應症、劑量調整、交互作用與不良反應，完全未提及吸收、半衰期或代謝排除等藥動學數據。",
+      "absence_hits": {
+        "半衰期": 17,
+        "吸收": 22,
+        "代謝": 25,
+        "血中濃度": 12
       },
-      "decision": "OK (external review)"
+      "nearest_clause": null
     }
   },
   {
@@ -3525,7 +2684,8 @@
     "language": "mixed",
     "slices": [
       "no_answer",
-      "mixed_zh_en"
+      "mixed_zh_en",
+      "drug_name_zh"
     ],
     "required_gold_evidence": [],
     "answerable": false,
@@ -3565,22 +2725,11 @@
         "page": 1,
         "text": "每日一次 losartan (平均劑量約為 0.54-0.77 mg/kg)的藥物動力學已在 50 位年齡大於 1 個月至小於 16 歲患有高血壓的兒孩童上被研究。",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [
-          "slices -['drug_name_zh']"
-        ],
-        "problems": [],
-        "reason": "Hetlosar label mentions a pediatric pharmacokinetic study but does not provide the requested oral bioavailability and plasma half-life values."
-      },
-      "decision": "edited (external review)"
+      }
     }
   },
   {
-    "query": "「安星」伊風柔錠300毫克（allopurinol）仿單是否載明服藥期間禁止駕駛或操作機械等明確操作限制？",
+    "query": "服用「安星」伊風柔錠300毫克（allopurinol）期間，是否會影響駕駛或操作機械的能力？",
     "dept": "MA",
     "language": "mixed",
     "slices": [
@@ -3593,8 +2742,8 @@
     "expected_behaviour": "insufficient_evidence",
     "abstention": {
       "scope_document_key": "tfda-label-ifonol-tablets-300mg-astar",
-      "topic": "明確駕車/操作機械限制",
-      "absence_check": "absence_terms ['駕駛', '操作機械', 'driving', 'machinery'] 在 tfda-label-ifonol-tablets-300mg-astar 全部 9 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'駕駛': 6, '操作機械': 6, 'driving': 0, 'machinery': 0}；2026-09-22 问题按外部审校收窄，缺席词未变",
+      "topic": "駕駛/操作機械能力影響",
+      "absence_check": "absence_terms ['駕駛', '操作機械', 'driving', 'machinery'] 在 tfda-label-ifonol-tablets-300mg-astar 全部 9 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'駕駛': 6, '操作機械': 6, 'driving': 0, 'machinery': 0}",
       "document_pages": [
         1,
         2,
@@ -3630,23 +2779,11 @@
         "page": 6,
         "text": "如有嗜睡(睏倦)發生時要留意。",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [
-          "query (narrowed per review)",
-          "topic"
-        ],
-        "problems": [],
-        "reason": "Ifonol label warns to take care if drowsiness occurs, but does not explicitly state a driving/machinery prohibition or other concrete operating restriction."
-      },
-      "decision": "edited (external review)"
+      }
     }
   },
   {
-    "query": "樂癲活持續釋放膜衣錠25毫克（Lamofree ER Tablets 25mg）仿單是否載明服藥期間禁止駕駛或操作機械等明確操作限制？",
+    "query": "根據樂癲活持續釋放膜衣錠25毫克（Lamofree ER Tablets 25mg）仿單，服用本藥期間是否會影響病患駕駛車輛或操作機械的能力？",
     "dept": "MA",
     "language": "mixed",
     "slices": [
@@ -3659,14 +2796,13 @@
     "expected_behaviour": "insufficient_evidence",
     "abstention": {
       "scope_document_key": "tfda-label-lamofree-er-tablets-25mg",
-      "topic": "明確駕車/操作機械限制",
-      "absence_check": "absence_terms ['駕駛', '操作機械', 'machinery'] 在 tfda-label-lamofree-er-tablets-25mg 全部 15 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'駕駛': 6, '操作機械': 6, 'machinery': 0}；2026-09-22 问题按外部审校收窄，缺席词未变",
+      "topic": "駕駛/操作機械能力影響",
+      "absence_check": "absence_terms ['駕駛', '操作機械', 'machinery'] 在 tfda-label-lamofree-er-tablets-25mg 全部 15 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'駕駛': 6, '操作機械': 6, 'machinery': 0}",
       "document_pages": [
         1,
         2,
         3,
         4,
-        5,
         6,
         7,
         8,
@@ -3675,8 +2811,7 @@
         11,
         12,
         13,
-        14,
-        15
+        14
       ]
     },
     "notes": "",
@@ -3701,19 +2836,7 @@
         "page": 6,
         "text": "觀察到最常見的不良反應 Lamotrigine 持續釋放劑型與安慰劑的治療差異 4% 為 ( 順序為發生率遞減 ) ︰頭暈、顫抖 / 意向性顫抖、嘔吐及複視。",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [
-          "query (narrowed per review)",
-          "topic"
-        ],
-        "problems": [],
-        "reason": "Lamofree label reports dizziness/diplopia and other adverse effects, but does not explicitly prescribe a driving/machinery restriction."
-      },
-      "decision": "edited (external review); reviewer pages widened"
+      }
     }
   },
   {
@@ -3763,16 +2886,7 @@
         "page": 3,
         "text": "Digoxin 是 P-糖蛋白(P-glycoprotein)的受質。因此,P-糖蛋白抑制劑可能會強化 digoxin 的吸收及/或降低其腎臟廓清率,進而增加 digoxin 的血液濃度。誘導 P-糖蛋白則會降低 digoxin 血中濃度。",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [],
-        "problems": [],
-        "reason": "Lanoxin label discusses P-glycoprotein and many interactions but no grapefruit-juice interaction."
-      },
-      "decision": "OK (external review)"
+      }
     }
   },
   {
@@ -3814,16 +2928,7 @@
         "grapefruit": 1,
         "柚汁": 1
       },
-      "nearest_clause": null,
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [],
-        "problems": [],
-        "reason": "Loformin/metformin label has dosing, contraindications and interactions but no grapefruit-juice interaction advice."
-      },
-      "decision": "OK (external review)"
+      "nearest_clause": null
     }
   },
   {
@@ -3832,7 +2937,8 @@
     "language": "mixed",
     "slices": [
       "no_answer",
-      "mixed_zh_en"
+      "mixed_zh_en",
+      "drug_name_zh"
     ],
     "required_gold_evidence": [],
     "answerable": false,
@@ -3868,18 +2974,7 @@
         "page": 1,
         "text": "高血壓大多數病人的一般起始劑量及維持劑量為每次 50 毫克,每日一次;在治療後 3-6 週可獲得最大降壓效果;有些病人在劑量增加至每次 100 毫克,每日一次後,其療效更佳。",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [
-          "slices -['drug_name_zh']"
-        ],
-        "problems": [],
-        "reason": "Losacar label gives dosing and interaction information but no instruction for handling a missed dose."
-      },
-      "decision": "edited (external review)"
+      }
     }
   },
   {
@@ -3924,20 +3019,11 @@
         "遮光": 0,
         "有效期限": 2
       },
-      "nearest_clause": null,
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [],
-        "problems": [],
-        "reason": "Perisafe/enalapril leaflet was checked through its end and does not provide storage conditions such as light protection or refrigeration."
-      },
-      "decision": "OK (external review)"
+      "nearest_clause": null
     }
   },
   {
-    "query": "「居禮」拔痛酸錠（Allopurinol）仿單是否載明服藥期間禁止駕駛或操作機械等明確操作限制？",
+    "query": "服用「居禮」拔痛酸錠（Allopurinol）期間，是否會影響病人駕駛或操作機械的能力？",
     "dept": "MA",
     "language": "mixed",
     "slices": [
@@ -3950,8 +3036,8 @@
     "expected_behaviour": "insufficient_evidence",
     "abstention": {
       "scope_document_key": "tfda-label-purinol-tablets",
-      "topic": "明確駕車/操作機械限制",
-      "absence_check": "absence_terms ['駕駛', '操作機械', 'driving', 'machinery'] 在 tfda-label-purinol-tablets 全部 7 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'駕駛': 6, '操作機械': 6, 'driving': 0, 'machinery': 0}；2026-09-22 问题按外部审校收窄，缺席词未变",
+      "topic": "駕駛/操作機械能力影響",
+      "absence_check": "absence_terms ['駕駛', '操作機械', 'driving', 'machinery'] 在 tfda-label-purinol-tablets 全部 7 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'駕駛': 6, '操作機械': 6, 'driving': 0, 'machinery': 0}",
       "document_pages": [
         1,
         2,
@@ -3985,19 +3071,7 @@
         "page": 5,
         "text": "*e. 如有嗜睡(睏倦)發生時要留意。",
         "located": "tolerant"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [
-          "query (narrowed per review)",
-          "topic"
-        ],
-        "problems": [],
-        "reason": "Purinol label warns to take care if drowsiness occurs, but does not explicitly state a driving/machinery prohibition or specific operating restriction."
-      },
-      "decision": "edited (external review)"
+      }
     }
   },
   {
@@ -4065,16 +3139,7 @@
         "page": 16,
         "text": "因此當 Quetiapin 與 Ketoconazole 或其他細胞色素 P450 3A 抑制劑(例如 Itraconazole fluconazole、Erythromycin、蛋白酶抑制劑)併服時應小心(減低 Quetiapine 劑量)。",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [],
-        "problems": [],
-        "reason": "Quetiapine label discusses CYP3A inhibitors and interactions but no grapefruit-juice instruction."
-      },
-      "decision": "OK (external review)"
+      }
     }
   },
   {
@@ -4121,20 +3186,11 @@
         "page": 1,
         "text": "對肝功能嚴重受損的病人,其初始劑量應該降低,因為 Loratadine 的清除率可能降低,建議劑量為每 5mg 或每隔一日 10mg。",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [],
-        "problems": [],
-        "reason": "Rodamine/loratadine label gives a reduced initial dose for severe hepatic impairment but no renal-impairment dose-adjustment regimen."
-      },
-      "decision": "OK (external review)"
+      }
     }
   },
   {
-    "query": "〝南光〞賜痛寧注射液（diclofenac）仿單是否為非嚴重腎功能受損病人提供分級的具體減量數值或給藥間隔方案？",
+    "query": "腎功能不全的病人使用〝南光〞賜痛寧注射液（diclofenac）時，是否需要調整劑量？建議如何調整？",
     "dept": "MA",
     "language": "mixed",
     "slices": [
@@ -4147,8 +3203,8 @@
     "expected_behaviour": "insufficient_evidence",
     "abstention": {
       "scope_document_key": "tfda-label-staren-injection-n-k-diclofenac",
-      "topic": "非嚴重腎功能受損的具體減量方案",
-      "absence_check": "absence_terms ['劑量調整', '腎功能不全', '肌酐廓清率'] 在 tfda-label-staren-injection-n-k-diclofenac 全部 2 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'劑量調整': 7, '腎功能不全': 13, '肌酐廓清率': 0}；2026-09-22 问题按外部审校收窄，缺席词未变",
+      "topic": "腎功能不全劑量調整建議",
+      "absence_check": "absence_terms ['劑量調整', '腎功能不全', '肌酐廓清率'] 在 tfda-label-staren-injection-n-k-diclofenac 全部 2 页 norm-v1 页文本中出现 0 次（工具核查 2026-09-21）；语料内其他文档命中数 {'劑量調整': 7, '腎功能不全': 13, '肌酐廓清率': 0}",
       "document_pages": [
         1,
         2
@@ -4179,19 +3235,7 @@
         "page": 1,
         "text": "對於發生這類反應的高危險族群(年長者、腎功能受損、心衰竭、肝功能不全及使用利尿劑與 ACE 抑制劑的病人)應謹慎投予。",
         "located": "missing"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [
-          "query (narrowed per review)",
-          "topic"
-        ],
-        "problems": [],
-        "reason": "Staren/diclofenac injection warns about renal impairment and contraindicates severe renal failure, but does not provide a renal-function-stratified numeric dose reduction or interval scheme for non-severe impairment."
-      },
-      "decision": "edited (external review)"
+      }
     }
   },
   {
@@ -4237,16 +3281,7 @@
         "page": 1,
         "text": "曾與下列成分進行臨床試驗證實,並未有臨床上明顯藥物交互作用,包括:cimetidine, warfarin, furosemide, digoxin, atenolol, indomethacin, hydrochlorothiazide, amlodipine, glibenclamide。",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [],
-        "problems": [],
-        "reason": "Valsartan label lists studied drug interactions but no grapefruit/grapefruit-juice interaction guidance."
-      },
-      "decision": "OK (external review)"
+      }
     }
   },
   {
@@ -4287,16 +3322,7 @@
         "grapefruit": 1,
         "果汁": 0
       },
-      "nearest_clause": null,
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [],
-        "problems": [],
-        "reason": "Venton/diclofenac injection label contains no grapefruit-juice interaction guidance."
-      },
-      "decision": "OK (external review)"
+      "nearest_clause": null
     }
   },
   {
@@ -4343,16 +3369,7 @@
         "page": 1,
         "text": "由於 ondansetron 是經由多種酵素進行代謝,若其中一種酵素的活性被誘導或抑制時(例如:CYP2D6 基因缺乏),會經由其他酵素的代償作用,使得 ondansetron 的整體廓清率或需求劑量幾乎不受影響。",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [],
-        "problems": [],
-        "reason": "Vomiz/ondansetron label explains multi-enzyme metabolism and special-population dosing but no grapefruit-juice pharmacokinetic interaction."
-      },
-      "decision": "OK (external review)"
+      }
     }
   },
   {
@@ -4397,16 +3414,7 @@
         "page": 1,
         "text": "藥物交互作用:在臨床之藥物動力學試驗中,尚無具臨床意義之證據可確認 losartan 與 hydrochlorothiazide , digoxin , warfarin , cimetidine , phenobarbital , ketoconazole 及 erythromycin 之藥物交互作用。",
         "located": "exact"
-      },
-      "external_review": {
-        "source": "external_review/NA_review_audit_2026-09-21.md",
-        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
-        "verdict": "OK",
-        "applied": [],
-        "problems": [],
-        "reason": "Zosaa/losartan label lists several pharmacokinetic interactions but no grapefruit/grapefruit-juice interaction guidance."
-      },
-      "decision": "OK (external review)"
+      }
     }
   }
 ]

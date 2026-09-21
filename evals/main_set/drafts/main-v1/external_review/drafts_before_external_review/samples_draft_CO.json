@@ -1,0 +1,3762 @@
+[
+  {
+    "sample_id": "ms-0298",
+    "query": "根据ICH E6(R3),在什么情况下可以不经IRB/IEC事先书面批准就对已批准的试验方案进行偏离或变更?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0298-g1",
+        "source_hash": "e57e9fc0134abebec409d7144aed6e3047c0939d1bd758163fea4e1169472109",
+        "version_label": "Final guidance, September 2025",
+        "page": 18,
+        "printed_page_label": null,
+        "section": "4. Procedures (1.4)",
+        "key_text": "no deviations from or changes to the protocol should be initiated without prior documented IRB/IEC approval/favorable opinion of an appropriate protocol amendment",
+        "evidence_span": {
+          "text": "no deviations from or changes to the protocol should be initiated without prior documented IRB/IEC approval/favorable opinion of an appropriate protocol amendment except when necessary to eliminate immediate hazards to the participants or, in accordance with applicable regulatory requirements, when the change(s) involves only logistical or administrative aspects of the trial",
+          "char_start": 1177,
+          "char_end": 1554
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "fda-e6r3-gcp-2025",
+      "title": "E6(R3) Good Clinical Practice — Guidance for Industry (FDA, September 2025)",
+      "rank": 1,
+      "warnings": [
+        "missing query_en for an English document"
+      ],
+      "rationale": "本页仅1.4.7一条明确规定方案偏离或变更须经IRB/IEC事先书面批准,并列出可豁免的两种情形,其他条款不涉及该豁免条件。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0299",
+    "query": "根据ICH E6(R3),研究者或研究机构工作人员是否可以对受试者施压以促使其继续参与临床试验?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0299-g1",
+        "source_hash": "e57e9fc0134abebec409d7144aed6e3047c0939d1bd758163fea4e1169472109",
+        "version_label": "Final guidance, September 2025",
+        "page": 24,
+        "printed_page_label": null,
+        "section": "8. Informed Consent of Trial Participants (2.8)",
+        "key_text": "coerce or unduly influence a participant to participate or to continue their participation in the trial",
+        "evidence_span": {
+          "text": "Neither the investigator nor the investigator site staff should coerce or unduly influence a participant to participate or to continue their participation in the trial.",
+          "char_start": 209,
+          "char_end": 377
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "fda-e6r3-gcp-2025",
+      "title": "E6(R3) Good Clinical Practice — Guidance for Industry (FDA, September 2025)",
+      "rank": 2,
+      "warnings": [
+        "missing query_en for an English document"
+      ],
+      "rationale": "该页只有2.8.3明确禁止研究者或研究机构工作人员对受试者施加胁迫或不当影响以促使其参与或继续参与试验,是唯一能回答该问题的条款。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0300",
+    "query": "根据ICH E6(R3)术语表并参照ICH E2A,已上市药品的不良药物反应(ADR)应如何定义?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "protocol_id",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0300-g1",
+        "source_hash": "e57e9fc0134abebec409d7144aed6e3047c0939d1bd758163fea4e1169472109",
+        "version_label": "Final guidance, September 2025",
+        "page": 77,
+        "printed_page_label": null,
+        "section": "GLOSSARY",
+        "key_text": "a response to a drug that is noxious and unintended and that occurs at doses normally used in humans for prophylaxis, diagnosis or therapy of diseases or for modification of physiological function",
+        "evidence_span": {
+          "text": "For marketed medicinal products: a response to a drug that is noxious and unintended and that occurs at doses normally used in humans for prophylaxis, diagnosis or therapy of diseases or for modification of physiological function. (See ICH guidance for industry E2A Clinical Safety Data Management: Definitions and Standards for Expedited Reporting (March 1995).)",
+          "char_start": 1059,
+          "char_end": 1422
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "fda-e6r3-gcp-2025",
+      "title": "E6(R3) Good Clinical Practice — Guidance for Industry (FDA, September 2025)",
+      "rank": 3,
+      "warnings": [],
+      "rationale": "术语表中ADR定义分为“预批准阶段”与“已上市产品”两个并列条目,只有已上市产品这一条并引用ICH E2A,能唯一回答该问题。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0302",
+    "query": "根据ICH E6(R3),IRB/IEC在审查受试者参与试验的报酬时,报酬金额是否可以完全取决于受试者完成整个试验?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0302-g1",
+        "source_hash": "e57e9fc0134abebec409d7144aed6e3047c0939d1bd758163fea4e1169472109",
+        "version_label": "Final guidance, September 2025",
+        "page": 17,
+        "printed_page_label": null,
+        "section": "2. Responsibilities of the IRB/IEC (1.2)",
+        "key_text": "Payments to a participant should be timely, prorated, and not wholly contingent on completion of the trial by the participant.",
+        "evidence_span": {
+          "text": "Payments to a participant should be timely, prorated, and not wholly contingent on completion of the trial by the participant.",
+          "char_start": 795,
+          "char_end": 921
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "fda-e6r3-gcp-2025",
+      "title": "E6(R3) Good Clinical Practice — Guidance for Industry (FDA, September 2025)",
+      "rank": 4,
+      "warnings": [
+        "missing query_en for an English document"
+      ],
+      "rationale": "该页仅1.2.8条款规定受试者报酬不得完全取决于试验的完成,是唯一涉及报酬与试验完成关联性限制的条款。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0303",
+    "query": "根据ICH E6(R3)指南,IRB/IEC应建立、记录并遵循的书面程序(Procedures,1.4)应包含哪些具体事项?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en",
+      "long_context"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0303-g1",
+        "source_hash": "e57e9fc0134abebec409d7144aed6e3047c0939d1bd758163fea4e1169472109",
+        "version_label": "Final guidance, September 2025",
+        "page": 18,
+        "printed_page_label": null,
+        "section": "4. Procedures (1.4)",
+        "key_text": "The IRB/IEC should establish, document, and follow its procedures, which should include:",
+        "evidence_span": {
+          "text": "4. Procedures (1.4) The IRB/IEC should establish, document, and follow its procedures, which should include: 1.4.1 Determining its composition (names and qualifications of the members) and the authority under which it is established 1.4.2 Scheduling, notifying its members of, and conducting its meetings 1.4.3 Conducting initial and continuing review of trials 1.4.4 Determining the frequency of continuing review, as appropriate 1.4.5 Providing, according to the applicable regulatory requirements, expedited review and approval/favorable opinion of minor change(s) in ongoing trials that have the approval/favorable opinion of the IRB/IEC 1.4.6 Specifying that no participant should be enrolled in a trial before the IRB/IEC issues its documented approval/favorable opinion of the trial 1.4.7 Specifying that no deviations from or changes to the protocol should be initiated without prior documented IRB/IEC approval/favorable opinion of an appropriate protocol amendment except when necessary to eliminate immediate hazards to the participants or, in accordance with applicable regulatory requirements, when the change(s) involves only logistical or administrative aspects of the trial 1.4.8 Specifying that the investigator/institution should promptly report to the IRB/IEC (see section III.A.1 (1.1)): (a) Deviations from the protocol to eliminate immediate hazards to the trial participants (see paragraph 1.4.7 section III.A.4 (1.4.7); paragraph 2.5.4 section III.B.5 (2.5.4); and paragraph 2.5.5 section III.B.5 (2.5.5)) (b) Changes increasing the risk to participants and/or significantly affecting the conduct of the trial (see paragraph 2.4.6 section III.B.4 (2.4.6)) (c) All suspected unexpected serious adverse reactions (SUSARs) in accordance with applicable regulatory requirements (d) New information that may adversely affect the safety of the participants or the conduct of the trial",
+          "char_start": 365,
+          "char_end": 2267
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "fda-e6r3-gcp-2025",
+      "title": "E6(R3) Good Clinical Practice — Guidance for Industry (FDA, September 2025)",
+      "rank": 101,
+      "warnings": [],
+      "rationale": "第18页仅有4. Procedures (1.4)这一条款以1.4.1至1.4.8(含(a)-(d))完整列举了IRB/IEC应建立并遵循的程序事项清单,页内其他条款均不能提供这一完整要件清单。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0305",
+    "query": "根据21 CFR 50.20,知情同意文件中是否可以包含要求受试者放弃法律追责权利的免责语言(exculpatory language)?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0305-g1",
+        "source_hash": "96b26b2edb06e20ee2872ca59f4ec7c04cde8a8b1adf98bc150764e3d52f906a",
+        "version_label": "Final guidance, August 2023",
+        "page": 10,
+        "printed_page_label": null,
+        "section": "A. General Requirements for Informed Consent",
+        "key_text": "may include any exculpatory language through which the subject or the representative is made to waive or appear to waive any of the subject's legal rights",
+        "evidence_span": {
+          "text": "No informed consent, whether oral or written, may include any exculpatory language through which the subject or the representative is made to waive or appear to waive any of the subject's legal rights, or releases or appears to release the investigator, the sponsor, the institution, or its agents from liability for negligence.",
+          "char_start": 2106,
+          "char_end": 2434
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "fda-informed-consent-2023",
+      "title": "Informed Consent — Guidance for IRBs, Clinical Investigators, and Sponsors (Final, August 2023)",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "本页仅此条款明确禁止知情同意文件包含使受试者放弃法律权利的免责语言,是唯一能回答该问题的条款。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0307",
+    "query": "对于2012年3月7日以后启动的适用临床试验(applicable clinical trials),知情同意书中关于ClinicalTrials.gov的规定声明是否可以被修改?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0307-g1",
+        "source_hash": "96b26b2edb06e20ee2872ca59f4ec7c04cde8a8b1adf98bc150764e3d52f906a",
+        "version_label": "Final guidance, August 2023",
+        "page": 29,
+        "printed_page_label": null,
+        "section": "D. Element of Informed Consent for “Applicable Clinical Trials”",
+        "key_text": "must contain the above quoted statement, which cannot be modified",
+        "evidence_span": {
+          "text": "All informed consent forms for “applicable clinical trials”42 initiated on or after March 7, 2012, must contain the above quoted statement, which cannot be modified (21 CFR 50.25(c)).",
+          "char_start": 526,
+          "char_end": 709
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "fda-informed-consent-2023",
+      "title": "Informed Consent — Guidance for IRBs, Clinical Investigators, and Sponsors (Final, August 2023)",
+      "rank": 2,
+      "warnings": [],
+      "rationale": "本页仅此句说明该ClinicalTrials.gov声明不得修改,是唯一能回答该问题的条款。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0309",
+    "query": "当研究要求书面记录知情同意时,能否仅通过电话口头方式获得并记录受试者的知情同意?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0309-g1",
+        "source_hash": "96b26b2edb06e20ee2872ca59f4ec7c04cde8a8b1adf98bc150764e3d52f906a",
+        "version_label": "Final guidance, August 2023",
+        "page": 31,
+        "printed_page_label": null,
+        "section": "E. Documentation of Informed Consent — Requirement for Written Documentation of Informed Consent",
+        "key_text": "informed consent cannot be obtained and documented by oral communication through the telephone alone",
+        "evidence_span": {
+          "text": "When written documentation of informed consent is required, informed consent cannot be obtained and documented by oral communication through the telephone alone.",
+          "char_start": 332,
+          "char_end": 493
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "fda-informed-consent-2023",
+      "title": "Informed Consent — Guidance for IRBs, Clinical Investigators, and Sponsors (Final, August 2023)",
+      "rank": 3,
+      "warnings": [],
+      "rationale": "本页仅此句明确禁止仅凭电话口头方式获取并记录书面知情同意,是唯一能回答该问题的条款。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0311",
+    "query": "根据21 CFR 50.56(b)(4),被指定为病房儿童(wards of the state)受试者辩护人(advocate)的人员能否与该临床试验、研究者或监护机构有关联?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0311-g1",
+        "source_hash": "96b26b2edb06e20ee2872ca59f4ec7c04cde8a8b1adf98bc150764e3d52f906a",
+        "version_label": "Final guidance, August 2023",
+        "page": 50,
+        "printed_page_label": null,
+        "section": "2. Are there any additional protections required when enrolling children who are wards of the state?",
+        "key_text": "must not be associated in any way (except in the role as advocate or member of the IRB) with the clinical investigation, the investigator(s), or the guardian organization",
+        "evidence_span": {
+          "text": "The advocate must not be associated in any way (except in the role as advocate or member of the IRB) with the clinical investigation, the investigator(s), or the guardian organization (21 CFR 50.56(b)(4)).",
+          "char_start": 2187,
+          "char_end": 2392
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "fda-informed-consent-2023",
+      "title": "Informed Consent — Guidance for IRBs, Clinical Investigators, and Sponsors (Final, August 2023)",
+      "rank": 4,
+      "warnings": [
+        "protocol_id: no identifier pattern in query"
+      ],
+      "rationale": "本页仅此条款规定辩护人不得与该临床试验、研究者或监护机构有关联,是唯一能回答该问题的条款。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": [
+        "dropped protocol_id: query carries no identifier (P3)"
+      ]
+    }
+  },
+  {
+    "sample_id": "ms-0313",
+    "query": "根据21 CFR 50.56(a)批准的、以wards of the state儿童为受试者的临床试验中,为该儿童指定的advocate必须具备哪些资格与独立性要求?在哪些情况下(如50.51、50.52批准的试验)则不要求指定advocate?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en",
+      "long_context"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0313-g1",
+        "source_hash": "96b26b2edb06e20ee2872ca59f4ec7c04cde8a8b1adf98bc150764e3d52f906a",
+        "version_label": "Final guidance, August 2023",
+        "page": 50,
+        "printed_page_label": null,
+        "section": "2. Are there any additional protections required when enrolling children who are wards of the state?",
+        "key_text": "the IRB must require that an advocate be appointed for each child who is a ward",
+        "evidence_span": {
+          "text": "If a clinical investigation is approved under 21 CFR 50.56(a), the IRB must require that an advocate be appointed for each child who is a ward (21 CFR 50.56(b)). The IRB must ensure that such an advocate is in place, but the IRB itself is not required to appoint the advocate. The advocate, who may serve as an advocate for more than one child, serves in addition to any other individual acting on behalf of the child as guardian or in loco parentis78 (21 CFR 50.56(b)(1) and (2)). The advocate must be an individual who has the background and experience to act in, and agrees to act in, the best interest of the child for the duration of the child's participation in the clinical investigation (21 CFR 50.56(b)(3)). The appropriate expertise for an advocate should include, but is not limited to, education and/or experience in pediatric medicine, law, child advocacy, foster parenting, behavioral sciences, or child psychology. The advocate should be adequately informed about the potential risks and benefits of the proposed clinical investigation, and about how the intervention is likely to affect the individual child. The advocate must not be associated in any way (except in the role as advocate or member of the IRB) with the clinical investigation, the investigator(s), or the guardian organization (21 CFR 50.56(b)(4)). Wards of the state can participate in clinical investigations approved under 21 CFR 50.51 (i.e., research involving no more than minimal risk) and 21 CFR 50.52 (i.e., research involving greater than minimal risk but presenting the prospect of direct benefit), and FDA regulations do not require the appointment of an advocate for children who are wards involved in clinical investigations approved under these sections.",
+          "char_start": 1062,
+          "char_end": 2812
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "fda-informed-consent-2023",
+      "title": "Informed Consent — Guidance for IRBs, Clinical Investigators, and Sponsors (Final, August 2023)",
+      "rank": 101,
+      "warnings": [
+        "protocol_id: no identifier pattern in query",
+        "missing query_en for an English document"
+      ],
+      "rationale": "只有第50页此段完整列出了21 CFR 50.56(a)下为wards of the state儿童指定advocate所需满足的全部资格、独立性要求,并说明了50.51/50.52批准的试验中无需指定advocate的例外情形,是回答该问题的唯一完整条款。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": [
+        "dropped protocol_id: query carries no identifier (P3)"
+      ]
+    }
+  },
+  {
+    "sample_id": "ms-0314",
+    "query": "根据21 CFR 812.110,研究者可否将试验用医疗器械提供给未经授权接收该器械的人?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0314-g1",
+        "source_hash": "140b612e6fe3e830256fc9c47794cdf5708b28f2df5d7abe146e14dfd0efadfc",
+        "version_label": "Final guidance, October 2009",
+        "page": 16,
+        "printed_page_label": null,
+        "section": "SPECIFIC RESPONSIBILITIES OF INVESTIGATORS (21 CFR 812.110)",
+        "key_text": "An investigator shall not supply an investigational device to any person not authorized under 21 CFR Part 812 to receive it.",
+        "evidence_span": {
+          "text": "Supervising the use of the investigational device. An investigator shall permit an investigational device to be used only with subjects under the investigator's supervision. An investigator shall not supply an investigational device to any person not authorized under 21 CFR Part 812 to receive it.",
+          "char_start": 42,
+          "char_end": 340
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "fda-investigator-responsibilities-2009",
+      "title": "Investigator Responsibilities — Protecting the Rights, Safety, and Welfare of Study Subjects (Final, October 2009)",
+      "rank": 1,
+      "warnings": [
+        "protocol_id: no identifier pattern in query"
+      ],
+      "rationale": "只有该条款在页文本中明确规定研究者不得将试验用器械提供给未经21 CFR Part 812授权接收的人。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": [
+        "dropped protocol_id: query carries no identifier (P3)"
+      ]
+    }
+  },
+  {
+    "sample_id": "ms-0316",
+    "query": "依21 CFR 812.150规定,研究者向申办者和IRB报告意外器械不良效应(unanticipated adverse device effect)的时限是多少个工作日?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "time_window",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0316-g1",
+        "source_hash": "140b612e6fe3e830256fc9c47794cdf5708b28f2df5d7abe146e14dfd0efadfc",
+        "version_label": "Final guidance, October 2009",
+        "page": 17,
+        "printed_page_label": null,
+        "section": "SUBMITTING REPORTS (21 CFR 812.150)",
+        "key_text": "Due no later than 10 working days after the investigator first learns of the effect",
+        "evidence_span": {
+          "text": "Any unanticipated adverse device effect occurring during an investigation. (Due no later than 10 working days after the investigator first learns of the effect.)",
+          "char_start": 203,
+          "char_end": 364
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "fda-investigator-responsibilities-2009",
+      "title": "Investigator Responsibilities — Protecting the Rights, Safety, and Welfare of Study Subjects (Final, October 2009)",
+      "rank": 2,
+      "warnings": [
+        "protocol_id: no identifier pattern in query"
+      ],
+      "rationale": "本页仅此条款给出意外器械不良效应报告的10个工作日时限,是唯一能回答该时限问题的条款。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": [
+        "dropped protocol_id: query carries no identifier (P3)"
+      ]
+    }
+  },
+  {
+    "sample_id": "ms-0318",
+    "query": "若研究者在未取得受试者知情同意的情况下使用试验器械,依21 CFR 812.150须在多少个工作日内提交报告?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "time_window",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0318-g1",
+        "source_hash": "140b612e6fe3e830256fc9c47794cdf5708b28f2df5d7abe146e14dfd0efadfc",
+        "version_label": "Final guidance, October 2009",
+        "page": 17,
+        "printed_page_label": null,
+        "section": "SUBMITTING REPORTS (21 CFR 812.150)",
+        "key_text": "without obtaining informed consent. (Due within 5 working days after such use.)",
+        "evidence_span": {
+          "text": "Any use of the device without obtaining informed consent. (Due within 5 working days after such use.)",
+          "char_start": 1053,
+          "char_end": 1154
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "fda-investigator-responsibilities-2009",
+      "title": "Investigator Responsibilities — Protecting the Rights, Safety, and Welfare of Study Subjects (Final, October 2009)",
+      "rank": 3,
+      "warnings": [
+        "protocol_id: no identifier pattern in query"
+      ],
+      "rationale": "该条款是页文本中唯一规定未取得知情同意使用器械须于5个工作日内报告的条款,含否定语义与时限。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": [
+        "dropped protocol_id: query carries no identifier (P3)"
+      ]
+    }
+  },
+  {
+    "sample_id": "ms-0320",
+    "query": "根据21 CFR 312.23(a)(6)和312.40(a)(1),当方案规定执行特定任务人员的资格时,是否可依当地法律以不同资格人员代替?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0320-g1",
+        "source_hash": "140b612e6fe3e830256fc9c47794cdf5708b28f2df5d7abe146e14dfd0efadfc",
+        "version_label": "Final guidance, October 2009",
+        "page": 6,
+        "printed_page_label": null,
+        "section": "1. What Is Appropriate Delegation of Study-Related Tasks?",
+        "key_text": "in which case the protocol must be followed even if state law permits individuals with different qualifications to perform the task",
+        "evidence_span": {
+          "text": "In some cases a protocol may specify the qualifications of the individuals who are to perform certain protocol-required tasks (e.g., physician, registered nurse), in which case the protocol must be followed even if state law permits individuals with different qualifications to perform the task (see 21 CFR 312.23(a)(6) and 312.40(a)(1)).",
+          "char_start": 2294,
+          "char_end": 2632
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "fda-investigator-responsibilities-2009",
+      "title": "Investigator Responsibilities — Protecting the Rights, Safety, and Welfare of Study Subjects (Final, October 2009)",
+      "rank": 4,
+      "warnings": [
+        "protocol_id: no identifier pattern in query"
+      ],
+      "rationale": "只有该条款引用21 CFR 312.23(a)(6)和312.40(a)(1),说明方案规定的人员资格优先于当地法律许可的不同资格人员。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": [
+        "dropped protocol_id: query carries no identifier (P3)"
+      ]
+    }
+  },
+  {
+    "sample_id": "ms-0322",
+    "query": "根据21 CFR 812.150,研究者在重大风险医疗器械临床试验中,必须向申办者和IRB提交哪些报告及其提交时限?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "time_window",
+      "negation",
+      "mixed_zh_en",
+      "long_context"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0322-g1",
+        "source_hash": "140b612e6fe3e830256fc9c47794cdf5708b28f2df5d7abe146e14dfd0efadfc",
+        "version_label": "Final guidance, October 2009",
+        "page": 17,
+        "printed_page_label": null,
+        "section": "SUBMITTING REPORTS (21 CFR 812.150)",
+        "key_text": "An investigator shall prepare and submit the following complete, accurate, and timely reports",
+        "evidence_span": {
+          "text": "An investigator shall prepare and submit the following complete, accurate, and timely reports: 1. To the sponsor and the IRB: − Any unanticipated adverse device effect occurring during an investigation. (Due no later than 10 working days after the investigator first learns of the effect.) − Progress reports on the investigation. (These reports must be provided at regular intervals, but in no event less often than yearly. If there is a study monitor, a copy of the report should also be sent to the monitor.) − Any deviation from the investigational plan made to protect the life or physical well-being of a subject in an emergency. (Report is due as soon as possible but no later than 5 working days after the emergency occurs. Except in emergency situations, a protocol deviation requires prior sponsor approval; and if the deviation may affect the scientific soundness of the plan or the rights, safety, or welfare of subjects, prior FDA and IRB approval are required.) − Any use of the device without obtaining informed consent. (Due within 5 working days after such use.) − A final report. (Due within 3 months following termination or completion of the investigation or the investigator's part of the investigation. For additional guidance, see the discussion under the section entitled \"Annual Progress Reports and Final Reports.\") − Any further information requested by FDA or the IRB about any aspect of the investigation. 2. To the Sponsor: − Withdrawal of IRB approval of the investigator's part of an investigation. (Due within 5 working days of such action).",
+          "char_start": 75,
+          "char_end": 1649
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "fda-investigator-responsibilities-2009",
+      "title": "Investigator Responsibilities — Protecting the Rights, Safety, and Welfare of Study Subjects (Final, October 2009)",
+      "rank": 101,
+      "warnings": [
+        "protocol_id: no identifier pattern in query"
+      ],
+      "rationale": "第17页“SUBMITTING REPORTS (21 CFR 812.150)”条款是全文档中唯一完整列出研究者须依812.150向申办者与IRB提交的全部报告类型及各自提交时限的条款,其他页均无此清单。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": [
+        "dropped protocol_id: query carries no identifier (P3)"
+      ]
+    }
+  },
+  {
+    "sample_id": "ms-0324",
+    "query": "临床试验方案设计阶段，为了从源头降低重要方案偏离（protocol deviation）发生的风险，申办者（sponsor）可以采取哪些具体做法？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en",
+      "long_context"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0324-g1",
+        "source_hash": "3b172d83fd5310029d0933a2efdb821c31d77c31d874e292dff7fb7da9abd42f",
+        "version_label": "Draft, December 2024 (FDA-2023-D-5016)",
+        "page": 11,
+        "printed_page_label": null,
+        "section": "2. Role of the Sponsor in Evaluating, Mitigating, and Reporting Protocol Deviations",
+        "key_text": "Sponsors can minimize the occurrence of protocol 276 deviations by identifying those aspects of the study that are critical to quality and, when possible, 277 mitigating risks such as by:",
+        "evidence_span": {
+          "text": "Sponsors may prevent the occurrence or mitigate the impact of important protocol deviations by 273 using quality by design principles to develop study protocols.20 Developing protocols that are 274 less complex and provide for greater flexibility in implementation, if appropriate, may decrease 275 the occurrence of protocol deviations. Sponsors can minimize the occurrence of protocol 276 deviations by identifying those aspects of the study that are critical to quality and, when possible, 277 mitigating risks such as by: 278 279 • Establishing flexible enrollment criteria when appropriate to give investigators more 280 discretion and removing unnecessary enrollment criteria21 281 282 • Streamlining the study design 283 284 • Using flexible time frames for collection of essential data where feasible 285 286 • Conducting certain assessments remotely when possible 287 288 • Eliminating nonessential activities 289 290 • Reviewing prohibited medications to avoid excluding medications that may be 291 appropriate if only taken for a very brief period and where such drug ingestion would not 292 impact either patient safety or study efficacy assessments 293 294 When designing the study, sponsors should seek input from relevant stakeholders, including 295 potential trial participants and clinical investigators and their staff, to help ensure adherence to 296 the planned protocol by developing procedures that are feasible and not unnecessarily 297 burdensome. Before or during protocol development, sponsors should conduct a risk assessment 298 to identify protocol elements (e.g., visit structure, visit procedures, visit windows, enrollment 299 criteria) that can be made more flexible (or even eliminated entirely) to avoid the occurrence of 300 protocol deviations.",
+          "char_start": 980,
+          "char_end": 2761
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "fda-protocol-deviations-draft-2024",
+      "title": "Protocol Deviations for Clinical Investigations of Drugs, Biological Products, and Devices — Guidance for Industry (Draft Guidance)",
+      "rank": 101,
+      "warnings": [],
+      "rationale": "本文档在提供的各页中，只有第11页这段文字完整列出了申办者在方案设计阶段可用以从源头减少方案偏离的具体做法清单（灵活入排标准、简化设计、灵活时间窗、远程评估、剔除非必要活动、审视禁用药物清单），其他页均未给出这一具体做法清单，因此只有该条款能唯一回答此问题。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0326",
+    "query": "根据FDA的《A Risk-Based Approach to Monitoring of Clinical Investigations Questions and Answers》(April 2023)指南,申办方是否应当只监测在最初风险评估中被认定为重要且可能发生的风险?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0326-g1",
+        "source_hash": "2c0d04faa13f3cfd95bb3b4c5359f699ede4f48dcb055ad2d0ae89d3aa9c423c",
+        "version_label": "Final guidance, April 2023",
+        "page": 7,
+        "printed_page_label": null,
+        "section": "III.A Monitoring Approach – Q2",
+        "key_text": "risks detected during the conduct of the clinical investigation that were not identified before the investigation began",
+        "evidence_span": {
+          "text": "No. Sponsors should monitor the important and likely risks identified during their initial risk assessment, and they should also monitor for additional risks detected during the conduct of the clinical investigation that were not identified before the investigation began.",
+          "char_start": 2727,
+          "char_end": 2999
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "fda-rbm-qa-2023",
+      "title": "A Risk-Based Approach to Monitoring of Clinical Investigations: Questions and Answers (Final, April 2023)",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "本页仅Q2的答案以否定句“No”并说明“not identified before the investigation began”回应了该问题,明确监测范围不限于最初风险评估中的风险。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0328",
+    "query": "根据21 CFR 312.50,申办方对临床试验负有哪些具体的监测与合规义务?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0328-g1",
+        "source_hash": "2c0d04faa13f3cfd95bb3b4c5359f699ede4f48dcb055ad2d0ae89d3aa9c423c",
+        "version_label": "Final guidance, April 2023",
+        "page": 5,
+        "printed_page_label": null,
+        "section": "II. BACKGROUND (footnote 7)",
+        "key_text": "21 CFR 312.50 requires a sponsor to, among other things, ensure “proper monitoring of the investigation(s)”",
+        "evidence_span": {
+          "text": "21 CFR 312.50 requires a sponsor to, among other things, ensure “proper monitoring of the investigation(s)” and “that the investigation(s) is conducted in accordance with the general investigational plan and protocols contained in the IND.”",
+          "char_start": 2843,
+          "char_end": 3083
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "fda-rbm-qa-2023",
+      "title": "A Risk-Based Approach to Monitoring of Clinical Investigations: Questions and Answers (Final, April 2023)",
+      "rank": 2,
+      "warnings": [
+        "protocol_id: no identifier pattern in query"
+      ],
+      "rationale": "本页脚注7中只有这一句具体说明21 CFR 312.50对申办方在监测及依IND计划执行方面的要求,是唯一可答来源。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": [
+        "dropped protocol_id: query carries no identifier (P3)"
+      ]
+    }
+  },
+  {
+    "sample_id": "ms-0330",
+    "query": "根据这份FDA风险监测指南,采用以风险为基础的监测方法是否意味着申办方必须对所有临床试验机构进行频繁的常规巡查和广泛的源数据核实(SDV)?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0330-g1",
+        "source_hash": "2c0d04faa13f3cfd95bb3b4c5359f699ede4f48dcb055ad2d0ae89d3aa9c423c",
+        "version_label": "Final guidance, April 2023",
+        "page": 9,
+        "printed_page_label": null,
+        "section": "III.A Monitoring Approach – Q3",
+        "key_text": "without necessarily having to conduct frequent routine visits to all clinical sites and extensive SDV",
+        "evidence_span": {
+          "text": "Focusing more monitoring activities on risks to the most critical data elements and processes should enable sponsors to achieve the objective of conducting a quality clinical investigation, including human subject protection and data integrity, without necessarily having to conduct frequent routine visits to all clinical sites and extensive SDV.",
+          "char_start": 1209,
+          "char_end": 1556
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "fda-rbm-qa-2023",
+      "title": "A Risk-Based Approach to Monitoring of Clinical Investigations: Questions and Answers (Final, April 2023)",
+      "rank": 3,
+      "warnings": [],
+      "rationale": "本页只有这句话明确指出聚焦关键数据风险的监测方式无需对所有机构进行频繁常规巡查和广泛SDV,直接回答该问题。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0332",
+    "query": "根据这份FDA指南,集中监测(centralized monitoring)可以帮助申办方开展哪些具体活动?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0332-g1",
+        "source_hash": "2c0d04faa13f3cfd95bb3b4c5359f699ede4f48dcb055ad2d0ae89d3aa9c423c",
+        "version_label": "Final guidance, April 2023",
+        "page": 10,
+        "printed_page_label": null,
+        "section": "III.A Monitoring Approach – Q4",
+        "key_text": "determine which clinical sites need on-site review",
+        "evidence_span": {
+          "text": "Centralized monitoring may allow sponsors to (1) review study-wide data for inconsistencies or omissions; (2) perform activities such as data checks, for completeness and consistency; (3) verify source data; (4) ensure that institutional review board and informed consent documents are current; and (5) determine which clinical sites need on-site review.",
+          "char_start": 1044,
+          "char_end": 1398
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "fda-rbm-qa-2023",
+      "title": "A Risk-Based Approach to Monitoring of Clinical Investigations: Questions and Answers (Final, April 2023)",
+      "rank": 4,
+      "warnings": [],
+      "rationale": "本页仅此句列举了集中监测可帮助申办方开展的五项具体活动,是回答该问题的唯一依据。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0334",
+    "query": "根据这份FDA监查指南,申办方在监查(monitoring)中发现重大问题(significant issue)后,应如何开展根本原因分析(root cause analysis)与整改,并将结果沟通给哪些相关方(parties)?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en",
+      "long_context"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0334-g1",
+        "source_hash": "2c0d04faa13f3cfd95bb3b4c5359f699ede4f48dcb055ad2d0ae89d3aa9c423c",
+        "version_label": "Final guidance, April 2023",
+        "page": 12,
+        "printed_page_label": null,
+        "section": "C. Follow-Up and Communication of Monitoring Results",
+        "key_text": "A root cause analysis followed by appropriate corrective and preventive actions should be undertaken promptly",
+        "evidence_span": {
+          "text": "A root cause analysis followed by appropriate corrective and preventive actions should be undertaken promptly to reduce the impact of the identified issue on the rights, safety, and welfare of participants in the clinical investigation and/or the integrity of the data. Additionally, the risk assessment and monitoring plan should be reviewed and revised, as needed, to help ensure the risk of recurrence is decreased, or if possible, eliminated. In instances in which corrective actions modify study processes, the protocol and/or associated investigational plans should be amended to reflect changed processes. Related systemic issues should be identified and resolved promptly to help ensure that investigation quality, including the rights, safety, and welfare of investigation participants and data integrity, is maintained. Examples of preventive and corrective actions that may be warranted include but are not limited to (1) improved training for the clinical investigator and site staff; (2) halting enrollment at a clinical site pending resolution of identified issues; (3) clarifying or revising the protocol and/or other related investigational plans and documents; and/or (4) modifying vendor service agreements to ensure adequate trial support. Significant issues identified through monitoring and oversight activities and the actions to be taken should be documented and communicated to the appropriate parties, which may include, but are not limited to (1) sponsor management; (2) sponsor teams; (3) clinical sites; (4) institutional review boards; (5) other relevant parties (for example, DMCs and relevant contract research organizations); and (6) applicable regulatory agencies, including FDA, when appropriate.",
+          "char_start": 659,
+          "char_end": 2389
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "fda-rbm-qa-2023",
+      "title": "A Risk-Based Approach to Monitoring of Clinical Investigations: Questions and Answers (Final, April 2023)",
+      "rank": 101,
+      "warnings": [],
+      "rationale": "Page 12 的 Q7 答案是本文档中唯一完整规定重大问题根本原因分析、整改、方案修订及向六类相关方沟通全流程的条款,其他页均未给出这一完整清单。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0336",
+    "query": "根据21 CFR 312.50，申办者对临床试验监查负有哪些具体职责？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0336-g1",
+        "source_hash": "76556b1dcf148a1929f110bb1bfdf17d554630b665d23ad2b885473c5e8f2561",
+        "version_label": "Final guidance, August 2013 (PRA update 2022-11-21)",
+        "page": 5,
+        "printed_page_label": null,
+        "section": "II. BACKGROUND",
+        "key_text": "ensure “proper monitoring of the investigation(s)” and “that the investigation(s) is conducted in accordance with the general investigational plan and protocols contained in the IND.”",
+        "evidence_span": {
+          "text": "21 CFR 312.50 requires a sponsor to, among other things, ensure “proper monitoring of the investigation(s)” and “that the investigation(s) is conducted in accordance with the general investigational plan and protocols contained in the IND.”",
+          "char_start": 3227,
+          "char_end": 3467
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "fda-risk-based-monitoring-2013",
+      "title": "Oversight of Clinical Investigations — A Risk-Based Approach to Monitoring (Final, August 2013)",
+      "rank": 2,
+      "warnings": [
+        "protocol_id: no identifier pattern in query"
+      ],
+      "rationale": "Only this footnote on the page cites 21 CFR 312.50 and specifies the sponsor's obligation to ensure proper monitoring and protocol compliance.",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": [
+        "dropped protocol_id: query carries no identifier (P3)"
+      ]
+    }
+  },
+  {
+    "sample_id": "ms-0338",
+    "query": "根据ICH E6和ISO 14155:2011，是否可以完全依赖集中监查而完全不进行现场监查？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0338-g1",
+        "source_hash": "76556b1dcf148a1929f110bb1bfdf17d554630b665d23ad2b885473c5e8f2561",
+        "version_label": "Final guidance, August 2013 (PRA update 2022-11-21)",
+        "page": 7,
+        "printed_page_label": null,
+        "section": "A. Current Monitoring Practices and FDA Guidance",
+        "key_text": "rely entirely on centralized monitoring only in exceptional circumstances",
+        "evidence_span": {
+          "text": "Although the ICH guidance and ISO standard specifically provide for the possibility of reduced, or even no, on-site monitoring, they also make clear that it would be appropriate to rely entirely on centralized monitoring only in exceptional circumstances.",
+          "char_start": 1276,
+          "char_end": 1531
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "fda-risk-based-monitoring-2013",
+      "title": "Oversight of Clinical Investigations — A Risk-Based Approach to Monitoring (Final, August 2013)",
+      "rank": 3,
+      "warnings": [
+        "protocol_id: no identifier pattern in query"
+      ],
+      "rationale": "This is the only sentence on the page that addresses, with reference to ICH E6 and ISO 14155:2011, whether a sponsor may rely entirely on centralized monitoring without any on-site monitoring.",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": [
+        "dropped protocol_id: query carries no identifier (P3)"
+      ]
+    }
+  },
+  {
+    "sample_id": "ms-0340",
+    "query": "对于主要疗效试验，业界通常以多长的时间间隔安排现场监查访视？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "time_window",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0340-g1",
+        "source_hash": "76556b1dcf148a1929f110bb1bfdf17d554630b665d23ad2b885473c5e8f2561",
+        "version_label": "Final guidance, August 2013 (PRA update 2022-11-21)",
+        "page": 6,
+        "printed_page_label": null,
+        "section": "A. Current Monitoring Practices and FDA Guidance",
+        "key_text": "conduct on-site monitoring visits at approximately 4- to 8-week intervals",
+        "evidence_span": {
+          "text": "For major efficacy trials, companies typically conduct on-site monitoring visits at approximately 4- to 8-week intervals",
+          "char_start": 2170,
+          "char_end": 2290
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "fda-risk-based-monitoring-2013",
+      "title": "Oversight of Clinical Investigations — A Risk-Based Approach to Monitoring (Final, August 2013)",
+      "rank": 4,
+      "warnings": [
+        "time_window: no time-window pattern in span"
+      ],
+      "rationale": "Only this sentence on the page states the typical 4- to 8-week interval used for on-site monitoring visits in major efficacy trials.",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0342",
+    "query": "为什么申办者可能无法远程访问医院、大学等机构保存的电子病历？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0342-g1",
+        "source_hash": "76556b1dcf148a1929f110bb1bfdf17d554630b665d23ad2b885473c5e8f2561",
+        "version_label": "Final guidance, August 2013 (PRA update 2022-11-21)",
+        "page": 12,
+        "printed_page_label": null,
+        "section": "b. Site’s Records",
+        "key_text": "may not have remote access to electronic health records maintained by hospitals, universities, and other institutions",
+        "evidence_span": {
+          "text": "We recognize that sponsors may not have remote access to electronic health records maintained by hospitals, universities, and other institutions because of data privacy and security concerns as well as technological challenges.",
+          "char_start": 2147,
+          "char_end": 2374
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "fda-risk-based-monitoring-2013",
+      "title": "Oversight of Clinical Investigations — A Risk-Based Approach to Monitoring (Final, August 2013)",
+      "rank": 5,
+      "warnings": [],
+      "rationale": "This is the only sentence on the page explaining why sponsors may lack remote access to electronic health records held by external institutions.",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0344",
+    "query": "在评估某个新疗法是否值得以外部对照(externally controlled)试验的方式提前测试时，为什么不能仅因为渴望出现戏剧性疗效，就开展没有现实机会可信证明该疗法疗效的试验？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0344-g1",
+        "source_hash": "034b29a6d1b565e4f466fd17df8b6506a7b65508328701b14b11fc42ed0c1881",
+        "version_label": "Step 4, 2000-07-20",
+        "page": 32,
+        "printed_page_label": null,
+        "section": "External Control – Ethical Considerations for Early-Phase Testing",
+        "key_text": "it is not responsible or ethical to carry out studies that have no realistic chance of credibly showing the efficacy of the treatment",
+        "evidence_span": {
+          "text": "At the same time, it is not responsible or ethical to carry out studies that have no realistic chance of credibly showing the efficacy of the treatment.",
+          "char_start": 276,
+          "char_end": 428
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e10-step4-2000",
+      "title": "ICH E10: Choice of Control Group and Related Issues in Clinical Trials",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "This is the only sentence on the page explicitly stating that conducting trials with no realistic chance of demonstrating efficacy is irresponsible and unethical, uniquely answering the question.",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0346",
+    "query": "根据 ICH E9，在非劣效性(non-inferiority)或等效性(equivalence)主动对照(active control)试验中，对照药物需要满足什么条件？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "protocol_id",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0346-g1",
+        "source_hash": "034b29a6d1b565e4f466fd17df8b6506a7b65508328701b14b11fc42ed0c1881",
+        "version_label": "Step 4, 2000-07-20",
+        "page": 28,
+        "printed_page_label": null,
+        "section": "2.4.1 Description",
+        "key_text": "the active control treatment needs to be of established efficacy at the dose used and under the conditions of the study",
+        "evidence_span": {
+          "text": "In a non-inferiority or equivalence trial, the active control treatment needs to be of established efficacy at the dose used and under the conditions of the study (see IC H E9: Statistical Principles for Clinical Trials).",
+          "char_start": 898,
+          "char_end": 1119
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e10-step4-2000",
+      "title": "ICH E10: Choice of Control Group and Related Issues in Clinical Trials",
+      "rank": 2,
+      "warnings": [],
+      "rationale": "Only this sentence ties the ICH E9 cross-reference to the specific requirement that the active control be of established efficacy at the studied dose and conditions.",
+      "key_status": "exact",
+      "span_status": "tolerant",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0348",
+    "query": "为什么在某些药物即使被证实有效，也难以可靠地确定其相对安慰剂的最小疗效，从而难以设定非劣效性(non-inferiority)试验的边界(margin)？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0348-g1",
+        "source_hash": "034b29a6d1b565e4f466fd17df8b6506a7b65508328701b14b11fc42ed0c1881",
+        "version_label": "Step 4, 2000-07-20",
+        "page": 16,
+        "printed_page_label": null,
+        "section": "Non-inferiority Trial – Historical Evidence of Sensitivity to Drug Effects",
+        "key_text": "one therefore cannot reliably determine a minimum effect the drug will have in the setting of a specific trial",
+        "evidence_span": {
+          "text": "There are many conditions, however, in which drugs considered effective cannot regularly be shown superior to placebo in well-controlled trials; and one therefore cannot reliably determine a minimum effect the drug will have in the setting of a specific trial.",
+          "char_start": 1667,
+          "char_end": 1927
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e10-step4-2000",
+      "title": "ICH E10: Choice of Control Group and Related Issues in Clinical Trials",
+      "rank": 3,
+      "warnings": [],
+      "rationale": "This is the only passage explaining why, for certain conditions, the minimum drug effect cannot be reliably determined for setting a non-inferiority margin.",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0350",
+    "query": "根据 ICH E10，为什么在急性心肌梗塞(acute myocardial infarction)患者中使用血栓溶解剂(thrombolytic agent)时，不会被认为可以进行安慰剂对照(placebo-controlled)试验？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0350-g1",
+        "source_hash": "034b29a6d1b565e4f466fd17df8b6506a7b65508328701b14b11fc42ed0c1881",
+        "version_label": "Step 4, 2000-07-20",
+        "page": 25,
+        "printed_page_label": null,
+        "section": "Placebo Control – Ethical Limitations (Thrombolytic Example)",
+        "key_text": "it would not be considered ethical to carry out a placebo-controlled trial of a thrombolytic agent in patients with acute myocardial infarction",
+        "evidence_span": {
+          "text": "For example, it would not be considered ethical to carry out a placebo-controlled trial of a thrombolytic agent in patients with acute myocardial infarction.",
+          "char_start": 198,
+          "char_end": 355
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e10-step4-2000",
+      "title": "ICH E10: Choice of Control Group and Related Issues in Clinical Trials",
+      "rank": 4,
+      "warnings": [],
+      "rationale": "This is the sole example in the document naming thrombolytic therapy in acute myocardial infarction as a case where placebo-controlled trials are considered unethical.",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0352",
+    "query": "根据ICH E11(R1)的伦理原则,除非满足什么条件,否则不应将儿童纳入临床试验?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0352-g1",
+        "source_hash": "be9f56e84b67bb2d726c24da0096340e2788e92d7197bbd0f2d4f72972299763",
+        "version_label": "Step 4, 2017-08-18",
+        "page": 16,
+        "printed_page_label": null,
+        "section": "2. ETHICAL CONSIDERATIONS",
+        "key_text": "children should not be enrolled in a clinical study unless necessary to achieve an important pediatric public health need",
+        "evidence_span": {
+          "text": "A fundamental principle in pediatric drug development requires that children should not be enrolled in a clinical study unless necessary to achieve an important pediatric public health need.",
+          "char_start": 3029,
+          "char_end": 3219
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e11-r1-step4-2017",
+      "title": "ICH E11(R1): Addendum: Clinical Investigation of Medicinal Products in the Pediatric Population",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "该页仅此句给出'不得纳入儿童受试者'的例外条件,是唯一能回答该伦理限制问题的条款。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0354",
+    "query": "根据ICH E11(R1) Section 4,足月新生儿(term newborn infant)的新生儿期(neonatal period)如何界定?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "time_window",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0354-g1",
+        "source_hash": "be9f56e84b67bb2d726c24da0096340e2788e92d7197bbd0f2d4f72972299763",
+        "version_label": "Step 4, 2017-08-18",
+        "page": 18,
+        "printed_page_label": null,
+        "section": "4. AGE CLASSIFICATION AND PEDIATRIC SUBGROUPS, INCLUDING NEONATES",
+        "key_text": "The neonatal period for term and post-term newborn infants is defined as the day of birth plus 27 days.",
+        "evidence_span": {
+          "text": "The neonatal period for term and post-term newborn infants is defined as the day of birth plus 27 days.",
+          "char_start": 3009,
+          "char_end": 3112
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e11-r1-step4-2017",
+      "title": "ICH E11(R1): Addendum: Clinical Investigation of Medicinal Products in the Pediatric Population",
+      "rank": 2,
+      "warnings": [],
+      "rationale": "该页仅此句给出足月及过期产新生儿新生儿期的具体时间窗定义,与紧邻的早产儿定义不同,故为唯一答案。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0356",
+    "query": "ICH E11(R1) 6.2节所引用的ICH E11(2000) Section 2.4.2,对儿科不同年龄亚组的结局指标(endpoint)提出了什么要求?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "protocol_id",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0356-g1",
+        "source_hash": "be9f56e84b67bb2d726c24da0096340e2788e92d7197bbd0f2d4f72972299763",
+        "version_label": "Step 4, 2017-08-18",
+        "page": 22,
+        "printed_page_label": null,
+        "section": "6.2. Outcome Assessments",
+        "key_text": "As stated in the ICH E11 (2000) Section 2.4.2, it may be necessary to develop, validate, and employ different endpoints for specific age and developmental subgroups.",
+        "evidence_span": {
+          "text": "As stated in the ICH E11 (2000) Section 2.4.2, it may be necessary to develop, validate, and employ different endpoints for specific age and developmental subgroups.",
+          "char_start": 1907,
+          "char_end": 2072
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e11-r1-step4-2017",
+      "title": "ICH E11(R1): Addendum: Clinical Investigation of Medicinal Products in the Pediatric Population",
+      "rank": 3,
+      "warnings": [],
+      "rationale": "该页仅此句明确引用ICH E11(2000) Section 2.4.2并说明其内容,是唯一能凭该编号精确检索到的条款。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0358",
+    "query": "根据ICH E11(R1),婴幼儿(infants and toddlers)到1至2岁时,按mg/kg计算的药物清除率通常呈现什么变化趋势?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0358-g1",
+        "source_hash": "be9f56e84b67bb2d726c24da0096340e2788e92d7197bbd0f2d4f72972299763",
+        "version_label": "Step 4, 2017-08-18",
+        "page": 12,
+        "printed_page_label": null,
+        "section": "2.5.3 Infants and toddlers (28 days to 23 months)",
+        "key_text": "By 1 to 2 years of age, clearance of many drugs on a mg/kg basis may exceed adult values.",
+        "evidence_span": {
+          "text": "By 1 to 2 years of age, clearance of many drugs on a mg/kg basis may exceed adult values.",
+          "char_start": 1171,
+          "char_end": 1260
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e11-r1-step4-2017",
+      "title": "ICH E11(R1): Addendum: Clinical Investigation of Medicinal Products in the Pediatric Population",
+      "rank": 4,
+      "warnings": [
+        "dose_unit: no numeral+unit/frequency pattern in span"
+      ],
+      "rationale": "该页仅此句给出1至2岁时按mg/kg计算药物清除率相对成人值的变化趋势,是唯一回答该剂量单位问题的条款。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0360",
+    "query": "根据ICH E11(R1),在设计早产新生儿(preterm newborn infants)相关临床试验方案时,应考虑哪些重要特征(important features)?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "mixed_zh_en",
+      "long_context"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0360-g1",
+        "source_hash": "be9f56e84b67bb2d726c24da0096340e2788e92d7197bbd0f2d4f72972299763",
+        "version_label": "Step 4, 2017-08-18",
+        "page": 11,
+        "printed_page_label": null,
+        "section": "2.5.1 Preterm Newborn Infants",
+        "key_text": "Important features that should be considered for these patients include:",
+        "evidence_span": {
+          "text": "The study of medicinal products in preterm newborn infants presents special challe nges because of the unique pathophysiology and responses to therapy in this population. The complexity of and ethical considerations involved in studying preterm newborn infants suggest the need for careful protocol development with expert input from neonatologists and neonatal pharmacologists. Only rarely will it be possible to extrapolate efficacy from studies in adults or even in older pediatric patients to the preterm newborn infant. The category of preterm newborn infants is not a homogeneous group of patients. A 25- week gestation, 500- gram (g) newborn is very different from a 30 -week gestation newborn weighing 1,500 g. A distinction should also be made for low -birth-weight babies as to whether they are immature or growth retarded. Important features that should be considered for these patients include: (1) gestational age at birth and age after birth (adjusted age); (2) immaturity of renal and hepatic clearance mechanisms; (3) protein binding and displacement issues (particularly bilirubin); (4) penetration of medicinal products into the central nervous system (CNS); (5) unique neonatal disease states (e.g., respiratory distress syndrome of the newborn, patent ductus arteriosus, primary pulmonary hypertension); (6) unique susceptibilities of the preterm newborn (e.g., necrotizing enterocolitis, intraventricular hemorrhage, retinopathy of prematurity); (7) rapid and variable maturation of all physiologic and pharmacologic processes leading to different dosing regimens with chronic exposure; and (8) transdermal absorption of medicinal products and other chemicals.",
+          "char_start": 1429,
+          "char_end": 3110
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e11-r1-step4-2017",
+      "title": "ICH E11(R1): Addendum: Clinical Investigation of Medicinal Products in the Pediatric Population",
+      "rank": 101,
+      "warnings": [],
+      "rationale": "第11页2.5.1节是全文中唯一完整列出早产新生儿临床试验须考虑的重要特征清单的条款,其他页未涉及该主题的完整清单。",
+      "key_status": "exact",
+      "span_status": "tolerant",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0362",
+    "query": "在评估新降压药物血压反应与剂量关系时，短期研究通常应持续多长时间？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "time_window",
+      "mixed_zh_en",
+      "version_conflict"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0362-g1",
+        "source_hash": "d09627c2d02dc3c6675be445232a7312e0aa295f6b1748da68fc9d771405a9ac",
+        "version_label": "Principle document, 2000-03-02",
+        "page": 6,
+        "printed_page_label": null,
+        "section": "3.1. Studies to Assess Antihypertensive Effect",
+        "key_text": "short-term studies (4-12 weeks)",
+        "evidence_span": {
+          "text": "The effect on blood pressure and the relationship of the response to dose should be characterized in short-term studies (4-12 weeks), whose short duration allows for use of a placebo control.",
+          "char_start": 3071,
+          "char_end": 3262
+        }
+      }
+    ],
+    "notes": "合成冲突（spec-m1 §5）：ich-e12a-principle-2000--synthetic-old 为同一 PDF 的合成旧版（effective_from 1998-03-02），发布现行版（effective_from 2000-03-02）时归档；正文相同，检验版本状态与时效过滤（INV-DATA-03），不检验内容差异。",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e12a-principle-2000",
+      "title": "ICH E12A: Principles for Clinical Evaluation of New Antihypertensive Drugs (ICH consensus principle document)",
+      "rank": 2,
+      "warnings": [],
+      "rationale": "该页仅此句给出用于表征剂量-反应关系的短期研究时长（4-12周）。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    },
+    "conflict": {
+      "family_document_keys": [
+        "ich-e12a-principle-2000",
+        "ich-e12a-principle-2000--synthetic-old"
+      ],
+      "current_document_key": "ich-e12a-principle-2000",
+      "clause_topic": "3.1. Studies to Assess Antihypertensive Effect",
+      "synthetic": true
+    }
+  },
+  {
+    "sample_id": "ms-0364",
+    "query": "在固定复方降压药物的非应答者试验设计中，判定患者对单一成分'无应答'的舒张压标准是什么？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "mixed_zh_en",
+      "version_conflict"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0364-g1",
+        "source_hash": "d09627c2d02dc3c6675be445232a7312e0aa295f6b1748da68fc9d771405a9ac",
+        "version_label": "Principle document, 2000-03-02",
+        "page": 9,
+        "printed_page_label": null,
+        "section": "6.2. Studies in Non-responders to Each Drug",
+        "key_text": "diastolic blood pressure > 90 mmHg on that component",
+        "evidence_span": {
+          "text": "The safety and efficacy of combinations can also be assessed by examining the effect of the combination in patients failing to respond to both of the single drugs, e.g., diastolic blood pressure > 90 mmHg on that component.",
+          "char_start": 1404,
+          "char_end": 1627
+        }
+      }
+    ],
+    "notes": "合成冲突（spec-m1 §5）：ich-e12a-principle-2000--synthetic-old 为同一 PDF 的合成旧版（effective_from 1998-03-02），发布现行版（effective_from 2000-03-02）时归档；正文相同，检验版本状态与时效过滤（INV-DATA-03），不检验内容差异。",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e12a-principle-2000",
+      "title": "ICH E12A: Principles for Clinical Evaluation of New Antihypertensive Drugs (ICH consensus principle document)",
+      "rank": 3,
+      "warnings": [
+        "dose_unit: no numeral+unit/frequency pattern in span"
+      ],
+      "rationale": "该页仅此句给出判定患者对单一降压药物成分无应答的舒张压数值标准（>90 mmHg）。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    },
+    "conflict": {
+      "family_document_keys": [
+        "ich-e12a-principle-2000",
+        "ich-e12a-principle-2000--synthetic-old"
+      ],
+      "current_document_key": "ich-e12a-principle-2000",
+      "clause_topic": "6.2. Studies in Non-responders to Each Drug",
+      "synthetic": true
+    }
+  },
+  {
+    "sample_id": "ms-0366",
+    "query": "根据ICH E1，评估新降压药物安全性时通常建议的患者暴露数据库规模是多少？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "protocol_id",
+      "mixed_zh_en",
+      "version_conflict"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0366-g1",
+        "source_hash": "d09627c2d02dc3c6675be445232a7312e0aa295f6b1748da68fc9d771405a9ac",
+        "version_label": "Principle document, 2000-03-02",
+        "page": 8,
+        "printed_page_label": null,
+        "section": "4. ASSESSMENT OF SAFETY",
+        "key_text": "database of about 1500 patients (300-600 for 6 months, 100 for 1 year)",
+        "evidence_span": {
+          "text": "ICH E1 suggests that a database of about 1500 patients (300-600 for 6 months, 100 for 1 year) is usually sufficient for chronically administered drugs, but as suggested in that guideline, this may be too small for the very long, very wide exposure in an asymptomatic population intended for antihypertensive drugs.",
+          "char_start": 2114,
+          "char_end": 2428
+        }
+      }
+    ],
+    "notes": "合成冲突（spec-m1 §5）：ich-e12a-principle-2000--synthetic-old 为同一 PDF 的合成旧版（effective_from 1998-03-02），发布现行版（effective_from 2000-03-02）时归档；正文相同，检验版本状态与时效过滤（INV-DATA-03），不检验内容差异。",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e12a-principle-2000",
+      "title": "ICH E12A: Principles for Clinical Evaluation of New Antihypertensive Drugs (ICH consensus principle document)",
+      "rank": 4,
+      "warnings": [],
+      "rationale": "该页仅此句引用ICH E1并给出约1500例患者的安全性暴露数据库建议规模。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    },
+    "conflict": {
+      "family_document_keys": [
+        "ich-e12a-principle-2000",
+        "ich-e12a-principle-2000--synthetic-old"
+      ],
+      "current_document_key": "ich-e12a-principle-2000",
+      "clause_topic": "4. ASSESSMENT OF SAFETY",
+      "synthetic": true
+    }
+  },
+  {
+    "sample_id": "ms-0368",
+    "query": "根据ICH E4，剂量-反应（D/R）研究应识别出D/R曲线上的哪些关键剂量点？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "protocol_id",
+      "mixed_zh_en",
+      "version_conflict"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0368-g1",
+        "source_hash": "d09627c2d02dc3c6675be445232a7312e0aa295f6b1748da68fc9d771405a9ac",
+        "version_label": "Principle document, 2000-03-02",
+        "page": 8,
+        "printed_page_label": null,
+        "section": "3.3. Dose Response Relationship",
+        "key_text": "should characterize critical parts of the D/R curve, allowing identification of the lowest dose with some useful effect",
+        "evidence_span": {
+          "text": "These D/R studies (See ICH E4) should characterize critical parts of the D/R curve, allowing identification of the lowest dose with some useful effect, a dose on the steep part of the D/R curve, and a dose beyond which further effects are absent or small (maximum useful dose).",
+          "char_start": 471,
+          "char_end": 748
+        }
+      }
+    ],
+    "notes": "合成冲突（spec-m1 §5）：ich-e12a-principle-2000--synthetic-old 为同一 PDF 的合成旧版（effective_from 1998-03-02），发布现行版（effective_from 2000-03-02）时归档；正文相同，检验版本状态与时效过滤（INV-DATA-03），不检验内容差异。",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e12a-principle-2000",
+      "title": "ICH E12A: Principles for Clinical Evaluation of New Antihypertensive Drugs (ICH consensus principle document)",
+      "rank": 5,
+      "warnings": [],
+      "rationale": "该页仅此句说明参照ICH E4的D/R研究应识别的关键剂量点（最低有效剂量、陡峭段剂量、最大有效剂量）。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    },
+    "conflict": {
+      "family_document_keys": [
+        "ich-e12a-principle-2000",
+        "ich-e12a-principle-2000--synthetic-old"
+      ],
+      "current_document_key": "ich-e12a-principle-2000",
+      "clause_topic": "3.3. Dose Response Relationship",
+      "synthetic": true
+    }
+  },
+  {
+    "sample_id": "ms-0370",
+    "query": "在本文件引用的相关ICH指南列表中，ICH E1对应的主题是什么？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "mixed_zh_en",
+      "version_conflict"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0370-g1",
+        "source_hash": "d09627c2d02dc3c6675be445232a7312e0aa295f6b1748da68fc9d771405a9ac",
+        "version_label": "Principle document, 2000-03-02",
+        "page": 5,
+        "printed_page_label": null,
+        "section": "INTRODUCTION",
+        "key_text": "E1 : The Extent of Population Exposure to Assess Clinical Safety.",
+        "evidence_span": {
+          "text": "E1 : The Extent of Population Exposure to Assess Clinical Safety.",
+          "char_start": 639,
+          "char_end": 704
+        }
+      }
+    ],
+    "notes": "合成冲突（spec-m1 §5）：ich-e12a-principle-2000--synthetic-old 为同一 PDF 的合成旧版（effective_from 1998-03-02），发布现行版（effective_from 2000-03-02）时归档；正文相同，检验版本状态与时效过滤（INV-DATA-03），不检验内容差异。",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e12a-principle-2000",
+      "title": "ICH E12A: Principles for Clinical Evaluation of New Antihypertensive Drugs (ICH consensus principle document)",
+      "rank": 6,
+      "warnings": [
+        "protocol_id: no identifier pattern in query"
+      ],
+      "rationale": "该页仅此条列出ICH E1指南对应的主题为评估临床安全性所需的人群暴露范围。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": [
+        "dropped protocol_id: query carries no identifier (P3)"
+      ]
+    },
+    "conflict": {
+      "family_document_keys": [
+        "ich-e12a-principle-2000",
+        "ich-e12a-principle-2000--synthetic-old"
+      ],
+      "current_document_key": "ich-e12a-principle-2000",
+      "clause_topic": "INTRODUCTION",
+      "synthetic": true
+    }
+  },
+  {
+    "sample_id": "ms-0372",
+    "query": "根据ICH E14,在尚未确定药物对QT/QTc间期的影响之前,基线QTc间期反复超过多少ms会被建议作为受试者入选的排除标准?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0372-g1",
+        "source_hash": "6199a1a27063c31e6d935e062ad0b581618f123473b13a854fe61eea5ffe0a5c",
+        "version_label": "Step 4, 2005-05-12",
+        "page": 6,
+        "printed_page_label": null,
+        "section": "2.1.1 Subject Enrollment",
+        "key_text": "repeated demonstration of a QTc interval >450 ms",
+        "evidence_span": {
+          "text": "A marked baseline prolongation of QT/QTc interval (e.g., repeated demonstration of a QTc interval >450 ms);",
+          "char_start": 2133,
+          "char_end": 2240
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e14-step4-2005",
+      "title": "ICH E14: The Clinical Evaluation of QT/QTc Interval Prolongation and Proarrhythmic Potential for Non-Antiarrhythmic Drugs",
+      "rank": 1,
+      "warnings": [
+        "dose_unit: no numeral+unit/frequency pattern in span"
+      ],
+      "rationale": "本页只有这一条排除标准明确给出450 ms的QTc基线阈值,是唯一能回答该数值问题的条款。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0374",
+    "query": "根据ICH E14对'thorough QT/QTc study'结果的解读,若药物使平均QT/QTc间期延长约5 ms或更少,是否会导致TdP?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "dose_unit",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0374-g1",
+        "source_hash": "6199a1a27063c31e6d935e062ad0b581618f123473b13a854fe61eea5ffe0a5c",
+        "version_label": "Step 4, 2005-05-12",
+        "page": 9,
+        "printed_page_label": null,
+        "section": "2.2.4 Interpretation of the ‘Thorough QT/QTc Study’",
+        "key_text": "drugs that prolong the mean QT/QTc interval by around 5 ms or less do not appear to cause TdP",
+        "evidence_span": {
+          "text": "However, drugs that prolong the mean QT/QTc interval by around 5 ms or less do not appear to cause TdP.",
+          "char_start": 1324,
+          "char_end": 1427
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e14-step4-2005",
+      "title": "ICH E14: The Clinical Evaluation of QT/QTc Interval Prolongation and Proarrhythmic Potential for Non-Antiarrhythmic Drugs",
+      "rank": 2,
+      "warnings": [
+        "dose_unit: no numeral+unit/frequency pattern in span"
+      ],
+      "rationale": "本页唯一明确说明5 ms以下的平均QT/QTc延长'不会导致TdP'的条款,同时含否定语义与剂量单位。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0376",
+    "query": "根据ICH E14对QT/QTc间期分类分析的规定,临床试验中QTc延长超过多少ms被视为特别关注的阈值?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0376-g1",
+        "source_hash": "6199a1a27063c31e6d935e062ad0b581618f123473b13a854fe61eea5ffe0a5c",
+        "version_label": "Step 4, 2005-05-12",
+        "page": 14,
+        "printed_page_label": null,
+        "section": "3.2.2 Categorical Analyses",
+        "key_text": "a prolongation of QTc > 500 ms during therapy has been a threshold of particular concern",
+        "evidence_span": {
+          "text": "In clinical trials, a prolongation of QTc > 500 ms during therapy has been a threshold of particular concern.",
+          "char_start": 366,
+          "char_end": 475
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e14-step4-2005",
+      "title": "ICH E14: The Clinical Evaluation of QT/QTc Interval Prolongation and Proarrhythmic Potential for Non-Antiarrhythmic Drugs",
+      "rank": 3,
+      "warnings": [
+        "dose_unit: no numeral+unit/frequency pattern in span"
+      ],
+      "rationale": "本页唯一明确给出500 ms这一特别关注阈值数值的条款。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0378",
+    "query": "根据ICH E14,若药物申请安全数据库中未观察到TdP事件,能否据此排除该药物存在致心律失常风险的可能性?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0378-g1",
+        "source_hash": "6199a1a27063c31e6d935e062ad0b581618f123473b13a854fe61eea5ffe0a5c",
+        "version_label": "Step 4, 2005-05-12",
+        "page": 15,
+        "printed_page_label": null,
+        "section": "4.1 Clinical Trial Adverse Events",
+        "key_text": "the failure to observe an episode of TdP in a drug applic ation database is not considered sufficient grounds for dismissing the possible arrhythmogenic risks of a drug",
+        "evidence_span": {
+          "text": "Given this, the failure to observe an episode of TdP in a drug applic ation database is not considered sufficient grounds for dismissing the possible arrhythmogenic risks of a drug when these are suspected on the basis of ECG and other clinical data.",
+          "char_start": 273,
+          "char_end": 523
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e14-step4-2005",
+      "title": "ICH E14: The Clinical Evaluation of QT/QTc Interval Prolongation and Proarrhythmic Potential for Non-Antiarrhythmic Drugs",
+      "rank": 4,
+      "warnings": [],
+      "rationale": "本页唯一明确说明'未观察到TdP不足以排除致心律失常风险'这一否定性结论的条款。",
+      "key_status": "tolerant",
+      "span_status": "tolerant",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0380",
+    "query": "根据ICH E15指南，基因组生物标志物（genomic biomarker）的定义是什么？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "mixed_zh_en",
+      "version_conflict"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0380-g1",
+        "source_hash": "40516566c939436147ade1b076a2e46d716755d3062c1102732ae394cf8e02fc",
+        "version_label": "Step 4, 2007-11-01",
+        "page": 5,
+        "printed_page_label": null,
+        "section": "2.1 Genomic Biomarker / 2.1.1 Definition",
+        "key_text": "A measurable DNA and/or RNA characteristic that is an indicator of normal biologic processes, pathogenic processes, and/or response to therapeutic or other interventions.",
+        "evidence_span": {
+          "text": "A genomic biomarker is defined as follows: A measurable DNA and/or RNA characteristic that is an indicator of normal biologic processes, pathogenic processes, and/or response to therapeutic or other interventions.",
+          "char_start": 2361,
+          "char_end": 2574
+        }
+      }
+    ],
+    "notes": "合成冲突（spec-m1 §5）：ich-e15-step4-2007--synthetic-old 为同一 PDF 的合成旧版（effective_from 2005-11-01），发布现行版（effective_from 2007-11-01）时归档；正文相同，检验版本状态与时效过滤（INV-DATA-03），不检验内容差异。",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e15-step4-2007",
+      "title": "ICH E15: Definitions for Genomic Biomarkers, Pharmacogenomics, Pharmacogenetics, Genomic Data and Sample Coding Categories",
+      "rank": 1,
+      "warnings": [
+        "protocol_id: no identifier pattern in query"
+      ],
+      "rationale": "全文档中只有此处给出“基因组生物标志物”的正式定义，其他章节均未重复该定义句。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": [
+        "dropped protocol_id: query carries no identifier (P3)"
+      ]
+    },
+    "conflict": {
+      "family_document_keys": [
+        "ich-e15-step4-2007",
+        "ich-e15-step4-2007--synthetic-old"
+      ],
+      "current_document_key": "ich-e15-step4-2007",
+      "clause_topic": "2.1 Genomic Biomarker / 2.1.1 Definition",
+      "synthetic": true
+    }
+  },
+  {
+    "sample_id": "ms-0382",
+    "query": "根据ICH E15，药物遗传学（Pharmacogenetics, PGt）的定义是什么？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "protocol_id",
+      "mixed_zh_en",
+      "version_conflict"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0382-g1",
+        "source_hash": "40516566c939436147ade1b076a2e46d716755d3062c1102732ae394cf8e02fc",
+        "version_label": "Step 4, 2007-11-01",
+        "page": 6,
+        "printed_page_label": null,
+        "section": "2.2 Pharmacogenomics and Pharmacogenetics / 2.2.1.2 Pharmacogenetics",
+        "key_text": "The study of variations in DNA sequence as related to drug response.",
+        "evidence_span": {
+          "text": "Pharmacogenetics (PGt) is a subset of pharmacogenomics (PGx) and is defined as: The study of variations in DNA sequence as related to drug response.",
+          "char_start": 1572,
+          "char_end": 1720
+        }
+      }
+    ],
+    "notes": "合成冲突（spec-m1 §5）：ich-e15-step4-2007--synthetic-old 为同一 PDF 的合成旧版（effective_from 2005-11-01），发布现行版（effective_from 2007-11-01）时归档；正文相同，检验版本状态与时效过滤（INV-DATA-03），不检验内容差异。",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e15-step4-2007",
+      "title": "ICH E15: Definitions for Genomic Biomarkers, Pharmacogenomics, Pharmacogenetics, Genomic Data and Sample Coding Categories",
+      "rank": 2,
+      "warnings": [],
+      "rationale": "该页同时给出PGx与PGt两条定义，问题明确指定PGt，使该条款成为唯一答案。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    },
+    "conflict": {
+      "family_document_keys": [
+        "ich-e15-step4-2007",
+        "ich-e15-step4-2007--synthetic-old"
+      ],
+      "current_document_key": "ich-e15-step4-2007",
+      "clause_topic": "2.2 Pharmacogenomics and Pharmacogenetics / 2.2.1.2 Pharmacogenetics",
+      "synthetic": true
+    }
+  },
+  {
+    "sample_id": "ms-0384",
+    "query": "根据ICH E15，已识别（identified）数据和样本是否一般被认为适合用于药物开发的临床试验？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "protocol_id",
+      "mixed_zh_en",
+      "version_conflict"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0384-g1",
+        "source_hash": "40516566c939436147ade1b076a2e46d716755d3062c1102732ae394cf8e02fc",
+        "version_label": "Step 4, 2007-11-01",
+        "page": 7,
+        "printed_page_label": null,
+        "section": "2.3.1 Identified Data and Samples",
+        "key_text": "Identified data and samples are generally not considered appropriate for purposes of clinical trials in drug development.",
+        "evidence_span": {
+          "text": "Identified data and samples are generally not considered appropriate for purposes of clinical trials in drug development.",
+          "char_start": 2085,
+          "char_end": 2206
+        }
+      }
+    ],
+    "notes": "合成冲突（spec-m1 §5）：ich-e15-step4-2007--synthetic-old 为同一 PDF 的合成旧版（effective_from 2005-11-01），发布现行版（effective_from 2007-11-01）时归档；正文相同，检验版本状态与时效过滤（INV-DATA-03），不检验内容差异。",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e15-step4-2007",
+      "title": "ICH E15: Definitions for Genomic Biomarkers, Pharmacogenomics, Pharmacogenetics, Genomic Data and Sample Coding Categories",
+      "rank": 3,
+      "warnings": [],
+      "rationale": "该页仅有此句明确说明“已识别数据和样本一般不适合用于临床试验”，是唯一能回答该问题的条款。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    },
+    "conflict": {
+      "family_document_keys": [
+        "ich-e15-step4-2007",
+        "ich-e15-step4-2007--synthetic-old"
+      ],
+      "current_document_key": "ich-e15-step4-2007",
+      "clause_topic": "2.3.1 Identified Data and Samples",
+      "synthetic": true
+    }
+  },
+  {
+    "sample_id": "ms-0386",
+    "query": "根据ICH E15，匿名化（anonymised）数据和样本是否可以用于对受试者进行临床监测或随访？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "protocol_id",
+      "mixed_zh_en",
+      "version_conflict"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0386-g1",
+        "source_hash": "40516566c939436147ade1b076a2e46d716755d3062c1102732ae394cf8e02fc",
+        "version_label": "Step 4, 2007-11-01",
+        "page": 8,
+        "printed_page_label": null,
+        "section": "2.3.3 Anonymised Data and Samples",
+        "key_text": "The use of anonymised data and samples does not allow for clinical monitoring, subject follow-up or the addition of new data from the subject.",
+        "evidence_span": {
+          "text": "As anonymised samples and associated data are not traceable back to the subject, it is not possible to undertake actions such as sample withdrawal, or the return of individual results, even at the subject’s request. The use of anonymised data and samples does not allow for clinical monitoring, subject follow-up or the addition of new data from the subject.",
+          "char_start": 2285,
+          "char_end": 2643
+        }
+      }
+    ],
+    "notes": "合成冲突（spec-m1 §5）：ich-e15-step4-2007--synthetic-old 为同一 PDF 的合成旧版（effective_from 2005-11-01），发布现行版（effective_from 2007-11-01）时归档；正文相同，检验版本状态与时效过滤（INV-DATA-03），不检验内容差异。",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e15-step4-2007",
+      "title": "ICH E15: Definitions for Genomic Biomarkers, Pharmacogenomics, Pharmacogenetics, Genomic Data and Sample Coding Categories",
+      "rank": 4,
+      "warnings": [],
+      "rationale": "页面中匿名化与匿名两类别均有类似限制句，但仅此句明确限定为“anonymised”类别，使问题答案唯一。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    },
+    "conflict": {
+      "family_document_keys": [
+        "ich-e15-step4-2007",
+        "ich-e15-step4-2007--synthetic-old"
+      ],
+      "current_document_key": "ich-e15-step4-2007",
+      "clause_topic": "2.3.3 Anonymised Data and Samples",
+      "synthetic": true
+    }
+  },
+  {
+    "sample_id": "ms-0388",
+    "query": "根据ICH E15，在某些情况下匿名（anonymous）基因组样本可以关联哪些有限的临床数据？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "protocol_id",
+      "mixed_zh_en",
+      "version_conflict"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0388-g1",
+        "source_hash": "40516566c939436147ade1b076a2e46d716755d3062c1102732ae394cf8e02fc",
+        "version_label": "Step 4, 2007-11-01",
+        "page": 8,
+        "printed_page_label": null,
+        "section": "2.3.4 Anonymous Data and Samples",
+        "key_text": "samples from subjects with diabetes, male, age 50-55, cholesterol>240 mg/dl",
+        "evidence_span": {
+          "text": "In some instances only limited clinical data can be associated with anonymous samples (e.g., samples from subjects with diabetes, male, age 50-55, cholesterol>240 mg/dl).",
+          "char_start": 3172,
+          "char_end": 3342
+        }
+      }
+    ],
+    "notes": "合成冲突（spec-m1 §5）：ich-e15-step4-2007--synthetic-old 为同一 PDF 的合成旧版（effective_from 2005-11-01），发布现行版（effective_from 2007-11-01）时归档；正文相同，检验版本状态与时效过滤（INV-DATA-03），不检验内容差异。",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e15-step4-2007",
+      "title": "ICH E15: Definitions for Genomic Biomarkers, Pharmacogenomics, Pharmacogenetics, Genomic Data and Sample Coding Categories",
+      "rank": 5,
+      "warnings": [],
+      "rationale": "该页仅此句给出匿名样本可关联的有限临床数据示例，且含数值单位mg/dl，是唯一符合的条款。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    },
+    "conflict": {
+      "family_document_keys": [
+        "ich-e15-step4-2007",
+        "ich-e15-step4-2007--synthetic-old"
+      ],
+      "current_document_key": "ich-e15-step4-2007",
+      "clause_topic": "2.3.4 Anonymous Data and Samples",
+      "synthetic": true
+    }
+  },
+  {
+    "sample_id": "ms-0390",
+    "query": "MRCT试验方案应如何区分允许和不允许使用的合并用药?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0390-g1",
+        "source_hash": "e67211a8358fa94236ef0a0dd0a76538271584ab93a71b9f9bf841d94d3f5371",
+        "version_label": "Step 4, 2017-11-16",
+        "page": 28,
+        "printed_page_label": null,
+        "section": "2.2.9 Handling Concomitant Medications",
+        "key_text": "specify allowable and not allowable concomitant medications and doses",
+        "evidence_span": {
+          "text": "The clinical trial protocol should specify allowable and not allowable concomitant medications and doses.",
+          "char_start": 955,
+          "char_end": 1060
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e17-step4-2017",
+      "title": "ICH E17: General Principles for Planning and Design of Multi-Regional Clinical Trials",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "This is the only sentence on the page stating the protocol's explicit obligation to specify allowable versus not-allowable concomitant medications, using a clear negation term.",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0392",
+    "query": "MRCT的所有参与地区和场所应如何符合ICH E6 GCP标准,并配合哪些监管检查?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "protocol_id",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0392-g1",
+        "source_hash": "e67211a8358fa94236ef0a0dd0a76538271584ab93a71b9f9bf841d94d3f5371",
+        "version_label": "Step 4, 2017-11-16",
+        "page": 9,
+        "printed_page_label": null,
+        "section": "2.1.2 Good Clinical Practice (GCP) Requirements and MRCTs",
+        "key_text": "conducted in compliance with ICH E6 GCP standards in all regions and sites, including making sites available for GCP inspections by regulatory authorities",
+        "evidence_span": {
+          "text": "MRCTs should be conducted in compliance with ICH E6 GCP standards in all regions and sites, including making sites available for GCP inspections by regulatory authorities.",
+          "char_start": 685,
+          "char_end": 856
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e17-step4-2017",
+      "title": "ICH E17: General Principles for Planning and Design of Multi-Regional Clinical Trials",
+      "rank": 2,
+      "warnings": [],
+      "rationale": "Only this sentence on the page ties MRCT conduct specifically to ICH E6 GCP standards and the requirement to make sites available for regulatory GCP inspections.",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0394",
+    "query": "如果MRCT的主要终点仅在少数地区有既往应用经验,该终点的采纳需要满足什么条件?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0394-g1",
+        "source_hash": "e67211a8358fa94236ef0a0dd0a76538271584ab93a71b9f9bf841d94d3f5371",
+        "version_label": "Step 4, 2017-11-16",
+        "page": 15,
+        "printed_page_label": null,
+        "section": "2.2.4 Choice of Endpoints - Primary Endpoint",
+        "key_text": "its adoption as primary endpoint will require discussion and agreement with regulatory authorities regarding the basis for the evidence",
+        "evidence_span": {
+          "text": "In cases where prior experience with an endpoint only exists in one or a subset of regions involved in the MRCT, its adoption as primary endpoint will require discussion and agreement with regulatory authorities regarding the basis for the evidence, keeping in mind that the forthcoming trial can add information about clinical relevance of the agreed upon endpoint.",
+          "char_start": 1553,
+          "char_end": 1919
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e17-step4-2017",
+      "title": "ICH E17: General Principles for Planning and Design of Multi-Regional Clinical Trials",
+      "rank": 3,
+      "warnings": [],
+      "rationale": "This is the only clause on the page addressing the specific scenario of an endpoint with prior experience limited to only some regions and the resulting requirement for regulatory discussion before adoption as primary endpoint.",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0396",
+    "query": "对于罕见病或传染病爆发相关的MRCT,当各地区疾病流行率差异很大时,样本量分配应如何处理?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0396-g1",
+        "source_hash": "e67211a8358fa94236ef0a0dd0a76538271584ab93a71b9f9bf841d94d3f5371",
+        "version_label": "Step 4, 2017-11-16",
+        "page": 21,
+        "printed_page_label": null,
+        "section": "2.2.5 Sample Size Planning",
+        "key_text": "it may be necessary to allow one or more regions to dominate the trial for recruitment to be feasible",
+        "evidence_span": {
+          "text": "In studies of rare diseases or an infectious disease outbreak, for example, disease prevalence may differ substantially between regions, and it may be necessary to allow one or more regions to dominate the trial for recruitment to be feasible. The recruitment strategy should be discussed with the regulatory authorities during planning.",
+          "char_start": 450,
+          "char_end": 787
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e17-step4-2017",
+      "title": "ICH E17: General Principles for Planning and Design of Multi-Regional Clinical Trials",
+      "rank": 4,
+      "warnings": [],
+      "rationale": "Only this passage on the page addresses the specific exception for rare disease or outbreak MRCTs where one or more regions may need to dominate enrolment, and the associated need to discuss recruitment strategy with regulators.",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0398",
+    "query": "根据ICH E18,基因组样本的储存时间是否可以超过知情同意书所载明的留存期限?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0398-g1",
+        "source_hash": "5dbb1b7247cf7ac1fd9629e3545e20df95b648785dfa50b0024fae96b49eb418",
+        "version_label": "Step 4, 2017-08-03",
+        "page": 8,
+        "printed_page_label": null,
+        "section": "2.2.2. Storage of Samples",
+        "key_text": "Samples should not be stored longer than the allowed total retention period as described in the informed consent document.",
+        "evidence_span": {
+          "text": "Samples should not be stored longer than the allowed total retention period as described in the informed consent document.",
+          "char_start": 2217,
+          "char_end": 2339
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e18-step4-2017",
+      "title": "ICH E18: Guideline on Genomic Sampling and Management of Genomic Data",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "This is the only sentence in the document that directly states samples must not be stored beyond the informed-consent-specified retention period.",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0400",
+    "query": "根据ICH E18,在选择采样时间点时,种系(germline)DNA与肿瘤DNA/RNA的时间稳定性有何不同?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0400-g1",
+        "source_hash": "5dbb1b7247cf7ac1fd9629e3545e20df95b648785dfa50b0024fae96b49eb418",
+        "version_label": "Step 4, 2017-08-03",
+        "page": 6,
+        "printed_page_label": null,
+        "section": "2.1.2. Timing of Specimen Collection",
+        "key_text": "the sequence of germline DNA is relatively stable over time, information obtained from tumor DNA and RNA can be affected by the source, method and/or timing of the sample collection",
+        "evidence_span": {
+          "text": "While the sequence of germline DNA is relatively stable over time, information obtained from tumor DNA and RNA can be affected by the source, method and/or timing of the sample collection.",
+          "char_start": 1892,
+          "char_end": 2080
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e18-step4-2017",
+      "title": "ICH E18: Guideline on Genomic Sampling and Management of Genomic Data",
+      "rank": 3,
+      "warnings": [],
+      "rationale": "This is the only sentence in section 2.1.2 comparing germline DNA stability to the variability of tumor DNA/RNA in relation to collection timing.",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0402",
+    "query": "根据ICH E18,BRCA1基因突变等意外发现(incidental findings)是否可能在并非以癌症风险为研究目的的全基因组测序中被识别?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0402-g1",
+        "source_hash": "5dbb1b7247cf7ac1fd9629e3545e20df95b648785dfa50b0024fae96b49eb418",
+        "version_label": "Step 4, 2017-08-03",
+        "page": 11,
+        "printed_page_label": null,
+        "section": "6. COMMUNICATION OF FINDINGS",
+        "key_text": "BRCA1 mutations may be identified with whole genome sequenc ing during research that has not been intended to investigate cancer risk",
+        "evidence_span": {
+          "text": "For example, BRCA1 mutations may be identified with whole genome sequenc ing during research that has not been intended to investigate cancer risk.",
+          "char_start": 2257,
+          "char_end": 2404
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e18-step4-2017",
+      "title": "ICH E18: Guideline on Genomic Sampling and Management of Genomic Data",
+      "rank": 4,
+      "warnings": [],
+      "rationale": "Only this example sentence in the Communication of Findings section describes BRCA1 mutations being identified despite the research not being intended to investigate cancer risk.",
+      "key_status": "tolerant",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0404",
+    "query": "根据ICH E18,基因组数据分析流程中的QC质控标准应在进入下一阶段分析前如何锁定?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0404-g1",
+        "source_hash": "5dbb1b7247cf7ac1fd9629e3545e20df95b648785dfa50b0024fae96b49eb418",
+        "version_label": "Step 4, 2017-08-03",
+        "page": 9,
+        "printed_page_label": null,
+        "section": "3.1. Generation of Genomic Data",
+        "key_text": "Such QC procedures and thresholds should be fixed for each stage of the workflow before proceeding to downstream analyses.",
+        "evidence_span": {
+          "text": "Such QC procedures and thresholds should be fixed for each stage of the workflow before proceeding to downstream analyses.",
+          "char_start": 1731,
+          "char_end": 1853
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e18-step4-2017",
+      "title": "ICH E18: Guideline on Genomic Sampling and Management of Genomic Data",
+      "rank": 5,
+      "warnings": [],
+      "rationale": "This is the only sentence in section 3.1 specifying that QC procedures and thresholds must be fixed before proceeding to downstream analyses.",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0406",
+    "query": "在ICH E19下，采用选择性安全性数据收集方法时，临床试验通常仍应收集哪些安全性相关数据（如严重不良事件、重要医学事件等）？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en",
+      "long_context"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0406-g1",
+        "source_hash": "6daddce21ed23e1899b05b555335402aae49873d8560b9ea7c4a74bf5fc77fdd",
+        "version_label": "Step 4, 2022-09-27",
+        "page": 8,
+        "printed_page_label": null,
+        "section": "2.4 Data that Should Generally be Collected",
+        "key_text": "data elements that should generally be collected, but is not meant to be comprehensive",
+        "evidence_span": {
+          "text": "In accordance with ICH E2A: Clinical Safety Data Management: Definitions and Standards for Expedited Reporting and ICH E6: Good Clinical Practice , an adverse event can be any unfavourable and unintended sign (including an abnormal laboratory finding), symptom, or disease temporally associated with the us e of a medicinal product, whether or not considered related to the medicinal product. The following list includes the data elements that should generally be collected, but is not meant to be comprehensive: 1. Serious adverse events (see ICH E2A; ICH E6) 2. Important medical events (see ICH E2A) 3. Medication error/overdose (intentional or unintentional) 4. Adverse event that led to study drug discontinuation 5. Pregnancy and lactation exposure and outcomes 6. Adverse events of special interest, including laboratory abnormalities, identified in the protocol as critical to safety evaluations ( see ICH E6; ICH E2F: Development Safety Update Report; CIOMS VI). When allowed/permitted by regional or local regulations and supported by adequate justification in the protocol, a selective collection of some of the data listed above could be considered in these regions. Serious adverse events considered efficacy or safety endpoints, which would not be subject to unblinding and expedited reporting (see ICH E2A), should be prospectively agreed upon with the regulatory authority (ies) and described in the clinical trial protocol. They should be collected and monitored on a regular basis through an independent data monitoring committee (IDMC) established by the sponsor (see ICH E6).",
+          "char_start": 790,
+          "char_end": 2385
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e19-step4-2022",
+      "title": "ICH E19: A Selective Approach to Safety Data Collection in Specific Late-Stage Pre-Approval or Post-Approval Clinical Trials",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "Section 2.4 is the only clause in the document that enumerates the safety data elements that must generally still be collected even under a selective safety data collection approach.",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0408",
+    "query": "根据ICH E19，若计划临床试验的给药剂量或给药频率超过既往用以确立药物安全性特征的试验，是否仍可考虑采用选择性安全性数据收集？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0408-g1",
+        "source_hash": "6daddce21ed23e1899b05b555335402aae49873d8560b9ea7c4a74bf5fc77fdd",
+        "version_label": "Step 4, 2022-09-27",
+        "page": 7,
+        "printed_page_label": null,
+        "section": "2.2 Factors that Contribute to a Conclusion that the Safety Profile of a Drug is Sufficiently Characterised to Justify Selective Safety Data Collection - Similarity of the Planned Clinical Trial to Pr",
+        "key_text": "the planned dose or dosing frequency of the drug should not exceed what was studied in previous clinical trials used to characterise the drug’s safety",
+        "evidence_span": {
+          "text": "7. The planned dose and dosing frequency in the proposed clinical trial. In general, the planned dose or dosing frequency of the drug should not exceed what was studied in previous clinical trials used to characterise the drug’s safety.",
+          "char_start": 1267,
+          "char_end": 1503
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e19-step4-2022",
+      "title": "ICH E19: A Selective Approach to Safety Data Collection in Specific Late-Stage Pre-Approval or Post-Approval Clinical Trials",
+      "rank": 2,
+      "warnings": [
+        "dose_unit: no numeral+unit/frequency pattern in span"
+      ],
+      "rationale": "Only item 7 of Section 2.2 links dose and dosing-frequency comparability to the requirement that it should not exceed prior trials, making it the unique clause answering this question.",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0410",
+    "query": "根据ICH E19中预防性疫苗(preventive vaccine)选择性安全性数据收集示例，方案中对征集性体征症状、非征集性不良事件及严重不良事件/AESI分别设定了多长的数据收集时间窗？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "time_window",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0410-g1",
+        "source_hash": "6daddce21ed23e1899b05b555335402aae49873d8560b9ea7c4a74bf5fc77fdd",
+        "version_label": "Step 4, 2022-09-27",
+        "page": 11,
+        "printed_page_label": null,
+        "section": "3.3 Comprehensive Safety Data Collection for the Initial Period of the Clinical Trial , with Selective Data Collection Thereafter",
+        "key_text": "serious adverse events and pre-specified AESIs are collected for at least 6 months post-vaccination (1)",
+        "evidence_span": {
+          "text": "Consider a clinical trial of a preventive vaccine in which solicited signs and symptoms are recorded daily for a pre -specified period post -vaccination (e.g., 7 days), all unsolicited adverse events are collected for approximately 4 weeks post -vaccination, and serious adverse events and pre-specified AESIs are collected for at least 6 months post-vaccination (1);",
+          "char_start": 3154,
+          "char_end": 3521
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e19-step4-2022",
+      "title": "ICH E19: A Selective Approach to Safety Data Collection in Specific Late-Stage Pre-Approval or Post-Approval Clinical Trials",
+      "rank": 3,
+      "warnings": [],
+      "rationale": "This is the only example in the document that specifies distinct collection time windows for solicited signs, unsolicited adverse events, and serious adverse events/AESIs in a vaccine trial.",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0412",
+    "query": "根据ICH E19，选择性安全性数据收集的原则是否适用于基因治疗(gene therapy)临床试验？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0412-g1",
+        "source_hash": "6daddce21ed23e1899b05b555335402aae49873d8560b9ea7c4a74bf5fc77fdd",
+        "version_label": "Step 4, 2022-09-27",
+        "page": 6,
+        "printed_page_label": null,
+        "section": "1.3 Scope of the Guideline - Post-approval Setting",
+        "key_text": "This guidance is not applicable to gene therapy or rare/orphan disease clinical trials",
+        "evidence_span": {
+          "text": "This guidance is not applicable to gene therapy or rare/orphan disease clinical trials . With limited numbers of prospective participants for such trials, the collection of comprehensive safety data, from every participant, is warranted.",
+          "char_start": 369,
+          "char_end": 606
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e19-step4-2022",
+      "title": "ICH E19: A Selective Approach to Safety Data Collection in Specific Late-Stage Pre-Approval or Post-Approval Clinical Trials",
+      "rank": 4,
+      "warnings": [],
+      "rationale": "This is the only sentence in the document that explicitly excludes gene therapy trials from the selective safety data collection approach.",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0414",
+    "query": "根据ICH E19,在临床试验中采用选择性安全性数据收集(selective safety data collection)方法时,通常仍应收集哪些安全性数据要素?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en",
+      "long_context"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0414-g1",
+        "source_hash": "6daddce21ed23e1899b05b555335402aae49873d8560b9ea7c4a74bf5fc77fdd",
+        "version_label": "Step 4, 2022-09-27",
+        "page": 8,
+        "printed_page_label": null,
+        "section": "2.4 Data that Should Generally be Collected",
+        "key_text": "The following list includes the data elements that should generally be collected, but is not meant to be comprehensive:",
+        "evidence_span": {
+          "text": "In accordance with ICH E2A: Clinical Safety Data Management: Definitions and Standards for Expedited Reporting and ICH E6: Good Clinical Practice , an adverse event can be any unfavourable and unintended sign (including an abnormal laboratory finding), symptom, or disease temporally associated with the us e of a medicinal product, whether or not considered related to the medicinal product. The following list includes the data elements that should generally be collected, but is not meant to be comprehensive: 1. Serious adverse events (see ICH E2A; ICH E6) 2. Important medical events (see ICH E2A) 3. Medication error/overdose (intentional or unintentional) 4. Adverse event that led to study drug discontinuation 5. Pregnancy and lactation exposure and outcomes 6. Adverse events of special interest, including laboratory abnormalities, identified in the protocol as critical to safety evaluations ( see ICH E6; ICH E2F: Development Safety Update Report; CIOMS VI). When allowed/permitted by regional or local regulations and supported by adequate justification in the protocol, a selective collection of some of the data listed above could be considered in these regions. Serious adverse events considered efficacy or safety endpoints, which would not be subject to unblinding and expedited reporting (see ICH E2A), should be prospectively agreed upon with the regulatory authority (ies) and described in the clinical trial protocol. They should be collected and monitored on a regular basis through an independent data monitoring committee (IDMC) established by the sponsor (see ICH E6).",
+          "char_start": 790,
+          "char_end": 2385
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e19-step4-2022",
+      "title": "ICH E19: A Selective Approach to Safety Data Collection in Specific Late-Stage Pre-Approval or Post-Approval Clinical Trials",
+      "rank": 101,
+      "warnings": [],
+      "rationale": "第8页仅此处以完整列表形式列出选择性安全性数据收集方法下仍应通常收集的六类安全性数据要素及其适用条件,是唯一能完整回答该问题的条款。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0416",
+    "query": "在ICH E3安全性报告的暴露程度部分,试验药物的剂量应如何以mg/kg或mg/m²表示?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0416-g1",
+        "source_hash": "032d53bb6d693151b64bdc87aa4cf42b90e096db6e52dad73c2093cd62ffa24d",
+        "version_label": "Step 4, 1995-11-30",
+        "page": 28,
+        "printed_page_label": null,
+        "section": "12.1 EXTENT OF EXPOSURE",
+        "key_text": "Dosage may be given as the actual daily dose or on a mg/kg or mg/m² basis as appropriate.",
+        "evidence_span": {
+          "text": "• Dose: The mean or median dose used and the number of patients exposed to specified daily dose levels should be given; the daily dose levels used could be the maximum dose for each patient, the dose with longest exposure for each patient, or the mean daily dose. It is often useful to provide combined dose- duration information, such as the numbers exposed for a given duration (e.g., at least one month) to the most common dose, the highest dose, the maximum recommended dose etc. In so me cases, cumulative dose might be pertinent. Dosage may be given as the actual daily dose or on a mg/kg or mg/m² basis as appropriate. The numbers of patients exposed to various doses should be broken down into age, sex, and racial subgroups, and any other pertinent subgroups.",
+          "char_start": 1576,
+          "char_end": 2344
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e3-step4-1995",
+      "title": "ICH E3: Structure and Content of Clinical Study Reports",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "This is the only passage on the page specifying that dosage in the extent-of-exposure section may be expressed on a mg/kg or mg/m² basis.",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0418",
+    "query": "根据ICH E3,临床研究报告中的数据列表为控制篇幅,是否可以过度使用符号代替文字说明?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0418-g1",
+        "source_hash": "032d53bb6d693151b64bdc87aa4cf42b90e096db6e52dad73c2093cd62ffa24d",
+        "version_label": "Step 4, 1995-11-30",
+        "page": 10,
+        "printed_page_label": null,
+        "section": "General Considerations on Data Presentation",
+        "key_text": "should not be allowed to lead to overuse of symbols instead of words",
+        "evidence_span": {
+          "text": "An excess of data should not be allowed to lead to overuse of symbols instead of words or easily understood abbreviations or to too small displays etc.",
+          "char_start": 1338,
+          "char_end": 1489
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e3-step4-1995",
+      "title": "ICH E3: Structure and Content of Clinical Study Reports",
+      "rank": 2,
+      "warnings": [],
+      "rationale": "Only this sentence on the page states that excess data should not be allowed to lead to overuse of symbols instead of words in data listings.",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0420",
+    "query": "ICH E3 11.4.2.7节要求主动对照等效性试验的疗效分析应呈现什么样的置信区间比较?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "protocol_id",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0420-g1",
+        "source_hash": "032d53bb6d693151b64bdc87aa4cf42b90e096db6e52dad73c2093cd62ffa24d",
+        "version_label": "Step 4, 1995-11-30",
+        "page": 25,
+        "printed_page_label": null,
+        "section": "11.4.2.7 Active-Control Studies Intended to Show Equivalence",
+        "key_text": "the analysis should show the confidence interval for the comparison between the two agents for critical end points",
+        "evidence_span": {
+          "text": "If an active control study is intended to show equivalence (i.e., lack of a difference greater than a specified size) between the te st drug/investigational product and the active control/comparator, the analysis should show the confidence interval for the comparison between the two agents for critical end points and the relation of that interval to the prespecified degree of inferiority that would be considered unacceptable. (See 9.2, for important consid erations when using the active control equivalence design.)",
+          "char_start": 2669,
+          "char_end": 3189
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e3-step4-1995",
+      "title": "ICH E3: Structure and Content of Clinical Study Reports",
+      "rank": 3,
+      "warnings": [],
+      "rationale": "Only section 11.4.2.7 on this page specifies the confidence-interval reporting requirement for active-control equivalence trials, so the section number is needed to retrieve it uniquely.",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0422",
+    "query": "根据ICH E3,是否要求对每一个不良事件都进行严格的统计学评估?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0422-g1",
+        "source_hash": "032d53bb6d693151b64bdc87aa4cf42b90e096db6e52dad73c2093cd62ffa24d",
+        "version_label": "Step 4, 1995-11-30",
+        "page": 30,
+        "printed_page_label": null,
+        "section": "12.2.3 Analysis of Adverse Events",
+        "key_text": "It is not intended that every adverse event be subjected to rigorous statistical evaluation",
+        "evidence_span": {
+          "text": "It is not intended that every adverse event be subjected to rigorous statistical evaluation.",
+          "char_start": 2207,
+          "char_end": 2299
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e3-step4-1995",
+      "title": "ICH E3: Structure and Content of Clinical Study Reports",
+      "rank": 4,
+      "warnings": [],
+      "rationale": "This is the only statement on the page clarifying that rigorous statistical evaluation is not required for every adverse event, distinguishing it from surrounding adverse-event analysis guidance.",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0424",
+    "query": "根据ICH E3第12.4.2.2节,在分析个别病人化验数值随治疗组别的变化(individual patient changes)时,可以采用哪些具体分析方法?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "dose_unit",
+      "mixed_zh_en",
+      "long_context"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0424-g1",
+        "source_hash": "032d53bb6d693151b64bdc87aa4cf42b90e096db6e52dad73c2093cd62ffa24d",
+        "version_label": "Step 4, 1995-11-30",
+        "page": 34,
+        "printed_page_label": null,
+        "section": "12.4.2.2 Individual Patient Changes",
+        "key_text": "An analysis of individual patient changes by treatment group should be given",
+        "evidence_span": {
+          "text": "12.4.2.2 Individual Patient Changes An analysis of individual patient changes by treatment group should be given. A variety of approaches may be used, including: I. \"Shift tables\" - These tables show the number of patients who are low, normal, or high at baseline and then at selected time intervals. II. Tables showing the number or fraction of patients who had a change in parameter of a predetermined size at selected time in tervals. For example, for BUN, it might be decided that a change of more than 10 mg/dL BUN should be noted. For this parameter, the number of patients having a change less than this or greater than this would be shown for one or more visi ts, usually grouping patients separately depending on baseline BUN (normal or elev ated). The possible advantage of this display, compared to the usual shift table, is that changes of a certain size are noted, even if the final value is not abnormal. III. A graph comparing the initial value and the on-treatment values of a laboratory measurement for each patient by locating the point defined by the initial value on the abscissa and a subsequent value on the ordinate. If no changes occur, the point representing each patient will be loca ted on the 45° line. A general shift to higher values will show a clustering of points above the 45° line. As this display usually shows only a single time point for a single treatment, interpretation requires a time series of these plot s for treatment and control groups. Alternatively the display could show bas eline and most extreme on-treatment value. These displays identify outliers readily (it is useful to include patient identifiers for the outliers).",
+          "char_start": 473,
+          "char_end": 2145
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e3-step4-1995",
+      "title": "ICH E3: Structure and Content of Clinical Study Reports",
+      "rank": 101,
+      "warnings": [],
+      "rationale": "第34页12.4.2.2节完整列出了评估个别病人化验值变化的三种具体分析方法(shift tables、预定幅度变化表、45度线散点图),是页内唯一能完整回答该问题的条款。",
+      "key_status": "exact",
+      "span_status": "tolerant",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0426",
+    "query": "根据ICH E6(R3)，在IRB/IEC作出书面批准（approval/favourable opinion）之前，能否将受试者纳入临床试验？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0426-g1",
+        "source_hash": "e6ce19e36ce7d2e294f89ee89492b9e035178c3cca48984392bbd92eec9b002c",
+        "version_label": "E6(R3) Step 4, 2025-01-06",
+        "page": 17,
+        "printed_page_label": null,
+        "section": "1.4 Procedures",
+        "key_text": "no participant should be enrolled in a trial before the IRB/IEC issues its documented approval/favourable opinion of the trial",
+        "evidence_span": {
+          "text": "Specifying that no participant should be enrolled in a trial before the IRB/IEC issues its documented approval/favourable opinion of the trial;",
+          "char_start": 1807,
+          "char_end": 1950
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e6-r3-step4-2025",
+      "title": "ICH Harmonised Guideline: Guideline for Good Clinical Practice E6(R3) — Final version, adopted 06 January 2025",
+      "rank": 2,
+      "warnings": [],
+      "rationale": "1.4.6条款是页面中唯一明确禁止在IRB/IEC出具书面批准意见前纳入受试者的规定。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0428",
+    "query": "根据ICH E6(R3)，受试者获得的试验相关报酬能否完全取决于其是否完成整个试验？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0428-g1",
+        "source_hash": "e6ce19e36ce7d2e294f89ee89492b9e035178c3cca48984392bbd92eec9b002c",
+        "version_label": "E6(R3) Step 4, 2025-01-06",
+        "page": 16,
+        "printed_page_label": null,
+        "section": "IRB/IEC Responsibilities (1.2)",
+        "key_text": "not wholly contingent on completion of the trial by the participant",
+        "evidence_span": {
+          "text": "Payments to a participant should be timely, prorated and not wholly contingent on completion of the trial by the participant.",
+          "char_start": 1542,
+          "char_end": 1667
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e6-r3-step4-2025",
+      "title": "ICH Harmonised Guideline: Guideline for Good Clinical Practice E6(R3) — Final version, adopted 06 January 2025",
+      "rank": 3,
+      "warnings": [],
+      "rationale": "1.2.8条款中该句是页面内唯一明确规定受试者报酬不得完全取决于试验完成情况的条款。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0430",
+    "query": "根据ICH E7,在制定老年患者临床试验方案时,是否应该因患者合并症而将其排除出试验?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en",
+      "version_conflict"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0430-g1",
+        "source_hash": "cbe681cf342eeefb477c1a30770d12798fadcf2d00079faa0aa66047ce4ca330",
+        "version_label": "Step 4, 1993-06-24",
+        "page": 4,
+        "printed_page_label": null,
+        "section": "IV. Definition of the Population",
+        "key_text": "important not to exclude unnecessarily patients with concomitant illnesses",
+        "evidence_span": {
+          "text": "It is also important not to exclude unnecessarily patients with concomitant illnesses; it is only by observing such patients that drug-disease interactions can be detected.",
+          "char_start": 374,
+          "char_end": 546
+        }
+      }
+    ],
+    "notes": "合成冲突（spec-m1 §5）：ich-e7-step4-1993--synthetic-old 为同一 PDF 的合成旧版（effective_from 1991-06-24），发布现行版（effective_from 1993-06-24）时归档；正文相同，检验版本状态与时效过滤（INV-DATA-03），不检验内容差异。",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e7-step4-1993",
+      "title": "ICH E7: Studies in Support of Special Populations: Geriatrics",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "该页仅此一处明确说明不应因合并症而不必要地排除老年患者,是唯一能回答此问题的条款。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    },
+    "conflict": {
+      "family_document_keys": [
+        "ich-e7-step4-1993",
+        "ich-e7-step4-1993--synthetic-old"
+      ],
+      "current_document_key": "ich-e7-step4-1993",
+      "clause_topic": "IV. Definition of the Population",
+      "synthetic": true
+    }
+  },
+  {
+    "sample_id": "ms-0432",
+    "query": "根据ICH E7,已上市药品的新剂型或新复方制剂,如果说明书未充分涵盖老年患者常见状况,是否仍适用本指导原则?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en",
+      "version_conflict"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0432-g1",
+        "source_hash": "cbe681cf342eeefb477c1a30770d12798fadcf2d00079faa0aa66047ce4ca330",
+        "version_label": "Step 4, 1993-06-24",
+        "page": 3,
+        "printed_page_label": null,
+        "section": "III. Scope of Guideline",
+        "key_text": "are likely to be encountered and are not already dealt with in current labelling",
+        "evidence_span": {
+          "text": "The guideline applies also to new formulations and new combinations of established medicinal products when there is specific reason to expect that conditions common in the elderly (e.g., renal or hepatic impairment, impaired cardiac function, concomitant illnesses or concomitant medications) are likely to be encountered and are not already dealt with in current labelling.",
+          "char_start": 1515,
+          "char_end": 1889
+        }
+      }
+    ],
+    "notes": "合成冲突（spec-m1 §5）：ich-e7-step4-1993--synthetic-old 为同一 PDF 的合成旧版（effective_from 1991-06-24），发布现行版（effective_from 1993-06-24）时归档；正文相同，检验版本状态与时效过滤（INV-DATA-03），不检验内容差异。",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e7-step4-1993",
+      "title": "ICH E7: Studies in Support of Special Populations: Geriatrics",
+      "rank": 2,
+      "warnings": [],
+      "rationale": "该页仅此一句明确规定指南适用于说明书尚未涵盖老年常见状况的新剂型/新复方,是回答该问题的唯一条款。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    },
+    "conflict": {
+      "family_document_keys": [
+        "ich-e7-step4-1993",
+        "ich-e7-step4-1993--synthetic-old"
+      ],
+      "current_document_key": "ich-e7-step4-1993",
+      "clause_topic": "III. Scope of Guideline",
+      "synthetic": true
+    }
+  },
+  {
+    "sample_id": "ms-0434",
+    "query": "根据ICH E7的一般原则,新药临床试验是否应涵盖包括老年人在内的所有相关年龄组?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "mixed_zh_en",
+      "version_conflict"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0434-g1",
+        "source_hash": "cbe681cf342eeefb477c1a30770d12798fadcf2d00079faa0aa66047ce4ca330",
+        "version_label": "Step 4, 1993-06-24",
+        "page": 3,
+        "printed_page_label": null,
+        "section": "II. General Principle",
+        "key_text": "should be studied in all age groups, including the elderly",
+        "evidence_span": {
+          "text": "Drugs should be studied in all age groups, including the elderly, for which they will have significant utility.",
+          "char_start": 880,
+          "char_end": 991
+        }
+      }
+    ],
+    "notes": "合成冲突（spec-m1 §5）：ich-e7-step4-1993--synthetic-old 为同一 PDF 的合成旧版（effective_from 1991-06-24），发布现行版（effective_from 1993-06-24）时归档；正文相同，检验版本状态与时效过滤（INV-DATA-03），不检验内容差异。",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e7-step4-1993",
+      "title": "ICH E7: Studies in Support of Special Populations: Geriatrics",
+      "rank": 3,
+      "warnings": [],
+      "rationale": "此为General Principle章节唯一陈述药物应在所有年龄组(含老年人)中进行研究的条款,别无重复。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    },
+    "conflict": {
+      "family_document_keys": [
+        "ich-e7-step4-1993",
+        "ich-e7-step4-1993--synthetic-old"
+      ],
+      "current_document_key": "ich-e7-step4-1993",
+      "clause_topic": "II. General Principle",
+      "synthetic": true
+    }
+  },
+  {
+    "sample_id": "ms-0436",
+    "query": "根据ICH E7,申办方若不单独进行老年人药代动力学评价,可以采用什么替代方法?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "mixed_zh_en",
+      "version_conflict"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0436-g1",
+        "source_hash": "cbe681cf342eeefb477c1a30770d12798fadcf2d00079faa0aa66047ce4ca330",
+        "version_label": "Step 4, 1993-06-24",
+        "page": 5,
+        "printed_page_label": null,
+        "section": "B. Pharmacokinetic Screening Approach",
+        "key_text": "utilize a Pharmacokinetic Screen in conjunction with the main Phase 3",
+        "evidence_span": {
+          "text": "Sponsors may opt, instead of conducting a separate PK evaluation of the elderly, to utilize a Pharmacokinetic Screen in conjunction with the main Phase 3 (and Phase 2, if the sponsor wishes) clinical trials program.",
+          "char_start": 958,
+          "char_end": 1173
+        }
+      }
+    ],
+    "notes": "合成冲突（spec-m1 §5）：ich-e7-step4-1993--synthetic-old 为同一 PDF 的合成旧版（effective_from 1991-06-24），发布现行版（effective_from 1993-06-24）时归档；正文相同，检验版本状态与时效过滤（INV-DATA-03），不检验内容差异。",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e7-step4-1993",
+      "title": "ICH E7: Studies in Support of Special Populations: Geriatrics",
+      "rank": 4,
+      "warnings": [],
+      "rationale": "该页唯一说明可用Pharmacokinetic Screen替代单独老年人PK评价方法的条款,能唯一回答此问题。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    },
+    "conflict": {
+      "family_document_keys": [
+        "ich-e7-step4-1993",
+        "ich-e7-step4-1993--synthetic-old"
+      ],
+      "current_document_key": "ich-e7-step4-1993",
+      "clause_topic": "B. Pharmacokinetic Screening Approach",
+      "synthetic": true
+    }
+  },
+  {
+    "sample_id": "ms-0438",
+    "query": "根据ICH E7,认知功能相关的评估是否建议单独设计临床试验,而非与主要试验合并进行?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "mixed_zh_en",
+      "version_conflict"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0438-g1",
+        "source_hash": "cbe681cf342eeefb477c1a30770d12798fadcf2d00079faa0aa66047ce4ca330",
+        "version_label": "Step 4, 1993-06-24",
+        "page": 4,
+        "printed_page_label": null,
+        "section": "V. Clinical Experience",
+        "key_text": "studies of cognitive function, require special planning and can be best accomplished in separate studies",
+        "evidence_span": {
+          "text": "Certain assessments, however, e.g., studies of cognitive function, require special planning and can be best accomplished in separate studies.",
+          "char_start": 2180,
+          "char_end": 2321
+        }
+      }
+    ],
+    "notes": "合成冲突（spec-m1 §5）：ich-e7-step4-1993--synthetic-old 为同一 PDF 的合成旧版（effective_from 1991-06-24），发布现行版（effective_from 1993-06-24）时归档；正文相同，检验版本状态与时效过滤（INV-DATA-03），不检验内容差异。",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e7-step4-1993",
+      "title": "ICH E7: Studies in Support of Special Populations: Geriatrics",
+      "rank": 5,
+      "warnings": [],
+      "rationale": "该页仅此一句明确指出认知功能等评估需特别规划并最好单独进行,是回答该问题的唯一条款。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    },
+    "conflict": {
+      "family_document_keys": [
+        "ich-e7-step4-1993",
+        "ich-e7-step4-1993--synthetic-old"
+      ],
+      "current_document_key": "ich-e7-step4-1993",
+      "clause_topic": "V. Clinical Experience",
+      "synthetic": true
+    }
+  },
+  {
+    "sample_id": "ms-0440",
+    "query": "ICH E7指南中,针对老年患者用药方案,建议在哪些具体情况下常规开展药物-药物交互作用研究,应涵盖哪些研究类型?",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en",
+      "long_context",
+      "version_conflict"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0440-g1",
+        "source_hash": "cbe681cf342eeefb477c1a30770d12798fadcf2d00079faa0aa66047ce4ca330",
+        "version_label": "Step 4, 1993-06-24",
+        "page": 6,
+        "printed_page_label": null,
+        "section": "IX. Drug-Drug Interaction Studies",
+        "key_text": "the following are ordinarily recommended:",
+        "evidence_span": {
+          "text": "Such interactions are of particular impo rtance to geriatric patients, who are more likely to be using concomitant me dications than younger patients, but of course are not limited to this age group. Therefore it is a general principle, not specific to these guidelines, that in cases where the therapeutic range (i.e., range of toxic to therapeutic doses) of the drug or likely concomitant drugs is narrow, and the likelihood of the concomitant ther apy is great, that specific drug-drug interaction studies be considered. The studies needed must be determined case- by-case, but the following are ordinarily recommended: • Digoxin and oral anticoagulant interacti on studies, because so many drugs alter serum concentrations of these drugs, they are widely prescribed in the elderly, and they have narrow therapeutic ranges • For drugs that undergo extensive hepa tic metabolism, determination of the effects of hepatic-enzyme inducers (e.g ., phenobarbital) and inhibitors (e.g., cimetidine) • For drugs metabolized by cytochrome P- 450 enzymes, it is critical to examine the effects of known inhibitors, such as quinidine (for cytochrome P-450 2D6) or ketoconazole and macrolide antibiotics (for drugs metabolized by cytochrome P-450 3A4). There is a rapidly growing list of drugs that can interfere with other drugs that metabolism, and sponsors should remain aware of it. • Interaction studies with other drugs that are likely to be used with the test drug (unless important interactions have been ruled out by a Pharmacokinetic Screen)",
+          "char_start": 1249,
+          "char_end": 2791
+        }
+      }
+    ],
+    "notes": "合成冲突（spec-m1 §5）：ich-e7-step4-1993--synthetic-old 为同一 PDF 的合成旧版（effective_from 1991-06-24），发布现行版（effective_from 1993-06-24）时归档；正文相同，检验版本状态与时效过滤（INV-DATA-03），不检验内容差异。",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e7-step4-1993",
+      "title": "ICH E7: Studies in Support of Special Populations: Geriatrics",
+      "rank": 101,
+      "warnings": [],
+      "rationale": "只有第6页此段完整列出了ICH E7指南针对老年人药物交互作用研究所推荐的全部具体研究类别及其触发情形,文档其他部分未重复该清单。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    },
+    "conflict": {
+      "family_document_keys": [
+        "ich-e7-step4-1993",
+        "ich-e7-step4-1993--synthetic-old"
+      ],
+      "current_document_key": "ich-e7-step4-1993",
+      "clause_topic": "IX. Drug-Drug Interaction Studies",
+      "synthetic": true
+    }
+  },
+  {
+    "sample_id": "ms-0442",
+    "query": "在临床试验方案设计中，关键质量因子(critical to quality factors)是否应纳入因扩展性次要目标而产生的次要问题？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0442-g1",
+        "source_hash": "99d56638828c823bb603ff3ef451fcfafc607de8a5b3926136d64980f27baa13",
+        "version_label": "Step 4, 2021-10-06",
+        "page": 11,
+        "printed_page_label": null,
+        "section": "3.3 Approach to Identifying the Critical to Quality Factors",
+        "key_text": "should not be cluttered with minor issues",
+        "evidence_span": {
+          "text": "The critical to quality factors should be clear and should not be cluttered with minor issues (e.g., due to extensive secondary objectives or processes/data collection not linked to the proper protection of the study participants and/or primary study objectives).",
+          "char_start": 538,
+          "char_end": 801
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e8-r1-step4-2021",
+      "title": "ICH Harmonised Guideline E8(R1): General Considerations for Clinical Studies",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "Only this sentence on the page states that critical to quality factors should remain clear and not be cluttered by minor issues from secondary objectives, making it the unique answer to this question.",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0444",
+    "query": "在使用外部/次要数据来源(secondary data use)开展临床研究时，若某疾病或事件在数据中未被记录，能否因此判定该事件未曾发生？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0444-g1",
+        "source_hash": "99d56638828c823bb603ff3ef451fcfafc607de8a5b3926136d64980f27baa13",
+        "version_label": "Step 4, 2021-10-06",
+        "page": 23,
+        "printed_page_label": null,
+        "section": "5.7 Study Data",
+        "key_text": "absence of affirmative information on a condition or event does not necessarily mean the condition or event is not present",
+        "evidence_span": {
+          "text": "As another example, absence of affirmative information on a condition or event does not necessarily mean the condition or event is not present.",
+          "char_start": 2774,
+          "char_end": 2917
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e8-r1-step4-2021",
+      "title": "ICH Harmonised Guideline E8(R1): General Considerations for Clinical Studies",
+      "rank": 2,
+      "warnings": [],
+      "rationale": "This is the only sentence on the page warning that lack of recorded information does not confirm the absence of a condition or event when using secondary data sources.",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0446",
+    "query": "根据ICH E9(R1)附录A.3.2.对treatment policy strategy的说明，为什么这一策略不能用于处理terminal events（如死亡）这类intercurrent event？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0446-g1",
+        "source_hash": "f7471f411f1c87ee76783d5b2b9faaeca31d01d530213f71b50d136b39e3b0d9",
+        "version_label": "Step 4, 2019-11-20",
+        "page": 9,
+        "printed_page_label": null,
+        "section": "A.3.2. Strategies for Addressing Intercurrent Events when Defining the Clinical Question of Interest — Treatment policy strategy",
+        "key_text": "the treatment policy strategy cannot be implemented for intercurrent events that are terminal events, since values for the variable after the intercurrent event do not exist",
+        "evidence_span": {
+          "text": "In general, the treatment policy strategy cannot be implemented for intercurrent events that are terminal events, since values for the variable after the intercurrent event do not exist. For example, an estimand based on this strategy cannot be constructed with respect to a variable that cannot be measured due to death.",
+          "char_start": 2027,
+          "char_end": 2348
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e9-r1-step4-2019",
+      "title": "ICH E9(R1): Addendum on Estimands and Sensitivity Analysis in Clinical Trials",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "只有Treatment policy strategy段落这句话明确说明该策略不能用于terminal events，页面其他策略描述均未给出此限制。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0448",
+    "query": "在ICH E9(R1)关于hypothetical strategies的举例中，对于因不良事件而中止治疗的受试者，设想了哪两种假设情境？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0448-g1",
+        "source_hash": "f7471f411f1c87ee76783d5b2b9faaeca31d01d530213f71b50d136b39e3b0d9",
+        "version_label": "Step 4, 2019-11-20",
+        "page": 10,
+        "printed_page_label": null,
+        "section": "Hypothetical strategies",
+        "key_text": "whether the same subject would not have the adverse event or could continue treatment in spite of the adverse event",
+        "evidence_span": {
+          "text": "For example, for a subject that will suffer an adverse event and discontinue treatment, it might be considered whether the same subject would not have the adverse event or could continue treatment in spite of the adverse event.",
+          "char_start": 313,
+          "char_end": 540
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e9-r1-step4-2019",
+      "title": "ICH E9(R1): Addendum on Estimands and Sensitivity Analysis in Clinical Trials",
+      "rank": 2,
+      "warnings": [],
+      "rationale": "该页仅此处针对‘因不良事件中止治疗的受试者’给出两种具体假设情境，是唯一能回答该问题的条款。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0450",
+    "query": "在ICH E9(R1)讨论discontinuation of treatment这一intercurrent event时，能否把基于principal stratum的效应或continued treatment期间的效应解释为‘假如所有病人都能继续治疗’时的效应？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0450-g1",
+        "source_hash": "f7471f411f1c87ee76783d5b2b9faaeca31d01d530213f71b50d136b39e3b0d9",
+        "version_label": "Step 4, 2019-11-20",
+        "page": 14,
+        "printed_page_label": null,
+        "section": "A.3.4. Considerations for Selecting Strategies to Address Intercurrent Events",
+        "key_text": "neither of these should be taken to represent an effect if all patients can continue with treatment",
+        "evidence_span": {
+          "text": "Consider an intercurrent event of discontinuation of treatment; it is of utmost importance to distinguish between treatment effects of interest based on the principal stratum of patients who would be able to continue if administered the test treatment and the effect during continued treatment. Furthermore, neither of these should be taken to represent an effect if all patients can continue with treatment.",
+          "char_start": 119,
+          "char_end": 527
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e9-r1-step4-2019",
+      "title": "ICH E9(R1): Addendum on Estimands and Sensitivity Analysis in Clinical Trials",
+      "rank": 3,
+      "warnings": [],
+      "rationale": "该页仅这段明确指出这两种效应都不应被解释为‘全部病人可继续治疗’时的效应，其他段落未涉及此限定。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0452",
+    "query": "根据ICH E9(R1)附录A.5.3.关于supplementary analysis的说明，为什么Per Protocol Set (PPS)分析不能达到估计任何principal stratum效应的目标？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0452-g1",
+        "source_hash": "f7471f411f1c87ee76783d5b2b9faaeca31d01d530213f71b50d136b39e3b0d9",
+        "version_label": "Step 4, 2019-11-20",
+        "page": 20,
+        "printed_page_label": null,
+        "section": "A.5.3. Supplementary Analysis",
+        "key_text": "analysis of the PPS does not achieve the goal of estimating the effect in any principal stratum",
+        "evidence_span": {
+          "text": "As noted above, analysis of the PPS does not achieve the goal of estimating the effect in any principal stratum, for example, in those subjects able to tolerate and continue to take the test treatment, because it may not compare similar subjects on different treatments.",
+          "char_start": 1638,
+          "char_end": 1908
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e9-r1-step4-2019",
+      "title": "ICH E9(R1): Addendum on Estimands and Sensitivity Analysis in Clinical Trials",
+      "rank": 4,
+      "warnings": [],
+      "rationale": "该页仅此句明确说明PPS分析无法达成principal stratum估计目标的原因，是唯一能回答该问题的条款。",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0454",
+    "query": "在双盲临床试验中，为什么药品包装标签只标示受试者编号和治疗期，而不使用代码字母等其他识别方式？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0454-g1",
+        "source_hash": "0c0ddc93cb427a70265dbcb0e7c25bfc9a3f7b52e178212b3630ea2408ad9c7e",
+        "version_label": "Step 4, 1998-02-05",
+        "page": 12,
+        "printed_page_label": null,
+        "section": "2.3 Design Techniques to Avoid Bias",
+        "key_text": "so that no one involved in the conduct of the trial is aware of the specific treatment allocated to any particular subject, not even as a code letter",
+        "evidence_span": {
+          "text": "Most such trials follow a double-blind approach in which treatments are pre-packed in accordance with a suitable randomisation schedule, and supplied to the trial centre(s) labelled only with the subject number and the treatment period so that no one involved in the conduct of the trial is aware of the specific treatment allocated to any particular subject, not even as a code letter.",
+          "char_start": 810,
+          "char_end": 1196
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e9-step4-1998",
+      "title": "ICH E9: Statistical Principles for Clinical Trials",
+      "rank": 1,
+      "warnings": [],
+      "rationale": "This is the only sentence on the page specifying that double-blind trial packaging is labelled solely with subject number and treatment period so that no one, not even by a code letter, can identify the treatment.",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0456",
+    "query": "在使用全分析集(full analysis set)进行分析时，若因方案违背而排除了某些已随机受试者，是否可以不评估这些排除对结果可能造成的偏倚？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "negation",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0456-g1",
+        "source_hash": "0c0ddc93cb427a70265dbcb0e7c25bfc9a3f7b52e178212b3630ea2408ad9c7e",
+        "version_label": "Step 4, 1998-02-05",
+        "page": 27,
+        "printed_page_label": null,
+        "section": "5.2.1 Full Analysis Set",
+        "key_text": "No analysis is complete unless the potential biases arising from these specific exclusions, or any others, are addressed.",
+        "evidence_span": {
+          "text": "No analysis is complete unless the potential biases arising from these specific exclusions, or any others, are addressed.",
+          "char_start": 984,
+          "char_end": 1105
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e9-step4-1998",
+      "title": "ICH E9: Statistical Principles for Clinical Trials",
+      "rank": 2,
+      "warnings": [],
+      "rationale": "This is the only statement on the page requiring that any exclusions from the full analysis set have their potential biases addressed for an analysis to be considered complete.",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0458",
+    "query": "根据ICH E9，若对多中心临床试验中'中心'(centre)一词的定义存有疑问，可参考哪份ICH指南以获得相关指导？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "protocol_id",
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0458-g1",
+        "source_hash": "0c0ddc93cb427a70265dbcb0e7c25bfc9a3f7b52e178212b3630ea2408ad9c7e",
+        "version_label": "Step 4, 1998-02-05",
+        "page": 17,
+        "printed_page_label": null,
+        "section": "Multicentre Trials",
+        "key_text": "In most instances centres can be satisfactorily defined through the investigators and ICH E6 provides relevant guidance in this respect.",
+        "evidence_span": {
+          "text": "In most instances centres can be satisfactorily defined through the investigators and ICH E6 provides relevant guidance in this respect.",
+          "char_start": 3115,
+          "char_end": 3251
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e9-step4-1998",
+      "title": "ICH E9: Statistical Principles for Clinical Trials",
+      "rank": 3,
+      "warnings": [],
+      "rationale": "Only this sentence identifies ICH E6 as the guideline providing relevant guidance for defining 'centre' in multicentre trials.",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  },
+  {
+    "sample_id": "ms-0460",
+    "query": "在开放标签(open-label)试验中，治疗分配的身份对哪些人是已知的？",
+    "dept": "CO",
+    "language": "mixed",
+    "slices": [
+      "mixed_zh_en"
+    ],
+    "required_gold_evidence": [
+      {
+        "gold_id": "ms-0460-g1",
+        "source_hash": "0c0ddc93cb427a70265dbcb0e7c25bfc9a3f7b52e178212b3630ea2408ad9c7e",
+        "version_label": "Step 4, 1998-02-05",
+        "page": 12,
+        "printed_page_label": null,
+        "section": "2.3.1 Blinding",
+        "key_text": "In an open-label trial the identity of treatment is known to all.",
+        "evidence_span": {
+          "text": "In an open-label trial the identity of treatment is known to all.",
+          "char_start": 3333,
+          "char_end": 3398
+        }
+      }
+    ],
+    "notes": "",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "_draft": {
+      "document_key": "ich-e9-step4-1998",
+      "title": "ICH E9: Statistical Principles for Clinical Trials",
+      "rank": 4,
+      "warnings": [],
+      "rationale": "This is the only sentence on the page defining the open-label trial arrangement, stating that treatment identity is known to all parties.",
+      "key_status": "exact",
+      "span_status": "exact",
+      "curation": []
+    }
+  }
+]

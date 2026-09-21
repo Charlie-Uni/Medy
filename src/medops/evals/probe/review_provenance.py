@@ -328,6 +328,9 @@ def _validate(
     # spec-m1: imported probe samples carry probe review evidence (validator PR-16), not this version's
     samples = [s for s in all_samples if not (main_set and imported_sample(s))]
     expected_total = manifest["counts"]["samples"] - (manifest["counts"]["imported"] if main_set else 0)
+    # spec-m1: samples removed after their review keep their run evidence; they are declared in the manifest
+    dropped = set(manifest.get("dropped_after_review") or {}) if main_set else set()
+    _require(not (dropped & set(sample_ids)), "dropped_after_review lists a sample that is still in the set")
     _require(
         len(set(sample_ids)) == len(all_samples) and len(samples) == expected_total,
         "review evidence sample coverage differs from manifest",
@@ -377,17 +380,18 @@ def _validate(
         _require(
             run.get("backend_model_version") is None, f"{batch}: backend version is exposed, sentinel is inappropriate"
         )
-        _hashes(run["sample_input_sha256"], set(group), batch)
+        live_hashes = {k: v for k, v in run["sample_input_sha256"].items() if k not in dropped}
+        _hashes(live_hashes, set(group), batch)
         if records is not None:
             _require(
-                run["sample_input_sha256"] == {sid: _digest(records[sid]) for sid in group},
+                live_hashes == {sid: _digest(records[sid]) for sid in group},
                 f"{batch}: current sample/page input hash differs from review",
             )
         latest, chunks = run["latest"], run["chunks"]
-        _require(isinstance(latest, dict) and set(latest) == set(group), f"{batch}: latest coverage mismatch")
+        _require(isinstance(latest, dict) and set(latest) - dropped == set(group), f"{batch}: latest coverage mismatch")
         _require(isinstance(chunks, list) and bool(chunks), f"{batch}: missing invocation evidence")
         current = _verdicts(_jsonl(artifacts[f"verdicts_{batch}.jsonl"]))
-        _require(set(current) == set(group), f"{batch}: verdict coverage mismatch")
+        _require(set(current) - dropped == set(group), f"{batch}: verdict coverage mismatch")
         for chunk in chunks:
             _require(
                 chunk["model"] == model and chunk["reasoning_effort"] == effort and chunk["returncode"] == 0,
@@ -403,7 +407,10 @@ def _validate(
             _require(chunk.get("backend_model_version") is None, f"{batch}: invocation exposes a backend version")
             ids = chunk["sample_ids"]
             _require(
-                isinstance(ids, list) and bool(ids) and len(ids) == len(set(ids)) and set(ids).issubset(group),
+                isinstance(ids, list)
+                and bool(ids)
+                and len(ids) == len(set(ids))
+                and (set(ids) - dropped).issubset(group),
                 f"{batch}: invalid invocation sample coverage",
             )
             _hashes(chunk["sample_input_sha256"], set(ids), batch)

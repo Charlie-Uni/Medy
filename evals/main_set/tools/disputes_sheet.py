@@ -56,6 +56,8 @@ def main() -> None:
     disputed = {sid for sid, v in verdicts.items() if v["verdict"] == "dispute"}
     rows = []
     for sid in sorted(disputed):
+        if sid not in drafts:
+            continue  # dropped after its review (review/dropped_after_review.json)
         v = verdicts[sid]
         b, s = drafts[sid]
         issues = ", ".join(k for k, val in v["items"].items() if val == "issue")
@@ -94,7 +96,8 @@ def main() -> None:
         "",
     ]
     args.out.write_text("\n".join(lines), encoding="utf-8")
-    print(f"{len(rows)} disputes -> {args.out.relative_to(dc.REPO)}")
+    shown = args.out.relative_to(dc.REPO) if args.out.resolve().is_relative_to(dc.REPO) else args.out
+    print(f"{len(rows)} disputes -> {shown}")
 
 
 if __name__ == "__main__":

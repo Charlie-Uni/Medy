@@ -265,6 +265,12 @@ def manifest_schema() -> dict:
         },
         "description": "spec-m1 §5: families with an archived version available to version_conflict samples",
     }
+    p["dropped_after_review"] = {
+        "type": "object",
+        "propertyNames": {"pattern": "^ms-[0-9]{4}$"},
+        "additionalProperties": {"type": "string", "minLength": 5, "maxLength": 500},
+        "description": "spec-m1: samples removed after their LLM review (their run evidence stays; PR-09 tolerates the ids)",
+    }
     m["required"] = m["required"] + ["gates", "imported_samples", "second_human_review", "conflict_fixtures"]
     m["allOf"].append(
         {
