@@ -195,6 +195,10 @@ def _current_records(
             },
             "page_text": text,
         }
+        if main_set and sample.get("conflict"):
+            result[sample["sample_id"]]["conflict"] = sample["conflict"]
+        if main_set and sample.get("notes"):
+            result[sample["sample_id"]]["notes"] = sample["notes"]
         if main_set and sample.get("derived_from"):
             result[sample["sample_id"]]["parent_query"] = by_id[sample["derived_from"]]["query"]
     return result

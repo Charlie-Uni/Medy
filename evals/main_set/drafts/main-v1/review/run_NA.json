@@ -1,0 +1,453 @@
+{
+  "batch": "NA",
+  "reviewer_cli": "claude-code",
+  "cli_binary": "/Users/leaf/.local/bin/claude",
+  "cli_version": "2.1.79 (Claude Code)",
+  "model": "claude-opus-5",
+  "model_version_source": "pinned_model_id",
+  "reasoning_effort_requested": "high",
+  "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+  "review_prompt_sha256": "8538a516164394d885245e2d79652432ea3c71d7c7a49bba269f09740c2d1e90",
+  "sample_input_sha256": {
+    "ms-0462": "d5a51f3b073305111f32fb7c1ec4ea49d360b472291ca34cfc9342147d93ef66",
+    "ms-0463": "0789af1a49454ab264a5aaa171131d259ea8490de40505701485934c9e5fcd36",
+    "ms-0464": "bb2e195c330442b29d6f1c07e7a9a2b5ccd3f7d5011df92ddbe84125825ea02e",
+    "ms-0465": "71565f9335b8e0dbdcecee6bd9f17e6e15722f27cb247694b5af4ee27a6705eb",
+    "ms-0466": "49851ced0b8e4f7a1736501295188e8b2ce10191931ad4d7d42a32e434a11306",
+    "ms-0467": "2b839e97f1122eaaf481a71d0dba242d3f9677b785c8363e67b2a9e1066c0e01",
+    "ms-0468": "d239eb3b33843061fb21d2fff98f9c6394ca0da954792f0ff7ade1f0a905921a",
+    "ms-0469": "266c819c36df5f43eda5fb19db5cc4bcc7e5f9f4ab82389c9094d28cafd9221a",
+    "ms-0470": "24a448b5bfd18877059d1c62ebf4db15e6375b48f5062c244dd6d183eb686912",
+    "ms-0471": "5ec284d4eb57ef7409bdfdcbd9fa01c3ad9ae998c933289803e80ad41966f94d",
+    "ms-0472": "3a32d82dac32861acad4a704222ba627445c2133955f4a4309b83ea13fe24073",
+    "ms-0473": "8982497a30088b67f4421f5033675af6e32d3fe53b31e753bdf725a388ff8880",
+    "ms-0474": "1f3e034a2d84fde3f12269a1b268149b3ae177ca9874ac76464f47f85e639fd2",
+    "ms-0475": "ccda9a231e1c557a8e5b5ecf105903cbc056a417c87bd8f80ce4d643a0c03e96",
+    "ms-0476": "b1f928d94653b7a7cdc5f86c240cb811db3144b736989926dc858f67aa21a018",
+    "ms-0477": "57ba41366345ba57514ea678190c9a543848b41fdd3859caf7eab6f71ec9f818",
+    "ms-0478": "a5a247ef3e40e60a7db8cee3a159b0b567fcac1699b6f3305f4650134f8403a8",
+    "ms-0479": "3e915d07c6cf7619dc2bd421846d9aa0a1a8f5e378fa931a9aa45622ccc09508",
+    "ms-0480": "f3e6438f5dc6189c6840a354200302c9a7117eb3276bdb936f81b1b5124b1f0e",
+    "ms-0481": "4143ba26d2be580f501b15454b357095f5b6f21c279370907f7ce7c78dcd30ae",
+    "ms-0482": "5520853a826971977422152ef272a448745271eecbb43eb1fa6b7a0793ee466b",
+    "ms-0483": "dfc2b76a73eee158e7aeafff16fbecaa5f5fb86042d06b777eb34ced97e8ba51",
+    "ms-0484": "122970d10a2771e451d611ac384ab4c0f8129f0b4b84bba1bb7c0c21a997b747",
+    "ms-0485": "f92b21fd6b381e80cd7a6d0198a8081e0e350a35ae13bf39d0b127054dc82349",
+    "ms-0486": "548f96e491dba0fa340f41e15552f78ee192840298e7c471c55ac3771ad82cf0",
+    "ms-0488": "b4283a096f8eeeb61592e6e533d70c33fc4e7f60e89dc6f20d2b5ce3ecb77a0d",
+    "ms-0489": "ba17eb79dfdb7dc978ebb2792d86f423e77dbcc14789247339c14b2bebeee541",
+    "ms-0490": "c243d0f0134cb0eec59406c4b59393164e8f127a2424822a011c70e03eb23174",
+    "ms-0491": "13102bff1230a17c4bd9e34fa1266597df0b9dbddc2fcdcb3904a1ec4c12f5fc",
+    "ms-0492": "b928c5a0b9983bb08bfb0db4de0e29fdc90f63d678976c3609e3fb2244593b04",
+    "ms-0493": "ee8a62823c2d003c7976dadde43c6188c0d288cbdadff431f835b0bee6f4df59",
+    "ms-0494": "e50308e0638f81bf2eeb0622e2b5058efe6645d0dc236de5150887a5d225ba39",
+    "ms-0495": "31c5b6459276be47d48ad5375ac41a8ba63bd5e2cf2b1c533e06166b99cce82d",
+    "ms-0496": "bd3d3d1c675b9b5e925031a39c4b238c1a3c2555d84d8a008f3e32f9ebaafa9a",
+    "ms-0497": "b686302ffe772627f91b0a2c84d3b43aa9db573d90fe24cc7ad78dc28b775e77",
+    "ms-0498": "c7ecc6d4d88c1685e88f448fd233691bc9bf65c72dd81ac4b0c32a12d484a2a4",
+    "ms-0499": "275be204cd8cc28fce2ae714154a75512e616d775a12c33630760b07fc33c0c7",
+    "ms-0500": "e043f798a85bfa024e4165d8ae16e20be61d5ad872d779a0da5a59cfda9a1eac",
+    "ms-0501": "2d51499ce1c559c6f7733daa7a85cf04060607f9214cf18e4c260c25771e73ba",
+    "ms-0502": "67b545e2ef622005b2fe957b68233d4dd69be4146215924a2852af634453bc49",
+    "ms-0503": "457e96a12f63c618f9f88c16d2508ee1ace2fca061060591ab4f71799df7f7c5",
+    "ms-0504": "c351083df9de0c35dc1f972caf12b2b0d9022aceb9a2bbf434f4780198541e7a",
+    "ms-0505": "0261cf76eb3eb9fadbe4693deccf39a1e89ecf24cbf5c8829fdc56daf1973afa",
+    "ms-0506": "81776a3a52e8e5572d4991937c532e6fbadf1029ed15830610bb4d00d2fcdd33",
+    "ms-0507": "571a8d119da47fc15fff5d98951aba0e7864d98a1243535252c412ed203753a8",
+    "ms-0508": "4af5ff7a1c07fbd2c4916d399fa3694c19d9c5fcb3b92c629cc0f806bb47c007",
+    "ms-0509": "b24b4530158b2726b0cb3a35324d423ad51ffb210a367347148a6a1e9741167c",
+    "ms-0510": "94596b5c4104ed3df0217e5581bc7fcec5136fa0950efe246ae338653991e9e1",
+    "ms-0511": "04031781526d7cd760e05a0c46806ec29348d0d0fb6cbd6b53797e3ec4dc75bd",
+    "ms-0512": "44154fbb13c581758b6a12e3e70667aed481d78ed6cab6eee3f6578ede39e8f9",
+    "ms-0513": "894f5c50d6f28b8c87a4b57b18792a649de3fca16fc7435e42d4e78ef1515bfc",
+    "ms-0514": "0e6e51658d0509478c922e0bffc16fa2d6bfddb2ae7e7c426c5cf629d17648fc",
+    "ms-0515": "e9713c152aa8a17944dd021aa3a8571c2850981cbd398d33896fd57799a33662",
+    "ms-0516": "eeac08c4379e0c6bbf27f63736c51b5f41c40bd3279ec6f00847e815cdaf3791",
+    "ms-0517": "6cd264060a229584453b024419ddf40218fd51b07688a0dae66310ad0de61c38",
+    "ms-0518": "70a5e34aa2d8197f4ea29a657e79a7d4691255adeae952058c5104e95c1df493",
+    "ms-0519": "51e86404087ad270de6de2045b9c8464c5d1eb3f96d47c987c6ce26c1766a0b8",
+    "ms-0520": "91b3b614ccbd0410288c2d0d0be504546c3d6a02ae3ed8c4da3f2f45e73878d3",
+    "ms-0521": "0053d919fcf71aba8ba5ce2685250fdf6dc7e3dcdc45c889b11dcccd39088dd8",
+    "ms-0522": "4938474a15fd2a21b5bfc8fb5ae68ac9770d6ca403cb50d476818ad5dbee1074",
+    "ms-0523": "c48a37dc3fbcbe896b99ebca41a5103f1fa2b13b92033da3096574faf0dee532",
+    "ms-0524": "4fcb54a7d3e0768501429c5af5859b81d8b75f85f3051c5da94ee998d32fc71a"
+  },
+  "chunks": [
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "3a8120ea-1ae5-42c7-ac42-b11c8052f9be",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "2769",
+      "cost_usd": 0.31609125,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0462",
+        "ms-0463",
+        "ms-0464"
+      ],
+      "started_at": "2026-09-21T14:22:48+00:00",
+      "finished_at": "2026-09-21T14:23:22+00:00",
+      "prompt_chars": 113583,
+      "prompt_sha256": "bcecc9b89826ac37db0f82efb632e64fe746a8f27b5b5dfb8f6354123d6afcd8",
+      "verdicts": [
+        {
+          "sample_id": "ms-0462",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "absence": "ok",
+            "slices": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0463",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "absence": "ok",
+            "slices": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0464",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "absence": "ok",
+            "slices": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_bcecc9b89826ac37db0f82efb632e64fe746a8f27b5b5dfb8f6354123d6afcd8.jsonl",
+      "sample_input_sha256": {
+        "ms-0462": "d5a51f3b073305111f32fb7c1ec4ea49d360b472291ca34cfc9342147d93ef66",
+        "ms-0463": "0789af1a49454ab264a5aaa171131d259ea8490de40505701485934c9e5fcd36",
+        "ms-0464": "bb2e195c330442b29d6f1c07e7a9a2b5ccd3f7d5011df92ddbe84125825ea02e"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "2166870f-b91f-4dc0-88e2-e9a4711daed4",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "3261",
+      "cost_usd": 0.32061,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0465",
+        "ms-0466",
+        "ms-0467"
+      ],
+      "started_at": "2026-09-21T14:23:50+00:00",
+      "finished_at": "2026-09-21T14:24:32+00:00",
+      "prompt_chars": 100796,
+      "prompt_sha256": "f819f62f8928e05a9b8666ad852a6bc98c98e3d47dae535912be0d6ce978f463",
+      "verdicts": [
+        {
+          "sample_id": "ms-0465",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "absence": "ok",
+            "slices": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0466",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "absence": "ok",
+            "slices": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0467",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "absence": "ok",
+            "slices": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_f819f62f8928e05a9b8666ad852a6bc98c98e3d47dae535912be0d6ce978f463.jsonl",
+      "sample_input_sha256": {
+        "ms-0465": "71565f9335b8e0dbdcecee6bd9f17e6e15722f27cb247694b5af4ee27a6705eb",
+        "ms-0466": "49851ced0b8e4f7a1736501295188e8b2ce10191931ad4d7d42a32e434a11306",
+        "ms-0467": "2b839e97f1122eaaf481a71d0dba242d3f9677b785c8363e67b2a9e1066c0e01"
+      }
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "a0a72363-2ded-494a-9cfb-3f381bb8b0c6",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "3090",
+      "cost_usd": 0.2959975,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0468",
+        "ms-0469",
+        "ms-0470"
+      ],
+      "started_at": "2026-09-21T14:24:32+00:00",
+      "finished_at": "2026-09-21T14:25:11+00:00",
+      "prompt_chars": 104132,
+      "prompt_sha256": "dcaf6075026a9f2964a4bbb217661e90fa266e3beaf7fc90198f7d98f06f5d76",
+      "verdicts": [
+        {
+          "sample_id": "ms-0468",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "absence": "ok",
+            "slices": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0469",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "absence": "ok",
+            "slices": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0470",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "absence": "ok",
+            "slices": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_dcaf6075026a9f2964a4bbb217661e90fa266e3beaf7fc90198f7d98f06f5d76.jsonl",
+      "sample_input_sha256": {
+        "ms-0468": "d239eb3b33843061fb21d2fff98f9c6394ca0da954792f0ff7ade1f0a905921a",
+        "ms-0469": "266c819c36df5f43eda5fb19db5cc4bcc7e5f9f4ab82389c9094d28cafd9221a",
+        "ms-0470": "24a448b5bfd18877059d1c62ebf4db15e6375b48f5062c244dd6d183eb686912"
+      }
+    }
+  ],
+  "provenance_version": 2,
+  "latest": {
+    "ms-0462": {
+      "chunk_index": 0,
+      "sample_input_sha256": "d5a51f3b073305111f32fb7c1ec4ea49d360b472291ca34cfc9342147d93ef66",
+      "prompt_sha256": "bcecc9b89826ac37db0f82efb632e64fe746a8f27b5b5dfb8f6354123d6afcd8",
+      "verdict_sha256": "f30848091225dbbf8bcc87e593e9a88a51dba0982db896c2e13e29a896612432"
+    },
+    "ms-0463": {
+      "chunk_index": 0,
+      "sample_input_sha256": "0789af1a49454ab264a5aaa171131d259ea8490de40505701485934c9e5fcd36",
+      "prompt_sha256": "bcecc9b89826ac37db0f82efb632e64fe746a8f27b5b5dfb8f6354123d6afcd8",
+      "verdict_sha256": "15827ba01cd910a8a7b0a1c4f993190d3297bd81cc507f563e140c30ee2a9e34"
+    },
+    "ms-0464": {
+      "chunk_index": 0,
+      "sample_input_sha256": "bb2e195c330442b29d6f1c07e7a9a2b5ccd3f7d5011df92ddbe84125825ea02e",
+      "prompt_sha256": "bcecc9b89826ac37db0f82efb632e64fe746a8f27b5b5dfb8f6354123d6afcd8",
+      "verdict_sha256": "0593e8c1c9397d76745b9301367c3a693f56fbbd3ea6684b5ebd8fc90fe8cf1b"
+    },
+    "ms-0465": {
+      "chunk_index": 1,
+      "sample_input_sha256": "71565f9335b8e0dbdcecee6bd9f17e6e15722f27cb247694b5af4ee27a6705eb",
+      "prompt_sha256": "f819f62f8928e05a9b8666ad852a6bc98c98e3d47dae535912be0d6ce978f463",
+      "verdict_sha256": "4d1d534bc9e72df9aaf8f595e89dc38faf70f2542825a4644745ab0754db8f44"
+    },
+    "ms-0466": {
+      "chunk_index": 1,
+      "sample_input_sha256": "49851ced0b8e4f7a1736501295188e8b2ce10191931ad4d7d42a32e434a11306",
+      "prompt_sha256": "f819f62f8928e05a9b8666ad852a6bc98c98e3d47dae535912be0d6ce978f463",
+      "verdict_sha256": "2a23a3f3794d20cc8c2bb0df1f35a87d11c4c06a430f52f41653216dce88185d"
+    },
+    "ms-0467": {
+      "chunk_index": 1,
+      "sample_input_sha256": "2b839e97f1122eaaf481a71d0dba242d3f9677b785c8363e67b2a9e1066c0e01",
+      "prompt_sha256": "f819f62f8928e05a9b8666ad852a6bc98c98e3d47dae535912be0d6ce978f463",
+      "verdict_sha256": "6e254d42a300d3252ac4346773b6a08e655f12ea417113fdba77831df02c832e"
+    },
+    "ms-0468": {
+      "chunk_index": 2,
+      "sample_input_sha256": "d239eb3b33843061fb21d2fff98f9c6394ca0da954792f0ff7ade1f0a905921a",
+      "prompt_sha256": "dcaf6075026a9f2964a4bbb217661e90fa266e3beaf7fc90198f7d98f06f5d76",
+      "verdict_sha256": "f864f5b4367d3c710146a9eebe0542a858d436e6a2658ef50f3d39bc77af99ff"
+    },
+    "ms-0469": {
+      "chunk_index": 2,
+      "sample_input_sha256": "266c819c36df5f43eda5fb19db5cc4bcc7e5f9f4ab82389c9094d28cafd9221a",
+      "prompt_sha256": "dcaf6075026a9f2964a4bbb217661e90fa266e3beaf7fc90198f7d98f06f5d76",
+      "verdict_sha256": "8e4a54e664b5f72dbe164be10a58a2060d3aa054a5e38c85f07a3a67630502d0"
+    },
+    "ms-0470": {
+      "chunk_index": 2,
+      "sample_input_sha256": "24a448b5bfd18877059d1c62ebf4db15e6375b48f5062c244dd6d183eb686912",
+      "prompt_sha256": "dcaf6075026a9f2964a4bbb217661e90fa266e3beaf7fc90198f7d98f06f5d76",
+      "verdict_sha256": "054569c715be64011524c5c3c04631666b5ef7b2551fc893a622c4a9b951b0bf"
+    }
+  },
+  "active_review": {
+    "sample_input_sha256": {
+      "ms-0462": "d5a51f3b073305111f32fb7c1ec4ea49d360b472291ca34cfc9342147d93ef66",
+      "ms-0463": "0789af1a49454ab264a5aaa171131d259ea8490de40505701485934c9e5fcd36",
+      "ms-0464": "bb2e195c330442b29d6f1c07e7a9a2b5ccd3f7d5011df92ddbe84125825ea02e",
+      "ms-0465": "71565f9335b8e0dbdcecee6bd9f17e6e15722f27cb247694b5af4ee27a6705eb",
+      "ms-0466": "49851ced0b8e4f7a1736501295188e8b2ce10191931ad4d7d42a32e434a11306",
+      "ms-0467": "2b839e97f1122eaaf481a71d0dba242d3f9677b785c8363e67b2a9e1066c0e01",
+      "ms-0468": "d239eb3b33843061fb21d2fff98f9c6394ca0da954792f0ff7ade1f0a905921a",
+      "ms-0469": "266c819c36df5f43eda5fb19db5cc4bcc7e5f9f4ab82389c9094d28cafd9221a",
+      "ms-0470": "24a448b5bfd18877059d1c62ebf4db15e6375b48f5062c244dd6d183eb686912",
+      "ms-0471": "5ec284d4eb57ef7409bdfdcbd9fa01c3ad9ae998c933289803e80ad41966f94d",
+      "ms-0472": "3a32d82dac32861acad4a704222ba627445c2133955f4a4309b83ea13fe24073",
+      "ms-0473": "8982497a30088b67f4421f5033675af6e32d3fe53b31e753bdf725a388ff8880",
+      "ms-0474": "1f3e034a2d84fde3f12269a1b268149b3ae177ca9874ac76464f47f85e639fd2",
+      "ms-0475": "ccda9a231e1c557a8e5b5ecf105903cbc056a417c87bd8f80ce4d643a0c03e96",
+      "ms-0476": "b1f928d94653b7a7cdc5f86c240cb811db3144b736989926dc858f67aa21a018",
+      "ms-0477": "57ba41366345ba57514ea678190c9a543848b41fdd3859caf7eab6f71ec9f818",
+      "ms-0478": "a5a247ef3e40e60a7db8cee3a159b0b567fcac1699b6f3305f4650134f8403a8",
+      "ms-0479": "3e915d07c6cf7619dc2bd421846d9aa0a1a8f5e378fa931a9aa45622ccc09508",
+      "ms-0480": "f3e6438f5dc6189c6840a354200302c9a7117eb3276bdb936f81b1b5124b1f0e",
+      "ms-0481": "4143ba26d2be580f501b15454b357095f5b6f21c279370907f7ce7c78dcd30ae",
+      "ms-0482": "5520853a826971977422152ef272a448745271eecbb43eb1fa6b7a0793ee466b",
+      "ms-0483": "dfc2b76a73eee158e7aeafff16fbecaa5f5fb86042d06b777eb34ced97e8ba51",
+      "ms-0484": "122970d10a2771e451d611ac384ab4c0f8129f0b4b84bba1bb7c0c21a997b747",
+      "ms-0485": "f92b21fd6b381e80cd7a6d0198a8081e0e350a35ae13bf39d0b127054dc82349",
+      "ms-0486": "548f96e491dba0fa340f41e15552f78ee192840298e7c471c55ac3771ad82cf0",
+      "ms-0488": "b4283a096f8eeeb61592e6e533d70c33fc4e7f60e89dc6f20d2b5ce3ecb77a0d",
+      "ms-0489": "ba17eb79dfdb7dc978ebb2792d86f423e77dbcc14789247339c14b2bebeee541",
+      "ms-0490": "c243d0f0134cb0eec59406c4b59393164e8f127a2424822a011c70e03eb23174",
+      "ms-0491": "13102bff1230a17c4bd9e34fa1266597df0b9dbddc2fcdcb3904a1ec4c12f5fc",
+      "ms-0492": "b928c5a0b9983bb08bfb0db4de0e29fdc90f63d678976c3609e3fb2244593b04",
+      "ms-0493": "ee8a62823c2d003c7976dadde43c6188c0d288cbdadff431f835b0bee6f4df59",
+      "ms-0494": "e50308e0638f81bf2eeb0622e2b5058efe6645d0dc236de5150887a5d225ba39",
+      "ms-0495": "31c5b6459276be47d48ad5375ac41a8ba63bd5e2cf2b1c533e06166b99cce82d",
+      "ms-0496": "bd3d3d1c675b9b5e925031a39c4b238c1a3c2555d84d8a008f3e32f9ebaafa9a",
+      "ms-0497": "b686302ffe772627f91b0a2c84d3b43aa9db573d90fe24cc7ad78dc28b775e77",
+      "ms-0498": "c7ecc6d4d88c1685e88f448fd233691bc9bf65c72dd81ac4b0c32a12d484a2a4",
+      "ms-0499": "275be204cd8cc28fce2ae714154a75512e616d775a12c33630760b07fc33c0c7",
+      "ms-0500": "e043f798a85bfa024e4165d8ae16e20be61d5ad872d779a0da5a59cfda9a1eac",
+      "ms-0501": "2d51499ce1c559c6f7733daa7a85cf04060607f9214cf18e4c260c25771e73ba",
+      "ms-0502": "67b545e2ef622005b2fe957b68233d4dd69be4146215924a2852af634453bc49",
+      "ms-0503": "457e96a12f63c618f9f88c16d2508ee1ace2fca061060591ab4f71799df7f7c5",
+      "ms-0504": "c351083df9de0c35dc1f972caf12b2b0d9022aceb9a2bbf434f4780198541e7a",
+      "ms-0505": "0261cf76eb3eb9fadbe4693deccf39a1e89ecf24cbf5c8829fdc56daf1973afa",
+      "ms-0506": "81776a3a52e8e5572d4991937c532e6fbadf1029ed15830610bb4d00d2fcdd33",
+      "ms-0507": "571a8d119da47fc15fff5d98951aba0e7864d98a1243535252c412ed203753a8",
+      "ms-0508": "4af5ff7a1c07fbd2c4916d399fa3694c19d9c5fcb3b92c629cc0f806bb47c007",
+      "ms-0509": "b24b4530158b2726b0cb3a35324d423ad51ffb210a367347148a6a1e9741167c",
+      "ms-0510": "94596b5c4104ed3df0217e5581bc7fcec5136fa0950efe246ae338653991e9e1",
+      "ms-0511": "04031781526d7cd760e05a0c46806ec29348d0d0fb6cbd6b53797e3ec4dc75bd",
+      "ms-0512": "44154fbb13c581758b6a12e3e70667aed481d78ed6cab6eee3f6578ede39e8f9",
+      "ms-0513": "894f5c50d6f28b8c87a4b57b18792a649de3fca16fc7435e42d4e78ef1515bfc",
+      "ms-0514": "0e6e51658d0509478c922e0bffc16fa2d6bfddb2ae7e7c426c5cf629d17648fc",
+      "ms-0515": "e9713c152aa8a17944dd021aa3a8571c2850981cbd398d33896fd57799a33662",
+      "ms-0516": "eeac08c4379e0c6bbf27f63736c51b5f41c40bd3279ec6f00847e815cdaf3791",
+      "ms-0517": "6cd264060a229584453b024419ddf40218fd51b07688a0dae66310ad0de61c38",
+      "ms-0518": "70a5e34aa2d8197f4ea29a657e79a7d4691255adeae952058c5104e95c1df493",
+      "ms-0519": "51e86404087ad270de6de2045b9c8464c5d1eb3f96d47c987c6ce26c1766a0b8",
+      "ms-0520": "91b3b614ccbd0410288c2d0d0be504546c3d6a02ae3ed8c4da3f2f45e73878d3",
+      "ms-0521": "0053d919fcf71aba8ba5ce2685250fdf6dc7e3dcdc45c889b11dcccd39088dd8",
+      "ms-0522": "4938474a15fd2a21b5bfc8fb5ae68ac9770d6ca403cb50d476818ad5dbee1074",
+      "ms-0523": "c48a37dc3fbcbe896b99ebca41a5103f1fa2b13b92033da3096574faf0dee532",
+      "ms-0524": "4fcb54a7d3e0768501429c5af5859b81d8b75f85f3051c5da94ee998d32fc71a"
+    },
+    "pending_ids": [
+      "ms-0471",
+      "ms-0472",
+      "ms-0473",
+      "ms-0474",
+      "ms-0475",
+      "ms-0476",
+      "ms-0477",
+      "ms-0478",
+      "ms-0479",
+      "ms-0480",
+      "ms-0481",
+      "ms-0482",
+      "ms-0483",
+      "ms-0484",
+      "ms-0485",
+      "ms-0486",
+      "ms-0488",
+      "ms-0489",
+      "ms-0490",
+      "ms-0491",
+      "ms-0492",
+      "ms-0493",
+      "ms-0494",
+      "ms-0495",
+      "ms-0496",
+      "ms-0497",
+      "ms-0498",
+      "ms-0499",
+      "ms-0500",
+      "ms-0501",
+      "ms-0502",
+      "ms-0503",
+      "ms-0504",
+      "ms-0505",
+      "ms-0506",
+      "ms-0507",
+      "ms-0508",
+      "ms-0509",
+      "ms-0510",
+      "ms-0511",
+      "ms-0512",
+      "ms-0513",
+      "ms-0514",
+      "ms-0515",
+      "ms-0516",
+      "ms-0517",
+      "ms-0518",
+      "ms-0519",
+      "ms-0520",
+      "ms-0521",
+      "ms-0522",
+      "ms-0523",
+      "ms-0524"
+    ]
+  }
+}

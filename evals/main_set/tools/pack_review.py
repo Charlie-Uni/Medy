@@ -76,6 +76,12 @@ def pack(samples: list[dict], corpus_by_key: dict[str, dict], parents: dict[str,
             "document": {k: d[k] for k in ("document_key", "title", "doc_type", "language")},
             "page_text": page_text,
         }
+        if s.get(
+            "conflict"
+        ):  # spec-m1: the reviewer sees the family/current-version declaration and the synthetic note
+            rec["conflict"] = s["conflict"]
+        if s.get("notes"):
+            rec["notes"] = s["notes"]
         if s.get("derived_from"):
             rec["parent_query"] = parents[s["derived_from"]]["query"]
         records.append(rec)
