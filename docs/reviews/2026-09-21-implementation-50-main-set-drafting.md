@@ -95,5 +95,5 @@ annotator-01 逐条确认五张标注表 → 按改动重算偏移 → `pack_rev
 - 复核人指出并已修正的工具缺陷：复核输入漏带 `conflict` 块；第一轮外部审校按报告长度重建的 PV span 边界错位（25 条，恢复起草者原始完整条款后重跑，PV 争议由 41 降至 21，EN 由 37 降至 19）；无答案输入只含起草选页、无法核实缺席（28 条扩页重跑）。
 - 复核后删除样本的机制：manifest 新增 `dropped_after_review`（`make_schemas.py`），PR-09 复核证据校验、装配与运行脚本的覆盖检查容忍已删除样本的历史证据（[review_provenance.py](../../src/medops/evals/probe/review_provenance.py)）；`review/dropped_after_review.json` 记录原因。
 - 争议构成（按裁决方式）：切片增删类可用 `接受` 机械应用；key_text / query / 无答案缺席类需 annotator-01 判断；裁决表 [disputes_sheet.md](../../evals/main_set/drafts/main-v1/review/disputes_sheet.md)。裁决 → `apply_resolutions.py`（改动样本 `--only` 重跑）→ `assemble.py --human-confirmed 2026-09-22` → `freeze.py`（`main-v1-provisional`）→ chunk 映射 → 端到端运行。
-- `env -u DEBUG -u PYTHONPATH make check`：退出码 0，**892 passed**（含复核证据的 dropped_after_review 容忍逻辑）。
+- `env -u DEBUG -u PYTHONPATH make check`：退出码 0，**893 passed**（含复核证据的 dropped_after_review 容忍逻辑）。
 
