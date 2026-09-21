@@ -79,3 +79,7 @@ annotator-01 逐条确认五张标注表 → 按改动重算偏移 → `pack_rev
 5. 审校指出的文档级问题，逐项核实：(a) Glimaryl 仿單（b1756268da31）文本层乱码属实（第 1 页 0 个汉字），无 gold，语料中保留、建议 M2 复核抽取或剔除；(b) `fda-investigator-safety-reporting-2021` 的 PDF 封面为 December 2025，候选清单与 corpus 的 `version_label`（September 2021）有误——`documents.version` 不可变，故按 M1-11 发布流程以同一源对象（`--share-source`）入库 `fda-investigator-safety-reporting-2025`（`Final guidance, December 2025 (FDA media 152530)`，effective_from 2025-12-01，`--accept-pii` 引用 2026-09-21 机构信箱复核）并 `--publish` 归档旧记录（outbox 事件 74–75）；corpus.json 记录替换、10 条样本的 gold `version_label` 同步、索引与向量补建；库内 active 76 / archived 6 / draft 3、chunk 10,992；(c) GVP Annex I Rev 4 的 PDF 第 1–3 页含 superseded 标注，仅作合成冲突 fixture，不代表现行定义。
 6. 尚缺：CO 批次审校（84 条）、NA 批次确认（63 条）、EN 80 条的父样本裁决；决策人确认后进入 LLM 复核。
 
+## 10. 补记（2026-09-22）：NA / CO 审校写回与人工确认
+
+决策人补交 NA（63）与 CO（84，重生成版、无逐字段 diff）两份审校并回复"可以了"。处理：审校只描述改法的条目由实现方写出新值并留档（`external_review/implementer_edits_2026-09-22.json`），[apply_external_review_2.py](../../evals/main_set/tools/apply_external_review_2.py) 重新锚定；应用 97 条、删除 6 条（含 ms-0300：审校建议移到 PV，但 PR-06 要求样本部门等于文档部门，故删除）；EN 80 条待定项全部解决（父样本存活者应用成对中文/英文改写，父样本删除者随删）。写回后 615 条（新 508），全部 spec-m1 下限满足，机械检查 0 错误。决策人的"可以了"记为 annotator-01 对五张表的人工确认（2026-09-22）；随后进入固定模型 LLM 复核（claude-opus-5，批次 MA/PV/CO/EN/NA）。
+

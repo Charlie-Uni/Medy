@@ -1,0 +1,784 @@
+{
+  "parsed": {
+    "NA": 63,
+    "CO": 84,
+    "EN_pending": 81
+  },
+  "applied": [
+    {
+      "sample_id": "ms-0463",
+      "source": "NA",
+      "applied": [
+        "slices -['protocol_id']"
+      ]
+    },
+    {
+      "sample_id": "ms-0464",
+      "source": "NA",
+      "applied": [
+        "slices -['protocol_id']"
+      ]
+    },
+    {
+      "sample_id": "ms-0465",
+      "source": "NA",
+      "applied": [
+        "slices -['protocol_id']"
+      ]
+    },
+    {
+      "sample_id": "ms-0466",
+      "source": "NA",
+      "applied": [
+        "slices -['protocol_id']"
+      ]
+    },
+    {
+      "sample_id": "ms-0467",
+      "source": "NA",
+      "applied": [
+        "slices -['protocol_id']"
+      ]
+    },
+    {
+      "sample_id": "ms-0468",
+      "source": "NA",
+      "applied": [
+        "slices -['protocol_id']"
+      ]
+    },
+    {
+      "sample_id": "ms-0469",
+      "source": "NA",
+      "applied": [
+        "query (narrowed per review)",
+        "topic",
+        "slices -['protocol_id']"
+      ]
+    },
+    {
+      "sample_id": "ms-0470",
+      "source": "NA",
+      "applied": [
+        "query (narrowed per review)",
+        "topic"
+      ]
+    },
+    {
+      "sample_id": "ms-0471",
+      "source": "NA",
+      "applied": [
+        "slices -['protocol_id']"
+      ]
+    },
+    {
+      "sample_id": "ms-0479",
+      "source": "NA",
+      "applied": [
+        "slices -['protocol_id']"
+      ]
+    },
+    {
+      "sample_id": "ms-0480",
+      "source": "NA",
+      "applied": [
+        "query (narrowed per review)",
+        "topic"
+      ]
+    },
+    {
+      "sample_id": "ms-0482",
+      "source": "NA",
+      "applied": [
+        "query (narrowed per review)",
+        "topic",
+        "slices -['protocol_id']"
+      ]
+    },
+    {
+      "sample_id": "ms-0483",
+      "source": "NA",
+      "applied": [
+        "slices -['protocol_id']"
+      ]
+    },
+    {
+      "sample_id": "ms-0484",
+      "source": "NA",
+      "applied": [
+        "query (narrowed per review)",
+        "topic",
+        "slices -['protocol_id']"
+      ]
+    },
+    {
+      "sample_id": "ms-0485",
+      "source": "NA",
+      "applied": [
+        "query (narrowed per review)",
+        "topic",
+        "slices -['protocol_id']"
+      ]
+    },
+    {
+      "sample_id": "ms-0488",
+      "source": "NA",
+      "applied": [
+        "slices -['protocol_id']"
+      ]
+    },
+    {
+      "sample_id": "ms-0489",
+      "source": "NA",
+      "applied": [
+        "slices -['protocol_id']"
+      ]
+    },
+    {
+      "sample_id": "ms-0491",
+      "source": "NA",
+      "applied": [
+        "slices -['protocol_id']"
+      ]
+    },
+    {
+      "sample_id": "ms-0492",
+      "source": "NA",
+      "applied": [
+        "query (narrowed per review)",
+        "topic"
+      ]
+    },
+    {
+      "sample_id": "ms-0493",
+      "source": "NA",
+      "applied": [
+        "slices -['protocol_id']"
+      ]
+    },
+    {
+      "sample_id": "ms-0494",
+      "source": "NA",
+      "applied": [
+        "query (narrowed per review)",
+        "topic"
+      ]
+    },
+    {
+      "sample_id": "ms-0498",
+      "source": "NA",
+      "applied": [
+        "query (narrowed per review)",
+        "topic"
+      ]
+    },
+    {
+      "sample_id": "ms-0510",
+      "source": "NA",
+      "applied": [
+        "slices -['drug_name_zh']"
+      ]
+    },
+    {
+      "sample_id": "ms-0511",
+      "source": "NA",
+      "applied": [
+        "query (narrowed per review)",
+        "topic"
+      ]
+    },
+    {
+      "sample_id": "ms-0512",
+      "source": "NA",
+      "applied": [
+        "query (narrowed per review)",
+        "topic"
+      ]
+    },
+    {
+      "sample_id": "ms-0515",
+      "source": "NA",
+      "applied": [
+        "slices -['drug_name_zh']"
+      ]
+    },
+    {
+      "sample_id": "ms-0517",
+      "source": "NA",
+      "applied": [
+        "query (narrowed per review)",
+        "topic"
+      ]
+    },
+    {
+      "sample_id": "ms-0520",
+      "source": "NA",
+      "applied": [
+        "query (narrowed per review)",
+        "topic"
+      ]
+    },
+    {
+      "sample_id": "ms-0299",
+      "source": "CO",
+      "applied": [
+        "key_text"
+      ]
+    },
+    {
+      "sample_id": "ms-0305",
+      "source": "CO",
+      "applied": [
+        "query",
+        "key_text"
+      ]
+    },
+    {
+      "sample_id": "ms-0311",
+      "source": "CO",
+      "applied": [
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0332",
+      "source": "CO",
+      "applied": [
+        "key_text"
+      ]
+    },
+    {
+      "sample_id": "ms-0362",
+      "source": "CO",
+      "applied": [
+        "slices"
+      ]
+    },
+    {
+      "sample_id": "ms-0364",
+      "source": "CO",
+      "applied": [
+        "slices"
+      ]
+    },
+    {
+      "sample_id": "ms-0366",
+      "source": "CO",
+      "applied": [
+        "query",
+        "key_text",
+        "slices"
+      ]
+    },
+    {
+      "sample_id": "ms-0368",
+      "source": "CO",
+      "applied": [
+        "slices"
+      ]
+    },
+    {
+      "sample_id": "ms-0370",
+      "source": "CO",
+      "applied": [
+        "slices"
+      ]
+    },
+    {
+      "sample_id": "ms-0376",
+      "source": "CO",
+      "applied": [
+        "query",
+        "slices"
+      ]
+    },
+    {
+      "sample_id": "ms-0380",
+      "source": "CO",
+      "applied": [
+        "slices"
+      ]
+    },
+    {
+      "sample_id": "ms-0382",
+      "source": "CO",
+      "applied": [
+        "slices"
+      ]
+    },
+    {
+      "sample_id": "ms-0384",
+      "source": "CO",
+      "applied": [
+        "slices"
+      ]
+    },
+    {
+      "sample_id": "ms-0386",
+      "source": "CO",
+      "applied": [
+        "slices"
+      ]
+    },
+    {
+      "sample_id": "ms-0388",
+      "source": "CO",
+      "applied": [
+        "slices"
+      ]
+    },
+    {
+      "sample_id": "ms-0410",
+      "source": "CO",
+      "applied": [
+        "key_text"
+      ]
+    },
+    {
+      "sample_id": "ms-0430",
+      "source": "CO",
+      "applied": [
+        "slices"
+      ]
+    },
+    {
+      "sample_id": "ms-0432",
+      "source": "CO",
+      "applied": [
+        "slices"
+      ]
+    },
+    {
+      "sample_id": "ms-0434",
+      "source": "CO",
+      "applied": [
+        "slices"
+      ]
+    },
+    {
+      "sample_id": "ms-0436",
+      "source": "CO",
+      "applied": [
+        "slices"
+      ]
+    },
+    {
+      "sample_id": "ms-0438",
+      "source": "CO",
+      "applied": [
+        "slices"
+      ]
+    },
+    {
+      "sample_id": "ms-0440",
+      "source": "CO",
+      "applied": [
+        "slices"
+      ]
+    },
+    {
+      "sample_id": "ms-0306",
+      "source": "EN",
+      "applied": [
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0308",
+      "source": "EN",
+      "applied": [
+        "parent query (paired rewrite)"
+      ]
+    },
+    {
+      "sample_id": "ms-0312",
+      "source": "EN",
+      "applied": [
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0317",
+      "source": "EN",
+      "applied": [
+        "parent query (paired rewrite)",
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0319",
+      "source": "EN",
+      "applied": [
+        "parent query (paired rewrite)",
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0321",
+      "source": "EN",
+      "applied": [
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0323",
+      "source": "EN",
+      "applied": [
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0327",
+      "source": "EN",
+      "applied": [
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0329",
+      "source": "EN",
+      "applied": [
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0331",
+      "source": "EN",
+      "applied": [
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0335",
+      "source": "EN",
+      "applied": [
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0337",
+      "source": "EN",
+      "applied": [
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0339",
+      "source": "EN",
+      "applied": [
+        "parent query (paired rewrite)",
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0341",
+      "source": "EN",
+      "applied": [
+        "parent query (paired rewrite)",
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0345",
+      "source": "EN",
+      "applied": [
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0347",
+      "source": "EN",
+      "applied": [
+        "parent query (paired rewrite)",
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0351",
+      "source": "EN",
+      "applied": [
+        "parent query (paired rewrite)",
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0353",
+      "source": "EN",
+      "applied": [
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0357",
+      "source": "EN",
+      "applied": [
+        "parent query (paired rewrite)",
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0359",
+      "source": "EN",
+      "applied": [
+        "parent query (paired rewrite)",
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0361",
+      "source": "EN",
+      "applied": [
+        "parent query (paired rewrite)",
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0365",
+      "source": "EN",
+      "applied": [
+        "parent query (paired rewrite)",
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0367",
+      "source": "EN",
+      "applied": [
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0369",
+      "source": "EN",
+      "applied": [
+        "parent query (paired rewrite)",
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0373",
+      "source": "EN",
+      "applied": [
+        "parent query (paired rewrite)",
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0375",
+      "source": "EN",
+      "applied": [
+        "parent query (paired rewrite)",
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0377",
+      "source": "EN",
+      "applied": [
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0379",
+      "source": "EN",
+      "applied": [
+        "parent query (paired rewrite)",
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0389",
+      "source": "EN",
+      "applied": [
+        "parent query (paired rewrite)",
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0391",
+      "source": "EN",
+      "applied": [
+        "parent query (paired rewrite)",
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0397",
+      "source": "EN",
+      "applied": [
+        "parent query (paired rewrite)",
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0401",
+      "source": "EN",
+      "applied": [
+        "parent query (paired rewrite)",
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0403",
+      "source": "EN",
+      "applied": [
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0405",
+      "source": "EN",
+      "applied": [
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0407",
+      "source": "EN",
+      "applied": [
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0409",
+      "source": "EN",
+      "applied": [
+        "parent query (paired rewrite)",
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0411",
+      "source": "EN",
+      "applied": [
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0417",
+      "source": "EN",
+      "applied": [
+        "parent query (paired rewrite)",
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0421",
+      "source": "EN",
+      "applied": [
+        "parent query (paired rewrite)",
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0431",
+      "source": "EN",
+      "applied": [
+        "parent query (paired rewrite)",
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0433",
+      "source": "EN",
+      "applied": [
+        "parent query (paired rewrite)",
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0439",
+      "source": "EN",
+      "applied": [
+        "parent query (paired rewrite)",
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0441",
+      "source": "EN",
+      "applied": [
+        "parent query (paired rewrite)",
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0447",
+      "source": "EN",
+      "applied": [
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0451",
+      "source": "EN",
+      "applied": [
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0455",
+      "source": "EN",
+      "applied": [
+        "query"
+      ]
+    },
+    {
+      "sample_id": "ms-0457",
+      "source": "EN",
+      "applied": [
+        "query"
+      ]
+    }
+  ],
+  "dropped": [
+    {
+      "sample_id": "ms-0487",
+      "source": "NA",
+      "reason": "NA review: ICH E2C(R2) lists the Executive Summary contents; the question is answerable",
+      "twins": []
+    },
+    {
+      "sample_id": "ms-0300",
+      "source": "CO",
+      "reason": "CO review proposed moving the sample from CO to PV; spec-m1 PR-06 requires the sample dept to equal the document's owner_dept (fda-e6r3-gcp-2025 is CO), so the ",
+      "twins": [
+        "ms-0301"
+      ]
+    },
+    {
+      "sample_id": "ms-0303",
+      "source": "CO",
+      "reason": "CO review: the 1.4 procedures list continues on the next page (1.4.9); single-page gold incomplete",
+      "twins": [
+        "ms-0304"
+      ]
+    },
+    {
+      "sample_id": "ms-0324",
+      "source": "CO",
+      "reason": "CO review: 2024-12 draft with line numbers, clause spans pages 11-12",
+      "twins": [
+        "ms-0325"
+      ]
+    },
+    {
+      "sample_id": "ms-0414",
+      "source": "CO",
+      "reason": "CO review: duplicate of ms-0406 (same document, same clause)",
+      "twins": [
+        "ms-0415"
+      ]
+    },
+    {
+      "sample_id": "ms-0428",
+      "source": "CO",
+      "reason": "CO review: duplicate of ms-0302 (participant payment)",
+      "twins": [
+        "ms-0429"
+      ]
+    }
+  ],
+  "problems": [],
+  "notes": []
+}

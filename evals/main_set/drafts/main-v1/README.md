@@ -37,3 +37,11 @@
 - 五张表已按写回后的 JSON 重新生成，「结论」列预填了当前状态（`OK (external review)` / `edited (external review)` / `pending: …`），annotator-01 覆盖即可；CO 表仍是原稿，需要 CO 审校或直接在表上确认。
 - 外部审校指出的文档级问题，已核实并处理：Glimaryl 仿單（b1756268da31）第 1 页文本层 0 个汉字、152 个乱码字符，确为字体编码乱码，不能作 gold（3 条样本已删，文档保留在语料、建议 M2 复核抽取或剔除）；`fda-investigator-safety-reporting-2021` 的 PDF 封面实为 December 2025 版而 `version_label` 误记 September 2021——已按 M1-11 发布流程以同一源对象升版为 `fda-investigator-safety-reporting-2025`（`Final guidance, December 2025 (FDA media 152530)`，旧记录归档），corpus.json 与该文档的 10 条样本（5 父 + 5 孪生）的 `version_label` 已同步；GVP Annex I Rev 4 的 PDF 第 1–3 页含 superseded 标注（EMA 已发布后续修订），本集仅作合成冲突 fixture 使用，不代表现行定义。
 
+## 2026-09-22 第二轮写回（NA、CO 审校与 EN 待定项）与确认状态
+
+- 输入：`external_review/NA_review_audit_2026-09-21.md`（63 条，表格式）、`external_review/CO_review_audit_2026-09-21.md`（84 条，重生成版，无逐字段 diff）。决策人回复"可以了"。
+- NA 与 CO 的审校只描述了改法、没有给出新文本的条目，由实现方按审校结论写出新值（[implementer_edits_2026-09-22.json](external_review/implementer_edits_2026-09-22.json)：NA 13 条收窄后的问题与 topic、CO 7 条 key/query 修订；CO 父样本的中文改写取自 EN 审校的成对建议），再经 `tools/apply_external_review_2.py` 重新锚定。
+- 结果（[apply_report_2026-09-22.json](external_review/apply_report_2026-09-22.json)）：应用 97 条（NA 28、CO 22、EN 47，其中 26 条为 EN 审校成对提出的父样本中文改写）；删除 6 条：NA ms-0487（文档可回答）、CO ms-0300（审校建议 CO→PV，但 PR-06 要求样本部门等于文档部门，故删除）、ms-0303/0324（gold 跨页）、ms-0414/0428（重复）及其孪生。机械检查 0 错误。
+- 现状：**615 条**（新 508：MA 80、PV 119、CO 79、EN 168、NA 62；探针 107），有答案 553、无答案 62、冲突 52、long_context 23；部门 MA 134 / PV 279 / CO 202；语言 zh-Hant 140 / zh-Hans 30 / en 445；全部下限满足。五张表全部预填了决定，不再有待定项。
+- **确认状态**：决策人（annotator-01）于 2026-09-22 以"可以了"确认以上写回结果作为人工标注（含实现方按审校结论写出的 NA/CO 文本与成对英文）；`drafted_by` 仍记录 LLM 起草者，人工确认日期 2026-09-22。第二人工复核人仍无，版本保持 `main-v1-provisional`。
+

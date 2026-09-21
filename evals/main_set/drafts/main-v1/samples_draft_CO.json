@@ -40,7 +40,16 @@
       "rationale": "本页仅1.4.7一条明确规定方案偏离或变更须经IRB/IEC事先书面批准,并列出可豁免的两种情形,其他条款不涉及该豁免条件。",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "OK (external review)"
     }
   },
   {
@@ -60,7 +69,7 @@
         "page": 24,
         "printed_page_label": null,
         "section": "8. Informed Consent of Trial Participants (2.8)",
-        "key_text": "coerce or unduly influence a participant to participate or to continue their participation in the trial",
+        "key_text": "Neither the investigator nor the investigator site staff should coerce or unduly influence a participant to participate or to continue their participation in the trial",
         "evidence_span": {
           "text": "Neither the investigator nor the investigator site staff should coerce or unduly influence a participant to participate or to continue their participation in the trial.",
           "char_start": 209,
@@ -84,49 +93,18 @@
       "rationale": "该页只有2.8.3明确禁止研究者或研究机构工作人员对受试者施加胁迫或不当影响以促使其参与或继续参与试验,是唯一能回答该问题的条款。",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
-    }
-  },
-  {
-    "sample_id": "ms-0300",
-    "query": "根据ICH E6(R3)术语表并参照ICH E2A,已上市药品的不良药物反应(ADR)应如何定义?",
-    "dept": "CO",
-    "language": "mixed",
-    "slices": [
-      "protocol_id",
-      "mixed_zh_en"
-    ],
-    "required_gold_evidence": [
-      {
-        "gold_id": "ms-0300-g1",
-        "source_hash": "e57e9fc0134abebec409d7144aed6e3047c0939d1bd758163fea4e1169472109",
-        "version_label": "Final guidance, September 2025",
-        "page": 77,
-        "printed_page_label": null,
-        "section": "GLOSSARY",
-        "key_text": "a response to a drug that is noxious and unintended and that occurs at doses normally used in humans for prophylaxis, diagnosis or therapy of diseases or for modification of physiological function",
-        "evidence_span": {
-          "text": "For marketed medicinal products: a response to a drug that is noxious and unintended and that occurs at doses normally used in humans for prophylaxis, diagnosis or therapy of diseases or for modification of physiological function. (See ICH guidance for industry E2A Clinical Safety Data Management: Definitions and Standards for Expedited Reporting (March 1995).)",
-          "char_start": 1059,
-          "char_end": 1422
-        }
-      }
-    ],
-    "notes": "",
-    "drafted_by": {
-      "kind": "llm",
-      "id": "drafter-llm-03",
-      "model": "claude-sonnet-5"
-    },
-    "_draft": {
-      "document_key": "fda-e6r3-gcp-2025",
-      "title": "E6(R3) Good Clinical Practice — Guidance for Industry (FDA, September 2025)",
-      "rank": 3,
-      "warnings": [],
-      "rationale": "术语表中ADR定义分为“预批准阶段”与“已上市产品”两个并列条目,只有已上市产品这一条并引用ICH E2A,能唯一回答该问题。",
-      "key_status": "exact",
-      "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [
+          "key_text"
+        ],
+        "problems": [],
+        "reason": "CO review: key must keep the negated subject (Neither…nor…should)"
+      },
+      "decision": "edited (external review)"
     }
   },
   {
@@ -170,55 +148,21 @@
       "rationale": "该页仅1.2.8条款规定受试者报酬不得完全取决于试验的完成,是唯一涉及报酬与试验完成关联性限制的条款。",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
-    }
-  },
-  {
-    "sample_id": "ms-0303",
-    "query": "根据ICH E6(R3)指南,IRB/IEC应建立、记录并遵循的书面程序(Procedures,1.4)应包含哪些具体事项?",
-    "dept": "CO",
-    "language": "mixed",
-    "slices": [
-      "negation",
-      "mixed_zh_en",
-      "long_context"
-    ],
-    "required_gold_evidence": [
-      {
-        "gold_id": "ms-0303-g1",
-        "source_hash": "e57e9fc0134abebec409d7144aed6e3047c0939d1bd758163fea4e1169472109",
-        "version_label": "Final guidance, September 2025",
-        "page": 18,
-        "printed_page_label": null,
-        "section": "4. Procedures (1.4)",
-        "key_text": "The IRB/IEC should establish, document, and follow its procedures, which should include:",
-        "evidence_span": {
-          "text": "4. Procedures (1.4) The IRB/IEC should establish, document, and follow its procedures, which should include: 1.4.1 Determining its composition (names and qualifications of the members) and the authority under which it is established 1.4.2 Scheduling, notifying its members of, and conducting its meetings 1.4.3 Conducting initial and continuing review of trials 1.4.4 Determining the frequency of continuing review, as appropriate 1.4.5 Providing, according to the applicable regulatory requirements, expedited review and approval/favorable opinion of minor change(s) in ongoing trials that have the approval/favorable opinion of the IRB/IEC 1.4.6 Specifying that no participant should be enrolled in a trial before the IRB/IEC issues its documented approval/favorable opinion of the trial 1.4.7 Specifying that no deviations from or changes to the protocol should be initiated without prior documented IRB/IEC approval/favorable opinion of an appropriate protocol amendment except when necessary to eliminate immediate hazards to the participants or, in accordance with applicable regulatory requirements, when the change(s) involves only logistical or administrative aspects of the trial 1.4.8 Specifying that the investigator/institution should promptly report to the IRB/IEC (see section III.A.1 (1.1)): (a) Deviations from the protocol to eliminate immediate hazards to the trial participants (see paragraph 1.4.7 section III.A.4 (1.4.7); paragraph 2.5.4 section III.B.5 (2.5.4); and paragraph 2.5.5 section III.B.5 (2.5.5)) (b) Changes increasing the risk to participants and/or significantly affecting the conduct of the trial (see paragraph 2.4.6 section III.B.4 (2.4.6)) (c) All suspected unexpected serious adverse reactions (SUSARs) in accordance with applicable regulatory requirements (d) New information that may adversely affect the safety of the participants or the conduct of the trial",
-          "char_start": 365,
-          "char_end": 2267
-        }
-      }
-    ],
-    "notes": "",
-    "drafted_by": {
-      "kind": "llm",
-      "id": "drafter-llm-03",
-      "model": "claude-sonnet-5"
-    },
-    "_draft": {
-      "document_key": "fda-e6r3-gcp-2025",
-      "title": "E6(R3) Good Clinical Practice — Guidance for Industry (FDA, September 2025)",
-      "rank": 101,
-      "warnings": [],
-      "rationale": "第18页仅有4. Procedures (1.4)这一条款以1.4.1至1.4.8(含(a)-(d))完整列举了IRB/IEC应建立并遵循的程序事项清单,页内其他条款均不能提供这一完整要件清单。",
-      "key_status": "exact",
-      "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "OK (external review)"
     }
   },
   {
     "sample_id": "ms-0305",
-    "query": "根据21 CFR 50.20,知情同意文件中是否可以包含要求受试者放弃法律追责权利的免责语言(exculpatory language)?",
+    "query": "根据21 CFR 50.20，知情同意文件能否包含使受试者放弃、或看似放弃其法律权利的免责语言？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
@@ -233,7 +177,7 @@
         "page": 10,
         "printed_page_label": null,
         "section": "A. General Requirements for Informed Consent",
-        "key_text": "may include any exculpatory language through which the subject or the representative is made to waive or appear to waive any of the subject's legal rights",
+        "key_text": "No informed consent, whether oral or written, may include any exculpatory language through which the subject or the representative is made to waive or appear to waive any of the subject's legal rights",
         "evidence_span": {
           "text": "No informed consent, whether oral or written, may include any exculpatory language through which the subject or the representative is made to waive or appear to waive any of the subject's legal rights, or releases or appears to release the investigator, the sponsor, the institution, or its agents from liability for negligence.",
           "char_start": 2106,
@@ -255,12 +199,24 @@
       "rationale": "本页仅此条款明确禁止知情同意文件包含使受试者放弃法律权利的免责语言,是唯一能回答该问题的条款。",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [
+          "query",
+          "key_text"
+        ],
+        "problems": [],
+        "reason": "CO review: key must include 'No informed consent…' and 'waive or appear to waive'; parent query paired with the EN review proposal"
+      },
+      "decision": "edited (external review)"
     }
   },
   {
     "sample_id": "ms-0307",
-    "query": "对于2012年3月7日以后启动的适用临床试验(applicable clinical trials),知情同意书中关于ClinicalTrials.gov的规定声明是否可以被修改?",
+    "query": "对于2012年3月7日当日或之后启动的适用临床试验，知情同意书中要求的ClinicalTrials.gov声明能否被修改？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
@@ -297,7 +253,17 @@
       "rationale": "本页仅此句说明该ClinicalTrials.gov声明不得修改,是唯一能回答该问题的条款。",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。",
+        "paired_parent_rewrite": "对于2012年3月7日当日或之后启动的适用临床试验，知情同意书中要求的ClinicalTrials.gov声明能否被修改？"
+      },
+      "decision": "edited (paired Chinese rewrite from the EN review)"
     }
   },
   {
@@ -339,12 +305,21 @@
       "rationale": "本页仅此句明确禁止仅凭电话口头方式获取并记录书面知情同意,是唯一能回答该问题的条款。",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "OK (external review)"
     }
   },
   {
     "sample_id": "ms-0311",
-    "query": "根据21 CFR 50.56(b)(4),被指定为病房儿童(wards of the state)受试者辩护人(advocate)的人员能否与该临床试验、研究者或监护机构有关联?",
+    "query": "根据21 CFR 50.56(b)(4)，为受国家等机构监护的儿童受试者指定的advocate，与临床试验、研究者或监护机构的关联受到哪些限制，有何角色例外？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
@@ -385,7 +360,18 @@
       "span_status": "exact",
       "curation": [
         "dropped protocol_id: query carries no identifier (P3)"
-      ]
+      ],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [
+          "query"
+        ],
+        "problems": [],
+        "reason": "CO review: 'wards of the state' is not 病房儿童; keep the role exception; parent query paired with the EN review proposal"
+      },
+      "decision": "edited (external review)"
     }
   },
   {
@@ -433,7 +419,16 @@
       "span_status": "exact",
       "curation": [
         "dropped protocol_id: query carries no identifier (P3)"
-      ]
+      ],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "保留制度例外：某些研究类别下法规不强制指定 advocate，但 IRB 仍应考虑指定；不能把“不强制”写成“不需要考虑”。"
+      },
+      "decision": "OK (external review)"
     }
   },
   {
@@ -479,12 +474,21 @@
       "span_status": "exact",
       "curation": [
         "dropped protocol_id: query carries no identifier (P3)"
-      ]
+      ],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "OK (external review)"
     }
   },
   {
     "sample_id": "ms-0316",
-    "query": "依21 CFR 812.150规定,研究者向申办者和IRB报告意外器械不良效应(unanticipated adverse device effect)的时限是多少个工作日?",
+    "query": "依据21 CFR 812.150，研究者首次获知意外器械不良效应后，最迟须在多少个工作日内向申办者和IRB报告？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
@@ -525,12 +529,22 @@
       "span_status": "exact",
       "curation": [
         "dropped protocol_id: query carries no identifier (P3)"
-      ]
+      ],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。",
+        "paired_parent_rewrite": "依据21 CFR 812.150，研究者首次获知意外器械不良效应后，最迟须在多少个工作日内向申办者和IRB报告？"
+      },
+      "decision": "edited (paired Chinese rewrite from the EN review)"
     }
   },
   {
     "sample_id": "ms-0318",
-    "query": "若研究者在未取得受试者知情同意的情况下使用试验器械,依21 CFR 812.150须在多少个工作日内提交报告?",
+    "query": "若研究者在未取得知情同意的情况下使用试验器械，依据21 CFR 812.150须在该次使用后多少个工作日内报告？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
@@ -572,7 +586,17 @@
       "span_status": "exact",
       "curation": [
         "dropped protocol_id: query carries no identifier (P3)"
-      ]
+      ],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。",
+        "paired_parent_rewrite": "若研究者在未取得知情同意的情况下使用试验器械，依据21 CFR 812.150须在该次使用后多少个工作日内报告？"
+      },
+      "decision": "edited (paired Chinese rewrite from the EN review)"
     }
   },
   {
@@ -617,7 +641,16 @@
       "span_status": "exact",
       "curation": [
         "dropped protocol_id: query carries no identifier (P3)"
-      ]
+      ],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "OK (external review)"
     }
   },
   {
@@ -665,50 +698,16 @@
       "span_status": "exact",
       "curation": [
         "dropped protocol_id: query carries no identifier (P3)"
-      ]
-    }
-  },
-  {
-    "sample_id": "ms-0324",
-    "query": "临床试验方案设计阶段，为了从源头降低重要方案偏离（protocol deviation）发生的风险，申办者（sponsor）可以采取哪些具体做法？",
-    "dept": "CO",
-    "language": "mixed",
-    "slices": [
-      "negation",
-      "mixed_zh_en",
-      "long_context"
-    ],
-    "required_gold_evidence": [
-      {
-        "gold_id": "ms-0324-g1",
-        "source_hash": "3b172d83fd5310029d0933a2efdb821c31d77c31d874e292dff7fb7da9abd42f",
-        "version_label": "Draft, December 2024 (FDA-2023-D-5016)",
-        "page": 11,
-        "printed_page_label": null,
-        "section": "2. Role of the Sponsor in Evaluating, Mitigating, and Reporting Protocol Deviations",
-        "key_text": "Sponsors can minimize the occurrence of protocol 276 deviations by identifying those aspects of the study that are critical to quality and, when possible, 277 mitigating risks such as by:",
-        "evidence_span": {
-          "text": "Sponsors may prevent the occurrence or mitigate the impact of important protocol deviations by 273 using quality by design principles to develop study protocols.20 Developing protocols that are 274 less complex and provide for greater flexibility in implementation, if appropriate, may decrease 275 the occurrence of protocol deviations. Sponsors can minimize the occurrence of protocol 276 deviations by identifying those aspects of the study that are critical to quality and, when possible, 277 mitigating risks such as by: 278 279 • Establishing flexible enrollment criteria when appropriate to give investigators more 280 discretion and removing unnecessary enrollment criteria21 281 282 • Streamlining the study design 283 284 • Using flexible time frames for collection of essential data where feasible 285 286 • Conducting certain assessments remotely when possible 287 288 • Eliminating nonessential activities 289 290 • Reviewing prohibited medications to avoid excluding medications that may be 291 appropriate if only taken for a very brief period and where such drug ingestion would not 292 impact either patient safety or study efficacy assessments 293 294 When designing the study, sponsors should seek input from relevant stakeholders, including 295 potential trial participants and clinical investigators and their staff, to help ensure adherence to 296 the planned protocol by developing procedures that are feasible and not unnecessarily 297 burdensome. Before or during protocol development, sponsors should conduct a risk assessment 298 to identify protocol elements (e.g., visit structure, visit procedures, visit windows, enrollment 299 criteria) that can be made more flexible (or even eliminated entirely) to avoid the occurrence of 300 protocol deviations.",
-          "char_start": 980,
-          "char_end": 2761
-        }
-      }
-    ],
-    "notes": "",
-    "drafted_by": {
-      "kind": "llm",
-      "id": "drafter-llm-03",
-      "model": "claude-sonnet-5"
-    },
-    "_draft": {
-      "document_key": "fda-protocol-deviations-draft-2024",
-      "title": "Protocol Deviations for Clinical Investigations of Drugs, Biological Products, and Devices — Guidance for Industry (Draft Guidance)",
-      "rank": 101,
-      "warnings": [],
-      "rationale": "本文档在提供的各页中，只有第11页这段文字完整列出了申办者在方案设计阶段可用以从源头减少方案偏离的具体做法清单（灵活入排标准、简化设计、灵活时间窗、远程评估、剔除非必要活动、审视禁用药物清单），其他页均未给出这一具体做法清单，因此只有该条款能唯一回答此问题。",
-      "key_status": "exact",
-      "span_status": "exact",
-      "curation": []
+      ],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "OK (external review)"
     }
   },
   {
@@ -750,7 +749,16 @@
       "rationale": "本页仅Q2的答案以否定句“No”并说明“not identified before the investigation began”回应了该问题,明确监测范围不限于最初风险评估中的风险。",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "OK (external review)"
     }
   },
   {
@@ -795,7 +803,16 @@
       "span_status": "exact",
       "curation": [
         "dropped protocol_id: query carries no identifier (P3)"
-      ]
+      ],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "OK (external review)"
     }
   },
   {
@@ -837,7 +854,16 @@
       "rationale": "本页只有这句话明确指出聚焦关键数据风险的监测方式无需对所有机构进行频繁常规巡查和广泛SDV,直接回答该问题。",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "OK (external review)"
     }
   },
   {
@@ -856,7 +882,7 @@
         "page": 10,
         "printed_page_label": null,
         "section": "III.A Monitoring Approach – Q4",
-        "key_text": "determine which clinical sites need on-site review",
+        "key_text": "Centralized monitoring may allow sponsors to (1) review study-wide data for inconsistencies or omissions",
         "evidence_span": {
           "text": "Centralized monitoring may allow sponsors to (1) review study-wide data for inconsistencies or omissions; (2) perform activities such as data checks, for completeness and consistency; (3) verify source data; (4) ensure that institutional review board and informed consent documents are current; and (5) determine which clinical sites need on-site review.",
           "char_start": 1044,
@@ -878,7 +904,18 @@
       "rationale": "本页仅此句列举了集中监测可帮助申办方开展的五项具体活动,是回答该问题的唯一依据。",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [
+          "key_text"
+        ],
+        "problems": [],
+        "reason": "CO review: key must cover the activity list, not only item (5); the span already holds the full list, the anchor moves to its head (P1, <= 200 chars)"
+      },
+      "decision": "edited (external review)"
     }
   },
   {
@@ -921,7 +958,16 @@
       "rationale": "Page 12 的 Q7 答案是本文档中唯一完整规定重大问题根本原因分析、整改、方案修订及向六类相关方沟通全流程的条款,其他页均未给出这一完整清单。",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "OK (external review)"
     }
   },
   {
@@ -966,12 +1012,21 @@
       "span_status": "exact",
       "curation": [
         "dropped protocol_id: query carries no identifier (P3)"
-      ]
+      ],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "OK (external review)"
     }
   },
   {
     "sample_id": "ms-0338",
-    "query": "根据ICH E6和ISO 14155:2011，是否可以完全依赖集中监查而完全不进行现场监查？",
+    "query": "按照FDA 2013年指南对ICH E6及ISO 14155:2011的讨论，在什么情况下可以完全依赖集中监查而不进行现场监查？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
@@ -1012,12 +1067,22 @@
       "span_status": "exact",
       "curation": [
         "dropped protocol_id: query carries no identifier (P3)"
-      ]
+      ],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。",
+        "paired_parent_rewrite": "按照FDA 2013年指南对ICH E6及ISO 14155:2011的讨论，在什么情况下可以完全依赖集中监查而不进行现场监查？"
+      },
+      "decision": "edited (paired Chinese rewrite from the EN review)"
     }
   },
   {
     "sample_id": "ms-0340",
-    "query": "对于主要疗效试验，业界通常以多长的时间间隔安排现场监查访视？",
+    "query": "在FDA 2013年指南描述的业界实践中，主要疗效试验的现场监查访视通常约间隔多久？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
@@ -1056,7 +1121,17 @@
       "rationale": "Only this sentence on the page states the typical 4- to 8-week interval used for on-site monitoring visits in major efficacy trials.",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。",
+        "paired_parent_rewrite": "在FDA 2013年指南描述的业界实践中，主要疗效试验的现场监查访视通常约间隔多久？"
+      },
+      "decision": "edited (paired Chinese rewrite from the EN review)"
     }
   },
   {
@@ -1098,7 +1173,16 @@
       "rationale": "This is the only sentence on the page explaining why sponsors may lack remote access to electronic health records held by external institutions.",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "OK (external review)"
     }
   },
   {
@@ -1140,12 +1224,21 @@
       "rationale": "This is the only sentence on the page explicitly stating that conducting trials with no realistic chance of demonstrating efficacy is irresponsible and unethical, uniquely answering the question.",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "OK (external review)"
     }
   },
   {
     "sample_id": "ms-0346",
-    "query": "根据 ICH E9，在非劣效性(non-inferiority)或等效性(equivalence)主动对照(active control)试验中，对照药物需要满足什么条件？",
+    "query": "按照ICH E10引用ICH E9的说明，在非劣效性或等效性试验中，活性对照治疗应满足什么条件？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
@@ -1182,7 +1275,17 @@
       "rationale": "Only this sentence ties the ICH E9 cross-reference to the specific requirement that the active control be of established efficacy at the studied dose and conditions.",
       "key_status": "exact",
       "span_status": "tolerant",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。",
+        "paired_parent_rewrite": "按照ICH E10引用ICH E9的说明，在非劣效性或等效性试验中，活性对照治疗应满足什么条件？"
+      },
+      "decision": "edited (paired Chinese rewrite from the EN review)"
     }
   },
   {
@@ -1224,12 +1327,21 @@
       "rationale": "This is the only passage explaining why, for certain conditions, the minimum drug effect cannot be reliably determined for setting a non-inferiority margin.",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "OK (external review)"
     }
   },
   {
     "sample_id": "ms-0350",
-    "query": "根据 ICH E10，为什么在急性心肌梗塞(acute myocardial infarction)患者中使用血栓溶解剂(thrombolytic agent)时，不会被认为可以进行安慰剂对照(placebo-controlled)试验？",
+    "query": "根据ICH E10，在急性心肌梗死患者中开展血栓溶解剂的安慰剂对照试验，是否被认为合乎伦理？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
@@ -1266,7 +1378,17 @@
       "rationale": "This is the sole example in the document naming thrombolytic therapy in acute myocardial infarction as a case where placebo-controlled trials are considered unethical.",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。",
+        "paired_parent_rewrite": "根据ICH E10，在急性心肌梗死患者中开展血栓溶解剂的安慰剂对照试验，是否被认为合乎伦理？"
+      },
+      "decision": "edited (paired Chinese rewrite from the EN review)"
     }
   },
   {
@@ -1308,7 +1430,16 @@
       "rationale": "该页仅此句给出'不得纳入儿童受试者'的例外条件,是唯一能回答该伦理限制问题的条款。",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "OK (external review)"
     }
   },
   {
@@ -1350,12 +1481,21 @@
       "rationale": "该页仅此句给出足月及过期产新生儿新生儿期的具体时间窗定义,与紧邻的早产儿定义不同,故为唯一答案。",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "OK (external review)"
     }
   },
   {
     "sample_id": "ms-0356",
-    "query": "ICH E11(R1) 6.2节所引用的ICH E11(2000) Section 2.4.2,对儿科不同年龄亚组的结局指标(endpoint)提出了什么要求?",
+    "query": "ICH E11(R1)第6.2节引用E11(2000)第2.4.2节时，对特定年龄及发育亚组可能需要不同终点作了什么说明？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
@@ -1392,12 +1532,22 @@
       "rationale": "该页仅此句明确引用ICH E11(2000) Section 2.4.2并说明其内容,是唯一能凭该编号精确检索到的条款。",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。",
+        "paired_parent_rewrite": "ICH E11(R1)第6.2节引用E11(2000)第2.4.2节时，对特定年龄及发育亚组可能需要不同终点作了什么说明？"
+      },
+      "decision": "edited (paired Chinese rewrite from the EN review)"
     }
   },
   {
     "sample_id": "ms-0358",
-    "query": "根据ICH E11(R1),婴幼儿(infants and toddlers)到1至2岁时,按mg/kg计算的药物清除率通常呈现什么变化趋势?",
+    "query": "按E11(R1)合订文件中原始ICH E11第2.5.3节，到1至2岁时，许多药物按mg/kg基础表达的清除率可能与成人值有何关系？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
@@ -1436,12 +1586,22 @@
       "rationale": "该页仅此句给出1至2岁时按mg/kg计算药物清除率相对成人值的变化趋势,是唯一回答该剂量单位问题的条款。",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。",
+        "paired_parent_rewrite": "按E11(R1)合订文件中原始ICH E11第2.5.3节，到1至2岁时，许多药物按mg/kg基础表达的清除率可能与成人值有何关系？"
+      },
+      "decision": "edited (paired Chinese rewrite from the EN review)"
     }
   },
   {
     "sample_id": "ms-0360",
-    "query": "根据ICH E11(R1),在设计早产新生儿(preterm newborn infants)相关临床试验方案时,应考虑哪些重要特征(important features)?",
+    "query": "按照E11(R1)合订文件中原始ICH E11第2.5.1节，制定早产新生儿临床研究方案时，应考虑该人群哪些重要特征？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
@@ -1479,7 +1639,17 @@
       "rationale": "第11页2.5.1节是全文中唯一完整列出早产新生儿临床试验须考虑的重要特征清单的条款,其他页未涉及该主题的完整清单。",
       "key_status": "exact",
       "span_status": "tolerant",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。",
+        "paired_parent_rewrite": "按照E11(R1)合订文件中原始ICH E11第2.5.1节，制定早产新生儿临床研究方案时，应考虑该人群哪些重要特征？"
+      },
+      "decision": "edited (paired Chinese rewrite from the EN review)"
     }
   },
   {
@@ -1489,8 +1659,8 @@
     "language": "mixed",
     "slices": [
       "time_window",
-      "mixed_zh_en",
-      "version_conflict"
+      "version_conflict",
+      "mixed_zh_en"
     ],
     "required_gold_evidence": [
       {
@@ -1522,7 +1692,18 @@
       "rationale": "该页仅此句给出用于表征剂量-反应关系的短期研究时长（4-12周）。",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [
+          "slices"
+        ],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "edited (external review)"
     },
     "conflict": {
       "family_document_keys": [
@@ -1536,13 +1717,13 @@
   },
   {
     "sample_id": "ms-0364",
-    "query": "在固定复方降压药物的非应答者试验设计中，判定患者对单一成分'无应答'的舒张压标准是什么？",
+    "query": "在ICH E12A第6.2节评估固定复方降压药的示例中，列举了什么舒张压值来说明患者对某单一成分无应答？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
       "dose_unit",
-      "mixed_zh_en",
-      "version_conflict"
+      "version_conflict",
+      "mixed_zh_en"
     ],
     "required_gold_evidence": [
       {
@@ -1576,7 +1757,19 @@
       "rationale": "该页仅此句给出判定患者对单一降压药物成分无应答的舒张压数值标准（>90 mmHg）。",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [
+          "slices"
+        ],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。",
+        "paired_parent_rewrite": "在ICH E12A第6.2节评估固定复方降压药的示例中，列举了什么舒张压值来说明患者对某单一成分无应答？"
+      },
+      "decision": "edited (paired Chinese rewrite from the EN review)"
     },
     "conflict": {
       "family_document_keys": [
@@ -1590,13 +1783,13 @@
   },
   {
     "sample_id": "ms-0366",
-    "query": "根据ICH E1，评估新降压药物安全性时通常建议的患者暴露数据库规模是多少？",
+    "query": "ICH E12A引用ICH E1时，给出的慢性用药一般患者暴露数据库规模及暴露时长是什么，对降压药的适用性又有何限制？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
       "protocol_id",
-      "mixed_zh_en",
-      "version_conflict"
+      "version_conflict",
+      "mixed_zh_en"
     ],
     "required_gold_evidence": [
       {
@@ -1606,7 +1799,7 @@
         "page": 8,
         "printed_page_label": null,
         "section": "4. ASSESSMENT OF SAFETY",
-        "key_text": "database of about 1500 patients (300-600 for 6 months, 100 for 1 year)",
+        "key_text": "ICH E1 suggests that a database of about 1500 patients (300-600 for 6 months, 100 for 1 year) is usually sufficient for chronically administered drugs",
         "evidence_span": {
           "text": "ICH E1 suggests that a database of about 1500 patients (300-600 for 6 months, 100 for 1 year) is usually sufficient for chronically administered drugs, but as suggested in that guideline, this may be too small for the very long, very wide exposure in an asymptomatic population intended for antihypertensive drugs.",
           "char_start": 2114,
@@ -1628,7 +1821,20 @@
       "rationale": "该页仅此句引用ICH E1并给出约1500例患者的安全性暴露数据库建议规模。",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [
+          "query",
+          "key_text",
+          "slices"
+        ],
+        "problems": [],
+        "reason": "CO review: keep ~1,500, exposure durations and the antihypertensive caveat (in the span); parent query paired with the EN review proposal"
+      },
+      "decision": "edited (external review)"
     },
     "conflict": {
       "family_document_keys": [
@@ -1642,13 +1848,13 @@
   },
   {
     "sample_id": "ms-0368",
-    "query": "根据ICH E4，剂量-反应（D/R）研究应识别出D/R曲线上的哪些关键剂量点？",
+    "query": "按照ICH E12A引用ICH E4的说明，剂量-反应研究应识别曲线上的哪些关键剂量点？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
       "protocol_id",
-      "mixed_zh_en",
-      "version_conflict"
+      "version_conflict",
+      "mixed_zh_en"
     ],
     "required_gold_evidence": [
       {
@@ -1680,7 +1886,19 @@
       "rationale": "该页仅此句说明参照ICH E4的D/R研究应识别的关键剂量点（最低有效剂量、陡峭段剂量、最大有效剂量）。",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [
+          "slices"
+        ],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。",
+        "paired_parent_rewrite": "按照ICH E12A引用ICH E4的说明，剂量-反应研究应识别曲线上的哪些关键剂量点？"
+      },
+      "decision": "edited (paired Chinese rewrite from the EN review)"
     },
     "conflict": {
       "family_document_keys": [
@@ -1698,8 +1916,8 @@
     "dept": "CO",
     "language": "mixed",
     "slices": [
-      "mixed_zh_en",
-      "version_conflict"
+      "version_conflict",
+      "mixed_zh_en"
     ],
     "required_gold_evidence": [
       {
@@ -1735,7 +1953,18 @@
       "span_status": "exact",
       "curation": [
         "dropped protocol_id: query carries no identifier (P3)"
-      ]
+      ],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [
+          "slices"
+        ],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "edited (external review)"
     },
     "conflict": {
       "family_document_keys": [
@@ -1749,7 +1978,7 @@
   },
   {
     "sample_id": "ms-0372",
-    "query": "根据ICH E14,在尚未确定药物对QT/QTc间期的影响之前,基线QTc间期反复超过多少ms会被建议作为受试者入选的排除标准?",
+    "query": "在药物对QT/QTc的影响尚未明确时，ICH E14列举何种反复测得的基线QTc毫秒值作为建议排除受试者的示例？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
@@ -1788,12 +2017,22 @@
       "rationale": "本页只有这一条排除标准明确给出450 ms的QTc基线阈值,是唯一能回答该数值问题的条款。",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。",
+        "paired_parent_rewrite": "在药物对QT/QTc的影响尚未明确时，ICH E14列举何种反复测得的基线QTc毫秒值作为建议排除受试者的示例？"
+      },
+      "decision": "edited (paired Chinese rewrite from the EN review)"
     }
   },
   {
     "sample_id": "ms-0374",
-    "query": "根据ICH E14对'thorough QT/QTc study'结果的解读,若药物使平均QT/QTc间期延长约5 ms或更少,是否会导致TdP?",
+    "query": "按照ICH E14对thorough QT/QTc研究的解读，使平均QT/QTc延长约5 ms或更少的药物，是否看起来会引起TdP？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
@@ -1833,16 +2072,25 @@
       "rationale": "本页唯一明确说明5 ms以下的平均QT/QTc延长'不会导致TdP'的条款,同时含否定语义与剂量单位。",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。",
+        "paired_parent_rewrite": "按照ICH E14对thorough QT/QTc研究的解读，使平均QT/QTc延长约5 ms或更少的药物，是否看起来会引起TdP？"
+      },
+      "decision": "edited (paired Chinese rewrite from the EN review)"
     }
   },
   {
     "sample_id": "ms-0376",
-    "query": "根据ICH E14对QT/QTc间期分类分析的规定,临床试验中QTc延长超过多少ms被视为特别关注的阈值?",
+    "query": "在ICH E14的分类分析讨论中，治疗期间QTc绝对间期超过多少毫秒被视为特别关注？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
-      "dose_unit",
       "mixed_zh_en"
     ],
     "required_gold_evidence": [
@@ -1877,12 +2125,24 @@
       "rationale": "本页唯一明确给出500 ms这一特别关注阈值数值的条款。",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [
+          "query",
+          "slices"
+        ],
+        "problems": [],
+        "reason": "CO review: absolute QTc value, not change from baseline; milliseconds are not a drug dose unit; parent query paired with the EN review proposal"
+      },
+      "decision": "edited (external review)"
     }
   },
   {
     "sample_id": "ms-0378",
-    "query": "根据ICH E14,若药物申请安全数据库中未观察到TdP事件,能否据此排除该药物存在致心律失常风险的可能性?",
+    "query": "根据ICH E14，若ECG及其他临床资料已提示潜在致心律失常风险，药物申请数据库未观察到TdP是否足以排除该风险？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
@@ -1919,7 +2179,17 @@
       "rationale": "本页唯一明确说明'未观察到TdP不足以排除致心律失常风险'这一否定性结论的条款。",
       "key_status": "tolerant",
       "span_status": "tolerant",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。",
+        "paired_parent_rewrite": "根据ICH E14，若ECG及其他临床资料已提示潜在致心律失常风险，药物申请数据库未观察到TdP是否足以排除该风险？"
+      },
+      "decision": "edited (paired Chinese rewrite from the EN review)"
     }
   },
   {
@@ -1928,8 +2198,8 @@
     "dept": "CO",
     "language": "mixed",
     "slices": [
-      "mixed_zh_en",
-      "version_conflict"
+      "version_conflict",
+      "mixed_zh_en"
     ],
     "required_gold_evidence": [
       {
@@ -1965,7 +2235,18 @@
       "span_status": "exact",
       "curation": [
         "dropped protocol_id: query carries no identifier (P3)"
-      ]
+      ],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [
+          "slices"
+        ],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "edited (external review)"
     },
     "conflict": {
       "family_document_keys": [
@@ -1984,8 +2265,8 @@
     "language": "mixed",
     "slices": [
       "protocol_id",
-      "mixed_zh_en",
-      "version_conflict"
+      "version_conflict",
+      "mixed_zh_en"
     ],
     "required_gold_evidence": [
       {
@@ -2017,7 +2298,18 @@
       "rationale": "该页同时给出PGx与PGt两条定义，问题明确指定PGt，使该条款成为唯一答案。",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [
+          "slices"
+        ],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "edited (external review)"
     },
     "conflict": {
       "family_document_keys": [
@@ -2037,8 +2329,8 @@
     "slices": [
       "negation",
       "protocol_id",
-      "mixed_zh_en",
-      "version_conflict"
+      "version_conflict",
+      "mixed_zh_en"
     ],
     "required_gold_evidence": [
       {
@@ -2070,7 +2362,18 @@
       "rationale": "该页仅有此句明确说明“已识别数据和样本一般不适合用于临床试验”，是唯一能回答该问题的条款。",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [
+          "slices"
+        ],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "edited (external review)"
     },
     "conflict": {
       "family_document_keys": [
@@ -2090,8 +2393,8 @@
     "slices": [
       "negation",
       "protocol_id",
-      "mixed_zh_en",
-      "version_conflict"
+      "version_conflict",
+      "mixed_zh_en"
     ],
     "required_gold_evidence": [
       {
@@ -2123,7 +2426,18 @@
       "rationale": "页面中匿名化与匿名两类别均有类似限制句，但仅此句明确限定为“anonymised”类别，使问题答案唯一。",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [
+          "slices"
+        ],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "edited (external review)"
     },
     "conflict": {
       "family_document_keys": [
@@ -2137,14 +2451,14 @@
   },
   {
     "sample_id": "ms-0388",
-    "query": "根据ICH E15，在某些情况下匿名（anonymous）基因组样本可以关联哪些有限的临床数据？",
+    "query": "ICH E15对某些情况下匿名基因组样本可关联的有限临床数据，列举了哪些示例？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
       "dose_unit",
       "protocol_id",
-      "mixed_zh_en",
-      "version_conflict"
+      "version_conflict",
+      "mixed_zh_en"
     ],
     "required_gold_evidence": [
       {
@@ -2176,7 +2490,19 @@
       "rationale": "该页仅此句给出匿名样本可关联的有限临床数据示例，且含数值单位mg/dl，是唯一符合的条款。",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [
+          "slices"
+        ],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。",
+        "paired_parent_rewrite": "ICH E15对某些情况下匿名基因组样本可关联的有限临床数据，列举了哪些示例？"
+      },
+      "decision": "edited (paired Chinese rewrite from the EN review)"
     },
     "conflict": {
       "family_document_keys": [
@@ -2190,7 +2516,7 @@
   },
   {
     "sample_id": "ms-0390",
-    "query": "MRCT试验方案应如何区分允许和不允许使用的合并用药?",
+    "query": "按照ICH E17，MRCT方案对允许及不允许的合并用药及其剂量应作什么规定？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
@@ -2227,7 +2553,17 @@
       "rationale": "This is the only sentence on the page stating the protocol's explicit obligation to specify allowable versus not-allowable concomitant medications, using a clear negation term.",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。",
+        "paired_parent_rewrite": "按照ICH E17，MRCT方案对允许及不允许的合并用药及其剂量应作什么规定？"
+      },
+      "decision": "edited (paired Chinese rewrite from the EN review)"
     }
   },
   {
@@ -2269,7 +2605,16 @@
       "rationale": "Only this sentence on the page ties MRCT conduct specifically to ICH E6 GCP standards and the requirement to make sites available for regulatory GCP inspections.",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "OK (external review)"
     }
   },
   {
@@ -2310,12 +2655,21 @@
       "rationale": "This is the only clause on the page addressing the specific scenario of an endpoint with prior experience limited to only some regions and the resulting requirement for regulatory discussion before adoption as primary endpoint.",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "OK (external review)"
     }
   },
   {
     "sample_id": "ms-0396",
-    "query": "对于罕见病或传染病爆发相关的MRCT,当各地区疾病流行率差异很大时,样本量分配应如何处理?",
+    "query": "在罕见病或传染病暴发的MRCT中，各地区疾病流行率差异很大时可如何分配招募，计划阶段应与谁讨论该策略？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
@@ -2351,7 +2705,17 @@
       "rationale": "Only this passage on the page addresses the specific exception for rare disease or outbreak MRCTs where one or more regions may need to dominate enrolment, and the associated need to discuss recruitment strategy with regulators.",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。",
+        "paired_parent_rewrite": "在罕见病或传染病暴发的MRCT中，各地区疾病流行率差异很大时可如何分配招募，计划阶段应与谁讨论该策略？"
+      },
+      "decision": "edited (paired Chinese rewrite from the EN review)"
     }
   },
   {
@@ -2393,12 +2757,21 @@
       "rationale": "This is the only sentence in the document that directly states samples must not be stored beyond the informed-consent-specified retention period.",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "OK (external review)"
     }
   },
   {
     "sample_id": "ms-0400",
-    "query": "根据ICH E18,在选择采样时间点时,种系(germline)DNA与肿瘤DNA/RNA的时间稳定性有何不同?",
+    "query": "根据ICH E18，计划样本采集时，种系DNA的时间稳定性与影响肿瘤DNA/RNA所获信息的因素有何不同？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
@@ -2434,7 +2807,17 @@
       "rationale": "This is the only sentence in section 2.1.2 comparing germline DNA stability to the variability of tumor DNA/RNA in relation to collection timing.",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。",
+        "paired_parent_rewrite": "根据ICH E18，计划样本采集时，种系DNA的时间稳定性与影响肿瘤DNA/RNA所获信息的因素有何不同？"
+      },
+      "decision": "edited (paired Chinese rewrite from the EN review)"
     }
   },
   {
@@ -2476,7 +2859,16 @@
       "rationale": "Only this example sentence in the Communication of Findings section describes BRCA1 mutations being identified despite the research not being intended to investigate cancer risk.",
       "key_status": "tolerant",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "OK (external review)"
     }
   },
   {
@@ -2517,7 +2909,16 @@
       "rationale": "This is the only sentence in section 3.1 specifying that QC procedures and thresholds must be fixed before proceeding to downstream analyses.",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "OK (external review)"
     }
   },
   {
@@ -2560,12 +2961,21 @@
       "rationale": "Section 2.4 is the only clause in the document that enumerates the safety data elements that must generally still be collected even under a selective safety data collection approach.",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "保留“generally”及非穷尽性质：选择性安全性数据收集时通常仍应收集哪些安全性数据，不能写成无例外的全部必收清单。"
+      },
+      "decision": "OK (external review)"
     }
   },
   {
     "sample_id": "ms-0408",
-    "query": "根据ICH E19，若计划临床试验的给药剂量或给药频率超过既往用以确立药物安全性特征的试验，是否仍可考虑采用选择性安全性数据收集？",
+    "query": "根据ICH E19，考虑选择性安全性数据收集时，拟定剂量及给药频率通常应与既往用于明确药物安全性的试验如何比较？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
@@ -2605,7 +3015,17 @@
       "rationale": "Only item 7 of Section 2.2 links dose and dosing-frequency comparability to the requirement that it should not exceed prior trials, making it the unique clause answering this question.",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。",
+        "paired_parent_rewrite": "根据ICH E19，考虑选择性安全性数据收集时，拟定剂量及给药频率通常应与既往用于明确药物安全性的试验如何比较？"
+      },
+      "decision": "edited (paired Chinese rewrite from the EN review)"
     }
   },
   {
@@ -2625,7 +3045,7 @@
         "page": 11,
         "printed_page_label": null,
         "section": "3.3 Comprehensive Safety Data Collection for the Initial Period of the Clinical Trial , with Selective Data Collection Thereafter",
-        "key_text": "serious adverse events and pre-specified AESIs are collected for at least 6 months post-vaccination (1)",
+        "key_text": "Consider a clinical trial of a preventive vaccine in which solicited signs and symptoms are recorded daily for a pre -specified period post -vaccination (e.g., 7 days)",
         "evidence_span": {
           "text": "Consider a clinical trial of a preventive vaccine in which solicited signs and symptoms are recorded daily for a pre -specified period post -vaccination (e.g., 7 days), all unsolicited adverse events are collected for approximately 4 weeks post -vaccination, and serious adverse events and pre-specified AESIs are collected for at least 6 months post-vaccination (1);",
           "char_start": 3154,
@@ -2647,7 +3067,18 @@
       "rationale": "This is the only example in the document that specifies distinct collection time windows for solicited signs, unsolicited adverse events, and serious adverse events/AESIs in a vaccine trial.",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [
+          "key_text"
+        ],
+        "problems": [],
+        "reason": "CO review: keep the three windows with their original strength (e.g. / approximately / at least) — the span holds all three, the anchor moves to the head of the example"
+      },
+      "decision": "edited (external review)"
     }
   },
   {
@@ -2689,55 +3120,21 @@
       "rationale": "This is the only sentence in the document that explicitly excludes gene therapy trials from the selective safety data collection approach.",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
-    }
-  },
-  {
-    "sample_id": "ms-0414",
-    "query": "根据ICH E19,在临床试验中采用选择性安全性数据收集(selective safety data collection)方法时,通常仍应收集哪些安全性数据要素?",
-    "dept": "CO",
-    "language": "mixed",
-    "slices": [
-      "negation",
-      "mixed_zh_en",
-      "long_context"
-    ],
-    "required_gold_evidence": [
-      {
-        "gold_id": "ms-0414-g1",
-        "source_hash": "6daddce21ed23e1899b05b555335402aae49873d8560b9ea7c4a74bf5fc77fdd",
-        "version_label": "Step 4, 2022-09-27",
-        "page": 8,
-        "printed_page_label": null,
-        "section": "2.4 Data that Should Generally be Collected",
-        "key_text": "The following list includes the data elements that should generally be collected, but is not meant to be comprehensive:",
-        "evidence_span": {
-          "text": "In accordance with ICH E2A: Clinical Safety Data Management: Definitions and Standards for Expedited Reporting and ICH E6: Good Clinical Practice , an adverse event can be any unfavourable and unintended sign (including an abnormal laboratory finding), symptom, or disease temporally associated with the us e of a medicinal product, whether or not considered related to the medicinal product. The following list includes the data elements that should generally be collected, but is not meant to be comprehensive: 1. Serious adverse events (see ICH E2A; ICH E6) 2. Important medical events (see ICH E2A) 3. Medication error/overdose (intentional or unintentional) 4. Adverse event that led to study drug discontinuation 5. Pregnancy and lactation exposure and outcomes 6. Adverse events of special interest, including laboratory abnormalities, identified in the protocol as critical to safety evaluations ( see ICH E6; ICH E2F: Development Safety Update Report; CIOMS VI). When allowed/permitted by regional or local regulations and supported by adequate justification in the protocol, a selective collection of some of the data listed above could be considered in these regions. Serious adverse events considered efficacy or safety endpoints, which would not be subject to unblinding and expedited reporting (see ICH E2A), should be prospectively agreed upon with the regulatory authority (ies) and described in the clinical trial protocol. They should be collected and monitored on a regular basis through an independent data monitoring committee (IDMC) established by the sponsor (see ICH E6).",
-          "char_start": 790,
-          "char_end": 2385
-        }
-      }
-    ],
-    "notes": "",
-    "drafted_by": {
-      "kind": "llm",
-      "id": "drafter-llm-03",
-      "model": "claude-sonnet-5"
-    },
-    "_draft": {
-      "document_key": "ich-e19-step4-2022",
-      "title": "ICH E19: A Selective Approach to Safety Data Collection in Specific Late-Stage Pre-Approval or Post-Approval Clinical Trials",
-      "rank": 101,
-      "warnings": [],
-      "rationale": "第8页仅此处以完整列表形式列出选择性安全性数据收集方法下仍应通常收集的六类安全性数据要素及其适用条件,是唯一能完整回答该问题的条款。",
-      "key_status": "exact",
-      "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "OK (external review)"
     }
   },
   {
     "sample_id": "ms-0416",
-    "query": "在ICH E3安全性报告的暴露程度部分,试验药物的剂量应如何以mg/kg或mg/m²表示?",
+    "query": "在ICH E3临床研究报告的暴露程度部分，剂量可以采用哪些表达方式，包括何时可按mg/kg或mg/m²表达？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
@@ -2774,7 +3171,17 @@
       "rationale": "This is the only passage on the page specifying that dosage in the extent-of-exposure section may be expressed on a mg/kg or mg/m² basis.",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。",
+        "paired_parent_rewrite": "在ICH E3临床研究报告的暴露程度部分，剂量可以采用哪些表达方式，包括何时可按mg/kg或mg/m²表达？"
+      },
+      "decision": "edited (paired Chinese rewrite from the EN review)"
     }
   },
   {
@@ -2816,12 +3223,21 @@
       "rationale": "Only this sentence on the page states that excess data should not be allowed to lead to overuse of symbols instead of words in data listings.",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "OK (external review)"
     }
   },
   {
     "sample_id": "ms-0420",
-    "query": "ICH E3 11.4.2.7节要求主动对照等效性试验的疗效分析应呈现什么样的置信区间比较?",
+    "query": "依ICH E3第11.4.2.7节，旨在显示等效性的主动对照试验应呈现关键终点的何种置信区间比较，以及该区间与预设不可接受劣效程度的什么关系？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
@@ -2858,7 +3274,17 @@
       "rationale": "Only section 11.4.2.7 on this page specifies the confidence-interval reporting requirement for active-control equivalence trials, so the section number is needed to retrieve it uniquely.",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。",
+        "paired_parent_rewrite": "依ICH E3第11.4.2.7节，旨在显示等效性的主动对照试验应呈现关键终点的何种置信区间比较，以及该区间与预设不可接受劣效程度的什么关系？"
+      },
+      "decision": "edited (paired Chinese rewrite from the EN review)"
     }
   },
   {
@@ -2900,7 +3326,16 @@
       "rationale": "This is the only statement on the page clarifying that rigorous statistical evaluation is not required for every adverse event, distinguishing it from surrounding adverse-event analysis guidance.",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "OK (external review)"
     }
   },
   {
@@ -2943,7 +3378,16 @@
       "rationale": "第34页12.4.2.2节完整列出了评估个别病人化验值变化的三种具体分析方法(shift tables、预定幅度变化表、45度线散点图),是页内唯一能完整回答该问题的条款。",
       "key_status": "exact",
       "span_status": "tolerant",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "OK (external review)"
     }
   },
   {
@@ -2985,60 +3429,27 @@
       "rationale": "1.4.6条款是页面中唯一明确禁止在IRB/IEC出具书面批准意见前纳入受试者的规定。",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
-    }
-  },
-  {
-    "sample_id": "ms-0428",
-    "query": "根据ICH E6(R3)，受试者获得的试验相关报酬能否完全取决于其是否完成整个试验？",
-    "dept": "CO",
-    "language": "mixed",
-    "slices": [
-      "negation",
-      "mixed_zh_en"
-    ],
-    "required_gold_evidence": [
-      {
-        "gold_id": "ms-0428-g1",
-        "source_hash": "e6ce19e36ce7d2e294f89ee89492b9e035178c3cca48984392bbd92eec9b002c",
-        "version_label": "E6(R3) Step 4, 2025-01-06",
-        "page": 16,
-        "printed_page_label": null,
-        "section": "IRB/IEC Responsibilities (1.2)",
-        "key_text": "not wholly contingent on completion of the trial by the participant",
-        "evidence_span": {
-          "text": "Payments to a participant should be timely, prorated and not wholly contingent on completion of the trial by the participant.",
-          "char_start": 1542,
-          "char_end": 1667
-        }
-      }
-    ],
-    "notes": "",
-    "drafted_by": {
-      "kind": "llm",
-      "id": "drafter-llm-03",
-      "model": "claude-sonnet-5"
-    },
-    "_draft": {
-      "document_key": "ich-e6-r3-step4-2025",
-      "title": "ICH Harmonised Guideline: Guideline for Good Clinical Practice E6(R3) — Final version, adopted 06 January 2025",
-      "rank": 3,
-      "warnings": [],
-      "rationale": "1.2.8条款中该句是页面内唯一明确规定受试者报酬不得完全取决于试验完成情况的条款。",
-      "key_status": "exact",
-      "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "OK (external review)"
     }
   },
   {
     "sample_id": "ms-0430",
-    "query": "根据ICH E7,在制定老年患者临床试验方案时,是否应该因患者合并症而将其排除出试验?",
+    "query": "根据ICH E7，老年患者试验方案是否应不必要地排除有合并疾病的患者？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
       "negation",
-      "mixed_zh_en",
-      "version_conflict"
+      "version_conflict",
+      "mixed_zh_en"
     ],
     "required_gold_evidence": [
       {
@@ -3070,7 +3481,19 @@
       "rationale": "该页仅此一处明确说明不应因合并症而不必要地排除老年患者,是唯一能回答此问题的条款。",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [
+          "slices"
+        ],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。",
+        "paired_parent_rewrite": "根据ICH E7，老年患者试验方案是否应不必要地排除有合并疾病的患者？"
+      },
+      "decision": "edited (paired Chinese rewrite from the EN review)"
     },
     "conflict": {
       "family_document_keys": [
@@ -3084,13 +3507,13 @@
   },
   {
     "sample_id": "ms-0432",
-    "query": "根据ICH E7,已上市药品的新剂型或新复方制剂,如果说明书未充分涵盖老年患者常见状况,是否仍适用本指导原则?",
+    "query": "根据ICH E7，已有药品的新剂型或新复方若有具体理由预期会遇到说明书尚未处理的老年人常见状况，是否也适用本指南？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
       "negation",
-      "mixed_zh_en",
-      "version_conflict"
+      "version_conflict",
+      "mixed_zh_en"
     ],
     "required_gold_evidence": [
       {
@@ -3122,7 +3545,19 @@
       "rationale": "该页仅此一句明确规定指南适用于说明书尚未涵盖老年常见状况的新剂型/新复方,是回答该问题的唯一条款。",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [
+          "slices"
+        ],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。",
+        "paired_parent_rewrite": "根据ICH E7，已有药品的新剂型或新复方若有具体理由预期会遇到说明书尚未处理的老年人常见状况，是否也适用本指南？"
+      },
+      "decision": "edited (paired Chinese rewrite from the EN review)"
     },
     "conflict": {
       "family_document_keys": [
@@ -3140,8 +3575,8 @@
     "dept": "CO",
     "language": "mixed",
     "slices": [
-      "mixed_zh_en",
-      "version_conflict"
+      "version_conflict",
+      "mixed_zh_en"
     ],
     "required_gold_evidence": [
       {
@@ -3173,7 +3608,18 @@
       "rationale": "此为General Principle章节唯一陈述药物应在所有年龄组(含老年人)中进行研究的条款,别无重复。",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [
+          "slices"
+        ],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "edited (external review)"
     },
     "conflict": {
       "family_document_keys": [
@@ -3191,8 +3637,8 @@
     "dept": "CO",
     "language": "mixed",
     "slices": [
-      "mixed_zh_en",
-      "version_conflict"
+      "version_conflict",
+      "mixed_zh_en"
     ],
     "required_gold_evidence": [
       {
@@ -3224,7 +3670,18 @@
       "rationale": "该页唯一说明可用Pharmacokinetic Screen替代单独老年人PK评价方法的条款,能唯一回答此问题。",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [
+          "slices"
+        ],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "edited (external review)"
     },
     "conflict": {
       "family_document_keys": [
@@ -3238,12 +3695,12 @@
   },
   {
     "sample_id": "ms-0438",
-    "query": "根据ICH E7,认知功能相关的评估是否建议单独设计临床试验,而非与主要试验合并进行?",
+    "query": "根据ICH E7，认知功能等评估是否需要特别规划，以及是否更适合在独立研究中开展？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
-      "mixed_zh_en",
-      "version_conflict"
+      "version_conflict",
+      "mixed_zh_en"
     ],
     "required_gold_evidence": [
       {
@@ -3275,7 +3732,19 @@
       "rationale": "该页仅此一句明确指出认知功能等评估需特别规划并最好单独进行,是回答该问题的唯一条款。",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [
+          "slices"
+        ],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。",
+        "paired_parent_rewrite": "根据ICH E7，认知功能等评估是否需要特别规划，以及是否更适合在独立研究中开展？"
+      },
+      "decision": "edited (paired Chinese rewrite from the EN review)"
     },
     "conflict": {
       "family_document_keys": [
@@ -3289,14 +3758,14 @@
   },
   {
     "sample_id": "ms-0440",
-    "query": "ICH E7指南中,针对老年患者用药方案,建议在哪些具体情况下常规开展药物-药物交互作用研究,应涵盖哪些研究类型?",
+    "query": "根据ICH E7，在什么情况下应考虑具体的药物相互作用研究，针对老年患者用药又通常推荐哪些研究类型？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
       "negation",
+      "version_conflict",
       "mixed_zh_en",
-      "long_context",
-      "version_conflict"
+      "long_context"
     ],
     "required_gold_evidence": [
       {
@@ -3328,7 +3797,19 @@
       "rationale": "只有第6页此段完整列出了ICH E7指南针对老年人药物交互作用研究所推荐的全部具体研究类别及其触发情形,文档其他部分未重复该清单。",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [
+          "slices"
+        ],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。",
+        "paired_parent_rewrite": "根据ICH E7，在什么情况下应考虑具体的药物相互作用研究，针对老年患者用药又通常推荐哪些研究类型？"
+      },
+      "decision": "edited (paired Chinese rewrite from the EN review)"
     },
     "conflict": {
       "family_document_keys": [
@@ -3379,7 +3860,16 @@
       "rationale": "Only this sentence on the page states that critical to quality factors should remain clear and not be cluttered by minor issues from secondary objectives, making it the unique answer to this question.",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "OK (external review)"
     }
   },
   {
@@ -3421,7 +3911,16 @@
       "rationale": "This is the only sentence on the page warning that lack of recorded information does not confirm the absence of a condition or event when using secondary data sources.",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "OK (external review)"
     }
   },
   {
@@ -3463,7 +3962,16 @@
       "rationale": "只有Treatment policy strategy段落这句话明确说明该策略不能用于terminal events，页面其他策略描述均未给出此限制。",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "OK (external review)"
     }
   },
   {
@@ -3505,7 +4013,16 @@
       "rationale": "该页仅此处针对‘因不良事件中止治疗的受试者’给出两种具体假设情境，是唯一能回答该问题的条款。",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "OK (external review)"
     }
   },
   {
@@ -3547,7 +4064,16 @@
       "rationale": "该页仅这段明确指出这两种效应都不应被解释为‘全部病人可继续治疗’时的效应，其他段落未涉及此限定。",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "OK (external review)"
     }
   },
   {
@@ -3589,7 +4115,16 @@
       "rationale": "该页仅此句明确说明PPS分析无法达成principal stratum估计目标的原因，是唯一能回答该问题的条款。",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "OK (external review)"
     }
   },
   {
@@ -3631,7 +4166,16 @@
       "rationale": "This is the only sentence on the page specifying that double-blind trial packaging is labelled solely with subject number and treatment period so that no one, not even by a code letter, can identify the treatment.",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "OK (external review)"
     }
   },
   {
@@ -3673,7 +4217,16 @@
       "rationale": "This is the only statement on the page requiring that any exclusions from the full analysis set have their potential biases addressed for an analysis to be considered complete.",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "OK (external review)"
     }
   },
   {
@@ -3715,7 +4268,16 @@
       "rationale": "Only this sentence identifies ICH E6 as the guideline providing relevant guidance for defining 'centre' in multicentre trials.",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "OK (external review)"
     }
   },
   {
@@ -3756,7 +4318,16 @@
       "rationale": "This is the only sentence on the page defining the open-label trial arrangement, stating that treatment identity is known to all parties.",
       "key_status": "exact",
       "span_status": "exact",
-      "curation": []
+      "curation": [],
+      "external_review": {
+        "source": "external_review/CO_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "OK",
+        "applied": [],
+        "problems": [],
+        "reason": "建议保留；原 artifact 的逐字段历史 diff 未能逐字恢复。"
+      },
+      "decision": "OK (external review)"
     }
   }
 ]

@@ -108,6 +108,7 @@ def main() -> None:
     ap.add_argument("--effort", default="high")
     ap.add_argument("--binary", default=dc.DEFAULT_BINARY)
     ap.add_argument("--only", nargs="*")
+    ap.add_argument("--max-chunks", type=int, default=None, help="stop after N chunks (the run stays resumable)")
     args = ap.parse_args()
     if args.chunk < 1:
         ap.error("--chunk must be positive")
@@ -173,7 +174,10 @@ def main() -> None:
     codex.checkpoint(run, run_path, out_path)
     with tempfile.TemporaryDirectory(prefix="main-review-") as tmp:
         workdir = pathlib.Path(tmp)
-        for i in range(0, len(records), args.chunk):
+        for n_chunk, i in enumerate(range(0, len(records), args.chunk)):
+            if args.max_chunks is not None and n_chunk >= args.max_chunks:
+                print(f"stopping after {n_chunk} chunks (--max-chunks); rerun without --only to resume", flush=True)
+                break
             chunk = records[i : i + args.chunk]
             ids = [r["sample_id"] for r in chunk]
             prompt = codex.build_prompt(prompt_text, chunk)
@@ -210,8 +214,10 @@ def main() -> None:
                 flush=True,
             )
     verdicts = codex.current_verdicts(run)
+    cost = sum(float(c.get("cost_usd") or 0) for c in run["chunks"])
     print(
-        f"{args.batch}: {len(verdicts)} verdicts, {sum(v['verdict'] == 'dispute' for v in verdicts.values())} disputes -> {out_path.relative_to(dc.REPO)}"
+        f"{args.batch}: {len(verdicts)} verdicts, {sum(v['verdict'] == 'dispute' for v in verdicts.values())} disputes, "
+        f"${cost:.2f} so far -> {out_path.relative_to(dc.REPO)}"
     )
 
 

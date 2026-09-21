@@ -1,0 +1,37 @@
+{
+  "note": "Field values authored by the implementer (Claude Fable 5.1) on 2026-09-22 to carry out the CO and NA external reviews, whose regenerated/tabular documents describe the required change but do not state the new text. Parent Chinese rewrites for CO samples are taken verbatim from the EN review's paired proposals where one exists. Every value is re-anchored by apply_external_review_2.py; annotator-01 sees the result prefilled in the sheets.",
+  "CO": {
+    "ms-0299": {"key_text": "Neither the investigator nor the investigator site staff should coerce or unduly influence a participant to participate or to continue their participation in the trial", "reason": "CO review: key must keep the negated subject (Neither…nor…should)"},
+    "ms-0305": {"query": "根据21 CFR 50.20，知情同意文件能否包含使受试者放弃、或看似放弃其法律权利的免责语言？", "key_text": "No informed consent, whether oral or written, may include any exculpatory language through which the subject or the representative is made to waive or appear to waive any of the subject's legal rights", "reason": "CO review: key must include 'No informed consent…' and 'waive or appear to waive'; parent query paired with the EN review proposal"},
+    "ms-0311": {"query": "根据21 CFR 50.56(b)(4)，为受国家等机构监护的儿童受试者指定的advocate，与临床试验、研究者或监护机构的关联受到哪些限制，有何角色例外？", "reason": "CO review: 'wards of the state' is not 病房儿童; keep the role exception; parent query paired with the EN review proposal"},
+    "ms-0332": {"key_text": "Centralized monitoring may allow sponsors to (1) review study-wide data for inconsistencies or omissions", "reason": "CO review: key must cover the activity list, not only item (5); the span already holds the full list, the anchor moves to its head (P1, <= 200 chars)"},
+    "ms-0366": {"query": "ICH E12A引用ICH E1时，给出的慢性用药一般患者暴露数据库规模及暴露时长是什么，对降压药的适用性又有何限制？", "key_text": "ICH E1 suggests that a database of about 1500 patients (300-600 for 6 months, 100 for 1 year) is usually sufficient for chronically administered drugs", "reason": "CO review: keep ~1,500, exposure durations and the antihypertensive caveat (in the span); parent query paired with the EN review proposal"},
+    "ms-0376": {"query": "在ICH E14的分类分析讨论中，治疗期间QTc绝对间期超过多少毫秒被视为特别关注？", "slices_remove": ["dose_unit"], "reason": "CO review: absolute QTc value, not change from baseline; milliseconds are not a drug dose unit; parent query paired with the EN review proposal"},
+    "ms-0410": {"key_text": "Consider a clinical trial of a preventive vaccine in which solicited signs and symptoms are recorded daily for a pre -specified period post -vaccination (e.g., 7 days)", "reason": "CO review: keep the three windows with their original strength (e.g. / approximately / at least) — the span holds all three, the anchor moves to the head of the example"}
+  },
+  "CO_drop": {
+    "ms-0300": "CO review proposed moving the sample from CO to PV; spec-m1 PR-06 requires the sample dept to equal the document's owner_dept (fda-e6r3-gcp-2025 is CO), so the sample is dropped instead (twin ms-0301 follows)",
+    "ms-0303": "CO review: the 1.4 procedures list continues on the next page (1.4.9); single-page gold incomplete",
+    "ms-0324": "CO review: 2024-12 draft with line numbers, clause spans pages 11-12",
+    "ms-0414": "CO review: duplicate of ms-0406 (same document, same clause)",
+    "ms-0428": "CO review: duplicate of ms-0302 (participant payment)"
+  },
+  "NA": {
+    "ms-0469": {"query": "GVP Module VIII 是否为非介入性上市后安全性研究（PASS）的患者知情同意书规定了逐项的必备内容清单？", "topic": "知情同意书逐项内容清单"},
+    "ms-0470": {"query": "对于强制性纳入范围内、五年初始监测期届满的药品，GVP Module X 是否给出了从额外监测清单移除的具体评估标准或审核流程？", "topic": "五年期满移除的具体标准与流程"},
+    "ms-0480": {"query": "ICH E11(R1) 是否给出了判定儿科外推程度（完全外推、部分外推或不外推）的固定阈值或决策表？", "topic": "外推程度的固定阈值/决策表"},
+    "ms-0482": {"query": "ICH E14 是否为 thorough QT/QTc study 规定了固定的受试者例数或统一的样本量计算公式？", "topic": "Thorough QT study 固定样本量/公式"},
+    "ms-0484": {"query": "ICH E17 是否规定了多区域临床试验（MRCT）独立数据监查委员会（DMC）的成员人数或各区域代表比例？", "topic": "DMC 成员人数/区域比例"},
+    "ms-0485": {"query": "ICH E19 是否给出了从选择性安全性数据收集恢复为全面收集的预设量化触发阈值或固定决策算法？", "topic": "恢复全面收集的量化阈值/算法"},
+    "ms-0492": {"query": "ICH E6(R3) 是否规定了受试者报酬的统一金额、计算公式或固定费率？", "topic": "受试者报酬的固定金额/公式/费率"},
+    "ms-0494": {"query": "ICH E8(R1) 是否规定了独立数据监查委员会（DMC）的固定成员人数、专业构成比例或角色配额？", "topic": "DMC 固定人数/构成比例"},
+    "ms-0498": {"query": "《SMQ 入门指南》是否列出了使用 SMQ 需向 MSSO 或 ICH 另行支付的许可费或订阅费金额或费率？", "topic": "SMQ 单独许可/订阅费金额"},
+    "ms-0511": {"query": "「安星」伊風柔錠300毫克（allopurinol）仿單是否載明服藥期間禁止駕駛或操作機械等明確操作限制？", "topic": "明確駕車/操作機械限制"},
+    "ms-0512": {"query": "樂癲活持續釋放膜衣錠25毫克（Lamofree ER Tablets 25mg）仿單是否載明服藥期間禁止駕駛或操作機械等明確操作限制？", "topic": "明確駕車/操作機械限制"},
+    "ms-0517": {"query": "「居禮」拔痛酸錠（Allopurinol）仿單是否載明服藥期間禁止駕駛或操作機械等明確操作限制？", "topic": "明確駕車/操作機械限制"},
+    "ms-0520": {"query": "〝南光〞賜痛寧注射液（diclofenac）仿單是否為非嚴重腎功能受損病人提供分級的具體減量數值或給藥間隔方案？", "topic": "非嚴重腎功能受損的具體減量方案"}
+  },
+  "NA_drop": {
+    "ms-0487": "NA review: ICH E2C(R2) lists the Executive Summary contents; the question is answerable"
+  }
+}

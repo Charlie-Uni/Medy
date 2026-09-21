@@ -5229,115 +5229,8 @@
     "derived_from": "ms-0278"
   },
   {
-    "sample_id": "ms-0301",
-    "query": "According to the ICH E6(R3) glossary, referencing ICH E2A, how is an adverse drug reaction (ADR) defined for marketed medicinal products?",
-    "dept": "CO",
-    "language": "en",
-    "slices": [
-      "protocol_id",
-      "mixed_zh_en"
-    ],
-    "required_gold_evidence": [
-      {
-        "gold_id": "ms-0301-g1",
-        "source_hash": "e57e9fc0134abebec409d7144aed6e3047c0939d1bd758163fea4e1169472109",
-        "version_label": "Final guidance, September 2025",
-        "page": 77,
-        "printed_page_label": null,
-        "section": "GLOSSARY",
-        "key_text": "a response to a drug that is noxious and unintended and that occurs at doses normally used in humans for prophylaxis, diagnosis or therapy of diseases or for modification of physiological function",
-        "evidence_span": {
-          "text": "For marketed medicinal products: a response to a drug that is noxious and unintended and that occurs at doses normally used in humans for prophylaxis, diagnosis or therapy of diseases or for modification of physiological function. (See ICH guidance for industry E2A Clinical Safety Data Management: Definitions and Standards for Expedited Reporting (March 1995).)",
-          "char_start": 1059,
-          "char_end": 1422
-        }
-      }
-    ],
-    "notes": "",
-    "drafted_by": {
-      "kind": "llm",
-      "id": "drafter-llm-03",
-      "model": "claude-sonnet-5"
-    },
-    "_draft": {
-      "document_key": "fda-e6r3-gcp-2025",
-      "title": "E6(R3) Good Clinical Practice — Guidance for Industry (FDA, September 2025)",
-      "rank": 3,
-      "warnings": [],
-      "rationale": "术语表中ADR定义分为“预批准阶段”与“已上市产品”两个并列条目,只有已上市产品这一条并引用ICH E2A,能唯一回答该问题。",
-      "key_status": "exact",
-      "span_status": "exact",
-      "curation": [],
-      "parent_query": "根据ICH E6(R3)术语表并参照ICH E2A,已上市药品的不良药物反应(ADR)应如何定义?",
-      "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。英文定义对象正确；注明FDA实施版。父样本前轮建议CO转PV，保留语言建议并暂缓，不把部门迁移当作全局删除。",
-        "suggested_query": "According to the glossary in FDA's September 2025 E6(R3) guidance, which refers to ICH E2A, how is an adverse drug reaction (ADR) defined for marketed medicinal products?",
-        "applied": [],
-        "problems": []
-      },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
-    },
-    "derived_from": "ms-0300"
-  },
-  {
-    "sample_id": "ms-0304",
-    "query": "According to ICH E6(R3), what specific items should the IRB/IEC's established, documented procedures (section 1.4) include?",
-    "dept": "CO",
-    "language": "en",
-    "slices": [
-      "negation",
-      "mixed_zh_en",
-      "long_context"
-    ],
-    "required_gold_evidence": [
-      {
-        "gold_id": "ms-0304-g1",
-        "source_hash": "e57e9fc0134abebec409d7144aed6e3047c0939d1bd758163fea4e1169472109",
-        "version_label": "Final guidance, September 2025",
-        "page": 18,
-        "printed_page_label": null,
-        "section": "4. Procedures (1.4)",
-        "key_text": "The IRB/IEC should establish, document, and follow its procedures, which should include:",
-        "evidence_span": {
-          "text": "4. Procedures (1.4) The IRB/IEC should establish, document, and follow its procedures, which should include: 1.4.1 Determining its composition (names and qualifications of the members) and the authority under which it is established 1.4.2 Scheduling, notifying its members of, and conducting its meetings 1.4.3 Conducting initial and continuing review of trials 1.4.4 Determining the frequency of continuing review, as appropriate 1.4.5 Providing, according to the applicable regulatory requirements, expedited review and approval/favorable opinion of minor change(s) in ongoing trials that have the approval/favorable opinion of the IRB/IEC 1.4.6 Specifying that no participant should be enrolled in a trial before the IRB/IEC issues its documented approval/favorable opinion of the trial 1.4.7 Specifying that no deviations from or changes to the protocol should be initiated without prior documented IRB/IEC approval/favorable opinion of an appropriate protocol amendment except when necessary to eliminate immediate hazards to the participants or, in accordance with applicable regulatory requirements, when the change(s) involves only logistical or administrative aspects of the trial 1.4.8 Specifying that the investigator/institution should promptly report to the IRB/IEC (see section III.A.1 (1.1)): (a) Deviations from the protocol to eliminate immediate hazards to the trial participants (see paragraph 1.4.7 section III.A.4 (1.4.7); paragraph 2.5.4 section III.B.5 (2.5.4); and paragraph 2.5.5 section III.B.5 (2.5.5)) (b) Changes increasing the risk to participants and/or significantly affecting the conduct of the trial (see paragraph 2.4.6 section III.B.4 (2.4.6)) (c) All suspected unexpected serious adverse reactions (SUSARs) in accordance with applicable regulatory requirements (d) New information that may adversely affect the safety of the participants or the conduct of the trial",
-          "char_start": 365,
-          "char_end": 2267
-        }
-      }
-    ],
-    "notes": "",
-    "drafted_by": {
-      "kind": "llm",
-      "id": "drafter-llm-03",
-      "model": "claude-sonnet-5"
-    },
-    "_draft": {
-      "document_key": "fda-e6r3-gcp-2025",
-      "title": "E6(R3) Good Clinical Practice — Guidance for Industry (FDA, September 2025)",
-      "rank": 101,
-      "warnings": [],
-      "rationale": "第18页仅有4. Procedures (1.4)这一条款以1.4.1至1.4.8(含(a)-(d))完整列举了IRB/IEC应建立并遵循的程序事项清单,页内其他条款均不能提供这一完整要件清单。",
-      "key_status": "exact",
-      "span_status": "exact",
-      "curation": [],
-      "parent_query": "根据ICH E6(R3)指南,IRB/IEC应建立、记录并遵循的书面程序(Procedures,1.4)应包含哪些具体事项?",
-      "external_review": {
-        "source": "EN",
-        "verdict": "DROP",
-        "reason": "`KEEP_QUERY`。英文询问整个1.4程序清单且与父草稿一致；1.4.9跨到物理19页，按前轮裁决排除当前单页样本。",
-        "applied": [],
-        "problems": [],
-        "pending": "parent drop comes from the CO review, which was not supplied"
-      },
-      "decision": "pending: CO review not supplied (twin DROP proposed)"
-    },
-    "derived_from": "ms-0303"
-  },
-  {
     "sample_id": "ms-0306",
-    "query": "Under 21 CFR 50.20, can informed consent documents include exculpatory language that makes the subject waive legal rights?",
+    "query": "Under 21 CFR 50.20, may an informed consent document contain exculpatory language that makes a subject waive, or appear to waive, the subject's legal rights?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -5352,7 +5245,7 @@
         "page": 10,
         "printed_page_label": null,
         "section": "A. General Requirements for Informed Consent",
-        "key_text": "may include any exculpatory language through which the subject or the representative is made to waive or appear to waive any of the subject's legal rights",
+        "key_text": "No informed consent, whether oral or written, may include any exculpatory language through which the subject or the representative is made to waive or appear to waive any of the subject's legal rights",
         "evidence_span": {
           "text": "No informed consent, whether oral or written, may include any exculpatory language through which the subject or the representative is made to waive or appear to waive any of the subject's legal rights, or releases or appears to release the investigator, the sponsor, the institution, or its agents from liability for negligence.",
           "char_start": 2106,
@@ -5375,16 +5268,18 @@
       "key_status": "exact",
       "span_status": "exact",
       "curation": [],
-      "parent_query": "根据21 CFR 50.20,知情同意文件中是否可以包含要求受试者放弃法律追责权利的免责语言(exculpatory language)?",
+      "parent_query": "根据21 CFR 50.20，知情同意文件能否包含使受试者放弃、或看似放弃其法律权利的免责语言？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。补回appear to waive；原父中文将legal rights缩成法律追责权利，应成对修订。",
-        "suggested_query": "Under 21 CFR 50.20, may an informed consent document contain exculpatory language that makes a subject waive, or appear to waive, the subject's legal rights?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。补回appear to waive；原父中文将legal rights缩成法律追责权利，应成对修订。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "derived_from": "ms-0305"
   },
@@ -5428,16 +5323,18 @@
       "key_status": "exact",
       "span_status": "exact",
       "curation": [],
-      "parent_query": "对于2012年3月7日以后启动的适用临床试验(applicable clinical trials),知情同意书中关于ClinicalTrials.gov的规定声明是否可以被修改?",
+      "parent_query": "对于2012年3月7日当日或之后启动的适用临床试验，知情同意书中要求的ClinicalTrials.gov声明能否被修改？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`KEEP_QUERY`。英文on or after准确包含2012-03-07当天；父草稿‘以后’需明确为‘当日或之后’，本项需父版确认。",
-        "suggested_query": null,
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "parent query (paired rewrite)"
+        ],
+        "problems": [],
+        "reason": "`KEEP_QUERY`。英文on or after准确包含2012-03-07当天；父草稿‘以后’需明确为‘当日或之后’，本项需父版确认。"
       },
-      "decision": "pending: CO parent review not supplied"
+      "decision": "edited (external review)"
     },
     "derived_from": "ms-0307"
   },
@@ -5483,20 +5380,20 @@
       "curation": [],
       "parent_query": "当研究要求书面记录知情同意时,能否仅通过电话口头方式获得并记录受试者的知情同意?",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`KEEP_QUERY`。written documentation required条件与telephone alone限制完全对应；并未排除有书面/电子签署的远程同意。",
-        "suggested_query": null,
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
         "applied": [],
-        "problems": []
+        "problems": [],
+        "reason": "`KEEP_QUERY`。written documentation required条件与telephone alone限制完全对应；并未排除有书面/电子签署的远程同意。"
       },
-      "decision": "pending: CO parent review not supplied"
+      "decision": "OK (external review)"
     },
     "derived_from": "ms-0309"
   },
   {
     "sample_id": "ms-0312",
-    "query": "Under 21 CFR 50.56(b)(4), can an individual appointed as an advocate for a ward-of-the-state child subject be associated with the clinical investigation, the investigator, or the guardian organization?",
+    "query": "Under 21 CFR 50.56(b)(4), what restrictions and exceptions apply to an advocate's association with the clinical investigation, investigators, or guardian organisation when representing a child who is a ward of the state?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -5538,16 +5435,18 @@
       "curation": [
         "dropped protocol_id: query carries no identifier (P3)"
       ],
-      "parent_query": "根据21 CFR 50.56(b)(4),被指定为病房儿童(wards of the state)受试者辩护人(advocate)的人员能否与该临床试验、研究者或监护机构有关联?",
+      "parent_query": "根据21 CFR 50.56(b)(4)，为受国家等机构监护的儿童受试者指定的advocate，与临床试验、研究者或监护机构的关联受到哪些限制，有何角色例外？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。恢复截断问句；wards不是病房儿童，advocate不是刑事辩护律师。显式保留独立性例外，需与中文父问题成对确认。",
-        "suggested_query": "Under 21 CFR 50.56(b)(4), what restrictions and exceptions apply to an advocate's association with the clinical investigation, investigators, or guardian organisation when representing a child who is a ward of the state?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。恢复截断问句；wards不是病房儿童，advocate不是刑事辩护律师。显式保留独立性例外，需与中文父问题成对确认。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "derived_from": "ms-0311"
   },
@@ -5597,20 +5496,20 @@
       ],
       "parent_query": "根据21 CFR 812.110,研究者可否将试验用医疗器械提供给未经授权接收该器械的人?",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`KEEP_QUERY`。device供给、未经授权接收人和21 CFR 812.110一致。",
-        "suggested_query": null,
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
         "applied": [],
-        "problems": []
+        "problems": [],
+        "reason": "`KEEP_QUERY`。device供给、未经授权接收人和21 CFR 812.110一致。"
       },
-      "decision": "pending: CO parent review not supplied"
+      "decision": "OK (external review)"
     },
     "derived_from": "ms-0314"
   },
   {
     "sample_id": "ms-0317",
-    "query": "Under 21 CFR 812.150, within how many working days must an investigator report an unanticipated adverse device effect to the sponsor and IRB?",
+    "query": "Under 21 CFR 812.150, within how many working days after first learning of an unanticipated adverse device effect must an investigator report it to the sponsor and IRB?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -5652,22 +5551,25 @@
       "curation": [
         "dropped protocol_id: query carries no identifier (P3)"
       ],
-      "parent_query": "依21 CFR 812.150规定,研究者向申办者和IRB报告意外器械不良效应(unanticipated adverse device effect)的时限是多少个工作日?",
+      "parent_query": "依据21 CFR 812.150，研究者首次获知意外器械不良效应后，最迟须在多少个工作日内向申办者和IRB报告？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。补上first learning起算事件，不能将发生日或确认因果日默认为起点。",
-        "suggested_query": "Under 21 CFR 812.150, within how many working days after first learning of an unanticipated adverse device effect must an investigator report it to the sponsor and IRB?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "parent query (paired rewrite)",
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。补上first learning起算事件，不能将发生日或确认因果日默认为起点。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "derived_from": "ms-0316"
   },
   {
     "sample_id": "ms-0319",
-    "query": "If an investigator uses an investigational device without obtaining informed consent, within how many working days must this be reported under 21 CFR 812.150?",
+    "query": "If an investigator uses an investigational device without obtaining informed consent, within how many working days after that use must the investigator report it under 21 CFR 812.150?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -5710,22 +5612,25 @@
       "curation": [
         "dropped protocol_id: query carries no identifier (P3)"
       ],
-      "parent_query": "若研究者在未取得受试者知情同意的情况下使用试验器械,依21 CFR 812.150须在多少个工作日内提交报告?",
+      "parent_query": "若研究者在未取得知情同意的情况下使用试验器械，依据21 CFR 812.150须在该次使用后多少个工作日内报告？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。保留未经知情同意的使用及after that use起算；不改为获知后。",
-        "suggested_query": "If an investigator uses an investigational device without obtaining informed consent, within how many working days after that use must the investigator report it under 21 CFR 812.150?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "parent query (paired rewrite)",
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。保留未经知情同意的使用及after that use起算；不改为获知后。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "derived_from": "ms-0318"
   },
   {
     "sample_id": "ms-0321",
-    "query": "Under 21 CFR 312.23(a)(6) and 312.40(a)(1), if the protocol specifies the qualifications required to perform a task, may individuals with different qualifications permitted under state law perform it instead?",
+    "query": "Under 21 CFR 312.23(a)(6) and 312.40(a)(1), if a protocol specifies the qualifications required for a task, may a person with different qualifications perform it instead merely because state law permits this?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -5768,20 +5673,22 @@
       ],
       "parent_query": "根据21 CFR 312.23(a)(6)和312.40(a)(1),当方案规定执行特定任务人员的资格时,是否可依当地法律以不同资格人员代替?",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。补全展示截断；州法许可不能取代方案规定的资格这一比较没有反转。",
-        "suggested_query": "Under 21 CFR 312.23(a)(6) and 312.40(a)(1), if a protocol specifies the qualifications required for a task, may a person with different qualifications perform it instead merely because state law permits this?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。补全展示截断；州法许可不能取代方案规定的资格这一比较没有反转。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "derived_from": "ms-0320"
   },
   {
     "sample_id": "ms-0323",
-    "query": "Under 21 CFR 812.150, what reports must an investigator submit to the sponsor and IRB during a significant risk device investigation, and within what time frames?",
+    "query": "Under the 21 CFR 812.150 reporting list in FDA's Investigator Responsibilities guidance, which reports must an investigator in a significant-risk device investigation submit to both the sponsor and IRB, and what deadlines apply?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -5827,74 +5734,22 @@
       ],
       "parent_query": "根据21 CFR 812.150,研究者在重大风险医疗器械临床试验中,必须向申办者和IRB提交哪些报告及其提交时限?",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。保持同时送申办者和IRB的第1组报告；不将第2组仅送申办者的撤回IRB批准报告误归两方。",
-        "suggested_query": "Under the 21 CFR 812.150 reporting list in FDA's Investigator Responsibilities guidance, which reports must an investigator in a significant-risk device investigation submit to both the sponsor and IRB, and what deadlines apply?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。保持同时送申办者和IRB的第1组报告；不将第2组仅送申办者的撤回IRB批准报告误归两方。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "derived_from": "ms-0322"
   },
   {
-    "sample_id": "ms-0325",
-    "query": "During protocol design, what specific steps can sponsors take to minimize the risk of protocol deviations occurring in a clinical investigation?",
-    "dept": "CO",
-    "language": "en",
-    "slices": [
-      "negation",
-      "mixed_zh_en",
-      "long_context"
-    ],
-    "required_gold_evidence": [
-      {
-        "gold_id": "ms-0325-g1",
-        "source_hash": "3b172d83fd5310029d0933a2efdb821c31d77c31d874e292dff7fb7da9abd42f",
-        "version_label": "Draft, December 2024 (FDA-2023-D-5016)",
-        "page": 11,
-        "printed_page_label": null,
-        "section": "2. Role of the Sponsor in Evaluating, Mitigating, and Reporting Protocol Deviations",
-        "key_text": "Sponsors can minimize the occurrence of protocol 276 deviations by identifying those aspects of the study that are critical to quality and, when possible, 277 mitigating risks such as by:",
-        "evidence_span": {
-          "text": "Sponsors may prevent the occurrence or mitigate the impact of important protocol deviations by 273 using quality by design principles to develop study protocols.20 Developing protocols that are 274 less complex and provide for greater flexibility in implementation, if appropriate, may decrease 275 the occurrence of protocol deviations. Sponsors can minimize the occurrence of protocol 276 deviations by identifying those aspects of the study that are critical to quality and, when possible, 277 mitigating risks such as by: 278 279 • Establishing flexible enrollment criteria when appropriate to give investigators more 280 discretion and removing unnecessary enrollment criteria21 281 282 • Streamlining the study design 283 284 • Using flexible time frames for collection of essential data where feasible 285 286 • Conducting certain assessments remotely when possible 287 288 • Eliminating nonessential activities 289 290 • Reviewing prohibited medications to avoid excluding medications that may be 291 appropriate if only taken for a very brief period and where such drug ingestion would not 292 impact either patient safety or study efficacy assessments 293 294 When designing the study, sponsors should seek input from relevant stakeholders, including 295 potential trial participants and clinical investigators and their staff, to help ensure adherence to 296 the planned protocol by developing procedures that are feasible and not unnecessarily 297 burdensome. Before or during protocol development, sponsors should conduct a risk assessment 298 to identify protocol elements (e.g., visit structure, visit procedures, visit windows, enrollment 299 criteria) that can be made more flexible (or even eliminated entirely) to avoid the occurrence of 300 protocol deviations.",
-          "char_start": 980,
-          "char_end": 2761
-        }
-      }
-    ],
-    "notes": "",
-    "drafted_by": {
-      "kind": "llm",
-      "id": "drafter-llm-03",
-      "model": "claude-sonnet-5"
-    },
-    "_draft": {
-      "document_key": "fda-protocol-deviations-draft-2024",
-      "title": "Protocol Deviations for Clinical Investigations of Drugs, Biological Products, and Devices — Guidance for Industry (Draft Guidance)",
-      "rank": 101,
-      "warnings": [],
-      "rationale": "本文档在提供的各页中，只有第11页这段文字完整列出了申办者在方案设计阶段可用以从源头减少方案偏离的具体做法清单（灵活入排标准、简化设计、灵活时间窗、远程评估、剔除非必要活动、审视禁用药物清单），其他页均未给出这一具体做法清单，因此只有该条款能唯一回答此问题。",
-      "key_status": "exact",
-      "span_status": "exact",
-      "curation": [],
-      "parent_query": "临床试验方案设计阶段，为了从源头降低重要方案偏离（protocol deviation）发生的风险，申办者（sponsor）可以采取哪些具体做法？",
-      "external_review": {
-        "source": "EN",
-        "verdict": "DROP",
-        "reason": "`REVISE_QUERY`。原英文漏important且未说明草案；修订语言仅供重建参考，父样本跨页与行号污染阻塞仍保留。",
-        "applied": [],
-        "problems": [],
-        "pending": "parent drop comes from the CO review, which was not supplied"
-      },
-      "decision": "pending: CO review not supplied (twin DROP proposed)"
-    },
-    "derived_from": "ms-0324"
-  },
-  {
     "sample_id": "ms-0327",
-    "query": "According to FDA's guidance A Risk-Based Approach to Monitoring of Clinical Investigations: Questions and Answers (April 2023), should sponsors monitor only the risks identified as important and likely to occur during their initial risk assessment?",
+    "query": "According to FDA's April 2023 risk-based monitoring questions-and-answers guidance, should sponsors monitor only risks identified as important and likely to occur during the initial risk assessment?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -5934,20 +5789,22 @@
       "curation": [],
       "parent_query": "根据FDA的《A Risk-Based Approach to Monitoring of Clinical Investigations Questions and Answers》(April 2023)指南,申办方是否应当只监测在最初风险评估中被认定为重要且可能发生的风险?",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。恢复截断，保留only及initial assessment，未变成只问新增风险。",
-        "suggested_query": "According to FDA's April 2023 risk-based monitoring questions-and-answers guidance, should sponsors monitor only risks identified as important and likely to occur during the initial risk assessment?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。恢复截断，保留only及initial assessment，未变成只问新增风险。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "derived_from": "ms-0326"
   },
   {
     "sample_id": "ms-0329",
-    "query": "According to 21 CFR 312.50, what specific monitoring and compliance obligations does a sponsor have for a clinical investigation?",
+    "query": "According to the passage quoting 21 CFR 312.50 in FDA's April 2023 risk-based monitoring questions-and-answers guidance, what monitoring and compliance obligations does a sponsor have?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -5990,20 +5847,22 @@
       ],
       "parent_query": "根据21 CFR 312.50,申办方对临床试验负有哪些具体的监测与合规义务?",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。明确实际依据的2023问答文件，避免同一法条在2013文件出现时引用混淆；仍问原两个义务。",
-        "suggested_query": "According to the passage quoting 21 CFR 312.50 in FDA's April 2023 risk-based monitoring questions-and-answers guidance, what monitoring and compliance obligations does a sponsor have?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。明确实际依据的2023问答文件，避免同一法条在2013文件出现时引用混淆；仍问原两个义务。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "derived_from": "ms-0328"
   },
   {
     "sample_id": "ms-0331",
-    "query": "According to this FDA risk-based monitoring guidance, does adopting a risk-based monitoring approach mean sponsors must conduct frequent routine visits to all clinical sites and extensive source data verification (SDV)?",
+    "query": "According to FDA's risk-based monitoring guidance, does a risk-based approach require frequent routine visits to all clinical sites and extensive source data verification (SDV)?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -6043,14 +5902,16 @@
       "curation": [],
       "parent_query": "根据这份FDA风险监测指南,采用以风险为基础的监测方法是否意味着申办方必须对所有临床试验机构进行频繁的常规巡查和广泛的源数据核实(SDV)?",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。恢复截断的SDV，保留all sites与extensive；没有把not necessarily转为完全不许现场监查。",
-        "suggested_query": "According to FDA's risk-based monitoring guidance, does a risk-based approach require frequent routine visits to all clinical sites and extensive source data verification (SDV)?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。恢复截断的SDV，保留all sites与extensive；没有把not necessarily转为完全不许现场监查。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "derived_from": "ms-0330"
   },
@@ -6070,7 +5931,7 @@
         "page": 10,
         "printed_page_label": null,
         "section": "III.A Monitoring Approach – Q4",
-        "key_text": "determine which clinical sites need on-site review",
+        "key_text": "Centralized monitoring may allow sponsors to (1) review study-wide data for inconsistencies or omissions",
         "evidence_span": {
           "text": "Centralized monitoring may allow sponsors to (1) review study-wide data for inconsistencies or omissions; (2) perform activities such as data checks, for completeness and consistency; (3) verify source data; (4) ensure that institutional review board and informed consent documents are current; and (5) determine which clinical sites need on-site review.",
           "char_start": 1044,
@@ -6095,20 +5956,20 @@
       "curation": [],
       "parent_query": "根据这份FDA指南,集中监测(centralized monitoring)可以帮助申办方开展哪些具体活动?",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`KEEP_QUERY`。问centralized monitoring支持哪些具体活动，未缩为是否现场审查；完整列表需从父gold继承。",
-        "suggested_query": null,
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
         "applied": [],
-        "problems": []
+        "problems": [],
+        "reason": "`KEEP_QUERY`。问centralized monitoring支持哪些具体活动，未缩为是否现场审查；完整列表需从父gold继承。"
       },
-      "decision": "pending: CO parent review not supplied"
+      "decision": "OK (external review)"
     },
     "derived_from": "ms-0332"
   },
   {
     "sample_id": "ms-0335",
-    "query": "According to this FDA monitoring guidance, how should sponsors conduct a root cause analysis and corrective actions after significant issues are identified through monitoring, and to which parties should the results be communicated?",
+    "query": "According to FDA's monitoring guidance, how should sponsors investigate root causes and take corrective and preventive action after identifying significant issues through monitoring, and to which parties should the issues and actions be communicated?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -6149,20 +6010,22 @@
       "curation": [],
       "parent_query": "根据这份FDA监查指南,申办方在监查(monitoring)中发现重大问题(significant issue)后,应如何开展根本原因分析(root cause analysis)与整改,并将结果沟通给哪些相关方(parties)?",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。恢复后半句的沟通对象，明确corrective and preventive两类行动；需父完整gold确认全覆盖。",
-        "suggested_query": "According to FDA's monitoring guidance, how should sponsors investigate root causes and take corrective and preventive action after identifying significant issues through monitoring, and to which parties should the issues and actions be communicated?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。恢复后半句的沟通对象，明确corrective and preventive两类行动；需父完整gold确认全覆盖。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "derived_from": "ms-0334"
   },
   {
     "sample_id": "ms-0337",
-    "query": "According to 21 CFR 312.50, what specific monitoring responsibilities does a sponsor have for a clinical investigation?",
+    "query": "According to the passage quoting 21 CFR 312.50 in FDA's August 2013 risk-based monitoring guidance, what specific monitoring responsibilities does a sponsor have for a clinical investigation?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -6205,20 +6068,22 @@
       ],
       "parent_query": "根据21 CFR 312.50，申办者对临床试验监查负有哪些具体职责？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。明确2013原指南为来源，与2023问答不同PDF不互换；不单凭重复条文合并文档。",
-        "suggested_query": "According to the passage quoting 21 CFR 312.50 in FDA's August 2013 risk-based monitoring guidance, what specific monitoring responsibilities does a sponsor have for a clinical investigation?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。明确2013原指南为来源，与2023问答不同PDF不互换；不单凭重复条文合并文档。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "derived_from": "ms-0336"
   },
   {
     "sample_id": "ms-0339",
-    "query": "According to ICH E6 and ISO 14155:2011, is it acceptable to rely entirely on centralized monitoring with no on-site monitoring at all?",
+    "query": "According to FDA's 2013 discussion of ICH E6 and ISO 14155:2011, under what circumstances is it appropriate to rely entirely on centralised monitoring without on-site monitoring?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -6260,22 +6125,25 @@
       "curation": [
         "dropped protocol_id: query carries no identifier (P3)"
       ],
-      "parent_query": "根据ICH E6和ISO 14155:2011，是否可以完全依赖集中监查而完全不进行现场监查？",
+      "parent_query": "按照FDA 2013年指南对ICH E6及ISO 14155:2011的讨论，在什么情况下可以完全依赖集中监查而不进行现场监查？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。限定历史讨论，问exceptional circumstances，不把旧版ICH E6表述冒充2025 R3当前规则。",
-        "suggested_query": "According to FDA's 2013 discussion of ICH E6 and ISO 14155:2011, under what circumstances is it appropriate to rely entirely on centralised monitoring without on-site monitoring?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "parent query (paired rewrite)",
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。限定历史讨论，问exceptional circumstances，不把旧版ICH E6表述冒充2025 R3当前规则。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "derived_from": "ms-0338"
   },
   {
     "sample_id": "ms-0341",
-    "query": "For major efficacy trials, at what interval do companies typically schedule on-site monitoring visits?",
+    "query": "In the industry practices described in FDA's 2013 guidance, at approximately what intervals did companies typically conduct on-site monitoring visits for major efficacy trials?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -6315,16 +6183,19 @@
       "key_status": "exact",
       "span_status": "exact",
       "curation": [],
-      "parent_query": "对于主要疗效试验，业界通常以多长的时间间隔安排现场监查访视？",
+      "parent_query": "在FDA 2013年指南描述的业界实践中，主要疗效试验的现场监查访视通常约间隔多久？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。将业界历史实践和approximately保留，避免被读成当前强制监查周期。",
-        "suggested_query": "In the industry practices described in FDA's 2013 guidance, at approximately what intervals did companies typically conduct on-site monitoring visits for major efficacy trials?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "parent query (paired rewrite)",
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。将业界历史实践和approximately保留，避免被读成当前强制监查周期。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "derived_from": "ms-0340"
   },
@@ -6370,20 +6241,20 @@
       "curation": [],
       "parent_query": "为什么申办者可能无法远程访问医院、大学等机构保存的电子病历？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`KEEP_QUERY`。可能无法远程访问EHR的理由对应隐私、安全及技术挑战；未把可能性写成绝对禁令。",
-        "suggested_query": null,
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
         "applied": [],
-        "problems": []
+        "problems": [],
+        "reason": "`KEEP_QUERY`。可能无法远程访问EHR的理由对应隐私、安全及技术挑战；未把可能性写成绝对禁令。"
       },
-      "decision": "pending: CO parent review not supplied"
+      "decision": "OK (external review)"
     },
     "derived_from": "ms-0342"
   },
   {
     "sample_id": "ms-0345",
-    "query": "When considering whether to test a promising new therapy early using an externally controlled design, why is it not acceptable to conduct a trial that has no realistic chance of credibly demonstrating the treatment's efficacy, merely in hopes of a dramatic effect?",
+    "query": "When considering an externally controlled trial of a promising new therapy, why should hopes of a dramatic benefit not justify a study with no realistic chance of credibly demonstrating efficacy?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -6423,20 +6294,22 @@
       "curation": [],
       "parent_query": "在评估某个新疗法是否值得以外部对照(externally controlled)试验的方式提前测试时，为什么不能仅因为渴望出现戏剧性疗效，就开展没有现实机会可信证明该疗法疗效的试验？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。补全截断并保留新疗法、外部对照、戏剧性疗效希望和可信证明疗效条件；完整理由需要父span含后续说明。",
-        "suggested_query": "When considering an externally controlled trial of a promising new therapy, why should hopes of a dramatic benefit not justify a study with no realistic chance of credibly demonstrating efficacy?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。补全截断并保留新疗法、外部对照、戏剧性疗效希望和可信证明疗效条件；完整理由需要父span含后续说明。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "derived_from": "ms-0344"
   },
   {
     "sample_id": "ms-0347",
-    "query": "According to ICH E9, what condition must the active control drug satisfy in a non-inferiority or equivalence active-controlled trial?",
+    "query": "According to ICH E10's discussion citing ICH E9, what condition must an active control treatment meet in a non-inferiority or equivalence trial?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -6474,16 +6347,19 @@
       "key_status": "exact",
       "span_status": "tolerant",
       "curation": [],
-      "parent_query": "根据 ICH E9，在非劣效性(non-inferiority)或等效性(equivalence)主动对照(active control)试验中，对照药物需要满足什么条件？",
+      "parent_query": "按照ICH E10引用ICH E9的说明，在非劣效性或等效性试验中，活性对照治疗应满足什么条件？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。实际gold源文件为E10，E9为交叉引用，不能声称已直接读取E9对应条款。",
-        "suggested_query": "According to ICH E10's discussion citing ICH E9, what condition must an active control treatment meet in a non-inferiority or equivalence trial?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "parent query (paired rewrite)",
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。实际gold源文件为E10，E9为交叉引用，不能声称已直接读取E9对应条款。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "derived_from": "ms-0346"
   },
@@ -6529,20 +6405,20 @@
       "curation": [],
       "parent_query": "为什么在某些药物即使被证实有效，也难以可靠地确定其相对安慰剂的最小疗效，从而难以设定非劣效性(non-inferiority)试验的边界(margin)？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`KEEP_QUERY`。相对安慰剂最小疗效与非劣效界值的关系保持，英文未把所有有效药物概括成无法估计。",
-        "suggested_query": null,
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
         "applied": [],
-        "problems": []
+        "problems": [],
+        "reason": "`KEEP_QUERY`。相对安慰剂最小疗效与非劣效界值的关系保持，英文未把所有有效药物概括成无法估计。"
       },
-      "decision": "pending: CO parent review not supplied"
+      "decision": "OK (external review)"
     },
     "derived_from": "ms-0348"
   },
   {
     "sample_id": "ms-0351",
-    "query": "According to ICH E10, why would it not be considered ethical to conduct a placebo-controlled trial of a thrombolytic agent in patients with acute myocardial infarction?",
+    "query": "According to ICH E10, would a placebo-controlled trial of a thrombolytic agent in patients with acute myocardial infarction be considered ethical?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -6580,22 +6456,25 @@
       "key_status": "exact",
       "span_status": "exact",
       "curation": [],
-      "parent_query": "根据 ICH E10，为什么在急性心肌梗塞(acute myocardial infarction)患者中使用血栓溶解剂(thrombolytic agent)时，不会被认为可以进行安慰剂对照(placebo-controlled)试验？",
+      "parent_query": "根据ICH E10，在急性心肌梗死患者中开展血栓溶解剂的安慰剂对照试验，是否被认为合乎伦理？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。源选句直接给伦理判断，不独立给完整原因；改为判断式问法，需父中文成对改写，不以医学常识补gold。",
-        "suggested_query": "According to ICH E10, would a placebo-controlled trial of a thrombolytic agent in patients with acute myocardial infarction be considered ethical?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "parent query (paired rewrite)",
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。源选句直接给伦理判断，不独立给完整原因；改为判断式问法，需父中文成对改写，不以医学常识补gold。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "derived_from": "ms-0350"
   },
   {
     "sample_id": "ms-0353",
-    "query": "According to ICH E11(R1) ethical principles, under what condition can children be enrolled in a clinical trial, and when should they not be?",
+    "query": "Under the ethical principles in ICH E11(R1), what necessary condition must be met before children should be enrolled in a clinical study?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -6635,14 +6514,16 @@
       "curation": [],
       "parent_query": "根据ICH E11(R1)的伦理原则,除非满足什么条件,否则不应将儿童纳入临床试验?",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。原under what condition can将必要条件误读为充分许可；保留necessary前提，不宣称满足即足以入组。",
-        "suggested_query": "Under the ethical principles in ICH E11(R1), what necessary condition must be met before children should be enrolled in a clinical study?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。原under what condition can将必要条件误读为充分许可；保留necessary前提，不宣称满足即足以入组。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "derived_from": "ms-0352"
   },
@@ -6688,20 +6569,20 @@
       "curation": [],
       "parent_query": "根据ICH E11(R1) Section 4,足月新生儿(term newborn infant)的新生儿期(neonatal period)如何界定?",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`KEEP_QUERY`。仅问term newborn neonatal period；未误用早产儿预产期加27天规则。",
-        "suggested_query": null,
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
         "applied": [],
-        "problems": []
+        "problems": [],
+        "reason": "`KEEP_QUERY`。仅问term newborn neonatal period；未误用早产儿预产期加27天规则。"
       },
-      "decision": "pending: CO parent review not supplied"
+      "decision": "OK (external review)"
     },
     "derived_from": "ms-0354"
   },
   {
     "sample_id": "ms-0357",
-    "query": "What does ICH E11(2000) Section 2.4.2, as cited in ICH E11(R1) Section 6.2, state about endpoints for pediatric age subgroups?",
+    "query": "What does ICH E11 (2000) Section 2.4.2, as cited in ICH E11(R1) Section 6.2, say about the possible need for different endpoints for specific paediatric age and developmental subgroups?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -6739,22 +6620,25 @@
       "key_status": "exact",
       "span_status": "exact",
       "curation": [],
-      "parent_query": "ICH E11(R1) 6.2节所引用的ICH E11(2000) Section 2.4.2,对儿科不同年龄亚组的结局指标(endpoint)提出了什么要求?",
+      "parent_query": "ICH E11(R1)第6.2节引用E11(2000)第2.4.2节时，对特定年龄及发育亚组可能需要不同终点作了什么说明？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。保留may be necessary和发育亚组，避免将所有亚组一律要求不同终点。",
-        "suggested_query": "What does ICH E11 (2000) Section 2.4.2, as cited in ICH E11(R1) Section 6.2, say about the possible need for different endpoints for specific paediatric age and developmental subgroups?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "parent query (paired rewrite)",
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。保留may be necessary和发育亚组，避免将所有亚组一律要求不同终点。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "derived_from": "ms-0356"
   },
   {
     "sample_id": "ms-0359",
-    "query": "According to ICH E11(R1), how does drug clearance on a mg/kg basis typically change by 1 to 2 years of age in infants and toddlers?",
+    "query": "According to Section 2.5.3 of the original ICH E11 text included with E11(R1), how may the clearance of many drugs, expressed on a mg/kg basis, compare with adult values by one to two years of age?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -6794,22 +6678,25 @@
       "key_status": "exact",
       "span_status": "exact",
       "curation": [],
-      "parent_query": "根据ICH E11(R1),婴幼儿(infants and toddlers)到1至2岁时,按mg/kg计算的药物清除率通常呈现什么变化趋势?",
+      "parent_query": "按E11(R1)合订文件中原始ICH E11第2.5.3节，到1至2岁时，许多药物按mg/kg基础表达的清除率可能与成人值有何关系？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。条款位于原始E11部分而非R1新增条款；may/many和成人比较保留，不将mg/kg自行纠正为另一单位。",
-        "suggested_query": "According to Section 2.5.3 of the original ICH E11 text included with E11(R1), how may the clearance of many drugs, expressed on a mg/kg basis, compare with adult values by one to two years of age?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "parent query (paired rewrite)",
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。条款位于原始E11部分而非R1新增条款；may/many和成人比较保留，不将mg/kg自行纠正为另一单位。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "derived_from": "ms-0358"
   },
   {
     "sample_id": "ms-0361",
-    "query": "According to ICH E11(R1), what important features should be considered when designing clinical trial protocols for preterm newborn infants?",
+    "query": "According to Section 2.5.1 of the original ICH E11 text included with E11(R1), what important characteristics of preterm newborn infants should be considered when developing a clinical study protocol?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -6848,16 +6735,19 @@
       "key_status": "exact",
       "span_status": "tolerant",
       "curation": [],
-      "parent_query": "根据ICH E11(R1),在设计早产新生儿(preterm newborn infants)相关临床试验方案时,应考虑哪些重要特征(important features)?",
+      "parent_query": "按照E11(R1)合订文件中原始ICH E11第2.5.1节，制定早产新生儿临床研究方案时，应考虑该人群哪些重要特征？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。区分原始E11特征清单与R1新增部分；不将important features自动扩展为全部研究设计问题。",
-        "suggested_query": "According to Section 2.5.1 of the original ICH E11 text included with E11(R1), what important characteristics of preterm newborn infants should be considered when developing a clinical study protocol?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "parent query (paired rewrite)",
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。区分原始E11特征清单与R1新增部分；不将important features自动扩展为全部研究设计问题。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "derived_from": "ms-0360"
   },
@@ -6868,8 +6758,8 @@
     "language": "en",
     "slices": [
       "time_window",
-      "mixed_zh_en",
-      "version_conflict"
+      "version_conflict",
+      "mixed_zh_en"
     ],
     "required_gold_evidence": [
       {
@@ -6904,14 +6794,14 @@
       "curation": [],
       "parent_query": "在评估新降压药物血压反应与剂量关系时，短期研究通常应持续多长时间？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`KEEP_QUERY`。short-term duration与剂量反应表征一致；不将4-12周擅自变为所有降压药全疗程。",
-        "suggested_query": null,
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
         "applied": [],
-        "problems": []
+        "problems": [],
+        "reason": "`KEEP_QUERY`。short-term duration与剂量反应表征一致；不将4-12周擅自变为所有降压药全疗程。"
       },
-      "decision": "pending: CO parent review not supplied"
+      "decision": "OK (external review)"
     },
     "conflict": {
       "family_document_keys": [
@@ -6926,13 +6816,13 @@
   },
   {
     "sample_id": "ms-0365",
-    "query": "In non-responder trial designs for fixed-dose combination antihypertensive products, what diastolic blood pressure threshold defines failure to respond to a single component?",
+    "query": "In the example in Section 6.2 of ICH E12A, what diastolic blood pressure value illustrates a failure to respond to an individual component when studying a fixed combination of antihypertensive drugs?",
     "dept": "CO",
     "language": "en",
     "slices": [
       "dose_unit",
-      "mixed_zh_en",
-      "version_conflict"
+      "version_conflict",
+      "mixed_zh_en"
     ],
     "required_gold_evidence": [
       {
@@ -6967,16 +6857,19 @@
       "key_status": "exact",
       "span_status": "exact",
       "curation": [],
-      "parent_query": "在固定复方降压药物的非应答者试验设计中，判定患者对单一成分'无应答'的舒张压标准是什么？",
+      "parent_query": "在ICH E12A第6.2节评估固定复方降压药的示例中，列举了什么舒张压值来说明患者对某单一成分无应答？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。保留e.g.例示性质，不把>90 mmHg写成普适无应答定义。",
-        "suggested_query": "In the example in Section 6.2 of ICH E12A, what diastolic blood pressure value illustrates a failure to respond to an individual component when studying a fixed combination of antihypertensive drugs?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "parent query (paired rewrite)",
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。保留e.g.例示性质，不把>90 mmHg写成普适无应答定义。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "conflict": {
       "family_document_keys": [
@@ -6991,13 +6884,13 @@
   },
   {
     "sample_id": "ms-0367",
-    "query": "According to ICH E1, what patient exposure database size is generally recommended for assessing the safety of a new antihypertensive drug?",
+    "query": "What general patient-exposure database size and exposure durations does ICH E12A cite from ICH E1 for chronically administered drugs, and what limitation does it note for antihypertensive drugs?",
     "dept": "CO",
     "language": "en",
     "slices": [
       "protocol_id",
-      "mixed_zh_en",
-      "version_conflict"
+      "version_conflict",
+      "mixed_zh_en"
     ],
     "required_gold_evidence": [
       {
@@ -7007,7 +6900,7 @@
         "page": 8,
         "printed_page_label": null,
         "section": "4. ASSESSMENT OF SAFETY",
-        "key_text": "database of about 1500 patients (300-600 for 6 months, 100 for 1 year)",
+        "key_text": "ICH E1 suggests that a database of about 1500 patients (300-600 for 6 months, 100 for 1 year) is usually sufficient for chronically administered drugs",
         "evidence_span": {
           "text": "ICH E1 suggests that a database of about 1500 patients (300-600 for 6 months, 100 for 1 year) is usually sufficient for chronically administered drugs, but as suggested in that guideline, this may be too small for the very long, very wide exposure in an asymptomatic population intended for antihypertensive drugs.",
           "char_start": 2114,
@@ -7030,16 +6923,18 @@
       "key_status": "exact",
       "span_status": "exact",
       "curation": [],
-      "parent_query": "根据ICH E1，评估新降压药物安全性时通常建议的患者暴露数据库规模是多少？",
+      "parent_query": "ICH E12A引用ICH E1时，给出的慢性用药一般患者暴露数据库规模及暴露时长是什么，对降压药的适用性又有何限制？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。补回慢性用药一般规模、暴露时长及降压药人群可能偏小的限定；实际引述源为E12A。",
-        "suggested_query": "What general patient-exposure database size and exposure durations does ICH E12A cite from ICH E1 for chronically administered drugs, and what limitation does it note for antihypertensive drugs?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。补回慢性用药一般规模、暴露时长及降压药人群可能偏小的限定；实际引述源为E12A。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "conflict": {
       "family_document_keys": [
@@ -7054,13 +6949,13 @@
   },
   {
     "sample_id": "ms-0369",
-    "query": "According to ICH E4, which critical dose points on the D/R curve should be identified in dose-response studies?",
+    "query": "According to ICH E12A's discussion referring to ICH E4, which critical dose points should dose-response studies identify on the dose-response curve?",
     "dept": "CO",
     "language": "en",
     "slices": [
       "protocol_id",
-      "mixed_zh_en",
-      "version_conflict"
+      "version_conflict",
+      "mixed_zh_en"
     ],
     "required_gold_evidence": [
       {
@@ -7093,16 +6988,19 @@
       "key_status": "exact",
       "span_status": "exact",
       "curation": [],
-      "parent_query": "根据ICH E4，剂量-反应（D/R）研究应识别出D/R曲线上的哪些关键剂量点？",
+      "parent_query": "按照ICH E12A引用ICH E4的说明，剂量-反应研究应识别曲线上的哪些关键剂量点？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。保持三个剂量点这一任务，清楚区分E12A实际引用PDF与E4交叉引用。",
-        "suggested_query": "According to ICH E12A's discussion referring to ICH E4, which critical dose points should dose-response studies identify on the dose-response curve?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "parent query (paired rewrite)",
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。保持三个剂量点这一任务，清楚区分E12A实际引用PDF与E4交叉引用。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "conflict": {
       "family_document_keys": [
@@ -7121,8 +7019,8 @@
     "dept": "CO",
     "language": "en",
     "slices": [
-      "mixed_zh_en",
-      "version_conflict"
+      "version_conflict",
+      "mixed_zh_en"
     ],
     "required_gold_evidence": [
       {
@@ -7161,14 +7059,14 @@
       ],
       "parent_query": "在本文件引用的相关ICH指南列表中，ICH E1对应的主题是什么？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`KEEP_QUERY`。问本文件所列E1主题，未将其展开成实际安全性暴露人数。",
-        "suggested_query": null,
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
         "applied": [],
-        "problems": []
+        "problems": [],
+        "reason": "`KEEP_QUERY`。问本文件所列E1主题，未将其展开成实际安全性暴露人数。"
       },
-      "decision": "pending: CO parent review not supplied"
+      "decision": "OK (external review)"
     },
     "conflict": {
       "family_document_keys": [
@@ -7183,7 +7081,7 @@
   },
   {
     "sample_id": "ms-0373",
-    "query": "According to ICH E14, before the effect of a drug on the QT/QTc interval has been characterized, what repeated baseline QTc interval value is suggested as an exclusion criterion for subject enrollment?",
+    "query": "Before a drug's effect on the QT/QTc interval has been characterised, what repeated baseline QTc value, in milliseconds, does ICH E14 give as an example supporting exclusion from a trial?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -7223,22 +7121,25 @@
       "key_status": "exact",
       "span_status": "exact",
       "curation": [],
-      "parent_query": "根据ICH E14,在尚未确定药物对QT/QTc间期的影响之前,基线QTc间期反复超过多少ms会被建议作为受试者入选的排除标准?",
+      "parent_query": "在药物对QT/QTc的影响尚未明确时，ICH E14列举何种反复测得的基线QTc毫秒值作为建议排除受试者的示例？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。补全截断；明确基线重复测量、ms、建议示例，不视为单次测量绝对禁入阈值。",
-        "suggested_query": "Before a drug's effect on the QT/QTc interval has been characterised, what repeated baseline QTc value, in milliseconds, does ICH E14 give as an example supporting exclusion from a trial?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "parent query (paired rewrite)",
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。补全截断；明确基线重复测量、ms、建议示例，不视为单次测量绝对禁入阈值。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "derived_from": "ms-0372"
   },
   {
     "sample_id": "ms-0375",
-    "query": "Under ICH E14's interpretation of the 'thorough QT/QTc study', if a drug prolongs the mean QT/QTc interval by around 5 ms or less, does it cause TdP?",
+    "query": "Under ICH E14's interpretation of the thorough QT/QTc study, do drugs that prolong the mean QT/QTc interval by around 5 ms or less appear to cause TdP?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -7279,26 +7180,28 @@
       "key_status": "exact",
       "span_status": "exact",
       "curation": [],
-      "parent_query": "根据ICH E14对'thorough QT/QTc study'结果的解读,若药物使平均QT/QTc间期延长约5 ms或更少,是否会导致TdP?",
+      "parent_query": "按照ICH E14对thorough QT/QTc研究的解读，使平均QT/QTc延长约5 ms或更少的药物，是否看起来会引起TdP？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。加入appear保留证据不确定性，不能把do not appear to cause改成绝不导致TdP。",
-        "suggested_query": "Under ICH E14's interpretation of the thorough QT/QTc study, do drugs that prolong the mean QT/QTc interval by around 5 ms or less appear to cause TdP?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "parent query (paired rewrite)",
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。加入appear保留证据不确定性，不能把do not appear to cause改成绝不导致TdP。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "derived_from": "ms-0374"
   },
   {
     "sample_id": "ms-0377",
-    "query": "According to ICH E14's provisions on categorical analysis of the QT/QTc interval, what QTc prolongation threshold (in ms) during clinical trials is considered of particular concern?",
+    "query": "In ICH E14's discussion of categorical analyses, above what absolute QTc interval value, in milliseconds, during treatment is particular concern noted?",
     "dept": "CO",
     "language": "en",
     "slices": [
-      "dose_unit",
       "mixed_zh_en"
     ],
     "required_gold_evidence": [
@@ -7334,22 +7237,24 @@
       "key_status": "exact",
       "span_status": "exact",
       "curation": [],
-      "parent_query": "根据ICH E14对QT/QTc间期分类分析的规定,临床试验中QTc延长超过多少ms被视为特别关注的阈值?",
+      "parent_query": "在ICH E14的分类分析讨论中，治疗期间QTc绝对间期超过多少毫秒被视为特别关注？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。明确absolute QTc value，避免读为相对基线增加500 ms；不是药物剂量单位。",
-        "suggested_query": "In ICH E14's discussion of categorical analyses, above what absolute QTc interval value, in milliseconds, during treatment is particular concern noted?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。明确absolute QTc value，避免读为相对基线增加500 ms；不是药物剂量单位。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "derived_from": "ms-0376"
   },
   {
     "sample_id": "ms-0379",
-    "query": "According to ICH E14, if no episode of TdP is observed in a drug application safety database, can the possible arrhythmogenic risk of the drug be dismissed on that basis?",
+    "query": "According to ICH E14, when ECG and other clinical data suggest possible arrhythmogenic risk, is the absence of TdP episodes in a drug application database sufficient to dismiss that risk?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -7387,16 +7292,19 @@
       "key_status": "tolerant",
       "span_status": "tolerant",
       "curation": [],
-      "parent_query": "根据ICH E14,若药物申请安全数据库中未观察到TdP事件,能否据此排除该药物存在致心律失常风险的可能性?",
+      "parent_query": "根据ICH E14，若ECG及其他临床资料已提示潜在致心律失常风险，药物申请数据库未观察到TdP是否足以排除该风险？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。补足ECG及其他临床资料已引起怀疑的条件，保留sufficient否定范围。",
-        "suggested_query": "According to ICH E14, when ECG and other clinical data suggest possible arrhythmogenic risk, is the absence of TdP episodes in a drug application database sufficient to dismiss that risk?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "parent query (paired rewrite)",
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。补足ECG及其他临床资料已引起怀疑的条件，保留sufficient否定范围。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "derived_from": "ms-0378"
   },
@@ -7406,8 +7314,8 @@
     "dept": "CO",
     "language": "en",
     "slices": [
-      "mixed_zh_en",
-      "version_conflict"
+      "version_conflict",
+      "mixed_zh_en"
     ],
     "required_gold_evidence": [
       {
@@ -7446,14 +7354,14 @@
       ],
       "parent_query": "根据ICH E15指南，基因组生物标志物（genomic biomarker）的定义是什么？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`KEEP_QUERY`。genomic biomarker定义问题一致；不用proteomic概念替代DNA/RNA。",
-        "suggested_query": null,
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
         "applied": [],
-        "problems": []
+        "problems": [],
+        "reason": "`KEEP_QUERY`。genomic biomarker定义问题一致；不用proteomic概念替代DNA/RNA。"
       },
-      "decision": "pending: CO parent review not supplied"
+      "decision": "OK (external review)"
     },
     "conflict": {
       "family_document_keys": [
@@ -7473,8 +7381,8 @@
     "language": "en",
     "slices": [
       "protocol_id",
-      "mixed_zh_en",
-      "version_conflict"
+      "version_conflict",
+      "mixed_zh_en"
     ],
     "required_gold_evidence": [
       {
@@ -7509,14 +7417,14 @@
       "curation": [],
       "parent_query": "根据ICH E15，药物遗传学（Pharmacogenetics, PGt）的定义是什么？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`KEEP_QUERY`。pharmacogenetics(PGt)与pharmacogenomics(PGx)区分正确。",
-        "suggested_query": null,
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
         "applied": [],
-        "problems": []
+        "problems": [],
+        "reason": "`KEEP_QUERY`。pharmacogenetics(PGt)与pharmacogenomics(PGx)区分正确。"
       },
-      "decision": "pending: CO parent review not supplied"
+      "decision": "OK (external review)"
     },
     "conflict": {
       "family_document_keys": [
@@ -7537,8 +7445,8 @@
     "slices": [
       "negation",
       "protocol_id",
-      "mixed_zh_en",
-      "version_conflict"
+      "version_conflict",
+      "mixed_zh_en"
     ],
     "required_gold_evidence": [
       {
@@ -7573,14 +7481,14 @@
       "curation": [],
       "parent_query": "根据ICH E15，已识别（identified）数据和样本是否一般被认为适合用于药物开发的临床试验？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`KEEP_QUERY`。identified数据/样本及generally保留，不误换成coded或anonymised。",
-        "suggested_query": null,
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
         "applied": [],
-        "problems": []
+        "problems": [],
+        "reason": "`KEEP_QUERY`。identified数据/样本及generally保留，不误换成coded或anonymised。"
       },
-      "decision": "pending: CO parent review not supplied"
+      "decision": "OK (external review)"
     },
     "conflict": {
       "family_document_keys": [
@@ -7601,8 +7509,8 @@
     "slices": [
       "negation",
       "protocol_id",
-      "mixed_zh_en",
-      "version_conflict"
+      "version_conflict",
+      "mixed_zh_en"
     ],
     "required_gold_evidence": [
       {
@@ -7637,14 +7545,14 @@
       "curation": [],
       "parent_query": "根据ICH E15，匿名化（anonymised）数据和样本是否可以用于对受试者进行临床监测或随访？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`KEEP_QUERY`。保留anonymised类别及clinical monitoring/subject follow-up，未误称anonymous。",
-        "suggested_query": null,
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
         "applied": [],
-        "problems": []
+        "problems": [],
+        "reason": "`KEEP_QUERY`。保留anonymised类别及clinical monitoring/subject follow-up，未误称anonymous。"
       },
-      "decision": "pending: CO parent review not supplied"
+      "decision": "OK (external review)"
     },
     "conflict": {
       "family_document_keys": [
@@ -7659,14 +7567,14 @@
   },
   {
     "sample_id": "ms-0389",
-    "query": "According to ICH E15, what limited clinical data can be associated with anonymous genomic samples in some instances?",
+    "query": "What examples does ICH E15 give of the limited clinical data that may be associated with anonymous genomic samples in some instances?",
     "dept": "CO",
     "language": "en",
     "slices": [
       "dose_unit",
       "protocol_id",
-      "mixed_zh_en",
-      "version_conflict"
+      "version_conflict",
+      "mixed_zh_en"
     ],
     "required_gold_evidence": [
       {
@@ -7699,16 +7607,19 @@
       "key_status": "exact",
       "span_status": "exact",
       "curation": [],
-      "parent_query": "根据ICH E15，在某些情况下匿名（anonymous）基因组样本可以关联哪些有限的临床数据？",
+      "parent_query": "ICH E15对某些情况下匿名基因组样本可关联的有限临床数据，列举了哪些示例？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。保留some instances和examples，不能把年龄/胆固醇示例误当所有匿名样本必需字段。",
-        "suggested_query": "What examples does ICH E15 give of the limited clinical data that may be associated with anonymous genomic samples in some instances?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "parent query (paired rewrite)",
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。保留some instances和examples，不能把年龄/胆固醇示例误当所有匿名样本必需字段。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "conflict": {
       "family_document_keys": [
@@ -7723,7 +7634,7 @@
   },
   {
     "sample_id": "ms-0391",
-    "query": "How should an MRCT protocol distinguish between allowable and not allowable concomitant medications?",
+    "query": "According to ICH E17, what should an MRCT protocol specify about allowable and non-allowable concomitant medications and their doses?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -7761,16 +7672,19 @@
       "key_status": "exact",
       "span_status": "exact",
       "curation": [],
-      "parent_query": "MRCT试验方案应如何区分允许和不允许使用的合并用药?",
+      "parent_query": "按照ICH E17，MRCT方案对允许及不允许的合并用药及其剂量应作什么规定？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。补回doses，原英文只问药物；需中文父问题成对包含剂量。",
-        "suggested_query": "According to ICH E17, what should an MRCT protocol specify about allowable and non-allowable concomitant medications and their doses?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "parent query (paired rewrite)",
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。补回doses，原英文只问药物；需中文父问题成对包含剂量。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "derived_from": "ms-0390"
   },
@@ -7816,14 +7730,14 @@
       "curation": [],
       "parent_query": "MRCT的所有参与地区和场所应如何符合ICH E6 GCP标准,并配合哪些监管检查?",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`KEEP_QUERY`。所有地区和中心遵守E6 GCP及监管检查均与父问题一致。",
-        "suggested_query": null,
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
         "applied": [],
-        "problems": []
+        "problems": [],
+        "reason": "`KEEP_QUERY`。所有地区和中心遵守E6 GCP及监管检查均与父问题一致。"
       },
-      "decision": "pending: CO parent review not supplied"
+      "decision": "OK (external review)"
     },
     "derived_from": "ms-0392"
   },
@@ -7868,20 +7782,20 @@
       "curation": [],
       "parent_query": "如果MRCT的主要终点仅在少数地区有既往应用经验,该终点的采纳需要满足什么条件?",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`KEEP_QUERY`。一个/部分地区已有终点经验、采纳前条件一致；未将各区域有经验当先决事实。",
-        "suggested_query": null,
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
         "applied": [],
-        "problems": []
+        "problems": [],
+        "reason": "`KEEP_QUERY`。一个/部分地区已有终点经验、采纳前条件一致；未将各区域有经验当先决事实。"
       },
-      "decision": "pending: CO parent review not supplied"
+      "decision": "OK (external review)"
     },
     "derived_from": "ms-0394"
   },
   {
     "sample_id": "ms-0397",
-    "query": "For MRCTs in rare diseases or infectious disease outbreaks, how should sample size allocation be handled when disease prevalence differs substantially across regions?",
+    "query": "For an MRCT involving a rare disease or an infectious disease outbreak, how may recruitment be allocated when disease prevalence differs substantially across regions, and with whom should the recruitment strategy be discussed during planning?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -7918,16 +7832,19 @@
       "key_status": "exact",
       "span_status": "exact",
       "curation": [],
-      "parent_query": "对于罕见病或传染病爆发相关的MRCT,当各地区疾病流行率差异很大时,样本量分配应如何处理?",
+      "parent_query": "在罕见病或传染病暴发的MRCT中，各地区疾病流行率差异很大时可如何分配招募，计划阶段应与谁讨论该策略？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。保留may、疾病流行率差异和监管讨论；新增讨论要点须中文父题同步，不独立扩大孪生。",
-        "suggested_query": "For an MRCT involving a rare disease or an infectious disease outbreak, how may recruitment be allocated when disease prevalence differs substantially across regions, and with whom should the recruitment strategy be discussed during planning?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "parent query (paired rewrite)",
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。保留may、疾病流行率差异和监管讨论；新增讨论要点须中文父题同步，不独立扩大孪生。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "derived_from": "ms-0396"
   },
@@ -7973,20 +7890,20 @@
       "curation": [],
       "parent_query": "根据ICH E18,基因组样本的储存时间是否可以超过知情同意书所载明的留存期限?",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`KEEP_QUERY`。总留存期受知情同意限制；英文没有把推荐长期存储当作无限期限。",
-        "suggested_query": null,
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
         "applied": [],
-        "problems": []
+        "problems": [],
+        "reason": "`KEEP_QUERY`。总留存期受知情同意限制；英文没有把推荐长期存储当作无限期限。"
       },
-      "decision": "pending: CO parent review not supplied"
+      "decision": "OK (external review)"
     },
     "derived_from": "ms-0398"
   },
   {
     "sample_id": "ms-0401",
-    "query": "According to ICH E18, how does temporal stability differ between germline DNA and tumor DNA/RNA when selecting specimen collection timing?",
+    "query": "According to ICH E18, how do the temporal stability of germline DNA and the factors affecting information from tumour DNA and RNA differ when specimen collection is planned?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -8023,22 +7940,25 @@
       "key_status": "exact",
       "span_status": "exact",
       "curation": [],
-      "parent_query": "根据ICH E18,在选择采样时间点时,种系(germline)DNA与肿瘤DNA/RNA的时间稳定性有何不同?",
+      "parent_query": "根据ICH E18，计划样本采集时，种系DNA的时间稳定性与影响肿瘤DNA/RNA所获信息的因素有何不同？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。区分种系序列相对稳定与肿瘤DNA/RNA所获信息受来源、方法及时间影响；不保证所有DNA不变。",
-        "suggested_query": "According to ICH E18, how do the temporal stability of germline DNA and the factors affecting information from tumour DNA and RNA differ when specimen collection is planned?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "parent query (paired rewrite)",
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。区分种系序列相对稳定与肿瘤DNA/RNA所获信息受来源、方法及时间影响；不保证所有DNA不变。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "derived_from": "ms-0400"
   },
   {
     "sample_id": "ms-0403",
-    "query": "According to ICH E18, can BRCA1 mutations be identified as incidental findings even when the research was not intended to investigate cancer risk?",
+    "query": "According to ICH E18, can whole-genome sequencing identify incidental findings such as BRCA1 mutations even when the research is not intended to investigate cancer risk?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -8078,20 +7998,22 @@
       "curation": [],
       "parent_query": "根据ICH E18,BRCA1基因突变等意外发现(incidental findings)是否可能在并非以癌症风险为研究目的的全基因组测序中被识别?",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。补回whole-genome sequencing，原英文遗漏父题指定的检测方法。",
-        "suggested_query": "According to ICH E18, can whole-genome sequencing identify incidental findings such as BRCA1 mutations even when the research is not intended to investigate cancer risk?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。补回whole-genome sequencing，原英文遗漏父题指定的检测方法。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "derived_from": "ms-0402"
   },
   {
     "sample_id": "ms-0405",
-    "query": "According to ICH E18, when should QC procedures and thresholds for genomic data analysis be fixed relative to proceeding to downstream analyses?",
+    "query": "According to ICH E18, when should QC procedures and thresholds be fixed for each stage of a genomic analysis workflow relative to proceeding to downstream analyses?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -8130,20 +8052,22 @@
       "curation": [],
       "parent_query": "根据ICH E18,基因组数据分析流程中的QC质控标准应在进入下一阶段分析前如何锁定?",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。保留for each stage，不能只理解为整个分析完成后统一定阈值。",
-        "suggested_query": "According to ICH E18, when should QC procedures and thresholds be fixed for each stage of a genomic analysis workflow relative to proceeding to downstream analyses?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。保留for each stage，不能只理解为整个分析完成后统一定阈值。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "derived_from": "ms-0404"
   },
   {
     "sample_id": "ms-0407",
-    "query": "Under ICH E19, when a selective safety data collection approach is used, what safety-related data (e.g., serious adverse events, important medical events) should generally still be collected in a clinical trial?",
+    "query": "Under ICH E19, what safety-related data, such as serious adverse events and important medical events, should generally still be collected when a selective safety data collection approach is used in a clinical trial?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -8184,20 +8108,22 @@
       "curation": [],
       "parent_query": "在ICH E19下，采用选择性安全性数据收集方法时，临床试验通常仍应收集哪些安全性相关数据（如严重不良事件、重要医学事件等）？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。补全截断并保留generally；不能把非穷尽清单翻成全部必收要素且无例外。",
-        "suggested_query": "Under ICH E19, what safety-related data, such as serious adverse events and important medical events, should generally still be collected when a selective safety data collection approach is used in a clinical trial?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。补全截断并保留generally；不能把非穷尽清单翻成全部必收要素且无例外。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "derived_from": "ms-0406"
   },
   {
     "sample_id": "ms-0409",
-    "query": "According to ICH E19, if the planned dose or dosing frequency in a proposed trial exceeds that used in previous trials that characterised the drug's safety, can selective safety data collection still be considered?",
+    "query": "Under ICH E19, how should the planned dose and dosing frequency generally compare with those used in previous trials that characterised the drug's safety when selective safety data collection is being considered?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -8238,22 +8164,25 @@
       "key_status": "exact",
       "span_status": "exact",
       "curation": [],
-      "parent_query": "根据ICH E19，若计划临床试验的给药剂量或给药频率超过既往用以确立药物安全性特征的试验，是否仍可考虑采用选择性安全性数据收集？",
+      "parent_query": "根据ICH E19，考虑选择性安全性数据收集时，拟定剂量及给药频率通常应与既往用于明确药物安全性的试验如何比较？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。原二元问法超出单一因素条款；2.2说明单个因素不决定可否采用。改问一般比较原则，需父中文同步，不能用not exceed证明绝对禁止。",
-        "suggested_query": "Under ICH E19, how should the planned dose and dosing frequency generally compare with those used in previous trials that characterised the drug's safety when selective safety data collection is being considered?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "parent query (paired rewrite)",
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。原二元问法超出单一因素条款；2.2说明单个因素不决定可否采用。改问一般比较原则，需父中文同步，不能用not exceed证明绝对禁止。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "derived_from": "ms-0408"
   },
   {
     "sample_id": "ms-0411",
-    "query": "In the ICH E19 example of a preventive vaccine trial using selective safety data collection, what time windows are specified for collecting solicited signs/symptoms, unsolicited adverse events, and serious adverse events/AESIs, respectively?",
+    "query": "In ICH E19's preventive-vaccine example, what post-vaccination collection windows are described for solicited signs and symptoms, unsolicited adverse events, and serious adverse events and pre-specified AESIs?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -8268,7 +8197,7 @@
         "page": 11,
         "printed_page_label": null,
         "section": "3.3 Comprehensive Safety Data Collection for the Initial Period of the Clinical Trial , with Selective Data Collection Thereafter",
-        "key_text": "serious adverse events and pre-specified AESIs are collected for at least 6 months post-vaccination (1)",
+        "key_text": "Consider a clinical trial of a preventive vaccine in which solicited signs and symptoms are recorded daily for a pre -specified period post -vaccination (e.g., 7 days)",
         "evidence_span": {
           "text": "Consider a clinical trial of a preventive vaccine in which solicited signs and symptoms are recorded daily for a pre -specified period post -vaccination (e.g., 7 days), all unsolicited adverse events are collected for approximately 4 weeks post -vaccination, and serious adverse events and pre-specified AESIs are collected for at least 6 months post-vaccination (1);",
           "char_start": 3154,
@@ -8293,14 +8222,16 @@
       "curation": [],
       "parent_query": "根据ICH E19中预防性疫苗(preventive vaccine)选择性安全性数据收集示例，方案中对征集性体征症状、非征集性不良事件及严重不良事件/AESI分别设定了多长的数据收集时间窗？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。恢复三组数据、接种后时间起点及pre-specified AESI；答案中保留e.g./approximately/at least。",
-        "suggested_query": "In ICH E19's preventive-vaccine example, what post-vaccination collection windows are described for solicited signs and symptoms, unsolicited adverse events, and serious adverse events and pre-specified AESIs?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。恢复三组数据、接种后时间起点及pre-specified AESI；答案中保留e.g./approximately/at least。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "derived_from": "ms-0410"
   },
@@ -8346,74 +8277,20 @@
       "curation": [],
       "parent_query": "根据ICH E19，选择性安全性数据收集的原则是否适用于基因治疗(gene therapy)临床试验？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`KEEP_QUERY`。基因治疗是否在本指南适用范围内一致，不延伸成所有可选择性收集方法理论上均不适用。",
-        "suggested_query": null,
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
         "applied": [],
-        "problems": []
+        "problems": [],
+        "reason": "`KEEP_QUERY`。基因治疗是否在本指南适用范围内一致，不延伸成所有可选择性收集方法理论上均不适用。"
       },
-      "decision": "pending: CO parent review not supplied"
+      "decision": "OK (external review)"
     },
     "derived_from": "ms-0412"
   },
   {
-    "sample_id": "ms-0415",
-    "query": "According to ICH E19, what safety data elements should generally still be collected when a selective safety data collection approach is used in a clinical trial?",
-    "dept": "CO",
-    "language": "en",
-    "slices": [
-      "negation",
-      "mixed_zh_en",
-      "long_context"
-    ],
-    "required_gold_evidence": [
-      {
-        "gold_id": "ms-0415-g1",
-        "source_hash": "6daddce21ed23e1899b05b555335402aae49873d8560b9ea7c4a74bf5fc77fdd",
-        "version_label": "Step 4, 2022-09-27",
-        "page": 8,
-        "printed_page_label": null,
-        "section": "2.4 Data that Should Generally be Collected",
-        "key_text": "The following list includes the data elements that should generally be collected, but is not meant to be comprehensive:",
-        "evidence_span": {
-          "text": "In accordance with ICH E2A: Clinical Safety Data Management: Definitions and Standards for Expedited Reporting and ICH E6: Good Clinical Practice , an adverse event can be any unfavourable and unintended sign (including an abnormal laboratory finding), symptom, or disease temporally associated with the us e of a medicinal product, whether or not considered related to the medicinal product. The following list includes the data elements that should generally be collected, but is not meant to be comprehensive: 1. Serious adverse events (see ICH E2A; ICH E6) 2. Important medical events (see ICH E2A) 3. Medication error/overdose (intentional or unintentional) 4. Adverse event that led to study drug discontinuation 5. Pregnancy and lactation exposure and outcomes 6. Adverse events of special interest, including laboratory abnormalities, identified in the protocol as critical to safety evaluations ( see ICH E6; ICH E2F: Development Safety Update Report; CIOMS VI). When allowed/permitted by regional or local regulations and supported by adequate justification in the protocol, a selective collection of some of the data listed above could be considered in these regions. Serious adverse events considered efficacy or safety endpoints, which would not be subject to unblinding and expedited reporting (see ICH E2A), should be prospectively agreed upon with the regulatory authority (ies) and described in the clinical trial protocol. They should be collected and monitored on a regular basis through an independent data monitoring committee (IDMC) established by the sponsor (see ICH E6).",
-          "char_start": 790,
-          "char_end": 2385
-        }
-      }
-    ],
-    "notes": "",
-    "drafted_by": {
-      "kind": "llm",
-      "id": "drafter-llm-03",
-      "model": "claude-sonnet-5"
-    },
-    "_draft": {
-      "document_key": "ich-e19-step4-2022",
-      "title": "ICH E19: A Selective Approach to Safety Data Collection in Specific Late-Stage Pre-Approval or Post-Approval Clinical Trials",
-      "rank": 101,
-      "warnings": [],
-      "rationale": "第8页仅此处以完整列表形式列出选择性安全性数据收集方法下仍应通常收集的六类安全性数据要素及其适用条件,是唯一能完整回答该问题的条款。",
-      "key_status": "exact",
-      "span_status": "exact",
-      "curation": [],
-      "parent_query": "根据ICH E19,在临床试验中采用选择性安全性数据收集(selective safety data collection)方法时,通常仍应收集哪些安全性数据要素?",
-      "external_review": {
-        "source": "EN",
-        "verdict": "DROP",
-        "reason": "`KEEP_QUERY`。英文和父问题同义，但父0414已因与0406重复建议排除；不创建新的父ID或自动重挂到0406。",
-        "applied": [],
-        "problems": [],
-        "pending": "parent drop comes from the CO review, which was not supplied"
-      },
-      "decision": "pending: CO review not supplied (twin DROP proposed)"
-    },
-    "derived_from": "ms-0414"
-  },
-  {
     "sample_id": "ms-0417",
-    "query": "In the Extent of Exposure section of an ICH E3 clinical study report, how should dosage be expressed, e.g., as mg/kg or mg/m²?",
+    "query": "In the Extent of Exposure section of an ICH E3 clinical study report, in what ways may dosage be expressed, including on a mg/kg or mg/m² basis where appropriate?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -8451,16 +8328,19 @@
       "key_status": "exact",
       "span_status": "exact",
       "curation": [],
-      "parent_query": "在ICH E3安全性报告的暴露程度部分,试验药物的剂量应如何以mg/kg或mg/m²表示?",
+      "parent_query": "在ICH E3临床研究报告的暴露程度部分，剂量可以采用哪些表达方式，包括何时可按mg/kg或mg/m²表达？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。问可接受的剂量表达方式，不要求原文未给出的单位换算公式；使用may及where appropriate。",
-        "suggested_query": "In the Extent of Exposure section of an ICH E3 clinical study report, in what ways may dosage be expressed, including on a mg/kg or mg/m² basis where appropriate?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "parent query (paired rewrite)",
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。问可接受的剂量表达方式，不要求原文未给出的单位换算公式；使用may及where appropriate。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "derived_from": "ms-0416"
   },
@@ -8506,20 +8386,20 @@
       "curation": [],
       "parent_query": "根据ICH E3,临床研究报告中的数据列表为控制篇幅,是否可以过度使用符号代替文字说明?",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`KEEP_QUERY`。控制篇幅与过量使用符号的关系一致，不禁止合理缩略语。",
-        "suggested_query": null,
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
         "applied": [],
-        "problems": []
+        "problems": [],
+        "reason": "`KEEP_QUERY`。控制篇幅与过量使用符号的关系一致，不禁止合理缩略语。"
       },
-      "decision": "pending: CO parent review not supplied"
+      "decision": "OK (external review)"
     },
     "derived_from": "ms-0418"
   },
   {
     "sample_id": "ms-0421",
-    "query": "What does ICH E3 Section 11.4.2.7 require regarding the confidence interval analysis for active-control equivalence trials?",
+    "query": "In an active-control study intended to show equivalence, what should the analysis show about the confidence interval for critical endpoints and its relation to the pre-specified unacceptable degree of inferiority under ICH E3 Section 11.4.2.7?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -8557,16 +8437,19 @@
       "key_status": "exact",
       "span_status": "exact",
       "curation": [],
-      "parent_query": "ICH E3 11.4.2.7节要求主动对照等效性试验的疗效分析应呈现什么样的置信区间比较?",
+      "parent_query": "依ICH E3第11.4.2.7节，旨在显示等效性的主动对照试验应呈现关键终点的何种置信区间比较，以及该区间与预设不可接受劣效程度的什么关系？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。补足置信区间与预设不可接受劣效程度的关系；不是只要求给出某个区间；父题需明确这两个要点。",
-        "suggested_query": "In an active-control study intended to show equivalence, what should the analysis show about the confidence interval for critical endpoints and its relation to the pre-specified unacceptable degree of inferiority under ICH E3 Section 11.4.2.7?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "parent query (paired rewrite)",
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。补足置信区间与预设不可接受劣效程度的关系；不是只要求给出某个区间；父题需明确这两个要点。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "derived_from": "ms-0420"
   },
@@ -8612,14 +8495,14 @@
       "curation": [],
       "parent_query": "根据ICH E3,是否要求对每一个不良事件都进行严格的统计学评估?",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`KEEP_QUERY`。every adverse event及rigorous statistical evaluation范围一致，未误成不用任何安全性分析。",
-        "suggested_query": null,
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
         "applied": [],
-        "problems": []
+        "problems": [],
+        "reason": "`KEEP_QUERY`。every adverse event及rigorous statistical evaluation范围一致，未误成不用任何安全性分析。"
       },
-      "decision": "pending: CO parent review not supplied"
+      "decision": "OK (external review)"
     },
     "derived_from": "ms-0422"
   },
@@ -8666,14 +8549,14 @@
       "curation": [],
       "parent_query": "根据ICH E3第12.4.2.2节,在分析个别病人化验数值随治疗组别的变化(individual patient changes)时,可以采用哪些具体分析方法?",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`KEEP_QUERY`。individual patient laboratory changes by treatment group而非只比较组均值；英文自然，继承标签待CO父版核验。",
-        "suggested_query": null,
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
         "applied": [],
-        "problems": []
+        "problems": [],
+        "reason": "`KEEP_QUERY`。individual patient laboratory changes by treatment group而非只比较组均值；英文自然，继承标签待CO父版核验。"
       },
-      "decision": "pending: CO parent review not supplied"
+      "decision": "OK (external review)"
     },
     "derived_from": "ms-0424"
   },
@@ -8719,79 +8602,26 @@
       "curation": [],
       "parent_query": "根据ICH E6(R3)，在IRB/IEC作出书面批准（approval/favourable opinion）之前，能否将受试者纳入临床试验？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`KEEP_QUERY`。来源为ICH原版而非FDA实施版；documented approval/favourable opinion与入组前提对应。",
-        "suggested_query": null,
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
         "applied": [],
-        "problems": []
+        "problems": [],
+        "reason": "`KEEP_QUERY`。来源为ICH原版而非FDA实施版；documented approval/favourable opinion与入组前提对应。"
       },
-      "decision": "pending: CO parent review not supplied"
+      "decision": "OK (external review)"
     },
     "derived_from": "ms-0426"
   },
   {
-    "sample_id": "ms-0429",
-    "query": "Under ICH E6(R3), can a trial participant's payment be wholly contingent on completing the entire trial?",
-    "dept": "CO",
-    "language": "en",
-    "slices": [
-      "negation",
-      "mixed_zh_en"
-    ],
-    "required_gold_evidence": [
-      {
-        "gold_id": "ms-0429-g1",
-        "source_hash": "e6ce19e36ce7d2e294f89ee89492b9e035178c3cca48984392bbd92eec9b002c",
-        "version_label": "E6(R3) Step 4, 2025-01-06",
-        "page": 16,
-        "printed_page_label": null,
-        "section": "IRB/IEC Responsibilities (1.2)",
-        "key_text": "not wholly contingent on completion of the trial by the participant",
-        "evidence_span": {
-          "text": "Payments to a participant should be timely, prorated and not wholly contingent on completion of the trial by the participant.",
-          "char_start": 1542,
-          "char_end": 1667
-        }
-      }
-    ],
-    "notes": "",
-    "drafted_by": {
-      "kind": "llm",
-      "id": "drafter-llm-03",
-      "model": "claude-sonnet-5"
-    },
-    "_draft": {
-      "document_key": "ich-e6-r3-step4-2025",
-      "title": "ICH Harmonised Guideline: Guideline for Good Clinical Practice E6(R3) — Final version, adopted 06 January 2025",
-      "rank": 3,
-      "warnings": [],
-      "rationale": "1.2.8条款中该句是页面内唯一明确规定受试者报酬不得完全取决于试验完成情况的条款。",
-      "key_status": "exact",
-      "span_status": "exact",
-      "curation": [],
-      "parent_query": "根据ICH E6(R3)，受试者获得的试验相关报酬能否完全取决于其是否完成整个试验？",
-      "external_review": {
-        "source": "EN",
-        "verdict": "DROP",
-        "reason": "`KEEP_QUERY`。英文语言正确；父0428前轮建议因重复排除，保留原ICH PDF路径而不换到FDA文件。",
-        "applied": [],
-        "problems": [],
-        "pending": "parent drop comes from the CO review, which was not supplied"
-      },
-      "decision": "pending: CO review not supplied (twin DROP proposed)"
-    },
-    "derived_from": "ms-0428"
-  },
-  {
     "sample_id": "ms-0431",
-    "query": "According to ICH E7, should patients with concomitant illnesses be excluded from geriatric clinical trial protocols?",
+    "query": "According to ICH E7, should geriatric trial protocols unnecessarily exclude patients because they have concomitant illnesses?",
     "dept": "CO",
     "language": "en",
     "slices": [
       "negation",
-      "mixed_zh_en",
-      "version_conflict"
+      "version_conflict",
+      "mixed_zh_en"
     ],
     "required_gold_evidence": [
       {
@@ -8824,16 +8654,19 @@
       "key_status": "exact",
       "span_status": "exact",
       "curation": [],
-      "parent_query": "根据ICH E7,在制定老年患者临床试验方案时,是否应该因患者合并症而将其排除出试验?",
+      "parent_query": "根据ICH E7，老年患者试验方案是否应不必要地排除有合并疾病的患者？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。保留unnecessarily而非禁止一切合并症排除；避免绝对化。",
-        "suggested_query": "According to ICH E7, should geriatric trial protocols unnecessarily exclude patients because they have concomitant illnesses?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "parent query (paired rewrite)",
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。保留unnecessarily而非禁止一切合并症排除；避免绝对化。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "conflict": {
       "family_document_keys": [
@@ -8848,13 +8681,13 @@
   },
   {
     "sample_id": "ms-0433",
-    "query": "According to ICH E7, does the guideline apply to new formulations or combinations of established drugs when conditions common in the elderly are not already addressed in current labelling?",
+    "query": "According to ICH E7, does the guideline also apply to new formulations or combinations of established medicines when there is a specific reason to expect conditions common in older patients that are not already addressed in current labelling?",
     "dept": "CO",
     "language": "en",
     "slices": [
       "negation",
-      "mixed_zh_en",
-      "version_conflict"
+      "version_conflict",
+      "mixed_zh_en"
     ],
     "required_gold_evidence": [
       {
@@ -8887,16 +8720,19 @@
       "key_status": "exact",
       "span_status": "exact",
       "curation": [],
-      "parent_query": "根据ICH E7,已上市药品的新剂型或新复方制剂,如果说明书未充分涵盖老年患者常见状况,是否仍适用本指导原则?",
+      "parent_query": "根据ICH E7，已有药品的新剂型或新复方若有具体理由预期会遇到说明书尚未处理的老年人常见状况，是否也适用本指南？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。补回specific reason to expect条件，不能只因说明书未涵盖就无条件适用。",
-        "suggested_query": "According to ICH E7, does the guideline also apply to new formulations or combinations of established medicines when there is a specific reason to expect conditions common in older patients that are not already addressed in current labelling?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "parent query (paired rewrite)",
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。补回specific reason to expect条件，不能只因说明书未涵盖就无条件适用。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "conflict": {
       "family_document_keys": [
@@ -8915,8 +8751,8 @@
     "dept": "CO",
     "language": "en",
     "slices": [
-      "mixed_zh_en",
-      "version_conflict"
+      "version_conflict",
+      "mixed_zh_en"
     ],
     "required_gold_evidence": [
       {
@@ -8951,14 +8787,14 @@
       "curation": [],
       "parent_query": "根据ICH E7的一般原则,新药临床试验是否应涵盖包括老年人在内的所有相关年龄组?",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`KEEP_QUERY`。all relevant age groups与有重要用途的相关年龄范围一致，未扩大为每个不相关年龄组。",
-        "suggested_query": null,
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
         "applied": [],
-        "problems": []
+        "problems": [],
+        "reason": "`KEEP_QUERY`。all relevant age groups与有重要用途的相关年龄范围一致，未扩大为每个不相关年龄组。"
       },
-      "decision": "pending: CO parent review not supplied"
+      "decision": "OK (external review)"
     },
     "conflict": {
       "family_document_keys": [
@@ -8977,8 +8813,8 @@
     "dept": "CO",
     "language": "en",
     "slices": [
-      "mixed_zh_en",
-      "version_conflict"
+      "version_conflict",
+      "mixed_zh_en"
     ],
     "required_gold_evidence": [
       {
@@ -9013,14 +8849,14 @@
       "curation": [],
       "parent_query": "根据ICH E7,申办方若不单独进行老年人药代动力学评价,可以采用什么替代方法?",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`KEEP_QUERY`。替代单独老年PK评价的方法提问一致；完整答案应包括结合主要III期及可选II期，不只说screen。",
-        "suggested_query": null,
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
         "applied": [],
-        "problems": []
+        "problems": [],
+        "reason": "`KEEP_QUERY`。替代单独老年PK评价的方法提问一致；完整答案应包括结合主要III期及可选II期，不只说screen。"
       },
-      "decision": "pending: CO parent review not supplied"
+      "decision": "OK (external review)"
     },
     "conflict": {
       "family_document_keys": [
@@ -9035,12 +8871,12 @@
   },
   {
     "sample_id": "ms-0439",
-    "query": "According to ICH E7, should assessments such as cognitive function studies be conducted as separate trials rather than combined with the main studies?",
+    "query": "According to ICH E7, do assessments such as cognitive function studies require special planning, and are they best carried out in separate studies?",
     "dept": "CO",
     "language": "en",
     "slices": [
-      "mixed_zh_en",
-      "version_conflict"
+      "version_conflict",
+      "mixed_zh_en"
     ],
     "required_gold_evidence": [
       {
@@ -9073,16 +8909,19 @@
       "key_status": "exact",
       "span_status": "exact",
       "curation": [],
-      "parent_query": "根据ICH E7,认知功能相关的评估是否建议单独设计临床试验,而非与主要试验合并进行?",
+      "parent_query": "根据ICH E7，认知功能等评估是否需要特别规划，以及是否更适合在独立研究中开展？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。保留special planning及best accomplished，不把较适宜独立开展写成必须独立试验。",
-        "suggested_query": "According to ICH E7, do assessments such as cognitive function studies require special planning, and are they best carried out in separate studies?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "parent query (paired rewrite)",
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。保留special planning及best accomplished，不把较适宜独立开展写成必须独立试验。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "conflict": {
       "family_document_keys": [
@@ -9097,14 +8936,14 @@
   },
   {
     "sample_id": "ms-0441",
-    "query": "According to the ICH E7 guideline, under what circumstances are drug-drug interaction studies ordinarily recommended for geriatric patients, and what specific types of studies should be included?",
+    "query": "According to ICH E7, in what circumstances should specific drug-drug interaction studies be considered, and which types are ordinarily recommended in the context of drug use in older patients?",
     "dept": "CO",
     "language": "en",
     "slices": [
       "negation",
+      "version_conflict",
       "mixed_zh_en",
-      "long_context",
-      "version_conflict"
+      "long_context"
     ],
     "required_gold_evidence": [
       {
@@ -9137,16 +8976,19 @@
       "key_status": "exact",
       "span_status": "exact",
       "curation": [],
-      "parent_query": "ICH E7指南中,针对老年患者用药方案,建议在哪些具体情况下常规开展药物-药物交互作用研究,应涵盖哪些研究类型?",
+      "parent_query": "根据ICH E7，在什么情况下应考虑具体的药物相互作用研究，针对老年患者用药又通常推荐哪些研究类型？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。把一律常规开展改成具体情形考虑、逐案决定且通常推荐；完整gold仍需保留PK筛查已排除的重要相互作用例外。",
-        "suggested_query": "According to ICH E7, in what circumstances should specific drug-drug interaction studies be considered, and which types are ordinarily recommended in the context of drug use in older patients?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "parent query (paired rewrite)",
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。把一律常规开展改成具体情形考虑、逐案决定且通常推荐；完整gold仍需保留PK筛查已排除的重要相互作用例外。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "conflict": {
       "family_document_keys": [
@@ -9201,14 +9043,14 @@
       "curation": [],
       "parent_query": "在临床试验方案设计中，关键质量因子(critical to quality factors)是否应纳入因扩展性次要目标而产生的次要问题？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`KEEP_QUERY`。次要事项源于扩展性次要目标，与原文minor issues相同；非一概排除所有次要终点。",
-        "suggested_query": null,
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
         "applied": [],
-        "problems": []
+        "problems": [],
+        "reason": "`KEEP_QUERY`。次要事项源于扩展性次要目标，与原文minor issues相同；非一概排除所有次要终点。"
       },
-      "decision": "pending: CO parent review not supplied"
+      "decision": "OK (external review)"
     },
     "derived_from": "ms-0442"
   },
@@ -9254,20 +9096,20 @@
       "curation": [],
       "parent_query": "在使用外部/次要数据来源(secondary data use)开展临床研究时，若某疾病或事件在数据中未被记录，能否因此判定该事件未曾发生？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`KEEP_QUERY`。二次数据未记载不等于没发生；没有把缺失当作肯定证据。",
-        "suggested_query": null,
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
         "applied": [],
-        "problems": []
+        "problems": [],
+        "reason": "`KEEP_QUERY`。二次数据未记载不等于没发生；没有把缺失当作肯定证据。"
       },
-      "decision": "pending: CO parent review not supplied"
+      "decision": "OK (external review)"
     },
     "derived_from": "ms-0444"
   },
   {
     "sample_id": "ms-0447",
-    "query": "According to the description of the treatment policy strategy in ICH E9(R1) Addendum Section A.3.2., why can this strategy not be implemented for terminal intercurrent events such as death?",
+    "query": "According to ICH E9(R1) Section A.3.2, why can the treatment policy strategy generally not be implemented for terminal intercurrent events such as death?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -9307,14 +9149,16 @@
       "curation": [],
       "parent_query": "根据ICH E9(R1)附录A.3.2.对treatment policy strategy的说明，为什么这一策略不能用于处理terminal events（如死亡）这类intercurrent event？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。保留in general及terminal intercurrent events；没有声称所有临床变量在死亡后均无法定义。",
-        "suggested_query": "According to ICH E9(R1) Section A.3.2, why can the treatment policy strategy generally not be implemented for terminal intercurrent events such as death?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。保留in general及terminal intercurrent events；没有声称所有临床变量在死亡后均无法定义。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "derived_from": "ms-0446"
   },
@@ -9360,20 +9204,20 @@
       "curation": [],
       "parent_query": "在ICH E9(R1)关于hypothetical strategies的举例中，对于因不良事件而中止治疗的受试者，设想了哪两种假设情境？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`KEEP_QUERY`。保留两个假设：不发生AE或虽AE仍继续治疗；不误作真实可执行治疗方案。",
-        "suggested_query": null,
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
         "applied": [],
-        "problems": []
+        "problems": [],
+        "reason": "`KEEP_QUERY`。保留两个假设：不发生AE或虽AE仍继续治疗；不误作真实可执行治疗方案。"
       },
-      "decision": "pending: CO parent review not supplied"
+      "decision": "OK (external review)"
     },
     "derived_from": "ms-0448"
   },
   {
     "sample_id": "ms-0451",
-    "query": "When ICH E9(R1) discusses discontinuation of treatment as an intercurrent event, can either the principal-stratum-based effect or the effect during continued treatment be interpreted as the effect if all patients could continue with treatment?",
+    "query": "When ICH E9(R1) discusses treatment discontinuation, can either the effect in the principal stratum of patients who could continue on the test treatment or the effect during continued treatment be interpreted as the effect if all patients could continue treatment?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -9413,14 +9257,16 @@
       "curation": [],
       "parent_query": "在ICH E9(R1)讨论discontinuation of treatment这一intercurrent event时，能否把基于principal stratum的效应或continued treatment期间的效应解释为‘假如所有病人都能继续治疗’时的效应？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。补完整个被截断比较及all patients；principal stratum不是实际PPS人群。",
-        "suggested_query": "When ICH E9(R1) discusses treatment discontinuation, can either the effect in the principal stratum of patients who could continue on the test treatment or the effect during continued treatment be interpreted as the effect if all patients could continue treatment?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。补完整个被截断比较及all patients；principal stratum不是实际PPS人群。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "derived_from": "ms-0450"
   },
@@ -9466,20 +9312,20 @@
       "curation": [],
       "parent_query": "根据ICH E9(R1)附录A.5.3.关于supplementary analysis的说明，为什么Per Protocol Set (PPS)分析不能达到估计任何principal stratum效应的目标？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`KEEP_QUERY`。PPS与任何principal stratum估计的区别一致，why保留，需要父gold包含不同治疗组人群不可比的原因。",
-        "suggested_query": null,
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
         "applied": [],
-        "problems": []
+        "problems": [],
+        "reason": "`KEEP_QUERY`。PPS与任何principal stratum估计的区别一致，why保留，需要父gold包含不同治疗组人群不可比的原因。"
       },
-      "decision": "pending: CO parent review not supplied"
+      "decision": "OK (external review)"
     },
     "derived_from": "ms-0452"
   },
   {
     "sample_id": "ms-0455",
-    "query": "In a double-blind clinical trial, why should drug packaging be labelled only with the subject number and treatment period rather than using a code letter or other identifying marks?",
+    "query": "In the double-blind approach described in ICH E9, why are treatment packs labelled only with the subject number and treatment period, rather than revealing treatment identity even as a code letter?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -9519,20 +9365,22 @@
       "curation": [],
       "parent_query": "在双盲临床试验中，为什么药品包装标签只标示受试者编号和治疗期，而不使用代码字母等其他识别方式？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。按原文描述的双盲做法提问，不自行增加所有包装其他标识都被禁止的强制要求。",
-        "suggested_query": "In the double-blind approach described in ICH E9, why are treatment packs labelled only with the subject number and treatment period, rather than revealing treatment identity even as a code letter?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。按原文描述的双盲做法提问，不自行增加所有包装其他标识都被禁止的强制要求。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "derived_from": "ms-0454"
   },
   {
     "sample_id": "ms-0457",
-    "query": "When performing an analysis based on the full analysis set, if certain randomised subjects are excluded due to protocol violations, is it acceptable to omit assessment of the potential bias arising from such exclusions?",
+    "query": "When using the full analysis set, if some randomised participants have been excluded because of protocol violations, is it acceptable not to assess the potential bias caused by those exclusions?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -9572,14 +9420,16 @@
       "curation": [],
       "parent_query": "在使用全分析集(full analysis set)进行分析时，若因方案违背而排除了某些已随机受试者，是否可以不评估这些排除对结果可能造成的偏倚？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`REVISE_QUERY`。补全截断问句，仍问排除偏倚评估，不替原文批准这些排除本身。",
-        "suggested_query": "When using the full analysis set, if some randomised participants have been excluded because of protocol violations, is it acceptable not to assess the potential bias caused by those exclusions?",
-        "applied": [],
-        "problems": []
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
+        "applied": [
+          "query"
+        ],
+        "problems": [],
+        "reason": "`REVISE_QUERY`。补全截断问句，仍问排除偏倚评估，不替原文批准这些排除本身。"
       },
-      "decision": "pending: CO parent review not supplied (English rewrite suggested)"
+      "decision": "edited (external review)"
     },
     "derived_from": "ms-0456"
   },
@@ -9625,14 +9475,14 @@
       "curation": [],
       "parent_query": "根据ICH E9，若对多中心临床试验中'中心'(centre)一词的定义存有疑问，可参考哪份ICH指南以获得相关指导？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`KEEP_QUERY`。问multicentre centre定义的ICH参考，未混同研究中心实地检查要求。",
-        "suggested_query": null,
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
         "applied": [],
-        "problems": []
+        "problems": [],
+        "reason": "`KEEP_QUERY`。问multicentre centre定义的ICH参考，未混同研究中心实地检查要求。"
       },
-      "decision": "pending: CO parent review not supplied"
+      "decision": "OK (external review)"
     },
     "derived_from": "ms-0458"
   },
@@ -9677,14 +9527,14 @@
       "curation": [],
       "parent_query": "在开放标签(open-label)试验中，治疗分配的身份对哪些人是已知的？",
       "external_review": {
-        "source": "EN",
-        "verdict": "PENDING_PARENT",
-        "reason": "`KEEP_QUERY`。open-label治疗分配身份对谁已知的提问准确，没有误作参与者个人身份公开。",
-        "suggested_query": null,
+        "source": "external_review/EN_review_audit_2026-09-21.md",
+        "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
+        "verdict": "PENDING_PARENT resolved",
         "applied": [],
-        "problems": []
+        "problems": [],
+        "reason": "`KEEP_QUERY`。open-label治疗分配身份对谁已知的提问准确，没有误作参与者个人身份公开。"
       },
-      "decision": "pending: CO parent review not supplied"
+      "decision": "OK (external review)"
     },
     "derived_from": "ms-0460"
   }
