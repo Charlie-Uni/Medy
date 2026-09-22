@@ -1,0 +1,248 @@
+{
+  "dataset_id": "precise_clause_main",
+  "dataset_version": "main-v1-provisional",
+  "spec_version": "spec-m1",
+  "status": "draft",
+  "created_at": "2026-09-22",
+  "frozen_at": null,
+  "purpose": "主评测集 main-v1（临时版）：并入探针 v2 全部 107 条样本，另按 spec-m1 新增有答案样本（含英文孪生、合成版本冲突样本、长条款样本）与无答案样本；用于基线 M1-21 端到端门禁（Recall@5 ≥ 85%、失效版本引用率 0、abstention accuracy ≥ 90%）。第二人工复核未完成，故为 provisional。",
+  "source_store": {
+    "kind": "local_path",
+    "location": "main_set/sources_staging 与 probe/precise_clause/v1/sources（本地目录，不进入 Git；完整性由 corpus.json 的 source_hash 校验）"
+  },
+  "extraction": {
+    "extractor": "pypdf",
+    "extractor_version": "6.18.1",
+    "params": {
+      "extraction_mode": "plain"
+    },
+    "params_hash": "7c3f1766ee925cd0175429abce29a029d834b8be9ffa33f45813e3a4944f6b8d"
+  },
+  "normalization": "norm-v1",
+  "minimums": {
+    "answerable_samples": 300,
+    "no_answer_samples": 40,
+    "conflict_samples": 20,
+    "per_slice": 20,
+    "per_dept": 60,
+    "max_samples_per_document": 8,
+    "documents": 10,
+    "documents_per_dept": 3,
+    "zh_hans_samples": 20,
+    "zh_hant_samples": 80,
+    "en_samples": 150
+  },
+  "gates": {
+    "recall_at_5": 0.85,
+    "abstention_accuracy": 0.9,
+    "invalid_version_citation_rate": 0.0,
+    "conflict_current_cited_rate": 1.0
+  },
+  "counts": {
+    "samples": 614,
+    "answerable": 553,
+    "no_answer": 61,
+    "conflict": 52,
+    "derived": 200,
+    "imported": 107,
+    "documents": 79,
+    "per_slice": {
+      "drug_name_zh": 112,
+      "dose_unit": 65,
+      "negation": 275,
+      "time_window": 128,
+      "protocol_id": 121,
+      "mixed_zh_en": 569,
+      "version_conflict": 52,
+      "no_answer": 61,
+      "long_context": 23
+    },
+    "per_dept": {
+      "MA": 133,
+      "PV": 279,
+      "CO": 202
+    },
+    "per_language": {
+      "zh-Hans": 30,
+      "zh-Hant": 139,
+      "en": 445,
+      "mixed": 0
+    }
+  },
+  "reviewers": [
+    {
+      "id": "annotator-01",
+      "kind": "human",
+      "role": "annotator"
+    },
+    {
+      "id": "reviewer-llm-02",
+      "kind": "llm",
+      "model": "claude-opus-5",
+      "model_version": "claude-opus-5",
+      "prompt_hash": "8538a516164394d885245e2d79652432ea3c71d7c7a49bba269f09740c2d1e90",
+      "role": "second_reviewer"
+    }
+  ],
+  "review_policy": {
+    "human_reviewers": 1,
+    "llm_reviewers": 1,
+    "statement": "人工标注加 LLM 独立复核；不等同于两名独立人工复核。"
+  },
+  "review_provenance": {
+    "reviewer_id": "reviewer-llm-02",
+    "version_source": "pinned_model_id",
+    "backend_model_version": "claude-opus-5",
+    "reasoning_effort": "high",
+    "reproducibility_limitations": "复核通过 Claude Code CLI 以固定模型标识 claude-opus-5 调用，标识由 CLI 在 modelUsage 中回显；工具关闭、会话不持久化、不加载用户设置、固定中性系统提示（哈希已记录）；reasoning effort 为请求参数，CLI 不回显。同一标识不保证服务端权重永不变化；复核输入与实际提示的哈希已逐条绑定，可据此复核一致性。",
+    "artifacts": [
+      {
+        "path": "review_evidence/resolutions.json",
+        "sha256": "84cef944d21bfe91bc0fa80bf44e6246f5f7632930a3b572327fea17ecc9653f"
+      },
+      {
+        "path": "review_evidence/reviewer_runtime_metadata.json",
+        "sha256": "d267834ebe17200f0aa013123e1ea34a307b4bec5ee638cdb6505d82875b1cbe"
+      },
+      {
+        "path": "review_evidence/run_CO.json",
+        "sha256": "498fa89613a0741ab3038e8894fd522e1ed7b1cd6199ebf64129658431e73e61"
+      },
+      {
+        "path": "review_evidence/run_EN.json",
+        "sha256": "a0c6e6e8723e4576cdb9cbfc007c66e3b23b95e067d2be6199b5bcd54a1ddfc4"
+      },
+      {
+        "path": "review_evidence/run_MA.json",
+        "sha256": "0034d944be85dae6956db7caeaa0d848716bba51097b15500f26abe3df17f7ef"
+      },
+      {
+        "path": "review_evidence/run_NA.json",
+        "sha256": "c5c57c9e86df1d427e8a759b15069215ed7de2d771b6ab59651f27417f1f644b"
+      },
+      {
+        "path": "review_evidence/run_PV.json",
+        "sha256": "588bec0c702bf4b7bdb3d8824984f28ef10b16c63addfc0909ae02dd1ebf9eea"
+      },
+      {
+        "path": "review_evidence/verdicts_CO.jsonl",
+        "sha256": "e3a91aceb100a5d86ede11014812d83f981d355d0e11faebd412020a67fa77cc"
+      },
+      {
+        "path": "review_evidence/verdicts_EN.jsonl",
+        "sha256": "ede379e05b4f2d1530116b37084608a5b5b98e50fdc5f9c5157b2a9b4b5a985a"
+      },
+      {
+        "path": "review_evidence/verdicts_MA.jsonl",
+        "sha256": "47a973d2df615c4a0c4c624fcaa41ff32ab3967fa9a7ecbca843f57a445c9cd2"
+      },
+      {
+        "path": "review_evidence/verdicts_NA.jsonl",
+        "sha256": "2a72a8b356d03c20e750cfd3f93c165555fc273475e8aeb9458c532a1caf5e41"
+      },
+      {
+        "path": "review_evidence/verdicts_PV.jsonl",
+        "sha256": "772343d8277c8b9af453a8ffd50bd31ebd2daa44f26f3a071c0d5dc4dc396d61"
+      }
+    ]
+  },
+  "pii_ruleset_version": "pii-rules-v1",
+  "files": [
+    {
+      "path": "corpus.json",
+      "sha256": "49e96fa846c2fb348a37a5d109b0346b6d3ad8226c94532ef6ff2ebcefb4cad2"
+    },
+    {
+      "path": "pii_exceptions.json",
+      "sha256": "49d9e6dbb9ebb974aa57266a32d859132e6e38e444d21faa85aa7e8872d5c9de"
+    },
+    {
+      "path": "review_prompt.md",
+      "sha256": "8538a516164394d885245e2d79652432ea3c71d7c7a49bba269f09740c2d1e90"
+    },
+    {
+      "path": "samples.jsonl",
+      "sha256": "4fb4d93b66a4ab9acd345e645fcb77b3aa30789632d9a043ad8737f7a078a8b5"
+    }
+  ],
+  "dataset_hash": null,
+  "supersedes": null,
+  "change_reason": null,
+  "derived_samples": {
+    "rule": "English query twins of samples whose gold document is English: gold, dept and slices inherited unchanged, language=en (spec-v1.1 §5.1); the 32 probe v2 twins are imported as-is and the new twins were drafted by drafter-llm-03",
+    "count": 200,
+    "query_language": "en",
+    "drafted_by": {
+      "kind": "llm",
+      "id": "drafter-llm-03",
+      "model": "claude-sonnet-5"
+    },
+    "human_confirmation": {
+      "status": "confirmed",
+      "annotator_id": "annotator-01",
+      "confirmed_on": "2026-09-22"
+    }
+  },
+  "imported_samples": {
+    "dataset_id": "precise_clause_probe",
+    "dataset_version": "v2",
+    "dataset_hash": "1fc5089f6fa7f80a1a5e23940826b0d4c811cde29e225dd8305241a33beb0321",
+    "path": "evals/probe/precise_clause/v2/samples.jsonl",
+    "samples_sha256": "3fc8e77ee2d6a8d6cbc456d95dd4dd23bd52666e0d4f76334ead16fa6a00e96e",
+    "count": 107,
+    "prompt_hash": "f4a3804e969b23ec9ab467406937e62f0b9e30933d6a680d4b00ee59b2631c38",
+    "reviewer_id": "reviewer-llm-02",
+    "statement": "探针 v2 的 107 条样本原样并入（canonical 字节一致），保留其探针复核记录与提示哈希；报告中探针子集单列。"
+  },
+  "second_human_review": {
+    "status": "pending",
+    "reviewer_id": null,
+    "statement": "决策人 2026-09-21 答复“第二人工复核人暂无”；基线 5.9 的第二人工复核未完成，本集只能以 provisional 运行，报告须标注。"
+  },
+  "dropped_after_review": {
+    "ms-0509": "dropped after review (2026-09-22): the Glimaryl label's text layer is garbled (0 CJK characters on page 1), so neither the tool absence check nor the LLM reviewer can verify that the document does not answer the question; same reason as the three MA drops on this document"
+  },
+  "conflict_fixtures": [
+    {
+      "document_key": "ich-e7-step4-1993",
+      "archived_document_keys": [
+        "ich-e7-step4-1993--synthetic-old"
+      ],
+      "synthetic": true,
+      "source": "同一 PDF 以两个 document_key 入库；旧版 effective_from 1991-06-24，发布现行版（1993-06-24）时归档（记录 50）"
+    },
+    {
+      "document_key": "ich-e12a-principle-2000",
+      "archived_document_keys": [
+        "ich-e12a-principle-2000--synthetic-old"
+      ],
+      "synthetic": true,
+      "source": "同一 PDF 以两个 document_key 入库；旧版 effective_from 1998-03-02，发布现行版（2000-03-02）时归档（记录 50）"
+    },
+    {
+      "document_key": "ich-e15-step4-2007",
+      "archived_document_keys": [
+        "ich-e15-step4-2007--synthetic-old"
+      ],
+      "synthetic": true,
+      "source": "同一 PDF 以两个 document_key 入库；旧版 effective_from 2005-11-01，发布现行版（2007-11-01）时归档（记录 50）"
+    },
+    {
+      "document_key": "ema-gvp-annex-i-rev5",
+      "archived_document_keys": [
+        "ema-gvp-annex-i-rev4",
+        "ema-gvp-annex-i-rev4--synthetic-old"
+      ],
+      "synthetic": false,
+      "source": "真实修订对：Rev 4（2017-10-09，页眉 superseded）→ Rev 5（2024-07-26）经发布流程替代；family 另含 Rev 4 的合成旧版（记录 50 §11）"
+    },
+    {
+      "document_key": "ema-gvp-pp-i",
+      "archived_document_keys": [
+        "ema-gvp-pp-i--synthetic-old"
+      ],
+      "synthetic": true,
+      "source": "同一 PDF 以两个 document_key 入库；旧版 effective_from 2011-12-09，发布现行版（2013-12-09）时归档（记录 50）"
+    }
+  ]
+}

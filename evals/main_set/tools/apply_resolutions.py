@@ -329,7 +329,11 @@ def main() -> int:
         if not args.no_rereview:
             for b in batches:
                 ids = sorted(t for t in changed if by_id[t][0] == b)
-                subprocess.run([sys.executable, str(HERE / "run_review.py"), b, "--only", *ids], check=True)
+                # one sample per call: a verdict then binds only to its own input, so later edits of other samples
+                # cannot invalidate it (PR-09 "latest invocation also contains superseded input")
+                subprocess.run(
+                    [sys.executable, str(HERE / "run_review.py"), b, "--chunk", "1", "--only", *ids], check=True
+                )
     print(f"resolutions: {len(resolutions)}; changed samples: {len(changed)} {sorted(changed)}")
     return 0
 

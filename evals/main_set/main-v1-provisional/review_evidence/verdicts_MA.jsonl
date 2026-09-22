@@ -43,15 +43,15 @@
 {"sample_id": "ms-0046", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
 {"sample_id": "ms-0047", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
 {"sample_id": "ms-0048", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
-{"sample_id": "ms-0049", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": "query 中「視血壓下降情形」与 key_text 用词重合，可改为「可增加到的最大劑量為何」以降低字面复用，但不影响判定。"}
+{"sample_id": "ms-0049", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
 {"sample_id": "ms-0050", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
-{"sample_id": "ms-0051", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": "key_text 可去掉句首連接詞「故」（縮為「不建議合併使用 ACEIs、 ARBs 或今 aliskiren 成分藥品來雙重阻斷 RAAS」仍頁內唯一且保留否定與對象），屬可選微調；另原文此處為 OCR 誤字「或今」（應為「含」），key_text 逐字沿用原文正確，無需修改。"}
+{"sample_id": "ms-0051", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
 {"sample_id": "ms-0052", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
 {"sample_id": "ms-0053", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
 {"sample_id": "ms-0054", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
 {"sample_id": "ms-0055", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
-{"sample_id": "ms-0056", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": "query 与 key_text 用词重合度偏高（「血清尿酸濃度…回復到治療前的數值」几乎逐字沿用），虽仍是 MA 用户会问的自然问题且答案数值被隐去，仍可考虑改写为「拔痛酸錠（Allopurinol）停藥後多久尿酸會回升至治療前水準？」以降低表面重叠。"}
-{"sample_id": "ms-0057", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
+{"sample_id": "ms-0056", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
+{"sample_id": "ms-0057", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": "key_text 含两句，首句「Allopurinol 沒有抗發炎的效力。」是理由而非命中本身；若判定口径允许以代词承接主语，可缩为「它必須不得使用於痛風性關節炎的急性發作」（页内唯一且保留否定与对象），否则维持现状亦可接受。"}
 {"sample_id": "ms-0058", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
 {"sample_id": "ms-0059", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
 {"sample_id": "ms-0060", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": ""}
