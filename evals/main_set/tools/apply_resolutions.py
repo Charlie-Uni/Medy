@@ -66,7 +66,8 @@ def parse_sheet(sheet: pathlib.Path = SHEET) -> dict[str, str]:
         if not line.startswith("| ms-"):
             continue
         cells = [c.strip() for c in re.split(r"(?<!\\)\|", line.strip())[1:-1]]
-        sid, decision = cells[0], cells[-1]
+        # an unescaped "|" inside the decision (e.g. `接受：span=… | slices=…`) spills into extra cells: re-join them
+        sid, decision = cells[0], " | ".join(cells[12:]) if len(cells) > 13 else cells[-1]
         if decision:
             decisions[sid] = decision.replace("\\|", "|")
     return decisions
@@ -193,7 +194,9 @@ def load_explicit(path: pathlib.Path | None, decisions: dict[str, str]) -> dict[
     for sid, entry in json.loads(path.read_text(encoding="utf-8")).items():
         cell = decisions.get(sid, "")
         if hashlib.sha256(cell.encode("utf-8")).hexdigest() != entry["decision_sha256"]:
-            raise SystemExit(f"{sid}: explicit translation does not match the sheet's decision text")
+            # the annotator rewrote this cell after the translation was prepared: the sheet text wins (parsed as syntax)
+            print(f"  {sid}: explicit translation ignored (decision text changed after it was prepared)")
+            continue
         out[sid] = entry
     return out
 

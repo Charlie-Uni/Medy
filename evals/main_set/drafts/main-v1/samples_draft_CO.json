@@ -381,6 +381,7 @@
     "language": "mixed",
     "slices": [
       "negation",
+      "protocol_id",
       "mixed_zh_en",
       "long_context"
     ],
@@ -1511,7 +1512,7 @@
         "page": 22,
         "printed_page_label": null,
         "section": "6.2. Outcome Assessments",
-        "key_text": "As stated in the ICH E11 (2000) Section 2.4.2, it may be necessary to develop, validate, and employ different endpoints for specific age and developmental subgroups.",
+        "key_text": "it may be necessary to develop, validate, and employ different endpoints for specific age and developmental subgroups",
         "evidence_span": {
           "text": "As stated in the ICH E11 (2000) Section 2.4.2, it may be necessary to develop, validate, and employ different endpoints for specific age and developmental subgroups.",
           "char_start": 1907,
@@ -1984,6 +1985,7 @@
     "dept": "CO",
     "language": "mixed",
     "slices": [
+      "negation",
       "mixed_zh_en"
     ],
     "required_gold_evidence": [
@@ -1996,8 +1998,8 @@
         "section": "2.1.1 Subject Enrollment",
         "key_text": "repeated demonstration of a QTc interval >450 ms",
         "evidence_span": {
-          "text": "A marked baseline prolongation of QT/QTc interval (e.g., repeated demonstration of a QTc interval >450 ms);",
-          "char_start": 2133,
+          "text": "Until the effects of the drug on the QT/Q Tc interval have been characterized, the following exclusion criteria are suggested: • A marked baseline prolongation of QT/QTc interval (e.g., repeated demonstration of a QTc interval >450 ms);",
+          "char_start": 2004,
           "char_end": 2240
         }
       }
@@ -2033,7 +2035,7 @@
   },
   {
     "sample_id": "ms-0374",
-    "query": "按照ICH E14对thorough QT/QTc研究的解读，使平均QT/QTc延长约5 ms或更少的药物，是否看起来会引起TdP？",
+    "query": "ICH E14 在解读 thorough QT/QTc 研究时，平均 QT/QTc 延长不超过多少的药物被认为不会引起 TdP？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
@@ -2564,7 +2566,7 @@
   },
   {
     "sample_id": "ms-0392",
-    "query": "MRCT的所有参与地区和场所应如何符合ICH E6 GCP标准,并配合哪些监管检查?",
+    "query": "MRCT 中各参与国家/地区的研究中心在 GCP 方面需要满足什么要求，是否必须接受监管机构的现场检查？",
     "dept": "CO",
     "language": "mixed",
     "slices": [

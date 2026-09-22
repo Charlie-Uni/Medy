@@ -3335,7 +3335,7 @@
         "page": 19,
         "printed_page_label": null,
         "section": "XVI.B.5.2. Schedule and documentation of studies evaluating risk minimisation measures",
-        "key_text": "within 12-24 months to allow the possibility of necessary changes in healthcare; and • Within 4 years of regulatory implementation the overall effectiveness evaluation of the RMM",
+        "key_text": "initial evaluation of RMM, e.g. within 12-24 months to allow the possibility of necessary changes in healthcare; and • Within 4 years of regulatory implementation the overall effectiveness evaluation",
         "evidence_span": {
           "text": "The following timepoints should be considered by marketing authorisation holders for establishing and agreeing schedules with competent authorities: • After regulatory implementation an initial evaluation of RMM, e.g. within 12-24 months to allow the possibility of necessary changes in healthcare; and • Within 4 years of regulatory implementation the overall effectiveness evaluation of the RMM (see XVI.B.5.3.), which, where applicable, can also inform the evaluation of the renewal of a marketing authorisation.",
           "char_start": 1325,
@@ -3933,7 +3933,7 @@
         "page": 9,
         "printed_page_label": null,
         "section": "P.III.B.2. Management and reporting of suspected adverse reactions — footnote 11",
-        "key_text": "termination of pregnancy without information on congenital malformation, reports of pregnancy exposure without outcome data, or reports which have a normal outcome should not be submitted as ICSRs",
+        "key_text": "induced termination of pregnancy without information on congenital malformation, reports of pregnancy exposure without outcome data, or reports which have a normal outcome should not be submitted",
         "evidence_span": {
           "text": "“Reports of induced termination of pregnancy without information on congenital malformation, reports of pregnancy exposure without outcome data, or reports which have a normal outcome should not be submitted as ICSRs since there is no suspected adverse reaction",
           "char_start": 2781,
@@ -4199,6 +4199,7 @@
     "dept": "PV",
     "language": "mixed",
     "slices": [
+      "negation",
       "mixed_zh_en"
     ],
     "required_gold_evidence": [
@@ -4211,9 +4212,9 @@
         "section": "P.IV.B.2.1. Age information",
         "key_text": "affiliation to one of the paediatric age subsets if it is not possible to obtain the exact age or date of birth",
         "evidence_span": {
-          "text": "age information is reported, and this information should be available in the structured data fields of the ICSR (rather than only in the narrative). As far as possible, the ICSRs should indicate either: • the age at time of onset of reaction or the date of birth, and for neonates, pre-term neonates and infants in addition the gestational age; or • affiliation to one of the paediatric age subsets if it is not possible to obtain the exact age or date of birth or if personal data protection legislation do not permit this in order to prevent identifying the patient, in particular when the medical condition is rare. If no age-related information is provided",
-          "char_start": 539,
-          "char_end": 1199
+          "text": "As far as possible, the ICSRs should indicate either: • the age at time of onset of reaction or the date of birth, and for neonates, pre-term neonates and infants in addition the gestational age; or • affiliation to one of the paediatric age subsets if it is not possible to obtain the exact age or date of birth or if personal data protection legislation do not permit this in order to prevent identifying the patient, in particular when the medical condition is rare.",
+          "char_start": 688,
+          "char_end": 1157
         }
       }
     ],
@@ -4266,9 +4267,9 @@
         "section": "P.IV.B.3. Periodic safety update report (PSUR)",
         "key_text": "ongoing monitoring of the risk-benefit balance specifically for this indication throughout the product life-cycle should be performed (unless exempted from PSUR submission with a justification)",
         "evidence_span": {
-          "text": "periodic safety update reports (PSUR) as described in GVP Module VII should be followed. When a paediatric indication has been granted, ongoing monitoring of the risk-benefit balance specifically for this indication throughout the product life-cycle should be performed (unless exempted from PSUR submission with a justification) via the PSURs, as they",
-          "char_start": 513,
-          "char_end": 865
+          "text": "The requirements for periodic safety update reports (PSUR) as described in GVP Module VII should be followed. When a paediatric indication has been granted, ongoing monitoring of the risk-benefit balance specifically for this indication throughout the product life-cycle should be performed (unless exempted from PSUR submission with a justification) via the PSURs, as they are an important tool to collect and cumulatively analyse information on paediatric use.",
+          "char_start": 492,
+          "char_end": 954
         }
       }
     ],

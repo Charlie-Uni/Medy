@@ -75,3 +75,5 @@
 - 工具增补：`apply_resolutions.py` 支持 `section=`、`span=`、`absence_terms=`（无答案样本改题必须给出并重查缺席）、父样本 query 改动联动孪生的 `parent_query` 并重跑孪生、`review/changed_<date>.json` 输出。
 - 结果：111 条样本改动（含孪生与 parent_query 联动），`check_drafts.py` 0 错误、下限全部满足；`resolutions.json` 9 条 `disputed_resolved`；改动样本按批次 `--only` 重跑 claude-opus-5 复核（结果见记录 50 §13）。
 - 重跑结果（2026-09-22 13:17）：111 条重跑费用 $9.16（累计 $52.22）；24 条新争议 → [review/disputes_sheet_round2.md](review/disputes_sheet_round2.md)（实现方预填 `建议：`，接受 15 / 保留 9，其中 6 条是指南名式 protocol_id 的口径冲突、2 条受 200 字符上限约束）。第一轮已决表仍为 `review/disputes_sheet.md`。第二轮应用命令：`apply_resolutions.py --sheet review/disputes_sheet_round2.md --explicit review/resolutions_explicit_round2.json --sweep review/consistency_sweep_round2.json`。
+- 第二轮裁决已应用（2026-09-22）：接受 16 / 保留 8（决策人对 ms-0197 自选 199 字符锚点、ms-0372/0373 扩 span 后补 negation），21 条改动、0 错误，`resolutions.json` 17 条；已决表即 `review/disputes_sheet_round2.md`，改动清单 `review/changed_2026-09-22_round2.json`（第一轮为 `_round1`）。
+- 第三轮（2026-09-22）：ms-0228 补 negation 与父样本同步，两条重跑 agree；争议收敛，17 条 `disputed_resolved`、其余 agree，复核累计 $53.52。

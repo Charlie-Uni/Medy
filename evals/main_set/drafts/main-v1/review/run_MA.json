@@ -55,7 +55,7 @@
     "ms-0047": "b0a2edfe68a57e3ab770e84b1ce5b6a75d84b7d9468081ae146e9fb2fcc27615",
     "ms-0048": "690d2196c3b1a89e637002909f1e2e494944740bc50772b1b8896101eab12fbf",
     "ms-0049": "d5c552e5e85d6517c987710b2fb49cc3041fed4da8f598164e80cbea930b57f1",
-    "ms-0050": "83e3ae7a9b12215ba78196a0f32cf6e4d1c8073d83d0efe5868b187f9ae03014",
+    "ms-0050": "b9141f1a0c37c26bfa7009128828dc5cd85380a4fcb0d15cd72aaf43ea26c559",
     "ms-0051": "238c8a8c16eb240c481e46b24804bbead93cd190aa9cf845f7bd689ae4167713",
     "ms-0052": "5b7a30fad66114993fb4d27a4ed28b58c7d1ee8ad00b358fd21d628214a5e53a",
     "ms-0053": "b2b900cb10ad7654ce883f4b04eb66b7e48a73537f70bcc1ae9f68737a5aaf37",
@@ -63,7 +63,7 @@
     "ms-0055": "3927ed749a20be33164b0dac7448c80ce01448570b121aac5d36394aae9c81ae",
     "ms-0056": "a1c31b1f34b59ae12f071c4acd0a15cbbe5c1e8f5f0fbf5bab0df736d8918f7f",
     "ms-0057": "d513ea7275a92d2dabade84c2825315128d49a0ceb3c213b1aac368374652a09",
-    "ms-0058": "773db90c14ae22af4e9f42bf16e29740f9460f9dce0984163e6c8f4ae65eccfe",
+    "ms-0058": "077a2059d77f0ac6763c902f398e9fa30397615fb7f965c4c5a47f8408c92edd",
     "ms-0059": "b1fec4a09381c8472f2504aa901322218bd78bdd3cb0192881b55bd736fb0176",
     "ms-0060": "93edb5365956043d8cf90d5a335e8f305d31d60c2a00945fdc63d050d29c7b6e",
     "ms-0061": "5a48c8fe61d5789c91b60939c637c24cca5be69b65fca1e9f248170927022da3",
@@ -1743,6 +1743,60 @@
         "ms-0058": "773db90c14ae22af4e9f42bf16e29740f9460f9dce0984163e6c8f4ae65eccfe",
         "ms-0061": "5a48c8fe61d5789c91b60939c637c24cca5be69b65fca1e9f248170927022da3"
       }
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "a183c59d-b9db-4905-9357-e5a868e5cec8",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "3413",
+      "cost_usd": 0.15372875,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0050",
+        "ms-0058"
+      ],
+      "started_at": "2026-09-22T03:41:00+00:00",
+      "finished_at": "2026-09-22T03:41:45+00:00",
+      "prompt_chars": 12308,
+      "prompt_sha256": "f9488e4c87efabddae0ff6053b8003e93e424104b196f090d542b3a3a9c58fee",
+      "verdicts": [
+        {
+          "sample_id": "ms-0050",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0058",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_f9488e4c87efabddae0ff6053b8003e93e424104b196f090d542b3a3a9c58fee.jsonl",
+      "sample_input_sha256": {
+        "ms-0050": "b9141f1a0c37c26bfa7009128828dc5cd85380a4fcb0d15cd72aaf43ea26c559",
+        "ms-0058": "077a2059d77f0ac6763c902f398e9fa30397615fb7f965c4c5a47f8408c92edd"
+      }
     }
   ],
   "provenance_version": 2,
@@ -2209,23 +2263,23 @@
       "prompt_sha256": "d0cc4e494a21662ad7b1dce49758a0fe9a33556029fd540ab4f8b06bcee57421",
       "verdict_sha256": "7de0aca81aca521378b47a5f60c319aa74555fa68d1711958e64969c6ff701d2"
     },
-    "ms-0050": {
-      "chunk_index": 16,
-      "sample_input_sha256": "83e3ae7a9b12215ba78196a0f32cf6e4d1c8073d83d0efe5868b187f9ae03014",
-      "prompt_sha256": "90d9dda69b12b2aa8dcfe3b3cff0043663c26b2046e2ffa4a4bb986f5d1da0ca",
-      "verdict_sha256": "363bc14f8b8b8f98a36a36458cdf9f72d83f41c10df87435014f7cc8dc957d14"
-    },
-    "ms-0058": {
-      "chunk_index": 16,
-      "sample_input_sha256": "773db90c14ae22af4e9f42bf16e29740f9460f9dce0984163e6c8f4ae65eccfe",
-      "prompt_sha256": "90d9dda69b12b2aa8dcfe3b3cff0043663c26b2046e2ffa4a4bb986f5d1da0ca",
-      "verdict_sha256": "eb875a5ad6ddba51702c4ee7c3f3055536f353e82b5e93064125b1fa29d02b80"
-    },
     "ms-0061": {
       "chunk_index": 16,
       "sample_input_sha256": "5a48c8fe61d5789c91b60939c637c24cca5be69b65fca1e9f248170927022da3",
       "prompt_sha256": "90d9dda69b12b2aa8dcfe3b3cff0043663c26b2046e2ffa4a4bb986f5d1da0ca",
       "verdict_sha256": "5615a14e9a1f4f7874162543c1d49e8458209e2274560c50ff020536138798e3"
+    },
+    "ms-0050": {
+      "chunk_index": 17,
+      "sample_input_sha256": "b9141f1a0c37c26bfa7009128828dc5cd85380a4fcb0d15cd72aaf43ea26c559",
+      "prompt_sha256": "f9488e4c87efabddae0ff6053b8003e93e424104b196f090d542b3a3a9c58fee",
+      "verdict_sha256": "29341ea17ccc28d3e56d41c7a613cb47eed121631513438396dcd549f375f1e0"
+    },
+    "ms-0058": {
+      "chunk_index": 17,
+      "sample_input_sha256": "077a2059d77f0ac6763c902f398e9fa30397615fb7f965c4c5a47f8408c92edd",
+      "prompt_sha256": "f9488e4c87efabddae0ff6053b8003e93e424104b196f090d542b3a3a9c58fee",
+      "verdict_sha256": "5daa64ef19b7ef07bef7c809975a25bc97daf08772f930f758b98acba2288b78"
     }
   },
   "active_review": null

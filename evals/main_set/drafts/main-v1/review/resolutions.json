@@ -26,6 +26,24 @@
     "sample_input_sha256": "93eab806938abc8a2468dd1624ca6672a2fee9d9754e2edf556b2ad3cf176400",
     "verdict_sha256": "0612213b634b5a53d4a2b9853729c3782f4a70be504f18fb32d32f0f8694cc03"
   },
+  "ms-0284": {
+    "approval_source": "drafts/main-v1/review/disputes_sheet_round2.md（annotator-01 决定列）",
+    "issue_scope": [
+      "slices"
+    ],
+    "resolution_note": "1,500-1,749 克为胎儿体重这一临床测量值，不属于药物剂量或具体给药频次；按 2026-09-22 统一口径不加 dose_unit。",
+    "sample_input_sha256": "2bcfaeba83df615dd25cfcc6f34f911faa5d002d35ea9bb993492e76c70bca4c",
+    "verdict_sha256": "213aa75dd044e4efcbeb1550e18be67264f4f8b66a3bdec930aa0654b722d5ee"
+  },
+  "ms-0347": {
+    "approval_source": "drafts/main-v1/review/disputes_sheet_round2.md（annotator-01 决定列）",
+    "issue_scope": [
+      "slices"
+    ],
+    "resolution_note": "不加 protocol_id。这里 ICH E10/ICH E9 是来源/交叉引用，active-control 条件本身足以定位答案；不依赖精确法规条号或标准版本锁定。",
+    "sample_input_sha256": "92fd0821deaf4b85c875b08f93af0ec889ab3225e7fe4b9435ea79801e618ff5",
+    "verdict_sha256": "92771d423b4192fbc1b0467b456b090aab0d9feaea0cf670f3c03e70d390df43"
+  },
   "ms-0376": {
     "approval_source": "drafts/main-v1/review/disputes_sheet.md（annotator-01 决定列）",
     "issue_scope": [
@@ -53,6 +71,34 @@
     "sample_input_sha256": "26903addbfc5ff8d1e35a7dcc417be9c7745723eb2ff0611331e26b3260a10f0",
     "verdict_sha256": "b12de76c5dbd69148bcb2f01959518d8cd1524ff6666fee0343b4126f27902ee"
   },
+  "ms-0432": {
+    "approval_source": "drafts/main-v1/review/disputes_sheet_round2.md（annotator-01 决定列）",
+    "issue_scope": [
+      "key_text",
+      "query"
+    ],
+    "resolution_note": "不改 query/key_text。完整连续判断句含必要否定条件时超过 200 字符上限；当前 key 保留“指南适用于新剂型/新复方”的对象与适用性断言，否定限定由完整 evidence_span 承担，且与 EN 孪生语义保持一致。",
+    "sample_input_sha256": "b7e76c0ebb0acf4fea7f2b663de1fd36a67be5906fa53ab1e6f8a5b7017e44dd",
+    "verdict_sha256": "5ffa63a4b1ed60ea15e3551d74399771f13059df4af136620d1ba34af502311d"
+  },
+  "ms-0479": {
+    "approval_source": "drafts/main-v1/review/disputes_sheet_round2.md（annotator-01 决定列）",
+    "issue_scope": [
+      "slices"
+    ],
+    "resolution_note": "不加 protocol_id。ICH E10 仅用于限定来源文档；题目并不依赖法规条号/章节号/版本号的精确匹配。",
+    "sample_input_sha256": "b8c54e144f45a41c8a3efe23c052d8dd2b95820b549e427574d5613b067a24f7",
+    "verdict_sha256": "38aea9a52347bb1ddd46665a8396d5931f66655d5a327fe74e691fe760dfd7ff"
+  },
+  "ms-0480": {
+    "approval_source": "drafts/main-v1/review/disputes_sheet_round2.md（annotator-01 决定列）",
+    "issue_scope": [
+      "slices"
+    ],
+    "resolution_note": "不加 protocol_id。ICH E11(R1) 在此作为来源文档名称与版本标识，不是用于锁定文内具体条款的精确 protocol 标识。",
+    "sample_input_sha256": "b32266554f20bacb2941cb72f59af6a70c01365badc5e09a0e63b467ecf5908d",
+    "verdict_sha256": "2cd81727aceede66ba80efcb29e07d2ee5c1136710f1f5802688357c7e052162"
+  },
   "ms-0482": {
     "approval_source": "drafts/main-v1/review/disputes_sheet.md（annotator-01 决定列）",
     "issue_scope": [
@@ -71,6 +117,15 @@
     "sample_input_sha256": "27c2f3bd64b046deb6e38ece2b20d839f01b5364e75b61d5639ced31316205b8",
     "verdict_sha256": "9a888cd623f80f6853257187fe5032bf9a60a44a725fb9e9872e332d2cceb5c3"
   },
+  "ms-0492": {
+    "approval_source": "drafts/main-v1/review/disputes_sheet_round2.md（annotator-01 决定列）",
+    "issue_scope": [
+      "slices"
+    ],
+    "resolution_note": "不加 protocol_id。ICH E6(R3) 仅限定来源指南；继续沿用 2026-09-22 对 NA 的统一口径。",
+    "sample_input_sha256": "1e890521fe4d5d469d73dce9d113f6d36fbf0817a4f01ebab36dccac3c137663",
+    "verdict_sha256": "be1e695ec0094d2c51caa9fadca22c88f501ab61ed43f1822a9c85a5b17b7fe0"
+  },
   "ms-0493": {
     "approval_source": "drafts/main-v1/review/disputes_sheet.md（annotator-01 决定列）",
     "issue_scope": [
@@ -79,5 +134,23 @@
     "resolution_note": "不加 protocol_id；ICH E7 只是来源指南名称，当前 no_answer,mixed_zh_en 保持不变。",
     "sample_input_sha256": "ee8a62823c2d003c7976dadde43c6188c0d288cbdadff431f835b0bee6f4df59",
     "verdict_sha256": "36580e35cdfcf6d0f03b2e68ff4606d945c09224b9ab41120ae57d073cb0aeec"
+  },
+  "ms-0494": {
+    "approval_source": "drafts/main-v1/review/disputes_sheet_round2.md（annotator-01 决定列）",
+    "issue_scope": [
+      "slices"
+    ],
+    "resolution_note": "不加 protocol_id。ICH E8(R1) 仅限定来源指南；问题由 DMC 主题本身定位，不依赖具体法规/条款编号。",
+    "sample_input_sha256": "74072783bcab90e3b6e67ac88879817b7c73b5fce463c30b6c0b8871b93f69ae",
+    "verdict_sha256": "a6ab05ba43758e069e9ab38796ebf705e3c4e53f7dd9f3ad230ac1347af2f7b5"
+  },
+  "ms-0495": {
+    "approval_source": "drafts/main-v1/review/disputes_sheet_round2.md（annotator-01 决定列）",
+    "issue_scope": [
+      "slices"
+    ],
+    "resolution_note": "不加 protocol_id。ICH E9(R1) 仅限定来源指南；missing data/sensitivity analysis 主题足以定位，不依赖精确条款编号。",
+    "sample_input_sha256": "309bfc73a020d0c13f7a2d83e2d64693dc3cad9b2a41f0a13f7b28d219e1bc79",
+    "verdict_sha256": "f1783fa293f85283bf53967c53805a54ca6b0a0b12fff239ccb3e77e86f0d9d0"
   }
 }

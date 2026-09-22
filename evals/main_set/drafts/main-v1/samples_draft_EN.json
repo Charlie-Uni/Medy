@@ -3022,7 +3022,7 @@
         "page": 19,
         "printed_page_label": null,
         "section": "XVI.B.5.2. Schedule and documentation of studies evaluating risk minimisation measures",
-        "key_text": "within 12-24 months to allow the possibility of necessary changes in healthcare; and • Within 4 years of regulatory implementation the overall effectiveness evaluation of the RMM",
+        "key_text": "initial evaluation of RMM, e.g. within 12-24 months to allow the possibility of necessary changes in healthcare; and • Within 4 years of regulatory implementation the overall effectiveness evaluation",
         "evidence_span": {
           "text": "The following timepoints should be considered by marketing authorisation holders for establishing and agreeing schedules with competent authorities: • After regulatory implementation an initial evaluation of RMM, e.g. within 12-24 months to allow the possibility of necessary changes in healthcare; and • Within 4 years of regulatory implementation the overall effectiveness evaluation of the RMM (see XVI.B.5.3.), which, where applicable, can also inform the evaluation of the renewal of a marketing authorisation.",
           "char_start": 1325,
@@ -3614,7 +3614,7 @@
         "page": 9,
         "printed_page_label": null,
         "section": "P.III.B.2. Management and reporting of suspected adverse reactions — footnote 11",
-        "key_text": "termination of pregnancy without information on congenital malformation, reports of pregnancy exposure without outcome data, or reports which have a normal outcome should not be submitted as ICSRs",
+        "key_text": "induced termination of pregnancy without information on congenital malformation, reports of pregnancy exposure without outcome data, or reports which have a normal outcome should not be submitted",
         "evidence_span": {
           "text": "“Reports of induced termination of pregnancy without information on congenital malformation, reports of pregnancy exposure without outcome data, or reports which have a normal outcome should not be submitted as ICSRs since there is no suspected adverse reaction",
           "char_start": 2781,
@@ -3871,6 +3871,7 @@
     "dept": "PV",
     "language": "en",
     "slices": [
+      "negation",
       "mixed_zh_en"
     ],
     "required_gold_evidence": [
@@ -3883,9 +3884,9 @@
         "section": "P.IV.B.2.1. Age information",
         "key_text": "affiliation to one of the paediatric age subsets if it is not possible to obtain the exact age or date of birth",
         "evidence_span": {
-          "text": "age information is reported, and this information should be available in the structured data fields of the ICSR (rather than only in the narrative). As far as possible, the ICSRs should indicate either: • the age at time of onset of reaction or the date of birth, and for neonates, pre-term neonates and infants in addition the gestational age; or • affiliation to one of the paediatric age subsets if it is not possible to obtain the exact age or date of birth or if personal data protection legislation do not permit this in order to prevent identifying the patient, in particular when the medical condition is rare. If no age-related information is provided",
-          "char_start": 539,
-          "char_end": 1199
+          "text": "As far as possible, the ICSRs should indicate either: • the age at time of onset of reaction or the date of birth, and for neonates, pre-term neonates and infants in addition the gestational age; or • affiliation to one of the paediatric age subsets if it is not possible to obtain the exact age or date of birth or if personal data protection legislation do not permit this in order to prevent identifying the patient, in particular when the medical condition is rare.",
+          "char_start": 688,
+          "char_end": 1157
         }
       }
     ],
@@ -3936,9 +3937,9 @@
         "section": "P.IV.B.3. Periodic safety update report (PSUR)",
         "key_text": "ongoing monitoring of the risk-benefit balance specifically for this indication throughout the product life-cycle should be performed (unless exempted from PSUR submission with a justification)",
         "evidence_span": {
-          "text": "periodic safety update reports (PSUR) as described in GVP Module VII should be followed. When a paediatric indication has been granted, ongoing monitoring of the risk-benefit balance specifically for this indication throughout the product life-cycle should be performed (unless exempted from PSUR submission with a justification) via the PSURs, as they",
-          "char_start": 513,
-          "char_end": 865
+          "text": "The requirements for periodic safety update reports (PSUR) as described in GVP Module VII should be followed. When a paediatric indication has been granted, ongoing monitoring of the risk-benefit balance specifically for this indication throughout the product life-cycle should be performed (unless exempted from PSUR submission with a justification) via the PSURs, as they are an important tool to collect and cumulatively analyse information on paediatric use.",
+          "char_start": 492,
+          "char_end": 954
         }
       }
     ],
@@ -6261,7 +6262,7 @@
   },
   {
     "sample_id": "ms-0345",
-    "query": "When considering an externally controlled trial of a promising new therapy, why should hopes of a dramatic benefit not justify a study with no realistic chance of credibly demonstrating efficacy?",
+    "query": "For a promising new therapy where investigators hope for a dramatically convincing effect, what caution does ICH E10 give about the responsibility and ethics of running an externally controlled study?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -6603,7 +6604,7 @@
         "page": 22,
         "printed_page_label": null,
         "section": "6.2. Outcome Assessments",
-        "key_text": "As stated in the ICH E11 (2000) Section 2.4.2, it may be necessary to develop, validate, and employ different endpoints for specific age and developmental subgroups.",
+        "key_text": "it may be necessary to develop, validate, and employ different endpoints for specific age and developmental subgroups",
         "evidence_span": {
           "text": "As stated in the ICH E11 (2000) Section 2.4.2, it may be necessary to develop, validate, and employ different endpoints for specific age and developmental subgroups.",
           "char_start": 1907,
@@ -7092,6 +7093,7 @@
     "dept": "CO",
     "language": "en",
     "slices": [
+      "negation",
       "mixed_zh_en"
     ],
     "required_gold_evidence": [
@@ -7104,8 +7106,8 @@
         "section": "2.1.1 Subject Enrollment",
         "key_text": "repeated demonstration of a QTc interval >450 ms",
         "evidence_span": {
-          "text": "A marked baseline prolongation of QT/QTc interval (e.g., repeated demonstration of a QTc interval >450 ms);",
-          "char_start": 2133,
+          "text": "Until the effects of the drug on the QT/Q Tc interval have been characterized, the following exclusion criteria are suggested: • A marked baseline prolongation of QT/QTc interval (e.g., repeated demonstration of a QTc interval >450 ms);",
+          "char_start": 2004,
           "char_end": 2240
         }
       }
@@ -7145,7 +7147,7 @@
   },
   {
     "sample_id": "ms-0375",
-    "query": "Under ICH E14's interpretation of the thorough QT/QTc study, do drugs that prolong the mean QT/QTc interval by around 5 ms or less appear to cause TdP?",
+    "query": "In ICH E14's interpretation of the thorough QT/QTc study, below what magnitude of mean QT/QTc prolongation are drugs considered not to cause TdP?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -7185,7 +7187,7 @@
       "key_status": "exact",
       "span_status": "exact",
       "curation": [],
-      "parent_query": "按照ICH E14对thorough QT/QTc研究的解读，使平均QT/QTc延长约5 ms或更少的药物，是否看起来会引起TdP？",
+      "parent_query": "ICH E14 在解读 thorough QT/QTc 研究时，平均 QT/QTc 延长不超过多少的药物被认为不会引起 TdP？",
       "external_review": {
         "source": "external_review/EN_review_audit_2026-09-21.md",
         "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
@@ -7691,7 +7693,7 @@
   },
   {
     "sample_id": "ms-0393",
-    "query": "How should all regions and sites participating in an MRCT comply with ICH E6 GCP standards and what regulatory inspections should they accommodate?",
+    "query": "In an MRCT, what quality and regulatory standards must participating sites meet, and can authorities inspect them?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -7728,7 +7730,7 @@
       "key_status": "exact",
       "span_status": "exact",
       "curation": [],
-      "parent_query": "MRCT的所有参与地区和场所应如何符合ICH E6 GCP标准,并配合哪些监管检查?",
+      "parent_query": "MRCT 中各参与国家/地区的研究中心在 GCP 方面需要满足什么要求，是否必须接受监管机构的现场检查？",
       "external_review": {
         "source": "external_review/EN_review_audit_2026-09-21.md",
         "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
@@ -7958,7 +7960,7 @@
   },
   {
     "sample_id": "ms-0403",
-    "query": "According to ICH E18, can whole-genome sequencing identify incidental findings such as BRCA1 mutations even when the research is not intended to investigate cancer risk?",
+    "query": "Under ICH E18, what example does the guideline give of clinically actionable data generated incidental to the main research objective?",
     "dept": "CO",
     "language": "en",
     "slices": [
