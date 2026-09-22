@@ -84,3 +84,4 @@
 - 第五/六轮完成（2026-09-22 17:25）：争议裁决终态 agree 464 / disputed_resolved 43 / open 0，绑定检查 0，复核累计 $94.85；进入装配、冻结 `main-v1-provisional` 与端到端运行。
 - 冻结前的证据重建修正：`conflict` 块键序容忍（校验器）、无 gold 记录的变体越界修正、ms-0508/0510 重跑；`tools/review_prompt_check.py` 归零后冻结。
 - **已冻结**：`evals/main_set/main-v1-provisional`（dataset_hash 269be665…c9699，2026-09-22）；快照与映射在 `evals/experiments/e2e/main-v1-provisional/`（3 条 unmappable）。
+- 端到端（2026-09-22 18:38）：A2+V 重排后 Recall@5 84.99%（门禁 85%，差 1 条）、失效引用 0、泄漏 0；无答案弃答近似 21.3%、冲突现行版召回 88.5%；详见记录 51 §4。
