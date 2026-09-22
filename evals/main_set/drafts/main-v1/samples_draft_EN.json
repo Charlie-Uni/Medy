@@ -569,6 +569,7 @@
     "language": "en",
     "slices": [
       "time_window",
+      "protocol_id",
       "mixed_zh_en"
     ],
     "required_gold_evidence": [
@@ -1535,7 +1536,7 @@
       "key_status": "exact",
       "span_status": "exact",
       "curation": [],
-      "parent_query": "如果某项研究并非受EMA或国家主管当局要求进行，该研究是否应纳入RMP的药物警戒计划中？",
+      "parent_query": "我们自行发起、监管机构并未要求的一项上市后研究，需要写进 RMP 第 III 部分的药物警戒计划汇总表吗？",
       "external_review": {
         "source": "external_review/EN_review_audit_2026-09-21.md",
         "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21)",
@@ -2603,7 +2604,7 @@
       "curation": [
         "dropped protocol_id: query carries no identifier (P3)"
       ],
-      "parent_query": "按 GVP Module X 所引 Regulation (EC) No 726/2004 Article 23(1)，一款在欧盟获准的药品所含新活性物质，在2011年1月1日尚未包含于任何欧盟已批准药品中，是否属于必须纳入额外监测清单的类别？",
+      "parent_query": "依 GVP Module X 所引 Regulation (EC) No 726/2004 Article 23(1)，含新活性物质的欧盟获批药品要在什么条件下才必须列入额外监测清单？",
       "external_review": {
         "source": "external_review/EN_review_audit_2026-09-21.md",
         "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21)",
@@ -2862,7 +2863,7 @@
         "page": 15,
         "printed_page_label": null,
         "section": "XV.C.2.1. Processing of DHPCs — core EU DHPC",
-        "key_text": "Although there will be national tailoring of such DHPCs, any core messages agreed at EU level should be preserved (i.e. tailoring should not conflict with these core messages)",
+        "key_text": "any core messages agreed at EU level should be preserved (i.e. tailoring should not conflict with these core messages)",
         "evidence_span": {
           "text": "Although there will be national tailoring of such DHPCs, any core messages agreed at EU level should be preserved (i.e. tailoring should not conflict with these core messages).",
           "char_start": 1088,
@@ -3721,9 +3722,9 @@
         "section": "P.III.A.2. Terminology — Miscarriage",
         "key_text": "The most recognised definition of miscarriage in the EU is a fetal death that occurs before 20 completed weeks of gestation",
         "evidence_span": {
-          "text": "a pregnancy before the fetus reaches viability. This definition is based on gestational age and/or fetal weight and varies across countries and regions. The most recognised definition of miscarriage in the EU is a fetal death that occurs before 20 completed weeks of gestation6. Stillbirth: Fetal death after the gestational age of viability.",
-          "char_start": 898,
-          "char_end": 1240
+          "text": "Miscarriage (also referred to as \"spontaneous abortion\"): Loss of a pregnancy before the fetus reaches viability. This definition is based on gestational age and/or fetal weight and varies across countries and regions. The most recognised definition of miscarriage in the EU is a fetal death that occurs before 20 completed weeks of gestation6.",
+          "char_start": 832,
+          "char_end": 1176
         }
       }
     ],
@@ -3776,9 +3777,9 @@
         "section": "P.III.B.2. Management and reporting of suspected adverse reactions — coding principles",
         "key_text": "route of administration should be coded as “transmammary” and the MedDRA term “Drug exposure via breast milk” should be used",
         "evidence_span": {
-          "text": "as outlined in GVP Module VI; o In the case of exposure during breastfeeding, route of administration should be coded as “transmammary” and the MedDRA term “Drug exposure via breast milk” should be used in the Reaction/event ICH-E2B(R3) section",
-          "char_start": 1725,
-          "char_end": 1969
+          "text": "In the case of exposure during breastfeeding, route of administration should be coded as “transmammary” and the MedDRA term “Drug exposure via breast milk” should be used in the Reaction/event ICH-E2B(R3) section (see GVP Annex IV, ICH-E2B(R3))",
+          "char_start": 1757,
+          "char_end": 2001
         }
       }
     ],
@@ -5241,6 +5242,7 @@
     "language": "en",
     "slices": [
       "negation",
+      "protocol_id",
       "mixed_zh_en"
     ],
     "required_gold_evidence": [
@@ -5404,6 +5406,7 @@
     "language": "en",
     "slices": [
       "negation",
+      "protocol_id",
       "mixed_zh_en"
     ],
     "required_gold_evidence": [
@@ -5463,6 +5466,7 @@
     "language": "en",
     "slices": [
       "negation",
+      "protocol_id",
       "mixed_zh_en"
     ],
     "required_gold_evidence": [
@@ -5520,6 +5524,7 @@
     "language": "en",
     "slices": [
       "time_window",
+      "protocol_id",
       "mixed_zh_en"
     ],
     "required_gold_evidence": [
@@ -5581,6 +5586,7 @@
     "slices": [
       "negation",
       "time_window",
+      "protocol_id",
       "mixed_zh_en"
     ],
     "required_gold_evidence": [
@@ -5640,7 +5646,8 @@
     "dept": "CO",
     "language": "en",
     "slices": [
-      "mixed_zh_en"
+      "mixed_zh_en",
+      "protocol_id"
     ],
     "required_gold_evidence": [
       {
@@ -5701,6 +5708,7 @@
       "time_window",
       "negation",
       "mixed_zh_en",
+      "protocol_id",
       "long_context"
     ],
     "required_gold_evidence": [
@@ -6541,6 +6549,7 @@
     "language": "en",
     "slices": [
       "time_window",
+      "protocol_id",
       "mixed_zh_en"
     ],
     "required_gold_evidence": [
@@ -6650,6 +6659,7 @@
     "language": "en",
     "slices": [
       "dose_unit",
+      "protocol_id",
       "mixed_zh_en"
     ],
     "required_gold_evidence": [
@@ -6685,7 +6695,7 @@
       "key_status": "exact",
       "span_status": "exact",
       "curation": [],
-      "parent_query": "按E11(R1)合订文件中原始ICH E11第2.5.3节，到1至2岁时，许多药物按mg/kg基础表达的清除率可能与成人值有何关系？",
+      "parent_query": "按 E11(R1) 合订文件中原始 ICH E11 第2.5.3节，婴幼儿到 1 至 2 岁时按体重计的药物清除率与成人相比通常处于什么水平？",
       "external_review": {
         "source": "external_review/EN_review_audit_2026-09-21.md",
         "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
@@ -6709,6 +6719,7 @@
     "slices": [
       "dose_unit",
       "mixed_zh_en",
+      "protocol_id",
       "long_context"
     ],
     "required_gold_evidence": [
@@ -6828,7 +6839,8 @@
     "language": "en",
     "slices": [
       "version_conflict",
-      "mixed_zh_en"
+      "mixed_zh_en",
+      "protocol_id"
     ],
     "required_gold_evidence": [
       {
@@ -7675,7 +7687,7 @@
       "key_status": "exact",
       "span_status": "exact",
       "curation": [],
-      "parent_query": "按照ICH E17，MRCT方案对允许及不允许的合并用药及其剂量应作什么规定？",
+      "parent_query": "ICH E17 中，各地区医疗实践差异导致合并用药与剂量不一致时，试验方案需要事先作出哪些界定？",
       "external_review": {
         "source": "external_review/EN_review_audit_2026-09-21.md",
         "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
@@ -8385,7 +8397,7 @@
       "key_status": "exact",
       "span_status": "exact",
       "curation": [],
-      "parent_query": "根据ICH E3,临床研究报告中的数据列表为控制篇幅,是否可以过度使用符号代替文字说明?",
+      "parent_query": "ICH E3 对报告附录中的数据列表在变量数量与排版上有什么要求，为压缩篇幅把多个变量放进同一张表时需要注意什么？",
       "external_review": {
         "source": "external_review/EN_review_audit_2026-09-21.md",
         "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
@@ -8438,7 +8450,7 @@
       "key_status": "exact",
       "span_status": "exact",
       "curation": [],
-      "parent_query": "依ICH E3第11.4.2.7节，旨在显示等效性的主动对照试验应呈现关键终点的何种置信区间比较，以及该区间与预设不可接受劣效程度的什么关系？",
+      "parent_query": "按 ICH E3 第11.4.2.7节，以等效性为目的的主动对照试验，疗效分析需要呈现哪些统计结果？",
       "external_review": {
         "source": "external_review/EN_review_audit_2026-09-21.md",
         "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
@@ -8515,6 +8527,7 @@
     "slices": [
       "dose_unit",
       "mixed_zh_en",
+      "protocol_id",
       "long_context"
     ],
     "required_gold_evidence": [
@@ -8616,7 +8629,7 @@
   },
   {
     "sample_id": "ms-0431",
-    "query": "According to ICH E7, should geriatric trial protocols unnecessarily exclude patients because they have concomitant illnesses?",
+    "query": "Under ICH E7, how should protocols handle enrolment of geriatric patients who have concomitant illnesses, and why?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -8910,7 +8923,7 @@
       "key_status": "exact",
       "span_status": "exact",
       "curation": [],
-      "parent_query": "根据ICH E7，认知功能等评估是否需要特别规划，以及是否更适合在独立研究中开展？",
+      "parent_query": "ICH E7 对老年人群试验中认知功能等特殊评估的实施方式有什么建议？应放在主研究还是另行安排？",
       "external_review": {
         "source": "external_review/EN_review_audit_2026-09-21.md",
         "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
@@ -9115,6 +9128,7 @@
     "language": "en",
     "slices": [
       "negation",
+      "protocol_id",
       "mixed_zh_en"
     ],
     "required_gold_evidence": [

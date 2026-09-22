@@ -167,6 +167,7 @@
     "language": "mixed",
     "slices": [
       "negation",
+      "protocol_id",
       "mixed_zh_en"
     ],
     "required_gold_evidence": [
@@ -324,6 +325,7 @@
     "language": "mixed",
     "slices": [
       "negation",
+      "protocol_id",
       "mixed_zh_en"
     ],
     "required_gold_evidence": [
@@ -439,6 +441,7 @@
     "language": "mixed",
     "slices": [
       "negation",
+      "protocol_id",
       "mixed_zh_en"
     ],
     "required_gold_evidence": [
@@ -494,6 +497,7 @@
     "language": "mixed",
     "slices": [
       "time_window",
+      "protocol_id",
       "mixed_zh_en"
     ],
     "required_gold_evidence": [
@@ -551,6 +555,7 @@
     "slices": [
       "negation",
       "time_window",
+      "protocol_id",
       "mixed_zh_en"
     ],
     "required_gold_evidence": [
@@ -606,7 +611,8 @@
     "dept": "CO",
     "language": "mixed",
     "slices": [
-      "mixed_zh_en"
+      "mixed_zh_en",
+      "protocol_id"
     ],
     "required_gold_evidence": [
       {
@@ -663,6 +669,7 @@
       "time_window",
       "negation",
       "mixed_zh_en",
+      "protocol_id",
       "long_context"
     ],
     "required_gold_evidence": [
@@ -1451,6 +1458,7 @@
     "language": "mixed",
     "slices": [
       "time_window",
+      "protocol_id",
       "mixed_zh_en"
     ],
     "required_gold_evidence": [
@@ -1549,11 +1557,12 @@
   },
   {
     "sample_id": "ms-0358",
-    "query": "按E11(R1)合订文件中原始ICH E11第2.5.3节，到1至2岁时，许多药物按mg/kg基础表达的清除率可能与成人值有何关系？",
+    "query": "按 E11(R1) 合订文件中原始 ICH E11 第2.5.3节，婴幼儿到 1 至 2 岁时按体重计的药物清除率与成人相比通常处于什么水平？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
       "dose_unit",
+      "protocol_id",
       "mixed_zh_en"
     ],
     "required_gold_evidence": [
@@ -1609,6 +1618,7 @@
     "slices": [
       "dose_unit",
       "mixed_zh_en",
+      "protocol_id",
       "long_context"
     ],
     "required_gold_evidence": [
@@ -1724,7 +1734,8 @@
     "language": "mixed",
     "slices": [
       "version_conflict",
-      "mixed_zh_en"
+      "mixed_zh_en",
+      "protocol_id"
     ],
     "required_gold_evidence": [
       {
@@ -2514,7 +2525,7 @@
   },
   {
     "sample_id": "ms-0390",
-    "query": "按照ICH E17，MRCT方案对允许及不允许的合并用药及其剂量应作什么规定？",
+    "query": "ICH E17 中，各地区医疗实践差异导致合并用药与剂量不一致时，试验方案需要事先作出哪些界定？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
@@ -3182,7 +3193,7 @@
   },
   {
     "sample_id": "ms-0418",
-    "query": "根据ICH E3,临床研究报告中的数据列表为控制篇幅,是否可以过度使用符号代替文字说明?",
+    "query": "ICH E3 对报告附录中的数据列表在变量数量与排版上有什么要求，为压缩篇幅把多个变量放进同一张表时需要注意什么？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
@@ -3233,7 +3244,7 @@
   },
   {
     "sample_id": "ms-0420",
-    "query": "依ICH E3第11.4.2.7节，旨在显示等效性的主动对照试验应呈现关键终点的何种置信区间比较，以及该区间与预设不可接受劣效程度的什么关系？",
+    "query": "按 ICH E3 第11.4.2.7节，以等效性为目的的主动对照试验，疗效分析需要呈现哪些统计结果？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
@@ -3342,6 +3353,7 @@
     "slices": [
       "dose_unit",
       "mixed_zh_en",
+      "protocol_id",
       "long_context"
     ],
     "required_gold_evidence": [
@@ -3691,7 +3703,7 @@
   },
   {
     "sample_id": "ms-0438",
-    "query": "根据ICH E7，认知功能等评估是否需要特别规划，以及是否更适合在独立研究中开展？",
+    "query": "ICH E7 对老年人群试验中认知功能等特殊评估的实施方式有什么建议？应放在主研究还是另行安排？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
@@ -3926,6 +3938,7 @@
     "language": "mixed",
     "slices": [
       "negation",
+      "protocol_id",
       "mixed_zh_en"
     ],
     "required_gold_evidence": [

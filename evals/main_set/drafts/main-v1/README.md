@@ -79,3 +79,5 @@
 - 第三轮（2026-09-22）：ms-0228 补 negation 与父样本同步，两条重跑 agree；争议收敛，17 条 `disputed_resolved`、其余 agree，复核累计 $53.52。
 - 冻结前 PR-09 发现：单独重跑改动样本会让原块邻居绑在含旧输入的提示上（318 条）。决策人选方案一：318 条以块大小 1 重跑（2026-09-22 下午，五批并行）；`tools/review_binding_check.py` 可在冻结前复查，`apply_resolutions.py` 之后的重跑固定块大小 1。
 - 318 条块大小 1 重跑完成（$34.75，累计 $88.27），绑定检查归零；57 条新争议 → [review/disputes_sheet_round4.md](review/disputes_sheet_round4.md)（预填：接受 30 / 保留 27），待 annotator-01 确认；`carry_forward_resolutions.py` 已把 6 条同一异议的保留决定续用、4 条转 agree 的撤销。
+- 第四轮已按决策人"按建议来"应用（接受 30 / 保留 27），47 条改动，块大小 1 重跑中；已决表即 `review/disputes_sheet_round4.md`，改动清单 `review/changed_2026-09-22_round4.json`。
+- 第四轮重跑完成（累计 $93.22），9 条新争议 → [review/disputes_sheet_round5.md](review/disputes_sheet_round5.md)（预填接受 7 / 保留 2），待确认。

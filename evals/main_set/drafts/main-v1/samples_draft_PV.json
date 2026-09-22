@@ -569,6 +569,7 @@
     "language": "mixed",
     "slices": [
       "time_window",
+      "protocol_id",
       "mixed_zh_en"
     ],
     "required_gold_evidence": [
@@ -1679,7 +1680,7 @@
   },
   {
     "sample_id": "ms-0139",
-    "query": "如果某项研究并非受EMA或国家主管当局要求进行，该研究是否应纳入RMP的药物警戒计划中？",
+    "query": "我们自行发起、监管机构并未要求的一项上市后研究，需要写进 RMP 第 III 部分的药物警戒计划汇总表吗？",
     "dept": "PV",
     "language": "mixed",
     "slices": [
@@ -2869,7 +2870,7 @@
   },
   {
     "sample_id": "ms-0179",
-    "query": "按 GVP Module X 所引 Regulation (EC) No 726/2004 Article 23(1)，一款在欧盟获准的药品所含新活性物质，在2011年1月1日尚未包含于任何欧盟已批准药品中，是否属于必须纳入额外监测清单的类别？",
+    "query": "依 GVP Module X 所引 Regulation (EC) No 726/2004 Article 23(1)，含新活性物质的欧盟获批药品要在什么条件下才必须列入额外监测清单？",
     "dept": "PV",
     "language": "mixed",
     "slices": [
@@ -3171,7 +3172,7 @@
         "page": 15,
         "printed_page_label": null,
         "section": "XV.C.2.1. Processing of DHPCs — core EU DHPC",
-        "key_text": "Although there will be national tailoring of such DHPCs, any core messages agreed at EU level should be preserved (i.e. tailoring should not conflict with these core messages)",
+        "key_text": "any core messages agreed at EU level should be preserved (i.e. tailoring should not conflict with these core messages)",
         "evidence_span": {
           "text": "Although there will be national tailoring of such DHPCs, any core messages agreed at EU level should be preserved (i.e. tailoring should not conflict with these core messages).",
           "char_start": 1088,
@@ -4044,9 +4045,9 @@
         "section": "P.III.A.2. Terminology — Miscarriage",
         "key_text": "The most recognised definition of miscarriage in the EU is a fetal death that occurs before 20 completed weeks of gestation",
         "evidence_span": {
-          "text": "a pregnancy before the fetus reaches viability. This definition is based on gestational age and/or fetal weight and varies across countries and regions. The most recognised definition of miscarriage in the EU is a fetal death that occurs before 20 completed weeks of gestation6. Stillbirth: Fetal death after the gestational age of viability.",
-          "char_start": 898,
-          "char_end": 1240
+          "text": "Miscarriage (also referred to as \"spontaneous abortion\"): Loss of a pregnancy before the fetus reaches viability. This definition is based on gestational age and/or fetal weight and varies across countries and regions. The most recognised definition of miscarriage in the EU is a fetal death that occurs before 20 completed weeks of gestation6.",
+          "char_start": 832,
+          "char_end": 1176
         }
       }
     ],
@@ -4102,9 +4103,9 @@
         "section": "P.III.B.2. Management and reporting of suspected adverse reactions — coding principles",
         "key_text": "route of administration should be coded as “transmammary” and the MedDRA term “Drug exposure via breast milk” should be used",
         "evidence_span": {
-          "text": "as outlined in GVP Module VI; o In the case of exposure during breastfeeding, route of administration should be coded as “transmammary” and the MedDRA term “Drug exposure via breast milk” should be used in the Reaction/event ICH-E2B(R3) section",
-          "char_start": 1725,
-          "char_end": 1969
+          "text": "In the case of exposure during breastfeeding, route of administration should be coded as “transmammary” and the MedDRA term “Drug exposure via breast milk” should be used in the Reaction/event ICH-E2B(R3) section (see GVP Annex IV, ICH-E2B(R3))",
+          "char_start": 1757,
+          "char_end": 2001
         }
       }
     ],
