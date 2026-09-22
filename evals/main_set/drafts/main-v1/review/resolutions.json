@@ -147,6 +147,24 @@
     "sample_input_sha256": "137df278780edd586e7b1b8247cbc71b0d1cd19d5d6ffe1d62262bb1930942b2",
     "verdict_sha256": "33a1ccb0f22c31b0dc5e7c188c493ea1943819994af80fb5447e80ab0d119218"
   },
+  "ms-0390": {
+    "approval_source": "drafts/main-v1/review/disputes_sheet_round5.md（annotator-01 决定列）",
+    "issue_scope": [
+      "slices"
+    ],
+    "resolution_note": "按 2026-09-22 口径（ms-0380/0391/0482/0491/0493 同），query 中的指南名只限定来源文档，不是用于锁定条款的精确条号、节号或版本号，不计 protocol_id。",
+    "sample_input_sha256": "a261e62a0409ccf481e5a3aba701f621f0c979571f2d746f17d0b1372395c483",
+    "verdict_sha256": "729cb30a348852213154c2eeeb63fc620c70705367a6001c70bc81aedd88705e"
+  },
+  "ms-0391": {
+    "approval_source": "drafts/main-v1/review/disputes_sheet_round6.md（annotator-01 决定列）",
+    "issue_scope": [
+      "slices"
+    ],
+    "resolution_note": "按 2026-09-22 口径（ms-0380/0391/0482/0491/0493 同），query 中的指南名只限定来源文档，不是用于锁定条款的精确条号、节号或版本号，不计 protocol_id。",
+    "sample_input_sha256": "988ec71e1cb58e1f09dc003fbae58f2390cd6b9e21d82b844f14959912e292a5",
+    "verdict_sha256": "f5c250de0e0533be8fd46dd9e31c2f9d8c72a9f43eb695d3d465a3a3239eeb56"
+  },
   "ms-0400": {
     "approval_source": "drafts/main-v1/review/disputes_sheet_round4.md（annotator-01 决定列）",
     "issue_scope": [
@@ -246,6 +264,15 @@
     "resolution_note": "按 2026-09-22 口径（ms-0380/0391/0482/0491/0493 同），query 中的指南名只限定来源文档，不是用于锁定条款的精确条号、节号或版本号，不计 protocol_id。",
     "sample_input_sha256": "99b83e24d69dc637d943fbd09d48f806d85905606c1ff163a24cd02be1786299",
     "verdict_sha256": "9c9ed09916d4b30372367283856956a09a6ad5aa4035b84e76476e481982d238"
+  },
+  "ms-0438": {
+    "approval_source": "drafts/main-v1/review/disputes_sheet_round5.md（annotator-01 决定列）",
+    "issue_scope": [
+      "slices"
+    ],
+    "resolution_note": "按 2026-09-22 口径（ms-0380/0391/0482/0491/0493 同），query 中的指南名只限定来源文档，不是用于锁定条款的精确条号、节号或版本号，不计 protocol_id。",
+    "sample_input_sha256": "1371fbd4b825370832b61d7ffa5ddc92f712a39cc6dc602f9fced9735de08020",
+    "verdict_sha256": "cea34b03aac2fd38834b1852ad5b95c7a2bbd0c14b82182bcd8f8e15f57d2d95"
   },
   "ms-0448": {
     "approval_source": "drafts/main-v1/review/disputes_sheet_round4.md（annotator-01 决定列）",

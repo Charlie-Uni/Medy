@@ -81,3 +81,4 @@
 - 318 条块大小 1 重跑完成（$34.75，累计 $88.27），绑定检查归零；57 条新争议 → [review/disputes_sheet_round4.md](review/disputes_sheet_round4.md)（预填：接受 30 / 保留 27），待 annotator-01 确认；`carry_forward_resolutions.py` 已把 6 条同一异议的保留决定续用、4 条转 agree 的撤销。
 - 第四轮已按决策人"按建议来"应用（接受 30 / 保留 27），47 条改动，块大小 1 重跑中；已决表即 `review/disputes_sheet_round4.md`，改动清单 `review/changed_2026-09-22_round4.json`。
 - 第四轮重跑完成（累计 $93.22），9 条新争议 → [review/disputes_sheet_round5.md](review/disputes_sheet_round5.md)（预填接受 7 / 保留 2），待确认。
+- 第五/六轮完成（2026-09-22 17:25）：争议裁决终态 agree 464 / disputed_resolved 43 / open 0，绑定检查 0，复核累计 $94.85；进入装配、冻结 `main-v1-provisional` 与端到端运行。

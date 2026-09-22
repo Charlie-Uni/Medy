@@ -2560,7 +2560,7 @@
   },
   {
     "sample_id": "ms-0180",
-    "query": "Under Article 23(1) of Regulation (EC) No 726/2004, as cited in GVP Module X, must an EU-authorised medicinal product be included in the additional monitoring list if it contains a new active substance that, on 1 January 2011, was not contained in any medicinal product authorised in the EU?",
+    "query": "Under Article 23(1) of Regulation (EC) No 726/2004 as cited in GVP Module X, on what condition must an EU-authorised medicinal product containing a new active substance be included in the additional monitoring list?",
     "dept": "PV",
     "language": "en",
     "slices": [
@@ -5504,7 +5504,7 @@
       "curation": [
         "dropped protocol_id: query carries no identifier (P3)"
       ],
-      "parent_query": "根据21 CFR 812.110,研究者可否将试验用医疗器械提供给未经授权接收该器械的人?",
+      "parent_query": "器械临床试验中，研究者把试验用器械交给本中心以外未获授权的人员使用，21 CFR 812.110 下是否允许？还有哪些使用范围限制？",
       "external_review": {
         "source": "external_review/EN_review_audit_2026-09-21.md",
         "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
@@ -7649,7 +7649,7 @@
   },
   {
     "sample_id": "ms-0391",
-    "query": "According to ICH E17, what should an MRCT protocol specify about allowable and non-allowable concomitant medications and their doses?",
+    "query": "Under ICH E17, when regional differences in medical practice lead to different concomitant drugs or doses being used, what must the trial protocol define in advance?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -8359,7 +8359,7 @@
   },
   {
     "sample_id": "ms-0419",
-    "query": "According to ICH E3, can data listings in a clinical study report overuse symbols instead of words merely to control size?",
+    "query": "What does ICH E3 say about data listings in the report appendices in terms of the number of variables and the format of the display, and what should be considered when many variables are combined into a single listing to limit its size?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -8376,9 +8376,9 @@
         "section": "General Considerations on Data Presentation",
         "key_text": "should not be allowed to lead to overuse of symbols instead of words",
         "evidence_span": {
-          "text": "An excess of data should not be allowed to lead to overuse of symbols instead of words or easily understood abbreviations or to too small displays etc.",
-          "char_start": 1338,
-          "char_end": 1489
+          "text": "Thus, althou gh it may be desirable to include many variables in a single listing to limit size, this should not be at the expense of clarity. An excess of data should not be allowed to lead to overuse of symbols instead of words or easily understood abbreviations or to too small displays etc. In this case, it is preferable to produce several listings.",
+          "char_start": 1195,
+          "char_end": 1549
         }
       }
     ],
@@ -8412,7 +8412,7 @@
   },
   {
     "sample_id": "ms-0421",
-    "query": "In an active-control study intended to show equivalence, what should the analysis show about the confidence interval for critical endpoints and its relation to the pre-specified unacceptable degree of inferiority under ICH E3 Section 11.4.2.7?",
+    "query": "Under ICH E3 Section 11.4.2.7, what statistical results should the efficacy analysis present for an active-control study intended to show equivalence?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -8885,7 +8885,7 @@
   },
   {
     "sample_id": "ms-0439",
-    "query": "According to ICH E7, do assessments such as cognitive function studies require special planning, and are they best carried out in separate studies?",
+    "query": "In geriatric trials under ICH E7, how should special assessments such as cognitive function evaluation be arranged — within the main Phase 3 studies or in dedicated studies?",
     "dept": "CO",
     "language": "en",
     "slices": [

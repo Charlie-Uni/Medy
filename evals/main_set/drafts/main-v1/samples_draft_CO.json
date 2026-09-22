@@ -436,7 +436,7 @@
   },
   {
     "sample_id": "ms-0314",
-    "query": "根据21 CFR 812.110,研究者可否将试验用医疗器械提供给未经授权接收该器械的人?",
+    "query": "器械临床试验中，研究者把试验用器械交给本中心以外未获授权的人员使用，21 CFR 812.110 下是否允许？还有哪些使用范围限制？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
@@ -3210,9 +3210,9 @@
         "section": "General Considerations on Data Presentation",
         "key_text": "should not be allowed to lead to overuse of symbols instead of words",
         "evidence_span": {
-          "text": "An excess of data should not be allowed to lead to overuse of symbols instead of words or easily understood abbreviations or to too small displays etc.",
-          "char_start": 1338,
-          "char_end": 1489
+          "text": "Thus, althou gh it may be desirable to include many variables in a single listing to limit size, this should not be at the expense of clarity. An excess of data should not be allowed to lead to overuse of symbols instead of words or easily understood abbreviations or to too small displays etc. In this case, it is preferable to produce several listings.",
+          "char_start": 1195,
+          "char_end": 1549
         }
       }
     ],
