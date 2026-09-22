@@ -240,34 +240,57 @@ def _no_answer_record(
     }
 
 
+_CONFLICT_DRAFTING_ORDER = ("family_document_keys", "current_document_key", "clause_topic", "synthetic")
+
+
 def _span_variants(record: dict[str, Any]) -> list[dict[str, Any]]:
-    if "gold" not in record:
-        return [record]
-    """The two serialisations an input pack may have used for evidence_span: the explicit
-    (text, char_start, char_end) order of the v1 drafting tools, or canonical sorted keys when the pack
-    was re-exported from a canonical samples.jsonl (v2). Content is identical; only key order differs."""
-    span = record["gold"]["evidence_span"]
-    ordered = {"text": span["text"], "char_start": span["char_start"], "char_end": span["char_end"]}
-    canonical = {k: span[k] for k in sorted(span)}
-    out = []
-    for variant in (ordered, canonical):
-        r = dict(record)
-        r["gold"] = dict(record["gold"])
-        r["gold"]["evidence_span"] = variant
-        out.append(r)
-    return out
+    """The serialisations an input pack may have used for blocks whose key order is not fixed by the schema:
+    `evidence_span` in the explicit (text, char_start, char_end) order of the drafting tools or in canonical sorted
+    order (pack re-exported from a canonical samples.jsonl), and — spec-m1 — the `conflict` block in the drafting
+    tools' order or in canonical order. Content is identical; only key order differs. Records without these blocks
+    (e.g. no-answer records) yield a single variant, returned twice so that callers can index 0/1 uniformly."""
+    variants: list[dict[str, Any]] = [record]
+    if "gold" in record:
+        span = record["gold"]["evidence_span"]
+        ordered = {"text": span["text"], "char_start": span["char_start"], "char_end": span["char_end"]}
+        canonical = {k: span[k] for k in sorted(span)}
+        variants = []
+        for variant in (ordered, canonical):
+            r = dict(record)
+            r["gold"] = dict(record["gold"])
+            r["gold"]["evidence_span"] = variant
+            variants.append(r)
+    if isinstance(record.get("conflict"), dict):
+        conflict = record["conflict"]
+        drafting = {k: conflict[k] for k in _CONFLICT_DRAFTING_ORDER if k in conflict}
+        drafting.update({k: v for k, v in conflict.items() if k not in drafting})
+        canonical_conflict = {k: conflict[k] for k in sorted(conflict)}
+        expanded = []
+        for base in variants:
+            for block in (drafting, canonical_conflict):
+                r = dict(base)
+                r["conflict"] = block
+                expanded.append(r)
+        variants = expanded
+    if len(variants) == 1:
+        variants = [variants[0], variants[0]]
+    return variants
 
 
 def _actual_prompt_hashes(prompt_text: str, records: list[dict[str, Any]]) -> set[str]:
-    """Prompt hashes for every per-record key-order combination of evidence_span (a pack may mix records
-    re-exported from canonical JSON with records edited by the drafting tools). Chunks are at most a
-    handful of records, so the product stays small; larger packs fall back to the two uniform variants."""
+    """Prompt hashes for every per-record key-order combination (see _span_variants). Chunks are at most a handful
+    of records, so the product stays small; larger products fall back to the uniform variants (same index for
+    every record)."""
     variants = [_span_variants(r) for r in records]
-    if len(records) > 8:
-        return {_actual_prompt_hash(prompt_text, [v[i] for v in variants]) for i in range(2)}
+    size = 1
+    for v in variants:
+        size *= len(v)
+    if size > 4096:
+        width = max(len(v) for v in variants)
+        return {_actual_prompt_hash(prompt_text, [v[min(i, len(v) - 1)] for v in variants]) for i in range(width)}
     return {
         _actual_prompt_hash(prompt_text, [v[i] for v, i in zip(variants, choice, strict=True)])
-        for choice in itertools.product((0, 1), repeat=len(records))
+        for choice in itertools.product(*[range(len(v)) for v in variants])
     }
 
 

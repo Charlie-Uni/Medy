@@ -82,3 +82,5 @@
 - 第四轮已按决策人"按建议来"应用（接受 30 / 保留 27），47 条改动，块大小 1 重跑中；已决表即 `review/disputes_sheet_round4.md`，改动清单 `review/changed_2026-09-22_round4.json`。
 - 第四轮重跑完成（累计 $93.22），9 条新争议 → [review/disputes_sheet_round5.md](review/disputes_sheet_round5.md)（预填接受 7 / 保留 2），待确认。
 - 第五/六轮完成（2026-09-22 17:25）：争议裁决终态 agree 464 / disputed_resolved 43 / open 0，绑定检查 0，复核累计 $94.85；进入装配、冻结 `main-v1-provisional` 与端到端运行。
+- 冻结前的证据重建修正：`conflict` 块键序容忍（校验器）、无 gold 记录的变体越界修正、ms-0508/0510 重跑；`tools/review_prompt_check.py` 归零后冻结。
+- **已冻结**：`evals/main_set/main-v1-provisional`（dataset_hash 269be665…c9699，2026-09-22）；快照与映射在 `evals/experiments/e2e/main-v1-provisional/`（3 条 unmappable）。

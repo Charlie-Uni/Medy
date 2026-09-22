@@ -2,9 +2,9 @@
   "dataset_id": "precise_clause_main",
   "dataset_version": "main-v1-provisional",
   "spec_version": "spec-m1",
-  "status": "draft",
+  "status": "frozen",
   "created_at": "2026-09-22",
-  "frozen_at": null,
+  "frozen_at": "2026-09-22",
   "purpose": "主评测集 main-v1（临时版）：并入探针 v2 全部 107 条样本，另按 spec-m1 新增有答案样本（含英文孪生、合成版本冲突样本、长条款样本）与无答案样本；用于基线 M1-21 端到端门禁（Recall@5 ≥ 85%、失效版本引用率 0、abstention accuracy ≥ 90%）。第二人工复核未完成，故为 provisional。",
   "source_store": {
     "kind": "local_path",
@@ -51,7 +51,7 @@
       "dose_unit": 65,
       "negation": 275,
       "time_window": 128,
-      "protocol_id": 121,
+      "protocol_id": 149,
       "mixed_zh_en": 569,
       "version_conflict": 52,
       "no_answer": 61,
@@ -98,51 +98,51 @@
     "artifacts": [
       {
         "path": "review_evidence/resolutions.json",
-        "sha256": "84cef944d21bfe91bc0fa80bf44e6246f5f7632930a3b572327fea17ecc9653f"
+        "sha256": "d3000000d057d94c63d60f733bb5f433146467abe86c0237b34ad2094857ce53"
       },
       {
         "path": "review_evidence/reviewer_runtime_metadata.json",
-        "sha256": "d267834ebe17200f0aa013123e1ea34a307b4bec5ee638cdb6505d82875b1cbe"
+        "sha256": "482cf31c93e1f2ec0d49ec334e9190db510373905f7e92b16ebf7cc5821894b9"
       },
       {
         "path": "review_evidence/run_CO.json",
-        "sha256": "498fa89613a0741ab3038e8894fd522e1ed7b1cd6199ebf64129658431e73e61"
+        "sha256": "e3286e122b73010deda078c5bff89cb6071b0039ab71a245ad3b0e5ebd5ac15a"
       },
       {
         "path": "review_evidence/run_EN.json",
-        "sha256": "a0c6e6e8723e4576cdb9cbfc007c66e3b23b95e067d2be6199b5bcd54a1ddfc4"
+        "sha256": "3b846a841a7021ecba06b75bdca56187ecf78bccf6e6363abeb6d16ae590c612"
       },
       {
         "path": "review_evidence/run_MA.json",
-        "sha256": "0034d944be85dae6956db7caeaa0d848716bba51097b15500f26abe3df17f7ef"
+        "sha256": "584f00ae655fddb14ce9fb8413f0cb1a5c6b84664852ff785e6f336e135c5e02"
       },
       {
         "path": "review_evidence/run_NA.json",
-        "sha256": "c5c57c9e86df1d427e8a759b15069215ed7de2d771b6ab59651f27417f1f644b"
+        "sha256": "593471090332d0dd982e4d09d25d0df3a6296c9999b58d891f50ea11dd8e306b"
       },
       {
         "path": "review_evidence/run_PV.json",
-        "sha256": "588bec0c702bf4b7bdb3d8824984f28ef10b16c63addfc0909ae02dd1ebf9eea"
+        "sha256": "e82dc3c5ff3e5f132235be408f08e556fc487853c2bf7c45dbc655243f0b02b1"
       },
       {
         "path": "review_evidence/verdicts_CO.jsonl",
-        "sha256": "e3a91aceb100a5d86ede11014812d83f981d355d0e11faebd412020a67fa77cc"
+        "sha256": "76a2c31d8d424646d4f5a9d210e6b9d35207280457f9606c2a07249f280aeb0e"
       },
       {
         "path": "review_evidence/verdicts_EN.jsonl",
-        "sha256": "ede379e05b4f2d1530116b37084608a5b5b98e50fdc5f9c5157b2a9b4b5a985a"
+        "sha256": "c2d58ffc896d63ccae945c935ec9859b4434e52a8cb2ef2b08b8cb78012ee833"
       },
       {
         "path": "review_evidence/verdicts_MA.jsonl",
-        "sha256": "47a973d2df615c4a0c4c624fcaa41ff32ab3967fa9a7ecbca843f57a445c9cd2"
+        "sha256": "c71e599f6d7f9456e3c26945173a4f71621a28ac15e06d3c7f9aeb8bca5950d3"
       },
       {
         "path": "review_evidence/verdicts_NA.jsonl",
-        "sha256": "2a72a8b356d03c20e750cfd3f93c165555fc273475e8aeb9458c532a1caf5e41"
+        "sha256": "7d2c827fa447e660cdac7b5ad1c2b3d392959c8bed369816736a5a20db1f1c47"
       },
       {
         "path": "review_evidence/verdicts_PV.jsonl",
-        "sha256": "772343d8277c8b9af453a8ffd50bd31ebd2daa44f26f3a071c0d5dc4dc396d61"
+        "sha256": "6822e1e6d9475cabce480b4083bfc67d219500f457b786f9335b7cc24213143e"
       }
     ]
   },
@@ -162,10 +162,10 @@
     },
     {
       "path": "samples.jsonl",
-      "sha256": "4fb4d93b66a4ab9acd345e645fcb77b3aa30789632d9a043ad8737f7a078a8b5"
+      "sha256": "a8c01f31aa5a7ccc94b0c4a9aa3eac63d766e85a1f5d10e2760fe0897a1e0253"
     }
   ],
-  "dataset_hash": null,
+  "dataset_hash": "269be665c288e79210a255c7e2ceaadbb87ba1c088e9ce9e1ee5515e568c9699",
   "supersedes": null,
   "change_reason": null,
   "derived_samples": {
