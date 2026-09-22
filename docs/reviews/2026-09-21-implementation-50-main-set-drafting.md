@@ -97,3 +97,14 @@ annotator-01 逐条确认五张标注表 → 按改动重算偏移 → `pack_rev
 - 争议构成（按裁决方式）：切片增删类可用 `接受` 机械应用；key_text / query / 无答案缺席类需 annotator-01 判断；裁决表 [disputes_sheet.md](../../evals/main_set/drafts/main-v1/review/disputes_sheet.md)。裁决 → `apply_resolutions.py`（改动样本 `--only` 重跑）→ `assemble.py --human-confirmed 2026-09-22` → `freeze.py`（`main-v1-provisional`）→ chunk 映射 → 端到端运行。
 - `env -u DEBUG -u PYTHONPATH make check`：退出码 0，**893 passed**（含复核证据的 dropped_after_review 容忍逻辑）。
 
+
+## 13. 补记（2026-09-22）：争议裁决写回、口径补充与第二轮复核
+
+- 决策人交回填好「决定」列的裁决表与一份统一口径记录（ChatGPT 辅助、由 annotator-01 提交；`external_review/main_v1_disputes_readjudication_audit_2026-09-22.md`）：接受 62、保留 9。逐格核对只有决定列与原表不同。
+- 六条口径中四条与 2026-09-19 批准的 P1/P2/P3 一致；两条是主集收窄并已登记到 [SPEC §3](../../evals/main_set/SPEC.md)：测量值（QTc 毫秒、体重、血压）不计 `dose_unit`；仅以指南名限定来源不计 `protocol_id`。后者与冻结的探针 v2 不一致（24 条 protocol_id 样本的 query 只含指南名，PR-16 逐字节并入不能改），已向决策人说明并在 SPEC 写明两套口径并存；决策人以裁决表维持收窄。
+- 写回方式：62 条接受多为文字描述，实现方翻译为页内原文的精确改动并留档 `review/resolutions_explicit_2026-09-22.json`（每条绑定决定文字的 SHA-256）；9 条决定给出的 key_text 超过 200 字符上限（ms-0122/0123、0197、0213、0217、0229、0268、0298、0326、0432/0433），取满足意图的最长 ≤200 连续原文并注明。决定引出的一致性清扫 `review/consistency_sweep_2026-09-22.json`：13 条（含孪生 20 条）指南名式 protocol_id、ms-0364/0365 的 mmHg dose_unit、ms-0416/0434 的父问改写（与已改写的孪生一致）。
+- 工具：[apply_resolutions.py](../../evals/main_set/tools/apply_resolutions.py) 新增 `--explicit`、`--sweep`、`--sheet`、`section=` / `span=` / `absence_terms=`（无答案样本改题必须重查缺席）、父问改动联动孪生 `parent_query` 并重跑孪生、`review/changed_<date>.json`；[disputes_sheet.py](../../evals/main_set/tools/disputes_sheet.py) 新增 `--round`（跳过 `保留` 且判定未变的争议）。
+- 结果：111 条样本改动（62 决定 + 孪生联动 + 清扫），`check_drafts.py` 0 错误、下限全满足；`resolutions.json` 9 条 `disputed_resolved`。111 条按批次 `--only` 重跑 claude-opus-5：费用 9.16 美元（累计 52.22 美元），EN 一块因复核人回复格式不合规中断一次、续跑完成。
+- 第二轮：24 条新争议（MA 2、PV 4、CO 5、EN 8、NA 5），全部落在改动样本上：切片 8（其中 6 条是指南名式 protocol_id，复核提示的切片定义仍写"指南编号"，与新口径冲突，只能靠 `保留` 消解；1 条 21 CFR 50.56(b) 应补 protocol_id；1 条克重 dose_unit）、key_text 6（含 2 条受 200 字符上限约束无法满足）、evidence_span 5（两条原本就切在句中，第一轮未被指出）、query 6（4 条是父问已改写而孪生仍是旧问法）。裁决表 [disputes_sheet_round2.md](../../evals/main_set/drafts/main-v1/review/disputes_sheet_round2.md) 已由实现方预填 `建议：`（接受 15 / 保留 9），待 annotator-01 确认；第一轮已决表仍为 `review/disputes_sheet.md`。
+- 观察：复核人对同一样本在两轮给出不同异议（如 ms-0058 第一轮建议收窄 span，第二轮又要求补回适应证限定），说明 LLM 复核有非确定性；第二轮之后若仍有争议，建议以 `保留` 收敛，不再进入第三轮重跑。
+- `env -u DEBUG -u PYTHONPATH make check`：893 passed（本节改动前后各跑一次，见提交）。

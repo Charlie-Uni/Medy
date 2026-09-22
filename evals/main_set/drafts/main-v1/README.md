@@ -66,3 +66,12 @@
 - 争议裁决表：[review/disputes_sheet.md](review/disputes_sheet.md)（71 条），annotator-01 在「决定」列写 `接受`（机械建议：补/删标签、改 key_text）或 `接受：key_text=… | slices=… | query=… | topic=… | span=…`，或 `保留：<理由>`；`tools/apply_resolutions.py` 应用并只对改动样本重跑复核。
 - 复核运行记录：`review/run_{MA,PV,CO,EN,NA}.json`、`verdicts_*.jsonl`（含页文本的输入包与分块输入不入 Git）。
 
+
+## 2026-09-22 争议裁决写回（annotator-01 决定列 + 审计记录）
+
+- 决策人交回填好「决定」列的裁决表（`review/disputes_sheet.md`，只有决定列与原表不同，逐格核对）与统一口径记录（`external_review/main_v1_disputes_readjudication_audit_2026-09-22.md`，ChatGPT 辅助、由 annotator-01 提交）：接受 62、保留 9。
+- 62 条接受多为文字描述而非工具语法，实现方逐条翻译成页内原文的精确改动并留档 `review/resolutions_explicit_2026-09-22.json`（每条绑定决定文字的 SHA-256，`apply_resolutions.py --explicit` 只在哈希一致时使用）。9 条决定文字给出的 key_text 超过 200 字符上限（ms-0122/0123、0197、0213、0217、0229、0268、0298、0326、0432/0433），取满足决定意图的最长 ≤200 连续原文并在文件中注明（`implementer_note`），标注人可否决。
+- 决定引出的两条主集口径（SPEC §3 已登记）：测量值不计 `dose_unit`；仅以指南名限定来源不计 `protocol_id`。为保持全集一致，对同构的未争议样本做了一次记录在案的清扫（`review/consistency_sweep_2026-09-22.json`，`--sweep`）：去掉 13 条（含孪生 20 条）只以指南名限定的 protocol_id、去掉 ms-0364/0365（mmHg）的 dose_unit、按复核人同一争议中的父问改写更新 ms-0416/0434 的 query 以与已改写的孪生一致。并入的探针样本不动（PR-16 逐字节），其 24 条指南名式 protocol_id 保留探针口径。
+- 工具增补：`apply_resolutions.py` 支持 `section=`、`span=`、`absence_terms=`（无答案样本改题必须给出并重查缺席）、父样本 query 改动联动孪生的 `parent_query` 并重跑孪生、`review/changed_<date>.json` 输出。
+- 结果：111 条样本改动（含孪生与 parent_query 联动），`check_drafts.py` 0 错误、下限全部满足；`resolutions.json` 9 条 `disputed_resolved`；改动样本按批次 `--only` 重跑 claude-opus-5 复核（结果见记录 50 §13）。
+- 重跑结果（2026-09-22 13:17）：111 条重跑费用 $9.16（累计 $52.22）；24 条新争议 → [review/disputes_sheet_round2.md](review/disputes_sheet_round2.md)（实现方预填 `建议：`，接受 15 / 保留 9，其中 6 条是指南名式 protocol_id 的口径冲突、2 条受 200 字符上限约束）。第一轮已决表仍为 `review/disputes_sheet.md`。第二轮应用命令：`apply_resolutions.py --sheet review/disputes_sheet_round2.md --explicit review/resolutions_explicit_round2.json --sweep review/consistency_sweep_round2.json`。

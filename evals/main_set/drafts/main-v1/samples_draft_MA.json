@@ -2487,7 +2487,7 @@
   },
   {
     "sample_id": "ms-0050",
-    "query": "Losacar仿單「禁忌症」所列的糖尿病患，或GFR低於60 ml/min/1.73 m²的腎功能不全患者，是否可合併使用含aliskiren成分的藥品？",
+    "query": "糖尿病患或腎功能不全（GFR<60 ml/min/1.73 m²）的病人，Losacar 可以和含 aliskiren 成分的藥品併用嗎？",
     "dept": "MA",
     "language": "mixed",
     "slices": [
@@ -2940,9 +2940,9 @@
         "section": "一般孩童劑量",
         "key_text": "年齡 6 至 12 歲的孩童:口服,100 mg,一天三次;或 300 mg 當作一個單一劑量,一天一次",
         "evidence_span": {
-          "text": "年齡 6 至 12 歲的孩童:口服,100 mg,一天三次;或 300 mg 當作一個單一劑量,一天一次。注意—大約在治療 48 小時之後,劑量的調整可能是必需的,依病人的反應而定。",
+          "text": "年齡 6 至 12 歲的孩童:口服,100 mg,一天三次;或 300 mg 當作一個單一劑量,一天一次。",
           "char_start": 50,
-          "char_end": 141
+          "char_end": 103
         }
       }
     ],
@@ -3102,7 +3102,7 @@
         "page": 7,
         "printed_page_label": null,
         "section": "5.13 QT 期間延長",
-        "key_text": "Quetiapine 應避免與其他會延長 QT 的藥物併用,包括 1A 類抗心律不整藥",
+        "key_text": "Quetiapine 應避免與其他會延長 QT 的藥物併用",
         "evidence_span": {
           "text": "Quetiapine 應避免與其他會延長 QT 的藥物併用,包括 1A 類抗心律不整藥(例如 Quinidine, Procainamide)或 III 類抗心律不整藥(例如 Amiodarone, Sotalol),抗精神病藥物(例如 Ziprasidone, Chlorpromazine, Thioridazine),抗生素(例如 Gatifloxacin, Moxifloxacin),或其他會延長 QT 期間的藥物類別(例如 Pentamidine,Levomethadyl acetate, Methadone)。",
           "char_start": 392,

@@ -72,7 +72,7 @@
   },
   {
     "sample_id": "ms-0087",
-    "query": "According to Directive 2001/83/EC Article 16c(1)(c), as cited in GVP Annex I Rev 4, how long must a traditional herbal medicinal product have been in medicinal use, including the required period within the EU?",
+    "query": "According to Directive 2001/83/EC Article 16c(1)(c), as cited in GVP Annex I Rev 5, how long must a traditional herbal medicinal product have been in medicinal use, including the required period within the EU?",
     "dept": "PV",
     "language": "en",
     "slices": [
@@ -116,7 +116,7 @@
       "curation": [
         "dropped protocol_id: query carries no identifier (P3)"
       ],
-      "parent_query": "按 GVP Annex I Rev 4 所引 Directive 2001/83/EC Art 16c(1)(c)，传统草药药品（traditional herbal medicinal product）的传统药用年限须达到多久，其中欧盟境内须达到多久？",
+      "parent_query": "按 GVP Annex I Rev 5 所引 Directive 2001/83/EC Art 16c(1)(c)，传统草药药品（traditional herbal medicinal product）的传统药用年限须达到多久，其中欧盟境内须达到多久？",
       "external_review": {
         "source": "external_review/EN_review_audit_2026-09-21.md",
         "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21)",
@@ -851,7 +851,7 @@
         "page": 4,
         "printed_page_label": null,
         "section": "III.A. Introduction",
-        "key_text": "the Member State concerned shall inform the other Member States, the Agency and the European Commission in accordance with III.C.1.",
+        "key_text": "the Member State concerned shall inform the other Member States, the Agency and the European Commission",
         "evidence_span": {
           "text": "If the outcome of the inspection is that the marketing authorisation holder does not comply with the pharmacovigilance obligations, the Member State concerned shall inform the other Member States, the Agency and the European Commission in accordance with III.C.1. [DIR Art 111(8)].",
           "char_start": 2009,
@@ -1071,7 +1071,7 @@
         "page": 11,
         "printed_page_label": null,
         "section": "IV.C.1.2.3. The Pharmacovigilance Risk Assessment Committee (PRAC)",
-        "key_text": "The mandate of the Pharmacovigilance Risk Assessment Committee (PRAC) shall cover all aspects of the risk management of the use of medicinal products for human use , having due regard to the design",
+        "key_text": "(PRAC) shall cover all aspects of the risk management of the use of medicinal products for human use , having due regard to the design and evaluation of pharmacovigilance audits",
         "evidence_span": {
           "text": "The mandate of the Pharmacovigilance Risk Assessment Committee (PRAC) shall cover all aspects of the risk management of the use of medicinal products for human use , having due regard to the design and evaluation of pharmacovigilance audits [REG Art 61a(6)].",
           "char_start": 1327,
@@ -1964,7 +1964,7 @@
         "page": 103,
         "printed_page_label": null,
         "section": "Table VI.6. Process description — Step 4. Submit ICSR to EV",
-        "key_text": "within the relevant time frame (15 or 90 days, as applicable). Non-serious non-EEA ICSRs should not be submitted to EV.",
+        "key_text": "in ICH- E2B(R2/R3) format as an XML message within the relevant time frame (15 or 90 days, as applicable). Non-serious non-EEA ICSRs should not be submitted to EV.",
         "evidence_span": {
           "text": "3.1 Is ICSR from EEA? Is the ICSR from EEA? If No go to step 3.2. If Yes, go to step 4. NCA/MAH 3.2 End. The ICSR is not serious and it is not from the EEA. It should not be sent to EV. NCA/MAH 4 Submit ICSR to EV. Submit the ICSR (EEA and non-EEA serious, and EEA non-serious) to EudraVigilance (EV) in ICH- E2B(R2/R3) format as an XML message within the relevant time frame (15 or 90 days, as applicable). Non-serious non-EEA ICSRs should not be submitted to EV.",
           "char_start": 824,
@@ -2295,7 +2295,7 @@
         "page": 18,
         "printed_page_label": null,
         "section": "VII.B.5.6.2. PSUR sub-section “Cumulative summary tabulations of serious adverse events from clinical trials”",
-        "key_text": "Causality assessment is generally useful for the evaluation of individual rare adverse drug reactions. Individual case causality assessment has less value in the analysis of aggregate data, where",
+        "key_text": "Individual case causality assessment has less value in the analysis of aggregate data",
         "evidence_span": {
           "text": "The following points should be considered: • Causality assessment is generally useful for the evaluation of individual rare adverse drug reactions. Individual case causality assessment has less value in the analysis of aggregate data, where group comparisons of rates are possible. Therefore, the summary tabulations should include all serious adverse events and not just serious adverse reactions for the investigational drug, comparators and placebo. It may be useful to give rates by dose. • In general, the tabulation(s) of serious adverse events from clinical trials should include only those terms that were used in defining the case as serious and non-serious events should be included in the study reports. • The tabulations should include blinded and unblinded clinical trial data. Unblinded serious adverse events might originate from completed trials and individual cases that have been unblinded for safety-related reasons (e.g. expedited reporting), if applicable. Sponsors of clinical trials and marketing authorisation holders should not unblind data for the specific purpose of preparing the PSUR. • Certain adverse events can be excluded from the clinical trials summary tabulations, but such exclusions should be explained in the report. For example, adverse events that have been defined in the protocol as “exempt” from special collection and entry into the safety database because they are anticipated in the patient population, and those that represent study endpoints, can be excluded (e.g. deaths reported in a trial of a drug for congestive heart failure where all-cause mortality is the primary efficacy endpoint, disease progression in cancer trials).",
           "char_start": 1049,
@@ -2969,7 +2969,7 @@
         "page": 16,
         "printed_page_label": null,
         "section": "XV.C.2.2. Translation and dissemination of DHPCs",
-        "key_text": "The draft translations should be submitted to the Member States for a language review and such review should be done within a reasonable timeframe which should not exceed 4-5 working days.",
+        "key_text": "such review should be done within a reasonable timeframe which should not exceed 4-5 working days",
         "evidence_span": {
           "text": "The draft translations should be submitted to the Member States for a language review and such review should be done within a reasonable timeframe which should not exceed 4-5 working days.",
           "char_start": 324,
@@ -3022,7 +3022,7 @@
         "page": 19,
         "printed_page_label": null,
         "section": "XVI.B.5.2. Schedule and documentation of studies evaluating risk minimisation measures",
-        "key_text": "Within 4 years of regulatory implementation the overall effectiveness evaluation of the RMM",
+        "key_text": "within 12-24 months to allow the possibility of necessary changes in healthcare; and • Within 4 years of regulatory implementation the overall effectiveness evaluation of the RMM",
         "evidence_span": {
           "text": "The following timepoints should be considered by marketing authorisation holders for establishing and agreeing schedules with competent authorities: • After regulatory implementation an initial evaluation of RMM, e.g. within 12-24 months to allow the possibility of necessary changes in healthcare; and • Within 4 years of regulatory implementation the overall effectiveness evaluation of the RMM (see XVI.B.5.3.), which, where applicable, can also inform the evaluation of the renewal of a marketing authorisation.",
           "char_start": 1325,
@@ -3131,7 +3131,7 @@
         "page": 38,
         "printed_page_label": null,
         "section": "XVI.App1.5.1. Subject to medical prescription",
-        "key_text": "The medicinal product is likely to present a danger either directly or indirectly, even when used correctly, if utilised without medical supervision; or • The medicinal product is frequently and to a",
+        "key_text": "Medicinal products shall be subject to medical prescription where",
         "evidence_span": {
           "text": "Medicinal products shall be subject to medical prescription where: • The medicinal product is likely to present a danger either directly or indirectly, even when used correctly, if utilised without medical supervision; or • The medicinal product is frequently and to a very wide extent used incorrectly, and as a result is likely to present a direct or indirect danger to human health; or • The medicinal product contains (a) substance(s) or preparations thereof, the activity and/or adverse reactions of which require further investigation; or • The medicinal product is normally prescribed to be administered parenterally [DIR Art 71(1)].",
           "char_start": 2839,
@@ -3240,7 +3240,7 @@
         "page": 36,
         "printed_page_label": null,
         "section": "XVI.App1.1. Summary of product characteristics",
-        "key_text": "the summary of product characteristics (SmPC) (see GVP Annex I) presents information relevant to RMM in: • SmPC section 4.8 ‘Undesirable Effects’: Information on adverse reactions, including",
+        "key_text": "the summary of product characteristics (SmPC) (see GVP Annex I) presents information relevant to RMM in",
         "evidence_span": {
           "text": "the summary of product characteristics (SmPC) (see GVP Annex I) presents information relevant to RMM in: • SmPC section 4.8 ‘Undesirable Effects’: Information on adverse reactions, including information characterising the reaction which may be useful to prevent, monitor or manage its occurrence; • SmPC section 4.4 ‘Special Warnings and Precautions for Use’: Warnings and actions to be taken to avoid specific possible adverse reactions or to be taken if a specific reaction occurs or, if deemed necessary, actions to be taken as a precaution for potential risks; • SmPC section 4.6 ‘Fertility, Pregnancy and Lactation’: Information on risks of the medicinal product impacting on fertility, pregnancy and lactation, including risks for the embryo/foetus/child due to adverse effects at conception, in utero or through breastfeeding, and actions to be taken to avoid or minimise these risks; • SmPC sections 4.1 ‘Therapeutic Indications’, 4.2 ‘Posology and Method of Administration’, 4.3 ‘Contraindications’, 4.5 ‘Interaction with Other Medicinal Products and Other Forms of Interaction’, 4.7 ‘Effects on Ability to Drive and Use Machines’ and 4.9’ Overdose’: Safe use advice regarding indications, dosing and administration, contraindications, interactions, ability to drive and use machines, and overdose. For medicinal products with additional RMM materials, according to the Guideline on Summary of Product Characteristics26 and supplementary Guidance on Frequently Asked Questions on SmPC Section 4.427, the SmPC section 4.4. should describe the intended actions for risk minimisation and should include a statement on the educational/safety advice materials addressed to healthcare professionals or patients which clearly and succinctly explains the purpose (e.g. “to be handed out to the patient”) and scope of the materials.",
           "char_start": 362,
@@ -3486,7 +3486,7 @@
         "page": 11,
         "printed_page_label": null,
         "section": "P.I.B.1.3.1. RMP section “Routine pharmacovigilance activities”",
-        "key_text": "batch-related adverse reactions , including the measures taken to clearly identify the name of the product and the batch numbers involved in suspected adverse reactions (see GVP Module VI)",
+        "key_text": "the batch numbers involved in suspected adverse reactions (see GVP Module VI) and a description of how traceability of manufacturing changes will allow identify any related adverse reactions",
         "evidence_span": {
           "text": "batch-related adverse reactions , including the measures taken to clearly identify the name of the product and the batch numbers involved in suspected adverse reactions (see GVP Module VI) and a description of how traceability of manufacturing changes will allow identify any related adverse reactions",
           "char_start": 1072,
@@ -3614,7 +3614,7 @@
         "page": 9,
         "printed_page_label": null,
         "section": "P.III.B.2. Management and reporting of suspected adverse reactions — footnote 11",
-        "key_text": "reports which have a normal outcome should not be submitted as ICSRs since there is no suspected adverse reaction",
+        "key_text": "termination of pregnancy without information on congenital malformation, reports of pregnancy exposure without outcome data, or reports which have a normal outcome should not be submitted as ICSRs",
         "evidence_span": {
           "text": "“Reports of induced termination of pregnancy without information on congenital malformation, reports of pregnancy exposure without outcome data, or reports which have a normal outcome should not be submitted as ICSRs since there is no suspected adverse reaction",
           "char_start": 2781,
@@ -3881,7 +3881,7 @@
         "page": 9,
         "printed_page_label": null,
         "section": "P.IV.B.2.1. Age information",
-        "key_text": "if it is not possible to obtain the exact age or date of birth or if personal data protection legislation do not permit this",
+        "key_text": "affiliation to one of the paediatric age subsets if it is not possible to obtain the exact age or date of birth",
         "evidence_span": {
           "text": "age information is reported, and this information should be available in the structured data fields of the ICSR (rather than only in the narrative). As far as possible, the ICSRs should indicate either: • the age at time of onset of reaction or the date of birth, and for neonates, pre-term neonates and infants in addition the gestational age; or • affiliation to one of the paediatric age subsets if it is not possible to obtain the exact age or date of birth or if personal data protection legislation do not permit this in order to prevent identifying the patient, in particular when the medical condition is rare. If no age-related information is provided",
           "char_start": 539,
@@ -3934,7 +3934,7 @@
         "page": 10,
         "printed_page_label": null,
         "section": "P.IV.B.3. Periodic safety update report (PSUR)",
-        "key_text": "unless exempted from PSUR submission with a justification",
+        "key_text": "ongoing monitoring of the risk-benefit balance specifically for this indication throughout the product life-cycle should be performed (unless exempted from PSUR submission with a justification)",
         "evidence_span": {
           "text": "periodic safety update reports (PSUR) as described in GVP Module VII should be followed. When a paediatric indication has been granted, ongoing monitoring of the risk-benefit balance specifically for this indication throughout the product life-cycle should be performed (unless exempted from PSUR submission with a justification) via the PSURs, as they",
           "char_start": 513,
@@ -4219,7 +4219,7 @@
         "page": 11,
         "printed_page_label": null,
         "section": "V.D. Nonserious Adverse Event Reporting",
-        "key_text": "The investigator is not required to assess causality of nonserious adverse events under § 312.64(b), although many sponsors may require it in the protocol.",
+        "key_text": "The investigator is not required to assess causality of nonserious adverse events under § 312.64(b)",
         "evidence_span": {
           "text": "The investigator is not required to assess causality of nonserious adverse events under § 312.64(b), although many sponsors may require it in the protocol.",
           "char_start": 890,
@@ -4262,8 +4262,7 @@
     "language": "en",
     "slices": [
       "protocol_id",
-      "mixed_zh_en",
-      "long_context"
+      "mixed_zh_en"
     ],
     "required_gold_evidence": [
       {
@@ -4275,8 +4274,8 @@
         "section": "III.A.2. Adverse Reaction and Suspected Adverse Reaction",
         "key_text": "illustrate the meaning of reasonable possibility with respect to a determination that there may be a causal relationship between the drug and the adverse event",
         "evidence_span": {
-          "text": "Suspected adverse reaction means — any adverse event for which there is a reasonable possibility that the drug caused the adverse event. For the purposes of IND safety reporting, “reasonable possibility” means there is evidence to suggest a causal relationship between the drug and the adverse event. Suspected adverse reaction implies a lesser degree of certainty about causality than adverse reaction[.] (§ 312.32(a)) (emphasis added) Both an adverse reaction and a suspected adverse reaction require evidence of a causal relationship between the drug and the adverse event (§ 312.32(a)). Therefore, if no drug has been administered, an adverse event is not reportable under IND safety reporting regulations.9,10 The following examples are also provided in the IND safety reporting regulation (§ 312.32(c)(1)(i)) and illustrate the meaning of reasonable possibility with respect to a determination that there may be a causal relationship between the drug and the adverse event: • A single occurrence of an event that is uncommon and known to be strongly associated with drug exposure (e.g., angioedema, hepatic injury, Stevens-Johnson Syndrome). • One or more occurrences of an event that is not commonly associated with drug exposure but is otherwise uncommon in the population exposed to the drug (e.g., tendon rupture). • An aggregate analysis of specific events observed in a clinical trial that indicates those events occur more frequently in the drug treatment group than in a concurrent or historical control group. Examples of such events are known consequences of the underlying disease or condition or events that commonly occur in the study population independent of drug therapy. For aggregate analysis under § 312.32(c)(1)(i)(C), such events could also be associated with treatment or therapy that is standard of care for the disease or condition.",
-          "char_start": 38,
+          "text": "The following examples are also provided in the IND safety reporting regulation (§ 312.32(c)(1)(i)) and illustrate the meaning of reasonable possibility with respect to a determination that there may be a causal relationship between the drug and the adverse event: • A single occurrence of an event that is uncommon and known to be strongly associated with drug exposure (e.g., angioedema, hepatic injury, Stevens-Johnson Syndrome). • One or more occurrences of an event that is not commonly associated with drug exposure but is otherwise uncommon in the population exposed to the drug (e.g., tendon rupture). • An aggregate analysis of specific events observed in a clinical trial that indicates those events occur more frequently in the drug treatment group than in a concurrent or historical control group. Examples of such events are known consequences of the underlying disease or condition or events that commonly occur in the study population independent of drug therapy. For aggregate analysis under § 312.32(c)(1)(i)(C), such events could also be associated with treatment or therapy that is standard of care for the disease or condition.",
+          "char_start": 753,
           "char_end": 1900
         }
       }
@@ -4607,9 +4606,9 @@
         "section": "2.8.3. Time Interval Between Data Lock Point and the Submission",
         "key_text": "PBRERs covering intervals of 6 or 12 months: within 70 calendar days",
         "evidence_span": {
-          "text": "PBRERs covering intervals of 6 or 12 months: within 70 calendar days;",
-          "char_start": 575,
-          "char_end": 644
+          "text": "As a result of the expanded scope of the PBRER, the time interval between the DLP and submission of PBRERs should be as follows:  PBRERs covering intervals of 6 or 12 months: within 70 calendar days;  PBRERs covering intervals in excess of 12 months: within 90 calendar days;  ad hoc PBRERs: 90 calendar days, unless otherwise specified in the ad hoc request. The day of DLP is day 0 of the 70- or 90-calendar day interval between the DLP and report submission.",
+          "char_start": 444,
+          "char_end": 908
         }
       }
     ],
@@ -4929,7 +4928,7 @@
         "page": 13,
         "printed_page_label": null,
         "section": "Annex — Pharmacovigilance Methods — 1. Passive Surveillance — Systematic Methods for the Evaluation of Spontaneous Reports",
-        "key_text": "This tool does not quantify the magnitude of risk, and caution should be exercised when comparing drugs.",
+        "key_text": "This tool does not quantify the magnitude of risk",
         "evidence_span": {
           "text": "Data mining techniques facilitate the evaluation of spontaneous reports by usin g statistical methods to detect potential signals for further evaluation. This tool does not quantify the magnitude of risk, and caution should be exercised when comparing drugs.",
           "char_start": 1944,
@@ -5770,7 +5769,7 @@
         "page": 7,
         "printed_page_label": null,
         "section": "III.A Monitoring Approach – Q2",
-        "key_text": "risks detected during the conduct of the clinical investigation that were not identified before the investigation began",
+        "key_text": "No. Sponsors should monitor the important and likely risks identified during their initial risk assessment, and they should also monitor for additional risks",
         "evidence_span": {
           "text": "No. Sponsors should monitor the important and likely risks identified during their initial risk assessment, and they should also monitor for additional risks detected during the conduct of the clinical investigation that were not identified before the investigation began.",
           "char_start": 2727,
@@ -5814,6 +5813,7 @@
     "dept": "CO",
     "language": "en",
     "slices": [
+      "protocol_id",
       "mixed_zh_en"
     ],
     "required_gold_evidence": [
@@ -5979,7 +5979,6 @@
     "dept": "CO",
     "language": "en",
     "slices": [
-      "negation",
       "mixed_zh_en",
       "long_context"
     ],
@@ -6035,6 +6034,7 @@
     "dept": "CO",
     "language": "en",
     "slices": [
+      "protocol_id",
       "mixed_zh_en"
     ],
     "required_gold_evidence": [
@@ -6094,6 +6094,7 @@
     "language": "en",
     "slices": [
       "negation",
+      "protocol_id",
       "mixed_zh_en"
     ],
     "required_gold_evidence": [
@@ -6298,7 +6299,7 @@
       "key_status": "exact",
       "span_status": "exact",
       "curation": [],
-      "parent_query": "在评估某个新疗法是否值得以外部对照(externally controlled)试验的方式提前测试时，为什么不能仅因为渴望出现戏剧性疗效，就开展没有现实机会可信证明该疗法疗效的试验？",
+      "parent_query": "对于早期结果看起来疗效显著、拟采用外部对照试验的新疗法，ICH E10 在责任和伦理方面对这种设计提出了什么告诫？",
       "external_review": {
         "source": "external_review/EN_review_audit_2026-09-21.md",
         "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
@@ -6319,7 +6320,6 @@
     "dept": "CO",
     "language": "en",
     "slices": [
-      "protocol_id",
       "mixed_zh_en"
     ],
     "required_gold_evidence": [
@@ -6626,7 +6626,7 @@
       "key_status": "exact",
       "span_status": "exact",
       "curation": [],
-      "parent_query": "ICH E11(R1)第6.2节引用E11(2000)第2.4.2节时，对特定年龄及发育亚组可能需要不同终点作了什么说明？",
+      "parent_query": "ICH E11(R1)第6.2节援引 E11(2000) Section 2.4.2 后，对儿科不同年龄和发育亚组的终点处理提出了哪些工作要求？",
       "external_review": {
         "source": "external_review/EN_review_audit_2026-09-21.md",
         "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
@@ -6826,7 +6826,6 @@
     "dept": "CO",
     "language": "en",
     "slices": [
-      "dose_unit",
       "version_conflict",
       "mixed_zh_en"
     ],
@@ -6895,6 +6894,7 @@
     "language": "en",
     "slices": [
       "protocol_id",
+      "time_window",
       "version_conflict",
       "mixed_zh_en"
     ],
@@ -7025,6 +7025,7 @@
     "dept": "CO",
     "language": "en",
     "slices": [
+      "protocol_id",
       "version_conflict",
       "mixed_zh_en"
     ],
@@ -7091,7 +7092,6 @@
     "dept": "CO",
     "language": "en",
     "slices": [
-      "dose_unit",
       "mixed_zh_en"
     ],
     "required_gold_evidence": [
@@ -7150,7 +7150,6 @@
     "language": "en",
     "slices": [
       "negation",
-      "dose_unit",
       "mixed_zh_en"
     ],
     "required_gold_evidence": [
@@ -7386,7 +7385,6 @@
     "dept": "CO",
     "language": "en",
     "slices": [
-      "protocol_id",
       "version_conflict",
       "mixed_zh_en"
     ],
@@ -7450,7 +7448,6 @@
     "language": "en",
     "slices": [
       "negation",
-      "protocol_id",
       "version_conflict",
       "mixed_zh_en"
     ],
@@ -7514,7 +7511,6 @@
     "language": "en",
     "slices": [
       "negation",
-      "protocol_id",
       "version_conflict",
       "mixed_zh_en"
     ],
@@ -7578,7 +7574,6 @@
     "language": "en",
     "slices": [
       "dose_unit",
-      "protocol_id",
       "version_conflict",
       "mixed_zh_en"
     ],
@@ -7700,7 +7695,6 @@
     "dept": "CO",
     "language": "en",
     "slices": [
-      "protocol_id",
       "mixed_zh_en"
     ],
     "required_gold_evidence": [
@@ -8002,7 +7996,7 @@
       "key_status": "tolerant",
       "span_status": "exact",
       "curation": [],
-      "parent_query": "根据ICH E18,BRCA1基因突变等意外发现(incidental findings)是否可能在并非以癌症风险为研究目的的全基因组测序中被识别?",
+      "parent_query": "ICH E18 在说明与主要研究目的无关、但可能具有临床意义的意外发现时，举了什么基因组学例子？",
       "external_review": {
         "source": "external_review/EN_review_audit_2026-09-21.md",
         "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
@@ -8133,7 +8127,6 @@
     "dept": "CO",
     "language": "en",
     "slices": [
-      "dose_unit",
       "negation",
       "mixed_zh_en"
     ],
@@ -8296,7 +8289,7 @@
   },
   {
     "sample_id": "ms-0417",
-    "query": "In the Extent of Exposure section of an ICH E3 clinical study report, in what ways may dosage be expressed, including on a mg/kg or mg/m² basis where appropriate?",
+    "query": "In the Extent of Exposure section of an ICH E3 clinical study report, how should the dose to which patients were exposed be expressed?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -8334,7 +8327,7 @@
       "key_status": "exact",
       "span_status": "exact",
       "curation": [],
-      "parent_query": "在ICH E3临床研究报告的暴露程度部分，剂量可以采用哪些表达方式，包括何时可按mg/kg或mg/m²表达？",
+      "parent_query": "在ICH E3临床研究报告的暴露程度部分，患者所接受的剂量应如何表达？",
       "external_review": {
         "source": "external_review/EN_review_audit_2026-09-21.md",
         "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
@@ -8660,7 +8653,7 @@
       "key_status": "exact",
       "span_status": "exact",
       "curation": [],
-      "parent_query": "根据ICH E7，老年患者试验方案是否应不必要地排除有合并疾病的患者？",
+      "parent_query": "ICH E7 对老年人临床试验中合并疾病患者的入排标准提出了什么原则？",
       "external_review": {
         "source": "external_review/EN_review_audit_2026-09-21.md",
         "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
@@ -8703,7 +8696,7 @@
         "page": 3,
         "printed_page_label": null,
         "section": "III. Scope of Guideline",
-        "key_text": "are likely to be encountered and are not already dealt with in current labelling",
+        "key_text": "The guideline applies also to new formulations and new combinations of established medicinal products when there is specific reason to expect that conditions common in the elderly",
         "evidence_span": {
           "text": "The guideline applies also to new formulations and new combinations of established medicinal products when there is specific reason to expect that conditions common in the elderly (e.g., renal or hepatic impairment, impaired cardiac function, concomitant illnesses or concomitant medications) are likely to be encountered and are not already dealt with in current labelling.",
           "char_start": 1515,
@@ -8753,7 +8746,7 @@
   },
   {
     "sample_id": "ms-0435",
-    "query": "According to the General Principle of ICH E7, should new drugs be studied in all relevant age groups, including the elderly?",
+    "query": "What general principle does ICH E7 set for including older patients in the clinical testing programme for a drug?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -8791,7 +8784,7 @@
       "key_status": "exact",
       "span_status": "exact",
       "curation": [],
-      "parent_query": "根据ICH E7的一般原则,新药临床试验是否应涵盖包括老年人在内的所有相关年龄组?",
+      "parent_query": "ICH E7 的一般原则对在药物临床试验中纳入老年患者提出了什么要求？",
       "external_review": {
         "source": "external_review/EN_review_audit_2026-09-21.md",
         "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",
@@ -8959,7 +8952,7 @@
         "page": 6,
         "printed_page_label": null,
         "section": "IX. Drug-Drug Interaction Studies",
-        "key_text": "the following are ordinarily recommended:",
+        "key_text": "that specific drug-drug interaction studies be considered. The studies needed must be determined case- by-case, but the following are ordinarily recommended:",
         "evidence_span": {
           "text": "Such interactions are of particular impo rtance to geriatric patients, who are more likely to be using concomitant me dications than younger patients, but of course are not limited to this age group. Therefore it is a general principle, not specific to these guidelines, that in cases where the therapeutic range (i.e., range of toxic to therapeutic doses) of the drug or likely concomitant drugs is narrow, and the likelihood of the concomitant ther apy is great, that specific drug-drug interaction studies be considered. The studies needed must be determined case- by-case, but the following are ordinarily recommended: • Digoxin and oral anticoagulant interacti on studies, because so many drugs alter serum concentrations of these drugs, they are widely prescribed in the elderly, and they have narrow therapeutic ranges • For drugs that undergo extensive hepa tic metabolism, determination of the effects of hepatic-enzyme inducers (e.g ., phenobarbital) and inhibitors (e.g., cimetidine) • For drugs metabolized by cytochrome P- 450 enzymes, it is critical to examine the effects of known inhibitors, such as quinidine (for cytochrome P-450 2D6) or ketoconazole and macrolide antibiotics (for drugs metabolized by cytochrome P-450 3A4). There is a rapidly growing list of drugs that can interfere with other drugs that metabolism, and sponsors should remain aware of it. • Interaction studies with other drugs that are likely to be used with the test drug (unless important interactions have been ruled out by a Pharmacokinetic Screen)",
           "char_start": 1249,
@@ -9023,7 +9016,7 @@
         "version_label": "Step 4, 2021-10-06",
         "page": 11,
         "printed_page_label": null,
-        "section": "3.3 Approach to Identifying the Critical to Quality Factors",
+        "section": "3.2 Critical to Quality Factors",
         "key_text": "should not be cluttered with minor issues",
         "evidence_span": {
           "text": "The critical to quality factors should be clear and should not be cluttered with minor issues (e.g., due to extensive secondary objectives or processes/data collection not linked to the proper protection of the study participants and/or primary study objectives).",
@@ -9293,7 +9286,7 @@
         "page": 20,
         "printed_page_label": null,
         "section": "A.5.3. Supplementary Analysis",
-        "key_text": "analysis of the PPS does not achieve the goal of estimating the effect in any principal stratum",
+        "key_text": "because it may not compare similar subjects on different treatments",
         "evidence_span": {
           "text": "As noted above, analysis of the PPS does not achieve the goal of estimating the effect in any principal stratum, for example, in those subjects able to tolerate and continue to take the test treatment, because it may not compare similar subjects on different treatments.",
           "char_start": 1638,
@@ -9445,7 +9438,6 @@
     "dept": "CO",
     "language": "en",
     "slices": [
-      "protocol_id",
       "mixed_zh_en"
     ],
     "required_gold_evidence": [
@@ -9494,7 +9486,7 @@
   },
   {
     "sample_id": "ms-0461",
-    "query": "In an open-label trial, who knows the identity of the treatment assignment?",
+    "query": "In a trial conducted without blinding, can subjects, investigators and sponsor staff all know which treatment each participant receives?",
     "dept": "CO",
     "language": "en",
     "slices": [
@@ -9531,7 +9523,7 @@
       "key_status": "exact",
       "span_status": "exact",
       "curation": [],
-      "parent_query": "在开放标签(open-label)试验中，治疗分配的身份对哪些人是已知的？",
+      "parent_query": "我们计划采用开放标签设计，研究者、受试者和申办方相关人员是否都能知道每名受试者接受的具体治疗？",
       "external_review": {
         "source": "external_review/EN_review_audit_2026-09-21.md",
         "reviewer": "ChatGPT (AI-assisted review submitted by annotator-01, 2026-09-21/22)",

@@ -16,7 +16,7 @@
         "page": 18,
         "printed_page_label": null,
         "section": "4. Procedures (1.4)",
-        "key_text": "no deviations from or changes to the protocol should be initiated without prior documented IRB/IEC approval/favorable opinion of an appropriate protocol amendment",
+        "key_text": "when necessary to eliminate immediate hazards to the participants or, in accordance with applicable regulatory requirements, when the change(s) involves only logistical or administrative aspects",
         "evidence_span": {
           "text": "no deviations from or changes to the protocol should be initiated without prior documented IRB/IEC approval/favorable opinion of an appropriate protocol amendment except when necessary to eliminate immediate hazards to the participants or, in accordance with applicable regulatory requirements, when the change(s) involves only logistical or administrative aspects of the trial",
           "char_start": 1177,
@@ -376,7 +376,7 @@
   },
   {
     "sample_id": "ms-0313",
-    "query": "根据21 CFR 50.56(a)批准的、以wards of the state儿童为受试者的临床试验中,为该儿童指定的advocate必须具备哪些资格与独立性要求?在哪些情况下(如50.51、50.52批准的试验)则不要求指定advocate?",
+    "query": "根据21 CFR 50.56(b)，为受国家或其他机构监护的儿童指定 advocate 时，该 advocate 在经验、维护儿童最佳利益和独立性方面需满足什么要求？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
@@ -392,7 +392,7 @@
         "page": 50,
         "printed_page_label": null,
         "section": "2. Are there any additional protections required when enrolling children who are wards of the state?",
-        "key_text": "the IRB must require that an advocate be appointed for each child who is a ward",
+        "key_text": "The advocate must be an individual who has the background and experience to act in, and agrees to act in, the best interest of the child",
         "evidence_span": {
           "text": "If a clinical investigation is approved under 21 CFR 50.56(a), the IRB must require that an advocate be appointed for each child who is a ward (21 CFR 50.56(b)). The IRB must ensure that such an advocate is in place, but the IRB itself is not required to appoint the advocate. The advocate, who may serve as an advocate for more than one child, serves in addition to any other individual acting on behalf of the child as guardian or in loco parentis78 (21 CFR 50.56(b)(1) and (2)). The advocate must be an individual who has the background and experience to act in, and agrees to act in, the best interest of the child for the duration of the child's participation in the clinical investigation (21 CFR 50.56(b)(3)). The appropriate expertise for an advocate should include, but is not limited to, education and/or experience in pediatric medicine, law, child advocacy, foster parenting, behavioral sciences, or child psychology. The advocate should be adequately informed about the potential risks and benefits of the proposed clinical investigation, and about how the intervention is likely to affect the individual child. The advocate must not be associated in any way (except in the role as advocate or member of the IRB) with the clinical investigation, the investigator(s), or the guardian organization (21 CFR 50.56(b)(4)). Wards of the state can participate in clinical investigations approved under 21 CFR 50.51 (i.e., research involving no more than minimal risk) and 21 CFR 50.52 (i.e., research involving greater than minimal risk but presenting the prospect of direct benefit), and FDA regulations do not require the appointment of an advocate for children who are wards involved in clinical investigations approved under these sections.",
           "char_start": 1062,
@@ -727,7 +727,7 @@
         "page": 7,
         "printed_page_label": null,
         "section": "III.A Monitoring Approach – Q2",
-        "key_text": "risks detected during the conduct of the clinical investigation that were not identified before the investigation began",
+        "key_text": "No. Sponsors should monitor the important and likely risks identified during their initial risk assessment, and they should also monitor for additional risks",
         "evidence_span": {
           "text": "No. Sponsors should monitor the important and likely risks identified during their initial risk assessment, and they should also monitor for additional risks detected during the conduct of the clinical investigation that were not identified before the investigation began.",
           "char_start": 2727,
@@ -767,6 +767,7 @@
     "dept": "CO",
     "language": "mixed",
     "slices": [
+      "protocol_id",
       "mixed_zh_en"
     ],
     "required_gold_evidence": [
@@ -924,7 +925,6 @@
     "dept": "CO",
     "language": "mixed",
     "slices": [
-      "negation",
       "mixed_zh_en",
       "long_context"
     ],
@@ -976,6 +976,7 @@
     "dept": "CO",
     "language": "mixed",
     "slices": [
+      "protocol_id",
       "mixed_zh_en"
     ],
     "required_gold_evidence": [
@@ -1031,6 +1032,7 @@
     "language": "mixed",
     "slices": [
       "negation",
+      "protocol_id",
       "mixed_zh_en"
     ],
     "required_gold_evidence": [
@@ -1187,7 +1189,7 @@
   },
   {
     "sample_id": "ms-0344",
-    "query": "在评估某个新疗法是否值得以外部对照(externally controlled)试验的方式提前测试时，为什么不能仅因为渴望出现戏剧性疗效，就开展没有现实机会可信证明该疗法疗效的试验？",
+    "query": "对于早期结果看起来疗效显著、拟采用外部对照试验的新疗法，ICH E10 在责任和伦理方面对这种设计提出了什么告诫？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
@@ -1242,7 +1244,6 @@
     "dept": "CO",
     "language": "mixed",
     "slices": [
-      "protocol_id",
       "mixed_zh_en"
     ],
     "required_gold_evidence": [
@@ -1495,7 +1496,7 @@
   },
   {
     "sample_id": "ms-0356",
-    "query": "ICH E11(R1)第6.2节引用E11(2000)第2.4.2节时，对特定年龄及发育亚组可能需要不同终点作了什么说明？",
+    "query": "ICH E11(R1)第6.2节援引 E11(2000) Section 2.4.2 后，对儿科不同年龄和发育亚组的终点处理提出了哪些工作要求？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
@@ -1721,7 +1722,6 @@
     "dept": "CO",
     "language": "mixed",
     "slices": [
-      "dose_unit",
       "version_conflict",
       "mixed_zh_en"
     ],
@@ -1788,6 +1788,7 @@
     "language": "mixed",
     "slices": [
       "protocol_id",
+      "time_window",
       "version_conflict",
       "mixed_zh_en"
     ],
@@ -1916,6 +1917,7 @@
     "dept": "CO",
     "language": "mixed",
     "slices": [
+      "protocol_id",
       "version_conflict",
       "mixed_zh_en"
     ],
@@ -1982,7 +1984,6 @@
     "dept": "CO",
     "language": "mixed",
     "slices": [
-      "dose_unit",
       "mixed_zh_en"
     ],
     "required_gold_evidence": [
@@ -2037,7 +2038,6 @@
     "language": "mixed",
     "slices": [
       "negation",
-      "dose_unit",
       "mixed_zh_en"
     ],
     "required_gold_evidence": [
@@ -2264,7 +2264,6 @@
     "dept": "CO",
     "language": "mixed",
     "slices": [
-      "protocol_id",
       "version_conflict",
       "mixed_zh_en"
     ],
@@ -2328,7 +2327,6 @@
     "language": "mixed",
     "slices": [
       "negation",
-      "protocol_id",
       "version_conflict",
       "mixed_zh_en"
     ],
@@ -2392,7 +2390,6 @@
     "language": "mixed",
     "slices": [
       "negation",
-      "protocol_id",
       "version_conflict",
       "mixed_zh_en"
     ],
@@ -2456,7 +2453,6 @@
     "language": "mixed",
     "slices": [
       "dose_unit",
-      "protocol_id",
       "version_conflict",
       "mixed_zh_en"
     ],
@@ -2572,7 +2568,6 @@
     "dept": "CO",
     "language": "mixed",
     "slices": [
-      "protocol_id",
       "mixed_zh_en"
     ],
     "required_gold_evidence": [
@@ -2822,7 +2817,7 @@
   },
   {
     "sample_id": "ms-0402",
-    "query": "根据ICH E18,BRCA1基因突变等意外发现(incidental findings)是否可能在并非以癌症风险为研究目的的全基因组测序中被识别?",
+    "query": "ICH E18 在说明与主要研究目的无关、但可能具有临床意义的意外发现时，举了什么基因组学例子？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
@@ -2979,7 +2974,6 @@
     "dept": "CO",
     "language": "mixed",
     "slices": [
-      "dose_unit",
       "negation",
       "mixed_zh_en"
     ],
@@ -3134,7 +3128,7 @@
   },
   {
     "sample_id": "ms-0416",
-    "query": "在ICH E3临床研究报告的暴露程度部分，剂量可以采用哪些表达方式，包括何时可按mg/kg或mg/m²表达？",
+    "query": "在ICH E3临床研究报告的暴露程度部分，患者所接受的剂量应如何表达？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
@@ -3443,7 +3437,7 @@
   },
   {
     "sample_id": "ms-0430",
-    "query": "根据ICH E7，老年患者试验方案是否应不必要地排除有合并疾病的患者？",
+    "query": "ICH E7 对老年人临床试验中合并疾病患者的入排标准提出了什么原则？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
@@ -3523,7 +3517,7 @@
         "page": 3,
         "printed_page_label": null,
         "section": "III. Scope of Guideline",
-        "key_text": "are likely to be encountered and are not already dealt with in current labelling",
+        "key_text": "The guideline applies also to new formulations and new combinations of established medicinal products when there is specific reason to expect that conditions common in the elderly",
         "evidence_span": {
           "text": "The guideline applies also to new formulations and new combinations of established medicinal products when there is specific reason to expect that conditions common in the elderly (e.g., renal or hepatic impairment, impaired cardiac function, concomitant illnesses or concomitant medications) are likely to be encountered and are not already dealt with in current labelling.",
           "char_start": 1515,
@@ -3571,7 +3565,7 @@
   },
   {
     "sample_id": "ms-0434",
-    "query": "根据ICH E7的一般原则,新药临床试验是否应涵盖包括老年人在内的所有相关年龄组?",
+    "query": "ICH E7 的一般原则对在药物临床试验中纳入老年患者提出了什么要求？",
     "dept": "CO",
     "language": "mixed",
     "slices": [
@@ -3775,7 +3769,7 @@
         "page": 6,
         "printed_page_label": null,
         "section": "IX. Drug-Drug Interaction Studies",
-        "key_text": "the following are ordinarily recommended:",
+        "key_text": "that specific drug-drug interaction studies be considered. The studies needed must be determined case- by-case, but the following are ordinarily recommended:",
         "evidence_span": {
           "text": "Such interactions are of particular impo rtance to geriatric patients, who are more likely to be using concomitant me dications than younger patients, but of course are not limited to this age group. Therefore it is a general principle, not specific to these guidelines, that in cases where the therapeutic range (i.e., range of toxic to therapeutic doses) of the drug or likely concomitant drugs is narrow, and the likelihood of the concomitant ther apy is great, that specific drug-drug interaction studies be considered. The studies needed must be determined case- by-case, but the following are ordinarily recommended: • Digoxin and oral anticoagulant interacti on studies, because so many drugs alter serum concentrations of these drugs, they are widely prescribed in the elderly, and they have narrow therapeutic ranges • For drugs that undergo extensive hepa tic metabolism, determination of the effects of hepatic-enzyme inducers (e.g ., phenobarbital) and inhibitors (e.g., cimetidine) • For drugs metabolized by cytochrome P- 450 enzymes, it is critical to examine the effects of known inhibitors, such as quinidine (for cytochrome P-450 2D6) or ketoconazole and macrolide antibiotics (for drugs metabolized by cytochrome P-450 3A4). There is a rapidly growing list of drugs that can interfere with other drugs that metabolism, and sponsors should remain aware of it. • Interaction studies with other drugs that are likely to be used with the test drug (unless important interactions have been ruled out by a Pharmacokinetic Screen)",
           "char_start": 1249,
@@ -3837,7 +3831,7 @@
         "version_label": "Step 4, 2021-10-06",
         "page": 11,
         "printed_page_label": null,
-        "section": "3.3 Approach to Identifying the Critical to Quality Factors",
+        "section": "3.2 Critical to Quality Factors",
         "key_text": "should not be cluttered with minor issues",
         "evidence_span": {
           "text": "The critical to quality factors should be clear and should not be cluttered with minor issues (e.g., due to extensive secondary objectives or processes/data collection not linked to the proper protection of the study participants and/or primary study objectives).",
@@ -4093,7 +4087,7 @@
         "page": 20,
         "printed_page_label": null,
         "section": "A.5.3. Supplementary Analysis",
-        "key_text": "analysis of the PPS does not achieve the goal of estimating the effect in any principal stratum",
+        "key_text": "because it may not compare similar subjects on different treatments",
         "evidence_span": {
           "text": "As noted above, analysis of the PPS does not achieve the goal of estimating the effect in any principal stratum, for example, in those subjects able to tolerate and continue to take the test treatment, because it may not compare similar subjects on different treatments.",
           "char_start": 1638,
@@ -4235,7 +4229,6 @@
     "dept": "CO",
     "language": "mixed",
     "slices": [
-      "protocol_id",
       "mixed_zh_en"
     ],
     "required_gold_evidence": [
@@ -4282,7 +4275,7 @@
   },
   {
     "sample_id": "ms-0460",
-    "query": "在开放标签(open-label)试验中，治疗分配的身份对哪些人是已知的？",
+    "query": "我们计划采用开放标签设计，研究者、受试者和申办方相关人员是否都能知道每名受试者接受的具体治疗？",
     "dept": "CO",
     "language": "mixed",
     "slices": [

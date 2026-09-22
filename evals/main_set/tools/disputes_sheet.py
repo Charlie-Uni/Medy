@@ -37,7 +37,12 @@ def esc(t: object) -> str:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", type=pathlib.Path, default=REVIEW / "disputes_sheet.md")
+    ap.add_argument(
+        "--round", type=int, default=1, help="adjudication round; rounds > 1 skip disputes already resolved"
+    )
     args = ap.parse_args()
+    res_path = REVIEW / "resolutions.json"
+    resolutions = json.loads(res_path.read_text(encoding="utf-8")) if res_path.exists() else {}
     corpus = dc.load_corpus()
     by_hash = {d["source_hash"]: d for d in corpus.values()}
     drafts: dict[str, tuple[str, dict]] = {}
@@ -54,6 +59,18 @@ def main() -> None:
         if rp.exists():
             verdicts.update(codex.current_verdicts(json.loads(rp.read_text(encoding="utf-8"))))
     disputed = {sid for sid, v in verdicts.items() if v["verdict"] == "dispute"}
+    latest: dict[str, dict] = {}
+    for b in BATCHES:
+        rp = REVIEW / f"run_{b}.json"
+        if rp.exists():
+            latest.update(json.loads(rp.read_text(encoding="utf-8")).get("latest", {}))
+    resolved = {
+        sid
+        for sid, r in resolutions.items()
+        if sid in latest and r.get("verdict_sha256") == latest[sid].get("verdict_sha256")
+    }
+    if args.round > 1:
+        disputed -= resolved  # 保留 decisions bound to the current verdict stay resolved
     rows = []
     for sid in sorted(disputed):
         if sid not in drafts:
@@ -84,8 +101,15 @@ def main() -> None:
             f"{esc(anchor)} | {esc(v['reason'][:600])} | {esc(v['suggestion'][:400])} | |"
         )
     lines = [
-        "# 主评测集 main-v1 复核争议裁决表（复核人 reviewer-llm-02 = claude-opus-5）",
+        f"# 主评测集 main-v1 复核争议裁决表（复核人 reviewer-llm-02 = claude-opus-5）{f'：第 {args.round} 轮' if args.round > 1 else ''}",
         "",
+        *(
+            [
+                f"> 第 {args.round} 轮：上一轮决定已应用并重跑复核后，复核人对改动样本提出的新争议（上一轮 `保留` 且判定未变的 {len(resolved)} 条不再列出）。"
+            ]
+            if args.round > 1
+            else []
+        ),
         f"> 共 {len(rows)} 条争议。每条请在「决定」列填写：`接受`（我按建议修改样本并只对该样本重跑复核；建议不够机械时写 `接受：key_text=… | slices=a,b | query=… | topic=…`）或 `保留：<理由>`（写入 resolution_note，状态记为 disputed_resolved）。",
         "> 同族规则（spec-v1.1 §5.1 / PR-15）：孪生的 gold、slices 与父样本完全相同；涉及 key_text、evidence_span 或 slices 的决定对父样本和孪生同时生效，query 的决定只影响被争议的那一条。无答案样本只有 query / topic / slices 可改。",
         "> PDF 用友好名打开（`evals/main_set/pdf_by_key/<document_key>.pdf`，本机符号链接），页码为 PDF 物理页序号。",
@@ -96,7 +120,7 @@ def main() -> None:
         "",
     ]
     args.out.write_text("\n".join(lines), encoding="utf-8")
-    shown = args.out.relative_to(dc.REPO) if args.out.resolve().is_relative_to(dc.REPO) else args.out
+    shown = args.out.resolve().relative_to(dc.REPO) if args.out.resolve().is_relative_to(dc.REPO) else args.out
     print(f"{len(rows)} disputes -> {shown}")
 
 

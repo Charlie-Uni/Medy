@@ -33,6 +33,7 @@
 - 每条新样本记录 `drafted_by`（`kind`、`id`、`model`）；`conflict.synthetic=true` 时 `notes` 必须写明“合成冲突”。
 - `long_context` 由工具按规则计算：任一 gold 的 `evidence_span.text` 超过 1,500 字符，或 gold 跨两页以上。
 - gold 锚定、`key_text` 最小性（P1）、切片判定口径（P2/P3）、norm-v1、命中规则全部沿用探针 SPEC §6–7。
+- 2026-09-22 决策人（annotator-01）在争议裁决中对两个切片给出的主集补充口径（依据 `drafts/main-v1/external_review/main_v1_disputes_readjudication_audit_2026-09-22.md` 与裁决表）：(a) `dose_unit` 限药物剂量、剂量单位与具体给药频次；出生体重、QT/QTc 毫秒、血压 mmHg 等测量值不计，抽象提及 dose / dosing frequency 而无具体数值或频次也不计；(b) `protocol_id` 要求 query 含用于锁定目标条款的精确标识（法规条号、标准版本号、批准号、字段/表格/节编号，或同页编号列表中被查询的编号），仅以指南名（如 "根据 ICH E15"）限定来源不计。该口径只适用于 `ms-` 样本；并入的 `pc-` 探针样本逐字节保留探针 v2 的标注（其中 24 条 protocol_id 样本的 query 只含指南名），分切片报告时须说明两者口径不同。
 
 ## 4. 标注与复核流程（基线 5.9）
 
