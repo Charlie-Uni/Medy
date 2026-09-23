@@ -153,7 +153,7 @@ P0 加权进度：39.9%（31.5/79）；按 99 项计 31.8%。分项：M0 10/11�
 | M2-05 | 部分（结构核验拦截伪造引用；evidence_log 落库随 M3，记录 52） | 验证引用属于本 Trace、版本/页码/chunk 真实且有权限；重算 chunk_content_hash 与实际 evidence_text_hash，expected/observed 写 evidence_log |
 | M2-06 | 部分（Trace 预算裁剪/升级、月度上限账本，记录 52） | Trace 总 Token/成本预算与单次模型上限都生效；超限先裁剪证据，仍不足则升级，不扩大预算继续猜测 |
 | M2-07 | 部分（elements-rules-v1，记录 52） | 抽取剂量、单位、频次、适应证、人群、时间和方案编号等关键要素，建立确定性规则测试 |
-| M2-08 | 部分（support-rules-v1 + 判定臂接口；模型待 DEC-003，记录 52） | supported / not_supported / contradicted 支持度判断；数字规则优先，NLI/小模型按 DEC-003 选；无依据不补医学常识，矛盾升级 |
+| M2-08 | 部分（support-rules-v1 + 判定 gpt-6-sol，分工按 ADR-0011；错接受率 2.2% 于 DEC-003 子集；M2-16 门禁数据待安全集，记录 53） | supported / not_supported / contradicted 支持度判断；数字规则优先，NLI/小模型按 DEC-003 选；无依据不补医学常识，矛盾升级 |
 | M2-09 | 部分（safety-rules-v1 三层，记录 52） | 用户输入、检索内容、最终输出三层 Safety；文档是数据而不是指令，注入不能改变权限或绕过检索 |
 | M2-10 | 部分（稳定 reason code 与升级记录；持久化随 M3，记录 52） | 稳定拒答/升级 reason code，最小必要上下文持久化，可由人工接手；诊断、处方、个体调整及紧急医疗意图拒答并升级 |
 | M2-11 | 待做 | Skill Registry 执行 Schema、scope、risk、timeout、parallel_safe、版本控制；节点不得绕过 Registry 调工具 |
@@ -251,7 +251,7 @@ P0 加权进度：39.9%（31.5/79）；按 99 项计 31.8%。分项：M0 10/11�
 | --- | --- | --- |
 | DEC-001 | 词法引擎、中文 tokenizer/词典 | 协议/阈值已决，探针已归档，实验准备草案和映射已有；镜像/适配器与正式实验待完成，生产实现未决 |
 | DEC-002 | Embedding 模型、维度、归一化与 Reranker | 待实验，M1；选定前不锁死 vector 维度 |
-| DEC-003 | Verifier：NLI 或小 LLM | 待实验，M2；确定性数字规则不因此省略 |
+| DEC-003 | Verifier：NLI 或小 LLM | 已决（ADR-0011，2026-09-23）：规则裁极性矛盾与整句包含，其余交 gpt-6-sol 判定；2,076 对实验见记录 53 |
 | DEC-004 | arq / Celery / 轻量 worker | 待决，M0/M3；以恢复、幂等和运维需求选择最小可用方案 |
 | DEC-005 | 医学术语来源 | 待决，M1 入库前；不是语料许可政策的编号 |
 | DEC-006 | 灰度按用户或部门 | 待决，M4；结合风险范围与统计有效性 |

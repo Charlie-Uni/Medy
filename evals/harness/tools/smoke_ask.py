@@ -31,6 +31,7 @@ from medops.domain.common import Dept
 from medops.domain.identity import UserContext
 from medops.domain.state import VersionSet
 from medops.harness.nodes import HarnessDeps
+from medops.harness.production import PRODUCTION_ANSWER_MODEL, PRODUCTION_JUDGE_MODEL
 from medops.harness.retrieval_port import ProductionRetrieval
 from medops.harness.runtime import initial_state, run_ask
 from medops.infrastructure.llm.budget import BudgetedGateway, InMemorySpendLedger
@@ -93,8 +94,8 @@ def pick_samples(rng: random.Random, per_dept: int, no_answer: int, conflict: in
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", type=pathlib.Path, required=True)
-    ap.add_argument("--answer-model", default="gpt-6-sol")
-    ap.add_argument("--judge-model", default="gpt-6-luna")
+    ap.add_argument("--answer-model", default=PRODUCTION_ANSWER_MODEL)
+    ap.add_argument("--judge-model", default=PRODUCTION_JUDGE_MODEL)
     ap.add_argument("--device", default="mps")
     ap.add_argument("--database", default="medops_v2")
     ap.add_argument("--as-of", type=date.fromisoformat, default=date(2026, 9, 23))

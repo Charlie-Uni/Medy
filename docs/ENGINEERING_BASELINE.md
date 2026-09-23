@@ -591,7 +591,7 @@ P0 保留：
 | --- | --- | --- | --- |
 | DEC-001 | 词法检索实现、中文 tokenizer 与词典选择；选择协议和阈值已由 [ADR-0002](adr/ADR-0002-lexical-retrieval-selection.md) 预登记，具体实现待实验 | M1 入口，后续实现前 | 探针集 Lexical Recall@20、端到端 Recall@5、关键切片、RLS/候选数、延迟、许可证与运维复杂度 |
 | DEC-002 | Embedding（模型、维度、归一化）与 Reranker；决策前不建固定维度 migration。已决（[ADR-0007](adr/ADR-0007-embedding-and-reranker-selection.md)，2026-09-20，决策人授权实施方决定）：bge-m3 稠密 1024 维余弦 + bge-reranker-v2-m3，本地推理 | M1 | 中英文医学集效果、许可、延迟、部署资源、维度切换成本 |
-| DEC-003 | Verifier 使用专用 NLI 还是小 LLM | M2 | 支持/矛盾准确率、可解释性、成本 |
+| DEC-003 | Verifier 使用专用 NLI 还是小 LLM。已决（[ADR-0011](adr/ADR-0011-verifier-judge-division-of-labour.md)，2026-09-23）：确定性规则只裁否定极性矛盾与同极性整句包含，其余交 LLM 判定 `gpt-6-sol`；未采用专用 NLI | M2 | 支持/矛盾准确率、可解释性、成本 |
 | DEC-004 | arq、Celery 或轻量 worker | M0/M3 | 可靠性需求、运维成本、任务复杂度；默认优先最小方案 |
 | DEC-005 | 初始医学术语来源。已决（[ADR-0008](adr/ADR-0008-medical-glossary-sources.md)，2026-09-20，决策人授权实施方决定）：TFDA 開放資料 + 语料内定义缩写；DrugBank Open Data 待决策人下载 | M1 入库前 | 公开许可、覆盖和版本更新方式 |
 | DEC-006 | 灰度按用户还是部门 | M4 | 爆炸半径、统计有效性；默认稳定 user hash |
