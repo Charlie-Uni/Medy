@@ -1,0 +1,97 @@
+{
+  "run": "2026-09-23-polarity-recheck-v2-term2",
+  "finished_at": "2026-09-23T05:44:32+00:00",
+  "dataset": {
+    "version": "main-v1-provisional",
+    "second_human_review": "pending"
+  },
+  "versions": {
+    "policy_version": "policy-m2-smoke-1",
+    "retrieval_version": "90b57e4e86b4bb462fc4de58f7f7749666fb6f50a588c129bd5f9aa50585ab18",
+    "skill_version_set": [],
+    "model_config_version": "answer=gpt-6-sol;judge=gpt-6-sol;verifier-v2+support-rules-v2+polarity_only"
+  },
+  "n": 1,
+  "answered": 1,
+  "answerable_answered_rate": 1.0,
+  "answerable_gold_cited_rate": 1.0,
+  "no_answer_abstained_rate": 0.0,
+  "answerable_false_abstention_rate": 0.0,
+  "conflict_answered_with_gold": [],
+  "total_cost_usd": 0.0071,
+  "total_model_calls": 3,
+  "mean_latency_s": 12.58,
+  "p95_latency_s": 12.58,
+  "reason_code_counts": {},
+  "rows": [
+    {
+      "sample_id": "pc-0027",
+      "dept": "MA",
+      "kind": "answerable",
+      "imported": true,
+      "derived": false,
+      "language": "zh",
+      "slices": [
+        "dose_unit",
+        "time_window",
+        "drug_name_zh",
+        "negation"
+      ],
+      "query": "依胃所樂腸溶膜衣錠仿單，成人及 12 歲以上青少年若有胃食道逆流症狀、但食道沒有發炎，每日用量如何安排？治療多久仍有症狀時應進一步檢查？",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "成人及 12 歲以上青少年若有胃食道逆流症狀、但食道未發炎，每日用量為 20 mg、每天 1 次。",
+        "若治療 4 週後仍有症狀，應進一步檢查。"
+      ],
+      "cited_chunks": [
+        "5e70df28-7df1-49c8-ab34-5714cae01e8e"
+      ],
+      "gold_chunks": [
+        "5e70df28-7df1-49c8-ab34-5714cae01e8e"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "evidence_chunks": [
+        "552d3e7d-c1f4-40b7-8648-ff3ee8936012",
+        "5e70df28-7df1-49c8-ab34-5714cae01e8e",
+        "356701b9-c957-43e6-ae3f-29b65de02a8c",
+        "d2af5134-a2e5-4e73-8ed6-7b6ccf18b46f",
+        "9b1c877a-431e-475b-b375-04bb52bdd92c",
+        "596ec030-0888-40d6-bbf7-d8900700039c",
+        "3147c919-80bc-4b6e-aced-306380d25973",
+        "88448aa8-dc48-4dfa-b0d0-7d3451c9a965"
+      ],
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "text": "成人及 12 歲以上青少年若有胃食道逆流症狀、但食道未發炎，每日用量為 20 mg、每天 1 次。",
+          "chunk": "5e70df28-7df1-49c8-ab34-5714cae01e8e",
+          "reason": "llm:gpt-6-sol: 证据在「成人及 12 歲以上之青少年」的胃食道逆流性疾病症狀治療項下指出，食道未發炎者為 20 mg 每天 1 次。"
+        },
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "text": "若治療 4 週後仍有症狀，應進一步檢查。",
+          "chunk": "5e70df28-7df1-49c8-ab34-5714cae01e8e",
+          "reason": "llm:gpt-6-sol: 證據指出，胃食道逆流性疾病症狀治療中，若 4 週後仍有症狀，應進一步檢查患者。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 8088,
+      "model_calls": 3,
+      "model_tokens": 5592,
+      "cost_usd": 0.007141,
+      "latency_s": 12.58
+    }
+  ]
+}

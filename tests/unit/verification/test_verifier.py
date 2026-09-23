@@ -111,3 +111,33 @@ def test_default_policy_leaves_everything_but_polarity_and_containment_to_the_ju
     )
     assert len(judge.calls) == 1 and {e.kind for e in legacy.elements} >= {ElementKind.dose, ElementKind.frequency}
     assert LABEL_TEXT
+
+
+def test_term_containment_with_opposite_polarity_is_left_to_the_judge():
+    """A population or identifier term inside a negated evidence clause is not a rule contradiction (record 54 §3.2)."""
+    from tests.unit.harness._fixtures import evidence as ev
+
+    cited = [ev("c9", "輕度至中度腎功能不全的病人通常不需要調整劑量。")]
+    claim = Claim(text="嚴重腎功能不全病人使用本品時需調整劑量", citation_chunk_ids=("c9",))
+    offline = verify_claims([claim], cited)
+    assert not offline.contradicted  # fail-closed offline: not_supported at most
+    judge = FakeModelGateway({"verify": [{"verdict": "supported", "evidence_index": 1, "reason": "ok"}]})
+    with_judge = verify_claims([claim], cited, gateway=judge, judge_model_id="gpt-6-sol")
+    assert not with_judge.contradicted and len(judge.calls) == 1
+
+
+def test_population_negation_in_the_claim_does_not_flip_a_contained_frequency():
+    """pc-0027 (record 54 §3.2): 沒有發炎 describes the patients; the frequency 每天 1 次 is contained with the same polarity."""
+    from tests.unit.harness._fixtures import evidence as ev
+
+    cited = [
+        ev(
+            "c8",
+            "糜爛性逆流性食道炎之治療:40 mg 每天 1次,為期4週。對食道未發炎之患者 20 mg 每天 1次;若 4週後仍有症狀時,則應進一步檢查患者。",
+        )
+    ]
+    claim = Claim(
+        text="食道沒有發炎的成人患者每日 20 mg，每天 1 次；若 4 週後仍有症狀應進一步檢查。", citation_chunk_ids=("c8",)
+    )
+    offline = verify_claims([claim], cited)
+    assert not offline.contradicted

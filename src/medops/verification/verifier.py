@@ -19,13 +19,17 @@ from medops.domain.evidence import Evidence
 from medops.domain.verification import ElementKind, ElementSupport, Verdict, VerifyResult
 from medops.infrastructure.llm.gateway import Message, ModelGateway, ModelOutputInvalid, ModelRequest
 from medops.verification.rules import (
+    _TERM_KINDS,
     RULES_VERSION,
     Polarity,
     RuleOutcome,
+    _aligned_window,
     best_overlap,
+    clause_around,
     compare_polarity,
     contained,
     judge_elements,
+    sentence_around,
     sentences,
 )
 
@@ -117,7 +121,7 @@ def verify_claims(
             hit = _contains_element(outcome, claim.text, cited)
             if hit and hit[1] == "same":
                 elements.append(_support(outcome, Verdict.supported, hit[0], "element text contained in evidence", 0.8))
-            elif hit and hit[1] == "opposite":
+            elif hit and hit[1] == "opposite" and outcome.element.kind not in _TERM_KINDS:
                 elements.append(
                     _support(
                         outcome, Verdict.contradicted, hit[0], "element contained but negation polarity differs", 0.9
@@ -152,7 +156,7 @@ def _polarity_only_claim(
     for outcome in outcomes:
         if outcome.verdict is None:
             hit = _contains_element(outcome, claim.text, cited)
-            if hit and hit[1] == "opposite":
+            if hit and hit[1] == "opposite" and outcome.element.kind not in _TERM_KINDS:
                 return [
                     _support(
                         outcome, Verdict.contradicted, hit[0], "element contained but negation polarity differs", 0.9
@@ -202,10 +206,15 @@ def _contains_element(outcome: RuleOutcome, claim_text: str, cited: Sequence[Evi
     needle = normalize_for_match(outcome.element.text)
     if not needle:
         return None
+    span = (outcome.element.start, outcome.element.end)
     for ev in cited:
         for sentence in sentences(ev.text):
             if needle in normalize_for_match(sentence):
-                return ev.citation.chunk_id, compare_polarity(claim_text, sentence)
+                # the claim side is the clause / sentence holding the element, not the whole claim: a negation that
+                # describes the population ("食道沒有發炎的患者 … 每天 1 次") must not flip the frequency (pc-0027)
+                window = compare_polarity(clause_around(claim_text, *span), _aligned_window(sentence, needle))
+                whole = compare_polarity(sentence_around(claim_text, *span), sentence)
+                return ev.citation.chunk_id, window if window == whole else "unclear"
     return None
 
 

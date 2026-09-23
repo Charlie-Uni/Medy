@@ -2,17 +2,17 @@
   "arm": "rules-nosv",
   "model": "verifier-v2+support-rules-v2+polarity_only",
   "n": 2076,
-  "accuracy": 0.881,
-  "unsafe_accept_rate": 0.0412,
-  "rules_decisive_share": 0.354,
+  "accuracy": 0.8507,
+  "unsafe_accept_rate": 0.0379,
+  "rules_decisive_share": 0.3035,
   "by_kind": {
     "contradicted/negation": {
       "n": 290,
-      "accuracy": 0.9241
+      "accuracy": 0.8483
     },
     "contradicted/numeric": {
       "n": 148,
-      "accuracy": 0.0608
+      "accuracy": 0.0203
     },
     "not_supported/other_doc": {
       "n": 546,
@@ -20,62 +20,62 @@
     },
     "not_supported/same_doc": {
       "n": 546,
-      "accuracy": 0.9084
+      "accuracy": 0.9304
     },
     "supported": {
       "n": 546,
-      "accuracy": 0.9341
+      "accuracy": 0.848
     }
   },
   "by_slice": {
     "dose_unit": {
       "n": 266,
-      "accuracy": 0.7744
+      "accuracy": 0.7594
     },
     "drug_name_zh": {
       "n": 360,
-      "accuracy": 0.8111
+      "accuracy": 0.8056
     },
     "long_context": {
       "n": 74,
-      "accuracy": 0.9459
+      "accuracy": 0.9054
     },
     "mixed_zh_en": {
       "n": 1924,
-      "accuracy": 0.8888
+      "accuracy": 0.8571
     },
     "negation": {
       "n": 1057,
-      "accuracy": 0.9092
+      "accuracy": 0.8761
     },
     "protocol_id": {
       "n": 527,
-      "accuracy": 0.8956
+      "accuracy": 0.8273
     },
     "time_window": {
       "n": 533,
-      "accuracy": 0.7561
+      "accuracy": 0.743
     },
     "version_conflict": {
       "n": 184,
-      "accuracy": 0.9022
+      "accuracy": 0.8478
     }
   },
   "confusion": {
     "supported": {
-      "supported": 510,
-      "not_supported": 8,
-      "contradicted": 28
+      "supported": 463,
+      "not_supported": 31,
+      "contradicted": 52
     },
     "not_supported": {
-      "supported": 30,
-      "not_supported": 1042,
-      "contradicted": 20
+      "supported": 28,
+      "not_supported": 1054,
+      "contradicted": 10
     },
     "contradicted": {
-      "supported": 33,
-      "not_supported": 128,
-      "contradicted": 277
+      "supported": 30,
+      "not_supported": 159,
+      "contradicted": 249
     }
   },
   "cost_usd": 0.0,
@@ -479,14 +479,14 @@
     {
       "pair_id": "ms-0008:contradicted/negation",
       "label": "contradicted",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "contradicted/negation",
       "slices": [
         "negation",
         "mixed_zh_en"
       ],
       "dept": "MA",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0009:supported",
@@ -942,7 +942,7 @@
     {
       "pair_id": "ms-0017:contradicted/negation",
       "label": "contradicted",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "contradicted/negation",
       "slices": [
         "negation",
@@ -950,7 +950,7 @@
         "mixed_zh_en"
       ],
       "dept": "MA",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0018:supported",
@@ -969,7 +969,7 @@
     {
       "pair_id": "ms-0018:not_supported/same_doc",
       "label": "not_supported",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "not_supported/same_doc",
       "slices": [
         "dose_unit",
@@ -1020,7 +1020,7 @@
         "mixed_zh_en"
       ],
       "dept": "MA",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0019:supported",
@@ -1429,7 +1429,7 @@
     {
       "pair_id": "ms-0026:supported",
       "label": "supported",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "supported",
       "slices": [
         "time_window",
@@ -1437,7 +1437,7 @@
         "mixed_zh_en"
       ],
       "dept": "MA",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0026:not_supported/same_doc",
@@ -1468,7 +1468,7 @@
     {
       "pair_id": "ms-0026:contradicted/numeric",
       "label": "contradicted",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "contradicted/numeric",
       "slices": [
         "time_window",
@@ -1598,7 +1598,7 @@
     {
       "pair_id": "ms-0032:not_supported/same_doc",
       "label": "not_supported",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "not_supported/same_doc",
       "slices": [
         "negation",
@@ -1624,7 +1624,7 @@
     {
       "pair_id": "ms-0032:contradicted/negation",
       "label": "contradicted",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "contradicted/negation",
       "slices": [
         "negation",
@@ -1632,7 +1632,7 @@
         "mixed_zh_en"
       ],
       "dept": "MA",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0033:supported",
@@ -2295,7 +2295,7 @@
     {
       "pair_id": "ms-0046:not_supported/same_doc",
       "label": "not_supported",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "not_supported/same_doc",
       "slices": [
         "time_window",
@@ -2303,7 +2303,7 @@
         "mixed_zh_en"
       ],
       "dept": "MA",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0046:not_supported/other_doc",
@@ -2454,7 +2454,7 @@
     {
       "pair_id": "ms-0049:contradicted/numeric",
       "label": "contradicted",
-      "pred": "supported",
+      "pred": "not_supported",
       "kind": "contradicted/numeric",
       "slices": [
         "dose_unit",
@@ -3955,7 +3955,7 @@
         "mixed_zh_en"
       ],
       "dept": "MA",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0079:supported",
@@ -4041,7 +4041,7 @@
         "mixed_zh_en"
       ],
       "dept": "MA",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0080:not_supported/other_doc",
@@ -4104,7 +4104,7 @@
     {
       "pair_id": "ms-0081:not_supported/same_doc",
       "label": "not_supported",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "not_supported/same_doc",
       "slices": [
         "negation",
@@ -4112,7 +4112,7 @@
         "mixed_zh_en"
       ],
       "dept": "MA",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0081:not_supported/other_doc",
@@ -4130,7 +4130,7 @@
     {
       "pair_id": "ms-0081:contradicted/negation",
       "label": "contradicted",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "contradicted/negation",
       "slices": [
         "negation",
@@ -4138,7 +4138,7 @@
         "mixed_zh_en"
       ],
       "dept": "MA",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0082:supported",
@@ -4239,7 +4239,7 @@
     {
       "pair_id": "ms-0084:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "contradicted",
       "kind": "supported",
       "slices": [
         "negation",
@@ -4248,7 +4248,7 @@
         "version_conflict"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0084:not_supported/same_doc",
@@ -4281,7 +4281,7 @@
     {
       "pair_id": "ms-0085:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "contradicted",
       "kind": "supported",
       "slices": [
         "negation",
@@ -4290,7 +4290,7 @@
         "version_conflict"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0085:not_supported/same_doc",
@@ -4323,7 +4323,7 @@
     {
       "pair_id": "ms-0086:supported",
       "label": "supported",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "supported",
       "slices": [
         "time_window",
@@ -4332,7 +4332,7 @@
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0086:not_supported/same_doc",
@@ -4365,7 +4365,7 @@
     {
       "pair_id": "ms-0086:contradicted/numeric",
       "label": "contradicted",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "contradicted/numeric",
       "slices": [
         "time_window",
@@ -4379,7 +4379,7 @@
     {
       "pair_id": "ms-0086:contradicted/negation",
       "label": "contradicted",
-      "pred": "supported",
+      "pred": "not_supported",
       "kind": "contradicted/negation",
       "slices": [
         "time_window",
@@ -4388,12 +4388,12 @@
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0087:supported",
       "label": "supported",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "supported",
       "slices": [
         "time_window",
@@ -4402,7 +4402,7 @@
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0087:not_supported/same_doc",
@@ -4435,7 +4435,7 @@
     {
       "pair_id": "ms-0087:contradicted/numeric",
       "label": "contradicted",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "contradicted/numeric",
       "slices": [
         "time_window",
@@ -4449,7 +4449,7 @@
     {
       "pair_id": "ms-0087:contradicted/negation",
       "label": "contradicted",
-      "pred": "supported",
+      "pred": "not_supported",
       "kind": "contradicted/negation",
       "slices": [
         "time_window",
@@ -4458,7 +4458,7 @@
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0088:supported",
@@ -5077,7 +5077,7 @@
     {
       "pair_id": "ms-0102:supported",
       "label": "supported",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "supported",
       "slices": [
         "time_window",
@@ -5085,7 +5085,7 @@
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0102:not_supported/same_doc",
@@ -5116,7 +5116,7 @@
     {
       "pair_id": "ms-0102:contradicted/numeric",
       "label": "contradicted",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "contradicted/numeric",
       "slices": [
         "time_window",
@@ -5137,12 +5137,12 @@
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0103:supported",
       "label": "supported",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "supported",
       "slices": [
         "time_window",
@@ -5150,7 +5150,7 @@
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0103:not_supported/same_doc",
@@ -5181,7 +5181,7 @@
     {
       "pair_id": "ms-0103:contradicted/numeric",
       "label": "contradicted",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "contradicted/numeric",
       "slices": [
         "time_window",
@@ -5202,7 +5202,7 @@
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0104:supported",
@@ -5219,14 +5219,14 @@
     {
       "pair_id": "ms-0104:not_supported/same_doc",
       "label": "not_supported",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "not_supported/same_doc",
       "slices": [
         "time_window",
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0104:not_supported/other_doc",
@@ -5279,14 +5279,14 @@
     {
       "pair_id": "ms-0105:not_supported/same_doc",
       "label": "not_supported",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "not_supported/same_doc",
       "slices": [
         "time_window",
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0105:not_supported/other_doc",
@@ -5327,14 +5327,14 @@
     {
       "pair_id": "ms-0106:supported",
       "label": "supported",
-      "pred": "not_supported",
+      "pred": "supported",
       "kind": "supported",
       "slices": [
         "negation",
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": false
+      "rules_decisive": true
     },
     {
       "pair_id": "ms-0106:not_supported/same_doc",
@@ -5363,14 +5363,14 @@
     {
       "pair_id": "ms-0106:contradicted/negation",
       "label": "contradicted",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "contradicted/negation",
       "slices": [
         "negation",
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0107:supported",
@@ -5483,7 +5483,7 @@
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0109:supported",
@@ -5548,7 +5548,7 @@
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0110:supported",
@@ -5745,14 +5745,14 @@
     {
       "pair_id": "ms-0114:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "contradicted",
       "kind": "supported",
       "slices": [
         "protocol_id",
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0114:not_supported/same_doc",
@@ -5781,14 +5781,14 @@
     {
       "pair_id": "ms-0115:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "contradicted",
       "kind": "supported",
       "slices": [
         "protocol_id",
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0115:not_supported/same_doc",
@@ -5817,14 +5817,14 @@
     {
       "pair_id": "ms-0116:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "contradicted",
       "kind": "supported",
       "slices": [
         "negation",
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0116:not_supported/same_doc",
@@ -5853,14 +5853,14 @@
     {
       "pair_id": "ms-0117:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "contradicted",
       "kind": "supported",
       "slices": [
         "negation",
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0117:not_supported/same_doc",
@@ -6105,7 +6105,7 @@
     {
       "pair_id": "ms-0124:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "not_supported",
       "kind": "supported",
       "slices": [
         "negation",
@@ -6113,7 +6113,7 @@
         "long_context"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0124:not_supported/same_doc",
@@ -6144,7 +6144,7 @@
     {
       "pair_id": "ms-0125:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "not_supported",
       "kind": "supported",
       "slices": [
         "negation",
@@ -6152,7 +6152,7 @@
         "long_context"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0125:not_supported/same_doc",
@@ -6648,7 +6648,7 @@
     {
       "pair_id": "ms-0137:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "not_supported",
       "kind": "supported",
       "slices": [
         "negation",
@@ -6656,7 +6656,7 @@
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0137:not_supported/same_doc",
@@ -6700,7 +6700,7 @@
     {
       "pair_id": "ms-0138:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "not_supported",
       "kind": "supported",
       "slices": [
         "negation",
@@ -6708,7 +6708,7 @@
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0138:not_supported/same_doc",
@@ -6752,14 +6752,14 @@
     {
       "pair_id": "ms-0139:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "contradicted",
       "kind": "supported",
       "slices": [
         "negation",
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0139:not_supported/same_doc",
@@ -6800,14 +6800,14 @@
     {
       "pair_id": "ms-0140:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "contradicted",
       "kind": "supported",
       "slices": [
         "negation",
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0140:not_supported/same_doc",
@@ -7090,14 +7090,14 @@
     {
       "pair_id": "ms-0147:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "contradicted",
       "kind": "supported",
       "slices": [
         "protocol_id",
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0147:not_supported/same_doc",
@@ -7126,14 +7126,14 @@
     {
       "pair_id": "ms-0148:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "contradicted",
       "kind": "supported",
       "slices": [
         "protocol_id",
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0148:not_supported/same_doc",
@@ -7162,7 +7162,7 @@
     {
       "pair_id": "ms-0149:supported",
       "label": "supported",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "supported",
       "slices": [
         "negation",
@@ -7170,7 +7170,7 @@
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0149:not_supported/same_doc",
@@ -7201,7 +7201,7 @@
     {
       "pair_id": "ms-0150:supported",
       "label": "supported",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "supported",
       "slices": [
         "negation",
@@ -7209,7 +7209,7 @@
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0150:not_supported/same_doc",
@@ -7306,14 +7306,14 @@
     {
       "pair_id": "ms-0153:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "contradicted",
       "kind": "supported",
       "slices": [
         "protocol_id",
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0153:not_supported/same_doc",
@@ -7342,14 +7342,14 @@
     {
       "pair_id": "ms-0154:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "contradicted",
       "kind": "supported",
       "slices": [
         "protocol_id",
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0154:not_supported/same_doc",
@@ -7378,7 +7378,7 @@
     {
       "pair_id": "ms-0155:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "contradicted",
       "kind": "supported",
       "slices": [
         "negation",
@@ -7386,7 +7386,7 @@
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0155:not_supported/same_doc",
@@ -7482,7 +7482,7 @@
     {
       "pair_id": "ms-0157:supported",
       "label": "supported",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "supported",
       "slices": [
         "time_window",
@@ -7491,7 +7491,7 @@
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0157:not_supported/same_doc",
@@ -7538,7 +7538,7 @@
     {
       "pair_id": "ms-0157:contradicted/negation",
       "label": "contradicted",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "contradicted/negation",
       "slices": [
         "time_window",
@@ -7547,12 +7547,12 @@
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0158:supported",
       "label": "supported",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "supported",
       "slices": [
         "time_window",
@@ -7561,7 +7561,7 @@
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0158:not_supported/same_doc",
@@ -7608,7 +7608,7 @@
     {
       "pair_id": "ms-0158:contradicted/negation",
       "label": "contradicted",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "contradicted/negation",
       "slices": [
         "time_window",
@@ -7617,7 +7617,7 @@
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0159:supported",
@@ -8000,7 +8000,7 @@
     {
       "pair_id": "ms-0167:not_supported/same_doc",
       "label": "not_supported",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "not_supported/same_doc",
       "slices": [
         "time_window",
@@ -8048,7 +8048,7 @@
     {
       "pair_id": "ms-0168:not_supported/same_doc",
       "label": "not_supported",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "not_supported/same_doc",
       "slices": [
         "time_window",
@@ -8544,7 +8544,7 @@
     {
       "pair_id": "ms-0179:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "contradicted",
       "kind": "supported",
       "slices": [
         "negation",
@@ -8553,7 +8553,7 @@
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0179:not_supported/same_doc",
@@ -8600,7 +8600,7 @@
     {
       "pair_id": "ms-0180:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "contradicted",
       "kind": "supported",
       "slices": [
         "negation",
@@ -8609,7 +8609,7 @@
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0180:not_supported/same_doc",
@@ -8776,14 +8776,14 @@
     {
       "pair_id": "ms-0183:contradicted/negation",
       "label": "contradicted",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "contradicted/negation",
       "slices": [
         "time_window",
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0184:supported",
@@ -8836,14 +8836,14 @@
     {
       "pair_id": "ms-0184:contradicted/negation",
       "label": "contradicted",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "contradicted/negation",
       "slices": [
         "time_window",
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0185:supported",
@@ -8985,7 +8985,7 @@
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0188:supported",
@@ -9055,7 +9055,7 @@
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0189:supported",
@@ -9156,13 +9156,13 @@
     {
       "pair_id": "ms-0191:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "contradicted",
       "kind": "supported",
       "slices": [
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0191:not_supported/same_doc",
@@ -9200,13 +9200,13 @@
     {
       "pair_id": "ms-0192:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "contradicted",
       "kind": "supported",
       "slices": [
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0192:not_supported/same_doc",
@@ -9364,7 +9364,7 @@
     {
       "pair_id": "ms-0199:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "contradicted",
       "kind": "supported",
       "slices": [
         "negation",
@@ -9372,7 +9372,7 @@
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0199:not_supported/same_doc",
@@ -9416,7 +9416,7 @@
     {
       "pair_id": "ms-0200:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "contradicted",
       "kind": "supported",
       "slices": [
         "negation",
@@ -9424,7 +9424,7 @@
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0200:not_supported/same_doc",
@@ -9468,14 +9468,14 @@
     {
       "pair_id": "ms-0201:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "contradicted",
       "kind": "supported",
       "slices": [
         "protocol_id",
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0201:not_supported/same_doc",
@@ -9504,14 +9504,14 @@
     {
       "pair_id": "ms-0202:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "contradicted",
       "kind": "supported",
       "slices": [
         "protocol_id",
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0202:not_supported/same_doc",
@@ -10134,14 +10134,14 @@
     {
       "pair_id": "ms-0215:contradicted/negation",
       "label": "contradicted",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "contradicted/negation",
       "slices": [
         "version_conflict",
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0216:supported",
@@ -10182,14 +10182,14 @@
     {
       "pair_id": "ms-0216:contradicted/negation",
       "label": "contradicted",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "contradicted/negation",
       "slices": [
         "version_conflict",
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0217:supported",
@@ -10678,14 +10678,14 @@
     {
       "pair_id": "ms-0227:contradicted/negation",
       "label": "contradicted",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "contradicted/negation",
       "slices": [
         "negation",
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0228:supported",
@@ -10726,14 +10726,14 @@
     {
       "pair_id": "ms-0228:contradicted/negation",
       "label": "contradicted",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "contradicted/negation",
       "slices": [
         "negation",
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0229:supported",
@@ -10810,14 +10810,14 @@
     {
       "pair_id": "ms-0231:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "contradicted",
       "kind": "supported",
       "slices": [
         "protocol_id",
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0231:not_supported/same_doc",
@@ -10846,14 +10846,14 @@
     {
       "pair_id": "ms-0232:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "contradicted",
       "kind": "supported",
       "slices": [
         "protocol_id",
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0232:not_supported/same_doc",
@@ -11330,14 +11330,14 @@
     {
       "pair_id": "ms-0241:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "contradicted",
       "kind": "supported",
       "slices": [
         "protocol_id",
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0241:not_supported/same_doc",
@@ -11378,14 +11378,14 @@
     {
       "pair_id": "ms-0242:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "contradicted",
       "kind": "supported",
       "slices": [
         "protocol_id",
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0242:not_supported/same_doc",
@@ -11722,7 +11722,7 @@
     {
       "pair_id": "ms-0249:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "contradicted",
       "kind": "supported",
       "slices": [
         "time_window",
@@ -11731,7 +11731,7 @@
         "long_context"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0249:not_supported/same_doc",
@@ -12181,13 +12181,13 @@
     {
       "pair_id": "ms-0258:contradicted/negation",
       "label": "contradicted",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "contradicted/negation",
       "slices": [
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0259:supported",
@@ -14089,14 +14089,14 @@
     {
       "pair_id": "ms-0309:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "contradicted",
       "kind": "supported",
       "slices": [
         "negation",
         "mixed_zh_en"
       ],
       "dept": "CO",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0309:not_supported/same_doc",
@@ -14137,14 +14137,14 @@
     {
       "pair_id": "ms-0310:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "contradicted",
       "kind": "supported",
       "slices": [
         "negation",
         "mixed_zh_en"
       ],
       "dept": "CO",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0310:not_supported/same_doc",
@@ -14949,14 +14949,14 @@
     {
       "pair_id": "ms-0328:supported",
       "label": "supported",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "supported",
       "slices": [
         "protocol_id",
         "mixed_zh_en"
       ],
       "dept": "CO",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0328:not_supported/same_doc",
@@ -14985,14 +14985,14 @@
     {
       "pair_id": "ms-0329:supported",
       "label": "supported",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "supported",
       "slices": [
         "protocol_id",
         "mixed_zh_en"
       ],
       "dept": "CO",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0329:not_supported/same_doc",
@@ -15349,7 +15349,7 @@
     {
       "pair_id": "ms-0338:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "contradicted",
       "kind": "supported",
       "slices": [
         "negation",
@@ -15357,7 +15357,7 @@
         "mixed_zh_en"
       ],
       "dept": "CO",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0338:not_supported/same_doc",
@@ -15388,7 +15388,7 @@
     {
       "pair_id": "ms-0339:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "contradicted",
       "kind": "supported",
       "slices": [
         "negation",
@@ -15396,7 +15396,7 @@
         "mixed_zh_en"
       ],
       "dept": "CO",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0339:not_supported/same_doc",
@@ -15985,14 +15985,14 @@
     {
       "pair_id": "ms-0352:not_supported/same_doc",
       "label": "not_supported",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "not_supported/same_doc",
       "slices": [
         "negation",
         "mixed_zh_en"
       ],
       "dept": "CO",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0352:not_supported/other_doc",
@@ -16033,14 +16033,14 @@
     {
       "pair_id": "ms-0353:not_supported/same_doc",
       "label": "not_supported",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "not_supported/same_doc",
       "slices": [
         "negation",
         "mixed_zh_en"
       ],
       "dept": "CO",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0353:not_supported/other_doc",
@@ -16321,7 +16321,7 @@
     {
       "pair_id": "ms-0358:contradicted/negation",
       "label": "contradicted",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "contradicted/negation",
       "slices": [
         "dose_unit",
@@ -16329,7 +16329,7 @@
         "mixed_zh_en"
       ],
       "dept": "CO",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0359:supported",
@@ -16386,7 +16386,7 @@
     {
       "pair_id": "ms-0359:contradicted/negation",
       "label": "contradicted",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "contradicted/negation",
       "slices": [
         "dose_unit",
@@ -16394,7 +16394,7 @@
         "mixed_zh_en"
       ],
       "dept": "CO",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0360:supported",
@@ -16805,7 +16805,7 @@
     {
       "pair_id": "ms-0368:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "not_supported",
       "kind": "supported",
       "slices": [
         "protocol_id",
@@ -16813,7 +16813,7 @@
         "mixed_zh_en"
       ],
       "dept": "CO",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0368:not_supported/same_doc",
@@ -16857,7 +16857,7 @@
     {
       "pair_id": "ms-0369:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "not_supported",
       "kind": "supported",
       "slices": [
         "protocol_id",
@@ -16865,7 +16865,7 @@
         "mixed_zh_en"
       ],
       "dept": "CO",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0369:not_supported/same_doc",
@@ -19041,14 +19041,14 @@
     {
       "pair_id": "ms-0420:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "not_supported",
       "kind": "supported",
       "slices": [
         "protocol_id",
         "mixed_zh_en"
       ],
       "dept": "CO",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0420:not_supported/same_doc",
@@ -19089,14 +19089,14 @@
     {
       "pair_id": "ms-0421:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "not_supported",
       "kind": "supported",
       "slices": [
         "protocol_id",
         "mixed_zh_en"
       ],
       "dept": "CO",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0421:not_supported/same_doc",
@@ -19521,7 +19521,7 @@
     {
       "pair_id": "ms-0432:supported",
       "label": "supported",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "supported",
       "slices": [
         "negation",
@@ -19529,7 +19529,7 @@
         "mixed_zh_en"
       ],
       "dept": "CO",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0432:not_supported/same_doc",
@@ -19560,7 +19560,7 @@
     {
       "pair_id": "ms-0433:supported",
       "label": "supported",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "supported",
       "slices": [
         "negation",
@@ -19568,7 +19568,7 @@
         "mixed_zh_en"
       ],
       "dept": "CO",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0433:not_supported/same_doc",
@@ -19635,14 +19635,14 @@
     {
       "pair_id": "ms-0434:contradicted/negation",
       "label": "contradicted",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "contradicted/negation",
       "slices": [
         "version_conflict",
         "mixed_zh_en"
       ],
       "dept": "CO",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0435:supported",
@@ -19683,14 +19683,14 @@
     {
       "pair_id": "ms-0435:contradicted/negation",
       "label": "contradicted",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "contradicted/negation",
       "slices": [
         "version_conflict",
         "mixed_zh_en"
       ],
       "dept": "CO",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0436:supported",
@@ -19863,14 +19863,14 @@
     {
       "pair_id": "ms-0442:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "contradicted",
       "kind": "supported",
       "slices": [
         "negation",
         "mixed_zh_en"
       ],
       "dept": "CO",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0442:not_supported/same_doc",
@@ -19911,14 +19911,14 @@
     {
       "pair_id": "ms-0443:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "contradicted",
       "kind": "supported",
       "slices": [
         "negation",
         "mixed_zh_en"
       ],
       "dept": "CO",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0443:not_supported/same_doc",
@@ -20351,14 +20351,14 @@
     {
       "pair_id": "ms-0452:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "contradicted",
       "kind": "supported",
       "slices": [
         "negation",
         "mixed_zh_en"
       ],
       "dept": "CO",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0452:not_supported/same_doc",
@@ -20399,14 +20399,14 @@
     {
       "pair_id": "ms-0453:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "contradicted",
       "kind": "supported",
       "slices": [
         "negation",
         "mixed_zh_en"
       ],
       "dept": "CO",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0453:not_supported/same_doc",
@@ -20648,13 +20648,13 @@
     {
       "pair_id": "ms-0458:contradicted/negation",
       "label": "contradicted",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "contradicted/negation",
       "slices": [
         "mixed_zh_en"
       ],
       "dept": "CO",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0459:supported",
@@ -20692,13 +20692,13 @@
     {
       "pair_id": "ms-0459:contradicted/negation",
       "label": "contradicted",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "contradicted/negation",
       "slices": [
         "mixed_zh_en"
       ],
       "dept": "CO",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "ms-0460:supported",
@@ -20889,14 +20889,14 @@
     {
       "pair_id": "pc-0003:contradicted/negation",
       "label": "contradicted",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "contradicted/negation",
       "slices": [
         "negation",
         "drug_name_zh"
       ],
       "dept": "MA",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "pc-0004:supported",
@@ -21301,7 +21301,7 @@
     {
       "pair_id": "pc-0011:contradicted/negation",
       "label": "contradicted",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "contradicted/negation",
       "slices": [
         "dose_unit",
@@ -21309,7 +21309,7 @@
         "drug_name_zh"
       ],
       "dept": "MA",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "pc-0012:supported",
@@ -21589,14 +21589,14 @@
     {
       "pair_id": "pc-0018:supported",
       "label": "supported",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "supported",
       "slices": [
         "protocol_id",
         "dose_unit"
       ],
       "dept": "MA",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "pc-0018:not_supported/same_doc",
@@ -22085,14 +22085,14 @@
     {
       "pair_id": "pc-0028:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "contradicted",
       "kind": "supported",
       "slices": [
         "negation",
         "mixed_zh_en"
       ],
       "dept": "MA",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "pc-0028:not_supported/same_doc",
@@ -22172,7 +22172,7 @@
     {
       "pair_id": "pc-0029:contradicted/numeric",
       "label": "contradicted",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "contradicted/numeric",
       "slices": [
         "dose_unit",
@@ -22180,7 +22180,7 @@
         "mixed_zh_en"
       ],
       "dept": "MA",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "pc-0029:contradicted/negation",
@@ -22231,14 +22231,14 @@
     {
       "pair_id": "pc-0031:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "contradicted",
       "kind": "supported",
       "slices": [
         "negation",
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "pc-0031:not_supported/same_doc",
@@ -22408,7 +22408,7 @@
     {
       "pair_id": "pc-0035:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "contradicted",
       "kind": "supported",
       "slices": [
         "negation",
@@ -22416,7 +22416,7 @@
         "dose_unit"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "pc-0035:not_supported/same_doc",
@@ -22565,14 +22565,14 @@
     {
       "pair_id": "pc-0039:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "contradicted",
       "kind": "supported",
       "slices": [
         "negation",
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "pc-0039:not_supported/same_doc",
@@ -22765,14 +22765,14 @@
     {
       "pair_id": "pc-0043:not_supported/same_doc",
       "label": "not_supported",
-      "pred": "supported",
+      "pred": "not_supported",
       "kind": "not_supported/same_doc",
       "slices": [
         "time_window",
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "pc-0043:not_supported/other_doc",
@@ -22849,14 +22849,14 @@
     {
       "pair_id": "pc-0045:supported",
       "label": "supported",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "supported",
       "slices": [
         "time_window",
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "pc-0045:not_supported/same_doc",
@@ -23679,7 +23679,7 @@
     {
       "pair_id": "pc-0062:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "contradicted",
       "kind": "supported",
       "slices": [
         "negation",
@@ -23687,7 +23687,7 @@
         "protocol_id"
       ],
       "dept": "CO",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "pc-0062:not_supported/same_doc",
@@ -24385,14 +24385,14 @@
     {
       "pair_id": "pc-0078:not_supported/same_doc",
       "label": "not_supported",
-      "pred": "supported",
+      "pred": "not_supported",
       "kind": "not_supported/same_doc",
       "slices": [
         "time_window",
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "pc-0078:not_supported/other_doc",
@@ -24469,14 +24469,14 @@
     {
       "pair_id": "pc-0080:supported",
       "label": "supported",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "supported",
       "slices": [
         "time_window",
         "mixed_zh_en"
       ],
       "dept": "PV",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "pc-0080:not_supported/same_doc",
@@ -25178,7 +25178,7 @@
     {
       "pair_id": "pc-0094:supported",
       "label": "supported",
-      "pred": "supported",
+      "pred": "contradicted",
       "kind": "supported",
       "slices": [
         "negation",
@@ -25186,7 +25186,7 @@
         "protocol_id"
       ],
       "dept": "CO",
-      "rules_decisive": true
+      "rules_decisive": false
     },
     {
       "pair_id": "pc-0094:not_supported/same_doc",

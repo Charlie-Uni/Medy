@@ -32,6 +32,9 @@ _NEGATION = re.compile(
     re.I,
 )
 _SENTENCE_BREAK = re.compile(r"[。！？!?；;\n]|(?<=[a-z0-9\)])\.\s")
+# Clause breaks inside a sentence: polarity is compared on the clause that holds the element, so an unrelated
+# negation elsewhere in a long sentence ("可能無症狀", "proves not to be harmful … and …") does not flip it.
+_CLAUSE_BREAK = re.compile(r"[，,、（）()：:]|\s(?:and|but|or|which|whereas|while)\s", re.I)
 
 # Bound phrases state a limit, not a negation (support-rules-v2): they are removed before negation cues are
 # counted and compared as a direction of their own, so paraphrases like 上限/不得超過/at most agree.
@@ -40,7 +43,8 @@ _BOUND_UPPER = re.compile(
     r"|不得晚於|不得晚于|不遲於|不迟于|不晚於|不晚于|最多|至多|上限|最高|最遲|最迟|最晚"
     r"|(?:可|可以)?(?:用|使用|增加|增量|加|調整|调整)至|(?:天|日|小時|小时|週|周|月|年|工作日)(?:以|之)?[內内]"
     r"|\bno more than\b|\bnot more than\b|\b(?:must |should |shall |may |can )?not exceed(?:ing)?\b|\bat most\b"
-    r"|\bup to\b|\bmaximum\b|\bno later than\b|\bnot later than\b|\bwithin\b|\bat the latest\b",
+    r"|\bup to\b|\bmaximum\b|\bno later than\b|\bnot later than\b|\bat the latest\b"
+    r"|\bwithin\s+(?:\d|one|two|three|four|five|six|seven|ten|twelve|the (?:next|following|same))",
     re.I,
 )
 _BOUND_LOWER = re.compile(
@@ -72,13 +76,17 @@ def _direction(first: bool, second: bool, a: str, b: str) -> str | None:
     return a if first else (b if second else None)
 
 
+_LEAD_TIME = re.compile(r"提前|事前|事先|預先|预先|\bin advance\b|\bbeforehand\b|\bprior to\b|\bahead of\b", re.I)
+
+
 def polarity(text: str) -> PolaritySignature:
     upper, lower = bool(_BOUND_UPPER.search(text)), bool(_BOUND_LOWER.search(text))
     stripped = _BOUND_LOWER.sub(" ", _BOUND_UPPER.sub(" ", text))
     up, down = bool(_EXCEED_UP.search(stripped)), bool(_EXCEED_DOWN.search(stripped))
-    return PolaritySignature(
-        len(_NEGATION.findall(stripped)), _direction(upper, lower, "upper", "lower"), _direction(up, down, "up", "down")
-    )
+    bound = _direction(upper, lower, "upper", "lower")
+    if bound and _LEAD_TIME.search(text):
+        bound = "both"  # "not later than 24 hours in advance" is a lower bound on the lead time: direction unclear
+    return PolaritySignature(len(_NEGATION.findall(stripped)), bound, _direction(up, down, "up", "down"))
 
 
 def compare_polarity(claim_text: str, evidence_text: str, *, count: bool = False) -> Polarity:
@@ -95,12 +103,13 @@ def compare_polarity(claim_text: str, evidence_text: str, *, count: bool = False
         return "opposite"
     if bounds & {"lower", "both"} and exceeds & {"down", "both"}:
         return "opposite"
-    if a.bound and b.bound and a.bound != b.bound:
+    if bounds == {"upper", "lower"}:
         return "opposite"
     return "unclear"
 
 
 _NUMERIC_KINDS = (ElementKind.dose, ElementKind.frequency, ElementKind.time_window)
+_TERM_KINDS = (ElementKind.population, ElementKind.identifier)  # terms: polarity flips are for the judge
 
 
 @dataclass(frozen=True)
@@ -120,6 +129,30 @@ def sentence_around(text: str, start: int, end: int) -> str:
     if m2:
         right = m2.start()
     return text[left:right]
+
+
+def clause_around(text: str, start: int, end: int) -> str:
+    """The clause (sentence further split at commas, brackets, colons and coordinating words) covering [start, end)."""
+    sentence_start = 0
+    for m in _SENTENCE_BREAK.finditer(text, 0, start):
+        sentence_start = m.end()
+    m2 = _SENTENCE_BREAK.search(text, end)
+    sentence_end = m2.start() if m2 else len(text)
+    left = sentence_start
+    for m in _CLAUSE_BREAK.finditer(text, sentence_start, start):
+        left = m.end()
+    m3 = _CLAUSE_BREAK.search(text, end, sentence_end)
+    right = m3.start() if m3 else sentence_end
+    return text[left:right]
+
+
+def polarity_relation(claim_text: str, claim_span: tuple[int, int], ev_text: str, ev_span: tuple[int, int]) -> Polarity:
+    """Rules decide polarity only when the clause holding the element and the whole sentence agree; when an
+    unrelated negation elsewhere in the sentence would flip the verdict, the relation is `unclear` and the judge
+    (or the fail-closed offline default) decides (record 54 §3.2)."""
+    clause = compare_polarity(clause_around(claim_text, *claim_span), clause_around(ev_text, *ev_span))
+    sentence = compare_polarity(sentence_around(claim_text, *claim_span), sentence_around(ev_text, *ev_span))
+    return clause if clause == sentence else "unclear"
 
 
 def negated(sentence: str) -> bool:
@@ -159,7 +192,7 @@ def judge_element(
     *,
     single_value_contradiction: bool = True,
 ) -> RuleOutcome:
-    claim_sentence = sentence_around(claim_text, element.start, element.end)
+    claim_span = (element.start, element.end)
     same_polarity: str | None = None
     opposite: str | None = None
     unclear: str | None = None
@@ -167,7 +200,7 @@ def judge_element(
         for el in evidence_elements.get(ev.citation.chunk_id, ()):
             if el.canonical != element.canonical:
                 continue
-            relation = compare_polarity(claim_sentence, sentence_around(ev.text, el.start, el.end))
+            relation = polarity_relation(claim_text, claim_span, ev.text, (el.start, el.end))
             if relation == "same":
                 same_polarity = ev.citation.chunk_id
                 break
@@ -179,6 +212,10 @@ def judge_element(
             break
     if same_polarity:
         return RuleOutcome(element, Verdict.supported, same_polarity, "exact match with the same polarity")
+    if opposite and element.kind in _TERM_KINDS:
+        # a term (population, identifier) inside a negated predicate ("輕度腎功能不全病人不需要調整劑量") does not
+        # contradict a claim about that term; only the judge can tell (record 54 §3.2, ms-0018)
+        return RuleOutcome(element, None, None, "same term, opposite negation polarity: not a rule decision")
     if opposite:
         return RuleOutcome(element, Verdict.contradicted, opposite, "same value, opposite negation polarity")
     if unclear:
@@ -212,7 +249,10 @@ def judge_element(
     for ev in cited:
         for sentence in sentences(ev.text):
             if needle and needle in normalize_for_match(sentence):
-                relation = compare_polarity(claim_sentence, _aligned_window(sentence, needle))
+                claim_sentence = sentence_around(claim_text, *claim_span)
+                window = compare_polarity(clause_around(claim_text, *claim_span), _aligned_window(sentence, needle))
+                whole = compare_polarity(claim_sentence, sentence)
+                relation = window if window == whole else "unclear"
                 if relation == "same":
                     return RuleOutcome(
                         element, Verdict.supported, ev.citation.chunk_id, "indication phrase contained in evidence"
@@ -251,9 +291,11 @@ def contained(claim_text: str, cited: Sequence[Evidence]) -> tuple[str, Polarity
         for sentence in sentences(ev.text):
             pos = normalize_for_match(sentence).find(needle)
             if pos >= 0:
-                # cues are counted in the aligned window (a short prefix plus the matched span), so a negation
-                # elsewhere in a long sentence does not flip the polarity of an unrelated clause
-                return ev.citation.chunk_id, compare_polarity(claim_text, _aligned_window(sentence, needle), count=True)
+                # the aligned window (a short prefix plus the matched span) and the whole sentence must agree; a
+                # negation elsewhere in a long sentence makes the relation unclear instead of flipping it
+                window = compare_polarity(claim_text, _aligned_window(sentence, needle), count=True)
+                whole = compare_polarity(claim_text, sentence, count=True)
+                return ev.citation.chunk_id, window if window == whole else "unclear"
         if needle in normalize_for_match(ev.text):  # crosses a sentence break: compare on the whole text
             return ev.citation.chunk_id, compare_polarity(claim_text, ev.text, count=True)
     return None

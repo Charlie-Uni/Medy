@@ -1,0 +1,339 @@
+{
+  "run": "2026-09-23-polarity-recheck-v2-term",
+  "finished_at": "2026-09-23T05:41:37+00:00",
+  "dataset": {
+    "version": "main-v1-provisional",
+    "second_human_review": "pending"
+  },
+  "versions": {
+    "policy_version": "policy-m2-smoke-1",
+    "retrieval_version": "90b57e4e86b4bb462fc4de58f7f7749666fb6f50a588c129bd5f9aa50585ab18",
+    "skill_version_set": [],
+    "model_config_version": "answer=gpt-6-sol;judge=gpt-6-sol;verifier-v2+support-rules-v2+polarity_only"
+  },
+  "n": 5,
+  "answered": 4,
+  "answerable_answered_rate": 0.75,
+  "answerable_gold_cited_rate": 0.75,
+  "no_answer_abstained_rate": 0.0,
+  "answerable_false_abstention_rate": 0.0,
+  "conflict_answered_with_gold": [
+    true
+  ],
+  "total_cost_usd": 0.0183,
+  "total_model_calls": 10,
+  "mean_latency_s": 7.13,
+  "p95_latency_s": 8.49,
+  "reason_code_counts": {
+    "unsupported_conclusion": 1
+  },
+  "rows": [
+    {
+      "sample_id": "ms-0018",
+      "dept": "MA",
+      "kind": "answerable",
+      "imported": false,
+      "derived": false,
+      "language": "mixed",
+      "slices": [
+        "dose_unit",
+        "negation",
+        "drug_name_zh",
+        "mixed_zh_en"
+      ],
+      "query": "嚴重腎功能不全（肌酐酸廓清率小於20毫升/分鐘）病人使用康肯®治療高血壓或狹心症時，每日劑量上限是多少？",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "嚴重腎功能不全（肌酐酸廓清率小於20毫升／分鐘）病人使用康肯®治療高血壓或狹心症時，每日劑量不可超過10毫克。"
+      ],
+      "cited_chunks": [
+        "18c9e3f8-15e6-429d-84f8-247e9c0b44b0",
+        "df6db6f2-923b-4142-95b0-224bb0739f0c"
+      ],
+      "gold_chunks": [
+        "18c9e3f8-15e6-429d-84f8-247e9c0b44b0"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "evidence_chunks": [
+        "18c9e3f8-15e6-429d-84f8-247e9c0b44b0",
+        "150a8188-b408-48af-ac76-9916fe935fdc",
+        "df6db6f2-923b-4142-95b0-224bb0739f0c",
+        "f4c48fc2-429d-483b-a267-31c377bf47b2",
+        "c283d2e8-fced-439b-8ddd-6b682767ecb3",
+        "cc9fda9a-981d-4614-bc78-640959a07207",
+        "35a71e30-c9b9-44de-a51b-32c690d625eb",
+        "8de28cd1-58c2-4450-8b32-45d97564ae9a"
+      ],
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "text": "嚴重腎功能不全（肌酐酸廓清率小於20毫升／分鐘）病人使用康肯®治療高血壓或狹心症時，每日劑量不可超過10毫克。",
+          "chunk": "18c9e3f8-15e6-429d-84f8-247e9c0b44b0",
+          "reason": "llm:gpt-6-sol: 证据在治疗高血压或狭心症的肾、肝功能不全病人剂量说明中指出：肌酐酸廓清率小于20毫升／分钟的严重肾功能不全病人，bisoprolol fumarate每日剂量不可超过10毫克。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 7820,
+      "model_calls": 2,
+      "model_tokens": 5364,
+      "cost_usd": 0.005575,
+      "latency_s": 8.49
+    },
+    {
+      "sample_id": "ms-0412",
+      "dept": "CO",
+      "kind": "answerable",
+      "imported": false,
+      "derived": false,
+      "language": "mixed",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "query": "根据ICH E19，选择性安全性数据收集的原则是否适用于基因治疗(gene therapy)临床试验？",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "不适用。ICH E19明确指出，该指南不适用于基因治疗临床试验。"
+      ],
+      "cited_chunks": [
+        "0ec717b2-19fa-4a28-8b81-616c8e6bbce7"
+      ],
+      "gold_chunks": [
+        "0ec717b2-19fa-4a28-8b81-616c8e6bbce7"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "evidence_chunks": [
+        "0ec717b2-19fa-4a28-8b81-616c8e6bbce7",
+        "79d24cf1-6633-44b4-a05c-e5388238c7b0",
+        "6da3f0df-1a60-45fa-9011-70d177287599",
+        "f40a44e7-b245-44e4-beee-eaf02e295f81",
+        "a35aed49-8fc0-4514-90db-a1e7153d8000",
+        "d415c9f8-1e47-4a60-a7f2-d98a8c2e35b4",
+        "009ef574-caa4-45f2-ae0c-7478bf93645b",
+        "50741ddb-50a5-4c32-ac38-4f47140b33ad"
+      ],
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "text": "不适用。ICH E19明确指出，该指南不适用于基因治疗临床试验。",
+          "chunk": "0ec717b2-19fa-4a28-8b81-616c8e6bbce7",
+          "reason": "llm:gpt-6-sol: 证据明确指出，该指南不适用于基因治疗临床试验。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 3201,
+      "model_calls": 2,
+      "model_tokens": 2204,
+      "cost_usd": 0.002492,
+      "latency_s": 6.51
+    },
+    {
+      "sample_id": "ms-0413",
+      "dept": "CO",
+      "kind": "answerable",
+      "imported": false,
+      "derived": true,
+      "language": "en",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "query": "According to ICH E19, does the selective safety data collection approach apply to gene therapy clinical trials?",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "No. ICH E19 states that its guidance is not applicable to gene therapy clinical trials."
+      ],
+      "cited_chunks": [
+        "0ec717b2-19fa-4a28-8b81-616c8e6bbce7"
+      ],
+      "gold_chunks": [
+        "0ec717b2-19fa-4a28-8b81-616c8e6bbce7"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "evidence_chunks": [
+        "0ec717b2-19fa-4a28-8b81-616c8e6bbce7",
+        "79d24cf1-6633-44b4-a05c-e5388238c7b0",
+        "98795e69-2836-499a-b5ed-783bea41cc4a",
+        "7a171793-a3b8-46cb-9f4f-8e2047661e2b",
+        "42abdb6f-0de5-49f8-9cde-94c541a4d9d4",
+        "3d31f9cc-6c15-4df5-b545-e054c660e6b4",
+        "30eabb53-79ee-4f36-9ca5-e5b8664c3cfa",
+        "d89df801-e11d-4479-bd4b-cd4223ae54e0"
+      ],
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "text": "No. ICH E19 states that its guidance is not applicable to gene therapy clinical trials.",
+          "chunk": "0ec717b2-19fa-4a28-8b81-616c8e6bbce7",
+          "reason": "llm:gpt-6-sol: 证据明确指出，ICH E19 指南不适用于基因治疗临床试验。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 3140,
+      "model_calls": 2,
+      "model_tokens": 2148,
+      "cost_usd": 0.002485,
+      "latency_s": 6.4
+    },
+    {
+      "sample_id": "ms-0431",
+      "dept": "CO",
+      "kind": "conflict",
+      "imported": false,
+      "derived": true,
+      "language": "en",
+      "slices": [
+        "negation",
+        "version_conflict",
+        "mixed_zh_en"
+      ],
+      "query": "Under ICH E7, how should protocols handle enrolment of geriatric patients who have concomitant illnesses, and why?",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "Protocols should not unnecessarily exclude geriatric patients with concomitant illnesses, because observing these patients is necessary to detect drug–disease interactions."
+      ],
+      "cited_chunks": [
+        "8de32360-f953-4a1a-b0fd-d9a25b7b728c"
+      ],
+      "gold_chunks": [
+        "8de32360-f953-4a1a-b0fd-d9a25b7b728c"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "evidence_chunks": [
+        "160c208f-5902-4d6e-b217-fb7216bedee5",
+        "8de32360-f953-4a1a-b0fd-d9a25b7b728c",
+        "14df2d36-4290-41c7-98c4-f6a134c203e4",
+        "a1db9873-f887-419e-8337-aa390b3e78f0",
+        "e384da7c-3ef0-45b9-9c14-d8394bc10531",
+        "ae54155d-c005-44a3-81a8-028d81e9b14c",
+        "881d9f80-2ef3-41e8-99e3-baca26012fd4",
+        "0a1f66af-52c1-4c70-8810-762a483ca2f9"
+      ],
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "text": "Protocols should not unnecessarily exclude geriatric patients with concomitant illnesses, because observing these patients is necessary to detect drug–disease i",
+          "chunk": "8de32360-f953-4a1a-b0fd-d9a25b7b728c",
+          "reason": "llm:gpt-6-sol: 证据明确指出，不应无必要地排除患有伴随疾病的老年患者；只有观察这些患者，才能发现药物与疾病的相互作用。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 3179,
+      "model_calls": 2,
+      "model_tokens": 2205,
+      "cost_usd": 0.00233,
+      "latency_s": 5.43
+    },
+    {
+      "sample_id": "pc-0027",
+      "dept": "MA",
+      "kind": "answerable",
+      "imported": true,
+      "derived": false,
+      "language": "zh",
+      "slices": [
+        "dose_unit",
+        "time_window",
+        "drug_name_zh",
+        "negation"
+      ],
+      "query": "依胃所樂腸溶膜衣錠仿單，成人及 12 歲以上青少年若有胃食道逆流症狀、但食道沒有發炎，每日用量如何安排？治療多久仍有症狀時應進一步檢查？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "unsupported_conclusion"
+      ],
+      "escalation_detail": "a claim contradicts the evidence (baseline 5.4 item 4)",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [
+        "5e70df28-7df1-49c8-ab34-5714cae01e8e"
+      ],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "evidence_chunks": [
+        "552d3e7d-c1f4-40b7-8648-ff3ee8936012",
+        "5e70df28-7df1-49c8-ab34-5714cae01e8e",
+        "356701b9-c957-43e6-ae3f-29b65de02a8c",
+        "d2af5134-a2e5-4e73-8ed6-7b6ccf18b46f",
+        "9b1c877a-431e-475b-b375-04bb52bdd92c",
+        "596ec030-0888-40d6-bbf7-d8900700039c",
+        "3147c919-80bc-4b6e-aced-306380d25973",
+        "88448aa8-dc48-4dfa-b0d0-7d3451c9a965"
+      ],
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "frequency",
+          "verdict": "contradicted",
+          "text": "每天1次",
+          "chunk": "5e70df28-7df1-49c8-ab34-5714cae01e8e",
+          "reason": "element contained but negation polarity differs"
+        },
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "text": "若治療4週後仍有症狀，應進一步檢查。",
+          "chunk": "5e70df28-7df1-49c8-ab34-5714cae01e8e",
+          "reason": "llm:gpt-6-sol: 證據指出，若4週後仍有症狀，應進一步檢查患者。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 7456,
+      "model_calls": 2,
+      "model_tokens": 4960,
+      "cost_usd": 0.005421,
+      "latency_s": 8.84
+    }
+  ]
+}

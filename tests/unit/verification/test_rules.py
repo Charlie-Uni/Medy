@@ -5,12 +5,14 @@ from __future__ import annotations
 from medops.domain.verification import ElementKind, Verdict
 from medops.verification.rules import (
     best_overlap,
+    clause_around,
     compare_polarity,
     contained,
     judge_elements,
     negated,
     overlap_ratio,
     polarity,
+    polarity_relation,
     sentence_around,
 )
 from tests.unit.harness._fixtures import evidence
@@ -85,8 +87,10 @@ def test_bound_phrases_are_limits_not_negations():
     # the live run's dominant false contradiction: 上限 X paraphrases 不得超過 X (record 54 §3)
     same = outcomes("每日劑量上限為 10 mg", "腎功能不全病人每日劑量不得超過 10 mg。")
     assert same[ElementKind.dose].verdict is Verdict.supported
-    lower = outcomes("至少提前 24 小時通知", "發布前應不少於 24 小時相互通知。")
+    lower = outcomes("應至少 24 小時前相互通知", "發布前應不少於 24 小時相互通知。")
     assert lower[ElementKind.time_window].verdict is Verdict.supported
+    lead = outcomes("至少提前 24 小時通知", "不得晚於 24 小時前通知。")
+    assert lead[ElementKind.time_window].verdict is None  # lead-time phrasing: bound direction is ambiguous
     plain = outcomes("每日劑量為 10 mg", "每日劑量不得超過 10 mg。")
     assert plain[ElementKind.dose].verdict is None  # a plain value against a limit: the judge decides
     assert "unclear" in plain[ElementKind.dose].reason
@@ -104,3 +108,42 @@ def test_indication_containment_respects_negation_polarity():
     ev2 = [evidence("c2", "Losartan potassium 用於治療高血壓及心衰竭。")]
     same = judge_elements("Losartan potassium 用於治療高血壓。", ev2)
     assert [o.verdict for o in same if o.element.kind is ElementKind.indication] == [Verdict.supported]
+
+
+def test_polarity_is_compared_on_the_clause_not_the_whole_sentence():
+    # record 54 §3.2: unrelated negation cues in the same evidence sentence flipped the polarity of a matching value
+    ppi = outcomes(
+        "低血鎂通報顯示病人至少使用 PPI 3 個月後出現反應。",
+        "低血鎂症曾有通報案件顯示,當長期使用PPI類成分藥品(至少使用3個月,大部分在使用1年以上),可能出現罕見低血鎂之不良反應,可能無症狀或嚴重之不良反應症狀。",
+    )
+    assert ppi[ElementKind.time_window].verdict is not Verdict.contradicted  # clause agrees, sentence has 無: unclear
+    herbal = outcomes(
+        "传统药用年限至少 30 年，其中至少 15 年在欧盟。",
+        "the product proves not to be harmful in the specified conditions of use and the efficacy is plausible on the basis of long-standing use for a period of at least 30 years, including at least 15 years within the Union.",
+    )
+    assert herbal[ElementKind.time_window].verdict is not Verdict.contradicted
+    notice = outcomes(
+        "发布安全公告前应至少提前 24 小时相互通知。",
+        "they shall inform each other not later than 24 hours in advance, except where urgent public announcements are required.",
+    )
+    assert notice[ElementKind.time_window].verdict is not Verdict.contradicted
+    text = "第一句，不得併用 aliskiren，第三句。"
+    start = text.index("aliskiren")
+    assert clause_around(text, start, start + 9) == "不得併用 aliskiren"
+    # a negation inside the element's own clause, with the sentence agreeing, still contradicts
+    real = outcomes("每日 300 mg", "兒童不得使用 300 mg。")
+    assert real[ElementKind.dose].verdict is Verdict.contradicted
+    # clause and sentence disagree -> unclear, never a rule verdict
+    assert polarity_relation("每日 300 mg", (2, 8), "可能無症狀，每日 300 mg。", (6, 12)) == "unclear"
+
+
+def test_term_elements_never_contradict_on_polarity_alone():
+    # record 54 §3.2 (ms-0018): the population term appears inside a negated predicate about another group
+    out = outcomes(
+        "嚴重腎功能不全病人每日劑量上限為 10 mg",
+        "輕度至中度肝或腎功能不全的病人通常不需要調整劑量。嚴重腎功能不全病人每日劑量不可超過 10 mg。",
+    )
+    assert out[ElementKind.dose].verdict is Verdict.supported
+    assert out[ElementKind.population].verdict is not Verdict.contradicted
+    only_negated = outcomes("腎功能不全病人使用本品", "腎功能不全病人不得使用本品。")
+    assert only_negated[ElementKind.population].verdict is None  # the judge decides, not the rule
