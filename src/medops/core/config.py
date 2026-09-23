@@ -99,6 +99,10 @@ class Settings(BaseSettings):
     # Secrets that later milestones consume; masked everywhere.
     redis_password: SecretStr | None = None
     identity_pseudonym_key: SecretStr | None = None  # HMAC key for surrogate ids (INV-OBS-02)
+    # Runtime LLM provider (ADR-0010 / DEC-009): OpenAI API key and the monthly spend cap enforced by the
+    # Model Gateway ledger (M2-06). Offline drafting/review keep using subscription CLIs and never read this key.
+    openai_api_key: SecretStr | None = None
+    llm_monthly_budget_usd: float = Field(default=30.0, ge=0)
 
     @field_validator(
         "postgres_password",

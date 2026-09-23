@@ -597,7 +597,7 @@ P0 保留：
 | DEC-006 | 灰度按用户还是部门 | M4 | 爆炸半径、统计有效性；默认稳定 user hash |
 | DEC-007 | 原始文档对象存储与备份 | M1 | 不可变、ACL、回看、恢复与成本 |
 | DEC-008 | Trace 与审计保留期 | M3 上线前 | 项目要求、数据最小化、重放窗口 |
-| DEC-009 | 模型托管/本地及数据传输边界 | M0/M2 | 数据政策、质量、成本、可用性 |
+| DEC-009 | 模型托管/本地及数据传输边界。已决（[ADR-0010](adr/ADR-0010-llm-provider-and-data-boundary.md)，2026-09-23，决策人）：运行时 LLM 走 OpenAI API，月上限 30 美元可调；embedding/reranker 本地（ADR-0007）；订阅 CLI 仅用于离线数据工作 | M0/M2 | 数据政策、质量、成本、可用性 |
 | DEC-010 | 身份提供方与 token 签发；架构保持 OIDC 兼容，不提前锁定厂商。OIDC 边界已决（[ADR-0001](adr/ADR-0001-identity-oidc-boundary.md)），具体 IdP 延后 | 边界：已决 / IdP：M3 上线前 | 部门与 scope 的服务端映射、group claim allowlist、开发环境测试签发密钥、审计要求 |
 | DEC-011 | 评测语料来源白名单与四级许可准入政策；政策已决（[ADR-0003](adr/ADR-0003-corpus-source-license-policy.md)），探针集 v1 只收 `eligible` 文档，具体文档清单待审核 | 政策：已决 / 清单：探针集 v1 冻结前 | 发布主体权威、版本可追溯、原始 PDF 可定位、许可状态、第三方内容、署名要求 |
 
