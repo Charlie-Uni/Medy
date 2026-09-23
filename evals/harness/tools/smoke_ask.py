@@ -16,9 +16,12 @@ import argparse
 import datetime as dt
 import hashlib
 import json
+import os
 import pathlib
+import queue
 import random
 import sys
+import threading
 import time
 from contextlib import contextmanager
 from datetime import date
@@ -27,6 +30,7 @@ from urllib.parse import urlsplit, urlunsplit
 import psycopg
 
 from medops.core.config import Settings
+from medops.core.errors import ErrorCode, InfrastructureError
 from medops.domain.common import Dept
 from medops.domain.identity import UserContext
 from medops.domain.state import VersionSet
@@ -71,19 +75,101 @@ class _Meter:
         return r
 
 
+class GpuThread:
+    """Every torch call goes through one long-lived daemon thread, with a wait timeout.
+
+    The harness runs node bodies in short-lived worker threads (`run_node`). Driving Metal from a new thread per
+    attempt wedged the MPS stream once (2026-09-23, sample 213 of the first full run: the driver blocked forever
+    in resource allocation and no node timeout could unblock the process). One pinned thread removes the churn,
+    and the timeout turns a wedged GPU into a `dependency_timeout` plus a process exit (75) that a supervisor can
+    restart with `--resume`.
+    """
+
+    EXIT_STALLED = 75
+
+    def __init__(self, timeout_s: float) -> None:
+        self._q: queue.Queue = queue.Queue()
+        self._timeout = timeout_s
+        self.stalled = False
+        threading.Thread(target=self._loop, name="gpu-pinned", daemon=True).start()
+
+    def _loop(self) -> None:
+        while True:
+            fn, args, kwargs, box, done = self._q.get()
+            try:
+                box.append(("ok", fn(*args, **kwargs)))
+            except BaseException as exc:  # noqa: BLE001 - re-raised in the calling thread
+                box.append(("err", exc))
+            done.set()
+
+    def call(self, fn, *args, **kwargs):
+        box: list = []
+        done = threading.Event()
+        self._q.put((fn, args, kwargs, box, done))
+        if not done.wait(self._timeout):
+            self.stalled = True
+            raise InfrastructureError(
+                ErrorCode.dependency_timeout,
+                detail=f"gpu call {getattr(fn, '__name__', fn)} exceeded {self._timeout}s",
+                retryable=False,
+            )
+        kind, value = box[0]
+        if kind == "err":
+            raise value
+        return value
+
+
+class _PinnedEmbedding:
+    def __init__(self, inner, gpu: GpuThread) -> None:
+        self._inner, self._gpu = inner, gpu
+        self.spec = inner.spec
+
+    def embed_documents(self, texts):
+        return self._gpu.call(self._inner.embed_documents, texts)
+
+    def embed_query(self, text):
+        return self._gpu.call(self._inner.embed_query, text)
+
+
+class _PinnedReranker:
+    def __init__(self, inner, gpu: GpuThread) -> None:
+        self._inner, self._gpu = inner, gpu
+        self.spec = inner.spec
+        self.framework = getattr(inner, "framework", "")
+
+    def score(self, query, texts):
+        return self._gpu.call(self._inner.score, query, texts)
+
+
+def _mps_empty_cache() -> None:
+    import torch
+
+    torch.mps.empty_cache()
+
+
 def _with_database(url: str, name: str) -> str:
     parts = urlsplit(url)
     return urlunsplit((parts.scheme, parts.netloc, "/" + name, parts.query, parts.fragment))
 
 
-def pick_samples(rng: random.Random, per_dept: int, no_answer: int, conflict: int, *, everything: bool = False) -> list[dict]:
-    samples = [json.loads(l) for l in (DATASET / "samples.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
+def pick_samples(
+    rng: random.Random, per_dept: int, no_answer: int, conflict: int, *, everything: bool = False
+) -> list[dict]:
+    samples = [
+        json.loads(line)
+        for line in (DATASET / "samples.jsonl").read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
     if everything:
         return samples
     new = [s for s in samples if s["sample_id"].startswith("ms-")]
     chosen: list[dict] = []
     for dept in ("MA", "PV", "CO"):
-        pool = [s for s in new if s["dept"] == dept and s.get("answerable", True) and not s.get("conflict") and not s.get("derived_from")]
+        pool = [
+            s
+            for s in new
+            if s["dept"] == dept and s.get("answerable", True) and not s.get("conflict") and not s.get("derived_from")
+        ]
         chosen += rng.sample(pool, min(per_dept, len(pool)))
     na_pool = [s for s in new if s.get("answerable", True) is False]
     chosen += na_pool if no_answer < 0 else rng.sample(na_pool, min(no_answer, len(na_pool)))
@@ -104,15 +190,27 @@ def main() -> int:
     ap.add_argument("--conflict", type=int, default=2)
     ap.add_argument("--seed", type=int, default=20260923)
     ap.add_argument("--all", action="store_true", help="run every sample of the dataset (614)")
+    ap.add_argument("--resume", action="store_true", help="continue an existing run directory from its rows.jsonl")
+    ap.add_argument("--gpu-timeout", type=float, default=120.0, help="seconds a single embedding/rerank call may take")
     args = ap.parse_args()
-    if args.out.exists():
-        raise SystemExit("refusing to overwrite an existing run directory")
+    if args.out.exists() and not args.resume:
+        raise SystemExit("refusing to overwrite an existing run directory (pass --resume to continue it)")
+    args.out.mkdir(parents=True, exist_ok=True)
+    rows_path = args.out / "rows.jsonl"
+    done_rows: dict[str, dict] = {}
+    if rows_path.exists():
+        for line in rows_path.read_text(encoding="utf-8").splitlines():
+            if line.strip():
+                r = json.loads(line)
+                done_rows[r["sample_id"]] = r
+    redo = {sid for sid, r in done_rows.items() if "system_failure" in r["reason_codes"]}
     settings = Settings()
     from medops.retrieval.rerank import BgeRerankerV2M3
     from medops.retrieval.vector.embedding import BgeM3EmbeddingProvider
 
-    provider = BgeM3EmbeddingProvider(device=args.device)
-    reranker = BgeRerankerV2M3(device=args.device, output=RERANK_OUTPUT)
+    gpu = GpuThread(args.gpu_timeout)
+    provider = _PinnedEmbedding(gpu.call(lambda: BgeM3EmbeddingProvider(device=args.device)), gpu)
+    reranker = _PinnedReranker(gpu.call(lambda: BgeRerankerV2M3(device=args.device, output=RERANK_OUTPUT)), gpu)
     app_dsn = _with_database(settings.database_url.get_secret_value(), args.database)
     conn = psycopg.connect(app_dsn)
     as_of = args.as_of
@@ -140,7 +238,11 @@ def main() -> int:
         )
     )
     deps = HarnessDeps(
-        retrieval=retrieval, gateway=gateway, answer_model_id=args.answer_model, judge_model_id=args.judge_model, as_of=as_of
+        retrieval=retrieval,
+        gateway=gateway,
+        answer_model_id=args.answer_model,
+        judge_model_id=args.judge_model,
+        as_of=as_of,
     )
     versions = VersionSet(
         policy_version="policy-m2-smoke-1",
@@ -149,8 +251,11 @@ def main() -> int:
     )
     mapping = {e["gold_id"]: e for e in json.loads(MAPPING.read_text(encoding="utf-8"))["entries"]}
     samples = pick_samples(random.Random(args.seed), args.per_dept, args.no_answer, args.conflict, everything=args.all)
-    rows = []
+    if done_rows:
+        print(f"resuming: {len(done_rows) - len(redo)} rows kept, {len(redo)} system_failure rows redone", flush=True)
     for s in samples:
+        if s["sample_id"] in done_rows and s["sample_id"] not in redo:
+            continue
         user = UserContext(
             user_id=hashlib.sha256(f"smoke:{s['sample_id']}".encode()).hexdigest()[:16],
             dept=Dept(s["dept"]),
@@ -168,39 +273,55 @@ def main() -> int:
             if entry and entry["status"] == "mapped":
                 gold_chunks.update(entry["chunk_ids"])
         cited = [c.chunk_id for c in run.state.answer.citations] if run.state.answer else []
-        rows.append(
-            {
-                "sample_id": s["sample_id"],
-                "dept": s["dept"],
-                "kind": "no_answer" if s.get("answerable", True) is False else ("conflict" if s.get("conflict") else "answerable"),
-                "imported": s["sample_id"].startswith("pc-"),
-                "derived": bool(s.get("derived_from")),
-                "language": s.get("language"),
-                "slices": s["slices"],
-                "query": s["query"],
-                "outcome": run.outcome,
-                "reason_codes": [c.value for c in run.state.escalation.reason_codes] if run.state.escalation else [],
-                "escalation_detail": run.state.escalation.detail[:200] if run.state.escalation else "",
-                "claims": [c.text for c in run.state.answer.claims] if run.state.answer else [],
-                "cited_chunks": cited,
-                "gold_chunks": sorted(gold_chunks),
-                "gold_cited": bool(gold_chunks & set(cited)),
-                "evidence_count": len(run.state.evidence),
-                "flagged_evidence": list(run.flagged_evidence),
-                "verify_elements": [
-                    {"kind": e.kind.value, "verdict": e.verdict.value, "reason": e.reason[:120]}
-                    for e in (run.state.verify_result.elements if run.state.verify_result else ())
-                ],
-                "attempts": [f"{a.node}:{a.outcome}" for a in run.attempts],
-                "tokens_used": run.state.budget.used,
-                "model_calls": gateway.calls - before[2],
-                "model_tokens": gateway.tokens - before[1],
-                "cost_usd": round(gateway.cost - before[0], 6),
-                "latency_s": round(latency, 2),
-            }
+        row = {
+            "sample_id": s["sample_id"],
+            "dept": s["dept"],
+            "kind": "no_answer"
+            if s.get("answerable", True) is False
+            else ("conflict" if s.get("conflict") else "answerable"),
+            "imported": s["sample_id"].startswith("pc-"),
+            "derived": bool(s.get("derived_from")),
+            "language": s.get("language"),
+            "slices": s["slices"],
+            "query": s["query"],
+            "outcome": run.outcome,
+            "reason_codes": [c.value for c in run.state.escalation.reason_codes] if run.state.escalation else [],
+            "escalation_detail": run.state.escalation.detail[:200] if run.state.escalation else "",
+            "claims": [c.text for c in run.state.answer.claims] if run.state.answer else [],
+            "cited_chunks": cited,
+            "gold_chunks": sorted(gold_chunks),
+            "gold_cited": bool(gold_chunks & set(cited)),
+            "evidence_count": len(run.state.evidence),
+            "flagged_evidence": list(run.flagged_evidence),
+            "verify_elements": [
+                {"kind": e.kind.value, "verdict": e.verdict.value, "reason": e.reason[:120]}
+                for e in (run.state.verify_result.elements if run.state.verify_result else ())
+            ],
+            "attempts": [f"{a.node}:{a.outcome}" for a in run.attempts],
+            "tokens_used": run.state.budget.used,
+            "model_calls": gateway.calls - before[2],
+            "model_tokens": gateway.tokens - before[1],
+            "cost_usd": round(gateway.cost - before[0], 6),
+            "latency_s": round(latency, 2),
+        }
+        done_rows[row["sample_id"]] = row
+        with rows_path.open("a", encoding="utf-8") as fh:
+            fh.write(json.dumps(row, ensure_ascii=False) + "\n")
+        print(
+            f"{s['sample_id']} [{row['kind']}] -> {run.outcome} {row['reason_codes']} gold_cited={row['gold_cited']} calls={row['model_calls']} ${row['cost_usd']:.4f} {latency:.1f}s",
+            flush=True,
         )
-        print(f"{s['sample_id']} [{rows[-1]['kind']}] -> {run.outcome} {rows[-1]['reason_codes']} gold_cited={rows[-1]['gold_cited']} calls={rows[-1]['model_calls']} ${rows[-1]['cost_usd']:.4f} {latency:.1f}s")
+        if gpu.stalled:
+            print(
+                f"gpu stalled beyond {args.gpu_timeout}s: exiting {GpuThread.EXIT_STALLED} for the supervisor to resume",
+                flush=True,
+            )
+            conn.close()
+            os._exit(GpuThread.EXIT_STALLED)
+        if args.device == "mps":
+            gpu.call(_mps_empty_cache)
     conn.close()
+    rows = [done_rows[s["sample_id"]] for s in samples if s["sample_id"] in done_rows]
     answerable = [r for r in rows if r["kind"] == "answerable"]
     summary = {
         "run": args.out.name,
@@ -209,19 +330,27 @@ def main() -> int:
         "versions": versions.model_dump(),
         "n": len(rows),
         "answered": sum(r["outcome"] == "answered" for r in rows),
-        "answerable_answered_rate": round(sum(r["outcome"] == "answered" for r in answerable) / max(1, len(answerable)), 3),
+        "answerable_answered_rate": round(
+            sum(r["outcome"] == "answered" for r in answerable) / max(1, len(answerable)), 3
+        ),
         "answerable_gold_cited_rate": round(sum(r["gold_cited"] for r in answerable) / max(1, len(answerable)), 3),
         "no_answer_abstained_rate": round(
-            sum(r["outcome"] == "escalated" and "insufficient_evidence" in r["reason_codes"] for r in rows if r["kind"] == "no_answer")
+            sum(
+                r["outcome"] == "escalated" and "insufficient_evidence" in r["reason_codes"]
+                for r in rows
+                if r["kind"] == "no_answer"
+            )
             / max(1, sum(1 for r in rows if r["kind"] == "no_answer")),
             3,
         ),
         "answerable_false_abstention_rate": round(
-            sum(r["outcome"] == "escalated" and "insufficient_evidence" in r["reason_codes"] for r in answerable) / max(1, len(answerable)), 3
+            sum(r["outcome"] == "escalated" and "insufficient_evidence" in r["reason_codes"] for r in answerable)
+            / max(1, len(answerable)),
+            3,
         ),
         "conflict_answered_with_gold": [r["gold_cited"] for r in rows if r["kind"] == "conflict"],
-        "total_cost_usd": round(gateway.cost, 4),
-        "total_model_calls": gateway.calls,
+        "total_cost_usd": round(sum(r["cost_usd"] for r in rows), 4),
+        "total_model_calls": sum(r["model_calls"] for r in rows),
         "mean_latency_s": round(sum(r["latency_s"] for r in rows) / len(rows), 2),
         "p95_latency_s": sorted(r["latency_s"] for r in rows)[int(0.95 * (len(rows) - 1))],
         "reason_code_counts": {},
@@ -230,7 +359,6 @@ def main() -> int:
     for r in rows:
         for c in r["reason_codes"]:
             summary["reason_code_counts"][c] = summary["reason_code_counts"].get(c, 0) + 1
-    args.out.mkdir(parents=True)
     (args.out / "results.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     lines = [
         f"# Harness smoke `{args.out.name}` (main-v1-provisional, second human review pending)",
@@ -242,10 +370,29 @@ def main() -> int:
         "| --- | --- | --- | --- | --- | --- | ---: | ---: | ---: | ---: |",
     ]
     for r in rows:
-        lines.append(f"| {r['sample_id']} | {r['kind']} | {r['dept']} | {r['outcome']} | {', '.join(r['reason_codes']) or '—'} | {'yes' if r['gold_cited'] else ('—' if r['kind'] == 'no_answer' else 'no')} | {len(r['claims'])} | {r['model_calls']} | ${r['cost_usd']:.4f} | {r['latency_s']}s |")
+        lines.append(
+            f"| {r['sample_id']} | {r['kind']} | {r['dept']} | {r['outcome']} | {', '.join(r['reason_codes']) or '—'} | {'yes' if r['gold_cited'] else ('—' if r['kind'] == 'no_answer' else 'no')} | {len(r['claims'])} | {r['model_calls']} | ${r['cost_usd']:.4f} | {r['latency_s']}s |"
+        )
     lines.append("")
     (args.out / "report.md").write_text("\n".join(lines), encoding="utf-8")
-    print(json.dumps({k: summary[k] for k in ("n", "answered", "answerable_answered_rate", "answerable_gold_cited_rate", "no_answer_abstained_rate", "answerable_false_abstention_rate", "total_cost_usd", "mean_latency_s")}, ensure_ascii=False))
+    print(
+        json.dumps(
+            {
+                k: summary[k]
+                for k in (
+                    "n",
+                    "answered",
+                    "answerable_answered_rate",
+                    "answerable_gold_cited_rate",
+                    "no_answer_abstained_rate",
+                    "answerable_false_abstention_rate",
+                    "total_cost_usd",
+                    "mean_latency_s",
+                )
+            },
+            ensure_ascii=False,
+        )
+    )
     return 0
 
 
