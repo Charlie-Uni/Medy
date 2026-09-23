@@ -26,18 +26,24 @@ from medops.verification.verifier import VERIFIER_VERSION, verify_claims  # noqa
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--pairs", type=pathlib.Path, default=REPO / "evals/verifier/dec003/pairs.jsonl")
-    ap.add_argument("--out", type=pathlib.Path, default=REPO / "evals/verifier/dec003/results_rules.json")
+    ap.add_argument("--out", type=pathlib.Path, default=None)
+    ap.add_argument("--no-single-value", action="store_true", help="numeric mismatch stays undetermined instead of contradicted")
     args = ap.parse_args()
+    out = args.out or REPO / ("evals/verifier/dec003/results_rules_nosv.json" if args.no_single_value else "evals/verifier/dec003/results_rules.json")
     pairs = [json.loads(l) for l in args.pairs.read_text(encoding="utf-8").splitlines() if l.strip()]
     rows = []
     for p in pairs:
         ev = evidence_from_pair(p)
-        vr = verify_claims([Claim(text=p["statement"], citation_chunk_ids=(p["evidence_chunk_id"],))], [ev])
+        vr = verify_claims(
+            [Claim(text=p["statement"], citation_chunk_ids=(p["evidence_chunk_id"],))],
+            [ev],
+            single_value_contradiction=not args.no_single_value,
+        )
         pred, decisive = predict_from_result(vr)
         rows.append({"pair_id": p["pair_id"], "label": p["label"], "pred": pred, "kind": p["kind"], "slices": p["slices"], "dept": p["dept"], "rules_decisive": decisive})
-    result = summarize(rows, arm="rules", model=VERIFIER_VERSION)
-    args.out.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    args.out.with_suffix(".md").write_text(report_markdown(result), encoding="utf-8")
+    result = summarize(rows, arm="rules-nosv" if args.no_single_value else "rules", model=VERIFIER_VERSION)
+    out.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    out.with_suffix(".md").write_text(report_markdown(result), encoding="utf-8")
     print(json.dumps({k: result[k] for k in ("arm", "n", "accuracy", "by_kind")}, ensure_ascii=False))
     return 0
 

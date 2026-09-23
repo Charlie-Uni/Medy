@@ -1,0 +1,3984 @@
+{
+  "arm": "cli",
+  "model": "claude-sonnet-5",
+  "n": 300,
+  "accuracy": 0.9567,
+  "unsafe_accept_rate": 0.0482,
+  "rules_decisive_share": 0.0,
+  "by_kind": {
+    "contradicted/negation": {
+      "n": 58,
+      "accuracy": 0.8448
+    },
+    "contradicted/numeric": {
+      "n": 17,
+      "accuracy": 1.0
+    },
+    "not_supported/other_doc": {
+      "n": 84,
+      "accuracy": 1.0
+    },
+    "not_supported/same_doc": {
+      "n": 69,
+      "accuracy": 0.942
+    },
+    "supported": {
+      "n": 72,
+      "accuracy": 1.0
+    }
+  },
+  "by_slice": {
+    "dose_unit": {
+      "n": 32,
+      "accuracy": 0.9688
+    },
+    "drug_name_zh": {
+      "n": 52,
+      "accuracy": 0.9615
+    },
+    "long_context": {
+      "n": 13,
+      "accuracy": 1.0
+    },
+    "mixed_zh_en": {
+      "n": 280,
+      "accuracy": 0.9571
+    },
+    "negation": {
+      "n": 152,
+      "accuracy": 0.9408
+    },
+    "protocol_id": {
+      "n": 72,
+      "accuracy": 0.9722
+    },
+    "time_window": {
+      "n": 83,
+      "accuracy": 0.9639
+    },
+    "version_conflict": {
+      "n": 28,
+      "accuracy": 1.0
+    }
+  },
+  "confusion": {
+    "supported": {
+      "supported": 72,
+      "not_supported": 0,
+      "contradicted": 0
+    },
+    "not_supported": {
+      "supported": 2,
+      "not_supported": 149,
+      "contradicted": 2
+    },
+    "contradicted": {
+      "supported": 9,
+      "not_supported": 0,
+      "contradicted": 66
+    }
+  },
+  "cost_usd": 1.1193,
+  "per_pair": [
+    {
+      "pair_id": "ms-0146:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "negation",
+        "time_window",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0069:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "drug_name_zh",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0281:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0128:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "time_window",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "pc-0094:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "negation",
+        "mixed_zh_en",
+        "protocol_id"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "pc-0045:contradicted/numeric",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/numeric",
+      "slices": [
+        "time_window",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "pc-0069:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "mixed_zh_en",
+        "protocol_id"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0427:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0233:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en",
+        "long_context"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0101:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "pc-0087:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0032:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "negation",
+        "drug_name_zh",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0443:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "pc-0027:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "dose_unit",
+        "time_window",
+        "drug_name_zh",
+        "negation"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0003:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "time_window",
+        "drug_name_zh",
+        "negation"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "pc-0041:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0294:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0252:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0108:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "time_window",
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0358:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "dose_unit",
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0034:contradicted/numeric",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/numeric",
+      "slices": [
+        "dose_unit",
+        "negation",
+        "drug_name_zh"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0023:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "dose_unit",
+        "drug_name_zh",
+        "time_window",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0026:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "time_window",
+        "drug_name_zh",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0010:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "dose_unit",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0431:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "negation",
+        "version_conflict",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0239:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "negation",
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "pc-0016:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "negation",
+        "drug_name_zh",
+        "dose_unit",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0032:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "negation",
+        "drug_name_zh",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0244:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "pc-0032:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "pc-0094:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "negation",
+        "mixed_zh_en",
+        "protocol_id"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0256:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0389:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "dose_unit",
+        "version_conflict",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0254:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "time_window",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0241:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "pc-0055:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "time_window",
+        "mixed_zh_en",
+        "negation"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0326:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0022:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "dose_unit",
+        "drug_name_zh",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "pc-0010:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0106:contradicted/negation",
+      "label": "contradicted",
+      "pred": "supported",
+      "kind": "contradicted/negation",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0207:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "time_window",
+        "version_conflict",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0335:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "mixed_zh_en",
+        "long_context"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0131:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0374:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "pc-0100:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0211:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "negation",
+        "version_conflict",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0343:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0318:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "negation",
+        "time_window",
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "pc-0098:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "negation",
+        "mixed_zh_en",
+        "protocol_id"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "pc-0106:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0446:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "negation",
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0038:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "negation",
+        "drug_name_zh",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "pc-0079:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0266:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0458:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "pc-0008:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "dose_unit",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0189:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0412:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0422:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0092:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "negation",
+        "version_conflict",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "pc-0033:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0114:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0179:contradicted/negation",
+      "label": "contradicted",
+      "pred": "supported",
+      "kind": "contradicted/negation",
+      "slices": [
+        "negation",
+        "protocol_id",
+        "time_window",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0446:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "negation",
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0417:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "dose_unit",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "pc-0088:contradicted/numeric",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/numeric",
+      "slices": [
+        "time_window",
+        "mixed_zh_en",
+        "negation"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0033:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "negation",
+        "drug_name_zh",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "pc-0066:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "negation",
+        "mixed_zh_en",
+        "protocol_id"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0048:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "dose_unit",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0348:contradicted/negation",
+      "label": "contradicted",
+      "pred": "supported",
+      "kind": "contradicted/negation",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0447:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "negation",
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0187:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "time_window",
+        "protocol_id",
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0184:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "time_window",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "pc-0103:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0250:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "contradicted",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "time_window",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0013:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "time_window",
+        "drug_name_zh",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0221:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "time_window",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0255:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "time_window",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0458:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0387:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "negation",
+        "version_conflict",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0398:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "pc-0055:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "time_window",
+        "mixed_zh_en",
+        "negation"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0297:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "negation"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0006:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "negation",
+        "drug_name_zh",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0434:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "version_conflict",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0140:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0228:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "pc-0020:contradicted/negation",
+      "label": "contradicted",
+      "pred": "supported",
+      "kind": "contradicted/negation",
+      "slices": [
+        "negation",
+        "drug_name_zh"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0061:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "negation",
+        "drug_name_zh",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "pc-0079:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0409:contradicted/negation",
+      "label": "contradicted",
+      "pred": "supported",
+      "kind": "contradicted/negation",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0222:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "time_window",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "pc-0105:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "time_window",
+        "mixed_zh_en",
+        "negation"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "pc-0007:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "dose_unit",
+        "drug_name_zh",
+        "time_window",
+        "negation"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "pc-0083:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "time_window",
+        "mixed_zh_en",
+        "negation"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0401:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0389:contradicted/numeric",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/numeric",
+      "slices": [
+        "dose_unit",
+        "version_conflict",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0002:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "negation",
+        "drug_name_zh",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0372:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "pc-0054:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "time_window",
+        "mixed_zh_en",
+        "negation"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0031:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "negation",
+        "drug_name_zh",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0253:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0193:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "time_window",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0200:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "negation",
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0098:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0281:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0036:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "negation",
+        "drug_name_zh",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0076:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "negation",
+        "drug_name_zh",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0089:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "version_conflict",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0018:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "dose_unit",
+        "negation",
+        "drug_name_zh",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "pc-0048:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "time_window",
+        "mixed_zh_en",
+        "negation"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0015:contradicted/numeric",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/numeric",
+      "slices": [
+        "time_window",
+        "negation",
+        "drug_name_zh"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0315:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "negation",
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0275:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0297:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "negation"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0116:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0205:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en",
+        "long_context"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0388:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "dose_unit",
+        "version_conflict",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0327:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0075:contradicted/numeric",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/numeric",
+      "slices": [
+        "negation",
+        "time_window",
+        "drug_name_zh",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0183:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "time_window",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0175:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0184:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "time_window",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0307:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0333:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "pc-0051:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0362:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "time_window",
+        "version_conflict",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "pc-0095:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "pc-0072:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0123:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0024:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "negation",
+        "drug_name_zh",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0352:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0437:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "version_conflict",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0387:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "negation",
+        "version_conflict",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "pc-0015:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "dose_unit",
+        "drug_name_zh"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0208:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "time_window",
+        "version_conflict",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0285:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0115:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0279:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0232:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "pc-0026:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "time_window",
+        "drug_name_zh"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0021:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "negation",
+        "drug_name_zh",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0248:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "negation",
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0019:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "negation",
+        "drug_name_zh",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0450:contradicted/negation",
+      "label": "contradicted",
+      "pred": "supported",
+      "kind": "contradicted/negation",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0160:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0039:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "dose_unit",
+        "time_window",
+        "drug_name_zh",
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0176:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "pc-0042:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "time_window",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "pc-0107:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "pc-0021:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "time_window",
+        "drug_name_zh"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0243:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "pc-0046:contradicted/numeric",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/numeric",
+      "slices": [
+        "time_window",
+        "mixed_zh_en",
+        "negation"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0246:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "time_window",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0448:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0361:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "dose_unit",
+        "mixed_zh_en",
+        "protocol_id",
+        "long_context"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "pc-0021:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "time_window",
+        "drug_name_zh"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0064:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "negation",
+        "drug_name_zh"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0337:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0136:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "time_window",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0235:contradicted/numeric",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/numeric",
+      "slices": [
+        "time_window",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0052:contradicted/numeric",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/numeric",
+      "slices": [
+        "dose_unit",
+        "drug_name_zh"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0346:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0076:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "negation",
+        "drug_name_zh",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0082:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "negation",
+        "drug_name_zh"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0350:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0336:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0174:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "time_window",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0277:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0142:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0009:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "time_window",
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0042:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "dose_unit",
+        "drug_name_zh"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0240:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "negation",
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "pc-0057:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "negation"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0188:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "time_window",
+        "protocol_id",
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0041:contradicted/numeric",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/numeric",
+      "slices": [
+        "dose_unit",
+        "drug_name_zh",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0425:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "dose_unit",
+        "mixed_zh_en",
+        "protocol_id",
+        "long_context"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0222:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "time_window",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0390:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0105:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "time_window",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0228:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "pc-0027:contradicted/numeric",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/numeric",
+      "slices": [
+        "dose_unit",
+        "time_window",
+        "drug_name_zh",
+        "negation"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0216:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "version_conflict",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "pc-0091:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0110:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0443:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0334:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "mixed_zh_en",
+        "long_context"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "pc-0105:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "time_window",
+        "mixed_zh_en",
+        "negation"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "pc-0099:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "mixed_zh_en",
+        "protocol_id"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0018:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "dose_unit",
+        "negation",
+        "drug_name_zh",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0366:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "protocol_id",
+        "time_window",
+        "version_conflict",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0455:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0316:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "time_window",
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0019:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "negation",
+        "drug_name_zh",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0172:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "time_window",
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0223:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0368:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "protocol_id",
+        "version_conflict",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0147:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0382:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "version_conflict",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "pc-0024:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "protocol_id",
+        "dose_unit"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0236:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "time_window",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0295:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "time_window",
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0103:contradicted/numeric",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/numeric",
+      "slices": [
+        "time_window",
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0427:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "pc-0083:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "time_window",
+        "mixed_zh_en",
+        "negation"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0258:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0071:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "dose_unit",
+        "time_window",
+        "drug_name_zh",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0044:contradicted/numeric",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/numeric",
+      "slices": [
+        "time_window",
+        "drug_name_zh",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0090:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "negation",
+        "version_conflict",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0145:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "negation",
+        "time_window",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0186:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0183:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "contradicted",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "time_window",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0296:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "negation"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0374:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "pc-0107:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0413:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0381:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "version_conflict",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0383:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "version_conflict",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0122:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0328:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0258:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "pc-0088:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "time_window",
+        "mixed_zh_en",
+        "negation"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0148:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0360:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "dose_unit",
+        "mixed_zh_en",
+        "protocol_id",
+        "long_context"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0043:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "negation",
+        "drug_name_zh",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0461:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0079:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "dose_unit",
+        "time_window",
+        "drug_name_zh",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0430:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "negation",
+        "version_conflict",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0161:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "time_window",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0136:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "time_window",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0384:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "negation",
+        "version_conflict",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0123:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0246:contradicted/numeric",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/numeric",
+      "slices": [
+        "time_window",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0087:contradicted/numeric",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/numeric",
+      "slices": [
+        "time_window",
+        "version_conflict",
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0295:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "time_window",
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0410:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "time_window",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0334:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "mixed_zh_en",
+        "long_context"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0123:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "pc-0054:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "time_window",
+        "mixed_zh_en",
+        "negation"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0311:contradicted/negation",
+      "label": "contradicted",
+      "pred": "supported",
+      "kind": "contradicted/negation",
+      "slices": [
+        "negation",
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0114:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0051:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0334:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "mixed_zh_en",
+        "long_context"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0124:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "negation",
+        "mixed_zh_en",
+        "long_context"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0044:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "time_window",
+        "drug_name_zh",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0208:contradicted/numeric",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/numeric",
+      "slices": [
+        "time_window",
+        "version_conflict",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0262:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0178:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "time_window",
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0125:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "negation",
+        "mixed_zh_en",
+        "long_context"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0264:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "dose_unit",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0175:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0109:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "time_window",
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "pc-0029:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "dose_unit",
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0425:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "dose_unit",
+        "mixed_zh_en",
+        "protocol_id",
+        "long_context"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0332:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0279:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "pc-0075:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0355:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "time_window",
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0107:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0230:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0044:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "time_window",
+        "drug_name_zh",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0031:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "negation",
+        "drug_name_zh",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0011:contradicted/negation",
+      "label": "contradicted",
+      "pred": "supported",
+      "kind": "contradicted/negation",
+      "slices": [
+        "negation",
+        "drug_name_zh",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0360:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "dose_unit",
+        "mixed_zh_en",
+        "protocol_id",
+        "long_context"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "pc-0045:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "time_window",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0444:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0353:contradicted/negation",
+      "label": "contradicted",
+      "pred": "supported",
+      "kind": "contradicted/negation",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0452:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0068:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "drug_name_zh",
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0070:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "negation",
+        "drug_name_zh",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0357:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "pc-0052:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0119:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "time_window",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0275:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0238:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "time_window",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "pc-0066:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "negation",
+        "mixed_zh_en",
+        "protocol_id"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0400:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0286:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0203:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0231:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0347:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0221:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "time_window",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0271:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0405:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0087:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "time_window",
+        "version_conflict",
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0315:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "negation",
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0096:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "pc-0044:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0097:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0250:contradicted/numeric",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/numeric",
+      "slices": [
+        "time_window",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0443:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0346:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0045:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "drug_name_zh",
+        "mixed_zh_en"
+      ],
+      "dept": "MA"
+    },
+    {
+      "pair_id": "ms-0368:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "protocol_id",
+        "version_conflict",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0207:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "time_window",
+        "version_conflict",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0357:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0342:not_supported/other_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/other_doc",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0270:supported",
+      "label": "supported",
+      "pred": "supported",
+      "kind": "supported",
+      "slices": [
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    },
+    {
+      "pair_id": "ms-0376:not_supported/same_doc",
+      "label": "not_supported",
+      "pred": "not_supported",
+      "kind": "not_supported/same_doc",
+      "slices": [
+        "mixed_zh_en"
+      ],
+      "dept": "CO"
+    },
+    {
+      "pair_id": "ms-0107:contradicted/negation",
+      "label": "contradicted",
+      "pred": "contradicted",
+      "kind": "contradicted/negation",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "dept": "PV"
+    }
+  ],
+  "dept_counts": {
+    "PV": 140,
+    "MA": 60,
+    "CO": 100
+  },
+  "calls": [
+    {
+      "cli": "claude-code",
+      "model_requested": "claude-sonnet-5",
+      "model_observed": "claude-sonnet-5",
+      "reasoning_effort_requested": "high",
+      "session_id": "59f83108-7d39-4752-8595-8dcb9e0df8f9",
+      "input_tokens": 2,
+      "output_tokens": 832,
+      "cost_usd": 0.038191249999999996,
+      "system_prompt_sha256": "26a7c706812c0d8bc3fc7a1598abc3effd309d2aeb2bf576a6c11de907d4462a",
+      "prompt_sha256": "d15a54c64c1017afbbabaebfc1e8b5c31475ef19b756ebddc2bddcfc4434e699",
+      "tools_disabled": true,
+      "n": 10,
+      "missing": [],
+      "at": "2026-09-23T01:31:44.667322+00:00"
+    },
+    {
+      "cli": "claude-code",
+      "model_requested": "claude-sonnet-5",
+      "model_observed": "claude-sonnet-5",
+      "reasoning_effort_requested": "high",
+      "session_id": "58594356-38bd-4ea2-ae0a-39a3db4cb2a3",
+      "input_tokens": 2,
+      "output_tokens": 900,
+      "cost_usd": 0.044485,
+      "system_prompt_sha256": "26a7c706812c0d8bc3fc7a1598abc3effd309d2aeb2bf576a6c11de907d4462a",
+      "prompt_sha256": "e133fca14824fb07e25f734d1b0dd375889a1afa1ec088594f24e67509356d8e",
+      "tools_disabled": true,
+      "n": 10,
+      "missing": [],
+      "at": "2026-09-23T01:31:54.066290+00:00"
+    },
+    {
+      "cli": "claude-code",
+      "model_requested": "claude-sonnet-5",
+      "model_observed": "claude-sonnet-5",
+      "reasoning_effort_requested": "high",
+      "session_id": "bf0e6c24-3be1-442a-b1a5-b83dfacd5b16",
+      "input_tokens": 2,
+      "output_tokens": 558,
+      "cost_usd": 0.044491249999999996,
+      "system_prompt_sha256": "26a7c706812c0d8bc3fc7a1598abc3effd309d2aeb2bf576a6c11de907d4462a",
+      "prompt_sha256": "ee4e7ab3662817c1853e8d7a6201496a46ddca6554f433840b0ede96dc2bae8f",
+      "tools_disabled": true,
+      "n": 10,
+      "missing": [],
+      "at": "2026-09-23T01:32:02.067165+00:00"
+    },
+    {
+      "cli": "claude-code",
+      "model_requested": "claude-sonnet-5",
+      "model_observed": "claude-sonnet-5",
+      "reasoning_effort_requested": "high",
+      "session_id": "7b62873c-f122-4708-b41d-4772a7ec88d4",
+      "input_tokens": 2,
+      "output_tokens": 1369,
+      "cost_usd": 0.0573225,
+      "system_prompt_sha256": "26a7c706812c0d8bc3fc7a1598abc3effd309d2aeb2bf576a6c11de907d4462a",
+      "prompt_sha256": "3b9b5ed8980ab2407dddb0ac156a7efa276b7c14178de18b8dfea410e50b2af9",
+      "tools_disabled": true,
+      "n": 10,
+      "missing": [],
+      "at": "2026-09-23T01:32:18.157759+00:00"
+    },
+    {
+      "cli": "claude-code",
+      "model_requested": "claude-sonnet-5",
+      "model_observed": "claude-sonnet-5",
+      "reasoning_effort_requested": "high",
+      "session_id": "1cb118e2-d186-4482-9330-21cfd8a43c55",
+      "input_tokens": 2,
+      "output_tokens": 908,
+      "cost_usd": 0.0371475,
+      "system_prompt_sha256": "26a7c706812c0d8bc3fc7a1598abc3effd309d2aeb2bf576a6c11de907d4462a",
+      "prompt_sha256": "66ee3af150f82302fcba557d7ebab2e97e1097027859c12f568c748ce744dd45",
+      "tools_disabled": true,
+      "n": 10,
+      "missing": [],
+      "at": "2026-09-23T01:32:27.299348+00:00"
+    },
+    {
+      "cli": "claude-code",
+      "model_requested": "claude-sonnet-5",
+      "model_observed": "claude-sonnet-5",
+      "reasoning_effort_requested": "high",
+      "session_id": "e688c19d-04b3-4c41-9f23-a6028f7cda5b",
+      "input_tokens": 2,
+      "output_tokens": 607,
+      "cost_usd": 0.03274125,
+      "system_prompt_sha256": "26a7c706812c0d8bc3fc7a1598abc3effd309d2aeb2bf576a6c11de907d4462a",
+      "prompt_sha256": "0defddae34b5841c74daf8c9a0404973bb03b34f19ef3bc5ccf5847c51314773",
+      "tools_disabled": true,
+      "n": 10,
+      "missing": [],
+      "at": "2026-09-23T01:32:36.885522+00:00"
+    },
+    {
+      "cli": "claude-code",
+      "model_requested": "claude-sonnet-5",
+      "model_observed": "claude-sonnet-5",
+      "reasoning_effort_requested": "high",
+      "session_id": "889a4643-a349-4c89-849b-a6a7e578cc5a",
+      "input_tokens": 2,
+      "output_tokens": 531,
+      "cost_usd": 0.032510000000000004,
+      "system_prompt_sha256": "26a7c706812c0d8bc3fc7a1598abc3effd309d2aeb2bf576a6c11de907d4462a",
+      "prompt_sha256": "3cf31c2776a5783b8084383bbe1a1654c69cf2cb6e2d92ca97b504a9be4b8860",
+      "tools_disabled": true,
+      "n": 10,
+      "missing": [],
+      "at": "2026-09-23T01:32:43.307655+00:00"
+    },
+    {
+      "cli": "claude-code",
+      "model_requested": "claude-sonnet-5",
+      "model_observed": "claude-sonnet-5",
+      "reasoning_effort_requested": "high",
+      "session_id": "700a8caa-f17e-4aca-a47e-9e140c9c8489",
+      "input_tokens": 2,
+      "output_tokens": 454,
+      "cost_usd": 0.031516249999999996,
+      "system_prompt_sha256": "26a7c706812c0d8bc3fc7a1598abc3effd309d2aeb2bf576a6c11de907d4462a",
+      "prompt_sha256": "269f0407698fe741d5ba4b907f95656c81f73ad9e2854e68a60f17ede9f557a4",
+      "tools_disabled": true,
+      "n": 10,
+      "missing": [],
+      "at": "2026-09-23T01:32:48.767577+00:00"
+    },
+    {
+      "cli": "claude-code",
+      "model_requested": "claude-sonnet-5",
+      "model_observed": "claude-sonnet-5",
+      "reasoning_effort_requested": "high",
+      "session_id": "9ffa2888-1fd0-4789-ae2f-3a1df57c78e6",
+      "input_tokens": 2,
+      "output_tokens": 613,
+      "cost_usd": 0.0376475,
+      "system_prompt_sha256": "26a7c706812c0d8bc3fc7a1598abc3effd309d2aeb2bf576a6c11de907d4462a",
+      "prompt_sha256": "40a0fbd250faed7689f43e34d06fd8dd33220f009b71f66acacc3d16d1257646",
+      "tools_disabled": true,
+      "n": 10,
+      "missing": [],
+      "at": "2026-09-23T01:32:57.423813+00:00"
+    },
+    {
+      "cli": "claude-code",
+      "model_requested": "claude-sonnet-5",
+      "model_observed": "claude-sonnet-5",
+      "reasoning_effort_requested": "high",
+      "session_id": "e11feee9-0a0d-4b6d-81c3-8123ce3ea95a",
+      "input_tokens": 2,
+      "output_tokens": 483,
+      "cost_usd": 0.02975375,
+      "system_prompt_sha256": "26a7c706812c0d8bc3fc7a1598abc3effd309d2aeb2bf576a6c11de907d4462a",
+      "prompt_sha256": "0396c40aae5a65c6f318563b0ea8ac3a0917e2c9d771ce285bd689f9cbb6d414",
+      "tools_disabled": true,
+      "n": 10,
+      "missing": [],
+      "at": "2026-09-23T01:33:04.165094+00:00"
+    },
+    {
+      "cli": "claude-code",
+      "model_requested": "claude-sonnet-5",
+      "model_observed": "claude-sonnet-5",
+      "reasoning_effort_requested": "high",
+      "session_id": "1afb51ff-022b-4cd9-97c0-a57cf6c319e9",
+      "input_tokens": 2,
+      "output_tokens": 586,
+      "cost_usd": 0.03757875,
+      "system_prompt_sha256": "26a7c706812c0d8bc3fc7a1598abc3effd309d2aeb2bf576a6c11de907d4462a",
+      "prompt_sha256": "67d16dcf9b204a7007a4e7803e9cf9e249f84daf7f24d0f1c21e2d6666b7be5c",
+      "tools_disabled": true,
+      "n": 10,
+      "missing": [],
+      "at": "2026-09-23T01:33:13.079827+00:00"
+    },
+    {
+      "cli": "claude-code",
+      "model_requested": "claude-sonnet-5",
+      "model_observed": "claude-sonnet-5",
+      "reasoning_effort_requested": "high",
+      "session_id": "aee0378c-bbaa-4c21-964c-6c373a20e9f4",
+      "input_tokens": 2,
+      "output_tokens": 941,
+      "cost_usd": 0.04675375,
+      "system_prompt_sha256": "26a7c706812c0d8bc3fc7a1598abc3effd309d2aeb2bf576a6c11de907d4462a",
+      "prompt_sha256": "9c359ea4665146484be696780abf74b1e54b00dd592b6dcd8bacda7068ff06a9",
+      "tools_disabled": true,
+      "n": 10,
+      "missing": [],
+      "at": "2026-09-23T01:33:23.207812+00:00"
+    },
+    {
+      "cli": "claude-code",
+      "model_requested": "claude-sonnet-5",
+      "model_observed": "claude-sonnet-5",
+      "reasoning_effort_requested": "high",
+      "session_id": "e10bd790-0026-4a95-9902-a84fee869fbe",
+      "input_tokens": 2,
+      "output_tokens": 439,
+      "cost_usd": 0.0271225,
+      "system_prompt_sha256": "26a7c706812c0d8bc3fc7a1598abc3effd309d2aeb2bf576a6c11de907d4462a",
+      "prompt_sha256": "c6bc28813562a297a68cd7f1baee71829ba7ceb38e2e4d80ee50494de8e83884",
+      "tools_disabled": true,
+      "n": 10,
+      "missing": [],
+      "at": "2026-09-23T01:33:28.776130+00:00"
+    },
+    {
+      "cli": "claude-code",
+      "model_requested": "claude-sonnet-5",
+      "model_observed": "claude-sonnet-5",
+      "reasoning_effort_requested": "high",
+      "session_id": "9d0cc67d-4bf5-4896-9a26-08141719201a",
+      "input_tokens": 2,
+      "output_tokens": 655,
+      "cost_usd": 0.039209999999999995,
+      "system_prompt_sha256": "26a7c706812c0d8bc3fc7a1598abc3effd309d2aeb2bf576a6c11de907d4462a",
+      "prompt_sha256": "6b5b6866ff65fe3df1456f0037e009e6bf990acffcd615ba118f95a94f92ba0b",
+      "tools_disabled": true,
+      "n": 10,
+      "missing": [],
+      "at": "2026-09-23T01:33:36.113435+00:00"
+    },
+    {
+      "cli": "claude-code",
+      "model_requested": "claude-sonnet-5",
+      "model_observed": "claude-sonnet-5",
+      "reasoning_effort_requested": "high",
+      "session_id": "4d6b8323-3dde-43ec-af6e-b8e728a7150e",
+      "input_tokens": 2,
+      "output_tokens": 542,
+      "cost_usd": 0.0342725,
+      "system_prompt_sha256": "26a7c706812c0d8bc3fc7a1598abc3effd309d2aeb2bf576a6c11de907d4462a",
+      "prompt_sha256": "485a9dd6b431eb5a5ad2380e98139ab717d572a579cf6d9dbaa8da36caddfdb4",
+      "tools_disabled": true,
+      "n": 10,
+      "missing": [],
+      "at": "2026-09-23T01:33:42.869066+00:00"
+    },
+    {
+      "cli": "claude-code",
+      "model_requested": "claude-sonnet-5",
+      "model_observed": "claude-sonnet-5",
+      "reasoning_effort_requested": "high",
+      "session_id": "b806eb9c-4c0f-4b49-8e2d-d89f103fd3bd",
+      "input_tokens": 2,
+      "output_tokens": 670,
+      "cost_usd": 0.03845375,
+      "system_prompt_sha256": "26a7c706812c0d8bc3fc7a1598abc3effd309d2aeb2bf576a6c11de907d4462a",
+      "prompt_sha256": "e124566f6cd3f0c497087c134550177b6fc6a3b1ae06e9ad7f85a688db60d46b",
+      "tools_disabled": true,
+      "n": 10,
+      "missing": [],
+      "at": "2026-09-23T01:33:50.786600+00:00"
+    },
+    {
+      "cli": "claude-code",
+      "model_requested": "claude-sonnet-5",
+      "model_observed": "claude-sonnet-5",
+      "reasoning_effort_requested": "high",
+      "session_id": "38577817-7f27-4285-9127-4c5d1b3e7e63",
+      "input_tokens": 2,
+      "output_tokens": 501,
+      "cost_usd": 0.031397499999999995,
+      "system_prompt_sha256": "26a7c706812c0d8bc3fc7a1598abc3effd309d2aeb2bf576a6c11de907d4462a",
+      "prompt_sha256": "e7232375c3a87b97b08eb467f5e38f05d0c6a6698be9c9c7a8cd256d97cc3a17",
+      "tools_disabled": true,
+      "n": 10,
+      "missing": [],
+      "at": "2026-09-23T01:33:58.309502+00:00"
+    },
+    {
+      "cli": "claude-code",
+      "model_requested": "claude-sonnet-5",
+      "model_observed": "claude-sonnet-5",
+      "reasoning_effort_requested": "high",
+      "session_id": "6a4b5267-7cf9-4e37-95f5-c3d637823bf2",
+      "input_tokens": 2,
+      "output_tokens": 509,
+      "cost_usd": 0.033960000000000004,
+      "system_prompt_sha256": "26a7c706812c0d8bc3fc7a1598abc3effd309d2aeb2bf576a6c11de907d4462a",
+      "prompt_sha256": "a8e4901d5f2c2ae0566855045ff9c27f633bb6963f85895e9caa2a57a794a117",
+      "tools_disabled": true,
+      "n": 10,
+      "missing": [],
+      "at": "2026-09-23T01:34:05.477779+00:00"
+    },
+    {
+      "cli": "claude-code",
+      "model_requested": "claude-sonnet-5",
+      "model_observed": "claude-sonnet-5",
+      "reasoning_effort_requested": "high",
+      "session_id": "012c0870-932d-485a-9c15-e23b52e300f5",
+      "input_tokens": 2,
+      "output_tokens": 570,
+      "cost_usd": 0.03279125,
+      "system_prompt_sha256": "26a7c706812c0d8bc3fc7a1598abc3effd309d2aeb2bf576a6c11de907d4462a",
+      "prompt_sha256": "3f1617f7b71dd7e6dd0d8266b4cf96802f2a2606be3c68be5d9a861dfd90379f",
+      "tools_disabled": true,
+      "n": 10,
+      "missing": [],
+      "at": "2026-09-23T01:34:13.776988+00:00"
+    },
+    {
+      "cli": "claude-code",
+      "model_requested": "claude-sonnet-5",
+      "model_observed": "claude-sonnet-5",
+      "reasoning_effort_requested": "high",
+      "session_id": "8a7fe881-b06d-4929-940f-8e92f0bec04a",
+      "input_tokens": 2,
+      "output_tokens": 484,
+      "cost_usd": 0.03055375,
+      "system_prompt_sha256": "26a7c706812c0d8bc3fc7a1598abc3effd309d2aeb2bf576a6c11de907d4462a",
+      "prompt_sha256": "29b32398bb1d9228ee0542cc4ba744a3ffa675f25b1495a595c2642a3f8c5787",
+      "tools_disabled": true,
+      "n": 10,
+      "missing": [],
+      "at": "2026-09-23T01:34:21.238033+00:00"
+    },
+    {
+      "cli": "claude-code",
+      "model_requested": "claude-sonnet-5",
+      "model_observed": "claude-sonnet-5",
+      "reasoning_effort_requested": "high",
+      "session_id": "7085a758-b4bf-4e77-867a-e388018f27b4",
+      "input_tokens": 2,
+      "output_tokens": 428,
+      "cost_usd": 0.03216625,
+      "system_prompt_sha256": "26a7c706812c0d8bc3fc7a1598abc3effd309d2aeb2bf576a6c11de907d4462a",
+      "prompt_sha256": "3d9e272e2655a7e758fc7c095553f394acc84b18796f67bbd9cc0a865cccd641",
+      "tools_disabled": true,
+      "n": 10,
+      "missing": [],
+      "at": "2026-09-23T01:34:27.680102+00:00"
+    },
+    {
+      "cli": "claude-code",
+      "model_requested": "claude-sonnet-5",
+      "model_observed": "claude-sonnet-5",
+      "reasoning_effort_requested": "high",
+      "session_id": "e5feb088-30b6-4443-a872-8e116c481995",
+      "input_tokens": 2,
+      "output_tokens": 643,
+      "cost_usd": 0.0348725,
+      "system_prompt_sha256": "26a7c706812c0d8bc3fc7a1598abc3effd309d2aeb2bf576a6c11de907d4462a",
+      "prompt_sha256": "bcc713c2a6bb6a8541f6e57c2c681dfb870661447a42589f69b870d25a5c2898",
+      "tools_disabled": true,
+      "n": 10,
+      "missing": [],
+      "at": "2026-09-23T01:34:35.595388+00:00"
+    },
+    {
+      "cli": "claude-code",
+      "model_requested": "claude-sonnet-5",
+      "model_observed": "claude-sonnet-5",
+      "reasoning_effort_requested": "high",
+      "session_id": "2545b5a5-8bf1-4377-9bab-ded909722679",
+      "input_tokens": 2,
+      "output_tokens": 486,
+      "cost_usd": 0.03682875,
+      "system_prompt_sha256": "26a7c706812c0d8bc3fc7a1598abc3effd309d2aeb2bf576a6c11de907d4462a",
+      "prompt_sha256": "a824047f2c5763ce7762804e26722a95b337354dc10739f908022183a6c78f25",
+      "tools_disabled": true,
+      "n": 10,
+      "missing": [],
+      "at": "2026-09-23T01:34:42.540776+00:00"
+    },
+    {
+      "cli": "claude-code",
+      "model_requested": "claude-sonnet-5",
+      "model_observed": "claude-sonnet-5",
+      "reasoning_effort_requested": "high",
+      "session_id": "2dfa07fa-9a13-4fb4-8ba2-8d535ab2f0ea",
+      "input_tokens": 2,
+      "output_tokens": 1213,
+      "cost_usd": 0.050535,
+      "system_prompt_sha256": "26a7c706812c0d8bc3fc7a1598abc3effd309d2aeb2bf576a6c11de907d4462a",
+      "prompt_sha256": "898f5357a06dc6d6fccf36bcba9c7edc3f7d75ae8a744d618f960a12232180e5",
+      "tools_disabled": true,
+      "n": 10,
+      "missing": [],
+      "at": "2026-09-23T01:34:56.833274+00:00"
+    },
+    {
+      "cli": "claude-code",
+      "model_requested": "claude-sonnet-5",
+      "model_observed": "claude-sonnet-5",
+      "reasoning_effort_requested": "high",
+      "session_id": "5e4c1910-848b-4313-8685-db2aac002ee1",
+      "input_tokens": 2,
+      "output_tokens": 945,
+      "cost_usd": 0.04271,
+      "system_prompt_sha256": "26a7c706812c0d8bc3fc7a1598abc3effd309d2aeb2bf576a6c11de907d4462a",
+      "prompt_sha256": "f26713aee58df6b7048f462c2e13f2e484680b46783b5ed21e1d775d60a5ce40",
+      "tools_disabled": true,
+      "n": 10,
+      "missing": [],
+      "at": "2026-09-23T01:35:06.243469+00:00"
+    },
+    {
+      "cli": "claude-code",
+      "model_requested": "claude-sonnet-5",
+      "model_observed": "claude-sonnet-5",
+      "reasoning_effort_requested": "high",
+      "session_id": "e9bdfbfc-c822-4917-8dda-7c5b6d9fb1a9",
+      "input_tokens": 2,
+      "output_tokens": 416,
+      "cost_usd": 0.03251625,
+      "system_prompt_sha256": "26a7c706812c0d8bc3fc7a1598abc3effd309d2aeb2bf576a6c11de907d4462a",
+      "prompt_sha256": "c2c3e5b4ee2f7306061c537cefdb034c6a440da1790cba6a639b2883a496a3d5",
+      "tools_disabled": true,
+      "n": 10,
+      "missing": [],
+      "at": "2026-09-23T01:35:11.197671+00:00"
+    },
+    {
+      "cli": "claude-code",
+      "model_requested": "claude-sonnet-5",
+      "model_observed": "claude-sonnet-5",
+      "reasoning_effort_requested": "high",
+      "session_id": "306cc9e4-d3a5-4066-899f-3a37025b48ef",
+      "input_tokens": 2,
+      "output_tokens": 668,
+      "cost_usd": 0.04037875,
+      "system_prompt_sha256": "26a7c706812c0d8bc3fc7a1598abc3effd309d2aeb2bf576a6c11de907d4462a",
+      "prompt_sha256": "0ea9eac6c13a14bd4a827c4ec380edda1c2f9ed6342fc7974a90ba3bebb3ae8a",
+      "tools_disabled": true,
+      "n": 10,
+      "missing": [],
+      "at": "2026-09-23T01:35:18.608872+00:00"
+    },
+    {
+      "cli": "claude-code",
+      "model_requested": "claude-sonnet-5",
+      "model_observed": "claude-sonnet-5",
+      "reasoning_effort_requested": "high",
+      "session_id": "2a8a774a-8c10-4f77-a633-3b70fcafed41",
+      "input_tokens": 2,
+      "output_tokens": 514,
+      "cost_usd": 0.03094125,
+      "system_prompt_sha256": "26a7c706812c0d8bc3fc7a1598abc3effd309d2aeb2bf576a6c11de907d4462a",
+      "prompt_sha256": "027f4ad905831fe09f61ae0e4a13796b99e4ef04c0a0e88c4348ad48c4421fdc",
+      "tools_disabled": true,
+      "n": 10,
+      "missing": [],
+      "at": "2026-09-23T01:35:25.990643+00:00"
+    },
+    {
+      "cli": "claude-code",
+      "model_requested": "claude-sonnet-5",
+      "model_observed": "claude-sonnet-5",
+      "reasoning_effort_requested": "high",
+      "session_id": "e7e6cdb8-7c41-4453-bcbe-67c4db8e38c9",
+      "input_tokens": 2,
+      "output_tokens": 482,
+      "cost_usd": 0.027360000000000002,
+      "system_prompt_sha256": "26a7c706812c0d8bc3fc7a1598abc3effd309d2aeb2bf576a6c11de907d4462a",
+      "prompt_sha256": "96bc7b494abc3bec17245868ae178e24f314336ab5d3ac394bf88e14535c34c1",
+      "tools_disabled": true,
+      "n": 10,
+      "missing": [],
+      "at": "2026-09-23T01:35:33.087076+00:00"
+    },
+    {
+      "cli": "claude-code",
+      "model_requested": "claude-sonnet-5",
+      "model_observed": "claude-sonnet-5",
+      "reasoning_effort_requested": "high",
+      "session_id": "9695eb15-7e4f-4410-bd1e-ad379d721c33",
+      "input_tokens": 2,
+      "output_tokens": 1433,
+      "cost_usd": 0.05306000000000001,
+      "system_prompt_sha256": "26a7c706812c0d8bc3fc7a1598abc3effd309d2aeb2bf576a6c11de907d4462a",
+      "prompt_sha256": "b55b72eeb79658fe125e827dce40396490abc87f740dd764e8811d3c64ed7fbc",
+      "tools_disabled": true,
+      "n": 10,
+      "missing": [],
+      "at": "2026-09-23T01:35:47.133396+00:00"
+    }
+  ],
+  "unjudged": []
+}

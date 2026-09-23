@@ -14,6 +14,7 @@ import datetime as dt
 import json
 import pathlib
 import random
+import subprocess
 import sys
 import tempfile
 
@@ -79,6 +80,7 @@ def main() -> int:
     ap.add_argument("--limit", type=int, default=None, help="seeded random subset size")
     ap.add_argument("--seed", type=int, default=1)
     ap.add_argument("--binary", default=dc.DEFAULT_BINARY)
+    ap.add_argument("--call-timeout", type=int, default=300, help="seconds per CLI call before it is abandoned")
     args = ap.parse_args()
     out = args.out or REPO / f"evals/verifier/dec003/results_{args.model}.json"
     verdict_path = out.with_suffix(".verdicts.jsonl")
@@ -101,7 +103,14 @@ def main() -> int:
         for i in range(0, len(pending), args.chunk):
             batch = pending[i : i + args.chunk]
             prompt = build_prompt(batch)
-            reply, meta = dc.run_claude(args.binary, args.model, args.effort, JUDGE_SYSTEM, prompt, workdir, timeout=900)
+            try:
+                reply, meta = dc.run_claude(
+                    args.binary, args.model, args.effort, JUDGE_SYSTEM, prompt, workdir, timeout=args.call_timeout
+                )
+            except (subprocess.TimeoutExpired, RuntimeError) as exc:  # a hung or malformed CLI call: skip, stay resumable
+                calls.append({"model_requested": args.model, "n": len(batch), "error": str(exc)[:300], "at": dt.datetime.now(dt.UTC).isoformat()})
+                print(f"  chunk {i // args.chunk + 1}: call failed ({type(exc).__name__}); pairs stay pending for a rerun")
+                continue
             by_index = {i: p["pair_id"] for i, p in enumerate(batch, 1)}
             rows = {}
             for o in parse_reply(reply):

@@ -85,6 +85,8 @@ def judge_element(
     claim_text: str,
     cited: Sequence[Evidence],
     evidence_elements: Mapping[str, Sequence[ExtractedElement]],
+    *,
+    single_value_contradiction: bool = True,
 ) -> RuleOutcome:
     claim_neg = negated(sentence_around(claim_text, element.start, element.end))
     same_polarity: str | None = None
@@ -112,7 +114,7 @@ def judge_element(
             for el in evidence_elements.get(ev.citation.chunk_id, ())
             if el.kind is element.kind and _family(el.canonical) == family
         }
-        if len(others) == 1:
+        if len(others) == 1 and single_value_contradiction:
             stated = next(iter(others))
             chunk = next(
                 ev.citation.chunk_id
@@ -138,9 +140,16 @@ def judge_element(
     return RuleOutcome(element, None, None, "indication phrase not contained in the cited evidence")
 
 
-def judge_elements(claim_text: str, cited: Sequence[Evidence]) -> tuple[RuleOutcome, ...]:
+def judge_elements(
+    claim_text: str, cited: Sequence[Evidence], *, single_value_contradiction: bool = True
+) -> tuple[RuleOutcome, ...]:
+    """`single_value_contradiction=False` leaves a numeric mismatch undetermined (for the judge) instead of calling
+    it a contradiction when the cited evidence states exactly one other value (DEC-003 arm variant)."""
     ev_elements = {e.citation.chunk_id: extract(e.text) for e in cited}
-    return tuple(judge_element(el, claim_text, cited, ev_elements) for el in extract(claim_text))
+    return tuple(
+        judge_element(el, claim_text, cited, ev_elements, single_value_contradiction=single_value_contradiction)
+        for el in extract(claim_text)
+    )
 
 
 def contained(claim_text: str, cited: Sequence[Evidence]) -> tuple[str, bool] | None:

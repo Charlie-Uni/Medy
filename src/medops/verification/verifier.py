@@ -84,13 +84,14 @@ def verify_claims(
     gateway: ModelGateway | None = None,
     judge_model_id: str | None = None,
     timeout_s: float = 30.0,
+    single_value_contradiction: bool = True,
 ) -> VerifyResult:
     hallucinated = structural_check([c for claim in claims for c in claim.citation_chunk_ids], evidence)
     by_id = {e.citation.chunk_id: e for e in evidence}
     elements: list[ElementSupport] = []
     for claim in claims:
         cited = [by_id[c] for c in claim.citation_chunk_ids if c in by_id]
-        outcomes = judge_elements(claim.text, cited)
+        outcomes = judge_elements(claim.text, cited, single_value_contradiction=single_value_contradiction)
         for outcome in outcomes:
             if outcome.verdict is not None:
                 conf = 1.0 if outcome.verdict is Verdict.supported else 0.9
