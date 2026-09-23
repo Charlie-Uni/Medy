@@ -149,11 +149,11 @@ P0 加权进度：43.0%（34.0/79）；按 99 项计 34.3%。分项：M0 10/11�
 | M2-01 | 已实现（图结构：无绕过边测试；节点规则版首切片，记录 52） | LangGraph 固定 Intent → Retrieve → Evidence Verify → Safety → Answer / Escalate；测试图中不存在绕过必经节点的回答路径 |
 | M2-02 | 部分（超时/重试/退避/降级与 State 契约已实现；asyncio 取消随 M3，记录 52） | 每节点明确输入输出模型、超时、错误类型、有限重试、取消与降级；跨节点只通过 State 交换数据 |
 | M2-03 | 已实现（迁移 0008 `operation_executions`/`operation_attempts`：执行前占键、成功增量复用、attempt 单独落库、失败/失联重占、run_kind 约束；单元 6 + 集成 5；生产接线与受限载荷分离随 M3，记录 56） | operation key 接入持久化执行；attempt 单独记录，重试不重复副作用，replay_run_id 与生产隔离；不能仅凭函数存在算幂等完成 |
-| M2-04 | 部分（仅接收已验证证据、claim-citation、生成后重验；真实适配器待 key，记录 52） | Answer 只接收已验证证据，输出 claim-citation；生成后再校验引用和关键结论，通过前不外发最终医学答案 |
-| M2-05 | 部分（结构核验拦截伪造引用；evidence_log 落库随 M3，记录 52） | 验证引用属于本 Trace、版本/页码/chunk 真实且有权限；重算 chunk_content_hash 与实际 evidence_text_hash，expected/observed 写 evidence_log |
+| M2-04 | 部分（仅接收已验证证据、claim-citation、生成后重验、弃答出口；主集 614 条实况：有答案样本回答 82.1%、引用 gold 74.9%、无答案弃答 96.7%、失效版本引用 0，记录 54；人工抽检与门禁随 M2-16） | Answer 只接收已验证证据，输出 claim-citation；生成后再校验引用和关键结论，通过前不外发最终医学答案 |
+| M2-05 | 部分（结构核验拦截伪造引用，实况 614 条零伪造引用、379 个被引 chunk 全部 active；evidence_log 落库随 M3，记录 52/54） | 验证引用属于本 Trace、版本/页码/chunk 真实且有权限；重算 chunk_content_hash 与实际 evidence_text_hash，expected/observed 写 evidence_log |
 | M2-06 | 部分（Trace 预算裁剪/升级、月度上限账本，记录 52） | Trace 总 Token/成本预算与单次模型上限都生效；超限先裁剪证据，仍不足则升级，不扩大预算继续猜测 |
 | M2-07 | 部分（elements-rules-v1，记录 52） | 抽取剂量、单位、频次、适应证、人群、时间和方案编号等关键要素，建立确定性规则测试 |
-| M2-08 | 部分（support-rules-v1 + 判定 gpt-6-sol，分工按 ADR-0011；错接受率 2.2% 于 DEC-003 子集；M2-16 门禁数据待安全集，记录 53） | supported / not_supported / contradicted 支持度判断；数字规则优先，NLI/小模型按 DEC-003 选；无依据不补医学常识，矛盾升级 |
+| M2-08 | 部分（support-rules-v2 + 判定 gpt-6-sol，分工按 ADR-0011；DEC-003 错接受率 4.1%（规则）/ 2.2%（分工）；M2-16 门禁数据待安全集，记录 53） | supported / not_supported / contradicted 支持度判断；数字规则优先，NLI/小模型按 DEC-003 选；无依据不补医学常识，矛盾升级 |
 | M2-09 | 部分（safety-rules-v1 三层，记录 52） | 用户输入、检索内容、最终输出三层 Safety；文档是数据而不是指令，注入不能改变权限或绕过检索 |
 | M2-10 | 部分（稳定 reason code 与升级记录；持久化随 M3，记录 52） | 稳定拒答/升级 reason code，最小必要上下文持久化，可由人工接手；诊断、处方、个体调整及紧急医疗意图拒答并升级 |
 | M2-11 | 已实现（`medops.skills.registry`：scope 默认拒绝→Schema→版本集→operation key→run_node 超时/幂等重试→输出契约→安全第三层；parallel_safe 并行；AST 无绕过测试，记录 55） | Skill Registry 执行 Schema、scope、risk、timeout、parallel_safe、版本控制；节点不得绕过 Registry 调工具 |

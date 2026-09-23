@@ -11,7 +11,7 @@ from medops.harness.contracts import NodeSpec
 from medops.harness.nodes import HarnessDeps, default_specs
 from medops.harness.retrieval_port import RetrievalOutcome, RetrievalRequest
 from medops.harness.runtime import initial_state, run_ask
-from medops.infrastructure.llm.fake import FakeModelGateway
+from medops.infrastructure.llm.fake import FakeModelGateway, Truncated
 from medops.infrastructure.llm.gateway import BudgetExceeded, ModelTimeout
 from tests.unit.harness._fixtures import evidence, user, versions
 
@@ -198,3 +198,20 @@ def test_model_declared_or_meta_abstention_escalates_as_insufficient_evidence():
     backstop = run_ask(state("本品的罰鍰金額是多少？"), make_deps(retrieval, meta))
     assert backstop.state.escalation.reason_codes == (ReasonCode.insufficient_evidence,)
     assert "backstop" in backstop.state.escalation.detail
+
+
+def test_truncated_answer_is_retried_once_with_a_doubled_allowance_then_fails():
+    retrieval = FakeRetrieval(evidence("c1", LABEL))
+    good = {"claims": [{"text": "6 至 12 歲孩童口服 100 mg，一天三次。", "citation_chunk_ids": ["c1"]}]}
+    gateway = FakeModelGateway({"answer": [Truncated('{"answers_question": true, "claims": [{"text": "6 至'), good]})
+    run = run_ask(state(), make_deps(retrieval, gateway))
+    assert run.outcome == "answered" and len(gateway.calls) == 2
+    assert [c.max_output_tokens for c in gateway.calls] == [800, 1600]
+
+    twice = FakeModelGateway({"answer": [Truncated("{"), Truncated("{")]})
+    run2 = run_ask(state(), make_deps(FakeRetrieval(evidence("c1", LABEL)), twice))
+    assert run2.outcome == "escalated" and run2.state.escalation is not None
+    assert (
+        run2.state.escalation.reason_codes == (ReasonCode.system_failure,) and "twice" in run2.state.escalation.detail
+    )
+    assert len(twice.calls) == 2

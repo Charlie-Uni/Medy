@@ -85,11 +85,11 @@ M1-01 同时是“部分”和“阻塞”，上表按“部分”计。P1/P2 11
 | M2-01 | 已实现（图结构范围：LangGraph 六节点固定图，无绕过边由测试枚举全部路径证明；节点为规则版首切片，记录 52） | LangGraph 固定状态机，无绕过边 | 状态机与 DAG；图可达性测试；工作流编排 |
 | M2-02 | 部分（NodeSpec 超时/有限重试/退避/降级、节点只经 AgentState 交换、每次 attempt 带 operation key；asyncio 取消传播随 M3 执行器，记录 52） | 节点 Schema、超时、错误类型、重试、降级 | 指数退避与抖动；幂等重试；asyncio 取消传播；断路器与降级 |
 | M2-03 | 已实现（迁移 0008 账本：占键→复用/在途/重占、attempt 落库、run_kind 约束；单元 6 + 集成 5；生产接线随 M3，记录 56） | operation key 接入持久化，attempt 单独记录 | 幂等键存储与唯一约束；at-least-once 与副作用；replay 隔离 |
-| M2-04 | 部分（Answer 只接收 state.evidence、JSON schema 强制 claim-citation、生成后重验并丢弃 not_supported；真实 OpenAI 适配器待 key 后 smoke，记录 52） | Answer 只收已验证证据，输出 claim-citation | 结构化输出（JSON Schema 约束、function calling）；grounding 与幻觉；后置校验 |
-| M2-05 | 部分（引用逐字段等于本 Trace 证据、伪造 chunk 拦截并升级；evidence_log expected/observed 落库随 M3 持久化，记录 52） | 引用结构核验与内容哈希比对 | 内容寻址校验；expected/observed 审计；引用伪造检测 |
+| M2-04 | 部分（Answer 只收 state.evidence、JSON schema 强制 claim-citation、生成后重验、弃答出口；主集实况回答 82.1%、引用 gold 74.9%、弃答 96.7%，记录 54） | Answer 只收已验证证据，输出 claim-citation | 结构化输出（JSON Schema 约束、function calling）；grounding 与幻觉；后置校验 |
+| M2-05 | 部分（引用逐字段等于本 Trace 证据、伪造 chunk 拦截并升级；实况零伪造、被引 chunk 全部 active；evidence_log 落库随 M3，记录 52/54） | 引用结构核验与内容哈希比对 | 内容寻址校验；expected/observed 审计；引用伪造检测 |
 | M2-06 | 部分（Trace TokenBudget 裁剪证据/不足即升级、模型用量计入、月度上限账本；成本模型按 ADR-0010 价目，记录 52） | 整条 Trace 的 Token/成本预算 | tokenizer 与 BPE；上下文窗口；成本模型；证据裁剪策略 |
 | M2-07 | 部分（elements-rules-v1：剂量/单位换算、频次、时间窗、编号、人群、适应证，中英繁简；覆盖率未在语料上量化，记录 52） | 关键要素抽取（剂量、单位、频次等） | 规则抽取与 NER；数字与单位归一；正则边界与误匹配 |
-| M2-08 | 部分（ADR-0011：规则裁极性矛盾与整句包含、其余交 gpt-6-sol；DEC-003 子集错接受率 2.2%；M2-16 门禁待安全集，记录 53） | supported/not_supported/contradicted 支持度判断 | NLI（蕴含/矛盾/中立）；LLM-as-judge 的偏差与校准；确定性规则优先 |
+| M2-08 | 部分（ADR-0011：规则裁极性矛盾与整句包含、其余交 gpt-6-sol；support-rules-v2 限值短语不计否定；DEC-003 错接受率 4.1%（规则）/ 2.2%（分工）；M2-16 门禁待安全集，记录 53） | supported/not_supported/contradicted 支持度判断 | NLI（蕴含/矛盾/中立）；LLM-as-judge 的偏差与校准；确定性规则优先 |
 | M2-09 | 部分（safety-rules-v1 三层：输入注入、检索内容注入剔除、输出个体建议；分类器与安全集待 M2-15，记录 52） | 三层 Safety（输入、检索内容、输出） | 直接/间接提示词注入；数据与指令边界；分类器加规则；输出过滤 |
 | M2-10 | 部分（稳定 ReasonCode 升级记录含 query/证据 id/verify/safety/策略版本；持久化与人工接手随 M3，记录 52） | 稳定 reason code 与升级记录 | 错误码稳定性；人工升级工单；最小必要上下文；审计留痕 |
 | M2-11 | 已实现（Registry 强制 scope/Schema/版本集/超时/幂等重试/输出安全；parallel_safe 并行；无绕过 AST 测试，记录 55） | Skill Registry 强制 Schema、scope、risk、timeout、版本 | 注册表模式；权限 scope 校验；并行安全；插件化边界 |

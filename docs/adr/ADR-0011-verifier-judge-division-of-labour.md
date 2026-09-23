@@ -38,6 +38,6 @@
 ## 后果
 
 - 运行时每条陈述约 69–77% 会产生一次判定调用；按 gpt-6-sol 实测单价，一次主集全量运行的判定部分约 1 美元（ADR-0010 上限 30 美元/月内）。生产常量钉在 `medops.harness.production`（`PRODUCTION_JUDGE_MODEL`、`PRODUCTION_ANSWER_MODEL`），改动即策略发布。
-- `VERIFIER_VERSION` 升为 `verifier-v2+support-rules-v1+polarity_only`；已冻结数据集与评测报告不受影响，M2-16 门禁按新版本跑。
+- `VERIFIER_VERSION` 升为 `verifier-v2+support-rules-v1+polarity_only`；已冻结数据集与评测报告不受影响，M2-16 门禁按新版本跑。**2026-09-23 下午升为 `support-rules-v2`**（记录 53 §5、记录 54 §3.2）：限值短语（不得超過 / 上限 / 至少 / within …）不再计为否定线索，而是作为方向比较——主集全量运行中 30 条 `unsupported_conclusion` 升级有 25 条来自「上限 X」与「不得超過 X」被判极性相反；同时补上离线路径 indication 要素不比较极性的盲点。DEC-003 全量 2,076 对：错接受率 5.16% → 4.12%，准确率 91.0% → 91.3%；polarity_only + gpt-6-sol 在 300 对子集 95.7% / 2.2%，分工与档位结论不变。
 - 规则臂的两个已知弱点（同值不同语境、数值多值）由模型承接；模型的已知弱点（删否定后的"逐字包含"）由规则承接。任一侧口径变化需重跑记录 53 的对比。
 - 待办：把 `polarity_only` 的错接受率纳入 M2-16 报告；DEC-003 数据的局限（陈述为逐字条款、矛盾为合成）在安全集（M2-15）建立后用真实改写句复验。

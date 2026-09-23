@@ -2,7 +2,7 @@
 
 | arm | accuracy | unsafe accept | contradicted/negation | contradicted/numeric | not_supported/other_doc | not_supported/same_doc | supported | cost (USD, API-equivalent) |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| rules:verifier-v1+support-rules-v1 | 0.922 | 0.040 | 0.929 | 0.765 | 0.976 | 0.841 | 0.972 | 0.00 |
+| rules:verifier-v2+support-rules-v2+polarity_only | 0.922 | 0.040 | 0.929 | 0.765 | 0.976 | 0.855 | 0.958 | 0.00 |
 | cli:claude-haiku-4-5 | 0.946 | 0.054 | 0.875 | 1.000 | 1.000 | 0.870 | 1.000 | 0.57 |
 | cli:claude-sonnet-5 | 0.956 | 0.049 | 0.839 | 1.000 | 1.000 | 0.942 | 1.000 | 1.12 |
 | openai-llm:gpt-6-luna | 0.959 | 0.049 | 0.839 | 1.000 | 1.000 | 0.957 | 1.000 | 0.02 |
@@ -14,7 +14,7 @@
 
 ## By slice (accuracy; n in the first arm)
 
-| slice | n | rules:verifier-v1+support-rules-v1 | cli:claude-haiku-4-5 | cli:claude-sonnet-5 | openai-llm:gpt-6-luna | openai-llm:gpt-5.4-mini | openai-llm:gpt-6-sol | openai-hybrid:gpt-6-luna | openai-hybrid:gpt-5.4-mini | openai-hybrid:gpt-6-sol |
+| slice | n | rules:verifier-v2+support-rules-v2+polarity_only | cli:claude-haiku-4-5 | cli:claude-sonnet-5 | openai-llm:gpt-6-luna | openai-llm:gpt-5.4-mini | openai-llm:gpt-6-sol | openai-hybrid:gpt-6-luna | openai-hybrid:gpt-5.4-mini | openai-hybrid:gpt-6-sol |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | dose_unit | 32 | 0.781 | 0.906 | 0.969 | 0.906 | 0.906 | 0.906 | 0.844 | 0.875 | 0.875 |
 | drug_name_zh | 52 | 0.827 | 0.981 | 0.962 | 0.962 | 0.904 | 0.981 | 0.923 | 0.885 | 0.942 |

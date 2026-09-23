@@ -20,11 +20,12 @@ from medops.domain.verification import ElementKind, ElementSupport, Verdict, Ver
 from medops.infrastructure.llm.gateway import Message, ModelGateway, ModelOutputInvalid, ModelRequest
 from medops.verification.rules import (
     RULES_VERSION,
+    Polarity,
     RuleOutcome,
     best_overlap,
+    compare_polarity,
     contained,
     judge_elements,
-    negated,
     sentences,
 )
 
@@ -114,9 +115,9 @@ def verify_claims(
                 elements.append(_support(outcome, outcome.verdict, outcome.evidence_chunk_id, outcome.reason, conf))
                 continue
             hit = _contains_element(outcome, claim.text, cited)
-            if hit and hit[1]:
+            if hit and hit[1] == "same":
                 elements.append(_support(outcome, Verdict.supported, hit[0], "element text contained in evidence", 0.8))
-            elif hit:
+            elif hit and hit[1] == "opposite":
                 elements.append(
                     _support(
                         outcome, Verdict.contradicted, hit[0], "element contained but negation polarity differs", 0.9
@@ -151,15 +152,15 @@ def _polarity_only_claim(
     for outcome in outcomes:
         if outcome.verdict is None:
             hit = _contains_element(outcome, claim.text, cited)
-            if hit and not hit[1]:
+            if hit and hit[1] == "opposite":
                 return [
                     _support(
                         outcome, Verdict.contradicted, hit[0], "element contained but negation polarity differs", 0.9
                     )
                 ]
     whole = contained(claim.text, cited)
-    if whole:
-        chunk, same = whole
+    if whole and whole[1] != "unclear":
+        chunk, same = whole[0], whole[1] == "same"
         if same:
             return [
                 ElementSupport(
@@ -194,18 +195,17 @@ def _polarity_only_claim(
     ]
 
 
-def _contains_element(outcome: RuleOutcome, claim_text: str, cited: Sequence[Evidence]) -> tuple[str, bool] | None:
-    """Element text contained in one evidence sentence -> (chunk_id, same negation polarity as the claim)."""
+def _contains_element(outcome: RuleOutcome, claim_text: str, cited: Sequence[Evidence]) -> tuple[str, Polarity] | None:
+    """Element text contained in one evidence sentence -> (chunk_id, polarity relation to the claim)."""
     from medops.verification.elements import normalize_for_match
 
     needle = normalize_for_match(outcome.element.text)
     if not needle:
         return None
-    claim_neg = negated(claim_text)
     for ev in cited:
         for sentence in sentences(ev.text):
             if needle in normalize_for_match(sentence):
-                return ev.citation.chunk_id, negated(sentence) == claim_neg
+                return ev.citation.chunk_id, compare_polarity(claim_text, sentence)
     return None
 
 
@@ -213,7 +213,7 @@ def _statement_support(
     claim: Claim, cited: Sequence[Evidence], gateway: ModelGateway | None, model_id: str | None, timeout_s: float
 ) -> ElementSupport:
     hit = contained(claim.text, cited)
-    if hit and hit[1]:
+    if hit and hit[1] == "same":
         return ElementSupport(
             kind=ElementKind.statement,
             text=claim.text,
@@ -222,7 +222,7 @@ def _statement_support(
             confidence=1.0,
             reason="claim contained in evidence",
         )
-    if hit:
+    if hit and hit[1] == "opposite":
         return ElementSupport(
             kind=ElementKind.statement,
             text=claim.text,
@@ -231,9 +231,9 @@ def _statement_support(
             confidence=0.9,
             reason="claim contained in evidence but negation polarity differs",
         )
-    ratio, chunk, same_polarity = best_overlap(claim.text, cited)
-    if ratio >= STATEMENT_OVERLAP_THRESHOLD and chunk:
-        if same_polarity:
+    ratio, chunk, relation = best_overlap(claim.text, cited)
+    if ratio >= STATEMENT_OVERLAP_THRESHOLD and chunk and relation != "unclear":
+        if relation == "same":
             return ElementSupport(
                 kind=ElementKind.statement,
                 text=claim.text,

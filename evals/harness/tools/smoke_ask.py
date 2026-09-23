@@ -191,6 +191,7 @@ def main() -> int:
     ap.add_argument("--seed", type=int, default=20260923)
     ap.add_argument("--all", action="store_true", help="run every sample of the dataset (614)")
     ap.add_argument("--resume", action="store_true", help="continue an existing run directory from its rows.jsonl")
+    ap.add_argument("--ids", default="", help="comma-separated sample ids to run (overrides the sampling options)")
     ap.add_argument("--gpu-timeout", type=float, default=120.0, help="seconds a single embedding/rerank call may take")
     args = ap.parse_args()
     if args.out.exists() and not args.resume:
@@ -251,6 +252,14 @@ def main() -> int:
     )
     mapping = {e["gold_id"]: e for e in json.loads(MAPPING.read_text(encoding="utf-8"))["entries"]}
     samples = pick_samples(random.Random(args.seed), args.per_dept, args.no_answer, args.conflict, everything=args.all)
+    if args.ids:
+        wanted = {sid.strip() for sid in args.ids.split(",") if sid.strip()}
+        samples = [
+            s for s in pick_samples(random.Random(args.seed), 0, 0, 0, everything=True) if s["sample_id"] in wanted
+        ]
+        missing = wanted - {s["sample_id"] for s in samples}
+        if missing:
+            raise SystemExit(f"unknown sample ids: {sorted(missing)}")
     if done_rows:
         print(f"resuming: {len(done_rows) - len(redo)} rows kept, {len(redo)} system_failure rows redone", flush=True)
     for s in samples:
@@ -292,9 +301,16 @@ def main() -> int:
             "gold_chunks": sorted(gold_chunks),
             "gold_cited": bool(gold_chunks & set(cited)),
             "evidence_count": len(run.state.evidence),
+            "evidence_chunks": [e.citation.chunk_id for e in run.state.evidence],
             "flagged_evidence": list(run.flagged_evidence),
             "verify_elements": [
-                {"kind": e.kind.value, "verdict": e.verdict.value, "reason": e.reason[:120]}
+                {
+                    "kind": e.kind.value,
+                    "verdict": e.verdict.value,
+                    "text": e.text[:160],
+                    "chunk": e.evidence_chunk_id,
+                    "reason": e.reason[:120],
+                }
                 for e in (run.state.verify_result.elements if run.state.verify_result else ())
             ],
             "attempts": [f"{a.node}:{a.outcome}" for a in run.attempts],

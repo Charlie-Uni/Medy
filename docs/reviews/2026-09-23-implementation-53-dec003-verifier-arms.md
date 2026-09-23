@@ -76,3 +76,17 @@
 - 数据不含新标注，标签可机械复核；页文本派生物（pairs、原始回复）不入 Git，结果报告入 Git。
 - 规则修正的每一步都有反向测试（`test_containment_and_overlap_carry_negation_polarity`、`test_negation_flip_of_a_contained_statement_is_a_contradiction_not_support`）。
 - CLI 臂的提示与运行时 `JUDGE_SYSTEM` 同源，但批量 10 组一问与运行时单组一问不同，结论对运行时只作近似；API 臂用运行时同一路径（Gateway、单组、JSON schema）。
+
+## 5. support-rules-v2 复跑（2026-09-23 下午）
+
+起因见记录 54 §3.2：主集全量运行的 30 条 `unsupported_conclusion` 中 25 条是规则把限值短语当否定线索（「每日劑量上限為 10 mg」对「不得超過 10 mg」判「同值、极性相反」）。另有记录 55 §3 登记的离线路径 indication 要素不比较极性的盲点。v2 改动：(1) `_BOUND_UPPER` / `_BOUND_LOWER` 短语在计数否定线索前剔除并作为方向比较，`_EXCEED_UP` / `_EXCEED_DOWN`（超過 / less than …）与同向限值相斥；(2) 极性关系三态 same / opposite / unclear，「限值对普通数值」为 unclear，规则不裁、交判定模型（离线路径 fail-closed 为 not_supported）；(3) indication 要素的包含改为带极性的对齐窗口比较。
+
+| 臂（2,076 对全量） | v1 准确率 / 错接受率 | v2 准确率 / 错接受率 | 否定翻转 | supported |
+| --- | ---: | ---: | ---: | ---: |
+| 规则臂 | 91.0% / 5.16% | **91.3% / 4.12%** | 90.0% → 92.4% | 95.4% → 93.4% |
+| 规则臂（无单值矛盾） | 87.8% / 5.16% | 88.1% / 4.12% | 同上 | 同上 |
+
+- supported 下降的 8 对（1.5%）是「限值对普通数值」进入 unclear 后离线路径按 not_supported 处理——方向安全；配判定模型时这些对交模型。
+- 296 对共享子集：规则臂 92.2% / 4.0% 不变；`polarity_only` 推演 gpt-6-sol 95.7% / 2.2%（此前 95.6%），gpt-6-luna 94.9% / 4.4%，模型调用占比 77% 不变。ADR-0011 的分工与档位结论不变。
+- `comparison.md`、`comparison_hybrid*.md`、`policies.md`、`results_rules*.json` 已重算；OpenAI 三档「hybrid」实测臂（`results_openai-*-hybrid.json`）是 v1 规则下的在线运行结果，未重跑（推演表已覆盖 v2 下的同一政策）。
+- DEC-003 数据本身几乎没有「上限 / 不得超過」改写对（陈述为逐字条款），所以 v2 的主要收益不体现在此表，而在记录 54 §3.2 的 25 条实况样本复跑。

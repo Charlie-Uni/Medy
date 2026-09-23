@@ -9,7 +9,15 @@ from typing import Any
 
 from medops.infrastructure.llm.gateway import ModelRequest, ModelResponse, ModelUsage, estimate_tokens
 
-Scripted = str | Mapping[str, Any] | BaseException
+
+class Truncated:
+    """A scripted reply cut off by max_output_tokens (finish_reason=length): `parsed` is None, `truncated` is True."""
+
+    def __init__(self, text: str) -> None:
+        self.text = text
+
+
+Scripted = str | Mapping[str, Any] | BaseException | Truncated
 
 
 class FakeModelGateway:
@@ -34,15 +42,17 @@ class FakeModelGateway:
         item = queue.popleft()
         if isinstance(item, BaseException):
             raise item
-        if isinstance(item, Mapping):
-            text = json.dumps(dict(item), ensure_ascii=False)
-            parsed: dict[str, Any] | None = dict(item)
+        truncated = isinstance(item, Truncated)
+        payload: str | Mapping[str, Any] = item.text if isinstance(item, Truncated) else item
+        if isinstance(payload, Mapping):
+            text = json.dumps(dict(payload), ensure_ascii=False)
+            parsed: dict[str, Any] | None = dict(payload)
         else:
-            text = item
+            text = payload
             parsed = None
-            if request.json_schema is not None:
+            if request.json_schema is not None and not truncated:
                 try:
-                    parsed = json.loads(item)
+                    parsed = json.loads(payload)
                 except json.JSONDecodeError:
                     parsed = None
         usage = ModelUsage(
@@ -59,4 +69,5 @@ class FakeModelGateway:
             response_id=f"fake-{len(self.calls)}",
             system_fingerprint="fake",
             latency_ms=1.0,
+            truncated=truncated,
         )

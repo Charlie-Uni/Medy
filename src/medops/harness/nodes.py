@@ -317,7 +317,11 @@ def build_nodes(deps: HarnessDeps) -> dict[str, Callable[[HarnessState], dict[st
         meter = _Meter(deps.gateway)
         response = meter.complete(_answer_request(state, deps))
         if response.truncated:
-            raise ModelOutputInvalid("answer truncated by max_output_tokens")
+            # reasoning tiers spend output tokens before the JSON (record 54: 1/614 truncated at 800); one retry
+            # with a doubled allowance is still bounded by the trace budget, then the node fails as before
+            response = meter.complete(_answer_request(state, deps, max_output_tokens=2 * deps.answer_max_output_tokens))
+            if response.truncated:
+                raise ModelOutputInvalid("answer truncated by max_output_tokens twice")
         answers_question, claims = _parse_claims(response)
         if not answers_question or not claims:
             return _finish_with_budget(
@@ -434,7 +438,7 @@ def _finish_with_budget(state: AgentState, meter: _Meter) -> AgentState:
         return state  # already escalating; the budget overshoot is recorded by the meter on the trace
 
 
-def _answer_request(state: AgentState, deps: HarnessDeps) -> ModelRequest:
+def _answer_request(state: AgentState, deps: HarnessDeps, *, max_output_tokens: int | None = None) -> ModelRequest:
     blocks = []
     for i, e in enumerate(state.evidence, 1):
         c = e.citation
@@ -445,7 +449,7 @@ def _answer_request(state: AgentState, deps: HarnessDeps) -> ModelRequest:
         purpose="answer",
         model_id=deps.answer_model_id,
         messages=(Message(role="system", content=ANSWER_SYSTEM), Message(role="user", content=user)),
-        max_output_tokens=deps.answer_max_output_tokens,
+        max_output_tokens=max_output_tokens or deps.answer_max_output_tokens,
         json_schema=ANSWER_SCHEMA,
         timeout_s=min(deps.specs["answer"].timeout_s, 120),
     )
