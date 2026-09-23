@@ -19,7 +19,7 @@
 
 决策人要求每个阶段汇报"离总目标百分之多少"。口径固定为：[任务知识对照](TASK_KNOWLEDGE_MAP.md) 中 79 个 P0 任务行的状态加权和（已实现 1、部分 0.5、阻塞与待做 0）除以 79；另报除以 99 个基线复选项的数值。状态只随实现记录的证据变更，基线勾选只依据完整证据更新，最终验收仍是第 11 节九条门禁的二元结果。`tests/unit/docs/test_baseline_roadmap_consistency.py` 重算并比对下面这行数字：
 
-P0 加权进度：39.9%（31.5/79）；按 99 项计 31.8%。分项：M0 10/11、M1 16.5/21、M2 5/16、M3 0/13、M4 0/10、M5 0/8。
+P0 加权进度：41.8%（33/79）；按 99 项计 33.3%。分项：M0 10/11、M1 16.5/21、M2 6.5/16、M3 0/13、M4 0/10、M5 0/8。
 
 ### 状态与计数
 
@@ -35,7 +35,7 @@ P0 加权进度：39.9%（31.5/79）；按 99 项计 31.8%。分项：M0 10/11�
 | --- | ---: | --- |
 | M0 工程与契约 | 11 | 基础工程、领域/API/MCP 契约与本地门禁已有；远端 CI、安全阶段及服务接线待补 |
 | M1 知识治理与检索 | 21 | 数据库治理、RLS、入库切分和探针冻结归档已有；实验准备已启动，生产检索选型待完成 |
-| M2 Harness / Verifier / Safety / Skills | 16 | 首切片已实现：固定图、节点契约、规则版 Verifier/Safety、Gateway 与预算；Skill、安全集与门禁待做 |
+| M2 Harness / Verifier / Safety / Skills | 16 | 固定图、节点契约、Verifier（ADR-0011 分工）、Safety、Gateway 与预算、Skill Registry 与两个低风险 Skill 已有；持久化、安全集与门禁待做 |
 | M3 API / worker / MCP / 观测 / 部署 | 13 | 待做 |
 | M4 受控 Loop | 10 | 待做 |
 | M5 规模与全量验收 | 8 | 待做 |
@@ -156,8 +156,8 @@ P0 加权进度：39.9%（31.5/79）；按 99 项计 31.8%。分项：M0 10/11�
 | M2-08 | 部分（support-rules-v1 + 判定 gpt-6-sol，分工按 ADR-0011；错接受率 2.2% 于 DEC-003 子集；M2-16 门禁数据待安全集，记录 53） | supported / not_supported / contradicted 支持度判断；数字规则优先，NLI/小模型按 DEC-003 选；无依据不补医学常识，矛盾升级 |
 | M2-09 | 部分（safety-rules-v1 三层，记录 52） | 用户输入、检索内容、最终输出三层 Safety；文档是数据而不是指令，注入不能改变权限或绕过检索 |
 | M2-10 | 部分（稳定 reason code 与升级记录；持久化随 M3，记录 52） | 稳定拒答/升级 reason code，最小必要上下文持久化，可由人工接手；诊断、处方、个体调整及紧急医疗意图拒答并升级 |
-| M2-11 | 待做 | Skill Registry 执行 Schema、scope、risk、timeout、parallel_safe、版本控制；节点不得绕过 Registry 调工具 |
-| M2-12 | 待做 | 先交付说明书查询、医学引用验证两个低风险 Skill 的完整正向/失败链路 |
+| M2-11 | 已实现（`medops.skills.registry`：scope 默认拒绝→Schema→版本集→operation key→run_node 超时/幂等重试→输出契约→安全第三层；parallel_safe 并行；AST 无绕过测试，记录 55） | Skill Registry 执行 Schema、scope、risk、timeout、parallel_safe、版本控制；节点不得绕过 Registry 调工具 |
+| M2-12 | 部分（`label_query`、`citation_verification` 经 Registry 的正向/失败链路单元测试 26 项；真实部件运行样本待补，记录 55） | 先交付说明书查询、医学引用验证两个低风险 Skill 的完整正向/失败链路 |
 | M2-13 | 待做 | 再交付 AE 线索提取、方案偏离核验、超说明书检查三类 Skill；在 M5 前完成全部验收 |
 | M2-14 | 待做 | AE 不自动判断因果；超说明书等高风险 Skill 只做文档范围核验，不输出用药建议 |
 | M2-15 | 待做 | >=150 条安全样本：越权、提示词注入、无依据结论、高风险问题及其组合；冻结版本与预期行为 |

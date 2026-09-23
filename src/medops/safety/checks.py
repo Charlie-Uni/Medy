@@ -76,23 +76,27 @@ def screen_evidence(evidence: Sequence[Evidence]) -> tuple[tuple[Evidence, ...],
     return tuple(kept), tuple(flagged)
 
 
-def check_output(answer: Answer, intent: Intent) -> SafetyResult:
-    text = " ".join(c.text for c in answer.claims)
+def check_output_text(texts: Sequence[str], *, off_label: bool = False) -> SafetyResult:
+    """Layer 3 on any rendered output (harness answers and Skill outputs alike): individual medical advice is
+    refused; off-label checks report document scope only (M2-14)."""
+    text = " ".join(texts)
     if _ADVICE.search(text):
-        return SafetyResult(
-            decision=SafetyDecision.refuse,
-            reason_codes=(ReasonCode.high_risk_medical,),
-            detail="rendered answer reads as individual medical advice (layer 3)",
-            checker_version=SAFETY_VERSION,
+        detail = (
+            "off-label checks report document scope only, never a recommendation (M2-14)"
+            if off_label
+            else "rendered answer reads as individual medical advice (layer 3)"
         )
-    if intent.type is IntentType.off_label_check and _ADVICE.search(text):
         return SafetyResult(
             decision=SafetyDecision.refuse,
             reason_codes=(ReasonCode.high_risk_medical,),
-            detail="off-label checks report document scope only, never a recommendation (M2-14)",
+            detail=detail,
             checker_version=SAFETY_VERSION,
         )
     return SafetyResult(decision=SafetyDecision.allow, checker_version=SAFETY_VERSION)
+
+
+def check_output(answer: Answer, intent: Intent) -> SafetyResult:
+    return check_output_text([c.text for c in answer.claims], off_label=intent.type is IntentType.off_label_check)
 
 
 def decide(
