@@ -103,6 +103,12 @@ class Settings(BaseSettings):
     # Model Gateway ledger (M2-06). Offline drafting/review keep using subscription CLIs and never read this key.
     openai_api_key: SecretStr | None = None
     llm_monthly_budget_usd: float = Field(default=30.0, ge=0)
+    # Identity boundary (ADR-0001, M3-05): OIDC issuer/audience the API accepts and the JWK set it trusts (a JSON
+    # document; dev/test use the local synthetic issuer). Group claims map to scopes only via the allowlist JSON.
+    oidc_issuer: str | None = None
+    oidc_audience: str | None = None
+    oidc_jwks_json: str | None = None
+    oidc_group_scopes_json: str | None = None
 
     @field_validator(
         "postgres_password",
@@ -114,6 +120,10 @@ class Settings(BaseSettings):
         "db_admin_password",
         "clamd_address",
         "model_cache_dir",
+        "oidc_issuer",
+        "oidc_audience",
+        "oidc_jwks_json",
+        "oidc_group_scopes_json",
         mode="before",
     )
     @classmethod

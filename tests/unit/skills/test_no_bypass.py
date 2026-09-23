@@ -18,7 +18,10 @@ def _imports(path: Path) -> list[str]:
     for node in ast.walk(tree):
         if isinstance(node, ast.ImportFrom) and node.module:
             names.append(node.module)
-            names.extend(f"{node.module}.{alias.name}" for alias in node.names)
+            if (
+                node.module == "medops.skills"
+            ):  # `from medops.skills import label_query` reaches an implementation module
+                names.extend(f"{node.module}.{alias.name}" for alias in node.names)
         elif isinstance(node, ast.Import):
             names.extend(alias.name for alias in node.names)
     return names

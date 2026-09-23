@@ -11,10 +11,10 @@
 | M0 工程与契约 | 11 | 9 | 2 | 0 | 0 |
 | M1 知识治理与检索 | 21 | 5 | 6 | 1 | 9 |
 | M2 Harness / Verifier / Safety / Skills | 16 | 5 | 9 | 0 | 2 |
-| M3 API / worker / MCP / 观测 / 部署 | 13 | 0 | 0 | 0 | 13 |
+| M3 API / worker / MCP / 观测 / 部署 | 13 | 0 | 3 | 0 | 10 |
 | M4 受控 Loop | 10 | 0 | 0 | 0 | 10 |
 | M5 规模与验收 | 8 | 0 | 0 | 0 | 8 |
-| P0 合计 | 79 | 19 | 17 | 1 | 42 |
+| P0 合计 | 79 | 19 | 20 | 1 | 39 |
 
 M1-01 同时是“部分”和“阻塞”，上表按“部分”计。P1/P2 11 项均为选做未启动，最终验收 9 项均未验收。
 
@@ -103,18 +103,18 @@ M1-01 同时是“部分”和“阻塞”，上表按“部分”计。P1/P2 11
 
 | ID | 状态 | 任务 | 八股知识点 |
 | --- | --- | --- | --- |
-| M3-01 | 待做 | /v1/ask 五类契约与集成测试 | HTTP/ASGI；FastAPI 依赖注入；Pydantic 请求响应；错误映射 |
+| M3-01 | 部分（五种契约在 TestClient + 假运行时下有测试；生产运行时可启动；真实 HTTP 冒烟与 Trace 落库待做，记录 58） | /v1/ask 五类契约与集成测试 | HTTP/ASGI；FastAPI 依赖注入；Pydantic 请求响应；错误映射 |
 | M3-02 | 待做 | 任务创建、查询、重试与 Idempotency-Key | 幂等键作用域；请求哈希；422 与并发返回原任务；事务创建；TTL |
 | M3-03 | 待做 | 反馈、文档管理、策略候选、审批、replay 接口 | RBAC 与角色分离；审批流；管理接口的权限测试 |
 | M3-04 | 待做 | worker 原子状态转换、租约、崩溃恢复 | 队列（Redis Streams/arq）；租约与可见性超时；at-least-once；状态机原子更新 |
-| M3-05 | 待做 | OIDC 接入与服务端 scope 映射 | OAuth2/OIDC 流程；JWT 结构与 iss/aud/exp/签名；JWKS 轮换；最小权限 |
+| M3-05 | 部分（JWKS 校验、HMAC 假名、principals 目录、group allowlist、测试签发器；JWKS 发现与 IdP 选择待做，记录 58） | OIDC 接入与服务端 scope 映射 | OAuth2/OIDC 流程；JWT 结构与 iss/aud/exp/签名；JWKS 轮换；最小权限 |
 | M3-06 | 待做 | 只读 MCP 四个工具 | MCP 协议与 Streamable HTTP；bearer 鉴权；只读由数据库角色证明 |
 | M3-07 | 待做 | 完整 Trace、脱敏、受限 payload 授权 | 结构化日志；HMAC 假名；追加写审计；加密与访问控制 |
 | M3-08 | 待做 | Trace replay 生成差异报告 | 确定性回放；版本固定；run id 隔离；缓存短路风险 |
 | M3-09 | 待做 | OTel 与 Langfuse 覆盖全部 spans | traces/spans/context propagation；采样；exporter 与后端 |
 | M3-10 | 待做 | 指标与告警仪表盘 | counter/gauge/histogram；指标基数；分位数计算；告警阈值 |
 | M3-11 | 待做 | P95 达标并记录环境 | 压测方法与并发模型；冷热缓存；分位数统计与尾延迟 |
-| M3-12 | 待做 | 非 root 镜像、健康检查、优雅停机、固定依赖 | 多阶段构建；SIGTERM 与优雅停机；就绪与存活探针；配置注入 |
+| M3-12 | 部分（健康/就绪探针、哈希锁、serve 入口；镜像与优雅停机待做，记录 58） | 非 root 镜像、健康检查、优雅停机、固定依赖 | 多阶段构建；SIGTERM 与优雅停机；就绪与存活探针；配置注入 |
 | M3-13 | 待做 | 模型超时、worker 重启、重复消费故障测试 | 混沌测试；故障注入；恢复验证；安全链不被绕过 |
 
 ## 6. M4 受控自进化 Loop（10 项）

@@ -146,6 +146,7 @@ def test_group_roles_login_users_and_forced_rls(migrated, login_users):
             "chunk_lexical_tsv",
             "operation_executions",  # migration 0008: operation-key ledger (M2-03), app writes / admin reads
             "operation_attempts",
+            "principals",  # migration 0009: principal directory (M3-05), app reads / admin writes
         }
         owners = {r[0] for r in conn.execute("select tableowner from pg_tables where schemaname = 'public'")}
         assert owners.isdisjoint(set(GROUPS.values()) | {u["name"] for u in login_users.values()})

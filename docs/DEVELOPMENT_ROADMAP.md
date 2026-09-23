@@ -19,7 +19,7 @@
 
 决策人要求每个阶段汇报"离总目标百分之多少"。口径固定为：[任务知识对照](TASK_KNOWLEDGE_MAP.md) 中 79 个 P0 任务行的状态加权和（已实现 1、部分 0.5、阻塞与待做 0）除以 79；另报除以 99 个基线复选项的数值。状态只随实现记录的证据变更，基线勾选只依据完整证据更新，最终验收仍是第 11 节九条门禁的二元结果。`tests/unit/docs/test_baseline_roadmap_consistency.py` 重算并比对下面这行数字：
 
-P0 加权进度：45.6%（36.0/79）；按 99 项计 36.4%。分项：M0 10/11、M1 16.5/21、M2 9.5/16、M3 0/13、M4 0/10、M5 0/8。
+P0 加权进度：47.5%（37.5/79）；按 99 项计 37.9%。分项：M0 10/11、M1 16.5/21、M2 9.5/16、M3 1.5/13、M4 0/10、M5 0/8。
 
 ### 状态与计数
 
@@ -36,7 +36,7 @@ P0 加权进度：45.6%（36.0/79）；按 99 项计 36.4%。分项：M0 10/11�
 | M0 工程与契约 | 11 | 基础工程、领域/API/MCP 契约与本地门禁已有；远端 CI、安全阶段及服务接线待补 |
 | M1 知识治理与检索 | 21 | 数据库治理、RLS、入库切分和探针冻结归档已有；实验准备已启动，生产检索选型待完成 |
 | M2 Harness / Verifier / Safety / Skills | 16 | 固定图、节点契约、operation key 账本、Verifier（ADR-0011 分工）、Safety、Gateway 与预算、Skill Registry 与两个低风险 Skill 已有；安全集与门禁待做 |
-| M3 API / worker / MCP / 观测 / 部署 | 13 | 待做 |
+| M3 API / worker / MCP / 观测 / 部署 | 13 | 首切片已实现：`/v1/ask` 五种契约、bearer 身份边界与 principal 目录、健康探针、生产运行时；任务/worker/MCP/观测/部署待做 |
 | M4 受控 Loop | 10 | 待做 |
 | M5 规模与全量验收 | 8 | 待做 |
 | P1/P2 checklist | 11 | 选做，未启动 |
@@ -167,18 +167,18 @@ P0 加权进度：45.6%（36.0/79）；按 99 项计 36.4%。分项：M0 10/11�
 
 | ID | 状态 | 要做的工作与验收 |
 | --- | --- | --- |
-| M3-01 | 待做 | FastAPI `/v1/ask`：成功、证据不足、拒答、升级、服务失败契约与集成测试 |
+| M3-01 | 部分（`medops.api.app`：五种契约在 TestClient + 假运行时下有测试，生产运行时可启动；真实 HTTP 冒烟与 Trace 落库待做，记录 58） | FastAPI `/v1/ask`：成功、证据不足、拒答、升级、服务失败契约与集成测试 |
 | M3-02 | 待做 | task 创建/查询/失败重试；Idempotency-Key 按身份和路由限定作用域，存 request hash；同 key 同 payload 返回原任务，不同 payload 返回 422；事务创建、TTL 和并发语义进入 OpenAPI |
 | M3-03 | 待做 | 反馈、文档管理、策略候选、审批、Trace replay 接口；逐接口验证业务/管理/审核权限 |
 | M3-04 | 待做 | worker 的 queued/running/completed/failed 转换、租约与结果原子持久化；崩溃恢复、重复消费安全，不把 Redis 队列当唯一事实来源 |
-| M3-05 | 待做 | 接入 OIDC：验证 issuer/audience/expiry/signature；用户部门/scope 服务端映射，group allowlist，角色分离；本地测试签发器仅用于合成身份 |
+| M3-05 | 部分（JWKS 校验、HMAC 假名、`principals` 目录（迁移 0009）、group allowlist、测试签发器；JWKS 发现/轮换与 IdP 选择（DEC-010）待做，记录 58） | 接入 OIDC：验证 issuer/audience/expiry/signature；用户部门/scope 服务端映射，group allowlist，角色分离；本地测试签发器仅用于合成身份 |
 | M3-06 | 待做 | 只读 MCP：search_documents、get_chunk、verify_citation、list_active_versions；生产 Streamable HTTP + bearer，继承身份与数据库权限，不能写入；stdio 仅开发测试 |
 | M3-07 | 待做 | 每次请求完整 Trace；身份 surrogate/HMAC 假名、日志脱敏，受限可回放 payload 单独加密和授权，审计追加写 |
 | M3-08 | 待做 | Trace replay 固定实际策略/检索/Skill/模型版本，用独立 run id 生成差异报告；禁止被原执行缓存短路 |
 | M3-09 | 待做 | Langfuse 与 OTel 串联 API、数据库、Redis、LLM、Reranker、worker spans，跨任务传播 trace/task/version 信息 |
 | M3-10 | 待做 | 延迟、错误、拒答/升级、队列、缓存、Token/成本与安全告警；trace_id/user_id 不作为高基数指标标签 |
 | M3-11 | 待做 | 普通问答 P95 <=8s、复杂 Skill <=15s；记录并发、硬件、语料、冷热缓存、失败率，不能仅测单次最快请求 |
-| M3-12 | 待做 | 固定依赖、非 root 镜像、health/readiness、优雅停机；配置/密钥隔离、持久化和部署说明 |
+| M3-12 | 部分（`/healthz`、`/readyz`、哈希锁依赖、`serve` 入口；镜像、优雅停机与部署说明待做，记录 58） | 固定依赖、非 root 镜像、health/readiness、优雅停机；配置/密钥隔离、持久化和部署说明 |
 | M3-13 | 待做 | 主链路故障测试：模型超时、worker 重启、队列重复消费；证明失败可定位、可恢复且不绕过安全链 |
 
 ### M4：受控自进化 Loop（10 项）

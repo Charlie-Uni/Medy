@@ -17,6 +17,10 @@ dependencies = [
   # M2 harness (baseline 5.3) and the runtime LLM adapter (ADR-0010)
   "langgraph>=1.2,<2",
   "openai>=2.50,<3",
+  "fastapi>=0.115,<1",
+  "httpx>=0.27,<1",
+  "pyjwt[crypto]>=2.9,<3",
+  "uvicorn>=0.30,<1",
 ]
 
 [project.optional-dependencies]

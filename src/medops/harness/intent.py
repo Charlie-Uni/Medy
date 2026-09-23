@@ -1,4 +1,5 @@
-"""Rule-based intent classification, version `intent-rules-v1` (Intent node first slice).
+"""Rule-based intent classification, version `intent-rules-v2` (v1: Intent node first slice; v2: adverbials between
+subject, modal and verb no longer defeat the first-person high-risk rule, record 58).
 
 High-risk detection is deliberately narrow and first-person: individual dosing, diagnosis, prescription or an
 acute personal emergency (INV-SAF-01). Regulatory questions that merely contain words like "emergency" stay
@@ -14,10 +15,11 @@ from collections.abc import Sequence
 from medops.domain.common import RiskLevel
 from medops.domain.intent import Entity, Intent, IntentType
 
-INTENT_VERSION = "intent-rules-v1"
+INTENT_VERSION = "intent-rules-v2"
 
 _HIGH_RISK = re.compile(
-    r"我(?:该|該|应该|應該|能|可以|要|需要)(?:吃|服|用|打|注射|加|减|減)(?:多少|几|幾|什么|什麼|哪种|哪種)"
+    # an adverbial between the subject, the modal and the verb (我最近…应该每天吃多少 / 我可以自己加量到) must not defeat the rule (v2)
+    r"我(?:[^，。？！,.?!；;]{0,8}?)(?:该|該|应该|應該|能|可以|要|需要|想)(?:[^，。？！,.?!；;]{0,6}?)(?:吃|服|用|打|注射|加|减|減|停)(?:量|药|藥|多少|几|幾|什么|什麼|哪种|哪種)"
     r"|我(?:得|患|是不是得|是否患)(?:了|的)?(?:什么|什麼|啥)病"
     r"|(?:帮|幫|替)我(?:诊断|診斷|开药|開藥|开处方|開處方|调剂量|調劑量|调整剂量|調整劑量)"
     r"|(?:我|我家|家人|孩子|小孩|母亲|母親|父亲|父親|老婆|老公|太太|先生)(?:现在|現在|刚才|剛才|突然)?(?:胸痛|呼吸困难|呼吸困難|昏迷|抽搐|大出血|休克|过量|過量)"

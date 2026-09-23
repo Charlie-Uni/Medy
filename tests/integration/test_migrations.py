@@ -31,6 +31,7 @@ EXPECTED_TABLES = {
     "chunk_lexical_tsv",
     "operation_executions",
     "operation_attempts",
+    "principals",
 }
 EXPECTED_TYPES = {
     "dept",
@@ -166,7 +167,7 @@ def set_actor(conn: psycopg.Connection, actor: str = "reviewer-01", reason: str 
 
 def test_single_head_and_offline_sql_render(migrated):
     heads = ScriptDirectory.from_config(alembic_config(migrated)).get_heads()
-    assert heads == ["0008"]
+    assert heads == ["0009"]
 
 
 def test_upgrade_downgrade_upgrade_round_trip_leaves_nothing_behind(scratch_database):
@@ -186,6 +187,8 @@ def test_upgrade_downgrade_upgrade_round_trip_leaves_nothing_behind(scratch_data
         "medops_outbox_acks_guard",
         "medops_operation_executions_guard",
         "medops_operation_attempts_guard",
+        "medops_principals_guard",
+        "medops_scopes_valid",
     }
     assert _policies(scratch_database) > 0 and _rls_forced(scratch_database) == EXPECTED_TABLES
     run_alembic(scratch_database, "downgrade", "base")
