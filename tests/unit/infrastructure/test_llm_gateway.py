@@ -168,3 +168,28 @@ def test_openai_adapter_maps_provider_errors_and_rejects_bad_structured_output()
     with pytest.raises(ModelUnavailable):
         OpenAIModelGateway(unpriced).complete(req(model="gpt-99"))
     assert unpriced.kwargs is None  # refused before any network call
+
+
+class _TemperatureRejectingClient:
+    """First call with `temperature` fails like a reasoning-tier model; the resend without it succeeds."""
+
+    def __init__(self):
+        self.calls = []
+        self.chat = SimpleNamespace(completions=SimpleNamespace(create=self._create))
+
+    def _create(self, **kwargs):
+        self.calls.append(kwargs)
+        if "temperature" in kwargs:
+            request = httpx.Request("POST", "https://api.openai.com/v1/chat/completions")
+            body = {"error": {"param": "temperature", "code": "unsupported_value", "message": "unsupported"}}
+            raise openai.BadRequestError("bad", response=httpx.Response(400, request=request), body=body)
+        return _completion("ok")
+
+
+def test_openai_adapter_resends_without_temperature_for_models_that_reject_it_and_remembers():
+    client = _TemperatureRejectingClient()
+    gw = OpenAIModelGateway(client)
+    assert gw.complete(req()).text == "ok"
+    assert [("temperature" in c) for c in client.calls] == [True, False]
+    gw.complete(req())
+    assert len(client.calls) == 3 and "temperature" not in client.calls[2]  # remembered for the model

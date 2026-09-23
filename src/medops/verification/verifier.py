@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import json
 from collections.abc import Sequence
+from typing import Literal
 
 from medops.domain.answer import Claim
 from medops.domain.evidence import Evidence
@@ -27,8 +28,14 @@ from medops.verification.rules import (
     sentences,
 )
 
-VERIFIER_VERSION = f"verifier-v1+{RULES_VERSION}"
+Policy = Literal["rules_first", "polarity_only"]
+# ADR-0011 (DEC-003, decision-maker 2026-09-23 "按照你建议的改"): with a judge configured, the rules alone decide only
+# negation-polarity contradictions and same-polarity whole-statement containment; every other claim goes to the model.
+# `rules_first` is the offline behaviour (no judge) and the pre-ADR-0011 path kept for the DEC-003 arms.
+DEFAULT_POLICY: Policy = "polarity_only"
+VERIFIER_VERSION = f"verifier-v2+{RULES_VERSION}+{DEFAULT_POLICY}"
 STATEMENT_OVERLAP_THRESHOLD = 0.6  # provisional; DEC-003 measures it
+JUDGE_MAX_OUTPUT_TOKENS = 600  # reasoning-tier models spend output tokens before the JSON; 200 would truncate
 
 JUDGE_SCHEMA = {
     "type": "object",
@@ -84,13 +91,22 @@ def verify_claims(
     gateway: ModelGateway | None = None,
     judge_model_id: str | None = None,
     timeout_s: float = 30.0,
-    single_value_contradiction: bool = True,
+    single_value_contradiction: bool | None = None,
+    policy: Policy = DEFAULT_POLICY,
 ) -> VerifyResult:
+    judge_ready = gateway is not None and bool(judge_model_id)
+    if single_value_contradiction is None:
+        # the offline / no-judge path keeps the pre-ADR-0011 numeric rule; polarity_only with a judge never uses it
+        single_value_contradiction = not (policy == "polarity_only" and judge_ready)
     hallucinated = structural_check([c for claim in claims for c in claim.citation_chunk_ids], evidence)
     by_id = {e.citation.chunk_id: e for e in evidence}
     elements: list[ElementSupport] = []
     for claim in claims:
         cited = [by_id[c] for c in claim.citation_chunk_ids if c in by_id]
+        if policy == "polarity_only" and judge_ready:
+            assert gateway is not None and judge_model_id is not None
+            elements.extend(_polarity_only_claim(claim, cited, gateway, judge_model_id, timeout_s))
+            continue
         outcomes = judge_elements(claim.text, cited, single_value_contradiction=single_value_contradiction)
         for outcome in outcomes:
             if outcome.verdict is not None:
@@ -119,6 +135,63 @@ def verify_claims(
         elements=tuple(elements),
         verifier_version=VERIFIER_VERSION,
     )
+
+
+def _polarity_only_claim(
+    claim: Claim, cited: Sequence[Evidence], gateway: ModelGateway, model_id: str, timeout_s: float
+) -> list[ElementSupport]:
+    """ADR-0011 division of labour: deterministic rules keep only the two verdict types they proved better at
+    than the models (record 53 §3.1): a negation-polarity contradiction (exact value or contained text with the
+    opposite polarity) and a same-polarity whole-statement containment. Everything else is one statement-level
+    judgement by the model; numeric mismatches are never called contradictions by a rule alone."""
+    outcomes = judge_elements(claim.text, cited, single_value_contradiction=False)
+    contra = [o for o in outcomes if o.verdict is Verdict.contradicted and "polarity" in o.reason]
+    if contra:
+        return [_support(o, Verdict.contradicted, o.evidence_chunk_id, o.reason, 0.9) for o in contra]
+    for outcome in outcomes:
+        if outcome.verdict is None:
+            hit = _contains_element(outcome, claim.text, cited)
+            if hit and not hit[1]:
+                return [
+                    _support(
+                        outcome, Verdict.contradicted, hit[0], "element contained but negation polarity differs", 0.9
+                    )
+                ]
+    whole = contained(claim.text, cited)
+    if whole:
+        chunk, same = whole
+        if same:
+            return [
+                ElementSupport(
+                    kind=ElementKind.statement,
+                    text=claim.text,
+                    verdict=Verdict.supported,
+                    evidence_chunk_id=chunk,
+                    confidence=1.0,
+                    reason="claim contained in evidence",
+                )
+            ]
+        return [
+            ElementSupport(
+                kind=ElementKind.statement,
+                text=claim.text,
+                verdict=Verdict.contradicted,
+                evidence_chunk_id=chunk,
+                confidence=0.9,
+                reason="claim contained in evidence but negation polarity differs",
+            )
+        ]
+    verdict, judge_chunk, reason = _llm_judge(gateway, model_id, claim.text, cited, timeout_s)
+    return [
+        ElementSupport(
+            kind=ElementKind.statement,
+            text=claim.text,
+            verdict=verdict,
+            evidence_chunk_id=judge_chunk,
+            confidence=0.7,
+            reason=reason,
+        )
+    ]
 
 
 def _contains_element(outcome: RuleOutcome, claim_text: str, cited: Sequence[Evidence]) -> tuple[str, bool] | None:
@@ -209,7 +282,7 @@ def _llm_judge(
             Message(role="system", content=JUDGE_SYSTEM),
             Message(role="user", content=f"陈述：{statement}\n\n{blocks or '（无证据）'}"),
         ),
-        max_output_tokens=200,
+        max_output_tokens=JUDGE_MAX_OUTPUT_TOKENS,
         json_schema=JUDGE_SCHEMA,
         timeout_s=timeout_s,
     )

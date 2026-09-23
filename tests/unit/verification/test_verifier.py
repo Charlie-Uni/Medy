@@ -75,3 +75,39 @@ def test_negation_flip_of_a_contained_statement_is_a_contradiction_not_support()
         [Claim(text="研究者不得在未取得知情同意的情況下使用試驗器械。", citation_chunk_ids=("c3",))], ev
     )
     assert not same.contradicted and not same.unsupported
+
+
+def test_default_policy_leaves_everything_but_polarity_and_containment_to_the_judge():
+    ev = [evidence("c1", LABEL_TEXT := "年齡 6 至 12 歲的孩童：口服，100 mg，一天三次。每日劑量不得超過 300 mg。")]
+    judge = FakeModelGateway({"verify": [{"verdict": "supported", "reason": "same dose, same population"}]})
+    # an exact numeric match is no longer decided by the rules alone: the judge is consulted once
+    numeric = verify_claims(
+        [Claim(text="6 至 12 歲孩童口服 100 mg，一天三次", citation_chunk_ids=("c1",))],
+        ev,
+        gateway=judge,
+        judge_model_id="gpt-6-luna",
+    )
+    assert len(judge.calls) == 1 and numeric.elements[0].kind is ElementKind.statement and not numeric.unsupported
+    # a negation-polarity contradiction is decided by the rules without a call
+    flipped = verify_claims(
+        [Claim(text="每日可超過 300 mg", citation_chunk_ids=("c1",))], ev, gateway=judge, judge_model_id="gpt-6-luna"
+    )
+    assert flipped.contradicted and len(judge.calls) == 1
+    # same-polarity whole-statement containment is decided by the rules without a call
+    contained_claim = verify_claims(
+        [Claim(text="每日劑量不得超過 300 mg", citation_chunk_ids=("c1",))],
+        ev,
+        gateway=judge,
+        judge_model_id="gpt-6-luna",
+    )
+    assert not contained_claim.unsupported and not contained_claim.contradicted and len(judge.calls) == 1
+    # rules_first keeps the per-element path (numeric match supported by rule, no call)
+    legacy = verify_claims(
+        [Claim(text="6 至 12 歲孩童口服 100 mg，一天三次", citation_chunk_ids=("c1",))],
+        ev,
+        gateway=judge,
+        judge_model_id="gpt-6-luna",
+        policy="rules_first",
+    )
+    assert len(judge.calls) == 1 and {e.kind for e in legacy.elements} >= {ElementKind.dose, ElementKind.frequency}
+    assert LABEL_TEXT

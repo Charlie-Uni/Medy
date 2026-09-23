@@ -34,6 +34,7 @@ class OpenAIModelGateway:
     def __init__(self, client: Any, *, prices: PriceTable | None = None) -> None:
         self._client = client
         self._prices = prices or PriceTable(OPENAI_PRICES)
+        self._no_temperature: set[str] = set()  # models that only accept their default sampling temperature
 
     @classmethod
     def from_settings(cls, settings: Settings, *, prices: PriceTable | None = None) -> OpenAIModelGateway:
@@ -41,6 +42,22 @@ class OpenAIModelGateway:
             raise ModelUnavailable("OPENAI_API_KEY is not configured (ADR-0010)", retryable=False)
         client = openai.OpenAI(api_key=settings.openai_api_key.get_secret_value(), max_retries=0)
         return cls(client, prices=prices)
+
+    def _create(self, kwargs: dict[str, Any]) -> Any:
+        """One provider call. Reasoning-tier models reject any non-default `temperature` with a 400
+        `unsupported_value`; that is a fixed property of the model, so the call is resent once without the
+        parameter and the model is remembered. Determinism then rests on the JSON schema and re-verification,
+        which is recorded on the trace through the response's model id."""
+        try:
+            return self._client.chat.completions.create(**kwargs)
+        except openai.BadRequestError as exc:
+            body = getattr(exc, "body", None) or {}
+            err = body.get("error", body) if isinstance(body, dict) else {}
+            if isinstance(err, dict) and err.get("param") == "temperature" and "temperature" in kwargs:
+                self._no_temperature.add(kwargs["model"])
+                retry = {k: v for k, v in kwargs.items() if k != "temperature"}
+                return self._client.chat.completions.create(**retry)
+            raise
 
     def complete(self, request: ModelRequest) -> ModelResponse:
         self._prices.require(request.model_id)  # refuse unpriced models before spending anything
@@ -56,9 +73,11 @@ class OpenAIModelGateway:
                 "type": "json_schema",
                 "json_schema": {"name": SCHEMA_NAME, "schema": request.json_schema, "strict": True},
             }
+        if request.model_id in self._no_temperature:
+            kwargs.pop("temperature", None)
         started = time.perf_counter()
         try:
-            completion = self._client.chat.completions.create(**kwargs)
+            completion = self._create(kwargs)
         except openai.APITimeoutError as exc:
             raise ModelTimeout(f"openai timeout after {request.timeout_s}s") from exc
         except (openai.RateLimitError, openai.APIConnectionError, openai.InternalServerError) as exc:
