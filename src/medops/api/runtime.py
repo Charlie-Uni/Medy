@@ -5,7 +5,7 @@ behind the monthly budget, the operation-key ledger, and the pinned production m
 from __future__ import annotations
 
 import json
-from collections.abc import Iterator
+from collections.abc import Iterator, Mapping
 from contextlib import contextmanager
 from dataclasses import dataclass, field
 from datetime import date
@@ -16,6 +16,7 @@ import psycopg
 from medops.api.app import ApiRuntime
 from medops.api.auth import Authenticator, JwtVerifier, PgDirectory
 from medops.api.contracts import AskRequest
+from medops.application.tasks import TaskStore
 from medops.core.config import Settings
 from medops.domain.identity import UserContext
 from medops.domain.state import VersionSet
@@ -23,6 +24,7 @@ from medops.harness.executions import PgExecutionStore
 from medops.harness.nodes import HarnessDeps
 from medops.harness.production import PRODUCTION_ANSWER_MODEL, PRODUCTION_JUDGE_MODEL, production_model_config_version
 from medops.harness.retrieval_port import ProductionRetrieval
+from medops.infrastructure.db.tasks import PgTaskStore
 from medops.infrastructure.llm.budget import BudgetedGateway, InMemorySpendLedger
 from medops.infrastructure.llm.gateway import OPENAI_PRICES, ModelGateway, PriceTable
 from medops.infrastructure.llm.openai_gateway import OpenAIModelGateway
@@ -36,6 +38,8 @@ from medops.retrieval.production import (
     production_vector_retriever,
 )
 from medops.skills.catalog import default_registry
+from medops.skills.production import doc_type_lookup, evidence_lookup
+from medops.skills.registry import SkillContext
 
 POLICY_VERSION = "policy-m3-api-1"  # released policy records arrive with M4; until then one pinned constant
 
@@ -143,6 +147,38 @@ class ProductionRuntime:
             judge_model_id=PRODUCTION_JUDGE_MODEL,
             as_of=as_of,
             executions=PgExecutionStore(conn),
+        )
+
+    def task_store(self, conn: Any) -> TaskStore:
+        return PgTaskStore(conn)
+
+    # ---- worker environment (medops.application.tasks.WorkerEnvironment)
+    def resolve_user(self, conn: Any, principal: str) -> UserContext | None:
+        p = PgDirectory(conn).resolve(principal) if len(principal) == 64 else None
+        if p is None or not p.active:
+            return None
+        return UserContext(user_id=principal[:32], dept=p.dept, roles=p.roles, acl_scopes=p.scopes)
+
+    def skill_context(
+        self, conn: Any, user: UserContext, trace_id: str, historical: Mapping[str, Any] | None
+    ) -> SkillContext:
+        as_of = date.fromisoformat(historical["as_of"]) if historical and historical.get("as_of") else self.as_of
+        request = AskRequest(query="task", historical=None)
+        deps = self.build_deps(conn, user, request)
+
+        @contextmanager
+        def conn_for_user(_user: UserContext) -> Iterator[Any]:
+            yield conn
+
+        return SkillContext(
+            user=user,
+            versions=self.versions,
+            deps=deps,
+            evidence_lookup=evidence_lookup(conn_for_user, as_of=as_of),
+            doc_type_lookup=doc_type_lookup(conn_for_user),
+            trace_id=trace_id,
+            run_id=trace_id,
+            as_of=as_of,
         )
 
     def ready(self) -> bool:

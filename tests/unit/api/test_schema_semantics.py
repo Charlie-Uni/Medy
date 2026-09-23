@@ -36,6 +36,13 @@ ANSWER = {
 REFUSAL = {"reason_codes": ["high_risk_medical"], "message": "拒答"}
 ERR = {"code": "dependency_timeout", "message": "服务暂时不可用，请稍后重试", "trace_id": TRACE, "retryable": True}
 RESULT = {"trace_id": TRACE, "outcome": "answered", "versions": VERSIONS, "answer": ANSWER}
+TASK_RESULT = {
+    "skill": "label_query@1.0.0",
+    "status": "completed",
+    "reason_codes": [],
+    "output": {"claims": []},
+    "versions": VERSIONS,
+}
 CONTENT = "孕妇禁用。"
 HASH = hashlib.sha256(CONTENT.encode("utf-8")).hexdigest()
 
@@ -59,19 +66,26 @@ CASES: list[tuple[type[BaseModel], dict, bool]] = [
     (TaskResponse, {"task_id": "t", "status": "queued", "created_at": NOW, "updated_at": NOW}, True),
     (
         TaskResponse,
-        {"task_id": "t", "status": "completed", "created_at": NOW, "updated_at": NOW, "result": RESULT},
+        {"task_id": "t", "status": "completed", "created_at": NOW, "updated_at": NOW, "result": TASK_RESULT},
         True,
     ),
     (TaskResponse, {"task_id": "t", "status": "completed", "created_at": NOW, "updated_at": NOW}, False),
     (
         TaskResponse,
-        {"task_id": "t", "status": "completed", "created_at": NOW, "updated_at": NOW, "result": RESULT, "error": ERR},
+        {
+            "task_id": "t",
+            "status": "completed",
+            "created_at": NOW,
+            "updated_at": NOW,
+            "result": TASK_RESULT,
+            "error": ERR,
+        },
         False,
     ),
     (TaskResponse, {"task_id": "t", "status": "failed", "created_at": NOW, "updated_at": NOW, "error": ERR}, True),
     (
         TaskResponse,
-        {"task_id": "t", "status": "failed", "created_at": NOW, "updated_at": NOW, "error": ERR, "result": RESULT},
+        {"task_id": "t", "status": "failed", "created_at": NOW, "updated_at": NOW, "error": ERR, "result": TASK_RESULT},
         False,
     ),
     (TaskResponse, {"task_id": "t", "status": "running", "created_at": NOW, "updated_at": NOW, "error": ERR}, False),

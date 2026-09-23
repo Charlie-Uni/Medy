@@ -137,6 +137,31 @@ class TaskCreateRequest(ApiModel):
     historical: HistoricalRequest | None = None
 
 
+class TaskResultStatus(StrEnum):
+    completed = "completed"
+    insufficient_evidence = "insufficient_evidence"
+    escalated = "escalated"
+
+
+class TaskResult(ApiModel):
+    """Result of a skill task (M3-02): the skill's typed output as it was validated against the skill's registered
+    output schema (`GET` the schema through the Registry's `describe`), plus the run status and reason codes.
+    Skill outputs are structured per skill (AE elements, deviation findings, label excerpts), so they are not
+    forced into the `AskResponse` shape."""
+
+    skill: NonEmptyStr  # name@version, also recorded in `versions.skill_version_set`
+    status: TaskResultStatus
+    reason_codes: tuple[ReasonCode, ...] = ()
+    output: dict[str, JsonValue]
+    versions: VersionSet
+
+    @model_validator(mode="after")
+    def _non_completion_has_a_reason(self) -> TaskResult:
+        if self.status is not TaskResultStatus.completed and not self.reason_codes:
+            raise ValueError("a non-completed task result needs at least one reason code")
+        return self
+
+
 class TaskResponse(ApiModel):
     model_config = ConfigDict(
         json_schema_extra={
@@ -168,7 +193,7 @@ class TaskResponse(ApiModel):
     trace_id: TraceId | None = None
     created_at: datetime
     updated_at: datetime
-    result: AskResponse | None = None
+    result: TaskResult | None = None
     error: ErrorResponse | None = None
 
     @model_validator(mode="after")

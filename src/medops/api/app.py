@@ -16,7 +16,17 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 
 from medops.api.auth import Authenticator, PrincipalDirectory
-from medops.api.contracts import AskRequest, AskResponse, EscalationReceipt, OutcomeKind, Refusal
+from medops.api.contracts import (
+    IDEMPOTENCY_KEY_HEADER,
+    AskRequest,
+    AskResponse,
+    EscalationReceipt,
+    OutcomeKind,
+    Refusal,
+    TaskCreateRequest,
+    TaskResponse,
+)
+from medops.application.tasks import TaskService, TaskStore, to_response
 from medops.core.errors import HTTP_STATUS, BusinessError, ErrorCode, ErrorResponse, MedOpsError
 from medops.core.logging import get_logger
 from medops.core.tracing import bind_trace_id
@@ -62,6 +72,8 @@ class ApiRuntime(Protocol):
 
     def build_deps(self, conn: Any, user: UserContext, request: AskRequest) -> HarnessDeps: ...
 
+    def task_store(self, conn: Any) -> TaskStore: ...
+
     def ready(self) -> bool: ...
 
 
@@ -94,7 +106,9 @@ def to_ask_response(run: HarnessRun, trace_id: str, versions: VersionSet) -> Ask
     )
 
 
-def create_app(runtime: ApiRuntime, *, docs_enabled: bool = False, debug: bool = False) -> FastAPI:
+def create_app(
+    runtime: ApiRuntime, *, docs_enabled: bool = False, debug: bool = False, idempotency_ttl_s: int = 7 * 24 * 3600
+) -> FastAPI:
     app = FastAPI(
         title="MedOps Copilot",
         docs_url="/docs" if docs_enabled else None,
@@ -161,6 +175,30 @@ def create_app(runtime: ApiRuntime, *, docs_enabled: bool = False, debug: bool =
             )
             run = run_ask(state, deps)
         return to_ask_response(run, trace_id, runtime.versions)
+
+    def _tasks(conn: Any) -> TaskService:
+        return TaskService(store=runtime.task_store(conn), idempotency_ttl_s=idempotency_ttl_s)
+
+    @app.post("/v1/tasks", response_model=TaskResponse, status_code=202)
+    def create_task(body: TaskCreateRequest, request: Request) -> TaskResponse:
+        with runtime.connection() as conn:
+            user = runtime.authenticator.authenticate(request.headers.get("authorization"), runtime.directory(conn))
+            record = _tasks(conn).create(user, body, request.headers.get(IDEMPOTENCY_KEY_HEADER))
+        return to_response(record)
+
+    @app.get("/v1/tasks/{task_id}", response_model=TaskResponse)
+    def get_task(task_id: str, request: Request) -> TaskResponse:
+        with runtime.connection() as conn:
+            user = runtime.authenticator.authenticate(request.headers.get("authorization"), runtime.directory(conn))
+            record = _tasks(conn).get(user, task_id)
+        return to_response(record)
+
+    @app.post("/v1/tasks/{task_id}/retry", response_model=TaskResponse, status_code=202)
+    def retry_task(task_id: str, request: Request) -> TaskResponse:
+        with runtime.connection() as conn:
+            user = runtime.authenticator.authenticate(request.headers.get("authorization"), runtime.directory(conn))
+            record = _tasks(conn).retry(user, task_id)
+        return to_response(record)
 
     return app
 

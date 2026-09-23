@@ -26,6 +26,7 @@ API_MODELS: dict[str, type[BaseModel]] = {
     "AskRequest": api.AskRequest,
     "AskResponse": api.AskResponse,
     "TaskCreateRequest": api.TaskCreateRequest,
+    "TaskResult": api.TaskResult,
     "TaskResponse": api.TaskResponse,
     "FeedbackRequest": api.FeedbackRequest,
     "FeedbackReceipt": api.FeedbackReceipt,

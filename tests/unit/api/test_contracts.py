@@ -17,6 +17,8 @@ from medops.api.contracts import (
     Refusal,
     TaskCreateRequest,
     TaskResponse,
+    TaskResult,
+    TaskResultStatus,
     TaskStatus,
 )
 from medops.contracts_export import render
@@ -101,7 +103,9 @@ def test_task_response_terminal_payloads_are_mutually_exclusive():
         status=TaskStatus.completed,
         created_at=NOW,
         updated_at=NOW,
-        result=AskResponse(trace_id=TRACE, outcome=OutcomeKind.answered, versions=VERSIONS, answer=_answer()),
+        result=TaskResult(
+            skill="label_query@1.0.0", status=TaskResultStatus.completed, output={"claims": []}, versions=VERSIONS
+        ),
     )
     ok_failed = TaskResponse(task_id="t1", status=TaskStatus.failed, created_at=NOW, updated_at=NOW, error=_err())
     assert ok_done.error is None and ok_failed.result is None and "detail" not in ok_failed.model_dump_json()

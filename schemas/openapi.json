@@ -839,7 +839,7 @@
           "result": {
             "anyOf": [
               {
-                "$ref": "#/components/schemas/AskResponse"
+                "$ref": "#/components/schemas/TaskResult"
               },
               {
                 "type": "null"
@@ -882,6 +882,55 @@
         ],
         "title": "TaskResponse",
         "type": "object"
+      },
+      "TaskResult": {
+        "additionalProperties": false,
+        "description": "Result of a skill task (M3-02): the skill's typed output as it was validated against the skill's registered\noutput schema (`GET` the schema through the Registry's `describe`), plus the run status and reason codes.\nSkill outputs are structured per skill (AE elements, deviation findings, label excerpts), so they are not\nforced into the `AskResponse` shape.",
+        "properties": {
+          "output": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/JsonValue"
+            },
+            "title": "Output",
+            "type": "object"
+          },
+          "reason_codes": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/ReasonCode"
+            },
+            "title": "Reason Codes",
+            "type": "array"
+          },
+          "skill": {
+            "minLength": 1,
+            "title": "Skill",
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/TaskResultStatus"
+          },
+          "versions": {
+            "$ref": "#/components/schemas/VersionSet"
+          }
+        },
+        "required": [
+          "skill",
+          "status",
+          "output",
+          "versions"
+        ],
+        "title": "TaskResult",
+        "type": "object"
+      },
+      "TaskResultStatus": {
+        "enum": [
+          "completed",
+          "insufficient_evidence",
+          "escalated"
+        ],
+        "title": "TaskResultStatus",
+        "type": "string"
       },
       "TaskStatus": {
         "enum": [

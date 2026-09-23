@@ -1,0 +1,105 @@
+{
+  "$defs": {
+    "JsonValue": {},
+    "ReasonCode": {
+      "description": "Stable refusal/escalation reason codes (baseline 5.5, F4.1).",
+      "enum": [
+        "insufficient_evidence",
+        "version_conflict",
+        "acl_denied",
+        "prompt_injection",
+        "high_risk_medical",
+        "unsupported_conclusion",
+        "budget_exceeded",
+        "intent_unclear",
+        "system_failure"
+      ],
+      "title": "ReasonCode",
+      "type": "string"
+    },
+    "TaskResultStatus": {
+      "enum": [
+        "completed",
+        "insufficient_evidence",
+        "escalated"
+      ],
+      "title": "TaskResultStatus",
+      "type": "string"
+    },
+    "VersionSet": {
+      "additionalProperties": false,
+      "description": "Every version that shapes a run; recorded on each trace (INV-HAR-05) and inside operation keys.",
+      "properties": {
+        "model_config_version": {
+          "minLength": 1,
+          "title": "Model Config Version",
+          "type": "string"
+        },
+        "policy_version": {
+          "minLength": 1,
+          "title": "Policy Version",
+          "type": "string"
+        },
+        "retrieval_version": {
+          "minLength": 1,
+          "title": "Retrieval Version",
+          "type": "string"
+        },
+        "skill_version_set": {
+          "default": [],
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Skill Version Set",
+          "type": "array"
+        }
+      },
+      "required": [
+        "policy_version",
+        "retrieval_version",
+        "model_config_version"
+      ],
+      "title": "VersionSet",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Result of a skill task (M3-02): the skill's typed output as it was validated against the skill's registered\noutput schema (`GET` the schema through the Registry's `describe`), plus the run status and reason codes.\nSkill outputs are structured per skill (AE elements, deviation findings, label excerpts), so they are not\nforced into the `AskResponse` shape.",
+  "properties": {
+    "output": {
+      "additionalProperties": {
+        "$ref": "#/$defs/JsonValue"
+      },
+      "title": "Output",
+      "type": "object"
+    },
+    "reason_codes": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ReasonCode"
+      },
+      "title": "Reason Codes",
+      "type": "array"
+    },
+    "skill": {
+      "minLength": 1,
+      "title": "Skill",
+      "type": "string"
+    },
+    "status": {
+      "$ref": "#/$defs/TaskResultStatus"
+    },
+    "versions": {
+      "$ref": "#/$defs/VersionSet"
+    }
+  },
+  "required": [
+    "skill",
+    "status",
+    "output",
+    "versions"
+  ],
+  "title": "TaskResult",
+  "type": "object"
+}

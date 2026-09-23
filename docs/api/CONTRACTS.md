@@ -8,7 +8,7 @@
 | --- | --- | --- | --- |
 | `POST /v1/ask` | `AskRequest` | `AskResponse` | `outcome` 为 answered、refused、escalated 之一，且只带对应负载；答案复用领域 `Answer`（claim-citation 与固定免责声明）；拒答与升级必须带稳定 `ReasonCode` |
 | `POST /v1/tasks` | `TaskCreateRequest` | `TaskResponse` | 支持 `Idempotency-Key`（作用域为身份 + 路由 + key；同 key 同 payload 返回原受理，含处理中；不同 payload 返回 422 `idempotency_payload_mismatch`）；`input` 为 JSON 对象，由 Skill Registry 按注册 Schema 校验 |
-| `GET /v1/tasks/{id}` | 路径参数 | `TaskResponse` | 状态 queued、running、completed、failed；completed 必带 result，failed 必带 `ErrorResponse`，非终态两者皆无 |
+| `GET /v1/tasks/{id}` | 路径参数 | `TaskResponse` | 状态 queued、running、completed、failed；completed 必带 `result`（`TaskResult`：Skill 的 `name@version`、状态、reason codes、按该 Skill 注册的输出 Schema 校验过的 `output`、版本集；2026-09-23 M3-02 由 `AskResponse` 改为此结构，因为 Skill 输出是按 Skill 定义的结构），failed 必带 `ErrorResponse`，非终态两者皆无；只有创建者可见，其余 `404 not_found` |
 | `POST /v1/tasks/{id}/retry` | 路径参数 | `TaskResponse` | 只允许 failed 且 `error.retryable` 为真的任务；其他状态返回 `409 task_not_retryable` |
 | `POST /v1/feedback` | `FeedbackRequest` | `FeedbackReceipt` | correction 必带文本，其余信号不得带；支持 `Idempotency-Key` |
 | `POST /admin/documents`、`PATCH /admin/documents/{id}/status` | M1 随入库流程定义 | | 管理角色；状态变更写审计 |

@@ -508,7 +508,7 @@ P0 保留：
 ### M3：API、异步、MCP、可观测性与部署
 
 - [ ] 实现 `/v1/ask`，覆盖成功、证据不足、拒答、升级和服务失败契约。
-- [ ] 实现 task 创建、查询、失败重试与 Idempotency-Key（作用域、request hash、`422`、并发返回原 task、任务与幂等记录同事务、TTL 写入 OpenAPI）。
+- [x] 实现 task 创建、查询、失败重试与 Idempotency-Key（作用域、request hash、`422`、并发返回原 task、任务与幂等记录同事务、TTL 写入 OpenAPI）。（记录 59）
 - [ ] 实现反馈、文档管理、策略候选、审批和 Trace replay 接口。
 - [ ] worker 状态转换原子、结果持久化、崩溃可恢复、重复消费安全。
 - [ ] 身份来自 OIDC 兼容 token（校验 issuer/audience/expiry/signature），scope 由服务端映射；业务、管理员、审核员权限分离。
