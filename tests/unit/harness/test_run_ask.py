@@ -178,3 +178,23 @@ def test_historical_evidence_requires_the_flag_and_sets_the_notice():
     bad = run_ask(state(), make_deps(FakeRetrieval(archived), gateway))
     assert bad.state.escalation is not None and bad.state.escalation.reason_codes == (ReasonCode.system_failure,)
     assert bad.state.evidence == () and len(gateway.calls) == 1
+
+
+def test_model_declared_or_meta_abstention_escalates_as_insufficient_evidence():
+    retrieval = FakeRetrieval(evidence("c1", LABEL))
+    declared = FakeModelGateway({"answer": [{"answers_question": False, "claims": []}]})
+    run = run_ask(state("本品的罰鍰金額是多少？"), make_deps(retrieval, declared))
+    assert run.state.escalation.reason_codes == (ReasonCode.insufficient_evidence,)
+    meta = FakeModelGateway(
+        {
+            "answer": [
+                {
+                    "answers_question": True,
+                    "claims": [{"text": "所提供的證據未載明罰鍰金額。", "citation_chunk_ids": ["c1"]}],
+                }
+            ]
+        }
+    )
+    backstop = run_ask(state("本品的罰鍰金額是多少？"), make_deps(retrieval, meta))
+    assert backstop.state.escalation.reason_codes == (ReasonCode.insufficient_evidence,)
+    assert "backstop" in backstop.state.escalation.detail

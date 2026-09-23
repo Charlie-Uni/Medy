@@ -1,0 +1,964 @@
+{
+  "run": "2026-09-23-smoke-ask-v1",
+  "finished_at": "2026-09-23T01:56:37+00:00",
+  "dataset": {
+    "version": "main-v1-provisional",
+    "second_human_review": "pending"
+  },
+  "versions": {
+    "policy_version": "policy-m2-smoke-1",
+    "retrieval_version": "90b57e4e86b4bb462fc4de58f7f7749666fb6f50a588c129bd5f9aa50585ab18",
+    "skill_version_set": [],
+    "model_config_version": "answer=gpt-6-sol;judge=gpt-6-luna;verifier-v2+support-rules-v1+polarity_only"
+  },
+  "n": 20,
+  "answered": 20,
+  "answerable_answered_rate": 1.0,
+  "answerable_gold_cited_rate": 1.0,
+  "no_answer_escalated_rate": 0.0,
+  "conflict_answered_with_gold": [
+    true,
+    true
+  ],
+  "total_cost_usd": 0.1333,
+  "total_model_calls": 50,
+  "mean_latency_s": 7.1,
+  "p95_latency_s": 10.57,
+  "reason_code_counts": {},
+  "rows": [
+    {
+      "sample_id": "ms-0048",
+      "dept": "MA",
+      "kind": "answerable",
+      "slices": [
+        "dose_unit",
+        "mixed_zh_en"
+      ],
+      "query": "Losacar治療高血壓的一般起始劑量及維持劑量是多少?",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "Losacar 治療高血壓時，大多數病人的一般起始劑量及維持劑量均為每次 50 毫克，每日一次。"
+      ],
+      "cited_chunks": [
+        "45617062-68e6-4adc-93e3-d2c1dead8e40",
+        "69d672fd-460a-4179-bcaa-69598ee179bf"
+      ],
+      "gold_chunks": [
+        "45617062-68e6-4adc-93e3-d2c1dead8e40"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据指出，高血压大多数病人的一般起始剂量及维持剂量为每次50毫克、每日一次，与陈述一致。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 7227,
+      "model_calls": 2,
+      "model_tokens": 4739,
+      "cost_usd": 0.008504,
+      "latency_s": 8.21
+    },
+    {
+      "sample_id": "ms-0035",
+      "dept": "MA",
+      "kind": "answerable",
+      "slices": [
+        "drug_name_zh"
+      ],
+      "query": "「安星」伊風柔錠300毫克應如何保存？",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "「安星」伊風柔錠300毫克應置於緊密容器中，在室溫下避光保存。"
+      ],
+      "cited_chunks": [
+        "a856085a-f794-487f-b47c-e1f3348902fe",
+        "b59909f8-2a85-4dca-88f3-0a0fad123d1a"
+      ],
+      "gold_chunks": [
+        "a856085a-f794-487f-b47c-e1f3348902fe"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 證據明確載明【保存條件】為「緊密容器中，室溫下、避光保存」，與陳述一致。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 5708,
+      "model_calls": 2,
+      "model_tokens": 3995,
+      "cost_usd": 0.007195,
+      "latency_s": 5.19
+    },
+    {
+      "sample_id": "ms-0041",
+      "dept": "MA",
+      "kind": "answerable",
+      "slices": [
+        "dose_unit",
+        "drug_name_zh",
+        "mixed_zh_en"
+      ],
+      "query": "依樂癲活持續釋放膜衣錠仿單第8.6節，中度或重度肝功能不全（Child-Pugh Grade B/C）病患的起始及維持劑量應如何調整？",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "中度肝功能不全（Child-Pugh Grade B）病患的起始及維持劑量，一般應減少約 50%。",
+        "重度肝功能不全（Child-Pugh Grade C）病患的起始及維持劑量，一般應減少 75%。",
+        "增加劑量及維持劑量的調整需依據臨床反應。"
+      ],
+      "cited_chunks": [
+        "596f1046-9300-425e-b68a-b413134fc778"
+      ],
+      "gold_chunks": [
+        "596f1046-9300-425e-b68a-b413134fc778"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据明确指出，中度肝功能不全（Child-Pugh Grade B）病患的起始及维持剂量应减少约 50%。"
+        },
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据明确指出，重度肝功能不全（Child-Pugh Grade C）病患的剂量应减少75%，涵盖起始及维持剂量。"
+        },
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据明确指出，增加及维持剂量的调整需依据临床反应。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 9073,
+      "model_calls": 4,
+      "model_tokens": 6300,
+      "cost_usd": 0.010678,
+      "latency_s": 10.06
+    },
+    {
+      "sample_id": "ms-0051",
+      "dept": "MA",
+      "kind": "answerable",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "query": "是否建議Losacar與ACEIs、ARBs或含aliskiren成分藥品合併使用以雙重阻斷RAAS?",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "不建議將 Losacar 與 ACEIs、ARBs 或含 aliskiren 成分藥品合併使用，以雙重阻斷 RAAS；此類合併使用會增加低血壓、高鉀血症及腎功能下降（包括急性腎衰竭）的風險。",
+        "若確有必要採用雙重阻斷治療，應密切監測腎功能、電解質及血壓。"
+      ],
+      "cited_chunks": [
+        "c12ca2c8-421a-4bb8-8c6f-e31e90dbc73c"
+      ],
+      "gold_chunks": [
+        "c12ca2c8-421a-4bb8-8c6f-e31e90dbc73c"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 證據指出，合併使用 ACEIs、ARBs 或含 aliskiren 成分藥品會增加低血壓、高鉀血症及腎功能下降（包括急性腎衰竭）的風險，因此不建議以此類藥品合併進行 RAAS 雙重阻斷。"
+        },
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据明确指出，若确有必要使用双重阻断治疗，应密切监测患者的肾功能、电解质及血压。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 7878,
+      "model_calls": 3,
+      "model_tokens": 5476,
+      "cost_usd": 0.010226,
+      "latency_s": 9.22
+    },
+    {
+      "sample_id": "ms-0057",
+      "dept": "MA",
+      "kind": "answerable",
+      "slices": [
+        "negation",
+        "drug_name_zh",
+        "mixed_zh_en"
+      ],
+      "query": "拔痛酸錠(Allopurinol)可以用於治療痛風性關節炎的急性發作嗎?",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "不可以。拔痛酸錠（Allopurinol）沒有抗發炎效力，不應用於治療痛風性關節炎的急性發作。",
+        "其用途是長期治療與痛風相關的高尿酸血症，以減少急性痛風發作的次數。"
+      ],
+      "cited_chunks": [
+        "429e1354-153f-4091-b209-6debadf9889f",
+        "127e13b5-e327-4dea-b5e5-e34ad287f2fa",
+        "c5c949ee-3c74-4866-9ff2-0c5569a27d7f"
+      ],
+      "gold_chunks": [
+        "127e13b5-e327-4dea-b5e5-e34ad287f2fa"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据明确指出 Allopurinol 没有抗发炎效力，且不得用于痛风性关节炎急性发作。"
+        },
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 證據指出 Allopurinol 適用於與痛風相關的高尿酸血症之長期治療，且治療目標包括減少急性痛風發作的次數。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 8140,
+      "model_calls": 3,
+      "model_tokens": 5624,
+      "cost_usd": 0.009827,
+      "latency_s": 7.51
+    },
+    {
+      "sample_id": "ms-0227",
+      "dept": "PV",
+      "kind": "answerable",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "query": "在儿科 ICSR 报告中，如果无法获得患儿的确切年龄或出生日期，应改为记录什么信息以替代？",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "如果无法获得患儿的确切年龄或出生日期，应记录患儿所属的儿科年龄亚组作为替代信息。"
+      ],
+      "cited_chunks": [
+        "c9bec716-3a5f-4268-8e79-004bae32034b"
+      ],
+      "gold_chunks": [
+        "c9bec716-3a5f-4268-8e79-004bae32034b"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据指出，若无法获得确切年龄或出生日期（或因个人数据保护法规不允许），应记录患儿所属的儿科年龄亚组。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 3047,
+      "model_calls": 2,
+      "model_tokens": 2105,
+      "cost_usd": 0.004108,
+      "latency_s": 5.87
+    },
+    {
+      "sample_id": "ms-0143",
+      "dept": "PV",
+      "kind": "answerable",
+      "slices": [
+        "mixed_zh_en"
+      ],
+      "query": "非干预性 PASS 被作为上市许可条件或特定义务实施时，GVP Module V 指明其监督适用 DIR 的哪些条款？",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "非干预性 PASS 若作为上市许可条件或特定义务实施，其监督适用 DIR 第 107m 至 107q 条。"
+      ],
+      "cited_chunks": [
+        "738336fe-4675-4188-a9b0-da004ece6e70"
+      ],
+      "gold_chunks": [
+        "738336fe-4675-4188-a9b0-da004ece6e70"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据明确指出，若条件或特定义务属于非干预性 PASS，则适用 DIR 第 107m 至 107q 条规定的监督。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 3159,
+      "model_calls": 2,
+      "model_tokens": 2223,
+      "cost_usd": 0.004498,
+      "latency_s": 5.43
+    },
+    {
+      "sample_id": "ms-0100",
+      "dept": "PV",
+      "kind": "answerable",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "query": "根据 IR Art 13(2)，MAH 药物警戒系统质量稽核结果的报告应发送给谁？",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "应发送给负责被稽核事项的管理层。"
+      ],
+      "cited_chunks": [
+        "044b6dc5-095f-4887-b881-7373cef7728c"
+      ],
+      "gold_chunks": [
+        "044b6dc5-095f-4887-b881-7373cef7728c"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据说明每项质量审计及后续审计的结果报告应发送给负责被审计事项的管理层。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:retry",
+        "answer:retry",
+        "answer:ok"
+      ],
+      "tokens_used": 3212,
+      "model_calls": 4,
+      "model_tokens": 6066,
+      "cost_usd": 0.006724,
+      "latency_s": 14.86
+    },
+    {
+      "sample_id": "ms-0291",
+      "dept": "PV",
+      "kind": "answerable",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "query": "按《MedDRA 术语选择：考虑要点》3.4.1的示例，报告同时写有“高钾血症”和“血清钾1.6 mEq/L”时，表中选择哪个 LLT 来涵盖这两个矛盾概念？",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "选择 LLT“血清钾异常”，以涵盖报告中的“高钾血症”和“血清钾 1.6 mEq/L”这两个矛盾概念。"
+      ],
+      "cited_chunks": [
+        "c226859c-6e46-4e11-8212-1f5329d0a56e"
+      ],
+      "gold_chunks": [
+        "c226859c-6e46-4e11-8212-1f5329d0a56e"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据明确指出，对于“高钾血症”和“血清钾 1.6 mEq/L”这两个矛盾概念，选择 LLT“血清钾异常”，并说明该术语同时涵盖两者。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 7217,
+      "model_calls": 2,
+      "model_tokens": 4341,
+      "cost_usd": 0.008224,
+      "latency_s": 5.65
+    },
+    {
+      "sample_id": "ms-0262",
+      "dept": "PV",
+      "kind": "answerable",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "query": "根据ICH E2D，如果药物过量(overdose)但没有伴随不良结果，是否需要作为不良反应报告？",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "不需要。根据 ICH E2D，药物过量但没有伴随不良结果的报告，不应作为不良反应报告。"
+      ],
+      "cited_chunks": [
+        "19e5bc0a-738f-45ec-9071-bd9c1d441ef6"
+      ],
+      "gold_chunks": [
+        "19e5bc0a-738f-45ec-9071-bd9c1d441ef6"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据明确指出，没有伴随不良结果的药物过量报告不应作为不良反应报告。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 4027,
+      "model_calls": 2,
+      "model_tokens": 2580,
+      "cost_usd": 0.005153,
+      "latency_s": 5.22
+    },
+    {
+      "sample_id": "ms-0302",
+      "dept": "CO",
+      "kind": "answerable",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "query": "根据ICH E6(R3),IRB/IEC在审查受试者参与试验的报酬时,报酬金额是否可以完全取决于受试者完成整个试验?",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "不可以。支付给受试者的报酬应及时、按比例支付，不应完全取决于受试者完成整个试验。",
+        "IRB/IEC应审查报酬金额和支付方式，以确保两者均不会对受试者造成胁迫或不当影响。"
+      ],
+      "cited_chunks": [
+        "a0ca176b-3bee-4137-83eb-7bca7b65fd4b",
+        "fc7770d8-8fa2-4d8b-a54a-7c4a5e36d386",
+        "57b2cbd1-87f9-441b-9f40-31426cae56d5"
+      ],
+      "gold_chunks": [
+        "a0ca176b-3bee-4137-83eb-7bca7b65fd4b"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据明确指出，支付给受试者的报酬应及时、按比例支付，且不应完全取决于受试者完成整个试验。"
+        },
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据指出，若受试者因参与试验获得报酬，IRB/IEC应审查报酬金额和支付方式，以确保两者均不会对受试者造成胁迫或不当影响。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 4032,
+      "model_calls": 3,
+      "model_tokens": 3031,
+      "cost_usd": 0.005628,
+      "latency_s": 7.37
+    },
+    {
+      "sample_id": "ms-0376",
+      "dept": "CO",
+      "kind": "answerable",
+      "slices": [
+        "mixed_zh_en"
+      ],
+      "query": "在ICH E14的分类分析讨论中，治疗期间QTc绝对间期超过多少毫秒被视为特别关注？",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "治疗期间QTc绝对间期超过500毫秒被视为特别关注。"
+      ],
+      "cited_chunks": [
+        "c8ee69db-e7c1-4a8e-aa64-5ef9f8169c0c"
+      ],
+      "gold_chunks": [
+        "c8ee69db-e7c1-4a8e-aa64-5ef9f8169c0c"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据指出，治疗期间QTc延长超过500毫秒是特别关注的阈值。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 3054,
+      "model_calls": 2,
+      "model_tokens": 2126,
+      "cost_usd": 0.004131,
+      "latency_s": 3.91
+    },
+    {
+      "sample_id": "ms-0444",
+      "dept": "CO",
+      "kind": "answerable",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "query": "在使用外部/次要数据来源(secondary data use)开展临床研究时，若某疾病或事件在数据中未被记录，能否因此判定该事件未曾发生？",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "不能。使用外部数据来源时，数据中没有关于某疾病或事件的肯定性记录，并不一定意味着该疾病或事件未曾发生。"
+      ],
+      "cited_chunks": [
+        "a5665745-41ab-4615-84e9-2efbb5b92d3a"
+      ],
+      "gold_chunks": [
+        "a5665745-41ab-4615-84e9-2efbb5b92d3a"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据明确指出，关于某种状况或事件缺乏肯定性信息，并不一定意味着该状况或事件不存在。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 2919,
+      "model_calls": 2,
+      "model_tokens": 2004,
+      "cost_usd": 0.003947,
+      "latency_s": 4.39
+    },
+    {
+      "sample_id": "ms-0424",
+      "dept": "CO",
+      "kind": "answerable",
+      "slices": [
+        "dose_unit",
+        "mixed_zh_en",
+        "protocol_id",
+        "long_context"
+      ],
+      "query": "根据ICH E3第12.4.2.2节,在分析个别病人化验数值随治疗组别的变化(individual patient changes)时,可以采用哪些具体分析方法?",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "按治疗组分析个别患者的化验数值变化时，可使用“转移表”：列出患者在基线及选定时间点分别处于低值、正常值或高值类别的人数。",
+        "可列表显示在选定时间点，化验参数变化达到预定幅度的患者人数或比例。",
+        "还可展示基线值与治疗期间的最极端值；这种展示有助于识别离群值，并可为离群患者附上患者标识。"
+      ],
+      "cited_chunks": [
+        "fd992dd7-fedb-4331-b4b7-fbfe995008fe",
+        "95cc8a7d-cd0d-4a1d-8ffc-130126d60abc"
+      ],
+      "gold_chunks": [
+        "fd992dd7-fedb-4331-b4b7-fbfe995008fe"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据说明，按治疗组分析个别患者变化时可使用“转移表”（shift tables），列出患者在基线及选定时间点处于低值、正常或高值的人数。"
+        },
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据明确提到表格可显示在选定时间点，化验参数变化达到预定幅度的患者人数或比例。"
+        },
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据明确提到可展示基线值与治疗期间最极端值，此类展示能识别离群值，并指出可为离群值附上患者标识。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 3962,
+      "model_calls": 4,
+      "model_tokens": 3066,
+      "cost_usd": 0.00661,
+      "latency_s": 8.99
+    },
+    {
+      "sample_id": "ms-0326",
+      "dept": "CO",
+      "kind": "answerable",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "query": "根据FDA的《A Risk-Based Approach to Monitoring of Clinical Investigations Questions and Answers》(April 2023)指南,申办方是否应当只监测在最初风险评估中被认定为重要且可能发生的风险?",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "不应只监测最初风险评估中认定为重要且可能发生的风险。申办方还应监测临床研究开展期间发现的、研究开始前未识别出的其他风险。"
+      ],
+      "cited_chunks": [
+        "69f89999-d4b8-493d-a3c2-7853d1ef78c6"
+      ],
+      "gold_chunks": [
+        "69f89999-d4b8-493d-a3c2-7853d1ef78c6"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据明确指出，申办方除监测初始风险评估中认定为重要且可能发生的风险外，还应监测临床研究开展期间发现的、研究开始前未识别的其他风险。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 2889,
+      "model_calls": 2,
+      "model_tokens": 2002,
+      "cost_usd": 0.004036,
+      "latency_s": 4.53
+    },
+    {
+      "sample_id": "ms-0496",
+      "dept": "PV",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en"
+      ],
+      "query": "根据本文档，各标准 MedDRA 分析查询(SMQ)（如 SMQ 急性胰腺炎、SMQ 速发严重过敏反应等）的灵敏度、特异度和阳性预测值等验证性能指标具体数值是多少？",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "所提供的证据片段介绍了急性胰腺炎 SMQ 和速发严重过敏反应 SMQ 的定义及纳入、排除标准，但未给出它们或其他 SMQ 的灵敏度、特异度、阳性预测值等验证性能指标的具体数值，因此无法据此列出这些数值。"
+      ],
+      "cited_chunks": [
+        "f146b4e9-1adb-4267-8832-846e26a3e575",
+        "ef3cc26d-0ee5-42de-9659-9dc9b745b0e4"
+      ],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据片段介绍了急性胰腺炎 SMQ 和速发严重过敏反应 SMQ 的定义及纳入、排除标准，未提及这些或其他 SMQ 的灵敏度、特异度、阳性预测值等验证性能指标数值。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 6491,
+      "model_calls": 2,
+      "model_tokens": 4546,
+      "cost_usd": 0.008386,
+      "latency_s": 8.69
+    },
+    {
+      "sample_id": "ms-0500",
+      "dept": "PV",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer"
+      ],
+      "query": "根據本指引,若通報單位逾期未依「藥品嚴重不良反應通報辦法」規定時限完成通報,將面臨多少罰鍰金額?",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "提供的指引片段未載明逾期通報的罰鍰金額；僅指出若因此延誤規定的通報時限，相關責任由通報者自行負責。"
+      ],
+      "cited_chunks": [
+        "45300272-5963-40fb-be7d-65833cc15c57",
+        "7a73a2dd-7cbb-4f7c-abb7-75d49753c5c9"
+      ],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 片段未載明逾期通報的罰鍰金額；並指出若因此延誤規定的通報時限，相關責任由通報者自行負責。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 7446,
+      "model_calls": 2,
+      "model_tokens": 4911,
+      "cost_usd": 0.009585,
+      "latency_s": 6.82
+    },
+    {
+      "sample_id": "ms-0465",
+      "dept": "PV",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en"
+      ],
+      "query": "根据GVP Module IX Addendum I，针对妊娠期（pregnancy）患者报告的可疑不良反应，本附录是否规定了专门的signal detection方法？",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "所给证据未显示 GVP Module IX Addendum I 针对妊娠期患者的可疑不良反应报告规定了专门的信号检测方法；但仅凭这些片段，不能断定附录全文没有相关规定。",
+        "所引附录片段描述的是监测自发报告的可疑不良反应数据库，并按“药物—事件”组合进行统计汇总。"
+      ],
+      "cited_chunks": [
+        "40dd0d25-41a4-4f33-8191-1275ef0fc8f5"
+      ],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据仅说明对自发报告的可疑不良反应数据库进行监测是信号检测的既定方法，并未提及妊娠期患者专门的信号检测方法。该片段也不足以证明附录全文没有相关规定。"
+        },
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 片段明确说明监测自发报告的可疑不良反应数据库（以 ICSR 格式），并通过对每个“药物—事件”组合在特定时间段内收到的信息进行统计汇总来辅助监测。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 3949,
+      "model_calls": 3,
+      "model_tokens": 3013,
+      "cost_usd": 0.007355,
+      "latency_s": 10.57
+    },
+    {
+      "sample_id": "ms-0380",
+      "dept": "CO",
+      "kind": "conflict",
+      "slices": [
+        "version_conflict",
+        "mixed_zh_en"
+      ],
+      "query": "根据ICH E15指南，基因组生物标志物（genomic biomarker）的定义是什么？",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "根据 ICH E15，基因组生物标志物是指可测量的 DNA 和/或 RNA 特征，可作为正常生物过程、病理过程和/或对治疗或其他干预措施的反应的指标。"
+      ],
+      "cited_chunks": [
+        "b5517063-41c4-4c53-9e9a-5ec5471b6262"
+      ],
+      "gold_chunks": [
+        "b5517063-41c4-4c53-9e9a-5ec5471b6262"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据中的 ICH E15 定义与陈述一致：基因组生物标志物是可测量的 DNA 和/或 RNA 特征，用作正常生物过程、病理过程和/或对治疗或其他干预措施反应的指标。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 3101,
+      "model_calls": 2,
+      "model_tokens": 2172,
+      "cost_usd": 0.004373,
+      "latency_s": 4.34
+    },
+    {
+      "sample_id": "ms-0432",
+      "dept": "CO",
+      "kind": "conflict",
+      "slices": [
+        "negation",
+        "version_conflict",
+        "mixed_zh_en"
+      ],
+      "query": "根据ICH E7，已有药品的新剂型或新复方若有具体理由预期会遇到说明书尚未处理的老年人常见状况，是否也适用本指南？",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "是。根据ICH E7，如果有具体理由预期会遇到当前说明书尚未处理的老年人常见状况，本指南也适用于已有药品的新剂型或新复方。"
+      ],
+      "cited_chunks": [
+        "a1db9873-f887-419e-8337-aa390b3e78f0"
+      ],
+      "gold_chunks": [
+        "a1db9873-f887-419e-8337-aa390b3e78f0"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据明确指出：当有具体理由预期会遇到老年人常见且当前说明书尚未处理的状况时，本指南也适用于已有药品的新剂型或新复方。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 2866,
+      "model_calls": 2,
+      "model_tokens": 2062,
+      "cost_usd": 0.004072,
+      "latency_s": 5.08
+    }
+  ]
+}
