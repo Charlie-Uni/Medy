@@ -37,8 +37,21 @@ def test_no_module_outside_the_skills_package_imports_a_skill_implementation():
 
 def test_delivered_skills_have_private_handlers_scopes_and_bounded_timeouts():
     reg = default_registry()
-    assert reg.version_set() == ("citation_verification@1.0.0", "label_query@1.0.0")
+    assert reg.version_set() == (
+        "ae_extraction@1.0.0",
+        "citation_verification@1.0.0",
+        "label_query@1.0.0",
+        "off_label_check@1.0.0",
+        "protocol_deviation@1.0.0",
+    )
     for entry in reg.entries():
         assert entry.handler.__name__.startswith("_"), entry.spec.name
         assert entry.spec.required_scopes and entry.spec.timeout_s <= 120
-        assert entry.spec.risk.value == "low"  # M2-12: only the two low-risk skills are delivered
+    risks = {e.spec.name: e.spec.risk.value for e in reg.entries()}
+    assert risks == {
+        "label_query": "low",
+        "citation_verification": "low",
+        "ae_extraction": "medium",
+        "protocol_deviation": "medium",
+        "off_label_check": "high",
+    }  # baseline 5.6 risk table
