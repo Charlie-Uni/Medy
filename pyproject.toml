@@ -14,6 +14,9 @@ dependencies = [
   "psycopg[binary]>=3.2,<4",
   "redis>=5.0,<7",
   "defusedxml>=0.7,<1",
+  # M2 harness (baseline 5.3) and the runtime LLM adapter (ADR-0010)
+  "langgraph>=1.2,<2",
+  "openai>=2.50,<3",
 ]
 
 [project.optional-dependencies]

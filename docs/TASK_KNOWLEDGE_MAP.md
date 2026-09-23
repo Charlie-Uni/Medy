@@ -10,11 +10,11 @@
 | --- | ---: | ---: | ---: | ---: | ---: |
 | M0 工程与契约 | 11 | 9 | 2 | 0 | 0 |
 | M1 知识治理与检索 | 21 | 5 | 6 | 1 | 9 |
-| M2 Harness / Verifier / Safety / Skills | 16 | 0 | 0 | 0 | 16 |
+| M2 Harness / Verifier / Safety / Skills | 16 | 1 | 8 | 0 | 7 |
 | M3 API / worker / MCP / 观测 / 部署 | 13 | 0 | 0 | 0 | 13 |
 | M4 受控 Loop | 10 | 0 | 0 | 0 | 10 |
 | M5 规模与验收 | 8 | 0 | 0 | 0 | 8 |
-| P0 合计 | 79 | 14 | 8 | 1 | 56 |
+| P0 合计 | 79 | 15 | 16 | 1 | 47 |
 
 M1-01 同时是“部分”和“阻塞”，上表按“部分”计。P1/P2 11 项均为选做未启动，最终验收 9 项均未验收。
 
@@ -82,16 +82,16 @@ M1-01 同时是“部分”和“阻塞”，上表按“部分”计。P1/P2 11
 
 | ID | 状态 | 任务 | 八股知识点 |
 | --- | --- | --- | --- |
-| M2-01 | 待做 | LangGraph 固定状态机，无绕过边 | 状态机与 DAG；图可达性测试；工作流编排 |
-| M2-02 | 待做 | 节点 Schema、超时、错误类型、重试、降级 | 指数退避与抖动；幂等重试；asyncio 取消传播；断路器与降级 |
+| M2-01 | 已实现（图结构范围：LangGraph 六节点固定图，无绕过边由测试枚举全部路径证明；节点为规则版首切片，记录 52） | LangGraph 固定状态机，无绕过边 | 状态机与 DAG；图可达性测试；工作流编排 |
+| M2-02 | 部分（NodeSpec 超时/有限重试/退避/降级、节点只经 AgentState 交换、每次 attempt 带 operation key；asyncio 取消传播随 M3 执行器，记录 52） | 节点 Schema、超时、错误类型、重试、降级 | 指数退避与抖动；幂等重试；asyncio 取消传播；断路器与降级 |
 | M2-03 | 待做 | operation key 接入持久化，attempt 单独记录 | 幂等键存储与唯一约束；at-least-once 与副作用；replay 隔离 |
-| M2-04 | 待做 | Answer 只收已验证证据，输出 claim-citation | 结构化输出（JSON Schema 约束、function calling）；grounding 与幻觉；后置校验 |
-| M2-05 | 待做 | 引用结构核验与内容哈希比对 | 内容寻址校验；expected/observed 审计；引用伪造检测 |
-| M2-06 | 待做 | 整条 Trace 的 Token/成本预算 | tokenizer 与 BPE；上下文窗口；成本模型；证据裁剪策略 |
-| M2-07 | 待做 | 关键要素抽取（剂量、单位、频次等） | 规则抽取与 NER；数字与单位归一；正则边界与误匹配 |
-| M2-08 | 待做 | supported/not_supported/contradicted 支持度判断 | NLI（蕴含/矛盾/中立）；LLM-as-judge 的偏差与校准；确定性规则优先 |
-| M2-09 | 待做 | 三层 Safety（输入、检索内容、输出） | 直接/间接提示词注入；数据与指令边界；分类器加规则；输出过滤 |
-| M2-10 | 待做 | 稳定 reason code 与升级记录 | 错误码稳定性；人工升级工单；最小必要上下文；审计留痕 |
+| M2-04 | 部分（Answer 只接收 state.evidence、JSON schema 强制 claim-citation、生成后重验并丢弃 not_supported；真实 OpenAI 适配器待 key 后 smoke，记录 52） | Answer 只收已验证证据，输出 claim-citation | 结构化输出（JSON Schema 约束、function calling）；grounding 与幻觉；后置校验 |
+| M2-05 | 部分（引用逐字段等于本 Trace 证据、伪造 chunk 拦截并升级；evidence_log expected/observed 落库随 M3 持久化，记录 52） | 引用结构核验与内容哈希比对 | 内容寻址校验；expected/observed 审计；引用伪造检测 |
+| M2-06 | 部分（Trace TokenBudget 裁剪证据/不足即升级、模型用量计入、月度上限账本；成本模型按 ADR-0010 价目，记录 52） | 整条 Trace 的 Token/成本预算 | tokenizer 与 BPE；上下文窗口；成本模型；证据裁剪策略 |
+| M2-07 | 部分（elements-rules-v1：剂量/单位换算、频次、时间窗、编号、人群、适应证，中英繁简；覆盖率未在语料上量化，记录 52） | 关键要素抽取（剂量、单位、频次等） | 规则抽取与 NER；数字与单位归一；正则边界与误匹配 |
+| M2-08 | 部分（support-rules-v1：精确匹配、否定极性、单值矛盾、编号缺席；LLM 判定臂已接口化，模型待 DEC-003，记录 52） | supported/not_supported/contradicted 支持度判断 | NLI（蕴含/矛盾/中立）；LLM-as-judge 的偏差与校准；确定性规则优先 |
+| M2-09 | 部分（safety-rules-v1 三层：输入注入、检索内容注入剔除、输出个体建议；分类器与安全集待 M2-15，记录 52） | 三层 Safety（输入、检索内容、输出） | 直接/间接提示词注入；数据与指令边界；分类器加规则；输出过滤 |
+| M2-10 | 部分（稳定 ReasonCode 升级记录含 query/证据 id/verify/safety/策略版本；持久化与人工接手随 M3，记录 52） | 稳定 reason code 与升级记录 | 错误码稳定性；人工升级工单；最小必要上下文；审计留痕 |
 | M2-11 | 待做 | Skill Registry 强制 Schema、scope、risk、timeout、版本 | 注册表模式；权限 scope 校验；并行安全；插件化边界 |
 | M2-12 | 待做 | 说明书查询、医学引用验证两个低风险 Skill | 端到端集成测试；正向与失败路径；契约驱动 |
 | M2-13 | 待做 | AE 线索提取、方案偏离、超说明书检查 | 风险分级；高风险声明；结构化抽取的验证 |

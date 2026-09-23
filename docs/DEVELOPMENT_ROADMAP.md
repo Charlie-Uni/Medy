@@ -19,7 +19,7 @@
 
 决策人要求每个阶段汇报"离总目标百分之多少"。口径固定为：[任务知识对照](TASK_KNOWLEDGE_MAP.md) 中 79 个 P0 任务行的状态加权和（已实现 1、部分 0.5、阻塞与待做 0）除以 79；另报除以 99 个基线复选项的数值。状态只随实现记录的证据变更，基线勾选只依据完整证据更新，最终验收仍是第 11 节九条门禁的二元结果。`tests/unit/docs/test_baseline_roadmap_consistency.py` 重算并比对下面这行数字：
 
-P0 加权进度：33.5%（26.5/79）；按 99 项计 26.8%。分项：M0 10/11、M1 16.5/21、M2 0/16、M3 0/13、M4 0/10、M5 0/8。
+P0 加权进度：39.9%（31.5/79）；按 99 项计 31.8%。分项：M0 10/11、M1 16.5/21、M2 5/16、M3 0/13、M4 0/10、M5 0/8。
 
 ### 状态与计数
 
@@ -35,7 +35,7 @@ P0 加权进度：33.5%（26.5/79）；按 99 项计 26.8%。分项：M0 10/11�
 | --- | ---: | --- |
 | M0 工程与契约 | 11 | 基础工程、领域/API/MCP 契约与本地门禁已有；远端 CI、安全阶段及服务接线待补 |
 | M1 知识治理与检索 | 21 | 数据库治理、RLS、入库切分和探针冻结归档已有；实验准备已启动，生产检索选型待完成 |
-| M2 Harness / Verifier / Safety / Skills | 16 | 待做 |
+| M2 Harness / Verifier / Safety / Skills | 16 | 首切片已实现：固定图、节点契约、规则版 Verifier/Safety、Gateway 与预算；Skill、安全集与门禁待做 |
 | M3 API / worker / MCP / 观测 / 部署 | 13 | 待做 |
 | M4 受控 Loop | 10 | 待做 |
 | M5 规模与全量验收 | 8 | 待做 |
@@ -146,16 +146,16 @@ P0 加权进度：33.5%（26.5/79）；按 99 项计 26.8%。分项：M0 10/11�
 
 | ID | 状态 | 要做的工作与验收 |
 | --- | --- | --- |
-| M2-01 | 待做 | LangGraph 固定 Intent → Retrieve → Evidence Verify → Safety → Answer / Escalate；测试图中不存在绕过必经节点的回答路径 |
-| M2-02 | 待做 | 每节点明确输入输出模型、超时、错误类型、有限重试、取消与降级；跨节点只通过 State 交换数据 |
+| M2-01 | 已实现（图结构：无绕过边测试；节点规则版首切片，记录 52） | LangGraph 固定 Intent → Retrieve → Evidence Verify → Safety → Answer / Escalate；测试图中不存在绕过必经节点的回答路径 |
+| M2-02 | 部分（超时/重试/退避/降级与 State 契约已实现；asyncio 取消随 M3，记录 52） | 每节点明确输入输出模型、超时、错误类型、有限重试、取消与降级；跨节点只通过 State 交换数据 |
 | M2-03 | 待做 | operation key 接入持久化执行；attempt 单独记录，重试不重复副作用，replay_run_id 与生产隔离；不能仅凭函数存在算幂等完成 |
-| M2-04 | 待做 | Answer 只接收已验证证据，输出 claim-citation；生成后再校验引用和关键结论，通过前不外发最终医学答案 |
-| M2-05 | 待做 | 验证引用属于本 Trace、版本/页码/chunk 真实且有权限；重算 chunk_content_hash 与实际 evidence_text_hash，expected/observed 写 evidence_log |
-| M2-06 | 待做 | Trace 总 Token/成本预算与单次模型上限都生效；超限先裁剪证据，仍不足则升级，不扩大预算继续猜测 |
-| M2-07 | 待做 | 抽取剂量、单位、频次、适应证、人群、时间和方案编号等关键要素，建立确定性规则测试 |
-| M2-08 | 待做 | supported / not_supported / contradicted 支持度判断；数字规则优先，NLI/小模型按 DEC-003 选；无依据不补医学常识，矛盾升级 |
-| M2-09 | 待做 | 用户输入、检索内容、最终输出三层 Safety；文档是数据而不是指令，注入不能改变权限或绕过检索 |
-| M2-10 | 待做 | 稳定拒答/升级 reason code，最小必要上下文持久化，可由人工接手；诊断、处方、个体调整及紧急医疗意图拒答并升级 |
+| M2-04 | 部分（仅接收已验证证据、claim-citation、生成后重验；真实适配器待 key，记录 52） | Answer 只接收已验证证据，输出 claim-citation；生成后再校验引用和关键结论，通过前不外发最终医学答案 |
+| M2-05 | 部分（结构核验拦截伪造引用；evidence_log 落库随 M3，记录 52） | 验证引用属于本 Trace、版本/页码/chunk 真实且有权限；重算 chunk_content_hash 与实际 evidence_text_hash，expected/observed 写 evidence_log |
+| M2-06 | 部分（Trace 预算裁剪/升级、月度上限账本，记录 52） | Trace 总 Token/成本预算与单次模型上限都生效；超限先裁剪证据，仍不足则升级，不扩大预算继续猜测 |
+| M2-07 | 部分（elements-rules-v1，记录 52） | 抽取剂量、单位、频次、适应证、人群、时间和方案编号等关键要素，建立确定性规则测试 |
+| M2-08 | 部分（support-rules-v1 + 判定臂接口；模型待 DEC-003，记录 52） | supported / not_supported / contradicted 支持度判断；数字规则优先，NLI/小模型按 DEC-003 选；无依据不补医学常识，矛盾升级 |
+| M2-09 | 部分（safety-rules-v1 三层，记录 52） | 用户输入、检索内容、最终输出三层 Safety；文档是数据而不是指令，注入不能改变权限或绕过检索 |
+| M2-10 | 部分（稳定 reason code 与升级记录；持久化随 M3，记录 52） | 稳定拒答/升级 reason code，最小必要上下文持久化，可由人工接手；诊断、处方、个体调整及紧急医疗意图拒答并升级 |
 | M2-11 | 待做 | Skill Registry 执行 Schema、scope、risk、timeout、parallel_safe、版本控制；节点不得绕过 Registry 调工具 |
 | M2-12 | 待做 | 先交付说明书查询、医学引用验证两个低风险 Skill 的完整正向/失败链路 |
 | M2-13 | 待做 | 再交付 AE 线索提取、方案偏离核验、超说明书检查三类 Skill；在 M5 前完成全部验收 |

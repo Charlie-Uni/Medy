@@ -17,6 +17,7 @@ class ElementKind(StrEnum):
     population = "population"
     time_window = "time_window"
     identifier = "identifier"
+    statement = "statement"  # whole-claim support when a claim carries no extractable key element (M2 verifier)
 
 
 class Verdict(StrEnum):
