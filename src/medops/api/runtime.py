@@ -16,6 +16,7 @@ import psycopg
 from medops.api.app import ApiRuntime
 from medops.api.auth import Authenticator, JwtVerifier, PgDirectory
 from medops.api.contracts import AskRequest
+from medops.application.audit import TraceStore
 from medops.application.tasks import TaskStore
 from medops.core.config import Settings
 from medops.domain.identity import UserContext
@@ -24,9 +25,11 @@ from medops.harness.executions import PgExecutionStore
 from medops.harness.nodes import HarnessDeps
 from medops.harness.production import PRODUCTION_ANSWER_MODEL, PRODUCTION_JUDGE_MODEL, production_model_config_version
 from medops.harness.retrieval_port import ProductionRetrieval
+from medops.infrastructure.db.audit import PgTraceStore
 from medops.infrastructure.db.tasks import PgTaskStore
 from medops.infrastructure.llm.budget import BudgetedGateway, InMemorySpendLedger
 from medops.infrastructure.llm.gateway import OPENAI_PRICES, ModelGateway, PriceTable
+from medops.infrastructure.llm.meter import MeteredGateway
 from medops.infrastructure.llm.openai_gateway import OpenAIModelGateway
 from medops.retrieval.pinned import PinnedEmbedding, PinnedReranker, PinnedThread
 from medops.retrieval.production import (
@@ -142,7 +145,7 @@ class ProductionRuntime:
         )
         return HarnessDeps(
             retrieval=retrieval,
-            gateway=self.gateway,
+            gateway=MeteredGateway(self.gateway),  # per-request calls/tokens/cost for the trace
             answer_model_id=PRODUCTION_ANSWER_MODEL,
             judge_model_id=PRODUCTION_JUDGE_MODEL,
             as_of=as_of,
@@ -151,6 +154,9 @@ class ProductionRuntime:
 
     def task_store(self, conn: Any) -> TaskStore:
         return PgTaskStore(conn)
+
+    def trace_store(self, conn: Any) -> TraceStore:
+        return PgTraceStore(conn)
 
     # ---- worker environment (medops.application.tasks.WorkerEnvironment)
     def resolve_user(self, conn: Any, principal: str) -> UserContext | None:

@@ -35,6 +35,10 @@ EXPECTED_TABLES = {
     "tasks",
     "task_attempts",
     "idempotency_keys",
+    "traces",
+    "trace_spans",
+    "escalations",
+    "feedback",
 }
 EXPECTED_TYPES = {
     "dept",
@@ -170,7 +174,7 @@ def set_actor(conn: psycopg.Connection, actor: str = "reviewer-01", reason: str 
 
 def test_single_head_and_offline_sql_render(migrated):
     heads = ScriptDirectory.from_config(alembic_config(migrated)).get_heads()
-    assert heads == ["0010"]
+    assert heads == ["0011"]
 
 
 def test_upgrade_downgrade_upgrade_round_trip_leaves_nothing_behind(scratch_database):
@@ -194,6 +198,7 @@ def test_upgrade_downgrade_upgrade_round_trip_leaves_nothing_behind(scratch_data
         "medops_scopes_valid",
         "medops_tasks_guard",
         "medops_append_only",
+        "medops_escalation_status_guard",
     }
     assert _policies(scratch_database) > 0 and _rls_forced(scratch_database) == EXPECTED_TABLES
     run_alembic(scratch_database, "downgrade", "base")

@@ -10,6 +10,7 @@ from datetime import UTC, datetime, timedelta
 import pytest
 
 from medops.api.contracts import TaskCreateRequest, TaskStatus
+from medops.application.audit import InMemoryTraceStore
 from medops.application.tasks import InMemoryTaskStore, TaskRunner, TaskService, to_response
 from medops.core.errors import BusinessError, ErrorCode
 from medops.domain.common import Dept, DomainModel, NonEmptyStr, RiskLevel
@@ -74,6 +75,7 @@ def registry(handler=echo) -> SkillRegistry:
 class FakeEnv:
     def __init__(self, store: InMemoryTaskStore, reg: SkillRegistry, principals: dict[str, UserContext]):
         self.store, self.reg, self.principals = store, reg, principals
+        self.traces = InMemoryTraceStore()
 
     @contextmanager
     def connection(self):
@@ -87,6 +89,9 @@ class FakeEnv:
 
     def task_store(self, conn):
         return self.store
+
+    def trace_store(self, conn):
+        return self.traces
 
     def skill_context(self, conn, user, trace_id, historical):
         return SkillContext(
@@ -177,6 +182,13 @@ def test_worker_runs_the_skill_under_the_stored_identity_and_persists_the_result
     )
     assert "echo_skill@1.0.0" in done.result["versions"]["skill_version_set"]
     assert [a["outcome"] for a in store.attempts] == ["completed"]
+    trace = runner.env.traces.traces[done.trace_id]
+    assert (
+        trace.kind == "task"
+        and trace.task_id == done.task_id
+        and trace.outcome == "completed"
+        and [s.node for s in trace.spans] == ["skill:echo_skill"]
+    )
     assert runner.run_once() is None  # nothing left
 
 

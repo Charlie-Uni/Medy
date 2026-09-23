@@ -8,6 +8,7 @@ the task claimable again and records the attempt as `lost`. Results and errors a
 
 from __future__ import annotations
 
+import time
 import uuid
 from collections.abc import Callable, Mapping
 from dataclasses import dataclass, field, replace
@@ -22,11 +23,13 @@ from medops.api.contracts import (
     TaskResultStatus,
     TaskStatus,
 )
+from medops.application.audit import TraceRecord, TraceStore, record_or_fail_closed
 from medops.core.canonical import canonical_hash
 from medops.core.errors import BusinessError, ErrorCode, ErrorResponse, MedOpsError
 from medops.core.tracing import new_trace_id
 from medops.domain.common import Dept
 from medops.domain.identity import UserContext
+from medops.infrastructure.llm.meter import MeteredGateway
 from medops.skills.registry import SkillContext, SkillRegistry
 
 TASKS_ROUTE = "POST /v1/tasks"
@@ -184,6 +187,8 @@ class WorkerEnvironment(Protocol):
 
     def task_store(self, conn: Any) -> TaskStore: ...
 
+    def trace_store(self, conn: Any) -> TraceStore: ...
+
     def skill_context(
         self, conn: Any, user: UserContext, trace_id: str, historical: Mapping[str, Any] | None
     ) -> SkillContext: ...
@@ -214,7 +219,34 @@ class TaskRunner:
                     )
                 self.env.bind_identity(conn, user)
                 ctx = self.env.skill_context(conn, user, trace_id, claimed.historical)
+                started = time.perf_counter()
                 run = self.registry.execute(claimed.skill_name, claimed.skill_version, claimed.input, context=ctx)
+                gateway = ctx.deps.gateway
+                meter = gateway if isinstance(gateway, MeteredGateway) else None
+                record_or_fail_closed(
+                    self.env.trace_store(conn),
+                    TraceRecord(
+                        trace_id=trace_id,
+                        run_id=trace_id,
+                        kind="task",
+                        principal=claimed.principal,
+                        dept=claimed.dept,
+                        query=f"{claimed.skill_name}@{claimed.skill_version}",
+                        outcome=run.output.status.value,
+                        reason_codes=tuple(c.value for c in run.output.reason_codes),
+                        versions=ctx.versions.model_dump(mode="json"),
+                        evidence_chunk_ids=(),
+                        cited_chunk_ids=(),
+                        flagged_chunk_ids=(),
+                        model_calls=meter.calls if meter else 0,
+                        tokens=meter.tokens if meter else 0,
+                        cost_usd=meter.cost_usd if meter else 0.0,
+                        duration_ms=(time.perf_counter() - started) * 1000,
+                        spans=run.attempts,
+                        task_id=claimed.task_id,
+                    ),
+                    None,
+                )
                 result = TaskResult(
                     skill=run.spec.version_tag,
                     status=TaskResultStatus(run.output.status.value),

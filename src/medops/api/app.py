@@ -6,6 +6,7 @@ attached (M2-03). Responses carry the trace id in `X-Trace-Id`; errors are `Erro
 
 from __future__ import annotations
 
+import time
 from collections.abc import Callable, Iterator, Mapping
 from contextlib import AbstractContextManager, contextmanager
 from dataclasses import dataclass
@@ -21,11 +22,14 @@ from medops.api.contracts import (
     AskRequest,
     AskResponse,
     EscalationReceipt,
+    FeedbackReceipt,
+    FeedbackRequest,
     OutcomeKind,
     Refusal,
     TaskCreateRequest,
     TaskResponse,
 )
+from medops.application.audit import FeedbackService, TraceStore, record_or_fail_closed, trace_from_run
 from medops.application.tasks import TaskService, TaskStore, to_response
 from medops.core.errors import HTTP_STATUS, BusinessError, ErrorCode, ErrorResponse, MedOpsError
 from medops.core.logging import get_logger
@@ -35,6 +39,7 @@ from medops.domain.identity import UserContext
 from medops.domain.state import VersionSet
 from medops.harness.nodes import HarnessDeps
 from medops.harness.runtime import HarnessRun, initial_state, run_ask
+from medops.infrastructure.llm.meter import MeteredGateway
 
 log = get_logger(__name__)
 TRACE_HEADER = "X-Trace-Id"
@@ -73,6 +78,8 @@ class ApiRuntime(Protocol):
     def build_deps(self, conn: Any, user: UserContext, request: AskRequest) -> HarnessDeps: ...
 
     def task_store(self, conn: Any) -> TaskStore: ...
+
+    def trace_store(self, conn: Any) -> TraceStore: ...
 
     def ready(self) -> bool: ...
 
@@ -173,8 +180,25 @@ def create_app(
                 trace_id=trace_id,
                 historical_requested=body.historical is not None,
             )
+            started = time.perf_counter()
             run = run_ask(state, deps)
-        return to_ask_response(run, trace_id, runtime.versions)
+            response = to_ask_response(run, trace_id, runtime.versions)
+            meter = deps.gateway if isinstance(deps.gateway, MeteredGateway) else None
+            trace, escalation = trace_from_run(
+                run,
+                kind="ask",
+                user=user,
+                query=body.query,
+                versions=runtime.versions,
+                outcome=response.outcome.value,
+                model_calls=meter.calls if meter else 0,
+                tokens=meter.tokens if meter else run.state.budget.used,
+                cost_usd=meter.cost_usd if meter else 0.0,
+                duration_ms=(time.perf_counter() - started) * 1000,
+            )
+            # the audit write is part of the request transaction: no trace, no answer (baseline 5.10)
+            record_or_fail_closed(runtime.trace_store(conn), trace, escalation)
+        return response
 
     def _tasks(conn: Any) -> TaskService:
         return TaskService(store=runtime.task_store(conn), idempotency_ttl_s=idempotency_ttl_s)
@@ -192,6 +216,13 @@ def create_app(
             user = runtime.authenticator.authenticate(request.headers.get("authorization"), runtime.directory(conn))
             record = _tasks(conn).get(user, task_id)
         return to_response(record)
+
+    @app.post("/v1/feedback", response_model=FeedbackReceipt, status_code=201)
+    def feedback(body: FeedbackRequest, request: Request) -> FeedbackReceipt:
+        with runtime.connection() as conn:
+            user = runtime.authenticator.authenticate(request.headers.get("authorization"), runtime.directory(conn))
+            service = FeedbackService(store=runtime.trace_store(conn), idempotency_ttl_s=idempotency_ttl_s)
+            return service.submit(user, body, request.headers.get(IDEMPOTENCY_KEY_HEADER))
 
     @app.post("/v1/tasks/{task_id}/retry", response_model=TaskResponse, status_code=202)
     def retry_task(task_id: str, request: Request) -> TaskResponse:

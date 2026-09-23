@@ -11,12 +11,14 @@ from fastapi.testclient import TestClient
 
 from medops.api.app import TRACE_HEADER, create_app
 from medops.api.auth import Authenticator, JwtVerifier, Principal, StaticDirectory, pseudonym
+from medops.application.audit import InMemoryTraceStore
 from medops.core.errors import ErrorCode, InfrastructureError
 from medops.domain.common import Dept
 from medops.harness.executions import InMemoryExecutionStore
 from medops.harness.nodes import HarnessDeps
 from medops.infrastructure.llm.fake import FakeModelGateway
 from medops.infrastructure.llm.gateway import ModelUnavailable
+from medops.infrastructure.llm.meter import MeteredGateway
 from tests.unit.api._auth_fixtures import AUDIENCE, ISSUER, PSEUDONYM_KEY, TestIssuer
 from tests.unit.harness._fixtures import evidence, versions
 from tests.unit.harness.test_run_ask import CONTRA, LABEL, FakeRetrieval, fast_specs
@@ -34,6 +36,7 @@ class FakeRuntime:
         self.versions = versions()
         self.retrieval, self.gateway, self.fail_connection = retrieval, gateway, fail_connection
         self.store = InMemoryExecutionStore()
+        self.traces = InMemoryTraceStore()
         self.bound: list[Dept] = []
         self.readiness = True
 
@@ -58,13 +61,16 @@ class FakeRuntime:
     def build_deps(self, conn, user, request):
         return HarnessDeps(
             retrieval=self.retrieval,
-            gateway=self.gateway,
+            gateway=MeteredGateway(self.gateway),
             answer_model_id="gpt-6-sol",
             specs=fast_specs(),
             sleep=lambda s: None,
             clock=lambda: datetime(2026, 9, 23, tzinfo=UTC),
             executions=self.store,
         )
+
+    def trace_store(self, conn):
+        return self.traces
 
     def ready(self):
         return self.readiness
@@ -163,3 +169,30 @@ def test_health_and_readiness():
     rt.readiness = False
     assert c.get("/readyz").status_code == 503
     assert c.get("/docs").status_code == 404  # docs off by default
+
+
+def test_every_ask_leaves_a_trace_with_spans_and_escalations_are_recorded():
+    rt = FakeRuntime(FakeRetrieval(evidence("c1", LABEL)), FakeModelGateway({"answer": [ANSWER]}))
+    c = client(rt)
+    body = c.post("/v1/ask", json={"query": QUERY}, headers=auth()).json()
+    trace = rt.traces.traces[body["trace_id"]]
+    assert (
+        trace.kind == "ask"
+        and trace.outcome == "answered"
+        and trace.principal == pseudonym("user-1", PSEUDONYM_KEY)[:32]
+    )
+    assert [s.node for s in trace.spans] == ["intent", "retrieve", "verify", "safety", "answer"]
+    assert trace.cited_chunk_ids == ("c1",) and trace.evidence_chunk_ids == ("c1",) and trace.query == QUERY
+    assert trace.model_calls == 1 and trace.tokens > 0 and trace.duration_ms >= 0 and rt.traces.escalations == {}
+    refused = c.post("/v1/ask", json={"query": "我最近血压 150/95，我应该每天吃多少 losartan？"}, headers=auth()).json()
+    esc = rt.traces.escalations[refused["trace_id"]]
+    assert esc.reason_codes == ("high_risk_medical",) and esc.policy_version == "policy-test-1" and esc.query
+
+
+def test_audit_failure_means_no_answer_and_a_retryable_503():
+    rt = FakeRuntime(FakeRetrieval(evidence("c1", LABEL)), FakeModelGateway({"answer": [ANSWER]}))
+    rt.traces.fail_with = RuntimeError("disk full")
+    r = client(rt).post("/v1/ask", json={"query": QUERY}, headers=auth())
+    assert r.status_code == 503
+    assert r.json()["code"] == "audit_unavailable" and r.json()["retryable"] is True
+    assert "claims" not in r.text and "disk full" not in r.text

@@ -19,7 +19,7 @@
 
 决策人要求每个阶段汇报"离总目标百分之多少"。口径固定为：[任务知识对照](TASK_KNOWLEDGE_MAP.md) 中 79 个 P0 任务行的状态加权和（已实现 1、部分 0.5、阻塞与待做 0）除以 79；另报除以 99 个基线复选项的数值。状态只随实现记录的证据变更，基线勾选只依据完整证据更新，最终验收仍是第 11 节九条门禁的二元结果。`tests/unit/docs/test_baseline_roadmap_consistency.py` 重算并比对下面这行数字：
 
-P0 加权进度：49.4%（39.0/79）；按 99 项计 39.4%。分项：M0 10/11、M1 16.5/21、M2 9.5/16、M3 3/13、M4 0/10、M5 0/8。
+P0 加权进度：51.3%（40.5/79）；按 99 项计 40.9%。分项：M0 10/11、M1 16.5/21、M2 10/16、M3 4/13、M4 0/10、M5 0/8。
 
 ### 状态与计数
 
@@ -155,7 +155,7 @@ P0 加权进度：49.4%（39.0/79）；按 99 项计 39.4%。分项：M0 10/11�
 | M2-07 | 部分（elements-rules-v1，记录 52） | 抽取剂量、单位、频次、适应证、人群、时间和方案编号等关键要素，建立确定性规则测试 |
 | M2-08 | 部分（support-rules-v2 + 判定 gpt-6-sol，分工按 ADR-0011；DEC-003 错接受率 4.1%（规则）/ 2.2%（分工）；M2-16 门禁数据待安全集，记录 53） | supported / not_supported / contradicted 支持度判断；数字规则优先，NLI/小模型按 DEC-003 选；无依据不补医学常识，矛盾升级 |
 | M2-09 | 部分（safety-rules-v1 三层，记录 52） | 用户输入、检索内容、最终输出三层 Safety；文档是数据而不是指令，注入不能改变权限或绕过检索 |
-| M2-10 | 部分（稳定 reason code 与升级记录；持久化随 M3，记录 52） | 稳定拒答/升级 reason code，最小必要上下文持久化，可由人工接手；诊断、处方、个体调整及紧急医疗意图拒答并升级 |
+| M2-10 | 已实现（稳定 reason code；升级记录落库 `escalations`（问题、证据 chunk id、Verifier/Safety 结果、策略版本），管理角色改状态接手，记录 52/60） | 稳定拒答/升级 reason code，最小必要上下文持久化，可由人工接手；诊断、处方、个体调整及紧急医疗意图拒答并升级 |
 | M2-11 | 已实现（`medops.skills.registry`：scope 默认拒绝→Schema→版本集→operation key→run_node 超时/幂等重试→输出契约→安全第三层；parallel_safe 并行；AST 无绕过测试，记录 55） | Skill Registry 执行 Schema、scope、risk、timeout、parallel_safe、版本控制；节点不得绕过 Registry 调工具 |
 | M2-12 | 已实现（`label_query`、`citation_verification` 经 Registry：单元 26 项 + 真实部件 12 用例（正向、非说明书、scope 拒绝、Schema、篡改数值、未知/跨部门 chunk），记录 55 §2.1；持久化与 API 接线随 M3） | 先交付说明书查询、医学引用验证两个低风险 Skill 的完整正向/失败链路 |
 | M2-13 | 部分（三个 Skill 已交付：`ae_extraction`、`protocol_deviation`、`off_label_check`，单元 6 项 + 真实部件 9 用例，记录 57；功能/安全/权限/故障的全部验收随 M5-02） | 再交付 AE 线索提取、方案偏离核验、超说明书检查三类 Skill；在 M5 前完成全部验收 |
@@ -169,11 +169,11 @@ P0 加权进度：49.4%（39.0/79）；按 99 项计 39.4%。分项：M0 10/11�
 | --- | --- | --- |
 | M3-01 | 部分（`medops.api.app`：五种契约在 TestClient + 假运行时下有测试，生产运行时可启动；真实 HTTP 冒烟与 Trace 落库待做，记录 58） | FastAPI `/v1/ask`：成功、证据不足、拒答、升级、服务失败契约与集成测试 |
 | M3-02 | 已实现（迁移 0010、`TaskService` + `PgTaskStore`、三个路由；幂等作用域 / hash / 422 / 并发返回原任务 / 同事务 / 创建者可见 / 重试规则均有测试；`TaskResult` 契约变更待决策人确认，记录 59） | task 创建/查询/失败重试；Idempotency-Key 按身份和路由限定作用域，存 request hash；同 key 同 payload 返回原任务，不同 payload 返回 422；事务创建、TTL 和并发语义进入 OpenAPI |
-| M3-03 | 待做 | 反馈、文档管理、策略候选、审批、Trace replay 接口；逐接口验证业务/管理/审核权限 |
+| M3-03 | 部分（`POST /v1/feedback` 含幂等回执与本人 Trace 可见性，记录 60；文档管理、策略候选、审批、replay 接口待做） | 反馈、文档管理、策略候选、审批、Trace replay 接口；逐接口验证业务/管理/审核权限 |
 | M3-04 | 部分（`TaskRunner` + 数据库租约、原子转换、attempt 记录、失联回收、attempts 上限、迟到汇报忽略；单元 + 集成测试；真实库端到端待跑，记录 59） | worker 的 queued/running/completed/failed 转换、租约与结果原子持久化；崩溃恢复、重复消费安全，不把 Redis 队列当唯一事实来源 |
 | M3-05 | 部分（JWKS 校验、HMAC 假名、`principals` 目录（迁移 0009）、group allowlist、测试签发器；JWKS 发现/轮换与 IdP 选择（DEC-010）待做，记录 58） | 接入 OIDC：验证 issuer/audience/expiry/signature；用户部门/scope 服务端映射，group allowlist，角色分离；本地测试签发器仅用于合成身份 |
 | M3-06 | 待做 | 只读 MCP：search_documents、get_chunk、verify_citation、list_active_versions；生产 Streamable HTTP + bearer，继承身份与数据库权限，不能写入；stdio 仅开发测试 |
-| M3-07 | 待做 | 每次请求完整 Trace；身份 surrogate/HMAC 假名、日志脱敏，受限可回放 payload 单独加密和授权，审计追加写 |
+| M3-07 | 部分（迁移 0011：每次问答 / 任务执行写 Trace 摘要 + 节点 span + 升级记录，请求事务内、写失败 fail-closed；假名、追加写、角色分离；受限可回放载荷的加密存储与 OTel 待做，记录 60） | 每次请求完整 Trace；身份 surrogate/HMAC 假名、日志脱敏，受限可回放 payload 单独加密和授权，审计追加写 |
 | M3-08 | 待做 | Trace replay 固定实际策略/检索/Skill/模型版本，用独立 run id 生成差异报告；禁止被原执行缓存短路 |
 | M3-09 | 待做 | Langfuse 与 OTel 串联 API、数据库、Redis、LLM、Reranker、worker spans，跨任务传播 trace/task/version 信息 |
 | M3-10 | 待做 | 延迟、错误、拒答/升级、队列、缓存、Token/成本与安全告警；trace_id/user_id 不作为高基数指标标签 |
