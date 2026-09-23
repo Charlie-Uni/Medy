@@ -77,6 +77,13 @@
 - 并入探针样本（pc-）的 46 条未命中里 29 条是检索未命中（gold 为精确条款的短 chunk，混合检索召回同文档相邻 chunk）；`long_context` 13 条里 6 条未命中、7 条在证据内但作答失败（条款跨 chunk）。两者都是 chunk 边界与证据窗口问题，登记到 M1 分块/M3 检索服务化。
 - gold 在证据内时的名次：第 1 名 32、第 2 名 16、第 3–6 名 13——重排把 gold 放在前两位的占 79%。
 
+### 3.4 v2 规则下的全量重跑：因 OpenAI 额度耗尽在第 69 条中断（2026-09-23 21:17–22:05）
+
+- `evals/harness/runs/2026-09-23-full-ask-v2`（Answer 与判定均 gpt-6-sol，`support-rules-v2`）：前 65 条正常，从 ms-0069 起 549 条的 Answer 调用全部 `ModelUnavailable`（每条重试 2 次后按 `system_failure` 升级，未产生费用）。事后直接调用 API 确认原因：HTTP 429，`code=credit_balance_exhausted`（「You have no credits remaining」）——账户预付额度用尽，不是速率限制。链路行为符合预期：模型不可用时 fail-closed、快速、零花费，但工具此前不会因连续失败中止，白跑了 50 分钟。
+- 有效的 65 条（ms-0001–ms-0068，全部为有答案样本）与 v1 同一样本对照：回答 57 → 60、引用 gold 52 → 55；v1 在这 65 条里的 3 条规则极性误报（ms-0018、ms-0020、ms-0026）v2 全部改为回答；1 条由回答变为弃答（模型侧非确定性，见记录 55 §4）。65 条费用 0.75 美元。
+- 处置：`smoke_ask.py` 新增 `--max-consecutive-failures`（默认 10，连续 `system_failure` 达阈值即以退出码 76 结束），看门狗对 76 等待 5 分钟再 `--resume`（`system_failure` 行会被重跑）。额度恢复后执行 `python <scratchpad>/supervise_full_ask.py <log> evals/harness/runs/2026-09-23-full-ask-v2` 即可续跑剩余 549 条（约 4 美元）。
+- 花费核对：按 Gateway 价目累计，今日全部 OpenAI 调用 8.75 美元（含卡死损失的 1.35）；账户额度耗尽说明预付余额低于假定的 30 美元，或实际计费高于价目估算——需要决策人在 billing 页面核对后决定是否充值。
+
 ## 4. 自审（§9）
 
 - 运行只读 medops_v2，身份事务内 `set_config('medops.dept')`，与 M1 端到端同一路径；不写库。

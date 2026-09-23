@@ -193,6 +193,12 @@ def main() -> int:
     ap.add_argument("--resume", action="store_true", help="continue an existing run directory from its rows.jsonl")
     ap.add_argument("--ids", default="", help="comma-separated sample ids to run (overrides the sampling options)")
     ap.add_argument("--gpu-timeout", type=float, default=120.0, help="seconds a single embedding/rerank call may take")
+    ap.add_argument(
+        "--max-consecutive-failures",
+        type=int,
+        default=10,
+        help="exit 76 after this many system_failure samples in a row (provider outage); the supervisor resumes later",
+    )
     args = ap.parse_args()
     if args.out.exists() and not args.resume:
         raise SystemExit("refusing to overwrite an existing run directory (pass --resume to continue it)")
@@ -260,6 +266,7 @@ def main() -> int:
         missing = wanted - {s["sample_id"] for s in samples}
         if missing:
             raise SystemExit(f"unknown sample ids: {sorted(missing)}")
+    consecutive_failures = 0
     if done_rows:
         print(f"resuming: {len(done_rows) - len(redo)} rows kept, {len(redo)} system_failure rows redone", flush=True)
     for s in samples:
@@ -327,6 +334,14 @@ def main() -> int:
             f"{s['sample_id']} [{row['kind']}] -> {run.outcome} {row['reason_codes']} gold_cited={row['gold_cited']} calls={row['model_calls']} ${row['cost_usd']:.4f} {latency:.1f}s",
             flush=True,
         )
+        consecutive_failures = consecutive_failures + 1 if "system_failure" in row["reason_codes"] else 0
+        if consecutive_failures >= args.max_consecutive_failures:
+            print(
+                f"{consecutive_failures} consecutive system failures (provider outage?): exiting 76 for the supervisor to resume later",
+                flush=True,
+            )
+            conn.close()
+            os._exit(76)
         if gpu.stalled:
             print(
                 f"gpu stalled beyond {args.gpu_timeout}s: exiting {GpuThread.EXIT_STALLED} for the supervisor to resume",
