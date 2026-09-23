@@ -75,8 +75,10 @@ def _with_database(url: str, name: str) -> str:
     return urlunsplit((parts.scheme, parts.netloc, "/" + name, parts.query, parts.fragment))
 
 
-def pick_samples(rng: random.Random, per_dept: int, no_answer: int, conflict: int) -> list[dict]:
+def pick_samples(rng: random.Random, per_dept: int, no_answer: int, conflict: int, *, everything: bool = False) -> list[dict]:
     samples = [json.loads(l) for l in (DATASET / "samples.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
+    if everything:
+        return samples
     new = [s for s in samples if s["sample_id"].startswith("ms-")]
     chosen: list[dict] = []
     for dept in ("MA", "PV", "CO"):
@@ -100,6 +102,7 @@ def main() -> int:
     ap.add_argument("--no-answer", type=int, default=3, help="-1 = every no-answer sample")
     ap.add_argument("--conflict", type=int, default=2)
     ap.add_argument("--seed", type=int, default=20260923)
+    ap.add_argument("--all", action="store_true", help="run every sample of the dataset (614)")
     args = ap.parse_args()
     if args.out.exists():
         raise SystemExit("refusing to overwrite an existing run directory")
@@ -144,7 +147,7 @@ def main() -> int:
         model_config_version=f"answer={args.answer_model};judge={args.judge_model};{VERIFIER_VERSION}",
     )
     mapping = {e["gold_id"]: e for e in json.loads(MAPPING.read_text(encoding="utf-8"))["entries"]}
-    samples = pick_samples(random.Random(args.seed), args.per_dept, args.no_answer, args.conflict)
+    samples = pick_samples(random.Random(args.seed), args.per_dept, args.no_answer, args.conflict, everything=args.all)
     rows = []
     for s in samples:
         user = UserContext(
@@ -169,6 +172,9 @@ def main() -> int:
                 "sample_id": s["sample_id"],
                 "dept": s["dept"],
                 "kind": "no_answer" if s.get("answerable", True) is False else ("conflict" if s.get("conflict") else "answerable"),
+                "imported": s["sample_id"].startswith("pc-"),
+                "derived": bool(s.get("derived_from")),
+                "language": s.get("language"),
                 "slices": s["slices"],
                 "query": s["query"],
                 "outcome": run.outcome,

@@ -1,0 +1,3200 @@
+{
+  "run": "2026-09-23-smoke-ask-v2-abstention",
+  "finished_at": "2026-09-23T02:04:59+00:00",
+  "dataset": {
+    "version": "main-v1-provisional",
+    "second_human_review": "pending"
+  },
+  "versions": {
+    "policy_version": "policy-m2-smoke-1",
+    "retrieval_version": "90b57e4e86b4bb462fc4de58f7f7749666fb6f50a588c129bd5f9aa50585ab18",
+    "skill_version_set": [],
+    "model_config_version": "answer=gpt-6-sol;judge=gpt-6-luna;verifier-v2+support-rules-v1+polarity_only"
+  },
+  "n": 78,
+  "answered": 18,
+  "answerable_answered_rate": 1.0,
+  "answerable_gold_cited_rate": 1.0,
+  "no_answer_abstained_rate": 0.984,
+  "answerable_false_abstention_rate": 0.0,
+  "conflict_answered_with_gold": [
+    true,
+    true
+  ],
+  "total_cost_usd": 0.4707,
+  "total_model_calls": 99,
+  "mean_latency_s": 4.5,
+  "p95_latency_s": 7.51,
+  "reason_code_counts": {
+    "insufficient_evidence": 60
+  },
+  "rows": [
+    {
+      "sample_id": "ms-0048",
+      "dept": "MA",
+      "kind": "answerable",
+      "slices": [
+        "dose_unit",
+        "mixed_zh_en"
+      ],
+      "query": "Losacar治療高血壓的一般起始劑量及維持劑量是多少?",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "Losacar 治療高血壓時，大多數病人的一般起始劑量及維持劑量均為每次 50 毫克，每日一次。"
+      ],
+      "cited_chunks": [
+        "45617062-68e6-4adc-93e3-d2c1dead8e40",
+        "69d672fd-460a-4179-bcaa-69598ee179bf"
+      ],
+      "gold_chunks": [
+        "45617062-68e6-4adc-93e3-d2c1dead8e40"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 證據指出，高血壓患者大多數的一般起始劑量及維持劑量為每次 50 毫克、每日一次；Losacar 含有 losartan potassium。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 7388,
+      "model_calls": 2,
+      "model_tokens": 4900,
+      "cost_usd": 0.00877,
+      "latency_s": 8.68
+    },
+    {
+      "sample_id": "ms-0035",
+      "dept": "MA",
+      "kind": "answerable",
+      "slices": [
+        "drug_name_zh"
+      ],
+      "query": "「安星」伊風柔錠300毫克應如何保存？",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "「安星」伊風柔錠300毫克應置於緊密容器中，在室溫下避光保存。"
+      ],
+      "cited_chunks": [
+        "a856085a-f794-487f-b47c-e1f3348902fe",
+        "b59909f8-2a85-4dca-88f3-0a0fad123d1a"
+      ],
+      "gold_chunks": [
+        "a856085a-f794-487f-b47c-e1f3348902fe"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据 2 明确记载保存条件为「紧密容器中，室温下、避光保存」，与陈述一致。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 5801,
+      "model_calls": 2,
+      "model_tokens": 4088,
+      "cost_usd": 0.007427,
+      "latency_s": 5.08
+    },
+    {
+      "sample_id": "ms-0041",
+      "dept": "MA",
+      "kind": "answerable",
+      "slices": [
+        "dose_unit",
+        "drug_name_zh",
+        "mixed_zh_en"
+      ],
+      "query": "依樂癲活持續釋放膜衣錠仿單第8.6節，中度或重度肝功能不全（Child-Pugh Grade B/C）病患的起始及維持劑量應如何調整？",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "一般而言，中度肝功能不全（Child-Pugh Grade B）病患的起始及維持劑量應減少約 50%。",
+        "一般而言，重度肝功能不全（Child-Pugh Grade C）病患的起始及維持劑量應減少 75%。",
+        "維持劑量的調整需依據臨床反應。"
+      ],
+      "cited_chunks": [
+        "596f1046-9300-425e-b68a-b413134fc778"
+      ],
+      "gold_chunks": [
+        "596f1046-9300-425e-b68a-b413134fc778"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据说明中度肝功能不全（Child-Pugh Grade B）患者的起始及维持剂量应减少约 50%。"
+        },
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据指出，重度肝功能不全（Child-Pugh Grade C）病患的剂量应减少75%；结合前文所述起始、增加及维持剂量的调整，可支持该陈述。"
+        },
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "claim contained in evidence"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 8916,
+      "model_calls": 3,
+      "model_tokens": 6143,
+      "cost_usd": 0.010627,
+      "latency_s": 12.38
+    },
+    {
+      "sample_id": "ms-0051",
+      "dept": "MA",
+      "kind": "answerable",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "query": "是否建議Losacar與ACEIs、ARBs或含aliskiren成分藥品合併使用以雙重阻斷RAAS?",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "不建議將 Losacar 與 ACEIs、ARBs 或含 aliskiren 成分藥品合併使用，以雙重阻斷 RAAS；此類合併使用會增加低血壓、高鉀血症及腎功能下降（包括急性腎衰竭）的風險。"
+      ],
+      "cited_chunks": [
+        "c12ca2c8-421a-4bb8-8c6f-e31e90dbc73c"
+      ],
+      "gold_chunks": [
+        "c12ca2c8-421a-4bb8-8c6f-e31e90dbc73c"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据明确指出，合并使用 ACEIs、ARBs 或含 aliskiren 成分药品会增加低血压、高钾血症及肾功能下降（包括急性肾衰竭）的风险，因此不建议用这些药品合并进行 RAAS 双重阻断。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 7171,
+      "model_calls": 2,
+      "model_tokens": 4769,
+      "cost_usd": 0.009781,
+      "latency_s": 7.51
+    },
+    {
+      "sample_id": "ms-0057",
+      "dept": "MA",
+      "kind": "answerable",
+      "slices": [
+        "negation",
+        "drug_name_zh",
+        "mixed_zh_en"
+      ],
+      "query": "拔痛酸錠(Allopurinol)可以用於治療痛風性關節炎的急性發作嗎?",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "不可以。拔痛酸錠（Allopurinol）沒有抗發炎效力，不得用於治療痛風性關節炎的急性發作。"
+      ],
+      "cited_chunks": [
+        "429e1354-153f-4091-b209-6debadf9889f",
+        "127e13b5-e327-4dea-b5e5-e34ad287f2fa"
+      ],
+      "gold_chunks": [
+        "127e13b5-e327-4dea-b5e5-e34ad287f2fa"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据明确指出 Allopurinol 没有抗发炎效力，且不得用于痛风性关节炎的急性发作，与陈述一致。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 7506,
+      "model_calls": 2,
+      "model_tokens": 4990,
+      "cost_usd": 0.009195,
+      "latency_s": 5.84
+    },
+    {
+      "sample_id": "ms-0227",
+      "dept": "PV",
+      "kind": "answerable",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "query": "在儿科 ICSR 报告中，如果无法获得患儿的确切年龄或出生日期，应改为记录什么信息以替代？",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "如果无法获得患儿的确切年龄或出生日期，应记录其所属的儿科年龄亚组。"
+      ],
+      "cited_chunks": [
+        "c9bec716-3a5f-4268-8e79-004bae32034b"
+      ],
+      "gold_chunks": [
+        "c9bec716-3a5f-4268-8e79-004bae32034b"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据明确说明，若无法获得确切年龄或出生日期，应记录患者所属的儿科年龄亚组。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 3124,
+      "model_calls": 2,
+      "model_tokens": 2182,
+      "cost_usd": 0.004286,
+      "latency_s": 5.12
+    },
+    {
+      "sample_id": "ms-0143",
+      "dept": "PV",
+      "kind": "answerable",
+      "slices": [
+        "mixed_zh_en"
+      ],
+      "query": "非干预性 PASS 被作为上市许可条件或特定义务实施时，GVP Module V 指明其监督适用 DIR 的哪些条款？",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "非干预性 PASS 作为上市许可条件或特定义务实施时，其监督适用 DIR 第 107m 至 107q 条。"
+      ],
+      "cited_chunks": [
+        "738336fe-4675-4188-a9b0-da004ece6e70"
+      ],
+      "gold_chunks": [
+        "738336fe-4675-4188-a9b0-da004ece6e70"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据指出，若上市许可条件或特定义务属于非干预性 PASS，则其适用 DIR 第 107m 至 107q 条规定的监督。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 3258,
+      "model_calls": 2,
+      "model_tokens": 2322,
+      "cost_usd": 0.004723,
+      "latency_s": 5.89
+    },
+    {
+      "sample_id": "ms-0100",
+      "dept": "PV",
+      "kind": "answerable",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "query": "根据 IR Art 13(2)，MAH 药物警戒系统质量稽核结果的报告应发送给谁？",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "应发送给负责被稽核事项的管理层。"
+      ],
+      "cited_chunks": [
+        "044b6dc5-095f-4887-b881-7373cef7728c"
+      ],
+      "gold_chunks": [
+        "044b6dc5-095f-4887-b881-7373cef7728c"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据说明，质量审计结果报告及任何后续审计应发送给负责被审计事项的管理层。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 3377,
+      "model_calls": 2,
+      "model_tokens": 2401,
+      "cost_usd": 0.004529,
+      "latency_s": 7.24
+    },
+    {
+      "sample_id": "ms-0291",
+      "dept": "PV",
+      "kind": "answerable",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "query": "按《MedDRA 术语选择：考虑要点》3.4.1的示例，报告同时写有“高钾血症”和“血清钾1.6 mEq/L”时，表中选择哪个 LLT 来涵盖这两个矛盾概念？",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "选择 LLT“血清钾异常”，以涵盖报告中的两个矛盾概念。"
+      ],
+      "cited_chunks": [
+        "c226859c-6e46-4e11-8212-1f5329d0a56e"
+      ],
+      "gold_chunks": [
+        "c226859c-6e46-4e11-8212-1f5329d0a56e"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据明确指出，面对“高钾血症”和血清钾 1.6 mEq/L 这两个矛盾概念，应选择 LLT“血清钾异常”，该术语涵盖报告中的两个概念。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 7272,
+      "model_calls": 2,
+      "model_tokens": 4396,
+      "cost_usd": 0.008246,
+      "latency_s": 5.91
+    },
+    {
+      "sample_id": "ms-0262",
+      "dept": "PV",
+      "kind": "answerable",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "query": "根据ICH E2D，如果药物过量(overdose)但没有伴随不良结果，是否需要作为不良反应报告？",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "不需要。根据 ICH E2D，药物过量但没有伴随不良结果的报告，不应作为不良反应报告。"
+      ],
+      "cited_chunks": [
+        "19e5bc0a-738f-45ec-9071-bd9c1d441ef6"
+      ],
+      "gold_chunks": [
+        "19e5bc0a-738f-45ec-9071-bd9c1d441ef6"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据明确指出，没有伴随不良结果的药物过量报告不应作为不良反应报告。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 4179,
+      "model_calls": 2,
+      "model_tokens": 2732,
+      "cost_usd": 0.005414,
+      "latency_s": 5.86
+    },
+    {
+      "sample_id": "ms-0302",
+      "dept": "CO",
+      "kind": "answerable",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "query": "根据ICH E6(R3),IRB/IEC在审查受试者参与试验的报酬时,报酬金额是否可以完全取决于受试者完成整个试验?",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "不可以。ICH E6(R3)要求受试者报酬及时、按比例支付，不得完全取决于受试者是否完成整个试验。"
+      ],
+      "cited_chunks": [
+        "a0ca176b-3bee-4137-83eb-7bca7b65fd4b",
+        "fc7770d8-8fa2-4d8b-a54a-7c4a5e36d386"
+      ],
+      "gold_chunks": [
+        "a0ca176b-3bee-4137-83eb-7bca7b65fd4b"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据明确规定，受试者报酬应及时、按比例支付，且不得完全取决于受试者完成整个试验。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 3490,
+      "model_calls": 2,
+      "model_tokens": 2489,
+      "cost_usd": 0.005195,
+      "latency_s": 5.38
+    },
+    {
+      "sample_id": "ms-0376",
+      "dept": "CO",
+      "kind": "answerable",
+      "slices": [
+        "mixed_zh_en"
+      ],
+      "query": "在ICH E14的分类分析讨论中，治疗期间QTc绝对间期超过多少毫秒被视为特别关注？",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "治疗期间QTc绝对间期超过500毫秒被视为特别关注。"
+      ],
+      "cited_chunks": [
+        "c8ee69db-e7c1-4a8e-aa64-5ef9f8169c0c"
+      ],
+      "gold_chunks": [
+        "c8ee69db-e7c1-4a8e-aa64-5ef9f8169c0c"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据指出，治疗期间QTc延长超过500毫秒是特别关注的阈值。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 3151,
+      "model_calls": 2,
+      "model_tokens": 2223,
+      "cost_usd": 0.004365,
+      "latency_s": 5.11
+    },
+    {
+      "sample_id": "ms-0444",
+      "dept": "CO",
+      "kind": "answerable",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "query": "在使用外部/次要数据来源(secondary data use)开展临床研究时，若某疾病或事件在数据中未被记录，能否因此判定该事件未曾发生？",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "不能。使用外部或次要数据来源时，数据中没有关于某疾病或事件的肯定性记录，并不必然意味着该疾病或事件未曾发生。"
+      ],
+      "cited_chunks": [
+        "a5665745-41ab-4615-84e9-2efbb5b92d3a"
+      ],
+      "gold_chunks": [
+        "a5665745-41ab-4615-84e9-2efbb5b92d3a"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据明确指出，缺少关于某疾病或事件的肯定性信息，并不必然意味着该疾病或事件不存在。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 3002,
+      "model_calls": 2,
+      "model_tokens": 2087,
+      "cost_usd": 0.00421,
+      "latency_s": 4.28
+    },
+    {
+      "sample_id": "ms-0424",
+      "dept": "CO",
+      "kind": "answerable",
+      "slices": [
+        "dose_unit",
+        "mixed_zh_en",
+        "protocol_id",
+        "long_context"
+      ],
+      "query": "根据ICH E3第12.4.2.2节,在分析个别病人化验数值随治疗组别的变化(individual patient changes)时,可以采用哪些具体分析方法?",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "使用“转移表”（shift tables）：按治疗组列出患者基线及选定时间点的化验值属于低、正常或高的情况及人数。",
+        "使用变化幅度表：按治疗组列出在选定时间点，化验参数变化达到预先规定幅度的患者人数或比例。",
+        "也可展示患者的基线值和治疗期间的最极端值。"
+      ],
+      "cited_chunks": [
+        "fd992dd7-fedb-4331-b4b7-fbfe995008fe",
+        "95cc8a7d-cd0d-4a1d-8ffc-130126d60abc"
+      ],
+      "gold_chunks": [
+        "fd992dd7-fedb-4331-b4b7-fbfe995008fe"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据说明“Shift tables”按基线及选定时间间隔展示患者处于低、正常或高的数量，与陈述一致。"
+        },
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据说明应按治疗组分析个体患者变化，并可用表格列出在选定时间点变化达到预先规定幅度的患者人数或比例。"
+        },
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据明确指出，展示内容可以是基线值和治疗期间最极端的值。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 4066,
+      "model_calls": 4,
+      "model_tokens": 3170,
+      "cost_usd": 0.006798,
+      "latency_s": 10.71
+    },
+    {
+      "sample_id": "ms-0326",
+      "dept": "CO",
+      "kind": "answerable",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "query": "根据FDA的《A Risk-Based Approach to Monitoring of Clinical Investigations Questions and Answers》(April 2023)指南,申办方是否应当只监测在最初风险评估中被认定为重要且可能发生的风险?",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "不应当只监测初始风险评估中认定为重要且可能发生的风险；申办方还应监测临床研究开展期间发现的、研究开始前未识别的其他风险。"
+      ],
+      "cited_chunks": [
+        "69f89999-d4b8-493d-a3c2-7853d1ef78c6"
+      ],
+      "gold_chunks": [
+        "69f89999-d4b8-493d-a3c2-7853d1ef78c6"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据明确指出，申办方除监测初始风险评估中认定为重要且可能发生的风险外，还应监测临床研究开展期间发现的、研究开始前未识别的其他风险。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 2992,
+      "model_calls": 2,
+      "model_tokens": 2105,
+      "cost_usd": 0.004282,
+      "latency_s": 4.76
+    },
+    {
+      "sample_id": "ms-0462",
+      "dept": "PV",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en"
+      ],
+      "query": "根据GVP Annex I中Individual case safety report相关定义，严重不良反应ICSR提交给EudraVigilance的具体时限（天数）是多少？",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "严重不良反应的有效ICSR应在收到报告之日起15天内提交至EudraVigilance。"
+      ],
+      "cited_chunks": [
+        "cc9ee695-f367-4244-8549-1ef001cafa53",
+        "21ae2a3e-9496-4b07-a630-40efd69e0eed"
+      ],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据指出，严重有效 ICSR 应在收到报告之日起 15 天内提交；提交目的地为 EudraVigilance。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 3464,
+      "model_calls": 2,
+      "model_tokens": 2560,
+      "cost_usd": 0.005165,
+      "latency_s": 6.86
+    },
+    {
+      "sample_id": "ms-0463",
+      "dept": "PV",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en"
+      ],
+      "query": "GVP Module I 规定上市许可持有人将严重不良反应报告提交给主管机关的具体时限是多少天？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "identifier",
+          "verdict": "not_supported",
+          "reason": "identifier absent from the cited evidence"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 2851,
+      "model_calls": 1,
+      "model_tokens": 1899,
+      "cost_usd": 0.004142,
+      "latency_s": 4.03
+    },
+    {
+      "sample_id": "ms-0464",
+      "dept": "PV",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en"
+      ],
+      "query": "根据GVP Module IV,如果被稽核方(auditee)不认同稽核发现被评为critical或major的分级结果,是否存在正式的申诉或复议程序供其提出异议?",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 2937,
+      "model_calls": 1,
+      "model_tokens": 1959,
+      "cost_usd": 0.004166,
+      "latency_s": 3.96
+    },
+    {
+      "sample_id": "ms-0465",
+      "dept": "PV",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en"
+      ],
+      "query": "根据GVP Module IX Addendum I，针对妊娠期（pregnancy）患者报告的可疑不良反应，本附录是否规定了专门的signal detection方法？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "population",
+          "verdict": "supported",
+          "reason": "exact match with the same polarity"
+        },
+        {
+          "kind": "population",
+          "verdict": "supported",
+          "reason": "exact match with the same polarity"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 2775,
+      "model_calls": 1,
+      "model_tokens": 1839,
+      "cost_usd": 0.004006,
+      "latency_s": 3.54
+    },
+    {
+      "sample_id": "ms-0466",
+      "dept": "PV",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en"
+      ],
+      "query": "根据GVP Module VI Addendum I，如果上市许可持有人未按规定与EMA或成员国主管当局协作检测重复病例报告，会受到何种处罚或制裁？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 2782,
+      "model_calls": 1,
+      "model_tokens": 1883,
+      "cost_usd": 0.004046,
+      "latency_s": 3.45
+    },
+    {
+      "sample_id": "ms-0467",
+      "dept": "PV",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en"
+      ],
+      "query": "根据GVP Module VI Addendum II，EudraVigilance系统中保留的经遮蔽（masked）个人数据的留存期限（retention period）具体是多久？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 2953,
+      "model_calls": 1,
+      "model_tokens": 1971,
+      "cost_usd": 0.00427,
+      "latency_s": 3.72
+    },
+    {
+      "sample_id": "ms-0468",
+      "dept": "PV",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en"
+      ],
+      "query": "根据 GVP Module VII，MAH 在 EU 单一评估（single assessment）程序中需要向 EMA 支付多少评估费用（fee）？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "identifier",
+          "verdict": "supported",
+          "reason": "exact match with the same polarity"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 3145,
+      "model_calls": 1,
+      "model_tokens": 2182,
+      "cost_usd": 0.004588,
+      "latency_s": 3.04
+    },
+    {
+      "sample_id": "ms-0469",
+      "dept": "PV",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en"
+      ],
+      "query": "GVP Module VIII 是否为非介入性上市后安全性研究（PASS）的患者知情同意书规定了逐项的必备内容清单？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "identifier",
+          "verdict": "supported",
+          "reason": "exact match with the same polarity"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 2810,
+      "model_calls": 1,
+      "model_tokens": 1844,
+      "cost_usd": 0.004072,
+      "latency_s": 4.15
+    },
+    {
+      "sample_id": "ms-0470",
+      "dept": "PV",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en"
+      ],
+      "query": "对于强制性纳入范围内、五年初始监测期届满的药品，GVP Module X 是否给出了从额外监测清单移除的具体评估标准或审核流程？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "time_window",
+          "verdict": "not_supported",
+          "reason": "no matching value in the cited evidence"
+        },
+        {
+          "kind": "identifier",
+          "verdict": "not_supported",
+          "reason": "identifier absent from the cited evidence"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 2780,
+      "model_calls": 1,
+      "model_tokens": 1875,
+      "cost_usd": 0.00415,
+      "latency_s": 3.86
+    },
+    {
+      "sample_id": "ms-0471",
+      "dept": "PV",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en"
+      ],
+      "query": "根据GVP Module XV，如果药品上市许可持有人未按约定的时间表发布DHPC或未遵守安全沟通协调要求，将面临何种处罚或制裁？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 2749,
+      "model_calls": 1,
+      "model_tokens": 1843,
+      "cost_usd": 0.003902,
+      "latency_s": 3.58
+    },
+    {
+      "sample_id": "ms-0472",
+      "dept": "PV",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en",
+        "protocol_id"
+      ],
+      "query": "GVP Module XVI (Rev 3) 是否在文件中列出了可用于包装说明书（package leaflet）的具体核准图案或象形图（pictogram）清单及其各自含义？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "identifier",
+          "verdict": "not_supported",
+          "reason": "identifier absent from the cited evidence"
+        },
+        {
+          "kind": "identifier",
+          "verdict": "supported",
+          "reason": "exact match with the same polarity"
+        },
+        {
+          "kind": "indication",
+          "verdict": "not_supported",
+          "reason": "indication phrase not contained in the cited evidence"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 2716,
+      "model_calls": 1,
+      "model_tokens": 1888,
+      "cost_usd": 0.00464,
+      "latency_s": 4.6
+    },
+    {
+      "sample_id": "ms-0473",
+      "dept": "PV",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer"
+      ],
+      "query": "本指南对疫苗冷链储存所需维持的具体温度范围（如摄氏度）有何规定？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 4195,
+      "model_calls": 1,
+      "model_tokens": 2531,
+      "cost_usd": 0.005278,
+      "latency_s": 3.7
+    },
+    {
+      "sample_id": "ms-0474",
+      "dept": "CO",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en",
+        "protocol_id"
+      ],
+      "query": "本指南对研究者的财务披露（Financial Disclosure，21 CFR Part 54）具体要求是什么？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "identifier",
+          "verdict": "not_supported",
+          "reason": "identifier absent from the cited evidence"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 2824,
+      "model_calls": 1,
+      "model_tokens": 1864,
+      "cost_usd": 0.00412,
+      "latency_s": 2.6
+    },
+    {
+      "sample_id": "ms-0475",
+      "dept": "PV",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en"
+      ],
+      "query": "如果研究者未能及时向申办者报告严重不良事件（SAE），FDA会对该研究者采取哪些处罚或资格取消（disqualification）措施？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 2669,
+      "model_calls": 1,
+      "model_tokens": 1767,
+      "cost_usd": 0.00375,
+      "latency_s": 3.35
+    },
+    {
+      "sample_id": "ms-0476",
+      "dept": "CO",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en",
+        "protocol_id"
+      ],
+      "query": "根据本指南，申办者的重要方案偏离（important protocol deviation）信息是否需要纳入IND年度报告（21 CFR 312.33 annual report）中提交给FDA？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "identifier",
+          "verdict": "not_supported",
+          "reason": "identifier absent from the cited evidence"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 3011,
+      "model_calls": 1,
+      "model_tokens": 1914,
+      "cost_usd": 0.004124,
+      "latency_s": 2.99
+    },
+    {
+      "sample_id": "ms-0477",
+      "dept": "CO",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en"
+      ],
+      "query": "根据FDA这份《风险为本临床试验监查》问答指南（2023年4月），发起人在监查中发现重大问题后，须在多少天或多少个工作日内向FDA报告？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "time_window",
+          "verdict": "not_supported",
+          "reason": "no matching value in the cited evidence"
+        },
+        {
+          "kind": "time_window",
+          "verdict": "not_supported",
+          "reason": "evidence states time:3:mo, claim says time:4:mo"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 2737,
+      "model_calls": 1,
+      "model_tokens": 1789,
+      "cost_usd": 0.003714,
+      "latency_s": 2.71
+    },
+    {
+      "sample_id": "ms-0478",
+      "dept": "CO",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en"
+      ],
+      "query": "根据本指南，负责 centralized monitoring 的人员是否必须持有特定专业认证/证书，或满足最低从业年限要求？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 2723,
+      "model_calls": 1,
+      "model_tokens": 1796,
+      "cost_usd": 0.00444,
+      "latency_s": 3.37
+    },
+    {
+      "sample_id": "ms-0479",
+      "dept": "CO",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en"
+      ],
+      "query": "根据 ICH E10，非劣效性试验的样本量应按什么具体公式计算？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "identifier",
+          "verdict": "not_supported",
+          "reason": "identifier absent from the cited evidence"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 2528,
+      "model_calls": 1,
+      "model_tokens": 1686,
+      "cost_usd": 0.003668,
+      "latency_s": 2.47
+    },
+    {
+      "sample_id": "ms-0480",
+      "dept": "CO",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en"
+      ],
+      "query": "ICH E11(R1) 是否给出了判定儿科外推程度（完全外推、部分外推或不外推）的固定阈值或决策表？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "identifier",
+          "verdict": "supported",
+          "reason": "exact match with the same polarity"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 2625,
+      "model_calls": 1,
+      "model_tokens": 1784,
+      "cost_usd": 0.004168,
+      "latency_s": 3.04
+    },
+    {
+      "sample_id": "ms-0481",
+      "dept": "CO",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en"
+      ],
+      "query": "根据E12A，评估新抗高血压药物时是否需要纳入患者生活质量（quality of life）或患者报告结局的评估？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 2765,
+      "model_calls": 1,
+      "model_tokens": 1812,
+      "cost_usd": 0.003912,
+      "latency_s": 2.6
+    },
+    {
+      "sample_id": "ms-0482",
+      "dept": "CO",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en"
+      ],
+      "query": "ICH E14 是否为 thorough QT/QTc study 规定了固定的受试者例数或统一的样本量计算公式？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "identifier",
+          "verdict": "not_supported",
+          "reason": "identifier absent from the cited evidence"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 2993,
+      "model_calls": 1,
+      "model_tokens": 1932,
+      "cost_usd": 0.004344,
+      "latency_s": 2.8
+    },
+    {
+      "sample_id": "ms-0483",
+      "dept": "CO",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en"
+      ],
+      "query": "根据ICH E15,双重编码(double coding)中用于连接第一把与第二把编码密钥的具体保存期限是多久?",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "indication",
+          "verdict": "not_supported",
+          "reason": "indication phrase not contained in the cited evidence"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 2707,
+      "model_calls": 1,
+      "model_tokens": 1762,
+      "cost_usd": 0.00382,
+      "latency_s": 2.53
+    },
+    {
+      "sample_id": "ms-0484",
+      "dept": "CO",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en"
+      ],
+      "query": "ICH E17 是否规定了多区域临床试验（MRCT）独立数据监查委员会（DMC）的成员人数或各区域代表比例？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "identifier",
+          "verdict": "supported",
+          "reason": "exact match with the same polarity"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 2775,
+      "model_calls": 1,
+      "model_tokens": 1789,
+      "cost_usd": 0.003866,
+      "latency_s": 2.5
+    },
+    {
+      "sample_id": "ms-0485",
+      "dept": "CO",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en"
+      ],
+      "query": "ICH E19 是否给出了从选择性安全性数据收集恢复为全面收集的预设量化触发阈值或固定决策算法？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "identifier",
+          "verdict": "supported",
+          "reason": "exact match with the same polarity"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 2769,
+      "model_calls": 1,
+      "model_tokens": 1807,
+      "cost_usd": 0.004022,
+      "latency_s": 2.71
+    },
+    {
+      "sample_id": "ms-0486",
+      "dept": "PV",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en"
+      ],
+      "query": "若申办者未能在ICH E2A规定的时限内提交快速安全报告，将面临何种监管处罚或制裁？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 3176,
+      "model_calls": 1,
+      "model_tokens": 2096,
+      "cost_usd": 0.004328,
+      "latency_s": 3.57
+    },
+    {
+      "sample_id": "ms-0488",
+      "dept": "PV",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en"
+      ],
+      "query": "根据ICH E2D，定期安全性更新报告（PSUR）应按照多长的时间间隔提交？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 2683,
+      "model_calls": 1,
+      "model_tokens": 1781,
+      "cost_usd": 0.003874,
+      "latency_s": 3.72
+    },
+    {
+      "sample_id": "ms-0489",
+      "dept": "PV",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en"
+      ],
+      "query": "根据ICH E2E指南，定期安全性更新报告（PSUR）应以多长的时间间隔提交给监管机构？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 2599,
+      "model_calls": 1,
+      "model_tokens": 1723,
+      "cost_usd": 0.003582,
+      "latency_s": 3.52
+    },
+    {
+      "sample_id": "ms-0490",
+      "dept": "PV",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en"
+      ],
+      "query": "ICH E2F是否规定DSUR文本必须使用申办方所在国官方语言或英语提交?",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "identifier",
+          "verdict": "not_supported",
+          "reason": "identifier absent from the cited evidence"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 2805,
+      "model_calls": 1,
+      "model_tokens": 1889,
+      "cost_usd": 0.004066,
+      "latency_s": 3.54
+    },
+    {
+      "sample_id": "ms-0491",
+      "dept": "CO",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en"
+      ],
+      "query": "根据ICH E3，用于对不良事件进行分组编码的标准不良反应/事件词典（如MedDRA）应采用哪个具体版本？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "indication",
+          "verdict": "not_supported",
+          "reason": "indication phrase not contained in the cited evidence"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 2565,
+      "model_calls": 1,
+      "model_tokens": 1710,
+      "cost_usd": 0.003756,
+      "latency_s": 2.76
+    },
+    {
+      "sample_id": "ms-0492",
+      "dept": "CO",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en"
+      ],
+      "query": "ICH E6(R3) 是否规定了受试者报酬的统一金额、计算公式或固定费率？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "identifier",
+          "verdict": "supported",
+          "reason": "exact match with the same polarity"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 2859,
+      "model_calls": 1,
+      "model_tokens": 1976,
+      "cost_usd": 0.004224,
+      "latency_s": 2.62
+    },
+    {
+      "sample_id": "ms-0493",
+      "dept": "CO",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en"
+      ],
+      "query": "根据 ICH E7,是否规定在老年人临床试验中必须使用特定的功能状态或衰弱评估量表(如 Karnofsky 或 ADL 量表)来筛选或分层受试者?",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "identifier",
+          "verdict": "supported",
+          "reason": "exact match with the same polarity"
+        },
+        {
+          "kind": "population",
+          "verdict": "supported",
+          "reason": "exact match with the same polarity"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 2683,
+      "model_calls": 1,
+      "model_tokens": 1789,
+      "cost_usd": 0.004026,
+      "latency_s": 3.04
+    },
+    {
+      "sample_id": "ms-0494",
+      "dept": "CO",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en"
+      ],
+      "query": "ICH E8(R1) 是否规定了独立数据监查委员会（DMC）的固定成员人数、专业构成比例或角色配额？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "identifier",
+          "verdict": "supported",
+          "reason": "exact match with the same polarity"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 2910,
+      "model_calls": 1,
+      "model_tokens": 1881,
+      "cost_usd": 0.004106,
+      "latency_s": 2.74
+    },
+    {
+      "sample_id": "ms-0495",
+      "dept": "CO",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en"
+      ],
+      "query": "根据 ICH E9(R1)，遗漏数据（missing data）比例达到多少百分比或门槛时才需要额外启动更严格的敏感度分析，指南是否给出具体数值标准？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "identifier",
+          "verdict": "supported",
+          "reason": "exact match with the same polarity"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 3030,
+      "model_calls": 1,
+      "model_tokens": 2035,
+      "cost_usd": 0.006182,
+      "latency_s": 4.84
+    },
+    {
+      "sample_id": "ms-0496",
+      "dept": "PV",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en"
+      ],
+      "query": "根据本文档，各标准 MedDRA 分析查询(SMQ)（如 SMQ 急性胰腺炎、SMQ 速发严重过敏反应等）的灵敏度、特异度和阳性预测值等验证性能指标具体数值是多少？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 4913,
+      "model_calls": 1,
+      "model_tokens": 2968,
+      "cost_usd": 0.006152,
+      "latency_s": 3.78
+    },
+    {
+      "sample_id": "ms-0497",
+      "dept": "PV",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en"
+      ],
+      "query": "MedDRA 发布新版本后，机构是否规定必须在多少天或多少周内完成版本切换？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 5419,
+      "model_calls": 1,
+      "model_tokens": 3179,
+      "cost_usd": 0.007182,
+      "latency_s": 3.96
+    },
+    {
+      "sample_id": "ms-0498",
+      "dept": "PV",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en"
+      ],
+      "query": "《SMQ 入门指南》是否列出了使用 SMQ 需向 MSSO 或 ICH 另行支付的许可费或订阅费金额或费率？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 6403,
+      "model_calls": 1,
+      "model_tokens": 3755,
+      "cost_usd": 0.007878,
+      "latency_s": 3.91
+    },
+    {
+      "sample_id": "ms-0499",
+      "dept": "PV",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en"
+      ],
+      "query": "《更新内容 MedDRA 第25.0版》中，新增的“非感染性心肌炎/心包炎”SMQ 的窄义与广义搜索各包含多少个 PT？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 5916,
+      "model_calls": 1,
+      "model_tokens": 3531,
+      "cost_usd": 0.007318,
+      "latency_s": 3.8
+    },
+    {
+      "sample_id": "ms-0500",
+      "dept": "PV",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer"
+      ],
+      "query": "根據本指引,若通報單位逾期未依「藥品嚴重不良反應通報辦法」規定時限完成通報,將面臨多少罰鍰金額?",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 6363,
+      "model_calls": 1,
+      "model_tokens": 3828,
+      "cost_usd": 0.007872,
+      "latency_s": 3.83
+    },
+    {
+      "sample_id": "ms-0501",
+      "dept": "MA",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en",
+        "drug_name_zh"
+      ],
+      "query": "服用瑪爾胰（glimepiride）期間，飲用葡萄柚汁是否會影響藥效或增加副作用風險？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 6960,
+      "model_calls": 1,
+      "model_tokens": 4222,
+      "cost_usd": 0.008692,
+      "latency_s": 4.19
+    },
+    {
+      "sample_id": "ms-0502",
+      "dept": "MA",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en",
+        "drug_name_zh"
+      ],
+      "query": "服用「明德」心壓暢錠100毫克（美托普洛）的病患，若同時服用fluoxetine或paroxetine等CYP2D6抑制劑，是否需要調整劑量？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "dose",
+          "verdict": "supported",
+          "reason": "exact match with the same polarity"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 6886,
+      "model_calls": 1,
+      "model_tokens": 4165,
+      "cost_usd": 0.008682,
+      "latency_s": 3.92
+    },
+    {
+      "sample_id": "ms-0503",
+      "dept": "MA",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en",
+        "drug_name_zh"
+      ],
+      "query": "服用固栓宜（Carvetone，clopidogrel）期間喝葡萄柚汁，會不會影響藥效或增加出血風險？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 6169,
+      "model_calls": 1,
+      "model_tokens": 3846,
+      "cost_usd": 0.007948,
+      "latency_s": 3.94
+    },
+    {
+      "sample_id": "ms-0504",
+      "dept": "MA",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en",
+        "drug_name_zh"
+      ],
+      "query": "使用「信諾隆」靜脈輸注液（ciprofloxacin）治療期間，若同時飲用葡萄柚汁，是否會影響藥效或產生交互作用？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 5818,
+      "model_calls": 1,
+      "model_tokens": 3635,
+      "cost_usd": 0.007558,
+      "latency_s": 4.23
+    },
+    {
+      "sample_id": "ms-0505",
+      "dept": "MA",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en",
+        "drug_name_zh"
+      ],
+      "query": "服用康肯®（bisoprolol）期間飲用葡萄柚汁，是否會影響其代謝或藥效？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 6617,
+      "model_calls": 1,
+      "model_tokens": 4053,
+      "cost_usd": 0.00837,
+      "latency_s": 4.27
+    },
+    {
+      "sample_id": "ms-0506",
+      "dept": "MA",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en",
+        "drug_name_zh"
+      ],
+      "query": "痛風停錠（allopurinol）對於肝功能不全的病人，建議如何調整劑量？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "population",
+          "verdict": "supported",
+          "reason": "exact match with the same polarity"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 6645,
+      "model_calls": 1,
+      "model_tokens": 4025,
+      "cost_usd": 0.008186,
+      "latency_s": 3.59
+    },
+    {
+      "sample_id": "ms-0507",
+      "dept": "MA",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "drug_name_zh"
+      ],
+      "query": "「胃所樂」腸溶膜衣錠40毫克在建議儲存條件下的有效期限（保存期限）為多久？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "dose",
+          "verdict": "supported",
+          "reason": "exact match with the same polarity"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 4597,
+      "model_calls": 1,
+      "model_tokens": 3040,
+      "cost_usd": 0.006456,
+      "latency_s": 3.68
+    },
+    {
+      "sample_id": "ms-0508",
+      "dept": "MA",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "drug_name_zh"
+      ],
+      "query": "若病患忘記服用一次怡胃適腸溶錠，應該立即補服，還是等到下次服藥時間再正常服用？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 6329,
+      "model_calls": 1,
+      "model_tokens": 3896,
+      "cost_usd": 0.008224,
+      "latency_s": 3.96
+    },
+    {
+      "sample_id": "ms-0510",
+      "dept": "MA",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en"
+      ],
+      "query": "Hetlosar 100（losartan potassium 100 毫克）口服後的生體可用率（bioavailability）及血漿半衰期為何？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "dose",
+          "verdict": "supported",
+          "reason": "exact match with the same polarity"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 6419,
+      "model_calls": 1,
+      "model_tokens": 3933,
+      "cost_usd": 0.008146,
+      "latency_s": 3.65
+    },
+    {
+      "sample_id": "ms-0511",
+      "dept": "MA",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en",
+        "drug_name_zh"
+      ],
+      "query": "「安星」伊風柔錠300毫克（allopurinol）仿單是否載明服藥期間禁止駕駛或操作機械等明確操作限制？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "dose",
+          "verdict": "not_supported",
+          "reason": "same value, opposite negation polarity"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 6058,
+      "model_calls": 1,
+      "model_tokens": 3783,
+      "cost_usd": 0.008014,
+      "latency_s": 4.26
+    },
+    {
+      "sample_id": "ms-0512",
+      "dept": "MA",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en",
+        "drug_name_zh"
+      ],
+      "query": "樂癲活持續釋放膜衣錠25毫克（Lamofree ER Tablets 25mg）仿單是否載明服藥期間禁止駕駛或操作機械等明確操作限制？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "dose",
+          "verdict": "not_supported",
+          "reason": "same value, opposite negation polarity"
+        },
+        {
+          "kind": "dose",
+          "verdict": "not_supported",
+          "reason": "same value, opposite negation polarity"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 6328,
+      "model_calls": 1,
+      "model_tokens": 3975,
+      "cost_usd": 0.008294,
+      "latency_s": 4.65
+    },
+    {
+      "sample_id": "ms-0513",
+      "dept": "MA",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en",
+        "drug_name_zh"
+      ],
+      "query": "服用隆我心錠（LANOXIN, digoxin）期間，若同時飲用葡萄柚汁，是否會影響其血中濃度或產生交互作用？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 5885,
+      "model_calls": 1,
+      "model_tokens": 3644,
+      "cost_usd": 0.00752,
+      "latency_s": 4.78
+    },
+    {
+      "sample_id": "ms-0514",
+      "dept": "MA",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en",
+        "drug_name_zh"
+      ],
+      "query": "服用美洛醣膜衣錠850毫克（Loformin, metformin）期間，飲用葡萄柚汁是否會影響藥效或增加副作用風險？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "dose",
+          "verdict": "supported",
+          "reason": "exact match with the same polarity"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 6580,
+      "model_calls": 1,
+      "model_tokens": 3940,
+      "cost_usd": 0.00812,
+      "latency_s": 6.13
+    },
+    {
+      "sample_id": "ms-0515",
+      "dept": "MA",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "drug_name_zh",
+        "mixed_zh_en"
+      ],
+      "query": "若病人服用 Losacar 100（losartan）緩壓膜衣錠時忘記服用一劑，仿單是否說明應如何補服或跳過該劑？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 6309,
+      "model_calls": 1,
+      "model_tokens": 3865,
+      "cost_usd": 0.008034,
+      "latency_s": 5.08
+    },
+    {
+      "sample_id": "ms-0516",
+      "dept": "MA",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en",
+        "drug_name_zh"
+      ],
+      "query": "脈得服錠10公絲（PERISAFE，enalapril）應如何貯藏，是否需要避光或冷藏？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 5134,
+      "model_calls": 1,
+      "model_tokens": 3279,
+      "cost_usd": 0.00691,
+      "latency_s": 5.77
+    },
+    {
+      "sample_id": "ms-0517",
+      "dept": "MA",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en",
+        "drug_name_zh"
+      ],
+      "query": "「居禮」拔痛酸錠（Allopurinol）仿單是否載明服藥期間禁止駕駛或操作機械等明確操作限制？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 6316,
+      "model_calls": 1,
+      "model_tokens": 4019,
+      "cost_usd": 0.01051,
+      "latency_s": 8.64
+    },
+    {
+      "sample_id": "ms-0518",
+      "dept": "MA",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en",
+        "drug_name_zh"
+      ],
+      "query": "服用喜樂平膜衣錠（Quetiapine）期間，是否需要避免飲用葡萄柚汁以免影響藥物血中濃度？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 6269,
+      "model_calls": 1,
+      "model_tokens": 3902,
+      "cost_usd": 0.008148,
+      "latency_s": 3.57
+    },
+    {
+      "sample_id": "ms-0519",
+      "dept": "MA",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "drug_name_zh"
+      ],
+      "query": "「華盛頓」洛得敏糖漿對於腎功能不全的病人是否需要調整劑量？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "population",
+          "verdict": "supported",
+          "reason": "exact match with the same polarity"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 6808,
+      "model_calls": 1,
+      "model_tokens": 4112,
+      "cost_usd": 0.008496,
+      "latency_s": 4.7
+    },
+    {
+      "sample_id": "ms-0520",
+      "dept": "MA",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en",
+        "drug_name_zh"
+      ],
+      "query": "〝南光〞賜痛寧注射液（diclofenac）仿單是否為非嚴重腎功能受損病人提供分級的具體減量數值或給藥間隔方案？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 7481,
+      "model_calls": 1,
+      "model_tokens": 4509,
+      "cost_usd": 0.010282,
+      "latency_s": 7.17
+    },
+    {
+      "sample_id": "ms-0521",
+      "dept": "MA",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en",
+        "drug_name_zh"
+      ],
+      "query": "服用衛欣保膜衣錠80毫克（valsartan）期間，飲用葡萄柚汁是否會影響藥效或增加副作用風險？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "dose",
+          "verdict": "supported",
+          "reason": "exact match with the same polarity"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 7105,
+      "model_calls": 1,
+      "model_tokens": 4253,
+      "cost_usd": 0.008762,
+      "latency_s": 3.95
+    },
+    {
+      "sample_id": "ms-0522",
+      "dept": "MA",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "drug_name_zh"
+      ],
+      "query": "免痛注射液（待克菲那）與葡萄柚汁併用是否會產生交互作用而影響藥效？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 6288,
+      "model_calls": 1,
+      "model_tokens": 3828,
+      "cost_usd": 0.007904,
+      "latency_s": 5.52
+    },
+    {
+      "sample_id": "ms-0523",
+      "dept": "MA",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en",
+        "drug_name_zh"
+      ],
+      "query": "莫尼茲靜脈注射劑（ondansetron）與葡萄柚汁併用時，藥物動力學是否會受影響？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 6158,
+      "model_calls": 1,
+      "model_tokens": 3821,
+      "cost_usd": 0.007914,
+      "latency_s": 4.07
+    },
+    {
+      "sample_id": "ms-0524",
+      "dept": "MA",
+      "kind": "no_answer",
+      "slices": [
+        "no_answer",
+        "mixed_zh_en",
+        "drug_name_zh"
+      ],
+      "query": "服用穩壓膜衣錠50毫克（Zosaa F.C. Tablets 50mg, losartan potassium）期間，可否同時飲用葡萄柚汁？是否會影響藥效？",
+      "outcome": "escalated",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "escalation_detail": "model reports the evidence does not answer the question",
+      "claims": [],
+      "cited_chunks": [],
+      "gold_chunks": [],
+      "gold_cited": false,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "dose",
+          "verdict": "supported",
+          "reason": "exact match with the same polarity"
+        },
+        {
+          "kind": "dose",
+          "verdict": "supported",
+          "reason": "exact match with the same polarity"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok",
+        "escalate:ok"
+      ],
+      "tokens_used": 6374,
+      "model_calls": 1,
+      "model_tokens": 3878,
+      "cost_usd": 0.008052,
+      "latency_s": 5.15
+    },
+    {
+      "sample_id": "ms-0382",
+      "dept": "CO",
+      "kind": "conflict",
+      "slices": [
+        "version_conflict",
+        "mixed_zh_en"
+      ],
+      "query": "根据ICH E15，药物遗传学（Pharmacogenetics, PGt）的定义是什么？",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "根据ICH E15，药物遗传学（PGt）是药物基因组学（PGx）的一个分支，定义为研究与药物反应相关的DNA序列变异。"
+      ],
+      "cited_chunks": [
+        "54c84cdd-ca4c-4407-99fb-786685f7c144"
+      ],
+      "gold_chunks": [
+        "54c84cdd-ca4c-4407-99fb-786685f7c144"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据明确指出，药物遗传学（PGt）是药物基因组学（PGx）的一个子集，定义为研究与药物反应相关的DNA序列变异。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 3238,
+      "model_calls": 2,
+      "model_tokens": 2277,
+      "cost_usd": 0.004538,
+      "latency_s": 4.5
+    },
+    {
+      "sample_id": "ms-0386",
+      "dept": "CO",
+      "kind": "conflict",
+      "slices": [
+        "negation",
+        "version_conflict",
+        "mixed_zh_en"
+      ],
+      "query": "根据ICH E15，匿名化（anonymised）数据和样本是否可以用于对受试者进行临床监测或随访？",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "不可以。根据 ICH E15，使用匿名化数据和样本无法对受试者进行临床监测或随访。"
+      ],
+      "cited_chunks": [
+        "ee6ae13c-6b37-4e52-82e5-d0150c15de30"
+      ],
+      "gold_chunks": [
+        "ee6ae13c-6b37-4e52-82e5-d0150c15de30"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "reason": "llm:gpt-6-luna: 证据明确指出，匿名化数据和样本不允许进行临床监测或受试者随访，与陈述内容一致。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 3030,
+      "model_calls": 2,
+      "model_tokens": 2251,
+      "cost_usd": 0.004171,
+      "latency_s": 6.13
+    }
+  ]
+}
