@@ -1,0 +1,614 @@
+{
+  "run": "2026-09-23-skill-smoke-v1",
+  "finished_at": "2026-09-23T05:48:29+00:00",
+  "versions": {
+    "policy_version": "policy-m2-smoke-1",
+    "retrieval_version": "90b57e4e86b4bb462fc4de58f7f7749666fb6f50a588c129bd5f9aa50585ab18",
+    "skill_version_set": [
+      "citation_verification@1.0.0",
+      "label_query@1.0.0"
+    ],
+    "model_config_version": "answer=gpt-6-sol;judge=gpt-6-sol;verifier-v2+support-rules-v2+polarity_only"
+  },
+  "n": 12,
+  "total_cost_usd": 0.06,
+  "results": [
+    {
+      "case": "label_query/positive",
+      "skill": "label_query",
+      "dept": "MA",
+      "input": {
+        "product": "瑪爾胰",
+        "question": "每日最高建議劑量是多少？"
+      },
+      "expect": "completed",
+      "expect_verdicts": null,
+      "sample_id": null,
+      "status": "insufficient_evidence",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "detail": "no claim survives verification (forged=0, dropped=1)",
+      "attempts": [
+        "skill:label_query:ok"
+      ],
+      "safety": "allow",
+      "output": {
+        "claims": [],
+        "excerpts": [],
+        "citations": [],
+        "historical_notice": false
+      },
+      "cost_usd": 0.011508,
+      "model_calls": 2,
+      "latency_s": 9.33
+    },
+    {
+      "case": "label_query/positive-2",
+      "skill": "label_query",
+      "dept": "MA",
+      "input": {
+        "product": "Losacar",
+        "question": "治療高血壓的一般起始劑量及維持劑量是多少？"
+      },
+      "expect": "completed",
+      "expect_verdicts": null,
+      "sample_id": null,
+      "status": "completed",
+      "reason_codes": [],
+      "detail": "",
+      "attempts": [
+        "skill:label_query:ok"
+      ],
+      "safety": "allow",
+      "output": {
+        "claims": [
+          {
+            "text": "Losacar 治療高血壓時，大多數病人的一般起始劑量及維持劑量均為每次 50 毫克，每日一次。",
+            "citation_chunk_ids": [
+              "69d672fd-460a-4179-bcaa-69598ee179bf",
+              "45617062-68e6-4adc-93e3-d2c1dead8e40"
+            ]
+          }
+        ],
+        "excerpts": [
+          {
+            "text": "劑量及用法 Losartan potassium 可與食物併服或空腹服用。 Losartan potassium 可與其他抗高血壓劑併服。高血壓大多數病人的一般起始劑量及維持劑量為每次 50 毫克,每日一次;在治療後 3-6 週可獲得最大降壓效果;有些病人在劑量增加至每次 100 毫克,每日一次後,其療效更佳。對血管內體液缺乏(intravascularly volume -depleted)之患者(如以高劑量利尿劑治療者),其起始劑量需考慮改用每次25 毫克,每日一次(參見注意事項)。對老年患者或腎功能受損患者,包括洗腎病人,毋須調整其起始劑量;但對有肝功能受損病史之患者,需考慮改用較低之劑量(參見注意事項)。治療第 II 型糖尿病腎病變一般起始劑量為每次 50 毫克,每日一次。視血壓下降情形,可將劑量增加至每次 100 毫克,每日一次。Losartan potassium 可與其他降血壓藥(如利尿劑、鈣離子拮抗劑、alpha 或 beta 阻斷劑、中樞神經作用劑)、胰島素及其他常用之降血糖藥(如 sulfonylureas、glitazones 及 glucosidase 抑制劑)合併服用。",
+            "citation": {
+              "doc_id": "95194502-0d2c-4647-9282-963570cf8702",
+              "version": "修訂日期 2016.12.2",
+              "effective_date": "2016-12-02",
+              "page": 1,
+              "section": "適應症",
+              "chunk_id": "45617062-68e6-4adc-93e3-d2c1dead8e40"
+            }
+          },
+          {
+            "text": "緩壓膜衣錠 100 毫克衛署藥輸字第 025589 號 Losacar 100 Tablets 本藥須由醫師處方使用治療類別 Losacar ( Losartan potassium)是血管收縮素 II(angiotensin II )接受體(AT1 型 receptor)之拮抗劑,為新類型中的第一個抗高血壓藥物。同時,Losartan potassium 對於伴有蛋白尿之第二型糖尿病患(type 2 diabetic patients)具有腎臟保護作用。適應症高血壓、治療第 II 型糖尿病腎病變。說明 Losartan potassium 可治療高血壓。 Losartan potassium 可延緩腎臟疾病的惡化-Losartan potassium 可降低下列二種綜合病變的發生:病人血清中肌酸酐(creatinine)值上升一倍、末期腎病變(需要長時間洗腎或換腎)或死亡;並且可降低蛋白尿的發生。",
+            "citation": {
+              "doc_id": "95194502-0d2c-4647-9282-963570cf8702",
+              "version": "修訂日期 2016.12.2",
+              "effective_date": "2016-12-02",
+              "page": 1,
+              "section": "",
+              "chunk_id": "69d672fd-460a-4179-bcaa-69598ee179bf"
+            }
+          }
+        ],
+        "citations": [
+          {
+            "doc_id": "95194502-0d2c-4647-9282-963570cf8702",
+            "version": "修訂日期 2016.12.2",
+            "effective_date": "2016-12-02",
+            "page": 1,
+            "section": "適應症",
+            "chunk_id": "45617062-68e6-4adc-93e3-d2c1dead8e40"
+          },
+          {
+            "doc_id": "95194502-0d2c-4647-9282-963570cf8702",
+            "version": "修訂日期 2016.12.2",
+            "effective_date": "2016-12-02",
+            "page": 1,
+            "section": "",
+            "chunk_id": "69d672fd-460a-4179-bcaa-69598ee179bf"
+          }
+        ],
+        "historical_notice": false
+      },
+      "cost_usd": 0.011024,
+      "model_calls": 2,
+      "latency_s": 5.83
+    },
+    {
+      "case": "label_query/positive-3",
+      "skill": "label_query",
+      "dept": "MA",
+      "input": {
+        "product": "拔痛酸錠",
+        "question": "6 至 12 歲兒童的口服劑量如何給予？"
+      },
+      "expect": "completed",
+      "expect_verdicts": null,
+      "sample_id": null,
+      "status": "completed",
+      "reason_codes": [],
+      "detail": "",
+      "attempts": [
+        "skill:label_query:ok"
+      ],
+      "safety": "allow",
+      "output": {
+        "claims": [
+          {
+            "text": "拔痛酸錠用於贅瘤疾病治療引起的高尿酸血症時，6 至 12 歲兒童的口服劑量為每次 100 mg、每日 3 次；或每日 1 次、單次 300 mg。",
+            "citation_chunk_ids": [
+              "fe527d30-b5b9-4e31-9c6b-532198f60ef4",
+              "a64a3e97-87c8-4d48-8f8d-d4a0eaa578cf",
+              "203936fb-ffd4-4af9-9e80-247af7211e8b"
+            ]
+          },
+          {
+            "text": "治療約 48 小時後，可能須依反應調整劑量。",
+            "citation_chunk_ids": [
+              "fe527d30-b5b9-4e31-9c6b-532198f60ef4",
+              "a64a3e97-87c8-4d48-8f8d-d4a0eaa578cf",
+              "203936fb-ffd4-4af9-9e80-247af7211e8b"
+            ]
+          }
+        ],
+        "excerpts": [
+          {
+            "text": "一般孩童劑量:贅瘤疾病治療上的抗高尿酸血症— 年齡及於 6 歲的孩童:口服,500 mg,一天三次。年齡 6 至 12 歲的孩童:口服,100 mg,一天三次;或 300 mg 當作一個單一劑量,一天一次。注意—大約在治療 48 小時之後,劑量的調整可能是必需的,依病人的反應而定。【注意事項】 1. 懷孕/生殖:生育力—以高達人用劑量之 200 倍的劑量投予老鼠或兔子,沒有檢測出生育力的受損。懷孕— 雖然在人體之適當且妥善控制的研究未曾執行過,但有三個報導指出,在懷孕期間接受 Allopurinol 的婦女,其新生兒並沒有出生缺陷的證據。在小白鼠的研究上,於妊娠期的第 10 天或第 13 天,以 100 mg/kg 的 Allopurinol 劑量做腹腔內注射,造成的死胎數目有所增加。但在 50 mg/kg 的劑量,則無此效應。在同一個研究上,當於妊娠期間之第 10 天以腹腔內注射 50 或 100 mg/kg 的劑量時,造成外部胎兒畸型(External fetal malformation)。",
+            "citation": {
+              "doc_id": "d953b0bb-c343-4c13-a6c2-73d71e033f03",
+              "version": "pdf-meta 2014-05-15（未见版本行）",
+              "effective_date": "2014-05-15",
+              "page": 3,
+              "section": "3 至 10 每日不超過 100 mg",
+              "chunk_id": "fe527d30-b5b9-4e31-9c6b-532198f60ef4"
+            }
+          },
+          {
+            "text": "有些腎功能不全的病人,可能需要甚至更低的劑量,或是更長的劑量間的間隔時間。某些情況下,300mg 每週兩次或更少,可能就足夠。一般成人處方限量:每一劑量 300mg;每天 800mg。一般孩童劑量:贅瘤疾病治療所引起的高尿酸血症 ─ 年齡及於 6 歲的孩童:口服,50mg,一天三次。年齡 6 至 12 歲的孩童:口服,100mg,一天三次;或 300mg 當作一個單一劑量,一天一次。注意─大約在治療 48 小時之後,劑量的調整可能是必須的,依病人的反應而定。【用法用量】 1. 懷孕/生殖:生育力─以高達人用劑量之 200 倍的劑量投予老鼠或兔子,沒有檢測出生育力的受損。懷孕─ 雖然在人體之適當且妥善控制的研究未曾執行過,但有三個報導指出,在懷孕期間接受 Allopurinol 的婦女,其新生兒並沒有出生缺陷的證據。在小白鼠的研究上,於妊娠期的第 10 天或第 13 天,以 100mg/kg 的 Allopurinol 劑量做腹腔內注射,造成的死胎數目有所增加。",
+            "citation": {
+              "doc_id": "d1ac3a07-6e3d-4172-b3e2-4d25d36b78a3",
+              "version": "pdf-meta 2015-07-15（未见版本行）",
+              "effective_date": "2015-07-15",
+              "page": 3,
+              "section": "3 至 10 每日不超過 100mg",
+              "chunk_id": "a64a3e97-87c8-4d48-8f8d-d4a0eaa578cf"
+            }
+          },
+          {
+            "text": "注意—由於Oxipurine主要是經由腎臟排泄,所以在有腎衰竭的病人,可能會發生蓄積。在接受透析的病人,可能需要使用一般治療劑量的Allopurinol;不過,在未接受透析的病人則建議依下表所列的劑量減低之:有些腎功能不全的病人,可能需要甚至更低劑量,或是更長的劑量間的間隔時間。某些情況下,300mg 每週兩次或更少,可能就足夠。一般成人處方限量:每一劑量300mg;每天800mg 一般孩童劑量:贅瘤疾病治療引起的高尿酸血症— 年齡及於6 歲的孩童:口服,50mg,一天三次。年齡6 至12 歲的孩童:口服,100mg,一天三次;或300mg 當作一個單一劑量,一天一次。注意—大約在治療48 小時之後,劑量的調整可能是必需的,依病人的反應而定。【注意事項】 1. 懷孕/生殖生育力—以高達人用劑量之200 倍的劑量投予老鼠或兔子,沒有檢測出生育能力的受損。懷孕—雖然在人體之適當且妥善控制的研究未曾執行過,但有三個報告指出,在懷孕期間接受Allopurinol的婦女,其新生兒並沒有出生缺陷的證據。肌胺酸酐清除率(Creatinine clearance)mL/min 劑量 10 至20 每日200mg 3 至10 每日不超過100mg <3 100mg 超過24 小時間隔,可能是必須的。 3",
+            "citation": {
+              "doc_id": "dd977e56-d632-42fa-bc47-ae8e399822b1",
+              "version": "pdf-meta 2018-02-09（未见版本行）",
+              "effective_date": "2026-07-20",
+              "page": 3,
+              "section": "用法用量",
+              "chunk_id": "203936fb-ffd4-4af9-9e80-247af7211e8b"
+            }
+          }
+        ],
+        "citations": [
+          {
+            "doc_id": "d953b0bb-c343-4c13-a6c2-73d71e033f03",
+            "version": "pdf-meta 2014-05-15（未见版本行）",
+            "effective_date": "2014-05-15",
+            "page": 3,
+            "section": "3 至 10 每日不超過 100 mg",
+            "chunk_id": "fe527d30-b5b9-4e31-9c6b-532198f60ef4"
+          },
+          {
+            "doc_id": "d1ac3a07-6e3d-4172-b3e2-4d25d36b78a3",
+            "version": "pdf-meta 2015-07-15（未见版本行）",
+            "effective_date": "2015-07-15",
+            "page": 3,
+            "section": "3 至 10 每日不超過 100mg",
+            "chunk_id": "a64a3e97-87c8-4d48-8f8d-d4a0eaa578cf"
+          },
+          {
+            "doc_id": "dd977e56-d632-42fa-bc47-ae8e399822b1",
+            "version": "pdf-meta 2018-02-09（未见版本行）",
+            "effective_date": "2026-07-20",
+            "page": 3,
+            "section": "用法用量",
+            "chunk_id": "203936fb-ffd4-4af9-9e80-247af7211e8b"
+          }
+        ],
+        "historical_notice": false
+      },
+      "cost_usd": 0.019384,
+      "model_calls": 3,
+      "latency_s": 10.04
+    },
+    {
+      "case": "label_query/non-label-topic",
+      "skill": "label_query",
+      "dept": "PV",
+      "input": {
+        "product": "GVP Module VI",
+        "question": "嚴重不良反應 ICSR 的提交時限是幾天？"
+      },
+      "expect": "insufficient_evidence",
+      "expect_verdicts": null,
+      "sample_id": null,
+      "status": "insufficient_evidence",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "detail": "answer cites 1 non-label document(s); label_query reports label text only",
+      "attempts": [
+        "skill:label_query:ok"
+      ],
+      "safety": "allow",
+      "output": {
+        "claims": [],
+        "excerpts": [],
+        "citations": [],
+        "historical_notice": false
+      },
+      "cost_usd": 0.0063,
+      "model_calls": 2,
+      "latency_s": 6.3
+    },
+    {
+      "case": "label_query/scope-denied",
+      "skill": "label_query",
+      "dept": "MA",
+      "input": {
+        "product": "瑪爾胰",
+        "question": "每日最高建議劑量是多少？"
+      },
+      "expect": "forbidden",
+      "expect_verdicts": null,
+      "sample_id": null,
+      "status": "error",
+      "error_code": "forbidden",
+      "error_message": "skill label_query@1.0.0 requires scopes the caller does not hold",
+      "error_detail": "missing=['MA:read']",
+      "cost_usd": 0.0,
+      "model_calls": 0,
+      "latency_s": 0.0
+    },
+    {
+      "case": "label_query/schema-violation",
+      "skill": "label_query",
+      "dept": "MA",
+      "input": {
+        "product": "",
+        "question": "x"
+      },
+      "expect": "schema_violation",
+      "expect_verdicts": null,
+      "sample_id": null,
+      "status": "error",
+      "error_code": "schema_violation",
+      "error_message": "skill label_query@1.0.0 input rejected by its schema (1 error(s))",
+      "error_detail": "1 validation error for LabelQueryInput\nproduct\n  String should have at least 1 character [type=string_too_short, input_value='', input_type=str]\n    For further information visit https://errors.pydant",
+      "cost_usd": 0.0,
+      "model_calls": 0,
+      "latency_s": 0.0
+    },
+    {
+      "case": "citation_verification/supported-1",
+      "skill": "citation_verification",
+      "dept": "MA",
+      "input": {
+        "claims": [
+          {
+            "text": "瑪爾胰（glimepiride）每日最高建議劑量為 8 mg。",
+            "citation_chunk_ids": [
+              "1bbf86e9-fe24-42d6-8b71-b0bf12953079"
+            ]
+          }
+        ]
+      },
+      "expect": "completed",
+      "expect_verdicts": "supported",
+      "sample_id": "ms-0001",
+      "status": "completed",
+      "reason_codes": [],
+      "detail": "verified 1 claim(s): {'supported': 1, 'not_supported': 0, 'contradicted': 0}",
+      "attempts": [
+        "skill:citation_verification:ok"
+      ],
+      "safety": "allow",
+      "output": {
+        "verdicts": [
+          {
+            "text": "瑪爾胰（glimepiride）每日最高建議劑量為 8 mg。",
+            "verdict": "supported",
+            "sources": [
+              {
+                "doc_id": "3bbe1470-9d21-4e90-8f77-4b93e07d1b02",
+                "version": "pdf-meta 2016-11-22（未见版本行）",
+                "effective_date": "2016-11-22",
+                "page": 1,
+                "section": "2.0 公絲錠",
+                "chunk_id": "1bbf86e9-fe24-42d6-8b71-b0bf12953079"
+              }
+            ],
+            "unknown_citations": [],
+            "reason": "llm:gpt-6-sol: 证据明确写明“Glimepiride 每日最高之建議劑量為 8mg”，与陈述一致。"
+          }
+        ],
+        "verifier_version": "verifier-v2+support-rules-v2+polarity_only"
+      },
+      "cost_usd": 0.001544,
+      "model_calls": 1,
+      "latency_s": 1.69
+    },
+    {
+      "case": "citation_verification/supported-2",
+      "skill": "citation_verification",
+      "dept": "MA",
+      "input": {
+        "claims": [
+          {
+            "text": "不可以。瑪爾胰（Amaryl）禁用於嚴重腎臟或肝臟功能異常的病患。",
+            "citation_chunk_ids": [
+              "b704feb4-7e74-46a3-8a64-ed8f9969b402",
+              "98bdbef1-e550-4755-9fcb-5edabcb144c9"
+            ]
+          },
+          {
+            "text": "仿單指出，這類病患應改用胰島素治療。",
+            "citation_chunk_ids": [
+              "b704feb4-7e74-46a3-8a64-ed8f9969b402",
+              "98bdbef1-e550-4755-9fcb-5edabcb144c9"
+            ]
+          }
+        ]
+      },
+      "expect": "completed",
+      "expect_verdicts": "supported",
+      "sample_id": "ms-0002",
+      "status": "completed",
+      "reason_codes": [],
+      "detail": "verified 2 claim(s): {'supported': 2, 'not_supported': 0, 'contradicted': 0}",
+      "attempts": [
+        "skill:citation_verification:ok"
+      ],
+      "safety": "allow",
+      "output": {
+        "verdicts": [
+          {
+            "text": "不可以。瑪爾胰（Amaryl）禁用於嚴重腎臟或肝臟功能異常的病患。",
+            "verdict": "supported",
+            "sources": [
+              {
+                "doc_id": "3bbe1470-9d21-4e90-8f77-4b93e07d1b02",
+                "version": "pdf-meta 2016-11-22（未见版本行）",
+                "effective_date": "2016-11-22",
+                "page": 1,
+                "section": "2.0 公絲錠",
+                "chunk_id": "b704feb4-7e74-46a3-8a64-ed8f9969b402"
+              }
+            ],
+            "unknown_citations": [],
+            "reason": "llm:gpt-6-sol: 证据1的「禁忌」部分明确列出：严重肾脏或肝脏功能异常的病患禁用 Amaryl。"
+          },
+          {
+            "text": "仿單指出，這類病患應改用胰島素治療。",
+            "verdict": "supported",
+            "sources": [
+              {
+                "doc_id": "3bbe1470-9d21-4e90-8f77-4b93e07d1b02",
+                "version": "pdf-meta 2016-11-22（未见版本行）",
+                "effective_date": "2016-11-22",
+                "page": 1,
+                "section": "2.0 公絲錠",
+                "chunk_id": "b704feb4-7e74-46a3-8a64-ed8f9969b402"
+              }
+            ],
+            "unknown_citations": [],
+            "reason": "llm:gpt-6-sol: 仿單指出，嚴重腎臟或肝臟功能不全的病患應改用胰島素治療。"
+          }
+        ],
+        "verifier_version": "verifier-v2+support-rules-v2+polarity_only"
+      },
+      "cost_usd": 0.006278,
+      "model_calls": 2,
+      "latency_s": 3.66
+    },
+    {
+      "case": "citation_verification/supported-3",
+      "skill": "citation_verification",
+      "dept": "PV",
+      "input": {
+        "claims": [
+          {
+            "text": "根据 GVP Annex I Rev 5 所引 Regulation (EU) No 536/2014 第 2(2)(4) 条，非干预性研究定义为临床试验以外的临床研究。",
+            "citation_chunk_ids": [
+              "c5eba266-7af3-4b76-8d25-49e3171977de"
+            ]
+          },
+          {
+            "text": "非干预性研究不属于 Regulation (EU) No 536/2014 的适用范围。",
+            "citation_chunk_ids": [
+              "c5eba266-7af3-4b76-8d25-49e3171977de"
+            ]
+          }
+        ]
+      },
+      "expect": "completed",
+      "expect_verdicts": "supported",
+      "sample_id": "ms-0084",
+      "status": "completed",
+      "reason_codes": [],
+      "detail": "verified 2 claim(s): {'supported': 2, 'not_supported': 0, 'contradicted': 0}",
+      "attempts": [
+        "skill:citation_verification:ok"
+      ],
+      "safety": "allow",
+      "output": {
+        "verdicts": [
+          {
+            "text": "根据 GVP Annex I Rev 5 所引 Regulation (EU) No 536/2014 第 2(2)(4) 条，非干预性研究定义为临床试验以外的临床研究。",
+            "verdict": "supported",
+            "sources": [
+              {
+                "doc_id": "5e5e57f3-c229-45e4-8b76-270143463dca",
+                "version": "EMA/876333/2011 Rev 5 (2024-07-26)",
+                "effective_date": "2024-07-26",
+                "page": 19,
+                "section": "10 of the Rules Governing Medicinal Products in the EU).",
+                "chunk_id": "c5eba266-7af3-4b76-8d25-49e3171977de"
+              }
+            ],
+            "unknown_citations": [],
+            "reason": "llm:gpt-6-sol: 证据明确写明“Non-interventional study”是“临床试验以外的临床研究”，并引述 Regulation (EU) No 536/2014 第 2(2)(4) 条。"
+          },
+          {
+            "text": "非干预性研究不属于 Regulation (EU) No 536/2014 的适用范围。",
+            "verdict": "supported",
+            "sources": [
+              {
+                "doc_id": "5e5e57f3-c229-45e4-8b76-270143463dca",
+                "version": "EMA/876333/2011 Rev 5 (2024-07-26)",
+                "effective_date": "2024-07-26",
+                "page": 19,
+                "section": "10 of the Rules Governing Medicinal Products in the EU).",
+                "chunk_id": "c5eba266-7af3-4b76-8d25-49e3171977de"
+              }
+            ],
+            "unknown_citations": [],
+            "reason": "llm:gpt-6-sol: 证据明确指出：“Non-interventional studies do not fall in the scope of Regulation (EU) No 536/2014”，与陈述一致。"
+          }
+        ],
+        "verifier_version": "verifier-v2+support-rules-v2+polarity_only"
+      },
+      "cost_usd": 0.002458,
+      "model_calls": 2,
+      "latency_s": 3.2
+    },
+    {
+      "case": "citation_verification/altered-number",
+      "skill": "citation_verification",
+      "dept": "MA",
+      "input": {
+        "claims": [
+          {
+            "text": "瑪爾胰（glimepiride）每日最高建議劑量為 24 mg。",
+            "citation_chunk_ids": [
+              "1bbf86e9-fe24-42d6-8b71-b0bf12953079"
+            ]
+          }
+        ]
+      },
+      "expect": "completed",
+      "expect_verdicts": "not supported",
+      "sample_id": "ms-0001",
+      "status": "completed",
+      "reason_codes": [],
+      "detail": "verified 1 claim(s): {'supported': 0, 'not_supported': 0, 'contradicted': 1}",
+      "attempts": [
+        "skill:citation_verification:ok"
+      ],
+      "safety": "allow",
+      "output": {
+        "verdicts": [
+          {
+            "text": "瑪爾胰（glimepiride）每日最高建議劑量為 24 mg。",
+            "verdict": "contradicted",
+            "sources": [],
+            "unknown_citations": [],
+            "reason": "llm:gpt-6-sol: 证据明确指出 glimepiride 每日最高建议剂量为 8 mg，而非 24 mg。"
+          }
+        ],
+        "verifier_version": "verifier-v2+support-rules-v2+polarity_only"
+      },
+      "cost_usd": 0.001514,
+      "model_calls": 1,
+      "latency_s": 1.42
+    },
+    {
+      "case": "citation_verification/unknown-chunk",
+      "skill": "citation_verification",
+      "dept": "MA",
+      "input": {
+        "claims": [
+          {
+            "text": "瑪爾胰（glimepiride）每日最高建議劑量為 8 mg。",
+            "citation_chunk_ids": [
+              "00000000-0000-0000-0000-000000000000",
+              "not-a-uuid"
+            ]
+          }
+        ]
+      },
+      "expect": "completed",
+      "expect_verdicts": "not_supported",
+      "sample_id": "ms-0001",
+      "status": "completed",
+      "reason_codes": [],
+      "detail": "verified 1 claim(s): {'supported': 0, 'not_supported': 1, 'contradicted': 0}",
+      "attempts": [
+        "skill:citation_verification:ok"
+      ],
+      "safety": "allow",
+      "output": {
+        "verdicts": [
+          {
+            "text": "瑪爾胰（glimepiride）每日最高建議劑量為 8 mg。",
+            "verdict": "not_supported",
+            "sources": [],
+            "unknown_citations": [
+              "00000000-0000-0000-0000-000000000000",
+              "not-a-uuid"
+            ],
+            "reason": "no cited chunk is visible to the caller"
+          }
+        ],
+        "verifier_version": "verifier-v2+support-rules-v2+polarity_only"
+      },
+      "cost_usd": 0.0,
+      "model_calls": 0,
+      "latency_s": 0.02
+    },
+    {
+      "case": "citation_verification/cross-dept-chunk",
+      "skill": "citation_verification",
+      "dept": "MA",
+      "input": {
+        "claims": [
+          {
+            "text": "根据 GVP Annex I Rev 5 所引 Regulation (EU) No 536/2014 第 2(2)(4) 条，非干预性研究定义为临床试验以外的临床研究。",
+            "citation_chunk_ids": [
+              "c5eba266-7af3-4b76-8d25-49e3171977de"
+            ]
+          }
+        ]
+      },
+      "expect": "completed",
+      "expect_verdicts": "not_supported (invisible)",
+      "sample_id": "ms-0084",
+      "status": "completed",
+      "reason_codes": [],
+      "detail": "verified 1 claim(s): {'supported': 0, 'not_supported': 1, 'contradicted': 0}",
+      "attempts": [
+        "skill:citation_verification:ok"
+      ],
+      "safety": "allow",
+      "output": {
+        "verdicts": [
+          {
+            "text": "根据 GVP Annex I Rev 5 所引 Regulation (EU) No 536/2014 第 2(2)(4) 条，非干预性研究定义为临床试验以外的临床研究。",
+            "verdict": "not_supported",
+            "sources": [],
+            "unknown_citations": [
+              "c5eba266-7af3-4b76-8d25-49e3171977de"
+            ],
+            "reason": "no cited chunk is visible to the caller"
+          }
+        ],
+        "verifier_version": "verifier-v2+support-rules-v2+polarity_only"
+      },
+      "cost_usd": 0.0,
+      "model_calls": 0,
+      "latency_s": 0.01
+    }
+  ]
+}

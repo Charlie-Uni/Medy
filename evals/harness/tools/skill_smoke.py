@@ -184,6 +184,10 @@ def main() -> int:
     ap.add_argument("--device", default="mps")
     ap.add_argument("--database", default="medops_v2")
     ap.add_argument("--as-of", type=date.fromisoformat, default=date(2026, 9, 23))
+    ap.add_argument("--only", default="", help="run only cases whose name contains this text")
+    ap.add_argument(
+        "--repeat", type=int, default=1, help="run each selected case this many times (nondeterminism check)"
+    )
     args = ap.parse_args()
     if args.out.exists():
         raise SystemExit("refusing to overwrite an existing run directory")
@@ -242,7 +246,13 @@ def main() -> int:
         if line.strip()
     }
     results = []
-    for case in cases(rows):
+    wanted = [w for w in args.only.split(",") if w]
+    all_cases = cases(rows)
+    exact = {c["case"] for c in all_cases}
+    selected = [
+        c for c in all_cases if not wanted or any(c["case"] == w or (w not in exact and w in c["case"]) for w in wanted)
+    ]
+    for case in [c for c in selected for _ in range(args.repeat)]:
         trace = hashlib.sha256(case["case"].encode()).hexdigest()[:32]
         ctx = SkillContext(
             user=case["user"],

@@ -1,0 +1,179 @@
+{
+  "run": "2026-09-23-skill-smoke-v1-repeat",
+  "finished_at": "2026-09-23T05:50:21+00:00",
+  "versions": {
+    "policy_version": "policy-m2-smoke-1",
+    "retrieval_version": "90b57e4e86b4bb462fc4de58f7f7749666fb6f50a588c129bd5f9aa50585ab18",
+    "skill_version_set": [
+      "citation_verification@1.0.0",
+      "label_query@1.0.0"
+    ],
+    "model_config_version": "answer=gpt-6-sol;judge=gpt-6-sol;verifier-v2+support-rules-v2+polarity_only"
+  },
+  "n": 3,
+  "total_cost_usd": 0.0135,
+  "results": [
+    {
+      "case": "label_query/positive",
+      "skill": "label_query",
+      "dept": "MA",
+      "input": {
+        "product": "瑪爾胰",
+        "question": "每日最高建議劑量是多少？"
+      },
+      "expect": "completed",
+      "expect_verdicts": null,
+      "sample_id": null,
+      "status": "insufficient_evidence",
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "detail": "no claim survives verification (forged=0, dropped=1)",
+      "attempts": [
+        "skill:label_query:ok"
+      ],
+      "safety": "allow",
+      "output": {
+        "claims": [],
+        "excerpts": [],
+        "citations": [],
+        "historical_notice": false
+      },
+      "cost_usd": 0.004675,
+      "model_calls": 2,
+      "latency_s": 9.91
+    },
+    {
+      "case": "label_query/positive",
+      "skill": "label_query",
+      "dept": "MA",
+      "input": {
+        "product": "瑪爾胰",
+        "question": "每日最高建議劑量是多少？"
+      },
+      "expect": "completed",
+      "expect_verdicts": null,
+      "sample_id": null,
+      "status": "completed",
+      "reason_codes": [],
+      "detail": "",
+      "attempts": [
+        "skill:label_query:ok"
+      ],
+      "safety": "allow",
+      "output": {
+        "claims": [
+          {
+            "text": "瑪爾胰每日最高建議劑量為 8 mg。",
+            "citation_chunk_ids": [
+              "b81cb213-2da0-4400-bb2b-2dcd40a347b4",
+              "1bbf86e9-fe24-42d6-8b71-b0bf12953079"
+            ]
+          }
+        ],
+        "excerpts": [
+          {
+            "text": "1 瑪爾胰  2.0 公絲錠衛署藥輸字第 022671 號本藥須由醫師處方使用 [組成] Amaryl 2mg 每錠含 2mg glimepiride。 [藥劑型式] 橢圓形錠劑兩面有刻痕,Amaryl 2mg 是綠色。口服給藥,錠片可依中間刻痕剝半。 Amaryl 需搭配足夠水量吞服,不可嚼碎。 [適應症] 非胰島素依賴型(第 2 型)糖尿病。 [說明] 以飲食控制、運動及減輕體重等方法仍不足以控制血糖之非胰島素依賴型(第 2 型)糖尿病。良好的飲食控制、定期運動以及例行檢測血糖與尿糖是成功治療糖尿病的基礎,若病患無法遵守飲食控制,僅靠藥物或胰島素並無法當做補償性治療。藥物的劑量係依血液及尿液葡萄糖檢測值決定。開始時每天服用 1mg glimepiride,如病情控制良好,可維持此劑量繼續治療。依據血糖控制的情形判斷,若治療情況不理想時,則應提高劑量,每隔1-2 週,逐步增加劑量至每日 2,3 或 4mg glimepiride。",
+            "citation": {
+              "doc_id": "3bbe1470-9d21-4e90-8f77-4b93e07d1b02",
+              "version": "pdf-meta 2016-11-22（未见版本行）",
+              "effective_date": "2016-11-22",
+              "page": 1,
+              "section": "",
+              "chunk_id": "b81cb213-2da0-4400-bb2b-2dcd40a347b4"
+            }
+          },
+          {
+            "text": "僅有特殊之病例,須使用每日劑量超過4mg glimepiride,才能得到較佳之治療效果。Glimepiride 每日最高之建議劑量為 8mg。每日服用 Metformin 最高劑量,尚無法適當控制血糖的病患,若有必要可合併使用 Glimepiride 治療。當持續使用 Metformin 時,併用 Glimepiride 治療應由低劑量開始,依據代謝控制所要的程度調高劑量。併用藥物治療必需在醫護人員嚴密之監督下進行。每日服用 Amaryl 最高劑量,尚無法適當控制血糖的病患,若有必要可合併使用胰島素治療。當持續使用 glimepiride 時,併用胰島素治療應由低劑量開始,依據代謝控制所要的程度調高劑量。併用藥物治療必需在醫護人員嚴密之監督下進行。正常情況下,每日服用 glimepiride 單一劑量已足夠。建議在早餐前服用,或在豐盛的早餐期間服用;若未進食早餐,則應於每日的第一餐正餐前,或用餐期間立即服用。",
+            "citation": {
+              "doc_id": "3bbe1470-9d21-4e90-8f77-4b93e07d1b02",
+              "version": "pdf-meta 2016-11-22（未见版本行）",
+              "effective_date": "2016-11-22",
+              "page": 1,
+              "section": "2.0 公絲錠",
+              "chunk_id": "1bbf86e9-fe24-42d6-8b71-b0bf12953079"
+            }
+          }
+        ],
+        "citations": [
+          {
+            "doc_id": "3bbe1470-9d21-4e90-8f77-4b93e07d1b02",
+            "version": "pdf-meta 2016-11-22（未见版本行）",
+            "effective_date": "2016-11-22",
+            "page": 1,
+            "section": "",
+            "chunk_id": "b81cb213-2da0-4400-bb2b-2dcd40a347b4"
+          },
+          {
+            "doc_id": "3bbe1470-9d21-4e90-8f77-4b93e07d1b02",
+            "version": "pdf-meta 2016-11-22（未见版本行）",
+            "effective_date": "2016-11-22",
+            "page": 1,
+            "section": "2.0 公絲錠",
+            "chunk_id": "1bbf86e9-fe24-42d6-8b71-b0bf12953079"
+          }
+        ],
+        "historical_notice": false
+      },
+      "cost_usd": 0.004575,
+      "model_calls": 2,
+      "latency_s": 5.61
+    },
+    {
+      "case": "label_query/positive",
+      "skill": "label_query",
+      "dept": "MA",
+      "input": {
+        "product": "瑪爾胰",
+        "question": "每日最高建議劑量是多少？"
+      },
+      "expect": "completed",
+      "expect_verdicts": null,
+      "sample_id": null,
+      "status": "completed",
+      "reason_codes": [],
+      "detail": "",
+      "attempts": [
+        "skill:label_query:ok"
+      ],
+      "safety": "allow",
+      "output": {
+        "claims": [
+          {
+            "text": "瑪爾胰每日最高建議劑量為 8 mg。",
+            "citation_chunk_ids": [
+              "1bbf86e9-fe24-42d6-8b71-b0bf12953079"
+            ]
+          }
+        ],
+        "excerpts": [
+          {
+            "text": "僅有特殊之病例,須使用每日劑量超過4mg glimepiride,才能得到較佳之治療效果。Glimepiride 每日最高之建議劑量為 8mg。每日服用 Metformin 最高劑量,尚無法適當控制血糖的病患,若有必要可合併使用 Glimepiride 治療。當持續使用 Metformin 時,併用 Glimepiride 治療應由低劑量開始,依據代謝控制所要的程度調高劑量。併用藥物治療必需在醫護人員嚴密之監督下進行。每日服用 Amaryl 最高劑量,尚無法適當控制血糖的病患,若有必要可合併使用胰島素治療。當持續使用 glimepiride 時,併用胰島素治療應由低劑量開始,依據代謝控制所要的程度調高劑量。併用藥物治療必需在醫護人員嚴密之監督下進行。正常情況下,每日服用 glimepiride 單一劑量已足夠。建議在早餐前服用,或在豐盛的早餐期間服用;若未進食早餐,則應於每日的第一餐正餐前,或用餐期間立即服用。",
+            "citation": {
+              "doc_id": "3bbe1470-9d21-4e90-8f77-4b93e07d1b02",
+              "version": "pdf-meta 2016-11-22（未见版本行）",
+              "effective_date": "2016-11-22",
+              "page": 1,
+              "section": "2.0 公絲錠",
+              "chunk_id": "1bbf86e9-fe24-42d6-8b71-b0bf12953079"
+            }
+          }
+        ],
+        "citations": [
+          {
+            "doc_id": "3bbe1470-9d21-4e90-8f77-4b93e07d1b02",
+            "version": "pdf-meta 2016-11-22（未见版本行）",
+            "effective_date": "2016-11-22",
+            "page": 1,
+            "section": "2.0 公絲錠",
+            "chunk_id": "1bbf86e9-fe24-42d6-8b71-b0bf12953079"
+          }
+        ],
+        "historical_notice": false
+      },
+      "cost_usd": 0.004291,
+      "model_calls": 2,
+      "latency_s": 6.56
+    }
+  ]
+}
