@@ -63,3 +63,15 @@ def test_evidence_stage_never_reports_contradiction_and_fails_structurally_witho
     vr = verify_evidence("孩童口服 500 mg 如何給予？", EV)
     assert vr.structural_ok and not vr.contradicted
     assert verify_evidence("任何問題", []).structural_ok is False
+
+
+def test_negation_flip_of_a_contained_statement_is_a_contradiction_not_support():
+    ev = [evidence("c3", "研究者不得在未取得知情同意的情況下使用試驗器械。")]
+    flipped = verify_claims(
+        [Claim(text="研究者在未取得知情同意的情況下使用試驗器械。", citation_chunk_ids=("c3",))], ev
+    )
+    assert flipped.contradicted and flipped.elements[0].kind is ElementKind.statement
+    same = verify_claims(
+        [Claim(text="研究者不得在未取得知情同意的情況下使用試驗器械。", citation_chunk_ids=("c3",))], ev
+    )
+    assert not same.contradicted and not same.unsupported

@@ -17,7 +17,15 @@ from medops.domain.answer import Claim
 from medops.domain.evidence import Evidence
 from medops.domain.verification import ElementKind, ElementSupport, Verdict, VerifyResult
 from medops.infrastructure.llm.gateway import Message, ModelGateway, ModelOutputInvalid, ModelRequest
-from medops.verification.rules import RULES_VERSION, RuleOutcome, contained, judge_elements, overlap_ratio
+from medops.verification.rules import (
+    RULES_VERSION,
+    RuleOutcome,
+    best_overlap,
+    contained,
+    judge_elements,
+    negated,
+    sentences,
+)
 
 VERIFIER_VERSION = f"verifier-v1+{RULES_VERSION}"
 STATEMENT_OVERLAP_THRESHOLD = 0.6  # provisional; DEC-003 measures it
@@ -88,9 +96,15 @@ def verify_claims(
                 conf = 1.0 if outcome.verdict is Verdict.supported else 0.9
                 elements.append(_support(outcome, outcome.verdict, outcome.evidence_chunk_id, outcome.reason, conf))
                 continue
-            chunk = _contains_element(outcome, cited)
-            if chunk:
-                elements.append(_support(outcome, Verdict.supported, chunk, "element text contained in evidence", 0.8))
+            hit = _contains_element(outcome, claim.text, cited)
+            if hit and hit[1]:
+                elements.append(_support(outcome, Verdict.supported, hit[0], "element text contained in evidence", 0.8))
+            elif hit:
+                elements.append(
+                    _support(
+                        outcome, Verdict.contradicted, hit[0], "element contained but negation polarity differs", 0.9
+                    )
+                )
             elif gateway is not None and judge_model_id:
                 verdict, chunk, reason = _llm_judge(gateway, judge_model_id, claim.text, cited, timeout_s)
                 elements.append(_support(outcome, verdict, chunk, reason, 0.7))
@@ -106,38 +120,61 @@ def verify_claims(
     )
 
 
-def _contains_element(outcome: RuleOutcome, cited: Sequence[Evidence]) -> str | None:
+def _contains_element(outcome: RuleOutcome, claim_text: str, cited: Sequence[Evidence]) -> tuple[str, bool] | None:
+    """Element text contained in one evidence sentence -> (chunk_id, same negation polarity as the claim)."""
     from medops.verification.elements import normalize_for_match
 
     needle = normalize_for_match(outcome.element.text)
+    if not needle:
+        return None
+    claim_neg = negated(claim_text)
     for ev in cited:
-        if needle and needle in normalize_for_match(ev.text):
-            return ev.citation.chunk_id
+        for sentence in sentences(ev.text):
+            if needle in normalize_for_match(sentence):
+                return ev.citation.chunk_id, negated(sentence) == claim_neg
     return None
 
 
 def _statement_support(
     claim: Claim, cited: Sequence[Evidence], gateway: ModelGateway | None, model_id: str | None, timeout_s: float
 ) -> ElementSupport:
-    chunk = contained(claim.text, cited)
-    if chunk:
+    hit = contained(claim.text, cited)
+    if hit and hit[1]:
         return ElementSupport(
             kind=ElementKind.statement,
             text=claim.text,
             verdict=Verdict.supported,
-            evidence_chunk_id=chunk,
+            evidence_chunk_id=hit[0],
             confidence=1.0,
             reason="claim contained in evidence",
         )
-    best = max(((overlap_ratio(claim.text, ev.text), ev.citation.chunk_id) for ev in cited), default=(0.0, None))
-    if best[0] >= STATEMENT_OVERLAP_THRESHOLD and best[1]:
+    if hit:
         return ElementSupport(
             kind=ElementKind.statement,
             text=claim.text,
-            verdict=Verdict.supported,
-            evidence_chunk_id=best[1],
-            confidence=0.6,
-            reason=f"token overlap {best[0]:.2f}",
+            verdict=Verdict.contradicted,
+            evidence_chunk_id=hit[0],
+            confidence=0.9,
+            reason="claim contained in evidence but negation polarity differs",
+        )
+    ratio, chunk, same_polarity = best_overlap(claim.text, cited)
+    if ratio >= STATEMENT_OVERLAP_THRESHOLD and chunk:
+        if same_polarity:
+            return ElementSupport(
+                kind=ElementKind.statement,
+                text=claim.text,
+                verdict=Verdict.supported,
+                evidence_chunk_id=chunk,
+                confidence=0.6,
+                reason=f"token overlap {ratio:.2f}",
+            )
+        return ElementSupport(
+            kind=ElementKind.statement,
+            text=claim.text,
+            verdict=Verdict.contradicted,
+            evidence_chunk_id=chunk,
+            confidence=0.7,
+            reason=f"token overlap {ratio:.2f} with opposite negation polarity",
         )
     if gateway is not None and model_id:
         verdict, chunk, reason = _llm_judge(gateway, model_id, claim.text, cited, timeout_s)
@@ -154,7 +191,7 @@ def _statement_support(
         text=claim.text,
         verdict=Verdict.not_supported,
         confidence=0.5,
-        reason=f"token overlap {best[0]:.2f} below threshold; no judge configured",
+        reason=f"token overlap {ratio:.2f} below threshold; no judge configured",
     )
 
 

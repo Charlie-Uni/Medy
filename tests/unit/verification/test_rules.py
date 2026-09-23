@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from medops.domain.verification import ElementKind, Verdict
-from medops.verification.rules import contained, judge_elements, negated, overlap_ratio, sentence_around
+from medops.verification.rules import best_overlap, contained, judge_elements, negated, overlap_ratio, sentence_around
 from tests.unit.harness._fixtures import evidence
 
 
@@ -57,6 +57,14 @@ def test_sentence_window_and_containment_helpers():
     start = text.index("aliskiren")
     assert sentence_around(text, start, start + 9) == "不得併用 aliskiren"
     ev = [evidence("c1", "Losartan potassium 禁用於對本項產品任何組成過敏者。")]
-    assert contained("禁用於對本項產品任何組成過敏者", ev) == "c1"
+    assert contained("禁用於對本項產品任何組成過敏者", ev) == ("c1", True)
     assert contained("完全無關的陳述", ev) is None
     assert overlap_ratio("Losartan 禁用 過敏者", ev[0].text) > 0.8
+
+
+def test_containment_and_overlap_carry_negation_polarity():
+    ev = [evidence("c1", "第一句。每日劑量不得超過 300 mg。第三句。")]
+    assert contained("超過 300 mg", ev) == ("c1", False)  # contained, but the evidence negates it
+    assert contained("不得超過 300 mg", ev) == ("c1", True)
+    ratio, chunk, same = best_overlap("每日劑量可超過 300 mg", ev)
+    assert chunk == "c1" and ratio > 0.6 and same is False

@@ -35,3 +35,8 @@ evals/main_set/drafts/*/review/**/input_*.jsonl
 evals/main_set/conflict_fixtures/sources/
 # friendly-name symlinks to the local PDFs (not in Git; regenerate with evals/main_set/tools/pdf_index.py)
 evals/main_set/pdf_by_key/
+
+# DEC-003 verifier pairs carry chunk text (page text derivative): local only; reports are tracked
+evals/verifier/dec003/pairs.jsonl
+evals/verifier/dec003/*.verdicts.jsonl
+evals/verifier/dec003/*.replies/

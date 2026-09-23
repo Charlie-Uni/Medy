@@ -1,0 +1,13 @@
+{
+  "samples": 546,
+  "unmapped": 7,
+  "no_text": 0,
+  "pairs": 2076,
+  "by_kind": {
+    "supported": 546,
+    "not_supported/same_doc": 546,
+    "not_supported/other_doc": 546,
+    "contradicted/numeric": 148,
+    "contradicted/negation": 290
+  }
+}

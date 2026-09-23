@@ -55,6 +55,20 @@ def negated(sentence: str) -> bool:
     return _NEGATION.search(sentence) is not None
 
 
+def negation_count(text: str) -> int:
+    return len(_NEGATION.findall(text))
+
+
+def sentences(text: str) -> list[str]:
+    """Sentence-ish units used for polarity comparison (same breaks as `sentence_around`)."""
+    out, last = [], 0
+    for m in _SENTENCE_BREAK.finditer(text):
+        out.append(text[last : m.start()])
+        last = m.end()
+    out.append(text[last:])
+    return [s for s in out if s.strip()]
+
+
 def _family(canonical: str) -> str:
     kind, _, rest = canonical.partition(":")
     if kind == "dose":
@@ -129,18 +143,56 @@ def judge_elements(claim_text: str, cited: Sequence[Evidence]) -> tuple[RuleOutc
     return tuple(judge_element(el, claim_text, cited, ev_elements) for el in extract(claim_text))
 
 
-def contained(claim_text: str, cited: Sequence[Evidence]) -> str | None:
-    """Whole-statement containment: the normalized claim appears verbatim inside one cited evidence text."""
+def contained(claim_text: str, cited: Sequence[Evidence]) -> tuple[str, bool] | None:
+    """Whole-statement containment: the normalized claim appears verbatim inside one sentence of a cited
+    evidence text. Returns (chunk_id, same_polarity): `超過 300 mg` is contained in `不得超過 300 mg`, but with the
+    opposite negation polarity, which the caller must treat as a contradiction, never as support."""
     needle = normalize_for_match(claim_text)
     if len(needle) < 4:
         return None
+    claim_cues = negation_count(claim_text)
     for ev in cited:
-        if needle in normalize_for_match(ev.text):
-            return ev.citation.chunk_id
+        for sentence in sentences(ev.text):
+            pos = normalize_for_match(sentence).find(needle)
+            if pos >= 0:
+                # cues are counted in the aligned window (a short prefix plus the matched span), so a negation
+                # elsewhere in a long sentence does not flip the polarity of an unrelated clause
+                window = _aligned_window(sentence, needle)
+                return ev.citation.chunk_id, negation_count(window) == claim_cues
+        if needle in normalize_for_match(ev.text):  # crosses a sentence break: compare on the whole text
+            return ev.citation.chunk_id, negation_count(ev.text) == claim_cues
     return None
 
 
+_PREFIX_CHARS = 24
+
+
+def _aligned_window(sentence: str, needle: str) -> str:
+    """The raw-text window covering `needle` (normalized) plus up to 24 preceding characters."""
+    norm = normalize_for_match(sentence)
+    start = norm.find(needle)
+    if start < 0:
+        return sentence
+    # map the normalized offset back to the raw sentence by walking characters that survive normalization
+    kept = [i for i, ch in enumerate(sentence) if normalize_for_match(ch)]
+    raw_start = kept[start] if start < len(kept) else 0
+    raw_end = kept[min(start + len(needle), len(kept)) - 1] + 1 if kept else len(sentence)
+    return sentence[max(0, raw_start - _PREFIX_CHARS) : raw_end]
+
+
 _TOKEN = re.compile(r"[A-Za-z0-9]+|[㐀-鿿]")
+
+
+def best_overlap(claim_text: str, cited: Sequence[Evidence]) -> tuple[float, str | None, bool]:
+    """Highest token overlap between the claim and any single evidence sentence: (ratio, chunk_id, same_polarity)."""
+    claim_cues = negation_count(claim_text)
+    best: tuple[float, str | None, bool] = (0.0, None, True)
+    for ev in cited:
+        for sentence in sentences(ev.text):
+            ratio = overlap_ratio(claim_text, sentence)
+            if ratio > best[0]:
+                best = (ratio, ev.citation.chunk_id, negation_count(sentence) == claim_cues)
+    return best
 
 
 def overlap_ratio(claim_text: str, evidence_text: str) -> float:
