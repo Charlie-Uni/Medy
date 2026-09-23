@@ -26,6 +26,7 @@ from medops.domain.safety import SafetyDecision, SafetyResult
 from medops.domain.state import MAX_CANDIDATES, AgentState, TokenBudget
 from medops.domain.verification import Verdict, VerifyResult
 from medops.harness.contracts import NodeAttempt, NodeFailure, NodeSpec, run_node
+from medops.harness.executions import ExecutionStore, apply_delta, state_delta
 from medops.harness.intent import INTENT_VERSION, classify
 from medops.harness.retrieval_port import RetrievalPort, RetrievalRequest
 from medops.infrastructure.llm.gateway import (
@@ -110,6 +111,7 @@ class HarnessDeps:
     clock: Callable[[], datetime] = lambda: datetime.now(UTC)
     as_of: date | None = None
     answer_max_output_tokens: int = 800
+    executions: ExecutionStore | None = None  # M2-03 operation-key ledger; None = no persistence (unit tests)
 
 
 class HarnessState(TypedDict):
@@ -176,15 +178,44 @@ def build_nodes(deps: HarnessDeps) -> dict[str, Callable[[HarnessState], dict[st
         node: str, hs: HarnessState, key: str, body: Callable[[AgentState], AgentState | tuple[AgentState, list[str]]]
     ) -> dict[str, Any]:
         state = hs["state"]
+        store = deps.executions
+        claim_no = 0
+        if store is not None:
+            claim = store.claim(
+                operation_key=key,
+                operation_scope=OPERATION_SCOPE,
+                run_id=state.run_id,
+                trace_id=state.trace_id,
+                node_name=node,
+                versions=state.versions.model_dump(mode="json"),
+                now=deps.clock(),
+            )
+            if claim.kind == "reused" and claim.result is not None:
+                # same operation key, succeeded before: the stored delta is re-applied, no side effect repeats
+                reused = apply_delta(state, claim.result["state_delta"])
+                return {"state": reused, "attempts": [], "flagged": list(claim.result.get("flagged", []))}
+            if claim.kind == "in_flight":
+                return {
+                    "state": _escalate(state, (ReasonCode.system_failure,), f"{node}: operation already in flight"),
+                    "attempts": [],
+                }
+            claim_no = claim.claim_no
         try:
             result, attempts = run_node(specs[node], key, lambda: body(state), sleep=deps.sleep, clock=deps.clock)
         except NodeFailure as failure:
             code, detail = _failure_codes(failure.error)
+            if store is not None:
+                store.record_attempts(claim_no, failure.attempts)
+                store.fail(key, failure.attempts[-1].error_code or code.value, deps.clock())
             return {"state": _escalate(state, (code,), f"{node}: {detail}"), "attempts": failure.attempts}
         if isinstance(result, tuple):
             new_state, flagged = result
-            return {"state": new_state, "attempts": attempts, "flagged": flagged}
-        return {"state": result, "attempts": attempts}
+        else:
+            new_state, flagged = result, []
+        if store is not None:
+            store.record_attempts(claim_no, attempts)
+            store.complete(key, {"state_delta": state_delta(state, new_state), "flagged": list(flagged)}, deps.clock())
+        return {"state": new_state, "attempts": attempts, "flagged": list(flagged)}
 
     # ---------------------------------------------------------------- intent (+ safety layer 1)
     def intent_body(state: AgentState) -> AgentState:

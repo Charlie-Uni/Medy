@@ -19,7 +19,7 @@
 
 决策人要求每个阶段汇报"离总目标百分之多少"。口径固定为：[任务知识对照](TASK_KNOWLEDGE_MAP.md) 中 79 个 P0 任务行的状态加权和（已实现 1、部分 0.5、阻塞与待做 0）除以 79；另报除以 99 个基线复选项的数值。状态只随实现记录的证据变更，基线勾选只依据完整证据更新，最终验收仍是第 11 节九条门禁的二元结果。`tests/unit/docs/test_baseline_roadmap_consistency.py` 重算并比对下面这行数字：
 
-P0 加权进度：41.8%（33/79）；按 99 项计 33.3%。分项：M0 10/11、M1 16.5/21、M2 6.5/16、M3 0/13、M4 0/10、M5 0/8。
+P0 加权进度：43.0%（34.0/79）；按 99 项计 34.3%。分项：M0 10/11、M1 16.5/21、M2 7.5/16、M3 0/13、M4 0/10、M5 0/8。
 
 ### 状态与计数
 
@@ -35,7 +35,7 @@ P0 加权进度：41.8%（33/79）；按 99 项计 33.3%。分项：M0 10/11、M
 | --- | ---: | --- |
 | M0 工程与契约 | 11 | 基础工程、领域/API/MCP 契约与本地门禁已有；远端 CI、安全阶段及服务接线待补 |
 | M1 知识治理与检索 | 21 | 数据库治理、RLS、入库切分和探针冻结归档已有；实验准备已启动，生产检索选型待完成 |
-| M2 Harness / Verifier / Safety / Skills | 16 | 固定图、节点契约、Verifier（ADR-0011 分工）、Safety、Gateway 与预算、Skill Registry 与两个低风险 Skill 已有；持久化、安全集与门禁待做 |
+| M2 Harness / Verifier / Safety / Skills | 16 | 固定图、节点契约、operation key 账本、Verifier（ADR-0011 分工）、Safety、Gateway 与预算、Skill Registry 与两个低风险 Skill 已有；安全集与门禁待做 |
 | M3 API / worker / MCP / 观测 / 部署 | 13 | 待做 |
 | M4 受控 Loop | 10 | 待做 |
 | M5 规模与全量验收 | 8 | 待做 |
@@ -148,7 +148,7 @@ P0 加权进度：41.8%（33/79）；按 99 项计 33.3%。分项：M0 10/11、M
 | --- | --- | --- |
 | M2-01 | 已实现（图结构：无绕过边测试；节点规则版首切片，记录 52） | LangGraph 固定 Intent → Retrieve → Evidence Verify → Safety → Answer / Escalate；测试图中不存在绕过必经节点的回答路径 |
 | M2-02 | 部分（超时/重试/退避/降级与 State 契约已实现；asyncio 取消随 M3，记录 52） | 每节点明确输入输出模型、超时、错误类型、有限重试、取消与降级；跨节点只通过 State 交换数据 |
-| M2-03 | 待做 | operation key 接入持久化执行；attempt 单独记录，重试不重复副作用，replay_run_id 与生产隔离；不能仅凭函数存在算幂等完成 |
+| M2-03 | 已实现（迁移 0008 `operation_executions`/`operation_attempts`：执行前占键、成功增量复用、attempt 单独落库、失败/失联重占、run_kind 约束；单元 6 + 集成 5；生产接线与受限载荷分离随 M3，记录 56） | operation key 接入持久化执行；attempt 单独记录，重试不重复副作用，replay_run_id 与生产隔离；不能仅凭函数存在算幂等完成 |
 | M2-04 | 部分（仅接收已验证证据、claim-citation、生成后重验；真实适配器待 key，记录 52） | Answer 只接收已验证证据，输出 claim-citation；生成后再校验引用和关键结论，通过前不外发最终医学答案 |
 | M2-05 | 部分（结构核验拦截伪造引用；evidence_log 落库随 M3，记录 52） | 验证引用属于本 Trace、版本/页码/chunk 真实且有权限；重算 chunk_content_hash 与实际 evidence_text_hash，expected/observed 写 evidence_log |
 | M2-06 | 部分（Trace 预算裁剪/升级、月度上限账本，记录 52） | Trace 总 Token/成本预算与单次模型上限都生效；超限先裁剪证据，仍不足则升级，不扩大预算继续猜测 |

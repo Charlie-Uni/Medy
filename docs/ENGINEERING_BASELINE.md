@@ -490,7 +490,7 @@ P0 保留：
 
 - [ ] LangGraph 中不存在绕过 Retrieve/Verify/Safety 到 Answer 的边。
 - [ ] 每个节点 Schema 校验、超时、错误类型、重试和降级已实现。
-- [ ] 使用 3.2 定义的 operation key 实现节点幂等，attempt 单独记录，回放使用独立 `replay_run_id`。
+- [x] 使用 3.2 定义的 operation key 实现节点幂等，attempt 单独记录，回放使用独立 `replay_run_id`。（记录 56）
 - [ ] Answer 只接受 verified Evidence，输出 claim-citation 结构。
 - [ ] 引用结构核验可拦截伪造 doc/version/page/chunk，并比对 `evidence_text_hash`/`chunk_content_hash`，expected/observed 写入 evidence_log。
 - [ ] 整条 Trace 的 Token/成本预算生效：超限先裁剪低价值 Evidence，不满足最小证据要求则升级。

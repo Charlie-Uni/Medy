@@ -10,11 +10,11 @@
 | --- | ---: | ---: | ---: | ---: | ---: |
 | M0 工程与契约 | 11 | 9 | 2 | 0 | 0 |
 | M1 知识治理与检索 | 21 | 5 | 6 | 1 | 9 |
-| M2 Harness / Verifier / Safety / Skills | 16 | 2 | 9 | 0 | 5 |
+| M2 Harness / Verifier / Safety / Skills | 16 | 3 | 9 | 0 | 4 |
 | M3 API / worker / MCP / 观测 / 部署 | 13 | 0 | 0 | 0 | 13 |
 | M4 受控 Loop | 10 | 0 | 0 | 0 | 10 |
 | M5 规模与验收 | 8 | 0 | 0 | 0 | 8 |
-| P0 合计 | 79 | 16 | 17 | 1 | 45 |
+| P0 合计 | 79 | 17 | 17 | 1 | 44 |
 
 M1-01 同时是“部分”和“阻塞”，上表按“部分”计。P1/P2 11 项均为选做未启动，最终验收 9 项均未验收。
 
@@ -84,7 +84,7 @@ M1-01 同时是“部分”和“阻塞”，上表按“部分”计。P1/P2 11
 | --- | --- | --- | --- |
 | M2-01 | 已实现（图结构范围：LangGraph 六节点固定图，无绕过边由测试枚举全部路径证明；节点为规则版首切片，记录 52） | LangGraph 固定状态机，无绕过边 | 状态机与 DAG；图可达性测试；工作流编排 |
 | M2-02 | 部分（NodeSpec 超时/有限重试/退避/降级、节点只经 AgentState 交换、每次 attempt 带 operation key；asyncio 取消传播随 M3 执行器，记录 52） | 节点 Schema、超时、错误类型、重试、降级 | 指数退避与抖动；幂等重试；asyncio 取消传播；断路器与降级 |
-| M2-03 | 待做 | operation key 接入持久化，attempt 单独记录 | 幂等键存储与唯一约束；at-least-once 与副作用；replay 隔离 |
+| M2-03 | 已实现（迁移 0008 账本：占键→复用/在途/重占、attempt 落库、run_kind 约束；单元 6 + 集成 5；生产接线随 M3，记录 56） | operation key 接入持久化，attempt 单独记录 | 幂等键存储与唯一约束；at-least-once 与副作用；replay 隔离 |
 | M2-04 | 部分（Answer 只接收 state.evidence、JSON schema 强制 claim-citation、生成后重验并丢弃 not_supported；真实 OpenAI 适配器待 key 后 smoke，记录 52） | Answer 只收已验证证据，输出 claim-citation | 结构化输出（JSON Schema 约束、function calling）；grounding 与幻觉；后置校验 |
 | M2-05 | 部分（引用逐字段等于本 Trace 证据、伪造 chunk 拦截并升级；evidence_log expected/observed 落库随 M3 持久化，记录 52） | 引用结构核验与内容哈希比对 | 内容寻址校验；expected/observed 审计；引用伪造检测 |
 | M2-06 | 部分（Trace TokenBudget 裁剪证据/不足即升级、模型用量计入、月度上限账本；成本模型按 ADR-0010 价目，记录 52） | 整条 Trace 的 Token/成本预算 | tokenizer 与 BPE；上下文窗口；成本模型；证据裁剪策略 |
