@@ -77,6 +77,8 @@ class Settings(BaseSettings):
     # migrations use a separate admin DSN that never reaches request handlers.
     database_url: SecretStr
     database_admin_url: SecretStr | None = None
+    # Read-only LOGIN user for the MCP server (INV-AUTH-04): the database proves the tools cannot write.
+    database_readonly_url: SecretStr | None = None
     redis_url: SecretStr
     # Retrieval candidate cache TTL (M1-19). Entries also die with the department epoch on publish events.
     retrieval_cache_ttl_seconds: int = Field(default=300, ge=1, le=86400)
@@ -115,6 +117,7 @@ class Settings(BaseSettings):
         "redis_password",
         "identity_pseudonym_key",
         "database_admin_url",
+        "database_readonly_url",
         "db_app_password",
         "db_readonly_password",
         "db_admin_password",
@@ -135,7 +138,7 @@ class Settings(BaseSettings):
             return None
         return value
 
-    @field_validator("database_url", "database_admin_url")
+    @field_validator("database_url", "database_admin_url", "database_readonly_url")
     @classmethod
     def _postgres_dsn(cls, value: SecretStr | None) -> SecretStr | None:
         return None if value is None else _check_dsn(_POSTGRES, value, "database DSN")

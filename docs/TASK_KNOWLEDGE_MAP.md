@@ -11,10 +11,10 @@
 | M0 工程与契约 | 11 | 9 | 2 | 0 | 0 |
 | M1 知识治理与检索 | 21 | 5 | 6 | 1 | 9 |
 | M2 Harness / Verifier / Safety / Skills | 16 | 6 | 8 | 0 | 2 |
-| M3 API / worker / MCP / 观测 / 部署 | 13 | 1 | 7 | 0 | 5 |
+| M3 API / worker / MCP / 观测 / 部署 | 13 | 1 | 8 | 0 | 4 |
 | M4 受控 Loop | 10 | 0 | 0 | 0 | 10 |
 | M5 规模与验收 | 8 | 0 | 0 | 0 | 8 |
-| P0 合计 | 79 | 21 | 23 | 1 | 34 |
+| P0 合计 | 79 | 21 | 24 | 1 | 33 |
 
 M1-01 同时是“部分”和“阻塞”，上表按“部分”计。P1/P2 11 项均为选做未启动，最终验收 9 项均未验收。
 
@@ -108,7 +108,7 @@ M1-01 同时是“部分”和“阻塞”，上表按“部分”计。P1/P2 11
 | M3-03 | 部分（反馈接口含幂等回执；其余管理接口待做，记录 60） | 反馈、文档管理、策略候选、审批、replay 接口 | RBAC 与角色分离；审批流；管理接口的权限测试 |
 | M3-04 | 部分（数据库租约 worker：原子转换、attempt、失联回收、上限；真实库端到端待跑，记录 59） | worker 原子状态转换、租约、崩溃恢复 | 队列（Redis Streams/arq）；租约与可见性超时；at-least-once；状态机原子更新 |
 | M3-05 | 部分（JWKS 校验、HMAC 假名、principals 目录、group allowlist、测试签发器；JWKS 发现与 IdP 选择待做，记录 58） | OIDC 接入与服务端 scope 映射 | OAuth2/OIDC 流程；JWT 结构与 iss/aud/exp/签名；JWKS 轮换；最小权限 |
-| M3-06 | 待做 | 只读 MCP 四个工具 | MCP 协议与 Streamable HTTP；bearer 鉴权；只读由数据库角色证明 |
+| M3-06 | 部分（四个只读工具 + bearer + 只读角色，记录 62；生产 Searcher 实测待做） | 只读 MCP 四个工具 | MCP 协议与 Streamable HTTP；bearer 鉴权；只读由数据库角色证明 |
 | M3-07 | 部分（Trace 摘要 + span + 升级记录落库、fail-closed、假名与追加写；受限载荷加密与 OTel 待做，记录 60） | 完整 Trace、脱敏、受限 payload 授权 | 结构化日志；HMAC 假名；追加写审计；加密与访问控制 |
 | M3-08 | 待做 | Trace replay 生成差异报告 | 确定性回放；版本固定；run id 隔离；缓存短路风险 |
 | M3-09 | 待做 | OTel 与 Langfuse 覆盖全部 spans | traces/spans/context propagation；采样；exporter 与后端 |
