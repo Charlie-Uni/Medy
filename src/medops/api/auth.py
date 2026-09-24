@@ -17,7 +17,7 @@ from typing import Any, Protocol
 import jwt
 from jwt import PyJWKSet
 
-from medops.core.errors import BusinessError, ErrorCode
+from medops.core.errors import BusinessError, ErrorCode, InfrastructureError
 from medops.domain.common import Dept, DomainModel
 from medops.domain.identity import Scope, UserContext
 
@@ -73,30 +73,118 @@ class TokenVerifier(Protocol):
     def verify(self, token: str) -> Mapping[str, Any]: ...
 
 
-@dataclass(frozen=True)
+class KeySource(Protocol):
+    def keys(self, *, refresh: bool = False) -> Mapping[str, Any]:
+        """kid -> PyJWK. `refresh=True` asks a remote source to re-fetch (key rotation: an unknown kid)."""
+        ...
+
+
+class StaticJwks:
+    """A JWK set given as configuration (dev/test issuer, or an operator-managed copy)."""
+
+    def __init__(self, jwks: Mapping[str, Any]) -> None:
+        keyset = PyJWKSet.from_dict(dict(jwks))
+        self._keys = {k.key_id: k for k in keyset.keys if k.key_id}
+
+    def keys(self, *, refresh: bool = False) -> Mapping[str, Any]:
+        return self._keys
+
+
+class RemoteJwks:
+    """JWKS fetched from the issuer (OIDC discovery `/.well-known/openid-configuration` -> `jwks_uri`, or an explicit
+    URL), cached for `ttl_s` and refreshed at most once per unknown kid. Fetch failures are a dependency outage
+    (`503 dependency_unavailable`), never an authentication verdict."""
+
+    def __init__(
+        self,
+        issuer: str,
+        *,
+        jwks_url: str | None = None,
+        client: Any | None = None,
+        ttl_s: float = 3600.0,
+        clock: Any = None,
+    ) -> None:
+        import time
+
+        import httpx
+
+        self._issuer = issuer.rstrip("/")
+        self._jwks_url = jwks_url
+        self._client = client or httpx.Client(timeout=5.0)
+        self._ttl = ttl_s
+        self._clock = clock or time.monotonic
+        self._keys: dict[str, Any] = {}
+        self._fetched_at: float | None = None
+        self._min_refresh_gap_s = 30.0
+        self._last_refresh: float = float("-inf")
+
+    def _fetch(self) -> None:
+        import httpx
+
+        try:
+            if self._jwks_url is None:
+                doc = self._client.get(f"{self._issuer}/.well-known/openid-configuration")
+                doc.raise_for_status()
+                self._jwks_url = str(doc.json()["jwks_uri"])
+            response = self._client.get(self._jwks_url)
+            response.raise_for_status()
+            keyset = PyJWKSet.from_dict(response.json())
+        except (httpx.HTTPError, KeyError, ValueError, TypeError) as exc:
+            raise InfrastructureError(
+                ErrorCode.dependency_unavailable, detail=f"jwks fetch failed: {type(exc).__name__}", retryable=True
+            ) from None
+        self._keys = {k.key_id: k for k in keyset.keys if k.key_id}
+        self._fetched_at = self._clock()
+
+    def keys(self, *, refresh: bool = False) -> Mapping[str, Any]:
+        now = self._clock()
+        stale = self._fetched_at is None or now - self._fetched_at > self._ttl
+        if refresh and now - self._last_refresh < self._min_refresh_gap_s and not stale:
+            return self._keys  # do not let a flood of unknown kids hammer the issuer
+        if stale or refresh:
+            if refresh:
+                self._last_refresh = now
+            self._fetch()
+        return self._keys
+
+
 class JwtVerifier:
-    """OIDC-compatible bearer verification against a JWK set: issuer, audience, expiry and signature are all
-    required (ADR-0001 §1). Keys are looked up by `kid`; unknown kids are refused, never guessed."""
+    """OIDC-compatible bearer verification: issuer, audience, expiry and signature are all required (ADR-0001 §1).
+    Keys are looked up by `kid`; an unknown kid triggers one refresh of a remote source (rotation) and is
+    otherwise refused, never guessed."""
 
-    issuer: str
-    audience: str
-    jwks: Mapping[str, Any]
-    algorithms: tuple[str, ...] = ALGORITHMS
-    leeway_s: int = 30
-    _keys: dict[str, Any] = field(default_factory=dict, init=False, repr=False)
-
-    def __post_init__(self) -> None:
-        keyset = PyJWKSet.from_dict(dict(self.jwks))
-        object.__setattr__(self, "_keys", {k.key_id: k for k in keyset.keys if k.key_id})
+    def __init__(
+        self,
+        *,
+        issuer: str,
+        audience: str,
+        jwks: Mapping[str, Any] | None = None,
+        key_source: KeySource | None = None,
+        algorithms: tuple[str, ...] = ALGORITHMS,
+        leeway_s: int = 30,
+    ) -> None:
+        if (jwks is None) == (key_source is None):
+            raise ValueError("JwtVerifier needs exactly one of jwks or key_source")
+        self.issuer = issuer
+        self.audience = audience
+        self.algorithms = algorithms
+        self.leeway_s = leeway_s
+        self._source: KeySource = key_source if key_source is not None else StaticJwks(jwks or {})
 
     def verify(self, token: str) -> Mapping[str, Any]:
         try:
             header = jwt.get_unverified_header(token)
-            key = self._keys.get(header.get("kid") or "")
-            if key is None:
-                raise BusinessError(ErrorCode.unauthenticated, "token key is not trusted")
-            if header.get("alg") not in self.algorithms:
-                raise BusinessError(ErrorCode.unauthenticated, "token algorithm is not accepted")
+        except jwt.PyJWTError as exc:
+            raise BusinessError(ErrorCode.unauthenticated, "token rejected", detail=type(exc).__name__) from None
+        kid = header.get("kid") or ""
+        key = self._source.keys().get(kid)
+        if key is None and kid:
+            key = self._source.keys(refresh=True).get(kid)  # rotation: one refresh, then refuse
+        if key is None:
+            raise BusinessError(ErrorCode.unauthenticated, "token key is not trusted")
+        if header.get("alg") not in self.algorithms:
+            raise BusinessError(ErrorCode.unauthenticated, "token algorithm is not accepted")
+        try:
             claims = jwt.decode(
                 token,
                 key=key.key,
@@ -106,8 +194,6 @@ class JwtVerifier:
                 leeway=self.leeway_s,
                 options={"require": list(REQUIRED_CLAIMS)},
             )
-        except BusinessError:
-            raise
         except jwt.PyJWTError as exc:
             raise BusinessError(ErrorCode.unauthenticated, "token rejected", detail=type(exc).__name__) from None
         if not isinstance(claims.get("sub"), str) or not claims["sub"]:

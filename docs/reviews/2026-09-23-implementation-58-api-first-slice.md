@@ -32,7 +32,7 @@
 
 ## 4. 未做 / 限制
 
-- JWKS 只支持静态配置（JSON），未实现从 issuer 发现端点拉取与轮换缓存；IdP 厂商未选（DEC-010）。
+- ~~JWKS 只支持静态配置（JSON）~~ 2026-09-24 补：`RemoteJwks` 支持 OIDC 发现（`/.well-known/openid-configuration` → `jwks_uri`）或显式 `OIDC_JWKS_URL`，缓存 TTL、未知 kid 触发一次刷新（轮换）、刷新节流、IdP 不可达记为 `503 dependency_unavailable`（4 项测试）。IdP 厂商仍未选（DEC-010）。
 - `/v1/ask` 的真实 HTTP 冒烟未跑（需要一份 principals 记录与本地签发器配置）；本记录的契约证明在 TestClient + 假运行时层。
 - 会话（`session_id`）未实现；反馈、任务、管理与回放接口（M3-02/03）未开始；Trace/升级/审计落库（M3-07）未开始，因此拒答与升级目前只在响应与账本里可见。
 - Skill 走 API 的入口（`POST /v1/tasks`）随 M3-02。

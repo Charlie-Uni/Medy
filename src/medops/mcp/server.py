@@ -64,8 +64,8 @@ class BearerVerifier:
         try:
             with self._runtime.directory() as directory:
                 user = self._runtime.authenticator.authenticate("Bearer " + token, directory)
-        except BusinessError:
-            return None  # unauthenticated or unprovisioned: the SDK answers 401
+        except MedOpsError:
+            return None  # unauthenticated, unprovisioned or key source down: the SDK answers 401
         return AccessToken(
             token=token,
             client_id=user.user_id,

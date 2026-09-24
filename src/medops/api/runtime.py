@@ -14,7 +14,7 @@ from typing import Any
 import psycopg
 
 from medops.api.app import ApiRuntime
-from medops.api.auth import Authenticator, JwtVerifier, PgDirectory
+from medops.api.auth import Authenticator, JwtVerifier, PgDirectory, RemoteJwks
 from medops.api.contracts import AskRequest
 from medops.application.audit import TraceStore
 from medops.application.metrics import MetricsSource, PgMetricsSource
@@ -49,23 +49,27 @@ POLICY_VERSION = "policy-m3-api-1"  # released policy records arrive with M4; un
 
 
 def authenticator_from_settings(settings: Settings) -> Authenticator:
-    missing = [
-        k
-        for k in ("oidc_issuer", "oidc_audience", "oidc_jwks_json", "identity_pseudonym_key")
-        if getattr(settings, k) is None
-    ]
+    """Keys come from `OIDC_JWKS_JSON` (static) or from the issuer (discovery / `OIDC_JWKS_URL`); the pseudonym key
+    and issuer/audience are always required (ADR-0001)."""
+    missing = [k for k in ("oidc_issuer", "oidc_audience", "identity_pseudonym_key") if getattr(settings, k) is None]
     if missing:
         raise ValueError(f"API identity boundary needs {', '.join(missing)} (ADR-0001)")
-    assert (
-        settings.oidc_issuer and settings.oidc_audience and settings.oidc_jwks_json and settings.identity_pseudonym_key
-    )
+    assert settings.oidc_issuer and settings.oidc_audience and settings.identity_pseudonym_key
+    if settings.oidc_jwks_json:
+        verifier = JwtVerifier(
+            issuer=settings.oidc_issuer, audience=settings.oidc_audience, jwks=json.loads(settings.oidc_jwks_json)
+        )
+    else:
+        verifier = JwtVerifier(
+            issuer=settings.oidc_issuer,
+            audience=settings.oidc_audience,
+            key_source=RemoteJwks(settings.oidc_issuer, jwks_url=settings.oidc_jwks_url),
+        )
     groups = json.loads(settings.oidc_group_scopes_json) if settings.oidc_group_scopes_json else {}
     return Authenticator(
-        verifier=JwtVerifier(
-            issuer=settings.oidc_issuer, audience=settings.oidc_audience, jwks=json.loads(settings.oidc_jwks_json)
-        ),
+        verifier=verifier,
         pseudonym_key=settings.identity_pseudonym_key.get_secret_value().encode("utf-8"),
-        group_scopes={str(k): [str(s) for s in v] for k, v in groups.items()},
+        group_scopes={str(k): [str(x) for x in v] for k, v in groups.items()},
     )
 
 

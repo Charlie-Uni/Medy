@@ -110,6 +110,7 @@ class Settings(BaseSettings):
     oidc_issuer: str | None = None
     oidc_audience: str | None = None
     oidc_jwks_json: str | None = None
+    oidc_jwks_url: str | None = None  # explicit JWKS URL; unset -> OIDC discovery from the issuer
     oidc_group_scopes_json: str | None = None
 
     @field_validator(
@@ -126,6 +127,7 @@ class Settings(BaseSettings):
         "oidc_issuer",
         "oidc_audience",
         "oidc_jwks_json",
+        "oidc_jwks_url",
         "oidc_group_scopes_json",
         mode="before",
     )
