@@ -1,0 +1,48 @@
+# Prometheus alerting rules for MedOps Copilot (M3-10 first slice; thresholds from baseline 5.10 / 5.11 / §8).
+# Source metrics: GET /metrics (record 64). Windows are 60-minute gauges computed from the audit tables, so
+# rules read them directly instead of rate().
+groups:
+  - name: medops-slo
+    rules:
+      - alert: MedopsAskLatencyP95High
+        expr: medops_request_duration_ms{kind="ask",quantile="0.95"} > 8000
+        for: 15m
+        labels: {severity: warning}
+        annotations: {summary: "Ask P95 above 8 s (baseline 5.11 target)"}
+      - alert: MedopsTaskLatencyP95High
+        expr: medops_request_duration_ms{kind="task",quantile="0.95"} > 15000
+        for: 15m
+        labels: {severity: warning}
+        annotations: {summary: "Skill task P95 above 15 s (baseline 5.11 target)"}
+      - alert: MedopsSystemFailureRateHigh
+        expr: sum(medops_escalations_window{reason_code="system_failure"}) / clamp_min(sum(medops_requests_window), 1) > 0.05
+        for: 10m
+        labels: {severity: critical}
+        annotations: {summary: "More than 5% of requests in the last hour ended in system_failure (provider or dependency outage)"}
+      - alert: MedopsEscalationBacklog
+        expr: medops_escalations_open > 50
+        for: 30m
+        labels: {severity: warning}
+        annotations: {summary: "Open escalations waiting for a human exceed 50"}
+      - alert: MedopsTaskQueueStale
+        expr: medops_task_queue_oldest_age_seconds > 600
+        for: 5m
+        labels: {severity: warning}
+        annotations: {summary: "Oldest queued task older than 10 minutes: worker down or overloaded"}
+      - alert: MedopsModelBudgetNearCap
+        expr: medops_model_cost_usd_month > 0.8 * medops_model_budget_usd_cap
+        for: 0m
+        labels: {severity: warning}
+        annotations: {summary: "Monthly model spend above 80% of the configured budget (ADR-0010)"}
+      - alert: MedopsModelBudgetExhausted
+        expr: medops_model_cost_usd_month >= medops_model_budget_usd_cap
+        for: 0m
+        labels: {severity: critical}
+        annotations: {summary: "Monthly model budget reached: the gateway refuses further calls"}
+      - alert: MedopsIntegrityFailures
+        expr: sum(medops_escalations_window{reason_code="unsupported_conclusion"}) > 20
+        for: 30m
+        labels: {severity: warning}
+        annotations: {summary: "Verifier contradictions above the hourly baseline; check rules/judge drift before trusting answers"}
+      # Not yet measurable from /metrics (record 64 §3): ACL denial anomalies (401/403 happen before a trace exists),
+      # invalid-version candidates, cache hit rate, per-node error rates.

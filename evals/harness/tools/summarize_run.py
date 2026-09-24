@@ -14,9 +14,15 @@ from collections import Counter, defaultdict
 
 
 def load(run_dir: pathlib.Path) -> list[dict]:
+    """rows.jsonl is append-only across resumes (a redone sample appears twice); the last row per sample wins."""
     rows_path = run_dir / "rows.jsonl"
     if rows_path.exists():
-        return [json.loads(line) for line in rows_path.read_text(encoding="utf-8").splitlines() if line.strip()]
+        latest: dict[str, dict] = {}
+        for line in rows_path.read_text(encoding="utf-8").splitlines():
+            if line.strip():
+                row = json.loads(line)
+                latest[row["sample_id"]] = row
+        return list(latest.values())
     return json.loads((run_dir / "results.json").read_text(encoding="utf-8"))["rows"]
 
 
