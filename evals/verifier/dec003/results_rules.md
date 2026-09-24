@@ -1,4 +1,4 @@
-# DEC-003 arm `rules` (verifier-v2+support-rules-v2+polarity_only)
+# DEC-003 arm `rules` (verifier-v2+support-rules-v3+polarity_only)
 
 - pairs: 2076 · accuracy: 0.8839 · unsafe accept rate (non-supported judged supported): 0.0379 · cost: $0.0
 - share of pairs decided by rules alone: 0.3613
@@ -24,6 +24,6 @@
 
 | label \ pred | supported | not_supported | contradicted |
 | --- | ---: | ---: | ---: |
-| supported | 463 | 31 | 52 |
+| supported | 463 | 32 | 51 |
 | not_supported | 28 | 1023 | 41 |
 | contradicted | 30 | 59 | 349 |

@@ -6,7 +6,7 @@ Per extracted claim element:
 - exact canonical match but opposite polarity (claim says 不得, evidence does not) -> contradicted; a bound
   phrase (不得超過 / 上限 / at most / within) is a limit, not a negation: `上限 300 mg` and `不得超過 300 mg` share
   polarity, `超過 300 mg` against `不得超過 300 mg` is opposite, and a plain value against a bound is left
-  undetermined for the judge (support-rules-v2);
+  undetermined for the judge (support-rules-v2; v3 adds the legal phrasings in no event later than / as early as / 儘早於);
 - no match, and the cited evidence states exactly one different value of the same family -> contradicted;
 - identifier absent from the cited evidence -> not_supported (an attribution the evidence does not make);
 - otherwise -> undetermined (`verdict=None`): containment or the LLM judge decides in the verifier.
@@ -23,7 +23,7 @@ from medops.domain.evidence import Evidence
 from medops.domain.verification import ElementKind, Verdict
 from medops.verification.elements import ExtractedElement, extract, normalize_for_match
 
-RULES_VERSION = "support-rules-v2"
+RULES_VERSION = "support-rules-v3"
 
 _NEGATION = re.compile(
     r"不得|不可|不應|不应|不宜|禁止|禁用|勿|不建議|不建议|無需|无需|不需要|不需|不要|不能|不推薦|不推荐|避免|除外|不適用|不适用|未|沒有|没有|無|无"
@@ -44,12 +44,17 @@ _BOUND_UPPER = re.compile(
     r"|(?:可|可以)?(?:用|使用|增加|增量|加|調整|调整)至|(?:天|日|小時|小时|週|周|月|年|工作日)(?:以|之)?[內内]"
     r"|\bno more than\b|\bnot more than\b|\b(?:must |should |shall |may |can )?not exceed(?:ing)?\b|\bat most\b"
     r"|\bup to\b|\bmaximum\b|\bno later than\b|\bnot later than\b|\bat the latest\b"
+    # support-rules-v3: legal phrasing of an upper bound ("in no event later than 10 working days") is a limit too
+    r"|\bin (?:no|any) (?:event|case) (?:no |not )?(?:later|more) than\b|\bunder no circumstances (?:later|more) than\b"
+    r"|\bas late as\b"
     r"|\bwithin\s+(?:\d|one|two|three|four|five|six|seven|ten|twelve|the (?:next|following|same))",
     re.I,
 )
 _BOUND_LOWER = re.compile(
     r"不得少於|不得少于|不少於|不少于|不低於|不低于|不得低於|不得低于|不得早於|不得早于|不早於|不早于|至少|最少|下限|最低|最早"
-    r"|\bat least\b|\bnot less than\b|\bno less than\b|\bminimum\b|\bno earlier than\b|\bnot earlier than\b|\bnot before\b",
+    r"|\bat least\b|\bnot less than\b|\bno less than\b|\bminimum\b|\bno earlier than\b|\bnot earlier than\b|\bnot before\b"
+    # support-rules-v3: "as early as" / 儘早於 state the earliest point, not an act of being earlier than a limit
+    r"|\bas early as\b|儘早於|儘早于|尽早于|盡早於|最早於|最早于|早至",
     re.I,
 )
 _EXCEED_UP = re.compile(

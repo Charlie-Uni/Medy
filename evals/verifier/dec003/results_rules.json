@@ -1,6 +1,6 @@
 {
   "arm": "rules",
-  "model": "verifier-v2+support-rules-v2+polarity_only",
+  "model": "verifier-v2+support-rules-v3+polarity_only",
   "n": 2076,
   "accuracy": 0.8839,
   "unsafe_accept_rate": 0.0379,
@@ -64,8 +64,8 @@
   "confusion": {
     "supported": {
       "supported": 463,
-      "not_supported": 31,
-      "contradicted": 52
+      "not_supported": 32,
+      "contradicted": 51
     },
     "not_supported": {
       "supported": 28,
@@ -11722,7 +11722,7 @@
     {
       "pair_id": "ms-0249:supported",
       "label": "supported",
-      "pred": "contradicted",
+      "pred": "not_supported",
       "kind": "supported",
       "slices": [
         "time_window",

@@ -16,5 +16,5 @@ def test_production_models_are_pinned_priced_and_versioned():
     assert PRODUCTION_ANSWER_MODEL in OPENAI_PRICES and PRODUCTION_JUDGE_MODEL in OPENAI_PRICES
     assert (
         production_model_config_version()
-        == "answer=gpt-6-sol;judge=gpt-6-sol;verifier-v2+support-rules-v2+polarity_only"
+        == "answer=gpt-6-sol;judge=gpt-6-sol;verifier-v2+support-rules-v3+polarity_only"
     )

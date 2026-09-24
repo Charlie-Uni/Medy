@@ -1,0 +1,267 @@
+{
+  "run": "polarity-recheck-v3",
+  "finished_at": "2026-09-24T04:33:17+00:00",
+  "dataset": {
+    "version": "main-v1-provisional",
+    "second_human_review": "pending"
+  },
+  "versions": {
+    "policy_version": "policy-m2-smoke-1",
+    "retrieval_version": "90b57e4e86b4bb462fc4de58f7f7749666fb6f50a588c129bd5f9aa50585ab18",
+    "skill_version_set": [],
+    "model_config_version": "answer=gpt-6-sol;judge=gpt-6-sol;verifier-v2+support-rules-v3+polarity_only"
+  },
+  "n": 4,
+  "answered": 4,
+  "answerable_answered_rate": 1.0,
+  "answerable_gold_cited_rate": 1.0,
+  "no_answer_abstained_rate": 0.0,
+  "answerable_false_abstention_rate": 0.0,
+  "conflict_answered_with_gold": [],
+  "total_cost_usd": 0.0292,
+  "total_model_calls": 8,
+  "mean_latency_s": 8.43,
+  "p95_latency_s": 8.92,
+  "reason_code_counts": {},
+  "rows": [
+    {
+      "sample_id": "ms-0071",
+      "dept": "MA",
+      "kind": "answerable",
+      "imported": false,
+      "derived": false,
+      "language": "mixed",
+      "slices": [
+        "dose_unit",
+        "time_window",
+        "drug_name_zh",
+        "mixed_zh_en"
+      ],
+      "query": "衛欣保（valsartan）仿單對心肌梗塞後用藥所列的最早開始時間與起始劑量為何？",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "仿單列明，心肌梗塞後最早可於12小時開始使用valsartan；起始劑量為每次20 mg、每日兩次。"
+      ],
+      "cited_chunks": [
+        "754c6a79-d07d-4ef2-9888-3ff60bc8b737"
+      ],
+      "gold_chunks": [
+        "754c6a79-d07d-4ef2-9888-3ff60bc8b737"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "evidence_chunks": [
+        "754c6a79-d07d-4ef2-9888-3ff60bc8b737",
+        "aa8244cb-19a7-41ea-bb02-f51294960f63",
+        "71205145-f496-4312-8353-7becfef2203f",
+        "3e334937-d621-4cec-bacc-126a739a7f6f",
+        "c1bd229c-8878-40e6-9169-e491bfe3648a",
+        "51d03323-51aa-4266-bdd4-5d84d371c4bb",
+        "a8d91427-5ba3-4d0d-8da9-be037951d21f",
+        "8264e17b-8735-4ad5-97b2-c349103d6601"
+      ],
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "text": "仿單列明，心肌梗塞後最早可於12小時開始使用valsartan；起始劑量為每次20 mg、每日兩次。",
+          "chunk": "754c6a79-d07d-4ef2-9888-3ff60bc8b737",
+          "reason": "llm:gpt-6-sol: 證據寫明valsartan可於心肌梗塞12小時後開始治療，初步劑量為20 mg、每日兩次。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 7426,
+      "model_calls": 2,
+      "model_tokens": 4786,
+      "cost_usd": 0.010692,
+      "latency_s": 8.92
+    },
+    {
+      "sample_id": "ms-0237",
+      "dept": "PV",
+      "kind": "answerable",
+      "imported": false,
+      "derived": false,
+      "language": "mixed",
+      "slices": [
+        "time_window",
+        "mixed_zh_en"
+      ],
+      "query": "在IDE研究中,研究者首次获知UADE(unanticipated adverse device effect)后,最迟须在多长时间内向申办者和审查IRB提交报告?",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "研究者应尽快向申办者和审查IRB报告UADE，最迟不得超过首次获知该事件后10个工作日。"
+      ],
+      "cited_chunks": [
+        "8b40a60a-31e7-4e96-b117-34b897eb4329"
+      ],
+      "gold_chunks": [
+        "8b40a60a-31e7-4e96-b117-34b897eb4329"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "evidence_chunks": [
+        "8b40a60a-31e7-4e96-b117-34b897eb4329",
+        "6d00f985-b256-40e0-851e-80bf4f14521d",
+        "0e144471-7248-489e-a56f-46daa062da71",
+        "53b7cf66-a215-4cc1-8aa4-cb332cb52519",
+        "930657a4-e773-46c4-960a-545d8e559614",
+        "e81ffe7e-2f01-4995-b00f-f557c013258e",
+        "442c28a2-63ab-4202-8e75-caaa7b16108e",
+        "f09e2708-b41d-4e01-a54c-4873a50c4a72"
+      ],
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "text": "研究者应尽快向申办者和审查IRB报告UADE，最迟不得超过首次获知该事件后10个工作日。",
+          "chunk": "8b40a60a-31e7-4e96-b117-34b897eb4329",
+          "reason": "llm:gpt-6-sol: 证据明确要求研究者尽快向申办者和审查IRB提交UADE报告，且最迟不得超过研究者首次获知该事件后10个工作日。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 3242,
+      "model_calls": 2,
+      "model_tokens": 2269,
+      "cost_usd": 0.005658,
+      "latency_s": 6.36
+    },
+    {
+      "sample_id": "ms-0238",
+      "dept": "PV",
+      "kind": "answerable",
+      "imported": false,
+      "derived": true,
+      "language": "en",
+      "slices": [
+        "time_window",
+        "mixed_zh_en"
+      ],
+      "query": "In IDE studies, what is the latest deadline for the investigator to submit a UADE report to the sponsor and reviewing IRB after first learning of the effect?",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "The investigator must submit the UADE report to the sponsor and reviewing IRB as soon as possible, and no later than 10 working days after first learning of the effect."
+      ],
+      "cited_chunks": [
+        "8b40a60a-31e7-4e96-b117-34b897eb4329"
+      ],
+      "gold_chunks": [
+        "8b40a60a-31e7-4e96-b117-34b897eb4329"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "evidence_chunks": [
+        "6d00f985-b256-40e0-851e-80bf4f14521d",
+        "8b40a60a-31e7-4e96-b117-34b897eb4329",
+        "03b35fda-7a45-4b11-b900-98efc650fe7e",
+        "526085c7-73f6-436e-86a9-6ec91eee9951",
+        "2ab5fee6-8c11-4cfe-9cd8-f1a1d6adbc84",
+        "fbea1f8a-3199-4d4a-b328-6d36d73ffbea",
+        "0e144471-7248-489e-a56f-46daa062da71",
+        "442c28a2-63ab-4202-8e75-caaa7b16108e"
+      ],
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "text": "The investigator must submit the UADE report to the sponsor and reviewing IRB as soon as possible, and no later than 10 working days after first learning of the",
+          "chunk": "8b40a60a-31e7-4e96-b117-34b897eb4329",
+          "reason": "llm:gpt-6-sol: 证据明确要求研究者在获知 UADE 后尽快向申办方和审查 IRB 提交报告，且不得晚于首次获知后 10 个工作日。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 3259,
+      "model_calls": 2,
+      "model_tokens": 2276,
+      "cost_usd": 0.005776,
+      "latency_s": 5.43
+    },
+    {
+      "sample_id": "ms-0261",
+      "dept": "PV",
+      "kind": "answerable",
+      "imported": false,
+      "derived": true,
+      "language": "en",
+      "slices": [
+        "time_window",
+        "mixed_zh_en"
+      ],
+      "query": "According to ICH E2D, for a serious and unexpected ADR that already meets the minimum information and expedited-reporting criteria, what is the general latest reporting deadline after the MAH first receives the information?",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "The MAH should report it as soon as possible, and no later than 15 calendar days after it first receives the information. The date MAH personnel first receive a report meeting the minimum-information and expedited-reporting criteria is generally day 0."
+      ],
+      "cited_chunks": [
+        "0b444d3d-9430-45bf-97cc-146e9e08fe74",
+        "36b51f71-bbd0-43eb-bc20-a4c66fe16475"
+      ],
+      "gold_chunks": [
+        "0b444d3d-9430-45bf-97cc-146e9e08fe74"
+      ],
+      "gold_cited": true,
+      "evidence_count": 8,
+      "evidence_chunks": [
+        "0b444d3d-9430-45bf-97cc-146e9e08fe74",
+        "36b51f71-bbd0-43eb-bc20-a4c66fe16475",
+        "53b7cf66-a215-4cc1-8aa4-cb332cb52519",
+        "930657a4-e773-46c4-960a-545d8e559614",
+        "a53aa5a0-157c-44e6-8390-050834f5d303",
+        "77965676-c35e-4a6d-982e-0f2a0aff7d46",
+        "8c175ab3-b898-4b6a-8c87-7156b1846b79",
+        "c0055477-684c-4623-ae19-b37881235ce2"
+      ],
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "text": "The MAH should report it as soon as possible, and no later than 15 calendar days after it first receives the information. The date MAH personnel first receive a",
+          "chunk": "0b444d3d-9430-45bf-97cc-146e9e08fe74",
+          "reason": "llm:gpt-6-sol: 证据1规定，严重且非预期ADR的快速报告应尽快提交，最迟不超过MAH初次收到信息后15个日历日。证据2规定，MAH人员首次收到同时满足最低信息要求和快速报告条件的病例报告之日，通常视为第0天。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 3349,
+      "model_calls": 2,
+      "model_tokens": 2438,
+      "cost_usd": 0.00706,
+      "latency_s": 13.01
+    }
+  ]
+}

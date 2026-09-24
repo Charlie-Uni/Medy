@@ -101,6 +101,24 @@ def test_bound_phrases_are_limits_not_negations():
     assert polarity("不得超過 300 mg").negations == 0 and polarity("不得使用").negations == 1
 
 
+def test_legal_bound_phrasings_are_limits_too():
+    # support-rules-v3: the v2 full run's last four rule contradictions (record 54 §3.5) were "in no event later than"
+    # (counted as a negation plus an exceed) and 儘早於 (matched as 早於, an exceed) against no later than / 最早
+    assert compare_polarity("no later than 10 working days", "in no event later than 10 working days after") == "same"
+    assert compare_polarity("最迟不得超过10个工作日", "in no case later than 10 working days") == "same"
+    assert compare_polarity("最早可於心肌梗塞後12小時開始", "可儘早於心肌梗塞12小時後即開始進行治療") == "same"
+    assert compare_polarity("as early as 12 hours after", "no earlier than 12 hours after") == "same"
+    assert polarity("in no event later than 15 calendar days").negations == 0
+    # crossing a limit is still opposite to the limit
+    assert compare_polarity("later than 10 working days", "in no event later than 10 working days") == "opposite"
+    assert compare_polarity("早於 12 小時", "儘早於 12 小時後開始") == "opposite"
+    reported = outcomes(
+        "The report is due no later than 10 working days after the effect.",
+        "A report of a UADE is due as soon as possible, but in no event later than 10 working days after the effect.",
+    )
+    assert reported[ElementKind.time_window].verdict is Verdict.supported
+
+
 def test_indication_containment_respects_negation_polarity():
     ev = [evidence("c1", "Losartan potassium 禁用於對本項產品任何組成過敏者。")]
     flipped = judge_elements("Losartan potassium 用於對本項產品任何組成過敏者。", ev)

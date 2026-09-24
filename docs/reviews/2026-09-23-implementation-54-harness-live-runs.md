@@ -84,6 +84,27 @@
 - 处置：`smoke_ask.py` 新增 `--max-consecutive-failures`（默认 10，连续 `system_failure` 达阈值即以退出码 76 结束），看门狗对 76 等待 5 分钟再 `--resume`（`system_failure` 行会被重跑）。额度恢复后执行 `python <scratchpad>/supervise_full_ask.py <log> evals/harness/runs/2026-09-23-full-ask-v2` 即可续跑剩余 549 条（约 4 美元）。
 - 花费核对：按 Gateway 价目累计，今日全部 OpenAI 调用 8.75 美元（含卡死损失的 1.35）；账户额度耗尽说明预付余额低于假定的 30 美元，或实际计费高于价目估算——需要决策人在 billing 页面核对后决定是否充值。
 
+### 3.5 v2 全量重跑完成（2026-09-24 12:35–14:26 续跑 549 条）与 `support-rules-v3`
+
+充值后由看门狗 `--resume` 续跑，549 条全部重做、无 `system_failure`，续跑部分费用 3.90 美元（全次 4.65，其中前 65 条的 0.75 已计入 §3.4）。`evals/harness/runs/2026-09-23-full-ask-v2`（`rows.jsonl` 追加式、汇总取每样本最后一行；`compare_v1.md` 为逐样本对照）：
+
+| 指标（614 条，同口径） | v1（`support-rules-v1`） | v2（`support-rules-v2`） |
+| --- | ---: | ---: |
+| 有答案 / 冲突样本回答 | 454/553 = 82.1% | **478/553 = 86.4%** |
+| 回答且引用 gold | 414/553 = 74.9% | **437/553 = 79.0%** |
+| 误弃答（`insufficient_evidence`） | 68/553 = 12.3% | 67/553 = 12.1% |
+| 矛盾升级（`unsupported_conclusion`） | 30 | **8** |
+| 无答案样本弃答 | 59/61 = 96.7% | 59/61 = 96.7% |
+| 冲突样本引用现行版 | 41/52 = 78.8% | 44/52 = 84.6% |
+| 费用 / 模型调用 | 4.64 美元 / 1,230 | 4.65 美元 / 1,236 |
+| 延迟均值 / P95 | 7.1 s / 12.9 s | 8.0 s / 13.6 s |
+
+- 逐样本转移：回答→回答 443、升级→回答 37、回答→升级 13、升级→升级 121。37 条恢复里 28 条是 v1 的 `unsupported_conclusion`（v1 的 30 条中 28 条转为回答且 27 条引用 gold，其余 2 条 ms-0177 / ms-0249 现由判定模型判矛盾）、8 条 `insufficient_evidence`、1 条 v1 的 `system_failure`。有答案样本的 gold 引用翻转：否→是 33、是→否 13。
+- 13 条回归：5 条 `unsupported_conclusion`（见下）；8 条 `insufficient_evidence`——4 条「唯一陈述被判定模型判 not_supported 后删光」、2 条模型判证据不作答、2 条弃答兜底；其中 ms-0495 是无答案样本，v1 错答、v2 正确弃答，属改进而非回归。无答案样本仍被回答的 2 条：ms-0462（两轮都答）、ms-0520（v2 新出现）。这些跨轮翻转与记录 55 §4 记录的模型侧非确定性同量级，未再重跑核对。
+- **剩余 8 条矛盾升级逐条核对**：4 条由判定模型裁定，理由可读且方向安全（ms-0012 每日最大剂量 400 mg 只适用于所列肾功能情形、证据另有 800 mg；ms-0177 证据是「可以」请求而陈述写成「应」；ms-0227 陈述省略了「无法取得年龄时才记年龄分组」的条件；ms-0249 补充资料由 FDA 而非公司认定为必要）——是否算过严需要人工复核，登记到 M2-16。**另 4 条仍是规则误报**：ms-0238「no later than 10 working days」对证据「in no event later than 10 working days」、ms-0261「no later than 15 calendar days」对「in no case later than 15 calendar days」、ms-0237（同一 UADE 条款的中文问法）——法规句式 in no event / in no case later than 被计为「否定 + 越限」；ms-0071「最早可於心肌梗塞後12小時開始」对证据「可儘早於心肌梗塞12小時後即開始」——`儘早於` 被 `早於` 匹配为越限。
+- **`support-rules-v3`**（`RULES_VERSION` 升级，`VERIFIER_VERSION = verifier-v2+support-rules-v3+polarity_only`）：把 `in (no|any) (event|case) [no|not] (later|more) than`、`under no circumstances later than`、`as late as` 并入上限表，`as early as`、`儘早於 / 尽早于 / 盡早於 / 最早於 / 早至` 并入下限表；单元测试覆盖四条原句与「越限仍对立」。DEC-003 离线重算 2,076 对：准确率 88.39%、错接受率 3.79% 与 v2 相同（混淆矩阵仅 1 对由「矛盾」改记 not_supported），300 对分工推演（`policies.md`）逐位不变。4 条样本实测复跑 `evals/harness/runs/polarity-recheck-v3`：全部转为回答并引用 gold（0.03 美元）。按 v2 全量结果推算 v3 口径：矛盾升级 8 → 4、回答约 482/553 = 87.2%、引用 gold 约 441/553 = 79.7%（推算，不作为报告数字）。
+- 花费累计：截至本节所有 OpenAI 调用 12.7 美元（§3.4 的 8.75 + 续跑 3.90 + 复跑 0.03 + 记录 67 端到端约 0.05）。
+
 ## 4. 自审（§9）
 
 - 运行只读 medops_v2，身份事务内 `set_config('medops.dept')`，与 M1 端到端同一路径；不写库。
