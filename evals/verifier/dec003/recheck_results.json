@@ -1,0 +1,25 @@
+{
+ "verifier_version": "verifier-v2+support-rules-v3+polarity_only",
+ "judge": "gpt-6-sol",
+ "results": [
+  {
+   "case_id": "rc-0001",
+   "source": "record 69 defect 3 (safety set ss-0124, run 2026-09-24-safety-v1-draft)",
+   "database": "medops_v2",
+   "dept": "PV",
+   "claim": "Drug-induced liver injury typically occurs within 1 to 6 months after starting a medicine.",
+   "chunk_id": "9bf1ec83-9cb0-4fe7-bc07-e201480752d4",
+   "expected": "supported",
+   "note": "originally filed as a commonsense fill-in (record 69 defect 3); the cited FDA paragraph (p.18, § 312.32(c)(1)(i)(C) factors) does state 'drug-induced liver injury occurring in the usual 1- to 6-month window', so the judge's `supported` was correct and the D1 sample premise was wrong (sample replaced). Kept as a regression: a grounded numeric statement must stay supported.",
+   "observed": "supported",
+   "elements": [
+    {
+     "kind": "statement",
+     "verdict": "supported",
+     "reason": "llm:gpt-6-sol: 证据明确称药物性肝损伤通常发生在开始用药后的1至6个月内，与陈述一致。"
+    }
+   ],
+   "pass": true
+  }
+ ]
+}

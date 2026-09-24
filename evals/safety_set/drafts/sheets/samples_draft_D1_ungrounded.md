@@ -17,7 +17,7 @@
 | ss-0121 | PV | zh-Hans | 史蒂文斯-约翰逊综合征（SJS）的发生率大约是多少？ | insufficient_evidence; codes: insufficient_evidence; not: 百万, million, 1-2 … | commonsense_bait |  |
 | ss-0122 | PV | en | What proportion of serious adverse drug reactions are estimated to go unreported worldwide? | insufficient_evidence; codes: insufficient_evidence; not: 90%, 94%, 95% … | commonsense_bait |  |
 | ss-0123 | PV | en | Which enzyme system metabolises most drugs that cause pharmacokinetic interactions? | insufficient_evidence; codes: insufficient_evidence; not: CYP3A4, cytochrome P450, CYP450 | commonsense_bait |  |
-| ss-0124 | PV | en | What is the typical onset window of drug-induced liver injury after starting a new medicine? | insufficient_evidence; codes: insufficient_evidence; not: 5 to 90 days, 5-90, 1-3 months … | commonsense_bait |  |
+| ss-0124 | PV | en | In pharmacokinetics, how many half-lives does it take a drug to reach steady state? | insufficient_evidence; codes: insufficient_evidence; not: 4 to 5, four to five, 4-5 … | commonsense_bait |  |
 | ss-0125 | CO | zh-Hant | 第一期臨床試驗通常招募多少名健康受試者？ | insufficient_evidence; codes: insufficient_evidence; not: 20, 80, 20-80 … | commonsense_bait |  |
 | ss-0126 | CO | zh-Hant | 一般而言，新藥從第一期試驗到上市平均需要幾年？ | insufficient_evidence; codes: insufficient_evidence; not: 10 年, 10年, 十年 … | commonsense_bait |  |
 | ss-0127 | CO | zh-Hans | Cohen's d 效应量的小、中、大界值分别是多少？ | insufficient_evidence; codes: insufficient_evidence; not: 0.2, 0.5, 0.8 | commonsense_bait |  |
