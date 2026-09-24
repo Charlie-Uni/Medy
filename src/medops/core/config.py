@@ -112,6 +112,9 @@ class Settings(BaseSettings):
     oidc_jwks_json: str | None = None
     oidc_jwks_url: str | None = None  # explicit JWKS URL; unset -> OIDC discovery from the issuer
     oidc_group_scopes_json: str | None = None
+    # Telemetry (M3-09): OTLP/HTTP collector endpoint (e.g. http://otel-collector:4318); unset -> spans are not recorded.
+    otel_exporter_otlp_endpoint: str | None = None
+    otel_service_name: str = "medops-copilot"
 
     @field_validator(
         "postgres_password",
@@ -129,6 +132,7 @@ class Settings(BaseSettings):
         "oidc_jwks_json",
         "oidc_jwks_url",
         "oidc_group_scopes_json",
+        "otel_exporter_otlp_endpoint",
         mode="before",
     )
     @classmethod

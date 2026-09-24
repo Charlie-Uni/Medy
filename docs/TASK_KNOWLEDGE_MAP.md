@@ -11,10 +11,10 @@
 | M0 工程与契约 | 11 | 9 | 2 | 0 | 0 |
 | M1 知识治理与检索 | 21 | 5 | 6 | 1 | 9 |
 | M2 Harness / Verifier / Safety / Skills | 16 | 6 | 8 | 0 | 2 |
-| M3 API / worker / MCP / 观测 / 部署 | 13 | 2 | 9 | 0 | 2 |
+| M3 API / worker / MCP / 观测 / 部署 | 13 | 2 | 10 | 0 | 1 |
 | M4 受控 Loop | 10 | 0 | 0 | 0 | 10 |
 | M5 规模与验收 | 8 | 0 | 0 | 0 | 8 |
-| P0 合计 | 79 | 22 | 25 | 1 | 31 |
+| P0 合计 | 79 | 22 | 26 | 1 | 30 |
 
 M1-01 同时是“部分”和“阻塞”，上表按“部分”计。P1/P2 11 项均为选做未启动，最终验收 9 项均未验收。
 
@@ -111,7 +111,7 @@ M1-01 同时是“部分”和“阻塞”，上表按“部分”计。P1/P2 11
 | M3-06 | 部分（四个只读工具 + bearer + 只读角色，记录 62；生产 Searcher 实测待做） | 只读 MCP 四个工具 | MCP 协议与 Streamable HTTP；bearer 鉴权；只读由数据库角色证明 |
 | M3-07 | 部分（Trace 摘要 + span + 升级记录落库、fail-closed、假名与追加写；受限载荷加密与 OTel 待做，记录 60） | 完整 Trace、脱敏、受限 payload 授权 | 结构化日志；HMAC 假名；追加写审计；加密与访问控制 |
 | M3-08 | 部分（单条回放：独立 run id、差异报告、replays 表，记录 65；数据集级回放随 M4） | Trace replay 生成差异报告 | 确定性回放；版本固定；run id 隔离；缓存短路风险 |
-| M3-09 | 待做 | OTel 与 Langfuse 覆盖全部 spans | traces/spans/context propagation；采样；exporter 与后端 |
+| M3-09 | 部分（OTel spans 覆盖 API/节点/模型/检索/worker，OTLP 导出可配置，记录 66；Langfuse 待决策） | OTel 与 Langfuse 覆盖全部 spans | traces/spans/context propagation；采样；exporter 与后端 |
 | M3-10 | 部分（数据库聚合的 /metrics，低基数标签；告警规则待做，记录 64） | 指标与告警仪表盘 | counter/gauge/histogram；指标基数；分位数计算；告警阈值 |
 | M3-11 | 待做 | P95 达标并记录环境 | 压测方法与并发模型；冷热缓存；分位数统计与尾延迟 |
 | M3-12 | 已实现（镜像、探针、优雅停机、compose、部署说明，记录 63） | 非 root 镜像、健康检查、优雅停机、固定依赖 | 多阶段构建；SIGTERM 与优雅停机；就绪与存活探针；配置注入 |

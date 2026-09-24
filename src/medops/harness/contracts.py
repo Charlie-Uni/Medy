@@ -11,6 +11,7 @@
 
 from __future__ import annotations
 
+import contextvars
 import time
 from collections.abc import Callable
 from concurrent.futures import ThreadPoolExecutor
@@ -21,6 +22,7 @@ from typing import Literal, TypeVar
 from pydantic import Field
 
 from medops.core.errors import ErrorCode, InfrastructureError, MedOpsError
+from medops.core.telemetry import annotate, span
 from medops.domain.common import DomainModel, NonEmptyStr
 
 MAX_RETRIES = 2  # baseline 3.2
@@ -77,29 +79,32 @@ def run_node(
         pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix=f"node-{spec.name}")
         error: BaseException
         outcome: Literal["retry", "failed", "timeout"]
-        try:
-            future = pool.submit(body)
+        with span("harness.node", node=spec.name, attempt=attempt, operation_key=operation_key) as current:
             try:
-                result = future.result(timeout=spec.timeout_s)
-            except FutureTimeout:
+                future = pool.submit(contextvars.copy_context().run, body)  # trace id + OTel context follow the body
+                try:
+                    result = future.result(timeout=spec.timeout_s)
+                except FutureTimeout:
+                    pool.shutdown(wait=False, cancel_futures=True)
+                    raise NodeTimeout(spec.name, spec.timeout_s) from None
+                pool.shutdown(wait=True)
+                attempts.append(_attempt(spec, attempt, operation_key, started, t0, "ok", None, ""))
+                annotate(current, outcome="ok")
+                return result, attempts
+            except NodeTimeout as exc:
+                error, retryable, outcome = exc, True, "timeout"
+            except InfrastructureError as exc:
                 pool.shutdown(wait=False, cancel_futures=True)
-                raise NodeTimeout(spec.name, spec.timeout_s) from None
-            pool.shutdown(wait=True)
-            attempts.append(_attempt(spec, attempt, operation_key, started, t0, "ok", None, ""))
-            return result, attempts
-        except NodeTimeout as exc:
-            error, retryable, outcome = exc, True, "timeout"
-        except InfrastructureError as exc:
-            pool.shutdown(wait=False, cancel_futures=True)
-            error, retryable, outcome = exc, exc.retryable, "retry"
-        except MedOpsError as exc:
-            pool.shutdown(wait=False, cancel_futures=True)
-            error, retryable, outcome = exc, False, "failed"
-        except Exception as exc:  # noqa: BLE001 - recorded as a failed attempt and re-raised as NodeFailure below
-            pool.shutdown(wait=False, cancel_futures=True)
-            error, retryable, outcome = exc, False, "failed"
-        code = error.code.value if isinstance(error, MedOpsError) else type(error).__name__
-        last = attempt > spec.max_retries or not retryable
+                error, retryable, outcome = exc, exc.retryable, "retry"
+            except MedOpsError as exc:
+                pool.shutdown(wait=False, cancel_futures=True)
+                error, retryable, outcome = exc, False, "failed"
+            except Exception as exc:  # noqa: BLE001 - recorded as a failed attempt and re-raised as NodeFailure below
+                pool.shutdown(wait=False, cancel_futures=True)
+                error, retryable, outcome = exc, False, "failed"
+            code = error.code.value if isinstance(error, MedOpsError) else type(error).__name__
+            last = attempt > spec.max_retries or not retryable
+            annotate(current, outcome="failed" if last else outcome, error_code=code)
         attempts.append(
             _attempt(spec, attempt, operation_key, started, t0, "failed" if last else outcome, code, str(error)[:200])
         )

@@ -26,7 +26,8 @@ from medops.api.contracts import (
 from medops.application.audit import TraceRecord, TraceStore, record_or_fail_closed
 from medops.core.canonical import canonical_hash
 from medops.core.errors import BusinessError, ErrorCode, ErrorResponse, MedOpsError
-from medops.core.tracing import new_trace_id
+from medops.core.telemetry import ATTR_TASK, ATTR_TRACE, annotate, span
+from medops.core.tracing import bind_trace_id, new_trace_id
 from medops.domain.common import Dept
 from medops.domain.identity import UserContext
 from medops.infrastructure.llm.meter import MeteredGateway
@@ -210,6 +211,18 @@ class TaskRunner:
             return None
         trace_id = new_trace_id()
         attempt = claimed.attempts
+        with (
+            bind_trace_id(trace_id),
+            span(
+                "worker.task",
+                **{ATTR_TASK: claimed.task_id, ATTR_TRACE: trace_id, "skill": claimed.skill_name, "attempt": attempt},
+            ) as current,
+        ):
+            record = self._execute(claimed, trace_id, attempt)
+            annotate(current, status=record.status.value if record else "unknown")
+        return record
+
+    def _execute(self, claimed: TaskRecord, trace_id: str, attempt: int) -> TaskRecord | None:
         try:
             with self.env.connection() as conn:
                 user = self.env.resolve_user(conn, claimed.principal)

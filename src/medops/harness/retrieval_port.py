@@ -12,6 +12,7 @@ from contextlib import AbstractContextManager
 from datetime import date
 from typing import Any, Protocol
 
+from medops.core.telemetry import annotate, span
 from medops.domain.common import DomainModel, NonEmptyStr
 from medops.domain.evidence import Evidence
 from medops.domain.identity import UserContext
@@ -78,6 +79,20 @@ class ProductionRetrieval:
         self._glossary = glossary
 
     def retrieve(self, request: RetrievalRequest) -> RetrievalOutcome:
+        with span(
+            "retrieval.retrieve", dept=request.user.dept.value, historical=request.historical_requested
+        ) as current:
+            outcome = self._retrieve(request)
+            annotate(
+                current,
+                candidates=len(outcome.candidates),
+                evidence=len(outcome.evidence),
+                rejected=len(outcome.rejected),
+                degraded=outcome.degraded,
+            )
+            return outcome
+
+    def _retrieve(self, request: RetrievalRequest) -> RetrievalOutcome:
         rw = rewrite(request.query, entities=request.session_entities, glossary=self._glossary)
         query = rw.queries[0]
         with self._conn_for_user(request.user) as conn:

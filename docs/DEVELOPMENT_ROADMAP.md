@@ -19,7 +19,7 @@
 
 决策人要求每个阶段汇报"离总目标百分之多少"。口径固定为：[任务知识对照](TASK_KNOWLEDGE_MAP.md) 中 79 个 P0 任务行的状态加权和（已实现 1、部分 0.5、阻塞与待做 0）除以 79；另报除以 99 个基线复选项的数值。状态只随实现记录的证据变更，基线勾选只依据完整证据更新，最终验收仍是第 11 节九条门禁的二元结果。`tests/unit/docs/test_baseline_roadmap_consistency.py` 重算并比对下面这行数字：
 
-P0 加权进度：54.4%（43.0/79）；按 99 项计 43.4%。分项：M0 10/11、M1 16.5/21、M2 10/16、M3 6.5/13、M4 0/10、M5 0/8。
+P0 加权进度：55.1%（43.5/79）；按 99 项计 43.9%。分项：M0 10/11、M1 16.5/21、M2 10/16、M3 7/13、M4 0/10、M5 0/8。
 
 ### 状态与计数
 
@@ -175,7 +175,7 @@ P0 加权进度：54.4%（43.0/79）；按 99 项计 43.4%。分项：M0 10/11�
 | M3-06 | 部分（官方 SDK 2.x：四个只读工具、bearer 校验复用 API 身份边界、只读角色连接与 RLS 可见性、stdio 仅开发；单元 4 + 集成 4；生产 Searcher 实测与 MCP 调用审计待做，记录 62） | 只读 MCP：search_documents、get_chunk、verify_citation、list_active_versions；生产 Streamable HTTP + bearer，继承身份与数据库权限，不能写入；stdio 仅开发测试 |
 | M3-07 | 部分（迁移 0011：每次问答 / 任务执行写 Trace 摘要 + 节点 span + 升级记录，请求事务内、写失败 fail-closed；假名、追加写、角色分离；受限可回放载荷的加密存储与 OTel 待做，记录 60） | 每次请求完整 Trace；身份 surrogate/HMAC 假名、日志脱敏，受限可回放 payload 单独加密和授权，审计追加写 |
 | M3-08 | 部分（`POST /admin/traces/{id}/replay`：原 principal 当前身份 + 本部署版本集 + 独立 replay_run_id，回放记为独立 Trace，差异报告与 `replays` 落库；多版本回放随 M4，记录 65） | Trace replay 固定实际策略/检索/Skill/模型版本，用独立 run id 生成差异报告；禁止被原执行缓存短路 |
-| M3-09 | 待做 | Langfuse 与 OTel 串联 API、数据库、Redis、LLM、Reranker、worker spans，跨任务传播 trace/task/version 信息 |
+| M3-09 | 部分（OTel：http.request / harness.node / llm.call / retrieval.retrieve / worker.task spans，属性含 trace_id、task_id、策略与检索版本，OTLP/HTTP 导出可配置；Langfuse 待托管决策，DB/Redis/重排细分 span 待做，记录 66） | Langfuse 与 OTel 串联 API、数据库、Redis、LLM、Reranker、worker spans，跨任务传播 trace/task/version 信息 |
 | M3-10 | 部分（`GET /metrics`：请求/结果、升级码、待处理升级、时延分位、调用/token/费用（窗口与月）与预算、任务队列；低基数标签、ops/admin 角色；告警规则、缓存与节点级错误待做，记录 64） | 延迟、错误、拒答/升级、队列、缓存、Token/成本与安全告警；trace_id/user_id 不作为高基数指标标签 |
 | M3-11 | 待做 | 普通问答 P95 <=8s、复杂 Skill <=15s；记录并发、硬件、语料、冷热缓存、失败率，不能仅测单次最快请求 |
 | M3-12 | 已实现（多阶段非 root 镜像、哈希锁定依赖、`/healthz` `/readyz`、三进程优雅停机、compose `app` profile、`docs/DEPLOY.md`；CI 构建与扫描随 M0-10 / P1，记录 63） | 固定依赖、非 root 镜像、health/readiness、优雅停机；配置/密钥隔离、持久化和部署说明 |

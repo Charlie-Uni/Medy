@@ -38,6 +38,7 @@ from medops.application.replay import ReplayService
 from medops.application.tasks import TaskService, TaskStore, to_response
 from medops.core.errors import HTTP_STATUS, BusinessError, ErrorCode, ErrorResponse, MedOpsError
 from medops.core.logging import get_logger
+from medops.core.telemetry import ATTR_POLICY, ATTR_RETRIEVAL, annotate, span
 from medops.core.tracing import bind_trace_id
 from medops.domain.common import ReasonCode
 from medops.domain.identity import UserContext
@@ -140,15 +141,23 @@ def create_app(
     async def trace_scope(request: Request, call_next: Callable[[Request], Any]) -> Any:
         with bind_trace_id() as trace_id:
             request.state.trace_id = trace_id
-            try:
-                response = await call_next(request)
-            except MedOpsError as exc:
-                response = _error_response(exc.code, exc.message, trace_id, retryable=exc.retryable)
-            except Exception:  # noqa: BLE001 - the public contract never leaks internals (baseline 5.12)
-                log.exception("unhandled error", extra={"path": request.url.path})
-                response = _error_response(
-                    ErrorCode.internal_error, "服务暂时不可用，请稍后重试", trace_id, retryable=False
-                )
+            attrs = {
+                "http.method": request.method,
+                "http.route": request.url.path,
+                ATTR_POLICY: runtime.versions.policy_version,
+                ATTR_RETRIEVAL: runtime.versions.retrieval_version,
+            }
+            with span("http.request", **attrs) as current:
+                try:
+                    response = await call_next(request)
+                except MedOpsError as exc:
+                    response = _error_response(exc.code, exc.message, trace_id, retryable=exc.retryable)
+                except Exception:  # noqa: BLE001 - the public contract never leaks internals (baseline 5.12)
+                    log.exception("unhandled error", extra={"path": request.url.path})
+                    response = _error_response(
+                        ErrorCode.internal_error, "服务暂时不可用，请稍后重试", trace_id, retryable=False
+                    )
+                annotate(current, **{"http.status_code": response.status_code})
             response.headers[TRACE_HEADER] = trace_id
             return response
 

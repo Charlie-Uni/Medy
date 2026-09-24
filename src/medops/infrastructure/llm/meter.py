@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from medops.core.telemetry import annotate, span
 from medops.infrastructure.llm.gateway import ModelGateway, ModelRequest, ModelResponse
 
 
@@ -17,7 +18,15 @@ class MeteredGateway:
         return self._inner.provider
 
     def complete(self, request: ModelRequest) -> ModelResponse:
-        response = self._inner.complete(request)
+        with span("llm.call", purpose=request.purpose, model_id=request.model_id) as current:
+            response = self._inner.complete(request)
+            annotate(
+                current,
+                input_tokens=response.usage.input_tokens,
+                output_tokens=response.usage.output_tokens,
+                cost_usd=response.cost_usd,
+                truncated=response.truncated,
+            )
         self.calls += 1
         self.tokens += response.usage.total_tokens
         self.cost_usd += response.cost_usd

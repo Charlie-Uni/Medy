@@ -10,6 +10,7 @@ from datetime import date
 from medops.api.runtime import authenticator_from_settings
 from medops.core.config import AppEnv, Settings, safe_config_errors
 from medops.core.logging import configure_logging, get_logger
+from medops.core.telemetry import configure_telemetry
 from medops.domain.common import Dept
 from medops.domain.identity import UserContext
 from medops.mcp.server import McpProductionRuntime, build_server
@@ -77,6 +78,7 @@ def main(argv: list[str] | None = None) -> int:
         )
         return 2
     configure_logging(settings.log_level)
+    configure_telemetry(endpoint=settings.otel_exporter_otlp_endpoint, service_name=settings.otel_service_name)
     log = get_logger(__name__)
     if settings.database_readonly_url is None:
         print(
