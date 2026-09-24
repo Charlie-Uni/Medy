@@ -27,3 +27,5 @@
 ## 结果
 
 见 `dec003/results_*.md`（追踪）与实现记录 53。
+
+- 复验用例 `dec003/recheck_cases.jsonl`（claim + chunk id，证据文本运行时从库中读取，不入库）：`tools/run_recheck_cases.py` 让这些对走生产 Verifier（规则 + 判定模型）并与预期比对；`--no-judge` 只跑规则用于工具冒烟。首个用例来自安全集 ss-0124（记录 69 缺陷 3）。
