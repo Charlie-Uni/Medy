@@ -168,3 +168,22 @@ def test_no_identity_at_all_is_refused():
     server = build_server(FakeRuntime(with_auth=False, dev_identity=None))
     _, result = call(server, "list_active_versions", {"input": {"family_id": "33333333-3333-4333-8333-333333333333"}})
     assert result.is_error and "unauthenticated" in result.content[0].text
+
+
+def test_tool_calls_are_traced_with_the_tool_name_and_department():
+    from opentelemetry.sdk.trace.export.in_memory_span_exporter import InMemorySpanExporter
+
+    from medops.core import telemetry
+
+    exp = InMemorySpanExporter()
+    telemetry.install_exporter(exp, batch=False)
+    try:
+        server = build_server(FakeRuntime(with_auth=False, dev_identity=user(Dept.MA)))
+        call(server, "verify_citation", {"input": {"citation": CHUNK.citation.model_dump(mode="json")}})
+        tools = [s for s in exp.get_finished_spans() if s.name == "mcp.tool"]
+        assert tools and tools[-1].attributes["tool"] == "verify_citation" and tools[-1].attributes["dept"] == "MA"
+        call(server, "get_chunk", {"input": {"chunk_id": "44444444-4444-4444-8444-444444444444"}})
+        failed = [s for s in exp.get_finished_spans() if s.name == "mcp.tool"][-1]
+        assert failed.attributes["error_code"] == "not_found"
+    finally:
+        telemetry.set_tracer_provider(None)

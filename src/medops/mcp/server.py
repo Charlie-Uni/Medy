@@ -20,6 +20,7 @@ from pydantic import AnyHttpUrl
 
 from medops.api.auth import Authenticator, PrincipalDirectory
 from medops.core.errors import BusinessError, ErrorCode, MedOpsError
+from medops.core.telemetry import annotate, span
 from medops.domain.identity import UserContext
 from medops.mcp.contracts import (
     MCP_TOOLS,
@@ -101,13 +102,16 @@ def build_server(runtime: McpRuntime, *, issuer_url: str | None = None, resource
     specs = {t.name: t for t in MCP_TOOLS}
 
     def run(name: str, method: str, inp: Any) -> dict[str, Any]:
-        try:
-            user = _current_user(runtime)
-            with runtime.service(user) as svc:
-                return getattr(svc, method)(inp).model_dump(mode="json")
-        except MedOpsError as exc:
-            # ToolError text is returned verbatim as isError; anything else would be wrapped as an unexpected error
-            raise ToolError(f"{exc.code.value}: {exc.message}") from None
+        with span("mcp.tool", tool=name) as current:
+            try:
+                user = _current_user(runtime)
+                annotate(current, dept=user.dept.value)
+                with runtime.service(user) as svc:
+                    return getattr(svc, method)(inp).model_dump(mode="json")
+            except MedOpsError as exc:
+                annotate(current, error_code=exc.code.value)
+                # ToolError text is returned verbatim as isError; anything else would be wrapped as an unexpected error
+                raise ToolError(f"{exc.code.value}: {exc.message}") from None
 
     @server.tool(name="search_documents", description=specs["search_documents"].description, annotations=READ_ONLY)
     def search_documents(input: SearchDocumentsInput) -> dict[str, Any]:

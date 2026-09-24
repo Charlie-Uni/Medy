@@ -102,18 +102,20 @@ class ProductionRetrieval:
                 self._lv = lexical.versions
             if self._vv is None:
                 self._vv = vector.versions
-            hybrid, rechecked = retrieve_evidence(
-                conn,
-                lexical,
-                vector,
-                query,
-                config=self._config,
-                lexical_expected=self._lv,
-                vector_expected=self._vv,
-                as_of=request.as_of,
-                allow_historical=request.historical_requested,
-            )
-        ranked = rerank_evidence(self._reranker, query, rechecked.evidence[: self._reranker.spec.max_input])
+            with span("retrieval.fact_plane"):
+                hybrid, rechecked = retrieve_evidence(
+                    conn,
+                    lexical,
+                    vector,
+                    query,
+                    config=self._config,
+                    lexical_expected=self._lv,
+                    vector_expected=self._vv,
+                    as_of=request.as_of,
+                    allow_historical=request.historical_requested,
+                )
+        with span("retrieval.rerank", inputs=min(len(rechecked.evidence), self._reranker.spec.max_input)):
+            ranked = rerank_evidence(self._reranker, query, rechecked.evidence[: self._reranker.spec.max_input])
         evidence = tuple(r.evidence for r in ranked)[:MAX_EVIDENCE]
         return RetrievalOutcome(
             rewritten_queries=rw.queries,

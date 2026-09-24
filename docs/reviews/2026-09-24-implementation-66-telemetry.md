@@ -23,7 +23,7 @@
 ## 3. 未做 / 限制
 
 - Langfuse（待决策）；collector 与看板未部署；采样策略未定（当前全量导出）。
-- MCP 工具调用未埋点（记录 62 §3 同一事项）；DB / Redis / 重排器细分 span 未做。
+- ~~MCP 工具调用未埋点~~ 同日补：`mcp.tool` span（工具名、部门、错误码）与 `retrieval.fact_plane` / `retrieval.rerank` 子 span；数据库与 Redis 的独立 span 仍未做。
 
 ## 4. 进度
 
