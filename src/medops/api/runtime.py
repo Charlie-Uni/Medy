@@ -17,6 +17,7 @@ from medops.api.app import ApiRuntime
 from medops.api.auth import Authenticator, JwtVerifier, PgDirectory
 from medops.api.contracts import AskRequest
 from medops.application.audit import TraceStore
+from medops.application.metrics import MetricsSource, PgMetricsSource
 from medops.application.tasks import TaskStore
 from medops.core.config import Settings
 from medops.domain.identity import UserContext
@@ -157,6 +158,13 @@ class ProductionRuntime:
 
     def trace_store(self, conn: Any) -> TraceStore:
         return PgTraceStore(conn)
+
+    def metrics_source(self, conn: Any) -> MetricsSource:
+        return PgMetricsSource(conn)
+
+    @property
+    def monthly_cap_usd(self) -> float | None:
+        return self.settings.llm_monthly_budget_usd
 
     # ---- worker environment (medops.application.tasks.WorkerEnvironment)
     def resolve_user(self, conn: Any, principal: str) -> UserContext | None:

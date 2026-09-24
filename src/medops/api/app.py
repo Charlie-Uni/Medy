@@ -10,11 +10,12 @@ import time
 from collections.abc import Callable, Iterator, Mapping
 from contextlib import AbstractContextManager, contextmanager
 from dataclasses import dataclass
+from datetime import UTC, datetime
 from typing import Any, Protocol
 
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, PlainTextResponse
 
 from medops.api.auth import Authenticator, PrincipalDirectory
 from medops.api.contracts import (
@@ -30,6 +31,7 @@ from medops.api.contracts import (
     TaskResponse,
 )
 from medops.application.audit import FeedbackService, TraceStore, record_or_fail_closed, trace_from_run
+from medops.application.metrics import MetricsSource, has_role, render_prometheus
 from medops.application.tasks import TaskService, TaskStore, to_response
 from medops.core.errors import HTTP_STATUS, BusinessError, ErrorCode, ErrorResponse, MedOpsError
 from medops.core.logging import get_logger
@@ -80,6 +82,11 @@ class ApiRuntime(Protocol):
     def task_store(self, conn: Any) -> TaskStore: ...
 
     def trace_store(self, conn: Any) -> TraceStore: ...
+
+    def metrics_source(self, conn: Any) -> MetricsSource: ...
+
+    @property
+    def monthly_cap_usd(self) -> float | None: ...
 
     def ready(self) -> bool: ...
 
@@ -202,6 +209,18 @@ def create_app(
 
     def _tasks(conn: Any) -> TaskService:
         return TaskService(store=runtime.task_store(conn), idempotency_ttl_s=idempotency_ttl_s)
+
+    @app.get("/metrics")
+    def metrics(request: Request) -> PlainTextResponse:
+        """Operational metrics (M3-10): aggregate, low-cardinality; readable by principals with the ops or admin role."""
+        with runtime.connection() as conn:
+            user = runtime.authenticator.authenticate(request.headers.get("authorization"), runtime.directory(conn))
+            if not has_role(user.roles, "ops", "admin"):
+                raise BusinessError(ErrorCode.forbidden, "metrics require the ops or admin role")
+            snapshot = runtime.metrics_source(conn).snapshot(window_minutes=60, now=datetime.now(UTC))
+        return PlainTextResponse(
+            render_prometheus(snapshot, monthly_cap_usd=runtime.monthly_cap_usd), media_type="text/plain; version=0.0.4"
+        )
 
     @app.post("/v1/tasks", response_model=TaskResponse, status_code=202)
     def create_task(body: TaskCreateRequest, request: Request) -> TaskResponse:
