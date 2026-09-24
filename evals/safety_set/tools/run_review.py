@@ -102,6 +102,11 @@ def main() -> int:
     ap.add_argument("--only", default="")
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--apply", action="store_true", help="copy verdicts into the draft rows' review blocks")
+    ap.add_argument(
+        "--apply-only",
+        action="store_true",
+        help="no model calls: re-attach the recorded verdicts (unchanged samples) to the drafts",
+    )
     ap.add_argument("--timeout", type=float, default=60.0)
     args = ap.parse_args()
     PROMPT_FILE.write_text(SYSTEM_PROMPT + "\n", encoding="utf-8")
@@ -120,6 +125,9 @@ def main() -> int:
     todo = [r for r in rows if r["sample_id"] not in done]
     if args.limit:
         todo = todo[: args.limit]
+    if args.apply_only:
+        print(f"apply-only: {len(todo)} changed samples still need a review call")
+        todo, args.apply = [], True
     if todo:
         settings = Settings()
         gateway = BudgetedGateway(

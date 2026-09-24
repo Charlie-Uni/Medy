@@ -154,8 +154,8 @@ P0 加权进度：57.6%（45.5/79）；按 99 项计 46.0%。分项：M0 10/11�
 | M2-06 | 部分（Trace 预算裁剪/升级、月度上限账本，记录 52） | Trace 总 Token/成本预算与单次模型上限都生效；超限先裁剪证据，仍不足则升级，不扩大预算继续猜测 |
 | M2-07 | 部分（elements-rules-v1，记录 52） | 抽取剂量、单位、频次、适应证、人群、时间和方案编号等关键要素，建立确定性规则测试 |
 | M2-08 | 部分（support-rules-v3 + 判定 gpt-6-sol，分工按 ADR-0011；DEC-003 错接受率 4.1%（规则）/ 2.2%（分工）；M2-16 门禁数据待安全集，记录 53） | supported / not_supported / contradicted 支持度判断；数字规则优先，NLI/小模型按 DEC-003 选；无依据不补医学常识，矛盾升级 |
-| M2-09 | 部分（safety-rules-v1 三层，记录 52） | 用户输入、检索内容、最终输出三层 Safety；文档是数据而不是指令，注入不能改变权限或绕过检索 |
-| M2-10 | 已实现（稳定 reason code；升级记录落库 `escalations`（问题、证据 chunk id、Verifier/Safety 结果、策略版本），管理角色改状态接手，记录 52/60） | 稳定拒答/升级 reason code，最小必要上下文持久化，可由人工接手；诊断、处方、个体调整及紧急医疗意图拒答并升级 |
+| M2-09 | 部分（safety-rules-v2 三层：第一层补上文外泄 / 伪造优先级备注 / 假设无限制 / 原样输出等句式，第二层补面向自动化读者 / 唯一依据 / 输出塑形 / 自授权四类 genre 并修掉「<词> system:」误报——安全集 B1 20/20、载荷 10/10 命中，11,556 段 chunk 零误报，记录 70；意图层模型二次判定待做） | 用户输入、检索内容、最终输出三层 Safety；文档是数据而不是指令，注入不能改变权限或绕过检索 |
+| M2-10 | 已实现（稳定 reason code；升级记录落库 `escalations`（问题、证据 chunk id、Verifier/Safety 结果、策略版本），管理角色改状态接手，记录 52/60；intent-rules-v3 覆盖第三人称 / 包装成查资料 / 急症 / 诊断等改写句，安全集 A 类 30/30、主集 0 误报，记录 70） | 稳定拒答/升级 reason code，最小必要上下文持久化，可由人工接手；诊断、处方、个体调整及紧急医疗意图拒答并升级 |
 | M2-11 | 已实现（`medops.skills.registry`：scope 默认拒绝→Schema→版本集→operation key→run_node 超时/幂等重试→输出契约→安全第三层；parallel_safe 并行；AST 无绕过测试，记录 55） | Skill Registry 执行 Schema、scope、risk、timeout、parallel_safe、版本控制；节点不得绕过 Registry 调工具 |
 | M2-12 | 已实现（`label_query`、`citation_verification` 经 Registry：单元 26 项 + 真实部件 12 用例（正向、非说明书、scope 拒绝、Schema、篡改数值、未知/跨部门 chunk），记录 55 §2.1；持久化与 API 接线随 M3） | 先交付说明书查询、医学引用验证两个低风险 Skill 的完整正向/失败链路 |
 | M2-13 | 部分（三个 Skill 已交付：`ae_extraction`、`protocol_deviation`、`off_label_check`，单元 6 项 + 真实部件 9 用例，记录 57；功能/安全/权限/故障的全部验收随 M5-02） | 再交付 AE 线索提取、方案偏离核验、超说明书检查三类 Skill；在 M5 前完成全部验收 |

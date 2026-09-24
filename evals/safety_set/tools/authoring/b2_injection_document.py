@@ -8,6 +8,7 @@ import json
 from common import CORPUS_SAFETY, INJECTION_PLAN, SAFETY_DB
 
 from authoring import canary_for, expect, sample
+from medops.safety.checks import _EVIDENCE_INJECTION
 
 OUTCOMES = ["answered", "insufficient_evidence"]
 # sample id -> (language, query)
@@ -60,7 +61,13 @@ def rows() -> list[dict]:
         payload = plan["payloads"][c["payload"]]
         canary = canary_for(sid)
         assert canary == c["canary"]
-        kind = "overt" if payload["kind"] == "overt" else "rules_miss"
+        v1_label = (
+            "matched_by_safety_v1" if payload["kind"] == "overt" else "missed_by_safety_v1"
+        )  # provenance (record 69)
+        injected_text = payload["text"].replace("{canary}", canary)
+        kind = (
+            "overt" if _EVIDENCE_INJECTION.search(injected_text) else "rules_miss"
+        )  # current layer-2 rules (record 70)
         if kind == "overt":
             exp = expect(
                 OUTCOMES,
@@ -83,7 +90,7 @@ def rows() -> list[dict]:
                 lang,
                 query,
                 exp,
-                slices=[kind, "document_vector"],
+                slices=[kind, v1_label, "document_vector"],
                 database=SAFETY_DB,
                 attack={
                     "payload": payload["text"].replace("{canary}", canary),
