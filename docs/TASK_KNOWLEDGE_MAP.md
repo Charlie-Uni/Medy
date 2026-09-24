@@ -89,7 +89,7 @@ M1-01 同时是“部分”和“阻塞”，上表按“部分”计。P1/P2 11
 | M2-05 | 部分（引用逐字段等于本 Trace 证据、伪造 chunk 拦截并升级；实况零伪造、被引 chunk 全部 active；evidence_log 落库随 M3，记录 52/54） | 引用结构核验与内容哈希比对 | 内容寻址校验；expected/observed 审计；引用伪造检测 |
 | M2-06 | 部分（Trace TokenBudget 裁剪证据/不足即升级、模型用量计入、月度上限账本；成本模型按 ADR-0010 价目，记录 52） | 整条 Trace 的 Token/成本预算 | tokenizer 与 BPE；上下文窗口；成本模型；证据裁剪策略 |
 | M2-07 | 部分（elements-rules-v1：剂量/单位换算、频次、时间窗、编号、人群、适应证，中英繁简；覆盖率未在语料上量化，记录 52） | 关键要素抽取（剂量、单位、频次等） | 规则抽取与 NER；数字与单位归一；正则边界与误匹配 |
-| M2-08 | 部分（ADR-0011：规则裁极性矛盾与整句包含、其余交 gpt-6-sol；support-rules-v2 限值短语不计否定；DEC-003 错接受率 4.1%（规则）/ 2.2%（分工）；M2-16 门禁待安全集，记录 53） | supported/not_supported/contradicted 支持度判断 | NLI（蕴含/矛盾/中立）；LLM-as-judge 的偏差与校准；确定性规则优先 |
+| M2-08 | 部分（ADR-0011：规则裁极性矛盾与整句包含、其余交 gpt-6-sol；support-rules-v3 限值短语（含 in no event later than / 儘早於）不计否定；DEC-003 错接受率 4.1%（规则）/ 2.2%（分工）；M2-16 门禁待安全集，记录 53） | supported/not_supported/contradicted 支持度判断 | NLI（蕴含/矛盾/中立）；LLM-as-judge 的偏差与校准；确定性规则优先 |
 | M2-09 | 部分（safety-rules-v1 三层：输入注入、检索内容注入剔除、输出个体建议；分类器与安全集待 M2-15，记录 52） | 三层 Safety（输入、检索内容、输出） | 直接/间接提示词注入；数据与指令边界；分类器加规则；输出过滤 |
 | M2-10 | 已实现（reason code + `escalations` 落库可接手，记录 52/60） | 稳定 reason code 与升级记录 | 错误码稳定性；人工升级工单；最小必要上下文；审计留痕 |
 | M2-11 | 已实现（Registry 强制 scope/Schema/版本集/超时/幂等重试/输出安全；parallel_safe 并行；无绕过 AST 测试，记录 55） | Skill Registry 强制 Schema、scope、risk、timeout、版本 | 注册表模式；权限 scope 校验；并行安全；插件化边界 |
@@ -103,13 +103,13 @@ M1-01 同时是“部分”和“阻塞”，上表按“部分”计。P1/P2 11
 
 | ID | 状态 | 任务 | 八股知识点 |
 | --- | --- | --- | --- |
-| M3-01 | 部分（五种契约在 TestClient + 假运行时下有测试；生产运行时可启动；真实 HTTP 冒烟与 Trace 落库待做，记录 58） | /v1/ask 五类契约与集成测试 | HTTP/ASGI；FastAPI 依赖注入；Pydantic 请求响应；错误映射 |
+| M3-01 | 已实现（五种契约有测试；生产运行时在 medops_v2 上真实 HTTP 冒烟、Trace 落库、优雅停机，记录 58、67） | /v1/ask 五类契约与集成测试 | HTTP/ASGI；FastAPI 依赖注入；Pydantic 请求响应；错误映射 |
 | M3-02 | 已实现（幂等作用域/hash/422/并发/同事务/可见性/重试，迁移 0010；`TaskResult` 契约变更待确认，记录 59） | 任务创建、查询、重试与 Idempotency-Key | 幂等键作用域；请求哈希；422 与并发返回原任务；事务创建；TTL |
 | M3-03 | 部分（反馈接口含幂等回执；其余管理接口待做，记录 60） | 反馈、文档管理、策略候选、审批、replay 接口 | RBAC 与角色分离；审批流；管理接口的权限测试 |
-| M3-04 | 部分（数据库租约 worker：原子转换、attempt、失联回收、上限；真实库端到端待跑，记录 59） | worker 原子状态转换、租约、崩溃恢复 | 队列（Redis Streams/arq）；租约与可见性超时；at-least-once；状态机原子更新 |
+| M3-04 | 已实现（数据库租约 worker：原子转换、attempt、失联回收、上限；真实库端到端通过，记录 59、67） | worker 原子状态转换、租约、崩溃恢复 | 队列（Redis Streams/arq）；租约与可见性超时；at-least-once；状态机原子更新 |
 | M3-05 | 部分（JWKS 静态 + 发现/轮换、HMAC 假名、principals 目录、group allowlist；IdP 选择待做，记录 58） | OIDC 接入与服务端 scope 映射 | OAuth2/OIDC 流程；JWT 结构与 iss/aud/exp/签名；JWKS 轮换；最小权限 |
-| M3-06 | 部分（四个只读工具 + bearer + 只读角色，记录 62；生产 Searcher 实测待做） | 只读 MCP 四个工具 | MCP 协议与 Streamable HTTP；bearer 鉴权；只读由数据库角色证明 |
-| M3-07 | 部分（Trace 摘要 + span + 升级记录落库、fail-closed、假名与追加写；受限载荷加密与 OTel 待做，记录 60） | 完整 Trace、脱敏、受限 payload 授权 | 结构化日志；HMAC 假名；追加写审计；加密与访问控制 |
+| M3-06 | 部分（四个只读工具 + bearer + 只读角色，记录 62；stdio + 生产 Searcher 实测通过、日志走 stderr，记录 67；Streamable HTTP 真实往返待做） | 只读 MCP 四个工具 | MCP 协议与 Streamable HTTP；bearer 鉴权；只读由数据库角色证明 |
+| M3-07 | 部分（Trace 摘要 + span + 升级记录落库、fail-closed、假名与追加写，真实库核对，记录 60、67；OTel 记录 66；受限载荷加密待做） | 完整 Trace、脱敏、受限 payload 授权 | 结构化日志；HMAC 假名；追加写审计；加密与访问控制 |
 | M3-08 | 部分（单条回放：独立 run id、差异报告、replays 表，记录 65；数据集级回放随 M4） | Trace replay 生成差异报告 | 确定性回放；版本固定；run id 隔离；缓存短路风险 |
 | M3-09 | 部分（OTel spans 覆盖 API/节点/模型/检索/worker，OTLP 导出可配置，记录 66；Langfuse 待决策） | OTel 与 Langfuse 覆盖全部 spans | traces/spans/context propagation；采样；exporter 与后端 |
 | M3-10 | 部分（数据库聚合的 /metrics，低基数标签；告警规则待做，记录 64） | 指标与告警仪表盘 | counter/gauge/histogram；指标基数；分位数计算；告警阈值 |
