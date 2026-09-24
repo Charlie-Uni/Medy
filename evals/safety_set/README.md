@@ -1,3 +1,33 @@
-# safety_set
+# 安全评测集（safety_set，spec-s1 v0.2）
 
-安全评测集（M2-15/16）。目前只有规范草案 [SPEC.md](SPEC.md)（spec-s1 v0.1）；样本起草在决策人确认 SPEC §7 的三个决定后开始。运行工具与 schema 随首批样本提交。
+规范见 [SPEC.md](SPEC.md)；决策见 `docs/reviews/2026-09-24-implementation-68-decisions.md`，建设记录见记录 69。
+
+## 目录
+
+| 路径 | 内容 | 入库 |
+| --- | --- | --- |
+| `schema/safety_sample.schema.json` | 样本 JSON Schema（§3） | 是 |
+| `drafts/samples_draft_<类别>.jsonl` | 起草样本（9 个类别，170 条），`review` 块含 gpt-6-sol 独立复核结论 | 是 |
+| `drafts/sheets/*.md` | annotator-01 逐条确认表（全集不抽样）与四条判定模型矛盾的人工复核表 | 是 |
+| `drafts/drafting_provenance.json` | 起草模块（模板）的 SHA-256 与条数 | 是 |
+| `drafts/review_verdicts.jsonl`、`drafts/review_prompt_safety.md` | 复核逐条结果与固定提示 | 是 |
+| `injection_plan.json`、`corpus_safety.json` | 合成文档计划（6 份、25 段注入）与安全语料记录（含金丝雀映射） | 是 |
+| `acl_targets.json` | 生产库文档的 source hash / 部门 / 状态快照（C1、D2、F 类引用） | 是 |
+| `synthetic/<source_hash>.docx` | 合成文档源文件（复制的受许可正文 + 注入段） | 否（gitignored，`build_synthetic_docs.py` 重建） |
+| `tools/authoring/*.py` | 起草模块：每条 query 与预期由起草人（claude-fable-5-1）直接写入 | 是 |
+
+## 流程
+
+```
+python evals/safety_set/tools/gen_acl_targets.py            # 生产库快照 -> acl_targets.json
+python evals/safety_set/tools/build_synthetic_docs.py       # 6 份 DOCX + corpus_safety.json（自检：每个金丝雀恰好一次）
+MEDOPS_MIGRATION_URL=<安全库 admin DSN> python -m medops.ingestion.load --corpus evals/safety_set/corpus_safety.json \
+    --sources-dir evals/safety_set/synthetic --actor safety-set-01 --no-av      # 然后 activate、build-lexical、向量补建
+python evals/safety_set/tools/author_drafts.py              # 起草模块 -> drafts/*.jsonl + 起草溯源
+python evals/safety_set/tools/check_safety.py               # schema、PR-S1..S6（含两库证明）、配额；必须为 0 问题
+python evals/safety_set/tools/run_review.py --apply         # gpt-6-sol 独立复核（不同厂商），结论写回 review 块
+python evals/safety_set/tools/make_sheets.py                # annotator-01 标注表
+python evals/harness/tools/safety_run.py --out evals/harness/runs/<名称>   # 自动判定 + M2-16 门禁（§1、§4）
+```
+
+安全数据库 `medops_v2_safety` 由 medops_v2 以模板克隆后追加 `sf-` 文档；生产库与主集运行永不接触它。
