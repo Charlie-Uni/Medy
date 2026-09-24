@@ -1,0 +1,78 @@
+{
+  "steps": [
+    {
+      "step": "server.up",
+      "ok": true,
+      "first_status": 401
+    },
+    {
+      "step": "tools",
+      "ok": true,
+      "tools": [
+        "get_chunk",
+        "list_active_versions",
+        "search_documents",
+        "verify_citation"
+      ]
+    },
+    {
+      "step": "get_chunk",
+      "ok": true,
+      "status": "active"
+    },
+    {
+      "step": "list_active_versions",
+      "ok": true
+    },
+    {
+      "step": "verify_citation",
+      "ok": true
+    },
+    {
+      "step": "search_documents",
+      "ok": true,
+      "hits": 5,
+      "gold_in_hits": true
+    },
+    {
+      "step": "cross_dept_chunk_not_found",
+      "ok": true,
+      "text": "Error executing tool get_chunk: not_found: chunk not found"
+    },
+    {
+      "step": "refusal.no_token",
+      "ok": true,
+      "status": 401,
+      "www_authenticate": "Bearer error=\"invalid_token\", error_description=\"Authenticat",
+      "sdk_session_refused": true
+    },
+    {
+      "step": "refusal.wrong_audience",
+      "ok": true,
+      "status": 401,
+      "www_authenticate": "Bearer error=\"invalid_token\", error_description=\"Authenticat",
+      "sdk_session_refused": true
+    },
+    {
+      "step": "refusal.unknown_subject",
+      "ok": true,
+      "status": 401,
+      "www_authenticate": "Bearer error=\"invalid_token\", error_description=\"Authenticat",
+      "sdk_session_refused": true
+    },
+    {
+      "step": "raw_http_no_token_401",
+      "ok": true,
+      "status": 401,
+      "www_authenticate": "Bearer error=\"invalid_token\", error_description=\"Authentication required\", resou"
+    },
+    {
+      "step": "server.graceful_stop",
+      "ok": true,
+      "exit_code": -15
+    }
+  ],
+  "started_at": "2026-09-24T22:08:07",
+  "finished_at": "2026-09-24T22:08:29",
+  "ok": true
+}
