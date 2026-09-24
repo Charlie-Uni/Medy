@@ -216,3 +216,42 @@ def test_search_applies_visibility_to_the_searcher_output_and_the_connection_can
                 (seed["visible"]["doc_id"],),
             )
         conn.rollback()
+
+
+def test_production_runtime_audit_writes_an_mcp_trace_through_the_app_role(db, seed):
+    """Record 73: the runtime's audit path uses the application role and lands a kind='mcp' row."""
+    from medops.application.audit import TraceRecord
+    from medops.domain.common import Dept
+    from medops.domain.identity import UserContext
+    from medops.mcp.server import McpProductionRuntime
+
+    user = UserContext(user_id="a" * 64, dept=Dept.MA, roles=("analyst",), acl_scopes=frozenset({"MA:read"}))
+    runtime = McpProductionRuntime(
+        authenticator=None,
+        dev_identity=user,
+        readonly_dsn=db["users"]["readonly"],
+        app_dsn_for_directory=db["users"]["app"],
+    )
+    trace = TraceRecord(
+        trace_id="c" * 32,
+        run_id="c" * 32,
+        kind="mcp",
+        principal=user.user_id,
+        dept=Dept.MA,
+        query="get_chunk {}",
+        outcome="answered",
+        reason_codes=(),
+        versions={"mcp_server": "0.0.1"},
+        evidence_chunk_ids=(),
+        cited_chunk_ids=(),
+        flagged_chunk_ids=(),
+        model_calls=0,
+        tokens=0,
+        cost_usd=0.0,
+        duration_ms=1.0,
+        spans=(),
+    )
+    runtime.audit(trace)
+    with psycopg.connect(db["users"]["admin"]) as conn:
+        row = conn.execute("select kind, principal, outcome from traces where trace_id = %s", ("c" * 32,)).fetchone()
+    assert row == ("mcp", "a" * 64, "answered")

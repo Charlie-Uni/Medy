@@ -82,6 +82,8 @@ class FakeRuntime:
         )
         self.dev_identity = dev_identity
         self.served: list[str] = []
+        self.audited: list = []
+        self.fail_audit = False
 
     @contextmanager
     def directory(self):
@@ -93,6 +95,11 @@ class FakeRuntime:
     def service(self, user):
         self.served.append(user.dept.value)
         yield FakeService(user)
+
+    def audit(self, trace):
+        if self.fail_audit:
+            raise RuntimeError("audit store down")
+        self.audited.append(trace)
 
 
 def call(server, tool: str, arguments: dict):
@@ -187,3 +194,23 @@ def test_tool_calls_are_traced_with_the_tool_name_and_department():
         assert failed.attributes["error_code"] == "not_found"
     finally:
         telemetry.set_tracer_provider(None)
+
+
+def test_every_tool_call_writes_an_mcp_trace_and_audit_failure_fails_closed():
+    """M3-07 follow-up (record 73): one trace per call with the tool, the principal pseudonym and the chunk ids
+    handed out; an error path is audited with its code; when the audit store is down no data leaves."""
+    runtime = FakeRuntime(with_auth=False, dev_identity=user(Dept.MA))
+    server = build_server(runtime)
+    chunk_id = CHUNK.citation.chunk_id
+    _, ok = call(server, "get_chunk", {"input": {"chunk_id": chunk_id}})
+    assert not ok.is_error
+    trace = runtime.audited[-1]
+    assert trace.kind == "mcp" and trace.query.startswith("get_chunk ") and trace.outcome == "answered"
+    assert chunk_id in trace.evidence_chunk_ids and trace.model_calls == 0 and trace.cost_usd == 0.0
+    assert len(trace.principal) == 64  # a dev identity is hashed into the pseudonym shape
+    _, missing = call(server, "get_chunk", {"input": {"chunk_id": "00000000-0000-4000-8000-00000000dead"}})
+    assert missing.is_error and runtime.audited[-1].outcome == "escalated"
+    assert runtime.audited[-1].reason_codes == ("not_found",)
+    runtime.fail_audit = True
+    _, closed = call(server, "get_chunk", {"input": {"chunk_id": chunk_id}})
+    assert closed.is_error and "audit unavailable" in closed.content[0].text and closed.structured_content is None

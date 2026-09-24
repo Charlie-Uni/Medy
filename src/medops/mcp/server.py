@@ -5,9 +5,14 @@ runs `McpService`; the database role proves the tools cannot write."""
 
 from __future__ import annotations
 
+import hashlib
+import json
+import re
+import uuid
 from collections.abc import Iterator
 from contextlib import AbstractContextManager, contextmanager
 from dataclasses import dataclass
+from time import perf_counter
 from typing import Any, Protocol
 
 from mcp.server.auth.middleware.auth_context import get_access_token
@@ -19,6 +24,7 @@ from mcp.types import ToolAnnotations
 from pydantic import AnyHttpUrl
 
 from medops.api.auth import Authenticator, PrincipalDirectory
+from medops.application.audit import TraceRecord
 from medops.core.errors import BusinessError, ErrorCode, MedOpsError
 from medops.core.telemetry import annotate, span
 from medops.domain.identity import UserContext
@@ -30,6 +36,7 @@ from medops.mcp.contracts import (
     VerifyCitationInput,
 )
 from medops.mcp.service import McpService
+from medops.retrieval.production import PRODUCTION_RETRIEVAL_VERSION
 
 READ_ONLY = ToolAnnotations(read_only_hint=True, destructive_hint=False, idempotent_hint=True, open_world_hint=False)
 
@@ -51,6 +58,10 @@ class McpRuntime(Protocol):
     def directory(self) -> AbstractContextManager[PrincipalDirectory]: ...
 
     def service(self, user: UserContext) -> AbstractContextManager[ServiceLike]: ...
+
+    def audit(self, trace: TraceRecord) -> None:
+        """Persist the per-call trace (kind='mcp'); raising here fails the call closed (INV-OBS-01)."""
+        ...
 
 
 class BearerVerifier:
@@ -86,6 +97,69 @@ def _current_user(runtime: McpRuntime) -> UserContext:
     raise BusinessError(ErrorCode.unauthenticated, "no verified identity for this call")
 
 
+_REFUSAL_CODES = {ErrorCode.forbidden, ErrorCode.unauthenticated}
+_HEX = re.compile(r"^[0-9a-f]{32,64}$")
+SERVER_VERSION = "0.0.1"
+
+
+def _chunk_ids(payload: Any) -> tuple[str, ...]:
+    found: list[str] = []
+
+    def walk(node: Any) -> None:
+        if isinstance(node, dict):
+            for key, value in node.items():
+                if key == "chunk_id" and isinstance(value, str):
+                    found.append(value)
+                else:
+                    walk(value)
+        elif isinstance(node, list):
+            for value in node:
+                walk(value)
+
+    walk(payload)
+    return tuple(dict.fromkeys(found))
+
+
+def _audit(
+    runtime: McpRuntime,
+    user: UserContext,
+    trace_id: str,
+    tool: str,
+    inp: Any,
+    outcome: str,
+    reason_codes: tuple[str, ...],
+    result: dict[str, Any] | None,
+    started: float,
+) -> None:
+    """One trace per tool call (M3-07): principal pseudonym, tool + input summary, outcome, chunk ids handed out.
+    An audit failure is surfaced as a tool error and the data is withheld, like /v1/ask (record 60)."""
+    principal = user.user_id if _HEX.match(user.user_id) else hashlib.sha256(user.user_id.encode()).hexdigest()
+    summary = json.dumps(inp.model_dump(mode="json"), ensure_ascii=False)[:500]
+    trace = TraceRecord(
+        trace_id=trace_id,
+        run_id=trace_id,
+        kind="mcp",
+        principal=principal,
+        dept=user.dept,
+        query=f"{tool} {summary}",
+        outcome=outcome,
+        reason_codes=reason_codes,
+        versions={"mcp_server": SERVER_VERSION, "retrieval_version": PRODUCTION_RETRIEVAL_VERSION},
+        evidence_chunk_ids=_chunk_ids(result),
+        cited_chunk_ids=(),
+        flagged_chunk_ids=(),
+        model_calls=0,
+        tokens=0,
+        cost_usd=0.0,
+        duration_ms=(perf_counter() - started) * 1000.0,
+        spans=(),
+    )
+    try:
+        runtime.audit(trace)
+    except Exception as exc:  # noqa: BLE001 - any audit failure fails the call closed
+        raise ToolError("internal_error: audit unavailable, call refused (fail closed)") from exc
+
+
 def build_server(runtime: McpRuntime, *, issuer_url: str | None = None, resource_url: str | None = None) -> MCPServer:
     auth = None
     verifier = None
@@ -102,16 +176,34 @@ def build_server(runtime: McpRuntime, *, issuer_url: str | None = None, resource
     specs = {t.name: t for t in MCP_TOOLS}
 
     def run(name: str, method: str, inp: Any) -> dict[str, Any]:
+        started = perf_counter()
+        trace_id = uuid.uuid4().hex
         with span("mcp.tool", tool=name) as current:
+            user = None
             try:
                 user = _current_user(runtime)
                 annotate(current, dept=user.dept.value)
                 with runtime.service(user) as svc:
-                    return getattr(svc, method)(inp).model_dump(mode="json")
+                    result = getattr(svc, method)(inp).model_dump(mode="json")
             except MedOpsError as exc:
                 annotate(current, error_code=exc.code.value)
+                if user is not None:
+                    _audit(
+                        runtime,
+                        user,
+                        trace_id,
+                        name,
+                        inp,
+                        "refused" if exc.code in _REFUSAL_CODES else "escalated",
+                        (exc.code.value,),
+                        None,
+                        started,
+                    )
                 # ToolError text is returned verbatim as isError; anything else would be wrapped as an unexpected error
                 raise ToolError(f"{exc.code.value}: {exc.message}") from None
+            # the trace is written before the data leaves the process: no audit row, no answer (fail closed)
+            _audit(runtime, user, trace_id, name, inp, "answered", (), result, started)
+            return result
 
     @server.tool(name="search_documents", description=specs["search_documents"].description, annotations=READ_ONLY)
     def search_documents(input: SearchDocumentsInput) -> dict[str, Any]:
@@ -156,6 +248,14 @@ class McpProductionRuntime:
 
         with psycopg.connect(self.app_dsn_for_directory) as conn, conn.transaction():
             yield PgDirectory(conn)
+
+    def audit(self, trace: TraceRecord) -> None:
+        import psycopg
+
+        from medops.infrastructure.db.audit import PgTraceStore
+
+        with psycopg.connect(self.app_dsn_for_directory) as conn, conn.transaction():
+            PgTraceStore(conn).record(trace, None)
 
     @contextmanager
     def service(self, user: UserContext) -> Iterator[ServiceLike]:
