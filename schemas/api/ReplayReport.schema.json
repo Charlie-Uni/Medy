@@ -1,0 +1,152 @@
+{
+  "$defs": {
+    "ReasonCode": {
+      "description": "Stable refusal/escalation reason codes (baseline 5.5, F4.1).",
+      "enum": [
+        "insufficient_evidence",
+        "version_conflict",
+        "acl_denied",
+        "prompt_injection",
+        "high_risk_medical",
+        "unsupported_conclusion",
+        "budget_exceeded",
+        "intent_unclear",
+        "system_failure"
+      ],
+      "title": "ReasonCode",
+      "type": "string"
+    },
+    "ReplaySide": {
+      "additionalProperties": false,
+      "properties": {
+        "cited_chunk_ids": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Cited Chunk Ids",
+          "type": "array"
+        },
+        "evidence_chunk_ids": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Chunk Ids",
+          "type": "array"
+        },
+        "outcome": {
+          "minLength": 1,
+          "title": "Outcome",
+          "type": "string"
+        },
+        "reason_codes": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/ReasonCode"
+          },
+          "title": "Reason Codes",
+          "type": "array"
+        },
+        "run_id": {
+          "minLength": 1,
+          "title": "Run Id",
+          "type": "string"
+        },
+        "trace_id": {
+          "pattern": "^[0-9a-f]{32}$",
+          "title": "Trace Id",
+          "type": "string"
+        },
+        "versions": {
+          "$ref": "#/$defs/VersionSet"
+        }
+      },
+      "required": [
+        "trace_id",
+        "run_id",
+        "outcome",
+        "versions"
+      ],
+      "title": "ReplaySide",
+      "type": "object"
+    },
+    "VersionSet": {
+      "additionalProperties": false,
+      "description": "Every version that shapes a run; recorded on each trace (INV-HAR-05) and inside operation keys.",
+      "properties": {
+        "model_config_version": {
+          "minLength": 1,
+          "title": "Model Config Version",
+          "type": "string"
+        },
+        "policy_version": {
+          "minLength": 1,
+          "title": "Policy Version",
+          "type": "string"
+        },
+        "retrieval_version": {
+          "minLength": 1,
+          "title": "Retrieval Version",
+          "type": "string"
+        },
+        "skill_version_set": {
+          "default": [],
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Skill Version Set",
+          "type": "array"
+        }
+      },
+      "required": [
+        "policy_version",
+        "retrieval_version",
+        "model_config_version"
+      ],
+      "title": "VersionSet",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "changed": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Changed",
+      "type": "array"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "replay": {
+      "$ref": "#/$defs/ReplaySide"
+    },
+    "replay_id": {
+      "minLength": 1,
+      "title": "Replay Id",
+      "type": "string"
+    },
+    "source": {
+      "$ref": "#/$defs/ReplaySide"
+    },
+    "versions_match": {
+      "title": "Versions Match",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "replay_id",
+    "source",
+    "replay",
+    "versions_match",
+    "created_at"
+  ],
+  "title": "ReplayReport",
+  "type": "object"
+}

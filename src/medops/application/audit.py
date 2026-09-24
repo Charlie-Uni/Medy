@@ -60,6 +60,34 @@ class EscalationRecord:
 
 
 @dataclass(frozen=True)
+class TraceSummary:
+    trace_id: str
+    run_id: str
+    kind: str
+    principal: str
+    dept: Dept
+    query: str
+    outcome: str
+    reason_codes: tuple[str, ...]
+    versions: Mapping[str, Any]
+    evidence_chunk_ids: tuple[str, ...]
+    cited_chunk_ids: tuple[str, ...]
+
+
+@dataclass(frozen=True)
+class ReplayRecord:
+    replay_id: str
+    source_trace_id: str
+    replay_trace_id: str
+    replay_run_id: str
+    requested_by: str
+    reason: str
+    versions_match: bool
+    changed: tuple[str, ...]
+    report: Mapping[str, Any]
+
+
+@dataclass(frozen=True)
 class FeedbackRecord:
     feedback_id: str
     trace_id: str
@@ -73,6 +101,10 @@ class TraceStore(Protocol):
     def record(self, trace: TraceRecord, escalation: EscalationRecord | None) -> None: ...
 
     def trace_principal(self, trace_id: str) -> str | None: ...
+
+    def read_trace(self, trace_id: str) -> TraceSummary | None: ...
+
+    def record_replay(self, record: ReplayRecord) -> None: ...
 
     def find_receipt(self, principal: str, route: str, key: str) -> tuple[str, Mapping[str, Any]] | None: ...
 
@@ -226,6 +258,7 @@ class InMemoryTraceStore:
     traces: dict[str, TraceRecord] = field(default_factory=dict)
     escalations: dict[str, EscalationRecord] = field(default_factory=dict)
     feedback: list[FeedbackRecord] = field(default_factory=list)
+    replays: list[ReplayRecord] = field(default_factory=list)
     receipts: dict[tuple[str, str, str], tuple[str, Mapping[str, Any], datetime]] = field(default_factory=dict)
     fail_with: Exception | None = None
     clock: Callable[[], datetime] = lambda: datetime.now(UTC)
@@ -242,6 +275,27 @@ class InMemoryTraceStore:
     def trace_principal(self, trace_id: str) -> str | None:
         t = self.traces.get(trace_id)
         return t.principal if t else None
+
+    def read_trace(self, trace_id: str) -> TraceSummary | None:
+        t = self.traces.get(trace_id)
+        if t is None:
+            return None
+        return TraceSummary(
+            trace_id=t.trace_id,
+            run_id=t.run_id,
+            kind=t.kind,
+            principal=t.principal,
+            dept=t.dept,
+            query=t.query,
+            outcome=t.outcome,
+            reason_codes=t.reason_codes,
+            versions=t.versions,
+            evidence_chunk_ids=t.evidence_chunk_ids,
+            cited_chunk_ids=t.cited_chunk_ids,
+        )
+
+    def record_replay(self, record: ReplayRecord) -> None:
+        self.replays.append(record)
 
     def find_receipt(self, principal: str, route: str, key: str) -> tuple[str, Mapping[str, Any]] | None:
         row = self.receipts.get((principal, route, key))

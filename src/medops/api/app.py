@@ -27,11 +27,14 @@ from medops.api.contracts import (
     FeedbackRequest,
     OutcomeKind,
     Refusal,
+    ReplayReport,
+    ReplayRequest,
     TaskCreateRequest,
     TaskResponse,
 )
 from medops.application.audit import FeedbackService, TraceStore, record_or_fail_closed, trace_from_run
 from medops.application.metrics import MetricsSource, has_role, render_prometheus
+from medops.application.replay import ReplayService
 from medops.application.tasks import TaskService, TaskStore, to_response
 from medops.core.errors import HTTP_STATUS, BusinessError, ErrorCode, ErrorResponse, MedOpsError
 from medops.core.logging import get_logger
@@ -84,6 +87,8 @@ class ApiRuntime(Protocol):
     def trace_store(self, conn: Any) -> TraceStore: ...
 
     def metrics_source(self, conn: Any) -> MetricsSource: ...
+
+    def resolve_user(self, conn: Any, principal: str) -> UserContext | None: ...
 
     @property
     def monthly_cap_usd(self) -> float | None: ...
@@ -221,6 +226,25 @@ def create_app(
         return PlainTextResponse(
             render_prometheus(snapshot, monthly_cap_usd=runtime.monthly_cap_usd), media_type="text/plain; version=0.0.4"
         )
+
+    @app.post("/admin/traces/{trace_id}/replay", response_model=ReplayReport, status_code=201)
+    def replay_trace(trace_id: str, body: ReplayRequest, request: Request) -> ReplayReport:
+        with runtime.connection() as conn:
+            admin = runtime.authenticator.authenticate(request.headers.get("authorization"), runtime.directory(conn))
+            if not has_role(admin.roles, "admin"):
+                raise BusinessError(ErrorCode.forbidden, "replay requires the admin role")
+
+            def deps_for(user: UserContext) -> HarnessDeps:
+                runtime.bind_identity(conn, user)  # the replay runs under the original principal, not the admin
+                return runtime.build_deps(conn, user, AskRequest(query="replay"))
+
+            service = ReplayService(
+                store=runtime.trace_store(conn),
+                versions=runtime.versions,
+                build_deps=deps_for,
+                resolve_user=lambda principal: runtime.resolve_user(conn, principal),
+            )
+            return service.replay(admin, trace_id, body)
 
     @app.post("/v1/tasks", response_model=TaskResponse, status_code=202)
     def create_task(body: TaskCreateRequest, request: Request) -> TaskResponse:

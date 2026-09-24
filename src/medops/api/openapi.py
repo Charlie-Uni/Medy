@@ -30,6 +30,7 @@ REF_TEMPLATE = "#/components/schemas/{model}"
 BEARER_SCHEME = "bearerAuth"
 IDEMPOTENCY_PARAMETER = "IdempotencyKey"
 TASK_ID_PARAMETER = "TaskId"
+TRACE_ID_PARAMETER = "TraceIdPath"
 IDEMPOTENCY_TTL_MIN_SECONDS = 24 * 3600
 IDEMPOTENCY_TTL_DEFAULT_SECONDS = 7 * 24 * 3600
 """Baseline 3.2: keys are retained at least 24 h and not shorter than the task lifetime. The deployed value
@@ -180,6 +181,22 @@ def _paths() -> dict[str, Any]:
                 parameters=(IDEMPOTENCY_PARAMETER,),
             ),
         },
+        "/admin/traces/{trace_id}/replay": {
+            "parameters": [{"$ref": f"#/components/parameters/{TRACE_ID_PARAMETER}"}],
+            "post": _operation(
+                "replayTrace",
+                "Re-run one trace under a fresh replay run id (admin)",
+                "Runs the original question again under the original principal's current identity and this "
+                "deployment's pinned versions, with an independent `replay_run_id` so no result of the production "
+                "run is reused (baseline 3.2, M3-08). Returns both sides and the fields that changed. Requires the "
+                "admin role.",
+                tag="admin",
+                success_status=201,
+                success_description="Replay report.",
+                response_model="ReplayReport",
+                request_model="ReplayRequest",
+            ),
+        },
     }
 
 
@@ -198,6 +215,7 @@ def build_openapi(models: Mapping[str, type[BaseModel]]) -> dict[str, Any]:
             {"name": "ask", "description": "Synchronous question answering"},
             {"name": "tasks", "description": "Asynchronous skill tasks"},
             {"name": "feedback", "description": "Feedback signals for the controlled improvement loop"},
+            {"name": "admin", "description": "Administrative operations (admin role)"},
         ],
         "security": [{BEARER_SCHEME: []}],
         "paths": _paths(),
@@ -218,6 +236,13 @@ def build_openapi(models: Mapping[str, type[BaseModel]]) -> dict[str, Any]:
                     "required": True,
                     "description": "Task identifier returned by `POST /v1/tasks`.",
                     "schema": {"type": "string", "minLength": 1},
+                },
+                TRACE_ID_PARAMETER: {
+                    "name": "trace_id",
+                    "in": "path",
+                    "required": True,
+                    "description": "Trace identifier (32 lowercase hex characters) of a previous request.",
+                    "schema": {"type": "string", "pattern": "^[0-9a-f]{32}$"},
                 },
             },
             "securitySchemes": {

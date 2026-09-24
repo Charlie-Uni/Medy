@@ -171,7 +171,7 @@ class ProductionRuntime:
         p = PgDirectory(conn).resolve(principal) if len(principal) == 64 else None
         if p is None or not p.active:
             return None
-        return UserContext(user_id=principal[:32], dept=p.dept, roles=p.roles, acl_scopes=p.scopes)
+        return UserContext(user_id=principal, dept=p.dept, roles=p.roles, acl_scopes=p.scopes)
 
     def skill_context(
         self, conn: Any, user: UserContext, trace_id: str, historical: Mapping[str, Any] | None

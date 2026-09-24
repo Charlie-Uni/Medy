@@ -22,6 +22,7 @@ EXPECTED_OPERATIONS = {
     ("/v1/tasks/{task_id}", "get"): (None, "200", "TaskResponse"),
     ("/v1/tasks/{task_id}/retry", "post"): (None, "202", "TaskResponse"),
     ("/v1/feedback", "post"): ("FeedbackRequest", "201", "FeedbackReceipt"),
+    ("/admin/traces/{trace_id}/replay", "post"): ("ReplayRequest", "201", "ReplayReport"),
 }
 IDEMPOTENT_OPERATIONS = {("/v1/tasks", "post"), ("/v1/feedback", "post")}
 HTTP_METHODS = ("get", "put", "post", "delete", "patch", "head", "options", "trace")

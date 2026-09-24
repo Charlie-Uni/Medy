@@ -138,4 +138,5 @@ class Authenticator:
             for group in groups:
                 for scope in self.group_scopes.get(str(group), ()):
                     scopes.add(scope)  # only allowlisted groups map to scopes (ADR-0001 §3)
-        return UserContext(user_id=pid[:32], dept=principal.dept, roles=principal.roles, acl_scopes=frozenset(scopes))
+        # the full pseudonym is the principal key everywhere (directory, tasks, traces): never truncated
+        return UserContext(user_id=pid, dept=principal.dept, roles=principal.roles, acl_scopes=frozenset(scopes))

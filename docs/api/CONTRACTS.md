@@ -13,7 +13,7 @@
 | `POST /v1/feedback` | `FeedbackRequest` | `FeedbackReceipt` | correction 必带文本，其余信号不得带；支持 `Idempotency-Key` |
 | `POST /admin/documents`、`PATCH /admin/documents/{id}/status` | M1 随入库流程定义 | | 管理角色；状态变更写审计 |
 | `GET /admin/policies/candidates`、`POST /admin/policies/{id}/approve` | M4 随 Loop 定义 | | 审核角色；发布经门禁与签字 |
-| `POST /admin/traces/{id}/replay` | M3-08 定义 | | 独立 `replay_run_id` |
+| `POST /admin/traces/{id}/replay` | `ReplayRequest` | `ReplayReport` | 管理角色；用原问题、原 principal 的当前身份与本部署钉定的版本集重跑，`replay_run_id` 独立于原运行（不复用任何 operation key 结果）；报告两侧的 outcome / reason codes / 引用与差异字段、版本是否一致；201（2026-09-24 M3-08 定义） |
 | 所有错误 | | `ErrorResponse` | 只含 code、message、trace_id、retryable；内部 detail 不外泄；HTTP 状态按 `core.errors.HTTP_STATUS` |
 
 OpenAPI 初版的成功状态码与约定（决策人 2026-09-17 批准）：`POST /v1/ask` 200；`POST /v1/tasks` 202（重复 `Idempotency-Key` 返回原任务与原状态码）；`GET /v1/tasks/{id}` 200；`POST /v1/tasks/{id}/retry` 202，不满足"failed 且 retryable"时返回 `409 task_not_retryable`（专用错误码，domain 类）；`POST /v1/feedback` 201。`Idempotency-Key` 为可选请求头，文档写明作用域、同 payload 返回原回执（含处理中、不返回 409）、异 payload 返回 422、同事务落库；保留期由 `IDEMPOTENCY_KEY_TTL_SECONDS` 配置，默认 604800 秒（7 天），下限 86400 秒由 `Settings` 强制，并写入 OpenAPI。管理、策略与回放端点在其模型定义后加入 OpenAPI，不预置空路径。

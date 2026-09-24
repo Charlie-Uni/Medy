@@ -20,6 +20,16 @@
           "minLength": 1,
           "type": "string"
         }
+      },
+      "TraceIdPath": {
+        "description": "Trace identifier (32 lowercase hex characters) of a previous request.",
+        "in": "path",
+        "name": "trace_id",
+        "required": true,
+        "schema": {
+          "pattern": "^[0-9a-f]{32}$",
+          "type": "string"
+        }
       }
     },
     "responses": {
@@ -708,6 +718,120 @@
         "title": "Refusal",
         "type": "object"
       },
+      "ReplayReport": {
+        "additionalProperties": false,
+        "properties": {
+          "changed": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Changed",
+            "type": "array"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "replay": {
+            "$ref": "#/components/schemas/ReplaySide"
+          },
+          "replay_id": {
+            "minLength": 1,
+            "title": "Replay Id",
+            "type": "string"
+          },
+          "source": {
+            "$ref": "#/components/schemas/ReplaySide"
+          },
+          "versions_match": {
+            "title": "Versions Match",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "replay_id",
+          "source",
+          "replay",
+          "versions_match",
+          "created_at"
+        ],
+        "title": "ReplayReport",
+        "type": "object"
+      },
+      "ReplayRequest": {
+        "additionalProperties": false,
+        "description": "Admin request to re-run one trace (M3-08). The replay runs the original question under the original\nprincipal's current identity, with this deployment's pinned versions, under a fresh `replay_run_id` so no\noperation-key result of the production run can be reused.",
+        "properties": {
+          "reason": {
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Reason",
+            "type": "string"
+          }
+        },
+        "required": [
+          "reason"
+        ],
+        "title": "ReplayRequest",
+        "type": "object"
+      },
+      "ReplaySide": {
+        "additionalProperties": false,
+        "properties": {
+          "cited_chunk_ids": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Cited Chunk Ids",
+            "type": "array"
+          },
+          "evidence_chunk_ids": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Evidence Chunk Ids",
+            "type": "array"
+          },
+          "outcome": {
+            "minLength": 1,
+            "title": "Outcome",
+            "type": "string"
+          },
+          "reason_codes": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/ReasonCode"
+            },
+            "title": "Reason Codes",
+            "type": "array"
+          },
+          "run_id": {
+            "minLength": 1,
+            "title": "Run Id",
+            "type": "string"
+          },
+          "trace_id": {
+            "pattern": "^[0-9a-f]{32}$",
+            "title": "Trace Id",
+            "type": "string"
+          },
+          "versions": {
+            "$ref": "#/components/schemas/VersionSet"
+          }
+        },
+        "required": [
+          "trace_id",
+          "run_id",
+          "outcome",
+          "versions"
+        ],
+        "title": "ReplaySide",
+        "type": "object"
+      },
       "TaskCreateRequest": {
         "additionalProperties": false,
         "description": "Skill workflow submission. `input` is validated against the skill's registered schema at\nexecution time (M2-11); the wire contract only requires a finite JSON object.",
@@ -996,6 +1120,73 @@
   },
   "openapi": "3.1.0",
   "paths": {
+    "/admin/traces/{trace_id}/replay": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/TraceIdPath"
+        }
+      ],
+      "post": {
+        "description": "Runs the original question again under the original principal's current identity and this deployment's pinned versions, with an independent `replay_run_id` so no result of the production run is reused (baseline 3.2, M3-08). Returns both sides and the fields that changed. Requires the admin role.",
+        "operationId": "replayTrace",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReplayRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReplayReport"
+                }
+              }
+            },
+            "description": "Replay report."
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "500": {
+            "$ref": "#/components/responses/Error500"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          },
+          "504": {
+            "$ref": "#/components/responses/Error504"
+          }
+        },
+        "summary": "Re-run one trace under a fresh replay run id (admin)",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
     "/v1/ask": {
       "post": {
         "description": "Runs the fixed `Intent -> Retrieve -> Evidence Verify -> Safety Check -> Answer / Escalate` chain. `outcome` is exactly one of answered, refused, escalated and only its own payload is present; refusals and escalations carry stable reason codes. Archived versions are only returned for an explicit `historical` selector (INV-DATA-03).",
@@ -1324,6 +1515,10 @@
     {
       "description": "Feedback signals for the controlled improvement loop",
       "name": "feedback"
+    },
+    {
+      "description": "Administrative operations (admin role)",
+      "name": "admin"
     }
   ]
 }

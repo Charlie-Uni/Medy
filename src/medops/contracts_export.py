@@ -30,6 +30,8 @@ API_MODELS: dict[str, type[BaseModel]] = {
     "TaskResponse": api.TaskResponse,
     "FeedbackRequest": api.FeedbackRequest,
     "FeedbackReceipt": api.FeedbackReceipt,
+    "ReplayRequest": api.ReplayRequest,
+    "ReplayReport": api.ReplayReport,
     "ErrorResponse": ErrorResponse,
 }
 MCP_MODELS: dict[str, type[BaseModel]] = {

@@ -246,6 +246,33 @@ class FeedbackReceipt(ApiModel):
     trace_id: TraceId
 
 
+class ReplayRequest(ApiModel):
+    """Admin request to re-run one trace (M3-08). The replay runs the original question under the original
+    principal's current identity, with this deployment's pinned versions, under a fresh `replay_run_id` so no
+    operation-key result of the production run can be reused."""
+
+    reason: Annotated[str, Field(min_length=1, max_length=500)]
+
+
+class ReplaySide(ApiModel):
+    trace_id: TraceId
+    run_id: NonEmptyStr
+    outcome: NonEmptyStr
+    reason_codes: tuple[ReasonCode, ...] = ()
+    cited_chunk_ids: tuple[str, ...] = ()
+    evidence_chunk_ids: tuple[str, ...] = ()
+    versions: VersionSet
+
+
+class ReplayReport(ApiModel):
+    replay_id: NonEmptyStr
+    source: ReplaySide
+    replay: ReplaySide
+    versions_match: bool  # the source ran under exactly this deployment's version set
+    changed: tuple[str, ...] = ()  # fields that differ between source and replay
+    created_at: datetime
+
+
 IDEMPOTENCY_KEY_HEADER = "Idempotency-Key"
 """POST /v1/tasks and POST /v1/feedback accept this header (baseline 3.2): scope is
 authenticated principal + route + key; same key and payload returns the original receipt, also while

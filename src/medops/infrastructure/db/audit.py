@@ -9,7 +9,15 @@ from typing import Any
 from psycopg.errors import UniqueViolation
 from psycopg.types.json import Jsonb
 
-from medops.application.audit import EscalationRecord, FeedbackRecord, IdempotencyRace, TraceRecord
+from medops.application.audit import (
+    EscalationRecord,
+    FeedbackRecord,
+    IdempotencyRace,
+    ReplayRecord,
+    TraceRecord,
+    TraceSummary,
+)
+from medops.domain.common import Dept
 
 
 class PgTraceStore:
@@ -86,6 +94,43 @@ class PgTraceStore:
     def trace_principal(self, trace_id: str) -> str | None:
         row = self._conn.execute("select principal from traces where trace_id = %s", (trace_id,)).fetchone()
         return row[0] if row else None
+
+    def read_trace(self, trace_id: str) -> TraceSummary | None:
+        row = self._conn.execute(
+            "select trace_id, run_id, kind, principal, dept::text, query, outcome, reason_codes, versions, evidence_chunk_ids, cited_chunk_ids from traces where trace_id = %s",
+            (trace_id,),
+        ).fetchone()
+        if row is None:
+            return None
+        return TraceSummary(
+            trace_id=row[0],
+            run_id=row[1],
+            kind=row[2],
+            principal=row[3],
+            dept=Dept(row[4]),
+            query=row[5],
+            outcome=row[6],
+            reason_codes=tuple(row[7]),
+            versions=row[8],
+            evidence_chunk_ids=tuple(row[9]),
+            cited_chunk_ids=tuple(row[10]),
+        )
+
+    def record_replay(self, record: ReplayRecord) -> None:
+        self._conn.execute(
+            "insert into replays (replay_id, source_trace_id, replay_trace_id, replay_run_id, requested_by, reason, versions_match, changed, report) values (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
+            (
+                record.replay_id,
+                record.source_trace_id,
+                record.replay_trace_id,
+                record.replay_run_id,
+                record.requested_by,
+                record.reason,
+                record.versions_match,
+                list(record.changed),
+                Jsonb(dict(record.report)),
+            ),
+        )
 
     def find_receipt(self, principal: str, route: str, key: str) -> tuple[str, Mapping[str, Any]] | None:
         row = self._conn.execute(

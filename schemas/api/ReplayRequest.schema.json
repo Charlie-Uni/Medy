@@ -1,0 +1,17 @@
+{
+  "additionalProperties": false,
+  "description": "Admin request to re-run one trace (M3-08). The replay runs the original question under the original\nprincipal's current identity, with this deployment's pinned versions, under a fresh `replay_run_id` so no\noperation-key result of the production run can be reused.",
+  "properties": {
+    "reason": {
+      "maxLength": 500,
+      "minLength": 1,
+      "title": "Reason",
+      "type": "string"
+    }
+  },
+  "required": [
+    "reason"
+  ],
+  "title": "ReplayRequest",
+  "type": "object"
+}

@@ -28,7 +28,7 @@ def test_valid_token_resolves_to_a_pseudonymous_user_context():
     auth = Authenticator(verifier=verifier(), pseudonym_key=PSEUDONYM_KEY)
     user = auth.authenticate("Bearer " + ISSUER_OBJ.token(), directory())
     assert user.dept is Dept.PV and user.acl_scopes == frozenset({"PV:read"}) and user.roles == ("analyst",)
-    assert user.user_id == pseudonym("user-1", PSEUDONYM_KEY)[:32] and "user-1" not in user.user_id
+    assert user.user_id == pseudonym("user-1", PSEUDONYM_KEY) and "user-1" not in user.user_id
 
 
 @pytest.mark.parametrize(

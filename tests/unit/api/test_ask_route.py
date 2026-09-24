@@ -176,11 +176,7 @@ def test_every_ask_leaves_a_trace_with_spans_and_escalations_are_recorded():
     c = client(rt)
     body = c.post("/v1/ask", json={"query": QUERY}, headers=auth()).json()
     trace = rt.traces.traces[body["trace_id"]]
-    assert (
-        trace.kind == "ask"
-        and trace.outcome == "answered"
-        and trace.principal == pseudonym("user-1", PSEUDONYM_KEY)[:32]
-    )
+    assert trace.kind == "ask" and trace.outcome == "answered" and trace.principal == pseudonym("user-1", PSEUDONYM_KEY)
     assert [s.node for s in trace.spans] == ["intent", "retrieve", "verify", "safety", "answer"]
     assert trace.cited_chunk_ids == ("c1",) and trace.evidence_chunk_ids == ("c1",) and trace.query == QUERY
     assert trace.model_calls == 1 and trace.tokens > 0 and trace.duration_ms >= 0 and rt.traces.escalations == {}
