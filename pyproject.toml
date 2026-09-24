@@ -11,6 +11,7 @@ dependencies = [
   "pypdf>=6.0,<7",
   "alembic>=1.13,<2",
   "sqlalchemy>=2.0,<3",
+  "greenlet>=3,<4",  # sqlalchemy pulls it on Linux only; pinned here so the Linux image installs with --require-hashes
   "psycopg[binary]>=3.2,<4",
   "redis>=5.0,<7",
   "defusedxml>=0.7,<1",

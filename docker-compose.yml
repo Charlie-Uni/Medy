@@ -1,6 +1,6 @@
 # MedOps Copilot local infrastructure (baseline M0-11, minimal form).
-# Only the fact plane and cache run here. API and worker services are added when their code exists;
-# object storage waits for DEC-007. Ports bind to localhost only. Passwords come from .env.
+# The fact plane and cache always run; the application services (api, worker, mcp) are behind the `app`
+# profile (M3-12). Object storage waits for DEC-007. Ports bind to localhost only. Passwords come from .env.
 name: medops
 
 services:
@@ -46,6 +46,82 @@ services:
     environment:
       REDIS_PASSWORD: ${REDIS_PASSWORD:?set REDIS_PASSWORD in .env}
 
+
+  # ---- application services (M3-12): `docker compose --profile app up -d --build`. Same image, three entry points.
+  api:
+    build: .
+    image: medops-copilot:dev
+    container_name: medops-api
+    profiles: ["app"]
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_URL: ${DATABASE_URL_DOCKER:-${DATABASE_URL}}
+      DATABASE_ADMIN_URL: ${DATABASE_ADMIN_URL_DOCKER:-${DATABASE_ADMIN_URL:-}}
+      DATABASE_READONLY_URL: ${DATABASE_READONLY_URL_DOCKER:-${DATABASE_READONLY_URL:-}}
+      REDIS_URL: ${REDIS_URL_DOCKER:-${REDIS_URL}}
+      MODEL_CACHE_DIR: /models
+    command: ["python", "-m", "medops.api.serve", "--host", "0.0.0.0", "--port", "8000", "--device", "cpu"]
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - model_cache:/models
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/healthz', timeout=3).status == 200 else 1)"]
+      interval: 15s
+      timeout: 5s
+      retries: 6
+      start_period: 120s
+    stop_grace_period: 30s
+
+  worker:
+    build: .
+    image: medops-copilot:dev
+    container_name: medops-worker
+    profiles: ["app"]
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_URL: ${DATABASE_URL_DOCKER:-${DATABASE_URL}}
+      DATABASE_ADMIN_URL: ${DATABASE_ADMIN_URL_DOCKER:-${DATABASE_ADMIN_URL:-}}
+      REDIS_URL: ${REDIS_URL_DOCKER:-${REDIS_URL}}
+      MODEL_CACHE_DIR: /models
+    command: ["python", "-m", "medops.worker.serve", "--device", "cpu"]
+    volumes:
+      - model_cache:/models
+    depends_on:
+      postgres:
+        condition: service_healthy
+    stop_grace_period: 30s
+
+  mcp:
+    build: .
+    image: medops-copilot:dev
+    container_name: medops-mcp
+    profiles: ["app"]
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_URL: ${DATABASE_URL_DOCKER:-${DATABASE_URL}}
+      DATABASE_READONLY_URL: ${DATABASE_READONLY_URL_DOCKER:-${DATABASE_READONLY_URL:-}}
+      REDIS_URL: ${REDIS_URL_DOCKER:-${REDIS_URL}}
+      MODEL_CACHE_DIR: /models
+    command: ["python", "-m", "medops.mcp.serve", "--transport", "streamable-http", "--host", "0.0.0.0", "--port", "8001", "--device", "cpu"]
+    ports:
+      - "127.0.0.1:8001:8001"
+    volumes:
+      - model_cache:/models
+    depends_on:
+      postgres:
+        condition: service_healthy
+    stop_grace_period: 30s
+
 volumes:
   postgres_data:
   redis_data:
+  model_cache:

@@ -1,0 +1,30 @@
+# Build context for the MedOps Copilot image: source, locks and migrations only. Secrets, virtualenvs, data,
+# evaluation runs, corpora and model caches never enter the image (baseline 4.3 config/secret isolation).
+.git
+.github
+venv
+.venv
+__pycache__
+**/__pycache__
+*.pyc
+.env
+.env.*
+!.env.example
+.mypy_cache
+.ruff_cache
+.pytest_cache
+evals/**/runs
+evals/**/raw*
+evals/**/*.pdf
+evals/**/page_texts
+evals/**/*.replies
+evals/verifier/dec003/pairs.jsonl
+docs
+schemas
+tests
+deploy/postgres
+docker-compose*.yml
+Dockerfile
+.dockerignore
+*.md
+!README.md

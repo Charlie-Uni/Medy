@@ -47,6 +47,8 @@ lock:
 	# the embed lock is pinned to the main lock's versions (constraints derived from it) so `install-embed` never upgrades a base package
 	grep -E '^[A-Za-z0-9_.-]+==' requirements.lock | sed 's/ \\$$//' > .constraints-main.tmp
 	uv pip compile pyproject.toml --extra embed --constraint .constraints-main.tmp --python-version 3.11 --generate-hashes -o requirements-embed.lock
+	# Linux image locks (M3-12): CPU-only PyTorch index, one per architecture, same constraints
+	for arch in aarch64 x86_64; do uv pip compile pyproject.toml --extra embed --constraint .constraints-main.tmp --python-version 3.11 --python-platform $$arch-manylinux_2_28 --extra-index-url https://download.pytorch.org/whl/cpu --index-strategy unsafe-best-match --generate-hashes -o requirements-embed-linux-$$arch.lock; done
 	rm -f .constraints-main.tmp
 
 install-embed:
