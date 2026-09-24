@@ -62,7 +62,7 @@ class _Adapter:
     def versions(self) -> LexicalVersions:
         return self.base.versions
 
-    def search(self, query: str, k: int) -> LexicalSearchResult:
+    def search(self, query, k, *, allow_historical=False) -> LexicalSearchResult:
         real = self.base.search(query, k)
         if self.behaviour == "versions":
             return real.model_copy(update={"dictionary_version": "someone-elses-dict"})
@@ -134,7 +134,7 @@ class _MutatingAdapter:
     def versions(self) -> LexicalVersions:
         return self.base.versions.model_copy(update={"dictionary_version": self._dict})
 
-    def search(self, query: str, k: int) -> LexicalSearchResult:
+    def search(self, query, k, *, allow_historical=False) -> LexicalSearchResult:
         self._dict = self._dict + "+swapped-mid-call"
         return self.base.search(query, k).model_copy(update={"dictionary_version": self._dict})
 
@@ -156,7 +156,7 @@ class _InvalidConstructionAdapter:
     def versions(self) -> LexicalVersions:
         return self.base.versions
 
-    def search(self, query: str, k: int) -> LexicalSearchResult:
+    def search(self, query, k, *, allow_historical=False) -> LexicalSearchResult:
         real = self.base.search(query, k)
         return LexicalSearchResult(**{**real.model_dump(), "returned_count": real.returned_count + 1})
 
@@ -177,7 +177,7 @@ class _RaisingAdapter:
     def versions(self) -> LexicalVersions:
         return self.base.versions
 
-    def search(self, query: str, k: int) -> LexicalSearchResult:
+    def search(self, query, k, *, allow_historical=False) -> LexicalSearchResult:
         raise self.error
 
 

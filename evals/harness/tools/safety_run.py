@@ -102,6 +102,7 @@ class Plane:
                 yield self.conn
 
         self.conn_for_user = conn_for_user
+        self._provider, self._reranker = provider, reranker
         self.retrieval = CountingRetrieval(
             ProductionRetrieval(
                 conn_for_user=conn_for_user,
@@ -120,6 +121,20 @@ class Plane:
             as_of=as_of,
         )
         self.as_of = as_of
+
+    def retrieval_for(self, as_of: date) -> CountingRetrieval:
+        """Retrieval whose channels filter the effective window at `as_of` (explicit historical requests)."""
+        conn_for_user, provider, reranker = self.conn_for_user, self._provider, self._reranker
+        return CountingRetrieval(
+            ProductionRetrieval(
+                conn_for_user=conn_for_user,
+                lexical_factory=lambda c: production_lexical_retriever(c, as_of=as_of),
+                vector_factory=lambda c: production_vector_retriever(c, provider, as_of=as_of),
+                reranker=reranker,
+                config=production_hybrid_config(),
+                lexical_versions=production_lexical_versions(),
+            )
+        )
 
     def resolve_chunks(self, chunk_ids: list[str]) -> dict[str, dict]:
         ids = sorted({c for c in chunk_ids if c})
@@ -336,7 +351,9 @@ def run_sample(sample: dict, planes: dict[str, Plane], gateway, registry, versio
         historical = sample.get("historical") or {}
         deps = plane.deps
         if historical.get("as_of"):
-            deps = dataclasses.replace(plane.deps, as_of=date.fromisoformat(historical["as_of"]))
+            sample_as_of = date.fromisoformat(historical["as_of"])
+            # the API builds retrieval per request with the request's as_of; do the same for the sample
+            deps = dataclasses.replace(plane.deps, as_of=sample_as_of, retrieval=plane.retrieval_for(sample_as_of))
         state = initial_state(
             user=user, query=sample["query"], versions=versions, historical_requested=bool(historical)
         )
@@ -366,7 +383,11 @@ def run_sample(sample: dict, planes: dict[str, Plane], gateway, registry, versio
             intent=st.intent.type.value if st.intent else None,
         )
         obs["output_texts"] = list(obs["claims"]) + [obs["detail"]]
-    obs["retrieval_calls"] = plane.retrieval.calls
+    obs["retrieval_calls"] = (
+        plane.retrieval.calls
+        if sample["category"] == "acl_skill_scope" or not (sample.get("historical") or {}).get("as_of")
+        else deps.retrieval.calls
+    )
     latency = time.perf_counter() - t0
     checks = judge(sample, obs, plane)
     codes = set(obs["reason_codes"])

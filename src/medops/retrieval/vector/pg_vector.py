@@ -3,7 +3,8 @@
 Fixed recipe (any change is a new `RETRIEVER_VERSION`):
 - candidates: every chunk that has a vector of the configured `embedding_version` AND is visible through the
   RLS chain `chunk_embeddings -> chunks -> documents -> document_acl` of the ordinary role AND belongs to an
-  `active` document whose effective window contains `as_of`;
+  `active` document whose effective window contains `as_of` (an `archived` one too when the caller explicitly
+  asked for historical evidence, INV-DATA-03);
 - ranking: cosine distance ascending via the HNSW index with pgvector's iterative scan (`relaxed_order`) so
   filtering cannot silently starve the page; ties broken by `chunk_id` ascending after an exact re-sort of the
   returned page;
@@ -42,7 +43,7 @@ from {TABLE} e
 join chunks c on c.chunk_id = e.chunk_id
 join documents d on d.doc_id = c.doc_id
 where e.embedding_version = %(v)s
-  and d.status = 'active'
+  and (d.status = 'active' or (%(allow_historical)s and d.status = 'archived'))
   and d.effective_from <= %(as_of)s
   and (d.effective_to is null or d.effective_to > %(as_of)s)
 """
@@ -53,7 +54,7 @@ from {TABLE} e
 join chunks c on c.chunk_id = e.chunk_id
 join documents d on d.doc_id = c.doc_id
 where e.embedding_version = %(v)s
-  and d.status = 'active'
+  and (d.status = 'active' or (%(allow_historical)s and d.status = 'archived'))
   and d.effective_from <= %(as_of)s
   and (d.effective_to is null or d.effective_to > %(as_of)s)
 order by e.embedding <=> %(q)s::vector
@@ -230,19 +231,23 @@ class PgVectorRetriever:
             return max(k, self._ef_search)
         return min(MAX_EF_SEARCH, max(MIN_EF_SEARCH, 4 * k))
 
-    def eligible_count(self) -> int:
-        params = {"v": self._provider.spec.embedding_version, "as_of": self._as_of or date.today()}
+    def eligible_count(self, *, allow_historical: bool = False) -> int:
+        params = {
+            "v": self._provider.spec.embedding_version,
+            "as_of": self._as_of or date.today(),
+            "allow_historical": bool(allow_historical),
+        }
         row = self._conn.execute(ELIGIBLE_COUNT_SQL, params).fetchone()
         return int(row[0]) if row else 0
 
-    def search(self, query: str, k: int) -> VectorSearchResult:
+    def search(self, query: str, k: int, *, allow_historical: bool = False) -> VectorSearchResult:
         check_k(k)
         require_identity(self._conn)
         built = self.versions
         text = normalize_text(query)
         if not text:
             raise BusinessError(ErrorCode.invalid_request, "query is empty after normalization")
-        eligible = self.eligible_count()
+        eligible = self.eligible_count(allow_historical=allow_historical)
         if eligible == 0:
             return self._result([], k, built)
         vector = self._provider.embed_query(text)
@@ -252,6 +257,7 @@ class PgVectorRetriever:
             "q": vector_literal(vector),
             "v": built.embedding_version,
             "as_of": self._as_of or date.today(),
+            "allow_historical": bool(allow_historical),
             "k": k,
         }
         rows = self._conn.execute(SEARCH_SQL, params).fetchall()
@@ -281,7 +287,7 @@ class PgVectorRetriever:
             normalization_version=built.normalization_version,
         )
 
-    def explain(self, query: str, k: int) -> str:
+    def explain(self, query: str, k: int, *, allow_historical: bool = False) -> str:
         """EXPLAIN (json) of the search under the current role and settings; evidence for the plan chain."""
         import json
 
@@ -293,6 +299,7 @@ class PgVectorRetriever:
             "q": vector_literal(vector),
             "v": self._provider.spec.embedding_version,
             "as_of": self._as_of or date.today(),
+            "allow_historical": bool(allow_historical),
             "k": k,
         }
         row = self._conn.execute("explain (format json) " + SEARCH_SQL, params).fetchone()

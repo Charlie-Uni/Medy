@@ -29,7 +29,7 @@ class _FirstOnlyAdapter:
     def versions(self) -> LexicalVersions:
         return self.base.versions
 
-    def search(self, query: str, k: int) -> LexicalSearchResult:
+    def search(self, query, k, *, allow_historical=False) -> LexicalSearchResult:
         real = self.base.search(query, k)
         first = real.candidates[:1]
         return real.model_copy(

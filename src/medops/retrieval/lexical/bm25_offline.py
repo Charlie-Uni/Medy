@@ -81,7 +81,8 @@ class OfflineBM25Index:
         self._avg_len = sum(doc_len.values()) / len(doc_len) if doc_len else 0.0
         self._built_with = versions
 
-    def search(self, query: str, k: int) -> LexicalSearchResult:
+    def search(self, query: str, k: int, *, allow_historical: bool = False) -> LexicalSearchResult:
+        # the offline candidate indexes the caller's chunk list as given; status filtering is not its concern
         if isinstance(k, bool) or not isinstance(k, int) or k < 1:
             raise ValueError("k must be an integer >= 1")
         if self._built_with is not None and self._current_versions() != self._built_with:

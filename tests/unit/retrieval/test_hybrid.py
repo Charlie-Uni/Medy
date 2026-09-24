@@ -36,7 +36,7 @@ class FakeLexical:
     def __init__(self, ids):
         self.ids = ids
 
-    def search(self, query, k):
+    def search(self, query, k, *, allow_historical=False):
         return lex(self.ids[:k], k)
 
 
@@ -46,7 +46,7 @@ class FakeVector:
     def __init__(self, ids):
         self.ids = ids
 
-    def search(self, query, k):
+    def search(self, query, k, *, allow_historical=False):
         return vec(self.ids[:k], k)
 
 
@@ -96,3 +96,27 @@ def test_config_bounds_and_version_inputs():
     for bad in ({"k_lexical": 0}, {"k_vector": 21}, {"limit": 0}, {"rrf_k": 0}):
         with pytest.raises(ValueError):
             HybridConfig(**bad)
+
+
+class _RecordingLexical(FakeLexical):
+    def search(self, query, k, *, allow_historical=False):
+        self.seen = allow_historical
+        return super().search(query, k, allow_historical=allow_historical)
+
+
+class _RecordingVector(FakeVector):
+    def search(self, query, k, *, allow_historical=False):
+        self.seen = allow_historical
+        return super().search(query, k, allow_historical=allow_historical)
+
+
+def test_allow_historical_reaches_both_channels_and_defaults_to_false():
+    """Record 71: an explicit historical request must reach the channel SQL, not only the re-check."""
+    lex, vec = _RecordingLexical(["a"]), _RecordingVector(["a"])
+    cfg = HybridConfig(k_lexical=5, k_vector=5, rrf_k=60.0, limit=5)
+    hybrid_search(lex, vec, "q", config=cfg, lexical_expected=lex.versions, vector_expected=vec.versions)
+    assert (lex.seen, vec.seen) == (False, False)
+    hybrid_search(
+        lex, vec, "q", config=cfg, lexical_expected=lex.versions, vector_expected=vec.versions, allow_historical=True
+    )
+    assert (lex.seen, vec.seen) == (True, True)

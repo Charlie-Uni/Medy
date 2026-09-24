@@ -101,7 +101,7 @@ with eligible as (
     join chunks c on c.chunk_id = i.chunk_id
     join documents d on d.doc_id = c.doc_id
     where i.tsv @@ %(q)s::tsquery
-      and d.status = 'active'
+      and (d.status = 'active' or (%(allow_historical)s and d.status = 'archived'))
       and d.effective_from <= %(as_of)s
       and (d.effective_to is null or d.effective_to > %(as_of)s)
 )
@@ -273,8 +273,17 @@ def empty_result(k: int, built: LexicalVersions) -> LexicalSearchResult:
     return page_to_result([], k, built)
 
 
-def search_params(tokens: Sequence[str], k: int, as_of: date | None) -> dict[str, Any]:
-    return {"q": tsquery_literal(tokens), "as_of": as_of or date.today(), "k": k}
+def search_params(
+    tokens: Sequence[str], k: int, as_of: date | None, *, allow_historical: bool = False
+) -> dict[str, Any]:
+    """`allow_historical` admits archived versions whose effective window contains `as_of` (INV-DATA-03: only an
+    explicit historical request may see them; the re-check then marks such evidence `historical`)."""
+    return {
+        "q": tsquery_literal(tokens),
+        "as_of": as_of or date.today(),
+        "k": k,
+        "allow_historical": bool(allow_historical),
+    }
 
 
 def explain_json(conn: psycopg.Connection[Any], sql: str, params: dict[str, Any]) -> str:

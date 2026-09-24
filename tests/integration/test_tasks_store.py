@@ -18,7 +18,9 @@ from medops.domain.common import Dept
 from medops.infrastructure.db.tasks import PgTaskStore
 from tests.integration.lexical_adapter_suite import make_database
 
-NOW = datetime(2026, 9, 23, 12, 0, tzinfo=UTC)
+NOW = datetime(
+    2026, 9, 23, 12, 0, tzinfo=UTC
+)  # fixed for stored timestamps; idempotency expiry is relative to the DB clock (expires_at > now())
 PRINCIPAL = "0123456789abcdef" * 2  # pseudonyms are hex (migration 0010 check)
 
 
@@ -49,12 +51,12 @@ def test_idempotent_create_and_race(db):
     t1, t2 = str(uuid.uuid4()), str(uuid.uuid4())
     with psycopg.connect(db["users"]["app"]) as conn:
         store = PgTaskStore(conn)
-        store.create(record(t1), ("POST /v1/tasks", "key-1", NOW + timedelta(days=1)))
+        store.create(record(t1), ("POST /v1/tasks", "key-1", datetime.now(UTC) + timedelta(days=1)))
         conn.commit()
         found = store.find_idempotent(PRINCIPAL, "POST /v1/tasks", "key-1")
         assert found is not None and found[1] == t1 and len(found[0]) == 64
         with pytest.raises(IdempotencyRace):
-            store.create(record(t2), ("POST /v1/tasks", "key-1", NOW + timedelta(days=1)))
+            store.create(record(t2), ("POST /v1/tasks", "key-1", datetime.now(UTC) + timedelta(days=1)))
         # the outer transaction survived the losing insert (savepoint)
         assert store.get(t1) is not None and store.get(t2) is None
         conn.commit()

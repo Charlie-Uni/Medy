@@ -122,7 +122,12 @@ def seed_candidate(db: dict, cut: CandidateUnderTest) -> dict:
     effective and one expired document (each with one 'sigma' chunk), plus one active document shared by MA
     and PV, plus the contract-harness corpus (25 chunks, deterministic UUIDs) owned by CO. Index installed
     by the owner and built through the admin LOGIN user (grants, not superuser powers)."""
-    data: dict = {"eligible": {d: set() for d in DEPTS}, "excluded": {d: set() for d in DEPTS}, "fixture": {}}
+    data: dict = {
+        "eligible": {d: set() for d in DEPTS},
+        "excluded": {d: set() for d in DEPTS},
+        "archived": {d: set() for d in DEPTS},
+        "fixture": {},
+    }
     counter = 5000
     with psycopg.connect(db["owner"]) as conn:
         cut.install(conn)
@@ -153,7 +158,9 @@ def seed_candidate(db: dict, cut: CandidateUnderTest) -> dict:
             same = [f"sigma 研究 PROT-2024-017 30 mg {dept}", "sigma 随访 tau"]
             data["eligible"][dept] |= set(make(dept, "active", (dept,), same))
             data["eligible"][dept] |= set(make(dept, "active", (dept,), ["sigma 研究"]))
-            data["excluded"][dept] |= set(make(dept, "archived", (dept,), ["sigma archived"]))
+            archived = set(make(dept, "archived", (dept,), ["sigma archived"]))
+            data["excluded"][dept] |= archived
+            data["archived"][dept] |= archived
             data["excluded"][dept] |= set(make(dept, "draft", (dept,), ["sigma draft"]))
             data["future"] = make(dept, "active", (dept,), ["sigma future"], effective_from=AS_OF + timedelta(days=1))
             data["excluded"][dept] |= set(data["future"])
@@ -210,11 +217,20 @@ class LexicalAdapterSuite:
     cut: CandidateUnderTest
 
     def search(
-        self, dsn: str, dept: str | None, query: str, k: int, *, as_of: date | None = AS_OF
+        self,
+        dsn: str,
+        dept: str | None,
+        query: str,
+        k: int,
+        *,
+        as_of: date | None = AS_OF,
+        allow_historical: bool = False,
     ) -> LexicalSearchResult:
         with txn(dsn, dept) as conn:
             retriever = self.cut.make_retriever(conn, as_of)
-            return run_lexical_search(retriever, query, k, expected=self.cut.expected_versions(conn))
+            return run_lexical_search(
+                retriever, query, k, expected=self.cut.expected_versions(conn), allow_historical=allow_historical
+            )
 
     def test_install_is_idempotent_and_tables_are_force_rls_with_least_grants(self, db, seed):
         with psycopg.connect(db["owner"]) as conn:
@@ -260,7 +276,7 @@ class LexicalAdapterSuite:
             def versions(self) -> LexicalVersions:
                 return self.inner.versions
 
-            def search(self, query: str, k: int) -> LexicalSearchResult:
+            def search(self, query: str, k: int, *, allow_historical: bool = False) -> LexicalSearchResult:
                 r = self.inner.search(query, k)
                 mapped = tuple(c.model_copy(update={"chunk_id": to_fixture[c.chunk_id]}) for c in r.candidates)
                 return r.model_copy(update={"candidates": mapped})
@@ -292,6 +308,17 @@ class LexicalAdapterSuite:
         after = self.search(dsn, "CO", "sigma", 20, as_of=AS_OF + timedelta(days=1))
         assert ids(before) == seed["eligible"]["CO"] | set(seed["expired"])
         assert ids(after) == seed["eligible"]["CO"] | set(seed["future"])
+
+    def test_archived_versions_are_returned_only_on_explicit_historical_requests(self, db, seed):
+        """Record 71 (safety set defect 4): an explicit historical request admits archived versions whose window
+        contains as_of; drafts, not-yet-effective and expired documents stay out; the default never sees archived."""
+        dsn = db["users"]["app"]
+        for dept in DEPTS:
+            plain = ids(self.search(dsn, dept, "sigma", 20))
+            historical = ids(self.search(dsn, dept, "sigma", 20, allow_historical=True))
+            assert not plain & seed["archived"][dept]
+            assert historical == seed["eligible"][dept] | seed["archived"][dept]
+            assert not historical & (seed["excluded"][dept] - seed["archived"][dept])
 
     def test_missing_identity_or_transaction_is_refused_not_empty(self, db, seed):
         dsn = db["users"]["app"]

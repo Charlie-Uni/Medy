@@ -72,9 +72,12 @@ def hybrid_search(
     config: HybridConfig,
     lexical_expected: LexicalVersions,
     vector_expected: VectorVersions,
+    allow_historical: bool = False,
 ) -> HybridResult:
-    lex = run_lexical_search(lexical, query, config.k_lexical, expected=lexical_expected)
-    vec = run_vector_search(vector, query, config.k_vector, expected=vector_expected)
+    lex = run_lexical_search(
+        lexical, query, config.k_lexical, expected=lexical_expected, allow_historical=allow_historical
+    )
+    vec = run_vector_search(vector, query, config.k_vector, expected=vector_expected, allow_historical=allow_historical)
     fused = rrf_fuse(
         {"lexical": [c.chunk_id for c in lex.candidates], "vector": [c.chunk_id for c in vec.candidates]},
         k=config.rrf_k,
@@ -97,7 +100,13 @@ def retrieve_evidence(
 ) -> tuple[HybridResult, RecheckResult]:
     """Hybrid candidates, then the fact-plane re-check under the same identity transaction."""
     hybrid = hybrid_search(
-        lexical, vector, query, config=config, lexical_expected=lexical_expected, vector_expected=vector_expected
+        lexical,
+        vector,
+        query,
+        config=config,
+        lexical_expected=lexical_expected,
+        vector_expected=vector_expected,
+        allow_historical=allow_historical,
     )
     rechecked = recheck_candidates(conn, hybrid.fused_ids, as_of=as_of, allow_historical=allow_historical)
     return hybrid, rechecked

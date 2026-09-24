@@ -10,7 +10,9 @@ from medops.retrieval.lexical.normalization import normalize_text
 from medops.retrieval.vector.contracts import VectorRetriever, VectorSearchResult, VectorVersions
 
 
-def run_vector_search(retriever: VectorRetriever, query: str, k: int, expected: VectorVersions) -> VectorSearchResult:
+def run_vector_search(
+    retriever: VectorRetriever, query: str, k: int, expected: VectorVersions, *, allow_historical: bool = False
+) -> VectorSearchResult:
     if isinstance(k, bool) or not isinstance(k, int):
         raise BusinessError(ErrorCode.invalid_request, "k must be an integer")
     if not 1 <= k <= MAX_K:
@@ -25,7 +27,7 @@ def run_vector_search(retriever: VectorRetriever, query: str, k: int, expected: 
             detail=f"expected={expected.model_dump()} index={declared.model_dump()}",
         )
     try:
-        result = retriever.search(query, k)
+        result = retriever.search(query, k, allow_historical=allow_historical)
         checked = VectorSearchResult.model_validate(result.model_dump())
     except ValidationError as exc:
         raise InfrastructureError(

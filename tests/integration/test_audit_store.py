@@ -17,7 +17,9 @@ from medops.harness.contracts import NodeAttempt
 from medops.infrastructure.db.audit import PgTraceStore
 from tests.integration.lexical_adapter_suite import make_database
 
-NOW = datetime(2026, 9, 23, 12, 0, tzinfo=UTC)
+NOW = datetime(
+    2026, 9, 23, 12, 0, tzinfo=UTC
+)  # fixed for stored timestamps; idempotency expiry is relative to the DB clock (expires_at > now())
 PRINCIPAL = "0123456789abcdef" * 2
 
 
@@ -114,7 +116,7 @@ def test_feedback_binds_to_a_trace_with_receipt_idempotency(db):
             created_at=NOW,
         )
         receipt = {"feedback_id": rec.feedback_id, "trace_id": tid}
-        store.add_feedback(rec, ("POST /v1/feedback", "k1", "b" * 64, NOW + timedelta(days=1), receipt))
+        store.add_feedback(rec, ("POST /v1/feedback", "k1", "b" * 64, datetime.now(UTC) + timedelta(days=1), receipt))
         app.commit()
         assert store.find_receipt(PRINCIPAL, "POST /v1/feedback", "k1") == ("b" * 64, receipt)
         dup = FeedbackRecord(
@@ -126,7 +128,9 @@ def test_feedback_binds_to_a_trace_with_receipt_idempotency(db):
             created_at=NOW,
         )
         with pytest.raises(IdempotencyRace):
-            store.add_feedback(dup, ("POST /v1/feedback", "k1", "b" * 64, NOW + timedelta(days=1), receipt))
+            store.add_feedback(
+                dup, ("POST /v1/feedback", "k1", "b" * 64, datetime.now(UTC) + timedelta(days=1), receipt)
+            )
         assert (
             app.execute("select count(*) from feedback where trace_id = %s", (tid,)).fetchone()[0] == 1
         )  # savepoint rolled the duplicate back

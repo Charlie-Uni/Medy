@@ -105,6 +105,19 @@ def test_status_and_effective_window_are_filtered_inside_the_query(db, seed):
     assert past.candidates == () and past.candidate_exhausted is True
 
 
+def test_archived_versions_are_returned_only_on_explicit_historical_requests(db, seed):
+    """Record 71: the vector channel admits archived versions only when the caller asked for historical evidence."""
+    for dept in DEPTS:
+        with txn(db["users"]["app"], dept) as conn:
+            plain = {uuid.UUID(c.chunk_id) for c in retriever(conn).search("sigma", 100).candidates}
+            historical = {
+                uuid.UUID(c.chunk_id) for c in retriever(conn).search("sigma", 100, allow_historical=True).candidates
+            }
+        assert not plain & seed["archived"][dept]
+        assert seed["archived"][dept] <= historical
+        assert not historical & (seed["excluded"][dept] - seed["archived"][dept])
+
+
 def test_pages_are_exactly_min_k_eligible_under_the_hnsw_index(db, seed):
     n = len(seed["visible"]["MA"])
     assert n >= 3

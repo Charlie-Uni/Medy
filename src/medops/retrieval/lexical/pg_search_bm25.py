@@ -80,7 +80,7 @@ with eligible as (
     join chunks c on c.chunk_id = i.chunk_id
     join documents d on d.doc_id = c.doc_id
     where (i.content::{TOKENIZER_SQL}) ||| %(terms)s::text[]
-      and d.status = 'active'
+      and (d.status = 'active' or (%(allow_historical)s and d.status = 'archived'))
       and d.effective_from <= %(as_of)s
       and (d.effective_to is null or d.effective_to > %(as_of)s)
 )
@@ -168,8 +168,8 @@ def build_index(conn: psycopg.Connection[Any], *, built_by: str) -> IndexBuildRe
     return IndexBuildReport(index_name=INDEX_NAME, chunk_count=count, skipped_empty=total - count, versions=versions)
 
 
-def _params(terms: Sequence[str], k: int, as_of: date | None) -> dict[str, Any]:
-    return {"terms": list(terms), "as_of": as_of or date.today(), "k": k}
+def _params(terms: Sequence[str], k: int, as_of: date | None, allow_historical: bool = False) -> dict[str, Any]:
+    return {"terms": list(terms), "as_of": as_of or date.today(), "k": k, "allow_historical": bool(allow_historical)}
 
 
 class PgSearchBm25Retriever:
@@ -191,7 +191,7 @@ class PgSearchBm25Retriever:
     def versions(self) -> LexicalVersions:
         return read_built_versions(self._conn, INDEX_NAME)
 
-    def search(self, query: str, k: int) -> LexicalSearchResult:
+    def search(self, query: str, k: int, *, allow_historical: bool = False) -> LexicalSearchResult:
         check_k(k)
         require_identity(self._conn)
         built = self.versions
@@ -199,15 +199,15 @@ class PgSearchBm25Retriever:
         terms = query_terms(self._conn, query)
         if not terms:
             return empty_result(k, built)
-        rows = self._conn.execute(SEARCH_SQL, _params(terms, k, self._as_of)).fetchall()
+        rows = self._conn.execute(SEARCH_SQL, _params(terms, k, self._as_of, allow_historical)).fetchall()
         return page_to_result(rows, k, built)
 
-    def explain(self, query: str, k: int) -> str:
+    def explain(self, query: str, k: int, *, allow_historical: bool = False) -> str:
         require_identity(self._conn)
         terms = query_terms(self._conn, query)
         if not terms:
             return ""
-        return explain_json(self._conn, SEARCH_SQL, _params(terms, k, self._as_of))
+        return explain_json(self._conn, SEARCH_SQL, _params(terms, k, self._as_of, allow_historical))
 
 
 def main(argv: Sequence[str] | None = None) -> int:

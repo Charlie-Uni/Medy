@@ -174,7 +174,7 @@ class PgSimpleFtsRetriever:
     def _query_tokens(self, query: str) -> list[str]:
         return list(dict.fromkeys(self._tokenizer.tokenize(query)))
 
-    def search(self, query: str, k: int) -> LexicalSearchResult:
+    def search(self, query: str, k: int, *, allow_historical: bool = False) -> LexicalSearchResult:
         check_k(k)
         require_identity(self._conn)
         built = self.versions
@@ -182,17 +182,21 @@ class PgSimpleFtsRetriever:
         tokens = self._query_tokens(query)
         if not tokens:
             return empty_result(k, built)
-        rows = self._conn.execute(self._search_sql, search_params(tokens, k, self._as_of)).fetchall()
+        rows = self._conn.execute(
+            self._search_sql, search_params(tokens, k, self._as_of, allow_historical=allow_historical)
+        ).fetchall()
         return page_to_result(rows, k, built)
 
-    def explain(self, query: str, k: int) -> str:
+    def explain(self, query: str, k: int, *, allow_historical: bool = False) -> str:
         """`EXPLAIN (FORMAT JSON)` of the exact search statement under the current role and identity,
         for the execution-plan evidence ADR-0002 requires. Returns '' when the query has no tokens."""
         require_identity(self._conn)
         tokens = self._query_tokens(query)
         if not tokens:
             return ""
-        return explain_json(self._conn, self._search_sql, search_params(tokens, k, self._as_of))
+        return explain_json(
+            self._conn, self._search_sql, search_params(tokens, k, self._as_of, allow_historical=allow_historical)
+        )
 
 
 def main(argv: Sequence[str] | None = None) -> int:

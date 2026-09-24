@@ -59,7 +59,7 @@ class FakeRetriever:
     def versions(self):
         return self._versions
 
-    def search(self, query, k):
+    def search(self, query, k, *, allow_historical=False):
         return self._res
 
 

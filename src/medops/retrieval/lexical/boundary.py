@@ -25,7 +25,7 @@ MAX_K = 20  # ADR-0002 experiment setting (K=20 for Lexical Recall@20); not deri
 
 
 def run_lexical_search(
-    retriever: LexicalRetriever, query: str, k: int, expected: LexicalVersions
+    retriever: LexicalRetriever, query: str, k: int, expected: LexicalVersions, *, allow_historical: bool = False
 ) -> LexicalSearchResult:
     if isinstance(k, bool) or not isinstance(k, int):
         raise BusinessError(ErrorCode.invalid_request, "k must be an integer")
@@ -41,7 +41,7 @@ def run_lexical_search(
             detail=f"expected={expected.model_dump()} index={declared.model_dump()}",
         )
     try:
-        result = retriever.search(query, k)
+        result = retriever.search(query, k, allow_historical=allow_historical)
         checked = LexicalSearchResult.model_validate(result.model_dump())  # re-validate, never trust model_construct
     except ValidationError as exc:  # an adapter building an invalid result (inside search or here) is an adapter defect
         raise InfrastructureError(
