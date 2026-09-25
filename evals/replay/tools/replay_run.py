@@ -79,6 +79,31 @@ def read_jsonl(path: pathlib.Path) -> list[dict[str, Any]]:
     return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
 
 
+def seed_baseline_rows(
+    prev: pathlib.Path, rows_path: pathlib.Path, *, versions: dict[str, Any], dataset_hash: str, subset: bool, runs: int
+) -> int:
+    """Copy the baseline-arm rows of a finished run into this run so a new candidate pays for one arm only (M5-04).
+    Refused unless the earlier run used the same replay set (hash and subset flag) and the same baseline versions;
+    rows keep their measured cost / latency and carry `reused_from` so the report can say where they came from."""
+    res = json.loads((prev / "results.json").read_text(encoding="utf-8"))
+    g = res["gate"]
+    if g["replay_set"]["dataset_hash"] != dataset_hash or bool(g["replay_set"]["subset"]) != subset:
+        raise SystemExit(f"--baseline-from {prev}: replay set differs from this run")
+    if json.loads(json.dumps(g["arms"]["baseline"]["versions"])) != json.loads(json.dumps(versions)):
+        raise SystemExit(f"--baseline-from {prev}: baseline versions differ (released state changed?)")
+    have = {f"{r['arm']}|{r['run']}|{r['replay_id']}" for r in read_jsonl(rows_path)} if rows_path.exists() else set()
+    n = 0
+    with rows_path.open("a", encoding="utf-8") as fh:
+        for r in read_jsonl(prev / "rows.jsonl"):
+            key = f"{r['arm']}|{r['run']}|{r['replay_id']}"
+            if r["arm"] != "baseline" or int(r["run"]) > runs or key in have:
+                continue
+            fh.write(json.dumps({**r, "reused_from": prev.name}, ensure_ascii=False) + "\n")
+            have.add(key)
+            n += 1
+    return n
+
+
 def main_success(item: dict[str, Any], outcome: str, cited: list[str]) -> bool:
     gold = bool(set(item["gold_chunks"]) & set(cited))
     kind = item["kind"]
@@ -131,6 +156,12 @@ def main() -> int:
     ap.add_argument("--estimate", action="store_true")
     ap.add_argument("--resume", action="store_true")
     ap.add_argument("--skip-safety", action="store_true")
+    ap.add_argument(
+        "--baseline-from",
+        type=pathlib.Path,
+        default=None,
+        help="reuse the baseline-arm rows of a finished run on the same replay set and released state (pays for the candidate arm only)",
+    )
     ap.add_argument("--gpu-timeout", type=float, default=120.0)
     args = ap.parse_args()
 
@@ -145,8 +176,12 @@ def main() -> int:
         items, safety_items = items[: args.items], safety_items[: args.items]
     if args.skip_safety:
         safety_items = []
-    est = args.runs * 2 * (len(items) * AVG_COST_MAIN + len(safety_items) * AVG_COST_SAFETY)
-    print(f"items={len(items)} safety={len(safety_items)} runs={args.runs} arms=2 estimated cost ≈ {est:.2f} USD", flush=True)
+    paid_arms = 1 if args.baseline_from else 2
+    est = args.runs * paid_arms * (len(items) * AVG_COST_MAIN + len(safety_items) * AVG_COST_SAFETY)
+    print(
+        f"items={len(items)} safety={len(safety_items)} runs={args.runs} paid arms={paid_arms} estimated cost ≈ {est:.2f} USD",
+        flush=True,
+    )
     if args.estimate:
         return 0
     if args.out.exists() and not args.resume:
@@ -184,17 +219,31 @@ def main() -> int:
     for name, rel in arms.items():
         out = rel.rerank_output(RERANK_OUTPUT)
         if out not in rerankers:
-            rerankers[out] = sa._PinnedReranker(gpu.call(lambda o=out: BgeRerankerV2M3(device=args.device, output=o)), gpu)
+            rerankers[out] = sa._PinnedReranker(
+                gpu.call(lambda o=out: BgeRerankerV2M3(device=args.device, output=o)), gpu
+            )
         cfg = rel.hybrid_config(production_hybrid_config())
         prompt = rel.answer_system(ANSWER_SYSTEM)
         planes[name] = {
-            db: sr.Plane(db, app_url, provider, rerankers[out], gateway, args.as_of, sa, config=cfg, answer_system=prompt)
+            db: sr.Plane(
+                db, app_url, provider, rerankers[out], gateway, args.as_of, sa, config=cfg, answer_system=prompt
+            )
             for db in (sr.PRODUCTION_DB, sr.SAFETY_DB)
         }
         versions[name] = arm_versions(name, rel, base_policy_version)
     drafts = {s["sample_id"]: s for s in sr.load_drafts()}
 
     rows_path = args.out / "rows.jsonl"
+    if args.baseline_from:
+        reused = seed_baseline_rows(
+            args.baseline_from,
+            rows_path,
+            versions=versions["baseline"].model_dump(mode="json"),
+            dataset_hash=manifest["dataset_hash"],
+            subset=not args.full,
+            runs=args.runs,
+        )
+        print(f"reused {reused} baseline rows from {args.baseline_from.name}", flush=True)
     done: dict[str, dict[str, Any]] = {}
     if rows_path.exists():
         for r in read_jsonl(rows_path):
@@ -221,7 +270,9 @@ def main() -> int:
                     if hist.get("as_of"):
                         a = dt.date.fromisoformat(hist["as_of"])
                         deps = dataclasses.replace(plane.deps, as_of=a, retrieval=plane.retrieval_for(a))
-                    state = initial_state(user=user, query=it["query"], versions=versions[arm], historical_requested=bool(hist))
+                    state = initial_state(
+                        user=user, query=it["query"], versions=versions[arm], historical_requested=bool(hist)
+                    )
                     before = (gateway.cost, gateway.tokens, gateway.calls)
                     t0 = time.perf_counter()
                     r = run_ask(state, deps)
@@ -249,7 +300,10 @@ def main() -> int:
                     done[key] = row
                     fh.write(json.dumps(row, ensure_ascii=False) + "\n")
                     fh.flush()
-                    print(f"run {run} {arm} {it['replay_id']} -> {r.outcome} success={row['success']} ${row['cost_usd']:.4f} {row['latency_s']}s", flush=True)
+                    print(
+                        f"run {run} {arm} {it['replay_id']} -> {r.outcome} success={row['success']} ${row['cost_usd']:.4f} {row['latency_s']}s",
+                        flush=True,
+                    )
                     if gpu.stalled:
                         print("gpu stalled: exiting for the supervisor", flush=True)
                         return sa.GpuThread.EXIT_STALLED
@@ -281,7 +335,10 @@ def main() -> int:
                     done[key] = row
                     fh.write(json.dumps(row, ensure_ascii=False) + "\n")
                     fh.flush()
-                    print(f"run {run} {arm} {it['replay_id']} [{it['category']}] -> {'PASS' if row['success'] else 'FAIL'} ${row['cost_usd']:.4f}", flush=True)
+                    print(
+                        f"run {run} {arm} {it['replay_id']} [{it['category']}] -> {'PASS' if row['success'] else 'FAIL'} ${row['cost_usd']:.4f}",
+                        flush=True,
+                    )
                     if gateway.cost > args.max_cost_usd:
                         print(f"cost cap {args.max_cost_usd} USD reached: stopping (resume later)", flush=True)
                         return 77
@@ -296,7 +353,11 @@ def main() -> int:
             rows = [done[f"{arm}|{run}|{i}"] for i in main_ids if f"{arm}|{run}|{i}" in done]
             by_arm_run[arm].append({r["replay_id"]: 1.0 if r["success"] else 0.0 for r in rows})
             cats: dict[str, dict[str, float]] = defaultdict(dict)
-            srows = [done[f"{arm}|{run}|{it['replay_id']}"] for it in safety_items if f"{arm}|{run}|{it['replay_id']}" in done]
+            srows = [
+                done[f"{arm}|{run}|{it['replay_id']}"]
+                for it in safety_items
+                if f"{arm}|{run}|{it['replay_id']}" in done
+            ]
             for r in srows:
                 cats[r["category"]][r["replay_id"]] = 1.0 if r["success"] else 0.0
             safety_by_arm_run[arm].append(dict(cats))
@@ -307,7 +368,9 @@ def main() -> int:
                     "n": len(rows),
                     "success_rate": round(sum(r["success"] for r in rows) / max(1, len(rows)), 4),
                     "safety_n": len(srows),
-                    "safety_pass_rate": round(sum(r["success"] for r in srows) / max(1, len(srows)), 4) if srows else None,
+                    "safety_pass_rate": round(sum(r["success"] for r in srows) / max(1, len(srows)), 4)
+                    if srows
+                    else None,
                     "latency_p50_s": pctl(lat, 0.5),
                     "latency_p95_s": pctl(lat, 0.95),
                     "tokens": sum(r["model_tokens"] for r in rows + srows),
@@ -315,8 +378,21 @@ def main() -> int:
                     "system_failures": sum("system_failure" in r["reason_codes"] for r in rows),
                 }
             )
-    slices = {it["replay_id"]: {"dept": it["dept"], "kind": it["kind"], "language": it.get("language"), "slice": it.get("slices", [])} for it in items}
-    complete_safety = bool(safety_items) and all(len(r) >= 1 for r in safety_by_arm_run["candidate"]) and not args.items and not args.skip_safety
+    slices = {
+        it["replay_id"]: {
+            "dept": it["dept"],
+            "kind": it["kind"],
+            "language": it.get("language"),
+            "slice": it.get("slices", []),
+        }
+        for it in items
+    }
+    complete_safety = (
+        bool(safety_items)
+        and all(len(r) >= 1 for r in safety_by_arm_run["candidate"])
+        and not args.items
+        and not args.skip_safety
+    )
     gate = compute_gate(
         baseline_runs=by_arm_run["baseline"],
         candidate_runs=by_arm_run["candidate"],
@@ -326,9 +402,18 @@ def main() -> int:
         safety_complete=complete_safety,
         seed=args.seed,
     ).as_dict()
-    gate["replay_set"] = {"dataset_version": manifest["dataset_version"], "dataset_hash": manifest["dataset_hash"], "subset": not args.full, "items": len(items), "safety_items": len(safety_items)}
+    gate["replay_set"] = {
+        "dataset_version": manifest["dataset_version"],
+        "dataset_hash": manifest["dataset_hash"],
+        "subset": not args.full,
+        "items": len(items),
+        "safety_items": len(safety_items),
+    }
     gate["arms"] = {
-        "baseline": {"released": [dataclasses.asdict(p) for p in baseline.policies], "versions": versions["baseline"].model_dump()},
+        "baseline": {
+            "released": [dataclasses.asdict(p) for p in baseline.policies],
+            "versions": versions["baseline"].model_dump(),
+        },
         "candidate": {"diff": spec, "versions": versions["candidate"].model_dump()},
     }
     results = {
@@ -339,28 +424,80 @@ def main() -> int:
         "aggregates": aggregates,
         "gate": gate,
         "total_cost_usd": round(gateway.cost, 4),
+        "baseline_reused_from": args.baseline_from.name if args.baseline_from else None,
     }
     (args.out / "results.json").write_text(json.dumps(results, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     (args.out / "report.md").write_text(render(results), encoding="utf-8")
-    print(json.dumps({"passed": gate["passed"], "target_delta_pp": gate["target"]["delta_pp"], "ci95": gate["target"]["ci95_pp"], "blockers": gate["blockers"], "cost": results["total_cost_usd"]}, ensure_ascii=False))
+    print(
+        json.dumps(
+            {
+                "passed": gate["passed"],
+                "target_delta_pp": gate["target"]["delta_pp"],
+                "ci95": gate["target"]["ci95_pp"],
+                "blockers": gate["blockers"],
+                "cost": results["total_cost_usd"],
+            },
+            ensure_ascii=False,
+        )
+    )
     return 0
 
 
 def render(res: dict[str, Any]) -> str:
     g = res["gate"]
     lines = [f"# Replay {res['run']} ({res['started_at'][:10]}){' — SMOKE' if res['smoke'] else ''}", ""]
-    lines += [f"- replay set {g['replay_set']['dataset_version']} ({g['replay_set']['dataset_hash'][:8]}…), {'subset' if g['replay_set']['subset'] else 'full'}: {g['replay_set']['items']} items + {g['replay_set']['safety_items']} safety items", f"- candidate diff: `{json.dumps(g['arms']['candidate']['diff'], ensure_ascii=False)}`", f"- cost {res['total_cost_usd']} USD", ""]
-    lines += ["## Runs", "", "| arm | run | n | success | safety pass | p50 s | p95 s | tokens | cost | system failures |", "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |"]
+    lines += [
+        f"- replay set {g['replay_set']['dataset_version']} ({g['replay_set']['dataset_hash'][:8]}…), {'subset' if g['replay_set']['subset'] else 'full'}: {g['replay_set']['items']} items + {g['replay_set']['safety_items']} safety items",
+        f"- candidate diff: `{json.dumps(g['arms']['candidate']['diff'], ensure_ascii=False)}`",
+        f"- cost {res['total_cost_usd']} USD",
+        "",
+    ]
+    if res.get("baseline_reused_from"):
+        lines.insert(
+            -1,
+            f"- baseline arm reused from `{res['baseline_reused_from']}` (same replay set and released state); cost above is the candidate arm only",
+        )
+    lines += [
+        "## Runs",
+        "",
+        "| arm | run | n | success | safety pass | p50 s | p95 s | tokens | cost | system failures |",
+        "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
+    ]
     for arm, runs in res["aggregates"].items():
         for a in runs:
-            lines.append(f"| {arm} | {a['run']} | {a['n']} | {a['success_rate']} | {a['safety_pass_rate']} | {a['latency_p50_s']} | {a['latency_p95_s']} | {a['tokens']} | {a['cost_usd']} | {a['system_failures']} |")
+            lines.append(
+                f"| {arm} | {a['run']} | {a['n']} | {a['success_rate']} | {a['safety_pass_rate']} | {a['latency_p50_s']} | {a['latency_p95_s']} | {a['tokens']} | {a['cost_usd']} | {a['system_failures']} |"
+            )
     t = g["target"]
-    lines += ["", "## Gate", "", f"- target: baseline {t['baseline']} → candidate {t['candidate']}, Δ {t['delta_pp']} pp (95% CI {t['ci95_pp']}), threshold +{g['thresholds']['target_min_pp']} pp → {'✓' if t['passes'] else '✗'}", f"- reliability: {g['reliability']}", f"- safety complete: {g['safety']['complete']}", f"- **passed: {g['passed']}**" + (f" — blockers: {g['blockers']}" if g["blockers"] else ""), "", "### Non-target slices (Δ pp; < 30 items diagnostic only)", "", "| slice | n | baseline | candidate | Δ pp | diagnostic | blocks |", "| --- | ---: | ---: | ---: | ---: | --- | --- |"]
+    lines += [
+        "",
+        "## Gate",
+        "",
+        f"- target: baseline {t['baseline']} → candidate {t['candidate']}, Δ {t['delta_pp']} pp (95% CI {t['ci95_pp']}), threshold +{g['thresholds']['target_min_pp']} pp → {'✓' if t['passes'] else '✗'}",
+        f"- reliability: {g['reliability']}",
+        f"- safety complete: {g['safety']['complete']}",
+        f"- **passed: {g['passed']}**" + (f" — blockers: {g['blockers']}" if g["blockers"] else ""),
+        "",
+        "### Non-target slices (Δ pp; < 30 items diagnostic only)",
+        "",
+        "| slice | n | baseline | candidate | Δ pp | diagnostic | blocks |",
+        "| --- | ---: | ---: | ---: | ---: | --- | --- |",
+    ]
     for s in g["non_target"]:
-        lines.append(f"| {s['name']} | {s['n']} | {s['baseline']} | {s['candidate']} | {s['delta_pp']} | {'yes' if s['diagnostic_only'] else ''} | {'✗' if s['blocks'] else ''} |")
-    lines += ["", "### Safety (worst run per category)", "", "| category | n | baseline worst | candidate worst | blocks |", "| --- | ---: | ---: | ---: | --- |"]
+        lines.append(
+            f"| {s['name']} | {s['n']} | {s['baseline']} | {s['candidate']} | {s['delta_pp']} | {'yes' if s['diagnostic_only'] else ''} | {'✗' if s['blocks'] else ''} |"
+        )
+    lines += [
+        "",
+        "### Safety (worst run per category)",
+        "",
+        "| category | n | baseline worst | candidate worst | blocks |",
+        "| --- | ---: | ---: | ---: | --- |",
+    ]
     for s in g["safety"]["categories"]:
-        lines.append(f"| {s['category']} | {s['n']} | {s['baseline_worst']} | {s['candidate_worst']} | {'✗' if s['blocks'] else ''} |")
+        lines.append(
+            f"| {s['category']} | {s['n']} | {s['baseline_worst']} | {s['candidate_worst']} | {'✗' if s['blocks'] else ''} |"
+        )
     return "\n".join(lines) + "\n"
 
 
