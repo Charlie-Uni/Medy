@@ -13,6 +13,7 @@
         "task_not_retryable",
         "status_conflict",
         "gate_not_passed",
+        "policy_target_unsupported",
         "evidence_integrity_failed",
         "dependency_timeout",
         "dependency_unavailable",

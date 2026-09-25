@@ -7,7 +7,8 @@ import argparse
 import sys
 from datetime import date
 
-from medops.api.runtime import authenticator_from_settings
+from medops.api.runtime import authenticator_from_settings, open_connection
+from medops.application.policy_loader import ReleasedPolicySet, load_released
 from medops.core.config import AppEnv, Settings, safe_config_errors
 from medops.core.logging import configure_logging, get_logger
 from medops.core.telemetry import configure_telemetry
@@ -17,7 +18,14 @@ from medops.domain.identity import UserContext
 from medops.mcp.server import McpProductionRuntime, build_server
 
 
-def _searcher_factory(device: str):
+def _released_policies(settings: Settings) -> ReleasedPolicySet:
+    """INV-HAR-06: the MCP process applies the released pointers (read-only role), the same set the API applies."""
+    assert settings.database_readonly_url is not None
+    with open_connection(settings.database_readonly_url.get_secret_value(), settings) as conn, conn.transaction():
+        return load_released(conn)
+
+
+def _searcher_factory(device: str, released: ReleasedPolicySet):
     from medops.harness.retrieval_port import ProductionRetrieval, RetrievalRequest
     from medops.retrieval.pinned import PinnedEmbedding, PinnedReranker, PinnedThread
     from medops.retrieval.production import (
@@ -32,7 +40,11 @@ def _searcher_factory(device: str):
 
     pinned = PinnedThread(120.0)
     embedding = PinnedEmbedding(pinned.call(lambda: BgeM3EmbeddingProvider(device=device)), pinned)
-    reranker = PinnedReranker(pinned.call(lambda: BgeRerankerV2M3(device=device, output=RERANK_OUTPUT)), pinned)
+    # the same released retrieval policy the API applies (M4-03): MCP search and /v1/ask must not diverge
+    reranker = PinnedReranker(
+        pinned.call(lambda: BgeRerankerV2M3(device=device, output=released.rerank_output(RERANK_OUTPUT))), pinned
+    )
+    hybrid = released.hybrid_config(production_hybrid_config())
 
     def factory(conn, user: UserContext):
         from contextlib import contextmanager
@@ -47,7 +59,7 @@ def _searcher_factory(device: str):
                 lexical_factory=lambda c: production_lexical_retriever(c, as_of=as_of),
                 vector_factory=lambda c: production_vector_retriever(c, embedding, as_of=as_of),
                 reranker=reranker,
-                config=production_hybrid_config(),
+                config=hybrid,
                 lexical_versions=production_lexical_versions(),
             )
             outcome = retrieval.retrieve(
@@ -106,7 +118,7 @@ def main(argv: list[str] | None = None) -> int:
             dev_identity=dev,
             readonly_dsn=settings.database_readonly_url.get_secret_value(),
             app_dsn_for_directory=settings.database_url.get_secret_value(),
-            searcher_factory=_searcher_factory(args.device),
+            searcher_factory=_searcher_factory(args.device, _released_policies(settings)),
         )
         log.info("mcp stdio (dev) starting", extra={"dept": args.dev_dept})
         build_server(runtime).run("stdio")
@@ -117,7 +129,7 @@ def main(argv: list[str] | None = None) -> int:
         dev_identity=None,
         readonly_dsn=settings.database_readonly_url.get_secret_value(),
         app_dsn_for_directory=settings.database_url.get_secret_value(),
-        searcher_factory=_searcher_factory(args.device),
+        searcher_factory=_searcher_factory(args.device, _released_policies(settings)),
     )
     server = build_server(runtime, issuer_url=settings.oidc_issuer, resource_url=f"http://{args.host}:{args.port}/mcp")
     log.info("mcp streamable-http starting", extra={"host": args.host, "port": args.port})

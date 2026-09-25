@@ -5,6 +5,7 @@ import sys
 
 import pytest
 
+from medops.application.policy_loader import ReleasedPolicySet
 from medops.mcp import serve as serve_mod
 
 
@@ -34,7 +35,8 @@ def test_stdio_transport_logs_to_stderr_and_runs_the_server(_env, monkeypatch):
     server = _Server()
     monkeypatch.setattr(serve_mod, "configure_logging", lambda level, stream=None: seen.setdefault("stream", stream))
     monkeypatch.setattr(serve_mod, "configure_telemetry", lambda **kw: None)
-    monkeypatch.setattr(serve_mod, "_searcher_factory", lambda device: object())
+    monkeypatch.setattr(serve_mod, "_searcher_factory", lambda device, released: object())
+    monkeypatch.setattr(serve_mod, "_released_policies", lambda settings: ReleasedPolicySet.empty())
     monkeypatch.setattr(serve_mod, "McpProductionRuntime", lambda **kw: seen.setdefault("runtime", kw))
     monkeypatch.setattr(serve_mod, "build_server", lambda runtime, **kw: server)
     assert serve_mod.main(["--transport", "stdio", "--dev-dept", "MA"]) == 0

@@ -1,0 +1,176 @@
+"""Released policies as production reads them (M4-03, record 80; INV-HAR-06).
+
+Production never reads the repository's latest prompt or parameters as *the* policy: at process start the runtime
+loads the `released_policies` pointers (switched atomically by release / rollback, record 75) and applies the
+structured diffs it knows how to apply. The repository constants are the bootstrap ("released v0") and stay in force
+for every target without a released pointer. Whatever is applied shows up in the trace versions: `policy_version`
+gains the released policy ids, a prompt override changes `model_config_version`, a retrieval override changes the
+composite `retrieval_version` (baseline 3.6: only the composite enters cache keys).
+
+Targets this build can apply (a release of anything else is refused with `policy_target_unsupported`):
+
+| kind             | name            | diff                                                                  |
+| ---------------- | --------------- | --------------------------------------------------------------------- |
+| retrieval_params | hybrid          | `{k_lexical|k_vector|rrf_k|limit|rerank_output: {"from": x, "to": y}}` |
+| prompt           | answer_system   | `{"text": "...", "text_sha256": "..."}` — the answer node's system prompt |
+"""
+
+from __future__ import annotations
+
+import hashlib
+from collections.abc import Mapping
+from dataclasses import dataclass, field
+from typing import Any
+
+from medops.domain.state import MAX_EVIDENCE
+from medops.retrieval.hybrid import HybridConfig
+
+SUPPORTED_RELEASE_TARGETS: frozenset[tuple[str, str]] = frozenset(
+    {("retrieval_params", "hybrid"), ("prompt", "answer_system")}
+)
+RETRIEVAL_PARAM_KEYS = ("k_lexical", "k_vector", "rrf_k", "limit", "rerank_output")
+
+
+class PolicyDiffError(ValueError):
+    """A released or proposed diff that this build cannot apply."""
+
+
+@dataclass(frozen=True)
+class ReleasedPolicy:
+    policy_id: str
+    kind: str
+    name: str
+    version: str
+    diff: Mapping[str, Any]
+
+
+@dataclass(frozen=True)
+class ReleasedPolicySet:
+    policies: tuple[ReleasedPolicy, ...] = field(default_factory=tuple)
+
+    @classmethod
+    def empty(cls) -> ReleasedPolicySet:
+        return cls(())
+
+    def get(self, kind: str, name: str) -> ReleasedPolicy | None:
+        for p in self.policies:
+            if p.kind == kind and p.name == name:
+                return p
+        return None
+
+    # -- retrieval
+    def hybrid_config(self, base: HybridConfig) -> HybridConfig:
+        p = self.get("retrieval_params", "hybrid")
+        return apply_retrieval_diff(base, p.diff) if p else base
+
+    def rerank_output(self, base: int) -> int:
+        p = self.get("retrieval_params", "hybrid")
+        if p is None or "rerank_output" not in p.diff:
+            return base
+        value = int(_to(p.diff["rerank_output"]))
+        if not 1 <= value <= MAX_EVIDENCE:
+            raise PolicyDiffError(f"rerank_output must be within 1..{MAX_EVIDENCE}")
+        return value
+
+    def retrieval_overridden(self) -> bool:
+        return self.get("retrieval_params", "hybrid") is not None
+
+    # -- prompt
+    def answer_system(self, base: str) -> str:
+        p = self.get("prompt", "answer_system")
+        if p is None:
+            return base
+        text = p.diff.get("text")
+        if not isinstance(text, str) or not text.strip():
+            raise PolicyDiffError("prompt/answer_system diff needs a non-empty `text`")
+        digest = hashlib.sha256(text.encode("utf-8")).hexdigest()
+        if p.diff.get("text_sha256") not in (None, digest):
+            raise PolicyDiffError("prompt/answer_system text does not match its recorded sha256")
+        return text
+
+    # -- versions
+    def policy_version(self, base: str) -> str:
+        if not self.policies:
+            return base
+        return base + "+rel:" + ",".join(sorted(p.policy_id.replace("-", "")[:8] for p in self.policies))
+
+    def model_config_suffix(self) -> str:
+        p = self.get("prompt", "answer_system")
+        if p is None:
+            return ""
+        text = str(p.diff.get("text", ""))
+        return ";prompt=" + hashlib.sha256(text.encode("utf-8")).hexdigest()[:8]
+
+
+def _to(entry: Any) -> Any:
+    if isinstance(entry, Mapping) and "to" in entry:
+        return entry["to"]
+    raise PolicyDiffError("each retrieval parameter entry is {'from': x, 'to': y}")
+
+
+def apply_retrieval_diff(base: HybridConfig, diff: Mapping[str, Any]) -> HybridConfig:
+    unknown = set(diff) - set(RETRIEVAL_PARAM_KEYS)
+    if unknown:
+        raise PolicyDiffError(f"unknown retrieval parameters: {sorted(unknown)}")
+    k_lexical = int(_to(diff["k_lexical"])) if "k_lexical" in diff else base.k_lexical
+    k_vector = int(_to(diff["k_vector"])) if "k_vector" in diff else base.k_vector
+    limit = int(_to(diff["limit"])) if "limit" in diff else base.limit
+    rrf_k = float(_to(diff["rrf_k"])) if "rrf_k" in diff else base.rrf_k
+    try:  # HybridConfig enforces the baseline caps (channel k and limit within 1..20)
+        return HybridConfig(k_lexical=k_lexical, k_vector=k_vector, rrf_k=rrf_k, limit=limit)
+    except ValueError as exc:
+        raise PolicyDiffError(str(exc)) from exc
+
+
+def validate_diff(kind: str, name: str, diff: Mapping[str, Any], *, base: HybridConfig | None = None) -> None:
+    """Shape check shared by Adapt (before a candidate is written) and the loader (before a release is applied)."""
+    if (kind, name) == ("retrieval_params", "hybrid"):
+        cfg = apply_retrieval_diff(base or HybridConfig(), diff)
+        if "rerank_output" in diff:
+            ReleasedPolicySet((ReleasedPolicy("x", kind, name, "v", diff),)).rerank_output(MAX_EVIDENCE)
+        if cfg == (base or HybridConfig()) and "rerank_output" not in diff:
+            raise PolicyDiffError("the diff changes nothing")
+        return
+    if (kind, name) == ("prompt", "answer_system"):
+        ReleasedPolicySet((ReleasedPolicy("x", kind, name, "v", diff),)).answer_system("")
+        if len(str(diff.get("text"))) > 6000:
+            raise PolicyDiffError("prompt text longer than 6000 characters")
+        return
+    if kind == "rule":
+        add = diff.get("add")
+        if (
+            not isinstance(add, list)
+            or not add
+            or len(add) > 20
+            or not all(isinstance(x, str) and 0 < len(x) <= 300 for x in add)
+        ):
+            raise PolicyDiffError(
+                "rule diffs are additive: {'add': [pattern, ...]} (1..20 patterns, each <= 300 chars)"
+            )
+        import re
+
+        for pattern in add:
+            try:
+                re.compile(pattern)
+            except re.error as exc:
+                raise PolicyDiffError(f"pattern does not compile: {exc}") from exc
+        return
+    if kind == "skill":
+        if not isinstance(diff.get("params"), Mapping) or not diff["params"]:
+            raise PolicyDiffError("skill diffs carry {'params': {...}}")
+        return
+    raise PolicyDiffError(f"unknown policy target {kind}/{name}")
+
+
+def load_released(conn: Any) -> ReleasedPolicySet:
+    rows = conn.execute(
+        "select p.policy_id::text, p.kind, p.name, p.version, p.diff from released_policies r "
+        "join policies p on p.policy_id = r.policy_id order by p.kind, p.name"
+    ).fetchall()
+    policies = tuple(
+        ReleasedPolicy(policy_id=r[0], kind=r[1], name=r[2], version=r[3], diff=dict(r[4] or {})) for r in rows
+    )
+    for p in policies:
+        if (p.kind, p.name) in SUPPORTED_RELEASE_TARGETS:
+            validate_diff(p.kind, p.name, p.diff)
+    return ReleasedPolicySet(policies)

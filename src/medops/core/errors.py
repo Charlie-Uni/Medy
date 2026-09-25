@@ -35,6 +35,7 @@ class ErrorCode(StrEnum):
     task_not_retryable = "task_not_retryable"  # retry requested for a task that is not failed+retryable
     status_conflict = "status_conflict"  # illegal document / policy state transition (M3-03)
     gate_not_passed = "gate_not_passed"  # release requested without a passing gate report (M3-03 / M4-08)
+    policy_target_unsupported = "policy_target_unsupported"  # the runtime cannot apply this kind/name (M4-03)
     evidence_integrity_failed = "evidence_integrity_failed"
     # infrastructure
     dependency_timeout = "dependency_timeout"
@@ -62,6 +63,7 @@ CATEGORY: Final[dict[ErrorCode, ErrorCategory]] = {
     ErrorCode.task_not_retryable: ErrorCategory.domain,
     ErrorCode.status_conflict: ErrorCategory.domain,
     ErrorCode.gate_not_passed: ErrorCategory.domain,
+    ErrorCode.policy_target_unsupported: ErrorCategory.domain,
     ErrorCode.evidence_integrity_failed: ErrorCategory.domain,
     ErrorCode.dependency_timeout: ErrorCategory.infrastructure,
     ErrorCode.dependency_unavailable: ErrorCategory.infrastructure,
@@ -81,6 +83,7 @@ HTTP_STATUS: Final[dict[ErrorCode, int]] = {
     ErrorCode.task_not_retryable: 409,
     ErrorCode.status_conflict: 409,
     ErrorCode.gate_not_passed: 409,
+    ErrorCode.policy_target_unsupported: 409,
     ErrorCode.evidence_integrity_failed: 500,
     ErrorCode.dependency_timeout: 504,
     ErrorCode.dependency_unavailable: 503,

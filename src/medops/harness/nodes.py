@@ -112,6 +112,7 @@ class HarnessDeps:
     as_of: date | None = None
     answer_max_output_tokens: int = 800
     executions: ExecutionStore | None = None  # M2-03 operation-key ledger; None = no persistence (unit tests)
+    answer_system: str = ANSWER_SYSTEM  # released prompt policy may override (M4-03); the trace's model config says so
 
 
 class HarnessState(TypedDict):
@@ -448,7 +449,7 @@ def _answer_request(state: AgentState, deps: HarnessDeps, *, max_output_tokens: 
     return ModelRequest(
         purpose="answer",
         model_id=deps.answer_model_id,
-        messages=(Message(role="system", content=ANSWER_SYSTEM), Message(role="user", content=user)),
+        messages=(Message(role="system", content=deps.answer_system), Message(role="user", content=user)),
         max_output_tokens=max_output_tokens or deps.answer_max_output_tokens,
         json_schema=ANSWER_SCHEMA,
         timeout_s=min(deps.specs["answer"].timeout_s, 120),

@@ -19,7 +19,7 @@
 
 决策人要求每个阶段汇报"离总目标百分之多少"。口径固定为：[任务知识对照](TASK_KNOWLEDGE_MAP.md) 中 79 个 P0 任务行的状态加权和（已实现 1、部分 0.5、阻塞与待做 0）除以 79；另报除以 99 个基线复选项的数值。状态只随实现记录的证据变更，基线勾选只依据完整证据更新，最终验收仍是第 11 节九条门禁的二元结果。`tests/unit/docs/test_baseline_roadmap_consistency.py` 重算并比对下面这行数字：
 
-P0 加权进度：63.3%（50.0/79）；按 99 项计 50.5%。分项：M0 10/11、M1 16.5/21、M2 11/16、M3 10.5/13、M4 2/10、M5 0/8。
+P0 加权进度：67.1%（53.0/79）；按 99 项计 53.5%。分项：M0 10/11、M1 16.5/21、M2 11/16、M3 10.5/13、M4 5/10、M5 0/8。
 
 ### 状态与计数
 
@@ -186,10 +186,10 @@ P0 加权进度：63.3%（50.0/79）；按 99 项计 50.5%。分项：M0 10/11�
 | ID | 状态 | 要做的工作与验收 |
 | --- | --- | --- |
 | M4-01 | 已实现（迁移 0016 `trace_signals` 视图把反馈 / 升级与人工结论 / Verifier 失败 / 安全标记 / 回放差异拼到 Trace；`medops.loop.observe` 按窄规则建 `bad_cases`（幂等、快照不可改、人工修正列只有管理角色能写）；Loop 登录用户只读信号、读写案例，真实用户下证明无 released 写路径；连续追问信号等会话落地，记录 79） | 用户反馈、Verifier、Safety、升级信号关联原 Trace；Execute/Observe 有统一数据来源 |
-| M4-02 | 待做 | Reflect 对 bad case 分为 retrieval / intent / generation / knowledge_gap / safety，带置信与人工修正入口 |
-| M4-03 | 待做 | Adapt 只生成 Prompt/Rule/Skill/检索参数候选 diff；线上只读 released，生产来源不是仓库最新 Prompt 明文 |
+| M4-02 | 已实现（`medops.loop.reflect` 规则归因五类、固定置信、`attribution_note` 写明依据；人工修正 = `human_override`（管理角色）+ `reflect correct`，覆盖优先；模型遍待加，记录 80） | Reflect 对 bad case 分为 retrieval / intent / generation / knowledge_gap / safety，带置信与人工修正入口 |
+| M4-03 | 已实现（`medops.loop.adapt`：分簇提案 + 形状校验 + INV-EVAL-01 隔离 + 经 Loop 角色写 candidate；`policy_loader` 在 API / MCP 启动时应用 released 的 `retrieval_params/hybrid` 与 `prompt/answer_system`，版本集随之变化；发布守卫 `policy_target_unsupported`；rule / skill 的运行时叠加待做，记录 80） | Adapt 只生成 Prompt/Rule/Skill/检索参数候选 diff；线上只读 released，生产来源不是仓库最新 Prompt 明文 |
 | M4-04 | 待做 | Loop 数据库角色只能写候选，无 released 写权限；用直接数据库操作的权限测试证明 |
-| M4-05 | 待做 | knowledge_gap 生成补文档任务，不自动生成或补写医学事实 |
+| M4-05 | 已实现（迁移 0017 `document_requests`：问题 + 缺口描述，无内容字段；Loop 只建、管理角色处理、关闭即终态，记录 80） | knowledge_gap 生成补文档任务，不自动生成或补写医学事实 |
 | M4-06 | 已实现（`evals/replay/replay-v1` 冻结：主集 v2 运行导出 614 项 good 496 / bad 118，安全回归集 170 项单列，筛选子集 200 项无 derived、bad 30%；manifest 标注运行导出与临时来源，哈希校验进 `make check`；隔离规则写明、执行随 M4-03，记录 79） | >=200 条独立 good/bad 历史 Trace 的冻结回放集，另跑安全回归集；不以 3 次重复运行充当 600 条独立样本 |
 | M4-07 | 待做 | 3 次独立运行、配对比较、bootstrap 95% CI；报告目标/非目标/安全/延迟/Token/成本，<30 样本切片标记不足；冻结评测集不进入候选生成上下文 |
 | M4-08 | 待做 | 自动门禁：目标点估计 >=+5pp、非目标下降 <=1pp、安全不下降；安全取三次最差值，CI 如实报告不事后改阈值 |

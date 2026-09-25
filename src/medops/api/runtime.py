@@ -19,13 +19,14 @@ from medops.api.contracts import AskRequest
 from medops.application.audit import TraceStore
 from medops.application.metrics import MetricsSource, PgMetricsSource
 from medops.application.payloads import PayloadReader, PayloadWriter
+from medops.application.policy_loader import ReleasedPolicySet, load_released
 from medops.application.tasks import TaskStore
 from medops.core.config import Settings
 from medops.core.errors import ErrorCode, InfrastructureError
 from medops.domain.identity import UserContext
 from medops.domain.state import VersionSet
 from medops.harness.executions import PgExecutionStore
-from medops.harness.nodes import HarnessDeps
+from medops.harness.nodes import ANSWER_SYSTEM, HarnessDeps
 from medops.harness.production import PRODUCTION_ANSWER_MODEL, PRODUCTION_JUDGE_MODEL, production_model_config_version
 from medops.harness.retrieval_port import ProductionRetrieval
 from medops.infrastructure.db.audit import PgTraceStore
@@ -40,6 +41,7 @@ from medops.infrastructure.llm.meter import MeteredGateway
 from medops.infrastructure.llm.openai_gateway import OpenAIModelGateway
 from medops.ingestion import acl as acl_ops
 from medops.ingestion import activate as activation
+from medops.retrieval.hybrid import HybridConfig
 from medops.retrieval.pinned import PinnedEmbedding, PinnedReranker, PinnedThread
 from medops.retrieval.production import (
     PRODUCTION_RETRIEVAL_VERSION,
@@ -47,8 +49,10 @@ from medops.retrieval.production import (
     production_hybrid_config,
     production_lexical_retriever,
     production_lexical_versions,
+    production_retrieval_inputs,
     production_vector_retriever,
 )
+from medops.retrieval.versioning import compute_retrieval_version
 from medops.skills.catalog import default_registry
 from medops.skills.production import doc_type_lookup, evidence_lookup
 from medops.skills.registry import SkillContext
@@ -81,6 +85,22 @@ def authenticator_from_settings(settings: Settings) -> Authenticator:
     )
 
 
+def open_connection(dsn: str, settings: Any) -> psycopg.Connection[Any]:
+    """Every runtime connection fails fast (record 78): a connect timeout and a per-statement timeout, and an
+    unreachable database is `dependency_unavailable` (503, retryable) rather than a request that hangs until the
+    client gives up."""
+    try:
+        return psycopg.connect(
+            dsn,
+            connect_timeout=settings.db_connect_timeout_s,
+            options=f"-c statement_timeout={settings.db_statement_timeout_ms}",
+        )
+    except psycopg.OperationalError as exc:
+        raise InfrastructureError(
+            ErrorCode.dependency_unavailable, detail=f"database: {type(exc).__name__}", retryable=True
+        ) from None
+
+
 @dataclass
 class ProductionRuntime:
     """Built once per process; `connection()` opens a fresh application-role connection per request."""
@@ -96,6 +116,8 @@ class ProductionRuntime:
     _admin_dsn: str | None = field(default=None, repr=False)
     _restricted_dsn: str | None = field(default=None, repr=False)
     _key_provider: Any = field(default=None, repr=False)
+    policies: ReleasedPolicySet = field(default_factory=ReleasedPolicySet.empty)  # what production applies (M4-03)
+    _hybrid: HybridConfig | None = field(default=None, repr=False)
 
     @classmethod
     def from_settings(
@@ -104,20 +126,32 @@ class ProductionRuntime:
         from medops.retrieval.rerank import BgeRerankerV2M3
         from medops.retrieval.vector.embedding import BgeM3EmbeddingProvider
 
+        dsn = settings.database_url.get_secret_value()
+        with open_connection(dsn, settings) as conn, conn.transaction():
+            released = load_released(
+                conn
+            )  # INV-HAR-06: production applies the released pointers, never the repo's latest text
+        hybrid = released.hybrid_config(production_hybrid_config())
+        rerank_output = released.rerank_output(RERANK_OUTPUT)
         pinned = PinnedThread(pinned_timeout_s)
         embedding = PinnedEmbedding(pinned.call(lambda: BgeM3EmbeddingProvider(device=device)), pinned)
-        reranker = PinnedReranker(pinned.call(lambda: BgeRerankerV2M3(device=device, output=RERANK_OUTPUT)), pinned)
+        reranker = PinnedReranker(pinned.call(lambda: BgeRerankerV2M3(device=device, output=rerank_output)), pinned)
         gateway = BudgetedGateway(
             OpenAIModelGateway.from_settings(settings),
             prices=PriceTable(OPENAI_PRICES),
             ledger=InMemorySpendLedger(),
             monthly_cap_usd=settings.llm_monthly_budget_usd,
         )
+        retrieval_version = (
+            compute_retrieval_version(production_retrieval_inputs(hybrid, rerank_output=rerank_output))
+            if released.retrieval_overridden()
+            else PRODUCTION_RETRIEVAL_VERSION
+        )
         versions = VersionSet(
-            policy_version=POLICY_VERSION,
-            retrieval_version=PRODUCTION_RETRIEVAL_VERSION,
+            policy_version=released.policy_version(POLICY_VERSION),
+            retrieval_version=retrieval_version,
             skill_version_set=default_registry().version_set(),
-            model_config_version=production_model_config_version(),
+            model_config_version=production_model_config_version() + released.model_config_suffix(),
         )
         runtime = cls(
             settings=settings,
@@ -127,7 +161,9 @@ class ProductionRuntime:
             reranker=reranker,
             versions=versions,
         )
-        runtime._dsn = settings.database_url.get_secret_value()
+        runtime._dsn = dsn
+        runtime.policies = released
+        runtime._hybrid = hybrid
         runtime._admin_dsn = settings.database_admin_url.get_secret_value() if settings.database_admin_url else None
         runtime._restricted_dsn = (
             settings.database_restricted_url.get_secret_value() if settings.database_restricted_url else None
@@ -139,19 +175,7 @@ class ProductionRuntime:
         return runtime
 
     def _open(self, dsn: str) -> psycopg.Connection[Any]:
-        """Every runtime connection fails fast (record 78): a connect timeout and a per-statement timeout, and an
-        unreachable database is `dependency_unavailable` (503, retryable) rather than a request that hangs until
-        the client gives up."""
-        try:
-            return psycopg.connect(
-                dsn,
-                connect_timeout=self.settings.db_connect_timeout_s,
-                options=f"-c statement_timeout={self.settings.db_statement_timeout_ms}",
-            )
-        except psycopg.OperationalError as exc:
-            raise InfrastructureError(
-                ErrorCode.dependency_unavailable, detail=f"database: {type(exc).__name__}", retryable=True
-            ) from None
+        return open_connection(dsn, self.settings)
 
     @contextmanager
     def connection(self) -> Iterator[psycopg.Connection[Any]]:
@@ -222,11 +246,12 @@ class ProductionRuntime:
             lexical_factory=lambda c: production_lexical_retriever(c, as_of=as_of),
             vector_factory=lambda c: production_vector_retriever(c, self.embedding, as_of=as_of),
             reranker=self.reranker,
-            config=production_hybrid_config(),
+            config=self._hybrid or production_hybrid_config(),
             lexical_versions=production_lexical_versions(),
         )
         return HarnessDeps(
             retrieval=retrieval,
+            answer_system=self.policies.answer_system(ANSWER_SYSTEM),
             gateway=MeteredGateway(self.gateway),  # per-request calls/tokens/cost for the trace
             answer_model_id=PRODUCTION_ANSWER_MODEL,
             judge_model_id=PRODUCTION_JUDGE_MODEL,

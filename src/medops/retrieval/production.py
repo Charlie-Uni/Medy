@@ -83,14 +83,18 @@ def production_hybrid_config() -> HybridConfig:
     return HybridConfig(k_lexical=20, k_vector=20, rrf_k=60.0, limit=20)
 
 
-def production_retrieval_inputs() -> RetrievalVersionInputs:
-    config = production_hybrid_config()
+def production_retrieval_inputs(
+    config: HybridConfig | None = None, *, rerank_output: int = RERANK_OUTPUT
+) -> RetrievalVersionInputs:
+    """Defaults are the pinned production values; a released retrieval policy (M4-03) passes its effective config so the
+    composite version changes with it (baseline 3.6)."""
+    config = config or production_hybrid_config()
     return RetrievalVersionInputs.from_lexical(
         production_lexical_versions(),
         embedding_version=EMBEDDING_VERSION,
         rrf_params=config.rrf_params(),
         rerank_params=PRODUCTION_RERANKER_SPEC.rerank_params(),
-        candidate_limits={**config.candidate_limits(), "rerank_output": RERANK_OUTPUT},
+        candidate_limits={**config.candidate_limits(), "rerank_output": rerank_output},
     )
 
 

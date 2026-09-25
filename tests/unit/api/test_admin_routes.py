@@ -115,15 +115,23 @@ class MemoryPolicies:
         self.pointer: dict[tuple[str, str], str] = {}
         self.log: list[tuple[str, str, str | None]] = []
 
-    def add(self, *, created_by: str, gate: bool | None = True, status: str = "candidate") -> str:
+    def add(
+        self,
+        *,
+        created_by: str,
+        gate: bool | None = True,
+        status: str = "candidate",
+        kind: str = "retrieval_params",
+        name: str = "hybrid",
+    ) -> str:
         pid = str(uuid.uuid4())
         self.rows[pid] = {
             "policy_id": pid,
-            "kind": "rule",
-            "name": "intent_rules",
+            "kind": kind,
+            "name": name,
             "version": "v4",
             "status": status,
-            "diff": {"add": ["pattern"]},
+            "diff": {"rrf_k": {"from": 60, "to": 40}} if kind == "retrieval_params" else {"add": ["pattern"]},
             "evidence": {"gate": {"passed": gate}} if gate is not None else {},
             "created_by": created_by,
             "created_at": NOW,
@@ -359,3 +367,23 @@ def test_policy_lifecycle_four_eyes_gate_release_and_rollback():
         c.post(f"/admin/policies/{pid}/rollback", json={"reason": "again"}, headers=auth("admin-1")).status_code == 409
     )
     assert rt.policies.log == [("release", pid, None), ("rollback", pid, None)]
+
+
+def test_release_refuses_targets_the_runtime_cannot_apply():
+    """M4-03: only kinds/names the policy loader applies may be released; a rule candidate can be approved but not
+    released until the runtime learns to apply rule diffs (policy_target_unsupported, 409)."""
+    c, rt = make()
+    pid = rt.policies.add(created_by=pseudonym("approver-1", PSEUDONYM_KEY), kind="rule", name="intent_rules")
+    assert (
+        c.post(
+            f"/admin/policies/{pid}/approve", json={"decision": "approve", "reason": "ok"}, headers=auth("approver-2")
+        ).status_code
+        == 200
+    )
+    r = c.post(f"/admin/policies/{pid}/release", json={"canary_percent": 5, "reason": "r"}, headers=auth("admin-1"))
+    assert (
+        r.status_code == 409
+        and r.json()["code"] == "policy_target_unsupported"
+        and "retrieval_params/hybrid" in r.json()["message"]
+    )
+    assert rt.policies.rows[pid]["status"] == "approved" and not rt.policies.pointer

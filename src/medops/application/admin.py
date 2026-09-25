@@ -27,6 +27,7 @@ from medops.api.contracts import (
     PolicyRollbackRequest,
     PolicyStatus,
 )
+from medops.application.policy_loader import SUPPORTED_RELEASE_TARGETS
 from medops.core.canonical import canonical_hash
 from medops.core.errors import BusinessError, ErrorCode
 from medops.domain.identity import UserContext
@@ -229,6 +230,12 @@ class PolicyService:
             )
         if not gate_passed(current.evidence):
             raise BusinessError(ErrorCode.gate_not_passed, "release requires a passing gate report in evidence.gate")
+        if (current.kind.value, current.name) not in SUPPORTED_RELEASE_TARGETS:
+            raise BusinessError(
+                ErrorCode.policy_target_unsupported,
+                f"the runtime cannot apply {current.kind.value}/{current.name}; releasable targets: "
+                + ", ".join(sorted(f"{k}/{n}" for k, n in SUPPORTED_RELEASE_TARGETS)),
+            )
         self.store.release(
             policy_id,
             kind=current.kind.value,
