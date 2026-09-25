@@ -1,0 +1,121 @@
+{
+ "dataset_id": "loop_replay",
+ "dataset_version": "replay-v1",
+ "spec_version": "spec-r1 v0.1",
+ "status": "frozen",
+ "provisional": true,
+ "provisional_reason": "both sources are provisional: main-v1-provisional awaits its second human review, the safety set awaits annotator-01",
+ "origin": "run_export_not_live_traffic",
+ "frozen_at": "2026-09-25",
+ "purpose": "M4 Loop replay set (baseline 5.8, M4-06): independent good / bad items replayed under a candidate policy; the safety items are the separate safety regression set.",
+ "sources": {
+  "main": {
+   "dataset_version": "main-v1-provisional",
+   "dataset_hash": "269be665c288e79210a255c7e2ceaadbb87ba1c088e9ce9e1ee5515e568c9699",
+   "run": "evals/harness/runs/2026-09-23-full-ask-v2",
+   "rows_sha256": "0941bef28cd7ffbbe52393b5b92c471bb1bececf15a77f39de1d3873ee56f5e0",
+   "versions": {
+    "policy_version": "policy-m2-smoke-1",
+    "retrieval_version": "90b57e4e86b4bb462fc4de58f7f7749666fb6f50a588c129bd5f9aa50585ab18",
+    "skill_version_set": [],
+    "model_config_version": "answer=gpt-6-sol;judge=gpt-6-sol;verifier-v2+support-rules-v2+polarity_only"
+   }
+  },
+  "safety": {
+   "dataset_version": "safety-v1-provisional",
+   "run": "evals/harness/runs/2026-09-24-safety-v1-draft-r2",
+   "rows_sha256": "3a9cb459e09469ec5a42e074bad4d6aa359321a13504fae289ebe3061ada8975",
+   "versions": {
+    "policy_version": "policy-m2-smoke-1",
+    "retrieval_version": "90b57e4e86b4bb462fc4de58f7f7749666fb6f50a588c129bd5f9aa50585ab18",
+    "skill_version_set": [],
+    "model_config_version": "answer=gpt-6-sol;judge=gpt-6-sol;verifier-v2+support-rules-v3+polarity_only"
+   }
+  }
+ },
+ "labels": {
+  "main": "see build_replay_set.py docstring table",
+  "safety": "good = all checks passed; bad = a check failed; not_exercised = injected chunk not retrieved (kept, not counted)"
+ },
+ "counts": {
+  "main": {
+   "items": 614,
+   "by_label": {
+    "bad": 118,
+    "good": 496
+   },
+   "by_dept": {
+    "CO": 202,
+    "MA": 133,
+    "PV": 279
+   },
+   "by_kind": {
+    "answerable": 501,
+    "conflict": 52,
+    "no_answer": 61
+   },
+   "by_language": {
+    "en": 200,
+    "mixed": 369,
+    "zh": 45
+   },
+   "by_dept_label": {
+    "CO/bad": 38,
+    "CO/good": 164,
+    "MA/bad": 24,
+    "MA/good": 109,
+    "PV/bad": 56,
+    "PV/good": 223
+   }
+  },
+  "safety": {
+   "items": 170,
+   "by_label": {
+    "good": 163,
+    "not_exercised": 7
+   },
+   "by_category": {
+    "acl_cross_dept": 30,
+    "acl_skill_scope": 10,
+    "combined": 20,
+    "high_risk": 30,
+    "injection_document": 20,
+    "injection_input": 20,
+    "numeric_trap": 10,
+    "ungrounded": 20,
+    "version_guard": 10
+   },
+   "by_dept": {
+    "CO": 52,
+    "MA": 60,
+    "PV": 58
+   },
+   "by_dept_label": {
+    "CO/good": 50,
+    "CO/not_exercised": 2,
+    "MA/good": 58,
+    "MA/not_exercised": 2,
+    "PV/good": 55,
+    "PV/not_exercised": 3
+   }
+  }
+ },
+ "independence": {
+  "distinct_queries_main": 614,
+  "derived_items_main": 200,
+  "imported_items_main": 107,
+  "statement": "one item per sample; derived (paraphrase twin) items are flagged and excluded from the screening subset; three repeated runs of the same items are never counted as more items (M4-06)"
+ },
+ "subset": {
+  "file": "subset.json",
+  "size": 200,
+  "seed": 20260925
+ },
+ "isolation": "INV-EVAL-01: replay ids, queries and gold ids never enter the Loop's candidate-generation context (Adapt); M4-03 enforces this when candidates are produced.",
+ "files": {
+  "items.jsonl": "a9bc634fa17ea918217b27853d0307922f057d8bc37492c6398cbc119d2dcbc0",
+  "safety_items.jsonl": "1570d0828a5cfcd77f659e4af444b14676213e51e62dd2dbdb74c58b4a0c2fd8",
+  "subset.json": "d6f763d3d64a67847e3531b5e94a6b24f3b3ee0b8f84f1532e6a19a070a11f54"
+ },
+ "dataset_hash": "154f576aba28f6186f7832582d6f12df8633e00b0da002f030062354f9f41b77"
+}

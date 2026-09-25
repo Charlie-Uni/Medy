@@ -31,8 +31,9 @@ GROUPS: Mapping[str, str] = {
     "readonly": "medops_readonly",
     "admin": "medops_admin_role",
     "restricted": "medops_restricted_role",  # DEC-013 payload reader; optional (skipped without a password)
+    "loop": "medops_loop_role",  # M4 Loop process: signals in, cases / candidates out; optional
 }
-OPTIONAL_GROUPS = frozenset({"restricted"})
+OPTIONAL_GROUPS = frozenset({"restricted", "loop"})
 ATTRIBUTES = "login nosuperuser nobypassrls nocreatedb nocreaterole noreplication inherit"
 
 

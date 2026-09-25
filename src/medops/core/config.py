@@ -80,6 +80,7 @@ class Settings(BaseSettings):
     # Read-only LOGIN user for the MCP server (INV-AUTH-04): the database proves the tools cannot write.
     database_readonly_url: SecretStr | None = None
     database_restricted_url: SecretStr | None = None  # restricted payload reader / retention (DEC-013)
+    database_loop_url: SecretStr | None = None  # Loop role: reads signals, writes cases and candidates only (M4)
     # every runtime connection fails fast instead of hanging when PostgreSQL is unreachable or stalled (record 78)
     db_connect_timeout_s: int = Field(default=5, ge=1, le=60)
     db_statement_timeout_ms: int = Field(default=30_000, ge=1_000, le=600_000)

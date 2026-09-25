@@ -45,6 +45,7 @@ EXPECTED_TABLES = {
     "released_policies",
     "trace_payloads",
     "payload_access_log",
+    "bad_cases",
 }
 EXPECTED_TYPES = {
     "dept",
@@ -180,7 +181,7 @@ def set_actor(conn: psycopg.Connection, actor: str = "reviewer-01", reason: str 
 
 def test_single_head_and_offline_sql_render(migrated):
     heads = ScriptDirectory.from_config(alembic_config(migrated)).get_heads()
-    assert heads == ["0015"]
+    assert heads == ["0016"]
 
 
 def test_upgrade_downgrade_upgrade_round_trip_leaves_nothing_behind(scratch_database):
@@ -190,6 +191,7 @@ def test_upgrade_downgrade_upgrade_round_trip_leaves_nothing_behind(scratch_data
     assert after_up["types"] == EXPECTED_TYPES
     assert {f for f in after_up["functions"] if f.startswith("medops_")} == {
         "medops_forbid_change",
+        "medops_bad_case_guard",  # migration 0016: Loop cases (M4-01)
         "medops_source_objects_immutable",
         "medops_documents_guard",
         "medops_documents_audit",
