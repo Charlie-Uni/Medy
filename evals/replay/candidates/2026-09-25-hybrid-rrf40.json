@@ -1,0 +1,7 @@
+{
+ "kind": "retrieval_params",
+ "name": "hybrid",
+ "diff": {"rrf_k": {"from": 60.0, "to": 40.0}},
+ "rationale": "First authored retrieval candidate for the Loop drill (record 82): a lower RRF k weights each channel's top ranks more strongly. Channel k and the fused limit are already at the baseline cap of 20, so rrf_k is the one retrieval parameter left to move without a new model. Evidence for a real candidate must cite bad_case ids; this file only exercises the runner and the gate.",
+ "evidence": {"case_ids": []}
+}

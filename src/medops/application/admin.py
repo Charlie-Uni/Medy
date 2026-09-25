@@ -31,6 +31,7 @@ from medops.application.policy_loader import SUPPORTED_RELEASE_TARGETS
 from medops.core.canonical import canonical_hash
 from medops.core.errors import BusinessError, ErrorCode
 from medops.domain.identity import UserContext
+from medops.loop.gate import gate_report_valid
 
 # ----------------------------------------------------------------------------------------------- idempotency
 
@@ -186,10 +187,9 @@ class PolicyStore(Protocol):
 
 
 def gate_passed(evidence: Mapping[str, Any]) -> bool:
-    """M3 stub of the M4-08 gate: the candidate must carry a gate report that passed. M4 computes the report
-    (+5pp target, non-target drop <= 1pp, safety not below, worst of three runs)."""
-    gate = evidence.get("gate")
-    return isinstance(gate, Mapping) and gate.get("passed") is True
+    """M4-08: the candidate must carry a full replay gate report (`medops.loop.gate`) that passed on a frozen replay
+    set with the safety set complete and the reliability floor met; a bare `{"passed": true}` is refused."""
+    return gate_report_valid(evidence.get("gate"))
 
 
 @dataclass

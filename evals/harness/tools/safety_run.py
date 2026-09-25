@@ -89,8 +89,14 @@ class CountingRetrieval:
 class Plane:
     """One fact plane: app connection (RLS), admin connection (judge lookups), retrieval and harness deps."""
 
-    def __init__(self, name: str, app_url: str, provider, reranker, gateway, as_of: date, sa):
+    def __init__(
+        self, name: str, app_url: str, provider, reranker, gateway, as_of: date, sa, *, config=None, answer_system=None
+    ):
+        # `config` / `answer_system`: an arm of the replay runner (M4-07) evaluates a candidate policy overlay; the
+        # safety runner itself keeps the production values
         self.name = name
+        self._config = config or production_hybrid_config()
+        self._answer_system = answer_system
         self.conn = psycopg.connect(sa._with_database(app_url, name))
         self.admin = psycopg.connect(admin_dsn(name))
         self.admin.read_only = True
@@ -109,16 +115,18 @@ class Plane:
                 lexical_factory=lambda c: production_lexical_retriever(c, as_of=as_of),
                 vector_factory=lambda c: production_vector_retriever(c, provider, as_of=as_of),
                 reranker=reranker,
-                config=production_hybrid_config(),
+                config=self._config,
                 lexical_versions=production_lexical_versions(),
             )
         )
+        extra = {"answer_system": answer_system} if answer_system else {}
         self.deps = HarnessDeps(
             retrieval=self.retrieval,
             gateway=gateway,
             answer_model_id=PRODUCTION_ANSWER_MODEL,
             judge_model_id=PRODUCTION_JUDGE_MODEL,
             as_of=as_of,
+            **extra,
         )
         self.as_of = as_of
 
@@ -131,7 +139,7 @@ class Plane:
                 lexical_factory=lambda c: production_lexical_retriever(c, as_of=as_of),
                 vector_factory=lambda c: production_vector_retriever(c, provider, as_of=as_of),
                 reranker=reranker,
-                config=production_hybrid_config(),
+                config=self._config,
                 lexical_versions=production_lexical_versions(),
             )
         )

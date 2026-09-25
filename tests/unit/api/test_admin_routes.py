@@ -13,6 +13,7 @@ from fastapi.testclient import TestClient
 from medops.api.app import create_app
 from medops.api.auth import Principal, StaticDirectory, pseudonym
 from medops.domain.common import Dept
+from medops.loop.gate import passing_gate_report
 from tests.unit.api._auth_fixtures import PSEUDONYM_KEY
 from tests.unit.api.test_ask_route import ISSUER_OBJ, FakeRuntime
 from tests.unit.harness.test_run_ask import LABEL, FakeRetrieval
@@ -132,7 +133,7 @@ class MemoryPolicies:
             "version": "v4",
             "status": status,
             "diff": {"rrf_k": {"from": 60, "to": 40}} if kind == "retrieval_params" else {"add": ["pattern"]},
-            "evidence": {"gate": {"passed": gate}} if gate is not None else {},
+            "evidence": {"gate": passing_gate_report() if gate else {"passed": False}} if gate is not None else {},
             "created_by": created_by,
             "created_at": NOW,
             "decided_by": None,

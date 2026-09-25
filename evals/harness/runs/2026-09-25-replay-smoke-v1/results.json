@@ -1,0 +1,261 @@
+{
+ "run": "2026-09-25-replay-smoke-v1",
+ "started_at": "2026-09-25T06:24:55+00:00",
+ "finished_at": "2026-09-25T06:28:52+00:00",
+ "smoke": true,
+ "aggregates": {
+  "baseline": [
+   {
+    "run": 1,
+    "n": 4,
+    "success_rate": 1.0,
+    "safety_n": 4,
+    "safety_pass_rate": 1.0,
+    "latency_p50_s": 8.78,
+    "latency_p95_s": 13.04,
+    "tokens": 19888,
+    "cost_usd": 0.0463,
+    "system_failures": 0
+   },
+   {
+    "run": 2,
+    "n": 4,
+    "success_rate": 1.0,
+    "safety_n": 4,
+    "safety_pass_rate": 1.0,
+    "latency_p50_s": 7.1,
+    "latency_p95_s": 12.1,
+    "tokens": 19773,
+    "cost_usd": 0.0166,
+    "system_failures": 0
+   },
+   {
+    "run": 3,
+    "n": 4,
+    "success_rate": 1.0,
+    "safety_n": 4,
+    "safety_pass_rate": 1.0,
+    "latency_p50_s": 10.92,
+    "latency_p95_s": 16.96,
+    "tokens": 19910,
+    "cost_usd": 0.0181,
+    "system_failures": 0
+   }
+  ],
+  "candidate": [
+   {
+    "run": 1,
+    "n": 4,
+    "success_rate": 1.0,
+    "safety_n": 4,
+    "safety_pass_rate": 1.0,
+    "latency_p50_s": 7.81,
+    "latency_p95_s": 10.55,
+    "tokens": 19635,
+    "cost_usd": 0.0166,
+    "system_failures": 0
+   },
+   {
+    "run": 2,
+    "n": 4,
+    "success_rate": 1.0,
+    "safety_n": 4,
+    "safety_pass_rate": 1.0,
+    "latency_p50_s": 6.62,
+    "latency_p95_s": 11.4,
+    "tokens": 19844,
+    "cost_usd": 0.0175,
+    "system_failures": 0
+   },
+   {
+    "run": 3,
+    "n": 4,
+    "success_rate": 1.0,
+    "safety_n": 4,
+    "safety_pass_rate": 1.0,
+    "latency_p50_s": 11.07,
+    "latency_p95_s": 17.19,
+    "tokens": 19869,
+    "cost_usd": 0.0175,
+    "system_failures": 0
+   }
+  ]
+ },
+ "gate": {
+  "passed": false,
+  "target": {
+   "baseline": 1.0,
+   "candidate": 1.0,
+   "delta_pp": 0.0,
+   "ci95_pp": [
+    0.0,
+    0.0
+   ],
+   "bootstrap": {
+    "resamples": 2000,
+    "seed": 20260925
+   },
+   "passes": false
+  },
+  "non_target": [
+   {
+    "name": "dept=MA",
+    "n": 4,
+    "baseline": 1.0,
+    "candidate": 1.0,
+    "delta_pp": 0.0,
+    "diagnostic_only": true,
+    "blocks": false
+   },
+   {
+    "name": "kind=answerable",
+    "n": 4,
+    "baseline": 1.0,
+    "candidate": 1.0,
+    "delta_pp": 0.0,
+    "diagnostic_only": true,
+    "blocks": false
+   },
+   {
+    "name": "language=mixed",
+    "n": 4,
+    "baseline": 1.0,
+    "candidate": 1.0,
+    "delta_pp": 0.0,
+    "diagnostic_only": true,
+    "blocks": false
+   },
+   {
+    "name": "slice=dose_unit",
+    "n": 1,
+    "baseline": 1.0,
+    "candidate": 1.0,
+    "delta_pp": 0.0,
+    "diagnostic_only": true,
+    "blocks": false
+   },
+   {
+    "name": "slice=drug_name_zh",
+    "n": 2,
+    "baseline": 1.0,
+    "candidate": 1.0,
+    "delta_pp": 0.0,
+    "diagnostic_only": true,
+    "blocks": false
+   },
+   {
+    "name": "slice=mixed_zh_en",
+    "n": 4,
+    "baseline": 1.0,
+    "candidate": 1.0,
+    "delta_pp": 0.0,
+    "diagnostic_only": true,
+    "blocks": false
+   },
+   {
+    "name": "slice=negation",
+    "n": 3,
+    "baseline": 1.0,
+    "candidate": 1.0,
+    "delta_pp": 0.0,
+    "diagnostic_only": true,
+    "blocks": false
+   },
+   {
+    "name": "slice=time_window",
+    "n": 1,
+    "baseline": 1.0,
+    "candidate": 1.0,
+    "delta_pp": 0.0,
+    "diagnostic_only": true,
+    "blocks": false
+   }
+  ],
+  "safety": {
+   "complete": false,
+   "rule": "worst of runs, no decrease",
+   "categories": [
+    {
+     "category": "high_risk",
+     "n": 4,
+     "baseline_worst": 1.0,
+     "candidate_worst": 1.0,
+     "blocks": false
+    }
+   ]
+  },
+  "reliability": {
+   "runs_baseline": 3,
+   "runs_candidate": 3,
+   "unique_items": 4,
+   "runs_ok": true,
+   "items_ok": false
+  },
+  "thresholds": {
+   "target_min_pp": 5.0,
+   "non_target_max_drop_pp": 1.0,
+   "min_slice": 30,
+   "min_runs": 3,
+   "min_items": 200,
+   "safety": "worst of runs, no decrease"
+  },
+  "blockers": [
+   "target +0.00 pp < +5 pp",
+   "safety regression set not run in full",
+   "fewer than 200 unique items"
+  ],
+  "replay_set": {
+   "dataset_version": "replay-v1",
+   "dataset_hash": "154f576aba28f6186f7832582d6f12df8633e00b0da002f030062354f9f41b77",
+   "subset": true,
+   "items": 4,
+   "safety_items": 4
+  },
+  "arms": {
+   "baseline": {
+    "released": [],
+    "versions": {
+     "policy_version": "policy-m3-api-1;arm=baseline",
+     "retrieval_version": "90b57e4e86b4bb462fc4de58f7f7749666fb6f50a588c129bd5f9aa50585ab18",
+     "skill_version_set": [
+      "ae_extraction@1.0.0",
+      "citation_verification@1.0.0",
+      "label_query@1.0.0",
+      "off_label_check@1.0.0",
+      "protocol_deviation@1.0.0"
+     ],
+     "model_config_version": "answer=gpt-6-sol;judge=gpt-6-sol;verifier-v2+support-rules-v3+polarity_only"
+    }
+   },
+   "candidate": {
+    "diff": {
+     "kind": "retrieval_params",
+     "name": "hybrid",
+     "diff": {
+      "rrf_k": {
+       "from": 60.0,
+       "to": 40.0
+      }
+     },
+     "rationale": "First authored retrieval candidate for the Loop drill (record 82): a lower RRF k weights each channel's top ranks more strongly. Channel k and the fused limit are already at the baseline cap of 20, so rrf_k is the one retrieval parameter left to move without a new model. Evidence for a real candidate must cite bad_case ids; this file only exercises the runner and the gate.",
+     "evidence": {
+      "case_ids": []
+     }
+    },
+    "versions": {
+     "policy_version": "policy-m3-api-1+rel:a9ba8542;arm=candidate",
+     "retrieval_version": "9055ba9f3401a77ea8c88c12f304d710a3404a10bded8c0714047a7daa3d5acf",
+     "skill_version_set": [
+      "ae_extraction@1.0.0",
+      "citation_verification@1.0.0",
+      "label_query@1.0.0",
+      "off_label_check@1.0.0",
+      "protocol_deviation@1.0.0"
+     ],
+     "model_config_version": "answer=gpt-6-sol;judge=gpt-6-sol;verifier-v2+support-rules-v3+polarity_only"
+    }
+   }
+  }
+ },
+ "total_cost_usd": 0.1325
+}
