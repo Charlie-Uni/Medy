@@ -7,8 +7,8 @@ attached (M2-03). Responses carry the trace id in `X-Trace-Id`; errors are `Erro
 from __future__ import annotations
 
 import time
-from collections.abc import Callable, Iterator, Mapping
-from contextlib import AbstractContextManager, contextmanager
+from collections.abc import AsyncIterator, Callable, Iterator, Mapping
+from contextlib import AbstractContextManager, asynccontextmanager, contextmanager
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from typing import Any, Protocol
@@ -60,6 +60,7 @@ from medops.application.tasks import TaskService, TaskStore, to_response
 from medops.core.errors import HTTP_STATUS, BusinessError, ErrorCode, ErrorResponse, MedOpsError
 from medops.core.logging import get_logger
 from medops.core.telemetry import ATTR_POLICY, ATTR_RETRIEVAL, annotate, span
+from medops.core.telemetry import flush as flush_telemetry
 from medops.core.tracing import bind_trace_id
 from medops.domain.common import ReasonCode
 from medops.domain.identity import UserContext
@@ -166,12 +167,18 @@ def to_ask_response(run: HarnessRun, trace_id: str, versions: VersionSet) -> Ask
 def create_app(
     runtime: ApiRuntime, *, docs_enabled: bool = False, debug: bool = False, idempotency_ttl_s: int = 7 * 24 * 3600
 ) -> FastAPI:
+    @asynccontextmanager
+    async def lifespan(_: FastAPI) -> AsyncIterator[None]:
+        yield
+        flush_telemetry()  # graceful stop: the last spans leave before uvicorn re-raises the signal (record 77)
+
     app = FastAPI(
         title="MedOps Copilot",
         docs_url="/docs" if docs_enabled else None,
         redoc_url=None,
         openapi_url="/openapi.json" if docs_enabled else None,
         debug=debug,
+        lifespan=lifespan,
     )
 
     @app.middleware("http")

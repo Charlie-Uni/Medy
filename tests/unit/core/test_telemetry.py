@@ -59,3 +59,20 @@ def test_failed_node_span_is_error_with_the_code_and_no_endpoint_means_no_spans(
     provider = telemetry.configure_telemetry(endpoint="http://collector:4318", service_name="medops-test")
     assert provider is not None
     telemetry.set_tracer_provider(None)
+
+
+def test_app_shutdown_flushes_spans_still_held_by_the_batch_processor():
+    """uvicorn re-raises SIGTERM after a graceful stop, so atexit never runs; the lifespan flush is what gets the
+    last spans out (record 77)."""
+    from fastapi.testclient import TestClient
+
+    from medops.api.app import create_app
+
+    exp = InMemorySpanExporter()
+    telemetry.install_exporter(exp, batch=True)  # BatchSpanProcessor: exports every 5 s or on flush
+    rt = FakeRuntime(FakeRetrieval(evidence("c1", LABEL)), FakeModelGateway({"answer": [ANSWER]}))
+    with TestClient(create_app(rt)) as c:
+        assert c.post("/v1/ask", json={"query": QUERY}, headers=auth()).status_code == 200
+        held = len(exp.get_finished_spans())
+    flushed = [s.name for s in exp.get_finished_spans()]
+    assert held == 0 and flushed.count("harness.node") == 5 and "http.request" in flushed

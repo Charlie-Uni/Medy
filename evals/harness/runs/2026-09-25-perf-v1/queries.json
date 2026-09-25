@@ -1,0 +1,695 @@
+{
+ "source": "main-v1-provisional via evals/harness/runs/2026-09-23-full-ask-v2/rows.jsonl (MA dept; answered+gold_cited and insufficient_evidence pools, seed 20260925, disjoint per level; c1-warm repeats c1-cold)",
+ "levels": [
+  {
+   "name": "c1-cold",
+   "concurrency": 1,
+   "queries": [
+    {
+     "id": "pc-0010",
+     "query": "Oxipurinol 的半衰期大約多久",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0083",
+     "query": "穩壓膜衣錠50毫克用於治療第Ⅱ型糖尿病腎病變時,起始劑量應如何給予?",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0518",
+     "query": "服用喜樂平膜衣錠（Quetiapine）期間，是否需要避免飲用葡萄柚汁以免影響藥物血中濃度？",
+     "expect": "escalated"
+    },
+    {
+     "id": "ms-0515",
+     "query": "若病人服用 Losacar 100（losartan）緩壓膜衣錠時忘記服用一劑，仿單是否說明應如何補服或跳過該劑？",
+     "expect": "escalated"
+    },
+    {
+     "id": "ms-0072",
+     "query": "衛欣保（valsartan）用於成人高血壓治療時，建議的起始劑量為何？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0036",
+     "query": "「安星」伊風柔錠300毫克可以用於治療急性痛風性關節炎發作嗎？",
+     "expect": "escalated"
+    },
+    {
+     "id": "ms-0074",
+     "query": "免痛注射液(待克菲那)成人肌肉注射的建議劑量與頻次為何?",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0059",
+     "query": "喜樂平（Quetiapine）用於老年思覺失調症病人時，起始劑量建議為多少？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0007",
+     "query": "ST段上升急性心肌梗塞病人若已超過75歲，開始使用Carvetone（clopidogrel）治療時是否應給予預載劑量（loading dose）？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0003",
+     "query": "瑪爾胰過量服用後，最初多久可能仍未出現低血糖症狀？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0008",
+     "query": "Carvetone（clopidogrel）仿單的「懷孕」段落，是否建議孕婦使用此藥？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0060",
+     "query": "依喜樂平（Quetiapine）仿單第3.3節，是否核准本品使用於18歲以下的兒童及青少年？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0025",
+     "query": "怡胃適腸溶錠（esomeprazole）用於肝功能嚴重不良的病人時，最高使用劑量限制為何？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0046",
+     "query": "美洛醣膜衣錠850毫克於病人接受非急需大手術前,應於術前多久停止服用?",
+     "expect": "answered"
+    },
+    {
+     "id": "pc-0024",
+     "query": "衛署藥製字第 029301 號是哪個藥品",
+     "expect": "answered"
+    },
+    {
+     "id": "pc-0002",
+     "query": "美洛醣每日最高治療劑量是多少",
+     "expect": "escalated"
+    },
+    {
+     "id": "ms-0067",
+     "query": "依賜痛寧注射液（diclofenac）仿單首頁的「心血管栓塞事件」警示，冠狀動脈繞道手術（CABG）後多久內禁用本藥？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0051",
+     "query": "是否建議Losacar與ACEIs、ARBs或含aliskiren成分藥品合併使用以雙重阻斷RAAS?",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0020",
+     "query": "痛風停錠(Allopurinol)用於一般成人抗痛風治療時,起始劑量與每日劑量上限各為多少?",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0026",
+     "query": "怡胃適仿單提到的PPI相關低血鎂通報中，病人在使用PPI類藥品至少多久後出現反應，而大部分案件的用藥時間為多久？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0044",
+     "query": "正在服用隆我心錠的病人若要接受選擇性直流電心臟電擊,應在電擊前多久停用digoxin?",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0078",
+     "query": "使用莫尼茲(Vomiz)注射劑治療化學治療引起之噁心嘔吐(CINV)時，中度或重度肝功能不全病人的靜脈注射或口服每日總劑量上限為何？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0512",
+     "query": "樂癲活持續釋放膜衣錠25毫克（Lamofree ER Tablets 25mg）仿單是否載明服藥期間禁止駕駛或操作機械等明確操作限制？",
+     "expect": "escalated"
+    },
+    {
+     "id": "pc-0008",
+     "query": "allopurinol 一般成人的處方限量是多少（每一劑量與每天）",
+     "expect": "answered"
+    },
+    {
+     "id": "pc-0023",
+     "query": "心壓暢錠過量時，該如何急救",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0049",
+     "query": "Losacar用於治療第II型糖尿病腎病變時，起始劑量為何，並可視血壓下降情形增加至多少？",
+     "expect": "escalated"
+    },
+    {
+     "id": "ms-0016",
+     "query": "康肯®用於治療穩定型慢性心衰竭時，第1週的起始劑量應如何給予？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0070",
+     "query": "使用衛欣保（valsartan）後若出現血管性水腫，是否應繼續用藥，以及日後能否再次使用？",
+     "expect": "answered"
+    },
+    {
+     "id": "pc-0027",
+     "query": "依胃所樂腸溶膜衣錠仿單，成人及 12 歲以上青少年若有胃食道逆流症狀、但食道沒有發炎，每日用量如何安排？治療多久仍有症狀時應進一步檢查？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0052",
+     "query": "脈得服錠10公絲(伊那拉普利)治療高血壓或心臟衰竭時,每日常用劑量範圍為何?",
+     "expect": "answered"
+    }
+   ]
+  },
+  {
+   "name": "c2",
+   "concurrency": 2,
+   "queries": [
+    {
+     "id": "ms-0065",
+     "query": "使用「華盛頓」洛得敏糖漿的病人若要做皮膚過敏測試(skin test),應提前多久停藥?",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0006",
+     "query": "心壓暢錠可以和verapamil併用嗎？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0522",
+     "query": "免痛注射液（待克菲那）與葡萄柚汁併用是否會產生交互作用而影響藥效？",
+     "expect": "escalated"
+    },
+    {
+     "id": "pc-0003",
+     "query": "超過八十歲的老人家可以開始用美洛醣嗎",
+     "expect": "escalated"
+    },
+    {
+     "id": "pc-0009",
+     "query": "痛風關節炎急性發作的時候可以用 allopurinol 嗎",
+     "expect": "answered"
+    },
+    {
+     "id": "pc-0014",
+     "query": "穩壓膜衣錠吃多久才會有最大的降壓效果",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0063",
+     "query": "「華盛頓」洛得敏糖漿(loratadine)成人及十二歲以上兒童的建議劑量是多少?",
+     "expect": "answered"
+    },
+    {
+     "id": "pc-0006",
+     "query": "衛部藥製字第058257號是哪一個藥品",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0005",
+     "query": "心壓暢錠用於狹心症時，每日建議如何分次服用？",
+     "expect": "answered"
+    },
+    {
+     "id": "pc-0004",
+     "query": "口服 metformin 之後大約多久達到最高血中濃度",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0014",
+     "query": "信諾隆是否可用於重症肌無力患者？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0038",
+     "query": "病患先前因服用Lamotrigine產生皮疹而停藥，醫師是否建議該病患再次開始使用樂癲活持續釋放膜衣錠(Lamofree ER Tablets)？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0076",
+     "query": "使用免痛注射液(待克菲那,diclofenac)期間可以併用aspirin嗎?",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0054",
+     "query": "脈得服錠(伊那拉普利)藥物過量時,大約服藥後多久會出現血壓明顯滑落等症狀?",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0004",
+     "query": "瑪爾胰開始治療的建議起始劑量是多少?",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0022",
+     "query": "Zollinger Ellison Syndrome (ZES)患者使用「胃所樂」（Esomeprazole）的起始劑量為多少？",
+     "expect": "answered"
+    },
+    {
+     "id": "pc-0005",
+     "query": "美洛醣按建議劑量服用多久後血中濃度會穩定",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0068",
+     "query": "賜痛寧注射液（diclofenac）仿單所列的適應症及適用情況為何？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0050",
+     "query": "糖尿病患或腎功能不全（GFR<60 ml/min/1.73 m²）的病人，Losacar 可以和含 aliskiren 成分的藥品併用嗎？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0507",
+     "query": "「胃所樂」腸溶膜衣錠40毫克在建議儲存條件下的有效期限（保存期限）為多久？",
+     "expect": "escalated"
+    },
+    {
+     "id": "ms-0030",
+     "query": "血管內體液缺乏(如使用高劑量利尿劑)之高血壓病人服用特釋壓膜衣錠(Hetlosar, losartan)時,起始劑量應如何調整?",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0524",
+     "query": "服用穩壓膜衣錠50毫克（Zosaa F.C. Tablets 50mg, losartan potassium）期間，可否同時飲用葡萄柚汁？是否會影響藥效？",
+     "expect": "escalated"
+    },
+    {
+     "id": "ms-0010",
+     "query": "依Carvetone（clopidogrel）仿單「成人和老年人」段落，一般建議的每日用量與服用次數為何？",
+     "expect": "answered"
+    },
+    {
+     "id": "pc-0013",
+     "query": "穩壓膜衣錠治療高血壓的一般起始劑量是多少",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0009",
+     "query": "病人接受手術前若不希望有抗血小板作用，應於術前幾天停止使用Carvetone（clopidogrel）？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0032",
+     "query": "新生兒或腎絲球過濾率低於30 mL/min/1.73 m²的兒童病人,是否建議使用特釋壓膜衣錠(Hetlosar, losartan)?",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0502",
+     "query": "服用「明德」心壓暢錠100毫克（美托普洛）的病患，若同時服用fluoxetine或paroxetine等CYP2D6抑制劑，是否需要調整劑量？",
+     "expect": "escalated"
+    },
+    {
+     "id": "pc-0030",
+     "query": "衛部藥製字第 058102 號藥品的製造廠址在哪裡",
+     "expect": "escalated"
+    },
+    {
+     "id": "ms-0023",
+     "query": "怡胃適腸溶錠(esomeprazole)用於治療成人及12歲以上青少年之糜爛性逆流性食道炎，起始劑量與療程為何？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0061",
+     "query": "使用喜樂平（Quetiapine）時，應避免併用哪些會延長QT期間的藥物？",
+     "expect": "answered"
+    }
+   ]
+  },
+  {
+   "name": "c4",
+   "concurrency": 4,
+   "queries": [
+    {
+     "id": "ms-0082",
+     "query": "穩壓膜衣錠50毫克對本項產品成分過敏的病人可以使用嗎?",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0057",
+     "query": "拔痛酸錠(Allopurinol)可以用於治療痛風性關節炎的急性發作嗎?",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0017",
+     "query": "康肯®（bisoprolol fumarate）是否建議用於兒童病人？",
+     "expect": "answered"
+    },
+    {
+     "id": "pc-0018",
+     "query": "衛署藥製字第 047911 號是哪個藥品",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0015",
+     "query": "開始用康肯®治療穩定型慢性中度至重度心衰竭前，就急性心衰竭病史這項條件而言，病人須在過去多久內未曾發生急性心衰竭？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0048",
+     "query": "Losacar治療高血壓的一般起始劑量及維持劑量是多少?",
+     "expect": "answered"
+    },
+    {
+     "id": "pc-0022",
+     "query": "要開刀麻醉的病人手術前多久停用心壓暢錠",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0073",
+     "query": "衛欣保（valsartan）是否建議與ACEIs或ARBs合併使用以雙重阻斷RAAS系統？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0047",
+     "query": "美洛醣膜衣錠850毫克一般成人的建議服用頻次與每次劑量為何?",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0505",
+     "query": "服用康肯®（bisoprolol）期間飲用葡萄柚汁，是否會影響其代謝或藥效？",
+     "expect": "escalated"
+    },
+    {
+     "id": "ms-0024",
+     "query": "怡胃適腸溶錠(esomeprazole)可以與nelfinavir併用嗎？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0079",
+     "query": "莫尼茲注射劑仿單對成人「致吐性化學治療及放射線治療」所列的注射建議劑量，以及後續改用口服給藥的時間為何？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0523",
+     "query": "莫尼茲靜脈注射劑（ondansetron）與葡萄柚汁併用時，藥物動力學是否會受影響？",
+     "expect": "escalated"
+    },
+    {
+     "id": "ms-0514",
+     "query": "服用美洛醣膜衣錠850毫克（Loformin, metformin）期間，飲用葡萄柚汁是否會影響藥效或增加副作用風險？",
+     "expect": "escalated"
+    },
+    {
+     "id": "ms-0037",
+     "query": "「安星」伊風柔錠300毫克用於成人預防化學治療或放射治療所致高尿酸血症時，應在治療開始前多久給藥，劑量為何？",
+     "expect": "answered"
+    },
+    {
+     "id": "pc-0025",
+     "query": "胃所樂腸溶膜衣錠可以嚼碎或壓碎再吃嗎",
+     "expect": "answered"
+    },
+    {
+     "id": "pc-0019",
+     "query": "高血壓患者每天用明德心壓暢錠治療用量範圍是多少",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0075",
+     "query": "依免痛注射液（待克菲那）仿單的「禁忌」條款，冠狀動脈繞道手術（CABG）後多久內禁止使用本藥？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0062",
+     "query": "服用喜樂平（Quetiapine）期間，是否建議授乳婦哺乳？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0031",
+     "query": "糖尿病病人使用特釋壓膜衣錠(Hetlosar, losartan)時,是否可以併用aliskiren?",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0035",
+     "query": "「安星」伊風柔錠300毫克應如何保存？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0058",
+     "query": "拔痛酸錠(Allopurinol)用於6至12歲兒童治療贅瘤疾病引起的高尿酸血症時,口服劑量如何給予?",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0066",
+     "query": "賜痛寧注射液(diclofenac)成人常用的劑量與注射方式為何?",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0513",
+     "query": "服用隆我心錠（LANOXIN, digoxin）期間，若同時飲用葡萄柚汁，是否會影響其血中濃度或產生交互作用？",
+     "expect": "escalated"
+    },
+    {
+     "id": "ms-0001",
+     "query": "瑪爾胰(glimepiride)每日最高建議劑量是多少?",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0040",
+     "query": "對樂癲活持續釋放膜衣錠(Lamofree ER Tablets)或其組成成分曾有過敏反應的病患，是否可以使用此藥？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0041",
+     "query": "依樂癲活持續釋放膜衣錠仿單第8.6節，中度或重度肝功能不全（Child-Pugh Grade B/C）病患的起始及維持劑量應如何調整？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0033",
+     "query": "特釋壓膜衣錠(Hetlosar, losartan)藥物過量時,能否以血液透析方式清除藥物及其活性代謝物?",
+     "expect": "answered"
+    },
+    {
+     "id": "pc-0012",
+     "query": "衛署藥製字第 048564 號的藥品須由醫師處方使用嗎",
+     "expect": "escalated"
+    },
+    {
+     "id": "ms-0506",
+     "query": "痛風停錠（allopurinol）對於肝功能不全的病人，建議如何調整劑量？",
+     "expect": "escalated"
+    }
+   ]
+  },
+  {
+   "name": "c1-warm",
+   "concurrency": 1,
+   "queries": [
+    {
+     "id": "pc-0010",
+     "query": "Oxipurinol 的半衰期大約多久",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0083",
+     "query": "穩壓膜衣錠50毫克用於治療第Ⅱ型糖尿病腎病變時,起始劑量應如何給予?",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0518",
+     "query": "服用喜樂平膜衣錠（Quetiapine）期間，是否需要避免飲用葡萄柚汁以免影響藥物血中濃度？",
+     "expect": "escalated"
+    },
+    {
+     "id": "ms-0515",
+     "query": "若病人服用 Losacar 100（losartan）緩壓膜衣錠時忘記服用一劑，仿單是否說明應如何補服或跳過該劑？",
+     "expect": "escalated"
+    },
+    {
+     "id": "ms-0072",
+     "query": "衛欣保（valsartan）用於成人高血壓治療時，建議的起始劑量為何？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0036",
+     "query": "「安星」伊風柔錠300毫克可以用於治療急性痛風性關節炎發作嗎？",
+     "expect": "escalated"
+    },
+    {
+     "id": "ms-0074",
+     "query": "免痛注射液(待克菲那)成人肌肉注射的建議劑量與頻次為何?",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0059",
+     "query": "喜樂平（Quetiapine）用於老年思覺失調症病人時，起始劑量建議為多少？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0007",
+     "query": "ST段上升急性心肌梗塞病人若已超過75歲，開始使用Carvetone（clopidogrel）治療時是否應給予預載劑量（loading dose）？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0003",
+     "query": "瑪爾胰過量服用後，最初多久可能仍未出現低血糖症狀？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0008",
+     "query": "Carvetone（clopidogrel）仿單的「懷孕」段落，是否建議孕婦使用此藥？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0060",
+     "query": "依喜樂平（Quetiapine）仿單第3.3節，是否核准本品使用於18歲以下的兒童及青少年？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0025",
+     "query": "怡胃適腸溶錠（esomeprazole）用於肝功能嚴重不良的病人時，最高使用劑量限制為何？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0046",
+     "query": "美洛醣膜衣錠850毫克於病人接受非急需大手術前,應於術前多久停止服用?",
+     "expect": "answered"
+    },
+    {
+     "id": "pc-0024",
+     "query": "衛署藥製字第 029301 號是哪個藥品",
+     "expect": "answered"
+    },
+    {
+     "id": "pc-0002",
+     "query": "美洛醣每日最高治療劑量是多少",
+     "expect": "escalated"
+    },
+    {
+     "id": "ms-0067",
+     "query": "依賜痛寧注射液（diclofenac）仿單首頁的「心血管栓塞事件」警示，冠狀動脈繞道手術（CABG）後多久內禁用本藥？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0051",
+     "query": "是否建議Losacar與ACEIs、ARBs或含aliskiren成分藥品合併使用以雙重阻斷RAAS?",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0020",
+     "query": "痛風停錠(Allopurinol)用於一般成人抗痛風治療時,起始劑量與每日劑量上限各為多少?",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0026",
+     "query": "怡胃適仿單提到的PPI相關低血鎂通報中，病人在使用PPI類藥品至少多久後出現反應，而大部分案件的用藥時間為多久？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0044",
+     "query": "正在服用隆我心錠的病人若要接受選擇性直流電心臟電擊,應在電擊前多久停用digoxin?",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0078",
+     "query": "使用莫尼茲(Vomiz)注射劑治療化學治療引起之噁心嘔吐(CINV)時，中度或重度肝功能不全病人的靜脈注射或口服每日總劑量上限為何？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0512",
+     "query": "樂癲活持續釋放膜衣錠25毫克（Lamofree ER Tablets 25mg）仿單是否載明服藥期間禁止駕駛或操作機械等明確操作限制？",
+     "expect": "escalated"
+    },
+    {
+     "id": "pc-0008",
+     "query": "allopurinol 一般成人的處方限量是多少（每一劑量與每天）",
+     "expect": "answered"
+    },
+    {
+     "id": "pc-0023",
+     "query": "心壓暢錠過量時，該如何急救",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0049",
+     "query": "Losacar用於治療第II型糖尿病腎病變時，起始劑量為何，並可視血壓下降情形增加至多少？",
+     "expect": "escalated"
+    },
+    {
+     "id": "ms-0016",
+     "query": "康肯®用於治療穩定型慢性心衰竭時，第1週的起始劑量應如何給予？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0070",
+     "query": "使用衛欣保（valsartan）後若出現血管性水腫，是否應繼續用藥，以及日後能否再次使用？",
+     "expect": "answered"
+    },
+    {
+     "id": "pc-0027",
+     "query": "依胃所樂腸溶膜衣錠仿單，成人及 12 歲以上青少年若有胃食道逆流症狀、但食道沒有發炎，每日用量如何安排？治療多久仍有症狀時應進一步檢查？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0052",
+     "query": "脈得服錠10公絲(伊那拉普利)治療高血壓或心臟衰竭時,每日常用劑量範圍為何?",
+     "expect": "answered"
+    }
+   ]
+  }
+ ],
+ "tasks": [
+  {
+   "skill_name": "label_query",
+   "skill_version": "1.0.0",
+   "input": {
+    "product": "瑪爾胰",
+    "question": "每日最高建議劑量是多少？"
+   }
+  },
+  {
+   "skill_name": "label_query",
+   "skill_version": "1.0.0",
+   "input": {
+    "product": "Losacar",
+    "question": "治療高血壓的一般起始劑量及維持劑量是多少？"
+   }
+  },
+  {
+   "skill_name": "label_query",
+   "skill_version": "1.0.0",
+   "input": {
+    "product": "拔痛酸錠",
+    "question": "6 至 12 歲兒童的口服劑量如何給予？"
+   }
+  },
+  {
+   "skill_name": "label_query",
+   "skill_version": "1.0.0",
+   "input": {
+    "product": "瑪爾胰",
+    "question": "腎功能不全患者的起始劑量如何調整？"
+   }
+  },
+  {
+   "skill_name": "label_query",
+   "skill_version": "1.0.0",
+   "input": {
+    "product": "Losacar",
+    "question": "與利尿劑併用時的起始劑量是多少？"
+   }
+  },
+  {
+   "skill_name": "label_query",
+   "skill_version": "1.0.0",
+   "input": {
+    "product": "拔痛酸錠",
+    "question": "成人每日最大劑量是多少？"
+   }
+  },
+  {
+   "skill_name": "label_query",
+   "skill_version": "1.0.0",
+   "input": {
+    "product": "瑪爾胰",
+    "question": "漏服一次劑量時應如何處理？"
+   }
+  },
+  {
+   "skill_name": "label_query",
+   "skill_version": "1.0.0",
+   "input": {
+    "product": "Losacar",
+    "question": "肝功能不全患者是否需要調整劑量？"
+   }
+  }
+ ]
+}

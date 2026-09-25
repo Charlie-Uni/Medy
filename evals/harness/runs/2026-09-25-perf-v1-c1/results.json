@@ -1,0 +1,147 @@
+{
+  "label": "perf-v1-c1",
+  "started_at": "2026-09-25T05:12:47.747936+00:00",
+  "finished_at": "2026-09-25T05:17:50.997222+00:00",
+  "api_ready_s": 17.3,
+  "spans_received": 334,
+  "environment": {
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "chip": "Apple M3",
+    "memory_gb": 24.0,
+    "cpu_count": 8,
+    "python": "3.11.16",
+    "device": "mps",
+    "packages": {
+      "torch": "2.14.0",
+      "sentence-transformers": "5.7.0",
+      "uvicorn": "0.53.0",
+      "fastapi": "0.141.1",
+      "psycopg": "3.3.5",
+      "openai": "2.54.0",
+      "httpx": "0.28.1"
+    },
+    "models": {
+      "answer": "gpt-6-sol",
+      "judge": "gpt-6-sol",
+      "verifier": "verifier-v2+support-rules-v3+polarity_only"
+    },
+    "retrieval": {
+      "k_lexical": 20,
+      "k_vector": 20,
+      "rrf_k": 60.0,
+      "fused_limit": 20,
+      "rerank_output": 8
+    },
+    "postgres": {
+      "server_version": "16.15 (Debian 16.15-1.pgdg12+2)",
+      "shared_buffers": "128MB",
+      "max_connections": "100",
+      "documents": {
+        "draft": 3,
+        "archived": 7,
+        "active": 76
+      },
+      "chunks": 11231,
+      "database": "medops_v2"
+    }
+  },
+  "levels": [
+    {
+      "name": "c1-cold",
+      "concurrency": 1,
+      "requests": 30,
+      "failed": 0,
+      "failure_rate": 0.0,
+      "elapsed_s": 277.7,
+      "wall_s": 277.7,
+      "started_at": "2026-09-25T05:13:05.065771+00:00",
+      "suspended_requests": 0,
+      "throughput_rps": 0.108,
+      "latency_all": {
+        "n": 30,
+        "p50": 8.012,
+        "p90": 13.101,
+        "p95": 16.953,
+        "p99": 24.525,
+        "max": 24.525,
+        "mean": 9.257
+      },
+      "latency_ok": {
+        "n": 30,
+        "p50": 8.012,
+        "p90": 13.101,
+        "p95": 16.953,
+        "p99": 24.525,
+        "max": 24.525,
+        "mean": 9.257
+      },
+      "by_outcome": {
+        "answered": {
+          "n": 25,
+          "p50": 8.342,
+          "p90": 14.208,
+          "p95": 16.953,
+          "p99": 24.525,
+          "max": 24.525,
+          "mean": 9.874
+        },
+        "escalated": {
+          "n": 5,
+          "p50": 5.264,
+          "p90": 10.759,
+          "p95": 10.759,
+          "p99": 10.759,
+          "max": 10.759,
+          "mean": 6.17
+        }
+      },
+      "node_p95_ms": {
+        "answer": 10079.2,
+        "escalate": 0.3,
+        "intent": 1.6,
+        "retrieve": 7596.0,
+        "safety": 3.4,
+        "verify": 18.3
+      },
+      "node_p50_ms": {
+        "answer": 4863.5,
+        "escalate": 0.2,
+        "intent": 0.4,
+        "retrieve": 2743.0,
+        "safety": 0.4,
+        "verify": 4.3
+      },
+      "gate_p95_le_8s": false
+    }
+  ],
+  "tasks": {
+    "requested": 0,
+    "completed": 0,
+    "failed": 0,
+    "exec": {
+      "n": 0,
+      "p50": null,
+      "p90": null,
+      "p95": null,
+      "p99": null,
+      "max": null,
+      "mean": null
+    },
+    "end_to_end": {
+      "n": 0,
+      "p50": null,
+      "p90": null,
+      "p95": null,
+      "p99": null,
+      "max": null,
+      "mean": null
+    },
+    "worker_rc": null,
+    "gate_p95_le_15s": null
+  },
+  "cost_usd": 0.123,
+  "gate": {
+    "ask_p95_le_8s_all_levels": false,
+    "skill_p95_le_15s": null
+  }
+}

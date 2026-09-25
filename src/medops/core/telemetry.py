@@ -54,6 +54,14 @@ def shutdown() -> None:
         _provider.shutdown()
 
 
+def flush(timeout_ms: int = 10_000) -> None:
+    """Export whatever the batch processor still holds. Called from the API's lifespan shutdown because uvicorn
+    re-raises the captured SIGTERM after a graceful stop (record 67): the process then dies by signal, `atexit`
+    never runs and the spans of the last few seconds would be lost (record 77)."""
+    if _provider is not None:
+        _provider.force_flush(timeout_ms)
+
+
 def _tracer() -> trace.Tracer:
     if _provider is None:
         return trace.NoOpTracer()

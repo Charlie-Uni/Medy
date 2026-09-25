@@ -1,0 +1,162 @@
+{
+ "source": "main-v1-provisional via evals/harness/runs/2026-09-23-full-ask-v2/rows.jsonl (MA dept; answered+gold_cited and insufficient_evidence pools, seed 20260925, disjoint per level; c1-warm repeats c1-cold); rerun of the c1-cold level alone in a fresh process (the first run's c1-cold level straddled a Wi-Fi loss and a system sleep)",
+ "levels": [
+  {
+   "name": "c1-cold",
+   "concurrency": 1,
+   "queries": [
+    {
+     "id": "pc-0010",
+     "query": "Oxipurinol 的半衰期大約多久",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0083",
+     "query": "穩壓膜衣錠50毫克用於治療第Ⅱ型糖尿病腎病變時,起始劑量應如何給予?",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0518",
+     "query": "服用喜樂平膜衣錠（Quetiapine）期間，是否需要避免飲用葡萄柚汁以免影響藥物血中濃度？",
+     "expect": "escalated"
+    },
+    {
+     "id": "ms-0515",
+     "query": "若病人服用 Losacar 100（losartan）緩壓膜衣錠時忘記服用一劑，仿單是否說明應如何補服或跳過該劑？",
+     "expect": "escalated"
+    },
+    {
+     "id": "ms-0072",
+     "query": "衛欣保（valsartan）用於成人高血壓治療時，建議的起始劑量為何？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0036",
+     "query": "「安星」伊風柔錠300毫克可以用於治療急性痛風性關節炎發作嗎？",
+     "expect": "escalated"
+    },
+    {
+     "id": "ms-0074",
+     "query": "免痛注射液(待克菲那)成人肌肉注射的建議劑量與頻次為何?",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0059",
+     "query": "喜樂平（Quetiapine）用於老年思覺失調症病人時，起始劑量建議為多少？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0007",
+     "query": "ST段上升急性心肌梗塞病人若已超過75歲，開始使用Carvetone（clopidogrel）治療時是否應給予預載劑量（loading dose）？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0003",
+     "query": "瑪爾胰過量服用後，最初多久可能仍未出現低血糖症狀？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0008",
+     "query": "Carvetone（clopidogrel）仿單的「懷孕」段落，是否建議孕婦使用此藥？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0060",
+     "query": "依喜樂平（Quetiapine）仿單第3.3節，是否核准本品使用於18歲以下的兒童及青少年？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0025",
+     "query": "怡胃適腸溶錠（esomeprazole）用於肝功能嚴重不良的病人時，最高使用劑量限制為何？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0046",
+     "query": "美洛醣膜衣錠850毫克於病人接受非急需大手術前,應於術前多久停止服用?",
+     "expect": "answered"
+    },
+    {
+     "id": "pc-0024",
+     "query": "衛署藥製字第 029301 號是哪個藥品",
+     "expect": "answered"
+    },
+    {
+     "id": "pc-0002",
+     "query": "美洛醣每日最高治療劑量是多少",
+     "expect": "escalated"
+    },
+    {
+     "id": "ms-0067",
+     "query": "依賜痛寧注射液（diclofenac）仿單首頁的「心血管栓塞事件」警示，冠狀動脈繞道手術（CABG）後多久內禁用本藥？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0051",
+     "query": "是否建議Losacar與ACEIs、ARBs或含aliskiren成分藥品合併使用以雙重阻斷RAAS?",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0020",
+     "query": "痛風停錠(Allopurinol)用於一般成人抗痛風治療時,起始劑量與每日劑量上限各為多少?",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0026",
+     "query": "怡胃適仿單提到的PPI相關低血鎂通報中，病人在使用PPI類藥品至少多久後出現反應，而大部分案件的用藥時間為多久？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0044",
+     "query": "正在服用隆我心錠的病人若要接受選擇性直流電心臟電擊,應在電擊前多久停用digoxin?",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0078",
+     "query": "使用莫尼茲(Vomiz)注射劑治療化學治療引起之噁心嘔吐(CINV)時，中度或重度肝功能不全病人的靜脈注射或口服每日總劑量上限為何？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0512",
+     "query": "樂癲活持續釋放膜衣錠25毫克（Lamofree ER Tablets 25mg）仿單是否載明服藥期間禁止駕駛或操作機械等明確操作限制？",
+     "expect": "escalated"
+    },
+    {
+     "id": "pc-0008",
+     "query": "allopurinol 一般成人的處方限量是多少（每一劑量與每天）",
+     "expect": "answered"
+    },
+    {
+     "id": "pc-0023",
+     "query": "心壓暢錠過量時，該如何急救",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0049",
+     "query": "Losacar用於治療第II型糖尿病腎病變時，起始劑量為何，並可視血壓下降情形增加至多少？",
+     "expect": "escalated"
+    },
+    {
+     "id": "ms-0016",
+     "query": "康肯®用於治療穩定型慢性心衰竭時，第1週的起始劑量應如何給予？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0070",
+     "query": "使用衛欣保（valsartan）後若出現血管性水腫，是否應繼續用藥，以及日後能否再次使用？",
+     "expect": "answered"
+    },
+    {
+     "id": "pc-0027",
+     "query": "依胃所樂腸溶膜衣錠仿單，成人及 12 歲以上青少年若有胃食道逆流症狀、但食道沒有發炎，每日用量如何安排？治療多久仍有症狀時應進一步檢查？",
+     "expect": "answered"
+    },
+    {
+     "id": "ms-0052",
+     "query": "脈得服錠10公絲(伊那拉普利)治療高血壓或心臟衰竭時,每日常用劑量範圍為何?",
+     "expect": "answered"
+    }
+   ]
+  }
+ ],
+ "tasks": []
+}

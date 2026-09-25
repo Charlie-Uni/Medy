@@ -11,6 +11,7 @@ from medops.api.runtime import authenticator_from_settings
 from medops.core.config import AppEnv, Settings, safe_config_errors
 from medops.core.logging import configure_logging, get_logger
 from medops.core.telemetry import configure_telemetry
+from medops.core.telemetry import shutdown as shutdown_telemetry
 from medops.domain.common import Dept
 from medops.domain.identity import UserContext
 from medops.mcp.server import McpProductionRuntime, build_server
@@ -109,6 +110,7 @@ def main(argv: list[str] | None = None) -> int:
         )
         log.info("mcp stdio (dev) starting", extra={"dept": args.dev_dept})
         build_server(runtime).run("stdio")
+        shutdown_telemetry()
         return 0
     runtime = McpProductionRuntime(
         authenticator=authenticator_from_settings(settings),
@@ -124,6 +126,7 @@ def main(argv: list[str] | None = None) -> int:
     import anyio
 
     anyio.run(functools.partial(server.run_streamable_http_async, host=args.host, port=args.port))
+    shutdown_telemetry()
     return 0
 
 
