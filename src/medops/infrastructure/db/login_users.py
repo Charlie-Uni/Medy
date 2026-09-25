@@ -26,7 +26,13 @@ from psycopg import sql
 
 from medops.core.config import Settings
 
-GROUPS: Mapping[str, str] = {"app": "medops_app", "readonly": "medops_readonly", "admin": "medops_admin_role"}
+GROUPS: Mapping[str, str] = {
+    "app": "medops_app",
+    "readonly": "medops_readonly",
+    "admin": "medops_admin_role",
+    "restricted": "medops_restricted_role",  # DEC-013 payload reader; optional (skipped without a password)
+}
+OPTIONAL_GROUPS = frozenset({"restricted"})
 ATTRIBUTES = "login nosuperuser nobypassrls nocreatedb nocreaterole noreplication inherit"
 
 
@@ -41,16 +47,17 @@ def username(prefix: str, kind: str) -> str:
 def provision(conn: psycopg.Connection, *, prefix: str, passwords: Mapping[str, str]) -> dict[str, str]:
     """Create or update the three login users inside the caller's transaction. Returns {kind: username}."""
     for kind in GROUPS:
-        if not passwords.get(kind):
+        if not passwords.get(kind) and kind not in OPTIONAL_GROUPS:
             raise ValueError(f"no password for the {kind} user")
+    wanted = {kind: group for kind, group in GROUPS.items() if passwords.get(kind)}
     present = {
-        r[0] for r in conn.execute("select rolname from pg_roles where rolname = any(%s)", (list(GROUPS.values()),))
+        r[0] for r in conn.execute("select rolname from pg_roles where rolname = any(%s)", (list(wanted.values()),))
     }
-    missing = sorted(set(GROUPS.values()) - present)
+    missing = sorted(set(wanted.values()) - present)
     if missing:
         raise MissingGroupRoleError(f"group roles missing, run migrations first: {missing}")
     created: dict[str, str] = {}
-    for kind, group in GROUPS.items():
+    for kind, group in wanted.items():
         name = username(prefix, kind)
         exists = conn.execute("select 1 from pg_roles where rolname = %s", (name,)).fetchone() is not None
         verb = "alter role" if exists else "create role"
@@ -91,6 +98,7 @@ def main(argv: list[str] | None = None) -> int:
         "app": settings.db_app_password.get_secret_value() if settings.db_app_password else "",
         "readonly": settings.db_readonly_password.get_secret_value() if settings.db_readonly_password else "",
         "admin": settings.db_admin_password.get_secret_value() if settings.db_admin_password else "",
+        "restricted": settings.db_restricted_password.get_secret_value() if settings.db_restricted_password else "",
     }
     empty = [k for k, v in passwords.items() if not v]
     if empty:

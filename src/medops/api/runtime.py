@@ -18,6 +18,7 @@ from medops.api.auth import Authenticator, JwtVerifier, PgDirectory, RemoteJwks
 from medops.api.contracts import AskRequest
 from medops.application.audit import TraceStore
 from medops.application.metrics import MetricsSource, PgMetricsSource
+from medops.application.payloads import PayloadReader, PayloadWriter
 from medops.application.tasks import TaskStore
 from medops.core.config import Settings
 from medops.core.errors import ErrorCode, InfrastructureError
@@ -30,6 +31,7 @@ from medops.harness.retrieval_port import ProductionRetrieval
 from medops.infrastructure.db.audit import PgTraceStore
 from medops.infrastructure.db.documents import PgDocumentAdminStore
 from medops.infrastructure.db.idempotency import PgReceiptStore
+from medops.infrastructure.db.payloads import PgPayloadStore
 from medops.infrastructure.db.policies import PgPolicyStore
 from medops.infrastructure.db.tasks import PgTaskStore
 from medops.infrastructure.llm.budget import BudgetedGateway, InMemorySpendLedger
@@ -92,6 +94,8 @@ class ProductionRuntime:
     as_of: date | None = None
     _dsn: str = field(default="", repr=False)
     _admin_dsn: str | None = field(default=None, repr=False)
+    _restricted_dsn: str | None = field(default=None, repr=False)
+    _key_provider: Any = field(default=None, repr=False)
 
     @classmethod
     def from_settings(
@@ -125,6 +129,13 @@ class ProductionRuntime:
         )
         runtime._dsn = settings.database_url.get_secret_value()
         runtime._admin_dsn = settings.database_admin_url.get_secret_value() if settings.database_admin_url else None
+        runtime._restricted_dsn = (
+            settings.database_restricted_url.get_secret_value() if settings.database_restricted_url else None
+        )
+        if settings.payload_key_file:
+            from medops.core.envelope import LocalFileKeyProvider
+
+            runtime._key_provider = LocalFileKeyProvider(settings.payload_key_file)
         return runtime
 
     @contextmanager
@@ -155,6 +166,29 @@ class ProductionRuntime:
 
     def receipt_store(self, conn: Any) -> PgReceiptStore:
         return PgReceiptStore(conn)
+
+    def payload_writer(self, conn: Any) -> PayloadWriter | None:
+        """None when no key file is configured: traces are still written, replay payloads are not (dev default)."""
+        if self._key_provider is None:
+            return None
+        return PayloadWriter(
+            store=PgPayloadStore(conn), provider=self._key_provider, retention_days=self.settings.payload_retention_days
+        )
+
+    @contextmanager
+    def restricted_connection(self) -> Iterator[psycopg.Connection[Any]]:
+        if not self._restricted_dsn or self._key_provider is None:
+            raise InfrastructureError(
+                ErrorCode.dependency_unavailable,
+                detail="DATABASE_RESTRICTED_URL / PAYLOAD_KEY_FILE not configured",
+                retryable=False,
+            )
+        with psycopg.connect(self._restricted_dsn) as conn:
+            with conn.transaction():
+                yield conn
+
+    def payload_reader(self, conn: Any) -> PayloadReader:
+        return PayloadReader(store=PgPayloadStore(conn), provider=self._key_provider)
 
     def bind_identity(self, conn: Any, user: UserContext) -> None:
         conn.execute(

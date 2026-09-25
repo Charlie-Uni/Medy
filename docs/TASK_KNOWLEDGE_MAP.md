@@ -109,7 +109,7 @@ M1-01 同时是“部分”和“阻塞”，上表按“部分”计。P1/P2 11
 | M3-04 | 已实现（数据库租约 worker：原子转换、attempt、失联回收、上限；真实库端到端通过，记录 59、67） | worker 原子状态转换、租约、崩溃恢复 | 队列（Redis Streams/arq）；租约与可见性超时；at-least-once；状态机原子更新 |
 | M3-05 | 部分（JWKS 静态 + 发现/轮换、HMAC 假名、principals 目录、group allowlist；IdP 选择待做，记录 58） | OIDC 接入与服务端 scope 映射 | OAuth2/OIDC 流程；JWT 结构与 iss/aud/exp/签名；JWKS 轮换；最小权限 |
 | M3-06 | 已实现（四个只读工具 + bearer + 只读角色，记录 62；stdio 与 Streamable HTTP 真实往返均通过，记录 67 / 72） | 只读 MCP 四个工具 | MCP 协议与 Streamable HTTP；bearer 鉴权；只读由数据库角色证明 |
-| M3-07 | 部分（Trace 摘要 + span + 升级记录落库、fail-closed、假名与追加写，真实库核对，记录 60、67；OTel 记录 66；受限载荷加密待做；MCP 调用 Trace，记录 73） | 完整 Trace、脱敏、受限 payload 授权 | 结构化日志；HMAC 假名；追加写审计；加密与访问控制 |
+| M3-07 | 已实现（Trace / span / 升级记录 fail-closed，假名与追加写，MCP 调用 Trace，受限载荷信封加密 + 独立角色 + 访问日志 + 保留期，记录 60 / 73 / 76） | 完整 Trace、脱敏、受限 payload 授权 | 结构化日志；HMAC 假名；追加写审计；加密与访问控制 |
 | M3-08 | 部分（单条回放：独立 run id、差异报告、replays 表，记录 65；数据集级回放随 M4） | Trace replay 生成差异报告 | 确定性回放；版本固定；run id 隔离；缓存短路风险 |
 | M3-09 | 部分（OTel spans 覆盖 API/节点/模型/检索/worker，OTLP 导出可配置，记录 66；Langfuse 待决策） | OTel 与 Langfuse 覆盖全部 spans | traces/spans/context propagation；采样；exporter 与后端 |
 | M3-10 | 部分（数据库聚合的 /metrics，低基数标签；告警规则待做，记录 64） | 指标与告警仪表盘 | counter/gauge/histogram；指标基数；分位数计算；告警阈值 |

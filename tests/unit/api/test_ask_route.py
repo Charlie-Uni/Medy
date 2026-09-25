@@ -72,6 +72,9 @@ class FakeRuntime:
     def trace_store(self, conn):
         return self.traces
 
+    def payload_writer(self, conn):
+        return None  # restricted payloads are off unless a test installs a writer (DEC-013)
+
     def ready(self):
         return self.readiness
 

@@ -43,6 +43,8 @@ EXPECTED_TABLES = {
     "policies",
     "policy_releases",
     "released_policies",
+    "trace_payloads",
+    "payload_access_log",
 }
 EXPECTED_TYPES = {
     "dept",
@@ -178,7 +180,7 @@ def set_actor(conn: psycopg.Connection, actor: str = "reviewer-01", reason: str 
 
 def test_single_head_and_offline_sql_render(migrated):
     heads = ScriptDirectory.from_config(alembic_config(migrated)).get_heads()
-    assert heads == ["0014"]
+    assert heads == ["0015"]
 
 
 def test_upgrade_downgrade_upgrade_round_trip_leaves_nothing_behind(scratch_database):
@@ -214,7 +216,7 @@ def test_upgrade_downgrade_upgrade_round_trip_leaves_nothing_behind(scratch_data
     # group roles are cluster-wide and deliberately survive a downgrade (0002 docstring)
     with psycopg.connect(scratch_database) as c:
         roles = {r[0] for r in c.execute("select rolname from pg_roles where rolname like 'medops_%'")}
-    assert {"medops_app", "medops_readonly", "medops_admin_role", "medops_loop_role"} <= roles
+    assert {"medops_app", "medops_readonly", "medops_admin_role", "medops_loop_role", "medops_restricted_role"} <= roles
     run_alembic(scratch_database, "upgrade", "head")
     assert _inventory(scratch_database)["tables"] == EXPECTED_TABLES | {"alembic_version"}
 

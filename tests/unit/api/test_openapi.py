@@ -32,6 +32,7 @@ EXPECTED_OPERATIONS = {
     ("/admin/policies/{policy_id}/approve", "post"): ("PolicyDecisionRequest", "200", "PolicyResponse"),
     ("/admin/policies/{policy_id}/release", "post"): ("PolicyReleaseRequest", "200", "PolicyResponse"),
     ("/admin/policies/{policy_id}/rollback", "post"): ("PolicyRollbackRequest", "200", "PolicyResponse"),
+    ("/admin/traces/{trace_id}/payload", "get"): (None, "200", "TracePayloadResponse"),
 }
 IDEMPOTENT_OPERATIONS = {
     ("/v1/tasks", "post"),

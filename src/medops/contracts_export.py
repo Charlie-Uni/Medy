@@ -42,6 +42,7 @@ API_MODELS: dict[str, type[BaseModel]] = {
     "PolicyDecisionRequest": api.PolicyDecisionRequest,
     "PolicyReleaseRequest": api.PolicyReleaseRequest,
     "PolicyRollbackRequest": api.PolicyRollbackRequest,
+    "TracePayloadResponse": api.TracePayloadResponse,
     "ErrorResponse": ErrorResponse,
 }
 MCP_MODELS: dict[str, type[BaseModel]] = {

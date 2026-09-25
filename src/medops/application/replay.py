@@ -62,6 +62,7 @@ class ReplayService:
     build_deps: Callable[[UserContext], HarnessDeps]
     resolve_user: Callable[[str], UserContext | None]
     clock: Callable[[], datetime] = lambda: datetime.now(UTC)
+    payload_writer: Any = None  # PayloadWriter | None (DEC-013): the replay's own payload, same transaction
 
     def replay(self, admin: UserContext, source_trace_id: str, request: ReplayRequest) -> ReplayReport:
         source = self.store.read_trace(source_trace_id)
@@ -95,6 +96,8 @@ class ReplayService:
             duration_ms=max((self.clock() - started).total_seconds() * 1000, 0.0),
         )
         record_or_fail_closed(self.store, trace, None)  # a replay is diagnostic: no human escalation
+        if self.payload_writer is not None:
+            self.payload_writer.record_run(run, query=trace.query, node="replay")
         source_versions = VersionSet.model_validate(source.versions)
         src = _side(
             source.trace_id,

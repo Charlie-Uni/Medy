@@ -41,6 +41,7 @@ from medops.api.contracts import (
     ReplayRequest,
     TaskCreateRequest,
     TaskResponse,
+    TracePayloadResponse,
 )
 from medops.application.admin import (
     DocumentActions,
@@ -53,6 +54,7 @@ from medops.application.admin import (
 )
 from medops.application.audit import FeedbackService, TraceStore, record_or_fail_closed, trace_from_run
 from medops.application.metrics import MetricsSource, has_role, render_prometheus
+from medops.application.payloads import PayloadReader, PayloadWriter
 from medops.application.replay import ReplayService
 from medops.application.tasks import TaskService, TaskStore, to_response
 from medops.core.errors import HTTP_STATUS, BusinessError, ErrorCode, ErrorResponse, MedOpsError
@@ -118,6 +120,13 @@ class ApiRuntime(Protocol):
     def policy_store(self, conn: Any) -> PolicyStore: ...
 
     def receipt_store(self, conn: Any) -> ReceiptStore | None: ...
+
+    # M3-07 restricted payloads (DEC-013): writer on the request connection (None = disabled), reader on the restricted role
+    def payload_writer(self, conn: Any) -> PayloadWriter | None: ...
+
+    def restricted_connection(self) -> AbstractContextManager[Any]: ...
+
+    def payload_reader(self, conn: Any) -> PayloadReader: ...
 
     @property
     def monthly_cap_usd(self) -> float | None: ...
@@ -247,6 +256,9 @@ def create_app(
             )
             # the audit write is part of the request transaction: no trace, no answer (baseline 5.10)
             record_or_fail_closed(runtime.trace_store(conn), trace, escalation)
+            writer = runtime.payload_writer(conn)
+            if writer is not None:  # same transaction: the replay payload exists iff the trace exists
+                writer.record_run(run, query=body.query)
         return response
 
     def _tasks(conn: Any) -> TaskService:
@@ -280,6 +292,7 @@ def create_app(
                 versions=runtime.versions,
                 build_deps=deps_for,
                 resolve_user=lambda principal: runtime.resolve_user(conn, principal),
+                payload_writer=runtime.payload_writer(conn),
             )
             return service.replay(admin, trace_id, body)
 
@@ -310,6 +323,18 @@ def create_app(
             user = runtime.authenticator.authenticate(request.headers.get("authorization"), runtime.directory(conn))
             record = _tasks(conn).retry(user, task_id)
         return to_response(record)
+
+    @app.get("/admin/traces/{trace_id}/payload", response_model=TracePayloadResponse)
+    def read_trace_payload(trace_id: str, purpose: str, request: Request) -> TracePayloadResponse:
+        """Restricted replay payload (DEC-013): admin role, stated purpose, every read logged before plaintext leaves."""
+        if not 8 <= len(purpose) <= 500:
+            raise BusinessError(ErrorCode.invalid_request, "purpose must be 8-500 characters")
+        with runtime.connection() as conn:
+            admin = runtime.authenticator.authenticate(request.headers.get("authorization"), runtime.directory(conn))
+        if not has_role(admin.roles, "admin"):
+            raise BusinessError(ErrorCode.forbidden, "restricted payloads require the admin role")
+        with runtime.restricted_connection() as rconn:
+            return runtime.payload_reader(rconn).read(admin, trace_id, purpose)
 
     # ------------------------------------------------------------------ admin: documents and policies (M3-03, DEC-012)
 

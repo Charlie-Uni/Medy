@@ -31,6 +31,17 @@
           "type": "string"
         }
       },
+      "PurposeQuery": {
+        "description": "Why the restricted payload is being read (8-500 characters); written to the access log with the caller's pseudonym (DEC-013).",
+        "in": "query",
+        "name": "purpose",
+        "required": true,
+        "schema": {
+          "maxLength": 500,
+          "minLength": 8,
+          "type": "string"
+        }
+      },
       "TaskId": {
         "description": "Task identifier returned by `POST /v1/tasks`.",
         "in": "path",
@@ -1732,6 +1743,80 @@
         "title": "TaskStatus",
         "type": "string"
       },
+      "TracePayloadItem": {
+        "additionalProperties": false,
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "expires_at": {
+            "format": "date-time",
+            "title": "Expires At",
+            "type": "string"
+          },
+          "kek_version": {
+            "minLength": 1,
+            "title": "Kek Version",
+            "type": "string"
+          },
+          "kind": {
+            "minLength": 1,
+            "title": "Kind",
+            "type": "string"
+          },
+          "node": {
+            "minLength": 1,
+            "title": "Node",
+            "type": "string"
+          },
+          "payload": {
+            "$ref": "#/components/schemas/JsonValue"
+          }
+        },
+        "required": [
+          "node",
+          "kind",
+          "created_at",
+          "expires_at",
+          "kek_version",
+          "payload"
+        ],
+        "title": "TracePayloadItem",
+        "type": "object"
+      },
+      "TracePayloadResponse": {
+        "additionalProperties": false,
+        "description": "Decrypted restricted payload of one trace; every read is logged with the caller's pseudonym and purpose.",
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/TracePayloadItem"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "purpose": {
+            "maxLength": 500,
+            "minLength": 8,
+            "title": "Purpose",
+            "type": "string"
+          },
+          "trace_id": {
+            "pattern": "^[0-9a-f]{32}$",
+            "title": "Trace Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "trace_id",
+          "purpose",
+          "items"
+        ],
+        "title": "TracePayloadResponse",
+        "type": "object"
+      },
       "VersionSet": {
         "additionalProperties": false,
         "description": "Every version that shapes a run; recorded on each trace (INV-HAR-05) and inside operation keys.",
@@ -2363,6 +2448,66 @@
           "admin"
         ]
       }
+    },
+    "/admin/traces/{trace_id}/payload": {
+      "get": {
+        "description": "Node inputs, the evidence snapshot and the model output of one request, envelope-encrypted at request time (AES-256-GCM per-row DEK, versioned KEK) and stored under a separate database role (INV-OBS-03, DEC-013). Requires the admin role and a `purpose`; the read is logged before any plaintext is returned. `404 not_found` when the payload was never written or has been purged (90 days; traces with an escalation keep it until 30 days after the escalation closes).",
+        "operationId": "readTracePayload",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TracePayloadResponse"
+                }
+              }
+            },
+            "description": "Decrypted payload items."
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "500": {
+            "$ref": "#/components/responses/Error500"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          },
+          "504": {
+            "$ref": "#/components/responses/Error504"
+          }
+        },
+        "summary": "Read the restricted replay payload of a trace (admin, logged)",
+        "tags": [
+          "admin"
+        ]
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/TraceIdPath"
+        },
+        {
+          "$ref": "#/components/parameters/PurposeQuery"
+        }
+      ]
     },
     "/admin/traces/{trace_id}/replay": {
       "parameters": [

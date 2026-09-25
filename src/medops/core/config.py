@@ -79,6 +79,7 @@ class Settings(BaseSettings):
     database_admin_url: SecretStr | None = None
     # Read-only LOGIN user for the MCP server (INV-AUTH-04): the database proves the tools cannot write.
     database_readonly_url: SecretStr | None = None
+    database_restricted_url: SecretStr | None = None  # restricted payload reader / retention (DEC-013)
     redis_url: SecretStr
     # Retrieval candidate cache TTL (M1-19). Entries also die with the department epoch on publish events.
     retrieval_cache_ttl_seconds: int = Field(default=300, ge=1, le=86400)
@@ -97,10 +98,14 @@ class Settings(BaseSettings):
     db_app_password: SecretStr | None = None
     db_readonly_password: SecretStr | None = None
     db_admin_password: SecretStr | None = None
+    db_restricted_password: SecretStr | None = None  # optional LOGIN user for medops_restricted_role
 
     # Secrets that later milestones consume; masked everywhere.
     redis_password: SecretStr | None = None
     identity_pseudonym_key: SecretStr | None = None  # HMAC key for surrogate ids (INV-OBS-02)
+    payload_key_file: str | None = None  # JSON KEK file for restricted payloads (DEC-013); unset = payloads not written
+    payload_retention_days: int = Field(default=90, ge=1)
+    escalation_payload_grace_days: int = Field(default=30, ge=0)
     # Runtime LLM provider (ADR-0010 / DEC-009): OpenAI API key and the monthly spend cap enforced by the
     # Model Gateway ledger (M2-06). Offline drafting/review keep using subscription CLIs and never read this key.
     openai_api_key: SecretStr | None = None

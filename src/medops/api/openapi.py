@@ -33,6 +33,7 @@ TASK_ID_PARAMETER = "TaskId"
 TRACE_ID_PARAMETER = "TraceIdPath"
 DOC_ID_PARAMETER = "DocumentIdPath"
 POLICY_ID_PARAMETER = "PolicyIdPath"
+PURPOSE_PARAMETER = "PurposeQuery"
 IDEMPOTENCY_TTL_MIN_SECONDS = 24 * 3600
 IDEMPOTENCY_TTL_DEFAULT_SECONDS = 7 * 24 * 3600
 """Baseline 3.2: keys are retained at least 24 h and not shorter than the task lifetime. The deployed value
@@ -314,6 +315,25 @@ def _paths() -> dict[str, Any]:
                 parameters=(IDEMPOTENCY_PARAMETER,),
             ),
         },
+        "/admin/traces/{trace_id}/payload": {
+            "parameters": [
+                {"$ref": f"#/components/parameters/{TRACE_ID_PARAMETER}"},
+                {"$ref": f"#/components/parameters/{PURPOSE_PARAMETER}"},
+            ],
+            "get": _operation(
+                "readTracePayload",
+                "Read the restricted replay payload of a trace (admin, logged)",
+                "Node inputs, the evidence snapshot and the model output of one request, envelope-encrypted at request "
+                "time (AES-256-GCM per-row DEK, versioned KEK) and stored under a separate database role (INV-OBS-03, "
+                "DEC-013). Requires the admin role and a `purpose`; the read is logged before any plaintext is "
+                "returned. `404 not_found` when the payload was never written or has been purged (90 days; traces with "
+                "an escalation keep it until 30 days after the escalation closes).",
+                tag="admin",
+                success_status=200,
+                success_description="Decrypted payload items.",
+                response_model="TracePayloadResponse",
+            ),
+        },
         "/admin/traces/{trace_id}/replay": {
             "parameters": [{"$ref": f"#/components/parameters/{TRACE_ID_PARAMETER}"}],
             "post": _operation(
@@ -390,6 +410,13 @@ def build_openapi(models: Mapping[str, type[BaseModel]]) -> dict[str, Any]:
                     "required": True,
                     "description": "Policy identifier (UUID).",
                     "schema": {"type": "string", "format": "uuid"},
+                },
+                PURPOSE_PARAMETER: {
+                    "name": "purpose",
+                    "in": "query",
+                    "required": True,
+                    "description": "Why the restricted payload is being read (8-500 characters); written to the access log with the caller's pseudonym (DEC-013).",
+                    "schema": {"type": "string", "minLength": 8, "maxLength": 500},
                 },
             },
             "securitySchemes": {

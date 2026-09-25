@@ -429,3 +429,23 @@ class PolicyReleaseRequest(ApiModel):
 
 class PolicyRollbackRequest(ApiModel):
     reason: Annotated[str, Field(min_length=1, max_length=500)]
+
+
+# ------------------------------------------------------------------------------- admin: restricted payloads (M3-07, DEC-013)
+
+
+class TracePayloadItem(ApiModel):
+    node: NonEmptyStr
+    kind: NonEmptyStr  # input | evidence_snapshot | model_output
+    created_at: datetime
+    expires_at: datetime
+    kek_version: NonEmptyStr
+    payload: JsonValue
+
+
+class TracePayloadResponse(ApiModel):
+    """Decrypted restricted payload of one trace; every read is logged with the caller's pseudonym and purpose."""
+
+    trace_id: TraceId
+    purpose: Annotated[str, Field(min_length=8, max_length=500)]
+    items: tuple[TracePayloadItem, ...]
