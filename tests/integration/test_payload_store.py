@@ -77,8 +77,8 @@ def test_roles_and_retention(db):
             app.execute("select count(*) from trace_payloads")
         app.rollback()
     with psycopg.connect(db["users"]["admin"]) as admin:
-        with pytest.raises(pg_errors.InsufficientPrivilege):  # the admin role does not see payloads either
-            admin.execute("select count(*) from trace_payloads")
+        with pytest.raises(pg_errors.InsufficientPrivilege):  # the admin role never sees ciphertext or wrapped keys
+            admin.execute("select ciphertext, dek_wrapped from trace_payloads")
         admin.rollback()
     with psycopg.connect(db["users"]["restricted"]) as restricted:
         store = PgPayloadStore(restricted)
@@ -86,8 +86,10 @@ def test_roles_and_retention(db):
         assert len(rows) == 1 and rows[0]["sealed"].kek_version == "k1"
         store.log_access(PRINCIPAL, t_live, "incident review 42")
         restricted.commit()  # the access log row must survive the failing statement below
-        with pytest.raises(pg_errors.InsufficientPrivilege):  # restricted reads, never rewrites
-            restricted.execute("update trace_payloads set kek_version = 'x'")
+        with pytest.raises(
+            pg_errors.InsufficientPrivilege
+        ):  # restricted reads and rewraps (0019): only those two columns
+            restricted.execute("update trace_payloads set ciphertext = %s", (b"x",))
         restricted.rollback()
         deleted = store.purge(now, escalation_grace_days=30)
         restricted.commit()

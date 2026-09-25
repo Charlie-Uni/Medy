@@ -1,0 +1,22 @@
+{
+ "dump": "medops_v2-20260925T135918Z.dump",
+ "dump_sha256": "463e0d9a2acd709c935645ae9546b3114d6a06055dd1a7ff5c1deeb12d7652d8",
+ "dump_bytes": 66770063,
+ "source": "medops_v2",
+ "scratch": "medops_v2_restore_drill",
+ "started_at": "2026-09-25T14:03:10+00:00",
+ "pg_restore_rc": 0,
+ "pg_restore_stderr_tail": "",
+ "restore_seconds": 88.3,
+ "alembic": "0019",
+ "tables": 34,
+ "total_rows": 63293,
+ "row_count_mismatches": {},
+ "tables_match": true,
+ "alembic_match": true,
+ "corpus_match": true,
+ "grantees_match": true,
+ "ok": true,
+ "scratch_dropped": true,
+ "finished_at": "2026-09-25T14:04:41+00:00"
+}

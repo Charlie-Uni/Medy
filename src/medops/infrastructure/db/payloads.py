@@ -9,6 +9,8 @@ from typing import Any
 
 from medops.core.envelope import Sealed
 
+StaleRows = list[dict[str, Any]]  # module scope: inside the class, `list` names the store's own method
+
 
 class PgPayloadStore:
     def __init__(self, conn: Any) -> None:
@@ -50,6 +52,38 @@ class PgPayloadStore:
             }
             for r in rows
         ]
+
+    def count_stale(self, current_version: str) -> int:
+        return int(
+            self._conn.execute(
+                "select count(*) from trace_payloads where kek_version <> %s", (current_version,)
+            ).fetchone()[0]
+        )
+
+    def stale(self, current_version: str, *, limit: int = 500) -> StaleRows:
+        """Rows still wrapped under an older KEK (key rotation, M5-06)."""
+        rows: list[Any] = self._conn.execute(
+            "select payload_id::text, ciphertext, nonce, dek_wrapped, kek_version from trace_payloads "
+            "where kek_version <> %s order by created_at limit %s",
+            (current_version, limit),
+        ).fetchall()
+        return [
+            {
+                "payload_id": r[0],
+                "ciphertext": bytes(r[1]),
+                "nonce": bytes(r[2]),
+                "dek_wrapped": bytes(r[3]),
+                "kek_version": r[4],
+            }
+            for r in rows
+        ]
+
+    def rewrap_row(self, payload_id: str, sealed: Sealed) -> None:
+        """Only these two columns may change (migration 0019 guard); the ciphertext is untouched by design."""
+        self._conn.execute(
+            "update trace_payloads set dek_wrapped = %s, kek_version = %s where payload_id = %s::uuid",
+            (sealed.dek_wrapped, sealed.kek_version, payload_id),
+        )
 
     def log_access(self, principal: str, trace_id: str, purpose: str) -> None:
         self._conn.execute(

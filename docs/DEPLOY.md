@@ -45,7 +45,7 @@ docker compose --env-file .env --profile app ps
 ## 持久化
 
 - PostgreSQL 数据卷 `postgres_data`（事实平面、任务、Trace、审计），Redis 数据卷 `redis_data`（检索缓存，可丢失），模型缓存卷 `model_cache`（可重建）。
-- 备份与恢复演练属 P1（基线 7.1）。
+- 备份、恢复演练、保留清理与密钥轮换见 `docs/OPERATIONS.md`（记录 87）；事故响应与发布 / 回滚操作见 `docs/RUNBOOK.md`。连续归档与异地灾备属 P1（基线 7.1）。
 
 ## 未做
 

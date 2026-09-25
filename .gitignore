@@ -47,3 +47,6 @@ evals/safety_set/synthetic/
 # process logs of harness runs stay local (rows/results/report are committed)
 evals/harness/runs/*/api.log
 evals/harness/runs/*/worker*.log
+
+# local logical backups (scripts/db_backup.py) never enter Git
+backups/

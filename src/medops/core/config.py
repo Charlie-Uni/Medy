@@ -112,6 +112,7 @@ class Settings(BaseSettings):
     policy_reload_ttl_s: float = Field(default=5.0, ge=0, le=300)  # released pointers re-read this often (M4-09)
     observation_window_hours: float = Field(default=24.0, ge=0, le=720)  # canary must sit this long before promote
     escalation_payload_grace_days: int = Field(default=30, ge=0)
+    trace_retention_days: int = Field(default=365, ge=90)  # decision 86: traces / escalations kept 365 days (M5-06)
     # Runtime LLM provider (ADR-0010 / DEC-009): OpenAI API key and the monthly spend cap enforced by the
     # Model Gateway ledger (M2-06). Offline drafting/review keep using subscription CLIs and never read this key.
     openai_api_key: SecretStr | None = None
