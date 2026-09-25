@@ -191,11 +191,16 @@ def compute_gate(
 REQUIRED_GATE_KEYS = ("passed", "target", "non_target", "safety", "reliability", "thresholds", "replay_set", "arms")
 
 
-def gate_report_valid(gate: Any) -> bool:
+def gate_report_valid(gate: Any, *, allow_drill: bool = False) -> bool:
     """What a release needs in `policies.evidence.gate`: a full report (M4-07 shape), passed, on a frozen replay set
-    with the safety set complete and the reliability floor met. A bare `{"passed": true}` is not enough."""
+    with the safety set complete and the reliability floor met. A bare `{"passed": true}` is not enough. With
+    `allow_drill` (dev environments only, record 83 C) a report marked `drill: true` may skip the reliability floor so
+    the release / rollback drill does not need a paid evaluation; the marker stays visible in the evidence."""
     if not isinstance(gate, Mapping) or gate.get("passed") is not True:
         return False
+    if allow_drill and gate.get("drill") is True:
+        replay = gate.get("replay_set") or {}
+        return isinstance(replay.get("dataset_hash"), str) and len(replay["dataset_hash"]) == 64 and "arms" in gate
     if any(k not in gate for k in REQUIRED_GATE_KEYS):
         return False
     rel = gate.get("reliability") or {}

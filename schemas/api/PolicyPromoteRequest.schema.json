@@ -1,0 +1,38 @@
+{
+  "additionalProperties": false,
+  "description": "Widen a canary (M4-09): only upwards, only after the observation window (or with a recorded override).",
+  "properties": {
+    "canary_percent": {
+      "maximum": 100,
+      "minimum": 11,
+      "title": "Canary Percent",
+      "type": "integer"
+    },
+    "override_reason": {
+      "anyOf": [
+        {
+          "maxLength": 500,
+          "minLength": 20,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Override Reason"
+    },
+    "reason": {
+      "maxLength": 500,
+      "minLength": 1,
+      "title": "Reason",
+      "type": "string"
+    }
+  },
+  "required": [
+    "canary_percent",
+    "reason"
+  ],
+  "title": "PolicyPromoteRequest",
+  "type": "object"
+}

@@ -63,6 +63,7 @@ class ReplayService:
     resolve_user: Callable[[str], UserContext | None]
     clock: Callable[[], datetime] = lambda: datetime.now(UTC)
     payload_writer: Any = None  # PayloadWriter | None (DEC-013): the replay's own payload, same transaction
+    versions_for: Callable[[UserContext], VersionSet] | None = None  # M4-09: the replayed principal's routed versions
 
     def replay(self, admin: UserContext, source_trace_id: str, request: ReplayRequest) -> ReplayReport:
         source = self.store.read_trace(source_trace_id)
@@ -76,8 +77,9 @@ class ReplayService:
         replay_trace_id = uuid.uuid4().hex
         replay_run_id = uuid.uuid4().hex  # independent of the source run: no operation key can be reused
         deps = self.build_deps(user)
+        versions = self.versions_for(user) if self.versions_for is not None else self.versions
         state = initial_state(
-            user=user, query=source.query, versions=self.versions, trace_id=replay_trace_id, run_id=replay_run_id
+            user=user, query=source.query, versions=versions, trace_id=replay_trace_id, run_id=replay_run_id
         )
         started = self.clock()
         run = run_ask(state, deps)
@@ -88,7 +90,7 @@ class ReplayService:
             kind="replay",
             user=user,
             query=source.query,
-            versions=self.versions,
+            versions=versions,
             outcome=outcome,
             model_calls=meter.calls if meter else 0,
             tokens=meter.tokens if meter else run.state.budget.used,

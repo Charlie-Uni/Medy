@@ -431,6 +431,14 @@ class PolicyRollbackRequest(ApiModel):
     reason: Annotated[str, Field(min_length=1, max_length=500)]
 
 
+class PolicyPromoteRequest(ApiModel):
+    """Widen a canary (M4-09): only upwards, only after the observation window (or with a recorded override)."""
+
+    canary_percent: Annotated[int, Field(ge=11, le=100)]
+    reason: Annotated[str, Field(min_length=1, max_length=500)]
+    override_reason: Annotated[str, Field(min_length=20, max_length=500)] | None = None
+
+
 # ------------------------------------------------------------------------------- admin: restricted payloads (M3-07, DEC-013)
 
 

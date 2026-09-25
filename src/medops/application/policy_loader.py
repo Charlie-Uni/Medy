@@ -20,9 +20,10 @@ from __future__ import annotations
 import hashlib
 from collections.abc import Mapping
 from dataclasses import dataclass, field
+from datetime import datetime
 from typing import Any
 
-from medops.domain.state import MAX_EVIDENCE
+from medops.domain.state import MAX_EVIDENCE, VersionSet
 from medops.retrieval.hybrid import HybridConfig
 
 SUPPORTED_RELEASE_TARGETS: frozenset[tuple[str, str]] = frozenset(
@@ -174,3 +175,101 @@ def load_released(conn: Any) -> ReleasedPolicySet:
         if (p.kind, p.name) in SUPPORTED_RELEASE_TARGETS:
             validate_diff(p.kind, p.name, p.diff)
     return ReleasedPolicySet(policies)
+
+
+# ------------------------------------------------------------------------------------------ canary routing (M4-09)
+
+
+@dataclass(frozen=True)
+class ReleaseTarget:
+    """One (kind, name) pointer with its canary state: `current` is the released policy, `previous` the policy the
+    canary's remaining traffic still uses (None = the repository constants), `canary_percent` the share on `current`."""
+
+    kind: str
+    name: str
+    current: ReleasedPolicy
+    canary_percent: int
+    previous: ReleasedPolicy | None
+    since: datetime | None
+
+
+@dataclass(frozen=True)
+class ReleaseState:
+    targets: tuple[ReleaseTarget, ...] = ()
+
+    def all_current(self) -> ReleasedPolicySet:
+        return ReleasedPolicySet(tuple(t.current for t in self.targets))
+
+    def for_principal(self, principal: str) -> RoutedPolicies:
+        """Stable split: the same principal always lands on the same side of every canary (sha256 of the principal
+        pseudonym and the target, mod 100, below the canary percentage -> the new policy)."""
+        chosen: list[ReleasedPolicy] = []
+        canary: list[str] = []
+        for t in self.targets:
+            if t.canary_percent >= 100:
+                chosen.append(t.current)
+                continue
+            bucket = int(hashlib.sha256(f"{principal}|{t.kind}/{t.name}".encode()).hexdigest(), 16) % 100
+            if bucket < t.canary_percent:
+                chosen.append(t.current)
+                canary.append(t.current.policy_id)
+            elif t.previous is not None:
+                chosen.append(t.previous)
+        return RoutedPolicies(ReleasedPolicySet(tuple(chosen)), tuple(canary))
+
+
+@dataclass(frozen=True)
+class RoutedPolicies:
+    policies: ReleasedPolicySet
+    canary_ids: tuple[str, ...] = ()
+
+    def policy_version(self, base: str) -> str:
+        """`base+rel:<ids>` for fully released policies, `+canary:<ids>` for the ones this request got as a canary."""
+        full = sorted(
+            p.policy_id.replace("-", "")[:8] for p in self.policies.policies if p.policy_id not in self.canary_ids
+        )
+        canary = sorted(pid.replace("-", "")[:8] for pid in self.canary_ids)
+        out = base
+        if full:
+            out += "+rel:" + ",".join(full)
+        if canary:
+            out += "+canary:" + ",".join(canary)
+        return out
+
+
+_STATE_SQL = """
+select r.kind, r.name, p.policy_id::text, p.version, p.diff,
+       coalesce(l.canary_percent, 100), l.previous_policy::text, l.occurred_at,
+       prev.version, prev.diff
+  from released_policies r
+  join policies p on p.policy_id = r.policy_id
+  left join lateral (
+        select canary_percent, previous_policy, occurred_at from policy_releases
+         where policy_id = r.policy_id and action in ('release', 'promote')
+         order by occurred_at desc limit 1) l on true
+  left join policies prev on prev.policy_id = l.previous_policy
+ order by r.kind, r.name
+"""
+
+
+def load_release_state(conn: Any) -> ReleaseState:
+    targets = []
+    for kind, name, pid, version, diff, percent, prev_id, since, prev_version, prev_diff in conn.execute(
+        _STATE_SQL
+    ).fetchall():
+        current = ReleasedPolicy(pid, kind, name, version, dict(diff or {}))
+        if (kind, name) in SUPPORTED_RELEASE_TARGETS:
+            validate_diff(kind, name, current.diff)
+        previous = ReleasedPolicy(prev_id, kind, name, prev_version, dict(prev_diff or {})) if prev_id else None
+        targets.append(ReleaseTarget(kind, name, current, int(percent), previous, since))
+    return ReleaseState(tuple(targets))
+
+
+@dataclass(frozen=True)
+class RequestPolicies:
+    """What one request runs under: the routed policy set, the version set that names it, and which of the policies
+    reached this request as a canary."""
+
+    policies: ReleasedPolicySet
+    versions: VersionSet
+    canary_ids: tuple[str, ...] = ()

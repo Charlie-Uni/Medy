@@ -22,6 +22,7 @@ from medops.api.contracts import (
     PolicyDecision,
     PolicyDecisionRequest,
     PolicyListResponse,
+    PolicyPromoteRequest,
     PolicyReleaseRequest,
     PolicyResponse,
     PolicyRollbackRequest,
@@ -185,17 +186,23 @@ class PolicyStore(Protocol):
 
     def rollback(self, policy_id: str, *, kind: str, name: str, actor: str, reason: str) -> str | None: ...
 
+    def last_release(self, policy_id: str) -> dict[str, Any] | None: ...
 
-def gate_passed(evidence: Mapping[str, Any]) -> bool:
+    def promote(self, policy_id: str, *, canary_percent: int, actor: str, reason: str) -> None: ...
+
+
+def gate_passed(evidence: Mapping[str, Any], *, allow_drill: bool = False) -> bool:
     """M4-08: the candidate must carry a full replay gate report (`medops.loop.gate`) that passed on a frozen replay
     set with the safety set complete and the reliability floor met; a bare `{"passed": true}` is refused."""
-    return gate_report_valid(evidence.get("gate"))
+    return gate_report_valid(evidence.get("gate"), allow_drill=allow_drill)
 
 
 @dataclass
 class PolicyService:
     store: PolicyStore
     clock: Callable[[], datetime] = lambda: datetime.now(UTC)
+    observation_window: timedelta = timedelta(hours=24)  # M4-09: a canary sits this long before a promote
+    allow_drill: bool = False  # dev only (record 83 C): `gate.drill` reports may release without the reliability floor
 
     def list_candidates(self) -> PolicyListResponse:
         items = tuple(PolicyResponse.model_validate(r) for r in self.store.list(status=PolicyStatus.candidate.value))
@@ -228,7 +235,7 @@ class PolicyService:
             raise BusinessError(
                 ErrorCode.status_conflict, f"policy is {current.status.value}, only approved policies can be released"
             )
-        if not gate_passed(current.evidence):
+        if not gate_passed(current.evidence, allow_drill=self.allow_drill):
             raise BusinessError(ErrorCode.gate_not_passed, "release requires a passing gate report in evidence.gate")
         if (current.kind.value, current.name) not in SUPPORTED_RELEASE_TARGETS:
             raise BusinessError(
@@ -244,6 +251,36 @@ class PolicyService:
             actor=user.user_id,
             reason=request.reason,
         )
+        return self.get(policy_id)
+
+    def promote(self, user: UserContext, policy_id: str, request: PolicyPromoteRequest) -> PolicyResponse:
+        """Widen the canary of the released policy (M4-09): approver who is not the author (four-eyes), only upwards,
+        only after the observation window unless an override reason is recorded; the pointer itself never moves."""
+        current = self.get(policy_id)
+        if current.status is not PolicyStatus.released or not current.released:
+            raise BusinessError(ErrorCode.status_conflict, "only the currently released policy can be promoted")
+        if current.created_by == user.user_id:
+            raise BusinessError(ErrorCode.forbidden, "four-eyes: the author of a candidate cannot promote it")
+        last = self.store.last_release(policy_id)
+        percent = int(last["canary_percent"]) if last and last.get("canary_percent") is not None else 100
+        if percent >= 100 or request.canary_percent <= percent:
+            raise BusinessError(
+                ErrorCode.status_conflict,
+                f"canary is at {percent}%; promote must widen it (got {request.canary_percent}%)",
+            )
+        since = last["occurred_at"] if last else None
+        now = self.clock()
+        if since is not None and now - since < self.observation_window and not request.override_reason:
+            remaining = self.observation_window - (now - since)
+            raise BusinessError(
+                ErrorCode.observation_window_open,
+                f"observation window open for another {int(remaining.total_seconds() // 60)} minutes; "
+                "pass override_reason to promote anyway (it is logged)",
+            )
+        reason = (
+            request.reason if not request.override_reason else f"{request.reason} [override: {request.override_reason}]"
+        )
+        self.store.promote(policy_id, canary_percent=request.canary_percent, actor=user.user_id, reason=reason)
         return self.get(policy_id)
 
     def rollback(self, user: UserContext, policy_id: str, request: PolicyRollbackRequest) -> PolicyResponse:

@@ -5,10 +5,11 @@ behind the monthly budget, the operation-key ledger, and the pinned production m
 from __future__ import annotations
 
 import json
+import time
 from collections.abc import Iterator, Mapping, Sequence
 from contextlib import contextmanager
 from dataclasses import dataclass, field
-from datetime import date
+from datetime import date, timedelta
 from typing import Any
 
 import psycopg
@@ -19,7 +20,14 @@ from medops.api.contracts import AskRequest
 from medops.application.audit import TraceStore
 from medops.application.metrics import MetricsSource, PgMetricsSource
 from medops.application.payloads import PayloadReader, PayloadWriter
-from medops.application.policy_loader import ReleasedPolicySet, load_released
+from medops.application.policy_loader import (
+    ReleasedPolicySet,
+    ReleaseState,
+    RequestPolicies,
+    RoutedPolicies,
+    load_release_state,
+    load_released,
+)
 from medops.application.tasks import TaskStore
 from medops.core.config import Settings
 from medops.core.errors import ErrorCode, InfrastructureError
@@ -118,6 +126,10 @@ class ProductionRuntime:
     _key_provider: Any = field(default=None, repr=False)
     policies: ReleasedPolicySet = field(default_factory=ReleasedPolicySet.empty)  # what production applies (M4-03)
     _hybrid: HybridConfig | None = field(default=None, repr=False)
+    _state_cache: tuple[float, ReleaseState] | None = field(default=None, repr=False)  # TTL re-read (M4-09)
+    _rerankers: dict[int, Any] = field(default_factory=dict, repr=False)  # one reranker per released output size
+    _pinned: Any = field(default=None, repr=False)
+    _device: str = field(default="cpu", repr=False)
 
     @classmethod
     def from_settings(
@@ -164,6 +176,9 @@ class ProductionRuntime:
         runtime._dsn = dsn
         runtime.policies = released
         runtime._hybrid = hybrid
+        runtime._pinned = pinned
+        runtime._device = device
+        runtime._rerankers = {rerank_output: reranker}
         runtime._admin_dsn = settings.database_admin_url.get_secret_value() if settings.database_admin_url else None
         runtime._restricted_dsn = (
             settings.database_restricted_url.get_secret_value() if settings.database_restricted_url else None
@@ -234,8 +249,66 @@ class ProductionRuntime:
             "select set_config('medops.dept', %s, true)", (user.dept.value,)
         )  # transaction-local (baseline 3.7)
 
-    def build_deps(self, conn: Any, user: UserContext, request: AskRequest) -> HarnessDeps:
+    # ---- released policy per request (M4-09: canary split, rollback without restart)
+    @property
+    def observation_window(self) -> timedelta:
+        return timedelta(hours=float(getattr(self.settings, "observation_window_hours", 24.0)))
+
+    @property
+    def allow_drill(self) -> bool:
+        return getattr(getattr(self.settings, "app_env", None), "value", None) == "dev"
+
+    def release_state(self, conn: Any) -> ReleaseState:
+        """The released pointers with their canary state, re-read at most every `policy_reload_ttl_s` seconds."""
+        ttl = float(getattr(self.settings, "policy_reload_ttl_s", 5.0))
+        now = time.monotonic()
+        if self._state_cache is not None and now - self._state_cache[0] < ttl:
+            return self._state_cache[1]
+        state = load_release_state(conn)
+        self._state_cache = (now, state)
+        return state
+
+    def request_policies(self, routed: RoutedPolicies) -> RequestPolicies:
+        pol = routed.policies
+        hybrid = pol.hybrid_config(production_hybrid_config())
+        rerank_output = pol.rerank_output(RERANK_OUTPUT)
+        retrieval_version = (
+            compute_retrieval_version(production_retrieval_inputs(hybrid, rerank_output=rerank_output))
+            if pol.retrieval_overridden()
+            else PRODUCTION_RETRIEVAL_VERSION
+        )
+        versions = VersionSet(
+            policy_version=routed.policy_version(POLICY_VERSION),
+            retrieval_version=retrieval_version,
+            skill_version_set=self.versions.skill_version_set,
+            model_config_version=production_model_config_version() + pol.model_config_suffix(),
+        )
+        return RequestPolicies(policies=pol, versions=versions, canary_ids=routed.canary_ids)
+
+    def route_policies(self, conn: Any, user: UserContext) -> RequestPolicies:
+        """Stable per-principal split across every canary; the versions name exactly what this request runs under."""
+        return self.request_policies(self.release_state(conn).for_principal(user.user_id))
+
+    def reranker_for(self, output: int) -> Any:
+        if output not in self._rerankers:
+            if self._pinned is None:
+                return self.reranker
+            from medops.retrieval.pinned import PinnedReranker
+            from medops.retrieval.rerank import BgeRerankerV2M3
+
+            pinned, device = self._pinned, self._device
+            self._rerankers[output] = PinnedReranker(
+                pinned.call(lambda: BgeRerankerV2M3(device=device, output=output)), pinned
+            )
+        return self._rerankers[output]
+
+    def build_deps(
+        self, conn: Any, user: UserContext, request: AskRequest, routed: RequestPolicies | None = None
+    ) -> HarnessDeps:
         as_of = request.historical.as_of if request.historical is not None else self.as_of
+        routed = routed or self.route_policies(conn, user)
+        hybrid = routed.policies.hybrid_config(production_hybrid_config())
+        reranker = self.reranker_for(routed.policies.rerank_output(RERANK_OUTPUT))
 
         @contextmanager
         def conn_for_user(_user: UserContext) -> Iterator[Any]:
@@ -245,13 +318,13 @@ class ProductionRuntime:
             conn_for_user=conn_for_user,
             lexical_factory=lambda c: production_lexical_retriever(c, as_of=as_of),
             vector_factory=lambda c: production_vector_retriever(c, self.embedding, as_of=as_of),
-            reranker=self.reranker,
-            config=self._hybrid or production_hybrid_config(),
+            reranker=reranker,
+            config=hybrid,
             lexical_versions=production_lexical_versions(),
         )
         return HarnessDeps(
             retrieval=retrieval,
-            answer_system=self.policies.answer_system(ANSWER_SYSTEM),
+            answer_system=routed.policies.answer_system(ANSWER_SYSTEM),
             gateway=MeteredGateway(self.gateway),  # per-request calls/tokens/cost for the trace
             answer_model_id=PRODUCTION_ANSWER_MODEL,
             judge_model_id=PRODUCTION_JUDGE_MODEL,
@@ -284,7 +357,8 @@ class ProductionRuntime:
     ) -> SkillContext:
         as_of = date.fromisoformat(historical["as_of"]) if historical and historical.get("as_of") else self.as_of
         request = AskRequest(query="task", historical=None)
-        deps = self.build_deps(conn, user, request)
+        routed = self.route_policies(conn, user)
+        deps = self.build_deps(conn, user, request, routed)
 
         @contextmanager
         def conn_for_user(_user: UserContext) -> Iterator[Any]:
@@ -292,7 +366,7 @@ class ProductionRuntime:
 
         return SkillContext(
             user=user,
-            versions=self.versions,
+            versions=routed.versions,
             deps=deps,
             evidence_lookup=evidence_lookup(conn_for_user, as_of=as_of),
             doc_type_lookup=doc_type_lookup(conn_for_user),

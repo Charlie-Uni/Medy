@@ -31,6 +31,7 @@ EXPECTED_OPERATIONS = {
     ("/admin/policies/{policy_id}", "get"): (None, "200", "PolicyResponse"),
     ("/admin/policies/{policy_id}/approve", "post"): ("PolicyDecisionRequest", "200", "PolicyResponse"),
     ("/admin/policies/{policy_id}/release", "post"): ("PolicyReleaseRequest", "200", "PolicyResponse"),
+    ("/admin/policies/{policy_id}/promote", "post"): ("PolicyPromoteRequest", "200", "PolicyResponse"),
     ("/admin/policies/{policy_id}/rollback", "post"): ("PolicyRollbackRequest", "200", "PolicyResponse"),
     ("/admin/traces/{trace_id}/payload", "get"): (None, "200", "TracePayloadResponse"),
 }
@@ -41,6 +42,7 @@ IDEMPOTENT_OPERATIONS = {
     ("/admin/documents/{doc_id}/acl", "patch"),
     ("/admin/policies/{policy_id}/approve", "post"),
     ("/admin/policies/{policy_id}/release", "post"),
+    ("/admin/policies/{policy_id}/promote", "post"),
     ("/admin/policies/{policy_id}/rollback", "post"),
 }
 HTTP_METHODS = ("get", "put", "post", "delete", "patch", "head", "options", "trace")

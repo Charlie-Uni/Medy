@@ -41,6 +41,7 @@ API_MODELS: dict[str, type[BaseModel]] = {
     "PolicyResponse": api.PolicyResponse,
     "PolicyDecisionRequest": api.PolicyDecisionRequest,
     "PolicyReleaseRequest": api.PolicyReleaseRequest,
+    "PolicyPromoteRequest": api.PolicyPromoteRequest,
     "PolicyRollbackRequest": api.PolicyRollbackRequest,
     "TracePayloadResponse": api.TracePayloadResponse,
     "ErrorResponse": ErrorResponse,

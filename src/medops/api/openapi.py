@@ -299,6 +299,24 @@ def _paths() -> dict[str, Any]:
                 parameters=(IDEMPOTENCY_PARAMETER,),
             ),
         },
+        "/admin/policies/{policy_id}/promote": {
+            "parameters": [{"$ref": f"#/components/parameters/{POLICY_ID_PARAMETER}"}],
+            "post": _operation(
+                "promotePolicy",
+                "Widen the canary of the released policy (approver)",
+                "Only the currently released policy, only upwards (11–100), by an approver who is not the author "
+                "(four-eyes). Refused while the observation window since the last release / promote is open "
+                "(`409 observation_window_open`) unless `override_reason` is given; the override is logged. The "
+                "released pointer does not move; the runtime re-reads the canary share within its reload TTL. "
+                + IDEMPOTENCY_DESCRIPTION,
+                tag="admin",
+                success_status=200,
+                success_description="Policy after the promotion.",
+                response_model="PolicyResponse",
+                request_model="PolicyPromoteRequest",
+                parameters=(IDEMPOTENCY_PARAMETER,),
+            ),
+        },
         "/admin/policies/{policy_id}/rollback": {
             "parameters": [{"$ref": f"#/components/parameters/{POLICY_ID_PARAMETER}"}],
             "post": _operation(

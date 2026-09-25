@@ -114,7 +114,8 @@ class MemoryPolicies:
     def __init__(self) -> None:
         self.rows: dict[str, dict] = {}
         self.pointer: dict[tuple[str, str], str] = {}
-        self.log: list[tuple[str, str, str | None]] = []
+        self.log: list[tuple] = []
+        self.canary: dict[str, dict] = {}
 
     def add(
         self,
@@ -163,8 +164,27 @@ class MemoryPolicies:
         previous = self.pointer.get((kind, name))
         self.rows[policy_id]["status"] = "released"
         self.pointer[(kind, name)] = policy_id
+        self.canary[policy_id] = {
+            "action": "release",
+            "canary_percent": canary_percent,
+            "previous_policy": previous,
+            "occurred_at": datetime.now(UTC),
+        }
         self.log.append(("release", policy_id, previous))
         return previous
+
+    def last_release(self, policy_id):
+        return self.canary.get(policy_id)
+
+    def promote(self, policy_id, *, canary_percent, actor, reason):
+        prev = self.canary[policy_id]["previous_policy"]
+        self.canary[policy_id] = {
+            "action": "promote",
+            "canary_percent": canary_percent,
+            "previous_policy": prev,
+            "occurred_at": datetime.now(UTC),
+        }
+        self.log.append(("promote", policy_id, canary_percent))
 
     def rollback(self, policy_id, *, kind, name, actor, reason):
         previous = next((p for a, pid, p in reversed(self.log) if a == "release" and pid == policy_id), None)
@@ -388,3 +408,65 @@ def test_release_refuses_targets_the_runtime_cannot_apply():
         and "retrieval_params/hybrid" in r.json()["message"]
     )
     assert rt.policies.rows[pid]["status"] == "approved" and not rt.policies.pointer
+
+
+def test_promote_widens_a_canary_only_upwards_after_the_window_by_a_non_author_approver():
+    """M4-09: promote is an approver action (four-eyes), monotone, blocked inside the observation window unless an
+    override reason is recorded; the pointer never moves, only the canary percentage."""
+    c, rt = make()
+    author = pseudonym("approver-1", PSEUDONYM_KEY)
+    pid = rt.policies.add(created_by=author)
+    c.post(f"/admin/policies/{pid}/approve", json={"decision": "approve", "reason": "ok"}, headers=auth("approver-2"))
+    assert (
+        c.post(
+            f"/admin/policies/{pid}/promote", json={"canary_percent": 50, "reason": "r"}, headers=auth("approver-2")
+        ).status_code
+        == 409
+    )  # not released yet
+    c.post(f"/admin/policies/{pid}/release", json={"canary_percent": 10, "reason": "canary"}, headers=auth("admin-1"))
+    assert (
+        c.post(
+            f"/admin/policies/{pid}/promote", json={"canary_percent": 50, "reason": "r"}, headers=auth("admin-1")
+        ).status_code
+        == 403
+    )
+    own = c.post(
+        f"/admin/policies/{pid}/promote", json={"canary_percent": 50, "reason": "r"}, headers=auth("approver-1")
+    )
+    assert own.status_code == 403 and "four-eyes" in own.json()["message"]
+    early = c.post(
+        f"/admin/policies/{pid}/promote", json={"canary_percent": 50, "reason": "r"}, headers=auth("approver-2")
+    )
+    assert early.status_code == 409 and early.json()["code"] == "observation_window_open"
+    forced = c.post(
+        f"/admin/policies/{pid}/promote",
+        json={"canary_percent": 50, "reason": "drill", "override_reason": "release drill, decision-maker approved"},
+        headers=auth("approver-2"),
+    )
+    assert (
+        forced.status_code == 200 and forced.json()["released"] is True and rt.policies.log[-1] == ("promote", pid, 50)
+    )
+    down = c.post(
+        f"/admin/policies/{pid}/promote",
+        json={"canary_percent": 30, "reason": "r", "override_reason": "release drill, decision-maker approved"},
+        headers=auth("approver-2"),
+    )
+    assert down.status_code == 409 and down.json()["code"] == "status_conflict"
+    assert (
+        c.post(
+            f"/admin/policies/{pid}/promote", json={"canary_percent": 5, "reason": "r"}, headers=auth("approver-2")
+        ).status_code
+        == 422
+    )
+    full = c.post(
+        f"/admin/policies/{pid}/promote",
+        json={"canary_percent": 100, "reason": "全量", "override_reason": "release drill, decision-maker approved"},
+        headers=auth("approver-2"),
+    )
+    assert full.status_code == 200 and rt.policies.canary[pid]["canary_percent"] == 100
+    again = c.post(
+        f"/admin/policies/{pid}/promote",
+        json={"canary_percent": 100, "reason": "r", "override_reason": "release drill, decision-maker approved"},
+        headers=auth("approver-2"),
+    )
+    assert again.status_code == 409  # already at 100%

@@ -12,6 +12,7 @@ from fastapi.testclient import TestClient
 from medops.api.app import TRACE_HEADER, create_app
 from medops.api.auth import Authenticator, JwtVerifier, Principal, StaticDirectory, pseudonym
 from medops.application.audit import InMemoryTraceStore
+from medops.application.policy_loader import ReleasedPolicySet, RequestPolicies
 from medops.core.errors import ErrorCode, InfrastructureError
 from medops.domain.common import Dept
 from medops.harness.executions import InMemoryExecutionStore
@@ -58,7 +59,10 @@ class FakeRuntime:
     def bind_identity(self, conn, user):
         self.bound.append(user.dept)
 
-    def build_deps(self, conn, user, request):
+    def route_policies(self, conn, user):
+        return RequestPolicies(ReleasedPolicySet.empty(), self.versions)
+
+    def build_deps(self, conn, user, request, routed=None):
         return HarnessDeps(
             retrieval=self.retrieval,
             gateway=MeteredGateway(self.gateway),

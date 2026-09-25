@@ -10,7 +10,7 @@ import time
 from collections.abc import AsyncIterator, Callable, Iterator, Mapping
 from contextlib import AbstractContextManager, asynccontextmanager, contextmanager
 from dataclasses import dataclass
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from typing import Any, Protocol
 
 from fastapi import FastAPI, Request
@@ -33,6 +33,7 @@ from medops.api.contracts import (
     OutcomeKind,
     PolicyDecisionRequest,
     PolicyListResponse,
+    PolicyPromoteRequest,
     PolicyReleaseRequest,
     PolicyResponse,
     PolicyRollbackRequest,
@@ -55,6 +56,7 @@ from medops.application.admin import (
 from medops.application.audit import FeedbackService, TraceStore, record_or_fail_closed, trace_from_run
 from medops.application.metrics import MetricsSource, has_role, render_prometheus
 from medops.application.payloads import PayloadReader, PayloadWriter
+from medops.application.policy_loader import RequestPolicies
 from medops.application.replay import ReplayService
 from medops.application.tasks import TaskService, TaskStore, to_response
 from medops.core.errors import HTTP_STATUS, BusinessError, ErrorCode, ErrorResponse, MedOpsError
@@ -103,7 +105,11 @@ class ApiRuntime(Protocol):
 
     def bind_identity(self, conn: Any, user: UserContext) -> None: ...
 
-    def build_deps(self, conn: Any, user: UserContext, request: AskRequest) -> HarnessDeps: ...
+    def route_policies(self, conn: Any, user: UserContext) -> RequestPolicies: ...
+
+    def build_deps(
+        self, conn: Any, user: UserContext, request: AskRequest, routed: RequestPolicies | None = None
+    ) -> HarnessDeps: ...
 
     def task_store(self, conn: Any) -> TaskStore: ...
 
@@ -237,24 +243,25 @@ def create_app(
         with runtime.connection() as conn:
             user = runtime.authenticator.authenticate(request.headers.get("authorization"), runtime.directory(conn))
             runtime.bind_identity(conn, user)
-            deps = runtime.build_deps(conn, user, body)
+            routed = runtime.route_policies(conn, user)  # M4-09: released pointers + canary split, per request
+            deps = runtime.build_deps(conn, user, body, routed)
             state = initial_state(
                 user=user,
                 query=body.query,
-                versions=runtime.versions,
+                versions=routed.versions,
                 trace_id=trace_id,
                 historical_requested=body.historical is not None,
             )
             started = time.perf_counter()
             run = run_ask(state, deps)
-            response = to_ask_response(run, trace_id, runtime.versions)
+            response = to_ask_response(run, trace_id, routed.versions)
             meter = deps.gateway if isinstance(deps.gateway, MeteredGateway) else None
             trace, escalation = trace_from_run(
                 run,
                 kind="ask",
                 user=user,
                 query=body.query,
-                versions=runtime.versions,
+                versions=routed.versions,
                 outcome=response.outcome.value,
                 model_calls=meter.calls if meter else 0,
                 tokens=meter.tokens if meter else run.state.budget.used,
@@ -292,11 +299,12 @@ def create_app(
 
             def deps_for(user: UserContext) -> HarnessDeps:
                 runtime.bind_identity(conn, user)  # the replay runs under the original principal, not the admin
-                return runtime.build_deps(conn, user, AskRequest(query="replay"))
+                return runtime.build_deps(conn, user, AskRequest(query="replay"), runtime.route_policies(conn, user))
 
             service = ReplayService(
                 store=runtime.trace_store(conn),
                 versions=runtime.versions,
+                versions_for=lambda user: runtime.route_policies(conn, user).versions,
                 build_deps=deps_for,
                 resolve_user=lambda principal: runtime.resolve_user(conn, principal),
                 payload_writer=runtime.payload_writer(conn),
@@ -406,19 +414,19 @@ def create_app(
     def list_policy_candidates(request: Request) -> PolicyListResponse:
         _admin_user(request, "approver", "admin")
         with runtime.admin_connection() as conn:
-            return PolicyService(store=runtime.policy_store(conn)).list_candidates()
+            return _policy_service(conn).list_candidates()
 
     @app.get("/admin/policies/{policy_id}", response_model=PolicyResponse)
     def get_policy(policy_id: str, request: Request) -> PolicyResponse:
         _admin_user(request, "approver", "admin")
         with runtime.admin_connection() as conn:
-            return PolicyService(store=runtime.policy_store(conn)).get(policy_id)
+            return _policy_service(conn).get(policy_id)
 
     @app.post("/admin/policies/{policy_id}/approve", response_model=PolicyResponse)
     def decide_policy(policy_id: str, body: PolicyDecisionRequest, request: Request) -> PolicyResponse:
         approver = _admin_user(request, "approver")
         with runtime.admin_connection() as conn:
-            service = PolicyService(store=runtime.policy_store(conn))
+            service = _policy_service(conn)
             return idempotent(
                 runtime.receipt_store(conn),
                 approver,
@@ -430,11 +438,18 @@ def create_app(
                 ttl_s=idempotency_ttl_s,
             )
 
+    def _policy_service(conn: Any) -> PolicyService:
+        return PolicyService(
+            store=runtime.policy_store(conn),
+            observation_window=getattr(runtime, "observation_window", timedelta(hours=24)),
+            allow_drill=bool(getattr(runtime, "allow_drill", False)),
+        )
+
     @app.post("/admin/policies/{policy_id}/release", response_model=PolicyResponse)
     def release_policy(policy_id: str, body: PolicyReleaseRequest, request: Request) -> PolicyResponse:
         admin = _admin_user(request, "admin")
         with runtime.admin_connection() as conn:
-            service = PolicyService(store=runtime.policy_store(conn))
+            service = _policy_service(conn)
             return idempotent(
                 runtime.receipt_store(conn),
                 admin,
@@ -446,11 +461,27 @@ def create_app(
                 ttl_s=idempotency_ttl_s,
             )
 
+    @app.post("/admin/policies/{policy_id}/promote", response_model=PolicyResponse)
+    def promote_policy(policy_id: str, body: PolicyPromoteRequest, request: Request) -> PolicyResponse:
+        approver = _admin_user(request, "approver")
+        with runtime.admin_connection() as conn:
+            service = _policy_service(conn)
+            return idempotent(
+                runtime.receipt_store(conn),
+                approver,
+                f"POST /admin/policies/{policy_id}/promote",
+                request.headers.get(IDEMPOTENCY_KEY_HEADER),
+                body,
+                PolicyResponse,
+                lambda: service.promote(approver, policy_id, body),
+                ttl_s=idempotency_ttl_s,
+            )
+
     @app.post("/admin/policies/{policy_id}/rollback", response_model=PolicyResponse)
     def rollback_policy(policy_id: str, body: PolicyRollbackRequest, request: Request) -> PolicyResponse:
         admin = _admin_user(request, "admin")
         with runtime.admin_connection() as conn:
-            service = PolicyService(store=runtime.policy_store(conn))
+            service = _policy_service(conn)
             return idempotent(
                 runtime.receipt_store(conn),
                 admin,

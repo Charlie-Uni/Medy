@@ -108,6 +108,26 @@ class PgPolicyStore:
         )
         return previous
 
+    def last_release(self, policy_id: str) -> dict[str, Any] | None:
+        """The latest release / promote row of a policy: its current canary percentage and when it was set."""
+        row = self._conn.execute(
+            "select action, canary_percent, previous_policy::text, occurred_at from policy_releases "
+            "where policy_id = %s::uuid and action in ('release', 'promote') order by occurred_at desc limit 1",
+            (policy_id,),
+        ).fetchone()
+        if row is None:
+            return None
+        return {"action": row[0], "canary_percent": row[1], "previous_policy": row[2], "occurred_at": row[3]}
+
+    def promote(self, policy_id: str, *, canary_percent: int, actor: str, reason: str) -> None:
+        """Widen the canary of the released policy: one append-only log row; the pointer does not move (M4-09)."""
+        last = self.last_release(policy_id)
+        self._conn.execute(
+            "insert into policy_releases (release_id, policy_id, action, canary_percent, previous_policy, actor, reason) "
+            "values (%s, %s::uuid, 'promote', %s, %s, %s, %s)",
+            (str(uuid.uuid4()), policy_id, canary_percent, last["previous_policy"] if last else None, actor, reason),
+        )
+
     def rollback(self, policy_id: str, *, kind: str, name: str, actor: str, reason: str) -> str | None:
         """Atomic pointer switch back to the previous release (or removal when there is none); returns the new pointer."""
         previous_row = self._conn.execute(

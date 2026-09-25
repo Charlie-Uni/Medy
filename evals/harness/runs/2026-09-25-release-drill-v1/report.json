@@ -1,0 +1,394 @@
+{
+ "started_at": "2026-09-25T10:19:25+00:00",
+ "ttl_s": 2,
+ "phases": [
+  {
+   "phase": "0-before",
+   "elapsed_s": 6127.9,
+   "rows": [
+    {
+     "subject": "drill-user-0",
+     "status": 200,
+     "outcome": "escalated",
+     "trace_id": "3ab39e7c26f145079526a6bce2744a7c",
+     "policy_version": "policy-m3-api-1",
+     "ledger_policy_version": "policy-m3-api-1",
+     "expected": "policy-m3-api-1",
+     "ok": true
+    },
+    {
+     "subject": "drill-user-1",
+     "status": 200,
+     "outcome": "answered",
+     "trace_id": "8d461928b1a94bacbc61e9a9d0ec0d98",
+     "policy_version": "policy-m3-api-1",
+     "ledger_policy_version": "policy-m3-api-1",
+     "expected": "policy-m3-api-1",
+     "ok": true
+    },
+    {
+     "subject": "drill-user-2",
+     "status": 200,
+     "outcome": "escalated",
+     "trace_id": "c1e9b696f1664a928fafaa704ce33c93",
+     "policy_version": "policy-m3-api-1",
+     "ledger_policy_version": "policy-m3-api-1",
+     "expected": "policy-m3-api-1",
+     "ok": true
+    },
+    {
+     "subject": "drill-user-3",
+     "status": 200,
+     "outcome": "escalated",
+     "trace_id": "0bb9c1213592449b88c6459b2b18aef4",
+     "policy_version": "policy-m3-api-1",
+     "ledger_policy_version": "policy-m3-api-1",
+     "expected": "policy-m3-api-1",
+     "ok": true
+    },
+    {
+     "subject": "drill-user-6",
+     "status": 200,
+     "outcome": "escalated",
+     "trace_id": "8243e8c98757465e975c1ac96c588a95",
+     "policy_version": "policy-m3-api-1",
+     "ledger_policy_version": "policy-m3-api-1",
+     "expected": "policy-m3-api-1",
+     "ok": true
+    },
+    {
+     "subject": "drill-user-9",
+     "status": 200,
+     "outcome": "escalated",
+     "trace_id": "f67dc6fb511d4c2fbf654b9fe7ee458e",
+     "policy_version": "policy-m3-api-1",
+     "ledger_policy_version": "policy-m3-api-1",
+     "expected": "policy-m3-api-1",
+     "ok": true
+    }
+   ]
+  },
+  {
+   "phase": "1-canary-10pct",
+   "elapsed_s": 3548.9,
+   "rows": [
+    {
+     "subject": "drill-user-0",
+     "status": 200,
+     "outcome": "escalated",
+     "trace_id": "099ac0bbc0d4484b88819abf0d953d49",
+     "policy_version": "policy-m3-api-1",
+     "ledger_policy_version": "policy-m3-api-1",
+     "expected": "policy-m3-api-1",
+     "ok": true
+    },
+    {
+     "subject": "drill-user-1",
+     "status": 200,
+     "outcome": "escalated",
+     "trace_id": "fa87e427f34b45af93b5b3ea77492e63",
+     "policy_version": "policy-m3-api-1",
+     "ledger_policy_version": "policy-m3-api-1",
+     "expected": "policy-m3-api-1",
+     "ok": true
+    },
+    {
+     "subject": "drill-user-2",
+     "status": 200,
+     "outcome": "answered",
+     "trace_id": "056464390bf546aa95af38ab4bac6cc1",
+     "policy_version": "policy-m3-api-1",
+     "ledger_policy_version": "policy-m3-api-1",
+     "expected": "policy-m3-api-1",
+     "ok": true
+    },
+    {
+     "subject": "drill-user-3",
+     "status": 200,
+     "outcome": "escalated",
+     "trace_id": "938a2581928a4bde9b9513a9c32b7df0",
+     "policy_version": "policy-m3-api-1",
+     "ledger_policy_version": "policy-m3-api-1",
+     "expected": "policy-m3-api-1",
+     "ok": true
+    },
+    {
+     "subject": "drill-user-6",
+     "status": 200,
+     "outcome": "answered",
+     "trace_id": "7bd3cfadee2547308bd8275fe70ece8c",
+     "policy_version": "policy-m3-api-1+canary:e72a6a08",
+     "ledger_policy_version": "policy-m3-api-1+canary:e72a6a08",
+     "expected": "policy-m3-api-1+canary:e72a6a08",
+     "ok": true
+    },
+    {
+     "subject": "drill-user-9",
+     "status": 200,
+     "outcome": "answered",
+     "trace_id": "c44901e2796a48f0a2fb0f459065037c",
+     "policy_version": "policy-m3-api-1+canary:e72a6a08",
+     "ledger_policy_version": "policy-m3-api-1+canary:e72a6a08",
+     "expected": "policy-m3-api-1+canary:e72a6a08",
+     "ok": true
+    }
+   ],
+   "effective_within_s": 3551.9
+  },
+  {
+   "phase": "2-full",
+   "elapsed_s": 75.6,
+   "rows": [
+    {
+     "subject": "drill-user-0",
+     "status": 200,
+     "outcome": "answered",
+     "trace_id": "7e3dbaaf279442989919474370038104",
+     "policy_version": "policy-m3-api-1+rel:e72a6a08",
+     "ledger_policy_version": "policy-m3-api-1+rel:e72a6a08",
+     "expected": "policy-m3-api-1+rel:e72a6a08",
+     "ok": true
+    },
+    {
+     "subject": "drill-user-1",
+     "status": 200,
+     "outcome": "answered",
+     "trace_id": "b3c6c63895eb4c9ca803a2ab6e37917e",
+     "policy_version": "policy-m3-api-1+rel:e72a6a08",
+     "ledger_policy_version": "policy-m3-api-1+rel:e72a6a08",
+     "expected": "policy-m3-api-1+rel:e72a6a08",
+     "ok": true
+    },
+    {
+     "subject": "drill-user-2",
+     "status": 200,
+     "outcome": "answered",
+     "trace_id": "61cada815ee24a83b0a79ba659432b86",
+     "policy_version": "policy-m3-api-1+rel:e72a6a08",
+     "ledger_policy_version": "policy-m3-api-1+rel:e72a6a08",
+     "expected": "policy-m3-api-1+rel:e72a6a08",
+     "ok": true
+    },
+    {
+     "subject": "drill-user-3",
+     "status": 200,
+     "outcome": "answered",
+     "trace_id": "1c50594c139b40359c3887ede7113a77",
+     "policy_version": "policy-m3-api-1+rel:e72a6a08",
+     "ledger_policy_version": "policy-m3-api-1+rel:e72a6a08",
+     "expected": "policy-m3-api-1+rel:e72a6a08",
+     "ok": true
+    },
+    {
+     "subject": "drill-user-6",
+     "status": 200,
+     "outcome": "answered",
+     "trace_id": "d96042144f4941c9b6e5b3d5f15cd9a0",
+     "policy_version": "policy-m3-api-1+rel:e72a6a08",
+     "ledger_policy_version": "policy-m3-api-1+rel:e72a6a08",
+     "expected": "policy-m3-api-1+rel:e72a6a08",
+     "ok": true
+    },
+    {
+     "subject": "drill-user-9",
+     "status": 200,
+     "outcome": "answered",
+     "trace_id": "4abec07de25a4ccf9c05d499a873816c",
+     "policy_version": "policy-m3-api-1+rel:e72a6a08",
+     "ledger_policy_version": "policy-m3-api-1+rel:e72a6a08",
+     "expected": "policy-m3-api-1+rel:e72a6a08",
+     "ok": true
+    }
+   ],
+   "effective_within_s": 78.6
+  },
+  {
+   "phase": "3-after-rollback",
+   "elapsed_s": 61.5,
+   "rows": [
+    {
+     "subject": "drill-user-0",
+     "status": 200,
+     "outcome": "answered",
+     "trace_id": "c5684ccd008b47b9aa1a0eeae82443c3",
+     "policy_version": "policy-m3-api-1",
+     "ledger_policy_version": "policy-m3-api-1",
+     "expected": "policy-m3-api-1",
+     "ok": true
+    },
+    {
+     "subject": "drill-user-1",
+     "status": 200,
+     "outcome": "answered",
+     "trace_id": "24fc62636f9a47ceada6b94c93ae5077",
+     "policy_version": "policy-m3-api-1",
+     "ledger_policy_version": "policy-m3-api-1",
+     "expected": "policy-m3-api-1",
+     "ok": true
+    },
+    {
+     "subject": "drill-user-2",
+     "status": 200,
+     "outcome": "answered",
+     "trace_id": "8b685bd90a82456297075f789a604a31",
+     "policy_version": "policy-m3-api-1",
+     "ledger_policy_version": "policy-m3-api-1",
+     "expected": "policy-m3-api-1",
+     "ok": true
+    },
+    {
+     "subject": "drill-user-3",
+     "status": 200,
+     "outcome": "answered",
+     "trace_id": "af759d78d8544714a7b7d896aa367606",
+     "policy_version": "policy-m3-api-1",
+     "ledger_policy_version": "policy-m3-api-1",
+     "expected": "policy-m3-api-1",
+     "ok": true
+    },
+    {
+     "subject": "drill-user-6",
+     "status": 200,
+     "outcome": "answered",
+     "trace_id": "ca78f5a356e64473a3a419ef662f5cf1",
+     "policy_version": "policy-m3-api-1",
+     "ledger_policy_version": "policy-m3-api-1",
+     "expected": "policy-m3-api-1",
+     "ok": true
+    },
+    {
+     "subject": "drill-user-9",
+     "status": 200,
+     "outcome": "answered",
+     "trace_id": "7a7d0412c0c142be870b44a2d2b70079",
+     "policy_version": "policy-m3-api-1",
+     "ledger_policy_version": "policy-m3-api-1",
+     "expected": "policy-m3-api-1",
+     "ok": true
+    }
+   ],
+   "effective_within_s": 64.5
+  }
+ ],
+ "checks": [
+  {
+   "check": "phase.0-before",
+   "ok": true,
+   "versions": [
+    "policy-m3-api-1"
+   ],
+   "mismatches": []
+  },
+  {
+   "check": "approve",
+   "ok": true,
+   "status": 200
+  },
+  {
+   "check": "release_10pct",
+   "ok": true,
+   "status": 200,
+   "body": "{\"policy_id\":\"e72a6a08-bb90-45c0-a204-d7e369849fd5\",\"kind\":\"retrieval_params\",\"name\":\"hybrid\",\"version\":\"hybrid@drill-be"
+  },
+  {
+   "check": "phase.1-canary-10pct",
+   "ok": true,
+   "versions": [
+    "policy-m3-api-1",
+    "policy-m3-api-1+canary:e72a6a08"
+   ],
+   "mismatches": []
+  },
+  {
+   "check": "promote_blocked_by_window",
+   "ok": true,
+   "status": 409,
+   "code": "observation_window_open"
+  },
+  {
+   "check": "promote_100pct_with_override",
+   "ok": true,
+   "status": 200,
+   "body": "{\"policy_id\":\"e72a6a08-bb90-45c0-a204-d7e369849fd5\",\"kind\":\"retrieval_params\",\"name\":\"hybrid\",\"version\":\"hybrid@drill-be"
+  },
+  {
+   "check": "phase.2-full",
+   "ok": true,
+   "versions": [
+    "policy-m3-api-1+rel:e72a6a08"
+   ],
+   "mismatches": []
+  },
+  {
+   "check": "rollback",
+   "ok": true,
+   "status": 200
+  },
+  {
+   "check": "phase.3-after-rollback",
+   "ok": true,
+   "versions": [
+    "policy-m3-api-1"
+   ],
+   "mismatches": []
+  },
+  {
+   "check": "release_log",
+   "ok": true,
+   "log": [
+    [
+     "release",
+     10
+    ],
+    [
+     "promote",
+     100
+    ],
+    [
+     "rollback",
+     null
+    ]
+   ]
+  },
+  {
+   "check": "pointer_cleared",
+   "ok": true
+  }
+ ],
+ "subjects": {
+  "drill-user-0": {
+   "pseudonym": "83599af9",
+   "bucket": 88,
+   "canary_side": false
+  },
+  "drill-user-1": {
+   "pseudonym": "d3ae73f1",
+   "bucket": 70,
+   "canary_side": false
+  },
+  "drill-user-2": {
+   "pseudonym": "f9504213",
+   "bucket": 66,
+   "canary_side": false
+  },
+  "drill-user-3": {
+   "pseudonym": "8df51134",
+   "bucket": 16,
+   "canary_side": false
+  },
+  "drill-user-6": {
+   "pseudonym": "8045b1d9",
+   "bucket": 5,
+   "canary_side": true
+  },
+  "drill-user-9": {
+   "pseudonym": "4e7400c2",
+   "bucket": 6,
+   "canary_side": true
+  }
+ },
+ "policy_id": "e72a6a08-bb90-45c0-a204-d7e369849fd5",
+ "cost_usd": 0.0655,
+ "ok": true,
+ "finished_at": "2026-09-25T13:04:07+00:00"
+}

@@ -109,6 +109,8 @@ class Settings(BaseSettings):
     identity_pseudonym_key: SecretStr | None = None  # HMAC key for surrogate ids (INV-OBS-02)
     payload_key_file: str | None = None  # JSON KEK file for restricted payloads (DEC-013); unset = payloads not written
     payload_retention_days: int = Field(default=90, ge=1)
+    policy_reload_ttl_s: float = Field(default=5.0, ge=0, le=300)  # released pointers re-read this often (M4-09)
+    observation_window_hours: float = Field(default=24.0, ge=0, le=720)  # canary must sit this long before promote
     escalation_payload_grace_days: int = Field(default=30, ge=0)
     # Runtime LLM provider (ADR-0010 / DEC-009): OpenAI API key and the monthly spend cap enforced by the
     # Model Gateway ledger (M2-06). Offline drafting/review keep using subscription CLIs and never read this key.

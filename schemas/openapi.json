@@ -112,7 +112,7 @@
             }
           }
         },
-        "description": "`ErrorResponse` with `code` in: `version_conflict`, `task_not_retryable`, `status_conflict`, `gate_not_passed`, `policy_target_unsupported`"
+        "description": "`ErrorResponse` with `code` in: `version_conflict`, `task_not_retryable`, `status_conflict`, `gate_not_passed`, `policy_target_unsupported`, `observation_window_open`"
       },
       "Error422": {
         "content": {
@@ -887,6 +887,7 @@
           "status_conflict",
           "gate_not_passed",
           "policy_target_unsupported",
+          "observation_window_open",
           "evidence_integrity_failed",
           "dependency_timeout",
           "dependency_unavailable",
@@ -1198,6 +1199,44 @@
           "count"
         ],
         "title": "PolicyListResponse",
+        "type": "object"
+      },
+      "PolicyPromoteRequest": {
+        "additionalProperties": false,
+        "description": "Widen a canary (M4-09): only upwards, only after the observation window (or with a recorded override).",
+        "properties": {
+          "canary_percent": {
+            "maximum": 100,
+            "minimum": 11,
+            "title": "Canary Percent",
+            "type": "integer"
+          },
+          "override_reason": {
+            "anyOf": [
+              {
+                "maxLength": 500,
+                "minLength": 20,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Override Reason"
+          },
+          "reason": {
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Reason",
+            "type": "string"
+          }
+        },
+        "required": [
+          "canary_percent",
+          "reason"
+        ],
+        "title": "PolicyPromoteRequest",
         "type": "object"
       },
       "PolicyReleaseRequest": {
@@ -2301,6 +2340,78 @@
           }
         },
         "summary": "Approve or reject a candidate (approver)",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/policies/{policy_id}/promote": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/PolicyIdPath"
+        }
+      ],
+      "post": {
+        "description": "Only the currently released policy, only upwards (11–100), by an approver who is not the author (four-eyes). Refused while the observation window since the last release / promote is open (`409 observation_window_open`) unless `override_reason` is given; the override is logged. The released pointer does not move; the runtime re-reads the canary share within its reload TTL. `Idempotency-Key` (baseline 3.2). Scope is authenticated principal + route + key; the server stores the canonical request hash. Same key and same payload returns the original receipt with the original status code, also while the first request is still processing (never 409). Same key with a different payload returns 422 `idempotency_payload_mismatch`. The record and the idempotency entry are created in one transaction. Retention is configured by IDEMPOTENCY_KEY_TTL_SECONDS (default 604800 seconds, never below 86400 seconds) and never shorter than the task lifetime.",
+        "operationId": "promotePolicy",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PolicyPromoteRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PolicyResponse"
+                }
+              }
+            },
+            "description": "Policy after the promotion."
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "500": {
+            "$ref": "#/components/responses/Error500"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          },
+          "504": {
+            "$ref": "#/components/responses/Error504"
+          }
+        },
+        "summary": "Widen the canary of the released policy (approver)",
         "tags": [
           "admin"
         ]
