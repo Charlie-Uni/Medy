@@ -1,0 +1,8 @@
+{
+ "kind": "retrieval_params",
+ "name": "hybrid",
+ "diff": {"rerank_output": {"from": 8, "to": 5}},
+ "gate_profile": "cost",
+ "rationale": "M5-04 first cost candidate (record 91): the answer prompt carries every reranked evidence chunk in full (8 today), and the evidence is the bulk of the ~3,200 model tokens an item costs (replay-eval-v1-rrf40 baseline arm). Keeping the top 5 reranked chunks is the smallest context trim the released policy targets can express without new code; the cost gate demands >= 25% fewer tokens per main item with overall success down at most 1 pp, unchanged slice and safety rules. Sentence-level trimming (baseline 5.11) stays a follow-up if this candidate loses quality.",
+ "evidence": {"case_ids": [], "kind": "cost", "source_run": "2026-09-25-replay-eval-v1-rrf40"}
+}

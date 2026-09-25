@@ -134,3 +134,71 @@ def test_release_check_needs_a_full_report():
     broken["reliability"]["runs_ok"] = False
     assert not gate_report_valid(broken)
     assert not gate_report_valid({**passing_gate_report(), "replay_set": {"dataset_hash": "short"}})
+
+
+def tokens(per_item: float, *, count: int = 3) -> list[dict[str, float]]:
+    return [{i: per_item for i in ITEMS} for _ in range(count)]
+
+
+def test_cost_profile_needs_a_quarter_fewer_tokens_and_quality_within_one_point():
+    base = set(ITEMS[:140])
+    cand = set(ITEMS[:139])  # −0.5 pp: inside the tolerance the slices already get
+    report = compute_gate(
+        baseline_runs=runs(base),
+        candidate_runs=runs(cand),
+        slices=SLICES,
+        safety_baseline_runs=safety(0.97),
+        safety_candidate_runs=safety(0.97),
+        safety_complete=True,
+        profile="cost",
+        baseline_tokens=tokens(3200.0),
+        candidate_tokens=tokens(2200.0),  # −31%
+    )
+    assert report.passed and report.blockers == []
+    assert report.target["profile"] == "cost" and report.target["token_reduction"] == 0.3125
+    assert report.target["quality_ok"] and report.target["tokens_ok"] and report.target["passes"]
+    assert report.thresholds["profile"] == "cost" and report.thresholds["token_reduction_min"] == 0.25
+    assert "target_min_pp" not in report.thresholds
+    assert gate_report_valid({**report.as_dict(), "replay_set": {"dataset_hash": "a" * 64}, "arms": {}})
+
+
+def test_cost_profile_blocks_small_savings_or_a_quality_drop():
+    base = set(ITEMS[:140])
+    common = dict(
+        slices=SLICES, safety_baseline_runs=safety(0.97), safety_candidate_runs=safety(0.97), safety_complete=True
+    )
+    small = compute_gate(
+        baseline_runs=runs(base),
+        candidate_runs=runs(base),
+        profile="cost",
+        baseline_tokens=tokens(3200.0),
+        candidate_tokens=tokens(2900.0),
+        **common,
+    )
+    assert not small.passed and small.blockers == ["token reduction 9.4% < 25%"]
+    worse = compute_gate(
+        baseline_runs=runs(base),
+        candidate_runs=runs(set(ITEMS[:136])),
+        profile="cost",
+        baseline_tokens=tokens(3200.0),
+        candidate_tokens=tokens(1600.0),
+        **common,
+    )
+    assert not worse.passed and any(b.startswith("quality -2.00 pp") for b in worse.blockers)
+    with pytest.raises(ValueError, match="token maps"):
+        compute_gate(baseline_runs=runs(base), candidate_runs=runs(base), profile="cost", **common)
+    with pytest.raises(ValueError, match="unknown gate profile"):
+        compute_gate(baseline_runs=runs(base), candidate_runs=runs(base), profile="speed", **common)
+
+
+def test_quality_profile_report_is_unchanged_in_shape():
+    report = compute_gate(
+        baseline_runs=runs(set(ITEMS[:140])),
+        candidate_runs=runs(set(ITEMS[:152])),
+        slices=SLICES,
+        safety_baseline_runs=safety(0.97),
+        safety_candidate_runs=safety(0.97),
+        safety_complete=True,
+    )
+    assert report.target["profile"] == "quality" and report.thresholds["target_min_pp"] == 5.0
+    assert "token_reduction" not in report.target

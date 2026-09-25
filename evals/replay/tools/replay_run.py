@@ -346,12 +346,14 @@ def main() -> int:
     # ---- report
     main_ids = [it["replay_id"] for it in items]
     by_arm_run: dict[str, list[dict[str, float]]] = {"baseline": [], "candidate": []}
+    tokens_by_arm_run: dict[str, list[dict[str, float]]] = {"baseline": [], "candidate": []}
     safety_by_arm_run: dict[str, list[dict[str, dict[str, float]]]] = {"baseline": [], "candidate": []}
     aggregates: dict[str, list[dict[str, Any]]] = {"baseline": [], "candidate": []}
     for run in range(1, args.runs + 1):
         for arm in ("baseline", "candidate"):
             rows = [done[f"{arm}|{run}|{i}"] for i in main_ids if f"{arm}|{run}|{i}" in done]
             by_arm_run[arm].append({r["replay_id"]: 1.0 if r["success"] else 0.0 for r in rows})
+            tokens_by_arm_run[arm].append({r["replay_id"]: float(r["model_tokens"]) for r in rows})
             cats: dict[str, dict[str, float]] = defaultdict(dict)
             srows = [
                 done[f"{arm}|{run}|{it['replay_id']}"]
@@ -401,6 +403,9 @@ def main() -> int:
         safety_candidate_runs=safety_by_arm_run["candidate"],
         safety_complete=complete_safety,
         seed=args.seed,
+        profile=spec.get("gate_profile", "quality"),
+        baseline_tokens=tokens_by_arm_run["baseline"],
+        candidate_tokens=tokens_by_arm_run["candidate"],
     ).as_dict()
     gate["replay_set"] = {
         "dataset_version": manifest["dataset_version"],
@@ -469,11 +474,20 @@ def render(res: dict[str, Any]) -> str:
                 f"| {arm} | {a['run']} | {a['n']} | {a['success_rate']} | {a['safety_pass_rate']} | {a['latency_p50_s']} | {a['latency_p95_s']} | {a['tokens']} | {a['cost_usd']} | {a['system_failures']} |"
             )
     t = g["target"]
+    th = g["thresholds"]
+    if t.get("profile") == "cost":
+        target_line = (
+            f"- profile cost: tokens/item baseline {t['tokens_baseline']} → candidate {t['tokens_candidate']} "
+            f"({100 * t['token_reduction']:.1f}% less, need ≥ {100 * th['token_reduction_min']:.0f}%); "
+            f"quality Δ {t['delta_pp']} pp (95% CI {t['ci95_pp']}, floor {th['quality_min_pp']} pp) → {'✓' if t['passes'] else '✗'}"
+        )
+    else:
+        target_line = f"- target: baseline {t['baseline']} → candidate {t['candidate']}, Δ {t['delta_pp']} pp (95% CI {t['ci95_pp']}), threshold +{th['target_min_pp']} pp → {'✓' if t['passes'] else '✗'}"
     lines += [
         "",
         "## Gate",
         "",
-        f"- target: baseline {t['baseline']} → candidate {t['candidate']}, Δ {t['delta_pp']} pp (95% CI {t['ci95_pp']}), threshold +{g['thresholds']['target_min_pp']} pp → {'✓' if t['passes'] else '✗'}",
+        target_line,
         f"- reliability: {g['reliability']}",
         f"- safety complete: {g['safety']['complete']}",
         f"- **passed: {g['passed']}**" + (f" — blockers: {g['blockers']}" if g["blockers"] else ""),

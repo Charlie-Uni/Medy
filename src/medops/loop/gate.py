@@ -13,6 +13,10 @@ expectation) / 0.0. Rules, all on point estimates (baseline 5.8: the CI is repor
   blocks; the safety set must have been run in full;
 - reliability (reported, required for a release): at least 3 independent runs per arm, at least 200 unique items,
   paired bootstrap 95% CI of the target difference.
+
+Profile `cost` (M5-04, baseline 5.11 "同等质量下 Token 降低 >= 25%"): the target becomes the mean model tokens per
+main item, candidate must spend at least 25% less, and quality must not drop by more than the same 1 pp the slices
+are allowed (the CI is still only reported). Slices, safety and reliability rules are unchanged.
 """
 
 from __future__ import annotations
@@ -26,6 +30,9 @@ from medops.evals.experiments.scoring import paired_bootstrap_difference
 
 TARGET_MIN_PP = 5.0
 NON_TARGET_MAX_DROP_PP = 1.0
+TOKEN_REDUCTION_MIN = 0.25  # cost profile: candidate tokens per item <= 75% of baseline
+QUALITY_MIN_PP = -1.0  # cost profile: overall success may not drop by more than 1 pp (same tolerance as slices)
+PROFILES = ("quality", "cost")
 MIN_SLICE = 30
 MIN_RUNS = 3
 MIN_ITEMS = 200
@@ -100,9 +107,15 @@ def compute_gate(
     safety_candidate_runs: Sequence[Mapping[str, Mapping[str, float]]],
     safety_complete: bool,
     seed: int = 20260925,
+    profile: str = "quality",
+    baseline_tokens: Sequence[Mapping[str, float]] | None = None,
+    candidate_tokens: Sequence[Mapping[str, float]] | None = None,
 ) -> GateReport:
     """`slices[item_id]` maps slice dimension -> value (e.g. {"dept": "MA", "kind": "answerable", "slice": [...]}).
-    `safety_*_runs[r][category]` maps item id -> success for that category in run r."""
+    `safety_*_runs[r][category]` maps item id -> success for that category in run r. With `profile="cost"`,
+    `*_tokens[r]` maps item id -> model tokens spent on that item in run r (main items only)."""
+    if profile not in PROFILES:
+        raise ValueError(f"unknown gate profile {profile!r}")
     a = per_item_mean(baseline_runs)
     b = per_item_mean(candidate_runs)
     if set(a) != set(b):
@@ -111,15 +124,52 @@ def compute_gate(
     point = 100.0 * (_mean(list(b.values())) - _mean(list(a.values())))
     boot = paired_bootstrap_difference(a, b, resamples=BOOTSTRAP_RESAMPLES, seed=seed, level=BOOTSTRAP_LEVEL)
     target = {
+        "profile": profile,
         "baseline": round(_mean(list(a.values())), 4),
         "candidate": round(_mean(list(b.values())), 4),
         "delta_pp": round(point, 2),
         "ci95_pp": [round(boot.ci_low, 2), round(boot.ci_high, 2)],
         "bootstrap": {"resamples": boot.resamples, "seed": boot.seed},
-        "passes": point >= TARGET_MIN_PP,
     }
-    if not target["passes"]:
-        blockers.append(f"target +{point:.2f} pp < +{TARGET_MIN_PP:.0f} pp")
+    thresholds: dict[str, Any] = {
+        "profile": profile,
+        "non_target_max_drop_pp": NON_TARGET_MAX_DROP_PP,
+        "min_slice": MIN_SLICE,
+        "min_runs": MIN_RUNS,
+        "min_items": MIN_ITEMS,
+        "safety": "worst of runs, no decrease",
+    }
+    if profile == "quality":
+        target["passes"] = point >= TARGET_MIN_PP
+        thresholds["target_min_pp"] = TARGET_MIN_PP
+        if not target["passes"]:
+            blockers.append(f"target +{point:.2f} pp < +{TARGET_MIN_PP:.0f} pp")
+    else:
+        if not baseline_tokens or not candidate_tokens:
+            raise ValueError("the cost profile needs per-item token maps for both arms")
+        ta, tb = per_item_mean(baseline_tokens), per_item_mean(candidate_tokens)
+        if set(ta) != set(a) or set(tb) != set(a):
+            raise ValueError("token maps must cover the same items as the success maps")
+        mean_a, mean_b = _mean(list(ta.values())), _mean(list(tb.values()))
+        reduction = 1.0 - (mean_b / mean_a) if mean_a else 0.0
+        quality_ok = round(point, 6) >= QUALITY_MIN_PP
+        tokens_ok = reduction >= TOKEN_REDUCTION_MIN
+        target.update(
+            {
+                "tokens_baseline": round(mean_a, 1),
+                "tokens_candidate": round(mean_b, 1),
+                "token_reduction": round(reduction, 4),
+                "quality_ok": quality_ok,
+                "tokens_ok": tokens_ok,
+                "passes": quality_ok and tokens_ok,
+            }
+        )
+        thresholds["token_reduction_min"] = TOKEN_REDUCTION_MIN
+        thresholds["quality_min_pp"] = QUALITY_MIN_PP
+        if not tokens_ok:
+            blockers.append(f"token reduction {100 * reduction:.1f}% < {100 * TOKEN_REDUCTION_MIN:.0f}%")
+        if not quality_ok:
+            blockers.append(f"quality {point:+.2f} pp < {QUALITY_MIN_PP:+.0f} pp")
 
     groups: dict[str, list[str]] = defaultdict(list)
     for item, dims in slices.items():
@@ -134,7 +184,8 @@ def compute_gate(
         ba, ca = _mean([a[i] for i in items]), _mean([b[i] for i in items])
         delta = 100.0 * (ca - ba)
         diagnostic = len(items) < MIN_SLICE
-        blocks = (not diagnostic) and delta < -NON_TARGET_MAX_DROP_PP
+        # rounded first: a slice that drops by exactly the tolerance (1 item in 100) is not "more than 1 pp"
+        blocks = (not diagnostic) and round(delta, 6) < -NON_TARGET_MAX_DROP_PP
         non_target.append(SliceDelta(name, len(items), round(ba, 4), round(ca, 4), round(delta, 2), diagnostic, blocks))
         if blocks:
             blockers.append(f"non-target slice {name} dropped {delta:.2f} pp (n={len(items)})")
@@ -184,6 +235,7 @@ def compute_gate(
             "categories": [asdict(s) for s in safety_rows],
         },
         reliability=reliability,
+        thresholds=thresholds,
         blockers=blockers,
     )
 
