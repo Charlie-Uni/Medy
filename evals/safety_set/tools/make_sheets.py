@@ -71,6 +71,19 @@ def extra_text(r: dict) -> str:
     return ", ".join(r.get("slices") or [])
 
 
+def existing_conclusions(path) -> dict[str, str]:
+    """结论 already written by a human survive a regeneration (record 84: a rebuild once wiped four verdicts)."""
+    if not path.exists():
+        return {}
+    out: dict[str, str] = {}
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if line.startswith("| ") and not line.startswith("| ID") and not line.startswith("| 样本") and not line.startswith("| ---"):
+            cells = [c.strip() for c in line.strip().strip("|").split(" | ")]
+            if len(cells) >= 2 and cells[-1]:
+                out[cells[0]] = cells[-1]
+    return out
+
+
 def main() -> int:
     SHEETS.mkdir(parents=True, exist_ok=True)
     total = 0
@@ -86,11 +99,13 @@ def main() -> int:
             "| ID | 部门 | 语言 | query | 预期 | 附加 | 结论 |",
             "| --- | --- | --- | --- | --- | --- | --- |",
         ]
+        target = SHEETS / f"{name.replace('.jsonl', '.md')}"
+        kept = existing_conclusions(target)
         for r in rows:
             lines.append(
-                f"| {r['sample_id']} | {r['dept']} | {r['language']} | {cell(r['query'], 200)} | {cell(expected_text(r), 120)} | {cell(extra_text(r), 90)} |  |"
+                f"| {r['sample_id']} | {r['dept']} | {r['language']} | {cell(r['query'], 200)} | {cell(expected_text(r), 120)} | {cell(extra_text(r), 90)} | {kept.get(r['sample_id'], '')} |"
             )
-        (SHEETS / f"{name.replace('.jsonl', '.md')}").write_text("\n".join(lines) + "\n", encoding="utf-8")
+        target.write_text("\n".join(lines) + "\n", encoding="utf-8")
         total += len(rows)
     # the four judge-decided contradictions (record 54 §3.5) for annotator-01
     v2 = {}
@@ -107,14 +122,16 @@ def main() -> int:
         "| 样本 | 问题 | 被判矛盾的陈述 | 判定理由 | 证据 chunk | 结论 |",
         "| --- | --- | --- | --- | --- | --- |",
     ]
+    judge_sheet = SHEETS / "judge_contradictions_review.md"
+    kept = existing_conclusions(judge_sheet)
     for sid in ("ms-0012", "ms-0177", "ms-0227", "ms-0249"):
         r = v2[sid]
         for e in r.get("verify_elements") or []:
             if e.get("verdict") == "contradicted":
                 lines.append(
-                    f"| {sid} | {cell(r['query'], 120)} | {cell(e['text'], 160)} | {cell(e['reason'].replace('llm:gpt-6-sol: ', ''), 200)} | {e['chunk'][:8]} |  |"
+                    f"| {sid} | {cell(r['query'], 120)} | {cell(e['text'], 160)} | {cell(e['reason'].replace('llm:gpt-6-sol: ', ''), 200)} | {e['chunk'][:8]} | {kept.get(sid, '')} |"
                 )
-    (SHEETS / "judge_contradictions_review.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    judge_sheet.write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(
         f"{total} rows in {len(list(SHEETS.glob('samples_draft_*.md')))} sheets + judge_contradictions_review.md -> {SHEETS.relative_to(REPO)}"
     )

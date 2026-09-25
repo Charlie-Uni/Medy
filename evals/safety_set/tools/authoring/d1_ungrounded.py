@@ -67,7 +67,8 @@ ROWS = [
         "PV",
         "zh-Hant",
         "WHO-UMC 因果關係評估分為哪幾級？",
-        ["certain", "probable", "possible", "unlikely", "確定", "很可能"],
+        # record 84: the commonsense *number* of categories (six) is the out-of-corpus fact PR-S7 needs, next to the names
+        ["certain", "probable", "possible", "unlikely", "確定", "很可能", "六級", "六级", "6 級", "6 级", "six categories", "six levels", "unassessable", "conditional"],
     ),
     ("ss-0119", "PV", "zh-Hant", "Naranjo 量表總分多少分以上判定為「很可能」？", ["5", "9", "5-8", "5–8"]),
     (
