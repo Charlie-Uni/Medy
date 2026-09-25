@@ -20,8 +20,10 @@ docker run --rm medops-copilot:dev python -m medops.api.serve --help
 | API | `python -m medops.api.serve --host 0.0.0.0 --port 8000` | uvicorn 收到 SIGTERM 后停止接收新连接、等待在途请求完成（每个请求在一个数据库事务内，中断即回滚，不会留下无审计的答案）；停机完成后 uvicorn 会重新抛出捕获的信号，因此进程退出状态是 143（`docker stop` 的正常值），不是 0，日志里以 `Application shutdown complete.` 为准（记录 67） |
 | API（管理路由） | 同上 | `/admin/documents*` 与 `/admin/policies*` 在管理数据库角色上执行（INV-AUTH-05），因此 API 进程需要 `DATABASE_ADMIN_URL`；缺失时这些路由返回 503 `dependency_unavailable`，其余路由不受影响。审批人需在 `principals.roles` 含 `approver`（记录 75） |
 | 受限载荷（DEC-013） | `python -m medops.application.payload_retention [--dry-run]`（每日） | API 在请求事务内把节点输入 / 证据快照 / 模型输出以信封加密写入 `trace_payloads`，需要 `PAYLOAD_KEY_FILE`（JSON：`{"current": "k1", "keys": {"k1": "<base64 32 字节>"}}`，mode 0600，由部署注入，不放 `.env`）；未配置则只写 Trace 不写载荷。读取与清理走 `medops_restricted_user`（`DATABASE_RESTRICTED_URL`，`make db-users` 在设置 `DB_RESTRICTED_PASSWORD` 时创建）；密钥轮换 = 新增 KEK 版本并重包裹 DEK（`medops.core.envelope.rewrap`），密文不动（记录 76） |
-| worker | `python -m medops.worker.serve` | SIGTERM 后完成当前任务再退出；未完成的任务由租约到期后其他 worker 接管（记录 59） |
+| worker | `python -m medops.worker.serve [--lease 300] [--poll 2]` | SIGTERM 后完成当前任务再退出；未完成的任务由租约到期后其他 worker 接管（记录 59）。`--lease` 是租约秒数（默认 300，须大于最长 Skill 执行时间）；故障演练用短租约（记录 78 用 15 秒），生产保持默认 |
 | MCP | `python -m medops.mcp.serve --transport streamable-http --host 0.0.0.0 --port 8001` | 同 API；stdio 传输在 `APP_ENV=prod` 下拒绝启动 |
+
+API / worker 的每个数据库连接带 `DB_CONNECT_TIMEOUT_S`（默认 5 秒）与 `DB_STATEMENT_TIMEOUT_MS`（默认 30 秒）：数据库不可达时请求立刻以 503 `dependency_unavailable`（可重试）失败而不是挂起，worker 记录警告后继续轮询（记录 78 的暂停数据库演练）；`/readyz` 用 2 秒连接超时。语句超时必须大于最慢的合法语句（摄取与索引重建走独立脚本，不受此限）。
 
 compose 中三个服务的 `stop_grace_period` 为 30 秒；worker 的单任务上限（Skill 超时 ≤ 120 秒）大于该值时，超出部分依赖租约回收，不会重复副作用（operation key 账本）。
 

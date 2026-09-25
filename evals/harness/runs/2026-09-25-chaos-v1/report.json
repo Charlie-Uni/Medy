@@ -1,0 +1,296 @@
+{
+  "started_at": "2026-09-25T05:29:08.781586+00:00",
+  "finished_at": "2026-09-25T05:35:42.885912+00:00",
+  "ok": true,
+  "cost_usd": 0.0407,
+  "results": [
+    {
+      "scenario": "baseline_pass_through",
+      "ok": true,
+      "ask": {
+        "status": 200,
+        "error": null,
+        "outcome": "answered",
+        "code": null,
+        "reason_codes": [],
+        "claims": 1,
+        "retryable": null,
+        "trace_id": "573bfb6cc411419ba36e8971f03035f6",
+        "latency_s": 8.98
+      },
+      "provider_calls": 3
+    },
+    {
+      "scenario": "model_timeout_blackhole",
+      "ok": true,
+      "during": {
+        "status": 200,
+        "error": null,
+        "outcome": "escalated",
+        "code": null,
+        "reason_codes": [
+          "system_failure"
+        ],
+        "claims": 0,
+        "retryable": null,
+        "trace_id": "7f3601b368ce4ef8a3c04f98cc00342a",
+        "latency_s": 183.02
+      },
+      "refusal_during_outage": {
+        "status": 200,
+        "error": null,
+        "outcome": "refused",
+        "code": null,
+        "reason_codes": [
+          "high_risk_medical"
+        ],
+        "claims": 0,
+        "retryable": null,
+        "trace_id": "ada8036d3eab4585ad86f1e67122076c",
+        "latency_s": 0.05
+      },
+      "error_spans": [
+        {
+          "node": "answer",
+          "attempt": 1,
+          "outcome": "retry",
+          "error_code": "dependency_timeout",
+          "ms": 60002
+        },
+        {
+          "node": "answer",
+          "attempt": 2,
+          "outcome": "timeout",
+          "error_code": "dependency_timeout",
+          "ms": 60005
+        },
+        {
+          "node": "answer",
+          "attempt": 3,
+          "outcome": "failed",
+          "error_code": "dependency_timeout",
+          "ms": 60005
+        }
+      ],
+      "escalation": {
+        "status": "open",
+        "reason_codes": [
+          "system_failure"
+        ]
+      },
+      "provider_calls_during": 3,
+      "recovered": {
+        "status": 200,
+        "error": null,
+        "outcome": "answered",
+        "code": null,
+        "reason_codes": [],
+        "claims": 1,
+        "retryable": null,
+        "trace_id": "ac2a1395c1424840b01f677057878dc1",
+        "latency_s": 7.11
+      }
+    },
+    {
+      "scenario": "provider_http_503",
+      "ok": true,
+      "during": {
+        "status": 200,
+        "error": null,
+        "outcome": "escalated",
+        "code": null,
+        "reason_codes": [
+          "system_failure"
+        ],
+        "claims": 0,
+        "retryable": null,
+        "trace_id": "60826b65478a4e86932784905e811f9d",
+        "latency_s": 2.88
+      },
+      "error_spans": [
+        {
+          "node": "answer",
+          "attempt": 1,
+          "outcome": "retry",
+          "error_code": "dependency_unavailable",
+          "ms": 2
+        },
+        {
+          "node": "answer",
+          "attempt": 2,
+          "outcome": "retry",
+          "error_code": "dependency_unavailable",
+          "ms": 5
+        },
+        {
+          "node": "answer",
+          "attempt": 3,
+          "outcome": "failed",
+          "error_code": "dependency_unavailable",
+          "ms": 5
+        }
+      ],
+      "provider_calls_during": 3,
+      "recovered": {
+        "status": 200,
+        "error": null,
+        "outcome": "answered",
+        "code": null,
+        "reason_codes": [],
+        "claims": 1,
+        "retryable": null,
+        "trace_id": "c6211e48e255488bac9d429102587924",
+        "latency_s": 7.06
+      }
+    },
+    {
+      "scenario": "provider_http_429",
+      "ok": true,
+      "during": {
+        "status": 200,
+        "error": null,
+        "outcome": "escalated",
+        "code": null,
+        "reason_codes": [
+          "system_failure"
+        ],
+        "claims": 0,
+        "retryable": null,
+        "trace_id": "d0efbf6cb9e947589c59dd7e47a38319",
+        "latency_s": 2.83
+      },
+      "error_spans": [
+        {
+          "node": "answer",
+          "attempt": 1,
+          "outcome": "retry",
+          "error_code": "dependency_unavailable",
+          "ms": 2
+        },
+        {
+          "node": "answer",
+          "attempt": 2,
+          "outcome": "retry",
+          "error_code": "dependency_unavailable",
+          "ms": 2
+        },
+        {
+          "node": "answer",
+          "attempt": 3,
+          "outcome": "failed",
+          "error_code": "dependency_unavailable",
+          "ms": 5
+        }
+      ],
+      "provider_calls_during": 3,
+      "recovered": {
+        "status": 200,
+        "error": null,
+        "outcome": "answered",
+        "code": null,
+        "reason_codes": [],
+        "claims": 1,
+        "retryable": null,
+        "trace_id": "decb18d1711645eab95663aef107fd2a",
+        "latency_s": 6.08
+      }
+    },
+    {
+      "scenario": "audit_store_down",
+      "ok": true,
+      "during": {
+        "status": 503,
+        "error": null,
+        "outcome": null,
+        "code": "audit_unavailable",
+        "reason_codes": [],
+        "claims": 0,
+        "retryable": true,
+        "trace_id": "2612cbcd07f740359580f1815b675d8f",
+        "latency_s": 6.98
+      },
+      "provider_calls_during": 2,
+      "trace_row_written": false,
+      "recovered": {
+        "status": 200,
+        "error": null,
+        "outcome": "answered",
+        "code": null,
+        "reason_codes": [],
+        "claims": 1,
+        "retryable": null,
+        "trace_id": "865c0def33f74cec9e01d55f94086a68",
+        "latency_s": 6.72
+      },
+      "trigger_left": false
+    },
+    {
+      "scenario": "db_pause",
+      "ok": true,
+      "readyz_503_while_paused": true,
+      "during": {
+        "status": 503,
+        "error": null,
+        "outcome": null,
+        "code": "dependency_unavailable",
+        "reason_codes": [],
+        "claims": 0,
+        "retryable": true,
+        "trace_id": "5f3657b49b9b4333b57afc396822b3ab",
+        "latency_s": 5.05
+      },
+      "provider_calls_during": 0,
+      "readyz_200_after": true,
+      "recovered": {
+        "status": 200,
+        "error": null,
+        "outcome": "answered",
+        "code": null,
+        "reason_codes": [],
+        "claims": 1,
+        "retryable": null,
+        "trace_id": "2bf37b26e89247139767906768686357",
+        "latency_s": 6.61
+      }
+    },
+    {
+      "scenario": "worker_sigkill_takeover",
+      "ok": true,
+      "first_owner": "worker-005a6cfc",
+      "attempts": [
+        {
+          "attempt": 1,
+          "worker": "worker-005a6cfc",
+          "outcome": "lost",
+          "error_code": null
+        },
+        {
+          "attempt": 2,
+          "worker": "worker-1c06cf59",
+          "outcome": "completed",
+          "error_code": null
+        }
+      ],
+      "final_status": "completed",
+      "task_traces": 1,
+      "takeover_after_s": 31.3
+    },
+    {
+      "scenario": "two_workers_exactly_once",
+      "ok": true,
+      "attempts_per_task": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "workers_seen": 2,
+      "statuses": [
+        "completed",
+        "completed",
+        "completed",
+        "completed"
+      ]
+    }
+  ]
+}

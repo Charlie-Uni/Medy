@@ -138,9 +138,24 @@ class ProductionRuntime:
             runtime._key_provider = LocalFileKeyProvider(settings.payload_key_file)
         return runtime
 
+    def _open(self, dsn: str) -> psycopg.Connection[Any]:
+        """Every runtime connection fails fast (record 78): a connect timeout and a per-statement timeout, and an
+        unreachable database is `dependency_unavailable` (503, retryable) rather than a request that hangs until
+        the client gives up."""
+        try:
+            return psycopg.connect(
+                dsn,
+                connect_timeout=self.settings.db_connect_timeout_s,
+                options=f"-c statement_timeout={self.settings.db_statement_timeout_ms}",
+            )
+        except psycopg.OperationalError as exc:
+            raise InfrastructureError(
+                ErrorCode.dependency_unavailable, detail=f"database: {type(exc).__name__}", retryable=True
+            ) from None
+
     @contextmanager
     def connection(self) -> Iterator[psycopg.Connection[Any]]:
-        with psycopg.connect(self._dsn) as conn:
+        with self._open(self._dsn) as conn:
             with conn.transaction():
                 yield conn
 
@@ -154,7 +169,7 @@ class ProductionRuntime:
             raise InfrastructureError(
                 ErrorCode.dependency_unavailable, detail="DATABASE_ADMIN_URL is not configured", retryable=False
             )
-        with psycopg.connect(self._admin_dsn) as conn:
+        with self._open(self._admin_dsn) as conn:
             with conn.transaction():
                 yield conn
 
@@ -183,7 +198,7 @@ class ProductionRuntime:
                 detail="DATABASE_RESTRICTED_URL / PAYLOAD_KEY_FILE not configured",
                 retryable=False,
             )
-        with psycopg.connect(self._restricted_dsn) as conn:
+        with self._open(self._restricted_dsn) as conn:
             with conn.transaction():
                 yield conn
 

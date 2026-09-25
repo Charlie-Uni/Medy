@@ -80,6 +80,9 @@ class Settings(BaseSettings):
     # Read-only LOGIN user for the MCP server (INV-AUTH-04): the database proves the tools cannot write.
     database_readonly_url: SecretStr | None = None
     database_restricted_url: SecretStr | None = None  # restricted payload reader / retention (DEC-013)
+    # every runtime connection fails fast instead of hanging when PostgreSQL is unreachable or stalled (record 78)
+    db_connect_timeout_s: int = Field(default=5, ge=1, le=60)
+    db_statement_timeout_ms: int = Field(default=30_000, ge=1_000, le=600_000)
     redis_url: SecretStr
     # Retrieval candidate cache TTL (M1-19). Entries also die with the department epoch on publish events.
     retrieval_cache_ttl_seconds: int = Field(default=300, ge=1, le=86400)

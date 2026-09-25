@@ -1,5 +1,7 @@
-"""`python -m medops.worker.serve [--poll 2.0] [--once] [--device cpu|mps]`: the task worker over the production
-runtime. PostgreSQL is the queue and the source of truth (baseline 5.7); polling is bounded and idle-friendly."""
+"""`python -m medops.worker.serve [--poll 2.0] [--lease 300] [--once] [--device cpu|mps]`: the task worker over
+the production runtime. PostgreSQL is the queue and the source of truth (baseline 5.7); polling is bounded and
+idle-friendly. `--lease` is how long a claimed task stays this worker's before another worker may take it over
+(record 59); fault drills shorten it, production keeps the default."""
 
 from __future__ import annotations
 
@@ -9,19 +11,24 @@ import sys
 import time
 
 from medops.api.runtime import ProductionRuntime
-from medops.application.tasks import TaskRunner
+from medops.application.tasks import DEFAULT_LEASE_S, TaskRunner
 from medops.core.config import Settings, safe_config_errors
+from medops.core.errors import InfrastructureError
 from medops.core.logging import configure_logging, get_logger
 from medops.core.telemetry import configure_telemetry
+from medops.core.telemetry import shutdown as shutdown_telemetry
 from medops.skills.catalog import default_registry
 
 
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--poll", type=float, default=2.0, help="seconds to sleep when no task is claimable")
+    ap.add_argument("--lease", type=float, default=DEFAULT_LEASE_S, help="seconds a claimed task is leased")
     ap.add_argument("--once", action="store_true", help="process at most one task and exit")
     ap.add_argument("--device", default="cpu")
     args = ap.parse_args(argv)
+    if args.lease <= 0:
+        ap.error("--lease must be positive")
     try:
         settings = Settings()  # type: ignore[call-arg]
     except Exception as exc:  # noqa: BLE001 - configuration errors are reported in their safe form only
@@ -34,7 +41,7 @@ def main(argv: list[str] | None = None) -> int:
     configure_telemetry(endpoint=settings.otel_exporter_otlp_endpoint, service_name=settings.otel_service_name)
     log = get_logger(__name__)
     runtime = ProductionRuntime.from_settings(settings, device=args.device)
-    runner = TaskRunner(env=runtime, registry=default_registry())
+    runner = TaskRunner(env=runtime, registry=default_registry(), lease_s=args.lease)
     stop = False
 
     def _stop(signum: int, _frame: object) -> None:
@@ -43,9 +50,18 @@ def main(argv: list[str] | None = None) -> int:
 
     signal.signal(signal.SIGTERM, _stop)
     signal.signal(signal.SIGINT, _stop)
-    log.info("worker starting", extra={"worker_id": runner.worker_id, "device": args.device})
+    log.info("worker starting", extra={"worker_id": runner.worker_id, "device": args.device, "lease_s": args.lease})
     while not stop:
-        done = runner.run_once()
+        try:
+            done = runner.run_once()
+        except InfrastructureError as exc:  # database unreachable: keep polling instead of dying (record 78)
+            log.warning(
+                "worker: dependency unavailable, retrying", extra={"code": exc.code.value, "detail": exc.detail}
+            )
+            if args.once:
+                return 1
+            time.sleep(args.poll)
+            continue
         if done is not None:
             log.info(
                 "task finished", extra={"task_id": done.task_id, "status": done.status.value, "trace_id": done.trace_id}
@@ -57,6 +73,7 @@ def main(argv: list[str] | None = None) -> int:
             break
         time.sleep(args.poll)
     log.info("worker stopped", extra={"worker_id": runner.worker_id})
+    shutdown_telemetry()
     return 0
 
 
