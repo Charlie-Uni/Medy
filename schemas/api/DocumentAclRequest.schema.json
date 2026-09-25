@@ -1,0 +1,43 @@
+{
+  "$defs": {
+    "Dept": {
+      "enum": [
+        "MA",
+        "PV",
+        "CO"
+      ],
+      "title": "Dept",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "grant": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/Dept"
+      },
+      "title": "Grant",
+      "type": "array"
+    },
+    "reason": {
+      "maxLength": 500,
+      "minLength": 1,
+      "title": "Reason",
+      "type": "string"
+    },
+    "revoke": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/Dept"
+      },
+      "title": "Revoke",
+      "type": "array"
+    }
+  },
+  "required": [
+    "reason"
+  ],
+  "title": "DocumentAclRequest",
+  "type": "object"
+}

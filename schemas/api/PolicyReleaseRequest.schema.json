@@ -1,0 +1,24 @@
+{
+  "additionalProperties": false,
+  "description": "Initial canary never above 10% (baseline 5.6 / M4-09).",
+  "properties": {
+    "canary_percent": {
+      "maximum": 10,
+      "minimum": 0,
+      "title": "Canary Percent",
+      "type": "integer"
+    },
+    "reason": {
+      "maxLength": 500,
+      "minLength": 1,
+      "title": "Reason",
+      "type": "string"
+    }
+  },
+  "required": [
+    "canary_percent",
+    "reason"
+  ],
+  "title": "PolicyReleaseRequest",
+  "type": "object"
+}

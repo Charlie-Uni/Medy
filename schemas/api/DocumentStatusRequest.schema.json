@@ -1,0 +1,45 @@
+{
+  "$defs": {
+    "DocumentStatusAction": {
+      "enum": [
+        "activate",
+        "archive",
+        "withdraw"
+      ],
+      "title": "DocumentStatusAction",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "`effective_date` is the activation date for `activate` and the end of the window for `archive`;\n`withdraw` ignores it. `reason` is written to the audit row.",
+  "properties": {
+    "action": {
+      "$ref": "#/$defs/DocumentStatusAction"
+    },
+    "effective_date": {
+      "anyOf": [
+        {
+          "format": "date",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Effective Date"
+    },
+    "reason": {
+      "maxLength": 500,
+      "minLength": 1,
+      "title": "Reason",
+      "type": "string"
+    }
+  },
+  "required": [
+    "action",
+    "reason"
+  ],
+  "title": "DocumentStatusRequest",
+  "type": "object"
+}

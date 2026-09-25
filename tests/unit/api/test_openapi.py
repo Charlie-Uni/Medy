@@ -23,8 +23,25 @@ EXPECTED_OPERATIONS = {
     ("/v1/tasks/{task_id}/retry", "post"): (None, "202", "TaskResponse"),
     ("/v1/feedback", "post"): ("FeedbackRequest", "201", "FeedbackReceipt"),
     ("/admin/traces/{trace_id}/replay", "post"): ("ReplayRequest", "201", "ReplayReport"),
+    ("/admin/documents", "get"): (None, "200", "DocumentListResponse"),
+    ("/admin/documents/{doc_id}", "get"): (None, "200", "DocumentDetail"),
+    ("/admin/documents/{doc_id}/status", "patch"): ("DocumentStatusRequest", "200", "DocumentDetail"),
+    ("/admin/documents/{doc_id}/acl", "patch"): ("DocumentAclRequest", "200", "DocumentAclResponse"),
+    ("/admin/policies/candidates", "get"): (None, "200", "PolicyListResponse"),
+    ("/admin/policies/{policy_id}", "get"): (None, "200", "PolicyResponse"),
+    ("/admin/policies/{policy_id}/approve", "post"): ("PolicyDecisionRequest", "200", "PolicyResponse"),
+    ("/admin/policies/{policy_id}/release", "post"): ("PolicyReleaseRequest", "200", "PolicyResponse"),
+    ("/admin/policies/{policy_id}/rollback", "post"): ("PolicyRollbackRequest", "200", "PolicyResponse"),
 }
-IDEMPOTENT_OPERATIONS = {("/v1/tasks", "post"), ("/v1/feedback", "post")}
+IDEMPOTENT_OPERATIONS = {
+    ("/v1/tasks", "post"),
+    ("/v1/feedback", "post"),
+    ("/admin/documents/{doc_id}/status", "patch"),
+    ("/admin/documents/{doc_id}/acl", "patch"),
+    ("/admin/policies/{policy_id}/approve", "post"),
+    ("/admin/policies/{policy_id}/release", "post"),
+    ("/admin/policies/{policy_id}/rollback", "post"),
+}
 HTTP_METHODS = ("get", "put", "post", "delete", "patch", "head", "options", "trace")
 
 

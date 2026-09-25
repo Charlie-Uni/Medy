@@ -25,7 +25,7 @@ from pydantic.config import JsonDict
 
 from medops.core.errors import ErrorResponse
 from medops.domain.answer import Answer
-from medops.domain.common import ReasonCode
+from medops.domain.common import Dept, ReasonCode
 from medops.domain.state import VersionSet
 
 TraceId = Annotated[str, Field(pattern=r"^[0-9a-f]{32}$")]
@@ -277,3 +277,155 @@ IDEMPOTENCY_KEY_HEADER = "Idempotency-Key"
 """POST /v1/tasks and POST /v1/feedback accept this header (baseline 3.2): scope is
 authenticated principal + route + key; same key and payload returns the original receipt, also while
 in progress; same key with a different payload returns 422 idempotency_payload_mismatch."""
+
+
+# ------------------------------------------------------------------------------- admin: documents (M3-03, DEC-012)
+
+
+class DocumentStatus(StrEnum):
+    draft = "draft"
+    active = "active"
+    archived = "archived"
+    withdrawn = "withdrawn"
+
+
+class DocumentSummary(ApiModel):
+    """Metadata only: admin views never return chunk content."""
+
+    doc_id: NonEmptyStr
+    document_key: NonEmptyStr
+    family_id: NonEmptyStr
+    title: NonEmptyStr
+    doc_type: NonEmptyStr
+    owner_dept: Dept
+    status: DocumentStatus
+    version: NonEmptyStr
+    effective_from: date | None = None
+    effective_to: date | None = None
+    read_depts: tuple[Dept, ...] = ()
+
+
+class DocumentAuditEntry(ApiModel):
+    action: NonEmptyStr
+    from_status: str | None = None
+    to_status: str | None = None
+    actor: NonEmptyStr
+    reason: str | None = None
+    occurred_at: datetime
+
+
+class DocumentDetail(DocumentSummary):
+    parse_quality: NonEmptyStr
+    language: NonEmptyStr
+    created_at: datetime
+    audit: tuple[DocumentAuditEntry, ...] = ()  # most recent first, at most 20
+
+
+class DocumentListResponse(ApiModel):
+    items: tuple[DocumentSummary, ...]
+    count: int = Field(ge=0)
+
+
+class DocumentStatusAction(StrEnum):
+    activate = "activate"  # draft -> active (family must have no other active version)
+    archive = "archive"  # active -> archived, closing the effective window at effective_date
+    withdraw = "withdraw"  # draft -> withdrawn (terminal)
+
+
+class DocumentStatusRequest(ApiModel):
+    """`effective_date` is the activation date for `activate` and the end of the window for `archive`;
+    `withdraw` ignores it. `reason` is written to the audit row."""
+
+    action: DocumentStatusAction
+    effective_date: date | None = None
+    reason: Annotated[str, Field(min_length=1, max_length=500)]
+
+    @model_validator(mode="after")
+    def _date_matches_action(self) -> DocumentStatusRequest:
+        if self.action in (DocumentStatusAction.activate, DocumentStatusAction.archive) and self.effective_date is None:
+            raise ValueError(f"{self.action.value} requires effective_date")
+        return self
+
+
+class DocumentAclRequest(ApiModel):
+    grant: tuple[Dept, ...] = ()
+    revoke: tuple[Dept, ...] = ()
+    reason: Annotated[str, Field(min_length=1, max_length=500)]
+
+    @model_validator(mode="after")
+    def _non_empty_and_disjoint(self) -> DocumentAclRequest:
+        if not self.grant and not self.revoke:
+            raise ValueError("grant or revoke at least one department")
+        if set(self.grant) & set(self.revoke):
+            raise ValueError("a department cannot be granted and revoked in the same request")
+        return self
+
+
+class DocumentAclResponse(ApiModel):
+    doc_id: NonEmptyStr
+    document_key: NonEmptyStr
+    granted: tuple[Dept, ...] = ()
+    revoked: tuple[Dept, ...] = ()
+    read_depts: tuple[Dept, ...] = ()
+
+
+# ------------------------------------------------------------------------------- admin: policies (M3-03 / M4, DEC-012)
+
+
+class PolicyKind(StrEnum):
+    prompt = "prompt"
+    rule = "rule"
+    skill = "skill"
+    retrieval_params = "retrieval_params"
+
+
+class PolicyStatus(StrEnum):
+    candidate = "candidate"
+    approved = "approved"
+    rejected = "rejected"
+    released = "released"
+    rolled_back = "rolled_back"
+
+
+class PolicyResponse(ApiModel):
+    policy_id: NonEmptyStr
+    kind: PolicyKind
+    name: NonEmptyStr
+    version: NonEmptyStr
+    status: PolicyStatus
+    diff: dict[str, JsonValue]  # structured candidate diff (M4-03); never executable code
+    evidence: dict[str, JsonValue]  # replay / gate report references; `gate.passed` must be true before a release
+    created_by: NonEmptyStr
+    created_at: datetime
+    decided_by: str | None = None
+    decided_at: datetime | None = None
+    decision_reason: str | None = None
+    released: bool = False  # the released pointer for (kind, name) currently points here
+
+
+class PolicyListResponse(ApiModel):
+    items: tuple[PolicyResponse, ...]
+    count: int = Field(ge=0)
+
+
+class PolicyDecision(StrEnum):
+    approve = "approve"
+    reject = "reject"
+
+
+class PolicyDecisionRequest(ApiModel):
+    """Four-eyes: the approver must not be the candidate's author."""
+
+    decision: PolicyDecision
+    reason: Annotated[str, Field(min_length=1, max_length=500)]
+
+
+class PolicyReleaseRequest(ApiModel):
+    """Initial canary never above 10% (baseline 5.6 / M4-09)."""
+
+    canary_percent: Annotated[int, Field(ge=0, le=10)]
+    reason: Annotated[str, Field(min_length=1, max_length=500)]
+
+
+class PolicyRollbackRequest(ApiModel):
+    reason: Annotated[str, Field(min_length=1, max_length=500)]

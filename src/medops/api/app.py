@@ -22,15 +22,34 @@ from medops.api.contracts import (
     IDEMPOTENCY_KEY_HEADER,
     AskRequest,
     AskResponse,
+    DocumentAclRequest,
+    DocumentAclResponse,
+    DocumentDetail,
+    DocumentListResponse,
+    DocumentStatusRequest,
     EscalationReceipt,
     FeedbackReceipt,
     FeedbackRequest,
     OutcomeKind,
+    PolicyDecisionRequest,
+    PolicyListResponse,
+    PolicyReleaseRequest,
+    PolicyResponse,
+    PolicyRollbackRequest,
     Refusal,
     ReplayReport,
     ReplayRequest,
     TaskCreateRequest,
     TaskResponse,
+)
+from medops.application.admin import (
+    DocumentActions,
+    DocumentAdminService,
+    DocumentAdminStore,
+    PolicyService,
+    PolicyStore,
+    ReceiptStore,
+    idempotent,
 )
 from medops.application.audit import FeedbackService, TraceStore, record_or_fail_closed, trace_from_run
 from medops.application.metrics import MetricsSource, has_role, render_prometheus
@@ -90,6 +109,15 @@ class ApiRuntime(Protocol):
     def metrics_source(self, conn: Any) -> MetricsSource: ...
 
     def resolve_user(self, conn: Any, principal: str) -> UserContext | None: ...
+
+    # M3-03 admin routes run on the admin database role (INV-AUTH-05: separated roles); the unit-test runtime yields None
+    def admin_connection(self) -> AbstractContextManager[Any]: ...
+
+    def document_admin(self, conn: Any) -> tuple[DocumentAdminStore, DocumentActions]: ...
+
+    def policy_store(self, conn: Any) -> PolicyStore: ...
+
+    def receipt_store(self, conn: Any) -> ReceiptStore | None: ...
 
     @property
     def monthly_cap_usd(self) -> float | None: ...
@@ -282,6 +310,125 @@ def create_app(
             user = runtime.authenticator.authenticate(request.headers.get("authorization"), runtime.directory(conn))
             record = _tasks(conn).retry(user, task_id)
         return to_response(record)
+
+    # ------------------------------------------------------------------ admin: documents and policies (M3-03, DEC-012)
+
+    def _admin_user(request: Request, *roles: str) -> UserContext:
+        with runtime.connection() as conn:
+            user = runtime.authenticator.authenticate(request.headers.get("authorization"), runtime.directory(conn))
+        if not has_role(user.roles, *roles):
+            raise BusinessError(ErrorCode.forbidden, f"requires one of the roles: {', '.join(roles)}")
+        return user
+
+    def _documents(conn: Any) -> DocumentAdminService:
+        store, actions = runtime.document_admin(conn)
+        return DocumentAdminService(store=store, actions=actions)
+
+    @app.get("/admin/documents", response_model=DocumentListResponse)
+    def list_documents(
+        request: Request, dept: str | None = None, status: str | None = None, family_id: str | None = None
+    ) -> DocumentListResponse:
+        _admin_user(request, "admin")
+        with runtime.admin_connection() as conn:
+            return _documents(conn).list(dept=dept, status=status, family_id=family_id)
+
+    @app.get("/admin/documents/{doc_id}", response_model=DocumentDetail)
+    def get_document(doc_id: str, request: Request) -> DocumentDetail:
+        _admin_user(request, "admin")
+        with runtime.admin_connection() as conn:
+            return _documents(conn).get(doc_id)
+
+    @app.patch("/admin/documents/{doc_id}/status", response_model=DocumentDetail)
+    def change_document_status(doc_id: str, body: DocumentStatusRequest, request: Request) -> DocumentDetail:
+        admin = _admin_user(request, "admin")
+        with runtime.admin_connection() as conn:
+            service = _documents(conn)
+            return idempotent(
+                runtime.receipt_store(conn),
+                admin,
+                f"PATCH /admin/documents/{doc_id}/status",
+                request.headers.get(IDEMPOTENCY_KEY_HEADER),
+                body,
+                DocumentDetail,
+                lambda: service.change_status(admin, doc_id, body),
+                ttl_s=idempotency_ttl_s,
+            )
+
+    @app.patch("/admin/documents/{doc_id}/acl", response_model=DocumentAclResponse)
+    def change_document_acl(doc_id: str, body: DocumentAclRequest, request: Request) -> DocumentAclResponse:
+        admin = _admin_user(request, "admin")
+        with runtime.admin_connection() as conn:
+            service = _documents(conn)
+            return idempotent(
+                runtime.receipt_store(conn),
+                admin,
+                f"PATCH /admin/documents/{doc_id}/acl",
+                request.headers.get(IDEMPOTENCY_KEY_HEADER),
+                body,
+                DocumentAclResponse,
+                lambda: service.change_acl(admin, doc_id, body),
+                ttl_s=idempotency_ttl_s,
+            )
+
+    @app.get("/admin/policies/candidates", response_model=PolicyListResponse)
+    def list_policy_candidates(request: Request) -> PolicyListResponse:
+        _admin_user(request, "approver", "admin")
+        with runtime.admin_connection() as conn:
+            return PolicyService(store=runtime.policy_store(conn)).list_candidates()
+
+    @app.get("/admin/policies/{policy_id}", response_model=PolicyResponse)
+    def get_policy(policy_id: str, request: Request) -> PolicyResponse:
+        _admin_user(request, "approver", "admin")
+        with runtime.admin_connection() as conn:
+            return PolicyService(store=runtime.policy_store(conn)).get(policy_id)
+
+    @app.post("/admin/policies/{policy_id}/approve", response_model=PolicyResponse)
+    def decide_policy(policy_id: str, body: PolicyDecisionRequest, request: Request) -> PolicyResponse:
+        approver = _admin_user(request, "approver")
+        with runtime.admin_connection() as conn:
+            service = PolicyService(store=runtime.policy_store(conn))
+            return idempotent(
+                runtime.receipt_store(conn),
+                approver,
+                f"POST /admin/policies/{policy_id}/approve",
+                request.headers.get(IDEMPOTENCY_KEY_HEADER),
+                body,
+                PolicyResponse,
+                lambda: service.decide(approver, policy_id, body),
+                ttl_s=idempotency_ttl_s,
+            )
+
+    @app.post("/admin/policies/{policy_id}/release", response_model=PolicyResponse)
+    def release_policy(policy_id: str, body: PolicyReleaseRequest, request: Request) -> PolicyResponse:
+        admin = _admin_user(request, "admin")
+        with runtime.admin_connection() as conn:
+            service = PolicyService(store=runtime.policy_store(conn))
+            return idempotent(
+                runtime.receipt_store(conn),
+                admin,
+                f"POST /admin/policies/{policy_id}/release",
+                request.headers.get(IDEMPOTENCY_KEY_HEADER),
+                body,
+                PolicyResponse,
+                lambda: service.release(admin, policy_id, body),
+                ttl_s=idempotency_ttl_s,
+            )
+
+    @app.post("/admin/policies/{policy_id}/rollback", response_model=PolicyResponse)
+    def rollback_policy(policy_id: str, body: PolicyRollbackRequest, request: Request) -> PolicyResponse:
+        admin = _admin_user(request, "admin")
+        with runtime.admin_connection() as conn:
+            service = PolicyService(store=runtime.policy_store(conn))
+            return idempotent(
+                runtime.receipt_store(conn),
+                admin,
+                f"POST /admin/policies/{policy_id}/rollback",
+                request.headers.get(IDEMPOTENCY_KEY_HEADER),
+                body,
+                PolicyResponse,
+                lambda: service.rollback(admin, policy_id, body),
+                ttl_s=idempotency_ttl_s,
+            )
 
     return app
 

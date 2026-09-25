@@ -32,6 +32,16 @@ API_MODELS: dict[str, type[BaseModel]] = {
     "FeedbackReceipt": api.FeedbackReceipt,
     "ReplayRequest": api.ReplayRequest,
     "ReplayReport": api.ReplayReport,
+    "DocumentListResponse": api.DocumentListResponse,
+    "DocumentDetail": api.DocumentDetail,
+    "DocumentStatusRequest": api.DocumentStatusRequest,
+    "DocumentAclRequest": api.DocumentAclRequest,
+    "DocumentAclResponse": api.DocumentAclResponse,
+    "PolicyListResponse": api.PolicyListResponse,
+    "PolicyResponse": api.PolicyResponse,
+    "PolicyDecisionRequest": api.PolicyDecisionRequest,
+    "PolicyReleaseRequest": api.PolicyReleaseRequest,
+    "PolicyRollbackRequest": api.PolicyRollbackRequest,
     "ErrorResponse": ErrorResponse,
 }
 MCP_MODELS: dict[str, type[BaseModel]] = {

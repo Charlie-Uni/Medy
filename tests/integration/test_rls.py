@@ -155,6 +155,9 @@ def test_group_roles_login_users_and_forced_rls(migrated, login_users):
             "escalations",
             "feedback",
             "replays",  # migration 0012: trace replays (M3-08)
+            "policies",  # migration 0014: policy candidates and decisions (M3-03 / DEC-012)
+            "policy_releases",  # migration 0014: release / rollback log
+            "released_policies",  # migration 0014: the released pointer
         }
         owners = {r[0] for r in conn.execute("select tableowner from pg_tables where schemaname = 'public'")}
         assert owners.isdisjoint(set(GROUPS.values()) | {u["name"] for u in login_users.values()})

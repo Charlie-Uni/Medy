@@ -11,8 +11,12 @@
 | `GET /v1/tasks/{id}` | 路径参数 | `TaskResponse` | 状态 queued、running、completed、failed；completed 必带 `result`（`TaskResult`：Skill 的 `name@version`、状态、reason codes、按该 Skill 注册的输出 Schema 校验过的 `output`、版本集；2026-09-23 M3-02 由 `AskResponse` 改为此结构，因为 Skill 输出是按 Skill 定义的结构；决策人 2026-09-24 批准），failed 必带 `ErrorResponse`，非终态两者皆无；只有创建者可见，其余 `404 not_found` |
 | `POST /v1/tasks/{id}/retry` | 路径参数 | `TaskResponse` | 只允许 failed 且 `error.retryable` 为真的任务；其他状态返回 `409 task_not_retryable` |
 | `POST /v1/feedback` | `FeedbackRequest` | `FeedbackReceipt` | correction 必带文本，其余信号不得带；支持 `Idempotency-Key` |
-| `POST /admin/documents`、`PATCH /admin/documents/{id}/status` | M1 随入库流程定义 | | 管理角色；状态变更写审计 |
-| `GET /admin/policies/candidates`、`POST /admin/policies/{id}/approve` | M4 随 Loop 定义 | | 审核角色；发布经门禁与签字 |
+| `GET /admin/documents`、`GET /admin/documents/{doc_id}` | 查询参数 dept / status / family_id | `DocumentListResponse`、`DocumentDetail` | 管理角色；只返回元数据、读 ACL 与最近 20 条审计，不返回正文；上传不是 HTTP 操作（入库流程离线，DEC-012，2026-09-25 决策人批准） |
+| `PATCH /admin/documents/{doc_id}/status` | `DocumentStatusRequest`（action activate / archive / withdraw、effective_date、reason） | `DocumentDetail` | 管理角色；draft→active、active→archived、draft→withdrawn，其余 `409 status_conflict`；复用发布链（触发器审计、outbox 事件、缓存失效）；支持 `Idempotency-Key` |
+| `PATCH /admin/documents/{doc_id}/acl` | `DocumentAclRequest`（grant / revoke 部门、reason） | `DocumentAclResponse` | 管理角色；所有者部门不可撤销；每次变更写 `doc_audit` 与 `document_acl_changed` 事件（涉及部门的缓存 epoch 失效）；支持 `Idempotency-Key` |
+| `GET /admin/policies/candidates`、`GET /admin/policies/{policy_id}` | — | `PolicyListResponse`、`PolicyResponse` | 审核（approver）或管理角色；候选 diff 只能是 prompt / rule / skill / retrieval_params 的结构化差异，含回放 / 门禁证据 |
+| `POST /admin/policies/{policy_id}/approve` | `PolicyDecisionRequest`（approve / reject、reason） | `PolicyResponse` | 审核角色；四眼：候选作者不得裁决（403）；只有 candidate 可裁决（409）；支持 `Idempotency-Key` |
+| `POST /admin/policies/{policy_id}/release`、`POST /admin/policies/{policy_id}/rollback` | `PolicyReleaseRequest`（canary_percent ≤ 10、reason）、`PolicyRollbackRequest` | `PolicyResponse` | 管理角色；发布要求 approved 且 `evidence.gate.passed`（否则 `409 gate_not_passed`，门禁计算随 M4-08）；released 指针按 (kind, name) 原子切换并记录前值；回滚只对当前发布有效，指针回到前一次发布；支持 `Idempotency-Key`（DEC-012） |
 | `POST /admin/traces/{id}/replay` | `ReplayRequest` | `ReplayReport` | 管理角色；用原问题、原 principal 的当前身份与本部署钉定的版本集重跑，`replay_run_id` 独立于原运行（不复用任何 operation key 结果）；报告两侧的 outcome / reason codes / 引用与差异字段、版本是否一致；201（2026-09-24 M3-08 定义，决策人同日批准） |
 | 所有错误 | | `ErrorResponse` | 只含 code、message、trace_id、retryable；内部 detail 不外泄；HTTP 状态按 `core.errors.HTTP_STATUS` |
 

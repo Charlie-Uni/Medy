@@ -1,0 +1,31 @@
+{
+  "$defs": {
+    "PolicyDecision": {
+      "enum": [
+        "approve",
+        "reject"
+      ],
+      "title": "PolicyDecision",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Four-eyes: the approver must not be the candidate's author.",
+  "properties": {
+    "decision": {
+      "$ref": "#/$defs/PolicyDecision"
+    },
+    "reason": {
+      "maxLength": 500,
+      "minLength": 1,
+      "title": "Reason",
+      "type": "string"
+    }
+  },
+  "required": [
+    "decision",
+    "reason"
+  ],
+  "title": "PolicyDecisionRequest",
+  "type": "object"
+}

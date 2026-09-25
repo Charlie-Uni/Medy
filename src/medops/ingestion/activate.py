@@ -195,6 +195,52 @@ def publish_version(
     return Publication(new_document_key, str(new_id), str(old[1]), str(old[0]), effective_from, (e1, e2))
 
 
+def archive_document(
+    conn: psycopg.Connection[Any], document_key: str, effective_to: date, *, actor: str, reason: str
+) -> Activation:
+    """active -> archived without a successor (M3-03 admin action): closes the effective window at `effective_to`,
+    the trigger writes the audit row with the session actor, one `document_archived` outbox event follows."""
+    if not actor or not reason:
+        raise ActivationRefused("actor and reason are required (audit)")
+    with conn.transaction():
+        conn.execute("select set_config('medops.actor', %s, true)", (actor,))
+        row = conn.execute(
+            "select doc_id, family_id, status::text, effective_from from documents where document_key = %s for update",
+            (document_key,),
+        ).fetchone()
+        if row is None:
+            raise ActivationRefused(f"{document_key}: unknown document_key")
+        doc_id, family_id, status, effective_from = row
+        if status != "active":
+            raise ActivationRefused(f"{document_key}: status is {status}, only active documents can be archived")
+        if effective_from is not None and effective_to <= effective_from:
+            raise ActivationRefused(f"{document_key}: effective_to must be after effective_from {effective_from}")
+        conn.execute(
+            "update documents set status = 'archived', effective_to = %s where doc_id = %s", (effective_to, doc_id)
+        )
+        _emit_status_event(conn, "document_archived", doc_id, family_id, actor, reason, effective_to=effective_to)
+    return Activation(document_key=document_key, doc_id=str(doc_id), effective_from=effective_to, actor=actor)
+
+
+def withdraw_document(conn: psycopg.Connection[Any], document_key: str, *, actor: str, reason: str) -> Activation:
+    """draft -> withdrawn (terminal, migration 0004); one `document_withdrawn` outbox event."""
+    if not actor or not reason:
+        raise ActivationRefused("actor and reason are required (audit)")
+    with conn.transaction():
+        conn.execute("select set_config('medops.actor', %s, true)", (actor,))
+        row = conn.execute(
+            "select doc_id, family_id, status::text from documents where document_key = %s for update", (document_key,)
+        ).fetchone()
+        if row is None:
+            raise ActivationRefused(f"{document_key}: unknown document_key")
+        doc_id, family_id, status = row
+        if status != "draft":
+            raise ActivationRefused(f"{document_key}: status is {status}, only drafts can be withdrawn")
+        conn.execute("update documents set status = 'withdrawn' where doc_id = %s", (doc_id,))
+        _emit_status_event(conn, "document_withdrawn", doc_id, family_id, actor, reason)
+    return Activation(document_key=document_key, doc_id=str(doc_id), effective_from=date.today(), actor=actor)
+
+
 def apply_plan(conn: psycopg.Connection[Any], plan: Sequence[dict[str, Any]], *, actor: str) -> list[Activation]:
     """Activate every entry with a non-null `effective_from`, all-or-nothing. Entries with
     `effective_from: null` are skipped (they must carry a `flag` explaining why)."""

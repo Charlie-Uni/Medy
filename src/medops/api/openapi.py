@@ -31,6 +31,8 @@ BEARER_SCHEME = "bearerAuth"
 IDEMPOTENCY_PARAMETER = "IdempotencyKey"
 TASK_ID_PARAMETER = "TaskId"
 TRACE_ID_PARAMETER = "TraceIdPath"
+DOC_ID_PARAMETER = "DocumentIdPath"
+POLICY_ID_PARAMETER = "PolicyIdPath"
 IDEMPOTENCY_TTL_MIN_SECONDS = 24 * 3600
 IDEMPOTENCY_TTL_DEFAULT_SECONDS = 7 * 24 * 3600
 """Baseline 3.2: keys are retained at least 24 h and not shorter than the task lifetime. The deployed value
@@ -181,6 +183,137 @@ def _paths() -> dict[str, Any]:
                 parameters=(IDEMPOTENCY_PARAMETER,),
             ),
         },
+        "/admin/documents": {
+            "get": _operation(
+                "listDocuments",
+                "List documents (admin)",
+                "Metadata, status, effective window and read departments of every document, optionally filtered by "
+                "`dept`, `status` or `family_id`; never returns chunk content. Requires the admin role (DEC-012).",
+                tag="admin",
+                success_status=200,
+                success_description="Document list.",
+                response_model="DocumentListResponse",
+            ),
+        },
+        "/admin/documents/{doc_id}": {
+            "parameters": [{"$ref": f"#/components/parameters/{DOC_ID_PARAMETER}"}],
+            "get": _operation(
+                "getDocument",
+                "Document detail with ACL and audit tail (admin)",
+                "Metadata plus the read ACL and the 20 most recent audit rows. Requires the admin role.",
+                tag="admin",
+                success_status=200,
+                success_description="Document detail.",
+                response_model="DocumentDetail",
+            ),
+        },
+        "/admin/documents/{doc_id}/status": {
+            "parameters": [{"$ref": f"#/components/parameters/{DOC_ID_PARAMETER}"}],
+            "patch": _operation(
+                "changeDocumentStatus",
+                "Activate, archive or withdraw a document (admin)",
+                "`activate`: draft to active at `effective_date` (the family must have no other active version); "
+                "`archive`: active to archived, closing the window at `effective_date`; `withdraw`: draft to the "
+                "terminal withdrawn state. Illegal transitions return `409 status_conflict`. The reason is written to "
+                "the audit row and an outbox event invalidates the retrieval cache. Uploads are not an HTTP operation "
+                "(the ingestion pipeline stays offline, DEC-012). " + IDEMPOTENCY_DESCRIPTION,
+                tag="admin",
+                success_status=200,
+                success_description="Document detail after the change.",
+                response_model="DocumentDetail",
+                request_model="DocumentStatusRequest",
+                parameters=(IDEMPOTENCY_PARAMETER,),
+            ),
+        },
+        "/admin/documents/{doc_id}/acl": {
+            "parameters": [{"$ref": f"#/components/parameters/{DOC_ID_PARAMETER}"}],
+            "patch": _operation(
+                "changeDocumentAcl",
+                "Grant or revoke department read access (admin)",
+                "The owner department keeps read access; withdrawn documents are read-only. Each change writes an "
+                "audit row and an outbox event that bumps the cache epoch of every department involved. "
+                + IDEMPOTENCY_DESCRIPTION,
+                tag="admin",
+                success_status=200,
+                success_description="Departments granted, revoked and the resulting read ACL.",
+                response_model="DocumentAclResponse",
+                request_model="DocumentAclRequest",
+                parameters=(IDEMPOTENCY_PARAMETER,),
+            ),
+        },
+        "/admin/policies/candidates": {
+            "get": _operation(
+                "listPolicyCandidates",
+                "List policy candidates awaiting a decision (approver / admin)",
+                "Candidate diffs (prompt, rule, skill or retrieval parameters) with their evidence. Requires the "
+                "approver or admin role.",
+                tag="admin",
+                success_status=200,
+                success_description="Candidates.",
+                response_model="PolicyListResponse",
+            ),
+        },
+        "/admin/policies/{policy_id}": {
+            "parameters": [{"$ref": f"#/components/parameters/{POLICY_ID_PARAMETER}"}],
+            "get": _operation(
+                "getPolicy",
+                "Policy with its decision, evidence and release state (approver / admin)",
+                "Requires the approver or admin role.",
+                tag="admin",
+                success_status=200,
+                success_description="Policy.",
+                response_model="PolicyResponse",
+            ),
+        },
+        "/admin/policies/{policy_id}/approve": {
+            "parameters": [{"$ref": f"#/components/parameters/{POLICY_ID_PARAMETER}"}],
+            "post": _operation(
+                "decidePolicy",
+                "Approve or reject a candidate (approver)",
+                "Four-eyes: the candidate's author cannot decide it (`403 forbidden`). Only candidates can be decided "
+                "(`409 status_conflict`). The decision, its author and the reason are recorded on the policy. "
+                + IDEMPOTENCY_DESCRIPTION,
+                tag="admin",
+                success_status=200,
+                success_description="Policy after the decision.",
+                response_model="PolicyResponse",
+                request_model="PolicyDecisionRequest",
+                parameters=(IDEMPOTENCY_PARAMETER,),
+            ),
+        },
+        "/admin/policies/{policy_id}/release": {
+            "parameters": [{"$ref": f"#/components/parameters/{POLICY_ID_PARAMETER}"}],
+            "post": _operation(
+                "releasePolicy",
+                "Release an approved policy with an initial canary (admin)",
+                "Requires status `approved` (`409 status_conflict`) and a passing gate report in `evidence.gate` "
+                "(`409 gate_not_passed`; M4-08 computes the report). `canary_percent` is at most 10. The released "
+                "pointer for (kind, name) switches atomically and the previous pointer is logged. "
+                + IDEMPOTENCY_DESCRIPTION,
+                tag="admin",
+                success_status=200,
+                success_description="Policy after the release.",
+                response_model="PolicyResponse",
+                request_model="PolicyReleaseRequest",
+                parameters=(IDEMPOTENCY_PARAMETER,),
+            ),
+        },
+        "/admin/policies/{policy_id}/rollback": {
+            "parameters": [{"$ref": f"#/components/parameters/{POLICY_ID_PARAMETER}"}],
+            "post": _operation(
+                "rollbackPolicy",
+                "Roll back the currently released policy (admin)",
+                "One atomic switch of the released pointer back to the previous release (or removal when there was "
+                "none); only the currently released policy can be rolled back (`409 status_conflict`). "
+                + IDEMPOTENCY_DESCRIPTION,
+                tag="admin",
+                success_status=200,
+                success_description="Policy after the rollback.",
+                response_model="PolicyResponse",
+                request_model="PolicyRollbackRequest",
+                parameters=(IDEMPOTENCY_PARAMETER,),
+            ),
+        },
         "/admin/traces/{trace_id}/replay": {
             "parameters": [{"$ref": f"#/components/parameters/{TRACE_ID_PARAMETER}"}],
             "post": _operation(
@@ -243,6 +376,20 @@ def build_openapi(models: Mapping[str, type[BaseModel]]) -> dict[str, Any]:
                     "required": True,
                     "description": "Trace identifier (32 lowercase hex characters) of a previous request.",
                     "schema": {"type": "string", "pattern": "^[0-9a-f]{32}$"},
+                },
+                DOC_ID_PARAMETER: {
+                    "name": "doc_id",
+                    "in": "path",
+                    "required": True,
+                    "description": "Document identifier (UUID).",
+                    "schema": {"type": "string", "format": "uuid"},
+                },
+                POLICY_ID_PARAMETER: {
+                    "name": "policy_id",
+                    "in": "path",
+                    "required": True,
+                    "description": "Policy identifier (UUID).",
+                    "schema": {"type": "string", "format": "uuid"},
                 },
             },
             "securitySchemes": {

@@ -1,6 +1,16 @@
 {
   "components": {
     "parameters": {
+      "DocumentIdPath": {
+        "description": "Document identifier (UUID).",
+        "in": "path",
+        "name": "doc_id",
+        "required": true,
+        "schema": {
+          "format": "uuid",
+          "type": "string"
+        }
+      },
       "IdempotencyKey": {
         "description": "`Idempotency-Key` (baseline 3.2). Scope is authenticated principal + route + key; the server stores the canonical request hash. Same key and same payload returns the original receipt with the original status code, also while the first request is still processing (never 409). Same key with a different payload returns 422 `idempotency_payload_mismatch`. The record and the idempotency entry are created in one transaction. Retention is configured by IDEMPOTENCY_KEY_TTL_SECONDS (default 604800 seconds, never below 86400 seconds) and never shorter than the task lifetime.",
         "in": "header",
@@ -8,6 +18,16 @@
         "required": false,
         "schema": {
           "minLength": 1,
+          "type": "string"
+        }
+      },
+      "PolicyIdPath": {
+        "description": "Policy identifier (UUID).",
+        "in": "path",
+        "name": "policy_id",
+        "required": true,
+        "schema": {
+          "format": "uuid",
           "type": "string"
         }
       },
@@ -81,7 +101,7 @@
             }
           }
         },
-        "description": "`ErrorResponse` with `code` in: `version_conflict`, `task_not_retryable`"
+        "description": "`ErrorResponse` with `code` in: `version_conflict`, `task_not_retryable`, `status_conflict`, `gate_not_passed`"
       },
       "Error422": {
         "content": {
@@ -416,6 +436,432 @@
         "title": "Claim",
         "type": "object"
       },
+      "Dept": {
+        "enum": [
+          "MA",
+          "PV",
+          "CO"
+        ],
+        "title": "Dept",
+        "type": "string"
+      },
+      "DocumentAclRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "grant": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/Dept"
+            },
+            "title": "Grant",
+            "type": "array"
+          },
+          "reason": {
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Reason",
+            "type": "string"
+          },
+          "revoke": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/Dept"
+            },
+            "title": "Revoke",
+            "type": "array"
+          }
+        },
+        "required": [
+          "reason"
+        ],
+        "title": "DocumentAclRequest",
+        "type": "object"
+      },
+      "DocumentAclResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "doc_id": {
+            "minLength": 1,
+            "title": "Doc Id",
+            "type": "string"
+          },
+          "document_key": {
+            "minLength": 1,
+            "title": "Document Key",
+            "type": "string"
+          },
+          "granted": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/Dept"
+            },
+            "title": "Granted",
+            "type": "array"
+          },
+          "read_depts": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/Dept"
+            },
+            "title": "Read Depts",
+            "type": "array"
+          },
+          "revoked": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/Dept"
+            },
+            "title": "Revoked",
+            "type": "array"
+          }
+        },
+        "required": [
+          "doc_id",
+          "document_key"
+        ],
+        "title": "DocumentAclResponse",
+        "type": "object"
+      },
+      "DocumentAuditEntry": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "minLength": 1,
+            "title": "Action",
+            "type": "string"
+          },
+          "actor": {
+            "minLength": 1,
+            "title": "Actor",
+            "type": "string"
+          },
+          "from_status": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "From Status"
+          },
+          "occurred_at": {
+            "format": "date-time",
+            "title": "Occurred At",
+            "type": "string"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Reason"
+          },
+          "to_status": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "To Status"
+          }
+        },
+        "required": [
+          "action",
+          "actor",
+          "occurred_at"
+        ],
+        "title": "DocumentAuditEntry",
+        "type": "object"
+      },
+      "DocumentDetail": {
+        "additionalProperties": false,
+        "properties": {
+          "audit": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/DocumentAuditEntry"
+            },
+            "title": "Audit",
+            "type": "array"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "doc_id": {
+            "minLength": 1,
+            "title": "Doc Id",
+            "type": "string"
+          },
+          "doc_type": {
+            "minLength": 1,
+            "title": "Doc Type",
+            "type": "string"
+          },
+          "document_key": {
+            "minLength": 1,
+            "title": "Document Key",
+            "type": "string"
+          },
+          "effective_from": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Effective From"
+          },
+          "effective_to": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Effective To"
+          },
+          "family_id": {
+            "minLength": 1,
+            "title": "Family Id",
+            "type": "string"
+          },
+          "language": {
+            "minLength": 1,
+            "title": "Language",
+            "type": "string"
+          },
+          "owner_dept": {
+            "$ref": "#/components/schemas/Dept"
+          },
+          "parse_quality": {
+            "minLength": 1,
+            "title": "Parse Quality",
+            "type": "string"
+          },
+          "read_depts": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/Dept"
+            },
+            "title": "Read Depts",
+            "type": "array"
+          },
+          "status": {
+            "$ref": "#/components/schemas/DocumentStatus"
+          },
+          "title": {
+            "minLength": 1,
+            "title": "Title",
+            "type": "string"
+          },
+          "version": {
+            "minLength": 1,
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "doc_id",
+          "document_key",
+          "family_id",
+          "title",
+          "doc_type",
+          "owner_dept",
+          "status",
+          "version",
+          "parse_quality",
+          "language",
+          "created_at"
+        ],
+        "title": "DocumentDetail",
+        "type": "object"
+      },
+      "DocumentListResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "count": {
+            "minimum": 0,
+            "title": "Count",
+            "type": "integer"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/DocumentSummary"
+            },
+            "title": "Items",
+            "type": "array"
+          }
+        },
+        "required": [
+          "items",
+          "count"
+        ],
+        "title": "DocumentListResponse",
+        "type": "object"
+      },
+      "DocumentStatus": {
+        "enum": [
+          "draft",
+          "active",
+          "archived",
+          "withdrawn"
+        ],
+        "title": "DocumentStatus",
+        "type": "string"
+      },
+      "DocumentStatusAction": {
+        "enum": [
+          "activate",
+          "archive",
+          "withdraw"
+        ],
+        "title": "DocumentStatusAction",
+        "type": "string"
+      },
+      "DocumentStatusRequest": {
+        "additionalProperties": false,
+        "description": "`effective_date` is the activation date for `activate` and the end of the window for `archive`;\n`withdraw` ignores it. `reason` is written to the audit row.",
+        "properties": {
+          "action": {
+            "$ref": "#/components/schemas/DocumentStatusAction"
+          },
+          "effective_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Effective Date"
+          },
+          "reason": {
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Reason",
+            "type": "string"
+          }
+        },
+        "required": [
+          "action",
+          "reason"
+        ],
+        "title": "DocumentStatusRequest",
+        "type": "object"
+      },
+      "DocumentSummary": {
+        "additionalProperties": false,
+        "description": "Metadata only: admin views never return chunk content.",
+        "properties": {
+          "doc_id": {
+            "minLength": 1,
+            "title": "Doc Id",
+            "type": "string"
+          },
+          "doc_type": {
+            "minLength": 1,
+            "title": "Doc Type",
+            "type": "string"
+          },
+          "document_key": {
+            "minLength": 1,
+            "title": "Document Key",
+            "type": "string"
+          },
+          "effective_from": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Effective From"
+          },
+          "effective_to": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Effective To"
+          },
+          "family_id": {
+            "minLength": 1,
+            "title": "Family Id",
+            "type": "string"
+          },
+          "owner_dept": {
+            "$ref": "#/components/schemas/Dept"
+          },
+          "read_depts": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/Dept"
+            },
+            "title": "Read Depts",
+            "type": "array"
+          },
+          "status": {
+            "$ref": "#/components/schemas/DocumentStatus"
+          },
+          "title": {
+            "minLength": 1,
+            "title": "Title",
+            "type": "string"
+          },
+          "version": {
+            "minLength": 1,
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "doc_id",
+          "document_key",
+          "family_id",
+          "title",
+          "doc_type",
+          "owner_dept",
+          "status",
+          "version"
+        ],
+        "title": "DocumentSummary",
+        "type": "object"
+      },
       "ErrorCode": {
         "enum": [
           "invalid_request",
@@ -427,6 +873,8 @@
           "not_found",
           "version_conflict",
           "task_not_retryable",
+          "status_conflict",
+          "gate_not_passed",
           "evidence_integrity_failed",
           "dependency_timeout",
           "dependency_unavailable",
@@ -676,6 +1124,224 @@
           "escalated"
         ],
         "title": "OutcomeKind",
+        "type": "string"
+      },
+      "PolicyDecision": {
+        "enum": [
+          "approve",
+          "reject"
+        ],
+        "title": "PolicyDecision",
+        "type": "string"
+      },
+      "PolicyDecisionRequest": {
+        "additionalProperties": false,
+        "description": "Four-eyes: the approver must not be the candidate's author.",
+        "properties": {
+          "decision": {
+            "$ref": "#/components/schemas/PolicyDecision"
+          },
+          "reason": {
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Reason",
+            "type": "string"
+          }
+        },
+        "required": [
+          "decision",
+          "reason"
+        ],
+        "title": "PolicyDecisionRequest",
+        "type": "object"
+      },
+      "PolicyKind": {
+        "enum": [
+          "prompt",
+          "rule",
+          "skill",
+          "retrieval_params"
+        ],
+        "title": "PolicyKind",
+        "type": "string"
+      },
+      "PolicyListResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "count": {
+            "minimum": 0,
+            "title": "Count",
+            "type": "integer"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/PolicyResponse"
+            },
+            "title": "Items",
+            "type": "array"
+          }
+        },
+        "required": [
+          "items",
+          "count"
+        ],
+        "title": "PolicyListResponse",
+        "type": "object"
+      },
+      "PolicyReleaseRequest": {
+        "additionalProperties": false,
+        "description": "Initial canary never above 10% (baseline 5.6 / M4-09).",
+        "properties": {
+          "canary_percent": {
+            "maximum": 10,
+            "minimum": 0,
+            "title": "Canary Percent",
+            "type": "integer"
+          },
+          "reason": {
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Reason",
+            "type": "string"
+          }
+        },
+        "required": [
+          "canary_percent",
+          "reason"
+        ],
+        "title": "PolicyReleaseRequest",
+        "type": "object"
+      },
+      "PolicyResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "created_by": {
+            "minLength": 1,
+            "title": "Created By",
+            "type": "string"
+          },
+          "decided_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Decided At"
+          },
+          "decided_by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Decided By"
+          },
+          "decision_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Decision Reason"
+          },
+          "diff": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/JsonValue"
+            },
+            "title": "Diff",
+            "type": "object"
+          },
+          "evidence": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/JsonValue"
+            },
+            "title": "Evidence",
+            "type": "object"
+          },
+          "kind": {
+            "$ref": "#/components/schemas/PolicyKind"
+          },
+          "name": {
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "policy_id": {
+            "minLength": 1,
+            "title": "Policy Id",
+            "type": "string"
+          },
+          "released": {
+            "default": false,
+            "title": "Released",
+            "type": "boolean"
+          },
+          "status": {
+            "$ref": "#/components/schemas/PolicyStatus"
+          },
+          "version": {
+            "minLength": 1,
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "policy_id",
+          "kind",
+          "name",
+          "version",
+          "status",
+          "diff",
+          "evidence",
+          "created_by",
+          "created_at"
+        ],
+        "title": "PolicyResponse",
+        "type": "object"
+      },
+      "PolicyRollbackRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "reason": {
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Reason",
+            "type": "string"
+          }
+        },
+        "required": [
+          "reason"
+        ],
+        "title": "PolicyRollbackRequest",
+        "type": "object"
+      },
+      "PolicyStatus": {
+        "enum": [
+          "candidate",
+          "approved",
+          "rejected",
+          "released",
+          "rolled_back"
+        ],
+        "title": "PolicyStatus",
         "type": "string"
       },
       "ReasonCode": {
@@ -1120,6 +1786,584 @@
   },
   "openapi": "3.1.0",
   "paths": {
+    "/admin/documents": {
+      "get": {
+        "description": "Metadata, status, effective window and read departments of every document, optionally filtered by `dept`, `status` or `family_id`; never returns chunk content. Requires the admin role (DEC-012).",
+        "operationId": "listDocuments",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentListResponse"
+                }
+              }
+            },
+            "description": "Document list."
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "500": {
+            "$ref": "#/components/responses/Error500"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          },
+          "504": {
+            "$ref": "#/components/responses/Error504"
+          }
+        },
+        "summary": "List documents (admin)",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/documents/{doc_id}": {
+      "get": {
+        "description": "Metadata plus the read ACL and the 20 most recent audit rows. Requires the admin role.",
+        "operationId": "getDocument",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentDetail"
+                }
+              }
+            },
+            "description": "Document detail."
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "500": {
+            "$ref": "#/components/responses/Error500"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          },
+          "504": {
+            "$ref": "#/components/responses/Error504"
+          }
+        },
+        "summary": "Document detail with ACL and audit tail (admin)",
+        "tags": [
+          "admin"
+        ]
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/DocumentIdPath"
+        }
+      ]
+    },
+    "/admin/documents/{doc_id}/acl": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/DocumentIdPath"
+        }
+      ],
+      "patch": {
+        "description": "The owner department keeps read access; withdrawn documents are read-only. Each change writes an audit row and an outbox event that bumps the cache epoch of every department involved. `Idempotency-Key` (baseline 3.2). Scope is authenticated principal + route + key; the server stores the canonical request hash. Same key and same payload returns the original receipt with the original status code, also while the first request is still processing (never 409). Same key with a different payload returns 422 `idempotency_payload_mismatch`. The record and the idempotency entry are created in one transaction. Retention is configured by IDEMPOTENCY_KEY_TTL_SECONDS (default 604800 seconds, never below 86400 seconds) and never shorter than the task lifetime.",
+        "operationId": "changeDocumentAcl",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentAclRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentAclResponse"
+                }
+              }
+            },
+            "description": "Departments granted, revoked and the resulting read ACL."
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "500": {
+            "$ref": "#/components/responses/Error500"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          },
+          "504": {
+            "$ref": "#/components/responses/Error504"
+          }
+        },
+        "summary": "Grant or revoke department read access (admin)",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/documents/{doc_id}/status": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/DocumentIdPath"
+        }
+      ],
+      "patch": {
+        "description": "`activate`: draft to active at `effective_date` (the family must have no other active version); `archive`: active to archived, closing the window at `effective_date`; `withdraw`: draft to the terminal withdrawn state. Illegal transitions return `409 status_conflict`. The reason is written to the audit row and an outbox event invalidates the retrieval cache. Uploads are not an HTTP operation (the ingestion pipeline stays offline, DEC-012). `Idempotency-Key` (baseline 3.2). Scope is authenticated principal + route + key; the server stores the canonical request hash. Same key and same payload returns the original receipt with the original status code, also while the first request is still processing (never 409). Same key with a different payload returns 422 `idempotency_payload_mismatch`. The record and the idempotency entry are created in one transaction. Retention is configured by IDEMPOTENCY_KEY_TTL_SECONDS (default 604800 seconds, never below 86400 seconds) and never shorter than the task lifetime.",
+        "operationId": "changeDocumentStatus",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentStatusRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentDetail"
+                }
+              }
+            },
+            "description": "Document detail after the change."
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "500": {
+            "$ref": "#/components/responses/Error500"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          },
+          "504": {
+            "$ref": "#/components/responses/Error504"
+          }
+        },
+        "summary": "Activate, archive or withdraw a document (admin)",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/policies/candidates": {
+      "get": {
+        "description": "Candidate diffs (prompt, rule, skill or retrieval parameters) with their evidence. Requires the approver or admin role.",
+        "operationId": "listPolicyCandidates",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PolicyListResponse"
+                }
+              }
+            },
+            "description": "Candidates."
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "500": {
+            "$ref": "#/components/responses/Error500"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          },
+          "504": {
+            "$ref": "#/components/responses/Error504"
+          }
+        },
+        "summary": "List policy candidates awaiting a decision (approver / admin)",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/policies/{policy_id}": {
+      "get": {
+        "description": "Requires the approver or admin role.",
+        "operationId": "getPolicy",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PolicyResponse"
+                }
+              }
+            },
+            "description": "Policy."
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "500": {
+            "$ref": "#/components/responses/Error500"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          },
+          "504": {
+            "$ref": "#/components/responses/Error504"
+          }
+        },
+        "summary": "Policy with its decision, evidence and release state (approver / admin)",
+        "tags": [
+          "admin"
+        ]
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/PolicyIdPath"
+        }
+      ]
+    },
+    "/admin/policies/{policy_id}/approve": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/PolicyIdPath"
+        }
+      ],
+      "post": {
+        "description": "Four-eyes: the candidate's author cannot decide it (`403 forbidden`). Only candidates can be decided (`409 status_conflict`). The decision, its author and the reason are recorded on the policy. `Idempotency-Key` (baseline 3.2). Scope is authenticated principal + route + key; the server stores the canonical request hash. Same key and same payload returns the original receipt with the original status code, also while the first request is still processing (never 409). Same key with a different payload returns 422 `idempotency_payload_mismatch`. The record and the idempotency entry are created in one transaction. Retention is configured by IDEMPOTENCY_KEY_TTL_SECONDS (default 604800 seconds, never below 86400 seconds) and never shorter than the task lifetime.",
+        "operationId": "decidePolicy",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PolicyDecisionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PolicyResponse"
+                }
+              }
+            },
+            "description": "Policy after the decision."
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "500": {
+            "$ref": "#/components/responses/Error500"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          },
+          "504": {
+            "$ref": "#/components/responses/Error504"
+          }
+        },
+        "summary": "Approve or reject a candidate (approver)",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/policies/{policy_id}/release": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/PolicyIdPath"
+        }
+      ],
+      "post": {
+        "description": "Requires status `approved` (`409 status_conflict`) and a passing gate report in `evidence.gate` (`409 gate_not_passed`; M4-08 computes the report). `canary_percent` is at most 10. The released pointer for (kind, name) switches atomically and the previous pointer is logged. `Idempotency-Key` (baseline 3.2). Scope is authenticated principal + route + key; the server stores the canonical request hash. Same key and same payload returns the original receipt with the original status code, also while the first request is still processing (never 409). Same key with a different payload returns 422 `idempotency_payload_mismatch`. The record and the idempotency entry are created in one transaction. Retention is configured by IDEMPOTENCY_KEY_TTL_SECONDS (default 604800 seconds, never below 86400 seconds) and never shorter than the task lifetime.",
+        "operationId": "releasePolicy",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PolicyReleaseRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PolicyResponse"
+                }
+              }
+            },
+            "description": "Policy after the release."
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "500": {
+            "$ref": "#/components/responses/Error500"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          },
+          "504": {
+            "$ref": "#/components/responses/Error504"
+          }
+        },
+        "summary": "Release an approved policy with an initial canary (admin)",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/policies/{policy_id}/rollback": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/PolicyIdPath"
+        }
+      ],
+      "post": {
+        "description": "One atomic switch of the released pointer back to the previous release (or removal when there was none); only the currently released policy can be rolled back (`409 status_conflict`). `Idempotency-Key` (baseline 3.2). Scope is authenticated principal + route + key; the server stores the canonical request hash. Same key and same payload returns the original receipt with the original status code, also while the first request is still processing (never 409). Same key with a different payload returns 422 `idempotency_payload_mismatch`. The record and the idempotency entry are created in one transaction. Retention is configured by IDEMPOTENCY_KEY_TTL_SECONDS (default 604800 seconds, never below 86400 seconds) and never shorter than the task lifetime.",
+        "operationId": "rollbackPolicy",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PolicyRollbackRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PolicyResponse"
+                }
+              }
+            },
+            "description": "Policy after the rollback."
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "500": {
+            "$ref": "#/components/responses/Error500"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          },
+          "504": {
+            "$ref": "#/components/responses/Error504"
+          }
+        },
+        "summary": "Roll back the currently released policy (admin)",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
     "/admin/traces/{trace_id}/replay": {
       "parameters": [
         {

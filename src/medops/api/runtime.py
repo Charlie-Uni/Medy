@@ -5,7 +5,7 @@ behind the monthly budget, the operation-key ledger, and the pinned production m
 from __future__ import annotations
 
 import json
-from collections.abc import Iterator, Mapping
+from collections.abc import Iterator, Mapping, Sequence
 from contextlib import contextmanager
 from dataclasses import dataclass, field
 from datetime import date
@@ -20,6 +20,7 @@ from medops.application.audit import TraceStore
 from medops.application.metrics import MetricsSource, PgMetricsSource
 from medops.application.tasks import TaskStore
 from medops.core.config import Settings
+from medops.core.errors import ErrorCode, InfrastructureError
 from medops.domain.identity import UserContext
 from medops.domain.state import VersionSet
 from medops.harness.executions import PgExecutionStore
@@ -27,11 +28,16 @@ from medops.harness.nodes import HarnessDeps
 from medops.harness.production import PRODUCTION_ANSWER_MODEL, PRODUCTION_JUDGE_MODEL, production_model_config_version
 from medops.harness.retrieval_port import ProductionRetrieval
 from medops.infrastructure.db.audit import PgTraceStore
+from medops.infrastructure.db.documents import PgDocumentAdminStore
+from medops.infrastructure.db.idempotency import PgReceiptStore
+from medops.infrastructure.db.policies import PgPolicyStore
 from medops.infrastructure.db.tasks import PgTaskStore
 from medops.infrastructure.llm.budget import BudgetedGateway, InMemorySpendLedger
 from medops.infrastructure.llm.gateway import OPENAI_PRICES, ModelGateway, PriceTable
 from medops.infrastructure.llm.meter import MeteredGateway
 from medops.infrastructure.llm.openai_gateway import OpenAIModelGateway
+from medops.ingestion import acl as acl_ops
+from medops.ingestion import activate as activation
 from medops.retrieval.pinned import PinnedEmbedding, PinnedReranker, PinnedThread
 from medops.retrieval.production import (
     PRODUCTION_RETRIEVAL_VERSION,
@@ -85,6 +91,7 @@ class ProductionRuntime:
     versions: VersionSet
     as_of: date | None = None
     _dsn: str = field(default="", repr=False)
+    _admin_dsn: str | None = field(default=None, repr=False)
 
     @classmethod
     def from_settings(
@@ -117,6 +124,7 @@ class ProductionRuntime:
             versions=versions,
         )
         runtime._dsn = settings.database_url.get_secret_value()
+        runtime._admin_dsn = settings.database_admin_url.get_secret_value() if settings.database_admin_url else None
         return runtime
 
     @contextmanager
@@ -127,6 +135,26 @@ class ProductionRuntime:
 
     def directory(self, conn: Any) -> PgDirectory:
         return PgDirectory(conn)
+
+    @contextmanager
+    def admin_connection(self) -> Iterator[psycopg.Connection[Any]]:
+        """Admin routes (M3-03) run on the admin role: DATABASE_ADMIN_URL is required for them (INV-AUTH-05)."""
+        if not self._admin_dsn:
+            raise InfrastructureError(
+                ErrorCode.dependency_unavailable, detail="DATABASE_ADMIN_URL is not configured", retryable=False
+            )
+        with psycopg.connect(self._admin_dsn) as conn:
+            with conn.transaction():
+                yield conn
+
+    def document_admin(self, conn: Any) -> tuple[PgDocumentAdminStore, PgDocumentActions]:
+        return PgDocumentAdminStore(conn), PgDocumentActions(conn)
+
+    def policy_store(self, conn: Any) -> PgPolicyStore:
+        return PgPolicyStore(conn)
+
+    def receipt_store(self, conn: Any) -> PgReceiptStore:
+        return PgReceiptStore(conn)
 
     def bind_identity(self, conn: Any, user: UserContext) -> None:
         conn.execute(
@@ -210,3 +238,25 @@ class ProductionRuntime:
 
 def _check_protocol(runtime: ProductionRuntime) -> ApiRuntime:  # structural conformance, checked by mypy
     return runtime
+
+
+class PgDocumentActions:
+    """The publish chain bound to an admin connection (ingestion.activate / ingestion.acl)."""
+
+    def __init__(self, conn: Any) -> None:
+        self._conn = conn
+
+    def activate(self, document_key: str, effective_from: Any, *, actor: str, reason: str) -> None:
+        activation.activate_document(self._conn, document_key, effective_from, actor=actor, reason=reason)
+
+    def archive(self, document_key: str, effective_to: Any, *, actor: str, reason: str) -> None:
+        activation.archive_document(self._conn, document_key, effective_to, actor=actor, reason=reason)
+
+    def withdraw(self, document_key: str, *, actor: str, reason: str) -> None:
+        activation.withdraw_document(self._conn, document_key, actor=actor, reason=reason)
+
+    def change_acl(
+        self, document_key: str, *, grant: Sequence[str], revoke: Sequence[str], actor: str, reason: str
+    ) -> Mapping[str, Any]:
+        change = acl_ops.change_acl(self._conn, document_key, grant=grant, revoke=revoke, actor=actor, reason=reason)
+        return {"granted": change.granted, "revoked": change.revoked, "read_depts": change.read_depts}

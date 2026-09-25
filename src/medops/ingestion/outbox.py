@@ -20,7 +20,7 @@ from typing import Any
 
 import psycopg
 
-EVENT_TYPES = ("document_activated", "document_archived", "document_withdrawn")
+EVENT_TYPES = ("document_activated", "document_archived", "document_withdrawn", "document_acl_changed")
 
 
 @dataclass(frozen=True)

@@ -1,0 +1,132 @@
+{
+  "$defs": {
+    "Dept": {
+      "enum": [
+        "MA",
+        "PV",
+        "CO"
+      ],
+      "title": "Dept",
+      "type": "string"
+    },
+    "DocumentStatus": {
+      "enum": [
+        "draft",
+        "active",
+        "archived",
+        "withdrawn"
+      ],
+      "title": "DocumentStatus",
+      "type": "string"
+    },
+    "DocumentSummary": {
+      "additionalProperties": false,
+      "description": "Metadata only: admin views never return chunk content.",
+      "properties": {
+        "doc_id": {
+          "minLength": 1,
+          "title": "Doc Id",
+          "type": "string"
+        },
+        "doc_type": {
+          "minLength": 1,
+          "title": "Doc Type",
+          "type": "string"
+        },
+        "document_key": {
+          "minLength": 1,
+          "title": "Document Key",
+          "type": "string"
+        },
+        "effective_from": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Effective From"
+        },
+        "effective_to": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Effective To"
+        },
+        "family_id": {
+          "minLength": 1,
+          "title": "Family Id",
+          "type": "string"
+        },
+        "owner_dept": {
+          "$ref": "#/$defs/Dept"
+        },
+        "read_depts": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Dept"
+          },
+          "title": "Read Depts",
+          "type": "array"
+        },
+        "status": {
+          "$ref": "#/$defs/DocumentStatus"
+        },
+        "title": {
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "version": {
+          "minLength": 1,
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "doc_id",
+        "document_key",
+        "family_id",
+        "title",
+        "doc_type",
+        "owner_dept",
+        "status",
+        "version"
+      ],
+      "title": "DocumentSummary",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "count": {
+      "minimum": 0,
+      "title": "Count",
+      "type": "integer"
+    },
+    "items": {
+      "items": {
+        "$ref": "#/$defs/DocumentSummary"
+      },
+      "title": "Items",
+      "type": "array"
+    }
+  },
+  "required": [
+    "items",
+    "count"
+  ],
+  "title": "DocumentListResponse",
+  "type": "object"
+}

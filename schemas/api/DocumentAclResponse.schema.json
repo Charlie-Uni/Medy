@@ -1,0 +1,56 @@
+{
+  "$defs": {
+    "Dept": {
+      "enum": [
+        "MA",
+        "PV",
+        "CO"
+      ],
+      "title": "Dept",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "doc_id": {
+      "minLength": 1,
+      "title": "Doc Id",
+      "type": "string"
+    },
+    "document_key": {
+      "minLength": 1,
+      "title": "Document Key",
+      "type": "string"
+    },
+    "granted": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/Dept"
+      },
+      "title": "Granted",
+      "type": "array"
+    },
+    "read_depts": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/Dept"
+      },
+      "title": "Read Depts",
+      "type": "array"
+    },
+    "revoked": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/Dept"
+      },
+      "title": "Revoked",
+      "type": "array"
+    }
+  },
+  "required": [
+    "doc_id",
+    "document_key"
+  ],
+  "title": "DocumentAclResponse",
+  "type": "object"
+}

@@ -1,0 +1,129 @@
+{
+  "$defs": {
+    "JsonValue": {},
+    "PolicyKind": {
+      "enum": [
+        "prompt",
+        "rule",
+        "skill",
+        "retrieval_params"
+      ],
+      "title": "PolicyKind",
+      "type": "string"
+    },
+    "PolicyStatus": {
+      "enum": [
+        "candidate",
+        "approved",
+        "rejected",
+        "released",
+        "rolled_back"
+      ],
+      "title": "PolicyStatus",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "created_by": {
+      "minLength": 1,
+      "title": "Created By",
+      "type": "string"
+    },
+    "decided_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Decided At"
+    },
+    "decided_by": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Decided By"
+    },
+    "decision_reason": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Decision Reason"
+    },
+    "diff": {
+      "additionalProperties": {
+        "$ref": "#/$defs/JsonValue"
+      },
+      "title": "Diff",
+      "type": "object"
+    },
+    "evidence": {
+      "additionalProperties": {
+        "$ref": "#/$defs/JsonValue"
+      },
+      "title": "Evidence",
+      "type": "object"
+    },
+    "kind": {
+      "$ref": "#/$defs/PolicyKind"
+    },
+    "name": {
+      "minLength": 1,
+      "title": "Name",
+      "type": "string"
+    },
+    "policy_id": {
+      "minLength": 1,
+      "title": "Policy Id",
+      "type": "string"
+    },
+    "released": {
+      "default": false,
+      "title": "Released",
+      "type": "boolean"
+    },
+    "status": {
+      "$ref": "#/$defs/PolicyStatus"
+    },
+    "version": {
+      "minLength": 1,
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "policy_id",
+    "kind",
+    "name",
+    "version",
+    "status",
+    "diff",
+    "evidence",
+    "created_by",
+    "created_at"
+  ],
+  "title": "PolicyResponse",
+  "type": "object"
+}

@@ -1,0 +1,197 @@
+{
+  "$defs": {
+    "Dept": {
+      "enum": [
+        "MA",
+        "PV",
+        "CO"
+      ],
+      "title": "Dept",
+      "type": "string"
+    },
+    "DocumentAuditEntry": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "minLength": 1,
+          "title": "Action",
+          "type": "string"
+        },
+        "actor": {
+          "minLength": 1,
+          "title": "Actor",
+          "type": "string"
+        },
+        "from_status": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "From Status"
+        },
+        "occurred_at": {
+          "format": "date-time",
+          "title": "Occurred At",
+          "type": "string"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reason"
+        },
+        "to_status": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "To Status"
+        }
+      },
+      "required": [
+        "action",
+        "actor",
+        "occurred_at"
+      ],
+      "title": "DocumentAuditEntry",
+      "type": "object"
+    },
+    "DocumentStatus": {
+      "enum": [
+        "draft",
+        "active",
+        "archived",
+        "withdrawn"
+      ],
+      "title": "DocumentStatus",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "audit": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/DocumentAuditEntry"
+      },
+      "title": "Audit",
+      "type": "array"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "doc_id": {
+      "minLength": 1,
+      "title": "Doc Id",
+      "type": "string"
+    },
+    "doc_type": {
+      "minLength": 1,
+      "title": "Doc Type",
+      "type": "string"
+    },
+    "document_key": {
+      "minLength": 1,
+      "title": "Document Key",
+      "type": "string"
+    },
+    "effective_from": {
+      "anyOf": [
+        {
+          "format": "date",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Effective From"
+    },
+    "effective_to": {
+      "anyOf": [
+        {
+          "format": "date",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Effective To"
+    },
+    "family_id": {
+      "minLength": 1,
+      "title": "Family Id",
+      "type": "string"
+    },
+    "language": {
+      "minLength": 1,
+      "title": "Language",
+      "type": "string"
+    },
+    "owner_dept": {
+      "$ref": "#/$defs/Dept"
+    },
+    "parse_quality": {
+      "minLength": 1,
+      "title": "Parse Quality",
+      "type": "string"
+    },
+    "read_depts": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/Dept"
+      },
+      "title": "Read Depts",
+      "type": "array"
+    },
+    "status": {
+      "$ref": "#/$defs/DocumentStatus"
+    },
+    "title": {
+      "minLength": 1,
+      "title": "Title",
+      "type": "string"
+    },
+    "version": {
+      "minLength": 1,
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "doc_id",
+    "document_key",
+    "family_id",
+    "title",
+    "doc_type",
+    "owner_dept",
+    "status",
+    "version",
+    "parse_quality",
+    "language",
+    "created_at"
+  ],
+  "title": "DocumentDetail",
+  "type": "object"
+}

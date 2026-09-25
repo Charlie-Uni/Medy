@@ -11,6 +11,8 @@
         "not_found",
         "version_conflict",
         "task_not_retryable",
+        "status_conflict",
+        "gate_not_passed",
         "evidence_integrity_failed",
         "dependency_timeout",
         "dependency_unavailable",
