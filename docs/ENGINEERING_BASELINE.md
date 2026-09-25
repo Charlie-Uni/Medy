@@ -526,7 +526,7 @@ P0 保留：
 - [x] 反馈、Verifier、安全和升级信号能关联到 Trace。（记录 79）
 - [x] bad case 五类归因有 Schema、置信和人工修正入口。（记录 80，规则遍）
 - [x] 候选以可审查 diff 保存，不能直接修改 released。（记录 80）
-- [ ] Loop 数据库角色无 released 写权限，并有自动化权限测试。
+- [x] Loop 数据库角色无 released 写权限，并有自动化权限测试。（记录 81）
 - [x] knowledge_gap 只创建补文档工单，不生成医学事实。（记录 80）
 - [x] 建立 >=200 条 good/bad Trace 回放集并冻结版本。（记录 79，运行导出的临时版）
 - [ ] 回放报告覆盖目标、非目标、安全、延迟、Token 和成本，含 3 次独立运行、paired comparison 与 bootstrap 95% CI；样本少于 30 的切片标记“样本不足”。
