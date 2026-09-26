@@ -19,7 +19,7 @@ from medops.domain.identity import UserContext
 from medops.domain.intent import Entity
 from medops.domain.state import MAX_CANDIDATES, MAX_EVIDENCE, CandidateRef
 from medops.retrieval.contracts import LexicalRetriever, LexicalVersions
-from medops.retrieval.hybrid import HybridConfig, retrieve_evidence
+from medops.retrieval.hybrid import HybridConfig, fuse_queries, retrieve_evidence
 from medops.retrieval.recheck import Rejection
 from medops.retrieval.rerank import Reranker, rerank_evidence
 from medops.retrieval.rewrite import Glossary, rewrite
@@ -68,6 +68,7 @@ class ProductionRetrieval:
         lexical_versions: LexicalVersions | None = None,
         vector_versions: VectorVersions | None = None,
         glossary: Glossary | None = None,
+        multi_query: bool = False,
     ) -> None:
         self._conn_for_user = conn_for_user
         self._lexical_factory = lexical_factory
@@ -77,6 +78,10 @@ class ProductionRetrieval:
         self._lv = lexical_versions
         self._vv = vector_versions
         self._glossary = glossary
+        # record 93: the rewriter has always produced up to three queries, but only the first was searched. With
+        # `multi_query` (a released retrieval parameter) every rewritten query is searched and the per-query fused
+        # rankings are fused again by RRF; the reranker still judges against the user's own query.
+        self._multi_query = multi_query
 
     def retrieve(self, request: RetrievalRequest) -> RetrievalOutcome:
         with span(
@@ -95,6 +100,7 @@ class ProductionRetrieval:
     def _retrieve(self, request: RetrievalRequest) -> RetrievalOutcome:
         rw = rewrite(request.query, entities=request.session_entities, glossary=self._glossary)
         query = rw.queries[0]
+        queries = list(rw.queries) if self._multi_query else [query]
         with self._conn_for_user(request.user) as conn:
             lexical = self._lexical_factory(conn)
             vector = self._vector_factory(conn)
@@ -102,24 +108,46 @@ class ProductionRetrieval:
                 self._lv = lexical.versions
             if self._vv is None:
                 self._vv = vector.versions
-            with span("retrieval.fact_plane"):
-                hybrid, rechecked = retrieve_evidence(
-                    conn,
-                    lexical,
-                    vector,
-                    query,
-                    config=self._config,
-                    lexical_expected=self._lv,
-                    vector_expected=self._vv,
-                    as_of=request.as_of,
-                    allow_historical=request.historical_requested,
-                )
-        with span("retrieval.rerank", inputs=min(len(rechecked.evidence), self._reranker.spec.max_input)):
-            ranked = rerank_evidence(self._reranker, query, rechecked.evidence[: self._reranker.spec.max_input])
+            with span("retrieval.fact_plane", queries=len(queries)):
+                results = [
+                    retrieve_evidence(
+                        conn,
+                        lexical,
+                        vector,
+                        q,
+                        config=self._config,
+                        lexical_expected=self._lv,
+                        vector_expected=self._vv,
+                        as_of=request.as_of,
+                        allow_historical=request.historical_requested,
+                    )
+                    for q in queries
+                ]
+        if len(results) == 1:
+            hybrid, rechecked = results[0]
+            candidates = hybrid.candidate_refs[:MAX_CANDIDATES]
+            accepted: tuple[Evidence, ...] = rechecked.evidence
+            rejected: tuple[Rejection, ...] = rechecked.rejected
+        else:
+            fused = fuse_queries([h.fused_ids for h, _ in results], k=self._config.rrf_k, limit=self._config.limit)
+            candidates = tuple(CandidateRef(chunk_id=c.chunk_id, source_ranks=c.source_ranks) for c in fused)[
+                :MAX_CANDIDATES
+            ]
+            by_id: dict[str, Evidence] = {}
+            seen_rejections: dict[str, Rejection] = {}
+            for _, rc in results:
+                for e in rc.evidence:
+                    by_id.setdefault(e.citation.chunk_id, e)
+                for r in rc.rejected:
+                    seen_rejections.setdefault(r.chunk_id, r)
+            accepted = tuple(by_id[c.chunk_id] for c in fused if c.chunk_id in by_id)
+            rejected = tuple(r for cid, r in seen_rejections.items() if cid not in by_id)
+        with span("retrieval.rerank", inputs=min(len(accepted), self._reranker.spec.max_input)):
+            ranked = rerank_evidence(self._reranker, query, accepted[: self._reranker.spec.max_input])
         evidence = tuple(r.evidence for r in ranked)[:MAX_EVIDENCE]
         return RetrievalOutcome(
             rewritten_queries=rw.queries,
-            candidates=hybrid.candidate_refs[:MAX_CANDIDATES],
+            candidates=candidates,
             evidence=evidence,
-            rejected=rechecked.rejected,
+            rejected=rejected,
         )

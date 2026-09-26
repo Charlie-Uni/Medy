@@ -112,5 +112,17 @@ def retrieve_evidence(
     return hybrid, rechecked
 
 
+def fuse_queries(per_query: Sequence[Sequence[str]], *, k: float, limit: int) -> list[FusedCandidate]:
+    """Second-level RRF over the per-query fused rankings (record 93, `multi_query`): the normalized user query and
+    the rewriter's entity / glossary expansions each contribute one ranking (`q1`, `q2`, …); same rank-only rule and
+    the same `k` as the channel fusion, capped at the fused limit. One query reproduces its own ranking order."""
+    rankings: dict[str, Sequence[str]] = {
+        f"q{i}": list(dict.fromkeys(ids)) for i, ids in enumerate(per_query, start=1) if ids
+    }
+    if not rankings:
+        return []
+    return rrf_fuse(rankings, k=k, limit=limit)
+
+
 def top_k_ids(rechecked: RecheckResult, k: int) -> Sequence[str]:
     return rechecked.accepted_ids[:k]

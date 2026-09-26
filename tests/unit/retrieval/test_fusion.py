@@ -25,3 +25,14 @@ def test_rrf_rejects_duplicates_and_bad_k():
         rrf_fuse({"lexical": ["a", "a"]})
     with pytest.raises(ValueError):
         rrf_fuse({"lexical": ["a"]}, k=0)
+
+
+def test_fuse_queries_fuses_per_query_rankings_and_keeps_single_query_order():
+    from medops.retrieval.hybrid import fuse_queries
+
+    one = fuse_queries([["a", "b", "c"]], k=60.0, limit=20)
+    assert [c.chunk_id for c in one] == ["a", "b", "c"] and one[0].source_ranks[0].source == "q1"
+    two = fuse_queries([["a", "b", "c"], ["c", "d"]], k=60.0, limit=3)
+    assert [c.chunk_id for c in two] == ["c", "a", "b"]  # c is ranked by both queries
+    assert {s.source for s in two[0].source_ranks} == {"q1", "q2"}
+    assert fuse_queries([[], []], k=60.0, limit=5) == []

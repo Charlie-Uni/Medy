@@ -224,6 +224,15 @@ def concept_entries(concepts: dict, pages: dict[str, dict[int, str]]) -> tuple[l
             for ev in evidence:
                 if ev not in entry["evidence"] and len(entry["evidence"]) < 3:
                     entry["evidence"].append(ev)
+    # the rewriter appends at most MAX_GLOSSARY_TERMS synonyms per query: keep one inflection per English term so a
+    # plural does not spend a second slot (record 93)
+    for entry in by_zh.values():
+        kept_syn: list[str] = []
+        for s in sorted(entry["synonyms"], key=len):
+            if any(s.startswith(k) and s[len(k) :] in ("s", "es") for k in kept_syn):
+                continue
+            kept_syn.append(s)
+        entry["synonyms"] = kept_syn
     return list(by_zh.values()), rejected
 
 

@@ -147,6 +147,7 @@ class ProductionRuntime:
         hybrid = released.hybrid_config(production_hybrid_config())
         rerank_output = released.rerank_output(RERANK_OUTPUT)
         glossary_version = released.glossary_version()
+        multi_query = released.multi_query()
         pinned = PinnedThread(pinned_timeout_s)
         embedding = PinnedEmbedding(pinned.call(lambda: BgeM3EmbeddingProvider(device=device)), pinned)
         reranker = PinnedReranker(pinned.call(lambda: BgeRerankerV2M3(device=device, output=rerank_output)), pinned)
@@ -158,7 +159,9 @@ class ProductionRuntime:
         )
         retrieval_version = (
             compute_retrieval_version(
-                production_retrieval_inputs(hybrid, rerank_output=rerank_output, glossary_version=glossary_version)
+                production_retrieval_inputs(
+                    hybrid, rerank_output=rerank_output, glossary_version=glossary_version, multi_query=multi_query
+                )
             )
             if released.retrieval_overridden()
             else PRODUCTION_RETRIEVAL_VERSION
@@ -280,7 +283,10 @@ class ProductionRuntime:
         retrieval_version = (
             compute_retrieval_version(
                 production_retrieval_inputs(
-                    hybrid, rerank_output=rerank_output, glossary_version=pol.glossary_version()
+                    hybrid,
+                    rerank_output=rerank_output,
+                    glossary_version=pol.glossary_version(),
+                    multi_query=pol.multi_query(),
                 )
             )
             if pol.retrieval_overridden()
@@ -342,6 +348,7 @@ class ProductionRuntime:
             config=hybrid,
             lexical_versions=production_lexical_versions(),
             glossary=self.glossary_for(routed.policies.glossary_version()),
+            multi_query=routed.policies.multi_query(),
         )
         return HarnessDeps(
             retrieval=retrieval,

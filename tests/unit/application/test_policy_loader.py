@@ -124,3 +124,15 @@ def test_glossary_is_a_retrieval_parameter_with_a_versioned_value():
     )
     with pytest.raises(PolicyDiffError):
         validate_diff("retrieval_params", "hybrid", {"glossary": {"from": "glossary-none", "to": "latest"}}, base=BASE)
+
+
+def test_multi_query_is_a_boolean_retrieval_parameter():
+    from medops.application.policy_loader import ReleasedPolicy, ReleasedPolicySet
+
+    rs = ReleasedPolicySet(
+        (ReleasedPolicy("m", "retrieval_params", "hybrid", "v", {"multi_query": {"from": False, "to": True}}),)
+    )
+    assert rs.multi_query() is True and ReleasedPolicySet().multi_query() is False
+    validate_diff("retrieval_params", "hybrid", {"multi_query": {"from": False, "to": True}}, base=BASE)
+    with pytest.raises(PolicyDiffError):
+        validate_diff("retrieval_params", "hybrid", {"multi_query": {"from": False, "to": "yes"}}, base=BASE)

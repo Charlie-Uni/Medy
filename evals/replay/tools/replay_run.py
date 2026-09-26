@@ -120,7 +120,10 @@ def arm_versions(name: str, released: ReleasedPolicySet, base_policy_version: st
         policy_version=released.policy_version(base_policy_version) + f";arm={name}",
         retrieval_version=compute_retrieval_version(
             production_retrieval_inputs(
-                hybrid, rerank_output=rerank_output, glossary_version=released.glossary_version()
+                hybrid,
+                rerank_output=rerank_output,
+                glossary_version=released.glossary_version(),
+                multi_query=released.multi_query(),
             )
         ),
         skill_version_set=default_registry().version_set(),
@@ -242,6 +245,7 @@ def main() -> int:
                 config=cfg,
                 answer_system=prompt,
                 glossary=glossary,
+                multi_query=rel.multi_query(),
             )
             for db in (sr.PRODUCTION_DB, sr.SAFETY_DB)
         }

@@ -85,7 +85,11 @@ def production_hybrid_config() -> HybridConfig:
 
 
 def production_retrieval_inputs(
-    config: HybridConfig | None = None, *, rerank_output: int = RERANK_OUTPUT, glossary_version: str | None = None
+    config: HybridConfig | None = None,
+    *,
+    rerank_output: int = RERANK_OUTPUT,
+    glossary_version: str | None = None,
+    multi_query: bool = False,
 ) -> RetrievalVersionInputs:
     """Defaults are the pinned production values; a released retrieval policy (M4-03) passes its effective config so the
     composite version changes with it (baseline 3.6). A released glossary (record 93) joins the hash as
@@ -94,6 +98,8 @@ def production_retrieval_inputs(
     rewrite: dict[str, Any] = (
         {"glossary": glossary_version} if glossary_version and glossary_version != GLOSSARY_NONE else {}
     )
+    if multi_query:
+        rewrite["multi_query"] = True
     return RetrievalVersionInputs.from_lexical(
         production_lexical_versions(),
         embedding_version=EMBEDDING_VERSION,

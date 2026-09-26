@@ -31,7 +31,7 @@ from medops.retrieval.rewrite import GLOSSARY_NONE
 SUPPORTED_RELEASE_TARGETS: frozenset[tuple[str, str]] = frozenset(
     {("retrieval_params", "hybrid"), ("prompt", "answer_system")}
 )
-RETRIEVAL_PARAM_KEYS = ("k_lexical", "k_vector", "rrf_k", "limit", "rerank_output", "glossary")
+RETRIEVAL_PARAM_KEYS = ("k_lexical", "k_vector", "rrf_k", "limit", "rerank_output", "glossary", "multi_query")
 
 
 class PolicyDiffError(ValueError):
@@ -83,6 +83,16 @@ class ReleasedPolicySet:
         value = str(_to(p.diff["glossary"]))
         if not valid_glossary_version(value):
             raise PolicyDiffError("glossary must be 'glossary-none' or 'glossary-<YYYYMMDD>-<sha12>'")
+        return value
+
+    def multi_query(self, base: bool = False) -> bool:
+        """Whether every rewritten query is searched and fused (record 93); the repository default is off."""
+        p = self.get("retrieval_params", "hybrid")
+        if p is None or "multi_query" not in p.diff:
+            return base
+        value = _to(p.diff["multi_query"])
+        if not isinstance(value, bool):
+            raise PolicyDiffError("multi_query must be true or false")
         return value
 
     def retrieval_overridden(self) -> bool:
@@ -144,7 +154,9 @@ def validate_diff(kind: str, name: str, diff: Mapping[str, Any], *, base: Hybrid
             probe.rerank_output(MAX_EVIDENCE)
         if "glossary" in diff:
             probe.glossary_version()
-        if cfg == (base or HybridConfig()) and "rerank_output" not in diff and "glossary" not in diff:
+        if "multi_query" in diff:
+            probe.multi_query()
+        if cfg == (base or HybridConfig()) and not ({"rerank_output", "glossary", "multi_query"} & set(diff)):
             raise PolicyDiffError("the diff changes nothing")
         return
     if (kind, name) == ("prompt", "answer_system"):

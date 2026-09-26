@@ -86,6 +86,7 @@ def _searcher_factory(device: str, settings: Settings):
                 config=hybrid,
                 lexical_versions=production_lexical_versions(),
                 glossary=glossary,
+                multi_query=routed.multi_query(),
             )
             outcome = retrieval.retrieve(
                 RetrievalRequest(query=query, user=user, as_of=as_of, historical_requested=allow_historical)

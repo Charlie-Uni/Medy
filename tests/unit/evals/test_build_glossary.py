@@ -138,3 +138,57 @@ def test_build_writes_a_validating_glossary_and_provenance(builder, tmp_path, mo
             out_dir=tmp_path / "out",
             built_on=date(2026, 9, 20),
         )
+
+
+def test_concept_entries_verify_english_on_cited_pages_and_merge_inflections(builder):
+    pages = {
+        "gvp-v": {3: "the marketing authorisation holder shall … marketing authorisation holders must; a new drug"}
+    }
+    concepts = {
+        "terms": [
+            {
+                "en": "marketing authorisation holder",
+                "keep": True,
+                "zh_hans": "上市许可持有人",
+                "zh_hant": "藥品許可證持有者",
+                "evidence": [{"document_key": "gvp-v", "page": 3}],
+            },
+            {
+                "en": "marketing authorisation holders",
+                "keep": True,
+                "zh_hans": "上市许可持有人",
+                "zh_hant": "藥品許可證持有者",
+                "evidence": [{"document_key": "gvp-v", "page": 3}],
+            },
+            {
+                "en": "new drug",
+                "keep": True,
+                "zh_hans": "新药",
+                "zh_hant": "新藥",
+                "evidence": [{"document_key": "gvp-v", "page": 3}],
+            },
+            {
+                "en": "dir art",
+                "keep": False,
+                "zh_hans": "",
+                "zh_hant": "",
+                "evidence": [{"document_key": "gvp-v", "page": 3}],
+            },
+            {
+                "en": "signal detection",
+                "keep": True,
+                "zh_hans": "信号检测",
+                "zh_hant": "訊號偵測",
+                "evidence": [{"document_key": "gvp-v", "page": 3}],
+            },
+        ]
+    }
+    kept, rejected = builder.concept_entries(concepts, pages)
+    by = {e["term"]: e for e in kept}
+    assert set(by) == {"上市许可持有人", "藥品許可證持有者"}  # 新药 too short; signal detection not on the cited page
+    assert by["上市许可持有人"]["synonyms"] == ["marketing authorisation holder"]  # plural folded away
+    assert by["上市许可持有人"]["kind"] == "concept" and by["上市许可持有人"]["evidence"] == [
+        {"document_key": "gvp-v", "page": 3}
+    ]
+    reasons = {r["term"]: r["reason"] for r in rejected}
+    assert "dir art" in reasons and "signal detection" in reasons and "新药" in reasons

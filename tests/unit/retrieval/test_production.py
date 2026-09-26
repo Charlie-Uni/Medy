@@ -70,3 +70,11 @@ def test_a_released_glossary_joins_the_composite_and_none_leaves_it_unchanged():
     assert with_glossary.rewrite_params == {"glossary": "glossary-20260926-0123456789ab"}
     assert compute_retrieval_version(with_glossary) != production.PRODUCTION_RETRIEVAL_VERSION
     assert compute_retrieval_version(base) == production.PRODUCTION_RETRIEVAL_VERSION
+
+
+def test_multi_query_joins_the_composite_only_when_on():
+    off = production.production_retrieval_inputs(multi_query=False)
+    assert compute_retrieval_version(off) == production.PRODUCTION_RETRIEVAL_VERSION
+    on = production.production_retrieval_inputs(multi_query=True)
+    assert on.rewrite_params == {"multi_query": True}
+    assert compute_retrieval_version(on) != production.PRODUCTION_RETRIEVAL_VERSION

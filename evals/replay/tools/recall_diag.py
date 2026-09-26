@@ -48,7 +48,7 @@ def render(rows: list[dict], meta: dict) -> str:
     lines = [f"# Recall diagnostic {meta['run']} ({meta['date']})", ""]
     lines += [
         f"- replay set {meta['dataset_version']} ({meta['dataset_hash'][:8]}…), subset items with label bad: {len(bad)}; good controls: {len(good)}",
-        f"- retrieval: production hybrid config, rerank_output {meta['rerank_output']}, glossary {meta.get('glossary', 'glossary-none')}, as_of {meta['as_of']}, device {meta['device']}; no model calls",
+        f"- retrieval: production hybrid config, rerank_output {meta['rerank_output']}, glossary {meta.get('glossary', 'glossary-none')}, multi_query {meta.get('multi_query', False)}, as_of {meta['as_of']}, device {meta['device']}; no model calls",
         "",
     ]
     lines += ["## Failed items by stage", "", "| stage | n | share |", "| --- | ---: | ---: |"]
@@ -125,6 +125,7 @@ def main() -> int:
     ap.add_argument("--gpu-timeout", type=float, default=120.0)
     ap.add_argument("--glossary", default="glossary-none", help="released glossary version to rewrite with (record 93)")
     ap.add_argument("--glossary-dir", type=pathlib.Path, default=REPO / "evals/glossary")
+    ap.add_argument("--multi-query", action="store_true", help="search every rewritten query and fuse (record 93)")
     args = ap.parse_args()
 
     sr = _load(REPO / "evals/harness/tools/safety_run.py", "safety_run")
@@ -173,6 +174,7 @@ def main() -> int:
         config=production_hybrid_config(),
         answer_system=ANSWER_SYSTEM,
         glossary=load_versioned_glossary(args.glossary_dir, args.glossary),
+        multi_query=args.multi_query,
     )
 
     def cjk_ratio(text: str) -> float:
@@ -246,6 +248,7 @@ def main() -> int:
         "labels": sorted(wanted),
         "controls": args.controls,
         "glossary": args.glossary,
+        "multi_query": args.multi_query,
     }
     (args.out / "results.json").write_text(
         json.dumps(

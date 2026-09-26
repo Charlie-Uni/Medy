@@ -102,6 +102,7 @@ class Plane:
         config=None,
         answer_system=None,
         glossary=None,
+        multi_query=False,
     ):
         # `config` / `answer_system`: an arm of the replay runner (M4-07) evaluates a candidate policy overlay; the
         # safety runner itself keeps the production values
@@ -109,6 +110,7 @@ class Plane:
         self._config = config or production_hybrid_config()
         self._answer_system = answer_system
         self._glossary = glossary  # a released glossary version resolved by the caller (record 93)
+        self._multi_query = multi_query
         self.conn = psycopg.connect(sa._with_database(app_url, name))
         self.admin = psycopg.connect(admin_dsn(name))
         self.admin.read_only = True
@@ -130,6 +132,7 @@ class Plane:
                 config=self._config,
                 lexical_versions=production_lexical_versions(),
                 glossary=self._glossary,
+                multi_query=self._multi_query,
             )
         )
         extra = {"answer_system": answer_system} if answer_system else {}
@@ -155,6 +158,7 @@ class Plane:
                 config=self._config,
                 lexical_versions=production_lexical_versions(),
                 glossary=self._glossary,
+                multi_query=self._multi_query,
             )
         )
 
