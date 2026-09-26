@@ -82,3 +82,10 @@ def test_boundary_bounds_k_query_and_versions_and_revalidates_results():
     drifted = good.model_copy(update={"embedding_version": "other"})
     with pytest.raises(InfrastructureError):
         run_vector_search(FakeRetriever(drifted), "阿司匹林", 3, expected=V)
+
+
+def test_vector_search_sql_carries_the_optional_document_filter():
+    from medops.retrieval.vector import pg_vector
+
+    for sql in (pg_vector.SEARCH_SQL, pg_vector.ELIGIBLE_COUNT_SQL):
+        assert "%(doc_ids)s::uuid[] is null or c.doc_id = any(%(doc_ids)s::uuid[])" in sql

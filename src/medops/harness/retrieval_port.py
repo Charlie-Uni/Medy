@@ -7,11 +7,12 @@ candidates as facts (only `evidence` may be cited) and never exceeds the state c
 
 from __future__ import annotations
 
-from collections.abc import Callable
+from collections.abc import Callable, Sequence
 from contextlib import AbstractContextManager
 from datetime import date
 from typing import Any, Protocol
 
+from medops.core.errors import InfrastructureError
 from medops.core.telemetry import annotate, span
 from medops.domain.common import DomainModel, NonEmptyStr
 from medops.domain.evidence import Evidence
@@ -19,8 +20,9 @@ from medops.domain.identity import UserContext
 from medops.domain.intent import Entity
 from medops.domain.state import MAX_CANDIDATES, MAX_EVIDENCE, CandidateRef
 from medops.retrieval.contracts import LexicalRetriever, LexicalVersions
-from medops.retrieval.hybrid import HybridConfig, fuse_queries, retrieve_evidence
-from medops.retrieval.recheck import Rejection
+from medops.retrieval.doc_focus import FOCUS_K, focus_documents, load_documents
+from medops.retrieval.hybrid import HybridConfig, fuse_rankings, retrieve_evidence
+from medops.retrieval.recheck import RecheckResult, Rejection, recheck_candidates
 from medops.retrieval.rerank import Reranker, rerank_evidence
 from medops.retrieval.rewrite import Glossary, rewrite
 from medops.retrieval.vector.contracts import VectorRetriever, VectorVersions
@@ -69,6 +71,8 @@ class ProductionRetrieval:
         vector_versions: VectorVersions | None = None,
         glossary: Glossary | None = None,
         multi_query: bool = False,
+        doc_focus: bool = False,
+        translator: Callable[[str], str | None] | None = None,
     ) -> None:
         self._conn_for_user = conn_for_user
         self._lexical_factory = lexical_factory
@@ -82,6 +86,11 @@ class ProductionRetrieval:
         # `multi_query` (a released retrieval parameter) every rewritten query is searched and the per-query fused
         # rankings are fused again by RRF; the reranker still judges against the user's own query.
         self._multi_query = multi_query
+        # record 94: when the question names a corpus document (brand, ICH code, GVP module, Chinese title), that
+        # document's own chunks are searched too and join the fusion (`doc_focus`, a released retrieval parameter)
+        self._doc_focus = doc_focus
+        # record 95: an English rendering of a Chinese question becomes one more search query (never evidence)
+        self._translator = translator
 
     def retrieve(self, request: RetrievalRequest) -> RetrievalOutcome:
         with span(
@@ -101,6 +110,10 @@ class ProductionRetrieval:
         rw = rewrite(request.query, entities=request.session_entities, glossary=self._glossary)
         query = rw.queries[0]
         queries = list(rw.queries) if self._multi_query else [query]
+        if self._translator is not None:
+            translated = self._translator(request.query)
+            if translated and translated not in queries:
+                queries.append(translated)
         with self._conn_for_user(request.user) as conn:
             lexical = self._lexical_factory(conn)
             vector = self._vector_factory(conn)
@@ -123,19 +136,52 @@ class ProductionRetrieval:
                     )
                     for q in queries
                 ]
-        if len(results) == 1:
+                focus_rankings: dict[str, list[str]] = {}
+                focus_rechecked: list[RecheckResult] = []
+                if self._doc_focus:
+                    focused = focus_documents(request.query, load_documents(conn))
+                    for i, doc in enumerate(focused, start=1):
+                        try:
+                            lex_ids = [
+                                c.chunk_id
+                                for c in lexical.search(
+                                    query, FOCUS_K, allow_historical=request.historical_requested, doc_ids=[doc.doc_id]
+                                ).candidates
+                            ]
+                            vec_ids = [
+                                c.chunk_id
+                                for c in vector.search(
+                                    query, FOCUS_K, allow_historical=request.historical_requested, doc_ids=[doc.doc_id]
+                                ).candidates
+                            ]
+                        except InfrastructureError:
+                            continue  # a starved or failing focused scan never blocks the corpus-wide answer
+                        if lex_ids:
+                            focus_rankings[f"focus{i}:lexical"] = lex_ids
+                        if vec_ids:
+                            focus_rankings[f"focus{i}:vector"] = vec_ids
+                    extra = list(dict.fromkeys(cid for ids in focus_rankings.values() for cid in ids))
+                    if extra:
+                        focus_rechecked.append(
+                            recheck_candidates(
+                                conn, extra, as_of=request.as_of, allow_historical=request.historical_requested
+                            )
+                        )
+        if len(results) == 1 and not focus_rankings:
             hybrid, rechecked = results[0]
             candidates = hybrid.candidate_refs[:MAX_CANDIDATES]
             accepted: tuple[Evidence, ...] = rechecked.evidence
             rejected: tuple[Rejection, ...] = rechecked.rejected
         else:
-            fused = fuse_queries([h.fused_ids for h, _ in results], k=self._config.rrf_k, limit=self._config.limit)
+            rankings: dict[str, Sequence[str]] = {f"q{i}": h.fused_ids for i, (h, _) in enumerate(results, start=1)}
+            rankings.update(focus_rankings)
+            fused = fuse_rankings(rankings, k=self._config.rrf_k, limit=self._config.limit)
             candidates = tuple(CandidateRef(chunk_id=c.chunk_id, source_ranks=c.source_ranks) for c in fused)[
                 :MAX_CANDIDATES
             ]
             by_id: dict[str, Evidence] = {}
             seen_rejections: dict[str, Rejection] = {}
-            for _, rc in results:
+            for _, rc in [*results, *((None, r) for r in focus_rechecked)]:
                 for e in rc.evidence:
                     by_id.setdefault(e.citation.chunk_id, e)
                 for r in rc.rejected:

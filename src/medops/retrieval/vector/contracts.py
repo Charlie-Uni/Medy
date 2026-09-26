@@ -8,6 +8,7 @@ vectors the version tuple is `(retriever_version, embedding_version, normalizati
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from typing import Protocol
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
@@ -69,4 +70,6 @@ class VectorRetriever(Protocol):
     @property
     def versions(self) -> VectorVersions: ...
 
-    def search(self, query: str, k: int, *, allow_historical: bool = False) -> VectorSearchResult: ...
+    def search(
+        self, query: str, k: int, *, allow_historical: bool = False, doc_ids: Sequence[str] | None = None
+    ) -> VectorSearchResult: ...

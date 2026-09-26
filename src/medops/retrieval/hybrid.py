@@ -11,7 +11,7 @@ fusion is a pure function of the two rankings.
 
 from __future__ import annotations
 
-from collections.abc import Sequence
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from datetime import date
 from typing import Any
@@ -112,16 +112,19 @@ def retrieve_evidence(
     return hybrid, rechecked
 
 
-def fuse_queries(per_query: Sequence[Sequence[str]], *, k: float, limit: int) -> list[FusedCandidate]:
-    """Second-level RRF over the per-query fused rankings (record 93, `multi_query`): the normalized user query and
-    the rewriter's entity / glossary expansions each contribute one ranking (`q1`, `q2`, …); same rank-only rule and
-    the same `k` as the channel fusion, capped at the fused limit. One query reproduces its own ranking order."""
-    rankings: dict[str, Sequence[str]] = {
-        f"q{i}": list(dict.fromkeys(ids)) for i, ids in enumerate(per_query, start=1) if ids
-    }
-    if not rankings:
+def fuse_rankings(rankings: Mapping[str, Sequence[str]], *, k: float, limit: int) -> list[FusedCandidate]:
+    """Second-level RRF over named rankings (record 93 `multi_query`, record 94 `doc_focus`): each rewritten query's
+    fused ranking (`q1`, `q2`, …) and each focused document's channel rankings (`focus1:lexical`, …) contribute
+    one list; same rank-only rule and the same `k` as the channel fusion, capped at the fused limit."""
+    cleaned: dict[str, Sequence[str]] = {name: list(dict.fromkeys(ids)) for name, ids in rankings.items() if ids}
+    if not cleaned:
         return []
-    return rrf_fuse(rankings, k=k, limit=limit)
+    return rrf_fuse(cleaned, k=k, limit=limit)
+
+
+def fuse_queries(per_query: Sequence[Sequence[str]], *, k: float, limit: int) -> list[FusedCandidate]:
+    """`fuse_rankings` over per-query lists named `q1`, `q2`, …; one query reproduces its own ranking order."""
+    return fuse_rankings({f"q{i}": ids for i, ids in enumerate(per_query, start=1)}, k=k, limit=limit)
 
 
 def top_k_ids(rechecked: RecheckResult, k: int) -> Sequence[str]:

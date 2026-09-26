@@ -1,0 +1,11 @@
+{
+ "kind": "retrieval_params",
+ "name": "hybrid",
+ "diff": {
+  "glossary": {"from": "glossary-none", "to": "glossary-20260926-e4daca58a8e4"},
+  "multi_query": {"from": false, "to": true},
+  "doc_focus": {"from": false, "to": true}
+ },
+ "rationale": "Records 92–94: two thirds of the failed replay items are recall failures. Three retrieval changes that leave the corpus-wide search untouched and only add rankings to the fusion: (1) the released glossary (532 entries, 436 Chinese→English concept terms) so the rewriter can expand Chinese questions; (2) multi_query, which finally searches the rewritten queries the port used to ignore; (3) doc_focus, which searches the document a question names (brand, ICH code, GVP module, Chinese title) on its own — 30 of the 60 failed subset items name a corpus document and 29 of those have their gold inside it. Offline recall diagnostics: evals/harness/runs/2026-09-26-recall-diag-v3-glossary-multiquery and -v4-bundle.",
+ "evidence": {"case_ids": [], "kind": "diagnostic", "source_runs": ["2026-09-26-recall-diag-v1", "2026-09-26-recall-diag-v3-glossary-multiquery", "2026-09-26-recall-diag-v4-bundle"]}
+}

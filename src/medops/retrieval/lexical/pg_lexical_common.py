@@ -104,6 +104,7 @@ with eligible as (
       and (d.status = 'active' or (%(allow_historical)s and d.status = 'archived'))
       and d.effective_from <= %(as_of)s
       and (d.effective_to is null or d.effective_to > %(as_of)s)
+      and (%(doc_ids)s::uuid[] is null or c.doc_id = any(%(doc_ids)s::uuid[]))
 )
 select chunk_id, score, count(*) over () as eligible_count
 from eligible
@@ -274,15 +275,22 @@ def empty_result(k: int, built: LexicalVersions) -> LexicalSearchResult:
 
 
 def search_params(
-    tokens: Sequence[str], k: int, as_of: date | None, *, allow_historical: bool = False
+    tokens: Sequence[str],
+    k: int,
+    as_of: date | None,
+    *,
+    allow_historical: bool = False,
+    doc_ids: Sequence[str] | None = None,
 ) -> dict[str, Any]:
     """`allow_historical` admits archived versions whose effective window contains `as_of` (INV-DATA-03: only an
-    explicit historical request may see them; the re-check then marks such evidence `historical`)."""
+    explicit historical request may see them; the re-check then marks such evidence `historical`). `doc_ids`
+    restricts the page to those documents (named-document focus, record 94); None keeps the corpus-wide search."""
     return {
         "q": tsquery_literal(tokens),
         "as_of": as_of or date.today(),
         "k": k,
         "allow_historical": bool(allow_historical),
+        "doc_ids": list(doc_ids) if doc_ids else None,
     }
 
 

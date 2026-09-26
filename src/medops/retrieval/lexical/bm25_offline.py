@@ -15,7 +15,7 @@ from __future__ import annotations
 
 import math
 from collections import Counter
-from collections.abc import Iterable
+from collections.abc import Iterable, Sequence
 
 from medops.core.errors import ErrorCode, InfrastructureError
 from medops.retrieval.contracts import ChunkRecord, LexicalCandidate, LexicalSearchResult, LexicalVersions
@@ -81,7 +81,11 @@ class OfflineBM25Index:
         self._avg_len = sum(doc_len.values()) / len(doc_len) if doc_len else 0.0
         self._built_with = versions
 
-    def search(self, query: str, k: int, *, allow_historical: bool = False) -> LexicalSearchResult:
+    def search(
+        self, query: str, k: int, *, allow_historical: bool = False, doc_ids: Sequence[str] | None = None
+    ) -> LexicalSearchResult:
+        if doc_ids:
+            raise NotImplementedError("named-document focus is implemented for the production retrievers only")
         # the offline candidate indexes the caller's chunk list as given; status filtering is not its concern
         if isinstance(k, bool) or not isinstance(k, int) or k < 1:
             raise ValueError("k must be an integer >= 1")

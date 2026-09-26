@@ -60,3 +60,16 @@ def test_search_sql_counts_and_pages_from_one_statement_with_the_same_filters():
     assert sql.count("%(q)s::tsquery") == 2 and "count(*) over ()" in sql
     assert "d.status = 'active'" in sql and "effective_from <= %(as_of)s" in sql and "effective_to > %(as_of)s" in sql
     assert "order by score desc, chunk_id asc" in sql and "limit %(k)s" in sql
+
+
+def test_lexical_search_params_and_sql_carry_the_optional_document_filter():
+    from medops.retrieval.lexical import pg_lexical_common as c
+
+    assert "%(doc_ids)s::uuid[] is null or c.doc_id = any(%(doc_ids)s::uuid[])" in c.tsvector_search_sql(
+        "lexical_index_a2"
+    )
+    params = c.search_params(["x"], 5, None)
+    assert params["doc_ids"] is None
+    assert c.search_params(["x"], 5, None, doc_ids=["11111111-1111-1111-1111-111111111111"])["doc_ids"] == [
+        "11111111-1111-1111-1111-111111111111"
+    ]

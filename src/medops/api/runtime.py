@@ -60,6 +60,7 @@ from medops.retrieval.production import (
     production_retrieval_inputs,
     production_vector_retriever,
 )
+from medops.retrieval.query_translation import QUERY_TRANSLATION_OFF, QueryTranslator
 from medops.retrieval.versioning import compute_retrieval_version
 from medops.skills.catalog import default_registry
 from medops.skills.production import doc_type_lookup, evidence_lookup
@@ -148,6 +149,8 @@ class ProductionRuntime:
         rerank_output = released.rerank_output(RERANK_OUTPUT)
         glossary_version = released.glossary_version()
         multi_query = released.multi_query()
+        doc_focus = released.doc_focus()
+        query_translation = released.query_translation()
         pinned = PinnedThread(pinned_timeout_s)
         embedding = PinnedEmbedding(pinned.call(lambda: BgeM3EmbeddingProvider(device=device)), pinned)
         reranker = PinnedReranker(pinned.call(lambda: BgeRerankerV2M3(device=device, output=rerank_output)), pinned)
@@ -160,7 +163,12 @@ class ProductionRuntime:
         retrieval_version = (
             compute_retrieval_version(
                 production_retrieval_inputs(
-                    hybrid, rerank_output=rerank_output, glossary_version=glossary_version, multi_query=multi_query
+                    hybrid,
+                    rerank_output=rerank_output,
+                    glossary_version=glossary_version,
+                    multi_query=multi_query,
+                    doc_focus=doc_focus,
+                    query_translation=query_translation,
                 )
             )
             if released.retrieval_overridden()
@@ -287,6 +295,8 @@ class ProductionRuntime:
                     rerank_output=rerank_output,
                     glossary_version=pol.glossary_version(),
                     multi_query=pol.multi_query(),
+                    doc_focus=pol.doc_focus(),
+                    query_translation=pol.query_translation(),
                 )
             )
             if pol.retrieval_overridden()
@@ -340,6 +350,9 @@ class ProductionRuntime:
         def conn_for_user(_user: UserContext) -> Iterator[Any]:
             yield conn  # already inside the request transaction with the department injected
 
+        metered = MeteredGateway(self.gateway)  # per-request calls/tokens/cost for the trace, translation included
+        qt_model = routed.policies.query_translation()
+        translator = QueryTranslator(metered, qt_model).translate if qt_model != QUERY_TRANSLATION_OFF else None
         retrieval = ProductionRetrieval(
             conn_for_user=conn_for_user,
             lexical_factory=lambda c: production_lexical_retriever(c, as_of=as_of),
@@ -349,11 +362,13 @@ class ProductionRuntime:
             lexical_versions=production_lexical_versions(),
             glossary=self.glossary_for(routed.policies.glossary_version()),
             multi_query=routed.policies.multi_query(),
+            doc_focus=routed.policies.doc_focus(),
+            translator=translator,
         )
         return HarnessDeps(
             retrieval=retrieval,
             answer_system=routed.policies.answer_system(ANSWER_SYSTEM),
-            gateway=MeteredGateway(self.gateway),  # per-request calls/tokens/cost for the trace
+            gateway=metered,
             answer_model_id=PRODUCTION_ANSWER_MODEL,
             judge_model_id=PRODUCTION_JUDGE_MODEL,
             as_of=as_of,

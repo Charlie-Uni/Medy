@@ -124,6 +124,8 @@ def arm_versions(name: str, released: ReleasedPolicySet, base_policy_version: st
                 rerank_output=rerank_output,
                 glossary_version=released.glossary_version(),
                 multi_query=released.multi_query(),
+                doc_focus=released.doc_focus(),
+                query_translation=released.query_translation(),
             )
         ),
         skill_version_set=default_registry().version_set(),
@@ -246,6 +248,8 @@ def main() -> int:
                 answer_system=prompt,
                 glossary=glossary,
                 multi_query=rel.multi_query(),
+                doc_focus=rel.doc_focus(),
+                query_translation=rel.query_translation(),
             )
             for db in (sr.PRODUCTION_DB, sr.SAFETY_DB)
         }

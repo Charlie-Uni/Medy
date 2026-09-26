@@ -46,6 +46,7 @@ where e.embedding_version = %(v)s
   and (d.status = 'active' or (%(allow_historical)s and d.status = 'archived'))
   and d.effective_from <= %(as_of)s
   and (d.effective_to is null or d.effective_to > %(as_of)s)
+  and (%(doc_ids)s::uuid[] is null or c.doc_id = any(%(doc_ids)s::uuid[]))
 """
 
 SEARCH_SQL = f"""
@@ -57,6 +58,7 @@ where e.embedding_version = %(v)s
   and (d.status = 'active' or (%(allow_historical)s and d.status = 'archived'))
   and d.effective_from <= %(as_of)s
   and (d.effective_to is null or d.effective_to > %(as_of)s)
+  and (%(doc_ids)s::uuid[] is null or c.doc_id = any(%(doc_ids)s::uuid[]))
 order by e.embedding <=> %(q)s::vector
 limit %(k)s
 """
@@ -231,23 +233,26 @@ class PgVectorRetriever:
             return max(k, self._ef_search)
         return min(MAX_EF_SEARCH, max(MIN_EF_SEARCH, 4 * k))
 
-    def eligible_count(self, *, allow_historical: bool = False) -> int:
+    def eligible_count(self, *, allow_historical: bool = False, doc_ids: Sequence[str] | None = None) -> int:
         params = {
             "v": self._provider.spec.embedding_version,
             "as_of": self._as_of or date.today(),
             "allow_historical": bool(allow_historical),
+            "doc_ids": list(doc_ids) if doc_ids else None,
         }
         row = self._conn.execute(ELIGIBLE_COUNT_SQL, params).fetchone()
         return int(row[0]) if row else 0
 
-    def search(self, query: str, k: int, *, allow_historical: bool = False) -> VectorSearchResult:
+    def search(
+        self, query: str, k: int, *, allow_historical: bool = False, doc_ids: Sequence[str] | None = None
+    ) -> VectorSearchResult:
         check_k(k)
         require_identity(self._conn)
         built = self.versions
         text = normalize_text(query)
         if not text:
             raise BusinessError(ErrorCode.invalid_request, "query is empty after normalization")
-        eligible = self.eligible_count(allow_historical=allow_historical)
+        eligible = self.eligible_count(allow_historical=allow_historical, doc_ids=doc_ids)
         if eligible == 0:
             return self._result([], k, built)
         vector = self._provider.embed_query(text)
@@ -259,6 +264,7 @@ class PgVectorRetriever:
             "as_of": self._as_of or date.today(),
             "allow_historical": bool(allow_historical),
             "k": k,
+            "doc_ids": list(doc_ids) if doc_ids else None,
         }
         rows = self._conn.execute(SEARCH_SQL, params).fetchall()
         page = sorted(((str(cid), float(dist)) for cid, dist in rows), key=lambda r: (r[1], r[0]))
@@ -301,6 +307,7 @@ class PgVectorRetriever:
             "as_of": self._as_of or date.today(),
             "allow_historical": bool(allow_historical),
             "k": k,
+            "doc_ids": None,
         }
         row = self._conn.execute("explain (format json) " + SEARCH_SQL, params).fetchone()
         return json.dumps(row[0], ensure_ascii=False) if row else ""

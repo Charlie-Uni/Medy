@@ -7,6 +7,7 @@ indexes and queries must agree on, and that flows into `retrieval_version`.
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from typing import Annotated, Protocol
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
@@ -100,4 +101,6 @@ class LexicalRetriever(Protocol):
     @property
     def versions(self) -> LexicalVersions: ...
 
-    def search(self, query: str, k: int, *, allow_historical: bool = False) -> LexicalSearchResult: ...
+    def search(
+        self, query: str, k: int, *, allow_historical: bool = False, doc_ids: Sequence[str] | None = None
+    ) -> LexicalSearchResult: ...

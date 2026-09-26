@@ -136,3 +136,32 @@ def test_multi_query_is_a_boolean_retrieval_parameter():
     validate_diff("retrieval_params", "hybrid", {"multi_query": {"from": False, "to": True}}, base=BASE)
     with pytest.raises(PolicyDiffError):
         validate_diff("retrieval_params", "hybrid", {"multi_query": {"from": False, "to": "yes"}}, base=BASE)
+
+
+def test_doc_focus_is_a_boolean_retrieval_parameter():
+    from medops.application.policy_loader import ReleasedPolicy, ReleasedPolicySet
+
+    rs = ReleasedPolicySet(
+        (ReleasedPolicy("f", "retrieval_params", "hybrid", "v", {"doc_focus": {"from": False, "to": True}}),)
+    )
+    assert rs.doc_focus() is True and ReleasedPolicySet().doc_focus() is False
+    validate_diff("retrieval_params", "hybrid", {"doc_focus": {"from": False, "to": True}}, base=BASE)
+    with pytest.raises(PolicyDiffError):
+        validate_diff("retrieval_params", "hybrid", {"doc_focus": {"from": False, "to": 1}}, base=BASE)
+
+
+def test_query_translation_is_an_allowlisted_model_and_marks_the_model_config():
+    from medops.application.policy_loader import ReleasedPolicy, ReleasedPolicySet
+
+    rs = ReleasedPolicySet(
+        (
+            ReleasedPolicy(
+                "t", "retrieval_params", "hybrid", "v", {"query_translation": {"from": "off", "to": "gpt-6-luna"}}
+            ),
+        )
+    )
+    assert rs.query_translation() == "gpt-6-luna" and rs.model_config_suffix() == ";qt=gpt-6-luna"
+    assert ReleasedPolicySet().query_translation() == "off" and ReleasedPolicySet().model_config_suffix() == ""
+    validate_diff("retrieval_params", "hybrid", {"query_translation": {"from": "off", "to": "gpt-6-luna"}}, base=BASE)
+    with pytest.raises(PolicyDiffError):
+        validate_diff("retrieval_params", "hybrid", {"query_translation": {"from": "off", "to": "gpt-3.5"}}, base=BASE)

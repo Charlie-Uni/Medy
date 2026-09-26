@@ -191,7 +191,11 @@ class PgSearchBm25Retriever:
     def versions(self) -> LexicalVersions:
         return read_built_versions(self._conn, INDEX_NAME)
 
-    def search(self, query: str, k: int, *, allow_historical: bool = False) -> LexicalSearchResult:
+    def search(
+        self, query: str, k: int, *, allow_historical: bool = False, doc_ids: Sequence[str] | None = None
+    ) -> LexicalSearchResult:
+        if doc_ids:
+            raise NotImplementedError("named-document focus is implemented for the production retrievers only")
         check_k(k)
         require_identity(self._conn)
         built = self.versions

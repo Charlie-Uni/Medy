@@ -174,7 +174,9 @@ class PgSimpleFtsRetriever:
     def _query_tokens(self, query: str) -> list[str]:
         return list(dict.fromkeys(self._tokenizer.tokenize(query)))
 
-    def search(self, query: str, k: int, *, allow_historical: bool = False) -> LexicalSearchResult:
+    def search(
+        self, query: str, k: int, *, allow_historical: bool = False, doc_ids: Sequence[str] | None = None
+    ) -> LexicalSearchResult:
         check_k(k)
         require_identity(self._conn)
         built = self.versions
@@ -183,7 +185,8 @@ class PgSimpleFtsRetriever:
         if not tokens:
             return empty_result(k, built)
         rows = self._conn.execute(
-            self._search_sql, search_params(tokens, k, self._as_of, allow_historical=allow_historical)
+            self._search_sql,
+            search_params(tokens, k, self._as_of, allow_historical=allow_historical, doc_ids=doc_ids),
         ).fetchall()
         return page_to_result(rows, k, built)
 

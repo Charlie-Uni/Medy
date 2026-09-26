@@ -48,7 +48,7 @@ def render(rows: list[dict], meta: dict) -> str:
     lines = [f"# Recall diagnostic {meta['run']} ({meta['date']})", ""]
     lines += [
         f"- replay set {meta['dataset_version']} ({meta['dataset_hash'][:8]}…), subset items with label bad: {len(bad)}; good controls: {len(good)}",
-        f"- retrieval: production hybrid config, rerank_output {meta['rerank_output']}, glossary {meta.get('glossary', 'glossary-none')}, multi_query {meta.get('multi_query', False)}, as_of {meta['as_of']}, device {meta['device']}; no model calls",
+        f"- retrieval: production hybrid config, rerank_output {meta['rerank_output']}, glossary {meta.get('glossary', 'glossary-none')}, multi_query {meta.get('multi_query', False)}, doc_focus {meta.get('doc_focus', False)}, query_translation {meta.get('query_translation', 'off')}, as_of {meta['as_of']}, device {meta['device']}; no model calls",
         "",
     ]
     lines += ["## Failed items by stage", "", "| stage | n | share |", "| --- | ---: | ---: |"]
@@ -126,6 +126,14 @@ def main() -> int:
     ap.add_argument("--glossary", default="glossary-none", help="released glossary version to rewrite with (record 93)")
     ap.add_argument("--glossary-dir", type=pathlib.Path, default=REPO / "evals/glossary")
     ap.add_argument("--multi-query", action="store_true", help="search every rewritten query and fuse (record 93)")
+    ap.add_argument(
+        "--doc-focus", action="store_true", help="search the named corpus document on its own and fuse (record 94)"
+    )
+    ap.add_argument(
+        "--translate",
+        default="off",
+        help="query translation model id (record 95); needs OPENAI_API_KEY, costs about 0.0002 USD per item",
+    )
     args = ap.parse_args()
 
     sr = _load(REPO / "evals/harness/tools/safety_run.py", "safety_run")
@@ -163,18 +171,35 @@ def main() -> int:
         def complete(self, *a, **k):
             raise RuntimeError("the diagnostic never calls the model")
 
+    gateway: object = NoGateway()
+    if args.translate != "off":
+        from medops.infrastructure.llm.budget import BudgetedGateway, InMemorySpendLedger
+        from medops.infrastructure.llm.gateway import OPENAI_PRICES, PriceTable
+        from medops.infrastructure.llm.openai_gateway import OpenAIModelGateway
+
+        gateway = sa._Meter(
+            BudgetedGateway(
+                OpenAIModelGateway.from_settings(settings),
+                prices=PriceTable(OPENAI_PRICES),
+                ledger=InMemorySpendLedger(),
+                monthly_cap_usd=settings.llm_monthly_budget_usd,
+            )
+        )
+
     plane = sr.Plane(
         sr.PRODUCTION_DB,
         app_url,
         provider,
         reranker,
-        NoGateway(),
+        gateway,
         args.as_of,
         sa,
         config=production_hybrid_config(),
         answer_system=ANSWER_SYSTEM,
         glossary=load_versioned_glossary(args.glossary_dir, args.glossary),
         multi_query=args.multi_query,
+        doc_focus=args.doc_focus,
+        query_translation=args.translate,
     )
 
     def cjk_ratio(text: str) -> float:
@@ -249,6 +274,9 @@ def main() -> int:
         "controls": args.controls,
         "glossary": args.glossary,
         "multi_query": args.multi_query,
+        "doc_focus": args.doc_focus,
+        "query_translation": args.translate,
+        "model_cost_usd": round(float(getattr(gateway, "cost", 0.0)), 4),
     }
     (args.out / "results.json").write_text(
         json.dumps(

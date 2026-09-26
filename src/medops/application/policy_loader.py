@@ -11,7 +11,9 @@ Targets this build can apply (a release of anything else is refused with `policy
 
 | kind             | name            | diff                                                                  |
 | ---------------- | --------------- | --------------------------------------------------------------------- |
-| retrieval_params | hybrid          | `{k_lexical|k_vector|rrf_k|limit|rerank_output: {"from": x, "to": y}}` |
+| retrieval_params | hybrid          | `{k_lexical|k_vector|rrf_k|limit|rerank_output: {"from": x, "to": y}}` plus the
+|                  |                 | rewrite-side keys `glossary` (version), `multi_query` / `doc_focus` (bool),      |
+|                  |                 | `query_translation` (`off` or an allowed model id) — records 93–95              |
 | prompt           | answer_system   | `{"text": "...", "text_sha256": "..."}` — the answer node's system prompt |
 """
 
@@ -26,12 +28,23 @@ from typing import Any
 from medops.domain.state import MAX_EVIDENCE, VersionSet
 from medops.retrieval.glossary_store import valid_glossary_version
 from medops.retrieval.hybrid import HybridConfig
+from medops.retrieval.query_translation import ALLOWED_TRANSLATION_MODELS, QUERY_TRANSLATION_OFF
 from medops.retrieval.rewrite import GLOSSARY_NONE
 
 SUPPORTED_RELEASE_TARGETS: frozenset[tuple[str, str]] = frozenset(
     {("retrieval_params", "hybrid"), ("prompt", "answer_system")}
 )
-RETRIEVAL_PARAM_KEYS = ("k_lexical", "k_vector", "rrf_k", "limit", "rerank_output", "glossary", "multi_query")
+RETRIEVAL_PARAM_KEYS = (
+    "k_lexical",
+    "k_vector",
+    "rrf_k",
+    "limit",
+    "rerank_output",
+    "glossary",
+    "multi_query",
+    "doc_focus",
+    "query_translation",
+)
 
 
 class PolicyDiffError(ValueError):
@@ -95,6 +108,26 @@ class ReleasedPolicySet:
             raise PolicyDiffError("multi_query must be true or false")
         return value
 
+    def doc_focus(self, base: bool = False) -> bool:
+        """Whether a named corpus document is searched on its own and fused (record 94); default off."""
+        p = self.get("retrieval_params", "hybrid")
+        if p is None or "doc_focus" not in p.diff:
+            return base
+        value = _to(p.diff["doc_focus"])
+        if not isinstance(value, bool):
+            raise PolicyDiffError("doc_focus must be true or false")
+        return value
+
+    def query_translation(self, base: str = QUERY_TRANSLATION_OFF) -> str:
+        """`off` or the model id that renders Chinese questions into English for retrieval (record 95)."""
+        p = self.get("retrieval_params", "hybrid")
+        if p is None or "query_translation" not in p.diff:
+            return base
+        value = str(_to(p.diff["query_translation"]))
+        if value != QUERY_TRANSLATION_OFF and value not in ALLOWED_TRANSLATION_MODELS:
+            raise PolicyDiffError(f"query_translation must be 'off' or one of {sorted(ALLOWED_TRANSLATION_MODELS)}")
+        return value
+
     def retrieval_overridden(self) -> bool:
         return self.get("retrieval_params", "hybrid") is not None
 
@@ -118,11 +151,15 @@ class ReleasedPolicySet:
         return base + "+rel:" + ",".join(sorted(p.policy_id.replace("-", "")[:8] for p in self.policies))
 
     def model_config_suffix(self) -> str:
+        suffix = ""
         p = self.get("prompt", "answer_system")
-        if p is None:
-            return ""
-        text = str(p.diff.get("text", ""))
-        return ";prompt=" + hashlib.sha256(text.encode("utf-8")).hexdigest()[:8]
+        if p is not None:
+            text = str(p.diff.get("text", ""))
+            suffix += ";prompt=" + hashlib.sha256(text.encode("utf-8")).hexdigest()[:8]
+        qt = self.query_translation()
+        if qt != QUERY_TRANSLATION_OFF:
+            suffix += f";qt={qt}"  # a translation model is part of the model configuration (record 95)
+        return suffix
 
 
 def _to(entry: Any) -> Any:
@@ -156,7 +193,12 @@ def validate_diff(kind: str, name: str, diff: Mapping[str, Any], *, base: Hybrid
             probe.glossary_version()
         if "multi_query" in diff:
             probe.multi_query()
-        if cfg == (base or HybridConfig()) and not ({"rerank_output", "glossary", "multi_query"} & set(diff)):
+        if "doc_focus" in diff:
+            probe.doc_focus()
+        if "query_translation" in diff:
+            probe.query_translation()
+        extras = {"rerank_output", "glossary", "multi_query", "doc_focus", "query_translation"}
+        if cfg == (base or HybridConfig()) and not (extras & set(diff)):
             raise PolicyDiffError("the diff changes nothing")
         return
     if (kind, name) == ("prompt", "answer_system"):

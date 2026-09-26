@@ -30,9 +30,11 @@ import psycopg
 
 from medops.core.errors import ErrorCode, InfrastructureError
 from medops.retrieval.contracts import LexicalVersions
+from medops.retrieval.doc_focus import DOC_FOCUS_VERSION
 from medops.retrieval.hybrid import HybridConfig
 from medops.retrieval.lexical import index_consumer, pg_simple_fts
 from medops.retrieval.lexical.tokenizer import JiebaTokenizerV2
+from medops.retrieval.query_translation import QUERY_TRANSLATION_OFF, QUERY_TRANSLATION_VERSION
 from medops.retrieval.rerank import MAX_INPUT, MAX_LENGTH, RERANK_MODEL_ID, RERANK_REVISION, RerankerSpec
 from medops.retrieval.rewrite import GLOSSARY_NONE
 from medops.retrieval.vector import pg_vector
@@ -90,6 +92,8 @@ def production_retrieval_inputs(
     rerank_output: int = RERANK_OUTPUT,
     glossary_version: str | None = None,
     multi_query: bool = False,
+    doc_focus: bool = False,
+    query_translation: str = QUERY_TRANSLATION_OFF,
 ) -> RetrievalVersionInputs:
     """Defaults are the pinned production values; a released retrieval policy (M4-03) passes its effective config so the
     composite version changes with it (baseline 3.6). A released glossary (record 93) joins the hash as
@@ -100,6 +104,10 @@ def production_retrieval_inputs(
     )
     if multi_query:
         rewrite["multi_query"] = True
+    if doc_focus:
+        rewrite["doc_focus"] = DOC_FOCUS_VERSION
+    if query_translation != QUERY_TRANSLATION_OFF:
+        rewrite["query_translation"] = f"{QUERY_TRANSLATION_VERSION}:{query_translation}"
     return RetrievalVersionInputs.from_lexical(
         production_lexical_versions(),
         embedding_version=EMBEDDING_VERSION,

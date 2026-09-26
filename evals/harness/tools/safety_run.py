@@ -103,6 +103,8 @@ class Plane:
         answer_system=None,
         glossary=None,
         multi_query=False,
+        doc_focus=False,
+        query_translation="off",
     ):
         # `config` / `answer_system`: an arm of the replay runner (M4-07) evaluates a candidate policy overlay; the
         # safety runner itself keeps the production values
@@ -111,6 +113,10 @@ class Plane:
         self._answer_system = answer_system
         self._glossary = glossary  # a released glossary version resolved by the caller (record 93)
         self._multi_query = multi_query
+        self._doc_focus = doc_focus
+        from medops.retrieval.query_translation import QueryTranslator
+
+        self._translator = QueryTranslator(gateway, query_translation).translate if query_translation != "off" else None
         self.conn = psycopg.connect(sa._with_database(app_url, name))
         self.admin = psycopg.connect(admin_dsn(name))
         self.admin.read_only = True
@@ -133,6 +139,8 @@ class Plane:
                 lexical_versions=production_lexical_versions(),
                 glossary=self._glossary,
                 multi_query=self._multi_query,
+                doc_focus=self._doc_focus,
+                translator=self._translator,
             )
         )
         extra = {"answer_system": answer_system} if answer_system else {}
@@ -159,6 +167,8 @@ class Plane:
                 lexical_versions=production_lexical_versions(),
                 glossary=self._glossary,
                 multi_query=self._multi_query,
+                doc_focus=self._doc_focus,
+                translator=self._translator,
             )
         )
 

@@ -78,3 +78,25 @@ def test_multi_query_joins_the_composite_only_when_on():
     on = production.production_retrieval_inputs(multi_query=True)
     assert on.rewrite_params == {"multi_query": True}
     assert compute_retrieval_version(on) != production.PRODUCTION_RETRIEVAL_VERSION
+
+
+def test_doc_focus_joins_the_composite_with_its_rule_version():
+    from medops.retrieval.doc_focus import DOC_FOCUS_VERSION
+
+    off = production.production_retrieval_inputs(doc_focus=False)
+    assert compute_retrieval_version(off) == production.PRODUCTION_RETRIEVAL_VERSION
+    on = production.production_retrieval_inputs(doc_focus=True)
+    assert on.rewrite_params == {"doc_focus": DOC_FOCUS_VERSION}
+    assert compute_retrieval_version(on) != production.PRODUCTION_RETRIEVAL_VERSION
+    bundle = production.production_retrieval_inputs(
+        glossary_version="glossary-20260926-e4daca58a8e4", multi_query=True, doc_focus=True
+    )
+    assert set(bundle.rewrite_params) == {"glossary", "multi_query", "doc_focus"}
+
+
+def test_query_translation_joins_the_composite_with_rule_and_model():
+    off = production.production_retrieval_inputs(query_translation="off")
+    assert compute_retrieval_version(off) == production.PRODUCTION_RETRIEVAL_VERSION
+    on = production.production_retrieval_inputs(query_translation="gpt-6-luna")
+    assert on.rewrite_params == {"query_translation": "qt-v1:gpt-6-luna"}
+    assert compute_retrieval_version(on) != production.PRODUCTION_RETRIEVAL_VERSION
