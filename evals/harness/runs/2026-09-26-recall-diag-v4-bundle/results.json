@@ -1,0 +1,24 @@
+{
+ "meta": {
+  "run": "2026-09-26-recall-diag-v4-bundle",
+  "date": "2026-09-26",
+  "dataset_version": "replay-v1",
+  "dataset_hash": "154f576aba28f6186f7832582d6f12df8633e00b0da002f030062354f9f41b77",
+  "rerank_output": 8,
+  "as_of": "2026-09-24",
+  "device": "mps",
+  "labels": [
+   "bad",
+   "good"
+  ],
+  "controls": 0,
+  "glossary": "glossary-20260926-e4daca58a8e4",
+  "multi_query": true,
+  "doc_focus": true
+ },
+ "by_stage": {
+  "generation": 30,
+  "recall": 26,
+  "rerank": 4
+ }
+}
