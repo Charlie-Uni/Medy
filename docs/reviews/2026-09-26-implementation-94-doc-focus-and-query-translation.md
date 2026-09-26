@@ -38,11 +38,21 @@
 
 ### 3.2 翻译复测
 
-（待填：`2026-09-26-recall-diag-v5-translate`。）
+`2026-09-26-recall-diag-v5-translate`（词表 + multi_query + doc_focus + gpt-6-luna 翻译，60 道失败题 + 60 道对照，模型费用 0.0098 美元）：
+
+| 组 | 不翻译（v4） | 翻译 |
+| --- | --- | --- |
+| 60 道失败题：gold 进前 8 | 30 | **35**（新进 7：rp-0093 / 0115 / 0123 / 0160 / 0294 / 0537 / 0568；掉出 2：rp-0379 / 0403 退到前 20 内） |
+| 60 道失败题：gold 不在前 20 | 26 | 21 |
+| 跨语言 32 道：gold 进前 8 | 13 | 17 |
+| 60 道对照（可回答 / 冲突）：gold 在前 8 / 第 1 名 | 60 / 49 | 60 / 49 |
+| 每题检索时延 | 8.4 秒 | 10.6 秒（多一次翻译调用） |
+
+从记录 92 的 18 道到 35 道：60 道失败题里 gold 进入前 8 的比例从 30% 到 58%，对照无退化。
 
 ### 3.3 候选与评测
 
-（待填。）
+候选 `evals/replay/candidates/2026-09-26-retrieval-bundle.json`：`glossary → glossary-20260926-e4daca58a8e4`、`multi_query → true`、`doc_focus → true`、`query_translation → gpt-6-luna`，质量档门禁（+5 pp），复用记录 90 的 baseline 臂（同回放集、同 baseline 版本），估算 6.42 美元。四项合成一个候选评测是为了省一次 6.4 美元：门禁判定的是发布与否，各项的单独贡献由上面的离线复测给出。评测运行 `evals/harness/runs/2026-09-26-replay-eval-v2-retrieval-bundle`（后台，约 4–5 小时）；结果另记。
 
 ## 4. §9 自审
 

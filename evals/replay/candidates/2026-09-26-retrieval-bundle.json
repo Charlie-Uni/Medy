@@ -2,10 +2,32 @@
  "kind": "retrieval_params",
  "name": "hybrid",
  "diff": {
-  "glossary": {"from": "glossary-none", "to": "glossary-20260926-e4daca58a8e4"},
-  "multi_query": {"from": false, "to": true},
-  "doc_focus": {"from": false, "to": true}
+  "glossary": {
+   "from": "glossary-none",
+   "to": "glossary-20260926-e4daca58a8e4"
+  },
+  "multi_query": {
+   "from": false,
+   "to": true
+  },
+  "doc_focus": {
+   "from": false,
+   "to": true
+  },
+  "query_translation": {
+   "from": "off",
+   "to": "gpt-6-luna"
+  }
  },
- "rationale": "Records 92–94: two thirds of the failed replay items are recall failures. Three retrieval changes that leave the corpus-wide search untouched and only add rankings to the fusion: (1) the released glossary (532 entries, 436 Chinese→English concept terms) so the rewriter can expand Chinese questions; (2) multi_query, which finally searches the rewritten queries the port used to ignore; (3) doc_focus, which searches the document a question names (brand, ICH code, GVP module, Chinese title) on its own — 30 of the 60 failed subset items name a corpus document and 29 of those have their gold inside it. Offline recall diagnostics: evals/harness/runs/2026-09-26-recall-diag-v3-glossary-multiquery and -v4-bundle.",
- "evidence": {"case_ids": [], "kind": "diagnostic", "source_runs": ["2026-09-26-recall-diag-v1", "2026-09-26-recall-diag-v3-glossary-multiquery", "2026-09-26-recall-diag-v4-bundle"]}
+ "rationale": "Records 92–94: two thirds of the failed replay items are recall failures. Four retrieval changes that leave the corpus-wide search untouched and only add rankings to the fusion: (1) the released glossary (532 entries, 436 Chinese→English concept terms) so the rewriter can expand Chinese questions; (2) multi_query, which finally searches the rewritten queries the port used to ignore; (3) doc_focus, which searches the document a question names (brand, ICH code, GVP module, Chinese title) on its own — 30 of the 60 failed subset items name a corpus document and 29 of those have their gold inside it; (4) query_translation, one bounded gpt-6-luna rendering of a Chinese question used only as an extra search query (about 0.0001 USD and +2 s per question). Offline recall diagnostics: evals/harness/runs/2026-09-26-recall-diag-v3-glossary-multiquery and -v4-bundle. Offline recall diagnostics on the 60 failed subset items: gold in the reranked top-8 18 → 30 (glossary + multi_query + doc_focus, run -v4-bundle) → 35 (plus query_translation, run -v5-translate); 60 passing controls unchanged.",
+ "evidence": {
+  "case_ids": [],
+  "kind": "diagnostic",
+  "source_runs": [
+   "2026-09-26-recall-diag-v1",
+   "2026-09-26-recall-diag-v3-glossary-multiquery",
+   "2026-09-26-recall-diag-v4-bundle",
+   "2026-09-26-recall-diag-v5-translate"
+  ]
+ }
 }
