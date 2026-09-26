@@ -1,0 +1,20 @@
+{
+ "meta": {
+  "run": "2026-09-26-recall-diag-v1",
+  "date": "2026-09-26",
+  "dataset_version": "replay-v1",
+  "dataset_hash": "154f576aba28f6186f7832582d6f12df8633e00b0da002f030062354f9f41b77",
+  "rerank_output": 8,
+  "as_of": "2026-09-24",
+  "device": "mps",
+  "labels": [
+   "bad"
+  ],
+  "controls": 30
+ },
+ "by_stage": {
+  "recall": 40,
+  "generation": 18,
+  "rerank": 2
+ }
+}

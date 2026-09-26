@@ -120,7 +120,7 @@ def test_build_writes_a_validating_glossary_and_provenance(builder, tmp_path, mo
         out_dir=tmp_path / "out",
         built_on=date(2026, 9, 20),
     )
-    assert summary["entries"] == {"total": 3, "brand": 2, "abbreviation": 1} and summary["rejected"] == []
+    assert summary["entries"] == {"total": 3, "brand": 2, "abbreviation": 1, "concept": 0} and summary["rejected"] == []
     glossary = load_glossary(Path(summary["glossary"]))
     assert glossary.version.startswith("glossary-20260920-") and len(glossary.entries) == 3
     provenance = json.loads(Path(summary["provenance"]).read_text(encoding="utf-8"))

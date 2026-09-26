@@ -128,6 +128,7 @@ class ProductionRuntime:
     _hybrid: HybridConfig | None = field(default=None, repr=False)
     _state_cache: tuple[float, ReleaseState] | None = field(default=None, repr=False)  # TTL re-read (M4-09)
     _rerankers: dict[int, Any] = field(default_factory=dict, repr=False)  # one reranker per released output size
+    _glossaries: dict[str, Any] = field(default_factory=dict, repr=False)  # verified glossaries by released version
     _pinned: Any = field(default=None, repr=False)
     _device: str = field(default="cpu", repr=False)
 
@@ -145,6 +146,7 @@ class ProductionRuntime:
             )  # INV-HAR-06: production applies the released pointers, never the repo's latest text
         hybrid = released.hybrid_config(production_hybrid_config())
         rerank_output = released.rerank_output(RERANK_OUTPUT)
+        glossary_version = released.glossary_version()
         pinned = PinnedThread(pinned_timeout_s)
         embedding = PinnedEmbedding(pinned.call(lambda: BgeM3EmbeddingProvider(device=device)), pinned)
         reranker = PinnedReranker(pinned.call(lambda: BgeRerankerV2M3(device=device, output=rerank_output)), pinned)
@@ -155,7 +157,9 @@ class ProductionRuntime:
             monthly_cap_usd=settings.llm_monthly_budget_usd,
         )
         retrieval_version = (
-            compute_retrieval_version(production_retrieval_inputs(hybrid, rerank_output=rerank_output))
+            compute_retrieval_version(
+                production_retrieval_inputs(hybrid, rerank_output=rerank_output, glossary_version=glossary_version)
+            )
             if released.retrieval_overridden()
             else PRODUCTION_RETRIEVAL_VERSION
         )
@@ -179,6 +183,7 @@ class ProductionRuntime:
         runtime._pinned = pinned
         runtime._device = device
         runtime._rerankers = {rerank_output: reranker}
+        runtime.glossary_for(glossary_version)  # fail fast: a released glossary must be present and verified at start
         runtime._admin_dsn = settings.database_admin_url.get_secret_value() if settings.database_admin_url else None
         runtime._restricted_dsn = (
             settings.database_restricted_url.get_secret_value() if settings.database_restricted_url else None
@@ -273,7 +278,11 @@ class ProductionRuntime:
         hybrid = pol.hybrid_config(production_hybrid_config())
         rerank_output = pol.rerank_output(RERANK_OUTPUT)
         retrieval_version = (
-            compute_retrieval_version(production_retrieval_inputs(hybrid, rerank_output=rerank_output))
+            compute_retrieval_version(
+                production_retrieval_inputs(
+                    hybrid, rerank_output=rerank_output, glossary_version=pol.glossary_version()
+                )
+            )
             if pol.retrieval_overridden()
             else PRODUCTION_RETRIEVAL_VERSION
         )
@@ -302,6 +311,17 @@ class ProductionRuntime:
             )
         return self._rerankers[output]
 
+    def glossary_for(self, version: str) -> Any:
+        """The verified glossary a released version names (None for `glossary-none`); cached per version."""
+        from medops.retrieval.glossary_store import load_versioned_glossary
+        from medops.retrieval.rewrite import GLOSSARY_NONE
+
+        if version == GLOSSARY_NONE:
+            return None
+        if version not in self._glossaries:
+            self._glossaries[version] = load_versioned_glossary(getattr(self.settings, "glossary_dir", None), version)
+        return self._glossaries[version]
+
     def build_deps(
         self, conn: Any, user: UserContext, request: AskRequest, routed: RequestPolicies | None = None
     ) -> HarnessDeps:
@@ -321,6 +341,7 @@ class ProductionRuntime:
             reranker=reranker,
             config=hybrid,
             lexical_versions=production_lexical_versions(),
+            glossary=self.glossary_for(routed.policies.glossary_version()),
         )
         return HarnessDeps(
             retrieval=retrieval,

@@ -59,3 +59,14 @@ def test_vector_retriever_requires_the_pinned_embedding_version():
 
     with pytest.raises(InfrastructureError):
         production.production_vector_retriever(None, HashingEmbeddingProvider())  # type: ignore[arg-type]
+
+
+def test_a_released_glossary_joins_the_composite_and_none_leaves_it_unchanged():
+    base = production.production_retrieval_inputs()
+    none = production.production_retrieval_inputs(glossary_version="glossary-none")
+    assert compute_retrieval_version(none) == production.PRODUCTION_RETRIEVAL_VERSION
+    assert none.rewrite_params == {}
+    with_glossary = production.production_retrieval_inputs(glossary_version="glossary-20260926-0123456789ab")
+    assert with_glossary.rewrite_params == {"glossary": "glossary-20260926-0123456789ab"}
+    assert compute_retrieval_version(with_glossary) != production.PRODUCTION_RETRIEVAL_VERSION
+    assert compute_retrieval_version(base) == production.PRODUCTION_RETRIEVAL_VERSION

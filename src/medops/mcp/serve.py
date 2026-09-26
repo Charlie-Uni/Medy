@@ -50,6 +50,15 @@ def _searcher_factory(device: str, settings: Settings):
             )
         return rerankers[output]
 
+    glossaries: dict[str, Any] = {}
+
+    def glossary_for(version: str):
+        from medops.retrieval.glossary_store import load_versioned_glossary
+
+        if version not in glossaries:
+            glossaries[version] = load_versioned_glossary(settings.glossary_dir, version)
+        return glossaries[version]
+
     def state_for(conn) -> ReleaseState:
         now = time.monotonic()
         if "state" not in cache or now - cache["at"] >= ttl:
@@ -62,6 +71,7 @@ def _searcher_factory(device: str, settings: Settings):
         routed = state_for(conn).for_principal(user.user_id).policies
         hybrid = routed.hybrid_config(production_hybrid_config())
         reranker = reranker_for(routed.rerank_output(RERANK_OUTPUT))
+        glossary = glossary_for(routed.glossary_version())
 
         @contextmanager
         def conn_for_user(_u):
@@ -75,6 +85,7 @@ def _searcher_factory(device: str, settings: Settings):
                 reranker=reranker,
                 config=hybrid,
                 lexical_versions=production_lexical_versions(),
+                glossary=glossary,
             )
             outcome = retrieval.retrieve(
                 RetrievalRequest(query=query, user=user, as_of=as_of, historical_requested=allow_historical)

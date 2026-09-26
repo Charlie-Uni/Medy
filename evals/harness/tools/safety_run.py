@@ -90,13 +90,25 @@ class Plane:
     """One fact plane: app connection (RLS), admin connection (judge lookups), retrieval and harness deps."""
 
     def __init__(
-        self, name: str, app_url: str, provider, reranker, gateway, as_of: date, sa, *, config=None, answer_system=None
+        self,
+        name: str,
+        app_url: str,
+        provider,
+        reranker,
+        gateway,
+        as_of: date,
+        sa,
+        *,
+        config=None,
+        answer_system=None,
+        glossary=None,
     ):
         # `config` / `answer_system`: an arm of the replay runner (M4-07) evaluates a candidate policy overlay; the
         # safety runner itself keeps the production values
         self.name = name
         self._config = config or production_hybrid_config()
         self._answer_system = answer_system
+        self._glossary = glossary  # a released glossary version resolved by the caller (record 93)
         self.conn = psycopg.connect(sa._with_database(app_url, name))
         self.admin = psycopg.connect(admin_dsn(name))
         self.admin.read_only = True
@@ -117,6 +129,7 @@ class Plane:
                 reranker=reranker,
                 config=self._config,
                 lexical_versions=production_lexical_versions(),
+                glossary=self._glossary,
             )
         )
         extra = {"answer_system": answer_system} if answer_system else {}
@@ -141,6 +154,7 @@ class Plane:
                 reranker=reranker,
                 config=self._config,
                 lexical_versions=production_lexical_versions(),
+                glossary=self._glossary,
             )
         )
 

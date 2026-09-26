@@ -35,7 +35,9 @@ def test_members_are_exactly_the_eight_named_in_baseline_3_6():
         "rerank_params",
         "candidate_limits",
     )
-    assert tuple(RetrievalVersionInputs.model_fields) == RETRIEVAL_VERSION_FIELDS
+    # record 93: `rewrite_params` (the released glossary) is the one member beyond the eight; it joins the hash only
+    # when set, so every composite computed before it existed is unchanged
+    assert tuple(RetrievalVersionInputs.model_fields) == (*RETRIEVAL_VERSION_FIELDS, "rewrite_params")
 
 
 def test_known_answer_and_formula():

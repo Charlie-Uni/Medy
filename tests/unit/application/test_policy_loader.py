@@ -97,3 +97,30 @@ def test_validate_diff_covers_every_kind_and_the_supported_targets_are_pinned():
     with pytest.raises(PolicyDiffError):
         validate_diff("prompt", "other", {"text": "x"})
     assert SUPPORTED_RELEASE_TARGETS == {("retrieval_params", "hybrid"), ("prompt", "answer_system")}
+
+
+def test_glossary_is_a_retrieval_parameter_with_a_versioned_value():
+    from medops.application.policy_loader import ReleasedPolicy, ReleasedPolicySet
+
+    rs = ReleasedPolicySet(
+        (
+            ReleasedPolicy(
+                "g",
+                "retrieval_params",
+                "hybrid",
+                "v",
+                {"glossary": {"from": "glossary-none", "to": "glossary-20260926-0123456789ab"}},
+            ),
+        )
+    )
+    assert rs.glossary_version() == "glossary-20260926-0123456789ab"
+    assert rs.hybrid_config(BASE) == BASE and rs.rerank_output(8) == 8 and rs.retrieval_overridden()
+    assert ReleasedPolicySet().glossary_version() == "glossary-none"
+    validate_diff(
+        "retrieval_params",
+        "hybrid",
+        {"glossary": {"from": "glossary-none", "to": "glossary-20260926-0123456789ab"}},
+        base=BASE,
+    )
+    with pytest.raises(PolicyDiffError):
+        validate_diff("retrieval_params", "hybrid", {"glossary": {"from": "glossary-none", "to": "latest"}}, base=BASE)

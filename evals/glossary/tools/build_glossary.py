@@ -180,7 +180,62 @@ def abbreviation_entries(curated: dict, pages: dict[str, dict[int, str]]) -> tup
     return kept, rejected
 
 
-def build(*, tfda_zip: Path, pages_dir: Path, corpus_path: Path, out_dir: Path, built_on: date) -> dict:
+MIN_CJK_TERM = 3  # a CJK glossary term is matched as a substring: two characters would fire on unrelated text
+
+
+def concept_entries(concepts: dict, pages: dict[str, dict[int, str]]) -> tuple[list[dict], list[dict]]:
+    """Chinese concept terms -> English terms (record 93): each English term must occur verbatim on a cited corpus
+    page (mechanical); the Chinese renderings come from the concepts file (model translation, spot-checked by the
+    decision-maker per ADR-0008). zh-Hans and zh-Hant become separate entries when they differ, and several English
+    forms of one Chinese term (singular / plural, British / American spelling) share one entry as synonyms."""
+    by_zh: dict[str, dict] = {}
+    rejected: list[dict] = []
+    for item in concepts["terms"]:
+        if not item.get("keep", True):
+            rejected.append({"term": item["en"], "reason": "translator marked it as not a term"})
+            continue
+        english = _clean(item["en"])
+        evidence = []
+        for ev in item.get("evidence", []):
+            text = pages.get(ev["document_key"], {}).get(int(ev["page"]), "")
+            if english.lower() in text.lower():
+                evidence.append({"document_key": ev["document_key"], "page": int(ev["page"])})
+        if not evidence:
+            rejected.append({"term": english, "reason": "English term not found on any cited corpus page"})
+            continue
+        for zh in dict.fromkeys(_clean(item.get(k, "")) for k in ("zh_hans", "zh_hant")):
+            if not zh or zh.lower() == english.lower():
+                continue
+            if len(zh) < MIN_CJK_TERM:
+                rejected.append({"term": zh, "reason": f"shorter than {MIN_CJK_TERM} characters (substring matching)"})
+                continue
+            entry = by_zh.setdefault(
+                zh,
+                {
+                    "term": zh,
+                    "synonyms": [],
+                    "kind": "concept",
+                    "source": "corpus-terms+model-translation",
+                    "evidence": [],
+                },
+            )
+            if english not in entry["synonyms"] and len(entry["synonyms"]) < MAX_SYNONYMS:
+                entry["synonyms"].append(english)
+            for ev in evidence:
+                if ev not in entry["evidence"] and len(entry["evidence"]) < 3:
+                    entry["evidence"].append(ev)
+    return list(by_zh.values()), rejected
+
+
+def build(
+    *,
+    tfda_zip: Path,
+    pages_dir: Path,
+    corpus_path: Path,
+    out_dir: Path,
+    built_on: date,
+    concepts_path: Path | None = None,
+) -> dict:
     corpus = json.loads(corpus_path.read_text(encoding="utf-8"))
     pages = load_pages(pages_dir, corpus)
     if not pages:
@@ -189,7 +244,13 @@ def build(*, tfda_zip: Path, pages_dir: Path, corpus_path: Path, out_dir: Path, 
     curated = json.loads((REPO / "evals/glossary/sources/abbreviations_curated.json").read_text(encoding="utf-8"))
     tfda, tfda_stats = tfda_entries(rows, pages)
     abbr, rejected = abbreviation_entries(curated, pages)
-    raw_entries = tfda + abbr
+    concepts, concept_rejected = ([], [])
+    concepts_meta: dict = {}
+    if concepts_path is not None:
+        concepts_doc = json.loads(concepts_path.read_text(encoding="utf-8"))
+        concepts, concept_rejected = concept_entries(concepts_doc, pages)
+        concepts_meta = {k: concepts_doc.get(k) for k in ("built_at", "model", "prompt_sha256", "cost_usd", "corpus")}
+    raw_entries = tfda + abbr + concepts
     # de-duplicate by term (first wins), then validate through the runtime model
     by_term: dict[str, dict] = {}
     for e in raw_entries:
@@ -230,7 +291,19 @@ def build(*, tfda_zip: Path, pages_dir: Path, corpus_path: Path, out_dir: Path, 
             "total": len(entries),
             "brand": sum(1 for e in entries if e.kind == "brand"),
             "abbreviation": sum(1 for e in entries if e.kind == "abbreviation"),
+            "concept": sum(1 for e in entries if e.kind == "concept"),
         },
+        "concepts": (
+            {
+                "file": str(concepts_path),
+                **concepts_meta,
+                "kept": len(concepts),
+                "rejected": concept_rejected,
+                "note": "Chinese renderings are model translations of English terms that occur verbatim in the corpus; the decision-maker spot-checks a sample before a release (ADR-0008)",
+            }
+            if concepts_path is not None
+            else None
+        ),
         "entry_evidence": [
             {
                 "term": e["term"],
@@ -261,9 +334,15 @@ def main() -> int:
     parser.add_argument("--corpus", type=Path, default=REPO / "evals/probe/precise_clause/v2/corpus.json")
     parser.add_argument("--out", type=Path, default=REPO / "evals/glossary")
     parser.add_argument("--date", type=date.fromisoformat, default=date.today())
+    parser.add_argument("--concepts", type=Path, default=None, help="concepts file from build_concepts.py (record 93)")
     args = parser.parse_args()
     summary = build(
-        tfda_zip=args.tfda, pages_dir=args.pages, corpus_path=args.corpus, out_dir=args.out, built_on=args.date
+        tfda_zip=args.tfda,
+        pages_dir=args.pages,
+        corpus_path=args.corpus,
+        out_dir=args.out,
+        built_on=args.date,
+        concepts_path=args.concepts,
     )
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     return 0

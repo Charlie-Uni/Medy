@@ -110,6 +110,7 @@ class Settings(BaseSettings):
     payload_key_file: str | None = None  # JSON KEK file for restricted payloads (DEC-013); unset = payloads not written
     payload_retention_days: int = Field(default=90, ge=1)
     policy_reload_ttl_s: float = Field(default=5.0, ge=0, le=300)  # released pointers re-read this often (M4-09)
+    glossary_dir: str | None = None  # versioned glossary files (ADR-0008); required once a glossary version is released
     observation_window_hours: float = Field(default=24.0, ge=0, le=720)  # canary must sit this long before promote
     escalation_payload_grace_days: int = Field(default=30, ge=0)
     trace_retention_days: int = Field(default=365, ge=90)  # decision 86: traces / escalations kept 365 days (M5-06)

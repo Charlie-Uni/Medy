@@ -24,12 +24,14 @@ from datetime import datetime
 from typing import Any
 
 from medops.domain.state import MAX_EVIDENCE, VersionSet
+from medops.retrieval.glossary_store import valid_glossary_version
 from medops.retrieval.hybrid import HybridConfig
+from medops.retrieval.rewrite import GLOSSARY_NONE
 
 SUPPORTED_RELEASE_TARGETS: frozenset[tuple[str, str]] = frozenset(
     {("retrieval_params", "hybrid"), ("prompt", "answer_system")}
 )
-RETRIEVAL_PARAM_KEYS = ("k_lexical", "k_vector", "rrf_k", "limit", "rerank_output")
+RETRIEVAL_PARAM_KEYS = ("k_lexical", "k_vector", "rrf_k", "limit", "rerank_output", "glossary")
 
 
 class PolicyDiffError(ValueError):
@@ -71,6 +73,16 @@ class ReleasedPolicySet:
         value = int(_to(p.diff["rerank_output"]))
         if not 1 <= value <= MAX_EVIDENCE:
             raise PolicyDiffError(f"rerank_output must be within 1..{MAX_EVIDENCE}")
+        return value
+
+    def glossary_version(self, base: str = GLOSSARY_NONE) -> str:
+        """The released glossary version (record 93); `glossary-none` means the rewriter runs without a glossary."""
+        p = self.get("retrieval_params", "hybrid")
+        if p is None or "glossary" not in p.diff:
+            return base
+        value = str(_to(p.diff["glossary"]))
+        if not valid_glossary_version(value):
+            raise PolicyDiffError("glossary must be 'glossary-none' or 'glossary-<YYYYMMDD>-<sha12>'")
         return value
 
     def retrieval_overridden(self) -> bool:
@@ -127,9 +139,12 @@ def validate_diff(kind: str, name: str, diff: Mapping[str, Any], *, base: Hybrid
     """Shape check shared by Adapt (before a candidate is written) and the loader (before a release is applied)."""
     if (kind, name) == ("retrieval_params", "hybrid"):
         cfg = apply_retrieval_diff(base or HybridConfig(), diff)
+        probe = ReleasedPolicySet((ReleasedPolicy("x", kind, name, "v", diff),))
         if "rerank_output" in diff:
-            ReleasedPolicySet((ReleasedPolicy("x", kind, name, "v", diff),)).rerank_output(MAX_EVIDENCE)
-        if cfg == (base or HybridConfig()) and "rerank_output" not in diff:
+            probe.rerank_output(MAX_EVIDENCE)
+        if "glossary" in diff:
+            probe.glossary_version()
+        if cfg == (base or HybridConfig()) and "rerank_output" not in diff and "glossary" not in diff:
             raise PolicyDiffError("the diff changes nothing")
         return
     if (kind, name) == ("prompt", "answer_system"):

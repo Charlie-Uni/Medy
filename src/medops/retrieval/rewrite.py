@@ -39,6 +39,7 @@ from medops.retrieval.lexical.normalization import NORMALIZATION_VERSION, normal
 
 REWRITER_VERSION = "qr-rules-v1"
 MAX_QUERY_CHARS = 512
+GLOSSARY_NONE = "glossary-none"
 MAX_ENTITY_TERMS = 3
 MAX_GLOSSARY_TERMS = 5
 ENTITY_KINDS: tuple[str, ...] = ("drug", "protocol", "indication", "population")
@@ -66,7 +67,7 @@ PROTECTED_PATTERNS: dict[str, re.Pattern[str]] = {
 class GlossaryEntry(DomainModel):
     term: NonEmptyStr
     synonyms: tuple[NonEmptyStr, ...] = Field(min_length=1)
-    kind: Literal["generic", "brand", "abbreviation", "other"] = "other"
+    kind: Literal["generic", "brand", "abbreviation", "concept", "other"] = "other"
 
     @model_validator(mode="after")
     def _rules(self) -> GlossaryEntry:
@@ -95,7 +96,7 @@ class Glossary(DomainModel):
 
     @classmethod
     def empty(cls) -> Glossary:
-        return cls(version="glossary-none")
+        return cls(version=GLOSSARY_NONE)
 
 
 def load_glossary(path: Path) -> Glossary:

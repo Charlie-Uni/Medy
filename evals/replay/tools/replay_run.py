@@ -54,6 +54,7 @@ from medops.infrastructure.llm.budget import BudgetedGateway, InMemorySpendLedge
 from medops.infrastructure.llm.gateway import OPENAI_PRICES, PriceTable  # noqa: E402
 from medops.infrastructure.llm.openai_gateway import OpenAIModelGateway  # noqa: E402
 from medops.loop.gate import compute_gate  # noqa: E402
+from medops.retrieval.glossary_store import load_versioned_glossary  # noqa: E402
 from medops.retrieval.production import (  # noqa: E402
     RERANK_OUTPUT,
     production_hybrid_config,
@@ -117,7 +118,11 @@ def arm_versions(name: str, released: ReleasedPolicySet, base_policy_version: st
     rerank_output = released.rerank_output(RERANK_OUTPUT)
     return VersionSet(
         policy_version=released.policy_version(base_policy_version) + f";arm={name}",
-        retrieval_version=compute_retrieval_version(production_retrieval_inputs(hybrid, rerank_output=rerank_output)),
+        retrieval_version=compute_retrieval_version(
+            production_retrieval_inputs(
+                hybrid, rerank_output=rerank_output, glossary_version=released.glossary_version()
+            )
+        ),
         skill_version_set=default_registry().version_set(),
         model_config_version=production_model_config_version() + released.model_config_suffix(),
     )
@@ -224,9 +229,19 @@ def main() -> int:
             )
         cfg = rel.hybrid_config(production_hybrid_config())
         prompt = rel.answer_system(ANSWER_SYSTEM)
+        glossary = load_versioned_glossary(settings.glossary_dir or REPO / "evals/glossary", rel.glossary_version())
         planes[name] = {
             db: sr.Plane(
-                db, app_url, provider, rerankers[out], gateway, args.as_of, sa, config=cfg, answer_system=prompt
+                db,
+                app_url,
+                provider,
+                rerankers[out],
+                gateway,
+                args.as_of,
+                sa,
+                config=cfg,
+                answer_system=prompt,
+                glossary=glossary,
             )
             for db in (sr.PRODUCTION_DB, sr.SAFETY_DB)
         }

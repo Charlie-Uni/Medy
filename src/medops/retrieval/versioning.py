@@ -56,6 +56,10 @@ class RetrievalVersionInputs(BaseModel):
     the empty object is itself part of the hash."""
     candidate_limits: dict[str, PositiveInt]
     """Per-stage candidate caps (for example lexical_k, vector_k, rerank_input, rerank_output); at least one."""
+    rewrite_params: dict[str, JsonValue] = Field(default_factory=dict)
+    """Query-rewrite inputs that change results: the released glossary version (INV-HAR-05, record 93). Empty for
+    `glossary-none`, and an empty object stays out of the hash so the eight-member composite of baseline 3.6 is
+    unchanged for every deployment without a released glossary."""
 
     @model_validator(mode="after")
     def _rules(self) -> RetrievalVersionInputs:
@@ -75,6 +79,7 @@ class RetrievalVersionInputs(BaseModel):
         rrf_params: dict[str, JsonValue],
         rerank_params: dict[str, JsonValue],
         candidate_limits: dict[str, int],
+        rewrite_params: dict[str, JsonValue] | None = None,
     ) -> RetrievalVersionInputs:
         return cls(
             retriever_version=lexical.retriever_version,
@@ -85,6 +90,7 @@ class RetrievalVersionInputs(BaseModel):
             rrf_params=rrf_params,
             rerank_params=rerank_params,
             candidate_limits=candidate_limits,
+            rewrite_params=dict(rewrite_params or {}),
         )
 
     @property
@@ -99,7 +105,10 @@ class RetrievalVersionInputs(BaseModel):
 
 
 def compute_retrieval_version(inputs: RetrievalVersionInputs) -> str:
-    """SHA-256 hex of the canonical JSON of the eight members (baseline 3.6)."""
+    """SHA-256 hex of the canonical JSON of the eight members (baseline 3.6), plus `rewrite_params` only when a
+    glossary is released (an empty object is dropped, so existing composites stay byte-identical)."""
     payload = inputs.model_dump(mode="json")
-    assert tuple(sorted(payload)) == tuple(sorted(RETRIEVAL_VERSION_FIELDS))
+    if not payload.get("rewrite_params"):
+        payload.pop("rewrite_params", None)
+    assert set(payload) - {"rewrite_params"} == set(RETRIEVAL_VERSION_FIELDS)
     return canonical_hash(payload)

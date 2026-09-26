@@ -34,6 +34,7 @@ from medops.retrieval.hybrid import HybridConfig
 from medops.retrieval.lexical import index_consumer, pg_simple_fts
 from medops.retrieval.lexical.tokenizer import JiebaTokenizerV2
 from medops.retrieval.rerank import MAX_INPUT, MAX_LENGTH, RERANK_MODEL_ID, RERANK_REVISION, RerankerSpec
+from medops.retrieval.rewrite import GLOSSARY_NONE
 from medops.retrieval.vector import pg_vector
 from medops.retrieval.vector.embedding import EMBEDDING_VERSION, EmbeddingProvider
 from medops.retrieval.versioning import RetrievalVersionInputs, compute_retrieval_version
@@ -84,17 +85,22 @@ def production_hybrid_config() -> HybridConfig:
 
 
 def production_retrieval_inputs(
-    config: HybridConfig | None = None, *, rerank_output: int = RERANK_OUTPUT
+    config: HybridConfig | None = None, *, rerank_output: int = RERANK_OUTPUT, glossary_version: str | None = None
 ) -> RetrievalVersionInputs:
     """Defaults are the pinned production values; a released retrieval policy (M4-03) passes its effective config so the
-    composite version changes with it (baseline 3.6)."""
+    composite version changes with it (baseline 3.6). A released glossary (record 93) joins the hash as
+    `rewrite_params.glossary`; `glossary-none` / None leave the composite unchanged."""
     config = config or production_hybrid_config()
+    rewrite: dict[str, Any] = (
+        {"glossary": glossary_version} if glossary_version and glossary_version != GLOSSARY_NONE else {}
+    )
     return RetrievalVersionInputs.from_lexical(
         production_lexical_versions(),
         embedding_version=EMBEDDING_VERSION,
         rrf_params=config.rrf_params(),
         rerank_params=PRODUCTION_RERANKER_SPEC.rerank_params(),
         candidate_limits={**config.candidate_limits(), "rerank_output": rerank_output},
+        rewrite_params=rewrite,
     )
 
 
