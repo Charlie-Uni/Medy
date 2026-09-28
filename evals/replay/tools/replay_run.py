@@ -80,6 +80,14 @@ def read_jsonl(path: pathlib.Path) -> list[dict[str, Any]]:
     return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
 
 
+def needs_run(done: dict[str, dict[str, Any]], key: str) -> bool:
+    """On --resume a row is redone when it is missing or when the stored row is a system failure (infrastructure,
+    not the candidate). Main and safety items follow the same rule — record 97: the safety loop used to keep the
+    failed rows of a collapsed run, which left the gate's safety blockers in place after a resume."""
+    row = done.get(key)
+    return row is None or "system_failure" in row.get("reason_codes", [])
+
+
 def seed_baseline_rows(
     prev: pathlib.Path, rows_path: pathlib.Path, *, versions: dict[str, Any], dataset_hash: str, subset: bool, runs: int
 ) -> int:
@@ -279,7 +287,7 @@ def main() -> int:
                 lookups = (evidence_lookup(prod.conn_for_user, as_of=args.as_of), doc_type_lookup(prod.conn_for_user))
                 for it in items:
                     key = f"{arm}|{run}|{it['replay_id']}"
-                    if key in done and "system_failure" not in done[key].get("reason_codes", []):
+                    if not needs_run(done, key):
                         continue
                     user = UserContext(
                         user_id=hashlib.sha256(f"replay:{it['replay_id']}".encode()).hexdigest()[:16],
@@ -335,7 +343,7 @@ def main() -> int:
                         return 77
                 for it in safety_items:
                     key = f"{arm}|{run}|{it['replay_id']}"
-                    if key in done:
+                    if not needs_run(done, key):
                         continue
                     sample = drafts[it["source"]["sample_id"]]
                     before = (gateway.cost, gateway.tokens, gateway.calls)
