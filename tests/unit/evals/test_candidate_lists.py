@@ -33,11 +33,16 @@ def test_candidate_list_matches_schema(path: Path) -> None:
     assert ids == [f"cand-{i:04d}" for i in range(1, len(ids) + 1)], "candidate ids must be contiguous from cand-0001"
 
 
+def _identity(candidate: dict) -> str:
+    """What must stay stable for an id across versions: the document it points at (titles may be corrected)."""
+    return candidate["pdf_url"] or candidate["landing_url"]
+
+
 def test_later_versions_keep_earlier_ids() -> None:
-    """A new version appends; ids from an earlier version keep the same title (renumbering would break references)."""
+    """A new version appends; an id from an earlier version keeps pointing at the same document (no renumbering)."""
     previous: dict[str, str] = {}
     for path in LISTS:
-        current = {c["candidate_id"]: c["title"] for c in _load(path)["candidates"]}
-        for cid, title in previous.items():
-            assert current.get(cid) == title, f"{path.name} changed or dropped {cid}"
+        current = {c["candidate_id"]: _identity(c) for c in _load(path)["candidates"]}
+        for cid, identity in previous.items():
+            assert current.get(cid) == identity, f"{path.name} changed or dropped {cid}"
         previous = current

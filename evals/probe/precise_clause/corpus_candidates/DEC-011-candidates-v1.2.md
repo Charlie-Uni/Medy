@@ -283,3 +283,19 @@
 ## 签字
 
 决策人按批回复；每批的 `reviewer_decision` / `reviewer_note` 由实现方据回复写入下一版本文件（不覆盖本版）。
+
+### 2026-09-28 复核后需决策人单独判断
+
+本节为复核辅助，不是签字。新增 230 份本地 PDF 均存在且 SHA-256 与清单一致；逐份扫描文本层限制标记后，以下三条仍有明确许可疑点。其余 227 条尚需按批确认，但没有发现同类文本层阻断证据；TFDA 仿單的逐页图像层检查仍按 ADR-0003 在签字后、入库前执行。
+
+| 项目 | 核对证据 | 建议及需回复的判断 |
+| --- | --- | --- |
+| cand-0114 | [ICH 官方 PDF](https://database.ich.org/sites/default/files/ICH_E2B%28R3%29_EWG_IWG_ICSR_Implementation_Guide_%28QA%20integration%29_Step3_2025_0718_Assembly_Approved_0.pdf) 第 14 页注明 ISO/HL7 27953-2 的版权属于 ISO 和 HL7，并标记 `ALL RIGHTS RESERVED`；ICH 许可排除第三方内容。该 PDF 文档历史又将 2025 年 7 月的 v5.03 列为 Step 4，与候选标题和版本栏的 Step 3 咨询版不一致。 | 建议 `rejected`，并修正版本元数据。请决定是否排除整份 PDF；如认为有可分离且获准的部分，请明确范围与授权依据。 |
+| cand-0293 | [TFDA 官方 PDF](https://mcp.fda.gov.tw/insert/pdfcasefile/i_bb02e8be-0595-4658-9274-375dc48102ae?c=2) 第 26 页含 `© Johnson & Johnson Taiwan Ltd. 2021`。 | 建议保持 `needs_review`。请决定该文件内声明是否阻止依据资料集 9117/39 的 OGDL-1.0 入库，或提供足以覆盖的具体授权依据。 |
+| cand-0298 | [TFDA 官方 PDF](https://mcp.fda.gov.tw/insert/pdfcasefile/i_bc44dd21-e25b-4df9-ab90-150b5edc0d64?c=2) 第 2 页含 `© Johnson & Johnson Taiwan Ltd. 2021`；正文文本抽取另有严重乱码。 | 建议保持 `needs_review`，并在许可之外单独判定抽取质量。请决定是否排除或另找同成分备选。 |
+
+**cand-0316 已排除为单独许可疑点。** 本机 Quartz 逐页渲染目视：文本层在第 2 页厂商地址后误抽为 `©` 的字形，图像上实际为圈号 `②`；两页均未见版权或保密声明。候选 JSON 中仍是 `needs_review`，待决策人按批确认后才能更新；TFDA 仿單的其余准入步骤仍须完成。
+
+**PV 份数缺口：** 预判可用语料中 PV 为 102 份，距 120 份目标少 18 份。建议先在现有白名单补官方 PV 文件；若仍不足，再由决策人决定是否纳入 MHRA/TGA 并更新 ADR-0003。请回复选择现有白名单优先，或授权扩充来源。
+
+**决策人回复（2026-09-28）：**“按照建议的来即可”。签字与逐条 `reviewer_note` 已写入 [v1.3 JSON](DEC-011-candidates-v1.3.json)，结果见 [v1.3 签字表](DEC-011-candidates-v1.3.md)：新增 230 条中 227 条 `eligible`、2 条 `needs_review`、1 条 `rejected`；PV 先在现有白名单补足。v1.2 JSON 保留签字前状态，v1.2 签字表只追加本次决定索引。

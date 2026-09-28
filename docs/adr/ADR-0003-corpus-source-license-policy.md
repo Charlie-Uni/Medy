@@ -75,3 +75,20 @@
 5. **抽取库选型**：批准 pypdf 进入锁文件，见 [ADR-0005](ADR-0005-pdf-extraction-library.md)。
 
 附带发现：v0.2 的五份 TFDA 仿單中四份许可证已註銷或廢止（仅美洛醣 850mg 现行），本决策的 `eligible` 只表示许可可用，不表示文档现行；现行性作为 corpus 条目字段与探针集选材条件另行处理，见候选清单 v0.3 与实现记录 12。
+
+## 决策记录（2026-09-28，候选清单 v1.2 新增 230 条审核）
+
+决策人对签字表中的逐批初审和单独疑点回复“按照建议的来即可”，由实现方写入 [v1.3 候选清单](../../evals/probe/precise_clause/corpus_candidates/DEC-011-candidates-v1.3.md)及 JSON；保留 v1.2 JSON 签字前快照；签字表只追加决定索引。
+
+1. 227 条 `reviewer_decision=eligible`，其中 cand-0316 的文本层 `©` 经本机 Quartz 逐页目视确认为圈号 `②` 的字形映射误报。TFDA 仿單获批仍以入库前图像层核查、来源署名、不主张商标权和文本质量检查为条件；许可通过不等于文档现行或可直接入库。
+2. cand-0114 `reviewer_decision=rejected`：官方 PDF 第 14 页含 ISO/HL7 标准第三方版权声明，ICH 公共许可不能覆盖；文档历史显示 2025-07-18 v5.03 为 Step 4，v1.3 修正标题与版本元数据。
+3. cand-0293 与 cand-0298 `reviewer_decision=needs_review`：PDF 内有 Johnson & Johnson Taiwan 版权声明，当前资料集授权与该文件内声明的关系未充分澄清；cand-0298 另有文本抽取乱码。两份均不得进入语料。
+4. PV 缺口先在现有来源白名单内补官方文件；若仍不足，新增 MHRA/TGA 来源须另行决定并更新本 ADR。
+
+### 白名单补件执行记录（2026-09-28，待新增候选签字）
+
+按第 4 项决定，仅从现有 EMA/FDA 来源补充 15 份 PV 官方 PDF，列于 [DEC-011 v1.4 待签清单](../../evals/probe/precise_clause/corpus_candidates/DEC-011-candidates-v1.4.md)。其中 14 份为正式文件，cand-0347 为 FDA 草案，须保留草案标识。15 份均已记录官方链接、本地副本哈希、页数、文本层和单件许可依据；新增候选的 `reviewer_decision` 仍为空，签字前不得摄取。按 v1.2 原缺口口径，补 15 份后名义上尚缺 3 份；主集重冻结前须重新计算实际可用份数。此执行记录不增加 MHRA/TGA 来源授权。
+
+### 白名单补件许可裁决（2026-09-28）
+
+本轮确认 cand-0333～0347 全部 15 条的许可初判，`reviewer_decision=eligible`；逐条条件写入 [v1.5 签字结果](../../evals/probe/precise_clause/corpus_candidates/DEC-011-candidates-v1.5.md)及 JSON。EMA 材料遵守署名要求并排除第三方内容；FDA 材料保留官方来源及版本，排除另有权利声明的第三方内容。cand-0347 特别接受为 **2019 年 FDA 草案**，必须显著标记 Draft / Not for Implementation，不得作为现行指南或约束性规则使用。许可签字不免除摄取前版次、哈希、文本与适用性核查；若仅统计现行正式文件，本轮可计 14 份而非 15 份，实际缺口在重冻结前重算。
