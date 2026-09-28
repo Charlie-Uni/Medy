@@ -1,0 +1,460 @@
+{
+ "reviewed_on": "2026-09-28",
+ "reviewer": "Claude Fable 5.1（决策人 2026-09-21 授权：decide / document / flag；主集 spec-m1 §3.4「公开文档中的研究者、作者等职业信息不视为 PHI」）",
+ "ruleset": "pii-rules-v1",
+ "classification": "252 处命中、108 份文档：(1) 机构职能信箱（FDA druginfo/ocod/faersesub/dsmica/CDRH-Guidance/OSE.PMKTREGS 等、EMA info/duplicates/EURDList/safety-issue 等、ICH admin、MedDRA MSSO、各成员国药物警戒机构收件箱、TFDA/TDRF 通报信箱），不指向自然人；(2) 5 个 FDA 官员的公务信箱（cand-0215/0218/0222/0240/0249 等指南的联系人栏，Bhanu.Kannan / Irfan.Khan / Jonathan.Helfgott / Ronald.Fitzmartin / matt@cber），属公开指南署名的职业联系信息，按 spec-m1 §3.4 不视为 PHI，单独列出供决策人否决；(3) 3 处 patient_identifier 为「medical record number」一词在数据质量框架/EudraVigilance 指南正文中的术语性提及，不是标识符。",
+ "named_person_work_emails": {
+  "cand-0241": [
+   "matt@cber.fda.gov"
+  ]
+ },
+ "false_positives": {
+  "cand-0111": [
+   "admin@ich.org"
+  ],
+  "cand-0112": [
+   "admin@ich.org"
+  ],
+  "cand-0113": [
+   "admin@ich.org"
+  ],
+  "cand-0126": [
+   "('email', 'safety-issue@ema.eu",
+   "nrg@ema.europa.eu"
+  ],
+  "cand-0129": [
+   "('email', 'eurdlist@ema.europa",
+   "rwe@ema.europa.eu"
+  ],
+  "cand-0135": [
+   "('email', 'P-PV-emerging-safet"
+  ],
+  "cand-0137": [
+   "('email', 'press@ema.europa.eu"
+  ],
+  "cand-0138": [
+   "('email', 'EURDList@ema.europa"
+  ],
+  "cand-0140": [
+   "mail@emea.eu.int"
+  ],
+  "cand-0141": [
+   "('email', 'mail@emea.europa.eu"
+  ],
+  "cand-0143": [
+   "info@ema.europa.eu"
+  ],
+  "cand-0149": [
+   "mail@emea.eu.int"
+  ],
+  "cand-0151": [
+   "info@ema.europa.eu"
+  ],
+  "cand-0152": [
+   "('email', 'Biostatistics@ema.e"
+  ],
+  "cand-0154": [
+   "mail@emea.eu.int"
+  ],
+  "cand-0155": [
+   "mail@emea.eu.int"
+  ],
+  "cand-0156": [
+   "mail@emea.eu.int"
+  ],
+  "cand-0157": [
+   "('email', 'mail@emea.europa.eu"
+  ],
+  "cand-0158": [
+   "info@ema.europa.eu"
+  ],
+  "cand-0161": [
+   "('patient_identifier', 'medica"
+  ],
+  "cand-0163": [
+   "info@ema.europa.eu"
+  ],
+  "cand-0164": [
+   "mail@emea.eu.int"
+  ],
+  "cand-0165": [
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0169": [
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0170": [
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0171": [
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0172": [
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0173": [
+   "('email', 'CDER_OCP_GPT@fda.hh",
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0174": [
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0175": [
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0176": [
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0177": [
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0178": [
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0179": [
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0180": [
+   "('email', 'druginfo@fda.hhs.go",
+   "('email', 'industry.biologics@"
+  ],
+  "cand-0181": [
+   "('email', 'druginfo@fda.hhs.go"
+  ],
+  "cand-0182": [
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0183": [
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0184": [
+   "('email', 'CDER-OPDP-RPM@fda.h",
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0185": [
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0186": [
+   "('email', 'dsmica@cdrh.fda.gov"
+  ],
+  "cand-0187": [
+   "('email', 'druginfo@fda.hhs.go",
+   "AskCVM@fda.hhs.gov",
+   "dsmica@fda.hhs.gov",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0188": [
+   "('email', 'CDRH-Guidance@fda.h",
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0189": [
+   "('email', 'druginfo@fda.hhs.go",
+   "DICE@fda.hhs.gov",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0193": [
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0194": [
+   "('email', 'subscrib@meddramsso"
+  ],
+  "cand-0196": [
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0197": [
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0198": [
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0199": [
+   "('email', 'OSE.PMKTREGS@fda.hh",
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0200": [
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0201": [
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0202": [
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0203": [
+   "('email', 'druginfo@fda.hhs.go"
+  ],
+  "cand-0204": [
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0206": [
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0207": [
+   "('email', 'druginfo@fda.hhs.go"
+  ],
+  "cand-0208": [
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0209": [
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0210": [
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0211": [
+   "('email', 'druginfo@fda.hhs.go"
+  ],
+  "cand-0212": [
+   "('email', 'druginfo@fda.hhs.go"
+  ],
+  "cand-0213": [
+   "('email', 'druginfo@fda.hhs.go"
+  ],
+  "cand-0214": [
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0215": [
+   "('email', 'CBERICSRSubmissions",
+   "('email', 'FAERSESUB@fda.hhs.g",
+   "('email', 'MSSOhelp@mssotools.",
+   "('email', 'faersesub@fda.hhs.g"
+  ],
+  "cand-0216": [
+   "('email', 'CDRH-Guidance@fda.h"
+  ],
+  "cand-0217": [
+   "('email', 'druginfo@fda.hhs.go"
+  ],
+  "cand-0218": [
+   "('email', 'OSE.PMKTREGS@fda.hh",
+   "('email', 'druginfo@fda.hhs.go",
+   "('email', 'esubprep@fda.hhs.go",
+   "('email', 'faersesub@fda.hhs.g",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0219": [
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0220": [
+   "('email', 'pmcweb@cder.fda.gov"
+  ],
+  "cand-0221": [
+   "('email', 'CDRH-Guidance@fda.h",
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0222": [
+   "('email', 'CDRH-Guidance@fda.h",
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0223": [
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0224": [
+   "('email', 'gcpquestions@fda.hh"
+  ],
+  "cand-0225": [
+   "('email', 'CDRH-Guidance@fda.h",
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0226": [
+   "('email', 'CDRH-Guidance@fda.h",
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0227": [
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0228": [
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0229": [
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0230": [
+   "('email', 'druginfo@fda.hhs.go",
+   "('email', 'industry.biologics@"
+  ],
+  "cand-0231": [
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0232": [
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0233": [
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0234": [
+   "('email', 'DSMICA@cdrh.fda.gov"
+  ],
+  "cand-0236": [
+   "('email', 'druginfo@fda.hhs.go",
+   "DICE@fda.hhs.gov",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0237": [
+   "omh@fda.hhs.gov"
+  ],
+  "cand-0238": [
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0239": [
+   "('email', 'druginfo@fda.hhs.go",
+   "('email', 'industry.biologics@"
+  ],
+  "cand-0240": [
+   "('email', 'Bhanu.Kannan@fda.hh",
+   "('email', 'Irfan.Khan@fda.hhs.",
+   "('email', 'Jonathan.Helfgott@f",
+   "('email', 'Ronald.Fitzmartin@f",
+   "('email', 'druginfo@fda.hhs.go",
+   "('email', 'dsmica@cdrh.fda.gov",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0241": [
+   "('email', 'druginfo@fda.hhs.go",
+   "matt@cber.fda.gov"
+  ],
+  "cand-0242": [
+   "('email', 'druginfo@fda.hhs.go",
+   "('email', 'dsmica@cdrh.fda.gov"
+  ],
+  "cand-0243": [
+   "('email', 'druginfo@fda.hhs.go",
+   "DSMICA@fda.hhs.gov"
+  ],
+  "cand-0244": [
+   "('email', 'druginfo@fda.hhs.go",
+   "('email', 'gcp.questions@fda.h",
+   "dsmica@fda.hhs.gov",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0245": [
+   "('email', 'DRUGINFO@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0246": [
+   "('email', 'druginfo@fda.hhs.go",
+   "('email', 'dsmica@cdrh.fda.gov",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0247": [
+   "('email', 'gcp.questions@fda.h"
+  ],
+  "cand-0250": [
+   "('email', 'oiipolicystaffs@fda"
+  ],
+  "cand-0251": [
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0252": [
+   "adr@doh.gov.tw"
+  ],
+  "cand-0261": [
+   "adr@tdrf.org.tw"
+  ],
+  "cand-0340": [
+   "('email', 'duplicates@ema.euro"
+  ],
+  "cand-0341": [
+   "('email', 'donotreply@ema.euro"
+  ],
+  "cand-0342": [
+   "('email', 'Aukaverkun@lyfjasto",
+   "('email', 'Central.Biv@lakemed",
+   "('email', 'ICSRquality@dkma.dk",
+   "('email', 'NepageidaujamaR@vvk",
+   "('email', 'adr.box@ogyei.gov.h",
+   "('email', 'duplicates@ema.euro",
+   "('email', 'farmacovigilancia@i",
+   "('email', 'farmacovigilanza@ai",
+   "('email', 'farmacovigilenta@an",
+   "('email', 'h-farmakovigilanca@",
+   "('email', 'nebenwirkung@basg.g",
+   "('email', 'neziaduce.ucinky@su",
+   "('email', 'nuspojave@halmed.hr",
+   "('email', 'pharmacovig@ravimia",
+   "('email', 'pharmacovigilance1@",
+   "('email', 'pharmacovigilance@m",
+   "('patient_identifier', 'medica",
+   "adr@fagg-afmps.be",
+   "adr@noma.no",
+   "anpv@ansm.sante.fr",
+   "el.icsr@sukl.cz",
+   "ev@eof.gr",
+   "fimea.ev@fimea.fi",
+   "fvicsr@aemps.es",
+   "info@lareb.nl",
+   "info@zva.gov.lv",
+   "medsafety@hpra.ie",
+   "ndl@urpl.gov.pl",
+   "pharmacovig@bda.bg",
+   "phv@phs.moh.gov.cy",
+   "uaw@bfarm.de"
+  ],
+  "cand-0343": [
+   "('email', 'druginfo@fda.hhs.go",
+   "('email', 'industry.biologics@"
+  ],
+  "cand-0344": [
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0345": [
+   "('email', 'OSE.PMKTREGS@fda.hh",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0346": [
+   "('email', 'CBERICSRSUBMISSIONS",
+   "('email', 'ESGHelpDesk@fda.hhs",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0347": [
+   "('email', 'druginfo@fda.hhs.go",
+   "ocod@fda.hhs.gov"
+  ]
+ }
+}
