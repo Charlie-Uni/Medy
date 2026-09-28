@@ -1364,34 +1364,9 @@
    "reason": "ADR-0009 恶意内容策略：pdf.launch"
   },
   {
-   "document_key": "fda-reports-on-the-status-of-postmarketing-study-commit-2006",
-   "effective_from": "2006-02-01",
-   "reason": "pypdf 字体告警 → parse_quality=low_trust（INV-DATA-05，需决策人签字 --accept-quality 后重新入库）"
-  },
-  {
-   "document_key": "tfda-label-carvedil-tablets-25mg",
-   "effective_from": "2015-10-14",
-   "reason": "pypdf 字体告警 → parse_quality=low_trust（INV-DATA-05，需决策人签字 --accept-quality 后重新入库）"
-  },
-  {
-   "document_key": "tfda-label-quimadine-f-c-tablets-20mg-famotidine",
-   "effective_from": "2015-10-06",
-   "reason": "pypdf 字体告警 → parse_quality=low_trust（INV-DATA-05，需决策人签字 --accept-quality 后重新入库）"
-  },
-  {
-   "document_key": "tfda-label-arizole-orally-disintegrating-tablets-10",
-   "effective_from": "2016-11-22",
-   "reason": "pypdf 字体告警 → parse_quality=low_trust（INV-DATA-05，需决策人签字 --accept-quality 后重新入库）"
-  },
-  {
    "document_key": "tfda-label-plusdmax-tablets-sinphar",
    "effective_from": "2018-03-16",
    "reason": "ADR-0009 恶意内容策略：pdf.javascript"
-  },
-  {
-   "document_key": "tfda-label-acylete-tablets-200-mg-acyclovir",
-   "effective_from": "2015-09-23",
-   "reason": "pypdf 字体告警 → parse_quality=low_trust（INV-DATA-05，需决策人签字 --accept-quality 后重新入库）"
   },
   {
    "document_key": "fda-providing-submissions-in-electronic-format-2015",
@@ -1399,5 +1374,37 @@
    "reason": "ADR-0009 恶意内容策略：pdf.embedded_file"
   }
  ],
- "note": "2026-09-28：234 条计划中 226 条可激活；3 条被 ADR-0009 恶意内容策略拒收（未入库），5 条 low_trust 保持 draft。"
+ "note": "2026-09-28：234 条计划中 226 条可激活；3 条被 ADR-0009 恶意内容策略拒收（未入库），5 条 low_trust 保持 draft。",
+ "quality_reviewed_r2": [
+  {
+   "document_key": "fda-reports-on-the-status-of-postmarketing-study-commit-2006-r2",
+   "effective_from": "2006-02-01",
+   "tier": "main-v2",
+   "source": "cand-0220 质量复核放行 2026-09-28（原键 fda-reports-on-the-status-of-postmarketing-study-commit-2006 low_trust draft 撤回）"
+  },
+  {
+   "document_key": "tfda-label-carvedil-tablets-25mg-r2",
+   "effective_from": "2015-10-14",
+   "tier": "main-v2",
+   "source": "cand-0269 质量复核放行 2026-09-28（原键 tfda-label-carvedil-tablets-25mg low_trust draft 撤回）"
+  },
+  {
+   "document_key": "tfda-label-quimadine-f-c-tablets-20mg-famotidine-r2",
+   "effective_from": "2015-10-06",
+   "tier": "main-v2",
+   "source": "cand-0279 质量复核放行 2026-09-28（原键 tfda-label-quimadine-f-c-tablets-20mg-famotidine low_trust draft 撤回）"
+  },
+  {
+   "document_key": "tfda-label-arizole-orally-disintegrating-tablets-10-r2",
+   "effective_from": "2016-11-22",
+   "tier": "main-v2",
+   "source": "cand-0294 质量复核放行 2026-09-28（原键 tfda-label-arizole-orally-disintegrating-tablets-10 low_trust draft 撤回）"
+  },
+  {
+   "document_key": "tfda-label-acylete-tablets-200-mg-acyclovir-r2",
+   "effective_from": "2015-09-23",
+   "tier": "main-v2",
+   "source": "cand-0324 质量复核放行 2026-09-28（原键 tfda-label-acylete-tablets-200-mg-acyclovir low_trust draft 撤回）"
+  }
+ ]
 }
