@@ -100,8 +100,9 @@ def main(argv: list[str] | None = None) -> int:
         "readonly": settings.db_readonly_password.get_secret_value() if settings.db_readonly_password else "",
         "admin": settings.db_admin_password.get_secret_value() if settings.db_admin_password else "",
         "restricted": settings.db_restricted_password.get_secret_value() if settings.db_restricted_password else "",
+        "loop": settings.db_loop_password.get_secret_value() if settings.db_loop_password else "",
     }
-    empty = [k for k, v in passwords.items() if not v]
+    empty = [k for k, v in passwords.items() if not v and k not in OPTIONAL_GROUPS]
     if empty:
         print(f"missing passwords for: {empty} (set DB_APP_PASSWORD / DB_READONLY_PASSWORD / DB_ADMIN_PASSWORD)")
         return 2

@@ -135,3 +135,10 @@ def test_structured_error_output_contract(monkeypatch):
     assert safe and all(set(e) == {"loc", "type", "msg"} for e in safe)
     assert pw not in json.dumps(safe, ensure_ascii=False) and pw not in json.dumps(redact(safe), ensure_ascii=False)
     assert safe[0]["loc"] == ["database_url"] and "value withheld" in safe[0]["msg"]
+
+
+def test_loop_login_password_is_a_masked_optional_setting(monkeypatch):
+    s = _settings(monkeypatch, DB_LOOP_PASSWORD="SYNTHETIC-LOOP-PW", DB_RESTRICTED_PASSWORD="")
+    assert s.db_loop_password is not None and s.db_loop_password.get_secret_value() == "SYNTHETIC-LOOP-PW"
+    assert s.db_restricted_password is None  # `KEY=` means unset for every login password
+    assert "SYNTHETIC" not in repr(s) and "SYNTHETIC" not in str(s.model_dump())

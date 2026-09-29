@@ -824,7 +824,9 @@ def _norm(s: str) -> str:
     return re.sub(r"[^a-z]", " ", s.lower())
 
 
-def tfda_label_seeds(csv39: Path, csv36: Path, limit: int, per_inn: int = 3) -> list[dict]:
+def tfda_label_seeds(
+    csv39: Path, csv36: Path, limit: int, per_inn: int = 3, *, skip: frozenset[str] = frozenset(), today: str = TODAY
+) -> list[dict]:
     """Up to `per_inn` labels per active ingredient for the first `limit` ingredients with any eligible product; the
     compiler tries them in rank order and lists one per INN (image-only scans fall out, so ranks 2/3 are fallbacks)."""
     with csv39.open(encoding="utf-8-sig", newline="") as f:
@@ -839,14 +841,14 @@ def tfda_label_seeds(csv39: Path, csv36: Path, limit: int, per_inn: int = 3) -> 
         link = row["仿單圖檔連結"]
         if ";" in link or not link.startswith("https://mcp.fda.gov.tw/insert/pdfcasefile/"):
             continue  # ADR-0003 决策 1 条件 (1) 只对上传 PDF 链接可成立
-        if L["註銷狀態"] or not L["有效日期"] or L["有效日期"] <= TODAY:
+        if L["註銷狀態"] or not L["有效日期"] or L["有效日期"] <= today:
             continue
         if "處方" not in L["藥品類別"] and "限由醫師" not in L["藥品類別"]:
             continue
         comps = [c for c in re.split(r";+|\n", L["主成分略述"]) if c.strip()]
         m = _norm(L["主成分略述"])
         inns = [t for t in INN_TARGETS if t in m]
-        if len(inns) != 1 or inns[0] in INN_HAVE:
+        if len(inns) != 1 or inns[0] in INN_HAVE or inns[0] in skip:
             continue
         if len(comps) > 1 and not (inns[0] == "sulfamethoxazole" and len(comps) == 2):
             continue  # single-ingredient labels only (SMX/TMP is a standard fixed combination)
@@ -908,7 +910,8 @@ def tfda_label_seeds(csv39: Path, csv36: Path, limit: int, per_inn: int = 3) -> 
     return out
 
 
-def fda_seeds(fda_json: Path) -> list[dict]:
+def fda_seeds(fda_json: Path, media_map: dict[int, tuple[str, str]] | None = None) -> list[dict]:
+    """`media_map` (media id -> (dept, note)) replaces the v1.2 FDA_MEDIA selection for a later batch (v1.6+)."""
     rows = json.loads(fda_json.read_text(encoding="utf-8"))
 
     def strip(s: str) -> str:
@@ -924,7 +927,7 @@ def fda_seeds(fda_json: Path) -> list[dict]:
         if m:
             by_media.setdefault(int(m.group(1)), r)
     out = []
-    for media, (dept, note) in FDA_MEDIA.items():
+    for media, (dept, note) in (FDA_MEDIA if media_map is None else media_map).items():
         r = by_media.get(media)
         if r is None:
             raise SystemExit(f"FDA media {media} not found in dataset")
@@ -958,9 +961,24 @@ def main() -> None:
     p.add_argument("--out", type=Path, required=True)
     p.add_argument("--labels", type=int, default=110, help="number of active ingredients to seed")
     p.add_argument("--labels-per-inn", type=int, default=3)
+    p.add_argument("--groups", default="ich,ema,fda,tfda_site,tfda_label", help="comma list of seed groups to emit")
+    p.add_argument(
+        "--skip-inns", type=Path, default=None, help="JSON list of INNs already tried / listed (later batches)"
+    )
+    p.add_argument(
+        "--today", default=TODAY, help="YYYY/MM/DD used for the licence currency filter (same day as the snapshots)"
+    )
+    p.add_argument("--fda-media", type=Path, default=None, help="JSON {media_id: [dept, note]} replacing FDA_MEDIA")
     a = p.parse_args()
+    groups = {g.strip() for g in a.groups.split(",") if g.strip()}
+    skip = frozenset(json.loads(a.skip_inns.read_text(encoding="utf-8"))) if a.skip_inns else frozenset()
+    media_map = (
+        {int(k): (v[0], v[1]) for k, v in json.loads(a.fda_media.read_text(encoding="utf-8")).items()}
+        if a.fda_media
+        else None
+    )
     seeds: list[dict] = []
-    for title, fn, dept, ver, landing, note in ICH:
+    for title, fn, dept, ver, landing, note in ICH if "ich" in groups else []:
         seeds.append(
             {
                 "group": "ich",
@@ -976,7 +994,7 @@ def main() -> None:
                 "notes": note,
             }
         )
-    for title, pdf, landing, dept, note in EMA_DOCS:
+    for title, pdf, landing, dept, note in EMA_DOCS if "ema" in groups else []:
         seeds.append(
             {
                 "group": "ema",
@@ -991,8 +1009,9 @@ def main() -> None:
                 "notes": note,
             }
         )
-    seeds.extend(fda_seeds(a.fda_json))
-    for title, pdf, landing, dept, ver, note in TFDA_DOCS:
+    if "fda" in groups:
+        seeds.extend(fda_seeds(a.fda_json, media_map))
+    for title, pdf, landing, dept, ver, note in TFDA_DOCS if "tfda_site" in groups else []:
         seeds.append(
             {
                 "group": "tfda_site",
@@ -1008,7 +1027,8 @@ def main() -> None:
                 "notes": note,
             }
         )
-    seeds.extend(tfda_label_seeds(a.tfda_39, a.tfda_36, a.labels, a.labels_per_inn))
+    if "tfda_label" in groups:
+        seeds.extend(tfda_label_seeds(a.tfda_39, a.tfda_36, a.labels, a.labels_per_inn, skip=skip, today=a.today))
     a.out.parent.mkdir(parents=True, exist_ok=True)
     with a.out.open("w", encoding="utf-8") as f:
         for s in seeds:

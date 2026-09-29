@@ -1,0 +1,63 @@
+{
+ "kind": "retrieval_params",
+ "name": "hybrid",
+ "diff": {
+  "glossary": {
+   "from": "glossary-none",
+   "to": "glossary-20260926-e4daca58a8e4"
+  },
+  "multi_query": {
+   "from": false,
+   "to": true
+  },
+  "doc_focus": {
+   "from": false,
+   "to": true
+  },
+  "query_translation": {
+   "from": "off",
+   "to": "gpt-6-luna"
+  }
+ },
+ "evidence": {
+  "case_ids": [
+   "01a1a6e5-6204-49b1-834c-f58bda2e5c04",
+   "0499f016-5392-4084-b437-4165ec395737",
+   "05a12ea6-7c11-49a1-a419-84cfdc77f74a",
+   "11fce7b5-92a6-4557-ac8e-0fadd14c082e",
+   "132454ed-03dd-44d5-824b-3627299407e1",
+   "23b15bfc-f7e7-4cf0-8fac-c60b00861196",
+   "26213e85-54be-42fc-bcac-3cfeb03e85f6",
+   "311b6510-5005-47c9-8251-4a49b985cf3a",
+   "39899eb3-cdda-4318-a25a-1d1327f2d954",
+   "442f7314-21f8-4618-830a-6b5b77856e10",
+   "4efcde79-3e76-4899-8ea9-fc2d2551797f",
+   "5a4a44b7-4113-4042-828c-443d4c42fb66",
+   "69a77485-57cc-4c67-8c7f-bc1127b0a045",
+   "803fae4b-2f89-4cf8-9c7e-5479f608eb6d",
+   "83ad753b-9c17-4b5e-ae66-7a14649619b1",
+   "8ec215ab-844d-4154-89fe-1fb460e49c1e",
+   "9026d6b9-14e1-447e-8101-c938cb3b49db",
+   "9e0d0a59-6d4a-4946-b550-727b59421791",
+   "9e2560af-0bf9-4ed5-9084-aa5b0f725a29",
+   "da20f916-4306-4783-bd40-29a0afacb174",
+   "e0edf408-4a20-4854-8ec4-d091a9f9cbd1",
+   "e0f7607b-75fb-47e4-9bc7-1ccd3803fb25",
+   "e95c0ebb-a568-449d-b36c-08d8b2e9bf68",
+   "eaad7c22-d4bb-461e-9803-b86368ef0739",
+   "ec462d24-cd45-475d-82e0-4107a9fc5936",
+   "f54cb875-7c02-422e-8b8a-74bd6656a425",
+   "f588850d-85ce-4f0e-9c59-3c13c7bdd911",
+   "fa8cefdd-54bf-4efb-aa31-198cc49bbd12",
+   "fb467f0e-8563-4072-aa59-3412120a15a7"
+  ],
+  "cases": {
+   "source": "medops_v2 bad_cases, observe --since 2026-09-24 (231 traces scanned, 31 cases: 29 bad / 2 good), reflect run (29 -> retrieval, rules attribution, no human override yet); adapt propose min-support 3 -> one proposal (retrieval, MA, 29 cases) needing an authored candidate",
+   "dept": "MA",
+   "attribution": "retrieval"
+  },
+  "rationale": "Records 92–94: two thirds of the failed replay items are recall failures. Four retrieval changes that leave the corpus-wide search untouched and only add rankings to the fusion: (1) the released glossary (532 entries, 436 Chinese→English concept terms) so the rewriter can expand Chinese questions; (2) multi_query, which finally searches the rewritten queries the port used to ignore; (3) doc_focus, which searches the document a question names (brand, ICH code, GVP module, Chinese title) on its own — 30 of the 60 failed subset items name a corpus document and 29 of those have their gold inside it; (4) query_translation, one bounded gpt-6-luna rendering of a Chinese question used only as an extra search query (about 0.0001 USD and +2 s per question). Offline recall diagnostics: evals/harness/runs/2026-09-26-recall-diag-v3-glossary-multiquery and -v4-bundle. Offline recall diagnostics on the 60 failed subset items: gold in the reranked top-8 18 → 30 (glossary + multi_query + doc_focus, run -v4-bundle) → 35 (plus query_translation, run -v5-translate); 60 passing controls unchanged.",
+  "gate": null,
+  "gate_note": "replay-v1 report (evals/harness/runs/2026-09-26-replay-eval-v2-retrieval-bundle, +9.67 pp, CI [5.5, 13.83], safety unchanged) was measured on the 76-document corpus; by the 2026-09-28 decision the submission waits for the replay-v2 gate report (307-document corpus) and carries it here as evidence.gate before `adapt submit`."
+ }
+}

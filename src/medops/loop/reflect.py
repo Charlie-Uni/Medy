@@ -228,7 +228,9 @@ def main(argv: list[str] | None = None) -> int:
         with _connect(settings.database_loop_url.get_secret_value(), settings) as conn, conn.transaction():
             report = reflect(conn)
             if args.dry_run:
-                conn.rollback()
+                import psycopg
+
+                raise psycopg.Rollback  # explicit rollback() is forbidden inside a transaction block
         print(json.dumps(asdict(report), ensure_ascii=False))
         return 0
     if settings.database_admin_url is None:

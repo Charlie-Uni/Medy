@@ -66,9 +66,7 @@ TFDA_OPEN = (
     "（簡稱加值衍生物），此一授權行為不會嗣後撤回，使用者亦無須取得本機關之書面或其他方式授權；然使用時應註明出處。 || "
     "(一)本授權範圍僅及於著作權保護之範圍，不及於其他智慧財產權利，包括但不限於專利、商標、及機關標誌之提供。"
 )
-TFDA_COPYRIGHT = (
-    "本署網站上所刊載以本署名義公開發表之著作，在合理範圍內，得重製、公開播送或公開傳輸；利用時，並請註明出處。"
-)
+TFDA_COPYRIGHT = "本署網站上所刊載以本署名義公開發表之著作，即著作人為本署者，在合理範圍內，得重製、公開播送或公開傳輸；利用時，並請註明出處。"
 MCP_FOOTER = (
     "本網站所刊出內容之著作權屬於衛生福利部食品藥物管理署所有，未經本署之同意或授權，任何人不得以任何形式重製、轉載、散佈、引用、"
     "變更、播送或出版該內容之全部或局部，亦不得為其他任何違反本署著作權之行為。"
@@ -505,7 +503,7 @@ class Compiler:
         notes = f"{seed.get('notes', '')}；页数：{pages}；{self.today} 下载 sha256 {digest}，{len(data)} 字节，文本层 {chars} 字符"
         if g == "ich":
             notes += f"；文内 Legal notice: {'有' if extra['in_text_notice'] else '无'}"
-        notes += "。M5-01 扩语料候选（记录 89）。"
+        notes += f"。M5-01 扩语料候选（{self.a.record}）。"
         cand = {
             "candidate_id": "",
             "title": clip(seed["title"], 300),
@@ -671,9 +669,9 @@ class Compiler:
             "tfda_label": "TFDA 仿單",
         }
         lines = [
-            f"# DEC-011 候选清单 {a.version}（M5-01 扩语料，记录 89）",
+            f"# DEC-011 候选清单 {a.version}（M5-01 扩语料，{a.record}）",
             "",
-            f"编制：{self.today}。承接 v1.1（{len(base['candidates'])} 条）；本版新增 **{len(kept)} 条**候选，来源限 ADR-0003 白名单（ICH / EMA / FDA / TFDA），"
+            f"编制：{self.today}。承接 {base.get('candidate_list_version', '上一版')}（{len(base['candidates'])} 条）；本版新增 **{len(kept)} 条**候选，来源限 ADR-0003 白名单（ICH / EMA / FDA / TFDA），"
             "每条附同日下载的 SHA-256、页数与文本层字符数；TFDA 仿單另附資料集 39/36 同日快照的逐字核对与现行性字段。"
             "`预判` 是机械核对结果，`eligible` 只表示许可依据与已签字候选同源且核对全部通过；签字前请按批回复（如「批 1 确认」或列出例外）。",
             "",
@@ -778,6 +776,9 @@ def main() -> None:
     p.add_argument("--jobs", type=int, default=6)
     p.add_argument("--dropped", type=Path, default=None)
     p.add_argument("--compiled-by", default="ADR-0003 Claude Fable 5.1（承接 v1.1；M5-01 扩语料候选，记录 89）")
+    p.add_argument(
+        "--record", default="记录 89", help="implementation record cited in the sheet title and candidate notes"
+    )
     Compiler(p.parse_args()).run()
 
 

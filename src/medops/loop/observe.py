@@ -290,7 +290,7 @@ def main(argv: list[str] | None = None) -> int:
         with conn.transaction():
             report = observe(PgSignalSource(conn), PgCaseStore(conn), since=since, dept=args.dept)
             if args.dry_run:
-                conn.rollback()
+                raise psycopg.Rollback  # explicit rollback() is forbidden inside a transaction block
     print(json.dumps(asdict(report), ensure_ascii=False))
     return 0
 

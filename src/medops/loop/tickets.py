@@ -107,7 +107,7 @@ def main(argv: list[str] | None = None) -> int:
     ):
         report = open_tickets(conn)
         if args.dry_run:
-            conn.rollback()
+            raise psycopg.Rollback  # explicit rollback() is forbidden inside a transaction block
     print(json.dumps(asdict(report)))
     return 0
 

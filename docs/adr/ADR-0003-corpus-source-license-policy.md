@@ -92,3 +92,7 @@
 ### 白名单补件许可裁决（2026-09-28）
 
 本轮确认 cand-0333～0347 全部 15 条的许可初判，`reviewer_decision=eligible`；逐条条件写入 [v1.5 签字结果](../../evals/probe/precise_clause/corpus_candidates/DEC-011-candidates-v1.5.md)及 JSON。EMA 材料遵守署名要求并排除第三方内容；FDA 材料保留官方来源及版本，排除另有权利声明的第三方内容。cand-0347 特别接受为 **2019 年 FDA 草案**，必须显著标记 Draft / Not for Implementation，不得作为现行指南或约束性规则使用。许可签字不免除摄取前版次、哈希、文本与适用性核查；若仅统计现行正式文件，本轮可计 14 份而非 15 份，实际缺口在重冻结前重算。
+
+### 白名单补件执行记录（2026-09-29，v1.6 待签字）
+
+按 2026-09-28 决策第 4 项与决策人「按照你的建议来」，仅在现有 FDA / TFDA 来源内再补 27 份候选（FDA PV 官方文件 13、TFDA 仿單 14），列于 [DEC-011 v1.6 待签清单](../../evals/probe/precise_clause/corpus_candidates/DEC-011-candidates-v1.6.md)；许可依据与已签字候选同源，证据页于 2026-09-29 逐一复核。cand-0357 文本层含第三方教科书图表的「reproduced with permission」声明，预判 needs_review，建议不入库（与 cand-0114 同理）。新增候选的 `reviewer_decision` 为空，签字前不得摄取。本记录不新增来源。另：v1.2–v1.5 引用的 fda.gov.tw 著作權聲明漏掉「即著作人為本署者」一句，自 v1.6 起逐字引用；仿單的许可依据是資料集 9117 的政府資料開放授權條款第 1 版，既有裁决不受影响（记录 101）。

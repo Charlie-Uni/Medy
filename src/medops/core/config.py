@@ -103,6 +103,7 @@ class Settings(BaseSettings):
     db_readonly_password: SecretStr | None = None
     db_admin_password: SecretStr | None = None
     db_restricted_password: SecretStr | None = None  # optional LOGIN user for medops_restricted_role
+    db_loop_password: SecretStr | None = None  # optional LOGIN user for medops_loop_role (M4 Loop process)
 
     # Secrets that later milestones consume; masked everywhere.
     redis_password: SecretStr | None = None
@@ -138,6 +139,8 @@ class Settings(BaseSettings):
         "db_app_password",
         "db_readonly_password",
         "db_admin_password",
+        "db_restricted_password",
+        "db_loop_password",
         "clamd_address",
         "model_cache_dir",
         "oidc_issuer",
