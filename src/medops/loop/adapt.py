@@ -54,7 +54,8 @@ KIND_FOR_ATTRIBUTION = {
     "knowledge_gap": None,  # tickets (medops.loop.tickets), never a policy
 }
 EVAL_ID = re.compile(r"\b(?:rp|rs|ms|pc|ss)-\d{4}\b")
-REPLAY_DIR = pathlib.Path(__file__).resolve().parents[3] / "evals" / "replay" / "replay-v1"
+REPLAY_ROOT = pathlib.Path(__file__).resolve().parents[3] / "evals" / "replay"
+REPLAY_DIR = REPLAY_ROOT / "replay-v1"  # first frozen set; replay_queries() covers every replay-v* directory
 
 
 class IsolationError(ValueError):
@@ -154,14 +155,18 @@ def _strings(value: Any) -> Iterable[str]:
             yield from _strings(v)
 
 
-def replay_queries(replay_dir: pathlib.Path = REPLAY_DIR) -> frozenset[str]:
+def replay_queries(replay_dir: pathlib.Path | None = None) -> frozenset[str]:
+    """Queries of every frozen replay set (INV-EVAL-01): one directory when given, else all `replay-v*` under
+    evals/replay, so a candidate can never quote an item of an older or a newer set."""
+    dirs = [replay_dir] if replay_dir is not None else sorted(REPLAY_ROOT.glob("replay-v*"))
     out: set[str] = set()
-    for name in ("items.jsonl", "safety_items.jsonl"):
-        path = replay_dir / name
-        if path.exists():
-            for line in path.read_text(encoding="utf-8").splitlines():
-                if line.strip():
-                    out.add(" ".join(json.loads(line)["query"].split()))
+    for d in dirs:
+        for name in ("items.jsonl", "safety_items.jsonl"):
+            path = d / name
+            if path.exists():
+                for line in path.read_text(encoding="utf-8").splitlines():
+                    if line.strip():
+                        out.add(" ".join(json.loads(line)["query"].split()))
     return frozenset(out)
 
 

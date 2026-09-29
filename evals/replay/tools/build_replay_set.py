@@ -51,6 +51,7 @@ SAFETY_RUN = REPO / "evals/harness/runs/2026-09-24-safety-v1-draft-r2"
 MAIN_SET = REPO / "evals/main_set/main-v1-provisional"
 SAFETY_DRAFTS = REPO / "evals/safety_set/drafts"
 SPEC_VERSION = "spec-r1 v0.1"
+MAIN_DATASET_VERSION = "main-v1-provisional"  # stamped into item sources; build() sets it from the main-set manifest
 
 
 def sha256_file(path: pathlib.Path) -> str:
@@ -82,7 +83,9 @@ def label_main(row: dict[str, Any]) -> tuple[str, str]:
     raise ValueError(f"unknown sample kind {kind!r}")
 
 
-def build_main_items(samples: dict[str, dict[str, Any]], rows: dict[str, dict[str, Any]], versions: dict[str, Any]) -> list[dict[str, Any]]:
+def build_main_items(
+    samples: dict[str, dict[str, Any]], rows: dict[str, dict[str, Any]], versions: dict[str, Any]
+) -> list[dict[str, Any]]:
     items = []
     for i, sid in enumerate(sorted(rows), start=1):
         row = rows[sid]
@@ -91,7 +94,7 @@ def build_main_items(samples: dict[str, dict[str, Any]], rows: dict[str, dict[st
         items.append(
             {
                 "replay_id": f"rp-{i:04d}",
-                "source": {"dataset": "main-v1-provisional", "run": str(MAIN_RUN.relative_to(REPO)), "sample_id": sid},
+                "source": {"dataset": MAIN_DATASET_VERSION, "run": str(MAIN_RUN.relative_to(REPO)), "sample_id": sid},
                 "dept": row["dept"],
                 "kind": row["kind"],
                 "language": row.get("language"),
@@ -136,7 +139,11 @@ def build_safety_items(
         items.append(
             {
                 "replay_id": f"rs-{i:04d}",
-                "source": {"dataset": "safety-v1-provisional", "run": str(SAFETY_RUN.relative_to(REPO)), "sample_id": sid},
+                "source": {
+                    "dataset": "safety-v1-provisional",
+                    "run": str(SAFETY_RUN.relative_to(REPO)),
+                    "sample_id": sid,
+                },
                 "dept": row["dept"],
                 "category": row["category"],
                 "language": row.get("language"),
@@ -205,14 +212,30 @@ def write_jsonl(path: pathlib.Path, rows: list[dict[str, Any]]) -> None:
     path.write_text("".join(json.dumps(r, ensure_ascii=False, sort_keys=True) + "\n" for r in rows), encoding="utf-8")
 
 
-def build(out: pathlib.Path, *, subset_size: int, seed: int, bad_share: float) -> dict[str, Any]:
+def build(
+    out: pathlib.Path,
+    *,
+    subset_size: int,
+    seed: int,
+    bad_share: float,
+    main_run: pathlib.Path = MAIN_RUN,
+    safety_run: pathlib.Path = SAFETY_RUN,
+    main_set: pathlib.Path = MAIN_SET,
+) -> dict[str, Any]:
+    """A later replay version (replay-v2, ...) is built from a later frozen main set and its full run; the safety
+    drafts and their run may stay the same. The sources are recorded in the manifest, never assumed."""
+    global MAIN_RUN, SAFETY_RUN, MAIN_DATASET_VERSION  # noqa: PLW0603 - the item builders stamp these into sources
     out.mkdir(parents=True, exist_ok=True)
-    main_rows = latest_rows(MAIN_RUN / "rows.jsonl")
-    main_results = json.loads((MAIN_RUN / "results.json").read_text(encoding="utf-8"))
-    safety_rows = latest_rows(SAFETY_RUN / "rows.jsonl")
-    safety_results = json.loads((SAFETY_RUN / "results.json").read_text(encoding="utf-8"))
-    samples = latest_rows(MAIN_SET / "samples.jsonl")
-    main_manifest = json.loads((MAIN_SET / "manifest.json").read_text(encoding="utf-8"))
+    main_rows = latest_rows(main_run / "rows.jsonl")
+    main_results = json.loads((main_run / "results.json").read_text(encoding="utf-8"))
+    safety_rows = latest_rows(safety_run / "rows.jsonl")
+    safety_results = json.loads((safety_run / "results.json").read_text(encoding="utf-8"))
+    samples = latest_rows(main_set / "samples.jsonl")
+    main_manifest = json.loads((main_set / "manifest.json").read_text(encoding="utf-8"))
+    run_dataset = (main_results.get("dataset") or {}).get("version")
+    if run_dataset not in (None, main_manifest["dataset_version"]):
+        raise SystemExit(f"{main_run.name} was run on {run_dataset}, not {main_manifest['dataset_version']}")
+    MAIN_RUN, SAFETY_RUN, MAIN_DATASET_VERSION = main_run, safety_run, main_manifest["dataset_version"]
     drafts: dict[str, dict[str, Any]] = {}
     for path in sorted(SAFETY_DRAFTS.glob("samples_draft_*.jsonl")):
         drafts.update(latest_rows(path))
@@ -248,7 +271,7 @@ def build(out: pathlib.Path, *, subset_size: int, seed: int, bad_share: float) -
         "spec_version": SPEC_VERSION,
         "status": "frozen",
         "provisional": True,
-        "provisional_reason": "both sources are provisional: main-v1-provisional awaits its second human review, the safety set awaits annotator-01",
+        "provisional_reason": f"both sources are provisional: {main_manifest['dataset_version']} awaits its second human review, the safety set awaits annotator-01",
         "origin": "run_export_not_live_traffic",
         "frozen_at": dt.date.today().isoformat(),
         "purpose": "M4 Loop replay set (baseline 5.8, M4-06): independent good / bad items replayed under a candidate policy; the safety items are the separate safety regression set.",
@@ -256,19 +279,25 @@ def build(out: pathlib.Path, *, subset_size: int, seed: int, bad_share: float) -
             "main": {
                 "dataset_version": main_manifest["dataset_version"],
                 "dataset_hash": main_manifest["dataset_hash"],
-                "run": str(MAIN_RUN.relative_to(REPO)),
-                "rows_sha256": sha256_file(MAIN_RUN / "rows.jsonl"),
+                "run": str(main_run.relative_to(REPO)),
+                "rows_sha256": sha256_file(main_run / "rows.jsonl"),
                 "versions": main_results["versions"],
             },
             "safety": {
                 "dataset_version": "safety-v1-provisional",
-                "run": str(SAFETY_RUN.relative_to(REPO)),
-                "rows_sha256": sha256_file(SAFETY_RUN / "rows.jsonl"),
+                "run": str(safety_run.relative_to(REPO)),
+                "rows_sha256": sha256_file(safety_run / "rows.jsonl"),
                 "versions": safety_results["versions"],
             },
         },
-        "labels": {"main": "see build_replay_set.py docstring table", "safety": "good = all checks passed; bad = a check failed; not_exercised = injected chunk not retrieved (kept, not counted)"},
-        "counts": {"main": counts(main_items, "label", "dept", "kind", "language"), "safety": counts(safety_items, "label", "category", "dept")},
+        "labels": {
+            "main": "see build_replay_set.py docstring table",
+            "safety": "good = all checks passed; bad = a check failed; not_exercised = injected chunk not retrieved (kept, not counted)",
+        },
+        "counts": {
+            "main": counts(main_items, "label", "dept", "kind", "language"),
+            "safety": counts(safety_items, "label", "category", "dept"),
+        },
         "independence": {
             "distinct_queries_main": len({it["query"] for it in main_items}),
             "derived_items_main": sum(it["derived"] for it in main_items),
@@ -292,10 +321,14 @@ def check(out: pathlib.Path) -> list[str]:
         actual = sha256_file(out / name)
         if actual != expected:
             problems.append(f"{name}: sha256 {actual} != manifest {expected}")
-    recomputed = hashlib.sha256("".join(f"{h}  {n}\n" for n, h in sorted(manifest["files"].items())).encode()).hexdigest()
+    recomputed = hashlib.sha256(
+        "".join(f"{h}  {n}\n" for n, h in sorted(manifest["files"].items())).encode()
+    ).hexdigest()
     if recomputed != manifest["dataset_hash"]:
         problems.append("dataset_hash does not match the file hashes")
-    items = [json.loads(line) for line in (out / "items.jsonl").read_text(encoding="utf-8").splitlines() if line.strip()]
+    items = [
+        json.loads(line) for line in (out / "items.jsonl").read_text(encoding="utf-8").splitlines() if line.strip()
+    ]
     ids = [it["replay_id"] for it in items]
     if len(ids) != len(set(ids)):
         problems.append("duplicate replay ids")
@@ -319,6 +352,16 @@ def check(out: pathlib.Path) -> list[str]:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default=None)
+    ap.add_argument(
+        "--main-run",
+        type=pathlib.Path,
+        default=MAIN_RUN,
+        help="full main-set run directory (rows.jsonl + results.json)",
+    )
+    ap.add_argument("--safety-run", type=pathlib.Path, default=SAFETY_RUN, help="safety run directory")
+    ap.add_argument(
+        "--main-set", type=pathlib.Path, default=MAIN_SET, help="frozen main-set directory the run exercised"
+    )
     ap.add_argument("--check", default=None)
     ap.add_argument("--subset", type=int, default=200)
     ap.add_argument("--seed", type=int, default=20260925)
@@ -330,8 +373,22 @@ def main() -> int:
         return 1 if problems else 0
     if not args.out:
         ap.error("--out or --check is required")
-    manifest = build(pathlib.Path(args.out), subset_size=args.subset, seed=args.seed, bad_share=args.bad_share)
-    print(json.dumps({"dataset_hash": manifest["dataset_hash"], "counts": manifest["counts"], "subset": manifest["subset"]}, ensure_ascii=False, indent=1))
+    manifest = build(
+        pathlib.Path(args.out),
+        subset_size=args.subset,
+        seed=args.seed,
+        bad_share=args.bad_share,
+        main_run=args.main_run,
+        safety_run=args.safety_run,
+        main_set=args.main_set,
+    )
+    print(
+        json.dumps(
+            {"dataset_hash": manifest["dataset_hash"], "counts": manifest["counts"], "subset": manifest["subset"]},
+            ensure_ascii=False,
+            indent=1,
+        )
+    )
     return 0
 
 

@@ -52,8 +52,13 @@ from medops.retrieval.production import (
 from medops.verification.verifier import VERIFIER_VERSION
 
 REPO = pathlib.Path(__file__).resolve().parents[3]
-DATASET = REPO / "evals/main_set/main-v1-provisional"
+DATASET = REPO / "evals/main_set/main-v1-provisional"  # default; --dataset selects a later frozen version
 MAPPING = REPO / "evals/experiments/e2e/main-v1-provisional/chunk_mapping.chunker-v2.main-v1-provisional.json"
+
+
+def mapping_for(dataset: pathlib.Path) -> pathlib.Path:
+    """The gold -> chunk mapping published for a frozen main-set version (medops.evals.probe.chunk_mapping)."""
+    return REPO / "evals/experiments/e2e" / dataset.name / f"chunk_mapping.chunker-v2.{dataset.name}.json"
 
 
 class _Meter:
@@ -153,11 +158,17 @@ def _with_database(url: str, name: str) -> str:
 
 
 def pick_samples(
-    rng: random.Random, per_dept: int, no_answer: int, conflict: int, *, everything: bool = False
+    rng: random.Random,
+    per_dept: int,
+    no_answer: int,
+    conflict: int,
+    *,
+    everything: bool = False,
+    dataset: pathlib.Path = DATASET,
 ) -> list[dict]:
     samples = [
         json.loads(line)
-        for line in (DATASET / "samples.jsonl").read_text(encoding="utf-8").splitlines()
+        for line in (dataset / "samples.jsonl").read_text(encoding="utf-8").splitlines()
         if line.strip()
     ]
     if everything:
@@ -180,6 +191,15 @@ def pick_samples(
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", type=pathlib.Path, required=True)
+    ap.add_argument(
+        "--dataset", type=pathlib.Path, default=DATASET, help="frozen main-set directory (default main-v1-provisional)"
+    )
+    ap.add_argument(
+        "--mapping",
+        type=pathlib.Path,
+        default=None,
+        help="gold->chunk mapping; default evals/experiments/e2e/<dataset>/chunk_mapping.chunker-v2.<dataset>.json",
+    )
     ap.add_argument("--answer-model", default=PRODUCTION_ANSWER_MODEL)
     ap.add_argument("--judge-model", default=PRODUCTION_JUDGE_MODEL)
     ap.add_argument("--device", default="mps")
@@ -256,8 +276,23 @@ def main() -> int:
         retrieval_version=PRODUCTION_RETRIEVAL_VERSION,
         model_config_version=f"answer={args.answer_model};judge={args.judge_model};{VERIFIER_VERSION}",
     )
-    mapping = {e["gold_id"]: e for e in json.loads(MAPPING.read_text(encoding="utf-8"))["entries"]}
-    samples = pick_samples(random.Random(args.seed), args.per_dept, args.no_answer, args.conflict, everything=args.all)
+    dataset_manifest = json.loads((args.dataset / "manifest.json").read_text(encoding="utf-8"))
+    mapping_path = args.mapping or mapping_for(args.dataset)
+    mapping_doc = json.loads(mapping_path.read_text(encoding="utf-8"))
+    if mapping_doc.get("dataset_hash") != dataset_manifest.get("dataset_hash"):
+        print(
+            f"mapping {mapping_path.name} was built for another dataset_hash than {args.dataset.name}", file=sys.stderr
+        )
+        return 2
+    mapping = {e["gold_id"]: e for e in mapping_doc["entries"]}
+    samples = pick_samples(
+        random.Random(args.seed),
+        args.per_dept,
+        args.no_answer,
+        args.conflict,
+        everything=args.all,
+        dataset=args.dataset,
+    )
     if args.ids:
         wanted = {sid.strip() for sid in args.ids.split(",") if sid.strip()}
         samples = [
@@ -357,7 +392,11 @@ def main() -> int:
     summary = {
         "run": args.out.name,
         "finished_at": dt.datetime.now(dt.UTC).isoformat(timespec="seconds"),
-        "dataset": {"version": "main-v1-provisional", "second_human_review": "pending"},
+        "dataset": {
+            "version": dataset_manifest["dataset_version"],
+            "dataset_hash": dataset_manifest.get("dataset_hash"),
+            "second_human_review": dataset_manifest.get("second_human_review", {}).get("status", "pending"),
+        },
         "versions": versions.model_dump(),
         "n": len(rows),
         "answered": sum(r["outcome"] == "answered" for r in rows),
@@ -392,7 +431,7 @@ def main() -> int:
             summary["reason_code_counts"][c] = summary["reason_code_counts"].get(c, 0) + 1
     (args.out / "results.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     lines = [
-        f"# Harness smoke `{args.out.name}` (main-v1-provisional, second human review pending)",
+        f"# Harness smoke `{args.out.name}` ({dataset_manifest['dataset_version']}, second human review {summary['dataset']['second_human_review']})",
         "",
         f"- samples {summary['n']} · answered {summary['answered']} · answerable answered {summary['answerable_answered_rate']} · gold cited among answerable {summary['answerable_gold_cited_rate']} · no-answer abstained {summary['no_answer_abstained_rate']} · false abstention on answerable {summary['answerable_false_abstention_rate']} · cost ${summary['total_cost_usd']} · calls {summary['total_model_calls']} · mean latency {summary['mean_latency_s']}s · p95 {summary['p95_latency_s']}s",
         f"- answer model {args.answer_model} · judge {args.judge_model} · {VERIFIER_VERSION} · retrieval {PRODUCTION_RETRIEVAL_VERSION[:12]}…",
