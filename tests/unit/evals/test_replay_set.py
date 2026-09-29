@@ -1,5 +1,6 @@
-"""replay-v1 (M4-06): the frozen replay set is intact (file hashes and dataset hash), large and independent enough,
-labelled with the documented rules, and its screening subset follows its own rules."""
+"""Frozen replay sets (M4-06): replay-v1 is intact (file hashes and dataset hash), large and independent enough,
+labelled with the documented rules, and its screening subset follows its own rules; every later replay-v* directory
+must pass the same integrity check and name a later main-set version and run than its predecessor."""
 
 from __future__ import annotations
 
@@ -64,3 +65,25 @@ def test_screening_subset_follows_its_rules():
     assert labels["bad"] == 60 and labels["good"] == 140
     depts = Counter(it["dept"] for it in picked)
     assert set(depts) == {"MA", "PV", "CO"} and min(depts.values()) >= 30
+
+
+def test_every_later_replay_version_is_intact_and_supersedes_its_predecessor():
+    versions = sorted(REPO.glob("evals/replay/replay-v*"), key=lambda d: int(d.name.split("-v")[1]))
+    assert versions[0] == OUT
+    previous = json.loads((OUT / "manifest.json").read_text(encoding="utf-8"))
+    for version in versions[1:]:
+        manifest = json.loads((version / "manifest.json").read_text(encoding="utf-8"))
+        assert check(version) == [], version.name
+        assert manifest["status"] == "frozen" and manifest["provisional"] is True
+        assert manifest["dataset_hash"] != previous["dataset_hash"]
+        assert manifest["sources"]["main"]["dataset_version"] > previous["sources"]["main"]["dataset_version"]
+        assert manifest["sources"]["main"]["run"] != previous["sources"]["main"]["run"]
+        assert manifest["sources"]["main"]["dataset_version"] in manifest["provisional_reason"]
+        items = [
+            json.loads(line)
+            for line in (version / "items.jsonl").read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        ]
+        assert all(it["source"]["dataset"] == manifest["sources"]["main"]["dataset_version"] for it in items)
+        assert len(items) >= 200 and Counter(it["label"] for it in items)["bad"] >= 60
+        previous = manifest

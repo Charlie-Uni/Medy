@@ -1,0 +1,129 @@
+{
+ "dataset_id": "loop_replay",
+ "dataset_version": "replay-v2",
+ "spec_version": "spec-r1 v0.1",
+ "status": "frozen",
+ "provisional": true,
+ "provisional_reason": "both sources are provisional: main-v3-provisional awaits its second human review, the safety set awaits annotator-01",
+ "origin": "run_export_not_live_traffic",
+ "frozen_at": "2026-09-29",
+ "purpose": "M4 Loop replay set (baseline 5.8, M4-06): independent good / bad items replayed under a candidate policy; the safety items are the separate safety regression set.",
+ "sources": {
+  "main": {
+   "dataset_version": "main-v3-provisional",
+   "dataset_hash": "56c1627af2655a8e9438fdedc9dd61aca76d5b2f1115053ee45c804280469994",
+   "run": "evals/harness/runs/2026-09-29-full-ask-v3",
+   "rows_sha256": "f95b20527f7bc38eba0a00421f3426a03d9169b41233115d986668e5dc710aed",
+   "versions": {
+    "policy_version": "policy-m2-smoke-1",
+    "retrieval_version": "90b57e4e86b4bb462fc4de58f7f7749666fb6f50a588c129bd5f9aa50585ab18",
+    "skill_version_set": [],
+    "model_config_version": "answer=gpt-6-sol;judge=gpt-6-sol;verifier-v2+support-rules-v3+polarity_only"
+   }
+  },
+  "safety": {
+   "dataset_version": "safety-v1-provisional",
+   "run": "evals/harness/runs/2026-09-29-safety-v2",
+   "rows_sha256": "514f48eca39e4626a6c24c04d6d7a819c6558cece1074e999966842be9c9a986",
+   "versions": {
+    "policy_version": "policy-m2-smoke-1",
+    "retrieval_version": "90b57e4e86b4bb462fc4de58f7f7749666fb6f50a588c129bd5f9aa50585ab18",
+    "skill_version_set": [
+     "ae_extraction@1.0.0",
+     "citation_verification@1.0.0",
+     "label_query@1.0.0",
+     "off_label_check@1.0.0",
+     "protocol_deviation@1.0.0"
+    ],
+    "model_config_version": "answer=gpt-6-sol;judge=gpt-6-sol;verifier-v2+support-rules-v3+polarity_only"
+   }
+  }
+ },
+ "labels": {
+  "main": "see build_replay_set.py docstring table",
+  "safety": "good = all checks passed; bad = a check failed; not_exercised = injected chunk not retrieved (kept, not counted)"
+ },
+ "counts": {
+  "main": {
+   "items": 614,
+   "by_label": {
+    "bad": 124,
+    "good": 490
+   },
+   "by_dept": {
+    "CO": 202,
+    "MA": 133,
+    "PV": 279
+   },
+   "by_kind": {
+    "answerable": 501,
+    "conflict": 52,
+    "no_answer": 61
+   },
+   "by_language": {
+    "en": 200,
+    "mixed": 369,
+    "zh": 45
+   },
+   "by_dept_label": {
+    "CO/bad": 43,
+    "CO/good": 159,
+    "MA/bad": 24,
+    "MA/good": 109,
+    "PV/bad": 57,
+    "PV/good": 222
+   }
+  },
+  "safety": {
+   "items": 170,
+   "by_label": {
+    "bad": 1,
+    "good": 162,
+    "not_exercised": 7
+   },
+   "by_category": {
+    "acl_cross_dept": 30,
+    "acl_skill_scope": 10,
+    "combined": 20,
+    "high_risk": 30,
+    "injection_document": 20,
+    "injection_input": 20,
+    "numeric_trap": 10,
+    "ungrounded": 20,
+    "version_guard": 10
+   },
+   "by_dept": {
+    "CO": 52,
+    "MA": 60,
+    "PV": 58
+   },
+   "by_dept_label": {
+    "CO/good": 50,
+    "CO/not_exercised": 2,
+    "MA/good": 58,
+    "MA/not_exercised": 2,
+    "PV/bad": 1,
+    "PV/good": 54,
+    "PV/not_exercised": 3
+   }
+  }
+ },
+ "independence": {
+  "distinct_queries_main": 614,
+  "derived_items_main": 200,
+  "imported_items_main": 107,
+  "statement": "one item per sample; derived (paraphrase twin) items are flagged and excluded from the screening subset; three repeated runs of the same items are never counted as more items (M4-06)"
+ },
+ "subset": {
+  "file": "subset.json",
+  "size": 200,
+  "seed": 20260925
+ },
+ "isolation": "INV-EVAL-01: replay ids, queries and gold ids never enter the Loop's candidate-generation context (Adapt); M4-03 enforces this when candidates are produced.",
+ "files": {
+  "items.jsonl": "27c1851606cfcce7c7e9b5024a92a9e8aaee9924a2750185cdab6eb53237ddfa",
+  "safety_items.jsonl": "0445f07f30c0d49b924e77b032b863f9a7d4db0bb88b60d7fea8b113ce053694",
+  "subset.json": "184ab6744dee2d3a8a36a604a78d52c502d1c99e16d86a1b01e240a1a1d3eb7c"
+ },
+ "dataset_hash": "1bf7cd136fa3a68d2a562b30dc1c2ec7edd60b1f141d487c866bfe2c14b60637"
+}

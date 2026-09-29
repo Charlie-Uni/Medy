@@ -225,6 +225,7 @@ def build(
     """A later replay version (replay-v2, ...) is built from a later frozen main set and its full run; the safety
     drafts and their run may stay the same. The sources are recorded in the manifest, never assumed."""
     global MAIN_RUN, SAFETY_RUN, MAIN_DATASET_VERSION  # noqa: PLW0603 - the item builders stamp these into sources
+    main_run, safety_run, main_set = main_run.resolve(), safety_run.resolve(), main_set.resolve()
     out.mkdir(parents=True, exist_ok=True)
     main_rows = latest_rows(main_run / "rows.jsonl")
     main_results = json.loads((main_run / "results.json").read_text(encoding="utf-8"))
