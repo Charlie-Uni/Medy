@@ -137,30 +137,39 @@
    "effective_from": "2018-03-27",
    "tier": "main-v3",
    "source": "cand-0373 仿單 PDF 元数据日期（ModDate 20180327，未见版本行）"
-  }
- ],
- "note": "v1.7 签字批（记录 102）：26 份；effective_from 是检索的生效时间字段，不是说明书法定生效日；许可证现行 ≠ PDF 修订版现行。FDA 取指引总表 issue 日期所在月首日（与记录 96 口径一致）；仿單优先取版本行（民國日期），无版本行时取 PDF 元数据日期。",
- "held_back": [
+  },
   {
    "document_key": "tfda-label-misul-tablets-200-mg",
    "effective_from": "2016-06-02",
    "tier": "main-v3",
-   "source": "cand-0371 仿單版本行 民國 105.06.02",
-   "reason": "cand-0371 图像层第 1 页廠商地址栏末尾有单独的 Ⓒ 记号（无年份、无权利人；同厂 cand-0372 同位置为 Ⓐ，判为印刷版次代号），按 ADR-0003 条件 3 从严：入库为 draft，暂不激活，待决策人裁决"
+   "source": "cand-0371 仿單版本行 民國 105.06.02；决策人 2026-09-29「签字批准」：Ⓒ 记号按印刷版次代号处理，激活（记录 103）",
+   "held_reason_2026-09-29": "cand-0371 图像层第 1 页廠商地址栏末尾有单独的 Ⓒ 记号（无年份、无权利人；同厂 cand-0372 同位置为 Ⓐ，判为印刷版次代号），按 ADR-0003 条件 3 从严：入库为 draft，暂不激活，待决策人裁决"
   },
   {
-   "document_key": "tfda-label-analif-for-iv-injection",
+   "document_key": "tfda-label-analif-for-iv-injection-r2",
    "effective_from": "2015-07-09",
    "tier": "main-v3",
-   "source": "cand-0364 仿單 PDF 元数据日期（ModDate 20150709，未见版本行）",
-   "reason": "cand-0364 入库时 pypdf 告警，parse_quality=low_trust；INV-DATA-05 只允许 trusted 激活，不用 --accept-quality 放行（需决策人签字，同记录 96/99 口径）"
+   "source": "cand-0364 仿單 PDF 元数据日期（ModDate 20150709，未见版本行）；决策人 2026-09-29「签字批准」：--accept-quality 放行，按 -r2 记录键重新入库（记录 103）",
+   "held_reason_2026-09-29": "cand-0364 入库时 pypdf 告警，parse_quality=low_trust；INV-DATA-05 只允许 trusted 激活，不用 --accept-quality 放行（需决策人签字，同记录 96/99 口径）"
   },
   {
-   "document_key": "tfda-label-chlorpromazine-hcl-s-c-tablets-50mg-vpp",
+   "document_key": "tfda-label-chlorpromazine-hcl-s-c-tablets-50mg-vpp-r2",
    "effective_from": "2016-01-26",
    "tier": "main-v3",
-   "source": "cand-0374 仿單 PDF 元数据日期（ModDate 20160126，未见版本行）",
-   "reason": "cand-0374 入库时 pypdf 告警，parse_quality=low_trust；INV-DATA-05 只允许 trusted 激活，不用 --accept-quality 放行（需决策人签字，同记录 96/99 口径）"
+   "source": "cand-0374 仿單 PDF 元数据日期（ModDate 20160126，未见版本行）；决策人 2026-09-29「签字批准」：--accept-quality 放行，按 -r2 记录键重新入库（记录 103）",
+   "held_reason_2026-09-29": "cand-0374 入库时 pypdf 告警，parse_quality=low_trust；INV-DATA-05 只允许 trusted 激活，不用 --accept-quality 放行（需决策人签字，同记录 96/99 口径）"
+  }
+ ],
+ "note": "v1.7 签字批（记录 102）：26 份；effective_from 是检索的生效时间字段，不是说明书法定生效日；许可证现行 ≠ PDF 修订版现行。FDA 取指引总表 issue 日期所在月首日（与记录 96 口径一致）；仿單优先取版本行（民國日期），无版本行时取 PDF 元数据日期。 2026-09-29 决策人「签字批准」后三份暂缓文档全部激活（记录 103）。",
+ "held_back": [],
+ "quality_reviewed_r2": [
+  {
+   "old": "tfda-label-analif-for-iv-injection",
+   "new": "tfda-label-analif-for-iv-injection-r2"
+  },
+  {
+   "old": "tfda-label-chlorpromazine-hcl-s-c-tablets-50mg-vpp",
+   "new": "tfda-label-chlorpromazine-hcl-s-c-tablets-50mg-vpp-r2"
   }
  ]
 }
