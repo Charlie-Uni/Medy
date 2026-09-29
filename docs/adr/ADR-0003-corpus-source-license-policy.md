@@ -96,3 +96,7 @@
 ### 白名单补件执行记录（2026-09-29，v1.6 待签字）
 
 按 2026-09-28 决策第 4 项与决策人「按照你的建议来」，仅在现有 FDA / TFDA 来源内再补 27 份候选（FDA PV 官方文件 13、TFDA 仿單 14），列于 [DEC-011 v1.6 待签清单](../../evals/probe/precise_clause/corpus_candidates/DEC-011-candidates-v1.6.md)；许可依据与已签字候选同源，证据页于 2026-09-29 逐一复核。cand-0357 文本层含第三方教科书图表的「reproduced with permission」声明，预判 needs_review，建议不入库（与 cand-0114 同理）。新增候选的 `reviewer_decision` 为空，签字前不得摄取。本记录不新增来源。另：v1.2–v1.5 引用的 fda.gov.tw 著作權聲明漏掉「即著作人為本署者」一句，自 v1.6 起逐字引用；仿單的许可依据是資料集 9117 的政府資料開放授權條款第 1 版，既有裁决不受影响（记录 101）。
+
+### 白名单补件许可裁决（2026-09-29）
+
+决策人回复「可以签字」。按签字表预判确认 cand-0348～0374 中 26 条 `reviewer_decision=eligible`（FDA PV 官方指南 12、TFDA 仿單 14），逐条条件写入 [v1.7 签字结果](../../evals/probe/precise_clause/corpus_candidates/DEC-011-candidates-v1.7.md)及 JSON；cand-0357 因第三方教科书图表保持 `needs_review`，不入库。FDA 材料依官网公共领域政策并排除另有权利声明的第三方内容；仿單依資料集 9117 的政府資料開放授權條款第 1 版，入库前图像层核查、来源署名、不主张商标权与文本质量检查照旧。许可签字不免除摄取前版次、哈希、文本与适用性核查。

@@ -1,0 +1,63 @@
+{
+ "reviewed_on": "2026-09-29",
+ "reviewer": "Claude Fable 5.1（决策人 2026-09-21 授权：decide / document / flag；主集 spec-m1 §3.4「公开文档中的研究者、作者等职业信息不视为 PHI」）",
+ "ruleset": "pii-rules-v1",
+ "classification": "38 处命中、12 份文档（v1.7 签字批 cand-0348–0360 的 FDA 指南）：全部为 FDA 机构职能信箱（druginfo / ocod / faersesub / esghelpdesk / fda-srs / esub / esubprep / esgprep / cder-ose-pmktregs / ogd-premarketsafetyreports / fdaremswebsite / dice / combination@fda.gov），不指向自然人；未发现个人公务信箱、电话、病历号或其他标识符。14 份 TFDA 仿單无命中。全部判为误报并留档。",
+ "named_person_work_emails": {},
+ "false_positives": {
+  "cand-0348": [
+   "ESGHelpDesk@fda.hhs.gov",
+   "FAERSESUB@fda.hhs.gov",
+   "fda-srs@fda.hhs.gov"
+  ],
+  "cand-0349": [
+   "OGD-PremarketSafetyReports@fda.hhs.gov",
+   "druginfo@fda.hhs.gov",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0350": [
+   "ESUB@fda.hhs.gov",
+   "ESUBPREP@fda.hhs.gov",
+   "druginfo@fda.hhs.gov",
+   "faersesub@fda.hhs.gov",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0351": [
+   "faersesub@fda.hhs.gov"
+  ],
+  "cand-0352": [
+   "druginfo@fda.hhs.gov",
+   "faersesub@fda.hhs.gov"
+  ],
+  "cand-0353": [
+   "cder-ose-pmktregs@fda.hhs.gov",
+   "druginfo@fda.hhs.gov",
+   "esgprep@fda.hhs.gov",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0354": [
+   "FDAREMSwebsite@fda.hhs.gov",
+   "druginfo@fda.hhs.gov",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0355": [
+   "DICE@fda.hhs.gov",
+   "combination@fda.gov"
+  ],
+  "cand-0356": [
+   "druginfo@fda.hhs.gov"
+  ],
+  "cand-0358": [
+   "druginfo@fda.hhs.gov",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0359": [
+   "druginfo@fda.hhs.gov",
+   "ocod@fda.hhs.gov"
+  ],
+  "cand-0360": [
+   "druginfo@fda.hhs.gov",
+   "ocod@fda.hhs.gov"
+  ]
+ }
+}
