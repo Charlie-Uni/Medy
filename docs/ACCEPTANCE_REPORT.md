@@ -1,0 +1,69 @@
+# MedOps Copilot 验收报告（v1，2026-09-30）
+
+本报告按 [工程基线 §11 最终验收总门禁](ENGINEERING_BASELINE.md) 逐条对照目标与实测，只写有可复现运行记录的数字；目标未达到的写「未达标」，尚未测的写「待测」，不以目标值冒充结果。所有数据来自 §4 的运行清单，每条可用清单里的目录、数据集哈希与版本号重跑核对。
+
+## 1. 口径
+
+- 评测集：主集 `main-v3-provisional`（614 条样本：有答案 553 / 无答案 61 / 版本冲突 52；与 v1 逐字节相同）、安全集 `safety-v1-provisional` 草案（170 条，9 类）、回放集 `replay-v2`（614 主集项 + 170 安全项，筛选子集 200）。三者均为 **provisional**：第二人工复核人尚未到位（基线 5.9），安全集待 annotator-01 收尾。
+- 语料：medops_v2 active 333 份（MA 125 / PV 127 / CO 81），全部经 ADR-0003 许可签字与两批 10% 逐页抽样签字；安全库 339 份（另含 6 份合成注入文档）。
+- 系统版本：答题与判定模型 gpt-6-sol，查询翻译 gpt-6-luna；嵌入 bge-m3、重排 bge-reranker-v2-m3 本地推理；released 策略 `retrieval_params/hybrid` = 候选 3361ed13（词表 glossary-20260926-e4daca58a8e4 + multi_query + doc_focus + query_translation），2026-09-30 02:04 UTC 起 10% 灰度。
+- 硬件：Apple M3 笔记本，PostgreSQL 16 + pgvector 0.8，Redis 7；模型调用经 OpenAI API。
+
+## 2. 最终验收总门禁
+
+| # | 门禁（基线 §11） | 目标 | 实测 | 来源 | 判定 |
+| --- | --- | --- | --- | --- | --- |
+| 1 | 治理入库的公开文档 | 300–500 份 | 333 份 active，每份带来源、版本、部门、许可证据与签字 | 记录 96–103；`evals/main_set/corpus_v3.json` | 达标 |
+| 2a | 检索 / 引用样本 | ≥ 300 条 | 553 条有答案样本（614 条主集） | `main-v3-provisional` manifest | 达标 |
+| 2b | 严格宏平均 Recall@5（另报 Hit@5） | ≥ 85% | **released 检索 88.79%**（Hit@5 88.79%，每样本单一 gold；Recall@8 90.24%、Recall@20 91.32%）；基线检索 84.99%（与 76 份语料时的记录 51 相同）。分部门 MA 93.6% / PV 90.3% / CO 83.9%；分语言 en 91.0% / mixed 87.6% / zh 87.2%（基线 76.9%）；切片 time_window 96.1%、drug_name_zh 94.4%、dose_unit 93.9%、negation 89.1%、protocol_id 84.3%、long_context 69.6%（23 条） | R1 / R2 | 达标（released）；基线未达标 |
+| 2c | 引用准确率 | ≥ 95% | 结构准确率 100%：614 条全量运行中 634 处引用全部落在该 Trace 的证据集内、指向 active 文档、无生效日晚于 as-of 的引用、0 处伪造；作答中引用到 gold 的有答案样本 386 / 424 = 91.0%（这是"引用是否命中标注 gold"，口径严于"引用准确"） | `2026-09-29-full-ask-v3` | 达标（结构口径） |
+| 2d | 失效版本引用率 | = 0 | 0 / 634 | 同上 | 达标 |
+| 3 | 安全样本 | ≥ 150 条；正确拒答 ≥ 95%，越权拦截 ≥ 98%，高风险升级召回 ≥ 95% | 170 条（163 条被触发）：正确拒答 1.00（n=90）、越权拦截 1.00（n=39）、高风险召回 1.00（n=35）、引用在证据内 1.00（n=27）、金丝雀遏制 1.00（n=56） | `2026-09-29-safety-v2` | 达标 |
+| 4 | 历史 Trace 回放与策略发布 | ≥ 200 条；+5 pp、非目标下降 ≤ 1 pp、安全不降、人工签字、灰度 ≤ 10% | replay-v2 614 项（good 490 / bad 124），子集 200 条两臂三轮：Δ +8.33 pp，95% CI [4.5, 12.5]，非目标切片无阻断，安全九类最差轮不降；决策人四眼批准；10% 灰度并以两侧各 30 题冒烟核实分流 | `2026-09-29-replay-eval-v3-retrieval-bundle`、记录 104–105 | 达标 |
+| 5a | 普通问答 P95 | ≤ 8 s | 未达标：并发 1 热态 12.8 s、并发 2 15.9 s、并发 4 23.4 s（09-25，76 份语料）；灰度冒烟并发 1：基线侧 11.3 s、新策略侧 14.7 s（09-30）；全量发布后复测待做（§4 P2） | 记录 77；`2026-09-30-canary-smoke-*` | 未达标 |
+| 5b | 复杂 Skill P95 | ≤ 15 s | 13.5 s（8 个任务，执行时间；含排队 96.2 s 为单 worker 的函数） | 记录 77 | 达标 |
+| 6 | 同等质量下单次 Token 降低 | ≥ 25% | 未做（M5-04）：首个候选（重排输出 8 → 5）已备好，未评测 | 记录 91 | 未达标（未做） |
+| 7 | 可审计、可追溯、一次回滚 | 全部 | 每次回答一条 Trace（版本集、引用、费用）；策略经 candidate → approved → released 状态机与追加式发布日志；回滚一次操作原子切回（演练 11/11，真实发布路径已走通） | 记录 85、105 | 达标 |
+| 8 | 无诊断 / 处方输出、无真实患者数据、无跨部门泄漏、无写入型 MCP、无自动改生产策略 | 全部 | 安全集 high_risk 30/30 升级、ungrounded 20/20 拒答；行级安全零跨部门泄漏（集成测试）；MCP 只读证明；Loop 角色只能写候选，发布必须人批准 | 记录 18、64、81、`2026-09-29-safety-v2` | 达标 |
+| 9 | 数值来自可复现实测 | 全部 | 本报告每个数字对应 §4 一条运行记录（目录 + 数据集哈希 + 版本集 + 费用） | §4 | 达标 |
+
+小结：9 条中 7 条达标、2 条未达标（问答 P95、Token 降幅）。Recall@5 在基线检索下差 0.01 pp，released 的检索策略把它提到 88.79%，这正是本次发布的候选所证明的改进。未达标项的归因与杠杆见 §5。
+
+## 3. M5 里程碑状态
+
+| 项 | 状态 | 说明 |
+| --- | --- | --- |
+| M5-01 语料入库 | 已实现 | 333 份，记录 96–103 |
+| M5-02 Skill 测试矩阵 | 已实现 | 记录 88 |
+| M5-03 全项验收 | 部分 | 本报告：7 / 9 达标；发布后 P95 复测待做，Token 降幅属 M5-04 |
+| M5-04 成本 −25% | 待做 | 首个候选已备好 |
+| M5-05 容量测试 | 待做 | |
+| M5-06 / M5-07 运维 | 已实现 | 记录 87 |
+| M5-08 最终报告与演示 | 进行中 | 本报告 + 演示材料待做 |
+
+## 4. 可复现运行清单
+
+| 编号 | 运行目录 | 数据集（哈希前 8 位） | 版本集 | 日期 | 费用（USD） | 结果 |
+| --- | --- | --- | --- | --- | ---: | --- |
+| F1 | `evals/harness/runs/2026-09-29-full-ask-v3` | main-v3-provisional（56c1627a） | answer=gpt-6-sol;judge=gpt-6-sol;verifier-v2+support-rules-v3；released 基线（发布前） | 2026-09-29 | 4.64 | 614 条：作答率 84.6%，引用 gold 77.0%，正确弃答 98.4%，误弃答 14.2%，P95 13.5 s，0 系统失败 |
+| S1 | `evals/harness/runs/2026-09-29-safety-v2` | safety-v1-provisional 草案（170） | 同上 | 2026-09-29 | 0.64 | 五项门禁全部达标 |
+| G1 | `evals/harness/runs/2026-09-29-replay-eval-v3-retrieval-bundle` | replay-v2（1bf7cd13）子集 200 + 安全 163 | 基线臂 vs 候选 3361ed13，三轮 | 2026-09-29/30 | 13.52 | 门禁通过 Δ +8.33 pp |
+| C1 | `evals/harness/runs/2026-09-30-canary-smoke-{baseline,canary}` | 记录 77 问题集 c1-cold（30） | policy-m3-api-1 vs +canary:3361ed13 | 2026-09-30 | 0.63 | 分流核实；0 失败、0 安全升级 |
+| R1 | `evals/harness/runs/2026-09-30-recall-main-v3-baseline` | main-v3-provisional 553 条有答案样本 | 基线检索（glossary-none） | 2026-09-30 | 0 | Recall@5 84.99%，Hit@5 84.99% |
+| R2 | `evals/harness/runs/2026-09-30-recall-main-v3-released` | 同上 | released 检索（词表 + multi_query + doc_focus + 翻译 gpt-6-luna） | 2026-09-30 | ≈ 0.1（翻译调用未被计量器覆盖，按单价估算） | Recall@5 88.79%，Hit@5 88.79% |
+| P1 | `evals/harness/runs/2026-09-25-perf-v1` | 记录 77 问题集四级 + 8 任务 | 76 份语料，发布前策略 | 2026-09-25 | — | P95 见 §2 5a |
+| P2 | `evals/harness/runs/2026-10-01-perf-v2-released` | 同 P1 | 333 份语料，全量发布后 | 待做 | ≈ 1.5 | 待测 |
+
+重跑方式：主集 `evals/harness/tools/smoke_ask.py --dataset evals/main_set/main-v3-provisional --all`；安全集 `evals/harness/tools/safety_run.py`；门禁 `evals/replay/tools/replay_run.py --set evals/replay/replay-v2 --subset --runs 3 --candidate-file …`；召回 `evals/replay/tools/recall_diag.py --main-set evals/main_set/main-v3-provisional`；性能 `evals/harness/tools/perf_run.py`。冻结集完整性用各目录的 `SHA256SUMS` 与 manifest `dataset_hash` 校验。
+
+## 5. 已知限制与归因
+
+1. **评测集为 provisional**：第二人工复核未完成；主集 507 条新样本由人工标注加 LLM 独立复核，不等同于两名独立人工复核。数字可复现，但"人工黄金标准"这一层缺一半。
+2. **问答 P95 未达标**：尾部来自模型调用（gpt-6-sol 单次 5–10 s）与本机交叉编码重排（满载 6.5 s / 20 对，并发时线程排队）；released 策略又加一次翻译调用（+3–4 s）。杠杆：独立重排服务或量化（P1）、上下文裁剪（M5-04）、更快的答题模型路由。
+3. **Token 降幅未做**：M5-04 两个候选未评测。
+4. **无真实流量**：灰度观察窗只能靠合成冒烟填充；发布路径的每一步都已在真实 API 上执行过，但"观察窗指标"来自 60 次合成请求。
+5. **身份提供方未选型**：API 用本地合成身份（ADR-0001 §4）；生产接入待 DEC-010。
+
+## 6. 变更记录
+
+- v1（2026-09-30）：门禁 1–4、7–9 与 5b 填入实测；2b 由 R1 / R2 填入（released 检索达标）；5a 发布后复测（P2）与 6（M5-04）待补。
