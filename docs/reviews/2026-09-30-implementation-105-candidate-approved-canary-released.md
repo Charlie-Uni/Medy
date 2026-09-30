@@ -32,3 +32,20 @@
 ## 5. 追记：门禁实测
 
 `env -u DEBUG -u PYTHONPATH make check`：ruff、mypy、pytest **1264 passed / 70 skipped**（集成测试连库）、Schema 无漂移、`git diff --check` 通过。
+
+## 6. 追记：观察窗冒烟（决策人 2026-09-30 16:14–16:24 运行）
+
+`evals/harness/runs/2026-09-30-canary-smoke-{baseline,canary}`：同一 30 题 MA 问题集（记录 77 `c1-cold` 级），经真实 API（`perf_run.py`，并发 1）各以一个主体跑一遍；`traces.versions.policy_version` 证实分流：基线侧主体 30 条全部 `policy-m3-api-1`，灰度侧主体 30 条全部 `policy-m3-api-1+canary:3361ed13`。
+
+| | 基线侧（canary-smoke-01） | 灰度侧（canary-smoke-08） |
+| --- | ---: | ---: |
+| 请求 / 失败 | 30 / 0 | 30 / 0 |
+| 作答 / 证据不足升级 | 25 / 5 | 26 / 4 |
+| 与预期一致 | 27 / 30 | 28 / 30 |
+| 安全类升级 | 0 | 0 |
+| P50 / P95 延迟（s） | 7.9 / 11.3 | 11.1 / 14.7 |
+| 费用（USD） | 0.33 | 0.29 |
+
+判断：灰度侧没有任何安全指标下降，作答略多、误升级略少，与门禁方向一致；P95 高约 3.4 s 是查询翻译调用的已知代价（记录 94 / 104）。按 RUNBOOK §6.2 不构成回滚理由；观察窗满（2026-10-01 02:04 UTC）后可推进到全量，脚本 `PROMOTE.sh`（`approve_release.py --promote 100`，approver 执行）已备好。
+
+前三次冒烟失败均在 API 启动或探测阶段、未产生费用，各暴露一个真实的部署问题并已修正：(1) 模型加载时 HuggingFace 库向 huggingface.co 发检查请求，经当前代理 SSL 握手被截断，重试超过 120 s 的固定线程上限 → 冒烟与发布脚本以 `HF_HUB_OFFLINE=1` 离线加载本地缓存；(2) released 的检索参数指向词表版本后，API 按 DEPLOY.md 规则在启动时快速失败，而 `.env` 从未配置 `GLOSSARY_DIR` → 已写入 `.env`（指向仓库 `evals/glossary/`）并加入 RUNBOOK §6.4 检查单；(3) API 已监听但评测端就绪探测 300 s 无结果：终端环境的代理变量把发往 127.0.0.1 的探测送进了代理 → `perf_run.py` 的探测与请求改为 `trust_env=False` 并在超时时打印最后一次探测结果，脚本层再剥掉代理变量。

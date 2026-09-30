@@ -92,7 +92,9 @@ class SpanSink:
                     )
         with self.lock:
             self.spans.extend(out)
-            self.events.append({"at": time.time(), "bytes": len(body), "spans": len(out), "names": sorted({o["name"] for o in out})})
+            self.events.append(
+                {"at": time.time(), "bytes": len(body), "spans": len(out), "names": sorted({o["name"] for o in out})}
+            )
             self.last_at = time.monotonic()
 
     def settle(self, quiet_s: float = 6.0, max_s: float = 40.0) -> int:
@@ -183,14 +185,21 @@ def token(pem: bytes, *, kid: str, issuer: str, audience: str, sub: str) -> str:
 
 
 def wait_ready(base: str, timeout_s: float = 300.0) -> bool:
+    """Poll /readyz on the loopback API. `trust_env=False`: a proxy configured in the shell (HTTP(S)_PROXY) must never
+    carry loopback traffic — on 2026-09-30 the API was up but every probe went through the proxy and timed out. The
+    last failure is printed when the deadline passes so the cause is visible."""
     deadline = time.monotonic() + timeout_s
+    last = "no attempt"
     while time.monotonic() < deadline:
         try:
-            if httpx.get(base + "/readyz", timeout=2).status_code == 200:
+            status = httpx.get(base + "/readyz", timeout=2, trust_env=False).status_code
+            if status == 200:
                 return True
-        except Exception:  # noqa: BLE001 - not up yet
-            pass
+            last = f"HTTP {status}"
+        except Exception as exc:  # noqa: BLE001 - not up yet
+            last = f"{type(exc).__name__}: {str(exc)[:80]}"
         time.sleep(1.0)
+    print(f"readiness probe last result: {last}", flush=True)
     return False
 
 
@@ -222,7 +231,11 @@ def environment(admin_dsn: str | None, device_hint: str) -> dict[str, Any]:
         from medops.verification.verifier import VERIFIER_VERSION
 
         cfg = production_hybrid_config()
-        env["models"] = {"answer": PRODUCTION_ANSWER_MODEL, "judge": PRODUCTION_JUDGE_MODEL, "verifier": VERIFIER_VERSION}
+        env["models"] = {
+            "answer": PRODUCTION_ANSWER_MODEL,
+            "judge": PRODUCTION_JUDGE_MODEL,
+            "verifier": VERIFIER_VERSION,
+        }
         env["retrieval"] = {
             "k_lexical": cfg.k_lexical,
             "k_vector": cfg.k_vector,
@@ -263,7 +276,13 @@ def node_breakdown(spans: list[dict[str, Any]]) -> dict[str, Any]:
             sub[s["name"]] = round(sub.get(s["name"], 0.0) + s["ms"], 1)
         elif s["name"] == "http.request":
             http_ms = round(s["ms"], 1)
-    return {"http_ms": http_ms, "nodes": nodes, "retrieval": sub, "llm": llm, "llm_ms": round(sum(c["ms"] for c in llm), 1)}
+    return {
+        "http_ms": http_ms,
+        "nodes": nodes,
+        "retrieval": sub,
+        "llm": llm,
+        "llm_ms": round(sum(c["ms"] for c in llm), 1),
+    }
 
 
 # ------------------------------------------------------------------------------------------ ask levels
@@ -407,7 +426,9 @@ def wait_tasks(admin_dsn: str, ids: list[str], timeout_s: float) -> list[tuple[A
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", required=True)
-    ap.add_argument("--queries", required=True, help="JSON: {levels: [{name, concurrency, queries: [...]}], tasks: [...]}")
+    ap.add_argument(
+        "--queries", required=True, help="JSON: {levels: [{name, concurrency, queries: [...]}], tasks: [...]}"
+    )
     ap.add_argument("--api-cmd", required=True)
     ap.add_argument("--worker-cmd", default=None)
     ap.add_argument("--base-url", default="http://127.0.0.1:8010")
@@ -430,7 +451,9 @@ def main() -> int:
     spec = json.loads(pathlib.Path(args.queries).read_text(encoding="utf-8"))
     admin_dsn = os.environ.get(args.admin_dsn_env)
     pem = pathlib.Path(args.issuer_pem).read_bytes()
-    headers = {"Authorization": "Bearer " + token(pem, kid=args.kid, issuer=args.issuer, audience=args.audience, sub=args.sub)}
+    headers = {
+        "Authorization": "Bearer " + token(pem, kid=args.kid, issuer=args.issuer, audience=args.audience, sub=args.sub)
+    }
     run_tag = uuid.uuid4().hex[:8]
     started = dt.datetime.now(dt.UTC)
 
@@ -452,7 +475,7 @@ def main() -> int:
         return 1
 
     rows: list[dict[str, Any]] = []
-    client = httpx.Client(base_url=args.base_url, timeout=300)
+    client = httpx.Client(base_url=args.base_url, timeout=300, trust_env=False)  # loopback: never via a shell proxy
     task_ids: list[str] = []
     try:
         for level in spec["levels"]:
@@ -475,7 +498,9 @@ def main() -> int:
     worker_rc = None
     if task_ids and args.worker_cmd and admin_dsn:
         worker_log = open(out / "worker.log", "w", encoding="utf-8")  # noqa: SIM115
-        worker = subprocess.Popen(shlex.split(args.worker_cmd), env=child_env, stdout=worker_log, stderr=subprocess.STDOUT)
+        worker = subprocess.Popen(
+            shlex.split(args.worker_cmd), env=child_env, stdout=worker_log, stderr=subprocess.STDOUT
+        )
         try:
             task_rows = wait_tasks(admin_dsn, task_ids, args.task_timeout)
         finally:
@@ -494,7 +519,9 @@ def main() -> int:
     with (out / "spans.jsonl").open("w", encoding="utf-8") as fh:  # raw spans for attribution audits
         for s in sink.spans:
             fh.write(json.dumps(s, ensure_ascii=False, default=str) + "\n")
-    (out / "receiver.log").write_text("\n".join(json.dumps(e, default=str) for e in sink.events) + "\n", encoding="utf-8")
+    (out / "receiver.log").write_text(
+        "\n".join(json.dumps(e, default=str) for e in sink.events) + "\n", encoding="utf-8"
+    )
     for r in rows:
         if r.get("trace_id") and r["trace_id"] in by_trace:
             r["server"] = node_breakdown(by_trace[r["trace_id"]])
@@ -613,12 +640,19 @@ def render(res: dict[str, Any]) -> str:
     ]
     for lv in res["levels"]:
         la = lv["latency_all"]
-        flag = f" (⚠ {lv['suspended_requests']} requests straddled a system sleep)" if lv.get("suspended_requests") else ""
+        flag = (
+            f" (⚠ {lv['suspended_requests']} requests straddled a system sleep)" if lv.get("suspended_requests") else ""
+        )
         lines.append(
             f"| {lv['name']}{flag} | {lv['concurrency']} | {lv['requests']} | {lv['failed']} | {_f(la['p50'])} | {_f(la['p90'])} | "
             f"{_f(la['p95'])} | {_f(la['p99'])} | {_f(la['max'])} | {_f(lv['throughput_rps'])} | {'✓' if lv['gate_p95_le_8s'] else '✗'} |"
         )
-    lines += ["", "### By outcome (p50 / p95 / n)", "", "| level | " + " | ".join(sorted({o for lv in res["levels"] for o in lv["by_outcome"]})) + " |"]
+    lines += [
+        "",
+        "### By outcome (p50 / p95 / n)",
+        "",
+        "| level | " + " | ".join(sorted({o for lv in res["levels"] for o in lv["by_outcome"]})) + " |",
+    ]
     outs = sorted({o for lv in res["levels"] for o in lv["by_outcome"]})
     lines.append("| --- | " + " | ".join("---" for _ in outs) + " |")
     for lv in res["levels"]:

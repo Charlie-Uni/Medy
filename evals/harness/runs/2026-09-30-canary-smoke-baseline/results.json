@@ -1,0 +1,148 @@
+{
+  "label": "canary-observation-baseline",
+  "started_at": "2026-09-30T08:14:16.113044+00:00",
+  "finished_at": "2026-09-30T08:18:34.167020+00:00",
+  "api_ready_s": 14.2,
+  "spans_received": 334,
+  "environment": {
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "chip": "Apple M3",
+    "memory_gb": 24.0,
+    "cpu_count": 8,
+    "python": "3.11.16",
+    "device": "mps",
+    "packages": {
+      "torch": "2.14.0",
+      "sentence-transformers": "5.7.0",
+      "uvicorn": "0.53.0",
+      "fastapi": "0.141.1",
+      "psycopg": "3.3.5",
+      "openai": "2.54.0",
+      "httpx": "0.28.1"
+    },
+    "models": {
+      "answer": "gpt-6-sol",
+      "judge": "gpt-6-sol",
+      "verifier": "verifier-v2+support-rules-v3+polarity_only"
+    },
+    "retrieval": {
+      "k_lexical": 20,
+      "k_vector": 20,
+      "rrf_k": 60.0,
+      "fused_limit": 20,
+      "rerank_output": 8
+    },
+    "postgres": {
+      "server_version": "16.15 (Debian 16.15-1.pgdg12+2)",
+      "shared_buffers": "128MB",
+      "max_connections": "100",
+      "documents": {
+        "draft": 3,
+        "archived": 7,
+        "withdrawn": 7,
+        "active": 333
+      },
+      "chunks": 36100,
+      "database": "medops_v2"
+    }
+  },
+  "levels": [
+    {
+      "name": "canary-smoke",
+      "concurrency": 1,
+      "requests": 30,
+      "failed": 0,
+      "failure_rate": 0.0,
+      "elapsed_s": 235.15,
+      "wall_s": 235.14,
+      "started_at": "2026-09-30T08:14:30.346961+00:00",
+      "suspended_requests": 0,
+      "throughput_rps": 0.128,
+      "latency_all": {
+        "n": 30,
+        "p50": 7.9,
+        "p90": 10.409,
+        "p95": 11.263,
+        "p99": 11.52,
+        "max": 11.52,
+        "mean": 7.838
+      },
+      "latency_ok": {
+        "n": 30,
+        "p50": 7.9,
+        "p90": 10.409,
+        "p95": 11.263,
+        "p99": 11.52,
+        "max": 11.52,
+        "mean": 7.838
+      },
+      "by_outcome": {
+        "answered": {
+          "n": 25,
+          "p50": 7.929,
+          "p90": 10.544,
+          "p95": 11.263,
+          "p99": 11.52,
+          "max": 11.52,
+          "mean": 8.12
+        },
+        "escalated": {
+          "n": 5,
+          "p50": 4.795,
+          "p90": 10.409,
+          "p95": 10.409,
+          "p99": 10.409,
+          "max": 10.409,
+          "mean": 6.427
+        }
+      },
+      "node_p95_ms": {
+        "answer": 8298.6,
+        "escalate": 0.5,
+        "intent": 0.9,
+        "retrieve": 2676.0,
+        "safety": 0.3,
+        "verify": 3.2
+      },
+      "node_p50_ms": {
+        "answer": 5451.5,
+        "escalate": 0.5,
+        "intent": 0.7,
+        "retrieve": 2305.7,
+        "safety": 0.2,
+        "verify": 2.3
+      },
+      "gate_p95_le_8s": false
+    }
+  ],
+  "tasks": {
+    "requested": 0,
+    "completed": 0,
+    "failed": 0,
+    "exec": {
+      "n": 0,
+      "p50": null,
+      "p90": null,
+      "p95": null,
+      "p99": null,
+      "max": null,
+      "mean": null
+    },
+    "end_to_end": {
+      "n": 0,
+      "p50": null,
+      "p90": null,
+      "p95": null,
+      "p99": null,
+      "max": null,
+      "mean": null
+    },
+    "worker_rc": null,
+    "gate_p95_le_15s": null
+  },
+  "cost_usd": 0.3321,
+  "gate": {
+    "ask_p95_le_8s_all_levels": false,
+    "skill_p95_le_15s": null
+  }
+}
