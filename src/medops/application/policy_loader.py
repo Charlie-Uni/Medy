@@ -232,6 +232,28 @@ def validate_diff(kind: str, name: str, diff: Mapping[str, Any], *, base: Hybrid
     raise PolicyDiffError(f"unknown policy target {kind}/{name}")
 
 
+def check_restates_release(current: ReleasedPolicySet, kind: str, name: str, diff: Mapping[str, Any]) -> None:
+    """One policy per target: the released policy's diff is applied to the repository constants, so a new candidate
+    for the same target REPLACES the released diff instead of adding to it. A candidate that omits a released key
+    would silently revert it (2026-10-01: a rerank-only candidate was evaluated without the released retrieval
+    bundle, record 107). Every released key must therefore be restated — `from == to` keeps a value — and each
+    `from` must be the value in force."""
+    released = current.get(kind, name)
+    if released is None:
+        return
+    missing = sorted(k for k in released.diff if k not in diff)
+    if missing:
+        raise PolicyDiffError(
+            f"candidate would silently revert released keys {missing}: restate them (from == to keeps the value)"
+        )
+    for key, entry in diff.items():
+        if key not in released.diff or not isinstance(entry, Mapping) or "from" not in entry:
+            continue
+        in_force = _to(released.diff[key])
+        if entry["from"] != in_force:
+            raise PolicyDiffError(f"{key}: `from` {entry['from']!r} is not the released value {in_force!r}")
+
+
 def load_released(conn: Any) -> ReleasedPolicySet:
     rows = conn.execute(
         "select p.policy_id::text, p.kind, p.name, p.version, p.diff from released_policies r "

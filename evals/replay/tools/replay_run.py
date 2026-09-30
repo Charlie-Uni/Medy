@@ -40,6 +40,7 @@ import psycopg  # noqa: E402
 from medops.application.policy_loader import (  # noqa: E402
     ReleasedPolicy,
     ReleasedPolicySet,
+    check_restates_release,
     load_released,
     validate_diff,
 )
@@ -144,6 +145,7 @@ def arm_versions(name: str, released: ReleasedPolicySet, base_policy_version: st
 def candidate_set(baseline: ReleasedPolicySet, spec: dict[str, Any]) -> ReleasedPolicySet:
     kind, name, diff = spec["kind"], spec["name"], spec["diff"]
     validate_diff(kind, name, diff, base=baseline.hybrid_config(production_hybrid_config()))
+    check_restates_release(baseline, kind, name, diff)  # a stale candidate would run without the released keys
     pid = spec.get("policy_id") or hashlib.sha256(json.dumps(diff, sort_keys=True).encode()).hexdigest()[:32]
     kept = tuple(p for p in baseline.policies if (p.kind, p.name) != (kind, name))
     return ReleasedPolicySet(kept + (ReleasedPolicy(pid, kind, name, spec.get("version", "candidate"), dict(diff)),))

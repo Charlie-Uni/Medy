@@ -125,3 +125,30 @@ def test_isolation_check_normalises_whitespace_and_scans_nested_values():
     with pytest.raises(IsolationError):
         check_isolation(c, forbidden_queries=QUERIES)
     check_isolation(good_candidate(), forbidden_queries=QUERIES)
+
+
+def test_a_candidate_must_restate_every_released_key_of_its_target():
+    """One policy per target: a candidate replaces the released diff. Omitting a released key would silently revert
+    it (record 107: a rerank-only candidate ran without the released retrieval bundle)."""
+    from medops.application.policy_loader import ReleasedPolicy, ReleasedPolicySet, check_restates_release
+
+    bundle = {
+        "glossary": {"from": "glossary-none", "to": "glossary-20260926-e4daca58a8e4"},
+        "multi_query": {"from": False, "to": True},
+    }
+    released = ReleasedPolicySet((ReleasedPolicy("p1", "retrieval_params", "hybrid", "v1", bundle),))
+    with pytest.raises(PolicyDiffError, match="silently revert released keys"):
+        check_restates_release(released, "retrieval_params", "hybrid", {"rerank_output": {"from": 8, "to": 5}})
+    restated = {
+        "glossary": {"from": "glossary-20260926-e4daca58a8e4", "to": "glossary-20260926-e4daca58a8e4"},
+        "multi_query": {"from": True, "to": True},
+        "rerank_output": {"from": 8, "to": 5},
+    }
+    check_restates_release(released, "retrieval_params", "hybrid", restated)  # keeps the bundle, changes one key
+    stale_from = {**restated, "multi_query": {"from": False, "to": True}}
+    with pytest.raises(PolicyDiffError, match="is not the released value"):
+        check_restates_release(released, "retrieval_params", "hybrid", stale_from)
+    check_restates_release(
+        ReleasedPolicySet.empty(), "retrieval_params", "hybrid", {"rerank_output": {"from": 8, "to": 5}}
+    )
+    check_restates_release(released, "prompt", "answer_system", {"text": "x"})  # another target is untouched

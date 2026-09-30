@@ -1,0 +1,33 @@
+{
+ "kind": "retrieval_params",
+ "name": "hybrid",
+ "diff": {
+  "glossary": {
+   "from": "glossary-20260926-e4daca58a8e4",
+   "to": "glossary-20260926-e4daca58a8e4"
+  },
+  "multi_query": {
+   "from": true,
+   "to": true
+  },
+  "doc_focus": {
+   "from": true,
+   "to": true
+  },
+  "query_translation": {
+   "from": "gpt-6-luna",
+   "to": "gpt-6-luna"
+  },
+  "rerank_output": {
+   "from": 8,
+   "to": 5
+  }
+ },
+ "gate_profile": "cost",
+ "rationale": "M5-04 first cost candidate, restated on top of the released retrieval bundle (policy 3361ed13): the four released keys are kept (from == to) and only rerank_output changes 8 -> 5, so the answer prompt carries the top 5 reranked evidence chunks instead of 8. The 2026-09-26 file changed rerank_output alone; because a policy replaces the released diff of its target, evaluating it on 2026-10-01 compared the released bundle against NO bundle + 5 chunks (record 107). Cost gate: tokens per main item <= 75% of baseline, overall success drop <= 1 pp, slice and safety rules unchanged.",
+ "evidence": {
+  "case_ids": [],
+  "kind": "cost",
+  "supersedes_candidate_file": "evals/replay/candidates/2026-09-26-context-rerank5.json"
+ }
+}

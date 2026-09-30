@@ -38,6 +38,7 @@ from medops.application.policy_loader import (
     RETRIEVAL_PARAM_KEYS,
     PolicyDiffError,
     ReleasedPolicySet,
+    check_restates_release,
     load_released,
     validate_diff,
 )
@@ -178,7 +179,13 @@ def check_isolation(candidate: Candidate, *, forbidden_queries: frozenset[str]) 
             raise IsolationError("candidate contains a replay-set query")
 
 
-def validate_candidate(candidate: Candidate, *, current: HybridConfig, forbidden_queries: frozenset[str]) -> None:
+def validate_candidate(
+    candidate: Candidate,
+    *,
+    current: HybridConfig,
+    forbidden_queries: frozenset[str],
+    released: ReleasedPolicySet | None = None,
+) -> None:
     if candidate.kind not in ALLOWED_KINDS:
         raise PolicyDiffError(f"kind must be one of {sorted(ALLOWED_KINDS)}")
     if not re.fullmatch(r"[a-z][a-z0-9_]{1,63}", candidate.name):
@@ -186,6 +193,8 @@ def validate_candidate(candidate: Candidate, *, current: HybridConfig, forbidden
     if not isinstance(candidate.diff, Mapping) or not candidate.diff:
         raise PolicyDiffError("diff must be a non-empty JSON object")
     validate_diff(candidate.kind, candidate.name, candidate.diff, base=current)
+    if released is not None:  # a candidate replaces the released diff of its target: nothing may be dropped silently
+        check_restates_release(released, candidate.kind, candidate.name, candidate.diff)
     if candidate.kind == "retrieval_params":
         for key, entry in candidate.diff.items():
             if key in RETRIEVAL_PARAM_KEYS and isinstance(entry, Mapping) and "from" in entry:
@@ -202,11 +211,18 @@ def validate_candidate(candidate: Candidate, *, current: HybridConfig, forbidden
     check_isolation(candidate, forbidden_queries=forbidden_queries)
 
 
-def submit(conn: Any, candidate: Candidate, *, current: HybridConfig, forbidden_queries: frozenset[str]) -> str:
+def submit(
+    conn: Any,
+    candidate: Candidate,
+    *,
+    current: HybridConfig,
+    forbidden_queries: frozenset[str],
+    released: ReleasedPolicySet | None = None,
+) -> str:
     """Validate, then insert as a candidate through the store (the Loop role may only insert candidates)."""
     from medops.infrastructure.db.policies import PgPolicyStore
 
-    validate_candidate(candidate, current=current, forbidden_queries=forbidden_queries)
+    validate_candidate(candidate, current=current, forbidden_queries=forbidden_queries, released=released)
     versioned = candidate.with_version() if not candidate.version else candidate
     evidence = {
         **candidate.evidence,
@@ -285,7 +301,9 @@ def main(argv: list[str] | None = None) -> int:
             created_by=args.by,
         )
         try:
-            policy_id = submit(conn, candidate, current=current, forbidden_queries=replay_queries())
+            policy_id = submit(
+                conn, candidate, current=current, forbidden_queries=replay_queries(), released=load_released(conn)
+            )
         except (PolicyDiffError, IsolationError) as exc:
             print(json.dumps({"refused": type(exc).__name__, "detail": str(exc)}), file=sys.stderr)
             return 1
