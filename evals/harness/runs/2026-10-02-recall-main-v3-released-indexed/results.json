@@ -1,0 +1,151 @@
+{
+ "meta": {
+  "run": "2026-10-02-recall-main-v3-released-indexed",
+  "date": "2026-10-02",
+  "dataset_version": "main-v3-provisional",
+  "dataset_hash": "56c1627af2655a8e9438fdedc9dd61aca76d5b2f1115053ee45c804280469994",
+  "rerank_output": 8,
+  "as_of": "2026-09-29",
+  "device": "mps",
+  "labels": [
+   "answerable",
+   "conflict"
+  ],
+  "controls": 30,
+  "glossary": "glossary-20260926-e4daca58a8e4",
+  "multi_query": true,
+  "doc_focus": true,
+  "query_translation": "gpt-6-luna",
+  "model_cost_usd": 0.028
+ },
+ "by_stage": {},
+ "main_set": {
+  "all": {
+   "n": 553,
+   "recall_at_5": 0.8716,
+   "hit_at_5": 0.8716,
+   "recall_at_8": 0.8933,
+   "recall_at_20": 0.9042
+  },
+  "per_dept": {
+   "CO": {
+    "n": 186,
+    "recall_at_5": 0.8172,
+    "hit_at_5": 0.8172,
+    "recall_at_8": 0.8387,
+    "recall_at_20": 0.8548
+   },
+   "MA": {
+    "n": 110,
+    "recall_at_5": 0.9,
+    "hit_at_5": 0.9,
+    "recall_at_8": 0.9455,
+    "recall_at_20": 0.9636
+   },
+   "PV": {
+    "n": 257,
+    "recall_at_5": 0.8988,
+    "hit_at_5": 0.8988,
+    "recall_at_8": 0.9105,
+    "recall_at_20": 0.9144
+   }
+  },
+  "per_language": {
+   "en": {
+    "n": 200,
+    "recall_at_5": 0.885,
+    "hit_at_5": 0.885,
+    "recall_at_8": 0.905,
+    "recall_at_20": 0.915
+   },
+   "mixed": {
+    "n": 314,
+    "recall_at_5": 0.8726,
+    "hit_at_5": 0.8726,
+    "recall_at_8": 0.8885,
+    "recall_at_20": 0.8981
+   },
+   "zh": {
+    "n": 39,
+    "recall_at_5": 0.7949,
+    "hit_at_5": 0.7949,
+    "recall_at_8": 0.8718,
+    "recall_at_20": 0.8974
+   }
+  },
+  "per_slice": {
+   "dose_unit": {
+    "n": 65,
+    "recall_at_5": 0.9077,
+    "hit_at_5": 0.9077,
+    "recall_at_8": 0.9231,
+    "recall_at_20": 0.9385
+   },
+   "drug_name_zh": {
+    "n": 90,
+    "recall_at_5": 0.9333,
+    "hit_at_5": 0.9333,
+    "recall_at_8": 0.9778,
+    "recall_at_20": 1.0
+   },
+   "long_context": {
+    "n": 23,
+    "recall_at_5": 0.6522,
+    "hit_at_5": 0.6522,
+    "recall_at_8": 0.6957,
+    "recall_at_20": 0.7391
+   },
+   "mixed_zh_en": {
+    "n": 514,
+    "recall_at_5": 0.8774,
+    "hit_at_5": 0.8774,
+    "recall_at_8": 0.8949,
+    "recall_at_20": 0.9047
+   },
+   "negation": {
+    "n": 275,
+    "recall_at_5": 0.8836,
+    "hit_at_5": 0.8836,
+    "recall_at_8": 0.8945,
+    "recall_at_20": 0.9127
+   },
+   "protocol_id": {
+    "n": 146,
+    "recall_at_5": 0.7877,
+    "hit_at_5": 0.7877,
+    "recall_at_8": 0.8288,
+    "recall_at_20": 0.8425
+   },
+   "time_window": {
+    "n": 128,
+    "recall_at_5": 0.9531,
+    "hit_at_5": 0.9531,
+    "recall_at_8": 0.9688,
+    "recall_at_20": 0.9688
+   },
+   "version_conflict": {
+    "n": 52,
+    "recall_at_5": 0.9038,
+    "hit_at_5": 0.9038,
+    "recall_at_8": 0.9038,
+    "recall_at_20": 0.9038
+   }
+  },
+  "per_kind": {
+   "answerable": {
+    "n": 501,
+    "recall_at_5": 0.8683,
+    "hit_at_5": 0.8683,
+    "recall_at_8": 0.8922,
+    "recall_at_20": 0.9042
+   },
+   "conflict": {
+    "n": 52,
+    "recall_at_5": 0.9038,
+    "hit_at_5": 0.9038,
+    "recall_at_8": 0.9038,
+    "recall_at_20": 0.9038
+   }
+  }
+ }
+}
