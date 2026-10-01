@@ -120,6 +120,10 @@ class Plane:
         self.conn = psycopg.connect(sa._with_database(app_url, name))
         self.admin = psycopg.connect(admin_dsn(name))
         self.admin.read_only = True
+        from medops.retrieval.production import require_index_coverage
+
+        require_index_coverage(self.admin, plane=name)  # never measure a plane whose active documents are unindexed
+        self.admin.rollback()
 
         @contextmanager
         def conn_for_user(user: UserContext):

@@ -450,6 +450,13 @@ def main() -> int:
     out.mkdir(parents=True, exist_ok=True)
     spec = json.loads(pathlib.Path(args.queries).read_text(encoding="utf-8"))
     admin_dsn = os.environ.get(args.admin_dsn_env)
+    if admin_dsn:
+        import psycopg as _pg
+
+        from medops.retrieval.production import require_index_coverage
+
+        with _pg.connect(admin_dsn) as _conn:
+            require_index_coverage(_conn, plane="perf target")  # record 109: never measure an unindexed corpus
     pem = pathlib.Path(args.issuer_pem).read_bytes()
     headers = {
         "Authorization": "Bearer " + token(pem, kid=args.kid, issuer=args.issuer, audience=args.audience, sub=args.sub)

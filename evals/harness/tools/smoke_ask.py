@@ -240,6 +240,13 @@ def main() -> int:
     reranker = _PinnedReranker(gpu.call(lambda: BgeRerankerV2M3(device=args.device, output=RERANK_OUTPUT)), gpu)
     app_dsn = _with_database(settings.database_url.get_secret_value(), args.database)
     conn = psycopg.connect(app_dsn)
+    if settings.database_admin_url is None:
+        print("DATABASE_ADMIN_URL is needed for the index-coverage pre-flight", file=sys.stderr)
+        return 2
+    from medops.retrieval.production import require_index_coverage
+
+    with psycopg.connect(_with_database(settings.database_admin_url.get_secret_value(), args.database)) as admin_conn:
+        require_index_coverage(admin_conn, plane=args.database)  # record 109: never measure an unindexed corpus
     as_of = args.as_of
 
     @contextmanager

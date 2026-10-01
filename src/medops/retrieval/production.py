@@ -168,9 +168,51 @@ def production_index_target() -> index_consumer.IndexTarget:
     return index_consumer.tsvector_target(PRODUCTION_LEXICAL_TABLE, production_tokenizer())
 
 
+class IndexCoverageError(RuntimeError):
+    """Active documents whose chunks are missing from a retrieval index: they cannot be found by any query."""
+
+
+def index_coverage(conn: psycopg.Connection[Any]) -> dict[str, int]:
+    """How many chunks of ACTIVE documents the two production indexes cover (admin or readonly connection).
+
+    Ingestion and activation write documents and chunks; the lexical table and the embeddings are built by the
+    index build / outbox consumer. On 2026-09-28/29, 257 documents were activated without either index and every
+    evaluation until 2026-10-02 silently searched the older 76 documents only (record 109)."""
+    row = conn.execute(
+        f"""select count(*),
+                   count(*) filter (where l.chunk_id is null),
+                   count(*) filter (where e.chunk_id is null),
+                   count(distinct d.doc_id) filter (where l.chunk_id is null or e.chunk_id is null)
+              from chunks ch
+              join documents d on d.doc_id = ch.doc_id and d.status = 'active'
+              left join {PRODUCTION_LEXICAL_TABLE} l on l.chunk_id = ch.chunk_id
+              left join chunk_embeddings e on e.chunk_id = ch.chunk_id and e.embedding_version = %s""",
+        (EMBEDDING_VERSION,),
+    ).fetchone()
+    assert row is not None
+    return {
+        "active_chunks": int(row[0]),
+        "missing_lexical": int(row[1]),
+        "missing_embedding": int(row[2]),
+        "documents_not_fully_indexed": int(row[3]),
+    }
+
+
+def require_index_coverage(conn: psycopg.Connection[Any], *, plane: str = "") -> dict[str, int]:
+    """Fail closed before an evaluation or a release measurement: every active chunk must be in both indexes."""
+    cov = index_coverage(conn)
+    if cov["missing_lexical"] or cov["missing_embedding"]:
+        raise IndexCoverageError(
+            f"{plane or 'fact plane'}: {cov['documents_not_fully_indexed']} active documents are not fully indexed "
+            f"({cov['missing_lexical']} chunks missing from the lexical index, {cov['missing_embedding']} without an "
+            f"embedding, of {cov['active_chunks']}); build the indexes before measuring anything"
+        )
+    return cov
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Production retrieval configuration tools")
-    parser.add_argument("action", choices=("show", "build-lexical"))
+    parser.add_argument("action", choices=("show", "build-lexical", "check-indexes"))
     parser.add_argument("--admin-url", help="admin DSN (default: DATABASE_ADMIN_URL from settings)")
     parser.add_argument("--built-by", default="production-build")
     args = parser.parse_args(argv)
@@ -194,6 +236,11 @@ def main(argv: Sequence[str] | None = None) -> int:
     if not dsn:
         settings = Settings()  # type: ignore[call-arg]
         dsn = (settings.database_admin_url or settings.database_url).get_secret_value()
+    if args.action == "check-indexes":
+        with psycopg.connect(dsn) as conn:
+            cov = index_coverage(conn)
+        print(json.dumps(cov, ensure_ascii=False))
+        return 1 if cov["missing_lexical"] or cov["missing_embedding"] else 0
     with psycopg.connect(dsn) as conn:
         report = build_production_lexical_index(conn, built_by=args.built_by)
         conn.commit()
