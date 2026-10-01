@@ -182,6 +182,12 @@ def main() -> int:
         default=None,
         help="reuse the baseline-arm rows of a finished run on the same replay set and released state (pays for the candidate arm only)",
     )
+    ap.add_argument(
+        "--max-consecutive-failures",
+        type=int,
+        default=10,
+        help="exit 76 after this many system_failure rows in a row (provider outage, machine sleep); resume later",
+    )
     ap.add_argument("--gpu-timeout", type=float, default=120.0)
     args = ap.parse_args()
 
@@ -283,6 +289,7 @@ def main() -> int:
             done[f"{r['arm']}|{r['run']}|{r['replay_id']}"] = r
     started = dt.datetime.now(dt.UTC)
     with rows_path.open("a", encoding="utf-8") as fh:
+        streak = 0  # consecutive system_failure rows (provider outage or a sleeping machine)
         for run in range(1, args.runs + 1):
             for arm in ("baseline", "candidate"):
                 prod = planes[arm][sr.PRODUCTION_DB]
@@ -340,6 +347,10 @@ def main() -> int:
                     if gpu.stalled:
                         print("gpu stalled: exiting for the supervisor", flush=True)
                         return sa.GpuThread.EXIT_STALLED
+                    streak = streak + 1 if "system_failure" in row["reason_codes"] else 0
+                    if streak >= args.max_consecutive_failures:
+                        print(f"{streak} consecutive system failures: exiting 76 (resume redoes them)", flush=True)
+                        return 76
                     if gateway.cost > args.max_cost_usd:
                         print(f"cost cap {args.max_cost_usd} USD reached: stopping (resume later)", flush=True)
                         return 77
@@ -372,6 +383,10 @@ def main() -> int:
                         f"run {run} {arm} {it['replay_id']} [{it['category']}] -> {'PASS' if row['success'] else 'FAIL'} ${row['cost_usd']:.4f}",
                         flush=True,
                     )
+                    streak = streak + 1 if "system_failure" in row["reason_codes"] else 0
+                    if streak >= args.max_consecutive_failures:
+                        print(f"{streak} consecutive system failures: exiting 76 (resume redoes them)", flush=True)
+                        return 76
                     if gateway.cost > args.max_cost_usd:
                         print(f"cost cap {args.max_cost_usd} USD reached: stopping (resume later)", flush=True)
                         return 77
