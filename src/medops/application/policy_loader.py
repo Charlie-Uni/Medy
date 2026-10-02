@@ -14,6 +14,8 @@ Targets this build can apply (a release of anything else is refused with `policy
 | retrieval_params | hybrid          | `{k_lexical|k_vector|rrf_k|limit|rerank_output: {"from": x, "to": y}}` plus the
 |                  |                 | rewrite-side keys `glossary` (version), `multi_query` / `doc_focus` (bool),      |
 |                  |                 | `query_translation` (`off` or an allowed model id) — records 93–95              |
+|                  |                 | and the answer-context key `evidence_focus` (`off`, `compact-v1`,                |
+|                  |                 | `sentfocus-v1`) — record 113                                                     |
 | prompt           | answer_system   | `{"text": "...", "text_sha256": "..."}` — the answer node's system prompt |
 """
 
@@ -26,6 +28,7 @@ from datetime import datetime
 from typing import Any
 
 from medops.domain.state import MAX_EVIDENCE, VersionSet
+from medops.harness.evidence_focus import ALLOWED_EVIDENCE_FOCUS, EVIDENCE_FOCUS_OFF
 from medops.retrieval.glossary_store import valid_glossary_version
 from medops.retrieval.hybrid import HybridConfig
 from medops.retrieval.query_translation import ALLOWED_TRANSLATION_MODELS, QUERY_TRANSLATION_OFF
@@ -44,6 +47,7 @@ RETRIEVAL_PARAM_KEYS = (
     "multi_query",
     "doc_focus",
     "query_translation",
+    "evidence_focus",
 )
 
 
@@ -128,6 +132,17 @@ class ReleasedPolicySet:
             raise PolicyDiffError(f"query_translation must be 'off' or one of {sorted(ALLOWED_TRANSLATION_MODELS)}")
         return value
 
+    def evidence_focus(self, base: str = EVIDENCE_FOCUS_OFF) -> str:
+        """How evidence is laid out in the answer prompt (record 113): `off`, `compact-v1` or `sentfocus-v1`.
+        It changes what the model reads, not what is retrieved, so it enters the model configuration version."""
+        p = self.get("retrieval_params", "hybrid")
+        if p is None or "evidence_focus" not in p.diff:
+            return base
+        value = str(_to(p.diff["evidence_focus"]))
+        if value not in ALLOWED_EVIDENCE_FOCUS:
+            raise PolicyDiffError(f"evidence_focus must be one of {sorted(ALLOWED_EVIDENCE_FOCUS)}")
+        return value
+
     def retrieval_overridden(self) -> bool:
         return self.get("retrieval_params", "hybrid") is not None
 
@@ -159,6 +174,9 @@ class ReleasedPolicySet:
         qt = self.query_translation()
         if qt != QUERY_TRANSLATION_OFF:
             suffix += f";qt={qt}"  # a translation model is part of the model configuration (record 95)
+        focus = self.evidence_focus()
+        if focus != EVIDENCE_FOCUS_OFF:
+            suffix += f";ctx={focus}"  # the prompt layout is part of the model configuration (record 113)
         return suffix
 
 
@@ -197,7 +215,9 @@ def validate_diff(kind: str, name: str, diff: Mapping[str, Any], *, base: Hybrid
             probe.doc_focus()
         if "query_translation" in diff:
             probe.query_translation()
-        extras = {"rerank_output", "glossary", "multi_query", "doc_focus", "query_translation"}
+        if "evidence_focus" in diff:
+            probe.evidence_focus()
+        extras = {"rerank_output", "glossary", "multi_query", "doc_focus", "query_translation", "evidence_focus"}
         if cfg == (base or HybridConfig()) and not (extras & set(diff)):
             raise PolicyDiffError("the diff changes nothing")
         return

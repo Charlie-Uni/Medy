@@ -108,6 +108,7 @@ class Plane:
         multi_query=False,
         doc_focus=False,
         query_translation="off",
+        evidence_focus="off",
     ):
         # `config` / `answer_system`: an arm of the replay runner (M4-07) evaluates a candidate policy overlay; the
         # safety runner itself keeps the production values
@@ -157,6 +158,8 @@ class Plane:
             answer_model_id=PRODUCTION_ANSWER_MODEL,
             judge_model_id=PRODUCTION_JUDGE_MODEL,
             as_of=as_of,
+            evidence_focus=evidence_focus,
+            sentence_scorer=reranker.score,
             **extra,
         )
         self.as_of = as_of
@@ -764,6 +767,7 @@ def main() -> int:
             "multi_query": released.multi_query(),
             "doc_focus": released.doc_focus(),
             "query_translation": released.query_translation(),
+            "evidence_focus": released.evidence_focus(),
         }
         if args.released
         else {}

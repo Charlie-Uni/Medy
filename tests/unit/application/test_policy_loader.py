@@ -165,3 +165,19 @@ def test_query_translation_is_an_allowlisted_model_and_marks_the_model_config():
     validate_diff("retrieval_params", "hybrid", {"query_translation": {"from": "off", "to": "gpt-6-luna"}}, base=BASE)
     with pytest.raises(PolicyDiffError):
         validate_diff("retrieval_params", "hybrid", {"query_translation": {"from": "off", "to": "gpt-3.5"}}, base=BASE)
+
+
+def test_evidence_focus_is_an_allowlisted_layout_and_marks_the_model_config_only():
+    rs = ReleasedPolicySet(
+        (
+            ReleasedPolicy(
+                "f", "retrieval_params", "hybrid", "v", {"evidence_focus": {"from": "off", "to": "sentfocus-v1"}}
+            ),
+        )
+    )
+    assert rs.evidence_focus() == "sentfocus-v1" and rs.model_config_suffix() == ";ctx=sentfocus-v1"
+    assert rs.hybrid_config(BASE) == BASE  # what is retrieved does not change
+    assert ReleasedPolicySet().evidence_focus() == "off" and ReleasedPolicySet().model_config_suffix() == ""
+    validate_diff("retrieval_params", "hybrid", {"evidence_focus": {"from": "off", "to": "compact-v1"}}, base=BASE)
+    with pytest.raises(PolicyDiffError, match="evidence_focus must be one of"):
+        validate_diff("retrieval_params", "hybrid", {"evidence_focus": {"from": "off", "to": "top3"}}, base=BASE)

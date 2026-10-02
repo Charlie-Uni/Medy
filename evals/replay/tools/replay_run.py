@@ -142,6 +142,22 @@ def arm_versions(name: str, released: ReleasedPolicySet, base_policy_version: st
     )
 
 
+def arm_settings(released: ReleasedPolicySet) -> dict[str, Any]:
+    """What an arm actually runs with; printed for both arms before any paid row (record 107: a stale candidate
+    file once replaced the released bundle in the candidate arm and nobody saw it until the report)."""
+    hybrid = released.hybrid_config(production_hybrid_config())
+    return {
+        "hybrid": dataclasses.asdict(hybrid),
+        "rerank_output": released.rerank_output(RERANK_OUTPUT),
+        "glossary": released.glossary_version(),
+        "multi_query": released.multi_query(),
+        "doc_focus": released.doc_focus(),
+        "query_translation": released.query_translation(),
+        "evidence_focus": released.evidence_focus(),
+        "answer_prompt_overridden": released.get("prompt", "answer_system") is not None,
+    }
+
+
 def candidate_set(baseline: ReleasedPolicySet, spec: dict[str, Any]) -> ReleasedPolicySet:
     kind, name, diff = spec["kind"], spec["name"], spec["diff"]
     validate_diff(kind, name, diff, base=baseline.hybrid_config(production_hybrid_config()))
@@ -227,6 +243,8 @@ def main() -> int:
     candidate = candidate_set(baseline, spec)
     arms = {"baseline": baseline, "candidate": candidate}
     base_policy_version = "policy-m3-api-1"
+    for name, rel in arms.items():
+        print(f"arm {name}: {json.dumps(arm_settings(rel), ensure_ascii=False, sort_keys=True)}", flush=True)
 
     gpu = sa.GpuThread(args.gpu_timeout)
     provider = sa._PinnedEmbedding(gpu.call(lambda: BgeM3EmbeddingProvider(device=args.device)), gpu)
@@ -266,6 +284,7 @@ def main() -> int:
                 multi_query=rel.multi_query(),
                 doc_focus=rel.doc_focus(),
                 query_translation=rel.query_translation(),
+                evidence_focus=rel.evidence_focus(),
             )
             for db in (sr.PRODUCTION_DB, sr.SAFETY_DB)
         }

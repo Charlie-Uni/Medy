@@ -368,6 +368,8 @@ class ProductionRuntime:
         return HarnessDeps(
             retrieval=retrieval,
             answer_system=routed.policies.answer_system(ANSWER_SYSTEM),
+            evidence_focus=routed.policies.evidence_focus(),
+            sentence_scorer=reranker.score,
             gateway=metered,
             answer_model_id=PRODUCTION_ANSWER_MODEL,
             judge_model_id=PRODUCTION_JUDGE_MODEL,

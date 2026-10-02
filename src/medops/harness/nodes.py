@@ -26,6 +26,14 @@ from medops.domain.safety import SafetyDecision, SafetyResult
 from medops.domain.state import MAX_CANDIDATES, AgentState, TokenBudget
 from medops.domain.verification import Verdict, VerifyResult
 from medops.harness.contracts import NodeAttempt, NodeFailure, NodeSpec, run_node
+from medops.harness.evidence_focus import (
+    ALLOWED_EVIDENCE_FOCUS,
+    EVIDENCE_FOCUS_OFF,
+    EVIDENCE_FOCUS_SENTENCE,
+    RenderedEvidence,
+    SentenceScorer,
+    render_evidence,
+)
 from medops.harness.executions import ExecutionStore, apply_delta, state_delta
 from medops.harness.intent import INTENT_VERSION, classify
 from medops.harness.retrieval_port import RetrievalPort, RetrievalRequest
@@ -113,6 +121,14 @@ class HarnessDeps:
     answer_max_output_tokens: int = 800
     executions: ExecutionStore | None = None  # M2-03 operation-key ledger; None = no persistence (unit tests)
     answer_system: str = ANSWER_SYSTEM  # released prompt policy may override (M4-03); the trace's model config says so
+    evidence_focus: str = EVIDENCE_FOCUS_OFF  # released layout of the evidence in the answer prompt (M5-04)
+    sentence_scorer: SentenceScorer | None = None  # the reranker's scorer; required by `sentfocus-v1`
+
+    def __post_init__(self) -> None:
+        if self.evidence_focus not in ALLOWED_EVIDENCE_FOCUS:
+            raise ValueError(f"unknown evidence focus mode {self.evidence_focus!r}")
+        if self.evidence_focus == EVIDENCE_FOCUS_SENTENCE and self.sentence_scorer is None:
+            raise ValueError("evidence focus sentfocus-v1 needs a sentence scorer")
 
 
 class HarnessState(TypedDict):
@@ -316,14 +332,23 @@ def build_nodes(deps: HarnessDeps) -> dict[str, Callable[[HarnessState], dict[st
     def answer_body(state: AgentState) -> AgentState:
         assert state.intent is not None
         meter = _Meter(deps.gateway)
-        response = meter.complete(_answer_request(state, deps))
+        # the prompt layout is a released parameter; state.evidence (full text) is what the verifier judges below
+        rendered = render_evidence(state.query, state.evidence, mode=deps.evidence_focus, scorer=deps.sentence_scorer)
+        response = meter.complete(_answer_request(state, deps, rendered=rendered))
         if response.truncated:
             # reasoning tiers spend output tokens before the JSON (record 54: 1/614 truncated at 800); one retry
             # with a doubled allowance is still bounded by the trace budget, then the node fails as before
-            response = meter.complete(_answer_request(state, deps, max_output_tokens=2 * deps.answer_max_output_tokens))
+            response = meter.complete(
+                _answer_request(state, deps, max_output_tokens=2 * deps.answer_max_output_tokens, rendered=rendered)
+            )
             if response.truncated:
                 raise ModelOutputInvalid("answer truncated by max_output_tokens twice")
         answers_question, claims = _parse_claims(response)
+        if rendered.chunk_ids:  # the model cited aliases; an alias it invented stays as written and fails grounding
+            claims = [
+                Claim(text=c.text, citation_chunk_ids=tuple(dict.fromkeys(map(rendered.resolve, c.citation_chunk_ids))))
+                for c in claims
+            ]
         if not answers_question or not claims:
             return _finish_with_budget(
                 _escalate(
@@ -439,12 +464,14 @@ def _finish_with_budget(state: AgentState, meter: _Meter) -> AgentState:
         return state  # already escalating; the budget overshoot is recorded by the meter on the trace
 
 
-def _answer_request(state: AgentState, deps: HarnessDeps, *, max_output_tokens: int | None = None) -> ModelRequest:
-    blocks = []
-    for i, e in enumerate(state.evidence, 1):
-        c = e.citation
-        head = f"<<证据 {i} | chunk={c.chunk_id} | doc={c.doc_id} | version={c.version} | page={c.page}{' | historical' if e.historical else ''}>>"
-        blocks.append(f"{head}\n{e.text}\n<<证据 {i} 结束>>")
+def _answer_request(
+    state: AgentState,
+    deps: HarnessDeps,
+    *,
+    max_output_tokens: int | None = None,
+    rendered: RenderedEvidence | None = None,
+) -> ModelRequest:
+    blocks = (rendered or render_evidence(state.query, state.evidence)).blocks
     user = f"问题：{state.query}\n\n证据（共 {len(blocks)} 段）：\n\n" + "\n\n".join(blocks)
     return ModelRequest(
         purpose="answer",

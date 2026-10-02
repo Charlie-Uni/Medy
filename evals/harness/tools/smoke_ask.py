@@ -295,6 +295,8 @@ def main() -> int:
         answer_model_id=args.answer_model,
         judge_model_id=args.judge_model,
         as_of=as_of,
+        evidence_focus=released.evidence_focus(),
+        sentence_scorer=reranker.score,
     )
     from medops.retrieval.production import production_retrieval_inputs
     from medops.retrieval.versioning import compute_retrieval_version
