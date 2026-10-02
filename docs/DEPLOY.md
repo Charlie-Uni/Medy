@@ -52,3 +52,7 @@ docker compose --env-file .env --profile app ps
 
 - SBOM、镜像扫描（P1）；镜像未推送到任何仓库；CI 里的镜像构建随 M0-10 CI 项。
 - 容器内的 GPU（MPS）不可用，运行时用 CPU 推理，延迟高于记录 54 的本机数字。
+
+## 入库后的索引构建（记录 109）
+
+`ingestion.load` 与 `ingestion.activate` 只写文档、片段与发件箱事件，不构建检索索引。每次入库或激活之后必须运行 `make index-build ACTOR=<id> ADMIN_URL=<目标库管理 DSN> DEVICE=mps`（重建词法索引 `chunk_lexical_tsv`、补齐 `chunk_embeddings`、核对覆盖），生产库与安全库各一次；或运行发件箱消费者。`make index-check` 返回非 0 表示有已激活文档的片段不在索引里：它们不会被任何查询检索到。评测与性能工具在启动前强制做同一检查。

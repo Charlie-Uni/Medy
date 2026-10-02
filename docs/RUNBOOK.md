@@ -110,6 +110,7 @@ POST /admin/policies/{id}/rollback  {"reason": "…"}                           
 ### 6.4 发布前检查单
 
 - [ ] 候选 `evidence.gate` 是回放运行器产出的完整报告且 `passed`（`gate_report_valid`），不是 `drill`。
+- [ ] 入库 / 激活之后已运行 `make index-build`（或发件箱消费者），且 `make index-check` 在生产库与安全库都返回 0 缺失；否则新文档不可检索，任何评测都在测旧语料（记录 109）。
 - [ ] released 的检索参数若指向词表版本，API / worker / MCP 的 `GLOSSARY_DIR` 已配置且该版本文件存在（否则进程启动即快速失败，记录 105）。
 - [ ] `(kind, name)` 在运行时支持的目标内（否则 409 `policy_target_unsupported`）。
 - [ ] 备份在 24 小时内；恢复演练在 30 天内。

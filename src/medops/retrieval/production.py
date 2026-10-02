@@ -212,7 +212,8 @@ def require_index_coverage(conn: psycopg.Connection[Any], *, plane: str = "") ->
 
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Production retrieval configuration tools")
-    parser.add_argument("action", choices=("show", "build-lexical", "check-indexes"))
+    parser.add_argument("action", choices=("show", "build-lexical", "build-embeddings", "check-indexes"))
+    parser.add_argument("--device", default="cpu", help="build-embeddings: torch device for the local bge-m3 model")
     parser.add_argument("--admin-url", help="admin DSN (default: DATABASE_ADMIN_URL from settings)")
     parser.add_argument("--built-by", default="production-build")
     args = parser.parse_args(argv)
@@ -241,6 +242,20 @@ def main(argv: Sequence[str] | None = None) -> int:
             cov = index_coverage(conn)
         print(json.dumps(cov, ensure_ascii=False))
         return 1 if cov["missing_lexical"] or cov["missing_embedding"] else 0
+    if args.action == "build-embeddings":
+        from medops.retrieval.vector import pg_vector
+        from medops.retrieval.vector.embedding import BgeM3EmbeddingProvider
+
+        with psycopg.connect(dsn) as conn:
+            built = pg_vector.build_index(conn, BgeM3EmbeddingProvider(device=args.device), built_by=args.built_by)
+            conn.commit()
+            cov = index_coverage(conn)
+        print(
+            json.dumps(
+                {"embedded_now": built.embedded_now, "chunk_count": built.chunk_count, **cov}, ensure_ascii=False
+            )
+        )
+        return 1 if cov["missing_embedding"] else 0
     with psycopg.connect(dsn) as conn:
         report = build_production_lexical_index(conn, built_by=args.built_by)
         conn.commit()

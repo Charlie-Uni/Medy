@@ -1,4 +1,4 @@
-.PHONY: help install install-check install-embed lock schemas lint format format-check typecheck test test-integration check migrate migrate-down migration-check db-users load-corpus lexical-index-a lexical-index activate-docs validate-probe canonicalize-probe up down ps
+.PHONY: help install install-check install-embed lock schemas lint format format-check typecheck test test-integration check migrate migrate-down migration-check db-users load-corpus index-build index-check lexical-index-a lexical-index activate-docs validate-probe canonicalize-probe up down ps
 
 # venv lives in a NON-dot directory on purpose: ~/Documents is an iCloud Drive domain that marks every file
 # inside dot-directories as hidden, and CPython >= 3.11.16 skips hidden .pth files, which silently breaks
@@ -20,6 +20,8 @@ help:
 	@echo "make load-corpus CORPUS=<corpus.json> SOURCES=<dir> PAGES=<dir> ACTOR=<id> [ARGS=...]   ingest documents into the fact plane"
 	@echo "make lexical-index-a ACTOR=<id>          install and (re)build the DEC-001 candidate A lexical index (admin DSN)"
 	@echo "make lexical-index ACTOR=<id>            (re)build the PRODUCTION lexical index chunk_lexical_tsv (migration 0007, admin DSN)"
+	@echo "make index-build ACTOR=<id> [ADMIN_URL=<dsn>] [DEVICE=mps]   lexical index + embeddings + coverage check; run after every ingestion (record 109)"
+	@echo "make index-check [ADMIN_URL=<dsn>]        exit 1 if an active chunk is missing from the lexical index or the embeddings"
 	@echo "make activate-docs PLAN=<plan.json> ACTOR=<id> ADMIN_URL=<dsn>   activate draft documents all-or-nothing with audited reasons"
 	@echo "make check           lint + format-check + typecheck + test + schema drift (CI gate)"
 	@echo "make validate-probe DIR=<version_dir> [MODE=draft|frozen] [PAGES=<pages_dir>]"
@@ -94,6 +96,15 @@ lexical-index-a:
 
 lexical-index:
 	$(PY) -m medops.retrieval.production build-lexical --built-by $(ACTOR)
+
+# after every ingestion / activation: rebuild the lexical index, fill the embedding gaps, then verify coverage (record 109)
+index-build:
+	$(PY) -m medops.retrieval.production build-lexical --built-by $(ACTOR) $(if $(ADMIN_URL),--admin-url $(ADMIN_URL),)
+	$(PY) -m medops.retrieval.production build-embeddings --built-by $(ACTOR) --device $(or $(DEVICE),cpu) $(if $(ADMIN_URL),--admin-url $(ADMIN_URL),)
+	$(PY) -m medops.retrieval.production check-indexes $(if $(ADMIN_URL),--admin-url $(ADMIN_URL),)
+
+index-check:
+	$(PY) -m medops.retrieval.production check-indexes $(if $(ADMIN_URL),--admin-url $(ADMIN_URL),)
 
 activate-docs:
 	$(PY) -m medops.ingestion.activate --plan $(PLAN) --actor $(ACTOR) --admin-url $(ADMIN_URL)
