@@ -27,6 +27,7 @@ from dataclasses import dataclass, field
 
 from medops.domain.evidence import Evidence
 from medops.infrastructure.llm.gateway import estimate_tokens
+from medops.retrieval.lexical.normalization import normalize_text
 
 EVIDENCE_FOCUS_OFF = "off"
 EVIDENCE_FOCUS_COMPACT = "compact-v1"
@@ -130,7 +131,7 @@ def focus_texts(query: str, texts: Sequence[str], scorer: SentenceScorer) -> tup
         else:
             scored.extend((i, j) for j in range(len(row)))
     if scored:
-        scores = scorer(query, [texts[i][units[i][j][0] : units[i][j][1]].strip() for i, j in scored])
+        scores = scorer(normalize_text(query), [texts[i][units[i][j][0] : units[i][j][1]].strip() for i, j in scored])
         if len(scores) != len(scored):
             raise ValueError("sentence scorer returned a score count that differs from the input")
         by_unit = dict(zip(scored, scores, strict=True))
