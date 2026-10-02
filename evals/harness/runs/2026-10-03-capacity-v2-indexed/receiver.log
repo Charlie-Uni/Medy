@@ -1,0 +1,62 @@
+{"at": 1790944482.686496, "bytes": 2763, "spans": 9, "names": ["harness.node", "http.request"]}
+{"at": 1790944487.694089, "bytes": 8440, "spans": 17, "names": ["llm.call", "retrieval.fact_plane", "retrieval.translate"]}
+{"at": 1790944492.700873, "bytes": 5052, "spans": 21, "names": ["harness.node", "llm.call", "retrieval.fact_plane", "retrieval.rerank", "retrieval.retrieve"]}
+{"at": 1790944497.707732, "bytes": 6726, "spans": 26, "names": ["harness.node", "http.request", "llm.call", "retrieval.fact_plane", "retrieval.rerank", "retrieval.retrieve", "retrieval.translate"]}
+{"at": 1790944502.7161942, "bytes": 11067, "spans": 37, "names": ["harness.node", "http.request", "llm.call", "retrieval.fact_plane", "retrieval.rerank", "retrieval.retrieve", "retrieval.translate"]}
+{"at": 1790944507.723457, "bytes": 11378, "spans": 32, "names": ["harness.node", "http.request", "llm.call", "retrieval.fact_plane", "retrieval.rerank", "retrieval.retrieve", "retrieval.translate"]}
+{"at": 1790944512.727801, "bytes": 8257, "spans": 32, "names": ["harness.node", "http.request", "llm.call", "retrieval.fact_plane", "retrieval.rerank", "retrieval.retrieve", "retrieval.translate"]}
+{"at": 1790944517.734945, "bytes": 5297, "spans": 20, "names": ["harness.node", "http.request", "llm.call", "retrieval.rerank", "retrieval.retrieve", "retrieval.translate"]}
+{"at": 1790944522.745588, "bytes": 11006, "spans": 37, "names": ["harness.node", "http.request", "llm.call", "retrieval.fact_plane", "retrieval.rerank", "retrieval.retrieve", "retrieval.translate"]}
+{"at": 1790944527.749808, "bytes": 9080, "spans": 23, "names": ["harness.node", "http.request", "llm.call", "retrieval.fact_plane", "retrieval.rerank", "retrieval.retrieve", "retrieval.translate"]}
+{"at": 1790944532.7566001, "bytes": 6475, "spans": 25, "names": ["harness.node", "http.request", "llm.call", "retrieval.fact_plane", "retrieval.rerank", "retrieval.retrieve", "retrieval.translate"]}
+{"at": 1790944537.767466, "bytes": 11582, "spans": 32, "names": ["harness.node", "http.request", "llm.call", "retrieval.fact_plane", "retrieval.rerank", "retrieval.retrieve", "retrieval.translate"]}
+{"at": 1790944542.775838, "bytes": 6841, "spans": 27, "names": ["harness.node", "http.request", "llm.call", "retrieval.fact_plane", "retrieval.rerank", "retrieval.retrieve", "retrieval.translate"]}
+{"at": 1790944547.782756, "bytes": 6029, "spans": 22, "names": ["harness.node", "http.request", "llm.call", "retrieval.fact_plane", "retrieval.rerank", "retrieval.retrieve"]}
+{"at": 1790944552.784482, "bytes": 4252, "spans": 16, "names": ["harness.node", "http.request", "llm.call", "retrieval.fact_plane", "retrieval.rerank", "retrieval.retrieve"]}
+{"at": 1790944557.794882, "bytes": 4011, "spans": 14, "names": ["harness.node", "http.request", "llm.call", "retrieval.rerank", "retrieval.retrieve"]}
+{"at": 1790944562.802743, "bytes": 9909, "spans": 38, "names": ["harness.node", "http.request", "llm.call", "retrieval.fact_plane", "retrieval.translate"]}
+{"at": 1790944567.81008, "bytes": 11308, "spans": 30, "names": ["harness.node", "llm.call", "retrieval.fact_plane", "retrieval.rerank", "retrieval.retrieve", "retrieval.translate"]}
+{"at": 1790944572.814739, "bytes": 8866, "spans": 30, "names": ["harness.node", "http.request", "llm.call", "retrieval.fact_plane", "retrieval.rerank", "retrieval.retrieve", "retrieval.translate"]}
+{"at": 1790944577.821493, "bytes": 5887, "spans": 22, "names": ["harness.node", "http.request", "llm.call", "retrieval.fact_plane", "retrieval.rerank", "retrieval.retrieve", "retrieval.translate"]}
+{"at": 1790944582.825886, "bytes": 11038, "spans": 36, "names": ["harness.node", "http.request", "llm.call", "retrieval.fact_plane", "retrieval.rerank", "retrieval.retrieve", "retrieval.translate"]}
+{"at": 1790944587.830771, "bytes": 11012, "spans": 20, "names": ["harness.node", "http.request", "llm.call", "retrieval.rerank", "retrieval.retrieve", "retrieval.translate"]}
+{"at": 1790944592.8364348, "bytes": 3630, "spans": 8, "names": ["harness.node", "llm.call", "retrieval.rerank", "retrieval.retrieve", "retrieval.translate"]}
+{"at": 1790944597.8430002, "bytes": 3874, "spans": 10, "names": ["harness.node", "llm.call", "retrieval.fact_plane", "retrieval.rerank", "retrieval.retrieve", "retrieval.translate"]}
+{"at": 1790944602.846903, "bytes": 6949, "spans": 19, "names": ["harness.node", "llm.call", "retrieval.rerank", "retrieval.retrieve", "retrieval.translate"]}
+{"at": 1790944607.854101, "bytes": 13530, "spans": 36, "names": ["harness.node", "llm.call", "retrieval.fact_plane", "retrieval.rerank", "retrieval.retrieve", "retrieval.translate"]}
+{"at": 1790944612.8610492, "bytes": 3791, "spans": 9, "names": ["harness.node", "llm.call", "retrieval.fact_plane", "retrieval.rerank", "retrieval.retrieve", "retrieval.translate"]}
+{"at": 1790944617.879541, "bytes": 2290, "spans": 9, "names": ["harness.node", "llm.call", "retrieval.fact_plane", "retrieval.rerank", "retrieval.retrieve", "retrieval.translate"]}
+{"at": 1790944622.88691, "bytes": 13509, "spans": 45, "names": ["harness.node", "http.request", "llm.call", "retrieval.rerank", "retrieval.retrieve", "retrieval.translate"]}
+{"at": 1790944627.894492, "bytes": 46251, "spans": 43, "names": ["harness.node", "llm.call", "retrieval.fact_plane", "retrieval.rerank", "retrieval.retrieve", "retrieval.translate"]}
+{"at": 1790944632.901394, "bytes": 11183, "spans": 12, "names": ["harness.node", "http.request", "llm.call", "retrieval.fact_plane", "retrieval.rerank", "retrieval.retrieve", "retrieval.translate"]}
+{"at": 1790944637.902984, "bytes": 7721, "spans": 12, "names": ["harness.node", "http.request", "retrieval.fact_plane", "retrieval.rerank", "retrieval.retrieve"]}
+{"at": 1790944642.914657, "bytes": 10624, "spans": 19, "names": ["harness.node", "http.request", "retrieval.fact_plane", "retrieval.rerank", "retrieval.retrieve"]}
+{"at": 1790944647.927764, "bytes": 78449, "spans": 27, "names": ["harness.node", "http.request", "llm.call", "retrieval.fact_plane", "retrieval.rerank", "retrieval.retrieve", "retrieval.translate"]}
+{"at": 1790944652.9424782, "bytes": 19870, "spans": 10, "names": ["retrieval.fact_plane", "retrieval.rerank", "retrieval.retrieve"]}
+{"at": 1790944657.954448, "bytes": 624, "spans": 2, "names": ["retrieval.rerank", "retrieval.retrieve"]}
+{"at": 1790944662.967049, "bytes": 70569, "spans": 30, "names": ["harness.node", "llm.call", "retrieval.fact_plane", "retrieval.rerank", "retrieval.retrieve", "retrieval.translate"]}
+{"at": 1790944667.9787679, "bytes": 1912, "spans": 10, "names": ["retrieval.fact_plane", "retrieval.rerank", "retrieval.retrieve"]}
+{"at": 1790944672.989953, "bytes": 785, "spans": 3, "names": ["retrieval.fact_plane", "retrieval.rerank", "retrieval.retrieve"]}
+{"at": 1790944678.001539, "bytes": 1022, "spans": 4, "names": ["retrieval.rerank", "retrieval.retrieve"]}
+{"at": 1790944683.007345, "bytes": 11185, "spans": 35, "names": ["harness.node", "http.request", "retrieval.fact_plane", "retrieval.rerank", "retrieval.retrieve"]}
+{"at": 1790944687.304427, "bytes": 27290, "spans": 20, "names": ["retrieval.fact_plane", "retrieval.rerank", "retrieval.retrieve"]}
+{"at": 1790944703.793202, "bytes": 8523, "spans": 3, "names": ["harness.node", "llm.call", "retrieval.translate"]}
+{"at": 1790944708.802596, "bytes": 1606, "spans": 6, "names": ["harness.node", "retrieval.fact_plane", "retrieval.rerank", "retrieval.retrieve"]}
+{"at": 1790944713.816742, "bytes": 16437, "spans": 4, "names": ["harness.node", "llm.call"]}
+{"at": 1790944719.0482712, "bytes": 1827, "spans": 6, "names": ["harness.node", "llm.call", "worker.task"]}
+{"at": 1790944724.059293, "bytes": 2081, "spans": 8, "names": ["harness.node", "llm.call", "retrieval.fact_plane", "retrieval.rerank", "retrieval.retrieve", "retrieval.translate"]}
+{"at": 1790944729.068445, "bytes": 1828, "spans": 6, "names": ["harness.node", "llm.call", "worker.task"]}
+{"at": 1790944734.0779898, "bytes": 2075, "spans": 8, "names": ["harness.node", "llm.call", "retrieval.fact_plane", "retrieval.rerank", "retrieval.retrieve", "retrieval.translate"]}
+{"at": 1790944739.090715, "bytes": 752, "spans": 2, "names": ["llm.call"]}
+{"at": 1790944744.100255, "bytes": 3624, "spans": 8, "names": ["harness.node", "llm.call", "retrieval.fact_plane", "retrieval.translate", "worker.task"]}
+{"at": 1790944749.103616, "bytes": 1708, "spans": 6, "names": ["harness.node", "llm.call", "retrieval.rerank", "retrieval.retrieve"]}
+{"at": 1790944754.118428, "bytes": 1828, "spans": 6, "names": ["harness.node", "llm.call", "worker.task"]}
+{"at": 1790944759.121403, "bytes": 2081, "spans": 8, "names": ["harness.node", "llm.call", "retrieval.fact_plane", "retrieval.rerank", "retrieval.retrieve", "retrieval.translate"]}
+{"at": 1790944764.135983, "bytes": 489, "spans": 1, "names": ["llm.call"]}
+{"at": 1790944769.151345, "bytes": 3414, "spans": 13, "names": ["harness.node", "llm.call", "retrieval.fact_plane", "retrieval.rerank", "retrieval.retrieve", "retrieval.translate", "worker.task"]}
+{"at": 1790944774.15922, "bytes": 1827, "spans": 6, "names": ["harness.node", "llm.call", "worker.task"]}
+{"at": 1790944779.1664, "bytes": 2075, "spans": 8, "names": ["harness.node", "llm.call", "retrieval.fact_plane", "retrieval.rerank", "retrieval.retrieve", "retrieval.translate"]}
+{"at": 1790944784.174384, "bytes": 1828, "spans": 6, "names": ["harness.node", "llm.call", "worker.task"]}
+{"at": 1790944789.1885052, "bytes": 2081, "spans": 8, "names": ["harness.node", "llm.call", "retrieval.fact_plane", "retrieval.rerank", "retrieval.retrieve", "retrieval.translate"]}
+{"at": 1790944794.203114, "bytes": 489, "spans": 1, "names": ["llm.call"]}
+{"at": 1790944796.4865322, "bytes": 1292, "spans": 4, "names": ["harness.node", "llm.call", "worker.task"]}

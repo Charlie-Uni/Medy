@@ -1,0 +1,215 @@
+{
+  "label": "capacity-v2-c8-c16-backlog-indexed-corpus",
+  "started_at": "2026-10-02T12:34:31.859290+00:00",
+  "finished_at": "2026-10-02T12:40:03.056348+00:00",
+  "api_ready_s": 10.2,
+  "spans_received": 1047,
+  "environment": {
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "chip": "Apple M3",
+    "memory_gb": 24.0,
+    "cpu_count": 8,
+    "python": "3.11.16",
+    "device": "mps",
+    "packages": {
+      "torch": "2.14.0",
+      "sentence-transformers": "5.7.0",
+      "uvicorn": "0.53.0",
+      "fastapi": "0.141.1",
+      "psycopg": "3.3.5",
+      "openai": "2.54.0",
+      "httpx": "0.28.1"
+    },
+    "models": {
+      "answer": "gpt-6-sol",
+      "judge": "gpt-6-sol",
+      "verifier": "verifier-v2+support-rules-v3+polarity_only"
+    },
+    "retrieval": {
+      "k_lexical": 20,
+      "k_vector": 20,
+      "rrf_k": 60.0,
+      "fused_limit": 20,
+      "rerank_output": 8
+    },
+    "postgres": {
+      "server_version": "16.15 (Debian 16.15-1.pgdg12+2)",
+      "shared_buffers": "128MB",
+      "max_connections": "100",
+      "documents": {
+        "draft": 3,
+        "archived": 7,
+        "withdrawn": 7,
+        "active": 333
+      },
+      "chunks": 36100,
+      "database": "medops_v2"
+    }
+  },
+  "levels": [
+    {
+      "name": "c8",
+      "concurrency": 8,
+      "requests": 30,
+      "failed": 0,
+      "failure_rate": 0.0,
+      "elapsed_s": 77.24,
+      "wall_s": 77.24,
+      "started_at": "2026-10-02T12:34:42.080240+00:00",
+      "suspended_requests": 0,
+      "throughput_rps": 0.388,
+      "latency_all": {
+        "n": 30,
+        "p50": 17.536,
+        "p90": 23.541,
+        "p95": 24.378,
+        "p99": 24.947,
+        "max": 24.947,
+        "mean": 17.958
+      },
+      "latency_ok": {
+        "n": 30,
+        "p50": 17.536,
+        "p90": 23.541,
+        "p95": 24.378,
+        "p99": 24.947,
+        "max": 24.947,
+        "mean": 17.958
+      },
+      "by_outcome": {
+        "answered": {
+          "n": 25,
+          "p50": 17.536,
+          "p90": 24.124,
+          "p95": 24.378,
+          "p99": 24.947,
+          "max": 24.947,
+          "mean": 18.181
+        },
+        "escalated": {
+          "n": 5,
+          "p50": 17.555,
+          "p90": 21.562,
+          "p95": 21.562,
+          "p99": 21.562,
+          "max": 21.562,
+          "mean": 16.843
+        }
+      },
+      "node_p95_ms": {
+        "answer": 9310.9,
+        "escalate": 0.1,
+        "intent": 2.6,
+        "retrieve": 19507.2,
+        "safety": 0.5,
+        "verify": 5.4
+      },
+      "node_p50_ms": {
+        "answer": 4468.9,
+        "escalate": 0.1,
+        "intent": 0.3,
+        "retrieve": 13743.3,
+        "safety": 0.2,
+        "verify": 2.3
+      },
+      "gate_p95_le_8s": false
+    },
+    {
+      "name": "c16",
+      "concurrency": 16,
+      "requests": 30,
+      "failed": 24,
+      "failure_rate": 0.8,
+      "elapsed_s": 121.69,
+      "wall_s": 121.69,
+      "started_at": "2026-10-02T12:35:59.317057+00:00",
+      "suspended_requests": 0,
+      "throughput_rps": 0.247,
+      "latency_all": {
+        "n": 30,
+        "p50": 60.717,
+        "p90": 60.901,
+        "p95": 60.98,
+        "p99": 61.012,
+        "max": 61.012,
+        "mean": 51.872
+      },
+      "latency_ok": {
+        "n": 6,
+        "p50": 15.029,
+        "p90": 23.67,
+        "p95": 23.67,
+        "p99": 23.67,
+        "max": 23.67,
+        "mean": 16.225
+      },
+      "by_outcome": {
+        "answered": {
+          "n": 5,
+          "p50": 17.891,
+          "p90": 23.67,
+          "p95": 23.67,
+          "p99": 23.67,
+          "max": 23.67,
+          "mean": 17.682
+        },
+        "escalated": {
+          "n": 25,
+          "p50": 60.765,
+          "p90": 60.91,
+          "p95": 60.98,
+          "p99": 61.012,
+          "max": 61.012,
+          "mean": 58.71
+        }
+      },
+      "node_p95_ms": {
+        "answer": 7522.5,
+        "escalate": 2.0,
+        "intent": 54.3,
+        "retrieve": 60087.8,
+        "safety": 0.4,
+        "verify": 6.2
+      },
+      "node_p50_ms": {
+        "answer": 4741.6,
+        "escalate": 0.2,
+        "intent": 3.4,
+        "retrieve": 60044.8,
+        "safety": 0.2,
+        "verify": 3.0
+      },
+      "gate_p95_le_8s": false
+    }
+  ],
+  "tasks": {
+    "requested": 8,
+    "completed": 8,
+    "failed": 0,
+    "exec": {
+      "n": 8,
+      "p50": 10.858576,
+      "p90": 18.290456,
+      "p95": 18.290456,
+      "p99": 18.290456,
+      "max": 18.290456,
+      "mean": 11.768
+    },
+    "end_to_end": {
+      "n": 8,
+      "p50": 72.792047,
+      "p90": 113.338895,
+      "p95": 113.338895,
+      "p99": 113.338895,
+      "max": 113.338895,
+      "mean": 75.613
+    },
+    "worker_rc": 0,
+    "gate_p95_le_15s": false
+  },
+  "cost_usd": 0.2818,
+  "gate": {
+    "ask_p95_le_8s_all_levels": false,
+    "skill_p95_le_15s": false
+  }
+}
