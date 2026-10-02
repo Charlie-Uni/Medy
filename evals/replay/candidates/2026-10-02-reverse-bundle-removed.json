@@ -1,0 +1,28 @@
+{
+ "kind": "retrieval_params",
+ "name": "hybrid",
+ "diff": {
+  "glossary": {
+   "from": "glossary-20260926-e4daca58a8e4",
+   "to": "glossary-none"
+  },
+  "multi_query": {
+   "from": true,
+   "to": false
+  },
+  "doc_focus": {
+   "from": true,
+   "to": false
+  },
+  "query_translation": {
+   "from": "gpt-6-luna",
+   "to": "off"
+  }
+ },
+ "rationale": "Reverse comparison for record 110: the released retrieval bundle (policy 3361ed13) was gated on a corpus where only 76 of 333 documents were searchable (record 109). This candidate restates every released key and sets it back to the repository default, so the runner compares baseline = released bundle against candidate = bundle removed on the really indexed corpus. A negative delta of the candidate confirms the released policy end to end. This file is never to be submitted or released.",
+ "evidence": {
+  "case_ids": [],
+  "kind": "verification",
+  "do_not_release": true
+ }
+}

@@ -52,8 +52,10 @@ from medops.retrieval.production import (  # noqa: E402
     production_hybrid_config,
     production_lexical_retriever,
     production_lexical_versions,
+    production_retrieval_inputs,
     production_vector_retriever,
 )
+from medops.retrieval.versioning import compute_retrieval_version  # noqa: E402
 from medops.safety.checks import check_output_text  # noqa: E402
 from medops.skills.catalog import default_registry  # noqa: E402
 from medops.skills.production import doc_type_lookup, evidence_lookup  # noqa: E402
@@ -666,6 +668,11 @@ def main() -> int:
     ap.add_argument("--only", default="")
     ap.add_argument("--category", default="")
     ap.add_argument("--resume", action="store_true")
+    ap.add_argument(
+        "--released",
+        action="store_true",
+        help="apply the policies released in the production plane (retrieval params, glossary, translation); default: repository constants",
+    )
     ap.add_argument("--gpu-timeout", type=float, default=120.0)
     ap.add_argument("--max-consecutive-failures", type=int, default=10)
     ap.add_argument(
@@ -703,7 +710,14 @@ def main() -> int:
 
     gpu = sa.GpuThread(args.gpu_timeout)
     provider = sa._PinnedEmbedding(gpu.call(lambda: BgeM3EmbeddingProvider(device=args.device)), gpu)
-    reranker = sa._PinnedReranker(gpu.call(lambda: BgeRerankerV2M3(device=args.device, output=RERANK_OUTPUT)), gpu)
+    from medops.application.policy_loader import ReleasedPolicySet, load_released
+
+    released = ReleasedPolicySet.empty()
+    if args.released:
+        with psycopg.connect(sa._with_database(settings.database_url.get_secret_value(), PRODUCTION_DB)) as rconn:
+            released = load_released(rconn)
+    rerank_output = released.rerank_output(RERANK_OUTPUT)
+    reranker = sa._PinnedReranker(gpu.call(lambda: BgeRerankerV2M3(device=args.device, output=rerank_output)), gpu)
     gateway = sa._Meter(
         BudgetedGateway(
             OpenAIModelGateway.from_settings(settings),
@@ -713,15 +727,44 @@ def main() -> int:
         )
     )
     app_url = settings.database_url.get_secret_value()
+    from medops.retrieval.glossary_store import load_versioned_glossary
+
+    plane_kwargs = (
+        {
+            "config": released.hybrid_config(production_hybrid_config()),
+            "glossary": load_versioned_glossary(
+                settings.glossary_dir or REPO / "evals/glossary", released.glossary_version()
+            ),
+            "multi_query": released.multi_query(),
+            "doc_focus": released.doc_focus(),
+            "query_translation": released.query_translation(),
+        }
+        if args.released
+        else {}
+    )
     planes = {
-        name: Plane(name, app_url, provider, reranker, gateway, args.as_of, sa) for name in (PRODUCTION_DB, SAFETY_DB)
+        name: Plane(name, app_url, provider, reranker, gateway, args.as_of, sa, **plane_kwargs)
+        for name in (PRODUCTION_DB, SAFETY_DB)
     }
     registry = default_registry()
     versions = VersionSet(
-        policy_version="policy-m2-smoke-1",
-        retrieval_version=PRODUCTION_RETRIEVAL_VERSION,
+        policy_version=released.policy_version("policy-m2-smoke-1"),
+        retrieval_version=(
+            compute_retrieval_version(
+                production_retrieval_inputs(
+                    released.hybrid_config(production_hybrid_config()),
+                    rerank_output=rerank_output,
+                    glossary_version=released.glossary_version(),
+                    multi_query=released.multi_query(),
+                    doc_focus=released.doc_focus(),
+                    query_translation=released.query_translation(),
+                )
+            )
+            if args.released
+            else PRODUCTION_RETRIEVAL_VERSION
+        ),
         skill_version_set=registry.version_set(),
-        model_config_version=production_model_config_version(),
+        model_config_version=production_model_config_version() + released.model_config_suffix(),
     )
     prod = planes[PRODUCTION_DB]
     prod_lookups = (evidence_lookup(prod.conn_for_user, as_of=args.as_of), doc_type_lookup(prod.conn_for_user))

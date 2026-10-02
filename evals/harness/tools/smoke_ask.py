@@ -211,6 +211,11 @@ def main() -> int:
     ap.add_argument("--seed", type=int, default=20260923)
     ap.add_argument("--all", action="store_true", help="run every sample of the dataset (614)")
     ap.add_argument("--resume", action="store_true", help="continue an existing run directory from its rows.jsonl")
+    ap.add_argument(
+        "--released",
+        action="store_true",
+        help="apply the policies released in the target database (retrieval params, glossary, translation); default: repository constants",
+    )
     ap.add_argument("--ids", default="", help="comma-separated sample ids to run (overrides the sampling options)")
     ap.add_argument("--gpu-timeout", type=float, default=120.0, help="seconds a single embedding/rerank call may take")
     ap.add_argument(
@@ -237,9 +242,14 @@ def main() -> int:
 
     gpu = GpuThread(args.gpu_timeout)
     provider = _PinnedEmbedding(gpu.call(lambda: BgeM3EmbeddingProvider(device=args.device)), gpu)
-    reranker = _PinnedReranker(gpu.call(lambda: BgeRerankerV2M3(device=args.device, output=RERANK_OUTPUT)), gpu)
     app_dsn = _with_database(settings.database_url.get_secret_value(), args.database)
     conn = psycopg.connect(app_dsn)
+    from medops.application.policy_loader import ReleasedPolicySet, load_released
+
+    released = load_released(conn) if args.released else ReleasedPolicySet.empty()
+    conn.rollback()
+    rerank_output = released.rerank_output(RERANK_OUTPUT)
+    reranker = _PinnedReranker(gpu.call(lambda: BgeRerankerV2M3(device=args.device, output=rerank_output)), gpu)
     if settings.database_admin_url is None:
         print("DATABASE_ADMIN_URL is needed for the index-coverage pre-flight", file=sys.stderr)
         return 2
@@ -255,14 +265,6 @@ def main() -> int:
             conn.execute("select set_config('medops.dept', %s, true)", (user.dept.value,))
             yield conn
 
-    retrieval = ProductionRetrieval(
-        conn_for_user=conn_for_user,
-        lexical_factory=lambda c: production_lexical_retriever(c, as_of=as_of),
-        vector_factory=lambda c: production_vector_retriever(c, provider, as_of=as_of),
-        reranker=reranker,
-        config=production_hybrid_config(),
-        lexical_versions=production_lexical_versions(),
-    )
     gateway = _Meter(
         BudgetedGateway(
             OpenAIModelGateway.from_settings(settings),
@@ -271,6 +273,22 @@ def main() -> int:
             monthly_cap_usd=settings.llm_monthly_budget_usd,
         )
     )
+    from medops.retrieval.glossary_store import load_versioned_glossary
+    from medops.retrieval.query_translation import QueryTranslator
+
+    translation = released.query_translation()
+    retrieval = ProductionRetrieval(
+        conn_for_user=conn_for_user,
+        lexical_factory=lambda c: production_lexical_retriever(c, as_of=as_of),
+        vector_factory=lambda c: production_vector_retriever(c, provider, as_of=as_of),
+        reranker=reranker,
+        config=released.hybrid_config(production_hybrid_config()),
+        lexical_versions=production_lexical_versions(),
+        glossary=load_versioned_glossary(settings.glossary_dir or REPO / "evals/glossary", released.glossary_version()),
+        multi_query=released.multi_query(),
+        doc_focus=released.doc_focus(),
+        translator=QueryTranslator(gateway, translation).translate if translation != "off" else None,
+    )
     deps = HarnessDeps(
         retrieval=retrieval,
         gateway=gateway,
@@ -278,10 +296,27 @@ def main() -> int:
         judge_model_id=args.judge_model,
         as_of=as_of,
     )
+    from medops.retrieval.production import production_retrieval_inputs
+    from medops.retrieval.versioning import compute_retrieval_version
+
     versions = VersionSet(
-        policy_version="policy-m2-smoke-1",
-        retrieval_version=PRODUCTION_RETRIEVAL_VERSION,
-        model_config_version=f"answer={args.answer_model};judge={args.judge_model};{VERIFIER_VERSION}",
+        policy_version=released.policy_version("policy-m2-smoke-1"),
+        retrieval_version=(
+            compute_retrieval_version(
+                production_retrieval_inputs(
+                    released.hybrid_config(production_hybrid_config()),
+                    rerank_output=rerank_output,
+                    glossary_version=released.glossary_version(),
+                    multi_query=released.multi_query(),
+                    doc_focus=released.doc_focus(),
+                    query_translation=translation,
+                )
+            )
+            if args.released
+            else PRODUCTION_RETRIEVAL_VERSION
+        ),
+        model_config_version=f"answer={args.answer_model};judge={args.judge_model};{VERIFIER_VERSION}"
+        + released.model_config_suffix(),
     )
     dataset_manifest = json.loads((args.dataset / "manifest.json").read_text(encoding="utf-8"))
     mapping_path = args.mapping or mapping_for(args.dataset)

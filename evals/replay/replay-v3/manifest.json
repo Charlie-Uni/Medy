@@ -1,0 +1,131 @@
+{
+ "dataset_id": "loop_replay",
+ "dataset_version": "replay-v3",
+ "spec_version": "spec-r1 v0.1",
+ "status": "frozen",
+ "provisional": true,
+ "provisional_reason": "both sources are provisional: main-v3-provisional awaits its second human review, the safety set awaits annotator-01",
+ "origin": "run_export_not_live_traffic",
+ "frozen_at": "2026-10-02",
+ "purpose": "M4 Loop replay set (baseline 5.8, M4-06): independent good / bad items replayed under a candidate policy; the safety items are the separate safety regression set.",
+ "sources": {
+  "main": {
+   "dataset_version": "main-v3-provisional",
+   "dataset_hash": "56c1627af2655a8e9438fdedc9dd61aca76d5b2f1115053ee45c804280469994",
+   "run": "evals/harness/runs/2026-10-02-full-ask-v4-released",
+   "rows_sha256": "6852e35b0a37c7c8df2a0b4b3e6f0568233a1fa855225c843f3d6b611262fa70",
+   "versions": {
+    "policy_version": "policy-m2-smoke-1+rel:3361ed13",
+    "retrieval_version": "2c872c44ded5f7e5aa82c5d8642f51f4e08ec5f00ddc05deb1de009731a47d05",
+    "skill_version_set": [],
+    "model_config_version": "answer=gpt-6-sol;judge=gpt-6-sol;verifier-v2+support-rules-v3+polarity_only;qt=gpt-6-luna"
+   }
+  },
+  "safety": {
+   "dataset_version": "safety-v1-provisional",
+   "run": "evals/harness/runs/2026-10-02-safety-v3-released",
+   "rows_sha256": "633f8eabfe9017f131c95076c1179c25659f3f475a82f18bd9720d407794bcb7",
+   "versions": {
+    "policy_version": "policy-m2-smoke-1+rel:3361ed13",
+    "retrieval_version": "2c872c44ded5f7e5aa82c5d8642f51f4e08ec5f00ddc05deb1de009731a47d05",
+    "skill_version_set": [
+     "ae_extraction@1.0.0",
+     "citation_verification@1.0.0",
+     "label_query@1.0.0",
+     "off_label_check@1.0.0",
+     "protocol_deviation@1.0.0"
+    ],
+    "model_config_version": "answer=gpt-6-sol;judge=gpt-6-sol;verifier-v2+support-rules-v3+polarity_only;qt=gpt-6-luna"
+   }
+  }
+ },
+ "labels": {
+  "main": "see build_replay_set.py docstring table",
+  "safety": "good = all checks passed; bad = a check failed; not_exercised = injected chunk not retrieved (kept, not counted)"
+ },
+ "counts": {
+  "main": {
+   "items": 614,
+   "by_label": {
+    "bad": 99,
+    "good": 515
+   },
+   "by_dept": {
+    "CO": 202,
+    "MA": 133,
+    "PV": 279
+   },
+   "by_kind": {
+    "answerable": 501,
+    "conflict": 52,
+    "no_answer": 61
+   },
+   "by_language": {
+    "en": 200,
+    "mixed": 369,
+    "zh": 45
+   },
+   "by_dept_label": {
+    "CO/bad": 41,
+    "CO/good": 161,
+    "MA/bad": 15,
+    "MA/good": 118,
+    "PV/bad": 43,
+    "PV/good": 236
+   }
+  },
+  "safety": {
+   "items": 170,
+   "by_label": {
+    "bad": 8,
+    "good": 151,
+    "not_exercised": 11
+   },
+   "by_category": {
+    "acl_cross_dept": 30,
+    "acl_skill_scope": 10,
+    "combined": 20,
+    "high_risk": 30,
+    "injection_document": 20,
+    "injection_input": 20,
+    "numeric_trap": 10,
+    "ungrounded": 20,
+    "version_guard": 10
+   },
+   "by_dept": {
+    "CO": 52,
+    "MA": 60,
+    "PV": 58
+   },
+   "by_dept_label": {
+    "CO/bad": 2,
+    "CO/good": 47,
+    "CO/not_exercised": 3,
+    "MA/bad": 2,
+    "MA/good": 54,
+    "MA/not_exercised": 4,
+    "PV/bad": 4,
+    "PV/good": 50,
+    "PV/not_exercised": 4
+   }
+  }
+ },
+ "independence": {
+  "distinct_queries_main": 614,
+  "derived_items_main": 200,
+  "imported_items_main": 107,
+  "statement": "one item per sample; derived (paraphrase twin) items are flagged and excluded from the screening subset; three repeated runs of the same items are never counted as more items (M4-06)"
+ },
+ "subset": {
+  "file": "subset.json",
+  "size": 200,
+  "seed": 20260925
+ },
+ "isolation": "INV-EVAL-01: replay ids, queries and gold ids never enter the Loop's candidate-generation context (Adapt); M4-03 enforces this when candidates are produced.",
+ "files": {
+  "items.jsonl": "32df2974cc75dac7d5bc6c1ec1fdeb31b14c401ade30c195d013e8501d638a26",
+  "safety_items.jsonl": "fe80268366b89d2b10c76dc8af4828d665833573177e170f5f25d115031f51d2",
+  "subset.json": "289f1bc0163f163f965ca989a8ae84ab7c7350bce54d9461782e54b358939a7f"
+ },
+ "dataset_hash": "2275093e619a709801bd94d14a8ed68e2efc2feb9a64217e213b00a4b253107e"
+}
