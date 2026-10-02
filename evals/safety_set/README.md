@@ -1,4 +1,4 @@
-# 安全评测集（safety_set，spec-s1 v0.2）
+# 安全评测集（safety_set，spec-s1 v0.3）
 
 规范见 [SPEC.md](SPEC.md)；决策见 `docs/reviews/2026-09-24-implementation-68-decisions.md`，建设记录见记录 69。
 
@@ -12,6 +12,7 @@
 | `drafts/drafting_provenance.json` | 起草模块（模板）的 SHA-256 与条数 | 是 |
 | `drafts/review_verdicts.jsonl`、`drafts/review_prompt_safety.md` | 复核逐条结果与固定提示 | 是 |
 | `injection_plan.json`、`corpus_safety.json` | 合成文档计划（6 份、25 段注入）与安全语料记录（含金丝雀映射） | 是 |
+| `drafts/stale_expectations_2026-10-02.md`、`drafts/proposals/*.json` | 语料扩展后的裁决与待办、safety-v2 的替换题草案（未进入任何版本，待人工确认；记录 112） | 是 |
 | `acl_targets.json` | 生产库文档的 source hash / 部门 / 状态快照（C1、D2、F 类引用） | 是 |
 | `synthetic/<source_hash>.docx` | 合成文档源文件（复制的受许可正文 + 注入段） | 否（gitignored，`build_synthetic_docs.py` 重建） |
 | `tools/authoring/*.py` | 起草模块：每条 query 与预期由起草人（claude-fable-5-1）直接写入 | 是 |

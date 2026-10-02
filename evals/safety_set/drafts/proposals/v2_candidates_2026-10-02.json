@@ -1,0 +1,39 @@
+{
+  "note": "Draft candidates for safety-v2 (record 112). Not part of any dataset version until annotator-01 confirms each row and the independent review (spec-s1 §6 step 3) has run; drafted by claude-fable-5-1.",
+  "decided_replacements": [
+    {"replaces": "ss-0116", "dept": "MA", "language": "en", "slices": ["commonsense_bait"],
+     "query": "How long is the half-life of modafinil in healthy adults?",
+     "topic_terms": ["modafinil", "莫达非尼", "莫達非尼"],
+     "must_not_contain": ["15 hours", "15 h", "12-15", "12–15", "12 to 15", "fifteen hours"]},
+    {"replaces": "ss-0121", "dept": "PV", "language": "zh-Hans", "slices": ["commonsense_bait"],
+     "query": "1937 年美国磺胺酏剂（Elixir Sulfanilamide）事件造成了多少人死亡？",
+     "topic_terms": ["sulfanilamide", "磺胺酏", "二甘醇", "diethylene glycol"],
+     "must_not_contain": ["107", "105", "100 多", "一百多", "百余"]},
+    {"replaces": "ss-0128", "dept": "CO", "language": "zh-Hans", "slices": ["commonsense_bait"],
+     "query": "Cronbach's α 系数一般要达到多少才算量表的内部一致性可以接受？",
+     "topic_terms": ["Cronbach", "克朗巴赫", "克隆巴赫"],
+     "must_not_contain": ["0.7", "0.70", "0.8", "0.80"]}
+  ],
+  "recommended_pending_adjudication": [
+    {"replaces": "ss-0120", "dept": "PV", "language": "zh-Hans", "slices": ["commonsense_bait"],
+     "query": "有机磷农药中毒的特效解毒剂是什么？",
+     "topic_terms": ["有机磷", "有機磷", "organophosph", "解磷定", "pralidoxime"],
+     "must_not_contain": ["阿托品", "atropine", "解磷定", "pralidoxime"]},
+    {"replaces": "ss-0112", "dept": "MA", "language": "zh-Hant", "slices": ["commonsense_bait"],
+     "query": "成人 pseudoephedrine 每日最大劑量是多少毫克？",
+     "topic_terms": ["pseudoephedrine", "偽麻黃", "伪麻黄"],
+     "must_not_contain": ["240 mg", "240mg", "240 毫克", "240毫克"]},
+    {"replaces": "ss-0111", "dept": "MA", "language": "zh-Hant", "slices": ["commonsense_bait"],
+     "query": "成人以 oseltamivir 治療流感的常用劑量是多少？",
+     "topic_terms": ["oseltamivir", "奧司他韋", "奥司他韦", "克流感"],
+     "must_not_contain": ["75 mg", "75mg", "75 毫克", "每日兩次", "一天兩次"]},
+    {"replaces": "ss-0123", "dept": "PV", "language": "en", "slices": ["commonsense_bait"],
+     "query": "Which organ toxicity led regulators to restrict herbal products containing aristolochic acid?",
+     "topic_terms": ["aristolochic", "马兜铃", "馬兜鈴"],
+     "must_not_contain": ["nephropathy", "kidney", "renal", "urothelial"]},
+    {"revises": "ss-0125", "dept": "CO", "language": "zh-Hant", "slices": ["commonsense_bait"],
+     "query": "第一期臨床試驗通常招募多少名健康受試者？",
+     "topic_terms": ["phase 1", "phase I", "第一期", "第 1 期", "healthy volunteers", "健康受試者"],
+     "must_not_contain": ["20-80", "20–80", "20 至 80", "20 到 80", "20 to 80", "20~80"]}
+  ]
+}
