@@ -24,6 +24,9 @@ block header carries two UUIDs. Three released modes (`retrieval_params/hybrid` 
   fields, about 2.7 points more of the token cut; aliases and elision marks unchanged.
 - `sentfocus-v6` — the `sentfocus-v2` selection (two-sided neighbours) with delimiters `[E1 | D1 | p=…]` … `[/E1]`
   and one legend line `文档版本：D1 v=…；D2 v=…` — each document's version label once instead of once per block.
+- `sentfocus-v7` — `sentfocus-v6` whose legend names each document (`D1 = <title>（v=…）`, one line per document)
+  under one rule line: a question that says which document it wants answered from is not answered when that
+  document is not listed. Block headers drop the page number. The titles come from the reader's own connection.
 
 What does not change in any mode: `AgentState.evidence` keeps the full chunk text (its hash is checked, baseline
 3.3), layer-2 screening has already run on the full text, the claim verifier judges against the full cited chunk,
@@ -35,7 +38,7 @@ from __future__ import annotations
 
 import math
 import re
-from collections.abc import Callable, Sequence
+from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass, field
 
 from medops.domain.evidence import Evidence
@@ -50,6 +53,7 @@ EVIDENCE_FOCUS_SENTENCE_V3 = "sentfocus-v3"
 EVIDENCE_FOCUS_SENTENCE_V4 = "sentfocus-v4"
 EVIDENCE_FOCUS_SENTENCE_V5 = "sentfocus-v5"
 EVIDENCE_FOCUS_SENTENCE_V6 = "sentfocus-v6"
+EVIDENCE_FOCUS_SENTENCE_V7 = "sentfocus-v7"
 
 
 @dataclass(frozen=True)
@@ -64,7 +68,8 @@ class FocusParams:
     whole_top: int = 0  # leading chunks (reranker order) shown whole
     query_variants: int = 1  # the question plus this many rewritten queries, scored with max
     # block delimiters: v1 = <<证据 | chunk=E1 …>> … <<证据 E1 结束>>; v2 = [E1 | D1 | v=… | p=…] … [/E1];
-    # v3 = [E1 | D1 | p=…] … [/E1] with one legend line giving each document's version once
+    # v3 = [E1 | D1 | p=…] … [/E1] with one legend line giving each document's version once;
+    # v4 = [E1 | D1] … [/E1] with a legend of one line per document (title, version) under the named-source rule
     markers: str = "v1"
 
 
@@ -88,11 +93,18 @@ FOCUS_PARAMS: dict[str, FocusParams] = {
     # to v2's selection (+4.0 pp, no slice drop) and takes the tokens from the delimiters instead: the version label
     # is written once per document in a legend line (5.0 points offline, nothing removed)
     EVIDENCE_FOCUS_SENTENCE_V6: FocusParams(keep_ratio=0.6, neighbours=1, whole_top=1, query_variants=2, markers="v3"),
+    # v6 met the token gate with quality intact, but ss-0088 answered in all three pilots (record 118): the model
+    # cannot tell which document a block comes from. v7 is v6 with document titles in the legend and one rule line
+    # (a question that names its source is answered only from that source); page numbers leave the block headers
+    # to pay for the titles
+    EVIDENCE_FOCUS_SENTENCE_V7: FocusParams(keep_ratio=0.6, neighbours=1, whole_top=1, query_variants=2, markers="v4"),
 }
 ALLOWED_EVIDENCE_FOCUS: frozenset[str] = frozenset({EVIDENCE_FOCUS_OFF, EVIDENCE_FOCUS_COMPACT, *FOCUS_PARAMS})
 
 KEEP_RATIO = FOCUS_PARAMS[EVIDENCE_FOCUS_SENTENCE].keep_ratio
 MIN_CHUNK_TOKENS = 60  # a chunk this short is shown whole: trimming it saves almost nothing
+TITLE_MAX_CHARS = 60  # legend titles are cut here: enough to tell sibling documents apart (record 118)
+NAMED_SOURCE_RULE = "文档（若问题指明要依据某份具体文件作答，而下列文档中没有它，输出 answers_question=false）："
 MIN_UNIT_TOKENS = 5  # shorter fragments ("1.", "e.g.", "See Table 2.") are merged into the following unit
 MAX_UNIT_CHARS = 240  # longer runs without a sentence end (flattened tables) are cut at a clause or a space
 ELISION = "[…]"
@@ -265,6 +277,7 @@ def render_evidence(
     mode: str = EVIDENCE_FOCUS_OFF,
     scorer: SentenceScorer | None = None,
     rewritten: Sequence[str] = (),
+    titles: Mapping[str, str] | None = None,
 ) -> RenderedEvidence:
     if mode not in ALLOWED_EVIDENCE_FOCUS:
         raise ValueError(f"unknown evidence focus mode {mode!r}")
@@ -295,12 +308,30 @@ def render_evidence(
         doc = docs.setdefault(c.doc_id, f"D{len(docs) + 1}")
         versions.setdefault(doc, c.version)
         flag = " | historical" if e.historical else ""
-        if markers == "v3":
+        if markers == "v4":
+            blocks.append(f"[{alias} | {doc}{flag}]\n{text}\n[/{alias}]")
+        elif markers == "v3":
             blocks.append(f"[{alias} | {doc} | p={c.page}{flag}]\n{text}\n[/{alias}]")
         elif markers == "v2":
             blocks.append(f"[{alias} | {doc} | v={c.version} | p={c.page}{flag}]\n{text}\n[/{alias}]")
         else:
             head = f"<<证据 | chunk={alias} | doc={doc} | version={c.version} | page={c.page}{flag}>>"
             blocks.append(f"{head}\n{text}\n<<证据 {alias} 结束>>")
-    legend = "文档版本：" + "；".join(f"{d} v={v}" for d, v in versions.items()) if markers == "v3" else ""
+    legend = ""
+    if markers == "v3":
+        legend = "文档版本：" + "；".join(f"{d} v={v}" for d, v in versions.items())
+    elif markers == "v4":
+        missing = [doc_id for doc_id in docs if doc_id not in (titles or {})]
+        if missing:
+            raise ValueError(f"{mode} needs the title of every evidence document ({len(missing)} missing)")
+        assert titles is not None
+        lines = [
+            f"{alias} = {titles[doc_id][:TITLE_MAX_CHARS]}（v={versions[alias]}）" for doc_id, alias in docs.items()
+        ]
+        legend = "\n".join([NAMED_SOURCE_RULE, *lines])
     return RenderedEvidence(blocks=tuple(blocks), chunk_ids=chunk_ids, legend=legend, **stats)
+
+
+def needs_titles(mode: str) -> bool:
+    params = FOCUS_PARAMS.get(mode)
+    return params is not None and params.markers == "v4"

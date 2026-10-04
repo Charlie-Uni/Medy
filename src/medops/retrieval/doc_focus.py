@@ -156,5 +156,15 @@ def load_documents(conn: object) -> list[DocRef]:
     return [DocRef(str(r[0]), str(r[1]), str(r[2])) for r in rows]
 
 
+def load_titles(conn: object, doc_ids: Sequence[str]) -> dict[str, str]:
+    """Titles of the given documents as far as this connection may read them (row-level security applies)."""
+    if not doc_ids:
+        return {}
+    rows = conn.execute(  # type: ignore[attr-defined]
+        "select doc_id::text, title from documents where doc_id = any(%s::uuid[])", (list(doc_ids),)
+    ).fetchall()
+    return {str(r[0]): str(r[1]) for r in rows}
+
+
 def as_sequence(docs: Sequence[DocRef]) -> list[str]:
     return [d.doc_id for d in docs]

@@ -21,6 +21,7 @@ from medops.core.canonical import operation_key
 from medops.domain.answer import Answer, Claim, Escalation
 from medops.domain.common import ReasonCode
 from medops.domain.evidence import Evidence
+from medops.domain.identity import UserContext
 from medops.domain.intent import IntentType
 from medops.domain.safety import SafetyDecision, SafetyResult
 from medops.domain.state import MAX_CANDIDATES, AgentState, TokenBudget
@@ -32,6 +33,7 @@ from medops.harness.evidence_focus import (
     FOCUS_PARAMS,
     RenderedEvidence,
     SentenceScorer,
+    needs_titles,
     render_evidence,
 )
 from medops.harness.executions import ExecutionStore, apply_delta, state_delta
@@ -122,13 +124,17 @@ class HarnessDeps:
     executions: ExecutionStore | None = None  # M2-03 operation-key ledger; None = no persistence (unit tests)
     answer_system: str = ANSWER_SYSTEM  # released prompt policy may override (M4-03); the trace's model config says so
     evidence_focus: str = EVIDENCE_FOCUS_OFF  # released layout of the evidence in the answer prompt (M5-04)
-    sentence_scorer: SentenceScorer | None = None  # the reranker's scorer; required by `sentfocus-v1`
+    sentence_scorer: SentenceScorer | None = None  # the reranker's scorer; required by the sentfocus versions
+    # titles of evidence documents as the reader's own connection sees them; required by `sentfocus-v7`
+    doc_titles: Callable[[UserContext, Sequence[str]], Mapping[str, str]] | None = None
 
     def __post_init__(self) -> None:
         if self.evidence_focus not in ALLOWED_EVIDENCE_FOCUS:
             raise ValueError(f"unknown evidence focus mode {self.evidence_focus!r}")
         if self.evidence_focus in FOCUS_PARAMS and self.sentence_scorer is None:
             raise ValueError(f"evidence focus {self.evidence_focus} needs a sentence scorer")
+        if needs_titles(self.evidence_focus) and self.doc_titles is None:
+            raise ValueError(f"evidence focus {self.evidence_focus} needs a document-title lookup")
 
 
 class HarnessState(TypedDict):
@@ -339,6 +345,11 @@ def build_nodes(deps: HarnessDeps) -> dict[str, Callable[[HarnessState], dict[st
             mode=deps.evidence_focus,
             scorer=deps.sentence_scorer,
             rewritten=state.rewritten_queries,
+            titles=(
+                deps.doc_titles(state.user, sorted({e.citation.doc_id for e in state.evidence}))
+                if deps.doc_titles is not None and needs_titles(deps.evidence_focus)
+                else None
+            ),
         )
         response = meter.complete(_answer_request(state, deps, rendered=rendered))
         if response.truncated:

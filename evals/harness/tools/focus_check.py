@@ -149,6 +149,9 @@ def main() -> int:
         conn.read_only = True
         require_index_coverage(conn, plane=PRODUCTION_DB)
         evidence = load_evidence(conn, sorted({c for r in rows for c in r["evidence_chunks"]}))
+        from medops.retrieval.doc_focus import load_titles
+
+        titles = load_titles(conn, sorted({e.citation.doc_id for e in evidence.values()}))
 
     from medops.retrieval.glossary_store import load_versioned_glossary
     from medops.retrieval.rerank import BgeRerankerV2M3
@@ -171,7 +174,7 @@ def main() -> int:
         for mode in modes:
             t0 = time.perf_counter()
             rendered[mode] = ef.render_evidence(
-                r["query"], items, mode=mode, scorer=reranker.score, rewritten=rewritten
+                r["query"], items, mode=mode, scorer=reranker.score, rewritten=rewritten, titles=titles
             )
             if mode in seconds:
                 seconds[mode].append(time.perf_counter() - t0)

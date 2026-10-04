@@ -160,9 +160,16 @@ class Plane:
             as_of=as_of,
             evidence_focus=evidence_focus,
             sentence_scorer=reranker.score,
+            doc_titles=self._doc_titles,
             **extra,
         )
         self.as_of = as_of
+
+    def _doc_titles(self, user: UserContext, doc_ids) -> dict[str, str]:
+        from medops.retrieval.doc_focus import load_titles
+
+        with self.conn_for_user(user) as conn:  # the reader's own department scope
+            return load_titles(conn, doc_ids)
 
     def retrieval_for(self, as_of: date) -> CountingRetrieval:
         """Retrieval whose channels filter the effective window at `as_of` (explicit historical requests)."""

@@ -49,6 +49,7 @@ from medops.infrastructure.llm.meter import MeteredGateway
 from medops.infrastructure.llm.openai_gateway import OpenAIModelGateway
 from medops.ingestion import acl as acl_ops
 from medops.ingestion import activate as activation
+from medops.retrieval.doc_focus import load_titles
 from medops.retrieval.hybrid import HybridConfig
 from medops.retrieval.pinned import PinnedEmbedding, PinnedReranker, PinnedThread
 from medops.retrieval.production import (
@@ -370,6 +371,7 @@ class ProductionRuntime:
             answer_system=routed.policies.answer_system(ANSWER_SYSTEM),
             evidence_focus=routed.policies.evidence_focus(),
             sentence_scorer=reranker.score,
+            doc_titles=lambda _user, ids: load_titles(conn, ids),  # the request connection: department-scoped
             gateway=metered,
             answer_model_id=PRODUCTION_ANSWER_MODEL,
             judge_model_id=PRODUCTION_JUDGE_MODEL,

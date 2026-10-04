@@ -265,6 +265,12 @@ def main() -> int:
             conn.execute("select set_config('medops.dept', %s, true)", (user.dept.value,))
             yield conn
 
+    def doc_titles(user: UserContext, doc_ids) -> dict[str, str]:
+        from medops.retrieval.doc_focus import load_titles
+
+        with conn_for_user(user) as c:
+            return load_titles(c, doc_ids)
+
     gateway = _Meter(
         BudgetedGateway(
             OpenAIModelGateway.from_settings(settings),
@@ -297,6 +303,7 @@ def main() -> int:
         as_of=as_of,
         evidence_focus=released.evidence_focus(),
         sentence_scorer=reranker.score,
+        doc_titles=doc_titles,
     )
     from medops.retrieval.production import production_retrieval_inputs
     from medops.retrieval.versioning import compute_retrieval_version

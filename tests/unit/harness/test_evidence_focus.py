@@ -186,10 +186,12 @@ def test_deps_accept_every_sentence_version_and_the_loader_lists_them():
     from medops.application.policy_loader import ReleasedPolicy, ReleasedPolicySet
     from medops.harness.evidence_focus import ALLOWED_EVIDENCE_FOCUS, FOCUS_PARAMS
 
-    assert set(FOCUS_PARAMS) == {f"sentfocus-v{n}" for n in range(1, 7)}
+    assert set(FOCUS_PARAMS) == {f"sentfocus-v{n}" for n in range(1, 8)}
     assert set(FOCUS_PARAMS) < ALLOWED_EVIDENCE_FOCUS
     for mode in FOCUS_PARAMS:
-        make_deps(FakeRetrieval(), FakeModelGateway(), evidence_focus=mode, sentence_scorer=SCORER)
+        make_deps(
+            FakeRetrieval(), FakeModelGateway(), evidence_focus=mode, sentence_scorer=SCORER, doc_titles=lambda u, i: {}
+        )
         rs = ReleasedPolicySet(
             (ReleasedPolicy("f", "retrieval_params", "hybrid", "v", {"evidence_focus": {"from": "off", "to": mode}}),)
         )
@@ -260,4 +262,51 @@ def test_v6_writes_each_document_version_once_in_a_legend_and_selects_like_v2():
     run = run_ask(state(), make_deps(retrieval, gateway, evidence_focus="sentfocus-v6", sentence_scorer=SCORER))
     prompt = gateway.calls[0].messages[1].content
     assert "证据（共 3 段）：\n\n文档版本：D1 v=Rev 5；D2 v=pdf-meta 2016-11-22\n\n[E1 | D1 | p=1]" in prompt
+    assert run.outcome == "answered" and run.state.answer.claims[0].citation_chunk_ids == ("c1",)
+
+
+def test_v7_names_each_document_under_the_named_source_rule_and_needs_titles():
+    from medops.harness.evidence_focus import NAMED_SOURCE_RULE, TITLE_MAX_CHARS
+    from medops.harness.runtime import run_ask
+
+    items = [
+        evidence("c1", DOSE, doc_id="doc-1", version="Rev 5", page=7),
+        evidence("c2", ENGLISH, doc_id="doc-2", version="Step 4, 1994-10-27"),
+        evidence("c3", DOSE + "補充說明。", doc_id="doc-1", version="Rev 5", page=9),
+    ]
+    long_title = (
+        "Investigator Responsibilities — Safety Reporting for Investigational Drugs and Devices: Guidance for Industry"
+    )
+    titles = {"doc-1": "拔痛酸錠 仿單", "doc-2": long_title}
+    q = "6 至 12 歲 孩童 口服 劑量"
+    v7 = render_evidence(q, items, mode="sentfocus-v7", scorer=SCORER, titles=titles)
+    assert v7.legend.split("\n") == [
+        NAMED_SOURCE_RULE,
+        "D1 = 拔痛酸錠 仿單（v=Rev 5）",
+        f"D2 = {long_title[:TITLE_MAX_CHARS]}（v=Step 4, 1994-10-27）",
+    ]
+    assert v7.blocks[0].startswith("[E1 | D1]\n") and v7.blocks[2].startswith("[E3 | D1]\n")  # no page, no version
+    v6 = render_evidence(q, items, mode="sentfocus-v6", scorer=SCORER)
+    assert [b.split("\n")[1] for b in v6.blocks] == [b.split("\n")[1] for b in v7.blocks]  # same selected text
+    with pytest.raises(ValueError, match="needs the title of every evidence document"):
+        render_evidence(q, items, mode="sentfocus-v7", scorer=SCORER, titles={"doc-1": "x"})
+    with pytest.raises(ValueError, match="needs a document-title lookup"):
+        make_deps(FakeRetrieval(), FakeModelGateway(), evidence_focus="sentfocus-v7", sentence_scorer=SCORER)
+    # the answer node asks for titles with the reader's identity and only for the evidence documents
+    asked = []
+
+    def lookup(user, doc_ids):
+        asked.append((user.dept, list(doc_ids)))
+        return titles
+
+    gateway = FakeModelGateway(
+        {"answer": [{"claims": [{"text": "6 至 12 歲孩童口服 100 mg，一天三次。", "citation_chunk_ids": ["E1"]}]}]}
+    )
+    deps = make_deps(
+        FakeRetrieval(*items), gateway, evidence_focus="sentfocus-v7", sentence_scorer=SCORER, doc_titles=lookup
+    )
+    run = run_ask(state(), deps)
+    assert asked == [(state().user.dept, ["doc-1", "doc-2"])]
+    prompt = gateway.calls[0].messages[1].content
+    assert NAMED_SOURCE_RULE in prompt and "D1 = 拔痛酸錠 仿單（v=Rev 5）\n" in prompt
     assert run.outcome == "answered" and run.state.answer.claims[0].citation_chunk_ids == ("c1",)
