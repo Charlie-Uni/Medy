@@ -185,7 +185,7 @@ def test_deps_accept_every_sentence_version_and_the_loader_lists_them():
     from medops.application.policy_loader import ReleasedPolicy, ReleasedPolicySet
     from medops.harness.evidence_focus import ALLOWED_EVIDENCE_FOCUS, FOCUS_PARAMS
 
-    assert set(FOCUS_PARAMS) == {"sentfocus-v1", "sentfocus-v2", "sentfocus-v3"}
+    assert set(FOCUS_PARAMS) == {"sentfocus-v1", "sentfocus-v2", "sentfocus-v3", "sentfocus-v4"}
     assert set(FOCUS_PARAMS) < ALLOWED_EVIDENCE_FOCUS
     for mode in FOCUS_PARAMS:
         make_deps(FakeRetrieval(), FakeModelGateway(), evidence_focus=mode, sentence_scorer=SCORER)
@@ -193,3 +193,27 @@ def test_deps_accept_every_sentence_version_and_the_loader_lists_them():
             (ReleasedPolicy("f", "retrieval_params", "hybrid", "v", {"evidence_focus": {"from": "off", "to": mode}}),)
         )
         assert rs.evidence_focus() == mode and rs.model_config_suffix() == f";ctx={mode}"
+
+
+def test_v4_keeps_only_the_better_scoring_neighbour_of_the_best_unit():
+    from medops.harness.evidence_focus import FOCUS_PARAMS, FocusParams
+
+    units = [
+        "甲" * 20 + "。",
+        "乙" * 20 + "。",
+        "丙" * 20 + "。",
+        "丁" * 20 + "。",
+        "戊" * 20 + "。",
+    ]  # > MIN_CHUNK_TOKENS
+    text = "".join(units)
+    scores = {"乙": 0.2, "丙": 0.9, "丁": 0.6, "甲": 0.0, "戊": 0.1}
+
+    def scorer(query, texts):
+        return [scores[t[0]] for t in texts]
+
+    params = FocusParams(keep_ratio=0.01, neighbours=1, one_sided=True, query_variants=1)  # floors only
+    rendered, _ = focus_texts("q", [text, text], scorer, params=params)
+    assert "丙" in rendered[0] and "丁" in rendered[0] and "乙" not in rendered[0]  # best + its better side only
+    two_sided, _ = focus_texts("q", [text, text], scorer, params=FocusParams(keep_ratio=0.01, neighbours=1))
+    assert "乙" in two_sided[0] and "丁" in two_sided[0]
+    assert FOCUS_PARAMS["sentfocus-v4"].one_sided and not FOCUS_PARAMS["sentfocus-v2"].one_sided

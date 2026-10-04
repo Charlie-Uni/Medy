@@ -18,6 +18,8 @@ block header carries two UUIDs. Three released modes (`retrieval_params/hybrid` 
   first-ranked chunk is shown whole.
 - `sentfocus-v3` — `sentfocus-v2` without the whole first chunk (the neighbour rule alone keeps most answer texts;
   the whole chunk cost three points of the token cut).
+- `sentfocus-v4` — `sentfocus-v2` keeping only the better-scoring neighbour of the best unit (record 116: v2's
+  two-sided rule left three of four sentences and stopped 2.3 points short of the token gate).
 
 What does not change in any mode: `AgentState.evidence` keeps the full chunk text (its hash is checked, baseline
 3.3), layer-2 screening has already run on the full text, the claim verifier judges against the full cited chunk,
@@ -41,6 +43,7 @@ EVIDENCE_FOCUS_COMPACT = "compact-v1"
 EVIDENCE_FOCUS_SENTENCE = "sentfocus-v1"
 EVIDENCE_FOCUS_SENTENCE_V2 = "sentfocus-v2"
 EVIDENCE_FOCUS_SENTENCE_V3 = "sentfocus-v3"
+EVIDENCE_FOCUS_SENTENCE_V4 = "sentfocus-v4"
 
 
 @dataclass(frozen=True)
@@ -49,6 +52,9 @@ class FocusParams:
 
     keep_ratio: float  # share of the evidence text tokens (local estimate) kept across the whole evidence set
     neighbours: int = 0  # units kept on each side of a chunk's best unit
+    one_sided: bool = (
+        False  # keep only the better-scoring side of the best unit (record 116: v2's two sides cost 2.3 pp)
+    )
     whole_top: int = 0  # leading chunks (reranker order) shown whole
     query_variants: int = 1  # the question plus this many rewritten queries, scored with max
 
@@ -59,6 +65,11 @@ FOCUS_PARAMS: dict[str, FocusParams] = {
     # v2 without the whole first chunk: its neighbour rule already keeps 98% of the answer texts at ranks 2-8 (record
     # 113), and the whole chunk cost three points of the token cut
     EVIDENCE_FOCUS_SENTENCE_V3: FocusParams(keep_ratio=0.6, neighbours=1, whole_top=0, query_variants=2),
+    # v2 measured −22.7% real tokens at +4.0 pp (record 116); the two-sided neighbour rule is where the tokens went,
+    # so v4 keeps the best unit and only its better-scoring neighbour
+    EVIDENCE_FOCUS_SENTENCE_V4: FocusParams(
+        keep_ratio=0.6, neighbours=1, whole_top=1, query_variants=2, one_sided=True
+    ),
 }
 ALLOWED_EVIDENCE_FOCUS: frozenset[str] = frozenset({EVIDENCE_FOCUS_OFF, EVIDENCE_FOCUS_COMPACT, *FOCUS_PARAMS})
 
@@ -176,10 +187,16 @@ def focus_texts(
             for u, s in zip(scored, scores, strict=True):
                 by_unit[u] = max(by_unit[u], float(s))
         for i in {i for i, _ in scored}:  # every chunk keeps its best unit and the neighbours asked for
+            n = len(tokens[i])
             best = max((j for k, j in scored if k == i), key=lambda j: (by_unit[(i, j)], -j))
-            keep[i].update(
-                j for j in range(best - params.neighbours, best + params.neighbours + 1) if 0 <= j < len(tokens[i])
-            )
+            keep[i].add(best)
+            if params.neighbours:
+                sides = [j for j in (best - 1, best + 1) if 0 <= j < n]
+                if params.one_sided and sides:
+                    sides = [max(sides, key=lambda j: (by_unit[(i, j)], -j))]
+                for side in sides:
+                    step = 1 if side > best else -1
+                    keep[i].update(best + step * k for k in range(1, params.neighbours + 1) if 0 <= best + step * k < n)
         kept = sum(tokens[i][j] for i in range(len(texts)) for j in keep[i])
         budget = math.ceil(params.keep_ratio * full)
         for i, j in sorted(scored, key=lambda u: (-by_unit[u], u)):
