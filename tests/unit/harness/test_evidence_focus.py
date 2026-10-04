@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import pytest
 
+from medops.domain.common import DocStatus
 from medops.harness.evidence_focus import (
     ELISION,
     EVIDENCE_FOCUS_COMPACT,
@@ -185,7 +186,7 @@ def test_deps_accept_every_sentence_version_and_the_loader_lists_them():
     from medops.application.policy_loader import ReleasedPolicy, ReleasedPolicySet
     from medops.harness.evidence_focus import ALLOWED_EVIDENCE_FOCUS, FOCUS_PARAMS
 
-    assert set(FOCUS_PARAMS) == {"sentfocus-v1", "sentfocus-v2", "sentfocus-v3", "sentfocus-v4"}
+    assert set(FOCUS_PARAMS) == {"sentfocus-v1", "sentfocus-v2", "sentfocus-v3", "sentfocus-v4", "sentfocus-v5"}
     assert set(FOCUS_PARAMS) < ALLOWED_EVIDENCE_FOCUS
     for mode in FOCUS_PARAMS:
         make_deps(FakeRetrieval(), FakeModelGateway(), evidence_focus=mode, sentence_scorer=SCORER)
@@ -217,3 +218,17 @@ def test_v4_keeps_only_the_better_scoring_neighbour_of_the_best_unit():
     two_sided, _ = focus_texts("q", [text, text], scorer, params=FocusParams(keep_ratio=0.01, neighbours=1))
     assert "乙" in two_sided[0] and "丁" in two_sided[0]
     assert FOCUS_PARAMS["sentfocus-v4"].one_sided and not FOCUS_PARAMS["sentfocus-v2"].one_sided
+
+
+def test_v5_uses_short_delimiters_with_the_same_fields_and_aliases():
+    items = [
+        evidence("c1", DOSE, doc_id="doc-1"),
+        evidence("c2", ENGLISH, doc_id="doc-2", status=DocStatus.archived, historical=True),
+    ]
+    v5 = render_evidence("6 至 12 歲 孩童 口服 劑量", items, mode="sentfocus-v5", scorer=SCORER)
+    assert v5.blocks[0].startswith("[E1 | D1 | v=v1 | p=1]\n") and v5.blocks[0].endswith("\n[/E1]")
+    assert v5.blocks[1].startswith("[E2 | D2 | v=v1 | p=1 | historical]\n")
+    assert v5.chunk_ids == {"E1": "c1", "E2": "c2"} and v5.resolve("e2") == "c2"
+    v4 = render_evidence("6 至 12 歲 孩童 口服 劑量", items, mode="sentfocus-v4", scorer=SCORER)
+    assert v4.blocks[0].startswith("<<证据 | chunk=E1 | doc=D1 | version=v1 | page=1>>")
+    assert [b.split("\n")[1] for b in v4.blocks] == [b.split("\n")[1] for b in v5.blocks]  # same selected text

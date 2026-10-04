@@ -20,6 +20,8 @@ block header carries two UUIDs. Three released modes (`retrieval_params/hybrid` 
   the whole chunk cost three points of the token cut).
 - `sentfocus-v4` — `sentfocus-v2` keeping only the better-scoring neighbour of the best unit (record 116: v2's
   two-sided rule left three of four sentences and stopped 2.3 points short of the token gate).
+- `sentfocus-v5` — `sentfocus-v4` with shorter block delimiters (`[E1 | D1 | v=… | p=…]` … `[/E1]`): the same
+  fields, about 2.7 points more of the token cut; aliases and elision marks unchanged.
 
 What does not change in any mode: `AgentState.evidence` keeps the full chunk text (its hash is checked, baseline
 3.3), layer-2 screening has already run on the full text, the claim verifier judges against the full cited chunk,
@@ -44,6 +46,7 @@ EVIDENCE_FOCUS_SENTENCE = "sentfocus-v1"
 EVIDENCE_FOCUS_SENTENCE_V2 = "sentfocus-v2"
 EVIDENCE_FOCUS_SENTENCE_V3 = "sentfocus-v3"
 EVIDENCE_FOCUS_SENTENCE_V4 = "sentfocus-v4"
+EVIDENCE_FOCUS_SENTENCE_V5 = "sentfocus-v5"
 
 
 @dataclass(frozen=True)
@@ -57,6 +60,9 @@ class FocusParams:
     )
     whole_top: int = 0  # leading chunks (reranker order) shown whole
     query_variants: int = 1  # the question plus this many rewritten queries, scored with max
+    markers: str = (
+        "v1"  # block delimiters: v1 = <<证据 | chunk=E1 …>> … <<证据 E1 结束>>; v2 = [E1 | D1 | v=… | p=…] … [/E1]
+    )
 
 
 FOCUS_PARAMS: dict[str, FocusParams] = {
@@ -69,6 +75,11 @@ FOCUS_PARAMS: dict[str, FocusParams] = {
     # so v4 keeps the best unit and only its better-scoring neighbour
     EVIDENCE_FOCUS_SENTENCE_V4: FocusParams(
         keep_ratio=0.6, neighbours=1, whole_top=1, query_variants=2, one_sided=True
+    ),
+    # v4 measured 24.0% offline with 99.2% of the answer texts kept; the delimiters still cost 43 tokens a block
+    # (the version label alone 15), so v5 is v4 with shorter delimiters carrying the same fields
+    EVIDENCE_FOCUS_SENTENCE_V5: FocusParams(
+        keep_ratio=0.6, neighbours=1, whole_top=1, query_variants=2, one_sided=True, markers="v2"
     ),
 }
 ALLOWED_EVIDENCE_FOCUS: frozenset[str] = frozenset({EVIDENCE_FOCUS_OFF, EVIDENCE_FOCUS_COMPACT, *FOCUS_PARAMS})
@@ -255,10 +266,11 @@ def render_evidence(
             blocks.append(f"{head}\n{e.text}\n<<证据 {i} 结束>>")
         return RenderedEvidence(blocks=tuple(blocks), full_tokens=full, kept_tokens=full)
     stats = {"full_tokens": full, "kept_tokens": full, "units": 0, "kept_units": 0}
-    if mode in FOCUS_PARAMS:
+    params = FOCUS_PARAMS.get(mode)
+    if params is not None:
         if scorer is None:
             raise ValueError(f"{mode} needs a sentence scorer")
-        texts, stats = focus_texts(query, texts, scorer, params=FOCUS_PARAMS[mode], rewritten=rewritten)
+        texts, stats = focus_texts(query, texts, scorer, params=params, rewritten=rewritten)
     docs: dict[str, str] = {}
     chunk_ids: dict[str, str] = {}
     blocks = []
@@ -267,6 +279,10 @@ def render_evidence(
         alias = f"E{i}"
         chunk_ids[alias] = c.chunk_id
         doc = docs.setdefault(c.doc_id, f"D{len(docs) + 1}")
-        head = f"<<证据 | chunk={alias} | doc={doc} | version={c.version} | page={c.page}{' | historical' if e.historical else ''}>>"
-        blocks.append(f"{head}\n{text}\n<<证据 {alias} 结束>>")
+        flag = " | historical" if e.historical else ""
+        if params is not None and params.markers == "v2":
+            blocks.append(f"[{alias} | {doc} | v={c.version} | p={c.page}{flag}]\n{text}\n[/{alias}]")
+        else:
+            head = f"<<证据 | chunk={alias} | doc={doc} | version={c.version} | page={c.page}{flag}>>"
+            blocks.append(f"{head}\n{text}\n<<证据 {alias} 结束>>")
     return RenderedEvidence(blocks=tuple(blocks), chunk_ids=chunk_ids, **stats)
