@@ -71,13 +71,35 @@ def extra_text(r: dict) -> str:
     return ", ".join(r.get("slices") or [])
 
 
+def existing_notes(path) -> list[str]:
+    """Hand-written paragraphs between the heading block and the table survive a regeneration (record 114: the
+    2026-09-28 backfill note of the D2 sheet was dropped once)."""
+    if not path.exists():
+        return []
+    lines = path.read_text(encoding="utf-8").splitlines()
+    body = lines[4:]  # title, blank, instruction line, blank
+    notes = []
+    for line in body:
+        if line.startswith("| ID"):
+            break
+        notes.append(line)
+    while notes and not notes[-1].strip():
+        notes.pop()
+    return notes
+
+
 def existing_conclusions(path) -> dict[str, str]:
     """结论 already written by a human survive a regeneration (record 84: a rebuild once wiped four verdicts)."""
     if not path.exists():
         return {}
     out: dict[str, str] = {}
     for line in path.read_text(encoding="utf-8").splitlines():
-        if line.startswith("| ") and not line.startswith("| ID") and not line.startswith("| 样本") and not line.startswith("| ---"):
+        if (
+            line.startswith("| ")
+            and not line.startswith("| ID")
+            and not line.startswith("| 样本")
+            and not line.startswith("| ---")
+        ):
             cells = [c.strip() for c in line.strip().strip("|").split(" | ")]
             if len(cells) >= 2 and cells[-1]:
                 out[cells[0]] = cells[-1]
@@ -101,6 +123,9 @@ def main() -> int:
         ]
         target = SHEETS / f"{name.replace('.jsonl', '.md')}"
         kept = existing_conclusions(target)
+        notes = existing_notes(target)
+        if notes:
+            lines[4:4] = [*notes, ""]
         for r in rows:
             lines.append(
                 f"| {r['sample_id']} | {r['dept']} | {r['language']} | {cell(r['query'], 200)} | {cell(expected_text(r), 120)} | {cell(extra_text(r), 90)} | {kept.get(r['sample_id'], '')} |"

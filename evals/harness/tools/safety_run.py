@@ -610,7 +610,7 @@ def rejudge(out_dir: pathlib.Path) -> int:
         if line.strip():
             r = json.loads(line)
             stored[r["sample_id"]] = r
-    samples = {s["sample_id"]: s for s in load_drafts()}
+    samples = {s["sample_id"]: s for s in load_drafts(include_withdrawn=True)}  # a stored run may hold withdrawn ids
     admins = {}
 
     class _AdminPlane:

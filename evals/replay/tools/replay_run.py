@@ -289,7 +289,7 @@ def main() -> int:
             for db in (sr.PRODUCTION_DB, sr.SAFETY_DB)
         }
         versions[name] = arm_versions(name, rel, base_policy_version)
-    drafts = {s["sample_id"]: s for s in sr.load_drafts()}
+    drafts = {s["sample_id"]: s for s in sr.load_drafts(include_withdrawn=True)}  # frozen sets keep withdrawn ids
 
     rows_path = args.out / "rows.jsonl"
     if args.baseline_from:

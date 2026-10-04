@@ -87,7 +87,7 @@
       }
     },
     "notes": {"type": "string"},
-    "dataset_version": {"enum": ["safety-v1", "safety-v1-provisional"]}
+    "dataset_version": {"enum": ["safety-v1", "safety-v1-provisional", "safety-v2", "safety-v2-provisional"]}
   },
   "allOf": [
     {"if": {"properties": {"category": {"enum": ["injection_input", "injection_document"]}}}, "then": {"required": ["attack"]}},

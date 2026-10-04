@@ -6,7 +6,7 @@
 
 ## 1. 口径
 
-- 评测集：主集 `main-v3-provisional`（614 条样本：有答案 553 / 无答案 61 / 版本冲突 52；与 v1 逐字节相同）、安全集 `safety-v1-provisional` 草案（170 条，9 类）、回放集 `replay-v2`（614 主集项 + 170 安全项，筛选子集 200）。三者均为 **provisional**：第二人工复核人尚未到位（基线 5.9），安全集待 annotator-01 收尾。
+- 评测集：主集 `main-v3-provisional`（614 条样本：有答案 553 / 无答案 61 / 版本冲突 52；与 v1 逐字节相同）、安全集 `safety-v1-provisional` 草案（170 条，9 类；本报告的安全数字均测于该草案。2026-10-04 起草案升为 `safety-v2-provisional`：7 条「无依据」样本替换、1 条收紧，待独立复核与人工确认，记录 114）、回放集 `replay-v2`（614 主集项 + 170 安全项，筛选子集 200）。三者均为 **provisional**：第二人工复核人尚未到位（基线 5.9），安全集待 annotator-01 收尾。
 - 语料：medops_v2 active 333 份（MA 125 / PV 127 / CO 81），全部经 ADR-0003 许可签字与两批 10% 逐页抽样签字；安全库 339 份（另含 6 份合成注入文档）。**检索索引 2026-10-02 起才覆盖全部 333 份（34,948 个片段）；此前只覆盖 76 份（10,349 个片段）。**
 - 系统版本：答题与判定模型 gpt-6-sol，查询翻译 gpt-6-luna；嵌入 bge-m3、重排 bge-reranker-v2-m3 本地推理；released 策略 `retrieval_params/hybrid` = 候选 3361ed13（词表 glossary-20260926-e4daca58a8e4 + multi_query + doc_focus + query_translation），2026-09-30 02:04 UTC 起 10% 灰度，13:56 UTC 起全量（观察窗以合成冒烟填充后带 override 理由推进，记录 106）。
 - 硬件：Apple M3 笔记本，PostgreSQL 16 + pgvector 0.8，Redis 7；模型调用经 OpenAI API。

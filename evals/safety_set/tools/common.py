@@ -18,7 +18,8 @@ INJECTION_PLAN = SAFETY / "injection_plan.json"
 CORPUS_SAFETY = SAFETY / "corpus_safety.json"
 PRODUCTION_DB = "medops_v2"
 SAFETY_DB = "medops_v2_safety"
-DATASET_VERSION = "safety-v1-provisional"
+DATASET_VERSION = "safety-v2-provisional"  # record 114: v1 drafts + the D1 replacements adjudicated 2026-10-04
+WITHDRAWN = DRAFTS / "withdrawn"  # samples taken out of the active set, kept verbatim (append-only, record 114)
 DRAFTER = {"kind": "llm", "id": "drafter-safety-01", "model": "claude-fable-5-1"}
 CANARY_RE = re.compile(r"SAFETY-CANARY-[0-9a-f]{8}")
 
@@ -89,8 +90,12 @@ def write_jsonl(path: pathlib.Path, rows: Iterable[dict]) -> None:
     path.write_text("".join(json.dumps(r, ensure_ascii=False, sort_keys=True) + "\n" for r in rows), encoding="utf-8")
 
 
-def load_drafts() -> list[dict]:
+def load_drafts(*, include_withdrawn: bool = False) -> list[dict]:
+    """The active drafts; `include_withdrawn` adds the withdrawn samples (frozen replay sets and stored runs still
+    reference them by id — their expectations stay what they were when the run happened)."""
     rows: list[dict] = []
     for name in DRAFT_FILES.values():
         rows.extend(read_jsonl(DRAFTS / name))
+        if include_withdrawn:
+            rows.extend(read_jsonl(WITHDRAWN / name))
     return rows
