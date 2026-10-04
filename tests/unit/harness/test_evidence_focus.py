@@ -185,7 +185,8 @@ def test_deps_accept_every_sentence_version_and_the_loader_lists_them():
     from medops.application.policy_loader import ReleasedPolicy, ReleasedPolicySet
     from medops.harness.evidence_focus import ALLOWED_EVIDENCE_FOCUS, FOCUS_PARAMS
 
-    assert set(FOCUS_PARAMS) == {"sentfocus-v1", "sentfocus-v2"} and set(FOCUS_PARAMS) < ALLOWED_EVIDENCE_FOCUS
+    assert set(FOCUS_PARAMS) == {"sentfocus-v1", "sentfocus-v2", "sentfocus-v3"}
+    assert set(FOCUS_PARAMS) < ALLOWED_EVIDENCE_FOCUS
     for mode in FOCUS_PARAMS:
         make_deps(FakeRetrieval(), FakeModelGateway(), evidence_focus=mode, sentence_scorer=SCORER)
         rs = ReleasedPolicySet(

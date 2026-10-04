@@ -16,6 +16,8 @@ block header carries two UUIDs. Three released modes (`retrieval_params/hybrid` 
   answers spanning two sentences): a unit's score is its best score over the question and the richest rewritten
   query (glossary terms carry the English vocabulary); every chunk keeps the neighbours of its best unit; the
   first-ranked chunk is shown whole.
+- `sentfocus-v3` — `sentfocus-v2` without the whole first chunk (the neighbour rule alone keeps most answer texts;
+  the whole chunk cost three points of the token cut).
 
 What does not change in any mode: `AgentState.evidence` keeps the full chunk text (its hash is checked, baseline
 3.3), layer-2 screening has already run on the full text, the claim verifier judges against the full cited chunk,
@@ -38,6 +40,7 @@ EVIDENCE_FOCUS_OFF = "off"
 EVIDENCE_FOCUS_COMPACT = "compact-v1"
 EVIDENCE_FOCUS_SENTENCE = "sentfocus-v1"
 EVIDENCE_FOCUS_SENTENCE_V2 = "sentfocus-v2"
+EVIDENCE_FOCUS_SENTENCE_V3 = "sentfocus-v3"
 
 
 @dataclass(frozen=True)
@@ -53,6 +56,9 @@ class FocusParams:
 FOCUS_PARAMS: dict[str, FocusParams] = {
     EVIDENCE_FOCUS_SENTENCE: FocusParams(keep_ratio=0.6),
     EVIDENCE_FOCUS_SENTENCE_V2: FocusParams(keep_ratio=0.6, neighbours=1, whole_top=1, query_variants=2),
+    # v2 without the whole first chunk: its neighbour rule already keeps 98% of the answer texts at ranks 2-8 (record
+    # 113), and the whole chunk cost three points of the token cut
+    EVIDENCE_FOCUS_SENTENCE_V3: FocusParams(keep_ratio=0.6, neighbours=1, whole_top=0, query_variants=2),
 }
 ALLOWED_EVIDENCE_FOCUS: frozenset[str] = frozenset({EVIDENCE_FOCUS_OFF, EVIDENCE_FOCUS_COMPACT, *FOCUS_PARAMS})
 

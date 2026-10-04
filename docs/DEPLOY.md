@@ -40,6 +40,7 @@ docker compose --env-file .env --profile app ps
 - 容器内访问数据库与 Redis 用服务名，因此 `.env` 需要另给容器用的 DSN：`DATABASE_URL_DOCKER`、`DATABASE_ADMIN_URL_DOCKER`、`DATABASE_READONLY_URL_DOCKER`、`REDIS_URL_DOCKER`（主机名分别为 `postgres`、`redis`）；未设置时回退到主机用的同名键（仅在主机网络下可用）。
 - 模型缓存挂载到命名卷 `model_cache`（容器内 `/models`，`MODEL_CACHE_DIR=/models`），首次启动会下载嵌入与重排模型；离线环境请预先填充该卷。
 - 词表目录 `GLOSSARY_DIR`（记录 93）：存放已发布的查询改写词表 `glossary-<YYYYMMDD>-<sha12>.json`（仓库副本在 `evals/glossary/`）。一旦 released 的检索参数指向某个词表版本，API / worker / MCP 启动时会校验该文件存在且内容摘要与版本一致，缺失或不一致即以 `dependency_unavailable` 拒绝启动；未发布词表时可留空。检索参数 `multi_query` / `doc_focus` / `query_translation`（记录 93–95）同样只经发布生效，其中 `query_translation` 会在检索前调用一次翻译模型（计入 Trace 费用，MCP 搜索工具不做翻译）。
+- 作答上下文布局 `evidence_focus`（记录 113）：同为 `retrieval_params/hybrid` 下只经发布生效的键，取值 `off`（默认，提示词与历史完全一致）、`compact-v1`（证据块头部的 chunk / 文档 UUID 换成短别名，证据正文不动）、`sentfocus-v1` / `sentfocus-v2`（再按问题相关性只显示每段的部分句子，用已加载的本机重排模型打分）。不需要额外部署件；逐句版本在作答节点前多一次本机打分（真实语料上每题约 1–2 s，见记录 113），会计入普通问答时延。状态、校验与引用始终使用完整分块；该键只改变 `model_config_version`（后缀 `;ctx=`），不改变检索版本与缓存键。
 - 迁移不在容器启动时自动执行：`make migrate`（主机）或 `docker compose --profile app run --rm api python -m alembic upgrade head`（使用管理 DSN）。
 - 端口只绑定 `127.0.0.1`；对外暴露须经反向代理与 TLS，bearer token 的 issuer / audience 见 `OIDC_*` 键。
 
