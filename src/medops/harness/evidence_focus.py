@@ -32,6 +32,8 @@ What does not change in any mode: `AgentState.evidence` keeps the full chunk tex
 3.3), layer-2 screening has already run on the full text, the claim verifier judges against the full cited chunk,
 and citations stay chunk-level. The rules are deterministic for a fixed scorer revision; the mode enters
 `model_config_version` through the released-policy suffix, so runs of different modes never share operation keys.
+- `sentfocus-v8` — `sentfocus-v7` without the rule line (titles as information, no instruction) and with titles cut
+  at a word boundary within 90 characters.
 """
 
 from __future__ import annotations
@@ -54,6 +56,7 @@ EVIDENCE_FOCUS_SENTENCE_V4 = "sentfocus-v4"
 EVIDENCE_FOCUS_SENTENCE_V5 = "sentfocus-v5"
 EVIDENCE_FOCUS_SENTENCE_V6 = "sentfocus-v6"
 EVIDENCE_FOCUS_SENTENCE_V7 = "sentfocus-v7"
+EVIDENCE_FOCUS_SENTENCE_V8 = "sentfocus-v8"
 
 
 @dataclass(frozen=True)
@@ -69,8 +72,10 @@ class FocusParams:
     query_variants: int = 1  # the question plus this many rewritten queries, scored with max
     # block delimiters: v1 = <<证据 | chunk=E1 …>> … <<证据 E1 结束>>; v2 = [E1 | D1 | v=… | p=…] … [/E1];
     # v3 = [E1 | D1 | p=…] … [/E1] with one legend line giving each document's version once;
-    # v4 = [E1 | D1] … [/E1] with a legend of one line per document (title, version) under the named-source rule
+    # v4 = [E1 | D1] … [/E1] with a legend of one line per document (title, version)
     markers: str = "v1"
+    source_rule: bool = True  # markers v4: put the named-source rule line above the legend (v7); v8 lists titles only
+    title_chars: int = 60  # markers v4: legend titles are cut here (v8: 90, at a word boundary)
 
 
 FOCUS_PARAMS: dict[str, FocusParams] = {
@@ -98,6 +103,12 @@ FOCUS_PARAMS: dict[str, FocusParams] = {
     # (a question that names its source is answered only from that source); page numbers leave the block headers
     # to pay for the titles
     EVIDENCE_FOCUS_SENTENCE_V7: FocusParams(keep_ratio=0.6, neighbours=1, whole_top=1, query_variants=2, markers="v4"),
+    # v7's rule line stopped ss-0088 but made the model abstain on five items v2 and v6 answered, and its 60-character
+    # cut removed "IX" from "GVP – Module IX" (record 119). v8 gives the information without the instruction: the same
+    # legend of titles, no rule line, titles cut at a word boundary within 90 characters
+    EVIDENCE_FOCUS_SENTENCE_V8: FocusParams(
+        keep_ratio=0.6, neighbours=1, whole_top=1, query_variants=2, markers="v4", source_rule=False, title_chars=90
+    ),
 }
 ALLOWED_EVIDENCE_FOCUS: frozenset[str] = frozenset({EVIDENCE_FOCUS_OFF, EVIDENCE_FOCUS_COMPACT, *FOCUS_PARAMS})
 
@@ -325,11 +336,24 @@ def render_evidence(
         if missing:
             raise ValueError(f"{mode} needs the title of every evidence document ({len(missing)} missing)")
         assert titles is not None
+        assert params is not None
         lines = [
-            f"{alias} = {titles[doc_id][:TITLE_MAX_CHARS]}（v={versions[alias]}）" for doc_id, alias in docs.items()
+            f"{alias} = {_cut_title(titles[doc_id], params)}（v={versions[alias]}）" for doc_id, alias in docs.items()
         ]
-        legend = "\n".join([NAMED_SOURCE_RULE, *lines])
+        legend = "\n".join([NAMED_SOURCE_RULE if params.source_rule else "文档：", *lines])
     return RenderedEvidence(blocks=tuple(blocks), chunk_ids=chunk_ids, legend=legend, **stats)
+
+
+def _cut_title(title: str, params: FocusParams) -> str:
+    """v7 cuts at a fixed length; later versions back off to the last space so a designator is not split."""
+    limit = params.title_chars
+    if len(title) <= limit:
+        return title
+    if limit <= TITLE_MAX_CHARS:
+        return title[:limit]
+    head = title[:limit]
+    space = head.rfind(" ")
+    return (head[:space] if space >= limit - 20 else head).rstrip(" –—-:：,，(（") + "…"
 
 
 def needs_titles(mode: str) -> bool:

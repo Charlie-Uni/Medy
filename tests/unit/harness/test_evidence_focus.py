@@ -186,7 +186,7 @@ def test_deps_accept_every_sentence_version_and_the_loader_lists_them():
     from medops.application.policy_loader import ReleasedPolicy, ReleasedPolicySet
     from medops.harness.evidence_focus import ALLOWED_EVIDENCE_FOCUS, FOCUS_PARAMS
 
-    assert set(FOCUS_PARAMS) == {f"sentfocus-v{n}" for n in range(1, 8)}
+    assert set(FOCUS_PARAMS) == {f"sentfocus-v{n}" for n in range(1, 9)}
     assert set(FOCUS_PARAMS) < ALLOWED_EVIDENCE_FOCUS
     for mode in FOCUS_PARAMS:
         make_deps(
@@ -310,3 +310,24 @@ def test_v7_names_each_document_under_the_named_source_rule_and_needs_titles():
     prompt = gateway.calls[0].messages[1].content
     assert NAMED_SOURCE_RULE in prompt and "D1 = 拔痛酸錠 仿單（v=Rev 5）\n" in prompt
     assert run.outcome == "answered" and run.state.answer.claims[0].citation_chunk_ids == ("c1",)
+
+
+def test_v8_lists_titles_without_the_rule_line_and_cuts_them_at_a_word_boundary():
+    from medops.harness.evidence_focus import NAMED_SOURCE_RULE
+
+    gvp = "Guideline on good pharmacovigilance practices (GVP) – Module IX – Signal management (Rev 1)"
+    long_title = "Sponsor Responsibilities — Safety Reporting Requirements and Safety Assessment for IND and Bioavailability/Bioequivalence Studies"
+    items = [evidence("c1", DOSE, doc_id="doc-1"), evidence("c2", ENGLISH, doc_id="doc-2")]
+    titles = {"doc-1": gvp, "doc-2": long_title}
+    q = "6 至 12 歲 孩童 口服 劑量"
+    v8 = render_evidence(q, items, mode="sentfocus-v8", scorer=SCORER, titles=titles)
+    lines = v8.legend.split("\n")
+    assert lines[0] == "文档：" and NAMED_SOURCE_RULE not in v8.legend
+    assert "Module IX" in lines[1]  # v7's 60-character cut lost the designator
+    assert lines[2].startswith(
+        "D2 = Sponsor Responsibilities — Safety Reporting Requirements and Safety Assessment for IND"
+    )
+    assert "…（v=v1）" in lines[2] and len(lines[2]) < 110
+    v7 = render_evidence(q, items, mode="sentfocus-v7", scorer=SCORER, titles=titles)
+    assert v7.legend.split("\n")[0] == NAMED_SOURCE_RULE and "Module IX" not in v7.legend  # v7 stays as measured
+    assert v7.blocks == v8.blocks
