@@ -20,6 +20,7 @@ python evals/harness/tools/focus_check.py --run evals/harness/runs/<stored run> 
 from __future__ import annotations
 
 import argparse
+import dataclasses
 import hashlib
 import json
 import pathlib
@@ -42,7 +43,7 @@ from medops.harness.nodes import ANSWER_SYSTEM  # noqa: E402
 from medops.infrastructure.llm.gateway import estimate_tokens  # noqa: E402
 from medops.retrieval.production import require_index_coverage  # noqa: E402
 
-MODES = (ef.EVIDENCE_FOCUS_OFF, ef.EVIDENCE_FOCUS_COMPACT, ef.EVIDENCE_FOCUS_SENTENCE)
+MODES = (ef.EVIDENCE_FOCUS_OFF, ef.EVIDENCE_FOCUS_COMPACT, *ef.FOCUS_PARAMS)
 
 
 def read_jsonl(path: pathlib.Path) -> list[dict]:
@@ -121,9 +122,17 @@ def main() -> int:
     )
     ap.add_argument("--device", default="mps")
     ap.add_argument("--limit", type=int, default=0)
+    ap.add_argument(
+        "--glossary",
+        default="glossary-20260926-e4daca58a8e4",
+        help="glossary version of the released rewrite (its queries feed sentfocus-v2); 'glossary-none' to skip",
+    )
+    ap.add_argument("--modes", default=",".join(MODES), help="comma-separated subset of the layouts")
     args = ap.parse_args()
     if args.out.exists():
         raise SystemExit("refusing to overwrite an existing output directory")
+    modes = tuple(m for m in MODES if m in {x.strip() for x in args.modes.split(",")})
+    sentence_modes = [m for m in modes if m in ef.FOCUS_PARAMS]
 
     rows = list({r["sample_id"]: r for r in read_jsonl(args.run / "rows.jsonl")}.values())
     rows = [r for r in rows if r.get("evidence_chunks")]
@@ -141,26 +150,33 @@ def main() -> int:
         require_index_coverage(conn, plane=PRODUCTION_DB)
         evidence = load_evidence(conn, sorted({c for r in rows for c in r["evidence_chunks"]}))
 
+    from medops.retrieval.glossary_store import load_versioned_glossary
     from medops.retrieval.rerank import BgeRerankerV2M3
+    from medops.retrieval.rewrite import rewrite
 
+    glossary = (
+        load_versioned_glossary(REPO / "evals/glossary", args.glossary) if args.glossary != "glossary-none" else None
+    )
     reranker = BgeRerankerV2M3(device=args.device)
     tok_name, count = tokenizer()
 
     out_rows: list[dict] = []
-    seconds: list[float] = []
+    seconds: dict[str, list[float]] = {m: [] for m in sentence_modes}
     for n, r in enumerate(rows, 1):
         items = [evidence[c] for c in r["evidence_chunks"] if c in evidence]
         if not items:
             continue
+        rewritten = rewrite(r["query"], glossary=glossary).queries if glossary else ()
         rendered = {}
-        for mode in MODES:
+        for mode in modes:
             t0 = time.perf_counter()
-            rendered[mode] = ef.render_evidence(r["query"], items, mode=mode, scorer=reranker.score)
-            if mode == ef.EVIDENCE_FOCUS_SENTENCE:
-                seconds.append(time.perf_counter() - t0)
-        focused = dict(
-            zip((e.citation.chunk_id for e in items), rendered[ef.EVIDENCE_FOCUS_SENTENCE].blocks, strict=True)
-        )
+            rendered[mode] = ef.render_evidence(
+                r["query"], items, mode=mode, scorer=reranker.score, rewritten=rewritten
+            )
+            if mode in seconds:
+                seconds[mode].append(time.perf_counter() - t0)
+        chunk_order = [e.citation.chunk_id for e in items]
+        focused = {m: dict(zip(chunk_order, rendered[m].blocks, strict=True)) for m in sentence_modes}
         row = {
             "sample_id": r["sample_id"],
             "language": r["language"],
@@ -168,36 +184,50 @@ def main() -> int:
             "outcome": r["outcome"],
             "gold_cited": bool(r.get("gold_cited")),
             "model_tokens": r["model_tokens"],
-            "prompt_tokens": {m: count(prompt_text(r["query"], rendered[m])) for m in MODES},
-            "evidence_tokens_full": rendered[ef.EVIDENCE_FOCUS_SENTENCE].full_tokens,
-            "evidence_tokens_kept": rendered[ef.EVIDENCE_FOCUS_SENTENCE].kept_tokens,
-            "units": rendered[ef.EVIDENCE_FOCUS_SENTENCE].units,
-            "kept_units": rendered[ef.EVIDENCE_FOCUS_SENTENCE].kept_units,
-            "focus_seconds": round(seconds[-1], 3),
+            "prompt_tokens": {m: count(prompt_text(r["query"], rendered[m])) for m in modes},
+            "focus": {
+                m: {
+                    "evidence_tokens_full": rendered[m].full_tokens,
+                    "evidence_tokens_kept": rendered[m].kept_tokens,
+                    "units": rendered[m].units,
+                    "kept_units": rendered[m].kept_units,
+                    "seconds": round(seconds[m][-1], 3),
+                }
+                for m in sentence_modes
+            },
             "gold": [],
             "claims": [],
         }
         # retention of the annotated gold key text, for gold chunks that are in the evidence
         for g in samples.get(r["sample_id"], {}).get("required_gold_evidence", []):
             key = squash(g["key_text"])
-            for chunk_id in sorted(gold_chunks.get(g["gold_id"], set()) & set(focused)):
+            for chunk_id in sorted(gold_chunks.get(g["gold_id"], set()) & set(chunk_order)):
                 if key not in squash(evidence[chunk_id].text):
                     continue  # the key text straddles a chunk boundary: not decidable on this chunk alone
                 row["gold"].append(
-                    {"gold_id": g["gold_id"], "chunk": chunk_id, "kept": key in squash(focused[chunk_id])}
+                    {
+                        "gold_id": g["gold_id"],
+                        "chunk": chunk_id,
+                        "kept": {m: key in squash(focused[m][chunk_id]) for m in sentence_modes},
+                    }
                 )
         # retention of the sentence each stored claim leaned on: the unit of the cited chunk the cross-encoder ranks
         # first for the claim text must still be visible
-        if r["outcome"] == "answered":
+        if r["outcome"] == "answered" and sentence_modes:
             for claim in r.get("claims", []):
                 for chunk_id in r.get("cited_chunks", []):
-                    if chunk_id not in focused:
+                    if chunk_id not in chunk_order:
                         continue
                     text = evidence[chunk_id].text
                     units = [text[a:b].strip() for a, b in ef.split_units(text)]
                     scores = reranker.score(claim, units)
                     best = units[max(range(len(units)), key=lambda j: scores[j])]
-                    row["claims"].append({"chunk": chunk_id, "kept": squash(best) in squash(focused[chunk_id])})
+                    row["claims"].append(
+                        {
+                            "chunk": chunk_id,
+                            "kept": {m: squash(best) in squash(focused[m][chunk_id]) for m in sentence_modes},
+                        }
+                    )
         out_rows.append(row)
         if n % 100 == 0:
             print(f"{n}/{len(rows)}", flush=True)
@@ -206,18 +236,37 @@ def main() -> int:
         return sum(x["prompt_tokens"][mode] for x in out_rows)
 
     spent = sum(x["model_tokens"] for x in out_rows)
-    off = total(ef.EVIDENCE_FOCUS_OFF)
+    off = total(ef.EVIDENCE_FOCUS_OFF) if ef.EVIDENCE_FOCUS_OFF in modes else 0
     gold = [g for x in out_rows for g in x["gold"]]
     claims = [c for x in out_rows for c in x["claims"]]
     wins = [x for x in out_rows if x["outcome"] == "answered" and x["gold_cited"] and x["gold"]]
-    wins_at_risk = [x["sample_id"] for x in wins if not any(g["kept"] for g in x["gold"])]
+
+    def retention(mode: str) -> dict:
+        hidden = [x["sample_id"] for x in wins if not any(g["kept"][mode] for g in x["gold"])]
+        kept_gold = sum(g["kept"][mode] for g in gold)
+        kept_claims = sum(c["kept"][mode] for c in claims)
+        return {
+            "gold_key_text": {"n": len(gold), "kept": kept_gold, "rate": rate(kept_gold, len(gold))},
+            "claim_support_sentence": {"n": len(claims), "kept": kept_claims, "rate": rate(kept_claims, len(claims))},
+            "stored_successes_with_gold_in_evidence": len(wins),
+            "stored_successes_whose_gold_text_is_hidden": hidden,
+            "by_language": {
+                lang: rate(
+                    sum(g["kept"][mode] for x in out_rows if x["language"] == lang for g in x["gold"]),
+                    sum(len(x["gold"]) for x in out_rows if x["language"] == lang),
+                )
+                for lang in sorted({x["language"] for x in out_rows})
+            },
+        }
+
     summary = {
         "run": args.run.name,
         "dataset_hash": manifest["dataset_hash"],
         "items": len(out_rows),
         "tokenizer": tok_name,
+        "glossary_for_rewrites": args.glossary,
         "parameters": {
-            "keep_ratio": ef.KEEP_RATIO,
+            "versions": {m: dataclasses.asdict(ef.FOCUS_PARAMS[m]) for m in sentence_modes},
             "min_chunk_tokens": ef.MIN_CHUNK_TOKENS,
             "min_unit_tokens": ef.MIN_UNIT_TOKENS,
             "max_unit_chars": ef.MAX_UNIT_CHARS,
@@ -225,81 +274,77 @@ def main() -> int:
         },
         "tokens": {
             "stored_run_model_tokens_per_item": round(spent / len(out_rows), 1),
-            "answer_prompt_per_item": {m: round(total(m) / len(out_rows), 1) for m in MODES},
-            "prompt_cut_vs_off": {m: round(1 - total(m) / off, 4) for m in MODES},
-            "cut_as_share_of_all_model_tokens": {m: round((off - total(m)) / spent, 4) for m in MODES},
+            "answer_prompt_per_item": {m: round(total(m) / len(out_rows), 1) for m in modes},
+            "prompt_cut_vs_off": {m: round(1 - total(m) / off, 4) for m in modes} if off else {},
+            "cut_as_share_of_all_model_tokens": {m: round((off - total(m)) / spent, 4) for m in modes} if off else {},
             "note": "input side only; citing aliases instead of UUIDs also shortens the output, not counted here",
         },
         "focus": {
-            "evidence_tokens_kept_share": round(
-                sum(x["evidence_tokens_kept"] for x in out_rows) / sum(x["evidence_tokens_full"] for x in out_rows), 4
-            ),
-            "units_per_item": round(statistics.mean(x["units"] for x in out_rows), 1),
-            "kept_units_per_item": round(statistics.mean(x["kept_units"] for x in out_rows), 1),
-            "seconds_p50": round(pct(seconds, 0.5), 3),
-            "seconds_p95": round(pct(seconds, 0.95), 3),
-            "device": args.device,
+            m: {
+                "evidence_tokens_kept_share": round(
+                    sum(x["focus"][m]["evidence_tokens_kept"] for x in out_rows)
+                    / sum(x["focus"][m]["evidence_tokens_full"] for x in out_rows),
+                    4,
+                ),
+                "units_per_item": round(statistics.mean(x["focus"][m]["units"] for x in out_rows), 1),
+                "kept_units_per_item": round(statistics.mean(x["focus"][m]["kept_units"] for x in out_rows), 1),
+                "seconds_p50": round(pct(seconds[m], 0.5), 3),
+                "seconds_p95": round(pct(seconds[m], 0.95), 3),
+                "device": args.device,
+            }
+            for m in sentence_modes
         },
-        "retention": {
-            "gold_key_text": {
-                "n": len(gold),
-                "kept": sum(g["kept"] for g in gold),
-                "rate": rate(sum(g["kept"] for g in gold), len(gold)),
-            },
-            "claim_support_sentence": {
-                "n": len(claims),
-                "kept": sum(c["kept"] for c in claims),
-                "rate": rate(sum(c["kept"] for c in claims), len(claims)),
-            },
-            "stored_successes_with_gold_in_evidence": len(wins),
-            "stored_successes_whose_gold_text_is_hidden": wins_at_risk,
-            "by_language": {
-                lang: rate(
-                    sum(g["kept"] for x in out_rows if x["language"] == lang for g in x["gold"]),
-                    sum(len(x["gold"]) for x in out_rows if x["language"] == lang),
-                )
-                for lang in sorted({x["language"] for x in out_rows})
-            },
-        },
+        "retention": {m: retention(m) for m in sentence_modes},
     }
     args.out.mkdir(parents=True)
     (args.out / "rows.jsonl").write_text(
         "".join(json.dumps(x, ensure_ascii=False) + "\n" for x in out_rows), encoding="utf-8"
     )
     (args.out / "results.json").write_text(json.dumps(summary, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
-    t, f, k = summary["tokens"], summary["focus"], summary["retention"]
+    t = summary["tokens"]
     lines = [
         f"# Answer-context layout check on `{args.run.name}` — {len(out_rows)} items, no model calls",
         "",
-        f"Tokenizer: {tok_name}. Parameters fixed in `medops.harness.evidence_focus` before this run: keep ratio "
-        f"{ef.KEEP_RATIO}, whole chunks up to {ef.MIN_CHUNK_TOKENS} tokens, scorer {reranker.spec.model_id}.",
+        f"Tokenizer: {tok_name}. Rewritten queries from {args.glossary}. Parameters are the constants of "
+        f"`medops.harness.evidence_focus` ({json.dumps(summary['parameters']['versions'])}); scorer "
+        f"{reranker.spec.model_id}.",
         "",
         "| layout | answer prompt tokens / item | cut vs off | cut as share of all model tokens |",
         "| --- | ---: | ---: | ---: |",
     ]
-    for m in MODES:
-        lines.append(
-            f"| {m} | {t['answer_prompt_per_item'][m]} | {t['prompt_cut_vs_off'][m] * 100:.1f}% | "
-            f"{t['cut_as_share_of_all_model_tokens'][m] * 100:.1f}% |"
-        )
+    for m in modes:
+        cut = f"{t['prompt_cut_vs_off'][m] * 100:.1f}%" if off else "—"
+        share = f"{t['cut_as_share_of_all_model_tokens'][m] * 100:.1f}%" if off else "—"
+        lines.append(f"| {m} | {t['answer_prompt_per_item'][m]} | {cut} | {share} |")
     lines += [
         "",
         f"Stored run: {t['stored_run_model_tokens_per_item']} model tokens per item over all calls. The last column "
         "is the input-side cut only; the gate needs 25% on the provider's own count.",
-        "",
-        f"Sentence focus: {f['evidence_tokens_kept_share'] * 100:.1f}% of the evidence tokens kept "
-        f"({f['kept_units_per_item']} of {f['units_per_item']} units per item); local scoring p50 {f['seconds_p50']} s, "
-        f"P95 {f['seconds_p95']} s on {args.device}.",
-        "",
-        "| retention under sentfocus-v1 | kept | n | rate |",
-        "| --- | ---: | ---: | ---: |",
-        f"| annotated gold key text (gold chunk in evidence) | {k['gold_key_text']['kept']} | {k['gold_key_text']['n']} | {k['gold_key_text']['rate']} |",
-        f"| sentence a stored claim leaned on | {k['claim_support_sentence']['kept']} | {k['claim_support_sentence']['n']} | {k['claim_support_sentence']['rate']} |",
-        "",
-        f"Stored successes with their gold chunk in evidence: {k['stored_successes_with_gold_in_evidence']}; "
-        f"of these, the gold key text is hidden for {len(wins_at_risk)}: {', '.join(wins_at_risk) or 'none'}.",
-        "",
-        "Gold key text kept, by language: " + ", ".join(f"{a} {b}" for a, b in k["by_language"].items()) + ".",
+    ]
+    for m in sentence_modes:
+        f, k = summary["focus"][m], summary["retention"][m]
+        hidden = k["stored_successes_whose_gold_text_is_hidden"]
+        lines += [
+            "",
+            f"## {m}",
+            "",
+            f"{f['evidence_tokens_kept_share'] * 100:.1f}% of the evidence tokens kept "
+            f"({f['kept_units_per_item']} of {f['units_per_item']} units per item); local scoring p50 "
+            f"{f['seconds_p50']} s, P95 {f['seconds_p95']} s on {args.device}.",
+            "",
+            "| retention | kept | n | rate |",
+            "| --- | ---: | ---: | ---: |",
+            f"| annotated gold key text (gold chunk in evidence) | {k['gold_key_text']['kept']} | "
+            f"{k['gold_key_text']['n']} | {k['gold_key_text']['rate']} |",
+            f"| sentence a stored claim leaned on | {k['claim_support_sentence']['kept']} | "
+            f"{k['claim_support_sentence']['n']} | {k['claim_support_sentence']['rate']} |",
+            "",
+            f"Stored successes with their gold chunk in evidence: {k['stored_successes_with_gold_in_evidence']}; "
+            f"of these, the gold key text is hidden for {len(hidden)}: {', '.join(hidden) or 'none'}.",
+            "",
+            "Gold key text kept, by language: " + ", ".join(f"{a} {b}" for a, b in k["by_language"].items()) + ".",
+        ]
+    lines += [
         "",
         "This is not a quality result: whether the model answers as well from the focused prompt is only known "
         "from a replay run.",

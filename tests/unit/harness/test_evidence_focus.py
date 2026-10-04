@@ -153,3 +153,42 @@ def test_an_invented_alias_fails_grounding_like_a_forged_chunk_id():
     )
     run = run_ask(state(), make_deps(retrieval, gateway, evidence_focus=EVIDENCE_FOCUS_COMPACT))
     assert run.outcome == "escalated" and run.state.escalation.reason_codes == (ReasonCode.unsupported_conclusion,)
+
+
+def test_v2_keeps_neighbours_the_first_chunk_whole_and_scores_rewritten_queries_too():
+    from medops.harness.evidence_focus import EVIDENCE_FOCUS_SENTENCE_V2, FOCUS_PARAMS
+
+    other = "臨床試驗的監查計畫應依風險訂定。試驗主持人應保存受試者同意書。稽核報告不提供給試驗機構。資料管理計畫應事先核准。"
+    params = FOCUS_PARAMS[EVIDENCE_FOCUS_SENTENCE_V2]
+    asked: list[str] = []
+
+    def scorer(query, texts):
+        asked.append(query)
+        return SCORER(query, texts)
+
+    # chunk 1 (reranker order) is shown whole; the glossary-rich rewritten query is scored as a second variant
+    rendered, stats = focus_texts(
+        "監查計畫", [DOSE, other, ENGLISH], scorer, params=params, rewritten=("監查計畫", "監查計畫 monitoring plan")
+    )
+    assert rendered[0] == DOSE and ELISION not in rendered[0]
+    assert asked == ["監查計畫", "監查計畫 monitoring plan"]
+    # the best unit of chunk 2 is kept together with its neighbours
+    assert "臨床試驗的監查計畫應依風險訂定。試驗主持人應保存受試者同意書。" in rendered[1]
+    # a variant that only the rewritten query matches still lifts that unit
+    v1, _ = focus_texts("監查計畫", [DOSE, other, ENGLISH], SCORER, params=FOCUS_PARAMS["sentfocus-v1"])
+    v2, _ = focus_texts("xyz", [DOSE, other, ENGLISH], SCORER, params=params, rewritten=("xyz", "xyz 7 calendar days"))
+    assert "7 calendar days" in v2[2]
+    assert stats["kept_tokens"] >= params.keep_ratio * stats["full_tokens"]
+
+
+def test_deps_accept_every_sentence_version_and_the_loader_lists_them():
+    from medops.application.policy_loader import ReleasedPolicy, ReleasedPolicySet
+    from medops.harness.evidence_focus import ALLOWED_EVIDENCE_FOCUS, FOCUS_PARAMS
+
+    assert set(FOCUS_PARAMS) == {"sentfocus-v1", "sentfocus-v2"} and set(FOCUS_PARAMS) < ALLOWED_EVIDENCE_FOCUS
+    for mode in FOCUS_PARAMS:
+        make_deps(FakeRetrieval(), FakeModelGateway(), evidence_focus=mode, sentence_scorer=SCORER)
+        rs = ReleasedPolicySet(
+            (ReleasedPolicy("f", "retrieval_params", "hybrid", "v", {"evidence_focus": {"from": "off", "to": mode}}),)
+        )
+        assert rs.evidence_focus() == mode and rs.model_config_suffix() == f";ctx={mode}"

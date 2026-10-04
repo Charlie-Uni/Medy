@@ -11,6 +11,11 @@ block header carries two UUIDs. Three released modes (`retrieval_params/hybrid` 
   sentence units, the cross-encoder that reranked the chunks scores every unit against the question, each chunk
   keeps its best unit, and the remaining units compete across the whole evidence set until `KEEP_RATIO` of the
   evidence tokens is kept. Omitted stretches are marked `[…]` so two kept sentences are never read as adjacent.
+- `sentfocus-v2` — the same selection with three guards that the offline check of v1 motivated (record 113: the
+  annotated answer text was hidden in 6% of the cases, mostly English evidence under a Chinese question and
+  answers spanning two sentences): a unit's score is its best score over the question and the richest rewritten
+  query (glossary terms carry the English vocabulary); every chunk keeps the neighbours of its best unit; the
+  first-ranked chunk is shown whole.
 
 What does not change in any mode: `AgentState.evidence` keeps the full chunk text (its hash is checked, baseline
 3.3), layer-2 screening has already run on the full text, the claim verifier judges against the full cited chunk,
@@ -32,11 +37,26 @@ from medops.retrieval.lexical.normalization import normalize_text
 EVIDENCE_FOCUS_OFF = "off"
 EVIDENCE_FOCUS_COMPACT = "compact-v1"
 EVIDENCE_FOCUS_SENTENCE = "sentfocus-v1"
-ALLOWED_EVIDENCE_FOCUS: frozenset[str] = frozenset(
-    {EVIDENCE_FOCUS_OFF, EVIDENCE_FOCUS_COMPACT, EVIDENCE_FOCUS_SENTENCE}
-)
+EVIDENCE_FOCUS_SENTENCE_V2 = "sentfocus-v2"
 
-KEEP_RATIO = 0.6  # share of the evidence text tokens (local estimate) kept across the whole evidence set
+
+@dataclass(frozen=True)
+class FocusParams:
+    """Selection rules of one sentence-focus version; a version never changes once a run has used it."""
+
+    keep_ratio: float  # share of the evidence text tokens (local estimate) kept across the whole evidence set
+    neighbours: int = 0  # units kept on each side of a chunk's best unit
+    whole_top: int = 0  # leading chunks (reranker order) shown whole
+    query_variants: int = 1  # the question plus this many rewritten queries, scored with max
+
+
+FOCUS_PARAMS: dict[str, FocusParams] = {
+    EVIDENCE_FOCUS_SENTENCE: FocusParams(keep_ratio=0.6),
+    EVIDENCE_FOCUS_SENTENCE_V2: FocusParams(keep_ratio=0.6, neighbours=1, whole_top=1, query_variants=2),
+}
+ALLOWED_EVIDENCE_FOCUS: frozenset[str] = frozenset({EVIDENCE_FOCUS_OFF, EVIDENCE_FOCUS_COMPACT, *FOCUS_PARAMS})
+
+KEEP_RATIO = FOCUS_PARAMS[EVIDENCE_FOCUS_SENTENCE].keep_ratio
 MIN_CHUNK_TOKENS = 60  # a chunk this short is shown whole: trimming it saves almost nothing
 MIN_UNIT_TOKENS = 5  # shorter fragments ("1.", "e.g.", "See Table 2.") are merged into the following unit
 MAX_UNIT_CHARS = 240  # longer runs without a sentence end (flattened tables) are cut at a clause or a space
@@ -118,7 +138,14 @@ def _cut_long(text: str, span: tuple[int, int]) -> list[tuple[int, int]]:
     return out
 
 
-def focus_texts(query: str, texts: Sequence[str], scorer: SentenceScorer) -> tuple[list[str], dict[str, int]]:
+def focus_texts(
+    query: str,
+    texts: Sequence[str],
+    scorer: SentenceScorer,
+    *,
+    params: FocusParams = FOCUS_PARAMS[EVIDENCE_FOCUS_SENTENCE],
+    rewritten: Sequence[str] = (),
+) -> tuple[list[str], dict[str, int]]:
     """The sentence-focused rendering of each text (same order) and the counters of the selection."""
     units = [split_units(t) for t in texts]
     tokens = [[estimate_tokens(t[a:b]) for a, b in spans] for t, spans in zip(texts, units, strict=True)]
@@ -126,19 +153,29 @@ def focus_texts(query: str, texts: Sequence[str], scorer: SentenceScorer) -> tup
     keep: list[set[int]] = [set() for _ in texts]
     scored: list[tuple[int, int]] = []  # (text index, unit index) of every unit that has to compete
     for i, row in enumerate(tokens):
-        if len(row) <= 1 or sum(row) <= MIN_CHUNK_TOKENS:
+        if i < params.whole_top or len(row) <= 1 or sum(row) <= MIN_CHUNK_TOKENS:
             keep[i] = set(range(len(row)))
         else:
             scored.extend((i, j) for j in range(len(row)))
     if scored:
-        scores = scorer(normalize_text(query), [texts[i][units[i][j][0] : units[i][j][1]].strip() for i, j in scored])
-        if len(scores) != len(scored):
-            raise ValueError("sentence scorer returned a score count that differs from the input")
-        by_unit = dict(zip(scored, scores, strict=True))
-        for i in {i for i, _ in scored}:  # every chunk keeps its best unit
-            keep[i].add(max((j for k, j in scored if k == i), key=lambda j: (by_unit[(i, j)], -j)))
+        # the question first, then the richest rewritten queries (the last ones carry the most added terms)
+        variants = list(dict.fromkeys([normalize_text(query), *(normalize_text(q) for q in reversed(rewritten))]))
+        variants = variants[: params.query_variants]
+        unit_texts = [texts[i][units[i][j][0] : units[i][j][1]].strip() for i, j in scored]
+        by_unit: dict[tuple[int, int], float] = dict.fromkeys(scored, float("-inf"))
+        for variant in variants:
+            scores = scorer(variant, unit_texts)
+            if len(scores) != len(scored):
+                raise ValueError("sentence scorer returned a score count that differs from the input")
+            for u, s in zip(scored, scores, strict=True):
+                by_unit[u] = max(by_unit[u], float(s))
+        for i in {i for i, _ in scored}:  # every chunk keeps its best unit and the neighbours asked for
+            best = max((j for k, j in scored if k == i), key=lambda j: (by_unit[(i, j)], -j))
+            keep[i].update(
+                j for j in range(best - params.neighbours, best + params.neighbours + 1) if 0 <= j < len(tokens[i])
+            )
         kept = sum(tokens[i][j] for i in range(len(texts)) for j in keep[i])
-        budget = math.ceil(KEEP_RATIO * full)
+        budget = math.ceil(params.keep_ratio * full)
         for i, j in sorted(scored, key=lambda u: (-by_unit[u], u)):
             if kept >= budget:
                 break
@@ -176,7 +213,12 @@ def _join(text: str, spans: Sequence[tuple[int, int]], chosen: set[int]) -> str:
 
 
 def render_evidence(
-    query: str, evidence: Sequence[Evidence], *, mode: str = EVIDENCE_FOCUS_OFF, scorer: SentenceScorer | None = None
+    query: str,
+    evidence: Sequence[Evidence],
+    *,
+    mode: str = EVIDENCE_FOCUS_OFF,
+    scorer: SentenceScorer | None = None,
+    rewritten: Sequence[str] = (),
 ) -> RenderedEvidence:
     if mode not in ALLOWED_EVIDENCE_FOCUS:
         raise ValueError(f"unknown evidence focus mode {mode!r}")
@@ -190,10 +232,10 @@ def render_evidence(
             blocks.append(f"{head}\n{e.text}\n<<证据 {i} 结束>>")
         return RenderedEvidence(blocks=tuple(blocks), full_tokens=full, kept_tokens=full)
     stats = {"full_tokens": full, "kept_tokens": full, "units": 0, "kept_units": 0}
-    if mode == EVIDENCE_FOCUS_SENTENCE:
+    if mode in FOCUS_PARAMS:
         if scorer is None:
-            raise ValueError("sentfocus-v1 needs a sentence scorer")
-        texts, stats = focus_texts(query, texts, scorer)
+            raise ValueError(f"{mode} needs a sentence scorer")
+        texts, stats = focus_texts(query, texts, scorer, params=FOCUS_PARAMS[mode], rewritten=rewritten)
     docs: dict[str, str] = {}
     chunk_ids: dict[str, str] = {}
     blocks = []

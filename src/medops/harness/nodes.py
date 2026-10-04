@@ -29,7 +29,7 @@ from medops.harness.contracts import NodeAttempt, NodeFailure, NodeSpec, run_nod
 from medops.harness.evidence_focus import (
     ALLOWED_EVIDENCE_FOCUS,
     EVIDENCE_FOCUS_OFF,
-    EVIDENCE_FOCUS_SENTENCE,
+    FOCUS_PARAMS,
     RenderedEvidence,
     SentenceScorer,
     render_evidence,
@@ -127,8 +127,8 @@ class HarnessDeps:
     def __post_init__(self) -> None:
         if self.evidence_focus not in ALLOWED_EVIDENCE_FOCUS:
             raise ValueError(f"unknown evidence focus mode {self.evidence_focus!r}")
-        if self.evidence_focus == EVIDENCE_FOCUS_SENTENCE and self.sentence_scorer is None:
-            raise ValueError("evidence focus sentfocus-v1 needs a sentence scorer")
+        if self.evidence_focus in FOCUS_PARAMS and self.sentence_scorer is None:
+            raise ValueError(f"evidence focus {self.evidence_focus} needs a sentence scorer")
 
 
 class HarnessState(TypedDict):
@@ -333,7 +333,13 @@ def build_nodes(deps: HarnessDeps) -> dict[str, Callable[[HarnessState], dict[st
         assert state.intent is not None
         meter = _Meter(deps.gateway)
         # the prompt layout is a released parameter; state.evidence (full text) is what the verifier judges below
-        rendered = render_evidence(state.query, state.evidence, mode=deps.evidence_focus, scorer=deps.sentence_scorer)
+        rendered = render_evidence(
+            state.query,
+            state.evidence,
+            mode=deps.evidence_focus,
+            scorer=deps.sentence_scorer,
+            rewritten=state.rewritten_queries,
+        )
         response = meter.complete(_answer_request(state, deps, rendered=rendered))
         if response.truncated:
             # reasoning tiers spend output tokens before the JSON (record 54: 1/614 truncated at 800); one retry

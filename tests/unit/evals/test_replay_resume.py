@@ -34,3 +34,35 @@ def test_both_item_loops_use_the_same_resume_rule():
     src = inspect.getsource(rr.main)
     assert src.count("if not needs_run(done, key):") == 2
     assert "if key in done:" not in src
+
+
+def test_arm_settings_show_what_each_arm_really_runs_with():
+    """Printed for both arms before any paid row (record 107); the answer-context layout is part of it (record 113)."""
+    from medops.application.policy_loader import ReleasedPolicy, ReleasedPolicySet
+
+    bundle = {
+        "glossary": {"from": "glossary-none", "to": "glossary-20260926-e4daca58a8e4"},
+        "multi_query": {"from": False, "to": True},
+        "doc_focus": {"from": False, "to": True},
+        "query_translation": {"from": "off", "to": "gpt-6-luna"},
+    }
+    baseline = ReleasedPolicySet((ReleasedPolicy("b" * 32, "retrieval_params", "hybrid", "v1", bundle),))
+    spec = {
+        "kind": "retrieval_params",
+        "name": "hybrid",
+        "diff": {
+            **{k: {"from": v["to"], "to": v["to"]} for k, v in bundle.items()},
+            "evidence_focus": {"from": "off", "to": "sentfocus-v1"},
+        },
+    }
+    candidate = rr.candidate_set(baseline, spec)
+    base, cand = rr.arm_settings(baseline), rr.arm_settings(candidate)
+    assert base["evidence_focus"] == "off" and cand["evidence_focus"] == "sentfocus-v1"
+    assert {k: v for k, v in cand.items() if k != "evidence_focus"} == {
+        k: v for k, v in base.items() if k != "evidence_focus"
+    }  # nothing else differs between the arms
+    assert cand["glossary"] == "glossary-20260926-e4daca58a8e4" and cand["query_translation"] == "gpt-6-luna"
+    assert rr.arm_versions("candidate", candidate, "p").retrieval_version == rr.arm_versions(
+        "candidate", baseline, "p"
+    ).retrieval_version  # the layout does not change what is retrieved
+    assert rr.arm_versions("candidate", candidate, "p").model_config_version.endswith(";ctx=sentfocus-v1")
