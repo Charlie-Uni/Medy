@@ -477,8 +477,8 @@ def _answer_request(
     max_output_tokens: int | None = None,
     rendered: RenderedEvidence | None = None,
 ) -> ModelRequest:
-    blocks = (rendered or render_evidence(state.query, state.evidence)).blocks
-    user = f"问题：{state.query}\n\n证据（共 {len(blocks)} 段）：\n\n" + "\n\n".join(blocks)
+    shown = rendered or render_evidence(state.query, state.evidence)
+    user = f"问题：{state.query}\n\n证据（共 {len(shown.blocks)} 段）：\n\n" + shown.body()
     return ModelRequest(
         purpose="answer",
         model_id=deps.answer_model_id,

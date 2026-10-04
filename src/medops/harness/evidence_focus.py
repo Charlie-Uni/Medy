@@ -22,6 +22,8 @@ block header carries two UUIDs. Three released modes (`retrieval_params/hybrid` 
   two-sided rule left three of four sentences and stopped 2.3 points short of the token gate).
 - `sentfocus-v5` — `sentfocus-v4` with shorter block delimiters (`[E1 | D1 | v=… | p=…]` … `[/E1]`): the same
   fields, about 2.7 points more of the token cut; aliases and elision marks unchanged.
+- `sentfocus-v6` — the `sentfocus-v2` selection (two-sided neighbours) with delimiters `[E1 | D1 | p=…]` … `[/E1]`
+  and one legend line `文档版本：D1 v=…；D2 v=…` — each document's version label once instead of once per block.
 
 What does not change in any mode: `AgentState.evidence` keeps the full chunk text (its hash is checked, baseline
 3.3), layer-2 screening has already run on the full text, the claim verifier judges against the full cited chunk,
@@ -47,6 +49,7 @@ EVIDENCE_FOCUS_SENTENCE_V2 = "sentfocus-v2"
 EVIDENCE_FOCUS_SENTENCE_V3 = "sentfocus-v3"
 EVIDENCE_FOCUS_SENTENCE_V4 = "sentfocus-v4"
 EVIDENCE_FOCUS_SENTENCE_V5 = "sentfocus-v5"
+EVIDENCE_FOCUS_SENTENCE_V6 = "sentfocus-v6"
 
 
 @dataclass(frozen=True)
@@ -60,9 +63,9 @@ class FocusParams:
     )
     whole_top: int = 0  # leading chunks (reranker order) shown whole
     query_variants: int = 1  # the question plus this many rewritten queries, scored with max
-    markers: str = (
-        "v1"  # block delimiters: v1 = <<证据 | chunk=E1 …>> … <<证据 E1 结束>>; v2 = [E1 | D1 | v=… | p=…] … [/E1]
-    )
+    # block delimiters: v1 = <<证据 | chunk=E1 …>> … <<证据 E1 结束>>; v2 = [E1 | D1 | v=… | p=…] … [/E1];
+    # v3 = [E1 | D1 | p=…] … [/E1] with one legend line giving each document's version once
+    markers: str = "v1"
 
 
 FOCUS_PARAMS: dict[str, FocusParams] = {
@@ -81,6 +84,10 @@ FOCUS_PARAMS: dict[str, FocusParams] = {
     EVIDENCE_FOCUS_SENTENCE_V5: FocusParams(
         keep_ratio=0.6, neighbours=1, whole_top=1, query_variants=2, one_sided=True, markers="v2"
     ),
+    # v5 met the token gate but its one-sided neighbours cost the negation slice 4.4 pp (record 117); v6 goes back
+    # to v2's selection (+4.0 pp, no slice drop) and takes the tokens from the delimiters instead: the version label
+    # is written once per document in a legend line (5.0 points offline, nothing removed)
+    EVIDENCE_FOCUS_SENTENCE_V6: FocusParams(keep_ratio=0.6, neighbours=1, whole_top=1, query_variants=2, markers="v3"),
 }
 ALLOWED_EVIDENCE_FOCUS: frozenset[str] = frozenset({EVIDENCE_FOCUS_OFF, EVIDENCE_FOCUS_COMPACT, *FOCUS_PARAMS})
 
@@ -109,10 +116,15 @@ class RenderedEvidence:
 
     blocks: tuple[str, ...]
     chunk_ids: dict[str, str] = field(default_factory=dict)  # alias (upper case) -> chunk id; empty when off
+    legend: str = ""  # one line placed before the blocks (markers v3: each document's version, written once)
     full_tokens: int = 0  # local estimate of the evidence text before focusing
     kept_tokens: int = 0
     units: int = 0
     kept_units: int = 0
+
+    def body(self) -> str:
+        """The evidence part of the user message, after the "证据（共 N 段）：" line."""
+        return (self.legend + "\n\n" if self.legend else "") + "\n\n".join(self.blocks)
 
     def resolve(self, cited: str) -> str:
         """A cited id as the model wrote it -> the chunk id; unknown ids are returned unchanged (and then fail the
@@ -271,7 +283,9 @@ def render_evidence(
         if scorer is None:
             raise ValueError(f"{mode} needs a sentence scorer")
         texts, stats = focus_texts(query, texts, scorer, params=params, rewritten=rewritten)
+    markers = params.markers if params is not None else "v1"
     docs: dict[str, str] = {}
+    versions: dict[str, str] = {}  # document alias -> version label (a doc id is one version of one document)
     chunk_ids: dict[str, str] = {}
     blocks = []
     for i, (e, text) in enumerate(zip(evidence, texts, strict=True), 1):
@@ -279,10 +293,14 @@ def render_evidence(
         alias = f"E{i}"
         chunk_ids[alias] = c.chunk_id
         doc = docs.setdefault(c.doc_id, f"D{len(docs) + 1}")
+        versions.setdefault(doc, c.version)
         flag = " | historical" if e.historical else ""
-        if params is not None and params.markers == "v2":
+        if markers == "v3":
+            blocks.append(f"[{alias} | {doc} | p={c.page}{flag}]\n{text}\n[/{alias}]")
+        elif markers == "v2":
             blocks.append(f"[{alias} | {doc} | v={c.version} | p={c.page}{flag}]\n{text}\n[/{alias}]")
         else:
             head = f"<<证据 | chunk={alias} | doc={doc} | version={c.version} | page={c.page}{flag}>>"
             blocks.append(f"{head}\n{text}\n<<证据 {alias} 结束>>")
-    return RenderedEvidence(blocks=tuple(blocks), chunk_ids=chunk_ids, **stats)
+    legend = "文档版本：" + "；".join(f"{d} v={v}" for d, v in versions.items()) if markers == "v3" else ""
+    return RenderedEvidence(blocks=tuple(blocks), chunk_ids=chunk_ids, legend=legend, **stats)

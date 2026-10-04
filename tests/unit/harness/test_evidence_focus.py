@@ -186,7 +186,7 @@ def test_deps_accept_every_sentence_version_and_the_loader_lists_them():
     from medops.application.policy_loader import ReleasedPolicy, ReleasedPolicySet
     from medops.harness.evidence_focus import ALLOWED_EVIDENCE_FOCUS, FOCUS_PARAMS
 
-    assert set(FOCUS_PARAMS) == {"sentfocus-v1", "sentfocus-v2", "sentfocus-v3", "sentfocus-v4", "sentfocus-v5"}
+    assert set(FOCUS_PARAMS) == {f"sentfocus-v{n}" for n in range(1, 7)}
     assert set(FOCUS_PARAMS) < ALLOWED_EVIDENCE_FOCUS
     for mode in FOCUS_PARAMS:
         make_deps(FakeRetrieval(), FakeModelGateway(), evidence_focus=mode, sentence_scorer=SCORER)
@@ -232,3 +232,32 @@ def test_v5_uses_short_delimiters_with_the_same_fields_and_aliases():
     v4 = render_evidence("6 至 12 歲 孩童 口服 劑量", items, mode="sentfocus-v4", scorer=SCORER)
     assert v4.blocks[0].startswith("<<证据 | chunk=E1 | doc=D1 | version=v1 | page=1>>")
     assert [b.split("\n")[1] for b in v4.blocks] == [b.split("\n")[1] for b in v5.blocks]  # same selected text
+
+
+def test_v6_writes_each_document_version_once_in_a_legend_and_selects_like_v2():
+    from medops.harness.runtime import run_ask
+
+    items = [
+        evidence("c1", DOSE, doc_id="doc-1", version="Rev 5"),
+        evidence("c2", ENGLISH, doc_id="doc-2", version="pdf-meta 2016-11-22"),
+        evidence("c3", DOSE + "補充說明。", doc_id="doc-1", version="Rev 5"),
+    ]
+    q = "6 至 12 歲 孩童 口服 劑量"
+    v6 = render_evidence(q, items, mode="sentfocus-v6", scorer=SCORER)
+    assert v6.legend == "文档版本：D1 v=Rev 5；D2 v=pdf-meta 2016-11-22"
+    assert v6.blocks[0].startswith("[E1 | D1 | p=1]\n") and v6.blocks[2].startswith("[E3 | D1 | p=1]\n")
+    assert "Rev 5" not in "".join(v6.blocks) and v6.body().startswith(v6.legend + "\n\n[E1 | D1")
+    v2 = render_evidence(q, items, mode="sentfocus-v2", scorer=SCORER)
+    assert [b.split("\n")[1] for b in v2.blocks] == [b.split("\n")[1] for b in v6.blocks]  # v2's selection
+    assert (
+        render_evidence(q, items).legend == "" and render_evidence(q, items, mode=EVIDENCE_FOCUS_COMPACT).legend == ""
+    )
+    # the legend reaches the model, between the count line and the first block
+    retrieval = FakeRetrieval(*items)
+    gateway = FakeModelGateway(
+        {"answer": [{"claims": [{"text": "6 至 12 歲孩童口服 100 mg，一天三次。", "citation_chunk_ids": ["E1"]}]}]}
+    )
+    run = run_ask(state(), make_deps(retrieval, gateway, evidence_focus="sentfocus-v6", sentence_scorer=SCORER))
+    prompt = gateway.calls[0].messages[1].content
+    assert "证据（共 3 段）：\n\n文档版本：D1 v=Rev 5；D2 v=pdf-meta 2016-11-22\n\n[E1 | D1 | p=1]" in prompt
+    assert run.outcome == "answered" and run.state.answer.claims[0].citation_chunk_ids == ("c1",)

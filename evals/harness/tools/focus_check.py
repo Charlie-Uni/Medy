@@ -95,7 +95,7 @@ def load_evidence(conn: psycopg.Connection, chunk_ids: list[str]) -> dict[str, E
 
 
 def prompt_text(query: str, rendered: ef.RenderedEvidence) -> str:
-    user = f"问题：{query}\n\n证据（共 {len(rendered.blocks)} 段）：\n\n" + "\n\n".join(rendered.blocks)
+    user = f"问题：{query}\n\n证据（共 {len(rendered.blocks)} 段）：\n\n" + rendered.body()
     return ANSWER_SYSTEM + user
 
 
