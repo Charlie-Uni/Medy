@@ -1,0 +1,85 @@
+{
+ "run": "2026-10-02-full-ask-v4-released",
+ "dataset_hash": "56c1627af2655a8e9438fdedc9dd61aca76d5b2f1115053ee45c804280469994",
+ "items": 614,
+ "tokenizer": "tiktoken o200k_base (proxy; the provider's tokenizer is not public)",
+ "glossary_for_rewrites": "glossary-20260926-e4daca58a8e4",
+ "parameters": {
+  "versions": {
+   "sentfocus-v5": {
+    "keep_ratio": 0.6,
+    "neighbours": 1,
+    "one_sided": true,
+    "whole_top": 1,
+    "query_variants": 2,
+    "markers": "v2"
+   }
+  },
+  "min_chunk_tokens": 60,
+  "min_unit_tokens": 5,
+  "max_unit_chars": 240,
+  "scorer": {
+   "reranker_version": "rerank-bge-v2-m3-v1",
+   "model_id": "BAAI/bge-reranker-v2-m3",
+   "model_revision": "953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e",
+   "max_length": 512,
+   "max_input": 20,
+   "output": 8
+  }
+ },
+ "tokens": {
+  "stored_run_model_tokens_per_item": 3212.6,
+  "answer_prompt_per_item": {
+   "off": 2229.9,
+   "compact-v1": 1874.3,
+   "sentfocus-v5": 1371.8
+  },
+  "prompt_cut_vs_off": {
+   "off": 0.0,
+   "compact-v1": 0.1595,
+   "sentfocus-v5": 0.3848
+  },
+  "cut_as_share_of_all_model_tokens": {
+   "off": 0.0,
+   "compact-v1": 0.1107,
+   "sentfocus-v5": 0.2671
+  },
+  "note": "input side only; citing aliases instead of UUIDs also shortens the output, not counted here"
+ },
+ "focus": {
+  "sentfocus-v5": {
+   "evidence_tokens_kept_share": 0.6843,
+   "units_per_item": 33.0,
+   "kept_units_per_item": 20.6,
+   "seconds_p50": 1.709,
+   "seconds_p95": 3.756,
+   "device": "mps"
+  }
+ },
+ "retention": {
+  "sentfocus-v5": {
+   "gold_key_text": {
+    "n": 496,
+    "kept": 492,
+    "rate": 0.9919
+   },
+   "claim_support_sentence": {
+    "n": 1032,
+    "kept": 970,
+    "rate": 0.9399
+   },
+   "stored_successes_with_gold_in_evidence": 458,
+   "stored_successes_whose_gold_text_is_hidden": [
+    "ms-0036",
+    "ms-0057",
+    "ms-0403",
+    "pc-0071"
+   ],
+   "by_language": {
+    "en": 0.9945,
+    "mixed": 0.9894,
+    "zh": 1.0
+   }
+  }
+ }
+}

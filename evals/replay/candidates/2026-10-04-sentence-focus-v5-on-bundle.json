@@ -1,0 +1,37 @@
+{
+ "kind": "retrieval_params",
+ "name": "hybrid",
+ "diff": {
+  "glossary": {
+   "from": "glossary-20260926-e4daca58a8e4",
+   "to": "glossary-20260926-e4daca58a8e4"
+  },
+  "multi_query": {
+   "from": true,
+   "to": true
+  },
+  "doc_focus": {
+   "from": true,
+   "to": true
+  },
+  "query_translation": {
+   "from": "gpt-6-luna",
+   "to": "gpt-6-luna"
+  },
+  "evidence_focus": {
+   "from": "off",
+   "to": "sentfocus-v5"
+  }
+ },
+ "gate_profile": "cost",
+ "rationale": "M5-04 third cost candidate (records 116-117), restated on top of the released retrieval bundle (policy 3361ed13): only the answer-context layout changes, off -> sentfocus-v5 = the sentfocus-v2 selection with one-sided neighbours (v4) and shorter block delimiters carrying the same fields. Measured: v2 one-round pilot -22.7% real tokens at +4.0 pp (record 116); offline on the real-corpus full run v4 24.0% / 99.2% of the annotated answer texts kept, v5 26.7% / 99.2% (proxy tokenizer; v2's proxy estimate was within 0.3 pp of the provider's count). Cost gate: tokens per main item <= 75% of baseline, overall success drop <= 1 pp, slice and safety rules unchanged.",
+ "evidence": {
+  "case_ids": [],
+  "kind": "cost",
+  "offline_check": [
+   "evals/harness/runs/2026-10-04-focus-check-v4",
+   "evals/harness/runs/2026-10-04-focus-check-v5"
+  ],
+  "pilot_of_v2": "evals/harness/runs/2026-10-04-replay-eval-v8-sentfocus-v2"
+ }
+}
