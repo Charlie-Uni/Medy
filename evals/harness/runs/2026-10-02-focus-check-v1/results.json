@@ -1,0 +1,93 @@
+{
+ "run": "2026-10-02-full-ask-v4-released",
+ "dataset_hash": "56c1627af2655a8e9438fdedc9dd61aca76d5b2f1115053ee45c804280469994",
+ "items": 614,
+ "tokenizer": "tiktoken o200k_base (proxy; the provider's tokenizer is not public)",
+ "parameters": {
+  "keep_ratio": 0.6,
+  "min_chunk_tokens": 60,
+  "min_unit_tokens": 5,
+  "max_unit_chars": 240,
+  "scorer": {
+   "reranker_version": "rerank-bge-v2-m3-v1",
+   "model_id": "BAAI/bge-reranker-v2-m3",
+   "model_revision": "953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e",
+   "max_length": 512,
+   "max_input": 20,
+   "output": 8
+  }
+ },
+ "tokens": {
+  "stored_run_model_tokens_per_item": 3212.6,
+  "answer_prompt_per_item": {
+   "off": 2229.9,
+   "compact-v1": 1874.3,
+   "sentfocus-v1": 1389.7
+  },
+  "prompt_cut_vs_off": {
+   "off": 0.0,
+   "compact-v1": 0.1595,
+   "sentfocus-v1": 0.3768
+  },
+  "cut_as_share_of_all_model_tokens": {
+   "off": 0.0,
+   "compact-v1": 0.1107,
+   "sentfocus-v1": 0.2615
+  },
+  "note": "input side only; citing aliases instead of UUIDs also shortens the output, not counted here"
+ },
+ "focus": {
+  "evidence_tokens_kept_share": 0.6187,
+  "units_per_item": 33.0,
+  "kept_units_per_item": 17.7,
+  "seconds_p50": 0.934,
+  "seconds_p95": 2.068,
+  "device": "mps"
+ },
+ "retention": {
+  "gold_key_text": {
+   "n": 496,
+   "kept": 466,
+   "rate": 0.9395
+  },
+  "claim_support_sentence": {
+   "n": 1032,
+   "kept": 913,
+   "rate": 0.8847
+  },
+  "stored_successes_with_gold_in_evidence": 458,
+  "stored_successes_whose_gold_text_is_hidden": [
+   "ms-0057",
+   "ms-0094",
+   "ms-0095",
+   "ms-0106",
+   "ms-0137",
+   "ms-0138",
+   "ms-0169",
+   "ms-0180",
+   "ms-0181",
+   "ms-0182",
+   "ms-0199",
+   "ms-0200",
+   "ms-0209",
+   "ms-0210",
+   "ms-0338",
+   "ms-0339",
+   "ms-0342",
+   "ms-0394",
+   "ms-0395",
+   "ms-0406",
+   "ms-0407",
+   "ms-0417",
+   "ms-0418",
+   "ms-0452",
+   "ms-0453",
+   "pc-0071"
+  ],
+  "by_language": {
+   "en": 0.9337,
+   "mixed": 0.9362,
+   "zh": 1.0
+  }
+ }
+}

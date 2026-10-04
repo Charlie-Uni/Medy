@@ -1,0 +1,37 @@
+{
+ "kind": "retrieval_params",
+ "name": "hybrid",
+ "diff": {
+  "glossary": {
+   "from": "glossary-20260926-e4daca58a8e4",
+   "to": "glossary-20260926-e4daca58a8e4"
+  },
+  "multi_query": {
+   "from": true,
+   "to": true
+  },
+  "doc_focus": {
+   "from": true,
+   "to": true
+  },
+  "query_translation": {
+   "from": "gpt-6-luna",
+   "to": "gpt-6-luna"
+  },
+  "evidence_focus": {
+   "from": "off",
+   "to": "sentfocus-v2"
+  }
+ },
+ "gate_profile": "cost",
+ "rationale": "M5-04 second cost candidate (record 113), restated on top of the released retrieval bundle (policy 3361ed13): the four released keys are kept (from == to) and only the answer-context layout changes, off -> sentfocus-v2. All 8 reranked chunks stay in the prompt; chunk and document UUIDs in the block headers become short aliases, and each chunk shows its most relevant sentences (cross-encoder against the question and the richest rewritten query, every chunk keeps its best sentence and its neighbours, the first-ranked chunk is shown whole, 60% of the evidence tokens as the floor-bounded budget, gaps marked). State, screening, verification and citations keep the full chunk. Offline check on the real-corpus full run: input-side cut 23.0% of all model tokens with a proxy tokenizer (output-side alias saving not counted), gold key text visible in 99.6% of cases; v1 (26.2%, 93.95%) and v3 (23.5%, 97.6%) were measured and set aside. Cost gate: tokens per main item <= 75% of baseline, overall success drop <= 1 pp, slice and safety rules unchanged. Not evaluated yet: paid runs are paused until the OpenAI bill is reconciled.",
+ "evidence": {
+  "case_ids": [],
+  "kind": "cost",
+  "offline_check": [
+   "evals/harness/runs/2026-10-02-focus-check-v1",
+   "evals/harness/runs/2026-10-04-focus-check-v2",
+   "evals/harness/runs/2026-10-04-focus-check-v3"
+  ]
+ }
+}

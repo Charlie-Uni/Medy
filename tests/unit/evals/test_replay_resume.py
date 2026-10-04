@@ -62,7 +62,8 @@ def test_arm_settings_show_what_each_arm_really_runs_with():
         k: v for k, v in base.items() if k != "evidence_focus"
     }  # nothing else differs between the arms
     assert cand["glossary"] == "glossary-20260926-e4daca58a8e4" and cand["query_translation"] == "gpt-6-luna"
-    assert rr.arm_versions("candidate", candidate, "p").retrieval_version == rr.arm_versions(
-        "candidate", baseline, "p"
-    ).retrieval_version  # the layout does not change what is retrieved
+    assert (
+        rr.arm_versions("candidate", candidate, "p").retrieval_version
+        == rr.arm_versions("candidate", baseline, "p").retrieval_version
+    )  # the layout does not change what is retrieved
     assert rr.arm_versions("candidate", candidate, "p").model_config_version.endswith(";ctx=sentfocus-v1")
