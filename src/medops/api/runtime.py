@@ -111,6 +111,22 @@ def open_connection(dsn: str, settings: Any) -> psycopg.Connection[Any]:
         ) from None
 
 
+def retrieval_cache_from_settings(settings: Settings) -> Any:
+    """The retrieval candidate cache the settings ask for, or None (`retrieval_cache = off`, the default)."""
+    mode = getattr(settings, "retrieval_cache", "off")
+    if mode == "off":
+        return None
+    from medops.retrieval.cache import CandidateCache, InMemoryCandidateCacheStore
+
+    if mode == "memory":
+        return CandidateCache(InMemoryCandidateCacheStore(), ttl_seconds=settings.retrieval_cache_ttl_seconds)
+    from medops.infrastructure.cache import RedisCandidateCacheStore
+
+    return CandidateCache(
+        RedisCandidateCacheStore.from_settings(settings), ttl_seconds=settings.retrieval_cache_ttl_seconds
+    )
+
+
 @dataclass
 class ProductionRuntime:
     """Built once per process; `connection()` opens a fresh application-role connection per request."""
@@ -131,6 +147,7 @@ class ProductionRuntime:
     _state_cache: tuple[float, ReleaseState] | None = field(default=None, repr=False)  # TTL re-read (M4-09)
     _rerankers: dict[int, Any] = field(default_factory=dict, repr=False)  # one reranker per released output size
     _glossaries: dict[str, Any] = field(default_factory=dict, repr=False)  # verified glossaries by released version
+    _retrieval_cache: Any = field(default=None, repr=False)  # CandidateCache when `retrieval_cache` is not off
     _pinned: Any = field(default=None, repr=False)
     _device: str = field(default="cpu", repr=False)
 
@@ -196,6 +213,7 @@ class ProductionRuntime:
         runtime._device = device
         runtime._rerankers = {rerank_output: reranker}
         runtime.glossary_for(glossary_version)  # fail fast: a released glossary must be present and verified at start
+        runtime._retrieval_cache = retrieval_cache_from_settings(settings)
         runtime._admin_dsn = settings.database_admin_url.get_secret_value() if settings.database_admin_url else None
         runtime._restricted_dsn = (
             settings.database_restricted_url.get_secret_value() if settings.database_restricted_url else None
@@ -365,6 +383,10 @@ class ProductionRuntime:
             multi_query=routed.policies.multi_query(),
             doc_focus=routed.policies.doc_focus(),
             translator=translator,
+            cache=self._retrieval_cache,
+            cache_versions=(
+                (routed.versions.retrieval_version, routed.versions.policy_version) if self._retrieval_cache else None
+            ),
         )
         return HarnessDeps(
             retrieval=retrieval,

@@ -123,12 +123,18 @@ class CachedCandidates(DomainModel):
     candidates: tuple[CandidateRef, ...] = Field(max_length=MAX_CANDIDATES)
     retrieval_version: Sha256
     computed_at: datetime
+    # The reranker's order over the candidates that passed the re-check when the entry was written (record 121).
+    # Still not facts: on a hit it only orders evidence that has just been re-checked, and a chunk whose text
+    # changed fails the content-hash check before its old position could matter. Empty = rerank on every hit.
+    reranked: tuple[NonEmptyStr, ...] = Field(default=(), max_length=MAX_CANDIDATES)
 
     @model_validator(mode="after")
     def _rules(self) -> CachedCandidates:
         ids = [c.chunk_id for c in self.candidates]
         if len(set(ids)) != len(ids):
             raise ValueError("cached candidates must have unique chunk ids")
+        if len(set(self.reranked)) != len(self.reranked) or not set(self.reranked) <= set(ids):
+            raise ValueError("the reranked order must be unique ids drawn from the candidates")
         if self.computed_at.tzinfo is None:
             raise ValueError("computed_at must be timezone-aware")
         return self
@@ -314,10 +320,16 @@ def fetch_evidence(
     of them in the fact plane under the caller's identity (`conn` is the identity-bound request transaction).
     Returns `(recheck result, cache hit)`."""
     cached, hit = cache.get_or_compute(inputs, compute)
-    result = recheck_candidates(
+    return recheck_cached(conn, cached, inputs), hit
+
+
+def recheck_cached(conn: object, cached: CachedCandidates, inputs: CacheKeyInputs) -> RecheckResult:
+    """Cached candidates -> Evidence: every chunk is re-read in the fact plane under the caller's identity, so a
+    revoked ACL, an archived version or a corrupted chunk is filtered on a hit exactly as on a miss. The production
+    retrieval port uses this for its hit path (record 121); nothing else may turn a cache entry into evidence."""
+    return recheck_candidates(
         conn,  # type: ignore[arg-type]
         [c.chunk_id for c in cached.candidates],
         as_of=inputs.as_of,
         allow_historical=inputs.allow_historical,
     )
-    return result, hit

@@ -212,7 +212,9 @@ def require_index_coverage(conn: psycopg.Connection[Any], *, plane: str = "") ->
 
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Production retrieval configuration tools")
-    parser.add_argument("action", choices=("show", "build-lexical", "build-embeddings", "check-indexes"))
+    parser.add_argument(
+        "action", choices=("show", "build-lexical", "build-embeddings", "check-indexes", "invalidate-cache")
+    )
     parser.add_argument("--device", default="cpu", help="build-embeddings: torch device for the local bge-m3 model")
     parser.add_argument("--admin-url", help="admin DSN (default: DATABASE_ADMIN_URL from settings)")
     parser.add_argument("--built-by", default="production-build")
@@ -242,6 +244,25 @@ def main(argv: Sequence[str] | None = None) -> int:
             cov = index_coverage(conn)
         print(json.dumps(cov, ensure_ascii=False))
         return 1 if cov["missing_lexical"] or cov["missing_embedding"] else 0
+    if args.action == "invalidate-cache":
+        # record 121: after documents were published, archived or withdrawn, bump the cache epoch of every
+        # department that can read them so cached candidate lists stop being served. Only the shared (Redis) cache
+        # can be reached from here; a per-process memory cache expires by TTL or with the process.
+        from medops.infrastructure.cache import RedisCandidateCacheStore
+        from medops.retrieval import cache_consumer
+        from medops.retrieval.cache import CandidateCache
+
+        cache = CandidateCache(RedisCandidateCacheStore.from_settings(Settings()))  # type: ignore[call-arg]
+        acked: list[int] = []
+        with psycopg.connect(dsn) as conn:
+            while True:
+                batch = cache_consumer.consume(conn, cache)
+                conn.commit()
+                acked.extend(batch)
+                if not batch:
+                    break
+        print(json.dumps({"events_applied": len(acked)}, ensure_ascii=False))
+        return 0
     if args.action == "build-embeddings":
         from medops.retrieval.vector import pg_vector
         from medops.retrieval.vector.embedding import BgeM3EmbeddingProvider

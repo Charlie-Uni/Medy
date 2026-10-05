@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from collections.abc import Callable, Sequence
 from contextlib import AbstractContextManager
-from datetime import date
+from datetime import UTC, date, datetime
 from typing import Any, Protocol
 
 from medops.core.errors import InfrastructureError
@@ -19,11 +19,12 @@ from medops.domain.evidence import Evidence
 from medops.domain.identity import UserContext
 from medops.domain.intent import Entity
 from medops.domain.state import MAX_CANDIDATES, MAX_EVIDENCE, CandidateRef
+from medops.retrieval.cache import CachedCandidates, CacheKeyInputs, CandidateCache, recheck_cached
 from medops.retrieval.contracts import LexicalRetriever, LexicalVersions
 from medops.retrieval.doc_focus import FOCUS_K, focus_documents, load_documents
 from medops.retrieval.hybrid import HybridConfig, fuse_rankings, retrieve_evidence
 from medops.retrieval.recheck import RecheckResult, Rejection, recheck_candidates
-from medops.retrieval.rerank import Reranker, rerank_evidence
+from medops.retrieval.rerank import Reranker, rank_evidence
 from medops.retrieval.rewrite import Glossary, rewrite
 from medops.retrieval.vector.contracts import VectorRetriever, VectorVersions
 
@@ -43,6 +44,7 @@ class RetrievalOutcome(DomainModel):
     rejected: tuple[Rejection, ...] = ()
     degraded: bool = False  # a channel failed and the result is partial (baseline 5.3 degradation rule)
     detail: str = ""
+    cache_hit: bool = False  # the candidates came from the retrieval cache (they were re-checked all the same)
 
     def model_post_init(self, __context: Any) -> None:
         if len(self.candidates) > MAX_CANDIDATES or len(self.evidence) > MAX_EVIDENCE:
@@ -73,6 +75,8 @@ class ProductionRetrieval:
         multi_query: bool = False,
         doc_focus: bool = False,
         translator: Callable[[str], str | None] | None = None,
+        cache: CandidateCache | None = None,
+        cache_versions: tuple[str, str] | None = None,
     ) -> None:
         self._conn_for_user = conn_for_user
         self._lexical_factory = lexical_factory
@@ -91,6 +95,13 @@ class ProductionRetrieval:
         self._doc_focus = doc_focus
         # record 95: an English rendering of a Chinese question becomes one more search query (never evidence)
         self._translator = translator
+        # record 121 (M1-19 wired): the fused candidates of a retrieval are cached under the caller's permission
+        # fingerprint and the composite retrieval / policy versions; a hit skips the searches and the translation
+        # call, never the fact-plane re-check or the reranker. Off unless the runtime passes a cache.
+        if cache is not None and cache_versions is None:
+            raise ValueError("a retrieval cache needs the (retrieval_version, policy_version) of its entries")
+        self._cache = cache
+        self._cache_versions = cache_versions
 
     def retrieve(self, request: RetrievalRequest) -> RetrievalOutcome:
         with span(
@@ -103,13 +114,74 @@ class ProductionRetrieval:
                 evidence=len(outcome.evidence),
                 rejected=len(outcome.rejected),
                 degraded=outcome.degraded,
+                cache_hit=outcome.cache_hit,
             )
             return outcome
 
     def _retrieve(self, request: RetrievalRequest) -> RetrievalOutcome:
         rw = rewrite(request.query, entities=request.session_entities, glossary=self._glossary)
         query = rw.queries[0]
-        queries = list(rw.queries) if self._multi_query else [query]
+        spec = self._reranker.spec
+        inputs = self._cache_inputs(request)
+        cached = self._cache.lookup(inputs) if self._cache is not None and inputs is not None else None
+        hit = cached is not None
+        order: tuple[str, ...] | None = None  # the reranked order of a cache entry, when it covers what is accepted now
+        if cached is not None and inputs is not None:
+            with self._conn_for_user(request.user) as conn:
+                rechecked = recheck_cached(conn, cached, inputs)
+            candidates: tuple[CandidateRef, ...] = cached.candidates
+            accepted: tuple[Evidence, ...] = rechecked.evidence
+            rejected: tuple[Rejection, ...] = rechecked.rejected
+            if {e.citation.chunk_id for e in accepted[: spec.max_input]} <= set(cached.reranked):
+                order = cached.reranked
+        else:
+            candidates, accepted, rejected = self._search(request, list(rw.queries), query)
+        if order is not None:
+            # every accepted chunk was scored when the entry was written and has just passed the content-hash check,
+            # so its position still holds: no reranker call on this path
+            by_id = {e.citation.chunk_id: e for e in accepted[: spec.max_input]}
+            evidence = tuple(by_id[c] for c in order if c in by_id)[: spec.output][:MAX_EVIDENCE]
+        else:
+            with span("retrieval.rerank", inputs=min(len(accepted), spec.max_input)):
+                ranked = rank_evidence(self._reranker, query, accepted[: spec.max_input])
+            evidence = tuple(r.evidence for r in ranked)[: spec.output][:MAX_EVIDENCE]
+            if self._cache is not None and inputs is not None and not hit:
+                self._cache.store(
+                    inputs,
+                    CachedCandidates(
+                        candidates=candidates,
+                        retrieval_version=inputs.retrieval_version,
+                        computed_at=datetime.now(UTC),
+                        reranked=tuple(r.evidence.citation.chunk_id for r in ranked),
+                    ),
+                )
+        return RetrievalOutcome(
+            rewritten_queries=rw.queries,
+            candidates=candidates,
+            evidence=evidence,
+            rejected=rejected,
+            cache_hit=hit,
+        )
+
+    def _cache_inputs(self, request: RetrievalRequest) -> CacheKeyInputs | None:
+        if self._cache is None or self._cache_versions is None:
+            return None
+        retrieval_version, policy_version = self._cache_versions
+        return CacheKeyInputs.build(
+            query=request.query,
+            user=request.user,
+            as_of=request.as_of or date.today(),
+            retrieval_version=retrieval_version,
+            policy_version=policy_version,
+            entities=request.session_entities,
+            allow_historical=request.historical_requested,
+        )
+
+    def _search(
+        self, request: RetrievalRequest, rewritten: list[str], query: str
+    ) -> tuple[tuple[CandidateRef, ...], tuple[Evidence, ...], tuple[Rejection, ...]]:
+        """The full retrieval: every search channel, fusion and the fact-plane re-check of the fused candidates."""
+        queries = rewritten if self._multi_query else [query]
         if self._translator is not None:
             translated = self._translator(request.query)
             if translated and translated not in queries:
@@ -167,11 +239,14 @@ class ProductionRetrieval:
                                 conn, extra, as_of=request.as_of, allow_historical=request.historical_requested
                             )
                         )
+        candidates: tuple[CandidateRef, ...]
+        accepted: tuple[Evidence, ...]
+        rejected: tuple[Rejection, ...]
         if len(results) == 1 and not focus_rankings:
             hybrid, rechecked = results[0]
             candidates = hybrid.candidate_refs[:MAX_CANDIDATES]
-            accepted: tuple[Evidence, ...] = rechecked.evidence
-            rejected: tuple[Rejection, ...] = rechecked.rejected
+            accepted = rechecked.evidence
+            rejected = rechecked.rejected
         else:
             rankings: dict[str, Sequence[str]] = {f"q{i}": h.fused_ids for i, (h, _) in enumerate(results, start=1)}
             rankings.update(focus_rankings)
@@ -188,12 +263,4 @@ class ProductionRetrieval:
                     seen_rejections.setdefault(r.chunk_id, r)
             accepted = tuple(by_id[c.chunk_id] for c in fused if c.chunk_id in by_id)
             rejected = tuple(r for cid, r in seen_rejections.items() if cid not in by_id)
-        with span("retrieval.rerank", inputs=min(len(accepted), self._reranker.spec.max_input)):
-            ranked = rerank_evidence(self._reranker, query, accepted[: self._reranker.spec.max_input])
-        evidence = tuple(r.evidence for r in ranked)[:MAX_EVIDENCE]
-        return RetrievalOutcome(
-            rewritten_queries=rw.queries,
-            candidates=candidates,
-            evidence=evidence,
-            rejected=rejected,
-        )
+        return candidates, accepted, rejected

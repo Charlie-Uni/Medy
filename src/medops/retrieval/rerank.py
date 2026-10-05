@@ -58,6 +58,13 @@ class RankedEvidence(BaseModel):
 
 def rerank_evidence(reranker: Reranker, query: str, evidence: Sequence[Evidence]) -> tuple[RankedEvidence, ...]:
     """Score at most `spec.max_input` evidence items and keep the best `spec.output`; ties break by chunk_id."""
+    return rank_evidence(reranker, query, evidence)[: reranker.spec.output]
+
+
+def rank_evidence(reranker: Reranker, query: str, evidence: Sequence[Evidence]) -> tuple[RankedEvidence, ...]:
+    """Every scored item in rank order (no truncation). A score depends only on the query and the item's text, so
+    the order of any subset is the order of the whole restricted to it — the retrieval cache relies on this
+    (record 121)."""
     spec = reranker.spec
     if len(evidence) > spec.max_input:
         raise ValueError(f"reranker input exceeds {spec.max_input} candidates")
@@ -68,9 +75,7 @@ def rerank_evidence(reranker: Reranker, query: str, evidence: Sequence[Evidence]
     if len(scores) != len(evidence):
         raise ValueError("reranker returned a score count that differs from the input")
     ordered = sorted(zip(evidence, scores, strict=True), key=lambda pair: (-pair[1], pair[0].citation.chunk_id))
-    return tuple(
-        RankedEvidence(evidence=e, score=float(s), rank=i) for i, (e, s) in enumerate(ordered[: spec.output], start=1)
-    )
+    return tuple(RankedEvidence(evidence=e, score=float(s), rank=i) for i, (e, s) in enumerate(ordered, start=1))
 
 
 # ------------------------------------------------------------------------------------ test reranker

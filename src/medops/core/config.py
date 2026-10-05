@@ -17,6 +17,7 @@ Production forbids debug and interactive API docs (baseline 5.12).
 from __future__ import annotations
 
 from enum import StrEnum
+from typing import Literal
 
 from pydantic import (
     Field,
@@ -85,7 +86,10 @@ class Settings(BaseSettings):
     db_connect_timeout_s: int = Field(default=5, ge=1, le=60)
     db_statement_timeout_ms: int = Field(default=30_000, ge=1_000, le=600_000)
     redis_url: SecretStr
-    # Retrieval candidate cache TTL (M1-19). Entries also die with the department epoch on publish events.
+    # Retrieval candidate cache (M1-19, wired in record 121). `off` (default): every question searches. `memory`:
+    # one cache per API process. `redis`: shared through `redis_url`. Hits are always re-checked in the fact plane.
+    retrieval_cache: Literal["off", "memory", "redis"] = "off"
+    # Entries also die with the department epoch on publish events (needs the cache consumer to run).
     retrieval_cache_ttl_seconds: int = Field(default=300, ge=1, le=86400)
     # Antivirus hook for ingestion (ADR-0009 §4): clamd INSTREAM at tcp://host:port or unix:///path.
     # Optional in dev/test (the ingest audit records `av_scan: skipped`); required in prod.
