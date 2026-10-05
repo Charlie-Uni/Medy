@@ -1,4 +1,4 @@
-.PHONY: cache-invalidate demo demo-check demo-ask help install install-check install-embed lock schemas lint format format-check typecheck test test-integration check migrate migrate-down migration-check db-users load-corpus index-build index-check lexical-index-a lexical-index activate-docs validate-probe canonicalize-probe up down ps
+.PHONY: observability-up observability-down cache-invalidate demo demo-check demo-ask help install install-check install-embed lock schemas lint format format-check typecheck test test-integration check migrate migrate-down migration-check db-users load-corpus index-build index-check lexical-index-a lexical-index activate-docs validate-probe canonicalize-probe up down ps
 
 # venv lives in a NON-dot directory on purpose: ~/Documents is an iCloud Drive domain that marks every file
 # inside dot-directories as hidden, and CPython >= 3.11.16 skips hidden .pth files, which silently breaks
@@ -23,6 +23,7 @@ help:
 	@echo "make index-build ACTOR=<id> [ADMIN_URL=<dsn>] [DEVICE=mps]   lexical index + embeddings + coverage check; run after every ingestion (record 109)"
 	@echo "make index-check [ADMIN_URL=<dsn>]        exit 1 if an active chunk is missing from the lexical index or the embeddings"
 	@echo "make cache-invalidate [ADMIN_URL=<dsn>]   apply pending publish / archive events to the shared retrieval cache"
+	@echo "make observability-up / observability-down   start / remove the Jaeger trace viewer (profile observability)"
 	@echo "make demo-check                           demo prerequisites only (no API start, no model calls)"
 	@echo "make demo                                 seven demo scenarios through the real API (about 0.1 USD of model calls)"
 	@echo "make demo-ask [Q=\"question\"] [DEPT=MA|PV|CO]   ask your own question; without Q an interactive prompt"
@@ -109,6 +110,14 @@ index-build:
 
 index-check:
 	$(PY) -m medops.retrieval.production check-indexes $(if $(ADMIN_URL),--admin-url $(ADMIN_URL),)
+
+# trace viewer (Jaeger, one container) for the OTLP spans; UI at http://127.0.0.1:16686
+observability-up:
+	docker compose --env-file .env --profile observability up -d jaeger
+	@echo "set OTEL_EXPORTER_OTLP_ENDPOINT=http://127.0.0.1:4318 in .env, restart the API, then open http://127.0.0.1:16686"
+
+observability-down:
+	docker compose --env-file .env --profile observability rm -sf jaeger
 
 # after an ingestion: tell the shared retrieval cache (RETRIEVAL_CACHE=redis) which departments' entries are stale
 cache-invalidate:

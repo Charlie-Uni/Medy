@@ -28,7 +28,11 @@ def main(argv: list[str] | None = None) -> int:
         print(f"configuration invalid: {detail}", file=sys.stderr)
         return 2
     configure_logging(settings.log_level)
-    configure_telemetry(endpoint=settings.otel_exporter_otlp_endpoint, service_name=settings.otel_service_name)
+    configure_telemetry(
+        endpoint=settings.otel_exporter_otlp_endpoint,
+        service_name=settings.otel_service_name,
+        headers=settings.otel_exporter_otlp_headers.get_secret_value() if settings.otel_exporter_otlp_headers else None,
+    )
     log = get_logger(__name__)
     runtime = ProductionRuntime.from_settings(settings, device=args.device)
     app = create_app(runtime, docs_enabled=settings.docs_enabled, debug=settings.debug)

@@ -119,7 +119,11 @@ def main(argv: list[str] | None = None) -> int:
         return 2
     # stdio: stdout is the JSON-RPC channel, so structured logs must go to stderr or they corrupt the protocol stream
     configure_logging(settings.log_level, stream=sys.stderr if args.transport == "stdio" else None)
-    configure_telemetry(endpoint=settings.otel_exporter_otlp_endpoint, service_name=settings.otel_service_name)
+    configure_telemetry(
+        endpoint=settings.otel_exporter_otlp_endpoint,
+        service_name=settings.otel_service_name,
+        headers=settings.otel_exporter_otlp_headers.get_secret_value() if settings.otel_exporter_otlp_headers else None,
+    )
     log = get_logger(__name__)
     if settings.database_readonly_url is None:
         print(

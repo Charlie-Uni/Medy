@@ -76,3 +76,56 @@ def test_app_shutdown_flushes_spans_still_held_by_the_batch_processor():
         held = len(exp.get_finished_spans())
     flushed = [s.name for s in exp.get_finished_spans()]
     assert held == 0 and flushed.count("harness.node") == 5 and "http.request" in flushed
+
+
+def test_model_call_spans_carry_genai_attributes_but_never_prompt_or_reply():
+    """Record 123: trace viewers read the OpenTelemetry GenAI names; the content stays out (INV-OBS-03)."""
+    exp = exporter()
+    rt = FakeRuntime(FakeRetrieval(evidence("c1", LABEL)), FakeModelGateway({"answer": [ANSWER]}))
+    client(rt).post("/v1/ask", json={"query": QUERY}, headers=auth())
+    llm = next(s for s in exp.get_finished_spans() if s.name == "llm.call")
+    attrs = dict(llm.attributes)
+    assert attrs["gen_ai.operation.name"] == "chat" and attrs["gen_ai.request.model"] == attrs["model_id"]
+    assert attrs["gen_ai.usage.input_tokens"] == attrs["input_tokens"] > 0
+    assert attrs["gen_ai.usage.output_tokens"] == attrs["output_tokens"] > 0
+    everything = " ".join(str(v) for s in exp.get_finished_spans() for v in s.attributes.values())
+    assert LABEL not in everything and QUERY not in everything  # neither evidence nor the question
+    assert not any(k.startswith(("gen_ai.prompt", "gen_ai.completion", "gen_ai.input", "gen_ai.output")) for k in attrs)
+
+
+def test_otlp_headers_are_parsed_strictly_and_passed_to_the_exporter(monkeypatch):
+    import pytest
+
+    assert telemetry.parse_headers(None) == {} and telemetry.parse_headers("") == {}
+    assert telemetry.parse_headers("Authorization=Basic cGs6c2s=, x-tenant = a ") == {
+        "Authorization": "Basic cGs6c2s=",  # a base64 value keeps its own `=`
+        "x-tenant": "a",
+    }
+    with pytest.raises(ValueError, match="Key=Value"):
+        telemetry.parse_headers("Authorization")
+    seen = {}
+
+    class FakeExporter:
+        def __init__(self, endpoint, headers=None):
+            seen.update(endpoint=endpoint, headers=headers)
+
+        def export(self, spans):  # pragma: no cover - not reached
+            return None
+
+        def shutdown(self):
+            return None
+
+        def force_flush(self, timeout_millis=30000):
+            return True
+
+    import opentelemetry.exporter.otlp.proto.http.trace_exporter as mod
+
+    monkeypatch.setattr(mod, "OTLPSpanExporter", FakeExporter)
+    telemetry.configure_telemetry(endpoint="http://127.0.0.1:3000/api/public/otel/", headers="Authorization=Basic x=")
+    assert seen == {
+        "endpoint": "http://127.0.0.1:3000/api/public/otel/v1/traces",
+        "headers": {"Authorization": "Basic x="},
+    }
+    telemetry.configure_telemetry(endpoint="http://127.0.0.1:4318")
+    assert seen == {"endpoint": "http://127.0.0.1:4318/v1/traces", "headers": None}
+    telemetry.set_tracer_provider(None)

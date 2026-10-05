@@ -39,14 +39,31 @@ def install_exporter(
     return provider
 
 
-def configure_telemetry(*, endpoint: str | None, service_name: str = "medops-copilot") -> TracerProvider | None:
-    """OTLP/HTTP exporter when an endpoint is configured; otherwise spans are not recorded."""
+def parse_headers(raw: str | None) -> dict[str, str]:
+    """`Key=Value,Key2=Value2` -> headers. A value may itself contain `=` (base64); a malformed pair is an error."""
+    headers: dict[str, str] = {}
+    for pair in (raw or "").split(","):
+        if not pair.strip():
+            continue
+        key, sep, value = pair.partition("=")
+        if not sep or not key.strip() or not value.strip():
+            raise ValueError("OTLP headers must be Key=Value pairs separated by commas")
+        headers[key.strip()] = value.strip()
+    return headers
+
+
+def configure_telemetry(
+    *, endpoint: str | None, service_name: str = "medops-copilot", headers: str | None = None
+) -> TracerProvider | None:
+    """OTLP/HTTP exporter when an endpoint is configured; otherwise spans are not recorded. `headers` carries what
+    the backend needs to accept the export (a collector needs none; Langfuse wants Basic auth)."""
     if not endpoint:
         set_tracer_provider(None)
         return None
     from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
 
-    return install_exporter(OTLPSpanExporter(endpoint=endpoint.rstrip("/") + "/v1/traces"), service_name=service_name)
+    exporter = OTLPSpanExporter(endpoint=endpoint.rstrip("/") + "/v1/traces", headers=parse_headers(headers) or None)
+    return install_exporter(exporter, service_name=service_name)
 
 
 def shutdown() -> None:

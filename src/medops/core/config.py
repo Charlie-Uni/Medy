@@ -132,6 +132,9 @@ class Settings(BaseSettings):
     oidc_group_scopes_json: str | None = None
     # Telemetry (M3-09): OTLP/HTTP collector endpoint (e.g. http://otel-collector:4318); unset -> spans are not recorded.
     otel_exporter_otlp_endpoint: str | None = None
+    # Extra OTLP request headers as `Key=Value[,Key2=Value2]` (e.g. the Basic auth a self-hosted backend asks for).
+    # A secret: never logged. Unset for collectors that need none (record 123).
+    otel_exporter_otlp_headers: SecretStr | None = None
     otel_service_name: str = "medops-copilot"
 
     @field_validator(

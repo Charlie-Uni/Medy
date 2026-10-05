@@ -18,7 +18,14 @@ class MeteredGateway:
         return self._inner.provider
 
     def complete(self, request: ModelRequest) -> ModelResponse:
-        with span("llm.call", purpose=request.purpose, model_id=request.model_id) as current:
+        # the `gen_ai.*` names are the OpenTelemetry GenAI conventions, which trace viewers for model calls read
+        # (model, token counts); still structure only — never the prompt or the reply (INV-OBS-03)
+        with span(
+            "llm.call",
+            purpose=request.purpose,
+            model_id=request.model_id,
+            **{"gen_ai.operation.name": "chat", "gen_ai.request.model": request.model_id},
+        ) as current:
             response = self._inner.complete(request)
             annotate(
                 current,
@@ -26,6 +33,11 @@ class MeteredGateway:
                 output_tokens=response.usage.output_tokens,
                 cost_usd=response.cost_usd,
                 truncated=response.truncated,
+                **{
+                    "gen_ai.response.model": response.model_id,
+                    "gen_ai.usage.input_tokens": response.usage.input_tokens,
+                    "gen_ai.usage.output_tokens": response.usage.output_tokens,
+                },
             )
         self.calls += 1
         self.tokens += response.usage.total_tokens

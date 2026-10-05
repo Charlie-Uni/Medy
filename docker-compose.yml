@@ -121,6 +121,20 @@ services:
         condition: service_healthy
     stop_grace_period: 30s
 
+  jaeger:
+    # Trace viewer for the OTLP spans the API / worker / MCP already emit (record 123). Apache-2.0, one container,
+    # in-memory storage: for looking at call chains on a workstation, not a retention store. Spans carry structure
+    # only (node, model, tokens, cost, versions) — never prompts, evidence or answers (INV-OBS-03).
+    # Start with `make observability-up`, then set OTEL_EXPORTER_OTLP_ENDPOINT=http://127.0.0.1:4318 in .env.
+    image: jaegertracing/jaeger:2.4.0
+    container_name: medops-jaeger
+    profiles: ["observability"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:16686:16686" # UI
+      - "127.0.0.1:4318:4318" # OTLP/HTTP
+    stop_grace_period: 10s
+
 volumes:
   postgres_data:
   redis_data:
