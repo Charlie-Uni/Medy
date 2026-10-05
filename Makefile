@@ -1,4 +1,4 @@
-.PHONY: help install install-check install-embed lock schemas lint format format-check typecheck test test-integration check migrate migrate-down migration-check db-users load-corpus index-build index-check lexical-index-a lexical-index activate-docs validate-probe canonicalize-probe up down ps
+.PHONY: demo demo-check demo-ask help install install-check install-embed lock schemas lint format format-check typecheck test test-integration check migrate migrate-down migration-check db-users load-corpus index-build index-check lexical-index-a lexical-index activate-docs validate-probe canonicalize-probe up down ps
 
 # venv lives in a NON-dot directory on purpose: ~/Documents is an iCloud Drive domain that marks every file
 # inside dot-directories as hidden, and CPython >= 3.11.16 skips hidden .pth files, which silently breaks
@@ -22,6 +22,9 @@ help:
 	@echo "make lexical-index ACTOR=<id>            (re)build the PRODUCTION lexical index chunk_lexical_tsv (migration 0007, admin DSN)"
 	@echo "make index-build ACTOR=<id> [ADMIN_URL=<dsn>] [DEVICE=mps]   lexical index + embeddings + coverage check; run after every ingestion (record 109)"
 	@echo "make index-check [ADMIN_URL=<dsn>]        exit 1 if an active chunk is missing from the lexical index or the embeddings"
+	@echo "make demo-check                           demo prerequisites only (no API start, no model calls)"
+	@echo "make demo                                 seven demo scenarios through the real API (about 0.1 USD of model calls)"
+	@echo "make demo-ask [Q=\"question\"] [DEPT=MA|PV|CO]   ask your own question; without Q an interactive prompt"
 	@echo "make activate-docs PLAN=<plan.json> ACTOR=<id> ADMIN_URL=<dsn>   activate draft documents all-or-nothing with audited reasons"
 	@echo "make check           lint + format-check + typecheck + test + schema drift (CI gate)"
 	@echo "make validate-probe DIR=<version_dir> [MODE=draft|frozen] [PAGES=<pages_dir>]"
@@ -105,6 +108,16 @@ index-build:
 
 index-check:
 	$(PY) -m medops.retrieval.production check-indexes $(if $(ADMIN_URL),--admin-url $(ADMIN_URL),)
+
+# local demo on the real corpus with a throw-away identity (docs/DEMO.md); every question is a billed model call
+demo-check:
+	$(PY) scripts/demo.py --check
+
+demo:
+	$(PY) scripts/demo.py $(if $(DEVICE),--device $(DEVICE),)
+
+demo-ask:
+	$(PY) scripts/demo.py $(if $(Q),--ask "$(Q)",--interactive) $(if $(DEPT),--dept $(DEPT),) $(if $(DEVICE),--device $(DEVICE),)
 
 activate-docs:
 	$(PY) -m medops.ingestion.activate --plan $(PLAN) --actor $(ACTOR) --admin-url $(ADMIN_URL)

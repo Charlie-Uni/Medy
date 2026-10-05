@@ -2,15 +2,22 @@
 
 目的：用真实 API、真实语料和真实策略，在十分钟内展示系统"做什么、不做什么、怎么证明"。所有示例问题都来自评测集或安全集，实测结果见 [验收报告](ACCEPTANCE_REPORT.md) 与 §4 的运行目录。
 
-## 1. 准备（约两分钟）
+## 1. 准备与运行（约两分钟）
 
-1. 数据库与 Redis：`make up`（PostgreSQL 16 + pgvector、Redis 7）。语料在 `medops_v2`（333 份 active，`make index-check` 应返回 0 缺失）。
-2. 身份：开发环境用合成身份（ADR-0001 §4）。启动 API 时以环境变量给出 `OIDC_ISSUER`、`OIDC_AUDIENCE`、`OIDC_JWKS_JSON`（一次性 RSA 密钥的公钥集），`principals` 表里为演示主体建行（MA 分析员一名，可选 PV 分析员一名，均 `analyst` 角色）。记录 105 的发布脚本就是这样做的。
-3. 词表与模型：`.env` 的 `GLOSSARY_DIR` 指向 `evals/glossary/`（released 策略引用词表版本）；代理环境下加 `HF_HUB_OFFLINE=1` 离线加载本地模型缓存。
-4. 启动：`python -m medops.api.serve --host 127.0.0.1 --port 8124 --device mps`，`/readyz` 返回 200 即就绪（约 15 秒）。
-5. 演示脚本：`python evals/harness/tools/demo_walkthrough.py --base-url http://127.0.0.1:8124 --issuer-pem <pem> --kid <kid> --issuer <iss> --audience <aud> --sub <MA 主体> [--sub-other-dept <PV 主体>]`，逐条打印结果、策略版本与 trace id。
+前提：`make up` 已启动数据库（PostgreSQL 16 + pgvector、Redis 7），`.env` 里有数据库连接、`IDENTITY_PSEUDONYM_KEY` 与 `OPENAI_API_KEY`，本机已缓存两个本地模型（bge-m3、bge-reranker-v2-m3）。
 
-## 2. 六个场景（脚本顺序）
+| 命令 | 做什么 | 费用 |
+| --- | --- | --- |
+| `make demo-check` | 只检查前提：数据库可连、333 份文档的检索索引完整、已发布策略在、词表文件在。不启动 API，不调用模型 | 0 |
+| `make demo` | 启动真实 API（约 15 秒加载本地模型），依次跑 §2 的七个场景，逐条打印问题、结果、每条陈述及其引用的文档 / 版本 / 页码、策略版本、trace id，然后停掉 API | 约 0.1 USD |
+| `make demo-ask Q="你的问题" DEPT=MA` | 以某个部门的分析员身份问一个自己的问题（`DEPT` 取 MA / PV / CO，缺省 MA） | 约 0.01 USD |
+| `make demo-ask DEPT=PV` | 不带 `Q` 时进入交互：连续提问，空行结束 | 每问约 0.01 USD |
+
+脚本是 `scripts/demo.py`，只用于本机演示（ADR-0001 §4 的合成身份）：每次运行生成一把一次性的 RSA 密钥放在临时目录，把公钥交给 API，为 `demo-ma-01` / `demo-pv-01` / `demo-co-01` 三个演示分析员签发 10 分钟有效的令牌（它们在 `principals` 表里登记为 `analyst` 角色），退出时删除密钥。API 只监听 127.0.0.1。脚本不打印令牌、密钥或连接串；它强制使用演示库 `medops_v2`。每个问题都是一次真实的模型调用，计入 `.env` 里那把 key 的账单。非 Apple 芯片的机器加 `DEVICE=cpu` 或 `DEVICE=cuda`。
+
+想手工走一遍的话：API 的启动方式见 [DEPLOY.md](DEPLOY.md)，`evals/harness/tools/demo_walkthrough.py` 是只打印计数的精简客户端。
+
+## 2. 七个场景（脚本顺序）
 
 | # | 展示什么 | 问题 | 预期 | 实测出处 |
 | --- | --- | --- | --- | --- |
