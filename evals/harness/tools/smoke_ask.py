@@ -304,6 +304,7 @@ def main() -> int:
         evidence_focus=released.evidence_focus(),
         sentence_scorer=reranker.score,
         doc_titles=doc_titles,
+        answer_model_by_intent=released.answer_models(),
     )
     from medops.retrieval.production import production_retrieval_inputs
     from medops.retrieval.versioning import compute_retrieval_version

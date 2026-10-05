@@ -17,6 +17,11 @@ expectation) / 0.0. Rules, all on point estimates (baseline 5.8: the CI is repor
 Profile `cost` (M5-04, baseline 5.11 "同等质量下 Token 降低 >= 25%"): the target becomes the mean model tokens per
 main item, candidate must spend at least 25% less, and quality must not drop by more than the same 1 pp the slices
 are allowed (the CI is still only reported). Slices, safety and reliability rules are unchanged.
+
+Profile `spend` (record 122, decision 2026-10-05: model routing is judged on money, not tokens — a cheaper model
+spends the same tokens): the target is the mean model cost in USD per main item, candidate must spend at least 25%
+less (the baseline's own figure for the token goal), quality as in `cost`. Latency is reported by the runner and
+not gated here: the arms of a replay do not run under the same load.
 """
 
 from __future__ import annotations
@@ -32,7 +37,8 @@ TARGET_MIN_PP = 5.0
 NON_TARGET_MAX_DROP_PP = 1.0
 TOKEN_REDUCTION_MIN = 0.25  # cost profile: candidate tokens per item <= 75% of baseline
 QUALITY_MIN_PP = -1.0  # cost profile: overall success may not drop by more than 1 pp (same tolerance as slices)
-PROFILES = ("quality", "cost")
+SPEND_REDUCTION_MIN = 0.25  # spend profile: candidate USD per item <= 75% of baseline
+PROFILES = ("quality", "cost", "spend")
 MIN_SLICE = 30
 MIN_RUNS = 3
 MIN_ITEMS = 200
@@ -110,10 +116,13 @@ def compute_gate(
     profile: str = "quality",
     baseline_tokens: Sequence[Mapping[str, float]] | None = None,
     candidate_tokens: Sequence[Mapping[str, float]] | None = None,
+    baseline_spend: Sequence[Mapping[str, float]] | None = None,
+    candidate_spend: Sequence[Mapping[str, float]] | None = None,
 ) -> GateReport:
     """`slices[item_id]` maps slice dimension -> value (e.g. {"dept": "MA", "kind": "answerable", "slice": [...]}).
     `safety_*_runs[r][category]` maps item id -> success for that category in run r. With `profile="cost"`,
-    `*_tokens[r]` maps item id -> model tokens spent on that item in run r (main items only)."""
+    `*_tokens[r]` maps item id -> model tokens spent on that item in run r (main items only); with
+    `profile="spend"`, `*_spend[r]` maps item id -> model cost in USD of that item in run r."""
     if profile not in PROFILES:
         raise ValueError(f"unknown gate profile {profile!r}")
     a = per_item_mean(baseline_runs)
@@ -144,7 +153,7 @@ def compute_gate(
         thresholds["target_min_pp"] = TARGET_MIN_PP
         if not target["passes"]:
             blockers.append(f"target +{point:.2f} pp < +{TARGET_MIN_PP:.0f} pp")
-    else:
+    elif profile == "cost":
         if not baseline_tokens or not candidate_tokens:
             raise ValueError("the cost profile needs per-item token maps for both arms")
         ta, tb = per_item_mean(baseline_tokens), per_item_mean(candidate_tokens)
@@ -168,6 +177,32 @@ def compute_gate(
         thresholds["quality_min_pp"] = QUALITY_MIN_PP
         if not tokens_ok:
             blockers.append(f"token reduction {100 * reduction:.1f}% < {100 * TOKEN_REDUCTION_MIN:.0f}%")
+        if not quality_ok:
+            blockers.append(f"quality {point:+.2f} pp < {QUALITY_MIN_PP:+.0f} pp")
+    else:
+        if not baseline_spend or not candidate_spend:
+            raise ValueError("the spend profile needs per-item cost maps for both arms")
+        sa, sb = per_item_mean(baseline_spend), per_item_mean(candidate_spend)
+        if set(sa) != set(a) or set(sb) != set(a):
+            raise ValueError("cost maps must cover the same items as the success maps")
+        mean_a, mean_b = _mean(list(sa.values())), _mean(list(sb.values()))
+        reduction = 1.0 - (mean_b / mean_a) if mean_a else 0.0
+        quality_ok = round(point, 6) >= QUALITY_MIN_PP
+        spend_ok = reduction >= SPEND_REDUCTION_MIN
+        target.update(
+            {
+                "usd_baseline": round(mean_a, 6),
+                "usd_candidate": round(mean_b, 6),
+                "spend_reduction": round(reduction, 4),
+                "quality_ok": quality_ok,
+                "spend_ok": spend_ok,
+                "passes": quality_ok and spend_ok,
+            }
+        )
+        thresholds["spend_reduction_min"] = SPEND_REDUCTION_MIN
+        thresholds["quality_min_pp"] = QUALITY_MIN_PP
+        if not spend_ok:
+            blockers.append(f"spend reduction {100 * reduction:.1f}% < {100 * SPEND_REDUCTION_MIN:.0f}%")
         if not quality_ok:
             blockers.append(f"quality {point:+.2f} pp < {QUALITY_MIN_PP:+.0f} pp")
 

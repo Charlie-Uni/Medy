@@ -215,3 +215,27 @@ def test_truncated_answer_is_retried_once_with_a_doubled_allowance_then_fails():
         run2.state.escalation.reason_codes == (ReasonCode.system_failure,) and "twice" in run2.state.escalation.detail
     )
     assert len(twice.calls) == 2
+
+
+def test_a_released_model_route_picks_the_answer_model_by_intent_and_never_moves_the_judge():
+    """Record 122: `model_route/answer` routes the answer call only; the claim judge keeps its pinned model."""
+    retrieval = FakeRetrieval(evidence("c1", LABEL), evidence("c2", CONTRA))
+    reply = {"claims": [{"text": "6 至 12 歲孩童口服 100 mg，一天三次。", "citation_chunk_ids": ["c1"]}]}
+
+    def run_with(routes):
+        gateway = FakeModelGateway({"answer": [reply], "verify": [{"verdict": "supported", "reason": "ok"}] * 4})
+        deps = make_deps(retrieval, gateway, judge_model_id="gpt-6-sol", answer_model_by_intent=routes)
+        run = run_ask(state(), deps)
+        return run, gateway
+
+    run, gateway = run_with({})
+    intent = run.state.intent.type.value
+    assert [c.model_id for c in gateway.calls if c.purpose == "answer"] == ["gpt-6-sol"]
+    routed, gateway = run_with({intent: "gpt-6-luna"})
+    assert routed.outcome == run.outcome == "answered"
+    assert [c.model_id for c in gateway.calls if c.purpose == "answer"] == ["gpt-6-luna"]
+    assert {c.model_id for c in gateway.calls if c.purpose == "verify"} <= {"gpt-6-sol"}
+    other, gateway = run_with({"protocol_deviation" if intent != "protocol_deviation" else "label_query": "gpt-6-luna"})
+    assert [c.model_id for c in gateway.calls if c.purpose == "answer"] == ["gpt-6-sol"]  # other intents untouched
+    answer_keys = lambda r: [a.operation_key for a in r.attempts if a.node == "answer"]  # noqa: E731
+    assert answer_keys(run) != answer_keys(routed)  # a routed answer never reuses a stored execution of the other model

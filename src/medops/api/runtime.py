@@ -396,6 +396,7 @@ class ProductionRuntime:
             doc_titles=lambda _user, ids: load_titles(conn, ids),  # the request connection: department-scoped
             gateway=metered,
             answer_model_id=PRODUCTION_ANSWER_MODEL,
+            answer_model_by_intent=routed.policies.answer_models(),
             judge_model_id=PRODUCTION_JUDGE_MODEL,
             as_of=as_of,
             executions=PgExecutionStore(conn),

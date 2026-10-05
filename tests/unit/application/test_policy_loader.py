@@ -96,7 +96,11 @@ def test_validate_diff_covers_every_kind_and_the_supported_targets_are_pinned():
     validate_diff("skill", "label_query", {"params": {"k": 1}})
     with pytest.raises(PolicyDiffError):
         validate_diff("prompt", "other", {"text": "x"})
-    assert SUPPORTED_RELEASE_TARGETS == {("retrieval_params", "hybrid"), ("prompt", "answer_system")}
+    assert SUPPORTED_RELEASE_TARGETS == {
+        ("retrieval_params", "hybrid"),
+        ("prompt", "answer_system"),
+        ("model_route", "answer"),  # record 122
+    }
 
 
 def test_glossary_is_a_retrieval_parameter_with_a_versioned_value():
@@ -181,3 +185,24 @@ def test_evidence_focus_is_an_allowlisted_layout_and_marks_the_model_config_only
     validate_diff("retrieval_params", "hybrid", {"evidence_focus": {"from": "off", "to": "compact-v1"}}, base=BASE)
     with pytest.raises(PolicyDiffError, match="evidence_focus must be one of"):
         validate_diff("retrieval_params", "hybrid", {"evidence_focus": {"from": "off", "to": "top3"}}, base=BASE)
+
+
+def test_model_route_names_an_allowed_answer_model_per_routable_intent_and_marks_the_model_config():
+    diff = {
+        "label_query": {"from": "gpt-6-sol", "to": "gpt-6-luna"},
+        "general_qa": {"from": "gpt-6-sol", "to": "gpt-6-sol"},
+    }
+    rs = ReleasedPolicySet((ReleasedPolicy("m", "model_route", "answer", "v", diff),))
+    assert rs.answer_models() == {"label_query": "gpt-6-luna", "general_qa": "gpt-6-sol"}
+    assert rs.model_config_suffix() == ";route=general_qa:gpt-6-sol,label_query:gpt-6-luna"
+    assert rs.hybrid_config(BASE) == BASE and rs.evidence_focus() == "off"  # nothing else moves
+    assert ReleasedPolicySet().answer_models() == {} and ("model_route", "answer") in SUPPORTED_RELEASE_TARGETS
+    validate_diff("model_route", "answer", diff)
+    with pytest.raises(PolicyDiffError, match="not a routable intent"):
+        validate_diff("model_route", "answer", {"high_risk": {"from": "gpt-6-sol", "to": "gpt-6-luna"}})
+    with pytest.raises(PolicyDiffError, match="model must be one of"):
+        validate_diff("model_route", "answer", {"label_query": {"from": "gpt-6-sol", "to": "gpt-3.5"}})
+    with pytest.raises(PolicyDiffError, match="changes nothing"):
+        validate_diff("model_route", "answer", {"label_query": {"from": "gpt-6-sol", "to": "gpt-6-sol"}})
+    with pytest.raises(PolicyDiffError, match="at least one intent"):
+        validate_diff("model_route", "answer", {})

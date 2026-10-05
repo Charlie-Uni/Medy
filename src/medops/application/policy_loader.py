@@ -17,6 +17,8 @@ Targets this build can apply (a release of anything else is refused with `policy
 |                  |                 | and the answer-context key `evidence_focus` (`off`, `compact-v1`,                |
 |                  |                 | `sentfocus-v1`) — record 113                                                     |
 | prompt           | answer_system   | `{"text": "...", "text_sha256": "..."}` — the answer node's system prompt |
+| model_route      | answer          | `{"<intent>": {"from": "<model>", "to": "<model>"}}` — the answer model per      |
+|                  |                 | intent type (record 122); the judge model is never routed                        |
 """
 
 from __future__ import annotations
@@ -29,13 +31,14 @@ from typing import Any
 
 from medops.domain.state import MAX_EVIDENCE, VersionSet
 from medops.harness.evidence_focus import ALLOWED_EVIDENCE_FOCUS, EVIDENCE_FOCUS_OFF
+from medops.harness.production import ALLOWED_ANSWER_MODELS, ROUTABLE_INTENTS
 from medops.retrieval.glossary_store import valid_glossary_version
 from medops.retrieval.hybrid import HybridConfig
 from medops.retrieval.query_translation import ALLOWED_TRANSLATION_MODELS, QUERY_TRANSLATION_OFF
 from medops.retrieval.rewrite import GLOSSARY_NONE
 
 SUPPORTED_RELEASE_TARGETS: frozenset[tuple[str, str]] = frozenset(
-    {("retrieval_params", "hybrid"), ("prompt", "answer_system")}
+    {("retrieval_params", "hybrid"), ("prompt", "answer_system"), ("model_route", "answer")}
 )
 RETRIEVAL_PARAM_KEYS = (
     "k_lexical",
@@ -159,6 +162,23 @@ class ReleasedPolicySet:
             raise PolicyDiffError("prompt/answer_system text does not match its recorded sha256")
         return text
 
+    # -- model route
+    def answer_models(self) -> dict[str, str]:
+        """intent type -> answer model, for the intents a released `model_route/answer` policy names (record 122).
+        An intent it does not name keeps the pinned production answer model."""
+        p = self.get("model_route", "answer")
+        if p is None:
+            return {}
+        routes: dict[str, str] = {}
+        for intent, entry in p.diff.items():
+            if intent not in ROUTABLE_INTENTS:
+                raise PolicyDiffError(f"model_route/answer: {intent!r} is not a routable intent")
+            model = str(_to(entry))
+            if model not in ALLOWED_ANSWER_MODELS:
+                raise PolicyDiffError(f"model_route/answer: model must be one of {sorted(ALLOWED_ANSWER_MODELS)}")
+            routes[intent] = model
+        return routes
+
     # -- versions
     def policy_version(self, base: str) -> str:
         if not self.policies:
@@ -177,6 +197,9 @@ class ReleasedPolicySet:
         focus = self.evidence_focus()
         if focus != EVIDENCE_FOCUS_OFF:
             suffix += f";ctx={focus}"  # the prompt layout is part of the model configuration (record 113)
+        routes = self.answer_models()
+        if routes:  # which model answers which intent is the model configuration itself (record 122)
+            suffix += ";route=" + ",".join(f"{intent}:{model}" for intent, model in sorted(routes.items()))
         return suffix
 
 
@@ -219,6 +242,13 @@ def validate_diff(kind: str, name: str, diff: Mapping[str, Any], *, base: Hybrid
             probe.evidence_focus()
         extras = {"rerank_output", "glossary", "multi_query", "doc_focus", "query_translation", "evidence_focus"}
         if cfg == (base or HybridConfig()) and not (extras & set(diff)):
+            raise PolicyDiffError("the diff changes nothing")
+        return
+    if (kind, name) == ("model_route", "answer"):
+        routes = ReleasedPolicySet((ReleasedPolicy("x", kind, name, "v", diff),)).answer_models()
+        if not routes:
+            raise PolicyDiffError("model_route/answer needs at least one intent")
+        if all(isinstance(e, Mapping) and e.get("from") == e.get("to") for e in diff.values()):
             raise PolicyDiffError("the diff changes nothing")
         return
     if (kind, name) == ("prompt", "answer_system"):

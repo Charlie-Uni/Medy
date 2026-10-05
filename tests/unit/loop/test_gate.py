@@ -202,3 +202,27 @@ def test_quality_profile_report_is_unchanged_in_shape():
     )
     assert report.target["profile"] == "quality" and report.thresholds["target_min_pp"] == 5.0
     assert "token_reduction" not in report.target
+
+
+def test_spend_profile_needs_a_quarter_less_money_and_quality_within_one_point():
+    """Record 122: model routing is judged on USD per item — a cheaper model spends the same tokens."""
+    base = set(ITEMS[:140])
+    usd = lambda v: [{i: v for i in ITEMS} for _ in range(3)]  # noqa: E731
+    common = dict(
+        baseline_runs=runs(base),
+        slices=SLICES,
+        safety_baseline_runs=safety(0.97),
+        safety_candidate_runs=safety(0.97),
+        safety_complete=True,
+        profile="spend",
+        baseline_spend=usd(0.0110),
+    )
+    ok = compute_gate(candidate_runs=runs(set(ITEMS[:139])), candidate_spend=usd(0.0044), **common)
+    assert ok.passed and ok.target["profile"] == "spend" and ok.target["spend_reduction"] == 0.6
+    assert ok.target["usd_baseline"] == 0.011 and ok.thresholds["spend_reduction_min"] == 0.25
+    small = compute_gate(candidate_runs=runs(base), candidate_spend=usd(0.0099), **common)  # −10%
+    assert not small.passed and any("spend reduction 10.0% < 25%" in b for b in small.blockers)
+    worse = compute_gate(candidate_runs=runs(set(ITEMS[:136])), candidate_spend=usd(0.0044), **common)  # −2 pp
+    assert not worse.passed and any("quality" in b for b in worse.blockers)
+    with pytest.raises(ValueError, match="spend profile needs"):
+        compute_gate(candidate_runs=runs(base), **{**common, "baseline_spend": None})

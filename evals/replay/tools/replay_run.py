@@ -154,6 +154,7 @@ def arm_settings(released: ReleasedPolicySet) -> dict[str, Any]:
         "doc_focus": released.doc_focus(),
         "query_translation": released.query_translation(),
         "evidence_focus": released.evidence_focus(),
+        "answer_models": released.answer_models(),
         "answer_prompt_overridden": released.get("prompt", "answer_system") is not None,
     }
 
@@ -285,6 +286,7 @@ def main() -> int:
                 doc_focus=rel.doc_focus(),
                 query_translation=rel.query_translation(),
                 evidence_focus=rel.evidence_focus(),
+                answer_models=rel.answer_models(),
             )
             for db in (sr.PRODUCTION_DB, sr.SAFETY_DB)
         }
@@ -414,6 +416,7 @@ def main() -> int:
     main_ids = [it["replay_id"] for it in items]
     by_arm_run: dict[str, list[dict[str, float]]] = {"baseline": [], "candidate": []}
     tokens_by_arm_run: dict[str, list[dict[str, float]]] = {"baseline": [], "candidate": []}
+    spend_by_arm_run: dict[str, list[dict[str, float]]] = {"baseline": [], "candidate": []}
     safety_by_arm_run: dict[str, list[dict[str, dict[str, float]]]] = {"baseline": [], "candidate": []}
     aggregates: dict[str, list[dict[str, Any]]] = {"baseline": [], "candidate": []}
     for run in range(1, args.runs + 1):
@@ -421,6 +424,7 @@ def main() -> int:
             rows = [done[f"{arm}|{run}|{i}"] for i in main_ids if f"{arm}|{run}|{i}" in done]
             by_arm_run[arm].append({r["replay_id"]: 1.0 if r["success"] else 0.0 for r in rows})
             tokens_by_arm_run[arm].append({r["replay_id"]: float(r["model_tokens"]) for r in rows})
+            spend_by_arm_run[arm].append({r["replay_id"]: float(r["cost_usd"]) for r in rows})
             cats: dict[str, dict[str, float]] = defaultdict(dict)
             srows = [
                 done[f"{arm}|{run}|{it['replay_id']}"]
@@ -473,6 +477,8 @@ def main() -> int:
         profile=spec.get("gate_profile", "quality"),
         baseline_tokens=tokens_by_arm_run["baseline"],
         candidate_tokens=tokens_by_arm_run["candidate"],
+        baseline_spend=spend_by_arm_run["baseline"],
+        candidate_spend=spend_by_arm_run["candidate"],
     ).as_dict()
     gate["replay_set"] = {
         "dataset_version": manifest["dataset_version"],
@@ -547,6 +553,13 @@ def render(res: dict[str, Any]) -> str:
             f"- profile cost: tokens/item baseline {t['tokens_baseline']} → candidate {t['tokens_candidate']} "
             f"({100 * t['token_reduction']:.1f}% less, need ≥ {100 * th['token_reduction_min']:.0f}%); "
             f"quality Δ {t['delta_pp']} pp (95% CI {t['ci95_pp']}, floor {th['quality_min_pp']} pp) → {'✓' if t['passes'] else '✗'}"
+        )
+    elif t.get("profile") == "spend":
+        target_line = (
+            f"- profile spend: USD/item baseline {t['usd_baseline']} → candidate {t['usd_candidate']} "
+            f"({100 * t['spend_reduction']:.1f}% less, need ≥ {100 * th['spend_reduction_min']:.0f}%); "
+            f"quality Δ {t['delta_pp']} pp (95% CI {t['ci95_pp']}, floor {th['quality_min_pp']} pp) → {'✓' if t['passes'] else '✗'}"
+            " (latency: see the runs table; the arms do not share load)"
         )
     else:
         target_line = f"- target: baseline {t['baseline']} → candidate {t['candidate']}, Δ {t['delta_pp']} pp (95% CI {t['ci95_pp']}), threshold +{th['target_min_pp']} pp → {'✓' if t['passes'] else '✗'}"

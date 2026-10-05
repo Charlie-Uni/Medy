@@ -1,0 +1,16 @@
+{
+ "kind": "model_route",
+ "name": "answer",
+ "diff": {
+  "label_query": {
+   "from": "gpt-6-sol",
+   "to": "gpt-6-luna"
+  }
+ },
+ "gate_profile": "spend",
+ "rationale": "Model routing as record 91 sketched it: only label_query (single-document label questions, 14% of the replay items) is answered by gpt-6-luna. By arithmetic it can save at most about a tenth of the spend, so it cannot meet the 25% spend gate on its own; kept as the conservative variant if the diagnostic candidate shows the small model is only safe on this intent.",
+ "evidence": {
+  "case_ids": [],
+  "kind": "cost"
+ }
+}

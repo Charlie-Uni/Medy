@@ -123,6 +123,8 @@ class HarnessDeps:
     answer_max_output_tokens: int = 800
     executions: ExecutionStore | None = None  # M2-03 operation-key ledger; None = no persistence (unit tests)
     answer_system: str = ANSWER_SYSTEM  # released prompt policy may override (M4-03); the trace's model config says so
+    # released `model_route/answer` (record 122): intent type -> answer model; other intents use answer_model_id
+    answer_model_by_intent: Mapping[str, str] = field(default_factory=dict)
     evidence_focus: str = EVIDENCE_FOCUS_OFF  # released layout of the evidence in the answer prompt (M5-04)
     sentence_scorer: SentenceScorer | None = None  # the reranker's scorer; required by the sentfocus versions
     # titles of evidence documents as the reader's own connection sees them; required by `sentfocus-v7`
@@ -451,7 +453,9 @@ def build_nodes(deps: HarnessDeps) -> dict[str, Callable[[HarnessState], dict[st
         return guarded(
             "answer",
             hs,
-            _key(state, "answer", evidence=[e.citation.chunk_id for e in state.evidence], model=deps.answer_model_id),
+            _key(
+                state, "answer", evidence=[e.citation.chunk_id for e in state.evidence], model=answer_model(state, deps)
+            ),
             answer_body,
         )
 
@@ -481,6 +485,12 @@ def _finish_with_budget(state: AgentState, meter: _Meter) -> AgentState:
         return state  # already escalating; the budget overshoot is recorded by the meter on the trace
 
 
+def answer_model(state: AgentState, deps: HarnessDeps) -> str:
+    """The model that writes the answer for this question's intent (the judge model is not routed)."""
+    intent = state.intent.type.value if state.intent is not None else ""
+    return deps.answer_model_by_intent.get(intent, deps.answer_model_id)
+
+
 def _answer_request(
     state: AgentState,
     deps: HarnessDeps,
@@ -492,7 +502,7 @@ def _answer_request(
     user = f"问题：{state.query}\n\n证据（共 {len(shown.blocks)} 段）：\n\n" + shown.body()
     return ModelRequest(
         purpose="answer",
-        model_id=deps.answer_model_id,
+        model_id=answer_model(state, deps),
         messages=(Message(role="system", content=deps.answer_system), Message(role="user", content=user)),
         max_output_tokens=max_output_tokens or deps.answer_max_output_tokens,
         json_schema=ANSWER_SCHEMA,

@@ -1,0 +1,20 @@
+{
+ "kind": "model_route",
+ "name": "answer",
+ "diff": {
+  "label_query": {
+   "from": "gpt-6-sol",
+   "to": "gpt-6-luna"
+  },
+  "general_qa": {
+   "from": "gpt-6-sol",
+   "to": "gpt-6-luna"
+  }
+ },
+ "gate_profile": "spend",
+ "rationale": "Model routing, diagnostic candidate (record 122): the answer call of label_query and general_qa questions (97% of the replay items by the local intent rules: 87 + 512 of 614) goes to gpt-6-luna; the claim judge stays on gpt-6-sol and skill intents keep gpt-6-sol. One round measures where the small model answers as well as the large one, per intent and slice, before any narrower route is proposed. Spend gate: USD per main item at least 25% lower, overall success drop <= 1 pp, slice and safety rules unchanged; latency is reported, not gated. Prices: gpt-6-luna 0.10 / 0.50 USD per million tokens in / out, gpt-6-sol 2.00 / 10.00. A different release target from the released retrieval bundle, which stays in force in both arms.",
+ "evidence": {
+  "case_ids": [],
+  "kind": "cost"
+ }
+}
