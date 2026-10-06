@@ -12,6 +12,7 @@
 | `drafts/drafting_provenance.json` | 起草模块（模板）的 SHA-256 与条数 | 是 |
 | `drafts/review_verdicts.jsonl`、`drafts/review_prompt_safety.md` | 复核逐条结果与固定提示 | 是 |
 | `injection_plan.json`、`corpus_safety.json` | 合成文档计划（6 份、25 段注入）与安全语料记录（含金丝雀映射） | 是 |
+| `safety-v2-provisional/` | 冻结版本（2026-10-06，记录 124）：`samples.jsonl`、撤下样本、复核结论与提示、确认表、`manifest.json`、`SHA256SUMS`；`dataset_hash` 为 SHA256SUMS 文本的 SHA-256 | 是 |
 | `drafts/withdrawn/` | 从现行草案撤下的样本原文（含复核块）与 `manifest.json`（替换为谁、为什么）；`load_drafts(include_withdrawn=True)` 供冻结回放集与存档运行解析旧编号（记录 114） | 是 |
 | `drafts/sheets/safety-v2-changes.md` | safety-v2 变动样本的确认表（8 条待确认 + 7 条撤下） | 是 |
 | `drafts/stale_expectations_2026-10-02.md`、`drafts/proposals/*.json` | 语料扩展后的裁决与待办、safety-v2 的替换题草案（未进入任何版本，待人工确认；记录 112） | 是 |
@@ -30,7 +31,8 @@ python evals/safety_set/tools/author_drafts.py              # 起草模块 -> dr
 python evals/safety_set/tools/check_safety.py               # schema、PR-S1..S6（含两库证明）、配额；必须为 0 问题
 python evals/safety_set/tools/run_review.py --apply         # gpt-6-sol 独立复核（不同厂商），结论写回 review 块
 python evals/safety_set/tools/make_sheets.py                # annotator-01 标注表
-python evals/harness/tools/safety_run.py --out evals/harness/runs/<名称>   # 自动判定 + M2-16 门禁（§1、§4）
+python evals/safety_set/tools/freeze.py --version safety-v2-provisional --confirmed-by <who/when>   # 冻结：校验归零、复核齐全后写 manifest 与哈希
+python evals/harness/tools/safety_run.py --out evals/harness/runs/<名称> --dataset evals/safety_set/safety-v2-provisional --released   # 冻结版本上的正式运行
 ```
 
 安全数据库 `medops_v2_safety` 由 medops_v2 以模板克隆后追加 `sf-` 文档；生产库与主集运行永不接触它。

@@ -474,7 +474,7 @@ def run_sample(sample: dict, planes: dict[str, Plane], gateway, registry, versio
     }
 
 
-def summarize(rows: list[dict], versions: VersionSet, run_name: str) -> dict:
+def summarize(rows: list[dict], versions: VersionSet, run_name: str, dataset_info: dict | None = None) -> dict:
     by_cat = collections.defaultdict(list)
     for r in rows:
         by_cat[r["category"]].append(r)
@@ -515,6 +515,7 @@ def summarize(rows: list[dict], versions: VersionSet, run_name: str) -> dict:
     canary_ok = [r for r in canary_pool if all(c["ok"] for c in r["checks"] if c["check"] == "canary_absent")]
     return {
         "run": run_name,
+        "dataset": dataset_info,
         "finished_at": time.strftime("%Y-%m-%dT%H:%M:%S"),
         "n": len(rows),
         "exercised": sum(1 for r in rows if not r.get("not_exercised")),
@@ -706,6 +707,12 @@ def rejudge(out_dir: pathlib.Path) -> int:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", type=pathlib.Path, required=True)
+    ap.add_argument(
+        "--dataset",
+        type=pathlib.Path,
+        default=None,
+        help="frozen safety-set directory (samples.jsonl + manifest.json); default: the current drafts",
+    )
     ap.add_argument("--device", default="mps")
     ap.add_argument("--as-of", type=date.fromisoformat, default=date(2026, 9, 24))
     ap.add_argument("--only", default="")
@@ -737,9 +744,18 @@ def main() -> int:
                 r = json.loads(line)
                 if "system_failure" not in r.get("reason_codes", []):
                     done[r["sample_id"]] = r
-    current = {s["sample_id"]: s["query"] for s in load_drafts()}
+    frozen = None
+    if args.dataset:
+        frozen = json.loads((args.dataset / "manifest.json").read_text(encoding="utf-8"))
+        samples = [
+            json.loads(line)
+            for line in (args.dataset / "samples.jsonl").read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        ]
+    else:
+        samples = load_drafts()
+    current = {s["sample_id"]: s["query"] for s in samples}
     done = {k: v for k, v in done.items() if current.get(k) == v.get("query")}  # rewritten samples are redone
-    samples = load_drafts()
     if args.only:
         wanted = {x.strip() for x in args.only.split(",") if x.strip()}
         samples = [s for s in samples if s["sample_id"] in wanted]
@@ -837,7 +853,12 @@ def main() -> int:
                 print("consecutive system failures: exiting 76", flush=True)
                 return 76
     rows = [done[s["sample_id"]] for s in samples if s["sample_id"] in done]
-    summary = summarize(rows, versions, args.out.name)
+    dataset_info = (
+        {"version": frozen["dataset_version"], "dataset_hash": frozen["dataset_hash"], "path": str(args.dataset)}
+        if frozen
+        else {"version": samples[0]["dataset_version"] if samples else None, "dataset_hash": None, "path": "drafts"}
+    )
+    summary = summarize(rows, versions, args.out.name, dataset_info)
     (args.out / "results.json").write_text(
         json.dumps({**summary, "rows": rows}, ensure_ascii=False, indent=1) + "\n", encoding="utf-8"
     )

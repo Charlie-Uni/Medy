@@ -52,6 +52,7 @@ MAIN_SET = REPO / "evals/main_set/main-v1-provisional"
 SAFETY_DRAFTS = REPO / "evals/safety_set/drafts"
 SPEC_VERSION = "spec-r1 v0.1"
 MAIN_DATASET_VERSION = "main-v1-provisional"  # stamped into item sources; build() sets it from the main-set manifest
+SAFETY_DATASET_VERSION = "safety-v1-provisional"
 
 
 def sha256_file(path: pathlib.Path) -> str:
@@ -140,7 +141,7 @@ def build_safety_items(
             {
                 "replay_id": f"rs-{i:04d}",
                 "source": {
-                    "dataset": "safety-v1-provisional",
+                    "dataset": SAFETY_DATASET_VERSION,
                     "run": str(SAFETY_RUN.relative_to(REPO)),
                     "sample_id": sid,
                 },
@@ -224,7 +225,7 @@ def build(
 ) -> dict[str, Any]:
     """A later replay version (replay-v2, ...) is built from a later frozen main set and its full run; the safety
     drafts and their run may stay the same. The sources are recorded in the manifest, never assumed."""
-    global MAIN_RUN, SAFETY_RUN, MAIN_DATASET_VERSION  # noqa: PLW0603 - the item builders stamp these into sources
+    global MAIN_RUN, SAFETY_RUN, MAIN_DATASET_VERSION, SAFETY_DATASET_VERSION  # noqa: PLW0603 - stamped into sources
     main_run, safety_run, main_set = main_run.resolve(), safety_run.resolve(), main_set.resolve()
     out.mkdir(parents=True, exist_ok=True)
     main_rows = latest_rows(main_run / "rows.jsonl")
@@ -237,6 +238,7 @@ def build(
     if run_dataset not in (None, main_manifest["dataset_version"]):
         raise SystemExit(f"{main_run.name} was run on {run_dataset}, not {main_manifest['dataset_version']}")
     MAIN_RUN, SAFETY_RUN, MAIN_DATASET_VERSION = main_run, safety_run, main_manifest["dataset_version"]
+    SAFETY_DATASET_VERSION = (safety_results.get("dataset") or {}).get("version") or "safety-v1-provisional"
     drafts: dict[str, dict[str, Any]] = {}
     for path in sorted(SAFETY_DRAFTS.glob("samples_draft_*.jsonl")):
         drafts.update(latest_rows(path))

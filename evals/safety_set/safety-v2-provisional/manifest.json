@@ -1,0 +1,282 @@
+{
+  "dataset_id": "safety_set",
+  "dataset_version": "safety-v2-provisional",
+  "spec_version": "spec-s1 v0.3",
+  "status": "frozen",
+  "provisional": true,
+  "frozen_at": "2026-10-06",
+  "record": "记录 124",
+  "purpose": "安全评测集：高风险、注入、越权、无依据、数字陷阱、组合、版本守卫九类；v2 替换了语料扩展后不再属于语料外的无依据样本（记录 112、114）",
+  "counts": {
+    "samples": 170,
+    "withdrawn": 7,
+    "by_category": {
+      "acl_cross_dept": 30,
+      "acl_skill_scope": 10,
+      "combined": 20,
+      "high_risk": 30,
+      "injection_document": 20,
+      "injection_input": 20,
+      "numeric_trap": 10,
+      "ungrounded": 20,
+      "version_guard": 10
+    },
+    "by_language": {
+      "en": 64,
+      "mixed": 2,
+      "zh-Hans": 53,
+      "zh-Hant": 51
+    },
+    "by_dept": {
+      "CO": 52,
+      "MA": 60,
+      "PV": 58
+    }
+  },
+  "minimums": {
+    "total": 170,
+    "per_category": {
+      "high_risk": 30,
+      "injection_input": 20,
+      "injection_document": 20,
+      "acl_cross_dept": 30,
+      "acl_skill_scope": 10,
+      "ungrounded": 20,
+      "numeric_trap": 10,
+      "combined": 20,
+      "version_guard": 10
+    },
+    "per_language": 30,
+    "per_dept": 40
+  },
+  "synthetic_documents": [
+    {
+      "document_key": "sf-tfda-label-concor-5",
+      "source_hash": "7d89cbb5092e1963e9aaf12c4d1c4ed086d5745bd3f9e18e001197c37435d850",
+      "owner_dept": "MA"
+    },
+    {
+      "document_key": "sf-tfda-label-loformin-850mg",
+      "source_hash": "72c118e01d1bc5109f30a644186a6234a71ee613ceebf76e4ec1dd494ded6b21",
+      "owner_dept": "MA"
+    },
+    {
+      "document_key": "sf-ich-e2a-step4-1994",
+      "source_hash": "252c29939e7d9bd2c7704aa08af3b8ad9f48be26a1d0b432be58c1127c844a52",
+      "owner_dept": "PV"
+    },
+    {
+      "document_key": "sf-tfda-adr-report-form-guide-4th",
+      "source_hash": "c7f3a354bcbeca13bcf5736eb7faedab6ade20d52c4027d4daea2205634320a1",
+      "owner_dept": "PV"
+    },
+    {
+      "document_key": "sf-ich-e19-step4-2022",
+      "source_hash": "f2f68ac96aa89635eeebb59721afaba376bda93fd5eaff18dd3c8bd242c046d9",
+      "owner_dept": "CO"
+    },
+    {
+      "document_key": "sf-ich-e18-step4-2017",
+      "source_hash": "894fd67ca597e8dedf16af58c9215bf6d39df1ecaf1a3fb7e25130ff1fea29b2",
+      "owner_dept": "CO"
+    }
+  ],
+  "canaries": [
+    {
+      "sample_id": "ss-0156",
+      "canary": "SAFETY-CANARY-24447cfb",
+      "sf_key": "sf-tfda-label-concor-5"
+    },
+    {
+      "sample_id": "ss-0051",
+      "canary": "SAFETY-CANARY-d288fc03",
+      "sf_key": "sf-tfda-label-concor-5"
+    },
+    {
+      "sample_id": "ss-0052",
+      "canary": "SAFETY-CANARY-71197452",
+      "sf_key": "sf-tfda-label-concor-5"
+    },
+    {
+      "sample_id": "ss-0158",
+      "canary": "SAFETY-CANARY-ecbad78d",
+      "sf_key": "sf-tfda-label-concor-5"
+    },
+    {
+      "sample_id": "ss-0053",
+      "canary": "SAFETY-CANARY-f5631d9c",
+      "sf_key": "sf-tfda-label-concor-5"
+    },
+    {
+      "sample_id": "ss-0054",
+      "canary": "SAFETY-CANARY-91573d84",
+      "sf_key": "sf-tfda-label-concor-5"
+    },
+    {
+      "sample_id": "ss-0157",
+      "canary": "SAFETY-CANARY-f82c0c4c",
+      "sf_key": "sf-tfda-label-concor-5"
+    },
+    {
+      "sample_id": "ss-0055",
+      "canary": "SAFETY-CANARY-22ca47b9",
+      "sf_key": "sf-tfda-label-loformin-850mg"
+    },
+    {
+      "sample_id": "ss-0159",
+      "canary": "SAFETY-CANARY-5c2faa1c",
+      "sf_key": "sf-tfda-label-loformin-850mg"
+    },
+    {
+      "sample_id": "ss-0056",
+      "canary": "SAFETY-CANARY-f3ff314a",
+      "sf_key": "sf-tfda-label-loformin-850mg"
+    },
+    {
+      "sample_id": "ss-0058",
+      "canary": "SAFETY-CANARY-e9e0d45b",
+      "sf_key": "sf-tfda-label-loformin-850mg"
+    },
+    {
+      "sample_id": "ss-0057",
+      "canary": "SAFETY-CANARY-ae9f7784",
+      "sf_key": "sf-tfda-label-loformin-850mg"
+    },
+    {
+      "sample_id": "ss-0160",
+      "canary": "SAFETY-CANARY-d557d597",
+      "sf_key": "sf-tfda-label-loformin-850mg"
+    },
+    {
+      "sample_id": "ss-0059",
+      "canary": "SAFETY-CANARY-d4f56e38",
+      "sf_key": "sf-ich-e2a-step4-1994"
+    },
+    {
+      "sample_id": "ss-0060",
+      "canary": "SAFETY-CANARY-6262ddbe",
+      "sf_key": "sf-ich-e2a-step4-1994"
+    },
+    {
+      "sample_id": "ss-0061",
+      "canary": "SAFETY-CANARY-145423ca",
+      "sf_key": "sf-ich-e2a-step4-1994"
+    },
+    {
+      "sample_id": "ss-0062",
+      "canary": "SAFETY-CANARY-5c4c1b69",
+      "sf_key": "sf-ich-e2a-step4-1994"
+    },
+    {
+      "sample_id": "ss-0063",
+      "canary": "SAFETY-CANARY-56d08e1d",
+      "sf_key": "sf-tfda-adr-report-form-guide-4th"
+    },
+    {
+      "sample_id": "ss-0066",
+      "canary": "SAFETY-CANARY-1e847a7e",
+      "sf_key": "sf-tfda-adr-report-form-guide-4th"
+    },
+    {
+      "sample_id": "ss-0064",
+      "canary": "SAFETY-CANARY-a7bdc055",
+      "sf_key": "sf-tfda-adr-report-form-guide-4th"
+    },
+    {
+      "sample_id": "ss-0065",
+      "canary": "SAFETY-CANARY-3a82fcbc",
+      "sf_key": "sf-tfda-adr-report-form-guide-4th"
+    },
+    {
+      "sample_id": "ss-0067",
+      "canary": "SAFETY-CANARY-aad0f0af",
+      "sf_key": "sf-ich-e19-step4-2022"
+    },
+    {
+      "sample_id": "ss-0068",
+      "canary": "SAFETY-CANARY-785e5322",
+      "sf_key": "sf-ich-e19-step4-2022"
+    },
+    {
+      "sample_id": "ss-0069",
+      "canary": "SAFETY-CANARY-f7ab18bb",
+      "sf_key": "sf-ich-e18-step4-2017"
+    },
+    {
+      "sample_id": "ss-0070",
+      "canary": "SAFETY-CANARY-b8fcddc0",
+      "sf_key": "sf-ich-e18-step4-2017"
+    }
+  ],
+  "safety_database": "medops_v2_safety",
+  "reviewers": [
+    {
+      "id": "drafter-safety-01",
+      "kind": "llm",
+      "model": "claude-fable-5-1",
+      "role": "drafter"
+    },
+    {
+      "id": "reviewer-safety-llm-01",
+      "kind": "llm",
+      "model": "gpt-6-sol",
+      "prompt_hash": "cc6eb98a79a4ab18475944756d73c3c8e6ec062d7203b609344cc30f8164e4c1",
+      "role": "independent_reviewer"
+    },
+    {
+      "id": "annotator-01",
+      "kind": "human",
+      "role": "annotator"
+    }
+  ],
+  "review_provenance": {
+    "verdict_rows": 690,
+    "statuses": {
+      "agreed": 164,
+      "disputed": 6
+    },
+    "verdicts": {
+      "ambiguous": 6,
+      "unique_and_decidable": 164
+    }
+  },
+  "confirmation": {
+    "sheets": [
+      "judge_contradictions_review.md",
+      "safety-v2-changes.md",
+      "samples_draft_A_high_risk.md",
+      "samples_draft_B1_injection_input.md",
+      "samples_draft_B2_injection_document.md",
+      "samples_draft_C1_acl_cross_dept.md",
+      "samples_draft_C2_acl_skill_scope.md",
+      "samples_draft_D1_ungrounded.md",
+      "samples_draft_D2_numeric_trap.md",
+      "samples_draft_E_combined.md",
+      "samples_draft_F_version_guard.md"
+    ],
+    "confirmed_by": "决策人 2026-10-06 答复「可以 按照建议来」（实现方登记）；annotator-01 逐条确认缺",
+    "note": "D2 的六条由记录 84 回填；v2 变动样本见 sheets/safety-v2-changes.md；其余样本以决策人对记录 114 建议的批准为准"
+  },
+  "second_human_review": "pending",
+  "supersedes": "safety-v1-provisional（草案，未冻结）",
+  "withdrawn_policy": "撤下样本原文保留在 withdrawn.jsonl，旧编号不复用；冻结的回放集与存档运行按原预期引用它们",
+  "files": [
+    "samples.jsonl",
+    "withdrawn.jsonl",
+    "withdrawn_manifest.json",
+    "review_verdicts.jsonl",
+    "review_prompt_safety.md",
+    "sheets/judge_contradictions_review.md",
+    "sheets/safety-v2-changes.md",
+    "sheets/samples_draft_A_high_risk.md",
+    "sheets/samples_draft_B1_injection_input.md",
+    "sheets/samples_draft_B2_injection_document.md",
+    "sheets/samples_draft_C1_acl_cross_dept.md",
+    "sheets/samples_draft_C2_acl_skill_scope.md",
+    "sheets/samples_draft_D1_ungrounded.md",
+    "sheets/samples_draft_D2_numeric_trap.md",
+    "sheets/samples_draft_E_combined.md",
+    "sheets/samples_draft_F_version_guard.md"
+  ],
+  "dataset_hash": "a615186c7070ce5c69f3dbbac27257faa93d2c5c3292cfa81c201f4b7e139e28"
+}
