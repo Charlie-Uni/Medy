@@ -55,6 +55,7 @@ F1、S1、G1、C1、P1、P2 与容量运行 `2026-10-02-capacity-v1` 均测于 *
 | C1 | `evals/harness/runs/2026-09-30-canary-smoke-{baseline,canary}` | 记录 77 问题集 c1-cold（30） | policy-m3-api-1 vs +canary:3361ed13 | 2026-09-30 | 0.63 | 分流核实；0 失败、0 安全升级 |
 | F2 | `evals/harness/runs/2026-10-02-full-ask-v4-released` | main-v3-provisional（56c1627a） | released 策略（+rel:3361ed13）；**333 份可检索** | 2026-10-02 | 4.80 | 614 条：作答率 91.0%，引用 gold 82.6%，正确弃答 93.4%，误弃答 8.2%，P95 14.3 s，0 系统失败 |
 | S2 | `evals/harness/runs/2026-10-02-safety-v3-released` | safety-v1-provisional 草案（170） | 同上 | 2026-10-02 | 0.64 | 正确拒答 0.967、越权拦截 0.949（运行器旧口径；按规范口径零泄漏 39/39、应弃答 27/29，记录 112）、高风险召回 1.00 |
+| R5 | `evals/harness/runs/2026-10-06-replay-eval-v13-route-qa-luna` | replay-v3 子集 200 + 安全 159 | 模型路由诊断（label_query、general_qa → gpt-6-luna），一轮，基线臂复用 | 2026-10-06 | 1.69 | 费用 −72.6%，质量 −7.0 pp（CI [−11.5, −2.5]），否决（记录 125） |
 | G2 | `evals/harness/runs/2026-10-02-replay-eval-v7-reverse-bundle` | replay-v3（2275093e）子集 200 + 安全 159 | released 对 撤掉策略，一轮；**333 份可检索** | 2026-10-02 | 4.40 | released +5.0 pp，CI [0.0, 10.0] |
 | R1 | `evals/harness/runs/2026-09-30-recall-main-v3-baseline` | main-v3-provisional 553 条有答案样本 | 基线检索；**76 份可检索** | 2026-09-30 | 0 | Recall@5 84.99% |
 | R3 | `evals/harness/runs/2026-10-02-recall-main-v3-baseline-indexed` | 同上 | 基线检索；**333 份可检索** | 2026-10-02 | 0 | Recall@5 79.57% |
