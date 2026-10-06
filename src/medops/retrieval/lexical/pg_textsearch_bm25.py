@@ -79,6 +79,7 @@ where (i.content <@> to_bm25query(%(q)s, '{BM25_INDEX}')) < 0
   and (d.status = 'active' or (%(allow_historical)s and d.status = 'archived'))
   and d.effective_from <= %(as_of)s
   and (d.effective_to is null or d.effective_to > %(as_of)s)
+  and (%(doc_ids)s::uuid[] is null or c.doc_id = any(%(doc_ids)s::uuid[]))
 order by i.content <@> to_bm25query(%(q)s, '{BM25_INDEX}'), i.chunk_id
 limit %(k_plus_one)s
 """
@@ -153,8 +154,17 @@ def _flush(conn: psycopg.Connection[Any], rows: list[tuple[Any, str]]) -> int:
     return len(rows)
 
 
-def _params(q: str, k: int, as_of: date | None, allow_historical: bool = False) -> dict[str, Any]:
-    return {"q": q, "as_of": as_of or date.today(), "k_plus_one": k + 1, "allow_historical": bool(allow_historical)}
+def _params(
+    q: str, k: int, as_of: date | None, allow_historical: bool = False, doc_ids: Sequence[str] | None = None
+) -> dict[str, Any]:
+    """`doc_ids` restricts the page to those documents (named-document focus, record 94); None keeps the corpus."""
+    return {
+        "q": q,
+        "as_of": as_of or date.today(),
+        "k_plus_one": k + 1,
+        "allow_historical": bool(allow_historical),
+        "doc_ids": list(doc_ids) if doc_ids else None,
+    }
 
 
 def _page(rows: Sequence[tuple[Any, Any]], k: int) -> list[tuple[Any, Any, int]]:
@@ -188,8 +198,6 @@ class PgTextsearchBm25Retriever:
     def search(
         self, query: str, k: int, *, allow_historical: bool = False, doc_ids: Sequence[str] | None = None
     ) -> LexicalSearchResult:
-        if doc_ids:
-            raise NotImplementedError("named-document focus is implemented for the production retrievers only")
         check_k(k)
         require_identity(self._conn)
         built = self.versions
@@ -197,7 +205,7 @@ class PgTextsearchBm25Retriever:
         q = self.query_text(query)
         if not q:
             return empty_result(k, built)
-        rows = self._conn.execute(SEARCH_SQL, _params(q, k, self._as_of, allow_historical)).fetchall()
+        rows = self._conn.execute(SEARCH_SQL, _params(q, k, self._as_of, allow_historical, doc_ids)).fetchall()
         return page_to_result(_page(rows, k), k, built)
 
     def explain(self, query: str, k: int, *, allow_historical: bool = False) -> str:
