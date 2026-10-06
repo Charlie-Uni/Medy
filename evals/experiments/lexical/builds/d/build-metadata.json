@@ -1,0 +1,31 @@
+{
+  "candidate": "D",
+  "adr": "ADR-0002 revision 5",
+  "built_at_utc": "2026-10-06T10:01:11+00:00",
+  "extension": {
+    "name": "pg_textsearch",
+    "version": "1.5.1",
+    "licence": "PostgreSQL License",
+    "asset": "https://github.com/timescale/pg_textsearch/releases/download/v1.5.1/pg-textsearch-v1.5.1-pg17-arm64.zip",
+    "asset_sha256": "e65f953e99f47c05dde88a031884cf36ea269bcb62377f554b76ddb4d13fdc3e",
+    "deb": "pg-textsearch-postgresql-17_1.5.1-1_arm64.deb",
+    "deb_sha256": "9841e00382c3a094a08ffa3c1f7e6b287838bade1184cef8f656df78ebb143ce",
+    "published": "2026-10-02"
+  },
+  "base_image": "pgvector/pgvector@sha256:ac08538c6f8b9904c33c8224c5e5706dbe760aca29db1d096972b4052c22a75d",
+  "image": {
+    "tag": "medy-dec001-d:pg17-pgtextsearch-1.5.1",
+    "id": "sha256:5a3aab35a3e5d1a864ac1aec97be6ad8a347629a6e47b71b7d7f3aab1a9c87f4"
+  },
+  "server": {
+    "postgresql": "17.11 (Debian 17.11-1.pgdg12+2)",
+    "shared_preload_libraries": "pg_textsearch"
+  },
+  "smoke": {
+    "extension_loads": true,
+    "score_operator": "<@> returns the negated BM25 score; 0 for rows matching no term",
+    "rls_shortfall_check": "20,000 rows, 19,000 hidden higher-scoring MA rows, PV reader: k=20 -> 20, k=500 -> 500, k=2000 -> 1000 of 1000 visible matches; plan = BM25 index scan with the policy as a per-row filter",
+    "allow_rls_default": "on"
+  },
+  "adapter_suite": "tests/integration/test_lexical_pg_textsearch_bm25.py: 22 passed (2026-10-06)"
+}

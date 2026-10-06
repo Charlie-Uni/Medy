@@ -143,7 +143,7 @@ LexicalSearchResult
 
 **候选 D 的固定配置（观测前声明）。**
 
-- 组件：`pg_textsearch` v1.5.0 的官方发布包（Linux arm64，PostgreSQL 17），安装时记录资产的 SHA-256 与镜像 digest；基础镜像 `pgvector/pgvector:pg17`（库里有向量列，恢复数据需要 pgvector）；`shared_preload_libraries = 'pg_textsearch'`。
+- 组件：`pg_textsearch` 的官方发布包（Linux arm64，PostgreSQL 17；预登记时查到的最新版是 1.5.0，构建当日 2026-10-06 实际最新稳定版为 2026-10-02 发布的 1.5.1，采用 1.5.1，资产 SHA-256 与镜像 digest 记在 `evals/experiments/lexical/builds/d/build-metadata.json`）；基础镜像 `pgvector/pgvector:pg17`（库里有向量列，恢复数据需要 pgvector）；`shared_preload_libraries = 'pg_textsearch'`。
 - 分词：与 A2 完全相同——应用侧 `tok-jieba-v2`（同一份固定英文停用词表）产生词元，以空格连接存入索引表的文本列，索引 `using bm25(...) with (text_config = 'simple')`；查询走同一分词器。D 与 A2 的差别因此只剩「排序函数与索引引擎」，实验量的是 BM25 本身的作用，不混入分词差异。
 - 参数：`k1 = 1.2`、`b = 0.75`（扩展默认值），不调参。
 - 查询语义：词元之间为 OR；按 BM25 得分取前 20，得分相同按 `chunk_id` 升序；过滤条件与 A2 相同（RLS 链、`status = 'active'`、生效窗口）；合格候选的精确计数与分页在同一快照内取得。
