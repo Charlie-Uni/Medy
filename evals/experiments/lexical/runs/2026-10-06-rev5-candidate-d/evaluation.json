@@ -1,0 +1,111 @@
+{
+  "candidates": {
+    "A2": {
+      "macro": 0.49333333333333335,
+      "gate_queries": 75,
+      "slices": {
+        "drug_name_zh": {
+          "recall": 0.2777777777777778,
+          "support": 18,
+          "passed": false,
+          "note": ""
+        },
+        "dose_unit": {
+          "recall": 0.47368421052631576,
+          "support": 19,
+          "passed": false,
+          "note": ""
+        },
+        "negation": {
+          "recall": 0.5789473684210527,
+          "support": 38,
+          "passed": false,
+          "note": ""
+        },
+        "time_window": {
+          "recall": 0.5263157894736842,
+          "support": 19,
+          "passed": false,
+          "note": ""
+        },
+        "protocol_id": {
+          "recall": 0.4117647058823529,
+          "support": 17,
+          "passed": false,
+          "note": ""
+        },
+        "mixed_zh_en": {
+          "recall": 0.6226415094339622,
+          "support": 53,
+          "passed": false,
+          "note": ""
+        }
+      },
+      "gates": {
+        "macro_recall_at_20_ge_90": false,
+        "all_six_slices_ge_85": false,
+        "zero_leakage": true,
+        "no_silent_shortfall": true,
+        "reproducible_rankings": true
+      },
+      "passes_hard_gates": false,
+      "p95_ms": 163.870459,
+      "release_blocked": false
+    },
+    "D": {
+      "macro": 0.7866666666666666,
+      "gate_queries": 75,
+      "slices": {
+        "drug_name_zh": {
+          "recall": 0.5,
+          "support": 18,
+          "passed": false,
+          "note": ""
+        },
+        "dose_unit": {
+          "recall": 0.7368421052631579,
+          "support": 19,
+          "passed": false,
+          "note": ""
+        },
+        "negation": {
+          "recall": 0.8947368421052632,
+          "support": 38,
+          "passed": true,
+          "note": ""
+        },
+        "time_window": {
+          "recall": 0.8421052631578947,
+          "support": 19,
+          "passed": false,
+          "note": ""
+        },
+        "protocol_id": {
+          "recall": 0.7058823529411765,
+          "support": 17,
+          "passed": false,
+          "note": ""
+        },
+        "mixed_zh_en": {
+          "recall": 0.8679245283018868,
+          "support": 53,
+          "passed": true,
+          "note": ""
+        }
+      },
+      "gates": {
+        "macro_recall_at_20_ge_90": false,
+        "all_six_slices_ge_85": false,
+        "zero_leakage": true,
+        "no_silent_shortfall": true,
+        "reproducible_rankings": true
+      },
+      "passes_hard_gates": false,
+      "p95_ms": 858.756791,
+      "release_blocked": false
+    }
+  },
+  "selection": {},
+  "gate_scope": "language_matched",
+  "lexical_conclusion": "no candidate passes the hard gates: DEC-001 and M1 stay blocked; gates are not lowered"
+}

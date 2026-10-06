@@ -220,6 +220,14 @@ def main() -> int:
     )
     ap.add_argument("--mapping", type=pathlib.Path, default=None, help="gold->chunk mapping for --main-set")
     ap.add_argument("--items", type=int, default=0, help="smoke: only the first N items")
+    ap.add_argument(
+        "--lexical",
+        choices=("production", "d"),
+        default="production",
+        help="lexical channel: the production engine, or ADR-0002 revision 5 candidate D (pg_textsearch BM25)",
+    )
+    ap.add_argument("--server-url", default=None, help="app-user DSN of another server holding the same corpus")
+    ap.add_argument("--server-admin-url", default=None, help="admin DSN of that server (index coverage check)")
     args = ap.parse_args()
 
     sr = _load(REPO / "evals/harness/tools/safety_run.py", "safety_run")
@@ -261,7 +269,7 @@ def main() -> int:
         todo = todo[: args.items]
 
     settings = Settings()
-    app_url = settings.database_url.get_secret_value()
+    app_url = args.server_url or settings.database_url.get_secret_value()
     gpu = sa.GpuThread(args.gpu_timeout)
     provider = sa._PinnedEmbedding(gpu.call(lambda: BgeM3EmbeddingProvider(device=args.device)), gpu)
     reranker = sa._PinnedReranker(gpu.call(lambda: BgeRerankerV2M3(device=args.device, output=RERANK_OUTPUT)), gpu)
@@ -285,6 +293,13 @@ def main() -> int:
             )
         )
 
+    lexical_factory = None
+    if args.lexical == "d":
+        from medops.retrieval.lexical.pg_textsearch_bm25 import PgTextsearchBm25Retriever
+        from medops.retrieval.production import production_tokenizer
+
+        tokenizer = production_tokenizer()
+        lexical_factory = lambda c: PgTextsearchBm25Retriever(c, tokenizer, as_of=args.as_of)  # noqa: E731
     plane = sr.Plane(
         sr.PRODUCTION_DB,
         app_url,
@@ -299,6 +314,8 @@ def main() -> int:
         multi_query=args.multi_query,
         doc_focus=args.doc_focus,
         query_translation=args.translate,
+        lexical_factory=lexical_factory,
+        admin_url=args.server_admin_url,
     )
 
     def cjk_ratio(text: str) -> float:

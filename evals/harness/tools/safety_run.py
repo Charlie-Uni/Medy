@@ -110,6 +110,8 @@ class Plane:
         query_translation="off",
         evidence_focus="off",
         answer_models=None,
+        lexical_factory=None,
+        admin_url=None,
     ):
         # `config` / `answer_system`: an arm of the replay runner (M4-07) evaluates a candidate policy overlay; the
         # safety runner itself keeps the production values
@@ -122,8 +124,11 @@ class Plane:
         from medops.retrieval.query_translation import QueryTranslator
 
         self._translator = QueryTranslator(gateway, query_translation).translate if query_translation != "off" else None
+        # ADR-0002 revision 5: an experiment server (candidate D) is reached through explicit DSNs and its own
+        # lexical channel; everything else (vector channel, re-check, rerank) is the production code
+        self._lexical_factory = lexical_factory or (lambda c: production_lexical_retriever(c, as_of=as_of))
         self.conn = psycopg.connect(sa._with_database(app_url, name))
-        self.admin = psycopg.connect(admin_dsn(name))
+        self.admin = psycopg.connect(admin_url or admin_dsn(name))
         self.admin.read_only = True
         from medops.retrieval.production import require_index_coverage
 
@@ -141,7 +146,7 @@ class Plane:
         self.retrieval = CountingRetrieval(
             ProductionRetrieval(
                 conn_for_user=conn_for_user,
-                lexical_factory=lambda c: production_lexical_retriever(c, as_of=as_of),
+                lexical_factory=self._lexical_factory,
                 vector_factory=lambda c: production_vector_retriever(c, provider, as_of=as_of),
                 reranker=reranker,
                 config=self._config,

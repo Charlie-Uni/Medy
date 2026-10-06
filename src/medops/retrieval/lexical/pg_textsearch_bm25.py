@@ -9,7 +9,7 @@ Fixed configuration (declared before any observation, ADR-0002 revision 5): `k1 
 defaults); query terms are OR-ed (the BM25 query's own semantics); ranking is the extension's score ascending (the
 `<@>` operator returns the NEGATED BM25 score, so the best match sorts first) with `chunk_id` ascending on ties;
 rows that match no query term score 0 and are excluded by the `< 0` predicate; filters are the RLS chain plus
-`status = 'active'` and the effective window; the exact eligible count and the ranked page come from one statement.
+`status = 'active'` and the effective window; exhaustion is established by fetching k+1 rows (see SEARCH_SQL).
 
 Observed in the image smoke (2026-10-06): under FORCE RLS the planner uses the BM25 index scan with the policy as
 a per-row filter and the LIMIT is satisfied from visible rows only — 20 / 500 / 1,000 of 1,000 visible matches were
@@ -65,21 +65,22 @@ INSTALL_SQL = (
     + f"create index if not exists {BM25_INDEX} on {INDEX_TABLE} using bm25 (content) "
     f"with (text_config = '{TEXT_CONFIG}', k1 = {K1}, b = {B});\n"
 )
+# Top-(k+1) through the BM25 index scan. The other adapters count every eligible row in the same statement; here
+# that count forces BM25 scoring of every matching row (about 800 ms on 36,100 chunks) while the index returns the
+# top k in a few milliseconds, so exhaustion is established exactly by asking for one row more than k: fewer than
+# k+1 rows back means the visible matches are exhausted (the index scan with the RLS / status filters does not stop
+# early — builds/d smoke, 19,000 hidden rows). Ranking and filters are unchanged (ADR-0002 revision 5 addendum).
 SEARCH_SQL = f"""
-with eligible as (
-    select i.chunk_id, -(i.content <@> to_bm25query(%(q)s, '{BM25_INDEX}')) as score
-    from {INDEX_TABLE} i
-    join chunks c on c.chunk_id = i.chunk_id
-    join documents d on d.doc_id = c.doc_id
-    where (i.content <@> to_bm25query(%(q)s, '{BM25_INDEX}')) < 0
-      and (d.status = 'active' or (%(allow_historical)s and d.status = 'archived'))
-      and d.effective_from <= %(as_of)s
-      and (d.effective_to is null or d.effective_to > %(as_of)s)
-)
-select chunk_id, score, count(*) over () as eligible_count
-from eligible
-order by score desc, chunk_id asc
-limit %(k)s
+select i.chunk_id, -(i.content <@> to_bm25query(%(q)s, '{BM25_INDEX}')) as score
+from {INDEX_TABLE} i
+join chunks c on c.chunk_id = i.chunk_id
+join documents d on d.doc_id = c.doc_id
+where (i.content <@> to_bm25query(%(q)s, '{BM25_INDEX}')) < 0
+  and (d.status = 'active' or (%(allow_historical)s and d.status = 'archived'))
+  and d.effective_from <= %(as_of)s
+  and (d.effective_to is null or d.effective_to > %(as_of)s)
+order by i.content <@> to_bm25query(%(q)s, '{BM25_INDEX}'), i.chunk_id
+limit %(k_plus_one)s
 """
 
 
@@ -153,7 +154,14 @@ def _flush(conn: psycopg.Connection[Any], rows: list[tuple[Any, str]]) -> int:
 
 
 def _params(q: str, k: int, as_of: date | None, allow_historical: bool = False) -> dict[str, Any]:
-    return {"q": q, "as_of": as_of or date.today(), "k": k, "allow_historical": bool(allow_historical)}
+    return {"q": q, "as_of": as_of or date.today(), "k_plus_one": k + 1, "allow_historical": bool(allow_historical)}
+
+
+def _page(rows: Sequence[tuple[Any, Any]], k: int) -> list[tuple[Any, Any, int]]:
+    """k+1 rows -> the page rows `page_to_result` expects: eligible is exact when the fetch came back short, and
+    "at least k+1" otherwise (the page is then exactly k long and not exhausted)."""
+    eligible = len(rows) if len(rows) <= k else k + 1
+    return [(chunk_id, score, eligible) for chunk_id, score in rows[:k]]
 
 
 class PgTextsearchBm25Retriever:
@@ -190,7 +198,7 @@ class PgTextsearchBm25Retriever:
         if not q:
             return empty_result(k, built)
         rows = self._conn.execute(SEARCH_SQL, _params(q, k, self._as_of, allow_historical)).fetchall()
-        return page_to_result(rows, k, built)
+        return page_to_result(_page(rows, k), k, built)
 
     def explain(self, query: str, k: int, *, allow_historical: bool = False) -> str:
         require_identity(self._conn)

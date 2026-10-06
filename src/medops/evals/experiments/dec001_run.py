@@ -45,7 +45,7 @@ from medops.retrieval.lexical.boundary import run_lexical_search
 
 SLICES = ("drug_name_zh", "dose_unit", "negation", "time_window", "protocol_id", "mixed_zh_en")
 MIN_SLICE_SUPPORT = 8
-CANDIDATES = ("A", "A2", "B", "B2", "C")  # A2/B2: ADR-0002 amendment 2 stopword variants
+CANDIDATES = ("A", "A2", "B", "B2", "C", "D")  # A2/B2: amendment 2 stopword variants; D: revision 5 (pg_textsearch)
 STOPWORDS = Path("evals/experiments/lexical/resources/english.stop")
 
 # ------------------------------------------------------------------------------- inputs
@@ -191,7 +191,7 @@ def resolve_servers(repo: Path, mappings: Mapping[str, Path], plan: Mapping[str,
             if "=" in line and not line.startswith("#"):
                 key, value = line.split("=", 1)
                 env[key.strip()] = value.strip()
-    for cand in ("B", "C"):
+    for cand in ("B", "C", "D"):
         admin = os.environ.get(f"DEC001_{cand}_ADMIN_URL") or env.get(f"DEC001_{cand}_ADMIN_URL")
         if admin and cand in mappings:
             servers[cand] = CandidateServer(
@@ -239,6 +239,10 @@ def make_retriever(candidate: str, conn: psycopg.Connection[Any], as_of: date) -
         return pg_zhparser_fts.PgZhparserFtsRetriever(conn, as_of=as_of, variant=pg_zhparser_fts.VARIANT_B2)
     if candidate == "C":
         return pg_search_bm25.PgSearchBm25Retriever(conn, as_of=as_of)
+    if candidate == "D":  # revision 5: A2's tokens, BM25 ranking
+        from medops.retrieval.lexical import pg_textsearch_bm25
+
+        return pg_textsearch_bm25.PgTextsearchBm25Retriever(conn, _jieba_v2_tokenizer(), as_of=as_of)
     raise ValueError(candidate)
 
 
@@ -260,13 +264,13 @@ def _git_head(repo: Path) -> str | None:
 
 def server_facts(admin_dsn: str, candidate: str) -> dict[str, Any]:
     """Read-only facts for the manifest: server version, extensions, built index versions, document states."""
-    index_name = {"A": "a", "A2": "a2", "B": "b", "B2": "b2", "C": "c"}[candidate]
+    index_name = {"A": "a", "A2": "a2", "B": "b", "B2": "b2", "C": "c", "D": "d"}[candidate]
     with psycopg.connect(admin_dsn) as conn:
         with conn.transaction():
             conn.execute("set transaction read only")
             version = conn.execute("show server_version").fetchone()
             exts = conn.execute(
-                "select extname, extversion from pg_extension where extname in ('vector','zhparser','pg_search') order by 1"
+                "select extname, extversion from pg_extension where extname in ('vector','zhparser','pg_search','pg_textsearch') order by 1"
             ).fetchall()
             meta = conn.execute(
                 "select retriever_version, tokenizer_version, dictionary_version, normalization_version, chunk_count, built_by, built_at "
@@ -692,6 +696,12 @@ def main(argv: Sequence[str] | None = None) -> int:
         default=Path("evals/experiments/lexical/preparation-v1/servers/c/chunk_mapping.chunker-v1.json"),
     )
     parser.add_argument(
+        "--mapping-d",
+        type=Path,
+        default=Path("evals/experiments/e2e/main-v3-provisional/chunk_mapping.chunker-v2.main-v3-provisional.json"),
+        help="candidate D holds a restored copy of medops_v2 (same chunk ids), so the main-set mapping applies",
+    )
+    parser.add_argument(
         "--purpose", required=True, help="e.g. 'pipeline smoke (all documents draft)' or 'M1-05 comparison'"
     )
     parser.add_argument("--twins", type=Path, default=None, help="provisional English twin overlay JSON")
@@ -704,6 +714,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     wanted = [c.strip() for c in args.candidates.split(",") if c.strip()]
     mappings = {"A": args.mapping_a.resolve(), "B": args.mapping_b.resolve(), "C": args.mapping_c.resolve()}
     mappings["A2"], mappings["B2"] = mappings["A"], mappings["B"]
+    mappings["D"] = args.mapping_d.resolve()
     servers = {c: s for c, s in resolve_servers(repo, mappings, plan).items() if c in wanted}
     if args.database:
         servers = {
