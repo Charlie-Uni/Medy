@@ -36,7 +36,7 @@ probe v4 与 `main-v5-provisional` 均已冻结。EVAL-11 已完成：580 个 go
 | W-01 | 删除 Finder 副本 `src/medops/infrastructure/llm/budget 2.py` | DONE | 文件未跟踪，已删除，避免 `git add -A` 误收 |
 | W-02 | 区分源码、评测产物和临时 `output/` | DONE | BM25 提交只含实现、测试、迁移、部署配置与文档；备份及 `output/` 未纳入 Git |
 | W-03 | 按功能边界拆分提交 | DONE | BM25 实现与文档分两批提交；不按作者拆分 |
-| W-04 | 每组提交前运行定向检查，最终运行 `make check` | DONE | 记录 165：1720 passed、70 skipped；ruff、格式、mypy、Schema 漂移与评测审计均通过 |
+| W-04 | 每组提交前运行定向检查，最终运行 `make check` | DONE | 记录 166：1721 passed、70 skipped；ruff、格式、mypy、Schema 漂移与评测审计均通过 |
 | W-05 | 更新 README、阶段表、路线图和验收报告 | DONE | BM25、Langfuse、Redis 工程切换与待付费质量门禁已分开记录 |
 
 建议提交顺序：评测标准与工具；API/Harness 重构（含记录 143 的代码）；遥测与 Langfuse；运行完整性/0020/MCP；文档与证据（含记录 143 的文档）。
@@ -112,7 +112,8 @@ Langfuse 的 `score-create` 通过 `/api/public/ingestion` 在 v4.54.0 真实接
 | CACHE-02 | 验证撤权、归档、新版本和 Redis 故障 | DONE | 事实层回查、真实 Redis 版本切换、损坏值与断连回源均通过；记录 164 |
 | CACHE-10 | 真实重复问题流量收益测试 | PAID |
 | PERF-01A | 查询翻译与原始/改写检索重叠；有界并发、背压和过载失败关闭 | DONE | 4 worker / 8 在途 / 250 ms 等待；Trace context 保留；记录 165 |
-| PERF-01B | 评估词法/向量并行与重排批处理或独立服务 | READY | 先解决身份事务、事实快照与 pinned 模型队列边界 |
+| PERF-01B | 为本地嵌入/重排单线程增加总在途上限、短时背压和卡死后快速拒绝 | DONE | 8 个总在途、250 ms 准入等待；已卡死 lane 立即返回可重试依赖故障；记录 166 |
+| PERF-01C | 评估词法/向量并行与重排动态批处理或独立服务 | READY | 先解决身份事务与事实快照；既有 MPS 证据不支持仅放大 batch，服务化需独立基准 |
 | PERF-10 | 并发 1/2/4/8/16 的真实模型容量复测 | PAID |
 | FOCUS-01 | 保护数字、否定、条件和跨块证据，选定逐句裁剪候选 | READY |
 | FOCUS-09 | 逐句裁剪正式多轮门禁 | PAID |

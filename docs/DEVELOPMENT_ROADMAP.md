@@ -2,7 +2,7 @@
 
 > **最新入口（2026-10-09）**：[完整迭代计划与工程建议](ITERATION_PLAN.md)汇总代码整理、BM25、Redis、Langfuse、模型路由、评测与性能等 18 个目标。生产词法已切换到部门隔离 `pg_textsearch` BM25；PostgreSQL 17、migration 0022、三库逻辑迁移、回滚资产和 CI 接线见[记录 162](reviews/2026-10-09-implementation-162-production-bm25-cutover.md)。主运行配置的 Redis 候选缓存、独立 namespace、常驻失效 worker、按模式 readiness 与故障恢复已完成，真实流量收益仍待付费门禁，见[记录 164](reviews/2026-10-09-implementation-164-redis-cache-cutover.md)。Langfuse v4.54.0 已完成真实后端关联与故障恢复，UI detail 待人工目视；两项小模型路由候选已否决。安全 v2 已冻结，仍需对应版本的正式运行。代码整理见[记录 126](reviews/2026-10-07-implementation-126-code-maintenance.md)。按[十项阶段表](ITERATION_STAGES.md)逐轮自审，阶段 1 尚未通过。这些进展不直接改变下方基线加权进度或最终门禁。
 
-> 性能切片更新：查询翻译已与原始检索重叠，并加入 4 worker / 8 在途 / 250 ms 的有界背压和过载失败关闭；仅有确定性工程测试，尚无新 P95，见[记录 165](reviews/2026-10-09-implementation-165-translation-retrieval-overlap.md)。
+> 性能切片更新：查询翻译已与原始检索重叠，并加入 4 worker / 8 在途 / 250 ms 的有界背压和过载失败关闭，见[记录 165](reviews/2026-10-09-implementation-165-translation-retrieval-overlap.md)。本地嵌入/重排的单一 pinned lane 也已限制为 8 个总在途，饱和等待 250 ms 后失败关闭，卡死后不再让后续请求重复等待长超时，见[记录 166](reviews/2026-10-09-implementation-166-pinned-model-backpressure.md)。两项均只有确定性工程验证，尚无新 P95。
 >
 > **历史范围提示**：下方早期核查说明、§1 开篇结论及阶段概览保留历史快照，后续任务行逐次追加证据；早期“正在准备实验”“尚未实现”等措辞不能作为今天的状态。当前功能状态与后续行动先看上述总表，正式指标以[验收报告](ACCEPTANCE_REPORT.md)的运行版本为准。
 
