@@ -193,3 +193,20 @@ env -u DEBUG venv/bin/python -m medops.evals.experiments.dec002_run \
 Generic 臂只换 `--plan-cache-mode force_generic_plan`、新输出目录与 purpose；探针复现改为 `evals/probe/precise_clause/v4` 和本记录目录中的 probe-v4 映射，`--warmup 1 --measured 2`。不要拿不同代码/事实/日期/设备的耗时作直接配对比较。
 
 新连接等价性检查按 `final_custom_verification_plan.json`：加载 107 个冻结 Query 和同一 BGE-M3 provider；每题独立新连接、事务局部注入该题部门、调用默认 auto 检索一次并检查无已预备向量语句；复用连接按题切事务/身份，经 `production_vector_retriever` 检索。对比每个 `(chunk_id, raw_score)`，同时保留前后 `fact_snapshot_from_dsn`。这比较原始向量搜索，没有启动 API、翻译、重排或生成。
+
+## 10. 推送后的 CI 基础设施失败与恢复
+
+五个提交推至 `ca08793` 后，[远端 run 37994091525](https://github.com/Charlie-Uni/Medy/actions/runs/37994091525) 的三次 attempt 均在 `Initialize containers` 失败，checkout、lint、类型和测试尚未执行。前两次错误原文包含：
+
+```text
+Get "https://auth.docker.io/token?account=githubactions&scope=repository%3Apgvector%2Fpgvector%3Apull&service=registry.docker.io": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+net/http: request canceled (Client.Timeout exceeded while awaiting headers)
+```
+
+这是已观察到的 runner→Docker Hub 鉴权请求失败；[Docker 状态页](https://www.dockerstatus.com/)在核对时没有公布全局故障，不能将它确定归因为全局宕机。重复原配置两次没有恢复。
+
+核对 Google 缓存中的同一 OCI manifest：HTTP 200、响应摘要及实际 1609 字节的 SHA-256 都是原 `ac08538c…2a75d`。按[官方缓存说明](https://docs.cloud.google.com/artifact-registry/docs/pull-cached-dockerhub-images)配置 Docker daemon；缓存未命中时仍会尝试原仓库，缓存驻留也没有永久保证。
+
+Actions 的 `services` 在步骤前初始化，无法在失败前配置 daemon。CI 因此改为 checkout 后的显式启动步骤：保留已有 daemon 设置、追加缓存镜像配置、每张原镜像最多 3 次/每次 120 秒 pull；保持 PostgreSQL 的原固定摘要和 Redis 原 7.2-alpine；仅发布 localhost 端口。两个容器健康后才执行原 pinned pg_textsearch 安装、全部 lint/类型/测试/评测/迁移/Schema 步骤，最后始终清理。依赖不健康即失败，不能借跳过集成测试得到绿灯。没有修改本机 Docker daemon 或中断本机服务。
+
+YAML 解析、启动块 `bash -n` 与镜像 manifest 字节摘要核对通过。真实恢复结果在新 CI 完成后补记；此前远端三次失败仍保留，不能把本地 1730 passed 写成它们已经通过。

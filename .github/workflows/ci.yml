@@ -8,36 +8,59 @@ on:
 jobs:
   check:
     runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: pgvector/pgvector:pg17@sha256:ac08538c6f8b9904c33c8224c5e5706dbe760aca29db1d096972b4052c22a75d
-        env:
-          POSTGRES_DB: medops
-          POSTGRES_USER: medops_admin
-          POSTGRES_PASSWORD: ci-only-password
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd "pg_isready -U medops_admin -d medops"
-          --health-interval 5s
-          --health-timeout 5s
-          --health-retries 12
-      redis:
-        # same 7.2 line as docker-compose.yml (BSD-3-Clause); the cache-store tests use it (M1-19)
-        image: redis:7.2-alpine
-        ports:
-          - 6379:6379
-        options: >-
-          --health-cmd "redis-cli ping"
-          --health-interval 5s
-          --health-timeout 3s
-          --health-retries 12
     env:
       # integration tests create and drop throwaway databases through this admin DSN (tests/integration/conftest.py)
       MEDOPS_TEST_ADMIN_URL: postgresql://medops_admin:ci-only-password@localhost:5432/medops
       MEDOPS_TEST_REDIS_URL: redis://localhost:6379/0
     steps:
       - uses: actions/checkout@v4
+      - name: start required PostgreSQL and Redis with cached image pulls
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Configure the daemon before pulling: the Google cache serves the same digest and falls back
+          # to Docker Hub on a cache miss. Actions services start before steps, preventing this recovery.
+          sudo python3 - <<'PY'
+          import json
+          from pathlib import Path
+          daemon_path = Path('/etc/docker/daemon.json')
+          config = json.loads(daemon_path.read_text()) if daemon_path.exists() else {}
+          mirrors = config.setdefault('registry-mirrors', [])
+          if 'https://mirror.gcr.io' not in mirrors:
+              mirrors.append('https://mirror.gcr.io')
+          daemon_path.write_text(json.dumps(config) + '\n')
+          PY
+          sudo systemctl restart docker
+          for service_image in \
+            'pgvector/pgvector:pg17@sha256:ac08538c6f8b9904c33c8224c5e5706dbe760aca29db1d096972b4052c22a75d' \
+            'redis:7.2-alpine'; do
+            pulled=no
+            for pull_attempt in 1 2 3; do
+              if timeout 120s docker pull "$service_image"; then pulled=yes; break; fi
+              sleep "$((pull_attempt * 5))"
+            done
+            test "$pulled" = yes
+          done
+          docker run -d --name medy-ci-postgres -p 127.0.0.1:5432:5432 \
+            -e POSTGRES_DB=medops -e POSTGRES_USER=medops_admin -e POSTGRES_PASSWORD=ci-only-password \
+            --health-cmd 'pg_isready -U medops_admin -d medops' \
+            --health-interval 2s --health-timeout 5s --health-retries 12 \
+            pgvector/pgvector:pg17@sha256:ac08538c6f8b9904c33c8224c5e5706dbe760aca29db1d096972b4052c22a75d
+          # Keep the existing 7.2 line (BSD-3-Clause); no test may silently skip a required dependency.
+          docker run -d --name medy-ci-redis -p 127.0.0.1:6379:6379 \
+            --health-cmd 'redis-cli ping' --health-interval 2s --health-timeout 3s --health-retries 12 \
+            redis:7.2-alpine
+          for service_container in medy-ci-postgres medy-ci-redis; do
+            healthy=no
+            for health_attempt in $(seq 1 45); do
+              if test "$(docker inspect --format '{{.State.Health.Status}}' "$service_container")" = healthy; then
+                healthy=yes
+                break
+              fi
+              sleep 1
+            done
+            if test "$healthy" != yes; then docker logs "$service_container"; exit 1; fi
+          done
       - name: install pinned pg_textsearch 1.5.1 into PostgreSQL 17 service
         shell: bash
         run: |
@@ -87,3 +110,6 @@ jobs:
           cp evals/probe/precise_clause/examples/samples.example.jsonl /tmp/probe-draft/samples.jsonl
           cp evals/probe/precise_clause/examples/review_prompt.example.md /tmp/probe-draft/review_prompt.md
           python -m medops.evals.probe /tmp/probe-draft --mode draft
+      - name: remove CI services
+        if: always()
+        run: docker rm -f medy-ci-postgres medy-ci-redis || true
