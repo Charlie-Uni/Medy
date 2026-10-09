@@ -262,7 +262,17 @@ def test_batch_loader_reports_each_document_and_exit_code(migrated, tmp_path, ca
         )
     corpus = tmp_path / "corpus.json"
     corpus.write_text(json.dumps({"dataset_version": "v1", "documents": docs}), encoding="utf-8")
-    base = ["--corpus", str(corpus), "--sources-dir", str(sources), "--actor", "loader-01", "--admin-url", migrated]
+    base = [
+        "--corpus",
+        str(corpus),
+        "--sources-dir",
+        str(sources),
+        "--actor",
+        "loader-01",
+        "--admin-url",
+        migrated,
+        "--no-av",
+    ]
 
     assert load.main(base) == 1
     lines = [json.loads(line) for line in capsys.readouterr().out.strip().splitlines()]

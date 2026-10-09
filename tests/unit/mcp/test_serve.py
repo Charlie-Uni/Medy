@@ -21,6 +21,7 @@ def _env(monkeypatch):
     monkeypatch.setenv("APP_ENV", "dev")
     monkeypatch.setenv("DATABASE_URL", "postgresql://app:pw@localhost:5432/db")
     monkeypatch.setenv("DATABASE_READONLY_URL", "postgresql://ro:pw@localhost:5432/db")
+    monkeypatch.setenv("REDIS_URL", "redis://localhost:6379/0")
     monkeypatch.delenv("OTEL_EXPORTER_OTLP_ENDPOINT", raising=False)
     root = logging.getLogger()
     saved = (list(root.handlers), root.level)

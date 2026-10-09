@@ -45,7 +45,9 @@ class Report:
 @pytest.fixture
 def conn(monkeypatch):
     fake = FakeConn()
+    monkeypatch.setenv("DATABASE_URL", "postgresql://app:pw@localhost:5432/db")
     monkeypatch.setenv("DATABASE_LOOP_URL", "postgresql://loop:pw@localhost:5432/db")
+    monkeypatch.setenv("REDIS_URL", "redis://localhost:6379/0")
     monkeypatch.setattr(psycopg, "connect", lambda *a, **k: fake)
     monkeypatch.setattr(reflect, "_connect", lambda url, settings: fake)
     monkeypatch.setattr(observe, "observe", lambda *a, **k: Report())
