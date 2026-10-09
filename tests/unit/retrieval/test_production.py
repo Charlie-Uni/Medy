@@ -21,7 +21,7 @@ def test_pinned_members_and_composite_version():
     assert inputs.dictionary_version.endswith("+stop:" + production.STOPWORDS_SHA256[:16])
     assert inputs.normalization_version == "norm-v1"
     assert inputs.embedding_version == "emb-bge-m3-dense-v1"
-    assert inputs.vector_retriever_version == "pgvector-hnsw-cosine-generic-plan-v2"
+    assert inputs.vector_retriever_version == "pgvector-hnsw-cosine-custom-plan-v1"
     assert inputs.rrf_params == {"k": 60.0, "method": "rrf-rank-only"}
     assert inputs.rerank_params["model_id"] == "BAAI/bge-reranker-v2-m3" and inputs.rerank_params["output"] == 8
     assert inputs.candidate_limits == {"lexical_k": 20, "vector_k": 20, "fused_limit": 20, "rerank_output": 8}
@@ -64,7 +64,7 @@ def test_vector_retriever_requires_the_pinned_embedding_version():
     matching = HashingEmbeddingProvider()
     matching._spec = matching.spec.model_copy(update={"embedding_version": production.EMBEDDING_VERSION})
     configured = production.production_vector_retriever(None, matching).configured  # type: ignore[arg-type]
-    assert configured.retriever_version == "pgvector-hnsw-cosine-generic-plan-v2"
+    assert configured.retriever_version == "pgvector-hnsw-cosine-custom-plan-v1"
 
 
 def test_a_released_glossary_joins_the_composite_and_none_leaves_it_unchanged():

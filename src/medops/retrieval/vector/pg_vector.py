@@ -8,9 +8,9 @@ Fixed recipe (any change is a new `RETRIEVER_VERSION`):
 - ranking: cosine distance ascending via the HNSW index with pgvector's iterative scan (`relaxed_order`) so
   filtering cannot silently starve the page; ties broken by `chunk_id` ascending after an exact re-sort of the
   returned page;
-- plan policy: legacy `v1` follows psycopg/PostgreSQL automatic custom-to-generic plan selection; the separately
-  versioned `generic-plan-v2` prepares the vector statement and forces a generic plan on every execution so a
-  pooled connection cannot change its approximate candidate set after the prepare threshold;
+- plan policy: legacy `v1` follows psycopg/PostgreSQL automatic custom-to-generic plan selection; separately
+  versioned forced modes prepare the vector statement and pin custom or generic planning from the first
+  execution. Production pins custom planning to retain the fresh-connection query semantics;
 - exact count: the eligible set does not depend on the query text for vectors, so its exact size is counted in
   the same transaction under the same filters; the page must be exactly `min(eligible, k)` long, otherwise the
   adapter fails closed (hard gate 4: no silent shortfall);

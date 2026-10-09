@@ -6,7 +6,7 @@ Everything that shapes production retrieval results is pinned here and nowhere e
   vendored English stopword list whose SHA-256 is fixed below. MA, PV and CO use separate physical indexes so
   corpus statistics cannot cross the RLS boundary; migration 0022 keeps the former A2 table for rollback;
 - vector: bge-m3 dense embeddings (`emb-bge-m3-dense-v1`) in `chunk_embeddings` (migration 0006), queried with
-  the versioned generic-plan policy so pooled connections cannot switch candidate semantics after warm-up;
+  the versioned custom-plan policy so pooled connections cannot switch candidate semantics after warm-up;
 - fusion: rank-only RRF with k=60 over top-20/top-20, fused limit 20;
 - reranker: bge-reranker-v2-m3 on the re-checked candidates, output 8.
 
@@ -131,7 +131,7 @@ def production_retrieval_inputs(
         rrf_params=config.rrf_params(),
         rerank_params=PRODUCTION_RERANKER_SPEC.rerank_params(),
         candidate_limits={**config.candidate_limits(), "rerank_output": rerank_output},
-        vector_retriever_version=pg_vector.GENERIC_PLAN_RETRIEVER_VERSION,
+        vector_retriever_version=pg_vector.CUSTOM_PLAN_RETRIEVER_VERSION,
         rewrite_params=rewrite,
     )
 
@@ -140,7 +140,7 @@ def production_retrieval_version() -> str:
     return compute_retrieval_version(production_retrieval_inputs())
 
 
-PRODUCTION_RETRIEVAL_VERSION = "3f4f57fad62a6c9c7f2bff6b40bc07f397ca0844f4466994ba2ad6fb1b30fb6a"  # pinned; see tests
+PRODUCTION_RETRIEVAL_VERSION = "5ae70f4f59559cf3126af16de7219ed73d5a5f093cd50f1c0fe4383c877d28d9"  # pinned; see tests
 
 
 def production_lexical_retriever(
@@ -158,7 +158,7 @@ def production_vector_retriever(
             detail="production vector retriever requires the pinned embedding version",
             retryable=False,
         )
-    return pg_vector.PgVectorRetriever(conn, provider, as_of=as_of, plan_cache_mode="force_generic_plan")
+    return pg_vector.PgVectorRetriever(conn, provider, as_of=as_of, plan_cache_mode="force_custom_plan")
 
 
 def build_production_lexical_index(

@@ -178,7 +178,8 @@ def test_plan_policy_is_versioned_used_and_restores_transaction_setting(
     assert counts == (generic_count, custom_count)
 
 
-def test_generic_plan_reuse_preserves_department_history_and_document_filters(db, seed):
+@pytest.mark.parametrize("mode", ["force_generic_plan", "force_custom_plan"])
+def test_forced_plan_reuse_preserves_department_history_and_document_filters(db, seed, mode):
     with psycopg.connect(db["owner"]) as admin:
         doc_by_chunk = dict(admin.execute("select chunk_id, doc_id from chunks"))
     # The same prepared search is reused across departments, history flags and document restrictions.
@@ -191,9 +192,9 @@ def test_generic_plan_reuse_preserves_department_history_and_document_filters(db
                     expected = visible if doc_ids is None else {c for c in visible if doc_by_chunk[c] == one_doc}
                     with conn.transaction():
                         conn.execute("select set_config('medops.dept', %s, true)", (dept,))
-                        result = pg_vector.PgVectorRetriever(
-                            conn, PROVIDER, as_of=AS_OF, plan_cache_mode="force_generic_plan"
-                        ).search("sigma", 100, allow_historical=historical, doc_ids=doc_ids)
+                        result = pg_vector.PgVectorRetriever(conn, PROVIDER, as_of=AS_OF, plan_cache_mode=mode).search(
+                            "sigma", 100, allow_historical=historical, doc_ids=doc_ids
+                        )
                     assert {uuid.UUID(c.chunk_id) for c in result.candidates} == expected
                     assert result.returned_count == len(expected)
 
