@@ -146,21 +146,56 @@ def test_semantics_ranking_ties_and_reproducibility(db, seed):
         )
 
 
-def test_generic_plan_candidate_is_versioned_and_restores_transaction_setting(db, seed):
+@pytest.mark.parametrize(
+    ("mode", "version", "generic_count", "custom_count"),
+    [
+        ("force_generic_plan", pg_vector.GENERIC_PLAN_RETRIEVER_VERSION, 3, 0),
+        ("force_custom_plan", pg_vector.CUSTOM_PLAN_RETRIEVER_VERSION, 0, 3),
+    ],
+)
+def test_plan_policy_is_versioned_used_and_restores_transaction_setting(
+    db, seed, mode, version, generic_count, custom_count
+):
     with txn(db["users"]["app"], "MA") as conn:
+        conn.execute("set local plan_cache_mode = force_custom_plan")
         before = conn.execute("show plan_cache_mode").fetchone()[0]
         candidate = pg_vector.PgVectorRetriever(
             conn,
             PROVIDER,
             as_of=AS_OF,
-            plan_cache_mode="force_generic_plan",
+            plan_cache_mode=mode,
         )
         runs = [candidate.search("sigma 随访 tau", 4) for _ in range(3)]
         after = conn.execute("show plan_cache_mode").fetchone()[0]
-    assert candidate.configured.retriever_version == pg_vector.GENERIC_PLAN_RETRIEVER_VERSION
-    assert [run.retriever_version for run in runs] == [pg_vector.GENERIC_PLAN_RETRIEVER_VERSION] * 3
+        counts = conn.execute(
+            "select generic_plans, custom_plans from pg_prepared_statements "
+            "where statement like '%%select e.chunk_id, e.embedding <=>%%'"
+        ).fetchone()
+    assert candidate.configured.retriever_version == version
+    assert [run.retriever_version for run in runs] == [version] * 3
     assert [[c.chunk_id for c in run.candidates] for run in runs] == [[c.chunk_id for c in runs[0].candidates]] * 3
     assert after == before
+    assert counts == (generic_count, custom_count)
+
+
+def test_generic_plan_reuse_preserves_department_history_and_document_filters(db, seed):
+    with psycopg.connect(db["owner"]) as admin:
+        doc_by_chunk = dict(admin.execute("select chunk_id, doc_id from chunks"))
+    # The same prepared search is reused across departments, history flags and document restrictions.
+    with psycopg.connect(db["users"]["app"]) as conn:
+        for dept in DEPTS:
+            for historical in (False, True):
+                visible = seed["visible"][dept] | (seed["archived"][dept] if historical else set())
+                one_doc = doc_by_chunk[min(visible)]
+                for doc_ids in (None, [str(one_doc)]):
+                    expected = visible if doc_ids is None else {c for c in visible if doc_by_chunk[c] == one_doc}
+                    with conn.transaction():
+                        conn.execute("select set_config('medops.dept', %s, true)", (dept,))
+                        result = pg_vector.PgVectorRetriever(
+                            conn, PROVIDER, as_of=AS_OF, plan_cache_mode="force_generic_plan"
+                        ).search("sigma", 100, allow_historical=historical, doc_ids=doc_ids)
+                    assert {uuid.UUID(c.chunk_id) for c in result.candidates} == expected
+                    assert result.returned_count == len(expected)
 
 
 def test_missing_identity_or_transaction_is_refused_not_empty(db, seed):

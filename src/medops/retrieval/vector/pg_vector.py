@@ -36,7 +36,8 @@ from medops.retrieval.vector.embedding import EmbeddingProvider, EmbeddingSpec
 
 RETRIEVER_VERSION = "pgvector-hnsw-cosine-v1"
 GENERIC_PLAN_RETRIEVER_VERSION = "pgvector-hnsw-cosine-generic-plan-v2"
-PlanCacheMode = Literal["auto", "force_generic_plan"]
+CUSTOM_PLAN_RETRIEVER_VERSION = "pgvector-hnsw-cosine-custom-plan-v1"
+PlanCacheMode = Literal["auto", "force_generic_plan", "force_custom_plan"]
 TABLE = "chunk_embeddings"
 META_TABLE = "embedding_index_meta"
 INDEX_NAME = "chunk_embeddings_hnsw_cosine"
@@ -211,7 +212,7 @@ class PgVectorRetriever:
         ef_search: int | None = None,
         plan_cache_mode: PlanCacheMode = "auto",
     ) -> None:
-        if plan_cache_mode not in ("auto", "force_generic_plan"):
+        if plan_cache_mode not in ("auto", "force_generic_plan", "force_custom_plan"):
             raise ValueError(f"unsupported vector plan cache mode: {plan_cache_mode}")
         self._conn = conn
         self._provider = provider
@@ -223,6 +224,8 @@ class PgVectorRetriever:
     def retriever_version(self) -> str:
         if self._plan_cache_mode == "force_generic_plan":
             return GENERIC_PLAN_RETRIEVER_VERSION
+        if self._plan_cache_mode == "force_custom_plan":
+            return CUSTOM_PLAN_RETRIEVER_VERSION
         return RETRIEVER_VERSION
 
     @property
@@ -309,7 +312,7 @@ class PgVectorRetriever:
 
         psycopg normally changes a repeatedly executed statement from custom to generic planning. On the
         production corpus those two plans return different approximate HNSW candidate sets. The experimental
-        candidate pins a generic plan from the first execution and restores the transaction-local setting
+        candidate pins its selected plan mode from the first execution and restores the transaction-local setting
         after a successful statement. If execution fails, PostgreSQL aborts the transaction and rolls the
         local setting back with it.
         """
@@ -317,7 +320,7 @@ class PgVectorRetriever:
             return self._conn.execute(sql, params)
         previous = self._conn.execute("select current_setting('plan_cache_mode')").fetchone()
         previous_mode = str(previous[0]) if previous else "auto"
-        self._conn.execute("select set_config('plan_cache_mode', 'force_generic_plan', true)")
+        self._conn.execute("select set_config('plan_cache_mode', %s, true)", (self._plan_cache_mode,))
         cursor = self._conn.execute(sql, params, prepare=True)
         self._conn.execute("select set_config('plan_cache_mode', %s, true)", (previous_mode,))
         return cursor
@@ -340,7 +343,7 @@ class PgVectorRetriever:
         )
 
     def explain(self, query: str, k: int, *, allow_historical: bool = False) -> str:
-        """EXPLAIN (json) of the search under the current role and settings; evidence for the plan chain."""
+        """Standalone EXPLAIN under the current role; does not expose the cached search statement's plan."""
         import json
 
         require_identity(self._conn)

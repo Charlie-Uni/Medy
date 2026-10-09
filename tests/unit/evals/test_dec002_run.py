@@ -3,13 +3,15 @@ the searcher's use of the boundary, and the refusal to overwrite a run directory
 
 from __future__ import annotations
 
+import hashlib
 import json
 from datetime import date
+from types import SimpleNamespace
 
 import pytest
 
 from medops.evals.experiments import dec002_run as v
-from medops.evals.experiments.dec001_run import CROSS_LINGUAL, LANGUAGE_MATCHED
+from medops.evals.experiments.dec001_run import CROSS_LINGUAL, LANGUAGE_MATCHED, Query
 from medops.retrieval.vector.embedding import HashingEmbeddingProvider
 
 
@@ -123,3 +125,99 @@ def test_manifest_refuses_an_unfrozen_dataset_or_a_foreign_mapping(tmp_path):
     )
     with pytest.raises(RuntimeError, match="dataset_hash differs"):
         v.build_manifest(**kwargs)
+
+
+@pytest.mark.parametrize("gold_only", [False, True])
+def test_no_gold_queries_are_refused_before_any_database_or_model_work(tmp_path, monkeypatch, gold_only):
+    no_gold = Query("no-gold", "MA", "query", (), (), "en")
+    monkeypatch.setattr(v, "load_queries", lambda path: [no_gold])
+
+    def unexpected_manifest(**kwargs):
+        pytest.fail("input validation must happen before database inspection or manifest creation")
+
+    monkeypatch.setattr(v, "build_manifest", unexpected_manifest)
+    out = tmp_path / "run"
+    with pytest.raises(ValueError, match="gold evidence"):
+        v.run(
+            repo=tmp_path,
+            dataset_dir=tmp_path,
+            out_dir=out,
+            mapping_path=tmp_path / "m.json",
+            app_dsn="postgresql://app:x@localhost/db",
+            admin_dsn="postgresql://admin:x@localhost/db",
+            provider=HashingEmbeddingProvider(),
+            as_of=date(2026, 9, 20),
+            k=20,
+            warmup=0,
+            measured=1,
+            seed=1,
+            device="cpu",
+            purpose="unit",
+            gold_only=gold_only,
+        )
+    assert not out.exists()
+
+
+def test_explicit_gold_subset_keeps_unmappable_misses_and_auditable_rankings(tmp_path, monkeypatch):
+    queries = [
+        Query("mapped", "MA", "q1", (), ("g1", "unmappable"), "en", language="en"),
+        Query("cross", "PV", "q2", (), ("g2",), "en"),
+        Query("refusal", "CO", "q3", (), (), "en"),
+    ]
+    mapping_path = tmp_path / "mapping.json"
+    mapping_path.write_text(
+        json.dumps(
+            {
+                "entries": [
+                    {"gold_id": "g1", "status": "mapped", "chunk_ids": ["c1"]},
+                    {"gold_id": "g2", "status": "mapped", "chunk_ids": ["c2"]},
+                    {"gold_id": "unmappable", "status": "unmappable", "chunk_ids": []},
+                ]
+            }
+        )
+    )
+    monkeypatch.setattr(v, "load_queries", lambda path: queries)
+    manifest = _manifest()
+    manifest["measurement"].update(warmup_full_passes=0, measured_full_passes=1)
+    monkeypatch.setattr(v, "build_manifest", lambda **kwargs: manifest)
+    seen = []
+
+    def search(q, k):
+        seen.append(q.sample_id)
+        return SimpleNamespace(
+            candidates=[SimpleNamespace(chunk_id={"mapped": "c1", "cross": "c2"}[q.sample_id])],
+            returned_count=1,
+            candidate_exhausted=True,
+        )
+
+    search.close = lambda: seen.append("closed")
+    monkeypatch.setattr(v, "db_searcher", lambda *args: search)
+    monkeypatch.setattr(v, "leak_check", lambda *args: [])
+    monkeypatch.setattr(v, "plan_evidence", lambda *args: [])
+    out = tmp_path / "run"
+    results = v.run(
+        repo=tmp_path,
+        dataset_dir=tmp_path,
+        out_dir=out,
+        mapping_path=mapping_path,
+        app_dsn="unused",
+        admin_dsn="unused",
+        provider=HashingEmbeddingProvider(),
+        as_of=date(2026, 9, 20),
+        k=20,
+        warmup=0,
+        measured=1,
+        seed=1,
+        device="cpu",
+        purpose="unit",
+        gold_only=True,
+    )
+    assert sorted(seen[:-1]) == ["cross", "mapped"] and seen[-1] == "closed"
+    assert results["candidates"]["V"]["strict_macro_recall"] == 0.75
+    selection = json.loads((out / "run_manifest.json").read_text())["measurement"]["query_selection"]
+    assert selection["source_queries"] == 3 and selection["selected_queries"] == 2
+    assert selection["excluded_no_gold_sample_ids"] == ["refusal"]
+    rankings = (out / "rankings.json").read_bytes()
+    assert results["rankings_sha256"] == hashlib.sha256(rankings).hexdigest()
+    assert json.loads(rankings)["mapped"]["rankings"] == [["c1"]]
+    assert "repeatability was not assessed" in (out / "report.md").read_text()

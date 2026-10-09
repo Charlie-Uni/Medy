@@ -18,6 +18,7 @@ import os
 import platform
 import time
 from collections.abc import Callable, Mapping, Sequence
+from dataclasses import asdict
 from datetime import date
 from pathlib import Path
 from typing import Any
@@ -150,7 +151,7 @@ def build_manifest(
                 "iterative_scan": "relaxed_order",
                 "ef_search": "max(40, 4k) capped at 1000",
                 "plan_cache_mode": plan_cache_mode,
-                "force_prepared": plan_cache_mode == "force_generic_plan",
+                "force_prepared": plan_cache_mode != "auto",
             },
         },
         "environment": {
@@ -174,7 +175,11 @@ def build_manifest(
                 "retriever_version": (
                     pg_vector.GENERIC_PLAN_RETRIEVER_VERSION
                     if plan_cache_mode == "force_generic_plan"
-                    else pg_vector.RETRIEVER_VERSION
+                    else (
+                        pg_vector.CUSTOM_PLAN_RETRIEVER_VERSION
+                        if plan_cache_mode == "force_custom_plan"
+                        else pg_vector.RETRIEVER_VERSION
+                    )
                 ),
                 **server_facts(admin_dsn, spec.embedding_version),
             }
@@ -216,7 +221,7 @@ def plan_evidence(
     k: int,
     plan_cache_mode: pg_vector.PlanCacheMode = "auto",
 ) -> list[dict[str, Any]]:
-    """The default execution plan under the app role for the first query of each department."""
+    """Standalone EXPLAIN under each department; not EXPLAIN EXECUTE of the cached search statement."""
     out = []
     seen: set[str] = set()
     with psycopg.connect(app_dsn) as conn:
@@ -232,7 +237,14 @@ def plan_evidence(
                     as_of=as_of,
                     plan_cache_mode=plan_cache_mode,
                 ).explain(q.query, k)
-            out.append({"sample_id": q.sample_id, "dept": q.dept, "plan": json.loads(plan)})
+            out.append(
+                {
+                    "sample_id": q.sample_id,
+                    "dept": q.dept,
+                    "method": "standalone_explain_not_cached_search_plan",
+                    "plan": json.loads(plan),
+                }
+            )
     return out
 
 
@@ -269,7 +281,7 @@ def write_report(out_dir: Path, manifest: Mapping[str, Any], results: Mapping[st
         "| --- | ---: | ---: |",
         f"| language_matched | {lm['queries']} | {lm['strict_macro_recall']:.3f} |",
         f"| cross_lingual | {cl['queries']} | {cl['strict_macro_recall']:.3f} |",
-        f"| all frozen | {s['queries']} | {s['strict_macro_recall']:.3f} |",
+        f"| selected frozen | {s['queries']} | {s['strict_macro_recall']:.3f} |",
         "",
         f"Diagnostic threshold (ADR-0007): cross_lingual Recall@20 >= {CROSS_LINGUAL_DIAGNOSTIC_THRESHOLD:.2f} → **{verdict}** ({cross:.3f}).",
         "",
@@ -294,6 +306,22 @@ def write_report(out_dir: Path, manifest: Mapping[str, Any], results: Mapping[st
         f"- run_manifest sha256: `{results['run_manifest_sha256']}`",
         "",
     ]
+    selection = manifest["measurement"].get("query_selection")
+    if selection:
+        md.extend(
+            [
+                "## Query selection",
+                "",
+                f"- scope: {selection['scope']} · source queries: {selection['source_queries']} · "
+                f"selected: {selection['selected_queries']} · excluded without gold: "
+                f"{len(selection['excluded_no_gold_sample_ids'])}",
+                f"- unmappable gold: {selection['unmappable_gold_policy']}",
+                "- Only one pass: repeatability was not assessed."
+                if manifest["measurement"]["warmup_full_passes"] + manifest["measurement"]["measured_full_passes"] < 2
+                else "- Repeatability compares every saved ranking, including warmup passes.",
+                "",
+            ]
+        )
     (out_dir / "report.md").write_text("\n".join(md), encoding="utf-8")
 
 
@@ -314,10 +342,19 @@ def run(
     device: str,
     purpose: str,
     plan_cache_mode: pg_vector.PlanCacheMode = "auto",
+    gold_only: bool = False,
 ) -> dict[str, Any]:
     if out_dir.exists():
         raise FileExistsError(f"refusing to overwrite an existing run directory: {out_dir}")
-    queries = load_queries(dataset_dir)
+    all_queries = load_queries(dataset_dir)
+    excluded = [q.sample_id for q in all_queries if not q.gold_ids]
+    if excluded and not gold_only:
+        raise ValueError("vector Recall requires gold evidence for every query; use --gold-only for an explicit subset")
+    queries = [q for q in all_queries if q.gold_ids]
+    if not queries:
+        raise ValueError("vector Recall requires at least one query with gold evidence")
+    if warmup < 0 or measured < 1:
+        raise ValueError("warmup must be nonnegative and measured must be positive")
     manifest = build_manifest(
         run_id=out_dir.name,
         repo=repo,
@@ -335,6 +372,14 @@ def run(
         purpose=purpose,
         plan_cache_mode=plan_cache_mode,
     )
+    manifest["measurement"]["query_selection"] = {
+        "scope": "gold_only" if gold_only else "all",
+        "source_queries": len(all_queries),
+        "selected_queries": len(queries),
+        "selected_sample_ids": [q.sample_id for q in queries],
+        "excluded_no_gold_sample_ids": excluded,
+        "unmappable_gold_policy": "keep in the recall denominator as misses",
+    }
     out_dir.mkdir(parents=True)
     manifest_bytes = (canonical_json(manifest) + "\n").encode("utf-8")
     (out_dir / "run_manifest.json").write_bytes(manifest_bytes)
@@ -353,6 +398,9 @@ def run(
         )
     finally:
         search.close()  # type: ignore[attr-defined]
+    rankings_bytes = (canonical_json({sid: asdict(out) for sid, out in outcomes.items()}) + "\n").encode("utf-8")
+    (out_dir / "rankings.json").write_bytes(rankings_bytes)
+    results["rankings_sha256"] = hashlib.sha256(rankings_bytes).hexdigest()
     summary = summarize(CANDIDATE, queries, outcomes, mapping)
     per_query = summary.pop("_per_query_recall")
     summary["leak_violations"] = leak_check(admin_dsn, outcomes, as_of)
@@ -385,10 +433,11 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--purpose", required=True)
     parser.add_argument(
         "--plan-cache-mode",
-        choices=("auto", "force_generic_plan"),
+        choices=("auto", "force_generic_plan", "force_custom_plan"),
         default="auto",
-        help="PostgreSQL plan policy for the vector statement; generic mode is a separately versioned candidate",
+        help="PostgreSQL plan policy for the vector statement; forced modes have separate retriever versions",
     )
+    parser.add_argument("--gold-only", action="store_true", help="Explicitly report only queries with required gold")
     args = parser.parse_args(argv)
     repo = Path(__file__).resolve().parents[4]
     plan = json.loads(
@@ -416,6 +465,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         device=args.device,
         purpose=args.purpose,
         plan_cache_mode=args.plan_cache_mode,
+        gold_only=args.gold_only,
     )
     s = results["candidates"][CANDIDATE]
     print(
