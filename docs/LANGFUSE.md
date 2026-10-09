@@ -15,6 +15,8 @@
 
 本机栈与 MedOps 事实面分离。Langfuse 自用 PostgreSQL、ClickHouse、Redis 和 MinIO 都只在 Compose 内网开放；主机只开放 UI/API 的 loopback 端口。使用统计显式关闭，内置 Agent 和实验功能关闭，注册关闭。MinIO 是官方 v4 Compose 的对象存储依赖，AGPL-3.0 组件仅在这个内部本机栈运行；Redis 固定在 7.2 BSD 许可线。
 
+**所有者决定（2026-10-09）**：项目所有者已知悉 MinIO 为 AGPL-3.0 并明确接受，前提是原样运行官方镜像、不修改其源码、不作为产品分发、不对外提供其服务；这是针对本内部观测栈的个案接受，不改变 ADR-0003 对生产组件优先采用宽松许可证的原则。若日后把 Langfuse 栈对外部署或把本项目作为可分发产品，应换用 Apache-2.0 的 S3 兼容存储（如 SeaweedFS、RustFS）。决定由所有者在 Claude 会话中作出，Claude 登记。
+
 ## 2. 固定组件
 
 | 组件 | 固定版本或摘要 | 作用 |
