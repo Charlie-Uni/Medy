@@ -1,0 +1,101 @@
+{
+  "date": "2026-10-09",
+  "baseline_commit": "308acee",
+  "model_calls": 0,
+  "cost_usd": 0,
+  "compose": {
+    "config_command": "docker compose --env-file deploy/langfuse/.env -f deploy/langfuse/docker-compose.yml config -q",
+    "config_exit_code": 0,
+    "services": 6,
+    "published_ports": ["127.0.0.1:3000"],
+    "cold_restart_from_existing_volumes": "passed",
+    "restart_counts_after_cold_restart": {
+      "langfuse-web": 0,
+      "langfuse-worker": 0,
+      "clickhouse": 0,
+      "postgres": 0,
+      "redis": 0,
+      "minio": 0
+    }
+  },
+  "health": {
+    "public_health_http": 200,
+    "authenticated_observations_v2_http": 200,
+    "ready": true
+  },
+  "smoke": {
+    "command": "make langfuse-smoke",
+    "trace_id": "b5a59366479c12be498b98090232df96",
+    "observations": 3,
+    "scores": [
+      {
+        "id": "51b73a944996e07f9a616b9746e36db0584c52f1d50ff1cc2337e95fc1dac705",
+        "name": "deployment_smoke",
+        "value": true
+      },
+      {
+        "id": "a7c3357cbf9642b85e397999fdd2e8eb51b62d663f89de8acd45f102399d5ba0",
+        "name": "user_feedback",
+        "value": "up"
+      }
+    ],
+    "linked": true,
+    "feedback_linked": true
+  },
+  "privacy": {
+    "source": "ClickHouse events_full FINAL",
+    "trace_id": "3f15853c8677252e1b3f34a10af56c59",
+    "rows": [
+      {"name": "harness.run", "type": "CHAIN", "input_length": 0, "output_length": 0},
+      {"name": "retrieval.fixture", "type": "RETRIEVER", "input_length": 0, "output_length": 0},
+      {"name": "verifier.fixture", "type": "SPAN", "input_length": 0, "output_length": 0}
+    ]
+  },
+  "outage_recovery": {
+    "command": "make langfuse-outage-test",
+    "trace_id": "066aebda7eb27c18154f3d1861a5234b",
+    "during_outage": {
+      "attempted": 1,
+      "acknowledged": 0,
+      "failed": 1,
+      "pending": 1,
+      "delayed": 1,
+      "dead_lettered": 0
+    },
+    "after_restart": {
+      "attempted": 1,
+      "acknowledged": 1,
+      "failed": 0,
+      "pending": 0,
+      "delayed": 0,
+      "dead_lettered": 0
+    },
+    "second_drain_attempts": 0,
+    "remote_scores_with_same_id": 1
+  },
+  "resource_snapshot_mib": {
+    "langfuse_web": 1322,
+    "langfuse_worker": 552,
+    "clickhouse": 753,
+    "postgres": 85,
+    "redis": 10,
+    "minio": 73
+  },
+  "ui": {
+    "login_page_rendered": true,
+    "authenticated_trace_detail_visually_checked": false,
+    "reason": "bootstrap password was not transmitted through the browser automation log"
+  },
+  "tests": {
+    "command": "env -u DEBUG -u PYTHONPATH LANGFUSE_BASE_URL= LANGFUSE_PUBLIC_KEY= LANGFUSE_SECRET_KEY= OTEL_EXPORTER_OTLP_ENDPOINT= OTEL_EXPORTER_OTLP_HEADERS= make check",
+    "exit_code": 0,
+    "passed": 1713,
+    "skipped": 70,
+    "warnings": 1,
+    "ruff": "passed",
+    "format_files": 441,
+    "mypy_source_files": 189,
+    "evaluation_audit": "passed_with_4_registered_warnings",
+    "schema_drift": "passed"
+  }
+}

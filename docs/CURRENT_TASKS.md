@@ -92,11 +92,11 @@ probe v4 与 `main-v5-provisional` 均已冻结。EVAL-11 已完成：580 个 go
 | CACHE-BACKLOG-02 | `medops_v2_safety` 缓存积压 339 条 | READY | 同上 |
 | DEV-BACKLOG-01 | 旧 `medops` 三个消费者各积压 231 条 | READY | 与 DB-03 一并退役或迁移处理 |
 | OBS-01 | Trace、版本、费用、评分队列、退避和死信 | DONE | 记录 141、142、145 |
-| OBS-02 | 部署真实 Langfuse、配置凭据和访问边界 | READY | 外部依赖 |
-| OBS-03 | 完成 trace→score→feedback→UI 排障演示 | READY | 真实后端验收 |
-| OBS-04 | 验证故障时本地排队、恢复和告警 | READY | 真实后端验收 |
+| OBS-02 | 部署真实 Langfuse、配置凭据和访问边界 | DONE | v4.54.0 六容器本机栈；项目鉴权、loopback 边界及密钥权限通过，记录 163 |
+| OBS-03 | 完成 trace→score→feedback→UI 排障演示 | READY | 后端 trace→两类 score→回读已通过；登录后 UI detail 目视待人工 |
+| OBS-04 | 验证故障时本地排队、恢复和告警 | DONE | 停 web 后 pending 1，恢复后 acknowledged 1，重复 drain 0，记录 163 |
 
-Langfuse 的 `score-create` 通过 `/api/public/ingestion` 在 v4 仍受支持；弃用范围是旧 trace/observation 事件和旧读接口。OBS-02 仍需用真实部署的 OpenAPI、返回码和 UI 验证。
+Langfuse 的 `score-create` 通过 `/api/public/ingestion` 在 v4.54.0 真实接受，observations v2 与 scores v3 已完成回读。合成链路为 3 个 metadata-only observation、`deployment_smoke` 与 `user_feedback` 两个 score，模型调用 0；ClickHouse 实测 input/output 长度均为 0。部署、错误和复现命令见[记录 163](reviews/2026-10-09-implementation-163-langfuse-deployment-and-recovery.md)。
 
 `skill_smoke` 每次执行生成唯一 W3C Trace ID、稳定 run ID；`safety_data.app_dsn` 已删除。这两项是 `DONE`，不再列为待办。
 
