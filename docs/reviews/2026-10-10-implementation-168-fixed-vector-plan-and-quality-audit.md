@@ -209,4 +209,11 @@ net/http: request canceled (Client.Timeout exceeded while awaiting headers)
 
 Actions 的 `services` 在步骤前初始化，无法在失败前配置 daemon。CI 因此改为 checkout 后的显式启动步骤：保留已有 daemon 设置、追加缓存镜像配置、每张原镜像最多 3 次/每次 120 秒 pull；保持 PostgreSQL 的原固定摘要和 Redis 原 7.2-alpine；仅发布 localhost 端口。两个容器健康后才执行原 pinned pg_textsearch 安装、全部 lint/类型/测试/评测/迁移/Schema 步骤，最后始终清理。依赖不健康即失败，不能借跳过集成测试得到绿灯。没有修改本机 Docker daemon 或中断本机服务。
 
-YAML 解析、启动块 `bash -n` 与镜像 manifest 字节摘要核对通过。真实恢复结果在新 CI 完成后补记；此前远端三次失败仍保留，不能把本地 1730 passed 写成它们已经通过。
+首次恢复提交 `ecfca97` 的 [run 37995045800](https://github.com/Charlie-Uni/Medy/actions/runs/37995045800) 仍在 pull 步骤失败，日志继续出现 `account=githubactions`。随后 `f33c3b8` 将缓存镜像放在 daemon 镜像列表首位，检查 `docker info` 中配置已加载，在 runner 上重算同一 manifest 的字节摘要，并用独立空 Docker 客户端配置拉取公共镜像。组合变更恢复了运行；没有分别隔离这几项配置，不能断言继承的登录身份就是唯一根因。
+
+**真实恢复通过**：[run 37995496709](https://github.com/Charlie-Uni/Medy/actions/runs/37995496709)，HEAD `f33c3b8ef90711a224d3c89384d55a11e816f21b`，2026-10-10 悉尼时间完成，状态 `completed / success`。镜像配置、manifest 摘要、PostgreSQL / Redis 健康检查和 pinned pg_textsearch 安装通过；包外导入、依赖检查、lint / 格式、mypy、评测血缘审计、Schema、草稿示例、迁移单 head 及升降级往返和容器清理全部通过。
+
+- 远端主测试：**1708 passed、92 skipped、1 个既有短 HMAC 测试 key warning**，85.62 秒；单独迁移检查 **2 passed、13 deselected**。
+- 本地主测试：**1730 passed、70 skipped、同一既有 warning**。两端不能写成相同执行范围。CI 没有候选 D 专用 `MEDOPS_TEST_D_ADMIN_URL` / `.env.dec001`，而 `test_lexical_pg_textsearch_bm25.py` 的独立实验服务器 fixture 在缺少它时会跳过；该文件收集 **22 项**，与总数差值相符。使用主 CI 服务的生产 BM25 集成测试仍运行，不能将实验服务器缺省等同于整个 BM25 未测试。主 `pytest -q` 日志未逐项展开 skip reason，92 个跳过项仍是明确的验证限制。
+- YAML 解析、启动块 `bash -n` 与镜像 manifest 字节摘要核对通过。此前三次原配置失败及首次恢复失败全部保留，本地成功没有被用于替代远端成功证据。
+- 只修改短生命周期远端 runner 的 daemon；本机 Docker 配置和服务没有修改。本轮新增 hosted 模型调用 **0**，API 费用 **0 USD**。
