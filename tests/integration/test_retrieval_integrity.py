@@ -36,7 +36,6 @@ def test_complete_indexes_report_ready_under_read_only_transaction(db, indexed):
     "fault,reason",
     [
         ("lexical", "lexical_coverage_gap"),
-        ("empty_lexical", "lexical_coverage_gap"),
         ("embedding", "embedding_coverage_gap"),
         ("tokenizer", "lexical_version_missing_or_mismatched"),
         ("model", "embedding_version_missing_or_mismatched"),
@@ -49,9 +48,8 @@ def test_real_storage_faults_make_index_health_false(db, indexed, fault, reason)
             "select c.chunk_id from chunks c join documents d on c.doc_id=d.doc_id where d.status='active' limit 1"
         ).fetchone()[0]
         if fault == "lexical":
-            conn.execute("delete from chunk_lexical_tsv where chunk_id=%s", (cid,))
-        elif fault == "empty_lexical":
-            conn.execute("update chunk_lexical_tsv set tsv=''::tsvector where chunk_id=%s", (cid,))
+            for table in ("chunk_lexical_bm25_ma", "chunk_lexical_bm25_pv", "chunk_lexical_bm25_co"):
+                conn.execute(f"delete from {table} where chunk_id=%s", (cid,))
         elif fault == "embedding":
             conn.execute("delete from chunk_embeddings where chunk_id=%s", (cid,))
         elif fault == "tokenizer":

@@ -17,7 +17,7 @@ def save_preflight(out: Path, planes: Mapping[str, Mapping[str, Any]]) -> dict[s
         "format": "retrieval-preflight-v1",
         "checked_at_utc": datetime.now(UTC).isoformat(),
         "planes": dict(planes),
-        "scope": "active production A2/vector coverage and metadata; not a quality score or a long-lived guarantee",
+        "scope": "active production departmental-BM25/vector coverage and metadata; not a quality score or a long-lived guarantee",
     }
     data = (canonical_json(value) + "\n").encode()
     relative = Path("preflights") / f"{canonical_hash(value)}.json"

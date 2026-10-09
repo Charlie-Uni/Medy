@@ -15,7 +15,7 @@ from medops.ingestion import outbox
 from medops.retrieval.lexical.pg_lexical_common import read_built_versions
 from medops.retrieval.production import (
     PRODUCTION_LEXICAL_INDEX_NAME,
-    PRODUCTION_LEXICAL_TABLE,
+    production_document_lexical_gaps,
     production_index_target,
     production_lexical_versions,
 )
@@ -97,20 +97,11 @@ def lexical_handler() -> outbox.Handler:
         if status in ("draft", "withdrawn"):
             target.remove(conn, event.aggregate_id)
             return
-        # An empty legacy index row is not a usable index and must not block INSERT ON CONFLICT.
-        conn.execute(
-            f"delete from {PRODUCTION_LEXICAL_TABLE} l using chunks c "
-            "where l.chunk_id=c.chunk_id and c.doc_id=%s and l.tsv=''::tsvector",
-            (event.aggregate_id,),
-        )
+        # The departmental target first removes stale ACL copies, then recreates
+        # exactly the current department assignments from authoritative chunks.
         target.add(conn, event.aggregate_id)
-        missing = conn.execute(
-            f"select count(*) from chunks c left join {PRODUCTION_LEXICAL_TABLE} l using(chunk_id) "
-            "where c.doc_id=%s and (l.chunk_id is null or l.tsv=''::tsvector)",
-            (event.aggregate_id,),
-        ).fetchone()
-        if missing and missing[0]:
-            raise ValueError("published document contains chunks without lexical tokens")
+        if production_document_lexical_gaps(conn, event.aggregate_id):
+            raise ValueError("published document contains ACL/chunk assignments without lexical tokens")
 
     return handle
 

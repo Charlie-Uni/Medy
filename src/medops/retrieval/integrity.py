@@ -15,6 +15,7 @@ from medops.retrieval.production import (
     IndexCoverageError,
     index_coverage,
     production_lexical_versions,
+    require_production_lexical_runtime,
 )
 from medops.retrieval.vector.embedding import (
     BGE_M3_MODEL_ID,
@@ -88,6 +89,7 @@ def inspect_retrieval(conn: psycopg.Connection[Any], *, embedding: EmbeddingSpec
     if coverage["missing_embedding"]:
         problems.append("embedding_coverage_gap")
     try:
+        require_production_lexical_runtime(conn)
         lexical_ok = read_built_versions(conn, PRODUCTION_LEXICAL_INDEX_NAME) == production_lexical_versions()
     except (InfrastructureError, ValueError):
         lexical_ok = False
@@ -163,8 +165,8 @@ def require_retrieval_integrity(
 ) -> dict[str, Any]:
     """Production evaluation gate; the caller owns the read-only snapshot and bounded connection.
 
-    This checks the production A2/vector fact plane. An experimental lexical adapter still needs its own
-    index/version/coverage proof in addition to this common prerequisite. Backlog is reported separately.
+    This checks the production departmental-BM25/vector fact plane. An experimental lexical adapter still needs
+    its own index/version/coverage proof in addition to this common prerequisite. Backlog is reported separately.
     """
     status = inspect_retrieval(conn, embedding=embedding)
     if request_conn is not None and database_identity(request_conn) != status["database_identity"]:

@@ -16,8 +16,8 @@ pytest.importorskip("jieba")
 
 def test_pinned_members_and_composite_version():
     inputs = production.production_retrieval_inputs()
-    assert inputs.retriever_version == "pg-simple-fts-v1"
-    assert inputs.tokenizer_version == "tok-jieba-v2"
+    assert inputs.retriever_version == "pg-textsearch-bm25-departmental-v1"
+    assert inputs.tokenizer_version.startswith("tok-jieba-v2+pg_textsearch-1.5.1:simple:k1=1.2:b=0.75")
     assert inputs.dictionary_version.endswith("+stop:" + production.STOPWORDS_SHA256[:16])
     assert inputs.normalization_version == "norm-v1"
     assert inputs.embedding_version == "emb-bge-m3-dense-v1"

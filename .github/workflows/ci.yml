@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       postgres:
-        image: pgvector/pgvector:pg16
+        image: pgvector/pgvector:pg17@sha256:ac08538c6f8b9904c33c8224c5e5706dbe760aca29db1d096972b4052c22a75d
         env:
           POSTGRES_DB: medops
           POSTGRES_USER: medops_admin
@@ -38,6 +38,27 @@ jobs:
       MEDOPS_TEST_REDIS_URL: redis://localhost:6379/0
     steps:
       - uses: actions/checkout@v4
+      - name: install pinned pg_textsearch 1.5.1 into PostgreSQL 17 service
+        shell: bash
+        run: |
+          set -euo pipefail
+          archive=/tmp/pg-textsearch-v1.5.1-pg17-amd64.zip
+          deb=/tmp/pg-textsearch-postgresql-17_1.5.1-1_amd64.deb
+          curl -fsSL https://github.com/timescale/pg_textsearch/releases/download/v1.5.1/pg-textsearch-v1.5.1-pg17-amd64.zip -o "$archive"
+          echo "ed4410e8b6879a8971cd87fd03853f182e47b85b199c9bfcd9b34f159caba9fb  $archive" | sha256sum -c -
+          unzip -p "$archive" pg-textsearch-postgresql-17_1.5.1-1_amd64.deb > "$deb"
+          echo "357d27e5a1a8b6131f89851daf7ec47c2a6419a7f0f5bcfa08860b31334e804d  $deb" | sha256sum -c -
+          postgres_cid=$(docker ps --filter publish=5432 --format '{{.ID}}')
+          test -n "$postgres_cid"
+          docker cp "$deb" "$postgres_cid":/tmp/pg_textsearch.deb
+          docker exec "$postgres_cid" dpkg -i /tmp/pg_textsearch.deb
+          docker exec "$postgres_cid" psql -U medops_admin -d medops -v ON_ERROR_STOP=1 -c "alter system set shared_preload_libraries='pg_textsearch'"
+          docker restart "$postgres_cid"
+          for attempt in $(seq 1 30); do
+            if docker exec "$postgres_cid" pg_isready -U medops_admin -d medops; then break; fi
+            sleep 1
+          done
+          docker exec "$postgres_cid" psql -U medops_admin -d medops -Atc "show shared_preload_libraries" | grep -Fx pg_textsearch
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"

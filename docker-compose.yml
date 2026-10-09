@@ -5,9 +5,12 @@ name: medops
 
 services:
   postgres:
-    # Digest pinned 2026-09-17 (ADR-0006 item 6): PostgreSQL 16.15 + pgvector 0.8.6 as measured in record 16.
-    # Bump tag and digest together; DEC-001/002 may later require a different image (zhparser, pg_search).
-    image: pgvector/pgvector:pg16@sha256:ccc6e83d6e35e931dc7c5def2022729d5a6c370318d099181995567ff1fb4d6b
+    # ADR-0002 revision 6: PostgreSQL 17 + pgvector + pinned pg_textsearch 1.5.1.
+    # A new PG17 volume is intentional; migrate the PG16 data by logical dump/restore (docs/OPERATIONS.md).
+    build:
+      context: .
+      dockerfile: deploy/postgres/Dockerfile.pg17-bm25
+    image: medy-postgres:pg17-pgtextsearch-1.5.1
     container_name: medops-postgres
     restart: unless-stopped
     environment:
@@ -17,7 +20,7 @@ services:
     ports:
       - "127.0.0.1:5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres17_data:/var/lib/postgresql/data
       - ./deploy/postgres/init:/docker-entrypoint-initdb.d:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-medops_admin} -d ${POSTGRES_DB:-medops}"]
@@ -136,6 +139,8 @@ services:
     stop_grace_period: 10s
 
 volumes:
-  postgres_data:
+  postgres17_data:
+    name: medops_postgres17_data
+    external: true
   redis_data:
   model_cache:

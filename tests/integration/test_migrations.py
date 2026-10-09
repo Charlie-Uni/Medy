@@ -32,6 +32,9 @@ EXPECTED_TABLES = {
     "chunk_embeddings",
     "lexical_index_meta",
     "chunk_lexical_tsv",
+    "chunk_lexical_bm25_ma",
+    "chunk_lexical_bm25_pv",
+    "chunk_lexical_bm25_co",
     "operation_executions",
     "operation_attempts",
     "principals",
@@ -185,7 +188,7 @@ def set_actor(conn: psycopg.Connection, actor: str = "reviewer-01", reason: str 
 
 def test_single_head_and_offline_sql_render(migrated):
     heads = ScriptDirectory.from_config(alembic_config(migrated)).get_heads()
-    assert heads == ["0021"]
+    assert heads == ["0022"]
 
 
 def test_upgrade_downgrade_upgrade_round_trip_leaves_nothing_behind(scratch_database):
@@ -204,6 +207,7 @@ def test_upgrade_downgrade_upgrade_round_trip_leaves_nothing_behind(scratch_data
         "medops_llm_reserve",
         "medops_llm_settle",
         "medops_llm_month_total",
+        "medops_bm25_acl_revoke",
         "medops_source_objects_immutable",
         "medops_documents_guard",
         "medops_documents_audit",
@@ -235,9 +239,9 @@ def test_upgrade_downgrade_upgrade_round_trip_leaves_nothing_behind(scratch_data
     assert _inventory(scratch_database)["tables"] == EXPECTED_TABLES | {"alembic_version"}
 
 
-def test_only_the_decided_vector_and_tsvector_columns_exist(conn):
-    """DEC-002 (ADR-0007): exactly one vector(1024) column in chunk_embeddings. DEC-001 final (ADR-0002): exactly
-    one tsvector column, the production index chunk_lexical_tsv; candidate B/C tables stay experiment-scoped."""
+def test_only_the_decided_vector_and_legacy_rollback_tsvector_columns_exist(conn):
+    """The selected vector remains fixed. A2's one tsvector stays as the BM25 rollback copy; the production
+    BM25 indexes store text columns whose physical tables are checked in the migration inventory."""
     rows = conn.execute(
         "select table_name, column_name, udt_name from information_schema.columns where table_schema = 'public' and udt_name in ('vector', 'tsvector') order by 1"
     ).fetchall()

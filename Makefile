@@ -27,7 +27,7 @@ help:
 	@echo "make db-users        create/rotate LOGIN users for the 0002 group roles (DB_*_PASSWORD from .env)"
 	@echo "make load-corpus CORPUS=<corpus.json> SOURCES=<dir> PAGES=<dir> ACTOR=<id> [ARGS=...]   ingest documents into the fact plane"
 	@echo "make lexical-index-a ACTOR=<id>          install and (re)build the DEC-001 candidate A lexical index (admin DSN)"
-	@echo "make lexical-index ACTOR=<id>            (re)build the PRODUCTION lexical index chunk_lexical_tsv (migration 0007, admin DSN)"
+	@echo "make lexical-index ACTOR=<id>            rebuild the departmental production BM25 indexes (migration 0022, admin DSN)"
 	@echo "make index-build ACTOR=<id> [ADMIN_URL=<dsn>] [DEVICE=mps]   lexical index + embeddings + coverage check; run after every ingestion (record 109)"
 	@echo "make index-check [ADMIN_URL=<dsn>]        exit 1 if an active chunk is missing from the lexical index or the embeddings"
 	@echo "make retrieval-check [ADMIN_URL=<dsn>]    read-only index coverage, corpus, versions and consumer backlog; no model calls"
@@ -110,7 +110,7 @@ lexical-index-a:
 	$(PY) -m medops.retrieval.lexical.pg_simple_fts build --built-by $(ACTOR)
 
 lexical-index:
-	$(PY) -m medops.retrieval.production build-lexical --built-by $(ACTOR)
+	$(PY) -m medops.retrieval.production build-lexical --built-by $(ACTOR) $(if $(ADMIN_URL),--admin-url $(ADMIN_URL),)
 
 # after every ingestion / activation: rebuild the lexical index, fill the embedding gaps, then verify coverage (record 109)
 index-build:
@@ -170,6 +170,7 @@ canonicalize-probe:
 	$(PY) -m medops.evals.probe.canonicalize $(DIR) $(if $(PAGES),--pages $(PAGES),) $(if $(CHECK),--check,)
 
 up:
+	docker volume inspect medops_postgres17_data >/dev/null 2>&1 || docker volume create medops_postgres17_data
 	docker compose --env-file .env up -d --wait
 
 down:

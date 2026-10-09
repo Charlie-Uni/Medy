@@ -1,0 +1,34 @@
+# Production database image selected by ADR-0002 revision 6.  The base is the
+# measured multi-architecture PostgreSQL 17 + pgvector image; pg_textsearch is
+# downloaded from the publisher's v1.5.1 release and verified per architecture.
+FROM debian:bookworm-slim@sha256:7c7b2c966bc9ee8cedfeef67e0e279108992c77681fa595db4a9d65c06ccc587 AS extension
+
+ARG TARGETARCH
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends ca-certificates curl unzip \
+    && mkdir -p /out \
+    && case "$TARGETARCH" in \
+         amd64) archive_sha=ed4410e8b6879a8971cd87fd03853f182e47b85b199c9bfcd9b34f159caba9fb; deb_sha=357d27e5a1a8b6131f89851daf7ec47c2a6419a7f0f5bcfa08860b31334e804d ;; \
+         arm64) archive_sha=e65f953e99f47c05dde88a031884cf36ea269bcb62377f554b76ddb4d13fdc3e; deb_sha=9841e00382c3a094a08ffa3c1f7e6b287838bade1184cef8f656df78ebb143ce ;; \
+         *) echo "unsupported architecture: $TARGETARCH" >&2; exit 1 ;; \
+       esac \
+    && curl -fsSL "https://github.com/timescale/pg_textsearch/releases/download/v1.5.1/pg-textsearch-v1.5.1-pg17-${TARGETARCH}.zip" -o /tmp/pg_textsearch.zip \
+    && echo "$archive_sha  /tmp/pg_textsearch.zip" | sha256sum -c - \
+    && unzip -p /tmp/pg_textsearch.zip "pg-textsearch-postgresql-17_1.5.1-1_${TARGETARCH}.deb" > /out/pg_textsearch.deb \
+    && echo "$deb_sha  /out/pg_textsearch.deb" | sha256sum -c - \
+    && test "$(dpkg-deb -f /out/pg_textsearch.deb Version)" = 1.5.1-1
+
+FROM pgvector/pgvector:pg17@sha256:ac08538c6f8b9904c33c8224c5e5706dbe760aca29db1d096972b4052c22a75d
+
+LABEL org.opencontainers.image.source="https://github.com/timescale/pg_textsearch" \
+      org.opencontainers.image.version="1.5.1" \
+      medy.retrieval.lexical="departmental-pg_textsearch-bm25" \
+      medy.licence="PostgreSQL License"
+
+COPY --from=extension /out/pg_textsearch.deb /tmp/pg_textsearch.deb
+RUN dpkg -i /tmp/pg_textsearch.deb \
+    && test -f "$(pg_config --pkglibdir)/pg_textsearch.so" \
+    && test -f "$(pg_config --sharedir)/extension/pg_textsearch.control" \
+    && rm /tmp/pg_textsearch.deb
+
+CMD ["postgres", "-c", "shared_preload_libraries=pg_textsearch"]

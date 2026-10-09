@@ -4,7 +4,7 @@ import psycopg
 import pytest
 
 from medops.ingestion import outbox
-from medops.retrieval import maintenance
+from medops.retrieval import maintenance, production
 from medops.retrieval.vector import pg_vector
 from medops.retrieval.vector.embedding import EMBEDDING_VERSION, HashingEmbeddingProvider
 from tests.integration.test_lexical_production import db as db  # noqa: F401 - isolated module database
@@ -39,11 +39,25 @@ def indexed(conn, doc, table):
     ).fetchone()[0]
 
 
+def lexical_indexed(conn, doc):
+    return sum(indexed(conn, doc, table) for table in production.PRODUCTION_LEXICAL_TABLES.values())
+
+
+def expected_lexical_assignments(conn, doc):
+    return conn.execute(
+        "select count(*) from chunks c join document_acl a on a.doc_id=c.doc_id and a.permission='read' "
+        "where c.doc_id=%s",
+        (doc,),
+    ).fetchone()[0]
+
+
 def test_missing_indexes_recover_idempotently_and_vector_work_is_document_scoped(connection, provider):
     conn = connection
     doc, eid = emit(conn)
     count = conn.execute("select count(*) from chunks where doc_id=%s", (doc,)).fetchone()[0]
-    conn.execute("delete from chunk_lexical_tsv l using chunks c where c.chunk_id=l.chunk_id and c.doc_id=%s", (doc,))
+    assignments = expected_lexical_assignments(conn, doc)
+    for table in production.PRODUCTION_LEXICAL_TABLES.values():
+        conn.execute(f"delete from {table} l using chunks c where c.chunk_id=l.chunk_id and c.doc_id=%s", (doc,))
     for name, handler in (
         ("lexical-index", maintenance.lexical_handler()),
         ("vector-index", maintenance.vector_handler(provider)),
@@ -51,7 +65,7 @@ def test_missing_indexes_recover_idempotently_and_vector_work_is_document_scoped
         first = maintenance.consume_batch(conn, name, handler)
         assert first.acknowledged == (eid,) and not first.failed
         assert not maintenance.consume_batch(conn, name, handler).acknowledged
-    assert indexed(conn, doc, "chunk_lexical_tsv") == count
+    assert lexical_indexed(conn, doc) == assignments
     assert indexed(conn, doc, "chunk_embeddings") == count
     assert conn.execute("select count(*) from chunk_embeddings").fetchone()[0] == count
 
@@ -127,7 +141,7 @@ def test_current_fact_state_wins_and_archived_indexes_are_kept_for_explicit_hist
         ("vector-index", maintenance.vector_handler(provider)),
     ):
         assert maintenance.consume_batch(conn, name, handler).acknowledged == (eid,)
-    assert indexed(conn, doc, "chunk_lexical_tsv") > 0 and indexed(conn, doc, "chunk_embeddings") > 0
+    assert lexical_indexed(conn, doc) > 0 and indexed(conn, doc, "chunk_embeddings") > 0
 
 
 def test_draft_withdrawal_removes_indexes(connection, provider):
@@ -141,7 +155,7 @@ def test_draft_withdrawal_removes_indexes(connection, provider):
         ("vector-index", maintenance.vector_handler(provider)),
     ):
         assert maintenance.consume_batch(conn, name, handler).acknowledged == (eid,)
-    assert indexed(conn, doc, "chunk_lexical_tsv") == 0 and indexed(conn, doc, "chunk_embeddings") == 0
+    assert lexical_indexed(conn, doc) == 0 and indexed(conn, doc, "chunk_embeddings") == 0
 
 
 @pytest.mark.parametrize("kind", ["lexical", "vector"])
@@ -158,15 +172,19 @@ def test_wrong_metadata_fails_without_ack(connection, provider, kind):
     assert result.failed == (eid,) and not result.acknowledged
 
 
-def test_empty_lexical_row_is_repaired_before_ack(connection):
+def test_missing_lexical_row_is_repaired_before_ack(connection):
     conn = connection
     doc, eid = emit(conn)
-    conn.execute(
-        "update chunk_lexical_tsv l set tsv=''::tsvector from chunks c where c.chunk_id=l.chunk_id and c.doc_id=%s",
-        (doc,),
-    )
+    before = expected_lexical_assignments(conn, doc)
+    deleted = 0
+    for table in production.PRODUCTION_LEXICAL_TABLES.values():
+        deleted += conn.execute(
+            f"delete from {table} where chunk_id in (select chunk_id from chunks where doc_id=%s limit 1)",
+            (doc,),
+        ).rowcount
+    assert deleted > 0
     assert maintenance.consume_batch(conn, "lexical-index", maintenance.lexical_handler()).acknowledged == (eid,)
-    assert conn.execute("select count(*) from chunk_lexical_tsv where tsv=''::tsvector").fetchone()[0] == 0
+    assert lexical_indexed(conn, doc) == before
 
 
 def test_acl_event_for_a_draft_does_not_accidentally_index_unpublished_text(connection, provider):
@@ -177,7 +195,7 @@ def test_acl_event_for_a_draft_does_not_accidentally_index_unpublished_text(conn
         ("vector-index", maintenance.vector_handler(provider)),
     ):
         assert maintenance.consume_batch(conn, name, handler).acknowledged == (eid,)
-    assert indexed(conn, doc, "chunk_lexical_tsv") == 0 and indexed(conn, doc, "chunk_embeddings") == 0
+    assert lexical_indexed(conn, doc) == 0 and indexed(conn, doc, "chunk_embeddings") == 0
 
 
 def test_actual_commit_survives_restart_and_other_worker_skips_locked_event(admin_dsn):

@@ -2,9 +2,9 @@
 
 Everything that shapes production retrieval results is pinned here and nowhere else:
 
-- lexical: candidate A2 = PostgreSQL `simple` full-text search over application-side jieba tokens
-  (`tok-jieba-v2`) with the vendored English stopword list whose SHA-256 is fixed below; the index lives in the
-  migration-created table `chunk_lexical_tsv` under the index name `production-lexical`;
+- lexical: departmental `pg_textsearch` BM25 over application-side jieba tokens (`tok-jieba-v2`) with the
+  vendored English stopword list whose SHA-256 is fixed below. MA, PV and CO use separate physical indexes so
+  corpus statistics cannot cross the RLS boundary; migration 0022 keeps the former A2 table for rollback;
 - vector: bge-m3 dense embeddings (`emb-bge-m3-dense-v1`) in `chunk_embeddings` (migration 0006);
 - fusion: rank-only RRF with k=60 over top-20/top-20, fused limit 20;
 - reranker: bge-reranker-v2-m3 on the re-checked candidates, output 8.
@@ -32,7 +32,7 @@ from medops.core.errors import ErrorCode, InfrastructureError
 from medops.retrieval.contracts import LexicalVersions
 from medops.retrieval.doc_focus import DOC_FOCUS_VERSION
 from medops.retrieval.hybrid import HybridConfig
-from medops.retrieval.lexical import index_consumer, pg_simple_fts
+from medops.retrieval.lexical import index_consumer, pg_textsearch_departmental
 from medops.retrieval.lexical.tokenizer import JiebaTokenizerV2
 from medops.retrieval.query_translation import QUERY_TRANSLATION_OFF, QUERY_TRANSLATION_VERSION
 from medops.retrieval.rerank import MAX_INPUT, MAX_LENGTH, RERANK_MODEL_ID, RERANK_REVISION, RerankerSpec
@@ -42,9 +42,9 @@ from medops.retrieval.vector import pg_vector
 from medops.retrieval.vector.embedding import EMBEDDING_VERSION, EmbeddingProvider
 from medops.retrieval.versioning import RetrievalVersionInputs, compute_retrieval_version
 
-PRODUCTION_LEXICAL_CANDIDATE = "A2"
-PRODUCTION_LEXICAL_TABLE = "chunk_lexical_tsv"
-PRODUCTION_LEXICAL_INDEX_NAME = "production-lexical"
+PRODUCTION_LEXICAL_CANDIDATE = "D-departmental"
+PRODUCTION_LEXICAL_TABLES = pg_textsearch_departmental.TABLES
+PRODUCTION_LEXICAL_INDEX_NAME = pg_textsearch_departmental.INDEX_NAME
 STOPWORDS_RESOURCE = "english.stop"
 STOPWORDS_SHA256 = "b3f772a000465cb76e23adb03b47073c591c156fad8f7af09c8b8e80d6bd8eac"
 RERANK_OUTPUT = 8
@@ -80,7 +80,19 @@ def production_tokenizer() -> JiebaTokenizerV2:
 
 
 def production_lexical_versions() -> LexicalVersions:
-    return pg_simple_fts.configured_versions(production_tokenizer())
+    return pg_textsearch_departmental.configured_versions(production_tokenizer())
+
+
+def require_production_lexical_runtime(conn: psycopg.Connection[Any]) -> None:
+    """Readiness must validate the loaded extension as well as persisted index metadata."""
+    try:
+        pg_textsearch_departmental.require_extension(conn)
+    except pg_textsearch_departmental.InstallError as exc:
+        raise InfrastructureError(
+            ErrorCode.internal_error,
+            detail="production pg_textsearch extension is missing or has the wrong version",
+            retryable=False,
+        ) from exc
 
 
 def production_hybrid_config() -> HybridConfig:
@@ -126,19 +138,13 @@ def production_retrieval_version() -> str:
     return compute_retrieval_version(production_retrieval_inputs())
 
 
-PRODUCTION_RETRIEVAL_VERSION = "90b57e4e86b4bb462fc4de58f7f7749666fb6f50a588c129bd5f9aa50585ab18"  # pinned; see tests
+PRODUCTION_RETRIEVAL_VERSION = "19c755df9adf44e8df9badba547f9b0f21391edbf8f3ab3631f5ea0256b3e4d1"  # pinned; see tests
 
 
 def production_lexical_retriever(
     conn: psycopg.Connection[Any], *, as_of: date | None = None
-) -> pg_simple_fts.PgSimpleFtsRetriever:
-    return pg_simple_fts.PgSimpleFtsRetriever(
-        conn,
-        production_tokenizer(),
-        as_of=as_of,
-        index_name=PRODUCTION_LEXICAL_INDEX_NAME,
-        table=PRODUCTION_LEXICAL_TABLE,
-    )
+) -> pg_textsearch_departmental.DepartmentalBm25Retriever:
+    return pg_textsearch_departmental.DepartmentalBm25Retriever(conn, production_tokenizer(), as_of=as_of)
 
 
 def production_vector_retriever(
@@ -155,21 +161,18 @@ def production_vector_retriever(
 
 def build_production_lexical_index(
     conn: psycopg.Connection[Any], *, built_by: str, batch: int = 500
-) -> pg_simple_fts.IndexBuildReport:
-    """(Re)build the production lexical index in the migration-created table (admin connection)."""
-    return pg_simple_fts.build_index(
-        conn,
-        production_tokenizer(),
-        built_by=built_by,
-        batch=batch,
-        index_name=PRODUCTION_LEXICAL_INDEX_NAME,
-        table=PRODUCTION_LEXICAL_TABLE,
-    )
+) -> pg_textsearch_departmental.IndexBuildReport:
+    """Rebuild the three ACL-derived production BM25 corpora (admin connection)."""
+    return pg_textsearch_departmental.build_index(conn, production_tokenizer(), built_by=built_by, batch=batch)
 
 
 def production_index_target() -> index_consumer.IndexTarget:
     """Outbox consumer target that keeps the production lexical index in step with document status."""
-    return index_consumer.tsvector_target(PRODUCTION_LEXICAL_TABLE, production_tokenizer())
+    return pg_textsearch_departmental.index_target(production_tokenizer())
+
+
+def production_document_lexical_gaps(conn: psycopg.Connection[Any], doc_id: Any) -> int:
+    return pg_textsearch_departmental.document_gap_count(conn, doc_id)
 
 
 class IndexCoverageError(RuntimeError):
@@ -182,15 +185,34 @@ def index_coverage(conn: psycopg.Connection[Any]) -> dict[str, int]:
     Ingestion and activation write documents and chunks; the lexical table and the embeddings are built by the
     index build / outbox consumer. On 2026-09-28/29, 257 documents were activated without either index and every
     evaluation until 2026-10-02 silently searched the older 76 documents only (record 109)."""
+    unions = " union all ".join(
+        f"select '{dept}'::dept as dept, chunk_id, content from {table}"
+        for dept, table in PRODUCTION_LEXICAL_TABLES.items()
+    )
     row = conn.execute(
-        f"""select count(*),
-                   count(*) filter (where l.chunk_id is null or l.tsv = ''::tsvector),
-                   count(*) filter (where e.chunk_id is null),
-                   count(distinct d.doc_id) filter (where l.chunk_id is null or l.tsv = ''::tsvector or e.chunk_id is null)
-              from chunks ch
-              join documents d on d.doc_id = ch.doc_id and d.status = 'active'
-              left join {PRODUCTION_LEXICAL_TABLE} l on l.chunk_id = ch.chunk_id
-              left join chunk_embeddings e on e.chunk_id = ch.chunk_id and e.embedding_version = %s""",
+        f"""with active as (
+                   select ch.chunk_id, ch.doc_id
+                     from chunks ch join documents d on d.doc_id=ch.doc_id and d.status='active'
+               ), expected as (
+                   select a.chunk_id, a.doc_id, acl.dept
+                     from active a join document_acl acl on acl.doc_id=a.doc_id and acl.permission='read'
+               ), lexical as ({unions}),
+               lexical_gaps as (
+                   select x.chunk_id, x.doc_id
+                     from expected x left join lexical l on l.chunk_id=x.chunk_id and l.dept=x.dept
+                    where l.chunk_id is null or l.content=''
+               ), embedding_gaps as (
+                   select a.chunk_id, a.doc_id
+                     from active a left join chunk_embeddings e
+                       on e.chunk_id=a.chunk_id and e.embedding_version=%s
+                    where e.chunk_id is null
+               )
+               select (select count(*) from active),
+                      (select count(*) from lexical_gaps),
+                      (select count(*) from embedding_gaps),
+                      (select count(distinct doc_id) from (
+                           select doc_id from lexical_gaps union all select doc_id from embedding_gaps
+                       ) gaps)""",
         (EMBEDDING_VERSION,),
     ).fetchone()
     assert row is not None
@@ -208,7 +230,8 @@ def require_index_coverage(conn: psycopg.Connection[Any], *, plane: str = "") ->
     if cov["missing_lexical"] or cov["missing_embedding"]:
         raise IndexCoverageError(
             f"{plane or 'fact plane'}: {cov['documents_not_fully_indexed']} active documents are not fully indexed "
-            f"({cov['missing_lexical']} chunks missing from the lexical index, {cov['missing_embedding']} without an "
+            f"({cov['missing_lexical']} ACL/chunk assignments missing from the lexical index, "
+            f"{cov['missing_embedding']} chunks without an "
             f"embedding, of {cov['active_chunks']}); build the indexes before measuring anything"
         )
     return cov
@@ -230,7 +253,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                 {
                     "retrieval_version": production_retrieval_version(),
                     "inputs": production_retrieval_inputs().model_dump(mode="json"),
-                    "lexical_table": PRODUCTION_LEXICAL_TABLE,
+                    "lexical_tables": PRODUCTION_LEXICAL_TABLES,
                     "lexical_index_name": PRODUCTION_LEXICAL_INDEX_NAME,
                 },
                 ensure_ascii=False,

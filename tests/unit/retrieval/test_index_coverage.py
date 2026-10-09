@@ -30,7 +30,7 @@ def test_coverage_counts_only_active_documents_for_the_production_embedding_vers
         "missing_embedding": 0,
         "documents_not_fully_indexed": 0,
     }
-    assert "d.status = 'active'" in conn.sql and "chunk_lexical_tsv" in conn.sql and "chunk_embeddings" in conn.sql
+    assert "d.status='active'" in conn.sql and "chunk_lexical_bm25_ma" in conn.sql and "chunk_embeddings" in conn.sql
     assert conn.params == ("emb-bge-m3-dense-v1",)
 
 

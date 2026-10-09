@@ -23,7 +23,16 @@ from tests.integration.conftest import user_dsn
 from tests.integration.test_migrations import document, job, source_object
 
 DEPTS = ("MA", "PV", "CO")
-READ_TABLES = ("documents", "chunks", "chunk_spans", "document_acl", "source_objects")
+READ_TABLES = (
+    "documents",
+    "chunks",
+    "chunk_spans",
+    "document_acl",
+    "source_objects",
+    "chunk_lexical_bm25_ma",
+    "chunk_lexical_bm25_pv",
+    "chunk_lexical_bm25_co",
+)
 
 
 # ------------------------------------------------------------------------------------ fixtures
@@ -148,6 +157,9 @@ def test_group_roles_login_users_and_forced_rls(migrated, login_users):
             "chunk_embeddings",
             "lexical_index_meta",  # migration 0007: production lexical index (DEC-001 final)
             "chunk_lexical_tsv",
+            "chunk_lexical_bm25_ma",  # migration 0022: department-isolated BM25 corpora
+            "chunk_lexical_bm25_pv",
+            "chunk_lexical_bm25_co",
             "operation_executions",  # migration 0008: operation-key ledger (M2-03), app writes / admin reads
             "operation_attempts",
             "principals",  # migration 0009: principal directory (M3-05), app reads / admin writes
