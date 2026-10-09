@@ -89,6 +89,26 @@ DATABASE_ADMIN_URL=<管理 DSN> python scripts/db_restore_drill.py --dump /backu
 
 P1 完整灾备（异地、连续归档、演练恢复整套环境）不在本手册范围（基线 7.1）。
 
+### 3.4 PostgreSQL 16 → 17 / BM25 切换与回滚
+
+`pg_textsearch` 只支持 PostgreSQL 17/18，且必须在服务器启动前加入 `shared_preload_libraries`。禁止把 PG16 的物理 data directory 直接挂给 PG17；使用逻辑 dump/restore。仓库镜像 `deploy/postgres/Dockerfile.pg17-bm25` 固定 PG17/pgvector 基础镜像 digest、`pg_textsearch` 1.5.1 及 amd64/arm64 发布资产 SHA-256。
+
+切换顺序：
+
+1. 停止应用写入，为每个数据库运行 `scripts/db_backup.py`，核对 `.dump.sha256`。
+2. 在独立端口和新命名卷启动 PG17 镜像。先在临时空库运行 `alembic upgrade head`，确认扩展能加载并创建集群级 group roles，然后删除临时库。
+3. 创建目标数据库，以 `pg_restore --no-owner --exit-on-error` 恢复。升级前逐库比较：Alembic revision、public 表集合、逐表行数、按 chunk_id 排序的语料指纹和 grantee；任何一项不同都停止切换。
+4. 对目标库运行 `alembic upgrade head`，确认 revision 0022；运行 `make lexical-index ACTOR=<切换记录> ADMIN_URL=<目标管理 DSN>`。正式库和安全库分别运行 `make index-check`、`make retrieval-check`。
+5. 用 app/readonly LOGIN 用户分别设置 MA/PV/CO 事务身份，做一次零模型词法查询；核对每个部门只能读取自己的 BM25 表，并确认 `retrieval_version` 为 `19c755…e4d1`。
+6. 停旧 PG16，保留旧卷；让默认 5432 指向新卷并再次运行覆盖、readiness、`make check`。至少保留旧卷和切换前 dump 到新版本观察期结束。
+
+快速回滚有两层：
+
+- **代码/检索回滚：** migration 0022 没有删除 migration 0007 的 `chunk_lexical_tsv`。将生产装配和检索版本恢复到 A2，再失效候选缓存；不要在 BM25 代码仍运行时直接 downgrade 0022。
+- **数据库主版本回滚：** 在没有 PG17 新写入，或新写入已另行回灌的前提下，停服务并把 5432 切回保留的 PG16 卷。发生新写入后不能直接切旧卷，必须先停写、逻辑导出 PG17 增量/全库并在 PG16 兼容 schema 中恢复验证。
+
+未来升级 `pg_textsearch` 二进制时，所有副本必须先安装并重启到新二进制，再升级主库；`shared_preload_libraries` 对 WAL 回放同样是必需配置。每次升级重跑 extension version、RLS/统计隔离、索引读写、备份恢复和 `make check`。
+
 ## 4. 依赖升级
 
 - Python 依赖全部锁定并带哈希（`requirements.lock`、`requirements-build.lock`、`requirements-embed*.lock`）。升级流程：改 `pyproject.toml` 约束 → `make lock`（uv 解析，含 Linux 镜像锁）→ `make install` → `make check` → 记录在实现记录里（版本、原因、`make check` 结果）。不要手改 lock 文件。

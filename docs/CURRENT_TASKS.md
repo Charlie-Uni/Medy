@@ -9,9 +9,9 @@
 | ID | 任务 | 状态 | 完成或前置证据 |
 | --- | --- | --- | --- |
 | ENV-01 | 本地 `DATABASE_URL` 与 `DATABASE_ADMIN_URL` 指向具备持久费用账本的正式本地事实库 | DONE | 本机 `.env` 已由 `medops` 改为 `medops_v2`；不记录凭据 |
-| DB-01 | `medops_v2` 升至 migration 0021 | DONE | 0020 提供费用/失败账本；0021 提供不暴露账本行的月度总额函数 |
-| DB-02 | `medops_v2_safety` 升至 migration 0021 | DONE | 2026-10-08 从 0019 连续升至 0021 |
-| DB-03 | 旧开发库 `medops` 的去留 | READY | 保持 0007、231 份 draft；API/正式评测不再默认连接它。后续决定退役或迁移，不阻塞当前工作 |
+| DB-01 | `medops_v2` 升至 migration 0022 | DONE | 0020/0021 为费用账本；0022 为部门隔离 BM25；记录 162 |
+| DB-02 | `medops_v2_safety` 升至 migration 0022 | DONE | PG17 逻辑恢复核对后由 0021 升至 0022，索引零缺口 |
+| DB-03 | 旧开发库 `medops` 的去留 | DONE | 同步迁移到 PG17/0022 并保留；没有向量索引，API/正式评测不连接它 |
 | ADJ-01 | 裁决 `ms-0125` | DONE | 项目所有者按建议保留现有 `char_end=2226` |
 | ADJ-02 | 裁决 `ms-0241/ms-0242` 的证据组 | DONE | 三类正式示例共同必需，standard-of-care 仅作补充；已落实到 v3 |
 | ADJ-03 | 裁决 `ms-0280` | DONE | 已增加 `protocol_id`，query、gold 与日期保留 |
@@ -34,10 +34,10 @@ probe v4 与 `main-v5-provisional` 均已冻结。EVAL-11 已完成：580 个 go
 | ID | 任务 | 状态 | 说明 |
 | --- | --- | --- | --- |
 | W-01 | 删除 Finder 副本 `src/medops/infrastructure/llm/budget 2.py` | DONE | 文件未跟踪，已删除，避免 `git add -A` 误收 |
-| W-02 | 区分源码、评测产物和临时 `output/` | READY | 提交前逐组检查 |
-| W-03 | 按功能边界拆分提交 | READY | 不按作者拆；记录 143 的代码归 API/Harness 组，文档归文档组 |
-| W-04 | 每组提交前运行定向检查，最终运行 `make check` | DONE | 记录 160 最新隔离复测：1712 passed、70 skipped；ruff、格式、mypy、Schema 漂移与评测审计均通过；改动仍未提交 |
-| W-05 | 更新 README、阶段表、路线图和验收报告 | READY | 状态必须区分实现、部署、付费运行和正式门禁 |
+| W-02 | 区分源码、评测产物和临时 `output/` | DONE | BM25 提交只含实现、测试、迁移、部署配置与文档；备份及 `output/` 未纳入 Git |
+| W-03 | 按功能边界拆分提交 | DONE | BM25 实现与文档分两批提交；不按作者拆分 |
+| W-04 | 每组提交前运行定向检查，最终运行 `make check` | DONE | 记录 162：1713 passed、70 skipped；ruff、格式、mypy、Schema 漂移与评测审计均通过 |
+| W-05 | 更新 README、阶段表、路线图和验收报告 | DONE | BM25 工程切换与待付费质量门禁已分开记录 |
 
 建议提交顺序：评测标准与工具；API/Harness 重构（含记录 143 的代码）；遥测与 Langfuse；运行完整性/0020/MCP；文档与证据（含记录 143 的文档）。
 
@@ -104,9 +104,10 @@ Langfuse 的 `score-create` 通过 `/api/public/ingestion` 在 v4 仍受支持�
 
 | ID | 任务 | 状态 |
 | --- | --- | --- |
-| BM25-01 | 固定分词和其他检索配置，完成统计隔离、PG17 迁移与回滚方案 | READY |
+| BM25-01 | 固定分词和其他检索配置，完成统计隔离、PG17 迁移与回滚方案 | DONE |
 | BM25-09 | 在新冻结集上跑完整检索与回答对照 | PAID |
-| BM25-10 | 依据预登记采用标准决定是否切换生产 | HUMAN |
+| BM25-10 | 依据预登记采用标准决定是否切换生产 | DONE：所有者 2026-10-09 明确决定切换；这是综合价值决策，历史 +5 pp 实验判定不改写 |
+| BM25-11 | 生产适配器、migration 0022、PG17 镜像、CI 与本机三库切换 | DONE：记录 162；正式库 readiness=true，旧 PG16 卷与逻辑备份保留 |
 | CACHE-01 | 部署 Redis、namespace 和持续失效消费者 | READY |
 | CACHE-02 | 验证撤权、归档、新版本和 Redis 故障 | READY |
 | CACHE-10 | 真实重复问题流量收益测试 | PAID |

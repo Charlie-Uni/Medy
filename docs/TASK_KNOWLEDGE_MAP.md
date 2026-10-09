@@ -69,8 +69,8 @@ M1-01 同时是“部分”和“阻塞”，上表按“部分”计。P1/P2 11
 | M1-11 | 已实现（发布/归档/审计/outbox 同事务，索引消费者幂等；缓存消费者随 M1-19） | 发布/归档同事务并经 outbox 失效索引缓存 | 事务性 outbox；至少一次投递与幂等消费；缓存失效时序 |
 | M1-12 | 部分（术语表初版 glossary-20260920，记录 44；分词词典不变） | 医学术语表及版本 | INN/通用名/商品名体系；同义词映射；字典版本化与许可；jieba 用户词典 |
 | M1-13 | 部分（规则型有界改写 `qr-rules-v1`，记录 40；术语内容待 DEC-005） | 1 到 3 条有界 Query Rewrite | 查询扩展与同义改写；会话实体与指代；用户文本不得生成过滤条件（注入） |
-| M1-14 | 已实现（DEC-001 最终判定 A2；迁移 0007 生产词法索引 + `medops.retrieval.production`，记录 45） | 实现 DEC-001 选定的 lexical_retriever | GIN 全文索引；tsvector 位置信息；tokenizer 版本一致性；版本不匹配拒绝 |
-| M1-15 | 已实现（生产取值固定，复合 retrieval_version 由测试钉住，记录 45） | 固化 tokenizer、词典、规范化版本进入 retrieval_version 与缓存键 | 复合版本哈希；缓存键设计；可复现性证明 |
+| M1-14 | 已实现；2026-10-09 按所有者决定由 A2 切至部门隔离 BM25（迁移 0022、记录 162；A2 表保留回滚） | 实现 DEC-001/ADR-0002 选定的 lexical_retriever | BM25 的 TF/IDF/长度归一；RLS 不隔离索引统计；按 ACL 复制的部门语料；tokenizer 版本一致性；版本不匹配拒绝 |
+| M1-15 | 已实现（生产取值固定，BM25 切换后的复合 retrieval_version 由测试钉住，记录 45、162） | 固化 tokenizer、扩展、参数、词典、规范化版本进入 retrieval_version 与缓存键 | 复合版本哈希；缓存键设计；可复现性证明 |
 | M1-16 | 已实现（迁移 0006、pgvector 适配器、bge-m3 本地提供者；探针 v2 向量通道 82.7% / 65.6%，记录 42） | DEC-002 后实现 pgvector 召回 | 余弦/内积相似度；ANN（HNSW、IVFFlat）与召回率；过滤后召回不足；embedding 维度与归一化 |
 | M1-17 | 部分（融合 + 重排 + 回查已实现；并行/超时/降级随 M2 执行器，记录 45） | RRF、Reranker、候选上限、并行超时 | RRF 公式；bi-encoder 与 cross-encoder；asyncio 并发与超时取消；显式降级 |
 | M1-18 | 已实现（回查模块与 RLS 下的集成证明；`evidence_log` 落库随 M2；显式历史请求放行 archived 到通道 SQL，记录 71） | 事实回查：状态、生效时间、ACL、完整性、解析质量 | 事实源与索引的分离；JOIN 校验；时间点查询；完整性状态 |

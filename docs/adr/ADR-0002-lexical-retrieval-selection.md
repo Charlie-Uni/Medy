@@ -374,3 +374,25 @@ DEC-001 选定 **A2**（PostgreSQL `simple` FTS + 应用侧 `tok-jieba-v2` + 固
 - 上层检索、RRF、Reranker 和业务契约保持稳定；具体词法实现通过适配器隔离。
 - M1 多一个小规模选型实验，但避免在主数据入库后更换 tokenizer 和重建索引。
 - 选定实现后仍必须在不少于 300 条的主评测集上通过最终门禁；探针集并入主集，但继续保留固定版本和独立报告。
+
+## 修订 6（2026-10-09，所有者明确决定“切换 BM25”）
+
+**决定。** 生产词法通道由 A2 切换为 `pg_textsearch` 1.5.1 BM25，固定 PostgreSQL 17、`tok-jieba-v2`、同一停用词表、`text_config=simple`、`k1=1.2`、`b=0.75`。复合检索版本从 `90b57e…ab18` 更新为 `19c755…e4d1`，因此旧候选缓存不会跨引擎复用。
+
+这是一项由所有者作出的综合价值决定，依据是 D 在真实大语料上的词法 Recall@20 78.7% 对 A2 49.3%、词法 P95 40 ms 对 164 ms、端到端检索 Recall@5 有正向差值，以及项目需要展示真正 BM25 检索。它**不改写**修订 5 的实验判定：D 的端到端提升只有 +1.63 pp，仍未达到当时预登记的 +5 pp 替换规则。新冻结集的正式检索和答案级对照仍是后续付费门禁，工程切换本身不能当作质量门禁通过。
+
+**统计隔离。** 单一 BM25 索引即使加 FORCE RLS，IDF/词频统计仍包含隐藏行。生产实现不采用实验 D 的共享表，而是建立 `chunk_lexical_bm25_ma/pv/co` 三个物理语料表和索引：
+
+1. 每个 chunk 按 `document_acl(permission=read)` 复制到所有有权部门；共享文档可存在于多个部门索引，排名统计只来自该部门可见语料。
+2. 每张表仍启用并强制 RLS，策略同时要求当前事务部门等于表所属部门，并通过 `chunks → documents → document_acl` 再做事实权限检查。
+3. 全量构建只纳入 active/archived 文档，draft/withdrawn 文本不进入 BM25 统计。
+4. ACL 撤权触发器在同一事务中同步删除被撤部门的索引行；授权增加、激活和归档由原有 transactional outbox 重建相应副本。覆盖和 readiness 按 ACL/chunk 组合检查。
+5. 合成集测试证明只向 MA 增加 40 个含已知词的 chunk 后，PV 的候选和浮点分数逐项不变；ACL 撤权在提交前已经移除对应部门语料行。
+
+**迁移与回滚。** migration 0022 要求 PostgreSQL ≥17、预加载且安装版本恰为 `pg_textsearch` 1.5.1；建立三个表、BM25 索引、策略和撤权触发器。migration 0007 的 `chunk_lexical_tsv` 与 GIN 索引不删除，作为 A2 快速回滚资产。Compose 使用固定 digest 的 `pgvector/pgvector:pg17` 加发布者的 amd64/arm64 包和 SHA-256；CI 在 PG17 service 中核验并安装同一发布包。
+
+**许可证门禁。** [生产许可记录](../reviews/2026-10-09-licence-dossier-pg-textsearch.md)已登记 `pg_textsearch`、PostgreSQL、pgvector、包依赖、ELF 运行依赖、两种架构资产哈希、基础镜像和分发义务。直接组件没有 AGPL/network copyleft 阻塞；若未来对外分发整个 Debian 镜像，仍须生成该构建的软件物料清单并携带所有系统包通知。
+
+本机切换采用逻辑 dump/restore，而不是把 PG16 数据目录直接挂到 PG17。`medops`、`medops_v2`、`medops_v2_safety` 在恢复到隔离 PG17 卷后，升级前的 Alembic 版本、表集合、逐表行数、语料指纹和 grantee 全部与源库一致；之后统一升至 0022、重建 BM25。正式库 active 333 份/34,948 chunks，安全库 active 339 份/35,273 chunks，词法和向量缺口均为 0，readiness 均为 true。旧 PG16 卷及三份带 SHA-256 的逻辑备份保留。详细命令、验证和一次 zsh 变量名失败见实现记录 162。
+
+**当前边界。** 生产工程切换完成；BM25-09 的新冻结集检索/回答对照仍需单独费用授权。未来升级 `pg_textsearch` 时还须关注其 preload/WAL 兼容要求，先升级副本再升级主库，并重跑 migration、RLS、统计隔离、恢复和索引可读性测试。

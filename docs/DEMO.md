@@ -4,7 +4,7 @@
 
 ## 1. 准备与运行（约两分钟）
 
-前提：`make up` 已启动数据库（PostgreSQL 16 + pgvector、Redis 7），`.env` 里有数据库连接、`IDENTITY_PSEUDONYM_KEY` 与 `OPENAI_API_KEY`，本机已缓存两个本地模型（bge-m3、bge-reranker-v2-m3）。
+前提：`make up` 已启动数据库（PostgreSQL 17 + pgvector + pg_textsearch 1.5.1、Redis 7），`.env` 里有数据库连接、`IDENTITY_PSEUDONYM_KEY` 与 `OPENAI_API_KEY`，本机已缓存两个本地模型（bge-m3、bge-reranker-v2-m3）。
 
 | 命令 | 做什么 | 费用 |
 | --- | --- | --- |
