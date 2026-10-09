@@ -110,6 +110,7 @@ def build_manifest(
     seed: int,
     device: str,
     purpose: str,
+    plan_cache_mode: pg_vector.PlanCacheMode = "auto",
 ) -> dict[str, Any]:
     manifest = json.loads((dataset_dir / "manifest.json").read_text(encoding="utf-8"))
     if manifest.get("status") != "frozen":
@@ -145,7 +146,12 @@ def build_manifest(
             "tie_break": "cosine distance ascending, then chunk_id ascending",
             "min_slice_support": MIN_SLICE_SUPPORT,
             "cross_lingual_diagnostic_threshold": CROSS_LINGUAL_DIAGNOSTIC_THRESHOLD,
-            "hnsw_query_settings": {"iterative_scan": "relaxed_order", "ef_search": "max(40, 4k) capped at 1000"},
+            "hnsw_query_settings": {
+                "iterative_scan": "relaxed_order",
+                "ef_search": "max(40, 4k) capped at 1000",
+                "plan_cache_mode": plan_cache_mode,
+                "force_prepared": plan_cache_mode == "force_generic_plan",
+            },
         },
         "environment": {
             "platform": platform.platform(),
@@ -165,21 +171,35 @@ def build_manifest(
                 "mapping_sha256": _sha256(mapping_path),
                 "mapping_counts": {"mapped": statuses.count("mapped"), "unmappable": statuses.count("unmappable")},
                 "provider_spec": spec.model_dump(),
-                "retriever_version": pg_vector.RETRIEVER_VERSION,
+                "retriever_version": (
+                    pg_vector.GENERIC_PLAN_RETRIEVER_VERSION
+                    if plan_cache_mode == "force_generic_plan"
+                    else pg_vector.RETRIEVER_VERSION
+                ),
                 **server_facts(admin_dsn, spec.embedding_version),
             }
         },
     }
 
 
-def db_searcher(app_dsn: str, provider: EmbeddingProvider, as_of: date) -> Callable[[Query, int], VectorSearchResult]:
+def db_searcher(
+    app_dsn: str,
+    provider: EmbeddingProvider,
+    as_of: date,
+    plan_cache_mode: pg_vector.PlanCacheMode = "auto",
+) -> Callable[[Query, int], VectorSearchResult]:
     conn = psycopg.connect(app_dsn)
     expected: dict[str, VectorVersions] = {}
 
     def search(q: Query, k: int) -> VectorSearchResult:
         with conn.transaction():
             conn.execute("select set_config('medops.dept', %s, true)", (q.dept,))
-            retriever = pg_vector.PgVectorRetriever(conn, provider, as_of=as_of)
+            retriever = pg_vector.PgVectorRetriever(
+                conn,
+                provider,
+                as_of=as_of,
+                plan_cache_mode=plan_cache_mode,
+            )
             if "v" not in expected:
                 expected["v"] = retriever.configured
             return run_vector_search(retriever, q.query, k, expected=expected["v"])
@@ -189,7 +209,12 @@ def db_searcher(app_dsn: str, provider: EmbeddingProvider, as_of: date) -> Calla
 
 
 def plan_evidence(
-    app_dsn: str, provider: EmbeddingProvider, queries: Sequence[Query], as_of: date, k: int
+    app_dsn: str,
+    provider: EmbeddingProvider,
+    queries: Sequence[Query],
+    as_of: date,
+    k: int,
+    plan_cache_mode: pg_vector.PlanCacheMode = "auto",
 ) -> list[dict[str, Any]]:
     """The default execution plan under the app role for the first query of each department."""
     out = []
@@ -201,7 +226,12 @@ def plan_evidence(
             seen.add(q.dept)
             with conn.transaction():
                 conn.execute("select set_config('medops.dept', %s, true)", (q.dept,))
-                plan = pg_vector.PgVectorRetriever(conn, provider, as_of=as_of).explain(q.query, k)
+                plan = pg_vector.PgVectorRetriever(
+                    conn,
+                    provider,
+                    as_of=as_of,
+                    plan_cache_mode=plan_cache_mode,
+                ).explain(q.query, k)
             out.append({"sample_id": q.sample_id, "dept": q.dept, "plan": json.loads(plan)})
     return out
 
@@ -283,6 +313,7 @@ def run(
     seed: int,
     device: str,
     purpose: str,
+    plan_cache_mode: pg_vector.PlanCacheMode = "auto",
 ) -> dict[str, Any]:
     if out_dir.exists():
         raise FileExistsError(f"refusing to overwrite an existing run directory: {out_dir}")
@@ -302,6 +333,7 @@ def run(
         seed=seed,
         device=device,
         purpose=purpose,
+        plan_cache_mode=plan_cache_mode,
     )
     out_dir.mkdir(parents=True)
     manifest_bytes = (canonical_json(manifest) + "\n").encode("utf-8")
@@ -314,7 +346,7 @@ def run(
     }
     mapping = load_mapping(mapping_path)
     started = time.perf_counter()
-    search = db_searcher(app_dsn, provider, as_of)
+    search = db_searcher(app_dsn, provider, as_of, plan_cache_mode)
     try:
         outcomes: dict[str, QueryOutcome] = execute_passes(
             queries, search, k=k, warmup=warmup, measured=measured, seed=seed
@@ -326,7 +358,7 @@ def run(
     summary["leak_violations"] = leak_check(admin_dsn, outcomes, as_of)
     summary["wall_seconds_all_passes"] = round(time.perf_counter() - started, 1)
     results["candidates"][CANDIDATE] = summary
-    results["plan_evidence"] = plan_evidence(app_dsn, provider, queries, as_of, k)
+    results["plan_evidence"] = plan_evidence(app_dsn, provider, queries, as_of, k, plan_cache_mode)
     results["finished_at"] = dt.datetime.now(dt.UTC).isoformat(timespec="seconds")
     (out_dir / "results.json").write_text(json.dumps(results, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (out_dir / "per_query_recall.json").write_text(
@@ -351,6 +383,12 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--database", default="medops_v2")
     parser.add_argument("--device", default="cpu")
     parser.add_argument("--purpose", required=True)
+    parser.add_argument(
+        "--plan-cache-mode",
+        choices=("auto", "force_generic_plan"),
+        default="auto",
+        help="PostgreSQL plan policy for the vector statement; generic mode is a separately versioned candidate",
+    )
     args = parser.parse_args(argv)
     repo = Path(__file__).resolve().parents[4]
     plan = json.loads(
@@ -377,6 +415,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         seed=args.seed,
         device=args.device,
         purpose=args.purpose,
+        plan_cache_mode=args.plan_cache_mode,
     )
     s = results["candidates"][CANDIDATE]
     print(

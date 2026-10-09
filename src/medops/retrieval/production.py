@@ -5,13 +5,14 @@ Everything that shapes production retrieval results is pinned here and nowhere e
 - lexical: departmental `pg_textsearch` BM25 over application-side jieba tokens (`tok-jieba-v2`) with the
   vendored English stopword list whose SHA-256 is fixed below. MA, PV and CO use separate physical indexes so
   corpus statistics cannot cross the RLS boundary; migration 0022 keeps the former A2 table for rollback;
-- vector: bge-m3 dense embeddings (`emb-bge-m3-dense-v1`) in `chunk_embeddings` (migration 0006);
+- vector: bge-m3 dense embeddings (`emb-bge-m3-dense-v1`) in `chunk_embeddings` (migration 0006), queried with
+  the versioned generic-plan policy so pooled connections cannot switch candidate semantics after warm-up;
 - fusion: rank-only RRF with k=60 over top-20/top-20, fused limit 20;
 - reranker: bge-reranker-v2-m3 on the re-checked candidates, output 8.
 
-`PRODUCTION_RETRIEVAL_VERSION` is the SHA-256 composite of baseline 3.6 over exactly these members. It is the
-only retrieval identifier allowed in cache keys, operation keys and replay records; changing any member here
-changes it, and the unit test pins the current value so that an accidental change is caught in review.
+`PRODUCTION_RETRIEVAL_VERSION` is the SHA-256 composite of the baseline 3.6 members plus present versioned
+policy extensions. It is the only retrieval identifier allowed in cache keys, operation keys and replay
+records; changing any member here changes it, and the unit test pins the current value for review.
 """
 
 from __future__ import annotations
@@ -130,6 +131,7 @@ def production_retrieval_inputs(
         rrf_params=config.rrf_params(),
         rerank_params=PRODUCTION_RERANKER_SPEC.rerank_params(),
         candidate_limits={**config.candidate_limits(), "rerank_output": rerank_output},
+        vector_retriever_version=pg_vector.GENERIC_PLAN_RETRIEVER_VERSION,
         rewrite_params=rewrite,
     )
 
@@ -138,7 +140,7 @@ def production_retrieval_version() -> str:
     return compute_retrieval_version(production_retrieval_inputs())
 
 
-PRODUCTION_RETRIEVAL_VERSION = "19c755df9adf44e8df9badba547f9b0f21391edbf8f3ab3631f5ea0256b3e4d1"  # pinned; see tests
+PRODUCTION_RETRIEVAL_VERSION = "3f4f57fad62a6c9c7f2bff6b40bc07f397ca0844f4466994ba2ad6fb1b30fb6a"  # pinned; see tests
 
 
 def production_lexical_retriever(
@@ -156,7 +158,7 @@ def production_vector_retriever(
             detail="production vector retriever requires the pinned embedding version",
             retryable=False,
         )
-    return pg_vector.PgVectorRetriever(conn, provider, as_of=as_of)
+    return pg_vector.PgVectorRetriever(conn, provider, as_of=as_of, plan_cache_mode="force_generic_plan")
 
 
 def build_production_lexical_index(

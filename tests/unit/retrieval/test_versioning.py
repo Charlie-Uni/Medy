@@ -35,9 +35,12 @@ def test_members_are_exactly_the_eight_named_in_baseline_3_6():
         "rerank_params",
         "candidate_limits",
     )
-    # record 93: `rewrite_params` (the released glossary) is the one member beyond the eight; it joins the hash only
-    # when set, so every composite computed before it existed is unchanged
-    assert tuple(RetrievalVersionInputs.model_fields) == (*RETRIEVAL_VERSION_FIELDS, "rewrite_params")
+    # Later optional policy members join the hash only when set, so historical eight-member composites remain exact.
+    assert tuple(RetrievalVersionInputs.model_fields) == (
+        *RETRIEVAL_VERSION_FIELDS,
+        "vector_retriever_version",
+        "rewrite_params",
+    )
 
 
 def test_known_answer_and_formula():
@@ -56,6 +59,7 @@ def test_known_answer_and_formula():
         ("dictionary_version", "dict-meddra-v1"),
         ("normalization_version", "norm-v2"),
         ("embedding_version", "bge-m3@1024"),
+        ("vector_retriever_version", "pgvector-generic-plan-v2"),
         ("rrf_params", {"k": 61}),
         ("rrf_params", {"k": 60, "weights": {"lexical": 1, "vector": 1}}),
         ("rerank_params", {"model": "reranker-x", "version": "1"}),
@@ -104,6 +108,7 @@ def test_component_versions_alone_do_not_identify_the_configuration():
         {**FIXTURE, "extra_member": "x"},  # unknown member would be silently missing from the hash
         {k: v for k, v in FIXTURE.items() if k != "embedding_version"},  # missing member
         {**FIXTURE, "tokenizer_version": ""},
+        {**FIXTURE, "vector_retriever_version": ""},
         {**FIXTURE, "rrf_params": {}},  # no k
         {**FIXTURE, "rrf_params": {"k": 0}},
         {**FIXTURE, "rrf_params": {"k": -60}},

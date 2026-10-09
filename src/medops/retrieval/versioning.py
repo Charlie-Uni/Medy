@@ -1,8 +1,11 @@
 """Composite `retrieval_version` (baseline 3.6, M1-15).
 
-    retrieval_version = SHA-256(canonical_json({
+    legacy retrieval_version = SHA-256(canonical_json({
         retriever_version, tokenizer_version, dictionary_version, normalization_version,
         embedding_version, rrf_params, rerank_params, candidate_limits}))
+
+Present optional policy extensions, including vector query semantics and rewrite rules, join the same canonical
+payload. Absent extensions are omitted so historical eight-member versions stay byte-identical.
 
 The composite is the only retrieval identifier that may enter cache keys, operation keys and
 replay records. The component versions carried by `LexicalSearchResult` / `LexicalVersions`
@@ -56,6 +59,9 @@ class RetrievalVersionInputs(BaseModel):
     the empty object is itself part of the hash."""
     candidate_limits: dict[str, PositiveInt]
     """Per-stage candidate caps (for example lexical_k, vector_k, rerank_input, rerank_output); at least one."""
+    vector_retriever_version: NonEmptyStr | None = None
+    """Vector query and planning semantics. Omitted for legacy composites; present whenever those semantics are
+    explicitly versioned, so a plan-policy change cannot reuse prior cache or replay identities."""
     rewrite_params: dict[str, JsonValue] = Field(default_factory=dict)
     """Query-rewrite inputs that change results: the released glossary version (INV-HAR-05, record 93). Empty for
     `glossary-none`, and an empty object stays out of the hash so the eight-member composite of baseline 3.6 is
@@ -79,6 +85,7 @@ class RetrievalVersionInputs(BaseModel):
         rrf_params: dict[str, JsonValue],
         rerank_params: dict[str, JsonValue],
         candidate_limits: dict[str, int],
+        vector_retriever_version: str | None = None,
         rewrite_params: dict[str, JsonValue] | None = None,
     ) -> RetrievalVersionInputs:
         return cls(
@@ -90,6 +97,7 @@ class RetrievalVersionInputs(BaseModel):
             rrf_params=rrf_params,
             rerank_params=rerank_params,
             candidate_limits=candidate_limits,
+            vector_retriever_version=vector_retriever_version,
             rewrite_params=dict(rewrite_params or {}),
         )
 
@@ -105,10 +113,14 @@ class RetrievalVersionInputs(BaseModel):
 
 
 def compute_retrieval_version(inputs: RetrievalVersionInputs) -> str:
-    """SHA-256 hex of the canonical JSON of the eight members (baseline 3.6), plus `rewrite_params` only when a
-    glossary is released (an empty object is dropped, so existing composites stay byte-identical)."""
+    """Hash the baseline members plus present, versioned retrieval-policy extensions.
+
+    Empty extensions are removed so historical eight-member composites remain byte-identical.
+    """
     payload = inputs.model_dump(mode="json")
+    if payload.get("vector_retriever_version") is None:
+        payload.pop("vector_retriever_version", None)
     if not payload.get("rewrite_params"):
         payload.pop("rewrite_params", None)
-    assert set(payload) - {"rewrite_params"} == set(RETRIEVAL_VERSION_FIELDS)
+    assert set(payload) - {"vector_retriever_version", "rewrite_params"} == set(RETRIEVAL_VERSION_FIELDS)
     return canonical_hash(payload)

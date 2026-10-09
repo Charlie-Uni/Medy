@@ -8,6 +8,9 @@ Fixed recipe (any change is a new `RETRIEVER_VERSION`):
 - ranking: cosine distance ascending via the HNSW index with pgvector's iterative scan (`relaxed_order`) so
   filtering cannot silently starve the page; ties broken by `chunk_id` ascending after an exact re-sort of the
   returned page;
+- plan policy: legacy `v1` follows psycopg/PostgreSQL automatic custom-to-generic plan selection; the separately
+  versioned `generic-plan-v2` prepares the vector statement and forces a generic plan on every execution so a
+  pooled connection cannot change its approximate candidate set after the prepare threshold;
 - exact count: the eligible set does not depend on the query text for vectors, so its exact size is counted in
   the same transaction under the same filters; the page must be exactly `min(eligible, k)` long, otherwise the
   adapter fails closed (hard gate 4: no silent shortfall);
@@ -20,7 +23,7 @@ from __future__ import annotations
 from collections.abc import Sequence
 from dataclasses import dataclass
 from datetime import date
-from typing import Any
+from typing import Any, Literal
 from uuid import UUID
 
 import psycopg
@@ -32,6 +35,8 @@ from medops.retrieval.vector.contracts import Candidate, VectorSearchResult, Vec
 from medops.retrieval.vector.embedding import EmbeddingProvider, EmbeddingSpec
 
 RETRIEVER_VERSION = "pgvector-hnsw-cosine-v1"
+GENERIC_PLAN_RETRIEVER_VERSION = "pgvector-hnsw-cosine-generic-plan-v2"
+PlanCacheMode = Literal["auto", "force_generic_plan"]
 TABLE = "chunk_embeddings"
 META_TABLE = "embedding_index_meta"
 INDEX_NAME = "chunk_embeddings_hnsw_cosine"
@@ -204,16 +209,26 @@ class PgVectorRetriever:
         *,
         as_of: date | None = None,
         ef_search: int | None = None,
+        plan_cache_mode: PlanCacheMode = "auto",
     ) -> None:
+        if plan_cache_mode not in ("auto", "force_generic_plan"):
+            raise ValueError(f"unsupported vector plan cache mode: {plan_cache_mode}")
         self._conn = conn
         self._provider = provider
         self._as_of = as_of
         self._ef_search = ef_search
+        self._plan_cache_mode = plan_cache_mode
+
+    @property
+    def retriever_version(self) -> str:
+        if self._plan_cache_mode == "force_generic_plan":
+            return GENERIC_PLAN_RETRIEVER_VERSION
+        return RETRIEVER_VERSION
 
     @property
     def configured(self) -> VectorVersions:
         return VectorVersions(
-            retriever_version=RETRIEVER_VERSION,
+            retriever_version=self.retriever_version,
             embedding_version=self._provider.spec.embedding_version,
             normalization_version=NORMALIZATION_VERSION,
         )
@@ -236,7 +251,7 @@ class PgVectorRetriever:
                 detail=f"index={built.model_dump()} query={mine.model_dump()}",
             )
         return VectorVersions(
-            retriever_version=RETRIEVER_VERSION,
+            retriever_version=self.retriever_version,
             embedding_version=built.embedding_version,
             normalization_version=NORMALIZATION_VERSION,
         )
@@ -279,7 +294,7 @@ class PgVectorRetriever:
             "k": k,
             "doc_ids": list(doc_ids) if doc_ids else None,
         }
-        rows = self._conn.execute(SEARCH_SQL, params).fetchall()
+        rows = self._execute_search(SEARCH_SQL, params).fetchall()
         page = sorted(((str(cid), float(dist)) for cid, dist in rows), key=lambda r: (r[1], r[0]))
         if len(page) != min(eligible, k):
             raise InfrastructureError(
@@ -288,6 +303,24 @@ class PgVectorRetriever:
                 retryable=False,
             )
         return self._result(page, k, built, exhausted=eligible < k)
+
+    def _execute_search(self, sql: str, params: dict[str, Any]) -> Any:
+        """Execute a vector statement under the selected PostgreSQL plan policy.
+
+        psycopg normally changes a repeatedly executed statement from custom to generic planning. On the
+        production corpus those two plans return different approximate HNSW candidate sets. The experimental
+        candidate pins a generic plan from the first execution and restores the transaction-local setting
+        after a successful statement. If execution fails, PostgreSQL aborts the transaction and rolls the
+        local setting back with it.
+        """
+        if self._plan_cache_mode == "auto":
+            return self._conn.execute(sql, params)
+        previous = self._conn.execute("select current_setting('plan_cache_mode')").fetchone()
+        previous_mode = str(previous[0]) if previous else "auto"
+        self._conn.execute("select set_config('plan_cache_mode', 'force_generic_plan', true)")
+        cursor = self._conn.execute(sql, params, prepare=True)
+        self._conn.execute("select set_config('plan_cache_mode', %s, true)", (previous_mode,))
+        return cursor
 
     @staticmethod
     def _result(
@@ -322,5 +355,5 @@ class PgVectorRetriever:
             "k": k,
             "doc_ids": None,
         }
-        row = self._conn.execute("explain (format json) " + SEARCH_SQL, params).fetchone()
+        row = self._execute_search("explain (format json) " + SEARCH_SQL, params).fetchone()
         return json.dumps(row[0], ensure_ascii=False) if row else ""

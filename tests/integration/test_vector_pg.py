@@ -146,6 +146,23 @@ def test_semantics_ranking_ties_and_reproducibility(db, seed):
         )
 
 
+def test_generic_plan_candidate_is_versioned_and_restores_transaction_setting(db, seed):
+    with txn(db["users"]["app"], "MA") as conn:
+        before = conn.execute("show plan_cache_mode").fetchone()[0]
+        candidate = pg_vector.PgVectorRetriever(
+            conn,
+            PROVIDER,
+            as_of=AS_OF,
+            plan_cache_mode="force_generic_plan",
+        )
+        runs = [candidate.search("sigma 随访 tau", 4) for _ in range(3)]
+        after = conn.execute("show plan_cache_mode").fetchone()[0]
+    assert candidate.configured.retriever_version == pg_vector.GENERIC_PLAN_RETRIEVER_VERSION
+    assert [run.retriever_version for run in runs] == [pg_vector.GENERIC_PLAN_RETRIEVER_VERSION] * 3
+    assert [[c.chunk_id for c in run.candidates] for run in runs] == [[c.chunk_id for c in runs[0].candidates]] * 3
+    assert after == before
+
+
 def test_missing_identity_or_transaction_is_refused_not_empty(db, seed):
     with txn(db["users"]["app"], None) as conn:
         with pytest.raises(BusinessError) as exc:
