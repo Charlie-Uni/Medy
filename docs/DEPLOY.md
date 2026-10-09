@@ -30,7 +30,7 @@ compose 中三个服务的 `stop_grace_period` 为 30 秒；worker 的单任务�
 
 ## compose
 
-`docker-compose.yml` 除 postgres / redis 外新增 `api`、`worker`、`mcp` 三个服务（`profiles: [app]`，默认 `make up` 不启动它们）：
+`docker-compose.yml` 除 postgres / redis 外提供 `api`、任务 `worker`、`mcp` 和 `retrieval-cache-worker`（`profiles: [app]`，默认 `make up` 不启动它们）：
 
 ```bash
 docker compose --env-file .env --profile app up -d --build
@@ -42,7 +42,7 @@ docker compose --env-file .env --profile app ps
 - 词表目录 `GLOSSARY_DIR`（记录 93）：存放已发布的查询改写词表 `glossary-<YYYYMMDD>-<sha12>.json`（仓库副本在 `evals/glossary/`）。一旦 released 的检索参数指向某个词表版本，API / worker / MCP 启动时会校验该文件存在且内容摘要与版本一致，缺失或不一致即以 `dependency_unavailable` 拒绝启动；未发布词表时可留空。检索参数 `multi_query` / `doc_focus` / `query_translation`（记录 93–95）及 `source_constraint`（记录 156，默认关闭）同样只经发布生效；API 与 MCP 搜索都按主体灰度结果应用同一参数，调用翻译模型时把调用次数、token、费用和实际策略/检索版本写入各自 Trace。`source_constraint` 启用后只在调用者可见的 active 文档内解析高置信点名来源，并将两个检索通道限制到该来源；正式答案级对照通过前不得发布。
 - 调用链查看：`make observability-up` 可启动轻量 Jaeger。需要 score/feedback 工作流时使用已验证的 Langfuse v4.54.0 本机栈：`make langfuse-up`，UI 为 `http://127.0.0.1:3000`。初始化会安全生成项目 key 并写入本机 `.env`，不要再设冲突的手工 OTLP target/header。两种后端的 span 都不含提示词、证据或回答（INV-OBS-03）。完整部署、资源和故障恢复见 [Langfuse 运维说明](LANGFUSE.md)与记录 163。
 - 模型路由 `model_route/answer`（记录 122）：第三个可发布目标，按意图类型指定作答模型（gpt-6-sol 或 gpt-6-luna）；未发布时全部走 gpt-6-sol。判定模型不受路由影响。生效的路由出现在响应的 `versions.model_config_version` 里（`;route=`）。它按 `spend` 档位（每题费用降 25%、质量不降）过门禁后才能发布。
-- 检索缓存 `RETRIEVAL_CACHE`（记录 121、145，默认 `off`）：`memory` 为每个 API/MCP 进程一份，`redis` 经 `REDIS_URL` 共享。缓存的是一次检索融合后的候选清单与重排顺序，键含规范化问题、权限指纹（部门 / 角色 / scope，不含用户 id）、as-of 日期、检索版本与策略版本；**命中后仍在提问者的连接里逐块复核权限、版本状态与内容哈希**，所以撤权、归档、内容变更在命中路径上与未命中路径同样被过滤，缓存只省检索、查询翻译与重排的时间。文档发布 / 归档 / 撤回后运行 `make cache-invalidate`（只对 `redis` 有效）使相关部门的条目立即失效；不运行则条目在 `RETRIEVAL_CACHE_TTL_SECONDS`（默认 300 秒）后过期，其间新文档可能检索不到。`memory` 模式没有跨进程失效，只靠过期时间或重启。Redis 不可用时自动降级为未命中，不报错。评测与回放工具不使用缓存。
+- 检索缓存 `RETRIEVAL_CACHE`（记录 121、145、164；部署示例为 `redis`）：`memory` 为每个 API/MCP 进程一份，`redis` 经 `REDIS_URL` 共享。`RETRIEVAL_CACHE_NAMESPACE` 必须按环境/数据库独立，`RETRIEVAL_CACHE_DATABASE` 是持续消费者的显式目标。缓存的是一次检索融合后的候选清单与重排顺序；**命中后仍在提问者的连接里逐块复核权限、版本状态与内容哈希**，所以撤权、归档、内容变更不会形成失效证据。`retrieval-cache-worker` 持续消费发布、归档、撤回及 ACL 事件并提升部门 epoch；`make cache-invalidate` 只作为一次性追赶。worker 停止时旧条目最多保留 `RETRIEVAL_CACHE_TTL_SECONDS`（默认 300 秒），期间可能发现不了新文档。Redis 不可用时自动降级为未命中；评测与回放工具不使用缓存。
 - 作答上下文布局 `evidence_focus`（记录 113）：同为 `retrieval_params/hybrid` 下只经发布生效的键，取值 `off`（默认，提示词与历史完全一致）、`compact-v1`（证据块头部的 chunk / 文档 UUID 换成短别名，证据正文不动）、`sentfocus-v1` / `sentfocus-v2`（再按问题相关性只显示每段的部分句子，用已加载的本机重排模型打分）。不需要额外部署件；逐句版本在作答节点前多一次本机打分（真实语料上每题约 1–2 s，见记录 113），会计入普通问答时延。状态、校验与引用始终使用完整分块；该键只改变 `model_config_version`（后缀 `;ctx=`），不改变检索版本与缓存键。
 - 迁移不在容器启动时自动执行：`make migrate`（主机）或 `docker compose --profile app run --rm api python -m alembic upgrade head`（使用管理 DSN）。
 - 端口只绑定 `127.0.0.1`；对外暴露须经反向代理与 TLS，bearer token 的 issuer / audience 见 `OIDC_*` 键。
@@ -70,6 +70,10 @@ env -u DEBUG venv/bin/python -m medops.worker.retrieval --database medops_v2 --c
 env -u DEBUG venv/bin/python -m medops.worker.retrieval --database medops_v2 --consumer vector-index --device cpu
 # 仅当运行时已配置同一共享 Redis 缓存时启动；off / memory 会拒绝。
 env -u DEBUG venv/bin/python -m medops.worker.retrieval --database medops_v2 --consumer retrieval-cache
+
+# Compose 管理的持续缓存消费者（构建、启动并等待 PostgreSQL + Redis 专用健康检查）
+make cache-worker-up
+make cache-worker-ps
 ```
 
 - 每个进程默认每批 10 条（1–100）、空闲或失败等待 2 秒（0.1–60）；`--once` 只处理一批，失败返回非零。一次批次成功不表示全队列已清空，以 `retrieval-check` 的各消费者 pending 为准。
@@ -80,7 +84,7 @@ env -u DEBUG venv/bin/python -m medops.worker.retrieval --database medops_v2 --c
 - 本轮提供可独立运行的入口，未自动启用长期系统服务、未追加 compose 服务；一次恢复和短时轮询检查不算长期驻留部署完成。CPU embedding 进程也需额外模型内存，部署时单独安排资源。
 - `lexical-index` 应统一由这个生产维护入口处理；早期候选实验消费者的归档删除策略仅供原实验使用，不与生产维护混用。首次恢复后检查 active 覆盖与历史查询；不能只看 ACK 数。
 
-`/readyz` 在线索法或向量消费者存在死信，或其未 ACK 事件最老年龄超过 300 秒时返回 503；`/metrics` 对三个消费者分别给出 pending、oldest age 与 dead-letter 数。缓存消费者可能在缓存关闭时保留历史积压，因此只告警而不阻塞索引就绪。阈值用于运行完整性，不修改质量验收门槛。
+`/readyz` 在线索法或向量消费者存在死信，或其未 ACK 事件最老年龄超过 300 秒时返回 503；`/metrics` 对三个消费者分别给出 pending、oldest age 与 dead-letter 数。`RETRIEVAL_CACHE=redis` 时，缓存消费者使用相同阻塞规则；`off` / `memory` 时仍只告警。阈值用于运行完整性，不修改质量验收门槛。
 
 ## Langfuse 评分同步（记录 141–145、163）
 

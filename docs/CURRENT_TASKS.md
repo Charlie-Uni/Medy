@@ -36,8 +36,8 @@ probe v4 与 `main-v5-provisional` 均已冻结。EVAL-11 已完成：580 个 go
 | W-01 | 删除 Finder 副本 `src/medops/infrastructure/llm/budget 2.py` | DONE | 文件未跟踪，已删除，避免 `git add -A` 误收 |
 | W-02 | 区分源码、评测产物和临时 `output/` | DONE | BM25 提交只含实现、测试、迁移、部署配置与文档；备份及 `output/` 未纳入 Git |
 | W-03 | 按功能边界拆分提交 | DONE | BM25 实现与文档分两批提交；不按作者拆分 |
-| W-04 | 每组提交前运行定向检查，最终运行 `make check` | DONE | 记录 162：1713 passed、70 skipped；ruff、格式、mypy、Schema 漂移与评测审计均通过 |
-| W-05 | 更新 README、阶段表、路线图和验收报告 | DONE | BM25 工程切换与待付费质量门禁已分开记录 |
+| W-04 | 每组提交前运行定向检查，最终运行 `make check` | DONE | 记录 164：1717 passed、70 skipped；ruff、格式、mypy、Schema 漂移与评测审计均通过 |
+| W-05 | 更新 README、阶段表、路线图和验收报告 | DONE | BM25、Langfuse、Redis 工程切换与待付费质量门禁已分开记录 |
 
 建议提交顺序：评测标准与工具；API/Harness 重构（含记录 143 的代码）；遥测与 Langfuse；运行完整性/0020/MCP；文档与证据（含记录 143 的文档）。
 
@@ -87,9 +87,9 @@ probe v4 与 `main-v5-provisional` 均已冻结。EVAL-11 已完成：580 个 go
 | SRC-05 | 修复 `ss-0090/ss-0096` 并回归 14 道正常题 | PAID | 真实库结构回归通过；答案级正式对照及发布决定待授权 |
 | IDX-01 | active 文档词法/向量覆盖、版本和 readiness | DONE | 记录 137–139、145 |
 | IDX-02 | outbox 退避、死信和人工重放 | DONE | migration 0020 |
-| IDX-03 | 长期部署消费者并演练毒事件恢复 | READY | 本机实现不等于常驻部署 |
-| CACHE-BACKLOG-01 | `medops_v2` 缓存积压 338 条 | READY | Redis 关闭时不阻塞；启用前处理 |
-| CACHE-BACKLOG-02 | `medops_v2_safety` 缓存积压 339 条 | READY | 同上 |
+| IDX-03 | 长期部署消费者并演练毒事件恢复 | READY | cache consumer 已常驻；词法/向量消费者的统一部署与毒事件实演仍待做 |
+| CACHE-BACKLOG-01 | `medops_v2` 缓存积压 338 条 | DONE | 常驻 worker ACK 338/338，失败/死信/pending 均为 0；记录 164 |
+| CACHE-BACKLOG-02 | `medops_v2_safety` 缓存积压 339 条 | DONE | 独立 safety namespace ACK 339/339，失败/死信/pending 均为 0；记录 164 |
 | DEV-BACKLOG-01 | 旧 `medops` 三个消费者各积压 231 条 | READY | 与 DB-03 一并退役或迁移处理 |
 | OBS-01 | Trace、版本、费用、评分队列、退避和死信 | DONE | 记录 141、142、145 |
 | OBS-02 | 部署真实 Langfuse、配置凭据和访问边界 | DONE | v4.54.0 六容器本机栈；项目鉴权、loopback 边界及密钥权限通过，记录 163 |
@@ -108,8 +108,8 @@ Langfuse 的 `score-create` 通过 `/api/public/ingestion` 在 v4.54.0 真实接
 | BM25-09 | 在新冻结集上跑完整检索与回答对照 | PAID |
 | BM25-10 | 依据预登记采用标准决定是否切换生产 | DONE：所有者 2026-10-09 明确决定切换；这是综合价值决策，历史 +5 pp 实验判定不改写 |
 | BM25-11 | 生产适配器、migration 0022、PG17 镜像、CI 与本机三库切换 | DONE：记录 162；正式库 readiness=true，旧 PG16 卷与逻辑备份保留 |
-| CACHE-01 | 部署 Redis、namespace 和持续失效消费者 | READY |
-| CACHE-02 | 验证撤权、归档、新版本和 Redis 故障 | READY |
+| CACHE-01 | 部署 Redis、namespace 和持续失效消费者 | DONE | 主库独立 namespace、Compose 常驻 worker、双依赖健康检查；记录 164 |
+| CACHE-02 | 验证撤权、归档、新版本和 Redis 故障 | DONE | 事实层回查、真实 Redis 版本切换、损坏值与断连回源均通过；记录 164 |
 | CACHE-10 | 真实重复问题流量收益测试 | PAID |
 | PERF-01 | 翻译与原始查询检索并行、重排批处理/服务、有界并发和背压 | READY |
 | PERF-10 | 并发 1/2/4/8/16 的真实模型容量复测 | PAID |
@@ -120,6 +120,8 @@ Langfuse 的 `score-create` 通过 `/api/public/ingestion` 在 v4.54.0 真实接
 | COMBO-01 | BM25、Redis、并发和裁剪组合对照 | PAID |
 
 第二批必须先单变量测试，再做组合测试。每个 `PAID` 项都要单独给出样本、轮数、预计费用、上限和停止条件，并获得当次明确批准。
+
+Redis 已在本机主运行配置切到 `redis`，TTL 300 秒；实际 smoke 为首次 miss 7.61 ms、第二次 hit 1.14 ms，仅证明接线。真实问题的命中率、完整问答 P95、质量与费用收益仍属于 CACHE-10，不能用 smoke 代替。
 
 ## 5. 第三批：使用闭环
 

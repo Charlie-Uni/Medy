@@ -1,0 +1,59 @@
+{
+  "date": "2026-10-09",
+  "model_calls": 0,
+  "cost_usd": 0.0,
+  "databases": {
+    "medops_v2": {"cache_pending_before": 338, "acked": 338, "failed": 0, "pending_after": 0},
+    "medops_v2_safety": {"cache_pending_before": 339, "acked": 339, "failed": 0, "pending_after": 0}
+  },
+  "readiness": {
+    "ready": true,
+    "cache_required": true,
+    "active_documents": 333,
+    "active_chunks": 34948,
+    "missing_lexical": 0,
+    "missing_embedding": 0,
+    "consumer_pending": {"lexical-index": 0, "vector-index": 0, "retrieval-cache": 0},
+    "consumer_dead_lettered": {"lexical-index": 0, "vector-index": 0, "retrieval-cache": 0}
+  },
+  "cache_smoke": {
+    "first_hit": false,
+    "second_hit": true,
+    "compute_calls": 1,
+    "same_value": true,
+    "miss_ms": 7.61,
+    "hit_ms": 1.14,
+    "degraded": 0
+  },
+  "outage": {
+    "hit": false,
+    "fallback_candidates": 0,
+    "degraded_operations": 3,
+    "elapsed_ms": 5.08,
+    "dependency_probe_exit": 1,
+    "redis_after": "healthy",
+    "worker_after": "healthy"
+  },
+  "redis": {
+    "version": "7.2.16",
+    "aof_enabled": true,
+    "aof_last_write_status": "ok",
+    "evicted_keys": 0,
+    "used_memory_human": "1.13M",
+    "deployment_keys_after_cleanup": 6
+  },
+  "resources": {
+    "redis_memory": "14.61MiB",
+    "cache_worker_memory": "40.48MiB",
+    "cache_worker_restart_count": 0
+  },
+  "tests": {
+    "targeted": {"passed": 47},
+    "full": {"passed": 1717, "skipped": 70, "warnings": 1},
+    "ruff": "passed",
+    "format_files": 441,
+    "mypy_source_files": 189,
+    "evaluation_audit": "passed_with_4_registered_warnings",
+    "schema_drift": "passed"
+  }
+}

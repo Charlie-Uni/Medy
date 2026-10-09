@@ -25,7 +25,7 @@
 | 3 / 第一批 | Langfuse；OPT-09 | 一条请求关联 trace、节点耗时、模型用量、策略/数据/评分版本和反馈；完成真实排障演示；内容脱敏与访问边界验证 | **真实后端与故障恢复完成，UI detail 待人工目视**：[记录 163](reviews/2026-10-09-implementation-163-langfuse-deployment-and-recovery.md)完成 v4.54.0 自建、OTLP→3 observations→2 scores 回读、input/output 零长度核验及 outage/recovery；登录页可用，登录后的 trace/score 页面尚未人工检查 |
 | 4 / 第一批 | 指定来源与证据覆盖；OPT-13 | 文件/产品/版本约束，文件内容与他文档引用的意图区分，必需组完整性；缺陷题及正常反例同时回归 | 工程候选完成：34 条来源契约、独立计分、默认 off 的运行时约束及真实库零费用回归见记录 156；答案级正式对照与发布决定待付费授权 |
 | 5 / 第二批 | BM25；OPT-07 | 复用候选 D，固定分词/其他检索条件，统计隔离和迁移/回滚方案，完整检索及作答配对结果 | 工程切换已完成：部门物理隔离、PG17 迁移和本机回滚副本已验证；新冻结集检索/作答付费门禁待授权 |
-| 6 / 第二批 | Redis；OPT-08 | 共享缓存、持续失效消费、命中率/耗时；撤权/归档/新版本/Redis 故障测试，真实重复流量收益 | 待开始，已有接线且默认 off |
+| 6 / 第二批 | Redis；OPT-08 | 共享缓存、持续失效消费、命中率/耗时；撤权/归档/新版本/Redis 故障测试，真实重复流量收益 | 工程切换与故障门完成；CACHE-10 真实重复问题收益待付费授权，记录 164 |
 | 7 / 第二批 | 并发与重排；OPT-11 | 独立检索与翻译并行评估、重排批处理/服务方案、有界并发、排队、超时与过载失败关闭 | 待开始；同时保持质量、安全与完整响应 P95 |
 | 8 / 第二批 | 上下文裁剪；OPT-11 | 数字、否定、适用条件与跨块证据保持；Token、质量、时延各自与组合对照 | 待开始，沿用既有候选与否决记录 |
 | 9 / 第三批 | 多轮与人工接手；OPT-14 | session 实体/身份隔离/失效，原文核对与升级材料，一次完整业务处理及失败路径 | 待开始 |
@@ -85,4 +85,5 @@
 - [记录 156](reviews/2026-10-09-implementation-156-source-semantics-and-runtime-candidate.md)：34 条版本化来源契约与独立来源符合率；`source-constraint-v1` 已作为默认 off 的发布参数接入。真实 `medops_v2` 的 RLS 下 34/34 来源角色结构回归通过，`ss-0090/0096` 均安全判为点名来源不可见；正式答案级对照、发布决定和第二人工仍待完成。
 
 - [记录 145](reviews/2026-10-08-implementation-145-operational-ledgers-and-mcp-parity.md)：Langfuse 有界队列/死信、outbox 按消费者死信与重放、PostgreSQL 月费用预留账本、MCP 查询翻译与缓存一致性；正式库升 0020 后 ready。1627 passed、70 skipped；外部 Langfuse UI 仍待验收。
+- [记录 164](reviews/2026-10-09-implementation-164-redis-cache-cutover.md)：主库 Redis 缓存、独立 namespace、常驻失效 worker、按模式 readiness、两库清账与断连恢复；1717 passed、70 skipped；真实流量收益待付费。
 - [记录 146](reviews/2026-10-08-implementation-146-task-ledger-and-paid-run-preflight.md)：发现本机 `.env` 仍指向 0007 的旧开发库并会阻断首次模型调用；已改指 `medops_v2`，将两个正式本地事实库升至 0021，补应用角色的受控月度费用读取函数，删除未跟踪 Finder 副本，并把所有模型运行改为逐次费用批准。
