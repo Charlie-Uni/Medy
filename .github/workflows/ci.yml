@@ -25,18 +25,30 @@ jobs:
           from pathlib import Path
           daemon_path = Path('/etc/docker/daemon.json')
           config = json.loads(daemon_path.read_text()) if daemon_path.exists() else {}
-          mirrors = config.setdefault('registry-mirrors', [])
-          if 'https://mirror.gcr.io' not in mirrors:
-              mirrors.append('https://mirror.gcr.io')
+          mirrors = config.get('registry-mirrors', [])
+          config['registry-mirrors'] = ['https://mirror.gcr.io'] + [
+              m for m in mirrors if m.rstrip('/') != 'https://mirror.gcr.io'
+          ]
           daemon_path.write_text(json.dumps(config) + '\n')
           PY
           sudo systemctl restart docker
+          docker info --format '{{json .RegistryConfig.Mirrors}}' | python3 -c \
+            'import json,sys; mirrors=json.load(sys.stdin); assert any(m.rstrip("/")=="https://mirror.gcr.io" for m in mirrors); print("mirror config loaded")'
+          docker info --format '{{json .DriverStatus}}'
+          curl --connect-timeout 10 --max-time 30 -fsS \
+            -H 'Accept: application/vnd.oci.image.index.v1+json' \
+            'https://mirror.gcr.io/v2/pgvector/pgvector/manifests/sha256:ac08538c6f8b9904c33c8224c5e5706dbe760aca29db1d096972b4052c22a75d' \
+            -o /tmp/medy-ci-postgres-manifest.json
+          echo 'ac08538c6f8b9904c33c8224c5e5706dbe760aca29db1d096972b4052c22a75d  /tmp/medy-ci-postgres-manifest.json' | sha256sum -c -
+          # Public images need no runner-provided Docker Hub login. Use a dedicated empty client config.
+          mkdir -p /tmp/medy-ci-docker-public
+          echo '{}' > /tmp/medy-ci-docker-public/config.json
           for service_image in \
             'pgvector/pgvector:pg17@sha256:ac08538c6f8b9904c33c8224c5e5706dbe760aca29db1d096972b4052c22a75d' \
             'redis:7.2-alpine'; do
             pulled=no
             for pull_attempt in 1 2 3; do
-              if timeout 120s docker pull "$service_image"; then pulled=yes; break; fi
+              if timeout 120s docker --config /tmp/medy-ci-docker-public pull "$service_image"; then pulled=yes; break; fi
               sleep "$((pull_attempt * 5))"
             done
             test "$pulled" = yes
