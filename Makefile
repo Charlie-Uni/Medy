@@ -1,4 +1,4 @@
-.PHONY: observability-up observability-down cache-invalidate demo demo-check demo-ask help install install-check install-embed lock schemas lint format format-check typecheck test test-integration check migrate migrate-down migration-check db-users load-corpus index-build index-check lexical-index-a lexical-index activate-docs validate-probe canonicalize-probe up down ps
+.PHONY: observability-up observability-down langfuse-init langfuse-up langfuse-down langfuse-ps langfuse-check langfuse-smoke langfuse-outage-test cache-invalidate demo demo-check demo-ask help install install-check install-embed lock schemas lint format format-check typecheck test test-integration check migrate migrate-down migration-check db-users load-corpus index-build index-check lexical-index-a lexical-index activate-docs validate-probe canonicalize-probe up down ps
 .PHONY: eval-check
 .PHONY: retrieval-check
 
@@ -33,6 +33,9 @@ help:
 	@echo "make retrieval-check [ADMIN_URL=<dsn>]    read-only index coverage, corpus, versions and consumer backlog; no model calls"
 	@echo "make cache-invalidate [ADMIN_URL=<dsn>]   apply pending publish / archive events to the shared retrieval cache"
 	@echo "make observability-up / observability-down   start / remove the Jaeger trace viewer (profile observability)"
+	@echo "make langfuse-up / langfuse-down / langfuse-ps   manage the local metadata-only Langfuse v4 stack"
+	@echo "make langfuse-check / langfuse-smoke         verify health/auth or run a zero-model-call trace+score smoke"
+	@echo "make langfuse-outage-test                    prove score queue retention and recovery during a web outage"
 	@echo "make demo-check                           demo prerequisites only (no API start, no model calls)"
 	@echo "make demo                                 seven demo scenarios through the real API (about 0.1 USD of model calls)"
 	@echo "make demo-ask [Q=\"question\"] [DEPT=MA|PV|CO]   ask your own question; without Q an interactive prompt"
@@ -131,6 +134,29 @@ observability-up:
 
 observability-down:
 	docker compose --env-file .env --profile observability rm -sf jaeger
+
+# Local metadata-only Langfuse v4.54.0. Deployment secrets and the app's matching project keys are generated
+# locally, mode 0600, and ignored by Git. These targets never invoke a model.
+langfuse-init:
+	env -u DEBUG $(PY) scripts/langfuse_local.py init
+
+langfuse-up: langfuse-init
+	docker compose --env-file deploy/langfuse/.env -f deploy/langfuse/docker-compose.yml up -d --wait
+
+langfuse-down:
+	docker compose --env-file deploy/langfuse/.env -f deploy/langfuse/docker-compose.yml down
+
+langfuse-ps:
+	docker compose --env-file deploy/langfuse/.env -f deploy/langfuse/docker-compose.yml ps
+
+langfuse-check:
+	env -u DEBUG $(PY) scripts/langfuse_local.py check
+
+langfuse-smoke:
+	env -u DEBUG $(PY) scripts/langfuse_local.py smoke
+
+langfuse-outage-test:
+	env -u DEBUG $(PY) scripts/langfuse_local.py outage-recovery
 
 # after an ingestion: tell the shared retrieval cache (RETRIEVAL_CACHE=redis) which departments' entries are stale
 cache-invalidate:
