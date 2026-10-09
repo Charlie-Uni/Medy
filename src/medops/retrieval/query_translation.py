@@ -18,9 +18,13 @@ from __future__ import annotations
 
 import json
 import re
+import threading
+from collections.abc import Callable
+from concurrent.futures import Future, ThreadPoolExecutor
+from contextvars import copy_context
 from typing import Any
 
-from medops.core.errors import InfrastructureError
+from medops.core.errors import ErrorCode, InfrastructureError
 from medops.core.telemetry import annotate, span
 from medops.infrastructure.llm.budget import BudgetExceeded
 from medops.infrastructure.llm.gateway import Message, ModelGateway, ModelOutputInvalid, ModelRequest
@@ -30,6 +34,13 @@ QUERY_TRANSLATION_OFF = "off"
 ALLOWED_TRANSLATION_MODELS: frozenset[str] = frozenset({"gpt-6-luna", "gpt-6-sol"})  # ADR-0010 provider policy
 MAX_TRANSLATION_CHARS = 400
 _CJK = re.compile(r"[一-鿿]")
+
+# Record 111 measured the throughput knee between four and eight concurrent requests. Translation is remote I/O,
+# while original retrieval uses PostgreSQL and the pinned local model thread, so four translation workers can overlap
+# those independent paths. Capacity includes four running and four queued calls; further callers receive backpressure.
+TRANSLATION_WORKERS = 4
+TRANSLATION_CAPACITY = 8
+TRANSLATION_QUEUE_WAIT_S = 0.25
 
 SYSTEM = (
     "You translate a regulatory / pharmacovigilance / clinical question into English so it can be matched against "
@@ -45,6 +56,51 @@ SCHEMA: dict[str, Any] = {
     "required": ["translation"],
     "additionalProperties": False,
 }
+
+
+class TranslationPool:
+    """A process-wide bounded translation executor.
+
+    Capacity includes running and queued calls. A caller waits briefly for a slot and then fails closed with a
+    retryable dependency timeout: it never starts an unbounded caller thread and never silently drops a released
+    retrieval step. ContextVars are copied so translation/model spans remain children of the request trace.
+    """
+
+    def __init__(
+        self,
+        *,
+        workers: int = TRANSLATION_WORKERS,
+        capacity: int = TRANSLATION_CAPACITY,
+        queue_wait_s: float = TRANSLATION_QUEUE_WAIT_S,
+    ) -> None:
+        if workers < 1 or capacity < workers or queue_wait_s <= 0:
+            raise ValueError("translation capacity must cover positive workers and queue wait must be positive")
+        self._slots = threading.BoundedSemaphore(capacity)
+        self._queue_wait_s = queue_wait_s
+        self._executor = ThreadPoolExecutor(max_workers=workers, thread_name_prefix="query-translation")
+
+    def submit(self, translate: Callable[[str], str | None], query: str) -> Future[str | None]:
+        if not self._slots.acquire(timeout=self._queue_wait_s):
+            raise InfrastructureError(
+                ErrorCode.dependency_timeout,
+                detail="query translation queue remained saturated",
+                retryable=True,
+            )
+        context = copy_context()
+        try:
+            future = self._executor.submit(context.run, translate, query)
+        except BaseException:  # executor shutdown/race: release the capacity before preserving the original error
+            self._slots.release()
+            raise
+        future.add_done_callback(lambda _future: self._slots.release())
+        return future
+
+    def shutdown(self) -> None:
+        """Tests and explicit process teardown may wait for accepted work; production uses interpreter shutdown."""
+        self._executor.shutdown(wait=True)
+
+
+DEFAULT_TRANSLATION_POOL = TranslationPool()
 
 
 class QueryTranslator:

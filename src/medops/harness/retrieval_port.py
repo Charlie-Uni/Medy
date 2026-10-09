@@ -23,6 +23,7 @@ from medops.retrieval.cache import CachedCandidates, CacheKeyInputs, CandidateCa
 from medops.retrieval.contracts import LexicalRetriever, LexicalVersions
 from medops.retrieval.doc_focus import FOCUS_K, focus_documents, load_documents
 from medops.retrieval.hybrid import HybridConfig, fuse_rankings, retrieve_evidence
+from medops.retrieval.query_translation import DEFAULT_TRANSLATION_POOL, TranslationPool
 from medops.retrieval.recheck import RecheckResult, Rejection, recheck_candidates
 from medops.retrieval.rerank import Reranker, rank_evidence
 from medops.retrieval.rewrite import Glossary, rewrite
@@ -79,6 +80,7 @@ class ProductionRetrieval:
         doc_focus: bool = False,
         source_constraint: bool = False,
         translator: Callable[[str], str | None] | None = None,
+        translation_pool: TranslationPool | None = None,
         cache: CandidateCache | None = None,
         cache_versions: tuple[str, str] | None = None,
     ) -> None:
@@ -103,6 +105,9 @@ class ProductionRetrieval:
         self._source_constraint = source_constraint
         # record 95: an English rendering of a Chinese question becomes one more search query (never evidence)
         self._translator = translator
+        # record 165: remote translation may overlap the independent original-query retrieval. One bounded pool is
+        # shared by the process; callers may inject an isolated pool for tests.
+        self._translation_pool = translation_pool or DEFAULT_TRANSLATION_POOL
         # record 121 (M1-19 wired): the fused candidates of a retrieval are cached under the caller's permission
         # fingerprint and the composite retrieval / policy versions; a hit skips the searches and the translation
         # call, never the fact-plane re-check or the reranker. Off unless the runtime passes a cache.
@@ -218,11 +223,14 @@ class ProductionRetrieval:
         source_doc_ids: Sequence[str] | None = None,
     ) -> tuple[tuple[CandidateRef, ...], tuple[Evidence, ...], tuple[Rejection, ...]]:
         """The full retrieval: every search channel, fusion and the fact-plane re-check of the fused candidates."""
-        queries = rewritten if self._multi_query else [query]
+        queries = list(rewritten if self._multi_query else [query])
+        translated: str | None = None
+        translation_added = False
+        translation = None
         if self._translator is not None:
-            translated = self._translator(request.query)
-            if translated and translated not in queries:
-                queries.append(translated)
+            with span("retrieval.translation_dispatch") as current:
+                translation = self._translation_pool.submit(self._translator, request.query)
+                annotate(current, mode="async")
         with self._conn_for_user(request.user) as conn:
             lexical = self._lexical_factory(conn)
             vector = self._vector_factory(conn)
@@ -230,7 +238,7 @@ class ProductionRetrieval:
                 self._lv = lexical.versions
             if self._vv is None:
                 self._vv = vector.versions
-            with span("retrieval.fact_plane", queries=len(queries)):
+            with span("retrieval.fact_plane", base_queries=len(queries)) as current:
                 results = [
                     retrieve_evidence(
                         conn,
@@ -280,6 +288,26 @@ class ProductionRetrieval:
                                 conn, extra, as_of=request.as_of, allow_historical=request.historical_requested
                             )
                         )
+                if translation is not None:
+                    translated = translation.result()
+                    if translated and translated not in queries:
+                        queries.append(translated)
+                        translation_added = True
+                        results.append(
+                            retrieve_evidence(
+                                conn,
+                                lexical,
+                                vector,
+                                translated,
+                                config=self._config,
+                                lexical_expected=self._lv,
+                                vector_expected=self._vv,
+                                as_of=request.as_of,
+                                allow_historical=request.historical_requested,
+                                doc_ids=source_doc_ids,
+                            )
+                        )
+                annotate(current, queries=len(queries), translation_added=translation_added)
         candidates: tuple[CandidateRef, ...]
         accepted: tuple[Evidence, ...]
         rejected: tuple[Rejection, ...]
