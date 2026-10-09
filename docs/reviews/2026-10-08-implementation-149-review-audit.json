@@ -1,0 +1,59 @@
+{
+  "record": 149,
+  "audited_at": "2026-10-08T11:34:08.978867+00:00",
+  "verification": "passed",
+  "revision_manifest_sha256": "4adb18739e21261ab6a4a22d391301751488dfd6286ea3afa301a4e8a47ea8a3",
+  "confirmation_sha256": "c251d81bf3078ca027458fbd8a291e404edf2310925d77ec7ab7e6024e80c304",
+  "authorization": {
+    "quote": "授权",
+    "max_attempts": 1,
+    "total_budget_usd": "0.300000",
+    "cli_threshold_usd": "0.280000",
+    "buffer_usd": "0.020000",
+    "automatic_retry": false
+  },
+  "attempt": {
+    "sample_id": "ms-0242",
+    "verdict": "agree",
+    "cost_usd_raw": "0.1852475",
+    "cost_usd_ledger": "0.185248",
+    "remaining_usd": "0.114752",
+    "session_id": "2ac5ca5c-1c28-4eb3-85cf-30c013fabc4b",
+    "tokens_used": 12180,
+    "duration_ms": 59444,
+    "attempt_id": "b20eba3dba444efe81ad748ef76471e9",
+    "prompt_sha256": "1bee59f6726bb0b3204defa6378a4cb726830dfd5a072a1b1bd41c3f2d5caf2c",
+    "capture_sha256": "32e663e712f1dd27ed32af90b60d753a8aa24b78a2dc3b9bdcda5fd6e18e2e3d",
+    "capture_mode": "0600"
+  },
+  "v4_followup_costs": {
+    "initial_v4_attempts_ledger_usd": "0.442077",
+    "retry_ledger_usd": "0.185248",
+    "v4_followup_total_ledger_usd": "0.627325"
+  },
+  "content_status": {
+    "ms-0241": "agree",
+    "ms-0242": "agree",
+    "changed_samples_review_complete": true,
+    "v4_freeze_ready": false
+  },
+  "checks": [
+    "exact authorization/request/revision/confirmation/input/prompt binding passed",
+    "actual prompt reconstructed; run/verdict/raw reply hashes and content matched",
+    "model and unique session matched; capture mode 0600",
+    "one successful attempt; no retry, failure, unknown charge or cap overrun",
+    "v4 deterministic page/span/key/chunk validation passed"
+  ],
+  "review_status_path": "evals/main_set/drafts/revision-2026-10-08-v4/review/review_status_2026-10-08.json",
+  "make_check": {
+    "status": "passed",
+    "tests_passed": 1635,
+    "tests_skipped": 70,
+    "warnings": 1,
+    "ruff": "passed",
+    "format_files": 423,
+    "mypy_source_files": 186,
+    "evaluation_inputs": "passed",
+    "schema_drift": "passed"
+  }
+}

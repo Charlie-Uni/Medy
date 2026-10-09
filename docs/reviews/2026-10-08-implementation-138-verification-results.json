@@ -1,0 +1,43 @@
+{
+  "record": 138,
+  "date": "2026-10-08",
+  "self_audit": "passed within incremental-consumer scope; deployment and stage acceptance remain pending",
+  "full_check": {
+    "command": "env -u DEBUG make check",
+    "passed": 1501,
+    "skipped": 70,
+    "warnings": 1,
+    "seconds": 38.11,
+    "formatted_files": 404,
+    "mypy_source_files": 179,
+    "eval_audit": "pass with provisional warnings",
+    "schema": "up to date"
+  },
+  "targeted_tests": {
+    "passed": 37,
+    "new_tests": 21
+  },
+  "failed_attempts": [
+    {
+      "error": "mypy: Value of type Any | None is not indexable",
+      "resolution": "check fetchone result before indexing"
+    },
+    {
+      "error": "CheckViolation: illegal status transition active -> withdrawn",
+      "result": "1 failed, 24 passed",
+      "resolution": "test the real draft -> withdrawn transition; inspect producer and also cover draft ACL events"
+    }
+  ],
+  "actual_recovery": "2026-10-08-implementation-138-index-recovery.json",
+  "actual_cli": "2026-10-08-implementation-138-worker-check.json",
+  "model_api_calls": 0,
+  "local_embedding_calls": 0,
+  "facts_unchanged": true,
+  "remaining": [
+    "cache consumer backlog retained until shared Redis iteration",
+    "long-running deployment not enabled",
+    "poison events can occupy the oldest full batch; no auto dead-letter",
+    "local embedding inference lacks a hard timeout; use process supervision",
+    "formal evaluation preflight expansion follows"
+  ]
+}

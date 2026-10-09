@@ -1,0 +1,80 @@
+{
+  "captured_at_utc": "2026-10-07T16:55:49.376150+00:00",
+  "mode": "read-only; no provider calls",
+  "databases": {
+    "medops_v2": {
+      "snapshot": {
+        "tables": {
+          "source_objects": {
+            "rows": 337,
+            "sha256": "afc2646acad84667b456b6441edfd545270d7db840a57715e2b7480975c40641"
+          },
+          "documents": {
+            "rows": 350,
+            "sha256": "c4a975802f6396e7d206f5e9129702ea183ce82c162bbb303af1e4b177ac6ac0"
+          },
+          "chunks": {
+            "rows": 36100,
+            "sha256": "2b0022f0d3a0af6f65bd1ac22f8ec9b769cb634537f70da02e48764dff4bcb40"
+          },
+          "chunk_spans": {
+            "rows": 36100,
+            "sha256": "f887a4b6cf38111e53f17a19f43d37a62162878431aaef0f25fbd226c64b57be"
+          },
+          "document_acl": {
+            "rows": 350,
+            "sha256": "1488e3bfa8a043e4046ae0e5190a2eced5eecf9612a0668c2f32e69b74540349"
+          },
+          "lexical_index_meta": {
+            "rows": 3,
+            "sha256": "3cc5dd534d675417767a4f817b618a9811eae4e9b89a7d01b8a4b2214953900e"
+          },
+          "embedding_index_meta": {
+            "rows": 1,
+            "sha256": "2c6637af04207b35fb61c7b7921041b5ba51c534d75bb5068534b66b60de3c2c"
+          }
+        },
+        "sha256": "23e33540ab6000cc5940058ea8d8ead7ec51cba2aff9ecccd59e72803ab5715e"
+      },
+      "repeat_identical": true,
+      "two_checks_elapsed_s": 2.337
+    },
+    "medops_v2_safety": {
+      "snapshot": {
+        "tables": {
+          "source_objects": {
+            "rows": 343,
+            "sha256": "236de336f0afd210f90aea84e8607b0c1bbc6217f9d67d1d3776bb2cdd69b1d0"
+          },
+          "documents": {
+            "rows": 351,
+            "sha256": "1a505c682038d517c95524fd67fcc03caf951b548dd02912f23bfcb21311c5ca"
+          },
+          "chunks": {
+            "rows": 36184,
+            "sha256": "50e06e0c67396b315312b6c15b5cd504bc8ce731fd287508e8426da063283b34"
+          },
+          "chunk_spans": {
+            "rows": 36184,
+            "sha256": "37f9192882d550c8b140ccae9ed000586b7dbf4d5f3e679dd83d7539c655e455"
+          },
+          "document_acl": {
+            "rows": 351,
+            "sha256": "6a9ce0a93d9626026d5aa9d310f42da88d39840f815cd3b3712f9f980e16771c"
+          },
+          "lexical_index_meta": {
+            "rows": 3,
+            "sha256": "3cc5dd534d675417767a4f817b618a9811eae4e9b89a7d01b8a4b2214953900e"
+          },
+          "embedding_index_meta": {
+            "rows": 1,
+            "sha256": "2c6637af04207b35fb61c7b7921041b5ba51c534d75bb5068534b66b60de3c2c"
+          }
+        },
+        "sha256": "85930efc37cb4752394e92f91758dc08df41af6fca5c7bd51de7c135bb2509af"
+      },
+      "repeat_identical": true,
+      "two_checks_elapsed_s": 2.575
+    }
+  }
+}

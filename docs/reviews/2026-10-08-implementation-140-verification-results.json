@@ -1,0 +1,51 @@
+{
+  "record": 140,
+  "date": "2026-10-08",
+  "self_audit": "passed for main/safety resume binding and recorded-attempt accounting",
+  "full_check": {
+    "command": "env -u DEBUG make check",
+    "passed": 1539,
+    "skipped": 70,
+    "warnings": 1,
+    "seconds": 36.78,
+    "formatted_files": 410,
+    "mypy_source_files": 181,
+    "eval_audit": "pass with provisional warnings",
+    "schema": "up to date"
+  },
+  "new_tests": 30,
+  "targeted_tests": {
+    "conditions_runtime_facts": 33,
+    "runner_control_flow": 2
+  },
+  "actual_fact_snapshots": "2026-10-08-implementation-140-live-fact-snapshots.json",
+  "provider_calls": 0,
+  "production_writes": 0,
+  "fixes": [
+    "resume binds source/environment/date/versions/facts/mapping/selected full samples",
+    "recorded retry fees preserved",
+    "safety GPU-stall row saved before exit",
+    "main and safety now apply the released answer prompt",
+    "unknown safety selection ids/categories refused"
+  ],
+  "failed_checks": [
+    {
+      "type": "mypy",
+      "message": "Incompatible types in assignment (expression has type None, target has type str)",
+      "fix": "explicit optional package-version dictionary value type"
+    },
+    {
+      "type": "ruff",
+      "message": "E702 multiple statements on one line in new test",
+      "fix": "format into separate statements"
+    }
+  ],
+  "limits": [
+    "old unbound runs cannot be resumed under new code",
+    "source bundle binding is deliberately conservative",
+    "no full-run database lock or per-query fact change detection",
+    "does not hash binary vectors or immutable remote model weights",
+    "crash before saving an attempt can leave unknown provider charges",
+    "replay reuse/runtime binding not covered by this main/safety change"
+  ]
+}

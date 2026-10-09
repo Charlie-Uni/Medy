@@ -1,0 +1,65 @@
+{
+  "record": 157,
+  "date": "2026-10-09",
+  "status": "passed_engineering_scope",
+  "paid_model_calls": 0,
+  "targeted": {
+    "tests_passed": 48,
+    "tests_failed": 0,
+    "ruff": "passed",
+    "mypy": "passed"
+  },
+  "live_fact_snapshots": {
+    "model_calls": 0,
+    "planes": {
+      "medops_v2": {
+        "stable": true,
+        "sha256": "23e33540ab6000cc5940058ea8d8ead7ec51cba2aff9ecccd59e72803ab5715e",
+        "first_ms": 1061.5,
+        "second_ms": 1169.1,
+        "rows": {
+          "source_objects": 337,
+          "documents": 350,
+          "chunks": 36100,
+          "chunk_spans": 36100,
+          "document_acl": 350,
+          "lexical_index_meta": 3,
+          "embedding_index_meta": 1
+        }
+      },
+      "medops_v2_safety": {
+        "stable": true,
+        "sha256": "85930efc37cb4752394e92f91758dc08df41af6fca5c7bd51de7c135bb2509af",
+        "first_ms": 1492.0,
+        "second_ms": 1393.2,
+        "rows": {
+          "source_objects": 343,
+          "documents": 351,
+          "chunks": 36184,
+          "chunk_spans": 36184,
+          "document_acl": 351,
+          "lexical_index_meta": 3,
+          "embedding_index_meta": 1
+        }
+      }
+    }
+  },
+  "full_check": {
+    "command": "env -u DEBUG -u PYTHONPATH make check",
+    "exit_code": 0,
+    "tests_passed": 1705,
+    "tests_skipped": 70,
+    "warnings": 1,
+    "ruff": "passed",
+    "format_files": 435,
+    "mypy_source_files": 188,
+    "evaluation_audit": "passed_with_4_registered_warnings",
+    "schema_drift": "passed"
+  },
+  "notes": [
+    "replay rows bind to the actual baseline or candidate version set",
+    "baseline reuse requires full source/runtime/fact identity and preserves attempt provenance",
+    "fact guards recheck periodically and before reports or controlled early exits",
+    "no quality score, release decision or acceptance gate was changed"
+  ]
+}

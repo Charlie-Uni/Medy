@@ -1,0 +1,16 @@
+{
+  "main": {
+    "database": "medops",
+    "exit_code": 1,
+    "error_line": "medops.retrieval.production.IndexCoverageError: medops: retrieval preflight failed: embedding_coverage_gap, embedding_version_missing_or_mismatched",
+    "model_loading_reached": false,
+    "rows_written": false
+  },
+  "perf": {
+    "exit_code": 1,
+    "error_line": "MEDY_MISSING_PREFLIGHT_DSN is required for the retrieval preflight; no API process started",
+    "api_started": false,
+    "issuer_file_read": false
+  },
+  "provider_calls": 0
+}

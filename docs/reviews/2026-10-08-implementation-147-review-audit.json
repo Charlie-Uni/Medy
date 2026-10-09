@@ -1,0 +1,84 @@
+{
+  "record": 147,
+  "audited_at": "2026-10-08T03:21:37.507435+00:00",
+  "verification": "passed_with_one_model_dispute",
+  "revision_manifest_sha256": "279c91a6ab2c7a667399419b51d97aeb27ea59972fe77716d75412550f46398d",
+  "confirmation_sha256": "ee390f2e5b6df7f7dcbd4a6e86318bbe71a6f58860d605c984e8439b10075bfa",
+  "model": "claude-opus-5",
+  "effort_requested": "high",
+  "effort_observed": null,
+  "cli_version": "2.1.79 (Claude Code)",
+  "authorized_sample_ids": [
+    "ms-0241",
+    "ms-0242",
+    "ms-0280"
+  ],
+  "unique_sessions": 3,
+  "raw_cli_cost_usd": "0.55589875000000003",
+  "tokens_including_cached_inputs": 35386,
+  "budget": {
+    "attempts": 3,
+    "known_cost_usd": "0.555900",
+    "remaining_usd": "0.194100",
+    "unresolved_attempts": [],
+    "total_budget_usd": "0.750000",
+    "max_attempts": 3
+  },
+  "sample_results": [
+    {
+      "sample_id": "ms-0242",
+      "batch": "EN",
+      "verdict": "agree",
+      "issues": [],
+      "attempt_id": "2b194a50987f46afa31c889398278075",
+      "session_id": "713c8b9b-b9d0-42a4-a9e5-0f258eb29280",
+      "prompt_sha256": "265a41e68fa4211ae9b043a38c082859191ba396de435f271c969158e2445900",
+      "cli_capture_sha256": "e9c7390644e24ec2828be0f1e895f9857f4a58b693d9652931bd054a614515b9",
+      "cost_usd": "0.1872725",
+      "tokens_used": 12246,
+      "duration_ms": 65945
+    },
+    {
+      "sample_id": "ms-0241",
+      "batch": "PV",
+      "verdict": "dispute",
+      "issues": [
+        "key_text"
+      ],
+      "attempt_id": "75bbc4fafe214bb686b7fe5df894d0e0",
+      "session_id": "c1be12b0-018f-46af-83cb-68e7cec0e803",
+      "prompt_sha256": "40bb27168cce54a40d1052836158b8e9d042c12dc00a50836afcfe637c420e84",
+      "cli_capture_sha256": "0bfb1ca131ae2662f3fe2c18aa9c4bf4e6f8c01716e22c789fcc86aab7e89a4a",
+      "cost_usd": "0.19692875",
+      "tokens_used": 12555,
+      "duration_ms": 73424
+    },
+    {
+      "sample_id": "ms-0280",
+      "batch": "PV",
+      "verdict": "agree",
+      "issues": [],
+      "attempt_id": "697ce0305777482aadbfb7d07bcd810a",
+      "session_id": "5b110c9d-ce56-4cb4-8cc7-bd24c9507eac",
+      "prompt_sha256": "0d15778ca675160f571f66064fd743c1dc8705154d8b8302c457528d987b64be",
+      "cli_capture_sha256": "6437966108c0e569e7fbb163a18cb9a0d2ea7c1ef85bae91a4b9c2d140597c90",
+      "cost_usd": "0.17169750000000003",
+      "tokens_used": 10585,
+      "duration_ms": 64416
+    }
+  ],
+  "parent_twin_disagreement": {
+    "same_key_text": true,
+    "key_text": "An aggregate analysis of specific events observed in a clinical trial that indicates those events occur more frequently",
+    "ms-0241": "dispute:key_text",
+    "ms-0242": "agree",
+    "interpretation": "Independent model sessions disagree on an identical inherited key; owner adjudication is required."
+  },
+  "checks": [
+    "authorization binds exact manifest, confirmation, batch inputs, prompt, model and effort",
+    "three unique authorized samples and three unique sessions; no failure, retry, unknown charge or cap breach",
+    "each prompt rebuilt from archived input and matched run prompt_sha256",
+    "run verdict mirrors JSONL and raw CLI reply; capture hashes and 0600 permissions passed",
+    "draft revision page/span/key/chunk checks passed separately before calls"
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "record": 137,
+  "date": "2026-10-08",
+  "self_audit": "passed within round scope; stage remains pending",
+  "full_check": {
+    "command": "env -u DEBUG make check",
+    "passed": 1480,
+    "skipped": 70,
+    "warnings": 1,
+    "seconds": 38.71,
+    "formatted_files": 400,
+    "mypy_source_files": 177,
+    "eval_audit": "pass with recorded provisional warnings",
+    "schema": "up to date"
+  },
+  "targeted_tests": {
+    "passed": 17
+  },
+  "actual_runtime_checks": "2026-10-08-implementation-137-runtime-check.json",
+  "read_only_databases": "2026-10-08-implementation-137-live-index-health.json",
+  "failed_attempts": [
+    {
+      "kind": "new test fixture mismatch",
+      "errors": [
+        "documents_non_draft_has_effective_from",
+        "KeyError: app"
+      ],
+      "resolution": "supply effective_from; use nested fixture user mapping"
+    },
+    {
+      "kind": "cross-module RLS fixture reused same session database",
+      "full_check_passed": 1445,
+      "full_check_errors": 35,
+      "error": "UniqueViolation: source_objects_source_hash_key (counter 1001 already inserted)",
+      "resolution": "place four metadata tests in existing RLS module to share one fixture instance; full check repeated successfully"
+    }
+  ],
+  "model_provider_calls": 0,
+  "production_database_writes": 0,
+  "remaining": [
+    "consumer recovery",
+    "formal evaluation preflight beyond old coverage-only check",
+    "Prometheus rule deployment proof",
+    "formal second human and calibration pending"
+  ]
+}

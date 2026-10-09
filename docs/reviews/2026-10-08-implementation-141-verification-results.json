@@ -1,0 +1,24 @@
+{
+  "record": 141,
+  "date": "2026-10-08",
+  "self_audit": "passed for application trace correlation and redaction",
+  "full_check": {
+    "command": "env -u DEBUG make check",
+    "passed": 1549,
+    "skipped": 70,
+    "warnings": 1,
+    "seconds": 37.01,
+    "mypy_source_files": 181,
+    "formatted_files": 411
+  },
+  "new_tests": 11,
+  "additional_http_test": "11 passed in 1.25s for complete targeted file, including local HTTP/protobuf receiver",
+  "provider_calls": 0,
+  "production_writes": 0,
+  "langfuse_deployed": false,
+  "limits": [
+    "no backend UI/score validation",
+    "new traces only; no history mutation",
+    "third-party automatic instrumentation outside audited wrapper scope"
+  ]
+}

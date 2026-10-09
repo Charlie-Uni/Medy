@@ -1,0 +1,131 @@
+{
+  "record": "implementation-150-main-v4-audit-v1",
+  "date": "2026-10-08",
+  "main": {
+    "version": "main-v4-provisional",
+    "dataset_hash": "79e0c56920252a6e86694e1228c3c4f5ab47fbdfab2f89aa85dd9891ac618c7d",
+    "manifest_sha256": "0d81e0acdb75b05dfaa82496ebddc9caca42cf25cf6d9313487e8bc6d096de2f",
+    "samples": 615,
+    "local_samples": 508,
+    "imported_samples": 107
+  },
+  "sample_diff": {
+    "added": [
+      "ms-0525"
+    ],
+    "removed": [],
+    "existing_local_annotation_changes": [
+      "ms-0124",
+      "ms-0125",
+      "ms-0177",
+      "ms-0178",
+      "ms-0205",
+      "ms-0206",
+      "ms-0241",
+      "ms-0242",
+      "ms-0243",
+      "ms-0244",
+      "ms-0280",
+      "ms-0298",
+      "ms-0299",
+      "ms-0336",
+      "ms-0337"
+    ],
+    "existing_local_review_block_changes": [
+      "ms-0124",
+      "ms-0125",
+      "ms-0177",
+      "ms-0178",
+      "ms-0205",
+      "ms-0206",
+      "ms-0235",
+      "ms-0236",
+      "ms-0237",
+      "ms-0238",
+      "ms-0239",
+      "ms-0240",
+      "ms-0241",
+      "ms-0242",
+      "ms-0243",
+      "ms-0244",
+      "ms-0280",
+      "ms-0298",
+      "ms-0299",
+      "ms-0336",
+      "ms-0337",
+      "ms-0475"
+    ],
+    "exactly_unchanged_existing_local_samples": 485,
+    "title_propagation_review_ids": [
+      "ms-0235",
+      "ms-0236",
+      "ms-0237",
+      "ms-0238",
+      "ms-0239",
+      "ms-0240",
+      "ms-0475"
+    ]
+  },
+  "probe_import": {
+    "byte_identical_canonical": true,
+    "sha256": "e3a8c6bd7535bba1e45ff32ce6ba1160025c8d67fda7ba060f1b5e1c445d89de",
+    "count": 107
+  },
+  "corpus_diff": {
+    "root_dataset_version": {
+      "before": "main-v3-provisional",
+      "after": "main-v4-provisional"
+    },
+    "document_changes": [
+      {
+        "document_key": "fda-investigator-safety-reporting-2025",
+        "fields": [
+          "title"
+        ]
+      }
+    ]
+  },
+  "review": {
+    "changed_input_count": 23,
+    "current_dispute_ids": [
+      "ms-0125"
+    ],
+    "prompt_hashes": [
+      "7572d16e88b638cbc6fa888f4e1a86fe6ffb4869583df357ee1ce0bd012eb758",
+      "8538a516164394d885245e2d79652432ea3c71d7c7a49bba269f09740c2d1e90"
+    ],
+    "title_propagation_calls": 7,
+    "title_propagation_cost_usd": "0.593073",
+    "all_title_propagation_outcomes_validated": true,
+    "unknown_or_over_cap": false
+  },
+  "mapping": {
+    "entries": 574,
+    "mapped": 568,
+    "unmappable": 6,
+    "sha256": "404ca270f850025d37df88f397fa5b1c86aa643a12d39bf29ef6391539ca5f41",
+    "construction": "frozen main-v3 mapping plus revision-v4 page-validated preview; source identity and coordinate system unchanged"
+  },
+  "full_snapshot_export": {
+    "status": "refused_closed",
+    "reason": "three corpus candidates intentionally absent from fact database under ADR-0009",
+    "document_keys": [
+      "fda-meta-analyses-of-randomized-controlled-clinic-draft-2018",
+      "tfda-label-plusdmax-tablets-sinphar",
+      "fda-providing-submissions-in-electronic-format-2015"
+    ],
+    "referenced_by_current_samples": false
+  },
+  "verification": {
+    "targeted_evals_tests": "528 passed",
+    "make_check": "1637 passed, 70 skipped",
+    "eval_audit_with_pages": "PASS; 4 datasets",
+    "known_warnings": [
+      "6 unmappable gold units",
+      "historical replay uses old safety set",
+      "independent human review pending",
+      "no unseen holdout",
+      "test-only short HMAC key warning"
+    ]
+  }
+}

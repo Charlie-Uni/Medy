@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-08",
+  "command": "env -u DEBUG make check",
+  "exit_code": 0,
+  "tests": {"passed": 1419, "skipped": 70, "warnings": 1, "duration_s": 35.72},
+  "targeted_tests_passed": 77,
+  "ruff": "passed",
+  "format_files": 392,
+  "mypy_source_files": 174,
+  "with_pages_audit": "passed",
+  "real_review_prompt_reconstruction": {"passed": 19, "total": 19},
+  "review_inputs": {"samples": 19, "gold_units": 39, "multi_gold_records": 10},
+  "initial_check": {"command": "make check", "failed": 7, "passed": 1185, "skipped": 297, "cause": "external DEBUG environment value is not a boolean"},
+  "self_audit": "passed for record 134 scope",
+  "stage_01": "pending",
+  "paid_api_calls": 0,
+  "limitations": ["independent model review not executed", "second human unavailable/pending", "new probe/main freeze pending", "B/C experimental services unavailable", "no remote CI run"]
+}

@@ -1,0 +1,34 @@
+{
+  "captured_at_utc": "2026-10-07T16:26:03.828054+00:00",
+  "mode": "actual ProductionRuntime and ASGI HTTP client; cached local MPS models",
+  "startup_s": 10.988,
+  "provider_calls": 0,
+  "database_writes": 0,
+  "checks": [
+    {
+      "path": "/healthz",
+      "status": 200,
+      "trace_header": true
+    },
+    {
+      "path": "/readyz",
+      "status": 200,
+      "trace_header": true
+    },
+    {
+      "path": "/metrics",
+      "status": 401,
+      "trace_header": true
+    },
+    {
+      "case": "app/admin database mismatch",
+      "path": "/readyz",
+      "status": 503
+    },
+    {
+      "case": "matching database restored",
+      "path": "/readyz",
+      "status": 200
+    }
+  ]
+}

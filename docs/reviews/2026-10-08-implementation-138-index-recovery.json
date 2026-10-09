@@ -1,0 +1,259 @@
+{
+  "started_at_utc": "2026-10-07T16:35:41.715066+00:00",
+  "model_api_calls": 0,
+  "cache_consumer_run": false,
+  "databases": [
+    {
+      "database": "medops_v2",
+      "before": {
+        "health": {
+          "ready": true,
+          "database": "medops_v2",
+          "database_identity": "c0fb19199d533c18ee09d221911e6fcb9216faa139ac66dd519de31e18389c60",
+          "coverage": {
+            "active_chunks": 34948,
+            "missing_lexical": 0,
+            "missing_embedding": 0,
+            "documents_not_fully_indexed": 0,
+            "active_documents": 333,
+            "active_documents_without_chunks": 0
+          },
+          "lexical_version_ok": true,
+          "embedding_version_ok": true,
+          "problems": [],
+          "outbox": {
+            "lexical-index": {
+              "pending": 338,
+              "oldest_age_s": 1475414.347333
+            },
+            "retrieval-cache": {
+              "pending": 338,
+              "oldest_age_s": 1475414.347333
+            },
+            "vector-index": {
+              "pending": 338,
+              "oldest_age_s": 1475414.347333
+            }
+          },
+          "outbox_blocks_readiness": false
+        },
+        "facts": {
+          "documents": {
+            "count": 350,
+            "md5_of_ordered_json": "75fd5b2d9efb14c946ecb5d8cb6cacc2"
+          },
+          "chunks": {
+            "count": 36100,
+            "md5_of_ordered_json": "66d83853808abb324fad8eb22b5952d1"
+          },
+          "document_acl": {
+            "count": 350,
+            "md5_of_ordered_json": "8ba5093969799cf486382a655f1b4b10"
+          }
+        },
+        "derived_counts": {
+          "chunk_lexical_tsv": 36100,
+          "chunk_embeddings": 36100,
+          "outbox_consumer_acks": 0
+        }
+      },
+      "consumers": [
+        {
+          "consumer": "lexical-index",
+          "acked": 338,
+          "failed": [],
+          "batches": 35,
+          "elapsed_s": 24.981
+        },
+        {
+          "consumer": "vector-index",
+          "acked": 338,
+          "failed": [],
+          "batches": 35,
+          "elapsed_s": 2.277
+        }
+      ],
+      "after": {
+        "health": {
+          "ready": true,
+          "database": "medops_v2",
+          "database_identity": "c0fb19199d533c18ee09d221911e6fcb9216faa139ac66dd519de31e18389c60",
+          "coverage": {
+            "active_chunks": 34948,
+            "missing_lexical": 0,
+            "missing_embedding": 0,
+            "documents_not_fully_indexed": 0,
+            "active_documents": 333,
+            "active_documents_without_chunks": 0
+          },
+          "lexical_version_ok": true,
+          "embedding_version_ok": true,
+          "problems": [],
+          "outbox": {
+            "lexical-index": {
+              "pending": 0,
+              "oldest_age_s": 0.0
+            },
+            "retrieval-cache": {
+              "pending": 338,
+              "oldest_age_s": 1475442.215482
+            },
+            "vector-index": {
+              "pending": 0,
+              "oldest_age_s": 0.0
+            }
+          },
+          "outbox_blocks_readiness": false
+        },
+        "facts": {
+          "documents": {
+            "count": 350,
+            "md5_of_ordered_json": "75fd5b2d9efb14c946ecb5d8cb6cacc2"
+          },
+          "chunks": {
+            "count": 36100,
+            "md5_of_ordered_json": "66d83853808abb324fad8eb22b5952d1"
+          },
+          "document_acl": {
+            "count": 350,
+            "md5_of_ordered_json": "8ba5093969799cf486382a655f1b4b10"
+          }
+        },
+        "derived_counts": {
+          "chunk_lexical_tsv": 35830,
+          "chunk_embeddings": 35830,
+          "outbox_consumer_acks": 676
+        }
+      },
+      "fact_fingerprints_unchanged": true
+    },
+    {
+      "database": "medops_v2_safety",
+      "before": {
+        "health": {
+          "ready": true,
+          "database": "medops_v2_safety",
+          "database_identity": "f18197d4cadcb02dd8ab45e4eb62bfc6d7b846f6d0ca77239cba25c50cf1f0e2",
+          "coverage": {
+            "active_chunks": 35273,
+            "missing_lexical": 0,
+            "missing_embedding": 0,
+            "documents_not_fully_indexed": 0,
+            "active_documents": 339,
+            "active_documents_without_chunks": 0
+          },
+          "lexical_version_ok": true,
+          "embedding_version_ok": true,
+          "problems": [],
+          "outbox": {
+            "lexical-index": {
+              "pending": 339,
+              "oldest_age_s": 1475442.553731
+            },
+            "retrieval-cache": {
+              "pending": 339,
+              "oldest_age_s": 1475442.553731
+            },
+            "vector-index": {
+              "pending": 339,
+              "oldest_age_s": 1475442.553731
+            }
+          },
+          "outbox_blocks_readiness": false
+        },
+        "facts": {
+          "documents": {
+            "count": 351,
+            "md5_of_ordered_json": "24d39286e70440d9ecb6d001e92d9b75"
+          },
+          "chunks": {
+            "count": 36184,
+            "md5_of_ordered_json": "068712f5fe05194cd2e0545459f88a87"
+          },
+          "document_acl": {
+            "count": 351,
+            "md5_of_ordered_json": "7ceb2ab08180111c4ed07e37b40b2f7e"
+          }
+        },
+        "derived_counts": {
+          "chunk_lexical_tsv": 36184,
+          "chunk_embeddings": 36184,
+          "outbox_consumer_acks": 0
+        }
+      },
+      "consumers": [
+        {
+          "consumer": "lexical-index",
+          "acked": 339,
+          "failed": [],
+          "batches": 35,
+          "elapsed_s": 25.48
+        },
+        {
+          "consumer": "vector-index",
+          "acked": 339,
+          "failed": [],
+          "batches": 35,
+          "elapsed_s": 2.055
+        }
+      ],
+      "after": {
+        "health": {
+          "ready": true,
+          "database": "medops_v2_safety",
+          "database_identity": "f18197d4cadcb02dd8ab45e4eb62bfc6d7b846f6d0ca77239cba25c50cf1f0e2",
+          "coverage": {
+            "active_chunks": 35273,
+            "missing_lexical": 0,
+            "missing_embedding": 0,
+            "documents_not_fully_indexed": 0,
+            "active_documents": 339,
+            "active_documents_without_chunks": 0
+          },
+          "lexical_version_ok": true,
+          "embedding_version_ok": true,
+          "problems": [],
+          "outbox": {
+            "lexical-index": {
+              "pending": 0,
+              "oldest_age_s": 0.0
+            },
+            "retrieval-cache": {
+              "pending": 339,
+              "oldest_age_s": 1475470.521994
+            },
+            "vector-index": {
+              "pending": 0,
+              "oldest_age_s": 0.0
+            }
+          },
+          "outbox_blocks_readiness": false
+        },
+        "facts": {
+          "documents": {
+            "count": 351,
+            "md5_of_ordered_json": "24d39286e70440d9ecb6d001e92d9b75"
+          },
+          "chunks": {
+            "count": 36184,
+            "md5_of_ordered_json": "068712f5fe05194cd2e0545459f88a87"
+          },
+          "document_acl": {
+            "count": 351,
+            "md5_of_ordered_json": "7ceb2ab08180111c4ed07e37b40b2f7e"
+          }
+        },
+        "derived_counts": {
+          "chunk_lexical_tsv": 36155,
+          "chunk_embeddings": 36155,
+          "outbox_consumer_acks": 678
+        }
+      },
+      "fact_fingerprints_unchanged": true
+    }
+  ],
+  "status": "completed",
+  "local_embedding_calls": 0,
+  "texts_embedded": 0,
+  "finished_at_utc": "2026-10-07T16:36:44.563116+00:00"
+}

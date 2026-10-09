@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-08",
+  "command": "env -u DEBUG make check",
+  "exit_code": 0,
+  "tests": {"passed": 1440, "skipped": 70, "warnings": 1, "duration_s": 36.47},
+  "new_tests": 21,
+  "self_audit": "passed for record 135 scope",
+  "stage_01": "pending",
+  "legacy_safety_rows_compared": 170,
+  "legacy_drift_samples": ["ss-0125"],
+  "paid_api_calls": 0,
+  "formal_new_replay_created": false,
+  "limitations": ["new replay requires real bound source runs", "historical replay safety cannot use mutable drafts", "database corpus snapshot still needs runtime verification", "independent human review pending", "no remote CI run"]
+}

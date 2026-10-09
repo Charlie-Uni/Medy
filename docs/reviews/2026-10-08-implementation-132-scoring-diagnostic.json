@@ -1,0 +1,35 @@
+{
+  "scope": "read-only diagnostic on existing rows, not a new model run or replacement gate result",
+  "source": "evals/harness/runs/2026-10-02-full-ask-v4-released/rows.jsonl",
+  "scoring": {
+    "version": "main-outcome-v2",
+    "no_answer": "escalated with exactly insufficient_evidence; failures remain in denominator",
+    "legacy_no_answer_expectation": "insufficient_evidence (verified main/replay v1-v3)",
+    "evidence": "explicit groups: AND across/OR within; legacy flat: any hit",
+    "safety": "existing per-sample checks, unchanged",
+    "semantic_support_and_answer_completeness": "not_measured_by_this_scorer"
+  },
+  "no_answer_n": 61,
+  "legacy_successes": 57,
+  "v2_successes": 57,
+  "abstention_metrics": {
+    "no_answer_correct": {
+      "numerator": 57,
+      "denominator": 61,
+      "rate": 0.9344262295081968
+    },
+    "false_abstention_answerable_including_conflict": {
+      "numerator": 46,
+      "denominator": 553,
+      "rate": 0.08318264014466546
+    },
+    "system_failure": {
+      "numerator": 0,
+      "denominator": 614,
+      "rate": 0.0
+    },
+    "no_answer_system_failures": 0,
+    "no_answer_other_failures": 4
+  },
+  "changed_no_answer_ids": []
+}

@@ -1,0 +1,30 @@
+{
+  "record": 139,
+  "date": "2026-10-08",
+  "self_audit": "passed for production-index evaluation preflight; stage remains partial",
+  "full_check": {
+    "command": "env -u DEBUG make check",
+    "passed": 1509,
+    "skipped": 70,
+    "warnings": 1,
+    "seconds": 37.67,
+    "formatted_files": 406,
+    "mypy_source_files": 180,
+    "eval_audit": "pass with provisional warnings",
+    "schema": "up to date"
+  },
+  "targeted_tests": {
+    "passed": 21,
+    "new_tests": 8
+  },
+  "actual_cli_failure_paths": "2026-10-08-implementation-139-cli-preflight.json",
+  "actual_read_only_success": "2026-10-08-implementation-139-live-preflight.json",
+  "provider_calls": 0,
+  "production_writes": 0,
+  "limits": [
+    "preflight is point-in-time active corpus coverage, not lifetime corpus lock",
+    "candidate lexical adapters still need candidate-specific index coverage",
+    "perf supplied admin DSN must refer to the launched API target; runtime ready checks its own actual pair",
+    "runtime/corpus/config drift during resume remains next task"
+  ]
+}

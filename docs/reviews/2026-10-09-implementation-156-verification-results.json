@@ -1,0 +1,50 @@
+{
+  "record": 156,
+  "date": "2026-10-09",
+  "status": "passed_engineering_scope",
+  "paid_model_calls": 0,
+  "source_contracts": {
+    "dataset_version": "main-v5-provisional",
+    "contracts": 34,
+    "validation": "passed",
+    "formal_gate": false
+  },
+  "live_rls_diagnostic": {
+    "database": "medops_v2",
+    "visible_active_documents": {
+      "PV": 127,
+      "CO": 81,
+      "MA": 125
+    },
+    "contracts_safe": 34,
+    "contracts_failed": 0,
+    "missing_source_cases": {
+      "ss-0090": true,
+      "ss-0096": true
+    }
+  },
+  "targeted": {
+    "tests_passed": 83,
+    "tests_failed": 0,
+    "source_semantics_subset_passed": 48,
+    "ruff": "passed",
+    "mypy": "passed"
+  },
+  "full_check": {
+    "command": "env -u DEBUG -u PYTHONPATH make check",
+    "exit_code": 0,
+    "tests_passed": 1690,
+    "tests_skipped": 70,
+    "warnings": 1,
+    "ruff": "passed",
+    "format_files": 435,
+    "mypy_source_files": 188,
+    "evaluation_audit": "passed_with_4_registered_warnings",
+    "schema_drift": "passed"
+  },
+  "notes": [
+    "source_constraint-v1 is wired as a released retrieval parameter and remains off by default",
+    "no answer-level model run or production release was performed",
+    "the source contract is provisional and is not an unseen holdout"
+  ]
+}

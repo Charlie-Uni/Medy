@@ -1,0 +1,29 @@
+{
+  "record": 142,
+  "date": "2026-10-08",
+  "self_audit": "passed for metadata-only score pipeline and durable delivery logic",
+  "full_check": {
+    "command": "env -u DEBUG make check",
+    "passed": 1594,
+    "skipped": 70,
+    "warnings": 1,
+    "seconds": 38.35,
+    "formatted_files": 417,
+    "mypy_source_files": 184,
+    "schema": "up to date",
+    "eval_audit": "pass with provisional warnings"
+  },
+  "new_tests": 44,
+  "live_read_only_harvest": "2026-10-08-implementation-142-live-feedback-harvest.json",
+  "provider_calls": 0,
+  "production_writes": 0,
+  "actual_backend_http_calls": 0,
+  "langfuse_deployed": false,
+  "limits": [
+    "no actual Langfuse query/UI/score roundtrip verified",
+    "score ingestion compatibility endpoint is deprecated; pinned source v4.54.0",
+    "SQLite queue is local, no permanent supervisor/retention configured",
+    "old trace identities not fabricated",
+    "rule scores are not semantic quality or release gates"
+  ]
+}

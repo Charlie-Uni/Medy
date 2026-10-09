@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-08",
+  "command": "env -u DEBUG make check",
+  "exit_code": 0,
+  "tests": {
+    "passed": 1399,
+    "skipped": 70,
+    "warnings": 1,
+    "duration_s": 37.38
+  },
+  "targeted_tests_passed": 37,
+  "ruff": "passed",
+  "format_files": 385,
+  "mypy_source_files": 173,
+  "dataset_audit": "passed, 4 frozen datasets plus current annotation draft",
+  "schemas": "up to date",
+  "self_audit": "passed for record 132 scope",
+  "stage_01": "pending",
+  "paid_api_calls": 0,
+  "missing_local_links": [],
+  "modified_frozen_or_archived_run_files": [],
+  "limitations": [
+    "B/C experimental services unavailable",
+    "independent human review pending",
+    "unseen holdout pending",
+    "semantic support and answer completeness not measured by this scorer",
+    "no new end-to-end quality/capacity run",
+    "no remote CI run"
+  ]
+}

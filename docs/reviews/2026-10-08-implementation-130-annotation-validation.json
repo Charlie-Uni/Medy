@@ -1,0 +1,25 @@
+{
+  "checks_passed": true,
+  "status": "draft",
+  "freeze_ready": false,
+  "page_validation": "passed",
+  "proposals": 18,
+  "target_samples": 13,
+  "linked_twins": 5,
+  "gold_units": 37,
+  "mapping": {
+    "mapped": 37
+  },
+  "projected_long_context": 19,
+  "changed_probe_imports": [
+    "pc-0017",
+    "pc-0028",
+    "pc-0029"
+  ],
+  "limitations": [
+    "Revised inputs need new annotation/review records; no old review was reused.",
+    "Changed pc- imports require a new frozen probe before main-set import (PR-16).",
+    "Projected long_context=19; existing minimum is 20. Replenish before freezing.",
+    "This mapping preview is not a frozen dataset mapping or a new system-quality measurement."
+  ]
+}

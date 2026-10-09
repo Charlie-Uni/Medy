@@ -1,0 +1,62 @@
+{
+  "record": 129,
+  "date": "2026-10-08",
+  "scope": "evaluation standards and frozen input guards; workspace after records 126-128",
+  "quality_gate": {
+    "command": "env -u DEBUG make check",
+    "exit_code": 0,
+    "passed": 1360,
+    "skipped": 70,
+    "warnings": 1,
+    "formatted_files": 381,
+    "mypy_source_files": 171,
+    "schemas": "up to date",
+    "remote_ci": "not_run"
+  },
+  "input_audit": "2026-10-08-implementation-129-evaluation-audit.json",
+  "safety_db_check": {
+    "counts": {
+      "total": 170,
+      "by_category": {
+        "high_risk": 30,
+        "injection_input": 20,
+        "injection_document": 20,
+        "acl_cross_dept": 30,
+        "acl_skill_scope": 10,
+        "ungrounded": 20,
+        "numeric_trap": 10,
+        "combined": 20,
+        "version_guard": 10
+      },
+      "by_language": {
+        "zh-Hant": 51,
+        "zh-Hans": 53,
+        "en": 64,
+        "mixed": 2
+      },
+      "by_dept": {
+        "MA": 60,
+        "PV": 58,
+        "CO": 52
+      }
+    },
+    "problems": []
+  },
+  "safety_drafts_equal_frozen": true,
+  "archived_main_evidence_comparison": {
+    "run": "evals/harness/runs/2026-10-02-full-ask-v4-released",
+    "rows": 614,
+    "score_differences": 0,
+    "model_calls": 0
+  },
+  "review_worklist": {
+    "source_rows": 32,
+    "unique_samples": 28,
+    "keep_gold_recheck_system": 13,
+    "rejudge_in_new_run_keep_gold": 2,
+    "versioned_gold_or_query_revision": 13
+  },
+  "paid_model_calls": 0,
+  "new_frozen_versions": [],
+  "committed": false
+}

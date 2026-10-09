@@ -1,0 +1,43 @@
+{
+  "record": 142,
+  "purpose": "read-only feedback harvest; enqueue-only; no backend running or HTTP delivery",
+  "databases": {
+    "medops_v2": {
+      "exit_code": 0,
+      "stdout": [
+        {
+          "collection": {
+            "scanned": 2,
+            "enqueued": 2,
+            "sweep_complete": false
+          },
+          "delivery": {}
+        }
+      ],
+      "queue_events": 2,
+      "delivered": 0,
+      "queue_mode": "0o600",
+      "stderr_present": false
+    },
+    "medops_v2_safety": {
+      "exit_code": 0,
+      "stdout": [
+        {
+          "collection": {
+            "scanned": 2,
+            "enqueued": 2,
+            "sweep_complete": false
+          },
+          "delivery": {}
+        }
+      ],
+      "queue_events": 2,
+      "delivered": 0,
+      "queue_mode": "0o600",
+      "stderr_present": false
+    }
+  },
+  "provider_calls": 0,
+  "production_writes": 0,
+  "http_calls": 0
+}

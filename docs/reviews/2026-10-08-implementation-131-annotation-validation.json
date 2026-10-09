@@ -1,0 +1,55 @@
+{
+  "checks_passed": true,
+  "status": "draft",
+  "freeze_ready": false,
+  "page_validation": "passed",
+  "proposals": 19,
+  "target_samples": 13,
+  "linked_twins": 5,
+  "new_samples": 1,
+  "gold_units": 39,
+  "mapping": {
+    "mapped": 39
+  },
+  "projected_long_context": 20,
+  "changed_probe_imports": [
+    "pc-0017",
+    "pc-0028",
+    "pc-0029"
+  ],
+  "projected_distribution": {
+    "samples": 615,
+    "answerable": 554,
+    "no_answer": 61,
+    "conflict": 52,
+    "per_slice": {
+      "dose_unit": 65,
+      "drug_name_zh": 115,
+      "mixed_zh_en": 570,
+      "negation": 275,
+      "time_window": 128,
+      "protocol_id": 149,
+      "version_conflict": 52,
+      "long_context": 20,
+      "no_answer": 61
+    },
+    "per_dept": {
+      "MA": 133,
+      "PV": 280,
+      "CO": 202
+    },
+    "per_source_language": {
+      "zh-Hant": 139,
+      "en": 446,
+      "zh-Hans": 30
+    },
+    "max_non_derived_per_document": 8,
+    "quota_shortfalls": {}
+  },
+  "limitations": [
+    "Revised inputs need new annotation/review records; no old review was reused.",
+    "Changed pc- imports require a new frozen probe before main-set import (PR-16).",
+    "Projected quota shortfalls: {}; satisfying counts does not complete review.",
+    "This mapping preview is not a frozen dataset mapping or a new system-quality measurement."
+  ]
+}

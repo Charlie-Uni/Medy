@@ -1,0 +1,576 @@
+{
+  "date": "2026-10-07",
+  "timezone": "Australia/Sydney",
+  "git_head": "cb83abdee12981e4081172f9c1378fe3ab9242d9",
+  "includes_uncommitted_changes": true,
+  "command": "env -u DEBUG PYTEST_ADDOPTS='-rs --junitxml=/tmp/medy-verification-2026-10-07.xml' make check",
+  "quality_checks": {
+    "install_check": "passed",
+    "ruff": "passed",
+    "format_checked_files": 376,
+    "mypy_checked_files": 168,
+    "schema_drift": "passed",
+    "git_diff_check": "passed"
+  },
+  "tests": {
+    "passed": 1337,
+    "skipped": 70
+  },
+  "by_module": {
+    "tests.integration": {
+      "passed": 254,
+      "skipped": 70
+    },
+    "tests.unit.api": {
+      "passed": 90
+    },
+    "tests.unit.application": {
+      "passed": 21
+    },
+    "tests.unit.config": {
+      "passed": 10
+    },
+    "tests.unit.core": {
+      "passed": 61
+    },
+    "tests.unit.docs": {
+      "passed": 10
+    },
+    "tests.unit.domain": {
+      "passed": 37
+    },
+    "tests.unit.evals": {
+      "passed": 333
+    },
+    "tests.unit.faults": {
+      "passed": 5
+    },
+    "tests.unit.harness": {
+      "passed": 91
+    },
+    "tests.unit.infrastructure": {
+      "passed": 11
+    },
+    "tests.unit.ingestion": {
+      "passed": 39
+    },
+    "tests.unit.loop": {
+      "passed": 68
+    },
+    "tests.unit.mcp": {
+      "passed": 14
+    },
+    "tests.unit.retrieval": {
+      "passed": 188
+    },
+    "tests.unit.safety": {
+      "passed": 18
+    },
+    "tests.unit.skills": {
+      "passed": 59
+    },
+    "tests.unit.verification": {
+      "passed": 28
+    }
+  },
+  "by_test_file": {
+    "tests.integration.test_activation": {
+      "passed": 5
+    },
+    "tests.integration.test_admin_stores": {
+      "passed": 2
+    },
+    "tests.integration.test_audit_store": {
+      "passed": 2
+    },
+    "tests.integration.test_cache_invalidation": {
+      "passed": 4
+    },
+    "tests.integration.test_fact_recheck": {
+      "passed": 9
+    },
+    "tests.integration.test_ingestion": {
+      "passed": 16
+    },
+    "tests.integration.test_lexical_pg_search_bm25": {
+      "skipped": 25
+    },
+    "tests.integration.test_lexical_pg_simple_fts": {
+      "passed": 42
+    },
+    "tests.integration.test_lexical_pg_textsearch_bm25": {
+      "passed": 22
+    },
+    "tests.integration.test_lexical_pg_zhparser_fts": {
+      "skipped": 45
+    },
+    "tests.integration.test_lexical_production": {
+      "passed": 22
+    },
+    "tests.integration.test_loop_pipeline": {
+      "passed": 3
+    },
+    "tests.integration.test_loop_role_permissions": {
+      "passed": 14
+    },
+    "tests.integration.test_loop_signals": {
+      "passed": 8
+    },
+    "tests.integration.test_mcp_service": {
+      "passed": 5
+    },
+    "tests.integration.test_metrics_source": {
+      "passed": 1
+    },
+    "tests.integration.test_migrations": {
+      "passed": 15
+    },
+    "tests.integration.test_operation_executions": {
+      "passed": 5
+    },
+    "tests.integration.test_payload_store": {
+      "passed": 1
+    },
+    "tests.integration.test_policy_router": {
+      "passed": 1
+    },
+    "tests.integration.test_principals": {
+      "passed": 3
+    },
+    "tests.integration.test_publish_outbox": {
+      "passed": 5
+    },
+    "tests.integration.test_redis_cache_store": {
+      "passed": 5
+    },
+    "tests.integration.test_retention_and_rotation": {
+      "passed": 3
+    },
+    "tests.integration.test_rls": {
+      "passed": 37
+    },
+    "tests.integration.test_tasks_store": {
+      "passed": 4
+    },
+    "tests.integration.test_vector_pg": {
+      "passed": 16
+    },
+    "tests.integration.test_withdrawn": {
+      "passed": 4
+    },
+    "tests.unit.api.test_admin_routes": {
+      "passed": 5
+    },
+    "tests.unit.api.test_ask_route": {
+      "passed": 10
+    },
+    "tests.unit.api.test_auth": {
+      "passed": 15
+    },
+    "tests.unit.api.test_contracts": {
+      "passed": 6
+    },
+    "tests.unit.api.test_feedback_route": {
+      "passed": 2
+    },
+    "tests.unit.api.test_jwks_discovery": {
+      "passed": 4
+    },
+    "tests.unit.api.test_metrics_route": {
+      "passed": 2
+    },
+    "tests.unit.api.test_openapi": {
+      "passed": 7
+    },
+    "tests.unit.api.test_payload_route": {
+      "passed": 1
+    },
+    "tests.unit.api.test_replay_route": {
+      "passed": 2
+    },
+    "tests.unit.api.test_runtime_connect": {
+      "passed": 2
+    },
+    "tests.unit.api.test_schema_semantics": {
+      "passed": 31
+    },
+    "tests.unit.api.test_task_routes": {
+      "passed": 3
+    },
+    "tests.unit.application.test_policy_loader": {
+      "passed": 11
+    },
+    "tests.unit.application.test_policy_router": {
+      "passed": 5
+    },
+    "tests.unit.application.test_tasks": {
+      "passed": 5
+    },
+    "tests.unit.config.test_settings": {
+      "passed": 10
+    },
+    "tests.unit.core.test_canonical": {
+      "passed": 5
+    },
+    "tests.unit.core.test_canonical_vectors": {
+      "passed": 15
+    },
+    "tests.unit.core.test_config_llm_provider": {
+      "passed": 2
+    },
+    "tests.unit.core.test_envelope": {
+      "passed": 3
+    },
+    "tests.unit.core.test_errors": {
+      "passed": 8
+    },
+    "tests.unit.core.test_logging": {
+      "passed": 11
+    },
+    "tests.unit.core.test_telemetry": {
+      "passed": 5
+    },
+    "tests.unit.core.test_tracing": {
+      "passed": 12
+    },
+    "tests.unit.docs.test_baseline_roadmap_consistency": {
+      "passed": 5
+    },
+    "tests.unit.docs.test_repo_hygiene": {
+      "passed": 5
+    },
+    "tests.unit.domain.test_agent_state": {
+      "passed": 9
+    },
+    "tests.unit.domain.test_agent_state_hardening": {
+      "passed": 15
+    },
+    "tests.unit.domain.test_contracts": {
+      "passed": 13
+    },
+    "tests.unit.evals.test_build_glossary": {
+      "passed": 4
+    },
+    "tests.unit.evals.test_candidate_compiler": {
+      "passed": 6
+    },
+    "tests.unit.evals.test_candidate_lists": {
+      "passed": 19
+    },
+    "tests.unit.evals.test_canonicalize": {
+      "passed": 15
+    },
+    "tests.unit.evals.test_chunk_mapping": {
+      "passed": 52
+    },
+    "tests.unit.evals.test_chunk_snapshot_export": {
+      "passed": 15
+    },
+    "tests.unit.evals.test_dec001_report": {
+      "passed": 4
+    },
+    "tests.unit.evals.test_dec001_run": {
+      "passed": 8
+    },
+    "tests.unit.evals.test_dec001_scoring": {
+      "passed": 4
+    },
+    "tests.unit.evals.test_dec002_run": {
+      "passed": 4
+    },
+    "tests.unit.evals.test_demo_launcher": {
+      "passed": 2
+    },
+    "tests.unit.evals.test_e2e_run": {
+      "passed": 5
+    },
+    "tests.unit.evals.test_extract": {
+      "passed": 7
+    },
+    "tests.unit.evals.test_main_set_validator": {
+      "passed": 12
+    },
+    "tests.unit.evals.test_pii_exceptions": {
+      "passed": 55
+    },
+    "tests.unit.evals.test_probe_validator": {
+      "passed": 8
+    },
+    "tests.unit.evals.test_probe_validator_regressions": {
+      "passed": 18
+    },
+    "tests.unit.evals.test_replay_baseline_reuse": {
+      "passed": 2
+    },
+    "tests.unit.evals.test_replay_resume": {
+      "passed": 3
+    },
+    "tests.unit.evals.test_replay_set": {
+      "passed": 5
+    },
+    "tests.unit.evals.test_review_assembly_metadata": {
+      "passed": 8
+    },
+    "tests.unit.evals.test_review_provenance": {
+      "passed": 34
+    },
+    "tests.unit.evals.test_review_provenance_variants": {
+      "passed": 4
+    },
+    "tests.unit.evals.test_review_tooling": {
+      "passed": 23
+    },
+    "tests.unit.evals.test_runtime": {
+      "passed": 3
+    },
+    "tests.unit.evals.test_safety_authoring": {
+      "passed": 3
+    },
+    "tests.unit.evals.test_safety_metrics": {
+      "passed": 3
+    },
+    "tests.unit.evals.test_statistics": {
+      "passed": 7
+    },
+    "tests.unit.faults.test_main_chain_faults": {
+      "passed": 5
+    },
+    "tests.unit.harness.test_evidence_focus": {
+      "passed": 16
+    },
+    "tests.unit.harness.test_executions": {
+      "passed": 6
+    },
+    "tests.unit.harness.test_graph": {
+      "passed": 3
+    },
+    "tests.unit.harness.test_intent": {
+      "passed": 41
+    },
+    "tests.unit.harness.test_node_policy": {
+      "passed": 5
+    },
+    "tests.unit.harness.test_production_pins": {
+      "passed": 1
+    },
+    "tests.unit.harness.test_retrieval_cache_port": {
+      "passed": 6
+    },
+    "tests.unit.harness.test_run_ask": {
+      "passed": 13
+    },
+    "tests.unit.infrastructure.test_llm_gateway": {
+      "passed": 8
+    },
+    "tests.unit.infrastructure.test_login_users_cli": {
+      "passed": 3
+    },
+    "tests.unit.ingestion.test_av_clamd": {
+      "passed": 3
+    },
+    "tests.unit.ingestion.test_chunker": {
+      "passed": 10
+    },
+    "tests.unit.ingestion.test_docx_extract": {
+      "passed": 4
+    },
+    "tests.unit.ingestion.test_filecheck": {
+      "passed": 22
+    },
+    "tests.unit.loop.test_adapt": {
+      "passed": 15
+    },
+    "tests.unit.loop.test_cli_dry_run": {
+      "passed": 3
+    },
+    "tests.unit.loop.test_gate": {
+      "passed": 11
+    },
+    "tests.unit.loop.test_observe": {
+      "passed": 20
+    },
+    "tests.unit.loop.test_reflect": {
+      "passed": 16
+    },
+    "tests.unit.loop.test_tickets": {
+      "passed": 3
+    },
+    "tests.unit.mcp.test_contracts": {
+      "passed": 6
+    },
+    "tests.unit.mcp.test_serve": {
+      "passed": 2
+    },
+    "tests.unit.mcp.test_server": {
+      "passed": 6
+    },
+    "tests.unit.retrieval.test_bm25_offline": {
+      "passed": 7
+    },
+    "tests.unit.retrieval.test_cache": {
+      "passed": 24
+    },
+    "tests.unit.retrieval.test_doc_focus": {
+      "passed": 3
+    },
+    "tests.unit.retrieval.test_fusion": {
+      "passed": 4
+    },
+    "tests.unit.retrieval.test_glossary_store": {
+      "passed": 3
+    },
+    "tests.unit.retrieval.test_hybrid": {
+      "passed": 4
+    },
+    "tests.unit.retrieval.test_index_coverage": {
+      "passed": 2
+    },
+    "tests.unit.retrieval.test_lexical_boundary": {
+      "passed": 11
+    },
+    "tests.unit.retrieval.test_normalization": {
+      "passed": 19
+    },
+    "tests.unit.retrieval.test_offline_bm25_contract": {
+      "passed": 4
+    },
+    "tests.unit.retrieval.test_pg_search_bm25_unit": {
+      "passed": 4
+    },
+    "tests.unit.retrieval.test_pg_simple_fts_literals": {
+      "passed": 9
+    },
+    "tests.unit.retrieval.test_pg_zhparser_fts_unit": {
+      "passed": 4
+    },
+    "tests.unit.retrieval.test_pinned": {
+      "passed": 3
+    },
+    "tests.unit.retrieval.test_production": {
+      "passed": 8
+    },
+    "tests.unit.retrieval.test_query_translation": {
+      "passed": 3
+    },
+    "tests.unit.retrieval.test_recheck": {
+      "passed": 18
+    },
+    "tests.unit.retrieval.test_rerank": {
+      "passed": 2
+    },
+    "tests.unit.retrieval.test_rewrite": {
+      "passed": 15
+    },
+    "tests.unit.retrieval.test_tokenizer": {
+      "passed": 9
+    },
+    "tests.unit.retrieval.test_vector_contracts": {
+      "passed": 4
+    },
+    "tests.unit.retrieval.test_versioning": {
+      "passed": 28
+    },
+    "tests.unit.safety.test_checks": {
+      "passed": 18
+    },
+    "tests.unit.skills.test_citation_verification": {
+      "passed": 2
+    },
+    "tests.unit.skills.test_label_query": {
+      "passed": 7
+    },
+    "tests.unit.skills.test_matrix": {
+      "passed": 27
+    },
+    "tests.unit.skills.test_no_bypass": {
+      "passed": 2
+    },
+    "tests.unit.skills.test_registry": {
+      "passed": 15
+    },
+    "tests.unit.skills.test_risk_skills": {
+      "passed": 6
+    },
+    "tests.unit.verification.test_elements": {
+      "passed": 6
+    },
+    "tests.unit.verification.test_rules": {
+      "passed": 13
+    },
+    "tests.unit.verification.test_verifier": {
+      "passed": 9
+    }
+  },
+  "skip_reasons": {
+    "candidate C: server unreachable (OperationalError)": 25,
+    "candidate B: server unreachable (OperationalError)": 45
+  },
+  "live_api": {
+    "device": "mps",
+    "provider_calls": 0,
+    "synthetic_oidc": true,
+    "checks": [
+      {
+        "method": "GET",
+        "path": "/healthz",
+        "status": 200,
+        "code": null,
+        "trace_header": true
+      },
+      {
+        "method": "GET",
+        "path": "/readyz",
+        "status": 200,
+        "code": null,
+        "trace_header": true
+      },
+      {
+        "method": "POST",
+        "path": "/v1/ask",
+        "status": 401,
+        "code": "unauthenticated",
+        "trace_header": true
+      },
+      {
+        "method": "POST",
+        "path": "/v1/ask",
+        "status": 422,
+        "code": "schema_violation",
+        "trace_header": true
+      },
+      {
+        "method": "GET",
+        "path": "/v1/tasks/verification-task",
+        "status": 401,
+        "code": "unauthenticated",
+        "trace_header": true
+      },
+      {
+        "method": "GET",
+        "path": "/metrics",
+        "status": 401,
+        "code": "unauthenticated",
+        "trace_header": true
+      },
+      {
+        "method": "GET",
+        "path": "/admin/traces/verification-trace/payload?purpose=verification-probe",
+        "status": 401,
+        "code": "unauthenticated",
+        "trace_header": true
+      }
+    ]
+  },
+  "corpus_preflight": {
+    "database": "medops_v2",
+    "active_documents": 333,
+    "active_chunks": 34948,
+    "released_policies": 1,
+    "index_coverage": "complete"
+  },
+  "limits": [
+    "No live model-provider answers or paid evaluations",
+    "No concurrency or capacity rerun",
+    "Candidate B/C unavailable; not counted as passed"
+  ]
+}

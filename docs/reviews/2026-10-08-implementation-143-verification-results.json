@@ -1,0 +1,63 @@
+{
+  "record": 143,
+  "date": "2026-10-08",
+  "self_audit": "passed for budget tooling, execution, metering and provenance; annotation disputes pending owner decision",
+  "full_check": {
+    "command": "env -u DEBUG make check",
+    "passed": 1612,
+    "skipped": 70,
+    "warnings": 1,
+    "seconds": 39.37,
+    "formatted_files": 419,
+    "mypy_source_files": 185,
+    "schema": "up to date",
+    "eval_audit": "pass with provisional warnings"
+  },
+  "new_tests": 18,
+  "targeted_tests": 32,
+  "actual_calls": 19,
+  "failures": 0,
+  "automatic_retries": 0,
+  "agree": 15,
+  "disputes": 4,
+  "owner_decision_groups": 3,
+  "production_writes": 0,
+  "dataset_frozen": false,
+  "budget": {
+    "attempts": 19,
+    "known_cost_usd": "2.917528",
+    "unresolved_reserved_usd": "0",
+    "remaining_usd": "2.082472",
+    "unresolved_attempts": [],
+    "total_budget_usd": "5.000000"
+  },
+  "raw_cli_cost_usd": "2.91752125000000002",
+  "token_total_including_cache": 204608,
+  "audit": "2026-10-08-implementation-143-review-audit.json",
+  "independent_second_human": false,
+  "limits": [
+    "USD is CLI subscription usage estimate, not an invoice amount",
+    "effort=high was requested but is not echoed by CLI",
+    "four disputes unresolved; suggestions unapplied",
+    "model review is not second human or formal product evaluation",
+    "single-gold review input does not include cover-page date evidence"
+  ],
+  "final_document_checks": {
+    "git_diff_check": "passed",
+    "local_markdown_links": {
+      "files_checked": 7,
+      "missing": 0
+    },
+    "pending_owner_decisions": 4,
+    "fabricated_decisions": 0
+  },
+  "annotation_validation": {
+    "command": "env -u DEBUG venv/bin/python -m medops.evals.annotation_revision evals/main_set/drafts/revision-2026-10-08-v2 --with-pages",
+    "checks_passed": true,
+    "proposals": 19,
+    "gold_units": 39,
+    "mapped": 39,
+    "freeze_ready": false,
+    "quota_shortfalls": {}
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-08",
+  "command": "env -u DEBUG make check",
+  "exit_code": 0,
+  "tests": {"passed": 1461, "skipped": 70, "warnings": 1, "duration_s": 36.56},
+  "additional_rls_tests": {"passed": 4, "command": "env -u DEBUG venv/bin/pytest -q tests/integration/test_answer_review_metadata.py"},
+  "new_unit_tests": 21,
+  "format_files_at_full_check": 397,
+  "mypy_source_files": 176,
+  "self_audit": "passed for record 136 scope",
+  "stage_01": "pending",
+  "paid_api_calls": 0,
+  "real_semantic_judgments": 0,
+  "formal_gate": false,
+  "limitations": ["rubric requires actual independent calibration", "new main runs only; historical input relationships cannot be inferred", "replay snapshots pending", "second human unavailable/pending", "no remote CI run"]
+}

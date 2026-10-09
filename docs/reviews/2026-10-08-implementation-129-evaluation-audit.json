@@ -1,0 +1,187 @@
+{
+  "catalog_version": "eval-catalog-v1",
+  "checks_passed": true,
+  "datasets": [
+    {
+      "role": "probe",
+      "path": "evals/probe/precise_clause/v2",
+      "integrity": "passed",
+      "samples": 107,
+      "query_language": {
+        "en": 32,
+        "mixed": 53,
+        "zh": 22
+      },
+      "departments": {
+        "CO": 32,
+        "MA": 30,
+        "PV": 45
+      },
+      "second_human_review": "not_declared",
+      "page_validation": "passed",
+      "source_language": {
+        "en": 64,
+        "mixed": 0,
+        "zh-Hans": 10,
+        "zh-Hant": 33
+      },
+      "answerable": 107,
+      "no_answer": 0,
+      "derived": 32,
+      "required_gold_groups": {
+        "1": 107
+      },
+      "dataset_version": "v2",
+      "dataset_hash": "1fc5089f6fa7f80a1a5e23940826b0d4c811cde29e225dd8305241a33beb0321"
+    },
+    {
+      "role": "main",
+      "path": "evals/main_set/main-v3-provisional",
+      "integrity": "passed",
+      "samples": 614,
+      "query_language": {
+        "en": 200,
+        "mixed": 369,
+        "zh": 45
+      },
+      "departments": {
+        "CO": 202,
+        "MA": 133,
+        "PV": 279
+      },
+      "second_human_review": {
+        "status": "pending",
+        "reviewer_id": null,
+        "statement": "决策人 2026-09-21 答复“第二人工复核人暂无”；基线 5.9 的第二人工复核未完成，本集只能以 provisional 运行，报告须标注。"
+      },
+      "page_validation": "passed",
+      "source_language": {
+        "zh-Hans": 30,
+        "zh-Hant": 139,
+        "en": 445,
+        "mixed": 0
+      },
+      "answerable": 553,
+      "no_answer": 61,
+      "derived": 200,
+      "required_gold_groups": {
+        "1": 553,
+        "0": 61
+      },
+      "mapping": {
+        "mapped": 546,
+        "unmappable": 7
+      },
+      "dataset_version": "main-v3-provisional",
+      "dataset_hash": "56c1627af2655a8e9438fdedc9dd61aca76d5b2f1115053ee45c804280469994"
+    },
+    {
+      "role": "safety",
+      "path": "evals/safety_set/safety-v2-provisional",
+      "integrity": "passed",
+      "samples": 170,
+      "query_language": {
+        "en": 64,
+        "mixed": 2,
+        "zh-Hans": 53,
+        "zh-Hant": 51
+      },
+      "departments": {
+        "CO": 52,
+        "MA": 60,
+        "PV": 58
+      },
+      "second_human_review": "pending",
+      "page_validation": "not_applicable",
+      "withdrawn": [
+        "ss-0111",
+        "ss-0112",
+        "ss-0116",
+        "ss-0120",
+        "ss-0121",
+        "ss-0123",
+        "ss-0128"
+      ],
+      "confirmation": "决策人 2026-10-06 答复「可以 按照建议来」（实现方登记）；annotator-01 逐条确认缺",
+      "dataset_version": "safety-v2-provisional",
+      "dataset_hash": "a615186c7070ce5c69f3dbbac27257faa93d2c5c3292cfa81c201f4b7e139e28"
+    },
+    {
+      "role": "replay",
+      "path": "evals/replay/replay-v3",
+      "integrity": "passed",
+      "main": 614,
+      "safety": 170,
+      "screening_subset": 200,
+      "sources": {
+        "main": {
+          "dataset_version": "main-v3-provisional",
+          "dataset_hash": "56c1627af2655a8e9438fdedc9dd61aca76d5b2f1115053ee45c804280469994",
+          "run": "evals/harness/runs/2026-10-02-full-ask-v4-released",
+          "rows_sha256": "6852e35b0a37c7c8df2a0b4b3e6f0568233a1fa855225c843f3d6b611262fa70",
+          "versions": {
+            "policy_version": "policy-m2-smoke-1+rel:3361ed13",
+            "retrieval_version": "2c872c44ded5f7e5aa82c5d8642f51f4e08ec5f00ddc05deb1de009731a47d05",
+            "skill_version_set": [],
+            "model_config_version": "answer=gpt-6-sol;judge=gpt-6-sol;verifier-v2+support-rules-v3+polarity_only;qt=gpt-6-luna"
+          }
+        },
+        "safety": {
+          "dataset_version": "safety-v1-provisional",
+          "run": "evals/harness/runs/2026-10-02-safety-v3-released",
+          "rows_sha256": "633f8eabfe9017f131c95076c1179c25659f3f475a82f18bd9720d407794bcb7",
+          "versions": {
+            "policy_version": "policy-m2-smoke-1+rel:3361ed13",
+            "retrieval_version": "2c872c44ded5f7e5aa82c5d8642f51f4e08ec5f00ddc05deb1de009731a47d05",
+            "skill_version_set": [
+              "ae_extraction@1.0.0",
+              "citation_verification@1.0.0",
+              "label_query@1.0.0",
+              "off_label_check@1.0.0",
+              "protocol_deviation@1.0.0"
+            ],
+            "model_config_version": "answer=gpt-6-sol;judge=gpt-6-sol;verifier-v2+support-rules-v3+polarity_only;qt=gpt-6-luna"
+          }
+        }
+      },
+      "dataset_version": "replay-v3",
+      "dataset_hash": "2275093e619a709801bd94d14a8ed68e2efc2feb9a64217e213b00a4b253107e"
+    }
+  ],
+  "findings": [
+    {
+      "level": "warning",
+      "code": "unmappable_gold",
+      "detail": "7 gold groups remain unmappable; keep them as misses in the recall denominator."
+    },
+    {
+      "level": "warning",
+      "code": "replay_uses_old_safety",
+      "detail": "Historical replay is intact but cannot stand in for the current frozen safety set.",
+      "retired_sample_ids": [
+        "ss-0111",
+        "ss-0112",
+        "ss-0116",
+        "ss-0120",
+        "ss-0121",
+        "ss-0123",
+        "ss-0128"
+      ]
+    },
+    {
+      "level": "warning",
+      "code": "independent_review_pending",
+      "detail": "Main and safety remain provisional. Mechanical success is not independent human review or release acceptance."
+    },
+    {
+      "level": "warning",
+      "code": "no_unseen_holdout",
+      "detail": "Registered sets have been used for development/regression; no new unseen holdout is registered."
+    }
+  ],
+  "review_actions": {
+    "keep_gold_recheck_system": 13,
+    "versioned_gold_or_query_revision": 13,
+    "rejudge_in_new_run_keep_gold": 2
+  }
+}
