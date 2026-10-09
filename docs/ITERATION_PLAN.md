@@ -1,6 +1,6 @@
 # Medy 项目完整迭代计划与工程建议
 
-更新日期：2026-10-09。生产 BM25 切换与迁移证据见[记录 162](reviews/2026-10-09-implementation-162-production-bm25-cutover.md)；Langfuse 部署见[记录 163](reviews/2026-10-09-implementation-163-langfuse-deployment-and-recovery.md)；Redis 缓存切换、清账与恢复见[记录 164](reviews/2026-10-09-implementation-164-redis-cache-cutover.md)。本文汇总代码修复、BM25、Redis、Langfuse、模型路由、评测、性能和产品能力，为每项工作明确现状、价值、步骤、约束与验收依据。
+更新日期：2026-10-10。生产 BM25 切换与迁移证据见[记录 162](reviews/2026-10-09-implementation-162-production-bm25-cutover.md)；Langfuse 部署见[记录 163](reviews/2026-10-09-implementation-163-langfuse-deployment-and-recovery.md)；Redis 缓存切换、清账与恢复见[记录 164](reviews/2026-10-09-implementation-164-redis-cache-cutover.md)；向量规划模式、质量取舍与连接等价性见[记录 168](reviews/2026-10-10-implementation-168-fixed-vector-plan-and-quality-audit.md)。本文汇总代码修复、BM25、Redis、Langfuse、模型路由、评测、性能和产品能力，为每项工作明确现状、价值、步骤、约束与验收依据。
 
 文中的“建议”“拟议”是后续设计，不计为已交付能力。原 ADR、冻结数据、许可与发布要求继续有效；本文不改写历史门禁或批准记录。部署是否开启某项能力，须由部署配置和运行证据确认。
 
@@ -106,7 +106,7 @@ BM25 是算法，D 是一种实现。倾向数据库方案的原因是现有 Pos
 
 ### 4.4 实施步骤
 
-1. **已完成：** 固定文档版本、chunk UUID/哈希、向量、分词、词典、停用词、候选数、融合及重排版本；新 `retrieval_version` 为 `19c755…e4d1`。
+1. **已完成：** 固定文档版本、chunk UUID/哈希、向量、分词、词典、停用词、候选数、融合及重排版本；BM25 切换时基础 `retrieval_version` 为 `19c755…e4d1`，记录 168 加入向量规划模式后为 `5ae70f4f…28d9`；发布策略参数继续参与实际运行哈希。
 2. **已完成：** 不依赖 RLS 隐藏统计。MA/PV/CO 使用三张表和三个 BM25 索引，共享文档按 read ACL 复制；草稿/撤回文本不入统计；撤权触发器在 ACL 事务中同步删除旧部门副本。
 3. **已完成：** PostgreSQL 16→17 逻辑迁移。三个数据库恢复前后 Alembic、表、逐表行数、语料指纹和授权完全一致；随后升级 0022 并重建索引。旧 PG16 卷与三份带哈希 dump 保留。
 4. **已完成：** 生产装配、outbox、覆盖检查、复合版本、Docker Compose 与 CI 改用 BM25；本机正式库与安全库 readiness 均为 true。
@@ -240,6 +240,8 @@ Langfuse 官方文档包含 score、实验比较和人工标注队列，可作�
 2026-10-09 的首个工程切片已完成：远程查询翻译通过进程级 4 worker / 8 在途有界池与原始/改写检索及文档聚焦重叠，250 ms 无槽位时以可重试系统错误失败关闭；Trace context 跨线程保留。词法/向量仍共享身份事务，本地嵌入与重排仍共享 pinned 模型线程，未在缺少一致性设计时强行并发。详见[记录 165](reviews/2026-10-09-implementation-165-translation-retrieval-overlap.md)。
 
 第二个零费用工程切片为共享 pinned 模型线程补了 8 个总在途任务上限和 250 ms 准入等待。饱和时快速返回可重试系统故障；一次模型调用若超过执行时限，则 lane 保持 stalled，后续请求立即拒绝并等待进程重启，不再继续堆积。历史微基准中 MPS batch 8 与 20 的满载重排时间接近，逐句裁剪基准中 batch 大于 8 反而更慢，因此没有把“增大 batch”直接当成优化。详见[记录 166](reviews/2026-10-09-implementation-166-pinned-model-backpressure.md)。
+
+2026-10-10 完成词法/向量双连接评估：每臂 80 次，在预开连接条件下中位收益约 6 ms，不实施。定位到 auto 规划模式随连接使用次数改变向量候选，随后在 554 道 gold 题上比较固定 custom/generic：generic 总 Recall +0.54 pp，但 dose_unit 少一题，本次平均耗时从 145.54 增至 263.11 ms，未采用。最终固定 custom；107 题新连接/复用候选和分数完全一致，重复无漂移，组合版本包含规划模式。这是稳定性修复；原始单通道 Recall、单次测量时延不能当作完整 QA 门禁。重排动态批处理/服务化为下一项 PERF-01D，详见记录 167/168。
 
 ### 8.3 性能实验与验收
 

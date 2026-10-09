@@ -1,0 +1,72 @@
+{
+  "device": "mps",
+  "dept": "MA",
+  "queries": 8,
+  "rounds": 10,
+  "n_per_mode": 80,
+  "method": "alternating adjacent arms; two pre-opened identity-bound connections; hosted LLM calls disabled",
+  "production_retrieval_version": "3f4f57fad62a6c9c7f2bff6b40bc07f397ca0844f4466994ba2ad6fb1b30fb6a",
+  "lexical_versions": {
+    "retriever_version": "pg-textsearch-bm25-departmental-v1",
+    "tokenizer_version": "tok-jieba-v2+pg_textsearch-1.5.1:simple:k1=1.2:b=0.75:corpus=department",
+    "dictionary_version": "jieba-0.42.1+default+stop:b3f772a000465cb7",
+    "normalization_version": "norm-v1"
+  },
+  "vector_versions": {
+    "retriever_version": "pgvector-hnsw-cosine-generic-plan-v2",
+    "embedding_version": "emb-bge-m3-dense-v1",
+    "normalization_version": "norm-v1"
+  },
+  "channel_variation_against_first_run": {
+    "sequential": {
+      "lexical": {
+        "comparisons": 76,
+        "order_changes": 0,
+        "set_changes": 0,
+        "min_overlap_at_20": 20
+      },
+      "vector": {
+        "comparisons": 76,
+        "order_changes": 0,
+        "set_changes": 0,
+        "min_overlap_at_20": 20
+      }
+    },
+    "parallel": {
+      "lexical": {
+        "comparisons": 76,
+        "order_changes": 0,
+        "set_changes": 0,
+        "min_overlap_at_20": 20
+      },
+      "vector": {
+        "comparisons": 76,
+        "order_changes": 0,
+        "set_changes": 0,
+        "min_overlap_at_20": 20
+      }
+    }
+  },
+  "sequential": {
+    "p50_ms": 127.87,
+    "p95_ms": 146.18,
+    "mean_ms": 128.49,
+    "min_ms": 109.76,
+    "max_ms": 150.69
+  },
+  "parallel": {
+    "p50_ms": 121.81,
+    "p95_ms": 137.64,
+    "mean_ms": 122.27,
+    "min_ms": 104.45,
+    "max_ms": 149.26
+  },
+  "channels": {
+    "sequential_lexical_p50_ms": 6.21,
+    "sequential_vector_p50_ms": 121.68,
+    "parallel_lexical_p50_ms": 6.08,
+    "parallel_vector_p50_ms": 121.73
+  },
+  "parallel_minus_sequential_p50_ms": -6.06,
+  "parallel_minus_sequential_p50_pct": -4.7
+}

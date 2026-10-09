@@ -1,6 +1,6 @@
 # 当前任务台账
 
-更新：2026-10-09。完整设计与任务说明见[迭代计划](ITERATION_PLAN.md)，阶段通过条件见[阶段表](ITERATION_STAGES.md)。本页只记录当前有效状态；历史记录中的旧待办不自动覆盖本页。
+更新：2026-10-10。完整设计与任务说明见[迭代计划](ITERATION_PLAN.md)，阶段通过条件见[阶段表](ITERATION_STAGES.md)。本页只记录当前有效状态；历史记录中的旧待办不自动覆盖本页。
 
 状态：`DONE` 已完成并验证；`READY` 可无付费继续；`HUMAN` 需要真实人工决定；`PAID` 每次运行前需要用户明确批准本次范围和费用；`BLOCKED` 等待前置；`OPTIONAL` 不阻塞当前迭代。
 
@@ -9,6 +9,7 @@
 | ID | 任务 | 状态 | 完成或前置证据 |
 | --- | --- | --- | --- |
 | ENV-01 | 本地 `DATABASE_URL` 与 `DATABASE_ADMIN_URL` 指向具备持久费用账本的正式本地事实库 | DONE | 本机 `.env` 已由 `medops` 改为 `medops_v2`；不记录凭据 |
+| ENV-02 | 锁定依赖运行环境迁出 iCloud 管理范围 | DONE | 本地 `venv` 链接外部缓存目录，原环境保留；锁哈希安装、pip check、repo 外导入通过；记录 168 |
 | DB-01 | `medops_v2` 升至 migration 0022 | DONE | 0020/0021 为费用账本；0022 为部门隔离 BM25；记录 162 |
 | DB-02 | `medops_v2_safety` 升至 migration 0022 | DONE | PG17 逻辑恢复核对后由 0021 升至 0022，索引零缺口 |
 | DB-03 | 旧开发库 `medops` 的去留 | DONE | 同步迁移到 PG17/0022 并保留；没有向量索引，API/正式评测不连接它 |
@@ -36,7 +37,7 @@ probe v4 与 `main-v5-provisional` 均已冻结。EVAL-11 已完成：580 个 go
 | W-01 | 删除 Finder 副本 `src/medops/infrastructure/llm/budget 2.py` | DONE | 文件未跟踪，已删除，避免 `git add -A` 误收 |
 | W-02 | 区分源码、评测产物和临时 `output/` | DONE | BM25 提交只含实现、测试、迁移、部署配置与文档；备份及 `output/` 未纳入 Git |
 | W-03 | 按功能边界拆分提交 | DONE | BM25 实现与文档分两批提交；不按作者拆分 |
-| W-04 | 每组提交前运行定向检查，最终运行 `make check` | DONE | 记录 166：1721 passed、70 skipped；ruff、格式、mypy、Schema 漂移与评测审计均通过 |
+| W-04 | 每组提交前运行定向检查，最终运行 `make check` | DONE | 记录 168：1730 passed、70 skipped；ruff、格式、mypy、Schema 漂移与评测审计均通过 |
 | W-05 | 更新 README、阶段表、路线图和验收报告 | DONE | BM25、Langfuse、Redis 工程切换与待付费质量门禁已分开记录 |
 
 建议提交顺序：评测标准与工具；API/Harness 重构（含记录 143 的代码）；遥测与 Langfuse；运行完整性/0020/MCP；文档与证据（含记录 143 的文档）。
@@ -113,7 +114,9 @@ Langfuse 的 `score-create` 通过 `/api/public/ingestion` 在 v4.54.0 真实接
 | CACHE-10 | 真实重复问题流量收益测试 | PAID |
 | PERF-01A | 查询翻译与原始/改写检索重叠；有界并发、背压和过载失败关闭 | DONE | 4 worker / 8 在途 / 250 ms 等待；Trace context 保留；记录 165 |
 | PERF-01B | 为本地嵌入/重排单线程增加总在途上限、短时背压和卡死后快速拒绝 | DONE | 8 个总在途、250 ms 准入等待；已卡死 lane 立即返回可重试依赖故障；记录 166 |
-| PERF-01C | 评估词法/向量并行与重排动态批处理或独立服务 | READY | 先解决身份事务与事实快照；既有 MPS 证据不支持仅放大 batch，服务化需独立基准 |
+| PERF-01C | 评估词法/向量双连接并行 | DONE：不实施 | 8 题每臂 80 次，乐观预开连接也仅约 6 ms 中位收益；记录 167/168；没有接入生产 |
+| VEC-01 | 修复向量规划模式随连接复用切换 | DONE | 固定 custom 并加入组合版本；107 题重复无漂移，新连接/复用候选及分数 107/107 一致；generic 的 4 gains / 1 loss 与成本留证并否决为默认值；记录 168 |
+| PERF-01D | 评估重排动态批处理或独立服务 | READY | 固定模型与排序规则；先测吞吐、尾延迟、故障隔离和排序一致性，再决定是否接线 |
 | PERF-10 | 并发 1/2/4/8/16 的真实模型容量复测 | PAID |
 | FOCUS-01 | 保护数字、否定、条件和跨块证据，选定逐句裁剪候选 | READY |
 | FOCUS-09 | 逐句裁剪正式多轮门禁 | PAID |

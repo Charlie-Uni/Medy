@@ -8,15 +8,17 @@ MedOps Copilot 是面向医学事务、药物警戒和临床运营的可信医�
 
 每个任务的当前状态与对应基础知识点，见 [任务与知识点对照](docs/TASK_KNOWLEDGE_MAP.md)。
 
-## 最新执行入口（2026-10-09）
+## 最新执行入口（2026-10-10）
 
 按用户确认的十项优先级及每轮自审规则推进，见[当前任务台账](docs/CURRENT_TASKS.md)和[分阶段执行与自审](docs/ITERATION_STAGES.md)。评测标准修订、来源契约、回放绑定和模型裁判校准已经形成冻结的 `probe-v4` 与 `main-v5-provisional`；第二独立人工仍未具备，因此相应结论继续标为 provisional。
 
-生产词法通道已按项目所有者决定切换到部门隔离的 `pg_textsearch` BM25：PostgreSQL 17、extension 1.5.1、migration 0022，MA/PV/CO 各用独立物理语料，避免 RLS 隐藏行参与跨部门 IDF/词频统计。正式库与安全库已完成逻辑迁移、索引构建和 readiness 核验，旧 PG16 卷及逐库逻辑备份保留。设计、实测数据、故障和回滚边界见[实现记录 162](docs/reviews/2026-10-09-implementation-162-production-bm25-cutover.md)，许可与发布资产见[许可记录](docs/reviews/2026-10-09-licence-dossier-pg-textsearch.md)。最新本地全量检查为 1713 passed、70 skipped；新冻结集上的付费检索与答案级 BM25 对照仍需单独授权，工程切换不等同于质量门禁通过。
+生产词法通道已按项目所有者决定切换到部门隔离的 `pg_textsearch` BM25：PostgreSQL 17、extension 1.5.1、migration 0022，MA/PV/CO 各用独立物理语料，避免 RLS 隐藏行参与跨部门 IDF/词频统计。正式库与安全库已完成逻辑迁移、索引构建和 readiness 核验，旧 PG16 卷及逐库逻辑备份保留。设计、实测数据、故障和回滚边界见[实现记录 162](docs/reviews/2026-10-09-implementation-162-production-bm25-cutover.md)，许可与发布资产见[许可记录](docs/reviews/2026-10-09-licence-dossier-pg-textsearch.md)。最新本地全量检查为 1730 passed、70 skipped；新冻结集上的付费检索与答案级 BM25 对照仍需单独授权，工程切换不等同于质量门禁通过。
 
 Langfuse v4.54.0 已以同网络、metadata-only 方式部署：真实 OTLP trace、评分与反馈类别关联、API 回读及服务中断后的队列恢复均通过，模型调用 0、费用 0；登录后的 UI detail 仍待人工目视。启动与复验见 [Langfuse 运维说明](docs/LANGFUSE.md)，实现与失败补救见[记录 163](docs/reviews/2026-10-09-implementation-163-langfuse-deployment-and-recovery.md)。
 
 Redis 候选缓存已切换到本机主运行配置：主库与 safety 使用独立 namespace，Compose 常驻消费者已清空 338/339 条历史失效事件，启用缓存时积压会进入 readiness，断连时安全回源。真实问题流量的命中率、完整问答 P95、质量与费用收益仍待 CACHE-10 付费对照，不能用 1.14 ms 的纯命中 smoke 代替。实现与演练见[记录 164](docs/reviews/2026-10-09-implementation-164-redis-cache-cutover.md)。
+
+向量检索现固定定制规划模式，避免连接复用后自动换计划导致候选漂移；107 题新连接/复用的候选与分数逐项一致，重复排名无变化。通用计划候选在主集 554 道 gold 题上仅 +0.54 pp，却有一题受保护切片回归和更高的排序扫描耗时，未选为默认值。基础组合版本为 `5ae70f4f…28d9`；这次是稳定性修复，未宣称完整问答召回或 P95 改善。详细错误、取舍与复现证据见[记录 167](docs/reviews/2026-10-09-implementation-167-channel-overlap-and-vector-plan-drift.md)、[记录 168](docs/reviews/2026-10-10-implementation-168-fixed-vector-plan-and-quality-audit.md)。
 
 ## 早期进度快照（历史）
 

@@ -30,3 +30,15 @@
 ### 2026-09-20：向量通道运行 `2026-09-20-dec002-bge-m3-v1`（实现记录 42）
 
 探针 v2（107 条）、`medops_v2`（2,662 chunk 全部嵌入）、K=20、CPU：language_matched 严格宏平均 Recall@20 **82.7%**（MA 100%、PV 79.3%、CO 56.2%），cross_lingual **65.6%**（诊断阈值 50% 达到）；切片 dose_unit / drug_name_zh / time_window 100%，negation 89.5%，mixed_zh_en 75.5%，protocol_id 58.8%；泄漏 0、不可复现 0、无候选耗尽；P95 138.4 ms（含查询嵌入）。与词法基线对比：A2 77.3% / 15.6%，B2 80.0% / 12.5%。结论：向量通道承担跨语言查询的预期成立；编号与英文指南为弱项，由词法通道互补，端到端融合按基线 M1-21 门禁判定。
+
+### 2026-10-10：扩量语料的规划模式修复（实现记录 167/168）
+
+333 份 active 文档的当前语料上，旧 auto 模式的近似候选随连接复用与定制/通用计划切换而变化。8 题微基准、固定向量和实际缓存语句 `EXPLAIN EXECUTE` 诊断确认：当前 custom 使用 HNSW，generic 使用排序扫描；旧小语料复现结论不直接覆盖现状。
+
+在冻结主集 v5 的显式有 gold 子集上，554 题、582 个 gold（580 mapped、2 unmappable 保留 miss）、K=20/MPS：custom strict macro Recall 82.90%，generic 83.44%，4 gains / 1 loss；dose_unit 65 题从 81.54% 降至 80.00%，单次顺序测量的平均耗时从 145.54 增至 263.11 ms。Generic 不作为生产默认值；不改 gold、切片或阈值来掩盖损失。
+
+生产固定 `force_custom_plan`，向量检索器版本 `pgvector-hnsw-cosine-custom-plan-v1` 纳入组合哈希，基础版本 `5ae70f4f…28d9`。保留 auto 和 generic 作为历史/诊断选项；模型、维度、余弦与索引构建参数未变，无需重嵌入。旧八成员组合未提供扩展时保持原哈希。统计或 DDL 变化后仍可能重新规划，需按新事实复测。
+
+探针 v4/MPS、107 题、1 次预热 + 2 次测量：custom 总 Recall 64.49%，语言一致 68.00%、跨语言 56.25%，重复/泄漏 0；比预热后 auto 少一个 pc-0052 命中。另行每题新建默认 auto 连接与复用生产 custom 连接比较，候选和分数 107/107 完全相同，证明本批原始查询保留新连接的初始规则。该 MPS 诊断不替代 2026-09-20 的 CPU 预登记运行或正式混合/答案级门禁，也不宣称召回提升。
+
+错误原话、输入预检、原始排名、事实摘要、逐题取舍与自审见[记录 168](../reviews/2026-10-10-implementation-168-fixed-vector-plan-and-quality-audit.md)。

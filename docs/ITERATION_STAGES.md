@@ -1,6 +1,6 @@
 # 分阶段执行与每轮自审
 
-更新：2026-10-09。依据用户确认的十项顺序、[原项目描述](source/PROJECT_DESCRIPTION_v0.1.md)、[工程基线](ENGINEERING_BASELINE.md)及[完整迭代计划](ITERATION_PLAN.md)。逐项状态见[当前任务台账](CURRENT_TASKS.md)。本页是执行状态入口，不调整原验收阈值。
+更新：2026-10-10。依据用户确认的十项顺序、[原项目描述](source/PROJECT_DESCRIPTION_v0.1.md)、[工程基线](ENGINEERING_BASELINE.md)及[完整迭代计划](ITERATION_PLAN.md)。逐项状态见[当前任务台账](CURRENT_TASKS.md)。本页是执行状态入口，不调整原验收阈值。
 
 ## 1. 执行规则
 
@@ -26,7 +26,7 @@
 | 4 / 第一批 | 指定来源与证据覆盖；OPT-13 | 文件/产品/版本约束，文件内容与他文档引用的意图区分，必需组完整性；缺陷题及正常反例同时回归 | 工程候选完成：34 条来源契约、独立计分、默认 off 的运行时约束及真实库零费用回归见记录 156；答案级正式对照与发布决定待付费授权 |
 | 5 / 第二批 | BM25；OPT-07 | 复用候选 D，固定分词/其他检索条件，统计隔离和迁移/回滚方案，完整检索及作答配对结果 | 工程切换已完成：部门物理隔离、PG17 迁移和本机回滚副本已验证；新冻结集检索/作答付费门禁待授权 |
 | 6 / 第二批 | Redis；OPT-08 | 共享缓存、持续失效消费、命中率/耗时；撤权/归档/新版本/Redis 故障测试，真实重复流量收益 | 工程切换与故障门完成；CACHE-10 真实重复问题收益待付费授权，记录 164 |
-| 7 / 第二批 | 并发与重排；OPT-11 | 独立检索与翻译并行评估、重排批处理/服务方案、有界并发、排队、超时与过载失败关闭 | 部分完成：翻译重叠见记录 165；本地模型 lane 的 8 在途背压与卡死快速拒绝见记录 166；通道事务方案、重排服务基准和真实容量复测待做 |
+| 7 / 第二批 | 并发与重排；OPT-11 | 独立检索与翻译并行评估、重排批处理/服务方案、有界并发、排队、超时与过载失败关闭 | 部分完成：翻译重叠与模型 lane 背压见记录 165/166；记录 167/168 完成双连接评估并决定不实施，同时修复向量规划漂移；重排服务基准和真实容量复测待做 |
 | 8 / 第二批 | 上下文裁剪；OPT-11 | 数字、否定、适用条件与跨块证据保持；Token、质量、时延各自与组合对照 | 待开始，沿用既有候选与否决记录 |
 | 9 / 第三批 | 多轮与人工接手；OPT-14 | session 实体/身份隔离/失效，原文核对与升级材料，一次完整业务处理及失败路径 | 待开始 |
 | 10 / 第三批 | 受控 Loop；OPT-16 | 真实反馈案例→候选→运行应用→回放→人工批准→灰度/回滚，明确自动化边界 | 待开始，复用原受控发布能力 |
@@ -88,4 +88,6 @@
 - [记录 164](reviews/2026-10-09-implementation-164-redis-cache-cutover.md)：主库 Redis 缓存、独立 namespace、常驻失效 worker、按模式 readiness、两库清账与断连恢复；1717 passed、70 skipped；真实流量收益待付费。
 - [记录 165](reviews/2026-10-09-implementation-165-translation-retrieval-overlap.md)：翻译与原始检索重叠、4 worker / 8 在途 / 250 ms 有界背压、Trace context 与过载失败关闭；1720 passed、70 skipped；无真实性能成绩。
 - [记录 166](reviews/2026-10-09-implementation-166-pinned-model-backpressure.md)：共享嵌入/重排 lane 的 8 个总在途上限、250 ms 准入等待与 stalled 快速拒绝；1721 passed、70 skipped；不把工程保护写成 P95 改善。
+- [记录 167](reviews/2026-10-09-implementation-167-channel-overlap-and-vector-plan-drift.md)：真实通道双连接并行仅约 6 ms 中位收益，不实施；发现旧 auto 向量候选随计划切换漂移，转 VEC-01；iCloud 占位事故与临时恢复留证。
+- [记录 168](reviews/2026-10-10-implementation-168-fixed-vector-plan-and-quality-audit.md)：554 道有 gold 题对照、4 gains / 1 loss、generic 成本与受保护切片回归完整保留，最终固定 custom；107/107 新连接/复用候选和分数一致，214 次重复无漂移；环境迁出 iCloud、最终 1730 passed、70 skipped。没有外部模型调用，完整答案/安全/容量门禁不变。
 - [记录 146](reviews/2026-10-08-implementation-146-task-ledger-and-paid-run-preflight.md)：发现本机 `.env` 仍指向 0007 的旧开发库并会阻断首次模型调用；已改指 `medops_v2`，将两个正式本地事实库升至 0021，补应用角色的受控月度费用读取函数，删除未跟踪 Finder 副本，并把所有模型运行改为逐次费用批准。
