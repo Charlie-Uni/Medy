@@ -6,7 +6,7 @@
 
 | 进程 | 就绪 | 说明 |
 | --- | --- | --- |
-| API | `GET /healthz`（进程活着）、`GET /readyz`（能连数据库，2 秒超时；不通 → 503） | `/metrics`（ops 角色）给出 60 分钟窗口的请求 / 升级 / 时延分位 / 费用 / 队列 |
+| API | `GET /healthz`（进程活着）、`GET /readyz`（实际数据库一致、active 语料及生产索引完整、版本一致，且 outbox 无死信/临界积压；检查失败 → 503，最多 5 秒状态缓存） | `/metrics`（ops 角色）给出请求 / 升级 / 时延 / 费用 / 队列、索引覆盖与三个 outbox 消费者积压/死信 |
 | worker | 日志 `worker starting` / `task finished`；`select status, count(*) from tasks group by 1` | 无 HTTP；数据库不可达时记录警告并继续轮询（记录 78） |
 | MCP | Streamable HTTP `initialize` 成功；`list_tools` 返回四个只读工具 | 只读角色（INV-AUTH-04） |
 | Loop | 定时任务退出码 0 且输出 JSON 报告 | observe → reflect → tickets → adapt propose |
@@ -39,10 +39,16 @@ docker compose ps; docker compose logs --since 10m api worker | grep -E '"level"
 - 行为：系统不给部分答案、不重试超过 2 次、拒答仍先于模型调用（记录 61 / 78）；恢复后无需重启。
 - 处置：确认供应商状态与本机网络；等待或切换网络；不要提高重试次数。若 15 分钟不恢复，向用户公告「问答暂不可用，任务排队中」。
 
-### 3.2 `/readyz` 503 或大量 `dependency_unavailable`（数据库）
+### 3.2 `/readyz` 503 或大量 `dependency_unavailable`（数据库 / 索引）
 
 - 判定：`readyz` 503；请求 5 秒内 503（连接超时 `DB_CONNECT_TIMEOUT_S`）；worker 日志 `dependency unavailable, retrying`。
 - 处置：`docker compose ps postgres`、`docker logs medops-postgres --tail 100`；磁盘满 / 容器重启 / 连接数打满（`max_connections` 100）依次排除。恢复后不需要重启服务进程。
+
+- 记录 137 起，数据库连通也可能因索引缺失而未就绪。先用同一目标库运行 `env -u DEBUG make retrieval-check`（从 Settings 读取管理连接，不在命令行粘贴密码），看 `problems`、`coverage` 与版本布尔值。检查连接必须拥有全局可见性，不能用 RLS 空结果当作覆盖完整。
+- 同时核对 `DATABASE_URL` 与 `DATABASE_ADMIN_URL` 的目标库。当前本机默认旧库 `medops` 缺向量；正式语料在 `medops_v2`。检查工具会输出库名，不会自动重写配置或重建错误的库。
+- `medops_retrieval_indexes_ready` 与 active 空文档、missing lexical/embedding 指标反映当前可检索性；outbox 的 pending、oldest_age、dead_lettered 按各消费者 ACK 计算，与 `published_at` 无关。词法/向量的死信或超过 300 秒的未 ACK 积压会使就绪失败；缓存消费者仍报告和告警，但缓存关闭时的历史积压不阻塞索引就绪。修复根因后用 `python -m medops.worker.retrieval --database <库名> --consumer <消费者> --requeue-event <event_id> --actor <操作人>` 显式重放，不能手工补 ACK。
+- 5 分钟积压并持续 5 分钟的 warning 是运维诊断初值，不改变质量验收门槛；本轮只交付告警规则，尚未证明 Prometheus 已加载并触发。
+- 索引检查为只读一致性快照，最多有 5 秒缓存窗口；每条 SQL 1 秒超时，不是整次调用 1 秒。共享缓存命中的权限与状态仍逐候选复查。重建与消费恢复需按明确目标库操作，积压为 0 也不能替代覆盖检查。
 
 ### 3.3 `audit_unavailable` 503
 
@@ -127,3 +133,11 @@ POST /admin/policies/{id}/rollback  {"reason": "…"}                           
 ## 8. 事故记录模板
 
 放在 `docs/reviews/YYYY-MM-DD-incident-NN-<slug>.md`：时间线（UTC）、影响面（请求数 / 部门 / 是否触及安全链）、根因、处置命令、恢复确认（哪条 Trace / 指标）、后续项与负责人。记录 77 §6.2 与记录 78 §4 是两个范例。
+
+## Langfuse 待送评分排查（记录 142）
+
+1. 查看同步进程的 collection/delivery 数量，以及 SQLite `scores` 表的 delivered、attempts、last_error、next_attempt_at、dead_lettered_at；不要导出应用密钥或添加正文来排查。
+2. `trace_not_visible`：确认应用启用了同项目 OTLP、业务 trace ID 对齐且后端物化完成。旧 OTel 随机 ID 不会自动成为新的业务 trace；不补造假 trace。
+3. `trace_lookup_http_404`：检查部署是否支持并启用了 v4 observations v2。401/403 检查项目凭据和读取权限；没有查询权限不能绕过关联检查。
+4. `http_*` / `event_not_acknowledged`：队列保留原事件并退避；达到次数/年龄上限后进入死信。修好后用 `--requeue-score <score_id>` 重放。固定 ID、名称和时间共同保证跨日重试不重复，不要改事件时间。
+5. 后端接受与界面显示分开验证。队列 delivered=1 仅代表接受；阶段验收仍需后端回读 trace/score 及 UI 证据。当前真实 Langfuse 部署和此闭环尚未验收。

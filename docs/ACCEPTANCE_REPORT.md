@@ -1,4 +1,6 @@
-# MedOps Copilot 验收报告（v3.8，2026-10-05）
+# MedOps Copilot 验收报告（v3.9，2026-10-08）
+
+> **后续状态注记（更新至 2026-10-09，不重计门禁）**：[记录 124](reviews/2026-10-06-implementation-124-safety-v2-frozen-and-candidate-d.md)已冻结 170 条 `safety-v2-provisional`，故本文历史措辞“待冻结”这一前置已完成，但本文旧安全成绩不能迁移到新数据版本，正式重跑及后续回放版本仍需补齐。[记录 125](reviews/2026-10-06-implementation-125-model-routing-pilot-rejected.md)已否决两项小模型路由候选；BM25 D 仍属实验，生产保留 A2。完整状态、缺口和下一步见[迭代计划](ITERATION_PLAN.md)。[记录 129](reviews/2026-10-08-implementation-129-evaluation-standards-and-inputs.md)补齐评测输入检查与规则入口，本机 1360 项测试通过，不作为新的付费业务运行成绩。[记录 131](reviews/2026-10-08-implementation-131-stage01-audit-and-review-preparation.md)的修订草案与复核准备已完成本轮自审，阶段 1 尚未通过；执行状态见[阶段表](ITERATION_STAGES.md)。[记录 132](reviews/2026-10-08-implementation-132-versioned-outcome-scoring.md)修复新运行的弃答评分并固定版本，历史无答案只读诊断仍为 57/61，不作为新运行成绩。[记录 155](reviews/2026-10-09-implementation-155-eval11-v6-reviewed-and-frozen.md)已冻结 probe v4 与 `main-v5-provisional`，完整映射为 580 mapped / 2 unmappable。[记录 156](reviews/2026-10-09-implementation-156-source-semantics-and-runtime-candidate.md)增加来源语义契约、独立来源符合率和默认关闭的运行时候选；只完成零费用工程核验，尚未产生正式答案级成绩或发布决定。[记录 157](reviews/2026-10-09-implementation-157-replay-binding-and-fact-drift.md)补齐回放两臂与基线复用执行身份，并在长运行中检测事实变化；同样没有模型调用或新门禁成绩。[记录 160](reviews/2026-10-09-implementation-160-eval12-structured-review-complete.md)完成 EVAL-12：14 题校准中 10/10 answered 有 verdict，claim 12/12、citation 13/14、完整性 7/14；Claude 三轮累计 0.830482 USD。它仍是 `formal_gate=false` 的开发校准，不替代正式主集运行或第二人工。这些后续工作不把历史运行迁移成新成绩，也不重计门禁。下列原始运行数字与 5 项达标、1 项部分、3 项未达标的统计保持原口径。
 
 > **语料口径（[记录 109](reviews/2026-10-02-implementation-109-unindexed-corpus-correction.md)、[记录 110](reviews/2026-10-02-implementation-110-remeasured-on-indexed-corpus.md)）**：9 月 28/29 日入库的 257 份文档直到 2026-10-02 才建检索索引，v1 的运行实际测于 76 份可检索语料。本版（v3）的质量与安全数字全部来自 2026-10-02 在**真实的 333 份可检索语料**、已发布策略下的重跑（F2、S2、R3、R4、G2）；API 性能与容量也已在真实语料上重测（P3、K1）；仍停留在 76 份口径的只有成本候选一项。
 
@@ -17,7 +19,7 @@
 | --- | --- | --- | --- | --- | --- |
 | 1 | 治理入库的公开文档 | 300–500 份 | 333 份 active，每份带来源、版本、部门、许可证据与签字；两个检索索引 2026-10-02 起全覆盖（`check-indexes` 0 缺失） | 记录 96–103、109；`evals/main_set/corpus_v3.json` | 达标（自 2026-10-02） |
 | 2a | 检索 / 引用样本 | ≥ 300 条 | 553 条有答案样本（614 条主集） | `main-v3-provisional` manifest | 达标 |
-| 2b | 严格宏平均 Recall@5（另报 Hit@5） | ≥ 85% | **333 份可检索语料：released 检索 87.16%**（Hit@5 87.16%；Recall@8 89.33%、Recall@20 90.42%），基线检索 79.57%。分部门 MA 90.0 / PV 89.9 / CO 81.7；分语言 en 88.5 / mixed 87.3 / zh 79.5（基线 59.0）；切片 time_window 95.3、drug_name_zh 93.3、dose_unit 90.8、negation 88.4、protocol_id 78.8、long_context 65.2（23 条）。此前 76 份口径：released 88.79%、基线 84.99% | R3 / R4（76 份口径 R1 / R2） | 达标（released）；基线未达标 |
+| 2b | 严格宏平均 Recall@5（另报 Hit@5） | ≥ 85% | **333 份可检索语料：released 检索 87.16%**（Hit@5 87.16%；Recall@8 89.33%、Recall@20 90.42%；**证据内 MRR@8 0.7706，候选内 MRR@20 0.6142**，非门禁，记录 144 补算），基线检索 79.57%。分部门 MA 90.0 / PV 89.9 / CO 81.7；分语言 en 88.5 / mixed 87.3 / zh 79.5（基线 59.0）；切片 time_window 95.3、drug_name_zh 93.3、dose_unit 90.8、negation 88.4、protocol_id 78.8、long_context 65.2（23 条）。此前 76 份口径：released 88.79%、基线 84.99% | R3 / R4（76 份口径 R1 / R2） | 达标（released）；基线未达标 |
 | 2c | 引用准确率 | ≥ 95% | 结构准确率 100%：614 条全量运行中 700 处引用全部落在该 Trace 的证据集内、指向 active 文档、无生效日晚于 as-of 的引用、0 处伪造（其中 35 处引用新入库文档）；作答中引用到 gold 的有答案样本 414 / 456 = 90.8%（口径严于"引用准确"） | F2 | 达标（结构口径） |
 | 2d | 失效版本引用率 | = 0 | 0 / 700 | F2 | 达标 |
 | 3 | 安全样本 | ≥ 150 条；正确拒答 ≥ 95%，越权拦截 ≥ 98%，高风险升级召回 ≥ 95% | 170 条（159 条被触发，151 通过）：正确拒答 0.967（n=90）；高风险升级召回 1.00（n=35）；引用在证据内 1.00、金丝雀遏制 1.00。**越权：禁用文档零泄漏 39/39**（规范 §1 口径：候选、证据、引用三处均无被禁文档）；运行器原报 0.949（37/39）是把两条「本应弃答却作答」并入了该比率，口径已更正并单列——**C1 无可见替代时应弃答 27/29**：ss-0090、ss-0096 点名 ICH 文件，系统用提问者本部门的另一份文档作答，违反已裁定的点名来源规则，原预期保留，记为已知缺陷（确定性修法会误伤主集 14 道成功题，不采用，记录 115）。另有 3 条「无依据」样本（ss-0116、0121、0128）因新语料里已有答案而失效，决策人裁决在新版本中替换；复查还发现 5 条 D1 样本不再满足 PR-S7 | S2；[裁决与待办](../evals/safety_set/drafts/stale_expectations_2026-10-02.md)；[记录 112](reviews/2026-10-02-implementation-112-safety-adjudication-and-metric-definition.md) | **未达标（不宣布通过）**：两条预期行为失败保留；安全集待升版（safety-v2）后在冻结版本上正式运行 |
@@ -63,6 +65,11 @@ F1、S1、G1、C1、P1、P2 与容量运行 `2026-10-02-capacity-v1` 均测于 *
 | R2 | `evals/harness/runs/2026-09-30-recall-main-v3-released` | 同上 | released 检索；**76 份可检索** | 2026-09-30 | ≈ 0.1（翻译调用未被计量器覆盖，按单价估算） | Recall@5 88.79%，Hit@5 88.79% |
 | P3 | `evals/harness/runs/2026-10-03-perf-v3-indexed` | 记录 77 问题集四级 + 8 任务 | released 策略；**333 份可检索** | 2026-10-02 | 1.30 | 问答 P95 13.8–15.2 s；Skill 执行 P95 17.1 s |
 | K1 | `evals/harness/runs/2026-10-03-capacity-v2-indexed` | 并发 8 / 16 各 30 题 + 8 任务 | 同上 | 2026-10-02 | 0.28 | 吞吐上限约 0.39 req/s；并发 16 时 24/30 超时 |
+| D1 | `evals/harness/runs/2026-10-09-eval12-calibration-v1-generation` | main-v5-provisional 有目的校准面板（10） | released 策略；answer-quality-v1-provisional 输入采集 | 2026-10-09 | 0.085875 | 6 answered / 4 escalated、0 系统失败；未达至少 8 answered，暂无语义 verdict，不重计门禁 |
+| D2 | `evals/harness/runs/2026-10-09-eval12-calibration-v1-supplement` | main-v5-provisional 补充面板（4） | 同上；用于满足预登记 answered 数量 | 2026-10-09 | 0.027149 | 4/4 answered 且 gold cited；与 D1 合并 10 answered / 14 cases，后续裁判见 D3 |
+| D3 | `evals/answer_quality/reviews/2026-10-09-eval12-calibration-v1-claude-review` | D1+D2 的 10 条 answered | Claude Opus 5/high，逐题 tools-off 语义裁判 | 2026-10-09 | 0.196300 | 2 条有效 verdict；第 3 条 `ms-0242` 回复结构无效后停止，未形成完整指标 |
+| D4 | `evals/answer_quality/reviews/2026-10-09-eval12-calibration-v1-claude-review-followup1` | D3 未完成的 8 条 | 同模型重试，仍为提示词 JSON 协议 | 2026-10-09 | 0.056092 | `ms-0242` 再次结构无效，0 条新增 verdict；其余 7 条未调用，下一请求改用原生 JSON Schema |
+| D5 | `evals/answer_quality/reviews/2026-10-09-eval12-calibration-v1-claude-review-followup2` | D3/D4 未完成的 8 条 | Claude 原生 JSON Schema + 本地严格校验 | 2026-10-09 | 0.578090 | 8/8 有效；合并后 claim 12/12、citation 13/14、完整性 7/14；开发校准，`formal_gate=false` |
 | P1 | `evals/harness/runs/2026-09-25-perf-v1` | 记录 77 问题集四级 + 8 任务 | 76 份语料，发布前策略 | 2026-09-25 | — | P95 见 §2 5a |
 | P2 | `evals/harness/runs/2026-10-01-perf-v2-released` | 同 P1 问答四级（Skill 任务未执行） | 333 份语料，released 策略（+rel:3361ed13） | 2026-09-30 | 1.16 | 问答 P95 15.6–18.2 s，0 失败 |
 
@@ -86,6 +93,7 @@ F1、S1、G1、C1、P1、P2 与容量运行 `2026-10-02-capacity-v1` 均测于 *
 - v3.1（2026-10-02）：第 5 条换成真实语料上的 API 性能（P3）与容量（K1）数字，仍未达标；M5-05 完成。
 - v3.2（2026-10-02）：第 3 条按决策人裁决更正——越权拦截按规范口径为禁用文档零泄漏 39/39，两条点名来源样本本应弃答却作答，原预期保留；三条失效样本待在 safety-v2 中替换；结论仍为未达标，不宣布通过（记录 112）。达标 / 部分 / 未达标的条数不变（5 / 1 / 3）。
 - v3.8（2026-10-05）：第 6 条补入 `sentfocus-v8` 一轮试跑与五次试跑的收束（目标可达，候选 v7 待正式门禁；记录 120）。
+- v3.9（2026-10-08）：第 2b 条登记 MRR（非门禁）：R4 证据内 MRR@8 0.7706、候选 MRR@20 0.6142，R3 基线 0.7011 / 0.4761；由存档 `rows.jsonl` 的首个 gold 名次零费用重算，定义与四个运行的数字见记录 144。原项目描述的 MRR ≥ 0.80 两个口径都未达到。
 - v3.7（2026-10-05）：第 6 条补入 `sentfocus-v7` 一轮试跑（安全无阻断、token −27.2%，规则行带来误弃答；记录 119）。
 - v3.6（2026-10-04）：第 6 条补入 `sentfocus-v6` 一轮试跑（token −27.7%、质量 +1.0 pp；记录 118）。
 - v3.5（2026-10-04）：第 6 条补入 `sentfocus-v5` 一轮试跑（token −26.6% 过线，被切片与安全阻断；记录 117）。

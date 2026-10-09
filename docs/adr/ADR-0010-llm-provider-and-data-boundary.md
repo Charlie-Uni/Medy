@@ -7,7 +7,7 @@
 ## 决策
 
 1. **运行时 LLM 走 OpenAI API（platform.openai.com）**，按量计费、预充值。M2 Harness 的 Intent、Answer、Verifier 节点及端到端评测中的这三类调用都经此路径；不使用任何订阅制 CLI（Claude Code、Codex）作为运行时或评测链路的一部分。
-2. **月度上限 30 美元**，决策人视情况调整。上限在两处生效：OpenAI 控制台的用量硬限额（由决策人设置），以及 Model Gateway 的本地账本（M2-06 实现：按 `usage` 累计当月美元开销，达到 `LLM_MONTHLY_BUDGET_USD` 后拒绝新调用并升级，不静默降级）。INV-HAR-08 的单 Trace 预算另行设置，不与月上限混用。
+2. **月度上限 30 美元**，决策人视情况调整。上限在两处生效：OpenAI 控制台的用量硬限额（由决策人设置），以及 Model Gateway 的 PostgreSQL 共享账本（迁移 0020）：调用前原子预留最坏费用，成功后按实际费用结算；供应商报错按预留额保守入账，进程崩溃留下可审计的未结预留并继续占用额度。账本不可用时拒绝模型调用，不静默降级。INV-HAR-08 的单 Trace 预算另行设置，不与月上限混用。
 3. **数据边界**：发往 OpenAI 的内容只有：用户查询（M2 前为合成查询）、已回查证据的文本片段（全部来自 ADR-0003 准入的公开文档）、系统提示。不发送身份信息（INV-OBS-02 的化名不进入提示）、不发送整份文档、不发送数据库标识以外的内部对象。OpenAI API 默认不用客户数据训练；Gateway 记录每次调用的 `model`、`system_fingerprint`（如返回）、token 用量与费用到 Trace（INV-HAR-05）。
 4. **模型 ID 固定**：生产只使用带明确 ID 的稳定模型，preview 模型只可用于实验。候选：Answer `gpt-6-sol`（$2/$10 每百万 token）；Verifier 从 `gpt-6-luna`（$0.10/$0.50）起试，`gpt-5.4-mini`、`gpt-6-sol` 为升级档；最终 ID 由 DEC-003 实验（ADR-0011 待写）按切片准确率、格式合规率、延迟与费用选定，选定后写入 `VersionSet` 与 `retrieval_version` 同级的策略版本。
 5. **离线数据工作继续走订阅**：评测集起草与 LLM 复核使用 Claude Code（Max）与 Codex（ChatGPT）CLI，消耗套餐额度、不计入本上限；起草者与复核者不得同源（spec-v1.1 §8.1），M2-15 安全集若由一家起草则由另一家复核。
@@ -23,5 +23,5 @@
 
 - `Settings` 新增 `openai_api_key`（SecretStr，可空）与 `llm_monthly_budget_usd`（默认 30）；`.env.example` 登记键名；key 由决策人在控制台创建并放入本机 `.env`，不进 Git、不进日志、不进聊天。
 - 依赖锁在 M2-02 加入 OpenAI 官方 Python SDK（带哈希锁定）；在此之前不新增依赖。
-- 每次端到端评测在 run_manifest 记录实际费用；月账本在 `docs/reviews` 的阶段记录中报告。
+- 每次端到端评测在 run_manifest 记录实际费用；所有运行时/评测进程共享 `llm_monthly_spend` 与 `llm_spend_reservations`，阶段记录仍报告当次费用与遗留预留。
 - 若上限调整或换厂商，修订本 ADR 并记录日期与原因；换厂商必须重跑 M2-16 门禁。
