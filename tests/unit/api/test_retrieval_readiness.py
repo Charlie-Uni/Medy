@@ -15,7 +15,7 @@ def setup(monkeypatch):
     calls, checks, clock = [], [], [0.0]
     status = {"ready": True, "database_identity": "same-db", "coverage": {"missing_embedding": 0}}
     rt = mod.ProductionRuntime(
-        settings=SimpleNamespace(),
+        settings=SimpleNamespace(retrieval_cache="redis"),
         authenticator=None,
         gateway=None,
         embedding=SimpleNamespace(spec="test-spec"),
@@ -40,8 +40,8 @@ def setup(monkeypatch):
         calls.append((dsn, kwargs))
         return Connection(dsn)
 
-    def inspect(conn, *, embedding):
-        assert conn.read_only and embedding == "test-spec"
+    def inspect(conn, *, embedding, cache_required):
+        assert conn.read_only and embedding == "test-spec" and cache_required is True
         checks.append(conn.dsn)
         return dict(status)
 

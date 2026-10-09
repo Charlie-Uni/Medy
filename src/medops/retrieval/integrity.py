@@ -55,15 +55,19 @@ def has_global_view(conn: psycopg.Connection[Any]) -> bool:
     return bool(row and row[0])
 
 
-def inspect_readiness(dsn: str, *, embedding: EmbeddingSpec | None = None) -> dict[str, Any]:
+def inspect_readiness(
+    dsn: str, *, embedding: EmbeddingSpec | None = None, cache_required: bool = False
+) -> dict[str, Any]:
     """`inspect_retrieval` on a bounded, read-only snapshot connection of its own (the ops endpoint and the CLI)."""
     with psycopg.connect(dsn, connect_timeout=2, options="-c statement_timeout=1000") as conn:
         conn.read_only = True
         conn.isolation_level = psycopg.IsolationLevel.REPEATABLE_READ
-        return inspect_retrieval(conn, embedding=embedding)
+        return inspect_retrieval(conn, embedding=embedding, cache_required=cache_required)
 
 
-def inspect_retrieval(conn: psycopg.Connection[Any], *, embedding: EmbeddingSpec | None = None) -> dict[str, Any]:
+def inspect_retrieval(
+    conn: psycopg.Connection[Any], *, embedding: EmbeddingSpec | None = None, cache_required: bool = False
+) -> dict[str, Any]:
     """Global coverage needs a role that can see all documents; an RLS-empty view is not a healthy index.
 
     Caller supplies a read-only transaction and statement timeout. No models are loaded or called.
@@ -131,15 +135,16 @@ def inspect_retrieval(conn: psycopg.Connection[Any], *, embedding: EmbeddingSpec
     outbox_status = {
         r[0]: {"pending": int(r[1]), "oldest_age_s": float(r[2]), "dead_lettered": int(r[3])} for r in rows
     }
+    readiness_consumers = READINESS_CONSUMERS | ({"retrieval-cache"} if cache_required else set())
     outbox_blocks = any(
-        name in READINESS_CONSUMERS
+        name in readiness_consumers
         and (item["dead_lettered"] or (item["pending"] and item["oldest_age_s"] > OUTBOX_CRITICAL_LAG_S))
         for name, item in outbox_status.items()
     )
-    if any(name in READINESS_CONSUMERS and item["dead_lettered"] for name, item in outbox_status.items()):
+    if any(name in readiness_consumers and item["dead_lettered"] for name, item in outbox_status.items()):
         problems.append("outbox_dead_letter")
     if any(
-        name in READINESS_CONSUMERS and item["pending"] and item["oldest_age_s"] > OUTBOX_CRITICAL_LAG_S
+        name in readiness_consumers and item["pending"] and item["oldest_age_s"] > OUTBOX_CRITICAL_LAG_S
         for name, item in outbox_status.items()
     ):
         problems.append("outbox_critical_lag")
@@ -153,6 +158,7 @@ def inspect_retrieval(conn: psycopg.Connection[Any], *, embedding: EmbeddingSpec
         "problems": problems,
         "outbox": outbox_status,
         "outbox_blocks_readiness": outbox_blocks,
+        "cache_required": cache_required,
     }
 
 

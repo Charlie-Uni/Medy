@@ -1,4 +1,4 @@
-.PHONY: observability-up observability-down langfuse-init langfuse-up langfuse-down langfuse-ps langfuse-check langfuse-smoke langfuse-outage-test cache-invalidate demo demo-check demo-ask help install install-check install-embed lock schemas lint format format-check typecheck test test-integration check migrate migrate-down migration-check db-users load-corpus index-build index-check lexical-index-a lexical-index activate-docs validate-probe canonicalize-probe up down ps
+.PHONY: observability-up observability-down langfuse-init langfuse-up langfuse-down langfuse-ps langfuse-check langfuse-smoke langfuse-outage-test cache-worker-up cache-worker-down cache-worker-ps cache-invalidate demo demo-check demo-ask help install install-check install-embed lock schemas lint format format-check typecheck test test-integration check migrate migrate-down migration-check db-users load-corpus index-build index-check lexical-index-a lexical-index activate-docs validate-probe canonicalize-probe up down ps
 .PHONY: eval-check
 .PHONY: retrieval-check
 
@@ -31,6 +31,7 @@ help:
 	@echo "make index-build ACTOR=<id> [ADMIN_URL=<dsn>] [DEVICE=mps]   lexical index + embeddings + coverage check; run after every ingestion (record 109)"
 	@echo "make index-check [ADMIN_URL=<dsn>]        exit 1 if an active chunk is missing from the lexical index or the embeddings"
 	@echo "make retrieval-check [ADMIN_URL=<dsn>]    read-only index coverage, corpus, versions and consumer backlog; no model calls"
+	@echo "make cache-worker-up / cache-worker-down / cache-worker-ps   manage continuous Redis invalidation"
 	@echo "make cache-invalidate [ADMIN_URL=<dsn>]   apply pending publish / archive events to the shared retrieval cache"
 	@echo "make observability-up / observability-down   start / remove the Jaeger trace viewer (profile observability)"
 	@echo "make langfuse-up / langfuse-down / langfuse-ps   manage the local metadata-only Langfuse v4 stack"
@@ -158,7 +159,18 @@ langfuse-smoke:
 langfuse-outage-test:
 	env -u DEBUG $(PY) scripts/langfuse_local.py outage-recovery
 
-# after an ingestion: tell the shared retrieval cache (RETRIEVAL_CACHE=redis) which departments' entries are stale
+# Continuous cache invalidation. The explicit database and namespace in `.env` must match the API/MCP deployment.
+cache-worker-up:
+	docker compose --env-file .env --profile app build retrieval-cache-worker
+	docker compose --env-file .env --profile app up -d --no-build --wait retrieval-cache-worker
+
+cache-worker-down:
+	docker compose --env-file .env --profile app rm -sf retrieval-cache-worker
+
+cache-worker-ps:
+	docker compose --env-file .env --profile app ps retrieval-cache-worker
+
+# One-shot operational catch-up; normal deployments use the continuous worker above.
 cache-invalidate:
 	$(PY) -m medops.retrieval.production invalidate-cache $(if $(ADMIN_URL),--admin-url $(ADMIN_URL),)
 

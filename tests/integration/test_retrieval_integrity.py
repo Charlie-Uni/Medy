@@ -115,6 +115,9 @@ def test_stale_optional_cache_backlog_is_visible_but_does_not_block_index_readin
         status = inspect_retrieval(conn, embedding=indexed)
         assert status["outbox"]["retrieval-cache"]["oldest_age_s"] >= 3600
         assert status["ready"] and status["outbox_blocks_readiness"] is False
+        active = inspect_retrieval(conn, embedding=indexed, cache_required=True)
+        assert not active["ready"] and active["outbox_blocks_readiness"] is True
+        assert "outbox_critical_lag" in active["problems"] and active["cache_required"] is True
         conn.rollback()
 
 

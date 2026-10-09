@@ -263,14 +263,14 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 0
     from medops.core.config import Settings
 
+    settings = Settings()  # type: ignore[call-arg]
     dsn = args.admin_url
     if not dsn:
-        settings = Settings()  # type: ignore[call-arg]
         dsn = (settings.database_admin_url or settings.database_url).get_secret_value()
     if args.action == "check-readiness":
         from medops.retrieval.integrity import inspect_readiness
 
-        status = inspect_readiness(dsn)
+        status = inspect_readiness(dsn, cache_required=settings.retrieval_cache == "redis")
         print(json.dumps(status, ensure_ascii=False))
         return 0 if status["ready"] else 1
     if args.action == "check-indexes":

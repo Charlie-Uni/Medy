@@ -27,7 +27,9 @@ class RedisCandidateCacheStore:
         self._ns = namespace
 
     @classmethod
-    def from_settings(cls, settings: Settings, *, namespace: str = DEFAULT_NAMESPACE) -> RedisCandidateCacheStore:
+    def from_settings(cls, settings: Settings, *, namespace: str | None = None) -> RedisCandidateCacheStore:
+        # Explicit overrides support isolated tests; production callers take the deployment-specific prefix.
+        namespace = namespace or settings.retrieval_cache_namespace
         client = redis.Redis.from_url(
             settings.redis_url.get_secret_value(),
             socket_connect_timeout=CONNECT_TIMEOUT_SECONDS,
@@ -66,9 +68,9 @@ class RedisCandidateCacheStore:
     def get_epoch(self, dept: str) -> int:
         try:
             value = cast("str | bytes | None", self._client.get(self._ns + "epoch:" + dept))
-        except redis.RedisError as exc:
+            return int(value) if value else 0
+        except (redis.RedisError, TypeError, ValueError) as exc:
             raise CacheStoreError(type(exc).__name__) from None
-        return int(value) if value else 0
 
     def bump_epoch(self, dept: str) -> int:
         try:

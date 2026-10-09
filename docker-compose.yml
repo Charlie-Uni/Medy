@@ -102,6 +102,47 @@ services:
         condition: service_healthy
     stop_grace_period: 30s
 
+  # Shared candidate-cache invalidation is a separate durable outbox consumer. Its explicit database argument
+  # prevents an operator DSN from silently selecting the wrong corpus; API/MCP and this worker share a namespace.
+  retrieval-cache-worker:
+    build: .
+    image: medops-copilot:dev
+    container_name: medops-retrieval-cache-worker
+    profiles: ["app"]
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_ADMIN_URL: ${DATABASE_ADMIN_URL_DOCKER:-${DATABASE_ADMIN_URL:-}}
+      REDIS_URL: ${REDIS_URL_DOCKER:-${REDIS_URL}}
+    command:
+      [
+        "python",
+        "-m",
+        "medops.worker.retrieval",
+        "--database",
+        "${RETRIEVAL_CACHE_DATABASE:?set RETRIEVAL_CACHE_DATABASE in .env}",
+        "--consumer",
+        "retrieval-cache",
+      ]
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "from psycopg import connect; from psycopg.conninfo import make_conninfo; from medops.core.config import Settings; from medops.infrastructure.cache import RedisCandidateCacheStore; s=Settings(); RedisCandidateCacheStore.from_settings(s).ping(); c=connect(make_conninfo(s.database_admin_url.get_secret_value(), dbname=s.retrieval_cache_database), connect_timeout=s.db_connect_timeout_s); c.execute('select 1').fetchone(); c.close()",
+        ]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    stop_grace_period: 30s
+
   mcp:
     build: .
     image: medops-copilot:dev

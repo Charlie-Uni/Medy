@@ -112,7 +112,10 @@ def main(argv: Sequence[str] | None = None) -> int:
                         backoff_max_s=getattr(settings, "outbox_backoff_max_s", 3600),
                     )
                     conn.commit()
-                print(json.dumps({"consumer": args.consumer, **asdict(result)}), flush=True)
+                # Continuous consumers stay silent while idle: at a two-second poll interval, logging every empty
+                # batch would add about 43,000 lines/day. One-shot operator calls always print their result.
+                if args.once or result.acknowledged or result.failed or result.dead_lettered:
+                    print(json.dumps({"consumer": args.consumer, **asdict(result)}), flush=True)
                 if args.once:
                     return 1 if result.failed else 0
                 if not result.acknowledged or result.failed:

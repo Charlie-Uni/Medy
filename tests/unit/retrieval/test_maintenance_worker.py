@@ -77,6 +77,34 @@ def test_configuration_error_is_sanitized(monkeypatch, capsys):
     assert "ValueError" in output and "a-secret-password" not in output
 
 
+def test_once_reports_an_empty_batch_for_operator_diagnostics(monkeypatch, capsys):
+    settings = SimpleNamespace(
+        database_admin_url=SecretStr("postgresql://user:secret@localhost/db"),
+        db_connect_timeout_s=2,
+        db_statement_timeout_ms=1000,
+        outbox_max_attempts=10,
+        outbox_backoff_base_s=5,
+        outbox_backoff_max_s=3600,
+    )
+    monkeypatch.setattr(worker, "Settings", lambda: settings)
+    monkeypatch.setattr(worker, "handler_from_settings", lambda *args, **kwargs: "handler")
+
+    class Connection:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            return False
+
+        def commit(self):
+            pass
+
+    monkeypatch.setattr(worker.psycopg, "connect", lambda *args, **kwargs: Connection())
+    monkeypatch.setattr(worker.maintenance, "consume_batch", lambda *args, **kwargs: BatchResult((), ()))
+    assert worker.main(["--database", "db", "--consumer", "lexical-index", "--once"]) == 0
+    assert '"acknowledged": []' in capsys.readouterr().out
+
+
 def test_dead_letter_requeue_is_explicit_and_does_not_load_the_handler(monkeypatch, capsys):
     settings = SimpleNamespace(
         database_admin_url=SecretStr("postgresql://user:secret@localhost/db"),

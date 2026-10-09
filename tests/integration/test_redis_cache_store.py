@@ -95,7 +95,19 @@ def test_an_unreachable_server_degrades_to_misses():
 
 
 def test_from_settings_builds_a_working_store_without_exposing_the_dsn(redis_url, namespace, capsys):
-    settings = Settings(_env_file=None, database_url="postgresql://u:p@localhost:5432/db", redis_url=redis_url)
-    store = RedisCandidateCacheStore.from_settings(settings, namespace=namespace)
+    settings = Settings(
+        _env_file=None,
+        database_url="postgresql://u:p@localhost:5432/db",
+        redis_url=redis_url,
+        retrieval_cache_namespace=namespace,
+    )
+    store = RedisCandidateCacheStore.from_settings(settings)
     assert store.ping() is True and store.namespace == namespace
     assert redis_url not in repr(store) and redis_url not in capsys.readouterr().out
+
+
+def test_corrupted_epoch_degrades_to_a_miss(store, client, namespace):
+    client.set(namespace + "epoch:MA", "not-an-integer")
+    cache = CandidateCache(store)
+    value, hit = cache.get_or_compute(_inputs(), lambda: ())
+    assert hit is False and value.candidates == () and cache.degraded >= 1

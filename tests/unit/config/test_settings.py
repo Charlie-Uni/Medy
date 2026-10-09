@@ -22,6 +22,19 @@ def _settings(monkeypatch, **env):
 def test_defaults_are_dev_safe(monkeypatch):
     s = _settings(monkeypatch)
     assert s.app_env is AppEnv.dev and s.debug is False and s.docs_enabled is True and s.log_level == "INFO"
+    assert s.retrieval_cache_namespace == "medops:rcache:"
+
+
+def test_retrieval_cache_namespace_is_bounded_and_delimited(monkeypatch):
+    configured = _settings(
+        monkeypatch, RETRIEVAL_CACHE_NAMESPACE="medops:v2:rcache:", RETRIEVAL_CACHE_DATABASE="medops_v2"
+    )
+    assert configured.retrieval_cache_namespace.endswith(":") and configured.retrieval_cache_database == "medops_v2"
+    for invalid in ("", ":bad:", "missing-trailing-colon", "contains space:", "x" * 129 + ":"):
+        with pytest.raises(ValidationError):
+            _settings(monkeypatch, RETRIEVAL_CACHE_NAMESPACE=invalid)
+    with pytest.raises(ValidationError):
+        _settings(monkeypatch, RETRIEVAL_CACHE_DATABASE="bad/name")
 
 
 def test_unknown_keys_and_bad_dsn_are_rejected(monkeypatch):
@@ -86,6 +99,8 @@ def test_dsn_passwords_are_masked_everywhere_and_available_on_request(monkeypatc
         DATABASE_URL=f"postgresql://app:{pw}@db:5432/medops",
         DATABASE_ADMIN_URL=f"postgresql://admin:{pw}@db:5432/medops",
         REDIS_URL=f"redis://:{pw}@cache:6379/0",
+        DATABASE_URL_DOCKER=f"postgresql://app:{pw}@postgres:5432/medops",
+        REDIS_URL_DOCKER=f"redis://:{pw}@redis:6379/0",
     )
     surfaces = [
         repr(s),
@@ -96,6 +111,7 @@ def test_dsn_passwords_are_masked_everywhere_and_available_on_request(monkeypatc
     ]
     assert all(pw not in surface for surface in surfaces)
     assert s.database_url.get_secret_value().endswith("@db:5432/medops") and pw in s.redis_url.get_secret_value()
+    assert s.database_url_docker and s.database_url_docker.get_secret_value().endswith("@postgres:5432/medops")
 
 
 def test_invalid_dsn_error_does_not_echo_the_value(monkeypatch):

@@ -99,13 +99,26 @@ class Settings(BaseSettings):
     database_readonly_url: SecretStr | None = None
     database_restricted_url: SecretStr | None = None  # restricted payload reader / retention (DEC-013)
     database_loop_url: SecretStr | None = None  # Loop role: reads signals, writes cases and candidates only (M4)
+    # Compose-only equivalents use service hostnames. They are accepted here because the same strict `.env` is
+    # loaded by the application; request code continues to use the non-Docker fields above.
+    database_url_docker: SecretStr | None = None
+    database_admin_url_docker: SecretStr | None = None
+    database_readonly_url_docker: SecretStr | None = None
     # every runtime connection fails fast instead of hanging when PostgreSQL is unreachable or stalled (record 78)
     db_connect_timeout_s: int = Field(default=5, ge=1, le=60)
     db_statement_timeout_ms: int = Field(default=30_000, ge=1_000, le=600_000)
     redis_url: SecretStr
+    redis_url_docker: SecretStr | None = None
     # Retrieval candidate cache (M1-19, wired in record 121). `off` (default): every question searches. `memory`:
     # one cache per API process. `redis`: shared through `redis_url`. Hits are always re-checked in the fact plane.
     retrieval_cache: Literal["off", "memory", "redis"] = "off"
+    # Isolate candidate ids and invalidation epochs between deployments/databases sharing one Redis instance.
+    # The trailing colon is deliberate: the store appends `rcache-v1:...` and `epoch:...` below this prefix.
+    retrieval_cache_namespace: str = Field(
+        default="medops:rcache:", min_length=2, max_length=128, pattern=r"^[A-Za-z0-9][A-Za-z0-9_.:-]*:$"
+    )
+    # Deployment-only explicit target used by the continuous invalidation worker (never inferred from a DSN).
+    retrieval_cache_database: str | None = Field(default=None, pattern=r"^[A-Za-z][A-Za-z0-9_]{0,62}$")
     # Entries also die with the department epoch on publish events (needs the cache consumer to run).
     retrieval_cache_ttl_seconds: int = Field(default=300, ge=1, le=86400)
     # Retrieval outbox poison-event policy. Dead letters remain unacknowledged until an operator requeues them.
@@ -192,6 +205,10 @@ class Settings(BaseSettings):
         "identity_pseudonym_key",
         "database_admin_url",
         "database_readonly_url",
+        "database_url_docker",
+        "database_admin_url_docker",
+        "database_readonly_url_docker",
+        "redis_url_docker",
         "db_app_password",
         "db_readonly_password",
         "db_admin_password",
@@ -216,7 +233,14 @@ class Settings(BaseSettings):
             return None
         return value
 
-    @field_validator("database_url", "database_admin_url", "database_readonly_url")
+    @field_validator(
+        "database_url",
+        "database_admin_url",
+        "database_readonly_url",
+        "database_url_docker",
+        "database_admin_url_docker",
+        "database_readonly_url_docker",
+    )
     @classmethod
     def _postgres_dsn(cls, value: SecretStr | None) -> SecretStr | None:
         return None if value is None else _check_dsn(_POSTGRES, value, "database DSN")
@@ -225,6 +249,11 @@ class Settings(BaseSettings):
     @classmethod
     def _redis_dsn(cls, value: SecretStr) -> SecretStr:
         return _check_dsn(_REDIS, value, "redis DSN")
+
+    @field_validator("redis_url_docker")
+    @classmethod
+    def _optional_redis_dsn(cls, value: SecretStr | None) -> SecretStr | None:
+        return None if value is None else _check_dsn(_REDIS, value, "redis DSN")
 
     @model_validator(mode="after")
     def _prod_hardening(self) -> Settings:

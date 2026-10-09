@@ -1,7 +1,7 @@
 """M1-19 on the real fact plane: a cache hit never bypasses the re-check (revocation takes effect at once),
 publishing a new version invalidates only the reading departments' entries through the outbox consumer, a
 changed version or department is a different key, and candidates computed under one identity are never
-served to another. In-memory store; the Redis store has its own test module.
+served to another. The complete publish/consume/retrieve path also runs through a real isolated Redis namespace.
 
 Own temporary database: the seeds leave active documents behind (non-draft documents cannot be deleted)."""
 
@@ -17,6 +17,7 @@ import psycopg
 import pytest
 
 from medops.domain import CandidateRef, Dept, SourceRank, UserContext
+from medops.infrastructure.cache import RedisCandidateCacheStore
 from medops.ingestion.activate import activate_document, publish_version
 from medops.ingestion.pipeline import DocumentSpec, ingest_document
 from medops.retrieval import cache_consumer
@@ -161,6 +162,44 @@ def test_publishing_a_new_version_invalidates_the_readers_departments_through_th
     assert hit is False and fresh.accepted_ids and set(fresh.accepted_ids) <= family["chunks"]["v2"]
     assert not set(fresh.accepted_ids) & family["chunks"]["v1"]
     assert all(e.historical is False for e in fresh.evidence)
+
+
+def test_real_redis_publish_invalidation_refreshes_the_fact_plane(db, family, redis_url):
+    import secrets
+
+    import redis
+
+    client = redis.Redis.from_url(redis_url, socket_connect_timeout=2, socket_timeout=2, decode_responses=True)
+    namespace = f"medops-test:fact-plane:{secrets.token_hex(6)}:"
+    store = RedisCandidateCacheStore(client, namespace=namespace)
+    cache = CandidateCache(store, ttl_seconds=60, jitter=0)
+    tag = family["tag"]
+    try:
+        with txn(db["users"]["app"], "MA") as conn:
+            before, hit = fetch_evidence(conn, cache, _inputs(tag), _compute(conn, tag))
+            assert hit is False and before.accepted_ids
+            again, hit = fetch_evidence(conn, cache, _inputs(tag), _compute(conn, tag))
+            assert hit is True and again.accepted_ids == before.accepted_ids
+        with psycopg.connect(db["users"]["admin"]) as admin:
+            publish_version(admin, family["k2"], AS_OF.replace(month=9, day=1), actor="reviewer-01", reason="v2")
+            admin.commit()
+        with txn(db["users"]["app"], "MA") as conn:
+            stale, hit = fetch_evidence(conn, cache, _inputs(tag), _compute(conn, tag))
+        assert hit is True and stale.evidence == ()
+        epoch = store.get_epoch("MA")
+        with psycopg.connect(db["users"]["admin"]) as admin:
+            index_consumer.consume(admin, [index_consumer.tsvector_target(a.INDEX_TABLE, TOKENIZER)])
+            acked = cache_consumer.consume(admin, cache)
+            admin.commit()
+        assert acked and store.get_epoch("MA") > epoch
+        with txn(db["users"]["app"], "MA") as conn:
+            fresh, hit = fetch_evidence(conn, cache, _inputs(tag), _compute(conn, tag))
+        assert hit is False and fresh.accepted_ids and set(fresh.accepted_ids) <= family["chunks"]["v2"]
+    finally:
+        keys = list(client.scan_iter(match=namespace + "*"))
+        if keys:
+            client.delete(*keys)
+        client.close()
 
 
 def test_version_or_date_changes_are_different_keys(db, family):

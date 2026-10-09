@@ -445,7 +445,11 @@ class ProductionRuntime:
                 status: dict[str, Any] = {"ready": False, "problems": ["integrity_connection_not_configured"]}
             else:
                 try:
-                    status = inspect_readiness(self._admin_dsn, embedding=self.embedding.spec)
+                    status = inspect_readiness(
+                        self._admin_dsn,
+                        embedding=self.embedding.spec,
+                        cache_required=getattr(self.settings, "retrieval_cache", "off") == "redis",
+                    )
                 except (psycopg.Error, InfrastructureError, ValueError):
                     status = {"ready": False, "problems": ["integrity_check_unavailable"]}
             self._integrity_cache = (time.monotonic(), status)
