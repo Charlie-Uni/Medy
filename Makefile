@@ -1,17 +1,25 @@
 .PHONY: observability-up observability-down cache-invalidate demo demo-check demo-ask help install install-check install-embed lock schemas lint format format-check typecheck test test-integration check migrate migrate-down migration-check db-users load-corpus index-build index-check lexical-index-a lexical-index activate-docs validate-probe canonicalize-probe up down ps
+.PHONY: eval-check
+.PHONY: retrieval-check
 
 # venv lives in a NON-dot directory on purpose: ~/Documents is an iCloud Drive domain that marks every file
 # inside dot-directories as hidden, and CPython >= 3.11.16 skips hidden .pth files, which silently breaks
 # editable installs placed in .venv/. See docs/reviews/2026-09-10-implementation-03-validator-hardening.md.
 PY ?= venv/bin/python
+# Active tooling is maintained code; frozen draft tooling and historical runs stay outside formatting.
+CHECK_PATHS = src tests migrations evals/harness/tools evals/replay/tools scripts
+CHECK_PATHS += evals/main_set/tools/pack_review.py evals/main_set/tools/prepare_revision_review.py evals/main_set/tools/run_review.py evals/main_set/tools/draft_common.py
+CHECK_PATHS += evals/main_set/tools/prepare_successor_review.py evals/main_set/tools/assemble_successor.py evals/main_set/tools/build_successor_mapping.py
+CHECK_PATHS += evals/main_set/tools/freeze.py evals/main_set/tools/make_schemas.py
+CHECK_PATHS += evals/probe/precise_clause/tools
 # Installer pin: the only tool that is not in requirements.lock. Bump deliberately together with the lock.
 PIP_VERSION ?= 26.2.1
 
 help:
 	@echo "make install         create venv/ (python3.11) and install with dev extras"
-	@echo "make lint            ruff check src tests migrations"
-	@echo "make format          ruff format src tests migrations"
-	@echo "make format-check    ruff format --check src tests migrations (part of make check)"
+	@echo "make lint            ruff check production, tests, migrations and active tooling"
+	@echo "make format          ruff format the maintained CHECK_PATHS"
+	@echo "make format-check    ruff format --check CHECK_PATHS (part of make check)"
 	@echo "make typecheck       mypy src"
 	@echo "make test            pytest (unit + integration; integration skips with a reason when PostgreSQL is down)"
 	@echo "make test-integration pytest tests/integration only (needs make up or MEDOPS_TEST_ADMIN_URL)"
@@ -22,6 +30,7 @@ help:
 	@echo "make lexical-index ACTOR=<id>            (re)build the PRODUCTION lexical index chunk_lexical_tsv (migration 0007, admin DSN)"
 	@echo "make index-build ACTOR=<id> [ADMIN_URL=<dsn>] [DEVICE=mps]   lexical index + embeddings + coverage check; run after every ingestion (record 109)"
 	@echo "make index-check [ADMIN_URL=<dsn>]        exit 1 if an active chunk is missing from the lexical index or the embeddings"
+	@echo "make retrieval-check [ADMIN_URL=<dsn>]    read-only index coverage, corpus, versions and consumer backlog; no model calls"
 	@echo "make cache-invalidate [ADMIN_URL=<dsn>]   apply pending publish / archive events to the shared retrieval cache"
 	@echo "make observability-up / observability-down   start / remove the Jaeger trace viewer (profile observability)"
 	@echo "make demo-check                           demo prerequisites only (no API start, no model calls)"
@@ -29,6 +38,7 @@ help:
 	@echo "make demo-ask [Q=\"question\"] [DEPT=MA|PV|CO]   ask your own question; without Q an interactive prompt"
 	@echo "make activate-docs PLAN=<plan.json> ACTOR=<id> ADMIN_URL=<dsn>   activate draft documents all-or-nothing with audited reasons"
 	@echo "make check           lint + format-check + typecheck + test + schema drift (CI gate)"
+	@echo "make eval-check [EVAL_ARGS=--with-pages]   frozen dataset integrity, versions and lineage; no model calls"
 	@echo "make validate-probe DIR=<version_dir> [MODE=draft|frozen] [PAGES=<pages_dir>]"
 	@echo "make canonicalize-probe DIR=<draft_dir> [PAGES=<pages_dir>] [CHECK=1]  rewrite draft JSONL to canonical form, then validate"
 	@echo "make lock            regenerate requirements.lock from pyproject (uv pip compile, hashed)"
@@ -66,13 +76,13 @@ install-check:
 	@cd /tmp && $(CURDIR)/$(PY) -c "import medops.evals.probe.validator" && echo "install-check: medops importable outside the repo"
 
 lint:
-	$(PY) -m ruff check src tests migrations
+	$(PY) -m ruff check $(CHECK_PATHS)
 
 format:
-	$(PY) -m ruff format src tests migrations
+	$(PY) -m ruff format $(CHECK_PATHS)
 
 format-check:
-	$(PY) -m ruff format --check src tests migrations
+	$(PY) -m ruff format --check $(CHECK_PATHS)
 
 typecheck:
 	$(PY) -m mypy
@@ -111,6 +121,9 @@ index-build:
 index-check:
 	$(PY) -m medops.retrieval.production check-indexes $(if $(ADMIN_URL),--admin-url $(ADMIN_URL),)
 
+retrieval-check:
+	$(PY) -m medops.retrieval.production check-readiness $(if $(ADMIN_URL),--admin-url $(ADMIN_URL),)
+
 # trace viewer (Jaeger, one container) for the OTLP spans; UI at http://127.0.0.1:16686
 observability-up:
 	docker compose --env-file .env --profile observability up -d jaeger
@@ -140,7 +153,10 @@ migration-check:
 	@test "$$($(PY) -m alembic heads | wc -l | tr -d ' ')" = "1" && echo "migration-check: single head"
 	$(PY) -m pytest -q tests/integration/test_migrations.py -k "round_trip or single_head"
 
-check: install-check lint format-check typecheck test
+eval-check:
+	$(PY) -m medops.evals.audit --summary $(EVAL_ARGS)
+
+check: install-check lint format-check typecheck test eval-check
 	$(PY) -m medops.contracts_export --out schemas --check
 
 schemas:

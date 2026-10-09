@@ -148,17 +148,11 @@ def extract(pages: dict[str, dict[int, str]], *, min_tf: int, min_df: int, max_t
 
 def translate(terms: list[dict], *, model: str, batch: int) -> tuple[list[dict], float]:
     from medops.core.config import Settings
-    from medops.infrastructure.llm.budget import BudgetedGateway, InMemorySpendLedger
-    from medops.infrastructure.llm.gateway import OPENAI_PRICES, Message, ModelRequest, PriceTable
-    from medops.infrastructure.llm.openai_gateway import OpenAIModelGateway
+    from medops.infrastructure.llm.factory import build_budgeted_gateway
+    from medops.infrastructure.llm.gateway import Message, ModelRequest
 
     settings = Settings()
-    gateway = BudgetedGateway(
-        OpenAIModelGateway.from_settings(settings),
-        prices=PriceTable(OPENAI_PRICES),
-        ledger=InMemorySpendLedger(),
-        monthly_cap_usd=settings.llm_monthly_budget_usd,
-    )
+    gateway = build_budgeted_gateway(settings)
     cost = 0.0
     by_en = {t["en"]: t for t in terms}
     for start in range(0, len(terms), batch):

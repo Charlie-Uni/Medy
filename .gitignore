@@ -47,6 +47,22 @@ evals/safety_set/synthetic/
 # process logs of harness runs stay local (rows/results/report are committed)
 evals/harness/runs/*/api.log
 evals/harness/runs/*/worker*.log
+# Exact authorized evidence for semantic answer review contains source text; hashes stay in rows.
+evals/harness/runs/*/answer_review_inputs/
 
 # local logical backups (scripts/db_backup.py) never enter Git
 backups/
+
+# Durable metadata-only telemetry delivery queue and deployment secrets
+.local/
+
+# Exact review CLI output may quote source pages; preserve locally, never commit
+evals/main_set/drafts/*/review/call_artifacts/
+evals/main_set/drafts/*/review/budget.json.lock
+evals/main_set/drafts/*/review/**/call_artifacts/
+evals/main_set/drafts/*/review/**/budget.json.lock
+evals/answer_quality/reviews/**/call_artifacts/
+evals/answer_quality/reviews/**/budget.json.lock
+
+# Generated project dossiers are local deliverables.
+output/pdf/

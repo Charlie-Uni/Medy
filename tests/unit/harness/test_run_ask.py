@@ -8,7 +8,7 @@ from datetime import UTC, datetime
 from medops.domain.common import DocStatus, ReasonCode
 from medops.domain.state import MAX_CANDIDATES, CandidateRef, SourceRank
 from medops.harness.contracts import NodeSpec
-from medops.harness.nodes import HarnessDeps, default_specs
+from medops.harness.dependencies import HarnessDeps, default_specs
 from medops.harness.retrieval_port import RetrievalOutcome, RetrievalRequest
 from medops.harness.runtime import initial_state, run_ask
 from medops.infrastructure.llm.fake import FakeModelGateway, Truncated

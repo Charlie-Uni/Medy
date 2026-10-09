@@ -8,6 +8,8 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
+import os
 import pathlib
 import re
 import subprocess
@@ -236,11 +238,28 @@ def cli_version(binary: str) -> str:
     return (out.stdout or out.stderr).strip().splitlines()[0]
 
 
+class ClaudeCallError(RuntimeError):
+    """Safe failure code plus actual metering, including non-success CLI results."""
+
+    def __init__(self, code: str, metadata: dict[str, Any]):
+        super().__init__(code)
+        self.metadata = metadata
+
+
 def run_claude(
-    binary: str, model: str, effort: str, system_prompt: str, prompt: str, workdir: pathlib.Path, timeout: int = 1500
+    binary: str,
+    model: str,
+    effort: str,
+    system_prompt: str,
+    prompt: str,
+    workdir: pathlib.Path,
+    timeout: int = 1500,
+    *,
+    max_cost_usd: float | None = None,
+    capture_path: pathlib.Path | None = None,
+    json_schema: dict[str, Any] | None = None,
 ) -> tuple[str, dict[str, Any]]:
-    """One `claude -p` call with tools off, no session persistence and no user settings (same wire discipline as
-    the probe review runner). Returns (reply_text, call_metadata); raises on a non-success reply."""
+    """One tools-off CLI call. Failure retains costs; exact CLI output is private/local when captured."""
     cmd = [
         binary,
         "-p",
@@ -250,6 +269,11 @@ def run_claude(
         effort,
         "--tools",
         "",
+        "--strict-mcp-config",
+        "--mcp-config",
+        '{"mcpServers":{}}',
+        "--disable-slash-commands",
+        "--no-chrome",
         "--no-session-persistence",
         "--setting-sources",
         "",
@@ -258,33 +282,103 @@ def run_claude(
         "--output-format",
         "json",
     ]
-    proc = subprocess.run(cmd, input=prompt, capture_output=True, text=True, timeout=timeout, cwd=workdir)
-    try:
-        data = json.loads(proc.stdout)
-    except json.JSONDecodeError as exc:
-        raise RuntimeError(
-            f"claude returned non-JSON ({proc.returncode}): {(proc.stdout + proc.stderr)[-800:]}"
-        ) from exc
-    usage = data.get("modelUsage") or {}
-    observed = next(iter(usage)) if len(usage) == 1 else None
-    ok = proc.returncode == 0 and not data.get("is_error") and data.get("subtype") == "success"
+    if max_cost_usd is not None:
+        if not math.isfinite(max_cost_usd) or max_cost_usd <= 0:
+            raise ValueError("review call budget must be finite and positive")
+        cmd.extend(["--max-budget-usd", str(max_cost_usd)])
+    schema_sha256 = None
+    if json_schema is not None:
+        schema_text = json.dumps(json_schema, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+        schema_sha256 = sha256_bytes(schema_text.encode("utf-8"))
+        cmd.extend(["--json-schema", schema_text])
     meta = {
         "cli": "claude-code",
         "model_requested": model,
-        "model_observed": observed,
+        "model_observed": None,
         "reasoning_effort_requested": effort,
-        "session_id": data.get("session_id"),
-        "input_tokens": sum(int(u.get("inputTokens", 0)) for u in usage.values()),
-        "output_tokens": sum(int(u.get("outputTokens", 0)) for u in usage.values()),
-        "cost_usd": data.get("total_cost_usd"),
+        "session_id": None,
+        "input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "total_input_tokens": 0,
+        "output_tokens": 0,
+        "cost_usd": None,
         "system_prompt_sha256": sha256_bytes(system_prompt.encode("utf-8")),
         "prompt_sha256": sha256_bytes(prompt.encode("utf-8")),
         "tools_disabled": True,
+        "requested_max_cost_usd": max_cost_usd,
+        "json_schema_sha256": schema_sha256,
     }
-    if not ok:
-        raise RuntimeError(f"claude call failed: {json.dumps(data)[:800]}")
+    raw: dict[str, Any]
+    failure = None
+    try:
+        proc = subprocess.run(cmd, input=prompt, capture_output=True, text=True, timeout=timeout, cwd=workdir)
+        raw = {"returncode": proc.returncode, "stdout": proc.stdout, "stderr": getattr(proc, "stderr", "")}
+    except subprocess.TimeoutExpired as exc:
+
+        def decode(value):
+            return value.decode("utf-8", errors="replace") if isinstance(value, bytes) else (value or "")
+
+        raw = {
+            "returncode": None,
+            "stdout": decode(exc.stdout),
+            "stderr": decode(exc.stderr),
+            "error_type": "TimeoutExpired",
+        }
+        failure = "cli_timeout_unknown_charge"
+    except OSError as exc:
+        raw = {"returncode": None, "stdout": "", "stderr": "", "error_type": type(exc).__name__}
+        meta["cost_usd"] = 0.0 if isinstance(exc, FileNotFoundError) else None
+        failure = "cli_not_started" if isinstance(exc, FileNotFoundError) else "cli_os_error_unknown_charge"
+    if capture_path is not None:
+        capture_path.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
+        data_bytes = (json.dumps(raw, ensure_ascii=False, indent=2) + "\n").encode()
+        descriptor = os.open(capture_path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+        with os.fdopen(descriptor, "wb") as handle:
+            handle.write(data_bytes)
+            handle.flush()
+            os.fsync(handle.fileno())
+        meta["cli_capture_sha256"] = sha256_bytes(data_bytes)
+    if failure:
+        raise ClaudeCallError(failure, meta)
+    try:
+        data = json.loads(raw["stdout"])
+        if not isinstance(data, dict):
+            raise ValueError("not object")
+    except (json.JSONDecodeError, ValueError, TypeError):
+        raise ClaudeCallError("cli_non_json_unknown_charge", meta) from None
+    cost = data.get("total_cost_usd")
+    if isinstance(cost, (int, float)) and not isinstance(cost, bool) and math.isfinite(cost) and cost >= 0:
+        meta["cost_usd"] = cost
+    usage = data.get("modelUsage") or {}
+    try:
+        observed = next(iter(usage)) if len(usage) == 1 else None
+        meta.update(
+            model_observed=observed,
+            session_id=data.get("session_id"),
+            input_tokens=sum(int(u.get("inputTokens", 0)) for u in usage.values()),
+            cache_read_input_tokens=sum(int(u.get("cacheReadInputTokens", 0)) for u in usage.values()),
+            cache_creation_input_tokens=sum(int(u.get("cacheCreationInputTokens", 0)) for u in usage.values()),
+            output_tokens=sum(int(u.get("outputTokens", 0)) for u in usage.values()),
+            model_usage=usage,
+        )
+        meta["total_input_tokens"] = (
+            meta["input_tokens"] + meta["cache_read_input_tokens"] + meta["cache_creation_input_tokens"]
+        )
+    except (ValueError, TypeError, AttributeError):
+        raise ClaudeCallError("cli_invalid_usage", meta) from None
+    if raw["returncode"] != 0 or data.get("is_error") or data.get("subtype") != "success":
+        meta["result_subtype"] = data.get("subtype")
+        raise ClaudeCallError("cli_call_failed", meta)
     if observed != model:
-        raise RuntimeError(f"observed model {observed!r} differs from requested {model!r}")
+        raise ClaudeCallError("cli_model_mismatch", meta)
+    if meta["cost_usd"] is None:
+        raise ClaudeCallError("cli_missing_cost", meta)
+    if json_schema is not None:
+        structured = data.get("structured_output")
+        if not isinstance(structured, (dict, list)):
+            raise ClaudeCallError("cli_missing_structured_output", meta)
+        return json.dumps(structured, ensure_ascii=False, sort_keys=True, separators=(",", ":")), meta
     return str(data.get("result", "")), meta
 
 

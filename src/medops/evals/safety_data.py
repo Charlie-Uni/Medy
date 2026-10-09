@@ -6,8 +6,10 @@ import hashlib
 import json
 import pathlib
 import re
-import urllib.parse
 from collections.abc import Iterable
+from urllib.parse import urlsplit, urlunsplit
+
+from medops.evals.datasets import read_rows
 
 REPO = pathlib.Path(__file__).resolve().parents[3]
 SAFETY = REPO / "evals/safety_set"
@@ -63,31 +65,22 @@ def _env() -> dict[str, str | None]:
 
 
 def with_database(dsn: str, database: str) -> str:
-    return re.sub(r"/[^/?]+(\?|$)", rf"/{database}\1", dsn)
+    """The same server and credentials, another database (the single implementation; record 144)."""
+    parts = urlsplit(dsn)
+    return urlunsplit((parts.scheme, parts.netloc, "/" + database, parts.query, parts.fragment))
 
 
 def admin_dsn(database: str) -> str:
     return with_database(_env()["DATABASE_ADMIN_URL"] or "", database)
 
 
-def app_dsn(database: str) -> str:
-    """The application LOGIN user (RLS enforced), as the harness uses it."""
-    env = _env()
-    dsn = env["DATABASE_URL"] or ""
-    p = urllib.parse.urlsplit(dsn)
-    user = urllib.parse.quote("medops_app_user")
-    pw = urllib.parse.quote(env["DB_APP_PASSWORD"] or "")
-    return f"postgresql://{user}:{pw}@{p.hostname}:{p.port or 5432}/{database}"
-
-
-def read_jsonl(path: pathlib.Path) -> list[dict]:
-    if not path.exists():
-        return []
-    return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
-
-
 def write_jsonl(path: pathlib.Path, rows: Iterable[dict]) -> None:
     path.write_text("".join(json.dumps(r, ensure_ascii=False, sort_keys=True) + "\n" for r in rows), encoding="utf-8")
+
+
+def _optional_rows(path: pathlib.Path) -> list[dict]:
+    """Withdrawn category files are sparse; validate any file that exists with the canonical reader."""
+    return read_rows(path) if path.exists() else []
 
 
 def load_drafts(*, include_withdrawn: bool = False) -> list[dict]:
@@ -95,7 +88,7 @@ def load_drafts(*, include_withdrawn: bool = False) -> list[dict]:
     reference them by id — their expectations stay what they were when the run happened)."""
     rows: list[dict] = []
     for name in DRAFT_FILES.values():
-        rows.extend(read_jsonl(DRAFTS / name))
+        rows.extend(read_rows(DRAFTS / name))
         if include_withdrawn:
-            rows.extend(read_jsonl(WITHDRAWN / name))
+            rows.extend(_optional_rows(WITHDRAWN / name))
     return rows

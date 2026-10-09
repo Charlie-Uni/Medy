@@ -8,6 +8,7 @@ from fastapi.testclient import TestClient
 
 from medops.api.app import create_app
 from medops.api.auth import Principal, StaticDirectory, pseudonym
+from medops.application.policy_loader import ReleasedPolicySet, RequestPolicies
 from medops.domain.common import Dept
 from medops.domain.identity import UserContext
 from medops.infrastructure.llm.fake import FakeModelGateway
@@ -94,3 +95,25 @@ def test_replay_reports_changes_and_guards():
         c.post(f"/admin/traces/{replay_id}/replay", json={"reason": "x"}, headers=auth("admin-1")).status_code == 404
     )  # replays are not replayed
     assert c.post(f"/admin/traces/{src['trace_id']}/replay", json={}, headers=auth("admin-1")).status_code == 422
+
+
+class CanaryRuntime(ReplayRuntime):
+    """Every principal is routed to a canary side whose policy version differs from the deployment's base set."""
+
+    def route_policies(self, conn, user):
+        routed = self.versions.model_copy(update={"policy_version": self.versions.policy_version + "+canary:abcd"})
+        return RequestPolicies(ReleasedPolicySet.empty(), routed)
+
+
+def test_replay_reports_the_routed_versions_it_ran_with():
+    """M4-09: the replay runs under the principal's routed versions; the report's replay side and `versions_match`
+    describe those versions, not the base set the service was constructed with (record 144)."""
+    rt = CanaryRuntime(FakeRetrieval(evidence("c1", LABEL)), FakeModelGateway({"answer": [ANSWER, ANSWER]}))
+    c = TestClient(create_app(rt), raise_server_exceptions=False)
+    src = c.post("/v1/ask", json={"query": QUERY}, headers=auth("user-1")).json()
+    assert src["versions"]["policy_version"] == "policy-test-1+canary:abcd"
+    report = c.post(
+        f"/admin/traces/{src['trace_id']}/replay", json={"reason": "canary"}, headers=auth("admin-1")
+    ).json()
+    assert report["replay"]["versions"]["policy_version"] == "policy-test-1+canary:abcd"
+    assert report["versions_match"] is True and report["source"]["versions"] == report["replay"]["versions"]

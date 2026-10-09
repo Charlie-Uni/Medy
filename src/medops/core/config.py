@@ -18,6 +18,7 @@ from __future__ import annotations
 
 from enum import StrEnum
 from typing import Literal
+from urllib.parse import urlsplit
 
 from pydantic import (
     Field,
@@ -60,6 +61,22 @@ class AppEnv(StrEnum):
     prod = "prod"
 
 
+def check_langfuse_base_url(url: str) -> None:
+    """A Langfuse project origin the process may send metadata to: HTTPS, or plain HTTP on this host only, with no
+    credentials, query or fragment in the URL (records 141, 142). Raises ValueError without echoing the URL."""
+    parsed = urlsplit(url)
+    if (
+        not parsed.hostname
+        or parsed.username
+        or parsed.password
+        or parsed.query
+        or parsed.fragment
+        or parsed.scheme not in {"http", "https"}
+        or (parsed.scheme == "http" and parsed.hostname not in {"localhost", "127.0.0.1", "::1"})
+    ):
+        raise ValueError("Langfuse requires HTTPS or localhost HTTP without URL credentials")
+
+
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=".env", env_file_encoding="utf-8", extra="forbid", frozen=True, hide_input_in_errors=True
@@ -91,6 +108,10 @@ class Settings(BaseSettings):
     retrieval_cache: Literal["off", "memory", "redis"] = "off"
     # Entries also die with the department epoch on publish events (needs the cache consumer to run).
     retrieval_cache_ttl_seconds: int = Field(default=300, ge=1, le=86400)
+    # Retrieval outbox poison-event policy. Dead letters remain unacknowledged until an operator requeues them.
+    outbox_max_attempts: int = Field(default=10, ge=1, le=100)
+    outbox_backoff_base_s: int = Field(default=5, ge=0, le=3600)
+    outbox_backoff_max_s: int = Field(default=3600, ge=0, le=24 * 3600)
     # Antivirus hook for ingestion (ADR-0009 §4): clamd INSTREAM at tcp://host:port or unix:///path.
     # Optional in dev/test (the ingest audit records `av_scan: skipped`); required in prod.
     clamd_address: str | None = Field(default=None, pattern=r"^(tcp://[^/\s]+:\d{1,5}|unix:///\S+)$")
@@ -136,6 +157,34 @@ class Settings(BaseSettings):
     # A secret: never logged. Unset for collectors that need none (record 123).
     otel_exporter_otlp_headers: SecretStr | None = None
     otel_service_name: str = "medops-copilot"
+    # Explicit opt-in; metadata-only OTLP and score worker use the same project credentials.
+    langfuse_base_url: str | None = None
+    langfuse_public_key: SecretStr | None = None
+    langfuse_secret_key: SecretStr | None = None
+    # Local score-export spool. It is intentionally bounded and independent of request handling.
+    langfuse_score_queue_max_rows: int = Field(default=10_000, ge=1, le=1_000_000)
+    langfuse_score_queue_max_age_s: int = Field(default=30 * 24 * 3600, ge=60, le=365 * 24 * 3600)
+    langfuse_score_queue_max_attempts: int = Field(default=10, ge=1, le=100)
+    langfuse_score_queue_backoff_base_s: int = Field(default=5, ge=1, le=3600)
+    langfuse_score_queue_backoff_max_s: int = Field(default=3600, ge=1, le=24 * 3600)
+
+    @model_validator(mode="after")
+    def _langfuse_target(self) -> Settings:
+        configured = (self.langfuse_base_url, self.langfuse_public_key, self.langfuse_secret_key)
+        if any(configured) and not all(configured):
+            raise ValueError("Langfuse requires base URL and both project API keys")
+        if self.langfuse_base_url:
+            check_langfuse_base_url(self.langfuse_base_url)
+            expected = self.langfuse_base_url.rstrip("/") + "/api/public/otel"
+            if self.otel_exporter_otlp_endpoint and self.otel_exporter_otlp_endpoint.rstrip("/") != expected:
+                raise ValueError("Langfuse and OTLP targets differ; trace and score must use the same project")
+            if self.otel_exporter_otlp_headers:
+                raise ValueError("Langfuse generates OTLP credentials; remove conflicting manual OTLP headers")
+        if self.langfuse_score_queue_backoff_max_s < self.langfuse_score_queue_backoff_base_s:
+            raise ValueError("Langfuse score queue max backoff must be at least its base backoff")
+        if self.outbox_backoff_max_s < self.outbox_backoff_base_s:
+            raise ValueError("outbox max backoff must be at least its base backoff")
+        return self
 
     @field_validator(
         "postgres_password",

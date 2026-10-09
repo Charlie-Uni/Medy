@@ -154,6 +154,18 @@ def test_doc_focus_is_a_boolean_retrieval_parameter():
         validate_diff("retrieval_params", "hybrid", {"doc_focus": {"from": False, "to": 1}}, base=BASE)
 
 
+def test_source_constraint_is_a_boolean_retrieval_parameter():
+    from medops.application.policy_loader import ReleasedPolicy, ReleasedPolicySet
+
+    rs = ReleasedPolicySet(
+        (ReleasedPolicy("s", "retrieval_params", "hybrid", "v", {"source_constraint": {"from": False, "to": True}}),)
+    )
+    assert rs.source_constraint() is True and ReleasedPolicySet().source_constraint() is False
+    validate_diff("retrieval_params", "hybrid", {"source_constraint": {"from": False, "to": True}}, base=BASE)
+    with pytest.raises(PolicyDiffError):
+        validate_diff("retrieval_params", "hybrid", {"source_constraint": {"from": False, "to": 1}}, base=BASE)
+
+
 def test_query_translation_is_an_allowlisted_model_and_marks_the_model_config():
     from medops.application.policy_loader import ReleasedPolicy, ReleasedPolicySet
 

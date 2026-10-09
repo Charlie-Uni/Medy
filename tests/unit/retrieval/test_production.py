@@ -94,6 +94,16 @@ def test_doc_focus_joins_the_composite_with_its_rule_version():
     assert set(bundle.rewrite_params) == {"glossary", "multi_query", "doc_focus"}
 
 
+def test_source_constraint_joins_the_composite_with_its_rule_version():
+    from medops.retrieval.source_constraints import SOURCE_CONSTRAINT_VERSION
+
+    off = production.production_retrieval_inputs(source_constraint=False)
+    assert compute_retrieval_version(off) == production.PRODUCTION_RETRIEVAL_VERSION
+    on = production.production_retrieval_inputs(source_constraint=True)
+    assert on.rewrite_params == {"source_constraint": SOURCE_CONSTRAINT_VERSION}
+    assert compute_retrieval_version(on) != production.PRODUCTION_RETRIEVAL_VERSION
+
+
 def test_query_translation_joins_the_composite_with_rule_and_model():
     off = production.production_retrieval_inputs(query_translation="off")
     assert compute_retrieval_version(off) == production.PRODUCTION_RETRIEVAL_VERSION

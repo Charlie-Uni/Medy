@@ -1,0 +1,87 @@
+{
+  "catalog_version": "eval-catalog-v1",
+  "as_of": "2026-10-09",
+  "policy": "evals/README.md",
+  "note": "Explicit version selection; frozen does not imply independent human review. No unseen holdout is registered. Historical directories remain unchanged.",
+  "datasets": [
+    {
+      "role": "probe",
+      "path": "evals/probe/precise_clause/v4",
+      "dataset_id": "precise_clause_probe",
+      "dataset_version": "v4",
+      "dataset_hash": "1427274ecd04ab6193e572ad1633cfa3bd897520315af52c40fd93e792492286",
+      "manifest_sha256": "789ab274f722370f631d47a2a588a925a46f985f4f7045693bb42f589f1df921",
+      "schema_dir": "evals/probe/precise_clause/schema",
+      "usage": "lexical_probe",
+      "unseen_holdout": false
+    },
+    {
+      "role": "main",
+      "path": "evals/main_set/main-v5-provisional",
+      "dataset_id": "precise_clause_main",
+      "dataset_version": "main-v5-provisional",
+      "dataset_hash": "23bf8530d63f6605b10fb2b1f9d7b3cf5cb805f5d3b20caa16f2fa2e7e5842b0",
+      "manifest_sha256": "81dc61fde572932c23bede60aea8eed85c257bb1e219ec477a7f2d4f19f1e0e2",
+      "schema_dir": "evals/main_set/schema",
+      "usage": "current_provisional_regression",
+      "unseen_holdout": false,
+      "chunk_mapping": {
+        "path": "evals/experiments/e2e/main-v5-provisional/chunk_mapping.chunker-v2.main-v5-provisional.json",
+        "sha256": "9189e9e20f38203a59d7d7cd7640dc2521ff6103dbde16f35590f4c331800d39"
+      }
+    },
+    {
+      "role": "safety",
+      "path": "evals/safety_set/safety-v2-provisional",
+      "dataset_id": "safety_set",
+      "dataset_version": "safety-v2-provisional",
+      "dataset_hash": "a615186c7070ce5c69f3dbbac27257faa93d2c5c3292cfa81c201f4b7e139e28",
+      "manifest_sha256": "8a282ddc772be80e716eb46e37cdaa1abaa45c4a18251c259766d7d30cb6d828",
+      "schema_dir": "evals/safety_set/schema",
+      "usage": "current_provisional_regression",
+      "unseen_holdout": false
+    },
+    {
+      "role": "replay",
+      "path": "evals/replay/replay-v3",
+      "dataset_id": "loop_replay",
+      "dataset_version": "replay-v3",
+      "dataset_hash": "2275093e619a709801bd94d14a8ed68e2efc2feb9a64217e213b00a4b253107e",
+      "manifest_sha256": "d23695eba3418cb8cef93105b8cc63915e9dadfc63f8ac2288d23bc21792b7c7",
+      "schema_dir": null,
+      "usage": "historical_regression",
+      "unseen_holdout": false
+    }
+  ],
+  "page_roots": [
+    "evals/main_set/pages",
+    "evals/probe/precise_clause/v1/pages"
+  ],
+  "review_worklist": {
+    "path": "evals/review/worklist-v1.json",
+    "sha256": "10aa4fc829778ff79490543a0620e253ccb67e28c64c78428a262b8f80ecb8a6"
+  },
+  "annotation_drafts": [
+    {
+      "path": "evals/main_set/drafts/revision-2026-10-08-v6",
+      "manifest_sha256": "9eba65082184d9f9311287ed6af4309d616a08566e40ee83de936eb2609b5c3c",
+      "status": "applied",
+      "usage": "annotation_revision_applied_to_current_main",
+      "human_confirmation": {
+        "path": "evals/main_set/drafts/revision-2026-10-08-v6/human_confirmation_2026-10-08.json",
+        "sha256": "d23e9326d6c8989dbf8b6fb8ec8928b6f6d1df6067b026e50532db8856243171"
+      },
+      "applied_to": {
+        "path": "evals/main_set/main-v5-provisional",
+        "dataset_version": "main-v5-provisional",
+        "dataset_hash": "23bf8530d63f6605b10fb2b1f9d7b3cf5cb805f5d3b20caa16f2fa2e7e5842b0"
+      }
+    }
+  ],
+  "source_contracts": {
+    "path": "evals/source_semantics/main-v5-provisional.json",
+    "sha256": "d15fc212ecf3332a536c319d0dab6c52d96b4e76e5858ee3785807a1e4664d45",
+    "status": "provisional",
+    "usage": "reviewed source-compliance cohort; not a formal gate"
+  }
+}

@@ -16,6 +16,7 @@ from medops.domain.state import CandidateRef, SourceRank
 from medops.harness import retrieval_port as rp
 from medops.harness.retrieval_port import ProductionRetrieval, RetrievalRequest
 from medops.retrieval.cache import CandidateCache, InMemoryCandidateCacheStore
+from medops.retrieval.doc_focus import DocRef
 from medops.retrieval.hybrid import HybridConfig
 from medops.retrieval.recheck import RecheckResult, Rejection
 from medops.retrieval.rerank import OverlapReranker
@@ -62,13 +63,15 @@ class Port(ProductionRetrieval):
             **kw,
         )
         self.searches = 0
+        self.source_doc_ids = None
 
     @property
     def reranks(self) -> int:
         return self._reranker.calls
 
-    def _search(self, request, rewritten, query):
+    def _search(self, request, rewritten, query, *, source_doc_ids=None):
         self.searches += 1
+        self.source_doc_ids = source_doc_ids
         candidates = tuple(
             CandidateRef(chunk_id=c, source_ranks=(SourceRank(source="lexical", rank=i),))
             for i, c in enumerate(TEXTS, 1)
@@ -194,3 +197,19 @@ def test_a_cache_without_versions_is_refused_and_a_failing_store_degrades_to_a_m
     a, b = port.retrieve(request()), port.retrieve(request())
     assert port.searches == 2 and not a.cache_hit and not b.cache_hit and cache.degraded >= 2
     assert [e.citation.chunk_id for e in a.evidence] == [e.citation.chunk_id for e in b.evidence]
+
+
+def test_source_constraint_scopes_search_or_fails_closed_without_revealing_a_document(monkeypatch, visible):
+    doc = DocRef("doc-1", "ICH E2F: Development Safety Update Report", "guideline", "ich-e2f-step4-2010")
+    monkeypatch.setattr(rp, "load_documents", lambda conn: [doc])
+    port = Port(source_constraint=True)
+    found = port.retrieve(request(query="ICH E2F 的 DSUR 需要涵蓋哪些內容？"))
+    assert found.source_constraint_applied and not found.source_constraint_missing
+    assert port.source_doc_ids == ("doc-1",)
+
+    monkeypatch.setattr(rp, "load_documents", lambda conn: [])
+    missing_port = Port(source_constraint=True)
+    missing = missing_port.retrieve(request(query="ICH E2F 的 DSUR 需要涵蓋哪些內容？"))
+    assert missing.source_constraint_applied and missing.source_constraint_missing
+    assert not missing.candidates and not missing.evidence and missing_port.searches == 0
+    assert "ICH E2F" not in missing.detail and "Development Safety Update Report" not in missing.detail

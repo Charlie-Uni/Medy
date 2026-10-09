@@ -21,6 +21,7 @@ from collections.abc import Sequence
 from dataclasses import dataclass
 from datetime import date
 from typing import Any
+from uuid import UUID
 
 import psycopg
 
@@ -108,11 +109,18 @@ def read_meta(conn: psycopg.Connection[Any], embedding_version: str) -> Embeddin
 
 
 def build_index(
-    conn: psycopg.Connection[Any], provider: EmbeddingProvider, *, built_by: str, batch: int = 64
+    conn: psycopg.Connection[Any],
+    provider: EmbeddingProvider,
+    *,
+    built_by: str,
+    batch: int = 64,
+    doc_ids: Sequence[str | UUID] | None = None,
 ) -> VectorBuildReport:
     """Embed every chunk that has no vector of the provider's version yet (admin connection). Re-running only
     fills gaps; a different spec under the same version is refused because the meaning of the vectors would
-    silently change."""
+    silently change. `doc_ids` bounds incremental outbox work to the affected documents; None builds all."""
+    if batch <= 0:
+        raise ValueError("embedding batch must be positive")
     spec = provider.spec
     existing = conn.execute(
         f"select model_id, model_revision, dimension, normalization, max_seq_length from {META_TABLE} "
@@ -149,8 +157,13 @@ def build_index(
     rows = conn.execute(
         f"""select c.chunk_id, c.content from chunks c
             where not exists (select 1 from {TABLE} e where e.chunk_id = c.chunk_id and e.embedding_version = %s)
+              and (%s::uuid[] is null or c.doc_id = any(%s::uuid[]))
             order by c.chunk_id""",
-        (spec.embedding_version,),
+        (
+            spec.embedding_version,
+            list(doc_ids) if doc_ids is not None else None,
+            list(doc_ids) if doc_ids is not None else None,
+        ),
     ).fetchall()
     embedded = 0
     with conn.cursor() as cur:

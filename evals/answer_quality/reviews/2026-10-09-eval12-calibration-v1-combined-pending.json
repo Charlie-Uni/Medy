@@ -1,0 +1,59 @@
+{
+  "scorer_version": "answer-quality-v1-provisional",
+  "formal_gate": false,
+  "cases": 14,
+  "reviewed_cases": 0,
+  "claim_support": {
+    "numerator": 0,
+    "denominator": 12,
+    "pending": 12,
+    "unverifiable": 0,
+    "rate": null
+  },
+  "citation_support": {
+    "numerator": 0,
+    "denominator": 14,
+    "pending": 14,
+    "unverifiable": 0,
+    "rate": null
+  },
+  "answer_completeness": {
+    "numerator": 0,
+    "denominator": 14,
+    "pending": 10,
+    "unverifiable": 0,
+    "rate": null
+  },
+  "note": "Separate diagnostic judgments; no structural/gold proxy, no second-human inference, no retrospective replacement of original scores.",
+  "provenance": {
+    "runs": [
+      {
+        "run": "evals/harness/runs/2026-10-09-eval12-calibration-v1-generation",
+        "rows_sha256": "c9ce5386c3b52c3ae9425033bdd785e19cd40c7066b10c3eb9d11e8b9d1e1b7d",
+        "snapshot_file_hashes": [
+          "02a57c06dd7bf6c9a6aece1926ce744f180dc7284b284a814e68beb2bb2c2856",
+          "16f6a939a2e3445d18d1ff226cf5f7b9eaa6013a1f1ff3ae969069faa280f429",
+          "31cd9de525dd3e812ab5558d7d07a3382cbe93a2c1617e4fd9cec82dffc40a38",
+          "596b965c59388222fabc56155ef83b6bbbe9e1ad5880205f93e4b279edc19d59",
+          "8bb9136e878a48231d9ecb1942ba125832e3710c304eb73dc698c6d189565af4",
+          "8ecff478839b0f732fdbd2201967036a7bf0a03947491fab9ecdf3bf063b1101",
+          "a44cd58d33c15354c763b4723af1bc5a7504520befd79709b86a6beff1ace604",
+          "a9814ae900ff680d445bfc0a91cc5c43ab8f6be7054d58575b8c1a0b17c3ef67",
+          "cfcdefd26b9ab5a0f4c2dba7fab727544f1e7937112727953afe25695849e723",
+          "e5c6cd6f060f5c853577b7763829f531b95bc1b6094585cb2333aa9999d7706e"
+        ]
+      },
+      {
+        "run": "evals/harness/runs/2026-10-09-eval12-calibration-v1-supplement",
+        "rows_sha256": "443490be82a6f63c44dec50f036129ee102e02da3bbc68329b8cc6d3da136e48",
+        "snapshot_file_hashes": [
+          "3e52dcda2022582c4e5f752811735da4939dba06d0a97233501477ec2f1a9716",
+          "65a937280b565800acb5d6453ab2f65d1c403f2be594c289df6aa5ff8affff42",
+          "797b41b5c607c05ac134a9edae9119ca887c7adae099d3e7622c55da0c6b8d6c",
+          "97abd096dd5b226105efa1af6ce861a76127395f227e94fc7fa416470ed1a3c5"
+        ]
+      }
+    ],
+    "review_file_sha256": null
+  }
+}

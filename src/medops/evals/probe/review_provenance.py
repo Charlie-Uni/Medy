@@ -16,6 +16,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
 from medops.core.canonical import canonical_json
+from medops.evals.probe.review_inputs import multi_gold_review_record
 
 if TYPE_CHECKING:
     from medops.evals.probe.validator import Finding, PageTextProvider
@@ -59,6 +60,8 @@ EVIDENCE_PATHS = tuple(f"review_evidence/{name}" for name in EVIDENCE_NAMES)
 ITEM_KEYS = {"query", "slices", "key_text", "evidence_span", "dept"}
 ITEM_KEYS_NO_ANSWER = {"query", "absence", "slices", "dept"}  # spec-m1 no-answer verdicts
 _SHA256 = re.compile(r"[0-9a-f]{64}\Z")
+_ARCHIVED_INPUT = re.compile(r"review_evidence/chunk_inputs/input_([0-9a-f]{64})\.jsonl\Z")
+_ARCHIVED_PROMPT = re.compile(r"review_evidence/review_prompts/review_prompt_([0-9a-f]{64})\.md\Z")
 
 
 def service_alias_version(model: str) -> str:
@@ -121,14 +124,16 @@ def _read_artifacts(version_dir: Path, provenance: dict[str, Any], batches: tupl
     names = evidence_names(batches)
     required_paths = tuple(f"review_evidence/{name}" for name in names)
     entries = provenance["artifacts"]
-    _require(
-        isinstance(entries, list) and len(entries) == len(required_paths),
-        f"review evidence must contain {len(names)} artifacts",
-    )
+    _require(isinstance(entries, list), "review evidence artifacts must be a list")
     paths = [entry["path"] for entry in entries]
     _require(
-        len(set(paths)) == len(paths) and set(paths) == set(required_paths),
-        "review evidence paths must match the required files",
+        len(set(paths)) == len(paths) and set(required_paths).issubset(paths),
+        "review evidence paths must contain each required file exactly once",
+    )
+    extras = set(paths) - set(required_paths)
+    _require(
+        all(_ARCHIVED_INPUT.fullmatch(path) or _ARCHIVED_PROMPT.fullmatch(path) for path in extras),
+        "extra review evidence must be a hashed archived chunk input or review prompt",
     )
     root = version_dir.resolve()
     evidence_dir = version_dir / "review_evidence"
@@ -143,8 +148,37 @@ def _read_artifacts(version_dir: Path, provenance: dict[str, Any], batches: tupl
         )
         raw = path.read_bytes()
         _require(hashlib.sha256(raw).hexdigest() == entry["sha256"], f"{relative}: artifact SHA-256 mismatch")
-        result[Path(relative).name] = raw
+        result[relative if relative in extras else Path(relative).name] = raw
     return result
+
+
+def _archived_chunk_records(
+    chunk: Mapping[str, Any], artifacts: Mapping[str, bytes], batch: str
+) -> tuple[list[dict[str, Any]], str]:
+    """Load an immutable historical input pack for a mixed superseded/current invocation.
+
+    A later targeted review may change one member of an old multi-sample prompt without invalidating the
+    unchanged members. The exact old prompt remains auditable only when its input pack is itself listed and
+    hashed in ``review_provenance.artifacts``.
+    """
+    relative = chunk.get("input_path")
+    _require(isinstance(relative, str), f"{batch}: mixed historical invocation needs an archived input_path")
+    artifact_path = f"review_evidence/{relative}"
+    match = _ARCHIVED_INPUT.fullmatch(artifact_path)
+    _require(match is not None, f"{batch}: invalid archived input_path")
+    assert match is not None
+    _require(match.group(1) == chunk["prompt_sha256"], f"{batch}: archived input filename must bind prompt hash")
+    _require(artifact_path in artifacts, f"{batch}: archived input pack is missing from review evidence")
+    records = _jsonl(artifacts[artifact_path])
+    _require(
+        [record.get("sample_id") for record in records] == chunk["sample_ids"],
+        f"{batch}: archived input coverage or order mismatch",
+    )
+    _require(
+        chunk["sample_input_sha256"] == {record["sample_id"]: _digest(record) for record in records},
+        f"{batch}: archived input hash mismatch",
+    )
+    return records, artifact_path
 
 
 def _current_records(
@@ -166,7 +200,15 @@ def _current_records(
                 return None
             result[sample["sample_id"]] = record
             continue
-        _require(len(sample["required_gold_evidence"]) == 1, "recorded review protocol requires one gold per sample")
+        if len(sample["required_gold_evidence"]) > 1:
+            multi_record = multi_gold_review_record(
+                sample, docs, pages.page_text, by_id.get(sample.get("derived_from"))
+            )
+            if multi_record is None:
+                return None
+            result[sample["sample_id"]] = multi_record
+            continue
+        _require(len(sample["required_gold_evidence"]) == 1, "answerable reviewer input requires gold")
         gold = sample["required_gold_evidence"][0]
         doc = docs[gold["source_hash"]]
         text = pages.page_text(gold["source_hash"], gold["page"])
@@ -245,17 +287,21 @@ _CONFLICT_DRAFTING_ORDER = ("family_document_keys", "current_document_key", "cla
 
 def _span_variants(record: dict[str, Any]) -> list[dict[str, Any]]:
     """The serialisations an input pack may have used for blocks whose key order is not fixed by the schema:
-    `evidence_span` in the explicit (text, char_start, char_end) order of the drafting tools or in canonical sorted
-    order (pack re-exported from a canonical samples.jsonl), and — spec-m1 — the `conflict` block in the drafting
-    tools' order or in canonical order. Content is identical; only key order differs. Records without these blocks
-    (e.g. no-answer records) yield a single variant, returned twice so that callers can index 0/1 uniformly."""
+    `evidence_span` in the explicit drafting, coordinate-first or canonical order, and — spec-m1 — the `conflict`
+    block in drafting or canonical order. Content is identical; only key order differs. Records without these
+    blocks (e.g. no-answer records) yield a single variant, returned twice so callers can index 0/1 uniformly."""
     variants: list[dict[str, Any]] = [record]
     if "gold" in record:
         span = record["gold"]["evidence_span"]
         ordered = {"text": span["text"], "char_start": span["char_start"], "char_end": span["char_end"]}
+        coordinates_first = {
+            "char_start": span["char_start"],
+            "char_end": span["char_end"],
+            "text": span["text"],
+        }
         canonical = {k: span[k] for k in sorted(span)}
         variants = []
-        for variant in (ordered, canonical):
+        for variant in (ordered, coordinates_first, canonical):
             r = dict(record)
             r["gold"] = dict(record["gold"])
             r["gold"]["evidence_span"] = variant
@@ -275,6 +321,30 @@ def _span_variants(record: dict[str, Any]) -> list[dict[str, Any]]:
     if len(variants) == 1:
         variants = [variants[0], variants[0]]
     return variants
+
+
+def _review_record_variants(
+    record: dict[str, Any], sample: Mapping[str, Any], by_id: Mapping[str, Mapping[str, Any]], *, main_set: bool
+) -> list[dict[str, Any]]:
+    """Return deterministic wire shapes that represent the same frozen sample.
+
+    Original probe review records omitted derived-twin context. Later revision tooling
+    appends the frozen note and parent query. Both forms are reconstructed from frozen
+    data; main-set records already contain their required context.
+    """
+    result = [record]
+    parent_id = sample.get("derived_from")
+    if not main_set and isinstance(parent_id, str):
+        parent = by_id.get(parent_id)
+        _require(parent is not None, f"{sample['sample_id']}: derived_from parent missing from the review scope")
+        assert parent is not None
+        contextual = dict(record)
+        if sample.get("notes"):
+            contextual["notes"] = sample["notes"]
+        contextual["parent_query"] = parent["query"]
+        if _digest(contextual) != _digest(record):
+            result.append(contextual)
+    return result
 
 
 def _actual_prompt_hashes(prompt_text: str, records: list[dict[str, Any]]) -> set[str]:
@@ -360,15 +430,37 @@ def _validate(
     )
     _require(all(batch_of(s) in batches for s in samples), "review evidence has an unknown sample batch")
     records = _current_records(version_dir, samples, pages)
+    record_variants = None
+    allowed_input_hashes = None
+    if records is not None:
+        by_id = {sample["sample_id"]: sample for sample in samples}
+        record_variants = {
+            sid: _review_record_variants(record, by_id[sid], by_id, main_set=main_set)
+            for sid, record in records.items()
+        }
+        allowed_input_hashes = {
+            sid: {_digest(variant) for variant in variants} for sid, variants in record_variants.items()
+        }
     prompt_raw = (version_dir / "review_prompt.md").read_bytes()
-    _require(
-        hashlib.sha256(prompt_raw).hexdigest() == second["prompt_hash"], "review_prompt.md hash differs from manifest"
-    )
-    prompt_text = prompt_raw.decode("utf-8")
+    current_prompt_hash = hashlib.sha256(prompt_raw).hexdigest()
+    _require(current_prompt_hash == second["prompt_hash"], "review_prompt.md hash differs from manifest")
+    prompts = {current_prompt_hash: prompt_raw.decode("utf-8")}
+    prompt_paths = {}
+    for path, raw in artifacts.items():
+        match = _ARCHIVED_PROMPT.fullmatch(path)
+        if match is None:
+            continue
+        prompt_hash = match.group(1)
+        _require(hashlib.sha256(raw).hexdigest() == prompt_hash, f"{path}: prompt filename/content hash mismatch")
+        _require(prompt_hash not in prompts, f"{path}: duplicate current review prompt")
+        prompts[prompt_hash] = raw.decode("utf-8")
+        prompt_paths[prompt_hash] = path
     resolutions = _json(artifacts["resolutions.json"])
     _require(isinstance(resolutions, dict), "resolutions must be an object")
     disputed = set()
     all_chunks = []
+    used_archived_inputs: set[str] = set()
+    used_archived_prompts: set[str] = set()
     for batch in batches:
         group = {s["sample_id"]: s for s in samples if batch_of(s) == batch}
         if main_set:
@@ -399,15 +491,15 @@ def _validate(
         _require(
             run["model"] == model and run["reasoning_effort_requested"] == effort, f"{batch}: model or effort mismatch"
         )
-        _require(run["review_prompt_sha256"] == second["prompt_hash"], f"{batch}: review prompt hash mismatch")
+        _require(run["review_prompt_sha256"] in prompts, f"{batch}: review prompt hash is not archived")
         _require(
             run.get("backend_model_version") is None, f"{batch}: backend version is exposed, sentinel is inappropriate"
         )
         live_hashes = {k: v for k, v in run["sample_input_sha256"].items() if k not in dropped}
         _hashes(live_hashes, set(group), batch)
-        if records is not None:
+        if allowed_input_hashes is not None:
             _require(
-                live_hashes == {sid: _digest(records[sid]) for sid in group},
+                all(live_hashes[sid] in allowed_input_hashes[sid] for sid in group),
                 f"{batch}: current sample/page input hash differs from review",
             )
         latest, chunks = run["latest"], run["chunks"]
@@ -416,10 +508,14 @@ def _validate(
         current = _verdicts(_jsonl(artifacts[f"verdicts_{batch}.jsonl"]))
         _require(set(current) - dropped == set(group), f"{batch}: verdict coverage mismatch")
         for chunk in chunks:
+            chunk_prompt_hash = chunk.get("review_prompt_sha256", run["review_prompt_sha256"])
             _require(
                 chunk["model"] == model and chunk["reasoning_effort"] == effort and chunk["returncode"] == 0,
                 f"{batch}: unsuccessful or mismatched invocation",
             )
+            _require(chunk_prompt_hash in prompts, f"{batch}: invocation review prompt is not archived")
+            if chunk_prompt_hash != current_prompt_hash:
+                used_archived_prompts.add(prompt_paths[chunk_prompt_hash])
             _require(
                 all(
                     isinstance(chunk.get(k), str) and chunk[k].strip()
@@ -450,6 +546,7 @@ def _validate(
             _require(type(index) is int and 0 <= index < len(chunks), f"{sid}: invalid latest chunk index")
             _require(index == last_invocation.get(sid), f"{sid}: latest must reference the last appended invocation")
             chunk = chunks[index]
+            chunk_prompt_hash = chunk.get("review_prompt_sha256", run["review_prompt_sha256"])
             _require(sid in chunk["sample_ids"], f"{sid}: latest points to an unrelated invocation")
             verdict = current[sid]
             _require(
@@ -465,19 +562,35 @@ def _validate(
                 reference == expected and reference["sample_input_sha256"] == run["sample_input_sha256"][sid],
                 f"{sid}: latest binding mismatch",
             )
-            if records is not None:
-                inputs = [records[member] for member in chunk["sample_ids"]]
+            if records is not None and record_variants is not None and allowed_input_hashes is not None:
+                current_inputs = []
+                for member in chunk["sample_ids"]:
+                    matching = [
+                        variant
+                        for variant in record_variants[member]
+                        if _digest(variant) == chunk["sample_input_sha256"][member]
+                    ]
+                    if len(matching) != 1:
+                        break
+                    current_inputs.append(matching[0])
+                if len(current_inputs) == len(chunk["sample_ids"]):
+                    inputs = current_inputs
+                else:
+                    inputs, artifact_path = _archived_chunk_records(chunk, artifacts, batch)
+                    used_archived_inputs.add(artifact_path)
+                    _require(
+                        _digest(next(record for record in inputs if record["sample_id"] == sid))
+                        in allowed_input_hashes[sid],
+                        f"{sid}: own reviewed input was superseded; rereview before freezing",
+                    )
                 _require(
-                    chunk["sample_input_sha256"] == {record["sample_id"]: _digest(record) for record in inputs},
-                    f"{sid}: latest invocation also contains superseded input; rereview before freezing",
-                )
-                _require(
-                    chunk["prompt_sha256"] in _actual_prompt_hashes(prompt_text, inputs),
+                    chunk["prompt_sha256"] in _actual_prompt_hashes(prompts[chunk_prompt_hash], inputs),
                     f"{sid}: actual prompt hash differs from current input",
                 )
             reviewer = sample["review"]["second_reviewer"]
             _require(
-                all(reviewer[k] == second[k] for k in ("id", "model", "model_version", "prompt_hash")),
+                all(reviewer[k] == second[k] for k in ("id", "model", "model_version"))
+                and reviewer["prompt_hash"] == chunk.get("review_prompt_sha256", run["review_prompt_sha256"]),
                 f"{sid}: sample reviewer differs from manifest",
             )
             if verdict["verdict"] == "agree":
@@ -502,6 +615,16 @@ def _validate(
                 f"{sid}: resolution issue scope mismatch",
             )
     _require(set(resolutions) == disputed, "resolutions must cover exactly the current disputed samples")
+    archived_inputs = {path for path in artifacts if _ARCHIVED_INPUT.fullmatch(path)}
+    _require(
+        archived_inputs == used_archived_inputs,
+        "archived input artifacts must cover exactly the mixed historical invocations used by current verdicts",
+    )
+    archived_prompts = {path for path in artifacts if _ARCHIVED_PROMPT.fullmatch(path)}
+    _require(
+        archived_prompts == used_archived_prompts,
+        "archived review prompts must cover exactly the historical prompts used by current verdicts",
+    )
     runtime = _json(artifacts["reviewer_runtime_metadata.json"])
     if pinned:
         _require(

@@ -8,7 +8,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from common import DATASET_VERSION, DRAFTER, canary_for  # noqa: E402
+from medops.evals.safety_data import DATASET_VERSION, DRAFTER, canary_for  # noqa: E402
 
 __all__ = ["sample", "expect", "canary_for", "DRAFTER", "DATASET_VERSION"]
 

@@ -39,6 +39,7 @@ import psycopg
 
 from medops.core.canonical import canonical_json
 from medops.evals.experiments import scoring
+from medops.evals.safety_data import with_database
 from medops.retrieval.contracts import LexicalSearchResult, LexicalVersions
 from medops.retrieval.lexical import pg_search_bm25, pg_simple_fts, pg_zhparser_fts
 from medops.retrieval.lexical.boundary import run_lexical_search
@@ -144,11 +145,6 @@ class CandidateServer:
     admin_dsn: str
     mapping_path: Path
     image_local_id: str | None = None
-
-
-def _with_database(url: str, name: str) -> str:
-    parts = urlsplit(url)
-    return urlunsplit((parts.scheme, parts.netloc, "/" + name, parts.query, parts.fragment))
 
 
 def _with_user(url: str, user: str, password: str) -> str:
@@ -698,7 +694,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument(
         "--mapping-d",
         type=Path,
-        default=Path("evals/experiments/e2e/main-v3-provisional/chunk_mapping.chunker-v2.main-v3-provisional.json"),
+        default=Path("evals/experiments/e2e/main-v4-provisional/chunk_mapping.chunker-v2.main-v4-provisional.json"),
         help="candidate D holds a restored copy of medops_v2 (same chunk ids), so the main-set mapping applies",
     )
     parser.add_argument(
@@ -720,8 +716,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         servers = {
             c: CandidateServer(
                 s.candidate,
-                _with_database(s.app_dsn, args.database),
-                _with_database(s.admin_dsn, args.database),
+                with_database(s.app_dsn, args.database),
+                with_database(s.admin_dsn, args.database),
                 s.mapping_path,
                 s.image_local_id,
             )

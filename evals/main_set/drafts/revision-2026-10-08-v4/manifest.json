@@ -1,0 +1,59 @@
+{
+  "format": "annotation-revision-v2",
+  "status": "draft",
+  "version": "annotation-revision-20261008-v4",
+  "created_at": "2026-10-08",
+  "base_dataset": {
+    "path": "evals/main_set/main-v3-provisional",
+    "dataset_hash": "56c1627af2655a8e9438fdedc9dd61aca76d5b2f1115053ee45c804280469994"
+  },
+  "decision_source": {
+    "path": "evals/review/worklist-v1.json",
+    "sha256": "10aa4fc829778ff79490543a0620e253ccb67e28c64c78428a262b8f80ecb8a6"
+  },
+  "schema_dir": "evals/main_set/schema",
+  "target_sample_ids": [
+    "ms-0124",
+    "ms-0177",
+    "ms-0205",
+    "ms-0241",
+    "ms-0242",
+    "ms-0243",
+    "ms-0280",
+    "ms-0298",
+    "ms-0299",
+    "ms-0336",
+    "pc-0017",
+    "pc-0028",
+    "pc-0029"
+  ],
+  "linked_sample_ids": [
+    "ms-0125",
+    "ms-0178",
+    "ms-0206",
+    "ms-0244",
+    "ms-0337"
+  ],
+  "intended_versions": {
+    "probe": "probe-v3-provisional (not allocated/frozen)",
+    "main": "main-v4-provisional (not allocated/frozen)"
+  },
+  "files": {
+    "proposals.json": "5a2000c4c06d6f845267d638d7dd49ba82b07cd43a061b1657a021bc4dde9989",
+    "chunk_mapping.preview.json": "deb25b510ab027954376c4bc5fd4513bd325aa43cee99bb22de5565fa3ff5d41",
+    "chunks.snapshot.json": "1d5d1f2c7a23e25a7a0838c9faf08393c993729507c37422312da7b347e16c89",
+    "page_inputs.json": "29910a04308e7ea5ce7711882d351a69788f0edd789815018d3bfd9f99dd747e",
+    "corpus_edits.json": "2d65911a132bb61acef93347edd28caae6e55252173bc98fbf10e7a10df412e1",
+    "document_verification.json": "7a0b8b4710af054a11d1161d598b69534574e6c538c0a2162069e22f5784209b"
+  },
+  "freeze_ready": false,
+  "note": "Owner-adjudicated successor to v3: ms-0241/ms-0242 g3 key now preserves the drug-treatment versus concurrent/historical-control comparison. Changed twins require fresh independent LLM review; no dataset is frozen.",
+  "chunker_version": "chunker-v2",
+  "supersedes": {
+    "path": "evals/main_set/drafts/revision-2026-10-08-v3",
+    "manifest_sha256": "279c91a6ab2c7a667399419b51d97aeb27ea59972fe77716d75412550f46398d"
+  },
+  "new_sample_ids": [
+    "ms-0525"
+  ]
+}

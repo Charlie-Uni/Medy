@@ -33,13 +33,18 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from typing import Any
 
 import httpx
-import jwt
 import psycopg
+
+from medops.evals.api_client import issue_demo_token as token
 
 UPSTREAM = "https://api.openai.com"
 HIGH_RISK = "我最近血压 150/95，我应该每天吃多少 losartan？"
 ANSWERABLE = "瑪爾胰(glimepiride)每日最高建議劑量是多少?"
-TASK = {"skill_name": "label_query", "skill_version": "1.0.0", "input": {"product": "Losacar", "question": "治療高血壓的一般起始劑量及維持劑量是多少？"}}
+TASK = {
+    "skill_name": "label_query",
+    "skill_version": "1.0.0",
+    "input": {"product": "Losacar", "question": "治療高血壓的一般起始劑量及維持劑量是多少？"},
+}
 
 
 # ------------------------------------------------------------------------------------------ provider proxy
@@ -73,7 +78,9 @@ class ProviderProxy:
                     payload = json.dumps(
                         {
                             "error": {
-                                "message": "chaos drill: provider unavailable" if status == 503 else "chaos drill: insufficient_quota",
+                                "message": "chaos drill: provider unavailable"
+                                if status == 503
+                                else "chaos drill: insufficient_quota",
                                 "type": "server_error" if status == 503 else "insufficient_quota",
                                 "code": None if status == 503 else "insufficient_quota",
                             }
@@ -81,13 +88,17 @@ class ProviderProxy:
                     ).encode()
                     self._reply(status, payload, {"Content-Type": "application/json"})
                     return
-                headers = {k: v for k, v in self.headers.items() if k.lower() not in ("host", "content-length", "connection")}
+                headers = {
+                    k: v for k, v in self.headers.items() if k.lower() not in ("host", "content-length", "connection")
+                }
                 try:
                     r = client.post(self.path, content=body, headers=headers)
                     passthrough = {k: v for k, v in r.headers.items() if k.lower() in ("content-type",)}
                     self._reply(r.status_code, r.content, passthrough)
                 except Exception:  # noqa: BLE001 - upstream trouble surfaces to the SDK as a 502
-                    self._reply(502, b'{"error":{"message":"proxy upstream failure"}}', {"Content-Type": "application/json"})
+                    self._reply(
+                        502, b'{"error":{"message":"proxy upstream failure"}}', {"Content-Type": "application/json"}
+                    )
 
             def _reply(self, status: int, payload: bytes, headers: dict[str, str]) -> None:
                 self.send_response(status)
@@ -100,7 +111,9 @@ class ProviderProxy:
             def log_message(self, *_: Any) -> None:
                 return
 
-            def handle(self) -> None:  # a client that gives up (blackhole mode) resets the keep-alive socket: not an error
+            def handle(
+                self,
+            ) -> None:  # a client that gives up (blackhole mode) resets the keep-alive socket: not an error
                 try:
                     super().handle()
                 except (ConnectionResetError, BrokenPipeError):
@@ -116,11 +129,6 @@ class ProviderProxy:
 
 
 # ------------------------------------------------------------------------------------------ helpers
-
-
-def token(pem: bytes, *, kid: str, issuer: str, audience: str, sub: str) -> str:
-    now = int(time.time())
-    return jwt.encode({"sub": sub, "iss": issuer, "aud": audience, "iat": now, "exp": now + 3600}, pem, algorithm="RS256", headers={"kid": kid})
 
 
 def wait_ready(base: str, timeout_s: float = 300.0, want: int = 200) -> bool:
@@ -158,7 +166,9 @@ class Db:
         ]
 
     def trace(self, trace_id: str) -> dict[str, Any] | None:
-        rows = self.q("select outcome, reason_codes, model_calls, cost_usd from traces where trace_id = %s", (trace_id,))
+        rows = self.q(
+            "select outcome, reason_codes, model_calls, cost_usd from traces where trace_id = %s", (trace_id,)
+        )
         if not rows:
             return None
         o, codes, calls, cost = rows[0]
@@ -203,7 +213,10 @@ class Drill:
         self.db = Db(os.environ[args.admin_dsn_env])
         self.proxy = ProviderProxy(args.proxy_port)
         pem = pathlib.Path(args.issuer_pem).read_bytes()
-        self.headers = {"Authorization": "Bearer " + token(pem, kid=args.kid, issuer=args.issuer, audience=args.audience, sub=args.sub)}
+        self.headers = {
+            "Authorization": "Bearer "
+            + token(pem, kid=args.kid, issuer=args.issuer, audience=args.audience, sub=args.sub)
+        }
         self.env = {**os.environ, "OPENAI_BASE_URL": f"http://127.0.0.1:{args.proxy_port}/v1"}
         for k in ("DEBUG", "PYTHONPATH", "OTEL_EXPORTER_OTLP_ENDPOINT"):
             self.env.pop(k, None)
@@ -215,7 +228,9 @@ class Drill:
     # -- processes
     def start_api(self) -> bool:
         self.api_log = open(self.out / "api.log", "a", encoding="utf-8")  # noqa: SIM115
-        self.api = subprocess.Popen(shlex.split(self.args.api_cmd), env=self.env, stdout=self.api_log, stderr=subprocess.STDOUT)
+        self.api = subprocess.Popen(
+            shlex.split(self.args.api_cmd), env=self.env, stdout=self.api_log, stderr=subprocess.STDOUT
+        )
         return wait_ready(self.args.base_url)
 
     def stop_api(self) -> None:
@@ -231,15 +246,24 @@ class Drill:
 
     def start_worker(self, name: str, extra: list[str] | None = None) -> subprocess.Popen[bytes]:
         log = open(self.out / f"worker-{name}.log", "a", encoding="utf-8")  # noqa: SIM115
-        return subprocess.Popen(shlex.split(self.args.worker_cmd) + (extra or []), env=self.env, stdout=log, stderr=subprocess.STDOUT)
+        return subprocess.Popen(
+            shlex.split(self.args.worker_cmd) + (extra or []), env=self.env, stdout=log, stderr=subprocess.STDOUT
+        )
 
     def record(self, name: str, **facts: Any) -> None:
         ok = bool(facts.pop("ok"))
         self.results.append({"scenario": name, "ok": ok, **facts})
-        print(("OK  " if ok else "FAIL"), name, json.dumps({k: (str(v)[:120]) for k, v in facts.items()}, ensure_ascii=False)[:600], flush=True)
+        print(
+            ("OK  " if ok else "FAIL"),
+            name,
+            json.dumps({k: (str(v)[:120]) for k, v in facts.items()}, ensure_ascii=False)[:600],
+            flush=True,
+        )
 
     def create_task(self, tag: str) -> str:
-        r = self.client.post("/v1/tasks", json=TASK, headers={**self.headers, "Idempotency-Key": f"chaos-{tag}-{uuid.uuid4().hex[:8]}"})
+        r = self.client.post(
+            "/v1/tasks", json=TASK, headers={**self.headers, "Idempotency-Key": f"chaos-{tag}-{uuid.uuid4().hex[:8]}"}
+        )
         r.raise_for_status()
         return r.json()["task_id"]
 
@@ -251,7 +275,8 @@ class Drill:
         return [
             {"attempt": a, "worker": w, "outcome": o, "error_code": e}
             for a, w, o, e in self.db.q(
-                "select attempt, worker, outcome, error_code from task_attempts where task_id = %s order by attempt", (task_id,)
+                "select attempt, worker, outcome, error_code from task_attempts where task_id = %s order by attempt",
+                (task_id,),
             )
         ]
 
@@ -259,7 +284,12 @@ class Drill:
     def s_baseline(self) -> None:
         t = time.time()
         a = ask(self.client, self.headers, ANSWERABLE)
-        self.record("baseline_pass_through", ok=a["status"] == 200 and a["outcome"] == "answered" and a["claims"] >= 1, ask=a, provider_calls=self.proxy.calls_since(t))
+        self.record(
+            "baseline_pass_through",
+            ok=a["status"] == 200 and a["outcome"] == "answered" and a["claims"] >= 1,
+            ask=a,
+            provider_calls=self.proxy.calls_since(t),
+        )
 
     # -- S1 real model timeout (blackhole provider), refusal during the outage, recovery in the same process
     def s_model_timeout(self) -> None:
@@ -275,11 +305,19 @@ class Drill:
         rec = ask(self.client, self.headers, ANSWERABLE)
         self.record(
             "model_timeout_blackhole",
-            ok=a["status"] == 200 and a["outcome"] == "escalated" and "system_failure" in a["reason_codes"] and a["claims"] == 0
-            and any(s["error_code"] == "dependency_timeout" for s in spans) and refused_ok
+            ok=a["status"] == 200
+            and a["outcome"] == "escalated"
+            and "system_failure" in a["reason_codes"]
+            and a["claims"] == 0
+            and any(s["error_code"] == "dependency_timeout" for s in spans)
+            and refused_ok
             and rec["outcome"] == "answered",
-            during=a, refusal_during_outage=r, error_spans=codes, escalation=self.db.escalation(a["trace_id"]) if a["trace_id"] else None,
-            provider_calls_during=calls_during, recovered=rec,
+            during=a,
+            refusal_during_outage=r,
+            error_spans=codes,
+            escalation=self.db.escalation(a["trace_id"]) if a["trace_id"] else None,
+            provider_calls_during=calls_during,
+            recovered=rec,
         )
 
     # -- S2/S3 provider 503 and 429 with real HTTP, recovery
@@ -293,15 +331,26 @@ class Drill:
         rec = ask(self.client, self.headers, ANSWERABLE)
         self.record(
             f"provider_{mode}",
-            ok=a["status"] == 200 and a["outcome"] == "escalated" and "system_failure" in a["reason_codes"] and a["claims"] == 0
-            and any(s["error_code"] == "dependency_unavailable" for s in spans) and rec["outcome"] == "answered",
-            during=a, error_spans=[s for s in spans if s["error_code"]], provider_calls_during=calls_during, recovered=rec,
+            ok=a["status"] == 200
+            and a["outcome"] == "escalated"
+            and "system_failure" in a["reason_codes"]
+            and a["claims"] == 0
+            and any(s["error_code"] == "dependency_unavailable" for s in spans)
+            and rec["outcome"] == "answered",
+            during=a,
+            error_spans=[s for s in spans if s["error_code"]],
+            provider_calls_during=calls_during,
+            recovered=rec,
         )
 
     # -- S4 audit store broken by a trigger: answer computed, nothing returned, nothing recorded; recovery
     def s_audit_trigger(self) -> None:
-        self.db.x("create or replace function chaos_fail_audit() returns trigger language plpgsql as $$ begin raise exception 'chaos drill: audit store down'; end $$")
-        self.db.x("create trigger chaos_traces_down before insert on traces for each row execute function chaos_fail_audit()")
+        self.db.x(
+            "create or replace function chaos_fail_audit() returns trigger language plpgsql as $$ begin raise exception 'chaos drill: audit store down'; end $$"
+        )
+        self.db.x(
+            "create trigger chaos_traces_down before insert on traces for each row execute function chaos_fail_audit()"
+        )
         try:
             t = time.time()
             a = ask(self.client, self.headers, ANSWERABLE)
@@ -313,9 +362,17 @@ class Drill:
         rec = ask(self.client, self.headers, ANSWERABLE)
         self.record(
             "audit_store_down",
-            ok=a["status"] == 503 and a["code"] == "audit_unavailable" and a["claims"] == 0 and a["retryable"] is True
-            and recorded is None and rec["outcome"] == "answered" and calls >= 1,
-            during=a, provider_calls_during=calls, trace_row_written=recorded is not None, recovered=rec,
+            ok=a["status"] == 503
+            and a["code"] == "audit_unavailable"
+            and a["claims"] == 0
+            and a["retryable"] is True
+            and recorded is None
+            and rec["outcome"] == "answered"
+            and calls >= 1,
+            during=a,
+            provider_calls_during=calls,
+            trace_row_written=recorded is not None,
+            recovered=rec,
             trigger_left=bool(self.db.q("select 1 from pg_trigger where tgname = 'chaos_traces_down'")),
         )
 
@@ -336,9 +393,19 @@ class Drill:
         rec = ask(self.client, self.headers, ANSWERABLE)
         self.record(
             "db_pause",
-            ok=not_ready and a["status"] == 503 and a["code"] in ("dependency_unavailable", "audit_unavailable", "dependency_timeout")
-            and a["retryable"] is True and a["claims"] == 0 and calls == 0 and ready_again and rec["outcome"] == "answered",
-            readyz_503_while_paused=not_ready, during=a, provider_calls_during=calls, readyz_200_after=ready_again, recovered=rec,
+            ok=not_ready
+            and a["status"] == 503
+            and a["code"] in ("dependency_unavailable", "audit_unavailable", "dependency_timeout")
+            and a["retryable"] is True
+            and a["claims"] == 0
+            and calls == 0
+            and ready_again
+            and rec["outcome"] == "answered",
+            readyz_503_while_paused=not_ready,
+            during=a,
+            provider_calls_during=calls,
+            readyz_200_after=ready_again,
+            recovered=rec,
         )
 
     # -- S6 worker SIGKILLed mid-task, another worker takes over after the lease
@@ -371,9 +438,18 @@ class Drill:
         traces = self.db.q("select count(*) from traces where task_id = %s", (task_id,))[0][0]
         self.record(
             "worker_sigkill_takeover",
-            ok=final == "completed" and len(att) == 2 and att[0]["outcome"] == "lost" and att[1]["outcome"] == "completed"
-            and att[0]["worker"] != att[1]["worker"] and att[0]["worker"] == owner and traces == 1,
-            first_owner=owner, attempts=att, final_status=final, task_traces=traces, takeover_after_s=round(time.time() - killed_at, 1),
+            ok=final == "completed"
+            and len(att) == 2
+            and att[0]["outcome"] == "lost"
+            and att[1]["outcome"] == "completed"
+            and att[0]["worker"] != att[1]["worker"]
+            and att[0]["worker"] == owner
+            and traces == 1,
+            first_owner=owner,
+            attempts=att,
+            final_status=final,
+            task_traces=traces,
+            takeover_after_s=round(time.time() - killed_at, 1),
         )
 
     # -- S7 two workers over one queue: every task runs exactly once
@@ -397,8 +473,11 @@ class Drill:
         workers = {a["worker"] for al in att.values() for a in al}
         self.record(
             "two_workers_exactly_once",
-            ok=all(len(al) == 1 and al[0]["outcome"] == "completed" for al in att.values()) and all(self.task_state(i)[0] == "completed" for i in ids),
-            attempts_per_task=[len(al) for al in att.values()], workers_seen=len(workers), statuses=[self.task_state(i)[0] for i in ids],
+            ok=all(len(al) == 1 and al[0]["outcome"] == "completed" for al in att.values())
+            and all(self.task_state(i)[0] == "completed" for i in ids),
+            attempts_per_task=[len(al) for al in att.values()],
+            workers_seen=len(workers),
+            statuses=[self.task_state(i)[0] for i in ids],
         )
 
     # -- run
@@ -428,11 +507,24 @@ class Drill:
             self.stop_api()
             self.proxy.server.shutdown()
         cost = 0.0
-        ids = [r.get(k, {}).get("trace_id") for r in self.results for k in ("ask", "during", "recovered", "refusal_during_outage") if isinstance(r.get(k), dict)]
+        ids = [
+            r.get(k, {}).get("trace_id")
+            for r in self.results
+            for k in ("ask", "during", "recovered", "refusal_during_outage")
+            if isinstance(r.get(k), dict)
+        ]
         ids = [i for i in ids if i]
         if ids:
-            cost += float(self.db.q("select coalesce(sum(cost_usd), 0) from traces where trace_id = any(%s)", (ids,))[0][0])
-        cost += float(self.db.q("select coalesce(sum(t.cost_usd), 0) from traces t join tasks k on k.task_id = t.task_id where k.created_at >= %s", (started,))[0][0] or 0)
+            cost += float(
+                self.db.q("select coalesce(sum(cost_usd), 0) from traces where trace_id = any(%s)", (ids,))[0][0]
+            )
+        cost += float(
+            self.db.q(
+                "select coalesce(sum(t.cost_usd), 0) from traces t join tasks k on k.task_id = t.task_id where k.created_at >= %s",
+                (started,),
+            )[0][0]
+            or 0
+        )
         report = {
             "started_at": started.isoformat(),
             "finished_at": dt.datetime.now(dt.UTC).isoformat(),
@@ -440,10 +532,23 @@ class Drill:
             "cost_usd": round(cost, 4),
             "results": self.results,
         }
-        (self.out / "report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2, default=str), encoding="utf-8")
-        lines = [f"# Process-level fault drill ({started.date()})", "", f"cost {report['cost_usd']} USD; all ok: {report['ok']}", "", "| scenario | ok | facts |", "| --- | --- | --- |"]
+        (self.out / "report.json").write_text(
+            json.dumps(report, ensure_ascii=False, indent=2, default=str), encoding="utf-8"
+        )
+        lines = [
+            f"# Process-level fault drill ({started.date()})",
+            "",
+            f"cost {report['cost_usd']} USD; all ok: {report['ok']}",
+            "",
+            "| scenario | ok | facts |",
+            "| --- | --- | --- |",
+        ]
         for r in self.results:
-            facts = ", ".join(f"{k}={json.dumps(v, ensure_ascii=False, default=str)[:160]}" for k, v in r.items() if k not in ("scenario", "ok"))
+            facts = ", ".join(
+                f"{k}={json.dumps(v, ensure_ascii=False, default=str)[:160]}"
+                for k, v in r.items()
+                if k not in ("scenario", "ok")
+            )
             lines.append(f"| {r['scenario']} | {'✓' if r['ok'] else '✗'} | {facts} |")
         (self.out / "report.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
         print("ALL OK" if report["ok"] else "SOME SCENARIOS FAILED", f"cost={report['cost_usd']}", flush=True)

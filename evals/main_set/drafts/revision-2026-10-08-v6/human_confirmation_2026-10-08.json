@@ -1,0 +1,71 @@
+{
+  "format": "human-annotation-confirmation-v1",
+  "status": "confirmed",
+  "confirmed_on": "2026-10-08",
+  "timezone": "Australia/Sydney",
+  "actor": {
+    "kind": "human",
+    "id": "project-owner",
+    "identity_basis": "User of the current project conversation; no new personal identity inferred"
+  },
+  "evidence": {
+    "source": "current_user_conversation",
+    "verbatim": "确认 EVAL-11 v6 建议",
+    "context": "Confirmation of all three v6 recommendations: retain ms-0197/ms-0198 as chunker-v2 misses, retain the agreed ms-0440/ms-0441 five-gold revision, and use one complete-list gold for pc-0070/pc-0102."
+  },
+  "scope": {
+    "revision_version": "annotation-revision-20261008-v6",
+    "sample_count": 4,
+    "corpus_title_edits": 0,
+    "independent_second_human": false,
+    "independent_llm_review": "reuse exact agree verdicts for ms-0440/ms-0441; pending new review for pc-0070/pc-0102"
+  },
+  "inputs": {
+    "manifest_sha256": "9eba65082184d9f9311287ed6af4309d616a08566e40ee83de936eb2609b5c3c",
+    "proposals_sha256": "f2b77ed5f2c647c06da5b8fefcff86129cf41f85ab879d8197cc87e057da80ed",
+    "corpus_edits_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+  },
+  "items": [
+    {
+      "sample_id": "ms-0440",
+      "decision": "confirmed",
+      "annotation_sha256": "df97235bd08d9c806bd514338af618935fb0eb49dfb8178b7b5482f08e4d4eb6",
+      "required_gold_groups_sha256": "10870ee338270a5c6eade506b77ec7c4bd5d7faae949d7f9ce6364e6111ecd5a",
+      "decision_source": "current_owner_confirmation_2026-10-08"
+    },
+    {
+      "sample_id": "ms-0441",
+      "decision": "confirmed",
+      "annotation_sha256": "9a0f755601aed297dfcc018e6e6b71695aa274e5e1dc86fcd2c29f2be492444c",
+      "required_gold_groups_sha256": "10870ee338270a5c6eade506b77ec7c4bd5d7faae949d7f9ce6364e6111ecd5a",
+      "decision_source": "current_owner_confirmation_2026-10-08"
+    },
+    {
+      "sample_id": "pc-0070",
+      "decision": "confirmed",
+      "annotation_sha256": "5c52d7ba800c23a7688fb3fe6d8978f2955c44e29e16f4ac7112c1b6cbe668c5",
+      "required_gold_groups_sha256": "3ab508d0fd2433e8bd7dfc595f4d70b3109fdae1482a8ac19f500e8d61179889",
+      "decision_source": "current_owner_confirmation_2026-10-08"
+    },
+    {
+      "sample_id": "pc-0102",
+      "decision": "confirmed",
+      "annotation_sha256": "a02afa5a891fc45abafcbbbe82c3f76b98dbb40e34ae954bcefae771a26c1002",
+      "required_gold_groups_sha256": "3ab508d0fd2433e8bd7dfc595f4d70b3109fdae1482a8ac19f500e8d61179889",
+      "decision_source": "current_owner_confirmation_2026-10-08"
+    }
+  ],
+  "retained_unmappable_decision": {
+    "gold_ids": [
+      "ms-0197-g1",
+      "ms-0198-g1"
+    ],
+    "decision": "confirmed_keep_as_misses",
+    "reason": "The object-plus-constraint fact crosses a chunker-v2 boundary; do not force an incomplete key mapping."
+  },
+  "corpus_edits_decision": "not_applicable",
+  "limitations": [
+    "This is the project owner/first-human annotation decision, not a second independent human review.",
+    "Any changed reviewer input requires separately authorized independent LLM review."
+  ]
+}

@@ -29,6 +29,11 @@ MAX_SEQ_LENGTH = 1024
 MODEL_CACHE_ENV = "MODEL_CACHE_DIR"  # same key as Settings.model_cache_dir
 
 
+# the fields that give vectors their meaning: a stored index whose metadata differs in any of them is another index,
+# whatever its version label says (`embedding_version` and `framework` are labels, not compared)
+EMBEDDING_FIELDS: set[str] = {"model_id", "model_revision", "dimension", "normalization", "max_seq_length"}
+
+
 class EmbeddingSpec(BaseModel):
     model_config = ConfigDict(frozen=True, extra="forbid")
 

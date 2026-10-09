@@ -1,0 +1,43 @@
+{
+  "format": "reused-review-verdicts-v1",
+  "status": "verified_exact_input_reuse",
+  "created_at": "2026-10-08",
+  "source_revision": "evals/main_set/drafts/revision-2026-10-08-v5",
+  "target_revision": "evals/main_set/drafts/revision-2026-10-08-v6",
+  "model_calls_for_reuse_check": 0,
+  "requirements": {
+    "same_model": "claude-opus-5",
+    "same_effort": "high",
+    "same_review_prompt_sha256": "7572d16e88b638cbc6fa888f4e1a86fe6ffb4869583df357ee1ce0bd012eb758",
+    "verdict": "agree",
+    "input_identity_rule": "canonical JSON object SHA-256 must match the source run binding and archived input"
+  },
+  "items": [
+    {
+      "sample_id": "ms-0440",
+      "source_run": "evals/main_set/drafts/revision-2026-10-08-v5/review/main/run_CO.json",
+      "source_chunk_index": 0,
+      "source_archived_input": "evals/main_set/drafts/revision-2026-10-08-v5/review/main/chunk_inputs/input_d3ffecc3ba5d5fd8ec0f921947d873b90039ea73875bc2039811dca473e0f0ad.jsonl",
+      "source_input_sha256": "7ba40a99172286d08fb545eb20d13def26c149b5c144b90d0eb8ca6fa0c7d453",
+      "target_input_sha256": "7ba40a99172286d08fb545eb20d13def26c149b5c144b90d0eb8ca6fa0c7d453",
+      "verdict_sha256": "64a3d517cea56cb270184ff33b1f8b7a12ba7604e1fd77d33d6658b81d68433f",
+      "verdict": "agree",
+      "exact_match": true
+    },
+    {
+      "sample_id": "ms-0441",
+      "source_run": "evals/main_set/drafts/revision-2026-10-08-v5/review/main/run_EN.json",
+      "source_chunk_index": 0,
+      "source_archived_input": "evals/main_set/drafts/revision-2026-10-08-v5/review/main/chunk_inputs/input_18a8c279063dbf7a20d9acf2f73b70f7e903f0867d39204f912f184498c03d9e.jsonl",
+      "source_input_sha256": "2cb7c17b03fc01ac3f34616773a47f8a7f37b45f1ecadc9007f03d1d9b8e0f51",
+      "target_input_sha256": "2cb7c17b03fc01ac3f34616773a47f8a7f37b45f1ecadc9007f03d1d9b8e0f51",
+      "verdict_sha256": "ccd00062a8183db3fae14766b0edde8ebc06367ece891edde33db70757afcd29",
+      "verdict": "agree",
+      "exact_match": true
+    }
+  ],
+  "limitations": [
+    "These are reused independent LLM verdicts, not a second independent human review.",
+    "Any change to a target input, review prompt, model or requested effort invalidates reuse."
+  ]
+}

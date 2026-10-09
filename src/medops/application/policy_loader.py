@@ -12,7 +12,8 @@ Targets this build can apply (a release of anything else is refused with `policy
 | kind             | name            | diff                                                                  |
 | ---------------- | --------------- | --------------------------------------------------------------------- |
 | retrieval_params | hybrid          | `{k_lexical|k_vector|rrf_k|limit|rerank_output: {"from": x, "to": y}}` plus the
-|                  |                 | rewrite-side keys `glossary` (version), `multi_query` / `doc_focus` (bool),      |
+|                  |                 | rewrite-side keys `glossary` (version), `multi_query` / `doc_focus` /            |
+|                  |                 | `source_constraint` (bool),                                                       |
 |                  |                 | `query_translation` (`off` or an allowed model id) — records 93–95              |
 |                  |                 | and the answer-context key `evidence_focus` (`off`, `compact-v1`,                |
 |                  |                 | `sentfocus-v1`) — record 113                                                     |
@@ -30,7 +31,7 @@ from datetime import datetime
 from typing import Any
 
 from medops.domain.state import MAX_EVIDENCE, VersionSet
-from medops.harness.evidence_focus import ALLOWED_EVIDENCE_FOCUS, EVIDENCE_FOCUS_OFF
+from medops.harness.focus_profiles import ALLOWED_EVIDENCE_FOCUS, EVIDENCE_FOCUS_OFF
 from medops.harness.production import ALLOWED_ANSWER_MODELS, ROUTABLE_INTENTS
 from medops.retrieval.glossary_store import valid_glossary_version
 from medops.retrieval.hybrid import HybridConfig
@@ -49,6 +50,7 @@ RETRIEVAL_PARAM_KEYS = (
     "glossary",
     "multi_query",
     "doc_focus",
+    "source_constraint",
     "query_translation",
     "evidence_focus",
 )
@@ -123,6 +125,16 @@ class ReleasedPolicySet:
         value = _to(p.diff["doc_focus"])
         if not isinstance(value, bool):
             raise PolicyDiffError("doc_focus must be true or false")
+        return value
+
+    def source_constraint(self, base: bool = False) -> bool:
+        """Enforce high-confidence named-source identity during retrieval; repository default is off."""
+        p = self.get("retrieval_params", "hybrid")
+        if p is None or "source_constraint" not in p.diff:
+            return base
+        value = _to(p.diff["source_constraint"])
+        if not isinstance(value, bool):
+            raise PolicyDiffError("source_constraint must be true or false")
         return value
 
     def query_translation(self, base: str = QUERY_TRANSLATION_OFF) -> str:
@@ -236,11 +248,21 @@ def validate_diff(kind: str, name: str, diff: Mapping[str, Any], *, base: Hybrid
             probe.multi_query()
         if "doc_focus" in diff:
             probe.doc_focus()
+        if "source_constraint" in diff:
+            probe.source_constraint()
         if "query_translation" in diff:
             probe.query_translation()
         if "evidence_focus" in diff:
             probe.evidence_focus()
-        extras = {"rerank_output", "glossary", "multi_query", "doc_focus", "query_translation", "evidence_focus"}
+        extras = {
+            "rerank_output",
+            "glossary",
+            "multi_query",
+            "doc_focus",
+            "source_constraint",
+            "query_translation",
+            "evidence_focus",
+        }
         if cfg == (base or HybridConfig()) and not (extras & set(diff)):
             raise PolicyDiffError("the diff changes nothing")
         return

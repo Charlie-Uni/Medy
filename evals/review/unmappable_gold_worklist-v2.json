@@ -1,0 +1,64 @@
+{
+  "version": "unmappable-gold-worklist-v2",
+  "created_at": "2026-10-08",
+  "supersedes": "evals/review/unmappable_gold_worklist-v1.json",
+  "source_mapping": "evals/experiments/e2e/main-v4-provisional/chunk_mapping.chunker-v2.main-v4-provisional.json",
+  "source_mapping_sha256": "404ca270f850025d37df88f397fa5b1c86aa643a12d39bf29ef6391539ca5f41",
+  "paid_review": {
+    "authorization_quote": "授权 EVAL-11 复核，最多 1.95 USD",
+    "attempts": 4,
+    "known_cost_usd": "0.579062",
+    "unused_authorized_balance_usd": "1.370938",
+    "calls_not_made": [
+      "ms-0198",
+      "pc-0102"
+    ],
+    "reason": "Parent disputes identify the same input defect in each English twin; avoid knowingly redundant spend.",
+    "evidence": {
+      "review/main/run_PV.json": "38b395957d03178fb07eb6615e90886a1c52601bc1f585aca223d2d944c1c0eb",
+      "review/main/verdicts_PV.jsonl": "e4ad91eb3c15aeb490e37c2aaefb6cd5f3c3ccfd96bf43d9ca812b15a43a7368",
+      "review/main/run_CO.json": "574d2c5fc77a6d9804f8be30f87ab66608c9cb58371859f08cea392af295c50a",
+      "review/main/verdicts_CO.jsonl": "71682ef8020363a30563f0d06ea3524db3f42387fb757991ba714b7485b8fd50",
+      "review/main/run_EN.json": "7c8782c5aea27f1e6f0379a2f968379c3562de4c63c9064377e6fceb758d9f5c",
+      "review/main/verdicts_EN.jsonl": "ea885b75572d90f4cc9316147f70c6a9691acb0cdd5f856fe8a57a297c37fd74",
+      "review/probe/run_CO.json": "080db426e9f0bb0670ca9b5ee2b3a81dbd1f15d50ff0bc0e13ba88548c1fe36f",
+      "review/probe/verdicts_CO.jsonl": "37e9255669c6ccc0488778cecb24aad67ce82217046161942a2da77b2af9dcf0",
+      "review/budget.json": "05db95eabb5cb3c9ff479a417ca9f4d65420a481fb2de0376f47939ba953ca8c"
+    }
+  },
+  "items": [
+    {
+      "sample_id": "ms-0197",
+      "linked_sample_ids": [
+        "ms-0198"
+      ],
+      "action": "keep_unmappable_chunker_v2",
+      "review_outcome": "dispute",
+      "recommendation": "撤回 v5 的物理切分修订；保留 main-v4 原标注与两个 unmappable miss。完整“初步评价 + 12–24个月”事实本身跨 chunker-v2 边界，不能用语义不完整 key 强行映射；留待独立 chunker 重叠/边界实验。"
+    },
+    {
+      "sample_id": "ms-0440",
+      "linked_sample_ids": [
+        "ms-0441"
+      ],
+      "action": "versioned_gold_or_query_revision",
+      "review_outcome": "agree/agree",
+      "recommendation": "沿用 v5 的 5 个共同必需 gold；中英文父题与孪生均 agree。"
+    },
+    {
+      "sample_id": "pc-0070",
+      "linked_sample_ids": [
+        "pc-0102"
+      ],
+      "action": "versioned_gold_or_query_revision",
+      "review_outcome": "dispute",
+      "recommendation": "接受 reviewer 建议，改为单一 gold：完整 1.5.1 句作为 evidence span，六类记录列表作为页内唯一 key；该 key 由一个现有 chunk 完整覆盖。"
+    }
+  ],
+  "decision_required": [
+    "确认保留 ms-0197/ms-0198 为 unmappable miss",
+    "确认 pc-0070/pc-0102 使用单一列表 gold",
+    "确认沿用已 agree 的 ms-0440/ms-0441 修订"
+  ],
+  "note": "Prepared for project-owner adjudication. No v6 human confirmation or new model authorization is claimed."
+}

@@ -1,0 +1,41 @@
+{
+  "format": "annotation-revision-v2",
+  "status": "draft",
+  "version": "annotation-revision-20261008-v5",
+  "created_at": "2026-10-08",
+  "base_dataset": {
+    "path": "evals/main_set/main-v4-provisional",
+    "dataset_hash": "79e0c56920252a6e86694e1228c3c4f5ab47fbdfab2f89aa85dd9891ac618c7d"
+  },
+  "decision_source": {
+    "path": "evals/review/unmappable_gold_worklist-v1.json",
+    "sha256": "c9aa0cbb0cc67d5d33357d7c051f9f3c60b7816e25e46edee636c8981dcd687e"
+  },
+  "schema_dir": "evals/main_set/schema",
+  "target_sample_ids": [
+    "ms-0197",
+    "ms-0440",
+    "pc-0070"
+  ],
+  "linked_sample_ids": [
+    "ms-0198",
+    "ms-0441",
+    "pc-0102"
+  ],
+  "intended_versions": {
+    "probe": "probe-v4-provisional (pending owner decision/review)",
+    "main": "main-v5-provisional (pending owner decision/review)"
+  },
+  "files": {
+    "proposals.json": "eb00526d7e225af0aafb44fd73584c94641b52ab41eea5f515298b0ad0e5d986",
+    "chunk_mapping.preview.json": "1d0cff7aa7fcbfda4104e7fc9fe54bc4ade20d12f9b1c7935843d72d5dddfe90",
+    "chunks.snapshot.json": "0e2ac8f33a49cb87464bf2175742ae730ed8c26428a050f2963bc71e07106e58",
+    "page_inputs.json": "3ffe9330c5f4adf0cf7539ed518c83946ba048059c2e0fab06a1496667745b00",
+    "corpus_edits.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "document_verification.json": "1c297c238c1450389afcac580058a3ec1a5bd9326c0af5d6aa2a67f009140583"
+  },
+  "freeze_ready": false,
+  "chunker_version": "chunker-v2",
+  "new_sample_ids": [],
+  "note": "EVAL-11 draft: resolve six unmappable gold units as three bilingual semantic cases using jointly required evidence groups. No human decision or model review has been claimed."
+}

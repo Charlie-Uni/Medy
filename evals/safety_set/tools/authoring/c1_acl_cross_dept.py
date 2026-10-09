@@ -5,9 +5,8 @@ the final outcome must be insufficient_evidence, or an answer built only from th
 
 import json
 
-from common import SAFETY
-
 from authoring import expect, sample
+from medops.evals.safety_data import SAFETY
 
 TARGETS = {
     d["document_key"]: d for d in json.loads((SAFETY / "acl_targets.json").read_text(encoding="utf-8"))["documents"]

@@ -26,6 +26,7 @@ from medops.retrieval.hybrid import HybridConfig, fuse_rankings, retrieve_eviden
 from medops.retrieval.recheck import RecheckResult, Rejection, recheck_candidates
 from medops.retrieval.rerank import Reranker, rank_evidence
 from medops.retrieval.rewrite import Glossary, rewrite
+from medops.retrieval.source_constraints import SourceConstraint, resolve_source_constraint
 from medops.retrieval.vector.contracts import VectorRetriever, VectorVersions
 
 
@@ -45,6 +46,8 @@ class RetrievalOutcome(DomainModel):
     degraded: bool = False  # a channel failed and the result is partial (baseline 5.3 degradation rule)
     detail: str = ""
     cache_hit: bool = False  # the candidates came from the retrieval cache (they were re-checked all the same)
+    source_constraint_applied: bool = False
+    source_constraint_missing: bool = False
 
     def model_post_init(self, __context: Any) -> None:
         if len(self.candidates) > MAX_CANDIDATES or len(self.evidence) > MAX_EVIDENCE:
@@ -74,6 +77,7 @@ class ProductionRetrieval:
         glossary: Glossary | None = None,
         multi_query: bool = False,
         doc_focus: bool = False,
+        source_constraint: bool = False,
         translator: Callable[[str], str | None] | None = None,
         cache: CandidateCache | None = None,
         cache_versions: tuple[str, str] | None = None,
@@ -93,6 +97,10 @@ class ProductionRetrieval:
         # record 94: when the question names a corpus document (brand, ICH code, GVP module, Chinese title), that
         # document's own chunks are searched too and join the fusion (`doc_focus`, a released retrieval parameter)
         self._doc_focus = doc_focus
+        # A released candidate may turn this on. It resolves only high-confidence named sources against the
+        # caller-visible fact plane, then scopes both search channels to those documents. The repository default is
+        # off until the provisional source-compliance cohort has been evaluated.
+        self._source_constraint = source_constraint
         # record 95: an English rendering of a Chinese question becomes one more search query (never evidence)
         self._translator = translator
         # record 121 (M1-19 wired): the fused candidates of a retrieval are cached under the caller's permission
@@ -115,12 +123,25 @@ class ProductionRetrieval:
                 rejected=len(outcome.rejected),
                 degraded=outcome.degraded,
                 cache_hit=outcome.cache_hit,
+                source_constraint_applied=outcome.source_constraint_applied,
+                source_constraint_missing=outcome.source_constraint_missing,
             )
             return outcome
 
     def _retrieve(self, request: RetrievalRequest) -> RetrievalOutcome:
         rw = rewrite(request.query, entities=request.session_entities, glossary=self._glossary)
         query = rw.queries[0]
+        constraint = self._resolve_source_constraint(request) if self._source_constraint else SourceConstraint(False)
+        if constraint.missing:
+            return RetrievalOutcome(
+                rewritten_queries=rw.queries,
+                candidates=(),
+                evidence=(),
+                detail="requested source is unavailable to the caller",
+                source_constraint_applied=True,
+                source_constraint_missing=True,
+            )
+        source_doc_ids = constraint.document_ids if constraint.required else None
         spec = self._reranker.spec
         inputs = self._cache_inputs(request)
         cached = self._cache.lookup(inputs) if self._cache is not None and inputs is not None else None
@@ -132,10 +153,16 @@ class ProductionRetrieval:
             candidates: tuple[CandidateRef, ...] = cached.candidates
             accepted: tuple[Evidence, ...] = rechecked.evidence
             rejected: tuple[Rejection, ...] = rechecked.rejected
+            if source_doc_ids is not None:
+                accepted = tuple(e for e in accepted if e.citation.doc_id in source_doc_ids)
+                accepted_ids = {e.citation.chunk_id for e in accepted}
+                candidates = tuple(c for c in candidates if c.chunk_id in accepted_ids)
             if {e.citation.chunk_id for e in accepted[: spec.max_input]} <= set(cached.reranked):
                 order = cached.reranked
         else:
-            candidates, accepted, rejected = self._search(request, list(rw.queries), query)
+            candidates, accepted, rejected = self._search(
+                request, list(rw.queries), query, source_doc_ids=source_doc_ids
+            )
         if order is not None:
             # every accepted chunk was scored when the entry was written and has just passed the content-hash check,
             # so its position still holds: no reranker call on this path
@@ -161,7 +188,12 @@ class ProductionRetrieval:
             evidence=evidence,
             rejected=rejected,
             cache_hit=hit,
+            source_constraint_applied=constraint.required,
         )
+
+    def _resolve_source_constraint(self, request: RetrievalRequest) -> SourceConstraint:
+        with self._conn_for_user(request.user) as conn:
+            return resolve_source_constraint(request.query, load_documents(conn))
 
     def _cache_inputs(self, request: RetrievalRequest) -> CacheKeyInputs | None:
         if self._cache is None or self._cache_versions is None:
@@ -178,7 +210,12 @@ class ProductionRetrieval:
         )
 
     def _search(
-        self, request: RetrievalRequest, rewritten: list[str], query: str
+        self,
+        request: RetrievalRequest,
+        rewritten: list[str],
+        query: str,
+        *,
+        source_doc_ids: Sequence[str] | None = None,
     ) -> tuple[tuple[CandidateRef, ...], tuple[Evidence, ...], tuple[Rejection, ...]]:
         """The full retrieval: every search channel, fusion and the fact-plane re-check of the fused candidates."""
         queries = rewritten if self._multi_query else [query]
@@ -205,6 +242,7 @@ class ProductionRetrieval:
                         vector_expected=self._vv,
                         as_of=request.as_of,
                         allow_historical=request.historical_requested,
+                        doc_ids=source_doc_ids,
                     )
                     for q in queries
                 ]
@@ -212,6 +250,9 @@ class ProductionRetrieval:
                 focus_rechecked: list[RecheckResult] = []
                 if self._doc_focus:
                     focused = focus_documents(request.query, load_documents(conn))
+                    if source_doc_ids is not None:
+                        allowed = set(source_doc_ids)
+                        focused = [doc for doc in focused if doc.doc_id in allowed]
                     for i, doc in enumerate(focused, start=1):
                         try:
                             lex_ids = [

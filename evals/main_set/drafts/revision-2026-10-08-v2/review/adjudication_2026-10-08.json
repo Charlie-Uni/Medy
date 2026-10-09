@@ -1,0 +1,56 @@
+{
+  "status": "owner_decided_and_applied_to_v3",
+  "independent_second_human": false,
+  "applied_changes": true,
+  "decisions": [
+    {
+      "sample_id": "ms-0125",
+      "reviewer_decision": "retain_current_annotation; deterministic char_end=2226 is correct",
+      "reviewer_id": "project-owner",
+      "decided_at": "2026-10-08T14:22:15+11:00",
+      "recommended_decision": "retain_current_annotation; reviewer misread char_end, actual 2226 verified",
+      "model_verdict": "dispute",
+      "original_attempt_id": "d0a95a0457e4492b884a460fb5b94ab3",
+      "prompt_sha256": "5c01c84714852cf45a7251bc4172f763a0c0f0d24a6b143f7b239627ea523f2b",
+      "cli_capture_sha256": "74ea1bce7ee1b76fb2919009a51935dbb3f2038b08ed185cd44f1019a4ab8f39"
+    },
+    {
+      "sample_id": "ms-0241",
+      "reviewer_decision": "revise to three jointly required enumerated examples; standard-of-care is optional background",
+      "reviewer_id": "project-owner",
+      "decided_at": "2026-10-08T14:22:15+11:00",
+      "recommended_decision": "revise required evidence to three enumerated examples; standard-of-care background optional",
+      "model_verdict": "dispute",
+      "original_attempt_id": "83c727402bd9489280f1ce505180180d",
+      "prompt_sha256": "be062e939958ea7a413b12a2e96470cc122b3ac871b40e4832fcbd8cf4784424",
+      "cli_capture_sha256": "2ee76408b55056b85bc64abab9a728f0c6bb809103f6b99c54b8e9fc78851676"
+    },
+    {
+      "sample_id": "ms-0242",
+      "reviewer_decision": "same evidence revision as linked Chinese sample ms-0241",
+      "reviewer_id": "project-owner",
+      "decided_at": "2026-10-08T14:22:15+11:00",
+      "recommended_decision": "same evidence revision as linked Chinese sample ms-0241",
+      "model_verdict": "dispute",
+      "original_attempt_id": "454909ffeb15432f9c88e66f079908ee",
+      "prompt_sha256": "50d94d24e774559aaffeeca448addc97d376bb62c9007613a124c3c3192fd629",
+      "cli_capture_sha256": "53fcc3f865f83a43c3129cfeb5d3f70f658fd278bb9e5c5e97c27cca0bae048f"
+    },
+    {
+      "sample_id": "ms-0280",
+      "reviewer_decision": "add protocol_id; retain query, gold and cover-verified date",
+      "reviewer_id": "project-owner",
+      "decided_at": "2026-10-08T14:22:15+11:00",
+      "recommended_decision": "add protocol_id; retain query, gold and cover-verified date",
+      "model_verdict": "dispute",
+      "original_attempt_id": "8c23b89ab2f94aa588cfb16bf02684bd",
+      "prompt_sha256": "7dc1d6a9337634e5897316df1e8682f4c50dfdd113e0cf30123eeab3d9f5ca84",
+      "cli_capture_sha256": "3e3f919f37f2b11647f07e03a19375dc866009bfe799a325886ec0d1dd227e5e"
+    }
+  ],
+  "owner_decision_quote": "三项按建议裁决，允许 EVAL-08 最多 0.75 USD",
+  "owner_decided_at": "2026-10-08T14:22:15+11:00",
+  "applied_revision": "evals/main_set/drafts/revision-2026-10-08-v3",
+  "applied_revision_manifest_sha256": "279c91a6ab2c7a667399419b51d97aeb27ea59972fe77716d75412550f46398d",
+  "followup_status": "EVAL-08 completed 3/3; ms-0241 has a new key_text dispute recorded in v3"
+}

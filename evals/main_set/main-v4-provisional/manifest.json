@@ -1,0 +1,256 @@
+{
+  "change_reason": "导入 probe v3 的三条指定来源修订；应用 16 条本地主集修订和 1 条新增样本；修正 FDA 指南标题，并补做其余 7 条受影响样本的定向复核。历史混合调用输入与旧提示均按 SHA-256 归档。",
+  "conflict_fixtures": [
+    {
+      "archived_document_keys": [
+        "ich-e7-step4-1993--synthetic-old"
+      ],
+      "document_key": "ich-e7-step4-1993",
+      "source": "同一 PDF 以两个 document_key 入库；旧版 effective_from 1991-06-24，发布现行版（1993-06-24）时归档（记录 50）",
+      "synthetic": true
+    },
+    {
+      "archived_document_keys": [
+        "ich-e12a-principle-2000--synthetic-old"
+      ],
+      "document_key": "ich-e12a-principle-2000",
+      "source": "同一 PDF 以两个 document_key 入库；旧版 effective_from 1998-03-02，发布现行版（2000-03-02）时归档（记录 50）",
+      "synthetic": true
+    },
+    {
+      "archived_document_keys": [
+        "ich-e15-step4-2007--synthetic-old"
+      ],
+      "document_key": "ich-e15-step4-2007",
+      "source": "同一 PDF 以两个 document_key 入库；旧版 effective_from 2005-11-01，发布现行版（2007-11-01）时归档（记录 50）",
+      "synthetic": true
+    },
+    {
+      "archived_document_keys": [
+        "ema-gvp-annex-i-rev4",
+        "ema-gvp-annex-i-rev4--synthetic-old"
+      ],
+      "document_key": "ema-gvp-annex-i-rev5",
+      "source": "真实修订对：Rev 4（2017-10-09，页眉 superseded）→ Rev 5（2024-07-26）经发布流程替代；family 另含 Rev 4 的合成旧版（记录 50 §11）",
+      "synthetic": false
+    },
+    {
+      "archived_document_keys": [
+        "ema-gvp-pp-i--synthetic-old"
+      ],
+      "document_key": "ema-gvp-pp-i",
+      "source": "同一 PDF 以两个 document_key 入库；旧版 effective_from 2011-12-09，发布现行版（2013-12-09）时归档（记录 50）",
+      "synthetic": true
+    }
+  ],
+  "counts": {
+    "answerable": 554,
+    "conflict": 52,
+    "derived": 200,
+    "documents": 339,
+    "imported": 107,
+    "no_answer": 61,
+    "per_dept": {
+      "CO": 202,
+      "MA": 133,
+      "PV": 280
+    },
+    "per_language": {
+      "en": 446,
+      "mixed": 0,
+      "zh-Hans": 30,
+      "zh-Hant": 139
+    },
+    "per_slice": {
+      "dose_unit": 65,
+      "drug_name_zh": 115,
+      "long_context": 20,
+      "mixed_zh_en": 570,
+      "negation": 275,
+      "no_answer": 61,
+      "protocol_id": 150,
+      "time_window": 128,
+      "version_conflict": 52
+    },
+    "samples": 615
+  },
+  "created_at": "2026-10-08",
+  "dataset_hash": "79e0c56920252a6e86694e1228c3c4f5ab47fbdfab2f89aa85dd9891ac618c7d",
+  "dataset_id": "precise_clause_main",
+  "dataset_version": "main-v4-provisional",
+  "derived_samples": {
+    "count": 200,
+    "drafted_by": {
+      "id": "drafter-llm-03",
+      "kind": "llm",
+      "model": "claude-sonnet-5"
+    },
+    "human_confirmation": {
+      "annotator_id": "annotator-01",
+      "confirmed_on": "2026-10-08",
+      "status": "confirmed"
+    },
+    "query_language": "en",
+    "rule": "English query twins of samples whose gold document is English: gold, dept and slices inherited unchanged, language=en (spec-v1.1 §5.1); the 32 probe v2 twins are imported as-is and the new twins were drafted by drafter-llm-03"
+  },
+  "dropped_after_review": {
+    "ms-0509": "dropped after review (2026-09-22): the Glimaryl label's text layer is garbled (0 CJK characters on page 1), so neither the tool absence check nor the LLM reviewer can verify that the document does not answer the question; same reason as the three MA drops on this document"
+  },
+  "extraction": {
+    "extractor": "pypdf",
+    "extractor_version": "6.18.1",
+    "params": {
+      "extraction_mode": "plain"
+    },
+    "params_hash": "7c3f1766ee925cd0175429abce29a029d834b8be9ffa33f45813e3a4944f6b8d"
+  },
+  "files": [
+    {
+      "path": "corpus.json",
+      "sha256": "03c25583872dc34837dea143be0facd06ec3820450a2bf753effde4554ac6f45"
+    },
+    {
+      "path": "pii_exceptions.json",
+      "sha256": "0d70837cb732c392d73899a2e9d595c633bdb663ce7752f099bf48f82bb43b42"
+    },
+    {
+      "path": "review_prompt.md",
+      "sha256": "7572d16e88b638cbc6fa888f4e1a86fe6ffb4869583df357ee1ce0bd012eb758"
+    },
+    {
+      "path": "revision_provenance.json",
+      "sha256": "83ee922b43f35706039199d0ef92d8c9af29dd4a30bf0f538a2010b256b04f5b"
+    },
+    {
+      "path": "samples.jsonl",
+      "sha256": "441f98c6b4a5b93cdd30797c05d4086f13714cb4d1e83d37315f717cf3cd4ad3"
+    }
+  ],
+  "frozen_at": "2026-10-08",
+  "gates": {
+    "abstention_accuracy": 0.9,
+    "conflict_current_cited_rate": 1.0,
+    "invalid_version_citation_rate": 0.0,
+    "recall_at_5": 0.85
+  },
+  "imported_samples": {
+    "count": 107,
+    "dataset_hash": "5707f29ddb750287015098dc8bee74246fc3f0b8b17b1f107aa0b5f75a28c97f",
+    "dataset_id": "precise_clause_probe",
+    "dataset_version": "v3",
+    "path": "evals/probe/precise_clause/v3/samples.jsonl",
+    "prompt_hash": "f4a3804e969b23ec9ab467406937e62f0b9e30933d6a680d4b00ee59b2631c38",
+    "reviewer_id": "reviewer-llm-02",
+    "samples_sha256": "e3a8c6bd7535bba1e45ff32ce6ba1160025c8d67fda7ba060f1b5e1c445d89de",
+    "statement": "探针 v3 的 107 条样本原样并入（canonical 字节一致），保留各自的探针复核提示哈希；报告中探针子集单列。"
+  },
+  "minimums": {
+    "answerable_samples": 300,
+    "conflict_samples": 20,
+    "documents": 10,
+    "documents_per_dept": 3,
+    "en_samples": 150,
+    "max_samples_per_document": 8,
+    "no_answer_samples": 40,
+    "per_dept": 60,
+    "per_slice": 20,
+    "zh_hans_samples": 20,
+    "zh_hant_samples": 80
+  },
+  "normalization": "norm-v1",
+  "pii_ruleset_version": "pii-rules-v1",
+  "purpose": "主评测集 main-v4-provisional：导入探针 v3，应用 2026-10-08 人工确认的标注与语料元数据修订，并对全部变化的复核输入完成独立 LLM 复核。第二独立人工仍未完成。",
+  "review_policy": {
+    "human_reviewers": 1,
+    "llm_reviewers": 1,
+    "statement": "人工标注加 LLM 独立复核；不等同于两名独立人工复核。"
+  },
+  "review_provenance": {
+    "artifacts": [
+      {
+        "path": "review_evidence/resolutions.json",
+        "sha256": "58861f6d34cc8c34c3f2da2fcd204848ee65cbed8664a5fa36364d0370e701bc"
+      },
+      {
+        "path": "review_evidence/review_prompts/review_prompt_8538a516164394d885245e2d79652432ea3c71d7c7a49bba269f09740c2d1e90.md",
+        "sha256": "8538a516164394d885245e2d79652432ea3c71d7c7a49bba269f09740c2d1e90"
+      },
+      {
+        "path": "review_evidence/reviewer_runtime_metadata.json",
+        "sha256": "02676f6358bf5fe2ef0fbeda001926f501e651b92d24b499de01ee2ad9d27c2e"
+      },
+      {
+        "path": "review_evidence/run_CO.json",
+        "sha256": "70774f9c4919492c7f33a42b6e66a27b9bf2c94ed79771d1997d5773b03bf6b7"
+      },
+      {
+        "path": "review_evidence/run_EN.json",
+        "sha256": "0e975a34d7465a0d27e6ae4e3e7e81b61d49015c15d78bfdb948c96ec01aa8e2"
+      },
+      {
+        "path": "review_evidence/run_MA.json",
+        "sha256": "4f0b848b16317d6c1c7c0c41104b2a0be28789cd7e5b3cd24dab6eca3aeeaa97"
+      },
+      {
+        "path": "review_evidence/run_NA.json",
+        "sha256": "9ec1121f9352fc01607e9fc3e1eeb0882230001ebb14f13e352a6b59b4eba136"
+      },
+      {
+        "path": "review_evidence/run_PV.json",
+        "sha256": "3e1c99e2f18f2c515b458453ac386011864c19dd39d3a6c1b6f730af015daeb8"
+      },
+      {
+        "path": "review_evidence/verdicts_CO.jsonl",
+        "sha256": "c376a70747c15e78db5b8d14f4025bc7a20d6c253d618638a05ccdabbdc3d672"
+      },
+      {
+        "path": "review_evidence/verdicts_EN.jsonl",
+        "sha256": "2f3bd71a7cfde14a04ee5ea1ff0ad334c95be03aa556b0e1d98511af5993d907"
+      },
+      {
+        "path": "review_evidence/verdicts_MA.jsonl",
+        "sha256": "c71e599f6d7f9456e3c26945173a4f71621a28ac15e06d3c7f9aeb8bca5950d3"
+      },
+      {
+        "path": "review_evidence/verdicts_NA.jsonl",
+        "sha256": "7a88660a44259367ae0209af7e4df68b0eb3defba6d376f6735b13da5cd120f4"
+      },
+      {
+        "path": "review_evidence/verdicts_PV.jsonl",
+        "sha256": "3ff459ec17fa523a59356eaf0951b8e35d162902e732975a6ecd6bd19cdb8d32"
+      }
+    ],
+    "backend_model_version": "claude-opus-5",
+    "reasoning_effort": "high",
+    "reproducibility_limitations": "复核通过 Claude Code CLI 以固定模型标识 claude-opus-5 调用，标识由 CLI 在 modelUsage 中回显；工具关闭、会话不持久化、不加载用户设置、固定中性系统提示（哈希已记录）；reasoning effort 为请求参数，CLI 不回显。同一标识不保证服务端权重永不变化；复核输入与实际提示的哈希已逐条绑定，可据此复核一致性。",
+    "reviewer_id": "reviewer-llm-02",
+    "version_source": "pinned_model_id"
+  },
+  "reviewers": [
+    {
+      "id": "annotator-01",
+      "kind": "human",
+      "role": "annotator"
+    },
+    {
+      "id": "reviewer-llm-02",
+      "kind": "llm",
+      "model": "claude-opus-5",
+      "model_version": "claude-opus-5",
+      "prompt_hash": "7572d16e88b638cbc6fa888f4e1a86fe6ffb4869583df357ee1ce0bd012eb758",
+      "role": "second_reviewer"
+    }
+  ],
+  "second_human_review": {
+    "reviewer_id": null,
+    "statement": "项目当前只有一名人工参与者；项目所有者完成裁决与确认，但不是独立第二人工复核。本集继续以 provisional 运行并在报告中披露该限制。",
+    "status": "pending"
+  },
+  "source_store": {
+    "kind": "local_path",
+    "location": "main_set/sources_staging 与 probe/precise_clause/v1/sources（本地目录，不进入 Git；完整性由 corpus.json 的 source_hash 校验）；页文本 main_set/pages/<sha>/"
+  },
+  "spec_version": "spec-m1",
+  "status": "frozen",
+  "supersedes": "main-v3-provisional"
+}

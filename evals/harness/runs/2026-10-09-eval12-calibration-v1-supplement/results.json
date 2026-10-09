@@ -1,0 +1,458 @@
+{
+  "run_conditions_sha256": "0d9ada5c0ee743331b42117be0ac2583f938574ff155015ae8279f46ea3907ad",
+  "fact_guard_checks": 2,
+  "attempt_accounting": {
+    "recorded_attempts": 4,
+    "system_failure_attempts": 0,
+    "cost_usd": 0.027149,
+    "model_calls": 10,
+    "reused_attempts": 0,
+    "reused_cost_usd": 0,
+    "scope": "all attempts recorded in this directory, including provenance-preserving reused attempts; excludes unknown charges from a crash before the attempt was saved"
+  },
+  "preflight_reference": {
+    "path": "preflights/880b89ff4ef6ed78c679302eaf40e444c9b8e810b4087ba817e35788973c256b.json",
+    "sha256": "921ef0ef04ead6112a47646ef90334ebb9f58a81d171b2dccc6b98fc4ab7540b"
+  },
+  "index_preflight": {
+    "ready": true,
+    "database": "medops_v2",
+    "database_identity": "2ce2d3ea29b237001a889f9d3a30129e520e5b2f346f7e15c187dea236b7a5a8",
+    "coverage": {
+      "active_chunks": 34948,
+      "missing_lexical": 0,
+      "missing_embedding": 0,
+      "documents_not_fully_indexed": 0,
+      "active_documents": 333,
+      "active_documents_without_chunks": 0
+    },
+    "lexical_version_ok": true,
+    "embedding_version_ok": true,
+    "problems": [],
+    "outbox": {
+      "lexical-index": {
+        "pending": 0,
+        "oldest_age_s": 0.0,
+        "dead_lettered": 0
+      },
+      "retrieval-cache": {
+        "pending": 338,
+        "oldest_age_s": 1592909.720819,
+        "dead_lettered": 0
+      },
+      "vector-index": {
+        "pending": 0,
+        "oldest_age_s": 0.0,
+        "dead_lettered": 0
+      }
+    },
+    "outbox_blocks_readiness": false
+  },
+  "scoring": {
+    "version": "main-outcome-v2",
+    "no_answer": "escalated with exactly insufficient_evidence; failures remain in denominator",
+    "legacy_no_answer_expectation": "insufficient_evidence (verified main/replay v1-v3)",
+    "evidence": "explicit groups: AND across/OR within; legacy flat: any hit",
+    "safety": "existing per-sample checks, unchanged",
+    "semantic_support_and_answer_completeness": "not_measured_by_this_scorer"
+  },
+  "abstention_metrics": {
+    "no_answer_correct": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "false_abstention_answerable_including_conflict": {
+      "numerator": 0,
+      "denominator": 4,
+      "rate": 0.0
+    },
+    "system_failure": {
+      "numerator": 0,
+      "denominator": 4,
+      "rate": 0.0
+    },
+    "no_answer_system_failures": 0,
+    "no_answer_other_failures": 0
+  },
+  "run": "2026-10-09-eval12-calibration-v1-supplement",
+  "finished_at": "2026-10-09T01:15:02+00:00",
+  "dataset": {
+    "version": "main-v5-provisional",
+    "dataset_hash": "23bf8530d63f6605b10fb2b1f9d7b3cf5cb805f5d3b20caa16f2fa2e7e5842b0",
+    "second_human_review": "pending"
+  },
+  "versions": {
+    "policy_version": "policy-m2-smoke-1+rel:3361ed13",
+    "retrieval_version": "2c872c44ded5f7e5aa82c5d8642f51f4e08ec5f00ddc05deb1de009731a47d05",
+    "skill_version_set": [],
+    "model_config_version": "answer=gpt-6-sol;judge=gpt-6-sol;verifier-v2+support-rules-v3+polarity_only;qt=gpt-6-luna"
+  },
+  "n": 4,
+  "answer_review_capture": {
+    "captured": 4,
+    "missing": 0,
+    "status": "pending_separate_semantic_review"
+  },
+  "answered": 4,
+  "answerable_answered_rate": 1.0,
+  "answerable_gold_cited_rate": 1.0,
+  "no_answer_abstained_rate": 0.0,
+  "answerable_false_abstention_rate": 0.0,
+  "conflict_answered_with_gold": [],
+  "total_cost_usd": 0.027149,
+  "run_cost_cap_usd": 0.15,
+  "total_model_calls": 10,
+  "retained_outcome_cost_usd": 0.027149,
+  "mean_latency_s": 9.07,
+  "p95_latency_s": 10.75,
+  "reason_code_counts": {},
+  "rows": [
+    {
+      "attempt_id": "117f94e6-aae6-4d7d-9d87-7f63660f56af",
+      "trace_id": "e1a23888a87648569d1d1c33e29e9d68",
+      "observed_at": "2026-10-09T01:14:38.171979+00:00",
+      "run_conditions_sha256": "0d9ada5c0ee743331b42117be0ac2583f938574ff155015ae8279f46ea3907ad",
+      "scoring_version": "main-outcome-v2",
+      "answer_review_input": {
+        "format": "answer-review-input-v1",
+        "path": "answer_review_inputs/3e52dcda2022582c4e5f752811735da4939dba06d0a97233501477ec2f1a9716.json",
+        "sha256": "3e52dcda2022582c4e5f752811735da4939dba06d0a97233501477ec2f1a9716",
+        "case_sha256": "c7fa77385c2bc91099cfc4ffb0afab37c3e97a3f7f35223a72e898a8203243e5"
+      },
+      "answer_review_error": null,
+      "sample_input_sha256": "e5a88a1b04b93c7c70c90a8ee40d94bf980157a7886dcf5631d4d6e33295e179",
+      "versions": {
+        "policy_version": "policy-m2-smoke-1+rel:3361ed13",
+        "retrieval_version": "2c872c44ded5f7e5aa82c5d8642f51f4e08ec5f00ddc05deb1de009731a47d05",
+        "skill_version_set": [],
+        "model_config_version": "answer=gpt-6-sol;judge=gpt-6-sol;verifier-v2+support-rules-v3+polarity_only;qt=gpt-6-luna"
+      },
+      "expected_behaviour": null,
+      "sample_id": "ms-0001",
+      "dept": "MA",
+      "kind": "answerable",
+      "imported": false,
+      "derived": false,
+      "language": "mixed",
+      "slices": [
+        "dose_unit",
+        "drug_name_zh",
+        "mixed_zh_en"
+      ],
+      "query": "瑪爾胰(glimepiride)每日最高建議劑量是多少?",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "瑪爾胰（glimepiride）每日最高建議劑量為 8 mg。"
+      ],
+      "cited_chunks": [
+        "1bbf86e9-fe24-42d6-8b71-b0bf12953079"
+      ],
+      "gold_chunks": [
+        "1bbf86e9-fe24-42d6-8b71-b0bf12953079"
+      ],
+      "required_gold_groups": [
+        [
+          "1bbf86e9-fe24-42d6-8b71-b0bf12953079"
+        ]
+      ],
+      "evidence_rule": "gold-groups-v1",
+      "gold_cited": true,
+      "evidence_count": 8,
+      "evidence_chunks": [
+        "1bbf86e9-fe24-42d6-8b71-b0bf12953079",
+        "b81cb213-2da0-4400-bb2b-2dcd40a347b4",
+        "84b33cbb-ce66-479f-9fd6-0a184779a240",
+        "f0ab96e2-49e4-4e17-a6f6-3b0fb92e5706",
+        "08518044-2f26-4357-9150-40e112bdcb59",
+        "6b758cd7-3c94-409c-a931-38a08e42633b",
+        "b704feb4-7e74-46a3-8a64-ed8f9969b402",
+        "7d91d0ac-5837-4156-9b09-e849cc868605"
+      ],
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "text": "瑪爾胰（glimepiride）每日最高建議劑量為 8 mg。",
+          "chunk": "1bbf86e9-fe24-42d6-8b71-b0bf12953079",
+          "reason": "llm:gpt-6-sol: 證據明確指出「Glimepiride 每日最高之建議劑量為 8mg」。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 7546,
+      "model_calls": 3,
+      "model_tokens": 5069,
+      "cost_usd": 0.010588,
+      "latency_s": 12.78,
+      "success": true
+    },
+    {
+      "attempt_id": "6b35846f-0f5d-49bc-91b1-44e5b875e157",
+      "trace_id": "199b88c029fa442395e5d4951b7d778d",
+      "observed_at": "2026-10-09T01:14:44.753741+00:00",
+      "run_conditions_sha256": "0d9ada5c0ee743331b42117be0ac2583f938574ff155015ae8279f46ea3907ad",
+      "scoring_version": "main-outcome-v2",
+      "answer_review_input": {
+        "format": "answer-review-input-v1",
+        "path": "answer_review_inputs/797b41b5c607c05ac134a9edae9119ca887c7adae099d3e7622c55da0c6b8d6c.json",
+        "sha256": "797b41b5c607c05ac134a9edae9119ca887c7adae099d3e7622c55da0c6b8d6c",
+        "case_sha256": "9aa231f6dd6a30f52100892f0a123746aa5ea7d53ed924728e5d17cd66a9b93d"
+      },
+      "answer_review_error": null,
+      "sample_input_sha256": "a13a464c1168901e0f9c29a957fe1198490644d9c2415e97ca2bed9e8a4d21da",
+      "versions": {
+        "policy_version": "policy-m2-smoke-1+rel:3361ed13",
+        "retrieval_version": "2c872c44ded5f7e5aa82c5d8642f51f4e08ec5f00ddc05deb1de009731a47d05",
+        "skill_version_set": [],
+        "model_config_version": "answer=gpt-6-sol;judge=gpt-6-sol;verifier-v2+support-rules-v3+polarity_only;qt=gpt-6-luna"
+      },
+      "expected_behaviour": null,
+      "sample_id": "ms-0099",
+      "dept": "PV",
+      "kind": "answerable",
+      "imported": false,
+      "derived": true,
+      "language": "en",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "query": "According to IR Art 10(2), in what document must the duties of the QPPV be defined?",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "The duties of the QPPV must be defined in a job description."
+      ],
+      "cited_chunks": [
+        "832e0a6e-7048-4b11-b2b5-f8e5e0cb5004"
+      ],
+      "gold_chunks": [
+        "832e0a6e-7048-4b11-b2b5-f8e5e0cb5004"
+      ],
+      "required_gold_groups": [
+        [
+          "832e0a6e-7048-4b11-b2b5-f8e5e0cb5004"
+        ]
+      ],
+      "evidence_rule": "gold-groups-v1",
+      "gold_cited": true,
+      "evidence_count": 8,
+      "evidence_chunks": [
+        "832e0a6e-7048-4b11-b2b5-f8e5e0cb5004",
+        "db3d6adf-6522-4d5e-aa0a-86b65d07ce17",
+        "cb107c39-deb3-4cc8-b28f-a096292bbccc",
+        "029830d7-ed35-4264-8bf0-b0ba79da46f0",
+        "b670a1d4-e152-4c5d-b7ac-99a1fdd00510",
+        "be2292ef-22ae-400c-ba2a-cd5a1b2dc8e4",
+        "6e9a013c-d1db-4803-a308-8ea97735484e",
+        "dba0e25a-3ccc-478e-ab85-ef7ae9229db5"
+      ],
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "text": "The duties of the QPPV must be defined in a job description.",
+          "chunk": "832e0a6e-7048-4b11-b2b5-f8e5e0cb5004",
+          "reason": "llm:gpt-6-sol: 证据明确指出：“The duties of the QPPV shall be defined in a job description”，与陈述一致。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 3078,
+      "model_calls": 2,
+      "model_tokens": 2183,
+      "cost_usd": 0.005238,
+      "latency_s": 6.56,
+      "success": true
+    },
+    {
+      "attempt_id": "5f4a823c-b69d-4a38-b82f-3a68d2736e3f",
+      "trace_id": "23e349bfbab84d8e977af9c96ddb2af6",
+      "observed_at": "2026-10-09T01:14:55.514269+00:00",
+      "run_conditions_sha256": "0d9ada5c0ee743331b42117be0ac2583f938574ff155015ae8279f46ea3907ad",
+      "scoring_version": "main-outcome-v2",
+      "answer_review_input": {
+        "format": "answer-review-input-v1",
+        "path": "answer_review_inputs/97abd096dd5b226105efa1af6ce861a76127395f227e94fc7fa416470ed1a3c5.json",
+        "sha256": "97abd096dd5b226105efa1af6ce861a76127395f227e94fc7fa416470ed1a3c5",
+        "case_sha256": "79843f9a6df8e7efcefd99fbcb0a1d10f9d10516679ae25a874a6309c1ea0960"
+      },
+      "answer_review_error": null,
+      "sample_input_sha256": "7ac3adacc77f66b99da997aea20300a83ac2b3147be1b69908f87345745d19af",
+      "versions": {
+        "policy_version": "policy-m2-smoke-1+rel:3361ed13",
+        "retrieval_version": "2c872c44ded5f7e5aa82c5d8642f51f4e08ec5f00ddc05deb1de009731a47d05",
+        "skill_version_set": [],
+        "model_config_version": "answer=gpt-6-sol;judge=gpt-6-sol;verifier-v2+support-rules-v3+polarity_only;qt=gpt-6-luna"
+      },
+      "expected_behaviour": null,
+      "sample_id": "ms-0104",
+      "dept": "PV",
+      "kind": "answerable",
+      "imported": false,
+      "derived": false,
+      "language": "mixed",
+      "slices": [
+        "time_window",
+        "mixed_zh_en"
+      ],
+      "query": "MAH 在收到国家主管机关就 PSMF 提出的请求后，最迟须在多少天内提交 PSMF 副本？",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "MAH 最迟须在收到国家主管机关请求后 7 天内提交 PSMF 副本。"
+      ],
+      "cited_chunks": [
+        "bdd681e4-abf4-43fd-b9da-d768902250f2"
+      ],
+      "gold_chunks": [
+        "bdd681e4-abf4-43fd-b9da-d768902250f2"
+      ],
+      "required_gold_groups": [
+        [
+          "bdd681e4-abf4-43fd-b9da-d768902250f2"
+        ]
+      ],
+      "evidence_rule": "gold-groups-v1",
+      "gold_cited": true,
+      "evidence_count": 8,
+      "evidence_chunks": [
+        "bdd681e4-abf4-43fd-b9da-d768902250f2",
+        "bce0f2d4-2849-4986-a04c-563eb1ca13c7",
+        "5b2b3f48-4d3e-4658-bfb1-531b8c7989d1",
+        "4b7166b3-ce8e-493f-9390-684d8f06a7af",
+        "d1b9f0a2-330f-42ab-a6c6-0171285ac88e",
+        "d9701d65-3e04-4fae-84e3-2a3bd5d13e19",
+        "37293e2e-9d9e-4574-b187-0487bc4740b9",
+        "f30b09cb-762f-41d3-9b2b-526d90c5ad0c"
+      ],
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "text": "MAH 最迟须在收到国家主管机关请求后 7 天内提交 PSMF 副本。",
+          "chunk": "bdd681e4-abf4-43fd-b9da-d768902250f2",
+          "reason": "llm:gpt-6-sol: 证据明确指出，MAH 必须最迟在收到国家主管机关请求后 7 天内提交 PSMF 副本。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 3174,
+      "model_calls": 3,
+      "model_tokens": 2603,
+      "cost_usd": 0.005701,
+      "latency_s": 10.75,
+      "success": true
+    },
+    {
+      "attempt_id": "d6c064b6-c401-4303-bad7-02626c02a6ef",
+      "trace_id": "b19da58c8da94db4a2bb5bd1c3576362",
+      "observed_at": "2026-10-09T01:15:01.728968+00:00",
+      "run_conditions_sha256": "0d9ada5c0ee743331b42117be0ac2583f938574ff155015ae8279f46ea3907ad",
+      "scoring_version": "main-outcome-v2",
+      "answer_review_input": {
+        "format": "answer-review-input-v1",
+        "path": "answer_review_inputs/65a937280b565800acb5d6453ab2f65d1c403f2be594c289df6aa5ff8affff42.json",
+        "sha256": "65a937280b565800acb5d6453ab2f65d1c403f2be594c289df6aa5ff8affff42",
+        "case_sha256": "6221b8d645746ae7a93b227b35d77ef171f554089566e3639cb36d9da71944b1"
+      },
+      "answer_review_error": null,
+      "sample_input_sha256": "411d6e98a44d3ff1b76b89a2d8cca9434caac2c584386d9fd2a23bcca143c2a3",
+      "versions": {
+        "policy_version": "policy-m2-smoke-1+rel:3361ed13",
+        "retrieval_version": "2c872c44ded5f7e5aa82c5d8642f51f4e08ec5f00ddc05deb1de009731a47d05",
+        "skill_version_set": [],
+        "model_config_version": "answer=gpt-6-sol;judge=gpt-6-sol;verifier-v2+support-rules-v3+polarity_only;qt=gpt-6-luna"
+      },
+      "expected_behaviour": null,
+      "sample_id": "ms-0317",
+      "dept": "CO",
+      "kind": "answerable",
+      "imported": false,
+      "derived": true,
+      "language": "en",
+      "slices": [
+        "time_window",
+        "protocol_id",
+        "mixed_zh_en"
+      ],
+      "query": "Under 21 CFR 812.150, within how many working days after first learning of an unanticipated adverse device effect must an investigator report it to the sponsor and IRB?",
+      "outcome": "answered",
+      "reason_codes": [],
+      "escalation_detail": "",
+      "claims": [
+        "An investigator must report the unanticipated adverse device effect to the sponsor and IRB no later than 10 working days after first learning of it."
+      ],
+      "cited_chunks": [
+        "712648ed-9ea6-4a3f-9160-021b80fc95f5"
+      ],
+      "gold_chunks": [
+        "712648ed-9ea6-4a3f-9160-021b80fc95f5"
+      ],
+      "required_gold_groups": [
+        [
+          "712648ed-9ea6-4a3f-9160-021b80fc95f5"
+        ]
+      ],
+      "evidence_rule": "gold-groups-v1",
+      "gold_cited": true,
+      "evidence_count": 8,
+      "evidence_chunks": [
+        "712648ed-9ea6-4a3f-9160-021b80fc95f5",
+        "7077f390-956c-4840-8855-85a2b514445e",
+        "8eb9aeaf-e2c3-445b-89a2-aadf6b748b22",
+        "1dd05b57-aa4e-4ef3-9a87-fac9719d8cd0",
+        "1e4a2b64-a705-4d06-98f0-5765191c974c",
+        "4ca4cc43-6671-4edf-84cd-89dbe5b67faf",
+        "87e0163e-0825-4d51-b655-31f533de5425",
+        "9f8eb371-05e3-4b13-bac8-89e8d9aff5b2"
+      ],
+      "flagged_evidence": [],
+      "verify_elements": [
+        {
+          "kind": "statement",
+          "verdict": "supported",
+          "text": "An investigator must report the unanticipated adverse device effect to the sponsor and IRB no later than 10 working days after first learning of it.",
+          "chunk": "712648ed-9ea6-4a3f-9160-021b80fc95f5",
+          "reason": "llm:gpt-6-sol: 证据明确规定，研究者须向申办方和 IRB 报告研究期间发生的任何非预期器械不良效应，截止时间为首次获知该效应后不晚于 10 个工作日。"
+        }
+      ],
+      "attempts": [
+        "intent:ok",
+        "retrieve:ok",
+        "verify:ok",
+        "safety:ok",
+        "answer:ok"
+      ],
+      "tokens_used": 3144,
+      "model_calls": 2,
+      "model_tokens": 2223,
+      "cost_usd": 0.005622,
+      "latency_s": 6.2,
+      "success": true
+    }
+  ]
+}

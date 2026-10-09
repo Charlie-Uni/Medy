@@ -99,14 +99,14 @@ def test_config_bounds_and_version_inputs():
 
 
 class _RecordingLexical(FakeLexical):
-    def search(self, query, k, *, allow_historical=False):
-        self.seen = allow_historical
+    def search(self, query, k, *, allow_historical=False, doc_ids=None):
+        self.seen = (allow_historical, doc_ids)
         return super().search(query, k, allow_historical=allow_historical)
 
 
 class _RecordingVector(FakeVector):
-    def search(self, query, k, *, allow_historical=False):
-        self.seen = allow_historical
+    def search(self, query, k, *, allow_historical=False, doc_ids=None):
+        self.seen = (allow_historical, doc_ids)
         return super().search(query, k, allow_historical=allow_historical)
 
 
@@ -115,8 +115,23 @@ def test_allow_historical_reaches_both_channels_and_defaults_to_false():
     lex, vec = _RecordingLexical(["a"]), _RecordingVector(["a"])
     cfg = HybridConfig(k_lexical=5, k_vector=5, rrf_k=60.0, limit=5)
     hybrid_search(lex, vec, "q", config=cfg, lexical_expected=lex.versions, vector_expected=vec.versions)
-    assert (lex.seen, vec.seen) == (False, False)
+    assert (lex.seen, vec.seen) == ((False, None), (False, None))
     hybrid_search(
         lex, vec, "q", config=cfg, lexical_expected=lex.versions, vector_expected=vec.versions, allow_historical=True
     )
-    assert (lex.seen, vec.seen) == (True, True)
+    assert (lex.seen, vec.seen) == ((True, None), (True, None))
+
+
+def test_document_scope_reaches_both_channel_boundaries():
+    lex, vec = _RecordingLexical(["a"]), _RecordingVector(["a"])
+    cfg = HybridConfig(k_lexical=5, k_vector=5, rrf_k=60.0, limit=5)
+    hybrid_search(
+        lex,
+        vec,
+        "q",
+        config=cfg,
+        lexical_expected=lex.versions,
+        vector_expected=vec.versions,
+        doc_ids=("doc-1",),
+    )
+    assert lex.seen == (False, ("doc-1",)) and vec.seen == (False, ("doc-1",))

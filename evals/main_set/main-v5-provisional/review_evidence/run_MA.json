@@ -1,0 +1,2824 @@
+{
+  "batch": "MA",
+  "reviewer_cli": "claude-code",
+  "cli_binary": "/Users/leaf/.local/bin/claude",
+  "cli_version": "2.1.79 (Claude Code)",
+  "model": "claude-opus-5",
+  "model_version_source": "pinned_model_id",
+  "reasoning_effort_requested": "high",
+  "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+  "review_prompt_sha256": "8538a516164394d885245e2d79652432ea3c71d7c7a49bba269f09740c2d1e90",
+  "sample_input_sha256": {
+    "ms-0001": "54f0ea3dacbad24704c25ab9f9b6e983220b2ecf6a341225a97e1f9acf7ddf74",
+    "ms-0002": "4f5cd481d11a121279c33887a39c20bf469067b925981230dcbbf65ecf4a9f9a",
+    "ms-0003": "cac02a06320fb4117212ff42c60173e3e72f07b34ca6e7b59f2ba7293c831faf",
+    "ms-0004": "ab8a9a8be2afd8c7c5f403212559f9a5dc65a952ea26c19784c4f57da8969900",
+    "ms-0005": "06d6ad0dd84a3c6f625be1894137e19cb4e25e422233205a5246ee590a8cf759",
+    "ms-0006": "04030fd3090b00783146f0be820aff6ba7f67b3131bec436de036e0d1debd6fe",
+    "ms-0007": "dfe9444e53cd0f3faf30ec4c8631e18d6a24d1bb008121713c28af1fed6ba240",
+    "ms-0008": "cf010d72f9e0e7ca713503bd2ac2abc0075e7d45831b16d0468ec3bcedf63ba8",
+    "ms-0009": "44cf6329929776fd8aefdd3f1123e99949a9c5c1ce054bb73cb713cd1b31795c",
+    "ms-0010": "270315ddfaf5fe19b8a3caff6cd46caea302cb0adc424941644e3fd7a1c4cda2",
+    "ms-0011": "c5067f03a9291ce7d0b29cad3091f55062962fa2dc673dd87b55afc2350ad0e5",
+    "ms-0012": "b4ff7fbefe2633a87d9a3b0fcac7bd5a32a6d828f08272d0f9edb9a352a4c858",
+    "ms-0013": "95611808d1dd8b20afc9f315eb654685a8ca9d994b6c4c12412d15ebc2b7dd66",
+    "ms-0014": "6a1d9a2b774cb9200b1684cfd7bb8f533a0df1acfdd2f79cd6a86002845ed38e",
+    "ms-0015": "e35a5a7cc37c63ffb3aa49f454e6b56ff3394517a18e846a1ae7475f08cc5d1a",
+    "ms-0016": "60911d99e2f5f77effeae8e787039aee9e6c8908c4a8f701f302cb51cba384d7",
+    "ms-0017": "3e612c94c3913d813d6acdb9b3b909d177904c452cf7ea4f6d9246ffd4b5db07",
+    "ms-0018": "bfc23d80edd573999479bf2004870ceb714898abd910d92c0cd5d3338d8f0f16",
+    "ms-0019": "1b0fa0d1da078ab9466eb1f7d725b64562610393a56c8d1af226c5305fa318ed",
+    "ms-0020": "843f374e09c3a52b15eafb00fb04345881f55f3a1c2129b2fa08966736f02a12",
+    "ms-0021": "4bd9220474f68b139a299e0f2714063b40ce6e46cf65cd7cc7253c59bdc40134",
+    "ms-0022": "08e8f08fb4542cf33bc2240bf630681db5d085493b09a0456d4fdd229afb26f1",
+    "ms-0023": "002d34b83f6fd2d21914cdd716a11d875694e70b9ce7b578ed6185d88d8eac71",
+    "ms-0024": "b31246587a5a3ad6c13005313c414501dd4ef29b28f041bb90e4d3d4b04923af",
+    "ms-0025": "1a53f71ffba0b1f496bc07f7cce0c15f2a779193955d174e1e17777bdd844230",
+    "ms-0026": "a10c4c95f7c43b15a3da820ffbf7648cf5708ae1bd1ca47e941aa8e4f0bbfb57",
+    "ms-0030": "49967fb675bfb9c8cac186c5e51bb02345a1caaa38fade1079e8f12ac3299c9e",
+    "ms-0031": "c6715e0aa8ebb400acb17889ca2535a101e7210dd2026ec2127ed50160ef28eb",
+    "ms-0032": "d1959d72965a859fdd296720bf5e8ce0219fde6e161612f93c9792b0f3640527",
+    "ms-0033": "4c41aa9cc199025070eb7b7912d80ab06eb60d4b0d9efeab3e200da5a2cb2641",
+    "ms-0034": "8ee7a5158c5ebcd53fd231275cf366e9ee8ac99705811afd3cd29bf84d32ddc4",
+    "ms-0035": "edcb887663f3c195a4de1a5459c0c21215f4b4f0c078e9dabd8621f15c919083",
+    "ms-0036": "ed30ee2e9111d8994d581337051826628beec52f251fe3fbb1456e11b4029285",
+    "ms-0037": "827d82cbb029f299142c7ddec8346ec1e2f9ed897df233ffe533fbcb9ab28064",
+    "ms-0038": "8be60b4a7cf5041baf527dab682172e98e84a5c005c55aa0206b49ea1fc84ae6",
+    "ms-0039": "9c3ab06b9f36a1b8d1bcb3df46a37f50aa5cadecc311ce2a4abd2782b863bd8a",
+    "ms-0040": "b50452d66d242249d522afd95cfd27b8329c8689f55e398a3ad57956571639ba",
+    "ms-0041": "9ef95120e94d50456229b8bbe1a7a9ab7c510776366e346e79de3921a0b3810b",
+    "ms-0042": "ddaf05da83109dc7461b08e5e771fcecc7cb2a76d49edb7e355357509e0ad033",
+    "ms-0043": "1f5033cc6162d876a46600abc14bd1072ee488218e975f8103f8da7031485d6b",
+    "ms-0044": "7cda85b57e65658b07ff64e439b049ab997e3f7294a0a12659b214ed611a31a2",
+    "ms-0045": "65e0fa40f7555d3115156edc19e73f6457d4985fd01293dc9e81de5dcda88f5d",
+    "ms-0046": "a33b610f3aabb11735af92987abc7e1360b678ec54467a9c5b690ecfe90bb4cd",
+    "ms-0047": "b0a2edfe68a57e3ab770e84b1ce5b6a75d84b7d9468081ae146e9fb2fcc27615",
+    "ms-0048": "690d2196c3b1a89e637002909f1e2e494944740bc50772b1b8896101eab12fbf",
+    "ms-0049": "d5c552e5e85d6517c987710b2fb49cc3041fed4da8f598164e80cbea930b57f1",
+    "ms-0050": "b9141f1a0c37c26bfa7009128828dc5cd85380a4fcb0d15cd72aaf43ea26c559",
+    "ms-0051": "238c8a8c16eb240c481e46b24804bbead93cd190aa9cf845f7bd689ae4167713",
+    "ms-0052": "5b7a30fad66114993fb4d27a4ed28b58c7d1ee8ad00b358fd21d628214a5e53a",
+    "ms-0053": "b2b900cb10ad7654ce883f4b04eb66b7e48a73537f70bcc1ae9f68737a5aaf37",
+    "ms-0054": "e849d7f2145655fb3bb57cc9ff6b708636e574c2efc4fceae234e236d643bb53",
+    "ms-0055": "3927ed749a20be33164b0dac7448c80ce01448570b121aac5d36394aae9c81ae",
+    "ms-0056": "a1c31b1f34b59ae12f071c4acd0a15cbbe5c1e8f5f0fbf5bab0df736d8918f7f",
+    "ms-0057": "d513ea7275a92d2dabade84c2825315128d49a0ceb3c213b1aac368374652a09",
+    "ms-0058": "077a2059d77f0ac6763c902f398e9fa30397615fb7f965c4c5a47f8408c92edd",
+    "ms-0059": "b1fec4a09381c8472f2504aa901322218bd78bdd3cb0192881b55bd736fb0176",
+    "ms-0060": "93edb5365956043d8cf90d5a335e8f305d31d60c2a00945fdc63d050d29c7b6e",
+    "ms-0061": "5a48c8fe61d5789c91b60939c637c24cca5be69b65fca1e9f248170927022da3",
+    "ms-0062": "95af46796265adda3176dbe20f22660d6a5fda97f9a6cb9a3ec2f5bcd09fe61b",
+    "ms-0063": "cf99dd45ba8b8512d2d857371cbbc9a94e88df02611b009a20971bf4574b6f9d",
+    "ms-0064": "7940ea5ce734f57153bb24c70311df59109a634c07c5621ec98accb6fccb0146",
+    "ms-0065": "f2c70dabee96010ecf14606ee5c162ad0a53eed2767d8d24002c8ad0c18f2397",
+    "ms-0066": "b6cf0008efbe39825e5f02fade73c44aba74960b94f33b8674a26f9f569027ac",
+    "ms-0067": "89f2062cb57ff05c61774bbbe50d4bd07dd9e53b55cbda3b89246bc432b9fe40",
+    "ms-0068": "00adfd73b1031dd0e6c3e736f9bc151bbfef9edd512d9a4af920cef3ff8a283f",
+    "ms-0069": "8c8d3a9950222cb1f873e8fc23e9df54cb51a343292c3febf52aee350dd9c08c",
+    "ms-0070": "868b44bc5dbf46b52bd8716ffa7454ba1d49666e0221002b8bb163cdc8d02cef",
+    "ms-0071": "84e50ce70e9449e8313316ee485675706929bf1ac302120f8d4d88b57b547a8c",
+    "ms-0072": "d4357f2ebcbe5bff900fb7c6b53cfe01da08f89fdc8498b8d1700bf54266a21e",
+    "ms-0073": "36a16c824e336d9c2480847780accf63e032c79d64c1b64f4c2d3778cf7819f5",
+    "ms-0074": "bc7fba0c276717a1e7074d8becea931d7a640c7ca5a81f9712fa43a001221516",
+    "ms-0075": "ceacb9686b2e291a8fd4675e1bf2de712e82e5ff7ea992ca86bc4eb5216d912d",
+    "ms-0076": "16bc46c47b8709b9312a5180649bf0b08d34951eab6a19da79d110bd569cff06",
+    "ms-0077": "9e54dd7c73665273cb9f626fa8d401fd062f5a8422c83d968274b99065b1413a",
+    "ms-0078": "b80daa664b9e49f139bd0ee4ca6fce5421acabd2c95160ae79914a862797a128",
+    "ms-0079": "18791da6bba5655098fc23c9ecb8a3f991669db3faedea5596b2408084099963",
+    "ms-0080": "a6da500f2ea61eded6c641e9819cc33d287e1f8fc056c9e8c1748811c2bebb8f",
+    "ms-0081": "56929f8e6e40f3eb3c355e7f39cd2338f1070b152d442332d70cbb08b957a76a",
+    "ms-0082": "b7dbe74b190a02f4ace627b6eeed99fdc909ae72af0cf0bd4726e4ee4fe5841d",
+    "ms-0083": "97c00254fcbe984c8646e1374e1744e56967613fec6cd7de564b1119750687e6"
+  },
+  "chunks": [
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "0b42e312-dd3e-410c-86ce-2eba520b73a1",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "4097",
+      "cost_usd": 0.20157874999999997,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0001",
+        "ms-0002",
+        "ms-0003",
+        "ms-0004",
+        "ms-0005"
+      ],
+      "started_at": "2026-09-21T14:21:05+00:00",
+      "finished_at": "2026-09-21T14:21:53+00:00",
+      "prompt_chars": 16869,
+      "prompt_sha256": "e4f184f4d86347ed89c440f869d4658540116942fca11a9bbfeeabd3492acf5c",
+      "verdicts": [
+        {
+          "sample_id": "ms-0001",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0002",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0003",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0004",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "頁內另有「Glimepiride 之建議劑量,由每日 1 mg 開始使用。」亦述及起始劑量,但其緊接「如前述」回指本條且屬換藥情境,不構成獨立競爭條款,故仍判 ok。",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0005",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_e4f184f4d86347ed89c440f869d4658540116942fca11a9bbfeeabd3492acf5c.jsonl",
+      "sample_input_sha256": {
+        "ms-0001": "54f0ea3dacbad24704c25ab9f9b6e983220b2ecf6a341225a97e1f9acf7ddf74",
+        "ms-0002": "4f5cd481d11a121279c33887a39c20bf469067b925981230dcbbf65ecf4a9f9a",
+        "ms-0003": "cac02a06320fb4117212ff42c60173e3e72f07b34ca6e7b59f2ba7293c831faf",
+        "ms-0004": "ab8a9a8be2afd8c7c5f403212559f9a5dc65a952ea26c19784c4f57da8969900",
+        "ms-0005": "06d6ad0dd84a3c6f625be1894137e19cb4e25e422233205a5246ee590a8cf759"
+      },
+      "review_prompt_sha256": "8538a516164394d885245e2d79652432ea3c71d7c7a49bba269f09740c2d1e90"
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "ff324366-abd6-439d-9e2d-c25fc078dc5e",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "4393",
+      "cost_usd": 0.40771,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0006",
+        "ms-0007",
+        "ms-0008",
+        "ms-0009",
+        "ms-0010"
+      ],
+      "started_at": "2026-09-21T14:21:53+00:00",
+      "finished_at": "2026-09-21T14:22:45+00:00",
+      "prompt_chars": 51879,
+      "prompt_sha256": "55b69d662187b33da27ae80b7e855214857df6038351d056878d8d72ec06a289",
+      "verdicts": [
+        {
+          "sample_id": "ms-0006",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0007",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0008",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0009",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0010",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_55b69d662187b33da27ae80b7e855214857df6038351d056878d8d72ec06a289.jsonl",
+      "sample_input_sha256": {
+        "ms-0006": "04030fd3090b00783146f0be820aff6ba7f67b3131bec436de036e0d1debd6fe",
+        "ms-0007": "dfe9444e53cd0f3faf30ec4c8631e18d6a24d1bb008121713c28af1fed6ba240",
+        "ms-0008": "cf010d72f9e0e7ca713503bd2ac2abc0075e7d45831b16d0468ec3bcedf63ba8",
+        "ms-0009": "44cf6329929776fd8aefdd3f1123e99949a9c5c1ce054bb73cb713cd1b31795c",
+        "ms-0010": "270315ddfaf5fe19b8a3caff6cd46caea302cb0adc424941644e3fd7a1c4cda2"
+      },
+      "review_prompt_sha256": "8538a516164394d885245e2d79652432ea3c71d7c7a49bba269f09740c2d1e90"
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "94f8443e-ef9a-4e14-9fc5-517ac7afb107",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "2302",
+      "cost_usd": 0.3329225,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0011",
+        "ms-0012",
+        "ms-0013",
+        "ms-0014",
+        "ms-0015"
+      ],
+      "started_at": "2026-09-21T14:23:38+00:00",
+      "finished_at": "2026-09-21T14:24:04+00:00",
+      "prompt_chars": 45646,
+      "prompt_sha256": "e1cb849ac7e2f8118d65cee3b05b247bfaa8e32cc936302504e5e87aaf139fba",
+      "verdicts": [
+        {
+          "sample_id": "ms-0011",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0012",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0013",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0014",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0015",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_e1cb849ac7e2f8118d65cee3b05b247bfaa8e32cc936302504e5e87aaf139fba.jsonl",
+      "sample_input_sha256": {
+        "ms-0011": "c5067f03a9291ce7d0b29cad3091f55062962fa2dc673dd87b55afc2350ad0e5",
+        "ms-0012": "b4ff7fbefe2633a87d9a3b0fcac7bd5a32a6d828f08272d0f9edb9a352a4c858",
+        "ms-0013": "95611808d1dd8b20afc9f315eb654685a8ca9d994b6c4c12412d15ebc2b7dd66",
+        "ms-0014": "6a1d9a2b774cb9200b1684cfd7bb8f533a0df1acfdd2f79cd6a86002845ed38e",
+        "ms-0015": "e35a5a7cc37c63ffb3aa49f454e6b56ff3394517a18e846a1ae7475f08cc5d1a"
+      },
+      "review_prompt_sha256": "8538a516164394d885245e2d79652432ea3c71d7c7a49bba269f09740c2d1e90"
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "44de6797-a11c-4ad7-94c3-6ec292918f7e",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "7385",
+      "cost_usd": 0.26156625,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0016",
+        "ms-0017",
+        "ms-0018",
+        "ms-0019",
+        "ms-0020"
+      ],
+      "started_at": "2026-09-21T14:24:04+00:00",
+      "finished_at": "2026-09-21T14:25:20+00:00",
+      "prompt_chars": 13811,
+      "prompt_sha256": "50dc33750c8821221593d3e1a638ff6986ccb83ae2cdf00e042d932c1a594428",
+      "verdicts": [
+        {
+          "sample_id": "ms-0016",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0017",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0018",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0019",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0020",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_50dc33750c8821221593d3e1a638ff6986ccb83ae2cdf00e042d932c1a594428.jsonl",
+      "sample_input_sha256": {
+        "ms-0016": "60911d99e2f5f77effeae8e787039aee9e6c8908c4a8f701f302cb51cba384d7",
+        "ms-0017": "3e612c94c3913d813d6acdb9b3b909d177904c452cf7ea4f6d9246ffd4b5db07",
+        "ms-0018": "bfc23d80edd573999479bf2004870ceb714898abd910d92c0cd5d3338d8f0f16",
+        "ms-0019": "1b0fa0d1da078ab9466eb1f7d725b64562610393a56c8d1af226c5305fa318ed",
+        "ms-0020": "843f374e09c3a52b15eafb00fb04345881f55f3a1c2129b2fa08966736f02a12"
+      },
+      "review_prompt_sha256": "8538a516164394d885245e2d79652432ea3c71d7c7a49bba269f09740c2d1e90"
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "447ba869-ba85-448c-9b61-fffacb696e15",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "3166",
+      "cost_usd": 0.28904125,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0021",
+        "ms-0022",
+        "ms-0023",
+        "ms-0024",
+        "ms-0025"
+      ],
+      "started_at": "2026-09-21T14:25:20+00:00",
+      "finished_at": "2026-09-21T14:25:56+00:00",
+      "prompt_chars": 36463,
+      "prompt_sha256": "3932e0a433cf106a5cbac1ac85e1a4eed4b89a8f7b50bb16c7c24fbf1073dba5",
+      "verdicts": [
+        {
+          "sample_id": "ms-0021",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0022",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0023",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0024",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0025",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_3932e0a433cf106a5cbac1ac85e1a4eed4b89a8f7b50bb16c7c24fbf1073dba5.jsonl",
+      "sample_input_sha256": {
+        "ms-0021": "4bd9220474f68b139a299e0f2714063b40ce6e46cf65cd7cc7253c59bdc40134",
+        "ms-0022": "08e8f08fb4542cf33bc2240bf630681db5d085493b09a0456d4fdd229afb26f1",
+        "ms-0023": "002d34b83f6fd2d21914cdd716a11d875694e70b9ce7b578ed6185d88d8eac71",
+        "ms-0024": "b31246587a5a3ad6c13005313c414501dd4ef29b28f041bb90e4d3d4b04923af",
+        "ms-0025": "1a53f71ffba0b1f496bc07f7cce0c15f2a779193955d174e1e17777bdd844230"
+      },
+      "review_prompt_sha256": "8538a516164394d885245e2d79652432ea3c71d7c7a49bba269f09740c2d1e90"
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "5db8d756-ff68-4a2c-aec8-d6f5d058e064",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "2401",
+      "cost_usd": 0.24652875,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0026",
+        "ms-0030",
+        "ms-0031",
+        "ms-0032",
+        "ms-0033"
+      ],
+      "started_at": "2026-09-21T14:25:56+00:00",
+      "finished_at": "2026-09-21T14:26:24+00:00",
+      "prompt_chars": 32548,
+      "prompt_sha256": "ce983136af56ca7b9c2c269d53b662087ebcae5fa16cbe57e88a370dd66008ee",
+      "verdicts": [
+        {
+          "sample_id": "ms-0026",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0030",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0031",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0032",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0033",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_ce983136af56ca7b9c2c269d53b662087ebcae5fa16cbe57e88a370dd66008ee.jsonl",
+      "sample_input_sha256": {
+        "ms-0026": "a10c4c95f7c43b15a3da820ffbf7648cf5708ae1bd1ca47e941aa8e4f0bbfb57",
+        "ms-0030": "49967fb675bfb9c8cac186c5e51bb02345a1caaa38fade1079e8f12ac3299c9e",
+        "ms-0031": "c6715e0aa8ebb400acb17889ca2535a101e7210dd2026ec2127ed50160ef28eb",
+        "ms-0032": "d1959d72965a859fdd296720bf5e8ce0219fde6e161612f93c9792b0f3640527",
+        "ms-0033": "4c41aa9cc199025070eb7b7912d80ab06eb60d4b0d9efeab3e200da5a2cb2641"
+      },
+      "review_prompt_sha256": "8538a516164394d885245e2d79652432ea3c71d7c7a49bba269f09740c2d1e90"
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "120a1a7d-48c0-45cc-9c70-cef466cee8e5",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "6482",
+      "cost_usd": 0.1686605,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0034",
+        "ms-0035",
+        "ms-0036",
+        "ms-0037",
+        "ms-0038"
+      ],
+      "started_at": "2026-09-21T14:27:09+00:00",
+      "finished_at": "2026-09-21T14:28:33+00:00",
+      "prompt_chars": 15406,
+      "prompt_sha256": "2131fe19243f98be27d99a056652fea7a1341a47dba8b5986766f8d82898db5c",
+      "verdicts": [
+        {
+          "sample_id": "ms-0034",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0035",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0036",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0037",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0038",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_2131fe19243f98be27d99a056652fea7a1341a47dba8b5986766f8d82898db5c.jsonl",
+      "sample_input_sha256": {
+        "ms-0034": "8ee7a5158c5ebcd53fd231275cf366e9ee8ac99705811afd3cd29bf84d32ddc4",
+        "ms-0035": "edcb887663f3c195a4de1a5459c0c21215f4b4f0c078e9dabd8621f15c919083",
+        "ms-0036": "ed30ee2e9111d8994d581337051826628beec52f251fe3fbb1456e11b4029285",
+        "ms-0037": "827d82cbb029f299142c7ddec8346ec1e2f9ed897df233ffe533fbcb9ab28064",
+        "ms-0038": "8be60b4a7cf5041baf527dab682172e98e84a5c005c55aa0206b49ea1fc84ae6"
+      },
+      "review_prompt_sha256": "8538a516164394d885245e2d79652432ea3c71d7c7a49bba269f09740c2d1e90"
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "9322a030-dcda-4512-b173-09b1ae71b6bc",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "5010",
+      "cost_usd": 0.2402475,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0039",
+        "ms-0040",
+        "ms-0041",
+        "ms-0042",
+        "ms-0043"
+      ],
+      "started_at": "2026-09-21T14:28:33+00:00",
+      "finished_at": "2026-09-21T14:29:45+00:00",
+      "prompt_chars": 20502,
+      "prompt_sha256": "5f59533c8ec71b3c4f421dcebecc0dc83a5fd593b94acb94cdbe453bc4981547",
+      "verdicts": [
+        {
+          "sample_id": "ms-0039",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0040",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0041",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0042",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0043",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_5f59533c8ec71b3c4f421dcebecc0dc83a5fd593b94acb94cdbe453bc4981547.jsonl",
+      "sample_input_sha256": {
+        "ms-0039": "9c3ab06b9f36a1b8d1bcb3df46a37f50aa5cadecc311ce2a4abd2782b863bd8a",
+        "ms-0040": "b50452d66d242249d522afd95cfd27b8329c8689f55e398a3ad57956571639ba",
+        "ms-0041": "9ef95120e94d50456229b8bbe1a7a9ab7c510776366e346e79de3921a0b3810b",
+        "ms-0042": "ddaf05da83109dc7461b08e5e771fcecc7cb2a76d49edb7e355357509e0ad033",
+        "ms-0043": "1f5033cc6162d876a46600abc14bd1072ee488218e975f8103f8da7031485d6b"
+      },
+      "review_prompt_sha256": "8538a516164394d885245e2d79652432ea3c71d7c7a49bba269f09740c2d1e90"
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "b7b89675-7cf8-4984-8eef-b2997f1c5741",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "2788",
+      "cost_usd": 0.20743499999999998,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0044",
+        "ms-0045",
+        "ms-0046",
+        "ms-0047",
+        "ms-0048"
+      ],
+      "started_at": "2026-09-21T14:29:45+00:00",
+      "finished_at": "2026-09-21T14:30:18+00:00",
+      "prompt_chars": 23983,
+      "prompt_sha256": "715df605613e08d393c2790cee4859ca10703fc2b0ab2fcc32f6a600c78d314b",
+      "verdicts": [
+        {
+          "sample_id": "ms-0044",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0045",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0046",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0047",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0048",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_715df605613e08d393c2790cee4859ca10703fc2b0ab2fcc32f6a600c78d314b.jsonl",
+      "sample_input_sha256": {
+        "ms-0044": "7cda85b57e65658b07ff64e439b049ab997e3f7294a0a12659b214ed611a31a2",
+        "ms-0045": "65e0fa40f7555d3115156edc19e73f6457d4985fd01293dc9e81de5dcda88f5d",
+        "ms-0046": "a33b610f3aabb11735af92987abc7e1360b678ec54467a9c5b690ecfe90bb4cd",
+        "ms-0047": "b0a2edfe68a57e3ab770e84b1ce5b6a75d84b7d9468081ae146e9fb2fcc27615",
+        "ms-0048": "690d2196c3b1a89e637002909f1e2e494944740bc50772b1b8896101eab12fbf"
+      },
+      "review_prompt_sha256": "8538a516164394d885245e2d79652432ea3c71d7c7a49bba269f09740c2d1e90"
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "a28b4cb8-ca6d-47ae-b168-28d9efa01d85",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "6691",
+      "cost_usd": 0.178515,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0049",
+        "ms-0050",
+        "ms-0051",
+        "ms-0052",
+        "ms-0053"
+      ],
+      "started_at": "2026-09-21T14:32:34+00:00",
+      "finished_at": "2026-09-21T14:33:45+00:00",
+      "prompt_chars": 24667,
+      "prompt_sha256": "4e38d600bbd3550e59d3ae7e1e67534e952969b318a781ab117ef6a57a0d7ad7",
+      "verdicts": [
+        {
+          "sample_id": "ms-0049",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0050",
+          "verdict": "dispute",
+          "items": {
+            "query": "issue",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "query 自我作答且指明答案所在节：问句写成「Losacar仿單「禁忌症」所列的糖尿病患，或GFR低於60 ml/min/1.73 m²的腎功能不全患者，是否可合併使用含aliskiren成分的藥品？」，前半句已声明这些病人被列于「禁忌症」，答案（不可合併使用）在提问中即被给出；同时直接把 key_text 的条款「合併使用本品及含 aliskiren 成分藥品於糖尿病患或腎功能不全患者 (GFR<60 ml/min/1.73 m2)」原句改写为问句，并以节名定位，削弱了检索难度。key_text 含标题「禁忌症〈依文獻記載〉」与过敏句属保留否定语义所必需的连续文本，不另判问题。",
+          "suggestion": "改为不含节名、不预设结论的问法，例如「糖尿病患或腎功能不全（GFR<60 ml/min/1.73 m²）的病人，Losacar 可以和含 aliskiren 成分的藥品併用嗎？」"
+        },
+        {
+          "sample_id": "ms-0051",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0052",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0053",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_4e38d600bbd3550e59d3ae7e1e67534e952969b318a781ab117ef6a57a0d7ad7.jsonl",
+      "sample_input_sha256": {
+        "ms-0049": "d5c552e5e85d6517c987710b2fb49cc3041fed4da8f598164e80cbea930b57f1",
+        "ms-0050": "bffa2a5ad32f54eb29326abf03544d22218735c85ae95a1d89bb517536d7414d",
+        "ms-0051": "238c8a8c16eb240c481e46b24804bbead93cd190aa9cf845f7bd689ae4167713",
+        "ms-0052": "5b7a30fad66114993fb4d27a4ed28b58c7d1ee8ad00b358fd21d628214a5e53a",
+        "ms-0053": "b2b900cb10ad7654ce883f4b04eb66b7e48a73537f70bcc1ae9f68737a5aaf37"
+      },
+      "review_prompt_sha256": "8538a516164394d885245e2d79652432ea3c71d7c7a49bba269f09740c2d1e90"
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "4a58b25e-dcd6-4c41-8dd3-d86fb7f19d35",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "5928",
+      "cost_usd": 0.23211,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0054",
+        "ms-0055",
+        "ms-0056",
+        "ms-0057",
+        "ms-0058"
+      ],
+      "started_at": "2026-09-21T14:33:45+00:00",
+      "finished_at": "2026-09-21T14:34:50+00:00",
+      "prompt_chars": 15442,
+      "prompt_sha256": "d401df4aaf57fded7e576643642833784136f5006be881cca30a792d83318a10",
+      "verdicts": [
+        {
+          "sample_id": "ms-0054",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0055",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0056",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0057",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": "key_text 含两句，首句「Allopurinol 沒有抗發炎的效力。」是理由而非命中本身；若判定口径允许以代词承接主语，可缩为「它必須不得使用於痛風性關節炎的急性發作」（页内唯一且保留否定与对象），否则维持现状亦可接受。"
+        },
+        {
+          "sample_id": "ms-0058",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "issue",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "按已批准口径 time_window 依完整 evidence_span 判定，本样本 span 末句逐字为「注意—大約在治療 48 小時之後,劑量的調整可能是必需的,依病人的反應而定。」，其中「治療 48 小時之後」属于“给药/治疗后 N 小时”的时间窗表达，但切片仅标了 dose_unit、drug_name_zh、mixed_zh_en，缺 time_window。",
+          "suggestion": "二选一：(1) 为 span 增补 time_window 标签；或 (2) 将 evidence_span 收至回答 query 的单一条款「年齡 6 至 12 歲的孩童:口服,100 mg,一天三次;或 300 mg 當作一個單一劑量,一天一次。」（相应调整 char_start/char_end 为 50/103 区间），此时现有切片组合成立。"
+        }
+      ],
+      "input_path": "chunk_inputs/input_d401df4aaf57fded7e576643642833784136f5006be881cca30a792d83318a10.jsonl",
+      "sample_input_sha256": {
+        "ms-0054": "e849d7f2145655fb3bb57cc9ff6b708636e574c2efc4fceae234e236d643bb53",
+        "ms-0055": "3927ed749a20be33164b0dac7448c80ce01448570b121aac5d36394aae9c81ae",
+        "ms-0056": "a1c31b1f34b59ae12f071c4acd0a15cbbe5c1e8f5f0fbf5bab0df736d8918f7f",
+        "ms-0057": "d513ea7275a92d2dabade84c2825315128d49a0ceb3c213b1aac368374652a09",
+        "ms-0058": "ff25120fc566b4f49fe21d10c3f9be73371baf55b9f38c2beb47342ebf136e5b"
+      },
+      "review_prompt_sha256": "8538a516164394d885245e2d79652432ea3c71d7c7a49bba269f09740c2d1e90"
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "2503c23d-0894-4e11-8d8d-6f972980e912",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "5042",
+      "cost_usd": 0.20248500000000003,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0059",
+        "ms-0060",
+        "ms-0061",
+        "ms-0062",
+        "ms-0063"
+      ],
+      "started_at": "2026-09-21T14:34:50+00:00",
+      "finished_at": "2026-09-21T14:35:46+00:00",
+      "prompt_chars": 14249,
+      "prompt_sha256": "b988cfb1664108b2973fe165d639efeff5f2f9eea3e722e32934861ba969a51c",
+      "verdicts": [
+        {
+          "sample_id": "ms-0059",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0060",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0061",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "issue",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "key_text「Quetiapine 應避免與其他會延長 QT 的藥物併用,包括 1A 類抗心律不整藥」在列舉中途截斷：既非最小（去掉「,包括 1A 類抗心律不整藥」仍完整保留「Quetiapine—避免與延長 QT 藥物併用」的對象與約束，不損失命中含義），也未涵蓋 query 所問的全部藥物類別（頁文本同句還列有「III 類抗心律不整藥(例如 Amiodarone, Sotalol),抗精神病藥物(例如 Ziprasidone, Chlorpromazine, Thioridazine),抗生素(例如 Gatifloxacin, Moxifloxacin),或其他會延長 QT 期間的藥物類別(例如 Pentamidine,Levomethadyl acetate, Methadone)」），只保留第一類屬任意切斷。",
+          "suggestion": "改為最小寫法「Quetiapine 應避免與其他會延長 QT 的藥物併用」；若需在 key_text 中體現具體類別，則應取整句列舉至「…Methadone)」，與 evidence_span 一致，不要在「1A 類抗心律不整藥」處截斷。"
+        },
+        {
+          "sample_id": "ms-0062",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0063",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_b988cfb1664108b2973fe165d639efeff5f2f9eea3e722e32934861ba969a51c.jsonl",
+      "sample_input_sha256": {
+        "ms-0059": "b1fec4a09381c8472f2504aa901322218bd78bdd3cb0192881b55bd736fb0176",
+        "ms-0060": "93edb5365956043d8cf90d5a335e8f305d31d60c2a00945fdc63d050d29c7b6e",
+        "ms-0061": "70a3253e9cae018f014a0f76c28b04af50bc24dcc9c64806b101771f6cfe24c8",
+        "ms-0062": "95af46796265adda3176dbe20f22660d6a5fda97f9a6cb9a3ec2f5bcd09fe61b",
+        "ms-0063": "cf99dd45ba8b8512d2d857371cbbc9a94e88df02611b009a20971bf4574b6f9d"
+      },
+      "review_prompt_sha256": "8538a516164394d885245e2d79652432ea3c71d7c7a49bba269f09740c2d1e90"
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "002c6726-8a87-4735-baff-e07ed87461b7",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "3063",
+      "cost_usd": 0.3877975,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0064",
+        "ms-0065",
+        "ms-0066",
+        "ms-0067",
+        "ms-0068"
+      ],
+      "started_at": "2026-09-21T14:35:46+00:00",
+      "finished_at": "2026-09-21T14:36:23+00:00",
+      "prompt_chars": 46011,
+      "prompt_sha256": "8166a68c2e8567e09758d9a60f6c35d8ff8793bdffda8f36bda592939babd358",
+      "verdicts": [
+        {
+          "sample_id": "ms-0064",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0065",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0066",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0067",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0068",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_8166a68c2e8567e09758d9a60f6c35d8ff8793bdffda8f36bda592939babd358.jsonl",
+      "sample_input_sha256": {
+        "ms-0064": "7940ea5ce734f57153bb24c70311df59109a634c07c5621ec98accb6fccb0146",
+        "ms-0065": "f2c70dabee96010ecf14606ee5c162ad0a53eed2767d8d24002c8ad0c18f2397",
+        "ms-0066": "b6cf0008efbe39825e5f02fade73c44aba74960b94f33b8674a26f9f569027ac",
+        "ms-0067": "89f2062cb57ff05c61774bbbe50d4bd07dd9e53b55cbda3b89246bc432b9fe40",
+        "ms-0068": "00adfd73b1031dd0e6c3e736f9bc151bbfef9edd512d9a4af920cef3ff8a283f"
+      },
+      "review_prompt_sha256": "8538a516164394d885245e2d79652432ea3c71d7c7a49bba269f09740c2d1e90"
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "b522339b-4f0f-4786-b48e-ce4c37915c02",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "4587",
+      "cost_usd": 0.41478499999999996,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0069",
+        "ms-0070",
+        "ms-0071",
+        "ms-0072",
+        "ms-0073"
+      ],
+      "started_at": "2026-09-21T14:36:23+00:00",
+      "finished_at": "2026-09-21T14:37:14+00:00",
+      "prompt_chars": 45341,
+      "prompt_sha256": "76193eacd0ab96db2ce409b0b200e50c8659fe7eefdb6b1f5fa67a04b1a25572",
+      "verdicts": [
+        {
+          "sample_id": "ms-0069",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": "儲存溫度 25 °C 屬溫度而非劑量單位，未標 dose_unit 正確；無須更動。"
+        },
+        {
+          "sample_id": "ms-0070",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0071",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0072",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": "頁內成人高血壓段落用語為「建議使用劑量」，而「起始劑量」一詞在頁內另指心衰竭（每次40mg，一天兩次）與兒童初始劑量，query 用「起始劑量」雖有成人高血壓限定仍略易混；可改為「建議使用劑量為何」以更貼近原文。"
+        },
+        {
+          "sample_id": "ms-0073",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_76193eacd0ab96db2ce409b0b200e50c8659fe7eefdb6b1f5fa67a04b1a25572.jsonl",
+      "sample_input_sha256": {
+        "ms-0069": "8c8d3a9950222cb1f873e8fc23e9df54cb51a343292c3febf52aee350dd9c08c",
+        "ms-0070": "868b44bc5dbf46b52bd8716ffa7454ba1d49666e0221002b8bb163cdc8d02cef",
+        "ms-0071": "84e50ce70e9449e8313316ee485675706929bf1ac302120f8d4d88b57b547a8c",
+        "ms-0072": "d4357f2ebcbe5bff900fb7c6b53cfe01da08f89fdc8498b8d1700bf54266a21e",
+        "ms-0073": "36a16c824e336d9c2480847780accf63e032c79d64c1b64f4c2d3778cf7819f5"
+      },
+      "review_prompt_sha256": "8538a516164394d885245e2d79652432ea3c71d7c7a49bba269f09740c2d1e90"
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "348fcd5d-a1ad-4f04-b66f-8beccc11e784",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "9294",
+      "cost_usd": 0.38302250000000004,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0074",
+        "ms-0075",
+        "ms-0076",
+        "ms-0077",
+        "ms-0078"
+      ],
+      "started_at": "2026-09-21T14:37:14+00:00",
+      "finished_at": "2026-09-21T14:38:54+00:00",
+      "prompt_chars": 24767,
+      "prompt_sha256": "10db77632dcb0c2214f664c58362bcb4f7c77f86067b259da245511b0710a879",
+      "verdicts": [
+        {
+          "sample_id": "ms-0074",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0075",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0076",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0077",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0078",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_10db77632dcb0c2214f664c58362bcb4f7c77f86067b259da245511b0710a879.jsonl",
+      "sample_input_sha256": {
+        "ms-0074": "bc7fba0c276717a1e7074d8becea931d7a640c7ca5a81f9712fa43a001221516",
+        "ms-0075": "ceacb9686b2e291a8fd4675e1bf2de712e82e5ff7ea992ca86bc4eb5216d912d",
+        "ms-0076": "16bc46c47b8709b9312a5180649bf0b08d34951eab6a19da79d110bd569cff06",
+        "ms-0077": "9e54dd7c73665273cb9f626fa8d401fd062f5a8422c83d968274b99065b1413a",
+        "ms-0078": "b80daa664b9e49f139bd0ee4ca6fce5421acabd2c95160ae79914a862797a128"
+      },
+      "review_prompt_sha256": "8538a516164394d885245e2d79652432ea3c71d7c7a49bba269f09740c2d1e90"
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "7dcd0620-7749-415f-a5fd-c295df70ecb5",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "3767",
+      "cost_usd": 0.27376625,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0079",
+        "ms-0080",
+        "ms-0081",
+        "ms-0082",
+        "ms-0083"
+      ],
+      "started_at": "2026-09-21T14:38:54+00:00",
+      "finished_at": "2026-09-21T14:39:36+00:00",
+      "prompt_chars": 30101,
+      "prompt_sha256": "d0cc4e494a21662ad7b1dce49758a0fe9a33556029fd540ab4f8b06bcee57421",
+      "verdicts": [
+        {
+          "sample_id": "ms-0079",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0080",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0081",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0082",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": "query 中「本項產品成分」沿用仿單自指用語，略顯生硬，可改為「對本品成分（losartan potassium）過敏的病人可以使用穩壓膜衣錠50毫克嗎?」以提高自然度；此為措辭建議，不影響判定。"
+        },
+        {
+          "sample_id": "ms-0083",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_d0cc4e494a21662ad7b1dce49758a0fe9a33556029fd540ab4f8b06bcee57421.jsonl",
+      "sample_input_sha256": {
+        "ms-0079": "18791da6bba5655098fc23c9ecb8a3f991669db3faedea5596b2408084099963",
+        "ms-0080": "a6da500f2ea61eded6c641e9819cc33d287e1f8fc056c9e8c1748811c2bebb8f",
+        "ms-0081": "56929f8e6e40f3eb3c355e7f39cd2338f1070b152d442332d70cbb08b957a76a",
+        "ms-0082": "b7dbe74b190a02f4ace627b6eeed99fdc909ae72af0cf0bd4726e4ee4fe5841d",
+        "ms-0083": "97c00254fcbe984c8646e1374e1744e56967613fec6cd7de564b1119750687e6"
+      },
+      "review_prompt_sha256": "8538a516164394d885245e2d79652432ea3c71d7c7a49bba269f09740c2d1e90"
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "b8b95b0e-ca9b-4161-a72c-bcfb5b8dcf6c",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "6571",
+      "cost_usd": 0.24594750000000004,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0050",
+        "ms-0058",
+        "ms-0061"
+      ],
+      "started_at": "2026-09-22T02:23:35+00:00",
+      "finished_at": "2026-09-22T02:25:00+00:00",
+      "prompt_chars": 14824,
+      "prompt_sha256": "90d9dda69b12b2aa8dcfe3b3cff0043663c26b2046e2ffa4a4bb986f5d1da0ca",
+      "verdicts": [
+        {
+          "sample_id": "ms-0050",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "issue",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "key_text 不最小：除命中條款外還包含小節標題「禁忌症〈依文獻記載〉」與與 query 無關的另一句禁忌「Losartan potassium 禁用於對本項產品任何組成過敏者。」。命中含義（對象＝本品與含 aliskiren 成分藥品併用；約束＝糖尿病患或腎功能不全 GFR<60 ml/min/1.73 m2）只需後半句即可保留，且縮短後在頁內仍唯一（警語段為「合併使用 ACEIs、ARBs 或含 aliskiren 成分藥品會增加低血壓…」、交互作用段為「合併使用ACEIs、ARBs 或含 aliskiren 成分藥品來雙重阻斷 RAAS」，均與建議字串不同）。negation 依已批准口徑按完整 evidence_span 判定，span 仍含「禁忌症〈依文獻記載〉…禁用於」，縮短 key_text 不影響否定語義。query、evidence_span（完整條款、含 GFR 限定、偏移與頁文本一致）、mixed_zh_en 與 MA 歸屬均無問題。",
+          "suggestion": "key_text 改為「合併使用本品及含 aliskiren 成分藥品於糖尿病患或腎功能不全患者 (GFR<60 ml/min/1.73 m2)」；evidence_span 與切片維持不變（另註：span 內 ml/min 為腎功能閾值而非給藥劑量或頻次，按口徑不建議補 dose_unit）。"
+        },
+        {
+          "sample_id": "ms-0058",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "issue",
+            "dept": "ok"
+          },
+          "reason": "evidence_span 遺漏適應證限定。query 問的是「治療贅瘤疾病引起的高尿酸血症」時的兒童口服劑量，而該限定條件寫在同段開頭「一般孩童劑量:贅瘤疾病治療上的抗高尿酸血症—」，span（char 50–103）自「年齡 6 至 12 歲的孩童」起，僅剩人群與劑量，未包含適應證，單看 span 無法確認此劑量專用於贅瘤疾病之抗高尿酸血症（gold.section 僅記「一般孩童劑量」，亦未含適應證）。偏移經核對與頁文本一致（char 49 為前一句句號「。」，span 長度 53 字）。key_text「年齡 6 至 12 歲的孩童:口服,100 mg,一天三次;或 300 mg 當作一個單一劑量,一天一次」在頁內僅出現一次且最小；dose_unit（100 mg、一天三次）、drug_name_zh（query 依「拔痛酸錠」精確匹配）、mixed_zh_en（Allopurinol）成立；仿單歸 MA 正確。",
+          "suggestion": "evidence_span 起點前移至「贅瘤疾病治療上的抗高尿酸血症—」（或整句「一般孩童劑量:贅瘤疾病治療上的抗高尿酸血症— 年齡 6 至 12 歲的孩童:口服,100 mg,一天三次;或 300 mg 當作一個單一劑量,一天一次。」），並相應更新 char_start/char_end；key_text 不變。"
+        },
+        {
+          "sample_id": "ms-0061",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_90d9dda69b12b2aa8dcfe3b3cff0043663c26b2046e2ffa4a4bb986f5d1da0ca.jsonl",
+      "sample_input_sha256": {
+        "ms-0050": "83e3ae7a9b12215ba78196a0f32cf6e4d1c8073d83d0efe5868b187f9ae03014",
+        "ms-0058": "773db90c14ae22af4e9f42bf16e29740f9460f9dce0984163e6c8f4ae65eccfe",
+        "ms-0061": "5a48c8fe61d5789c91b60939c637c24cca5be69b65fca1e9f248170927022da3"
+      },
+      "review_prompt_sha256": "8538a516164394d885245e2d79652432ea3c71d7c7a49bba269f09740c2d1e90"
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "a183c59d-b9db-4905-9357-e5a868e5cec8",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "3413",
+      "cost_usd": 0.15372875,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0050",
+        "ms-0058"
+      ],
+      "started_at": "2026-09-22T03:41:00+00:00",
+      "finished_at": "2026-09-22T03:41:45+00:00",
+      "prompt_chars": 12308,
+      "prompt_sha256": "f9488e4c87efabddae0ff6053b8003e93e424104b196f090d542b3a3a9c58fee",
+      "verdicts": [
+        {
+          "sample_id": "ms-0050",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "ms-0058",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_f9488e4c87efabddae0ff6053b8003e93e424104b196f090d542b3a3a9c58fee.jsonl",
+      "sample_input_sha256": {
+        "ms-0050": "b9141f1a0c37c26bfa7009128828dc5cd85380a4fcb0d15cd72aaf43ea26c559",
+        "ms-0058": "077a2059d77f0ac6763c902f398e9fa30397615fb7f965c4c5a47f8408c92edd"
+      },
+      "review_prompt_sha256": "8538a516164394d885245e2d79652432ea3c71d7c7a49bba269f09740c2d1e90"
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "4934312a-b177-45e7-8f9e-838e9626d433",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "1284",
+      "cost_usd": 0.08466,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0049"
+      ],
+      "started_at": "2026-09-22T04:05:34+00:00",
+      "finished_at": "2026-09-22T04:05:49+00:00",
+      "prompt_chars": 9515,
+      "prompt_sha256": "0f596fff1852e55919c9d3c19ba39aa81b728d1c4ff3e558961b1cf2f43263be",
+      "verdicts": [
+        {
+          "sample_id": "ms-0049",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": "query 中「視血壓下降情形」与 key_text 用词重合，可改为「可增加到的最大劑量為何」以降低字面复用，但不影响判定。"
+        }
+      ],
+      "input_path": "chunk_inputs/input_0f596fff1852e55919c9d3c19ba39aa81b728d1c4ff3e558961b1cf2f43263be.jsonl",
+      "sample_input_sha256": {
+        "ms-0049": "d5c552e5e85d6517c987710b2fb49cc3041fed4da8f598164e80cbea930b57f1"
+      },
+      "review_prompt_sha256": "8538a516164394d885245e2d79652432ea3c71d7c7a49bba269f09740c2d1e90"
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "f9030d17-312f-40fb-94bb-0c5791f1fe8a",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "2088",
+      "cost_usd": 0.10527875,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0051"
+      ],
+      "started_at": "2026-09-22T04:05:49+00:00",
+      "finished_at": "2026-09-22T04:06:20+00:00",
+      "prompt_chars": 9600,
+      "prompt_sha256": "a10a214dcd5f5dec9f68f43fbcae7a7b73a0088888b89870f58b3c3e623966c9",
+      "verdicts": [
+        {
+          "sample_id": "ms-0051",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": "key_text 可去掉句首連接詞「故」（縮為「不建議合併使用 ACEIs、 ARBs 或今 aliskiren 成分藥品來雙重阻斷 RAAS」仍頁內唯一且保留否定與對象），屬可選微調；另原文此處為 OCR 誤字「或今」（應為「含」），key_text 逐字沿用原文正確，無需修改。"
+        }
+      ],
+      "input_path": "chunk_inputs/input_a10a214dcd5f5dec9f68f43fbcae7a7b73a0088888b89870f58b3c3e623966c9.jsonl",
+      "sample_input_sha256": {
+        "ms-0051": "238c8a8c16eb240c481e46b24804bbead93cd190aa9cf845f7bd689ae4167713"
+      },
+      "review_prompt_sha256": "8538a516164394d885245e2d79652432ea3c71d7c7a49bba269f09740c2d1e90"
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "db871241-3c49-4c42-b08b-3af35826386a",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "1457",
+      "cost_usd": 0.06656625,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0052"
+      ],
+      "started_at": "2026-09-22T04:06:20+00:00",
+      "finished_at": "2026-09-22T04:06:41+00:00",
+      "prompt_chars": 5655,
+      "prompt_sha256": "5a3009ef6f156a0751b5ca1498d4fa6fc3c89868f5b5ca6083812b67e25ae2bb",
+      "verdicts": [
+        {
+          "sample_id": "ms-0052",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_5a3009ef6f156a0751b5ca1498d4fa6fc3c89868f5b5ca6083812b67e25ae2bb.jsonl",
+      "sample_input_sha256": {
+        "ms-0052": "5b7a30fad66114993fb4d27a4ed28b58c7d1ee8ad00b358fd21d628214a5e53a"
+      },
+      "review_prompt_sha256": "8538a516164394d885245e2d79652432ea3c71d7c7a49bba269f09740c2d1e90"
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "b06b732e-c482-432a-8a30-4d11198a01fb",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "1108",
+      "cost_usd": 0.0582975,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0053"
+      ],
+      "started_at": "2026-09-22T04:06:41+00:00",
+      "finished_at": "2026-09-22T04:06:56+00:00",
+      "prompt_chars": 5725,
+      "prompt_sha256": "3a6ac304b7076f90c4da774040663eaff297f71f1d3263a033922b3f26083ccf",
+      "verdicts": [
+        {
+          "sample_id": "ms-0053",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_3a6ac304b7076f90c4da774040663eaff297f71f1d3263a033922b3f26083ccf.jsonl",
+      "sample_input_sha256": {
+        "ms-0053": "b2b900cb10ad7654ce883f4b04eb66b7e48a73537f70bcc1ae9f68737a5aaf37"
+      },
+      "review_prompt_sha256": "8538a516164394d885245e2d79652432ea3c71d7c7a49bba269f09740c2d1e90"
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "512cdf5b-a608-4ffd-87ed-3102747ca569",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "2250",
+      "cost_usd": 0.08111625,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0054"
+      ],
+      "started_at": "2026-09-22T04:06:56+00:00",
+      "finished_at": "2026-09-22T04:07:20+00:00",
+      "prompt_chars": 4859,
+      "prompt_sha256": "be3ccd4daf5a692573c884f60bf9d55181703b876f633b7076f967a025a8f0f7",
+      "verdicts": [
+        {
+          "sample_id": "ms-0054",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_be3ccd4daf5a692573c884f60bf9d55181703b876f633b7076f967a025a8f0f7.jsonl",
+      "sample_input_sha256": {
+        "ms-0054": "e849d7f2145655fb3bb57cc9ff6b708636e574c2efc4fceae234e236d643bb53"
+      },
+      "review_prompt_sha256": "8538a516164394d885245e2d79652432ea3c71d7c7a49bba269f09740c2d1e90"
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "c13674f1-eb98-4669-b123-ac76cb94f788",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "1534",
+      "cost_usd": 0.07340375,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0055"
+      ],
+      "started_at": "2026-09-22T04:07:20+00:00",
+      "finished_at": "2026-09-22T04:07:41+00:00",
+      "prompt_chars": 6631,
+      "prompt_sha256": "cf37fdfb97f40a234eb822704f36788c37ed0991f59f2daf42a46bf0d49e3293",
+      "verdicts": [
+        {
+          "sample_id": "ms-0055",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_cf37fdfb97f40a234eb822704f36788c37ed0991f59f2daf42a46bf0d49e3293.jsonl",
+      "sample_input_sha256": {
+        "ms-0055": "3927ed749a20be33164b0dac7448c80ce01448570b121aac5d36394aae9c81ae"
+      },
+      "review_prompt_sha256": "8538a516164394d885245e2d79652432ea3c71d7c7a49bba269f09740c2d1e90"
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "d2aee2c7-89de-44ca-99ce-5d54fb43fcd5",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "1851",
+      "cost_usd": 0.078985,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0056"
+      ],
+      "started_at": "2026-09-22T04:07:41+00:00",
+      "finished_at": "2026-09-22T04:08:09+00:00",
+      "prompt_chars": 6255,
+      "prompt_sha256": "c55c5403cd5a3d6083b8e7bcb0071ef5c71eeb705b7c4d7a64cd16aaaeed92a0",
+      "verdicts": [
+        {
+          "sample_id": "ms-0056",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": "query 与 key_text 用词重合度偏高（「血清尿酸濃度…回復到治療前的數值」几乎逐字沿用），虽仍是 MA 用户会问的自然问题且答案数值被隐去，仍可考虑改写为「拔痛酸錠（Allopurinol）停藥後多久尿酸會回升至治療前水準？」以降低表面重叠。"
+        }
+      ],
+      "input_path": "chunk_inputs/input_c55c5403cd5a3d6083b8e7bcb0071ef5c71eeb705b7c4d7a64cd16aaaeed92a0.jsonl",
+      "sample_input_sha256": {
+        "ms-0056": "a1c31b1f34b59ae12f071c4acd0a15cbbe5c1e8f5f0fbf5bab0df736d8918f7f"
+      },
+      "review_prompt_sha256": "8538a516164394d885245e2d79652432ea3c71d7c7a49bba269f09740c2d1e90"
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "45a44780-b03d-452b-a107-ca59edf16b0f",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "3089",
+      "cost_usd": 0.11199124999999999,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0057"
+      ],
+      "started_at": "2026-09-22T04:08:09+00:00",
+      "finished_at": "2026-09-22T04:08:50+00:00",
+      "prompt_chars": 6580,
+      "prompt_sha256": "b943918b73f1520a0a7b4206342ead42f217bc6c3d0a4bc05d86bb94c09f2898",
+      "verdicts": [
+        {
+          "sample_id": "ms-0057",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_b943918b73f1520a0a7b4206342ead42f217bc6c3d0a4bc05d86bb94c09f2898.jsonl",
+      "sample_input_sha256": {
+        "ms-0057": "d513ea7275a92d2dabade84c2825315128d49a0ceb3c213b1aac368374652a09"
+      },
+      "review_prompt_sha256": "8538a516164394d885245e2d79652432ea3c71d7c7a49bba269f09740c2d1e90"
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "60631872-93f1-4fbe-91f9-55420bdba42d",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "1237",
+      "cost_usd": 0.05895375,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0059"
+      ],
+      "started_at": "2026-09-22T04:08:50+00:00",
+      "finished_at": "2026-09-22T04:09:07+00:00",
+      "prompt_chars": 5451,
+      "prompt_sha256": "d99cc83e6520bd171693b31ec969b4a699e39e4f8e2bc89437fc5255fbd1e101",
+      "verdicts": [
+        {
+          "sample_id": "ms-0059",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_d99cc83e6520bd171693b31ec969b4a699e39e4f8e2bc89437fc5255fbd1e101.jsonl",
+      "sample_input_sha256": {
+        "ms-0059": "b1fec4a09381c8472f2504aa901322218bd78bdd3cb0192881b55bd736fb0176"
+      },
+      "review_prompt_sha256": "8538a516164394d885245e2d79652432ea3c71d7c7a49bba269f09740c2d1e90"
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "c10f3b03-9a04-4067-912c-359f62c429d7",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "1136",
+      "cost_usd": 0.0562975,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0060"
+      ],
+      "started_at": "2026-09-22T04:09:07+00:00",
+      "finished_at": "2026-09-22T04:09:23+00:00",
+      "prompt_chars": 5431,
+      "prompt_sha256": "9a11cc96c23b6ea0942dec6b5d3216d11d2fd35ffdb7eee77b9b75a67274a214",
+      "verdicts": [
+        {
+          "sample_id": "ms-0060",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_9a11cc96c23b6ea0942dec6b5d3216d11d2fd35ffdb7eee77b9b75a67274a214.jsonl",
+      "sample_input_sha256": {
+        "ms-0060": "93edb5365956043d8cf90d5a335e8f305d31d60c2a00945fdc63d050d29c7b6e"
+      },
+      "review_prompt_sha256": "8538a516164394d885245e2d79652432ea3c71d7c7a49bba269f09740c2d1e90"
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "dc926496-1029-4acd-9fc7-4c4b6877fc60",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "3365",
+      "cost_usd": 0.11714749999999999,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0061"
+      ],
+      "started_at": "2026-09-22T04:09:23+00:00",
+      "finished_at": "2026-09-22T04:10:02+00:00",
+      "prompt_chars": 6385,
+      "prompt_sha256": "e408c75b466a2fd99f6d641973bf30bd5d03597049ece21caabfcc798f7644bf",
+      "verdicts": [
+        {
+          "sample_id": "ms-0061",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_e408c75b466a2fd99f6d641973bf30bd5d03597049ece21caabfcc798f7644bf.jsonl",
+      "sample_input_sha256": {
+        "ms-0061": "5a48c8fe61d5789c91b60939c637c24cca5be69b65fca1e9f248170927022da3"
+      },
+      "review_prompt_sha256": "8538a516164394d885245e2d79652432ea3c71d7c7a49bba269f09740c2d1e90"
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "0680534c-a9a1-4f5d-9e4f-7c97c86480ab",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "855",
+      "cost_usd": 0.05094125,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0062"
+      ],
+      "started_at": "2026-09-22T04:10:02+00:00",
+      "finished_at": "2026-09-22T04:10:16+00:00",
+      "prompt_chars": 5606,
+      "prompt_sha256": "97c1f580768c51759929af15afe1344668067637286fc6897895247ebfe6afac",
+      "verdicts": [
+        {
+          "sample_id": "ms-0062",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_97c1f580768c51759929af15afe1344668067637286fc6897895247ebfe6afac.jsonl",
+      "sample_input_sha256": {
+        "ms-0062": "95af46796265adda3176dbe20f22660d6a5fda97f9a6cb9a3ec2f5bcd09fe61b"
+      },
+      "review_prompt_sha256": "8538a516164394d885245e2d79652432ea3c71d7c7a49bba269f09740c2d1e90"
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "4de2d261-3c0b-4326-8e9b-c7b93a254071",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "604",
+      "cost_usd": 0.051484999999999996,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "ms-0063"
+      ],
+      "started_at": "2026-09-22T04:10:16+00:00",
+      "finished_at": "2026-09-22T04:10:26+00:00",
+      "prompt_chars": 6826,
+      "prompt_sha256": "08544c74215760a807aa1fbbcb9e218e765277155a64e8e5335f07c864097ce0",
+      "verdicts": [
+        {
+          "sample_id": "ms-0063",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_08544c74215760a807aa1fbbcb9e218e765277155a64e8e5335f07c864097ce0.jsonl",
+      "sample_input_sha256": {
+        "ms-0063": "cf99dd45ba8b8512d2d857371cbbc9a94e88df02611b009a20971bf4574b6f9d"
+      },
+      "review_prompt_sha256": "8538a516164394d885245e2d79652432ea3c71d7c7a49bba269f09740c2d1e90"
+    }
+  ],
+  "provenance_version": 2,
+  "latest": {
+    "ms-0001": {
+      "chunk_index": 0,
+      "sample_input_sha256": "54f0ea3dacbad24704c25ab9f9b6e983220b2ecf6a341225a97e1f9acf7ddf74",
+      "prompt_sha256": "e4f184f4d86347ed89c440f869d4658540116942fca11a9bbfeeabd3492acf5c",
+      "verdict_sha256": "f1a5ec87a4e6e84ae4c86af047869e38344ef91f6948ab2c078b6db6145f3fba"
+    },
+    "ms-0002": {
+      "chunk_index": 0,
+      "sample_input_sha256": "4f5cd481d11a121279c33887a39c20bf469067b925981230dcbbf65ecf4a9f9a",
+      "prompt_sha256": "e4f184f4d86347ed89c440f869d4658540116942fca11a9bbfeeabd3492acf5c",
+      "verdict_sha256": "68cefb75cd0204ad602cc4a29c181f0a331d5c1d5d67a470a753d9c477d786b2"
+    },
+    "ms-0003": {
+      "chunk_index": 0,
+      "sample_input_sha256": "cac02a06320fb4117212ff42c60173e3e72f07b34ca6e7b59f2ba7293c831faf",
+      "prompt_sha256": "e4f184f4d86347ed89c440f869d4658540116942fca11a9bbfeeabd3492acf5c",
+      "verdict_sha256": "dbf05076086cc379cc877dfccd3b056981d7ecb78d7cc4b671dbf3382bd7da9e"
+    },
+    "ms-0004": {
+      "chunk_index": 0,
+      "sample_input_sha256": "ab8a9a8be2afd8c7c5f403212559f9a5dc65a952ea26c19784c4f57da8969900",
+      "prompt_sha256": "e4f184f4d86347ed89c440f869d4658540116942fca11a9bbfeeabd3492acf5c",
+      "verdict_sha256": "04b921811ed0477e7b46dd587cd18f5e88742809d7f346c6f23a8fb6fb981eb3"
+    },
+    "ms-0005": {
+      "chunk_index": 0,
+      "sample_input_sha256": "06d6ad0dd84a3c6f625be1894137e19cb4e25e422233205a5246ee590a8cf759",
+      "prompt_sha256": "e4f184f4d86347ed89c440f869d4658540116942fca11a9bbfeeabd3492acf5c",
+      "verdict_sha256": "877bcaeaf5aa0e21478a72a6e2f0700d948a057fd389636d383a3e3288a3e495"
+    },
+    "ms-0006": {
+      "chunk_index": 1,
+      "sample_input_sha256": "04030fd3090b00783146f0be820aff6ba7f67b3131bec436de036e0d1debd6fe",
+      "prompt_sha256": "55b69d662187b33da27ae80b7e855214857df6038351d056878d8d72ec06a289",
+      "verdict_sha256": "bd0f4e7d63c20c5197cefdc8928d74d5b8e0df78a01dad0e2d8cdabd92104669"
+    },
+    "ms-0007": {
+      "chunk_index": 1,
+      "sample_input_sha256": "dfe9444e53cd0f3faf30ec4c8631e18d6a24d1bb008121713c28af1fed6ba240",
+      "prompt_sha256": "55b69d662187b33da27ae80b7e855214857df6038351d056878d8d72ec06a289",
+      "verdict_sha256": "3cf9f134d50c76c0540627a17b8ec714dac207a04c316823a38c07e24093e35a"
+    },
+    "ms-0008": {
+      "chunk_index": 1,
+      "sample_input_sha256": "cf010d72f9e0e7ca713503bd2ac2abc0075e7d45831b16d0468ec3bcedf63ba8",
+      "prompt_sha256": "55b69d662187b33da27ae80b7e855214857df6038351d056878d8d72ec06a289",
+      "verdict_sha256": "944ed55debb62c16aba2834c7b50eae46c85e6b9482c37503add4922fd5822ce"
+    },
+    "ms-0009": {
+      "chunk_index": 1,
+      "sample_input_sha256": "44cf6329929776fd8aefdd3f1123e99949a9c5c1ce054bb73cb713cd1b31795c",
+      "prompt_sha256": "55b69d662187b33da27ae80b7e855214857df6038351d056878d8d72ec06a289",
+      "verdict_sha256": "0109346f1a490fb1a8e4354c504a480db37ea460310b38f61189e30f3fc8bdc3"
+    },
+    "ms-0010": {
+      "chunk_index": 1,
+      "sample_input_sha256": "270315ddfaf5fe19b8a3caff6cd46caea302cb0adc424941644e3fd7a1c4cda2",
+      "prompt_sha256": "55b69d662187b33da27ae80b7e855214857df6038351d056878d8d72ec06a289",
+      "verdict_sha256": "c5f17a32a41672cb9d9d8e53c8626aeacda16fe3e1d96e6092138bcfa0aa1327"
+    },
+    "ms-0011": {
+      "chunk_index": 2,
+      "sample_input_sha256": "c5067f03a9291ce7d0b29cad3091f55062962fa2dc673dd87b55afc2350ad0e5",
+      "prompt_sha256": "e1cb849ac7e2f8118d65cee3b05b247bfaa8e32cc936302504e5e87aaf139fba",
+      "verdict_sha256": "d2019ac96291584788d8bc605e3a6774490cfdb4dc82250b4164042fe1b604b3"
+    },
+    "ms-0012": {
+      "chunk_index": 2,
+      "sample_input_sha256": "b4ff7fbefe2633a87d9a3b0fcac7bd5a32a6d828f08272d0f9edb9a352a4c858",
+      "prompt_sha256": "e1cb849ac7e2f8118d65cee3b05b247bfaa8e32cc936302504e5e87aaf139fba",
+      "verdict_sha256": "f30c390517369e13482134cd8dd0016b671ef431aabc1351d357ad3a0875634f"
+    },
+    "ms-0013": {
+      "chunk_index": 2,
+      "sample_input_sha256": "95611808d1dd8b20afc9f315eb654685a8ca9d994b6c4c12412d15ebc2b7dd66",
+      "prompt_sha256": "e1cb849ac7e2f8118d65cee3b05b247bfaa8e32cc936302504e5e87aaf139fba",
+      "verdict_sha256": "daa4cf38694c27360e1a1f96773310740dd93764f696f7ae3fe97ec71fbcb627"
+    },
+    "ms-0014": {
+      "chunk_index": 2,
+      "sample_input_sha256": "6a1d9a2b774cb9200b1684cfd7bb8f533a0df1acfdd2f79cd6a86002845ed38e",
+      "prompt_sha256": "e1cb849ac7e2f8118d65cee3b05b247bfaa8e32cc936302504e5e87aaf139fba",
+      "verdict_sha256": "6ac2602433dd651cb2098f411f2565a010bf313a8c4e4acbbe03c5289363fda8"
+    },
+    "ms-0015": {
+      "chunk_index": 2,
+      "sample_input_sha256": "e35a5a7cc37c63ffb3aa49f454e6b56ff3394517a18e846a1ae7475f08cc5d1a",
+      "prompt_sha256": "e1cb849ac7e2f8118d65cee3b05b247bfaa8e32cc936302504e5e87aaf139fba",
+      "verdict_sha256": "a2c21064887c4279c4429fbbe63dfeae0467ab9d9ce7ac49bf56027c802b4e1d"
+    },
+    "ms-0016": {
+      "chunk_index": 3,
+      "sample_input_sha256": "60911d99e2f5f77effeae8e787039aee9e6c8908c4a8f701f302cb51cba384d7",
+      "prompt_sha256": "50dc33750c8821221593d3e1a638ff6986ccb83ae2cdf00e042d932c1a594428",
+      "verdict_sha256": "d332da17e49ba8ece3532dd1e6fec1f99c81a1c40991cd45f963d076b0d6309c"
+    },
+    "ms-0017": {
+      "chunk_index": 3,
+      "sample_input_sha256": "3e612c94c3913d813d6acdb9b3b909d177904c452cf7ea4f6d9246ffd4b5db07",
+      "prompt_sha256": "50dc33750c8821221593d3e1a638ff6986ccb83ae2cdf00e042d932c1a594428",
+      "verdict_sha256": "2cd18e692cec9cfef49a6d3fefca8508489109614b5df2c510e59774f003d882"
+    },
+    "ms-0018": {
+      "chunk_index": 3,
+      "sample_input_sha256": "bfc23d80edd573999479bf2004870ceb714898abd910d92c0cd5d3338d8f0f16",
+      "prompt_sha256": "50dc33750c8821221593d3e1a638ff6986ccb83ae2cdf00e042d932c1a594428",
+      "verdict_sha256": "ed3e45221eb77cadc97ec5c4614287b4886436b3a40bbe9966d560295d3eac84"
+    },
+    "ms-0019": {
+      "chunk_index": 3,
+      "sample_input_sha256": "1b0fa0d1da078ab9466eb1f7d725b64562610393a56c8d1af226c5305fa318ed",
+      "prompt_sha256": "50dc33750c8821221593d3e1a638ff6986ccb83ae2cdf00e042d932c1a594428",
+      "verdict_sha256": "7a4859d3f7ef000d9cdc9e158e38825aea765845764a75660ccffec47ff70551"
+    },
+    "ms-0020": {
+      "chunk_index": 3,
+      "sample_input_sha256": "843f374e09c3a52b15eafb00fb04345881f55f3a1c2129b2fa08966736f02a12",
+      "prompt_sha256": "50dc33750c8821221593d3e1a638ff6986ccb83ae2cdf00e042d932c1a594428",
+      "verdict_sha256": "6d2bab94ceac26d913ebcf668f42e5e13a4a24cbd0220c4346637930effc401d"
+    },
+    "ms-0021": {
+      "chunk_index": 4,
+      "sample_input_sha256": "4bd9220474f68b139a299e0f2714063b40ce6e46cf65cd7cc7253c59bdc40134",
+      "prompt_sha256": "3932e0a433cf106a5cbac1ac85e1a4eed4b89a8f7b50bb16c7c24fbf1073dba5",
+      "verdict_sha256": "d157ca277c59dfec3d52b08c5a505ab69bd297a34afeec110e3ad3667dfeb4f1"
+    },
+    "ms-0022": {
+      "chunk_index": 4,
+      "sample_input_sha256": "08e8f08fb4542cf33bc2240bf630681db5d085493b09a0456d4fdd229afb26f1",
+      "prompt_sha256": "3932e0a433cf106a5cbac1ac85e1a4eed4b89a8f7b50bb16c7c24fbf1073dba5",
+      "verdict_sha256": "886a07cab9f8b55958bb60f8b0bc75c5521ee609970603186dbe2e2b2c390f45"
+    },
+    "ms-0023": {
+      "chunk_index": 4,
+      "sample_input_sha256": "002d34b83f6fd2d21914cdd716a11d875694e70b9ce7b578ed6185d88d8eac71",
+      "prompt_sha256": "3932e0a433cf106a5cbac1ac85e1a4eed4b89a8f7b50bb16c7c24fbf1073dba5",
+      "verdict_sha256": "d1d7d35b7ef78d4901581af864ece8a56b27aa41bfdfd9aeb9bf145a2d8bf6d8"
+    },
+    "ms-0024": {
+      "chunk_index": 4,
+      "sample_input_sha256": "b31246587a5a3ad6c13005313c414501dd4ef29b28f041bb90e4d3d4b04923af",
+      "prompt_sha256": "3932e0a433cf106a5cbac1ac85e1a4eed4b89a8f7b50bb16c7c24fbf1073dba5",
+      "verdict_sha256": "2d015370942afb7bdfb4c034f6ee1a9cfb5a46715afb510442cf832a6aabafb0"
+    },
+    "ms-0025": {
+      "chunk_index": 4,
+      "sample_input_sha256": "1a53f71ffba0b1f496bc07f7cce0c15f2a779193955d174e1e17777bdd844230",
+      "prompt_sha256": "3932e0a433cf106a5cbac1ac85e1a4eed4b89a8f7b50bb16c7c24fbf1073dba5",
+      "verdict_sha256": "c2a94125f9a06ca6a4c6f5195cd5a6da999350ad724a21bdd614bc1b1ceec2dd"
+    },
+    "ms-0026": {
+      "chunk_index": 5,
+      "sample_input_sha256": "a10c4c95f7c43b15a3da820ffbf7648cf5708ae1bd1ca47e941aa8e4f0bbfb57",
+      "prompt_sha256": "ce983136af56ca7b9c2c269d53b662087ebcae5fa16cbe57e88a370dd66008ee",
+      "verdict_sha256": "117a94c2b2e77471ccc2a64a98c6681d23ea9a8ae3c4e8bd11898a536360f46a"
+    },
+    "ms-0030": {
+      "chunk_index": 5,
+      "sample_input_sha256": "49967fb675bfb9c8cac186c5e51bb02345a1caaa38fade1079e8f12ac3299c9e",
+      "prompt_sha256": "ce983136af56ca7b9c2c269d53b662087ebcae5fa16cbe57e88a370dd66008ee",
+      "verdict_sha256": "f1a5f7430a320946668a6915fff63fd9bbbcc29e38c04781b3630dfb4afd4882"
+    },
+    "ms-0031": {
+      "chunk_index": 5,
+      "sample_input_sha256": "c6715e0aa8ebb400acb17889ca2535a101e7210dd2026ec2127ed50160ef28eb",
+      "prompt_sha256": "ce983136af56ca7b9c2c269d53b662087ebcae5fa16cbe57e88a370dd66008ee",
+      "verdict_sha256": "09fc583464b3e013ac6ab50685a9874f6caa9feb1136fc5ef17a8ca78c9c71ea"
+    },
+    "ms-0032": {
+      "chunk_index": 5,
+      "sample_input_sha256": "d1959d72965a859fdd296720bf5e8ce0219fde6e161612f93c9792b0f3640527",
+      "prompt_sha256": "ce983136af56ca7b9c2c269d53b662087ebcae5fa16cbe57e88a370dd66008ee",
+      "verdict_sha256": "c6438bf0c72627fdba4bcea6778a35adc75945ce36434f2083397c46348f466a"
+    },
+    "ms-0033": {
+      "chunk_index": 5,
+      "sample_input_sha256": "4c41aa9cc199025070eb7b7912d80ab06eb60d4b0d9efeab3e200da5a2cb2641",
+      "prompt_sha256": "ce983136af56ca7b9c2c269d53b662087ebcae5fa16cbe57e88a370dd66008ee",
+      "verdict_sha256": "7dada293d67eb2e9aeefad93c8e2a8485543f0b679c633e53020640be072b090"
+    },
+    "ms-0034": {
+      "chunk_index": 6,
+      "sample_input_sha256": "8ee7a5158c5ebcd53fd231275cf366e9ee8ac99705811afd3cd29bf84d32ddc4",
+      "prompt_sha256": "2131fe19243f98be27d99a056652fea7a1341a47dba8b5986766f8d82898db5c",
+      "verdict_sha256": "5cce9b61784a74c39b27654724abd3a5d8959fb3204adbc69d9a5c24158575f0"
+    },
+    "ms-0035": {
+      "chunk_index": 6,
+      "sample_input_sha256": "edcb887663f3c195a4de1a5459c0c21215f4b4f0c078e9dabd8621f15c919083",
+      "prompt_sha256": "2131fe19243f98be27d99a056652fea7a1341a47dba8b5986766f8d82898db5c",
+      "verdict_sha256": "5c0dbee8108d4292d726c79f4c2ae619935385c76605e84b49eb7134706c9f7b"
+    },
+    "ms-0036": {
+      "chunk_index": 6,
+      "sample_input_sha256": "ed30ee2e9111d8994d581337051826628beec52f251fe3fbb1456e11b4029285",
+      "prompt_sha256": "2131fe19243f98be27d99a056652fea7a1341a47dba8b5986766f8d82898db5c",
+      "verdict_sha256": "9d88f215e5f554673081fecf900cbfbd57145c729cd92271f5c368dc591ae325"
+    },
+    "ms-0037": {
+      "chunk_index": 6,
+      "sample_input_sha256": "827d82cbb029f299142c7ddec8346ec1e2f9ed897df233ffe533fbcb9ab28064",
+      "prompt_sha256": "2131fe19243f98be27d99a056652fea7a1341a47dba8b5986766f8d82898db5c",
+      "verdict_sha256": "52294b4226acdc563bba24fb3de5598f7a0ddfcc82dbaa6ce45cbfca8d084e09"
+    },
+    "ms-0038": {
+      "chunk_index": 6,
+      "sample_input_sha256": "8be60b4a7cf5041baf527dab682172e98e84a5c005c55aa0206b49ea1fc84ae6",
+      "prompt_sha256": "2131fe19243f98be27d99a056652fea7a1341a47dba8b5986766f8d82898db5c",
+      "verdict_sha256": "95534758e31cc2288096fe4e43b7ef5e8f556f2d1cf6d0bdeb4434a28dde29a1"
+    },
+    "ms-0039": {
+      "chunk_index": 7,
+      "sample_input_sha256": "9c3ab06b9f36a1b8d1bcb3df46a37f50aa5cadecc311ce2a4abd2782b863bd8a",
+      "prompt_sha256": "5f59533c8ec71b3c4f421dcebecc0dc83a5fd593b94acb94cdbe453bc4981547",
+      "verdict_sha256": "61b9580033012873318458d6acc58dff13e1b047e7468073153276ccc34540c2"
+    },
+    "ms-0040": {
+      "chunk_index": 7,
+      "sample_input_sha256": "b50452d66d242249d522afd95cfd27b8329c8689f55e398a3ad57956571639ba",
+      "prompt_sha256": "5f59533c8ec71b3c4f421dcebecc0dc83a5fd593b94acb94cdbe453bc4981547",
+      "verdict_sha256": "0b4469f8bb21f73f2f662d2651476379985e4492f2b2c4ab2d4d70c4b97fed65"
+    },
+    "ms-0041": {
+      "chunk_index": 7,
+      "sample_input_sha256": "9ef95120e94d50456229b8bbe1a7a9ab7c510776366e346e79de3921a0b3810b",
+      "prompt_sha256": "5f59533c8ec71b3c4f421dcebecc0dc83a5fd593b94acb94cdbe453bc4981547",
+      "verdict_sha256": "a6c94a8e35b76ed75afe8f642fafd6cd2d54eb08b5e14859ff85aed64829bc80"
+    },
+    "ms-0042": {
+      "chunk_index": 7,
+      "sample_input_sha256": "ddaf05da83109dc7461b08e5e771fcecc7cb2a76d49edb7e355357509e0ad033",
+      "prompt_sha256": "5f59533c8ec71b3c4f421dcebecc0dc83a5fd593b94acb94cdbe453bc4981547",
+      "verdict_sha256": "2960f91e1b3cb51e0fe9b6c9cb20813ce87033118a4ef23d79d079f080013d7e"
+    },
+    "ms-0043": {
+      "chunk_index": 7,
+      "sample_input_sha256": "1f5033cc6162d876a46600abc14bd1072ee488218e975f8103f8da7031485d6b",
+      "prompt_sha256": "5f59533c8ec71b3c4f421dcebecc0dc83a5fd593b94acb94cdbe453bc4981547",
+      "verdict_sha256": "93181e946f28f39fba624039a3c1f7b268e0ddfd95cff00ae1f7631de183b251"
+    },
+    "ms-0044": {
+      "chunk_index": 8,
+      "sample_input_sha256": "7cda85b57e65658b07ff64e439b049ab997e3f7294a0a12659b214ed611a31a2",
+      "prompt_sha256": "715df605613e08d393c2790cee4859ca10703fc2b0ab2fcc32f6a600c78d314b",
+      "verdict_sha256": "957666ad4eec9c4cf2e99345b5eb0012664eabca78bdc1c9e3dcd82fc06d9170"
+    },
+    "ms-0045": {
+      "chunk_index": 8,
+      "sample_input_sha256": "65e0fa40f7555d3115156edc19e73f6457d4985fd01293dc9e81de5dcda88f5d",
+      "prompt_sha256": "715df605613e08d393c2790cee4859ca10703fc2b0ab2fcc32f6a600c78d314b",
+      "verdict_sha256": "1aa213400c3f3b8509d8e8e910df5c331542d3d1c248d2dcc755e729259cb433"
+    },
+    "ms-0046": {
+      "chunk_index": 8,
+      "sample_input_sha256": "a33b610f3aabb11735af92987abc7e1360b678ec54467a9c5b690ecfe90bb4cd",
+      "prompt_sha256": "715df605613e08d393c2790cee4859ca10703fc2b0ab2fcc32f6a600c78d314b",
+      "verdict_sha256": "cc9f35acb8f0ef6ea9e771bb928c84ae5f09c0fa41ef5af0fb9b49b952d15bf6"
+    },
+    "ms-0047": {
+      "chunk_index": 8,
+      "sample_input_sha256": "b0a2edfe68a57e3ab770e84b1ce5b6a75d84b7d9468081ae146e9fb2fcc27615",
+      "prompt_sha256": "715df605613e08d393c2790cee4859ca10703fc2b0ab2fcc32f6a600c78d314b",
+      "verdict_sha256": "0af35f136a518fc554d4e72682a959496927667c5824755043ab4877173f5acd"
+    },
+    "ms-0048": {
+      "chunk_index": 8,
+      "sample_input_sha256": "690d2196c3b1a89e637002909f1e2e494944740bc50772b1b8896101eab12fbf",
+      "prompt_sha256": "715df605613e08d393c2790cee4859ca10703fc2b0ab2fcc32f6a600c78d314b",
+      "verdict_sha256": "a58444f7f0c978bd03191dbce1126d499060c640b08b2a2e2f78f3821b79314d"
+    },
+    "ms-0064": {
+      "chunk_index": 12,
+      "sample_input_sha256": "7940ea5ce734f57153bb24c70311df59109a634c07c5621ec98accb6fccb0146",
+      "prompt_sha256": "8166a68c2e8567e09758d9a60f6c35d8ff8793bdffda8f36bda592939babd358",
+      "verdict_sha256": "09f00c3cff29bfde7d78f16fe177049a9b24f01da47fde7e21564ef766e268e2"
+    },
+    "ms-0065": {
+      "chunk_index": 12,
+      "sample_input_sha256": "f2c70dabee96010ecf14606ee5c162ad0a53eed2767d8d24002c8ad0c18f2397",
+      "prompt_sha256": "8166a68c2e8567e09758d9a60f6c35d8ff8793bdffda8f36bda592939babd358",
+      "verdict_sha256": "1862b6a7656e3a0181885e00c757812b4e5da69f9ded15f4008d8ec3209ec2c9"
+    },
+    "ms-0066": {
+      "chunk_index": 12,
+      "sample_input_sha256": "b6cf0008efbe39825e5f02fade73c44aba74960b94f33b8674a26f9f569027ac",
+      "prompt_sha256": "8166a68c2e8567e09758d9a60f6c35d8ff8793bdffda8f36bda592939babd358",
+      "verdict_sha256": "4371c7f1c9e3a2e79c9470de545db76a4fe04be183175e33ccdd9f059c307527"
+    },
+    "ms-0067": {
+      "chunk_index": 12,
+      "sample_input_sha256": "89f2062cb57ff05c61774bbbe50d4bd07dd9e53b55cbda3b89246bc432b9fe40",
+      "prompt_sha256": "8166a68c2e8567e09758d9a60f6c35d8ff8793bdffda8f36bda592939babd358",
+      "verdict_sha256": "40a1f3ee6c07ae1998662fc85a78dd28465ab6f014f26b63c6145189cab69348"
+    },
+    "ms-0068": {
+      "chunk_index": 12,
+      "sample_input_sha256": "00adfd73b1031dd0e6c3e736f9bc151bbfef9edd512d9a4af920cef3ff8a283f",
+      "prompt_sha256": "8166a68c2e8567e09758d9a60f6c35d8ff8793bdffda8f36bda592939babd358",
+      "verdict_sha256": "8c1f765d81fe32da3be788ce43091347be9c1544a25fa40498aa022a9e7ca483"
+    },
+    "ms-0069": {
+      "chunk_index": 13,
+      "sample_input_sha256": "8c8d3a9950222cb1f873e8fc23e9df54cb51a343292c3febf52aee350dd9c08c",
+      "prompt_sha256": "76193eacd0ab96db2ce409b0b200e50c8659fe7eefdb6b1f5fa67a04b1a25572",
+      "verdict_sha256": "0ec63f443096c3632d24e34a9ac3a82b83adfa6ddc1a036f6032f94364126639"
+    },
+    "ms-0070": {
+      "chunk_index": 13,
+      "sample_input_sha256": "868b44bc5dbf46b52bd8716ffa7454ba1d49666e0221002b8bb163cdc8d02cef",
+      "prompt_sha256": "76193eacd0ab96db2ce409b0b200e50c8659fe7eefdb6b1f5fa67a04b1a25572",
+      "verdict_sha256": "891ddb2cf2b0a85f51d1cab829af97cd0cccf1a05db4a2b4c9d30c49236f2b9e"
+    },
+    "ms-0071": {
+      "chunk_index": 13,
+      "sample_input_sha256": "84e50ce70e9449e8313316ee485675706929bf1ac302120f8d4d88b57b547a8c",
+      "prompt_sha256": "76193eacd0ab96db2ce409b0b200e50c8659fe7eefdb6b1f5fa67a04b1a25572",
+      "verdict_sha256": "b76a2c890ac9c020cc3d8e87bda4d3723c7264a3e09fe2fdc3b8e28987e81a11"
+    },
+    "ms-0072": {
+      "chunk_index": 13,
+      "sample_input_sha256": "d4357f2ebcbe5bff900fb7c6b53cfe01da08f89fdc8498b8d1700bf54266a21e",
+      "prompt_sha256": "76193eacd0ab96db2ce409b0b200e50c8659fe7eefdb6b1f5fa67a04b1a25572",
+      "verdict_sha256": "2d57fb23a0d988061760ec9068e97dfaf7c6895423028d3fdeef8064e7a30828"
+    },
+    "ms-0073": {
+      "chunk_index": 13,
+      "sample_input_sha256": "36a16c824e336d9c2480847780accf63e032c79d64c1b64f4c2d3778cf7819f5",
+      "prompt_sha256": "76193eacd0ab96db2ce409b0b200e50c8659fe7eefdb6b1f5fa67a04b1a25572",
+      "verdict_sha256": "53aab7422bd1fa78125bc9f194c2449dd3f4f8166ff23588a56c4c6c40ccb80c"
+    },
+    "ms-0074": {
+      "chunk_index": 14,
+      "sample_input_sha256": "bc7fba0c276717a1e7074d8becea931d7a640c7ca5a81f9712fa43a001221516",
+      "prompt_sha256": "10db77632dcb0c2214f664c58362bcb4f7c77f86067b259da245511b0710a879",
+      "verdict_sha256": "2695a4c9f67b24131b7b521ebb455577d43d20e6c3d345c826dff9a41baf5579"
+    },
+    "ms-0075": {
+      "chunk_index": 14,
+      "sample_input_sha256": "ceacb9686b2e291a8fd4675e1bf2de712e82e5ff7ea992ca86bc4eb5216d912d",
+      "prompt_sha256": "10db77632dcb0c2214f664c58362bcb4f7c77f86067b259da245511b0710a879",
+      "verdict_sha256": "f39776626ab09a65ad44f5d585af2c7ac36f16c060368ec6599e6e281a66340d"
+    },
+    "ms-0076": {
+      "chunk_index": 14,
+      "sample_input_sha256": "16bc46c47b8709b9312a5180649bf0b08d34951eab6a19da79d110bd569cff06",
+      "prompt_sha256": "10db77632dcb0c2214f664c58362bcb4f7c77f86067b259da245511b0710a879",
+      "verdict_sha256": "28e6122c54dc1d4a2bfb8ebc09302d78a97f48d11bbfebaa477c779768e5bb41"
+    },
+    "ms-0077": {
+      "chunk_index": 14,
+      "sample_input_sha256": "9e54dd7c73665273cb9f626fa8d401fd062f5a8422c83d968274b99065b1413a",
+      "prompt_sha256": "10db77632dcb0c2214f664c58362bcb4f7c77f86067b259da245511b0710a879",
+      "verdict_sha256": "466697f2d49b608c97b409ee373daf3c918a0e956fb3e3a2a440e54aa1bb86ce"
+    },
+    "ms-0078": {
+      "chunk_index": 14,
+      "sample_input_sha256": "b80daa664b9e49f139bd0ee4ca6fce5421acabd2c95160ae79914a862797a128",
+      "prompt_sha256": "10db77632dcb0c2214f664c58362bcb4f7c77f86067b259da245511b0710a879",
+      "verdict_sha256": "621b8bcfc569b88ea64423db1309e3b543236024fda6bde5b628af9add316c7a"
+    },
+    "ms-0079": {
+      "chunk_index": 15,
+      "sample_input_sha256": "18791da6bba5655098fc23c9ecb8a3f991669db3faedea5596b2408084099963",
+      "prompt_sha256": "d0cc4e494a21662ad7b1dce49758a0fe9a33556029fd540ab4f8b06bcee57421",
+      "verdict_sha256": "19c1d3c8437447ba5bf4b34d7e07760a6700edc097e7df0ca333bc1d0a6a1db8"
+    },
+    "ms-0080": {
+      "chunk_index": 15,
+      "sample_input_sha256": "a6da500f2ea61eded6c641e9819cc33d287e1f8fc056c9e8c1748811c2bebb8f",
+      "prompt_sha256": "d0cc4e494a21662ad7b1dce49758a0fe9a33556029fd540ab4f8b06bcee57421",
+      "verdict_sha256": "5eec9d84901af6bae93a42232f21d6ed8446eb91fa3185924181fa25ddcdb989"
+    },
+    "ms-0081": {
+      "chunk_index": 15,
+      "sample_input_sha256": "56929f8e6e40f3eb3c355e7f39cd2338f1070b152d442332d70cbb08b957a76a",
+      "prompt_sha256": "d0cc4e494a21662ad7b1dce49758a0fe9a33556029fd540ab4f8b06bcee57421",
+      "verdict_sha256": "db2e362ff77265c355a5932f50575c63d0d590bbe70cd08e6aa5b1b9c72aac60"
+    },
+    "ms-0082": {
+      "chunk_index": 15,
+      "sample_input_sha256": "b7dbe74b190a02f4ace627b6eeed99fdc909ae72af0cf0bd4726e4ee4fe5841d",
+      "prompt_sha256": "d0cc4e494a21662ad7b1dce49758a0fe9a33556029fd540ab4f8b06bcee57421",
+      "verdict_sha256": "c84cad0f91bbc5c7fc661754776c215ab4a0b7ce1368f4d242c0eeb912082586"
+    },
+    "ms-0083": {
+      "chunk_index": 15,
+      "sample_input_sha256": "97c00254fcbe984c8646e1374e1744e56967613fec6cd7de564b1119750687e6",
+      "prompt_sha256": "d0cc4e494a21662ad7b1dce49758a0fe9a33556029fd540ab4f8b06bcee57421",
+      "verdict_sha256": "7de0aca81aca521378b47a5f60c319aa74555fa68d1711958e64969c6ff701d2"
+    },
+    "ms-0050": {
+      "chunk_index": 17,
+      "sample_input_sha256": "b9141f1a0c37c26bfa7009128828dc5cd85380a4fcb0d15cd72aaf43ea26c559",
+      "prompt_sha256": "f9488e4c87efabddae0ff6053b8003e93e424104b196f090d542b3a3a9c58fee",
+      "verdict_sha256": "29341ea17ccc28d3e56d41c7a613cb47eed121631513438396dcd549f375f1e0"
+    },
+    "ms-0058": {
+      "chunk_index": 17,
+      "sample_input_sha256": "077a2059d77f0ac6763c902f398e9fa30397615fb7f965c4c5a47f8408c92edd",
+      "prompt_sha256": "f9488e4c87efabddae0ff6053b8003e93e424104b196f090d542b3a3a9c58fee",
+      "verdict_sha256": "5daa64ef19b7ef07bef7c809975a25bc97daf08772f930f758b98acba2288b78"
+    },
+    "ms-0049": {
+      "chunk_index": 18,
+      "sample_input_sha256": "d5c552e5e85d6517c987710b2fb49cc3041fed4da8f598164e80cbea930b57f1",
+      "prompt_sha256": "0f596fff1852e55919c9d3c19ba39aa81b728d1c4ff3e558961b1cf2f43263be",
+      "verdict_sha256": "95ae95d9b91b41a9e1bb3bfbb5e0a674b41d68bf062219e4b4425e174226ecff"
+    },
+    "ms-0051": {
+      "chunk_index": 19,
+      "sample_input_sha256": "238c8a8c16eb240c481e46b24804bbead93cd190aa9cf845f7bd689ae4167713",
+      "prompt_sha256": "a10a214dcd5f5dec9f68f43fbcae7a7b73a0088888b89870f58b3c3e623966c9",
+      "verdict_sha256": "516394e6042404ed6faf19e02937ed73e9f5977133a16df09fc351290a3684c4"
+    },
+    "ms-0052": {
+      "chunk_index": 20,
+      "sample_input_sha256": "5b7a30fad66114993fb4d27a4ed28b58c7d1ee8ad00b358fd21d628214a5e53a",
+      "prompt_sha256": "5a3009ef6f156a0751b5ca1498d4fa6fc3c89868f5b5ca6083812b67e25ae2bb",
+      "verdict_sha256": "17dafad85803c41ad36071c25f2b1c28c78ff9932875cd0bcad41bf976faff17"
+    },
+    "ms-0053": {
+      "chunk_index": 21,
+      "sample_input_sha256": "b2b900cb10ad7654ce883f4b04eb66b7e48a73537f70bcc1ae9f68737a5aaf37",
+      "prompt_sha256": "3a6ac304b7076f90c4da774040663eaff297f71f1d3263a033922b3f26083ccf",
+      "verdict_sha256": "07e515b5c35fdd955be3dd48b2a4357978d289dc59ef302fea084ec300b5ed0d"
+    },
+    "ms-0054": {
+      "chunk_index": 22,
+      "sample_input_sha256": "e849d7f2145655fb3bb57cc9ff6b708636e574c2efc4fceae234e236d643bb53",
+      "prompt_sha256": "be3ccd4daf5a692573c884f60bf9d55181703b876f633b7076f967a025a8f0f7",
+      "verdict_sha256": "66576bb181627dec2c09eb48259e0901fa36dacfd169fb904811a274db19b042"
+    },
+    "ms-0055": {
+      "chunk_index": 23,
+      "sample_input_sha256": "3927ed749a20be33164b0dac7448c80ce01448570b121aac5d36394aae9c81ae",
+      "prompt_sha256": "cf37fdfb97f40a234eb822704f36788c37ed0991f59f2daf42a46bf0d49e3293",
+      "verdict_sha256": "83f015720399c4a291b2b6462db00678dfb1756bdcc984c78dca4ba276c14e41"
+    },
+    "ms-0056": {
+      "chunk_index": 24,
+      "sample_input_sha256": "a1c31b1f34b59ae12f071c4acd0a15cbbe5c1e8f5f0fbf5bab0df736d8918f7f",
+      "prompt_sha256": "c55c5403cd5a3d6083b8e7bcb0071ef5c71eeb705b7c4d7a64cd16aaaeed92a0",
+      "verdict_sha256": "7f950771066c5bd22b00f76c3e3ed965746ba89bb53d42340217d02c5f799375"
+    },
+    "ms-0057": {
+      "chunk_index": 25,
+      "sample_input_sha256": "d513ea7275a92d2dabade84c2825315128d49a0ceb3c213b1aac368374652a09",
+      "prompt_sha256": "b943918b73f1520a0a7b4206342ead42f217bc6c3d0a4bc05d86bb94c09f2898",
+      "verdict_sha256": "a6adba60653e5ba16a3f477912e4b460d653d1b6d7a7e7a2d87c619a14b7f755"
+    },
+    "ms-0059": {
+      "chunk_index": 26,
+      "sample_input_sha256": "b1fec4a09381c8472f2504aa901322218bd78bdd3cb0192881b55bd736fb0176",
+      "prompt_sha256": "d99cc83e6520bd171693b31ec969b4a699e39e4f8e2bc89437fc5255fbd1e101",
+      "verdict_sha256": "16c7eefe9fd25d204f71ba896a1aa70dd2921ae01b1fc748d41abb8d5ed78465"
+    },
+    "ms-0060": {
+      "chunk_index": 27,
+      "sample_input_sha256": "93edb5365956043d8cf90d5a335e8f305d31d60c2a00945fdc63d050d29c7b6e",
+      "prompt_sha256": "9a11cc96c23b6ea0942dec6b5d3216d11d2fd35ffdb7eee77b9b75a67274a214",
+      "verdict_sha256": "25a9df033a64b16d36f7329da719eb69f372cf755d8204a2f73fa8aef78beb25"
+    },
+    "ms-0061": {
+      "chunk_index": 28,
+      "sample_input_sha256": "5a48c8fe61d5789c91b60939c637c24cca5be69b65fca1e9f248170927022da3",
+      "prompt_sha256": "e408c75b466a2fd99f6d641973bf30bd5d03597049ece21caabfcc798f7644bf",
+      "verdict_sha256": "5615a14e9a1f4f7874162543c1d49e8458209e2274560c50ff020536138798e3"
+    },
+    "ms-0062": {
+      "chunk_index": 29,
+      "sample_input_sha256": "95af46796265adda3176dbe20f22660d6a5fda97f9a6cb9a3ec2f5bcd09fe61b",
+      "prompt_sha256": "97c1f580768c51759929af15afe1344668067637286fc6897895247ebfe6afac",
+      "verdict_sha256": "d952fd910af6011dea5e133e633cfef41ca8846c5a23d459bef113d568e3fc71"
+    },
+    "ms-0063": {
+      "chunk_index": 30,
+      "sample_input_sha256": "cf99dd45ba8b8512d2d857371cbbc9a94e88df02611b009a20971bf4574b6f9d",
+      "prompt_sha256": "08544c74215760a807aa1fbbcb9e218e765277155a64e8e5335f07c864097ce0",
+      "verdict_sha256": "376e9ee6957409bc0ebf87eb5a86135d3ce162921e0b2eb36a6294cc13816dd8"
+    }
+  },
+  "active_review": null
+}

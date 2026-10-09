@@ -5,6 +5,7 @@ behind the monthly budget, the operation-key ledger, and the pinned production m
 from __future__ import annotations
 
 import json
+import threading
 import time
 from collections.abc import Iterator, Mapping, Sequence
 from contextlib import contextmanager
@@ -14,9 +15,9 @@ from typing import Any
 
 import psycopg
 
-from medops.api.app import ApiRuntime
 from medops.api.auth import Authenticator, JwtVerifier, PgDirectory, RemoteJwks
 from medops.api.contracts import AskRequest
+from medops.api.ports import ApiRuntime
 from medops.application.audit import TraceStore
 from medops.application.metrics import MetricsSource, PgMetricsSource
 from medops.application.payloads import PayloadReader, PayloadWriter
@@ -33,33 +34,31 @@ from medops.core.config import Settings
 from medops.core.errors import ErrorCode, InfrastructureError
 from medops.domain.identity import UserContext
 from medops.domain.state import VersionSet
+from medops.harness.answer import ANSWER_SYSTEM
+from medops.harness.assembly import build_retrieval
+from medops.harness.dependencies import HarnessDeps
 from medops.harness.executions import PgExecutionStore
-from medops.harness.nodes import ANSWER_SYSTEM, HarnessDeps
 from medops.harness.production import PRODUCTION_ANSWER_MODEL, PRODUCTION_JUDGE_MODEL, production_model_config_version
-from medops.harness.retrieval_port import ProductionRetrieval
 from medops.infrastructure.db.audit import PgTraceStore
 from medops.infrastructure.db.documents import PgDocumentAdminStore
 from medops.infrastructure.db.idempotency import PgReceiptStore
 from medops.infrastructure.db.payloads import PgPayloadStore
 from medops.infrastructure.db.policies import PgPolicyStore
 from medops.infrastructure.db.tasks import PgTaskStore
-from medops.infrastructure.llm.budget import BudgetedGateway, InMemorySpendLedger
-from medops.infrastructure.llm.gateway import OPENAI_PRICES, ModelGateway, PriceTable
+from medops.infrastructure.llm.factory import build_budgeted_gateway
+from medops.infrastructure.llm.gateway import ModelGateway
 from medops.infrastructure.llm.meter import MeteredGateway
-from medops.infrastructure.llm.openai_gateway import OpenAIModelGateway
 from medops.ingestion import acl as acl_ops
 from medops.ingestion import activate as activation
 from medops.retrieval.doc_focus import load_titles
 from medops.retrieval.hybrid import HybridConfig
+from medops.retrieval.integrity import database_identity, inspect_readiness
 from medops.retrieval.pinned import PinnedEmbedding, PinnedReranker, PinnedThread
 from medops.retrieval.production import (
     PRODUCTION_RETRIEVAL_VERSION,
     RERANK_OUTPUT,
     production_hybrid_config,
-    production_lexical_retriever,
-    production_lexical_versions,
     production_retrieval_inputs,
-    production_vector_retriever,
 )
 from medops.retrieval.query_translation import QUERY_TRANSLATION_OFF, QueryTranslator
 from medops.retrieval.versioning import compute_retrieval_version
@@ -113,18 +112,9 @@ def open_connection(dsn: str, settings: Any) -> psycopg.Connection[Any]:
 
 def retrieval_cache_from_settings(settings: Settings) -> Any:
     """The retrieval candidate cache the settings ask for, or None (`retrieval_cache = off`, the default)."""
-    mode = getattr(settings, "retrieval_cache", "off")
-    if mode == "off":
-        return None
-    from medops.retrieval.cache import CandidateCache, InMemoryCandidateCacheStore
+    from medops.retrieval.runtime import candidate_cache_from_settings
 
-    if mode == "memory":
-        return CandidateCache(InMemoryCandidateCacheStore(), ttl_seconds=settings.retrieval_cache_ttl_seconds)
-    from medops.infrastructure.cache import RedisCandidateCacheStore
-
-    return CandidateCache(
-        RedisCandidateCacheStore.from_settings(settings), ttl_seconds=settings.retrieval_cache_ttl_seconds
-    )
+    return candidate_cache_from_settings(settings)
 
 
 @dataclass
@@ -150,6 +140,8 @@ class ProductionRuntime:
     _retrieval_cache: Any = field(default=None, repr=False)  # CandidateCache when `retrieval_cache` is not off
     _pinned: Any = field(default=None, repr=False)
     _device: str = field(default="cpu", repr=False)
+    _integrity_cache: tuple[float, dict[str, Any]] | None = field(default=None, repr=False)
+    _integrity_lock: Any = field(default_factory=threading.Lock, repr=False)
 
     @classmethod
     def from_settings(
@@ -168,16 +160,12 @@ class ProductionRuntime:
         glossary_version = released.glossary_version()
         multi_query = released.multi_query()
         doc_focus = released.doc_focus()
+        source_constraint = released.source_constraint()
         query_translation = released.query_translation()
         pinned = PinnedThread(pinned_timeout_s)
         embedding = PinnedEmbedding(pinned.call(lambda: BgeM3EmbeddingProvider(device=device)), pinned)
         reranker = PinnedReranker(pinned.call(lambda: BgeRerankerV2M3(device=device, output=rerank_output)), pinned)
-        gateway = BudgetedGateway(
-            OpenAIModelGateway.from_settings(settings),
-            prices=PriceTable(OPENAI_PRICES),
-            ledger=InMemorySpendLedger(),
-            monthly_cap_usd=settings.llm_monthly_budget_usd,
-        )
+        gateway = build_budgeted_gateway(settings)
         retrieval_version = (
             compute_retrieval_version(
                 production_retrieval_inputs(
@@ -186,6 +174,7 @@ class ProductionRuntime:
                     glossary_version=glossary_version,
                     multi_query=multi_query,
                     doc_focus=doc_focus,
+                    source_constraint=source_constraint,
                     query_translation=query_translation,
                 )
             )
@@ -315,6 +304,7 @@ class ProductionRuntime:
                     glossary_version=pol.glossary_version(),
                     multi_query=pol.multi_query(),
                     doc_focus=pol.doc_focus(),
+                    source_constraint=pol.source_constraint(),
                     query_translation=pol.query_translation(),
                 )
             )
@@ -372,16 +362,16 @@ class ProductionRuntime:
         metered = MeteredGateway(self.gateway)  # per-request calls/tokens/cost for the trace, translation included
         qt_model = routed.policies.query_translation()
         translator = QueryTranslator(metered, qt_model).translate if qt_model != QUERY_TRANSLATION_OFF else None
-        retrieval = ProductionRetrieval(
+        retrieval = build_retrieval(
             conn_for_user=conn_for_user,
-            lexical_factory=lambda c: production_lexical_retriever(c, as_of=as_of),
-            vector_factory=lambda c: production_vector_retriever(c, self.embedding, as_of=as_of),
+            as_of=as_of,
+            provider=self.embedding,
             reranker=reranker,
             config=hybrid,
-            lexical_versions=production_lexical_versions(),
             glossary=self.glossary_for(routed.policies.glossary_version()),
             multi_query=routed.policies.multi_query(),
             doc_focus=routed.policies.doc_focus(),
+            source_constraint=routed.policies.source_constraint(),
             translator=translator,
             cache=self._retrieval_cache,
             cache_versions=(
@@ -409,7 +399,7 @@ class ProductionRuntime:
         return PgTraceStore(conn)
 
     def metrics_source(self, conn: Any) -> MetricsSource:
-        return PgMetricsSource(conn)
+        return PgMetricsSource(conn, retrieval_integrity=self.retrieval_integrity)
 
     @property
     def monthly_cap_usd(self) -> float | None:
@@ -445,12 +435,32 @@ class ProductionRuntime:
             as_of=as_of,
         )
 
+    def retrieval_integrity(self) -> dict[str, Any]:
+        """A bounded, five-second status cache; only aggregate metrics leave the ops endpoint."""
+        with self._integrity_lock:
+            now = time.monotonic()
+            if self._integrity_cache and now - self._integrity_cache[0] < 5.0:
+                return self._integrity_cache[1]
+            if not self._admin_dsn:
+                status: dict[str, Any] = {"ready": False, "problems": ["integrity_connection_not_configured"]}
+            else:
+                try:
+                    status = inspect_readiness(self._admin_dsn, embedding=self.embedding.spec)
+                except (psycopg.Error, InfrastructureError, ValueError):
+                    status = {"ready": False, "problems": ["integrity_check_unavailable"]}
+            self._integrity_cache = (time.monotonic(), status)
+            return status
+
     def ready(self) -> bool:
+        if self._pinned is not None and self._pinned.stalled:
+            return False
+        status = self.retrieval_integrity()
+        if not status["ready"]:
+            return False
         try:
-            with psycopg.connect(self._dsn, connect_timeout=2) as conn:
-                conn.execute("select 1").fetchone()
-            return True
-        except psycopg.Error:
+            with psycopg.connect(self._dsn, connect_timeout=2, options="-c statement_timeout=1000") as conn:
+                return database_identity(conn) == status["database_identity"]
+        except (psycopg.Error, ValueError):
             return False
 
 

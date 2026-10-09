@@ -1,0 +1,33 @@
+{
+  "format": "review-budget-authorization-v1",
+  "approved_by": "project-owner",
+  "approval_quote": "三项按建议裁决，允许 EVAL-08 最多 0.75 USD",
+  "approval_context": "Only the changed v3 annotations ms-0241, ms-0242 and ms-0280 may be re-reviewed.",
+  "total_budget_usd": 0.75,
+  "max_attempts": 3,
+  "stop_on_nonvalidated_attempt": true,
+  "automatic_retry": false,
+  "review_root": "evals/main_set/drafts/revision-2026-10-08-v3/review/eval08",
+  "model": "claude-opus-5",
+  "effort": "high",
+  "recommended_call_cap_usd": 0.25,
+  "authorized_sample_ids": [
+    "ms-0241",
+    "ms-0242",
+    "ms-0280"
+  ],
+  "revision_manifest_sha256": "279c91a6ab2c7a667399419b51d97aeb27ea59972fe77716d75412550f46398d",
+  "confirmation_sha256": "ee390f2e5b6df7f7dcbd4a6e86318bbe71a6f58860d605c984e8439b10075bfa",
+  "batches": {
+    "main/EN": {
+      "input_sha256": "9358dcf8b31f25be985c27886fc8e86c0f8a418f9531b3b0d5a4ecce6531e01e",
+      "prompt_sha256": "7572d16e88b638cbc6fa888f4e1a86fe6ffb4869583df357ee1ce0bd012eb758"
+    },
+    "main/PV": {
+      "input_sha256": "486a839e018ce12c7b4e8217414e530b8c4a249dd81c1f4287eeb6caa0c68e1b",
+      "prompt_sha256": "7572d16e88b638cbc6fa888f4e1a86fe6ffb4869583df357ee1ce0bd012eb758"
+    }
+  },
+  "independent_second_human": false,
+  "cost_basis": "Claude CLI reported USD estimate; distinguish from provider invoice/subscription billing"
+}

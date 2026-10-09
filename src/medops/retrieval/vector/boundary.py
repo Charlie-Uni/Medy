@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from collections.abc import Sequence
+
 from pydantic import ValidationError
 
 from medops.core.errors import BusinessError, ErrorCode, InfrastructureError
@@ -11,7 +13,13 @@ from medops.retrieval.vector.contracts import VectorRetriever, VectorSearchResul
 
 
 def run_vector_search(
-    retriever: VectorRetriever, query: str, k: int, expected: VectorVersions, *, allow_historical: bool = False
+    retriever: VectorRetriever,
+    query: str,
+    k: int,
+    expected: VectorVersions,
+    *,
+    allow_historical: bool = False,
+    doc_ids: Sequence[str] | None = None,
 ) -> VectorSearchResult:
     if isinstance(k, bool) or not isinstance(k, int):
         raise BusinessError(ErrorCode.invalid_request, "k must be an integer")
@@ -27,7 +35,10 @@ def run_vector_search(
             detail=f"expected={expected.model_dump()} index={declared.model_dump()}",
         )
     try:
-        result = retriever.search(query, k, allow_historical=allow_historical)
+        if doc_ids is None:
+            result = retriever.search(query, k, allow_historical=allow_historical)
+        else:
+            result = retriever.search(query, k, allow_historical=allow_historical, doc_ids=doc_ids)
         checked = VectorSearchResult.model_validate(result.model_dump())
     except ValidationError as exc:
         raise InfrastructureError(

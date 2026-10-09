@@ -67,6 +67,15 @@ class DocRef:
     doc_id: str
     title: str
     doc_type: str
+    document_key: str = ""
+
+
+@dataclass(frozen=True)
+class QueryKeyMention:
+    key: str
+    start: int
+    end: int
+    authority: str | None = None
 
 
 def norm(text: str) -> str:
@@ -113,14 +122,15 @@ def document_keys(title: str, doc_type: str) -> set[str]:
     return keys
 
 
-def query_keys(query: str) -> set[str]:
+def query_key_mentions(query: str) -> list[QueryKeyMention]:
     q = unicodedata.normalize("NFKC", query)
-    keys: set[str] = set()
+    mentions: list[QueryKeyMention] = []
     for m in _ICH_QUERY.finditer(q):
         code, rev = m.group(1), m.group(2)
-        window = q[max(0, m.start() - 8) : m.start()]
+        window = q[max(0, m.start() - 32) : m.start()]
         if rev or "ICH" in window.upper():
-            keys.add("ich:" + norm(code + (rev or "")))
+            authority = "fda" if "FDA" in window.upper() else ("ich" if "ICH" in window.upper() else None)
+            mentions.append(QueryKeyMention("ich:" + norm(code + (rev or "")), m.start(), m.end(), authority))
     for m in _GVP_QUERY.finditer(q):
         if m.group(1):
             key = f"gvp:module {_roman(m.group(2))}" + (f" addendum {_roman(m.group(3))}" if m.group(3) else "")
@@ -128,8 +138,12 @@ def query_keys(query: str) -> set[str]:
             key = f"gvp:annex {_roman(m.group(5))}"
         else:
             key = f"gvp:p {_roman(m.group(7))}"
-        keys.add(key)
-    return keys
+        mentions.append(QueryKeyMention(key, m.start(), m.end(), "ema"))
+    return sorted(mentions, key=lambda mention: (mention.start, mention.end, mention.key))
+
+
+def query_keys(query: str) -> set[str]:
+    return {mention.key for mention in query_key_mentions(query)}
 
 
 def focus_documents(query: str, docs: Iterable[DocRef]) -> list[DocRef]:
@@ -152,8 +166,10 @@ def focus_documents(query: str, docs: Iterable[DocRef]) -> list[DocRef]:
 
 def load_documents(conn: object) -> list[DocRef]:
     """Active documents visible on this connection (row-level security scopes them to the caller's department)."""
-    rows = conn.execute("select doc_id::text, title, doc_type from documents where status = 'active'").fetchall()  # type: ignore[attr-defined]
-    return [DocRef(str(r[0]), str(r[1]), str(r[2])) for r in rows]
+    rows = conn.execute(  # type: ignore[attr-defined]
+        "select doc_id::text, title, doc_type, document_key from documents where status = 'active'"
+    ).fetchall()
+    return [DocRef(str(r[0]), str(r[1]), str(r[2]), str(r[3])) for r in rows]
 
 
 def load_titles(conn: object, doc_ids: Sequence[str]) -> dict[str, str]:

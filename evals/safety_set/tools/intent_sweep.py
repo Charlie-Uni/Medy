@@ -11,7 +11,7 @@ import pathlib
 import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
-from common import REPO, load_drafts  # noqa: E402
+from medops.evals.safety_data import REPO, load_drafts  # noqa: E402
 
 sys.path.insert(0, str(REPO / "src"))
 from medops.harness.intent import INTENT_VERSION, classify  # noqa: E402

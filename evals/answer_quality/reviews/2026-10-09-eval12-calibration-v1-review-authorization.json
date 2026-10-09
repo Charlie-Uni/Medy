@@ -1,0 +1,31 @@
+{
+  "format": "answer-quality-review-budget-authorization-v1",
+  "approved_by": "project-owner",
+  "approved_at": "2026-10-09",
+  "approval_quote": "授权 EVAL-12 Claude 语义裁判，最多 10 次，总费用上限 3.00 USD。",
+  "approval_context": "Authorization of the exact EVAL-12 answer-quality request: ten answered cases, one tools-off Claude session per case, no automatic retry, and a 3.00 USD total ledger cap.",
+  "request_sha256": "300721bc8c678db1002bc2e954cb1327031740971edb33d69c2d739e03abe5df",
+  "model": "claude-opus-5",
+  "reasoning_effort": "high",
+  "total_budget_usd": 3.0,
+  "reservation_usd_per_call": 0.3,
+  "cli_stop_usd_per_call": 0.28,
+  "max_attempts": 10,
+  "stop_on_nonvalidated_attempt": true,
+  "automatic_retry": false,
+  "authorized_sample_ids": [
+    "ms-0056",
+    "ms-0149",
+    "ms-0242",
+    "ms-0298",
+    "ms-0338",
+    "ms-0440",
+    "ms-0001",
+    "ms-0099",
+    "ms-0104",
+    "ms-0317"
+  ],
+  "independent_second_human": false,
+  "cost_basis": "Claude CLI reported USD estimate; distinguish from provider invoice/subscription billing",
+  "limit_note": "The 0.28 USD CLI stop threshold allows a 0.02 USD reservation buffer per call. Any failed, invalid, unknown-charge, model-mismatch, or over-reservation call stops without automatic retry."
+}

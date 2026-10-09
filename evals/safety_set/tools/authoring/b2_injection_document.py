@@ -5,9 +5,8 @@ answer and verification layers still keep the canary and the instructed behaviou
 
 import json
 
-from common import CORPUS_SAFETY, INJECTION_PLAN, SAFETY_DB
-
 from authoring import canary_for, expect, sample
+from medops.evals.safety_data import CORPUS_SAFETY, INJECTION_PLAN, SAFETY_DB
 from medops.safety.checks import _EVIDENCE_INJECTION
 
 OUTCOMES = ["answered", "insufficient_evidence"]

@@ -1,0 +1,223 @@
+{
+  "format": "answer-quality-review-request-v2",
+  "created_at": "2026-10-09",
+  "status": "prepared_no_model_calls_waiting_authorization",
+  "rubric": {
+    "version": "answer-quality-v1-provisional",
+    "path": "evals/answer_quality/RUBRIC.md",
+    "sha256": "9230f46fecf5a7e012dc21a803582d894685944f29f162239b5998700b37925d"
+  },
+  "runs": [
+    {
+      "path": "evals/harness/runs/2026-10-09-eval12-calibration-v1-generation",
+      "rows_sha256": "c9ce5386c3b52c3ae9425033bdd785e19cd40c7066b10c3eb9d11e8b9d1e1b7d",
+      "run_conditions_sha256": "6ba63a9e84eba6aec6b0dba75f0f547738f3a67e3c97de3e8b61046dae302749",
+      "dataset_binding_sha256": "0b67ec3973713fd7fd0e328efa7bcec27b000110ab97773011aadebd7301a397",
+      "scoring_binding_sha256": "18e3f0d8fab2ef79b5c582f90b4e87ac1a76e9bdf164a9a309dd1fb3325485d0"
+    },
+    {
+      "path": "evals/harness/runs/2026-10-09-eval12-calibration-v1-supplement",
+      "rows_sha256": "443490be82a6f63c44dec50f036129ee102e02da3bbc68329b8cc6d3da136e48",
+      "run_conditions_sha256": "13843ef09f7712f4ddb61642088c6fe154f801187c4b9460e5c9cea51705cb60",
+      "dataset_binding_sha256": "0b67ec3973713fd7fd0e328efa7bcec27b000110ab97773011aadebd7301a397",
+      "scoring_binding_sha256": "18e3f0d8fab2ef79b5c582f90b4e87ac1a76e9bdf164a9a309dd1fb3325485d0"
+    }
+  ],
+  "reviewer": {
+    "kind": "llm",
+    "id": "reviewer-llm-answer-quality-01",
+    "model": "claude-opus-5",
+    "reasoning_effort": "high",
+    "system_prompt_sha256": "c341cac1bafaefab8288706a6046228fd2254f3373b39254c154b8c7afa2404e",
+    "one_case_per_call": true,
+    "independent_second_human": false
+  },
+  "budget_request": {
+    "cli_stop_usd_per_call": 0.28,
+    "reservation_usd_per_call": 0.3,
+    "total_budget_usd": 2.4,
+    "max_attempts": 8,
+    "stop_on_nonvalidated_attempt": true,
+    "automatic_retry": false
+  },
+  "answered_cases": [
+    {
+      "sample_id": "ms-0242",
+      "run": "evals/harness/runs/2026-10-09-eval12-calibration-v1-generation",
+      "case_sha256": "ee63406774feda4fd5ebec008a4d146edd5af1033233e0e6abf7e292706f0e77",
+      "sample_input_sha256": "c94527e1b884518250a122e4afa7537fc7c6ae73083cd310203e177750f07f35",
+      "prompt_sha256": "49c47a8bcd79ecb843f6c1d8ccacef8aeab5a6db852c26df1908e418f0c3e77b",
+      "prompt_chars": 14650,
+      "claims": 1,
+      "citations": 1
+    },
+    {
+      "sample_id": "ms-0298",
+      "run": "evals/harness/runs/2026-10-09-eval12-calibration-v1-generation",
+      "case_sha256": "3bfa6b7d969e8d977e66ccb863dcbc9edd16613f8634157271e655dd7db8a34a",
+      "sample_input_sha256": "566d59a25b9a23c1571e2ba95fe42282f5ab76fd28f6522512cdb0830ced4c76",
+      "prompt_sha256": "a104ea0359d4a926791bbb6f20442f4e4424f1c14dcc43715f15850ad31d6c39",
+      "prompt_chars": 13039,
+      "claims": 1,
+      "citations": 1
+    },
+    {
+      "sample_id": "ms-0338",
+      "run": "evals/harness/runs/2026-10-09-eval12-calibration-v1-generation",
+      "case_sha256": "f38587aa10ce1eeba0923ecaf13b285a9a19209efc3b4e0054becc563182d7bd",
+      "sample_input_sha256": "715e8b6f1216ebb9a70770500d2d7c6bef9d926a661442e3ead052bcd1bd2bbd",
+      "prompt_sha256": "55d66d7a0df02ef39b72fe3eb35ce87fc8904032c3c97962a19704ec8379b54e",
+      "prompt_chars": 10956,
+      "claims": 1,
+      "citations": 1
+    },
+    {
+      "sample_id": "ms-0440",
+      "run": "evals/harness/runs/2026-10-09-eval12-calibration-v1-generation",
+      "case_sha256": "3261ea66da54235e96ba50c2de5f88afd3fd8114e21e535227638b4c1457c6ab",
+      "sample_input_sha256": "e5e63b147de4c7c3a00f22b6b956c16e9e833b94a8ab18f57a4cca65a7ce6292",
+      "prompt_sha256": "611d2deb3b1b414ee36bc1175ef2ac55ac5b62a6c892768c5febc187c0eef323",
+      "prompt_chars": 15805,
+      "claims": 3,
+      "citations": 2
+    },
+    {
+      "sample_id": "ms-0001",
+      "run": "evals/harness/runs/2026-10-09-eval12-calibration-v1-supplement",
+      "case_sha256": "c7fa77385c2bc91099cfc4ffb0afab37c3e97a3f7f35223a72e898a8203243e5",
+      "sample_input_sha256": "e5a88a1b04b93c7c70c90a8ee40d94bf980157a7886dcf5631d4d6e33295e179",
+      "prompt_sha256": "91196c3edd3b4b79741e84ffeba8c4e917f84e35cd00aa2d90bc78bceac2ccae",
+      "prompt_chars": 10689,
+      "claims": 1,
+      "citations": 1
+    },
+    {
+      "sample_id": "ms-0099",
+      "run": "evals/harness/runs/2026-10-09-eval12-calibration-v1-supplement",
+      "case_sha256": "9aa231f6dd6a30f52100892f0a123746aa5ea7d53ed924728e5d17cd66a9b93d",
+      "sample_input_sha256": "a13a464c1168901e0f9c29a957fe1198490644d9c2415e97ca2bed9e8a4d21da",
+      "prompt_sha256": "ad5d7cd53f809dbd586810a140587d5da59cd1ef7d60b8967b170292029a64d3",
+      "prompt_chars": 11598,
+      "claims": 1,
+      "citations": 1
+    },
+    {
+      "sample_id": "ms-0104",
+      "run": "evals/harness/runs/2026-10-09-eval12-calibration-v1-supplement",
+      "case_sha256": "79843f9a6df8e7efcefd99fbcb0a1d10f9d10516679ae25a874a6309c1ea0960",
+      "sample_input_sha256": "7ac3adacc77f66b99da997aea20300a83ac2b3147be1b69908f87345745d19af",
+      "prompt_sha256": "be4f9f822e7d0c47336259ee395171e6e2ac7e7f2516938568bda5eb84f77e61",
+      "prompt_chars": 12087,
+      "claims": 1,
+      "citations": 1
+    },
+    {
+      "sample_id": "ms-0317",
+      "run": "evals/harness/runs/2026-10-09-eval12-calibration-v1-supplement",
+      "case_sha256": "6221b8d645746ae7a93b227b35d77ef171f554089566e3639cb36d9da71944b1",
+      "sample_input_sha256": "411d6e98a44d3ff1b76b89a2d8cca9434caac2c584386d9fd2a23bcca143c2a3",
+      "prompt_sha256": "81205c8f2f89fd05c0a031edbe4bf763499a3acb21ad59e5f689e8bc218f2353",
+      "prompt_chars": 12717,
+      "claims": 1,
+      "citations": 1
+    }
+  ],
+  "unselected_answered_cases": [
+    {
+      "sample_id": "ms-0056",
+      "run": "evals/harness/runs/2026-10-09-eval12-calibration-v1-generation",
+      "case_sha256": "5f62953b2f5a1821171d7886394ad7fb7e23dfeb9ac888693bf85d5a4cd11756",
+      "sample_input_sha256": "335765b78bc0d3f5671fd99f1e609693b2ee3f215432678aa6ad5f8a6c3dabf4",
+      "prompt_sha256": "017905afce3ae098bd51beff32995a69957dd8caeee7eac06ab572be4a17a9d2",
+      "prompt_chars": 11685,
+      "claims": 1,
+      "citations": 3
+    },
+    {
+      "sample_id": "ms-0149",
+      "run": "evals/harness/runs/2026-10-09-eval12-calibration-v1-generation",
+      "case_sha256": "359c475db815bdd049ad34b2dc595f27325cb221852e1b22613beb073958613d",
+      "sample_input_sha256": "15da0b7c4c30076ffe586626acc3a6ef08a355a59f9ca543dd2398d5877d3e11",
+      "prompt_sha256": "7b93c90fc091c501181fe81895e76461493e41f72fd2c2034acfd6135dacd8e3",
+      "prompt_chars": 12024,
+      "claims": 1,
+      "citations": 2
+    }
+  ],
+  "prior_reviews": [
+    {
+      "path": "evals/answer_quality/reviews/2026-10-09-eval12-calibration-v1-claude-review",
+      "request_sha256": "300721bc8c678db1002bc2e954cb1327031740971edb33d69c2d739e03abe5df",
+      "authorization_sha256": "52943ac04045cda1e4528984007b4db7ee2b6b2667620953ea6f9ece2fd5f041",
+      "run_sha256": "39bb5e514f990291817df4537c885dcbd5da33e70d519ed592f4732e401ac82c",
+      "budget_sha256": "5dfb9261181e788d4222d2a293dbc3bcc30270100d634ca7dcaa8ae54916afdc",
+      "verdicts_sha256": "96c83b469cf111ef4fc37accc7387724ffe5998bb4db5f090b61a538215350ad",
+      "known_cost_usd": "0.196300",
+      "validated_cases": [
+        {
+          "sample_id": "ms-0056",
+          "case_sha256": "5f62953b2f5a1821171d7886394ad7fb7e23dfeb9ac888693bf85d5a4cd11756"
+        },
+        {
+          "sample_id": "ms-0149",
+          "case_sha256": "359c475db815bdd049ad34b2dc595f27325cb221852e1b22613beb073958613d"
+        }
+      ],
+      "attempts": [
+        {
+          "sample_id": "ms-0056",
+          "attempt_id": "e3a5f2582c8343198a9a1af86bd0414b",
+          "outcome": "validated_reply",
+          "cost_usd": "0.073723",
+          "cli_capture_sha256": "2d8abd2c588da3c82154cceb5a20806f66f4cf1111336ddc84987eab0a908ab6"
+        },
+        {
+          "sample_id": "ms-0149",
+          "attempt_id": "7866fcf812a9428a974caac97663935f",
+          "outcome": "validated_reply",
+          "cost_usd": "0.066435",
+          "cli_capture_sha256": "0d2b7601a31c81d05ffb1f9b6927b7775f5df2105743fac38056cf354fc9347e"
+        },
+        {
+          "sample_id": "ms-0242",
+          "attempt_id": "482cafa6045c497d9b02b06029f0316e",
+          "outcome": "failed",
+          "cost_usd": "0.056142",
+          "cli_capture_sha256": "4bc196f187a68afd6c0598298be1a58034de556e679a3bb93cc6b100a55d8730"
+        }
+      ]
+    }
+  ],
+  "escalated_cases": [
+    {
+      "sample_id": "ms-0012",
+      "run": "evals/harness/runs/2026-10-09-eval12-calibration-v1-generation",
+      "case_sha256": "7d794fdf40d5edb1dc11110b699baa3f532a7723e701c7a62d7b5a7700e93213",
+      "sample_input_sha256": "3821e3c041665a9c574001a2bfb089fc6236d2fc93439f56c145af0d3d6d3643"
+    },
+    {
+      "sample_id": "ms-0177",
+      "run": "evals/harness/runs/2026-10-09-eval12-calibration-v1-generation",
+      "case_sha256": "e340685fbc5d81654b41d884262978fda4a943b89d3cec7614a36e2f90f92aed",
+      "sample_input_sha256": "76a515a42c088c6a0afe88fadc6806188f4ed37853057400f3f0f020fc0f79a0"
+    },
+    {
+      "sample_id": "ms-0227",
+      "run": "evals/harness/runs/2026-10-09-eval12-calibration-v1-generation",
+      "case_sha256": "c0cc06c915e4d75a8cef59b519d6041152bc535e3d8ab8a1097363c0ed35f14c",
+      "sample_input_sha256": "3cbbb9247b450bbf004cb4e7bb9f5f2c07ee321a528867b43f2b9d6a3ef526da"
+    },
+    {
+      "sample_id": "pc-0068",
+      "run": "evals/harness/runs/2026-10-09-eval12-calibration-v1-generation",
+      "case_sha256": "fc8f41d51936a49ced34a80ef8069c10840e36b3e9ebdfd24645cbb208073012",
+      "sample_input_sha256": "c93d190f6e21c699b7b0c961bf76a435efdf51b101c6de9ce174bb4ad18be63c"
+    }
+  ],
+  "all_cases": 14,
+  "limitations": [
+    "This purposeful development panel is not a population estimate or a formal gate.",
+    "Model judgments are not an independent second-human review.",
+    "The Claude CLI stop threshold is not a guaranteed settlement ceiling; a call above its 0.30 USD reservation stops the run."
+  ]
+}

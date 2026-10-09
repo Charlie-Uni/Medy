@@ -1,0 +1,103 @@
+{
+  "format": "review-total-budget-v1",
+  "total_budget_usd": "3.000000",
+  "scope_sha256": "14d9de413469050c4130e1a4c89e56999daefebb2918cd4857df0a9826fc4fad",
+  "scope": {
+    "format": "answer-quality-review-budget-authorization-v1",
+    "approved_by": "project-owner",
+    "approved_at": "2026-10-09",
+    "approval_quote": "授权 EVAL-12 Claude 语义裁判，最多 10 次，总费用上限 3.00 USD。",
+    "approval_context": "Authorization of the exact EVAL-12 answer-quality request: ten answered cases, one tools-off Claude session per case, no automatic retry, and a 3.00 USD total ledger cap.",
+    "request_sha256": "300721bc8c678db1002bc2e954cb1327031740971edb33d69c2d739e03abe5df",
+    "model": "claude-opus-5",
+    "reasoning_effort": "high",
+    "total_budget_usd": 3.0,
+    "reservation_usd_per_call": 0.3,
+    "cli_stop_usd_per_call": 0.28,
+    "max_attempts": 10,
+    "stop_on_nonvalidated_attempt": true,
+    "automatic_retry": false,
+    "authorized_sample_ids": [
+      "ms-0056",
+      "ms-0149",
+      "ms-0242",
+      "ms-0298",
+      "ms-0338",
+      "ms-0440",
+      "ms-0001",
+      "ms-0099",
+      "ms-0104",
+      "ms-0317"
+    ],
+    "independent_second_human": false,
+    "cost_basis": "Claude CLI reported USD estimate; distinguish from provider invoice/subscription billing",
+    "limit_note": "The 0.28 USD CLI stop threshold allows a 0.02 USD reservation buffer per call. Any failed, invalid, unknown-charge, model-mismatch, or over-reservation call stops without automatic retry.",
+    "authorization_sha256": "52943ac04045cda1e4528984007b4db7ee2b6b2667620953ea6f9ece2fd5f041"
+  },
+  "created_at": "2026-10-09T01:34:20.480176+00:00",
+  "attempts": [
+    {
+      "attempt_id": "e3a5f2582c8343198a9a1af86bd0414b",
+      "status": "accounted",
+      "reserved_usd": "0.300000",
+      "cost_usd": "0.073723",
+      "started_at": "2026-10-09T01:34:20.803134+00:00",
+      "identity": {
+        "sample_id": "ms-0056",
+        "case_sha256": "5f62953b2f5a1821171d7886394ad7fb7e23dfeb9ac888693bf85d5a4cd11756",
+        "prompt_sha256": "017905afce3ae098bd51beff32995a69957dd8caeee7eac06ab572be4a17a9d2",
+        "model": "claude-opus-5",
+        "cli_version": "2.1.79 (Claude Code)"
+      },
+      "finished_at": "2026-10-09T01:34:32.747555+00:00",
+      "outcome": "validated_reply",
+      "metadata": {
+        "model_observed": "claude-opus-5",
+        "session_id": "5171850b-156b-4551-a335-95357ab010fb",
+        "cli_capture_sha256": "2d8abd2c588da3c82154cceb5a20806f66f4cf1111336ddc84987eab0a908ab6"
+      }
+    },
+    {
+      "attempt_id": "7866fcf812a9428a974caac97663935f",
+      "status": "accounted",
+      "reserved_usd": "0.300000",
+      "cost_usd": "0.066435",
+      "started_at": "2026-10-09T01:34:32.749187+00:00",
+      "identity": {
+        "sample_id": "ms-0149",
+        "case_sha256": "359c475db815bdd049ad34b2dc595f27325cb221852e1b22613beb073958613d",
+        "prompt_sha256": "7b93c90fc091c501181fe81895e76461493e41f72fd2c2034acfd6135dacd8e3",
+        "model": "claude-opus-5",
+        "cli_version": "2.1.79 (Claude Code)"
+      },
+      "finished_at": "2026-10-09T01:34:48.900541+00:00",
+      "outcome": "validated_reply",
+      "metadata": {
+        "model_observed": "claude-opus-5",
+        "session_id": "275569b6-501e-4a9d-9f80-ad7d32c911d4",
+        "cli_capture_sha256": "0d2b7601a31c81d05ffb1f9b6927b7775f5df2105743fac38056cf354fc9347e"
+      }
+    },
+    {
+      "attempt_id": "482cafa6045c497d9b02b06029f0316e",
+      "status": "accounted",
+      "reserved_usd": "0.300000",
+      "cost_usd": "0.056142",
+      "started_at": "2026-10-09T01:34:48.903056+00:00",
+      "identity": {
+        "sample_id": "ms-0242",
+        "case_sha256": "ee63406774feda4fd5ebec008a4d146edd5af1033233e0e6abf7e292706f0e77",
+        "prompt_sha256": "49c47a8bcd79ecb843f6c1d8ccacef8aeab5a6db852c26df1908e418f0c3e77b",
+        "model": "claude-opus-5",
+        "cli_version": "2.1.79 (Claude Code)"
+      },
+      "finished_at": "2026-10-09T01:34:58.201716+00:00",
+      "outcome": "ValueError",
+      "metadata": {
+        "model_observed": "claude-opus-5",
+        "session_id": "65c74d85-acb0-4ad2-87b6-d82f1aeffc29",
+        "cli_capture_sha256": "4bc196f187a68afd6c0598298be1a58034de556e679a3bb93cc6b100a55d8730"
+      }
+    }
+  ]
+}

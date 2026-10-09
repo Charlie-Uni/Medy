@@ -1,0 +1,1417 @@
+{
+  "batch": "PV",
+  "reviewer_cli": "claude-code",
+  "cli_binary": "/Users/leaf/.local/bin/claude",
+  "cli_version": "2.1.79 (Claude Code)",
+  "model": "claude-opus-5",
+  "model_version_source": "pinned_model_id",
+  "reasoning_effort_requested": "high",
+  "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+  "review_prompt_sha256": "f4a3804e969b23ec9ab467406937e62f0b9e30933d6a680d4b00ee59b2631c38",
+  "sample_input_sha256": {
+    "pc-0031": "7f8625c530884ff8358cb795acd3cfb0a0ecf477e4c19578958a98a7b253445a",
+    "pc-0032": "36bbeffeeb1fe6209eb177101d75094612dc512aa22709efe308a9c9e1c54e11",
+    "pc-0033": "1fa922b2653d442f5645014cc5a423d3f03e26c3bcd8d8146dcca34feda87216",
+    "pc-0034": "9c0c7a382820d3276e4b005e40a680e22aea6486203f9fda8325d27faa793b64",
+    "pc-0035": "12964c834f9f6cc75ba855d8b65247195d6fc61062e0aa597f2d870ce560ae9a",
+    "pc-0036": "a2044d7f9c29c9ca85158b182324bd580ab6cfccad06f49191320c556c4a90a0",
+    "pc-0037": "f904d13b01264a1ca97a619c44cb2c2f7cde4f0a98e1f3f1098aa36192643a71",
+    "pc-0038": "3c38596c5c9af31f2954d3042e143465edd0da5c08056a3fdfaa3d671c0bc8a8",
+    "pc-0039": "d2b4f23e19bcde47dfc73289e03be0329ce1e7e92f803438073a4fa781a675d1",
+    "pc-0040": "df5a324bb36e03f71c9b0566222367cf8171588b0d918f17a20ee782119c9855",
+    "pc-0041": "de416971972921ca750431259c3e7ec61837d84c4b63fe9f3850e0d0c2a1d19e",
+    "pc-0042": "1375c31f9064f7d02bf0f6a879b1ee9a40552e415137d50020b6283f170a2f86",
+    "pc-0043": "92598bb5ed413ae0e7d3c2af27d23d7965c064c388304cbe5779b0e9bfe9fb17",
+    "pc-0044": "fa2c62068b9c4691277c667844447fecba415cfe14ee475ba1b27bd3542baa80",
+    "pc-0045": "4b3cec7e0024243e5163353b6e0c967c1fa8da08016ac32e68357bd88b9b9663",
+    "pc-0046": "9b2092fb12c6b60d0b4710ea028b92cd3ca38bef529d99f20cfdc79b935803c8",
+    "pc-0047": "721e27bd2762489bad2ec21f341c52bb2acb910ba1fc1a7f7dd7d905b2841d02",
+    "pc-0048": "089091a77bbd8c8de143004bea9e2b9d7d233b1294c58bf45eecbe70bdf6b15f",
+    "pc-0049": "e6a60f97c715215eff9b062a961bf1f1eea5f5e8f94900651c17b25748688dcc",
+    "pc-0050": "3d7cfa977f9a44bbc8722bddf3238ed91f47915546af545ab1335ed15595bd9e",
+    "pc-0051": "41415665659ba27c11115b7b3b3b7c021ccc466636b6a8c0c80b0d478f421b4d",
+    "pc-0052": "09c30c0dcf276e7ee8aa9ea234e8da51888990b48f6fb4af5aa2864176a790f2",
+    "pc-0053": "d0e28b64cf4261f3eeb0d9b808256dd61d552054c9c06343198556ee1c3a1848",
+    "pc-0054": "019c76417a77ed2fb04956f5c27161119f92dacbfbb0f4edfcf04efba19c1645",
+    "pc-0055": "b39312b7f04dae6880b1ce26dd93ae94cb78131ef85fc2769f5d2c813b717386",
+    "pc-0056": "8b8dabb4788d6865b25ac28b3454ca825f53f0527a6892459c47b567e525d33b",
+    "pc-0057": "dd8774e18f2b70d4de544ebec98107f3214527b8a6c00dc77f6305665c37151a",
+    "pc-0058": "63986c05a1931147e398890fd23ab5706e8af2674836ca3f37f8d24bab358466",
+    "pc-0059": "8e47ccb0dc174ad238c40ba4c6c99ff40e5e3ebf2eeeb19ed804e8edd154c327"
+  },
+  "chunks": [
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "44f80ae9-e019-47fd-87a7-8e6d88bc3c8c",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "11658",
+      "cost_usd": 0.33431,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "pc-0031",
+        "pc-0032",
+        "pc-0033",
+        "pc-0034",
+        "pc-0035"
+      ],
+      "started_at": "2026-09-20T06:07:24+00:00",
+      "finished_at": "2026-09-20T06:09:20+00:00",
+      "prompt_chars": 8131,
+      "prompt_sha256": "9b80925b96db8da20c5ce1c77bfd3e9e8986dd749b696cb4f8915ffb56b6ddf3",
+      "verdicts": [
+        {
+          "sample_id": "pc-0031",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0032",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0033",
+          "verdict": "dispute",
+          "items": {
+            "query": "issue",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "query 基本是把 key_text 反转成是非问句：页文本原句为“不要用机构自身的解决方法来处理 MedDRA 的不足。”，query 为“……可以用机构自身的解决方法来处理这一不足吗？”，连续复用了“用机构自身的解决方法来处理……不足”这一非术语的完整谓语短语，不属于必要医学术语复用，检索退化为逐字匹配。其余四项无问题：key_text“不要用机构自身的解决方法”在页内唯一且逐字；evidence_span 偏移 374-444 与文本一致并含后续处理要求“请向 MSSO 提交变更申请”；negation（不要用）、mixed_zh_en（query/key_text 含 MedDRA）标签成立；MedDRA 术语选择指南归 PV 正确。",
+          "suggestion": "改为不复用原句谓语的场景问法，例如“MedDRA 中找不到足以反映报告信息的术语时，应该怎么做？”或“编码时遇到 MedDRA 术语不足，机构可以自行变通处理还是必须走别的流程？”，该页仍只有 2.6 节能回答。"
+        },
+        {
+          "sample_id": "pc-0034",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0035",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_9b80925b96db8da20c5ce1c77bfd3e9e8986dd749b696cb4f8915ffb56b6ddf3.jsonl",
+      "sample_input_sha256": {
+        "pc-0031": "7f8625c530884ff8358cb795acd3cfb0a0ecf477e4c19578958a98a7b253445a",
+        "pc-0032": "36bbeffeeb1fe6209eb177101d75094612dc512aa22709efe308a9c9e1c54e11",
+        "pc-0033": "0be1a2ae4722049e823051597d58d73ed49b55b1b1bf9a3b25c2a44f0a63519b",
+        "pc-0034": "9c0c7a382820d3276e4b005e40a680e22aea6486203f9fda8325d27faa793b64",
+        "pc-0035": "12964c834f9f6cc75ba855d8b65247195d6fc61062e0aa597f2d870ce560ae9a"
+      },
+      "review_prompt_sha256": "f4a3804e969b23ec9ab467406937e62f0b9e30933d6a680d4b00ee59b2631c38"
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "da8c6920-1435-4eae-b069-c3c687e30957",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "15978",
+      "cost_usd": 0.45111625000000005,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "pc-0036",
+        "pc-0037",
+        "pc-0038",
+        "pc-0039",
+        "pc-0040"
+      ],
+      "started_at": "2026-09-20T06:09:20+00:00",
+      "finished_at": "2026-09-20T06:12:03+00:00",
+      "prompt_chars": 9647,
+      "prompt_sha256": "ee9578532f0759acbf73232f7b4b83ae9fe0368b1a5f11a2c56ab6af335645c7",
+      "verdicts": [
+        {
+          "sample_id": "pc-0036",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "issue",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "切片重复标注：evidence_span「患者每 6 个月测一次肝酶,没有按照推荐日程即每月一次」「药物说明书上的监测日程是每月一次。」中的时间表达全部是频次表达（每 6 个月一次、每月一次），按 2026-09-19 批准的判定口径「给药频次属于 dose_unit」，频次应归 dose_unit 而不再计 time_window；本 span 内没有「…内」「给药后 24 小时」「±3 天」这类有边界的时间窗表达，time_window 属多标签。其余四项核对无误：key_text「用药监测步骤执行不正确」在页内恰好出现一次且为逐字原文并保留否定语义；evidence_span 偏移 391–478 与页文本逐字一致（该处正是「备注」之后）；negation（「没有按照推荐日程」「不正确」「没有遵照」）与 mixed_zh_en（query 含 LLT）成立；PV 归属正确。",
+          "suggestion": "删除 time_window，保留 dose_unit、negation、mixed_zh_en；若标注人认为「监测日程」应算时间窗，则应反向删除 dose_unit，二者不应同时基于同一频次表达并存。"
+        },
+        {
+          "sample_id": "pc-0037",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0038",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0039",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0040",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_ee9578532f0759acbf73232f7b4b83ae9fe0368b1a5f11a2c56ab6af335645c7.jsonl",
+      "sample_input_sha256": {
+        "pc-0036": "f2b790f0c915c3c5d50d212ac6823b1732285dff282c445213a691a407deffe0",
+        "pc-0037": "f904d13b01264a1ca97a619c44cb2c2f7cde4f0a98e1f3f1098aa36192643a71",
+        "pc-0038": "3c38596c5c9af31f2954d3042e143465edd0da5c08056a3fdfaa3d671c0bc8a8",
+        "pc-0039": "73d953e370ed4337427c0a0eaa76bdab71cf549258685db74ce46dd2c2f20390",
+        "pc-0040": "df5a324bb36e03f71c9b0566222367cf8171588b0d918f17a20ee782119c9855"
+      },
+      "review_prompt_sha256": "f4a3804e969b23ec9ab467406937e62f0b9e30933d6a680d4b00ee59b2631c38"
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "b3c7622c-10a8-4b4d-9d9e-e4a62a7d4477",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "7770",
+      "cost_usd": 0.2555725,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "pc-0041",
+        "pc-0042",
+        "pc-0043",
+        "pc-0044",
+        "pc-0045"
+      ],
+      "started_at": "2026-09-20T06:12:03+00:00",
+      "finished_at": "2026-09-20T06:13:21+00:00",
+      "prompt_chars": 24820,
+      "prompt_sha256": "08420a0f8b90dcc8a16829f0b7bfb20c95c81b997067c9203d655c74d0c23274",
+      "verdicts": [
+        {
+          "sample_id": "pc-0041",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0042",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0043",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0044",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "issue",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "key_text 为 “does not include the exposure to one of the ingredients”，虽在页内唯一且逐字原文，但丢失了 query 所问的关键约束“during the manufacturing process before the release as finished product”，与 P1“最小性以同时保留对象与约束的命中含义为前提”冲突：仅凭该命中无法判定问题中“成品放行前的生产过程中”的情形。",
+          "suggestion": "将 key_text 扩为 “does not include the exposure to one of the ingredients during the manufacturing process before the release as finished product”。"
+        },
+        {
+          "sample_id": "pc-0045",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "issue",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "key_text 为 “within 30 days from receipt of the validated signal”，只保留了时限约束而缺少对象（由谁完成何动作），与 P1“同时保留对象与约束的命中含义”不符；该命中本身不能说明是 PRAC Rapporteur 或 (lead) Member State 完成信号确认的时限。",
+          "suggestion": "将 key_text 改为 “This should be done by the PRAC Rapporteur or the (lead) Member State within 30 days from receipt of the validated signal”（仍在页内唯一）。"
+        }
+      ],
+      "input_path": "chunk_inputs/input_08420a0f8b90dcc8a16829f0b7bfb20c95c81b997067c9203d655c74d0c23274.jsonl",
+      "sample_input_sha256": {
+        "pc-0041": "de416971972921ca750431259c3e7ec61837d84c4b63fe9f3850e0d0c2a1d19e",
+        "pc-0042": "1375c31f9064f7d02bf0f6a879b1ee9a40552e415137d50020b6283f170a2f86",
+        "pc-0043": "92598bb5ed413ae0e7d3c2af27d23d7965c064c388304cbe5779b0e9bfe9fb17",
+        "pc-0044": "b4b5bba810d2815c3f89922db6bb5a222cd34b99eff885a80d60013e7e818a74",
+        "pc-0045": "8030f6d19d117b79e71da7166f2e5d4110fe003ad9808d8eebe3c1aa5957550f"
+      },
+      "review_prompt_sha256": "f4a3804e969b23ec9ab467406937e62f0b9e30933d6a680d4b00ee59b2631c38"
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "fd833e8a-9829-4fdb-a26f-8108a842275f",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "10836",
+      "cost_usd": 0.32866,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "pc-0046",
+        "pc-0047",
+        "pc-0048",
+        "pc-0049",
+        "pc-0050"
+      ],
+      "started_at": "2026-09-20T06:13:21+00:00",
+      "finished_at": "2026-09-20T06:15:38+00:00",
+      "prompt_chars": 22948,
+      "prompt_sha256": "00e8492fccf697788b5d2f8de497433ceb999b528a1900dc1bf8d52dbcb0d559",
+      "verdicts": [
+        {
+          "sample_id": "pc-0046",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0047",
+          "verdict": "dispute",
+          "items": {
+            "query": "issue",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "query 基本是 key_text 原句的直译反问：页文本 “Signal confirmation is not intended to be a full assessment of the signal.” 对应 query “信号确认是否等同于对信号的完整评估？”，属于把命中句改写成是非问句，且是非题对否定语义的判别力弱，不像 PV 用户在实际流程中会提的问题。其余四项成立：negation（“is not intended to be”）与 mixed_zh_en（query 含 “GVP Module IX”，key_text 为英文）标签均成立，key_text 在页内仅出现一次并保留对象与否定，evidence_span 为完整单句且偏移长度 74 与文本一致，PV 指南归 PV。",
+          "suggestion": "改为流程导向且非是非式的问法，例如：“按照 GVP Module IX，PRAC 报告员或（牵头）成员国在 30 天内做信号确认时，需要做到何种程度的评估？”，key_text 与 evidence_span 可保持不变。"
+        },
+        {
+          "sample_id": "pc-0048",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0049",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": "提示（不影响判定）：key_text “anticipated SAEs and expected serious suspected adverse reactions” 与本页后文 “anticipated SAEs or expected serious suspected adverse reactions” 仅差连词 and/or，页内唯一性成立但较脆弱，后续若重抽页文本需复核唯一性。"
+        },
+        {
+          "sample_id": "pc-0050",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "issue",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "key_text “§ 312.32(c)(1)(i)(C) and (c)(1)(iv)” 是孤立编号，未同时保留对象与约束，与已批准 P1（最小性以同时保留对象与约束的命中含义为前提，不得缩成孤立数字或编号）冲突；单看该串无法体现“两条 IND 安全报告条款”“要求评估汇总数据”的命中含义。页文本中存在连续且页内唯一的更完整写法。query、slices（query 含 FDA/IND/CFR 英文，属 mixed_zh_en；编号在答案侧出现不构成 protocol_id）、evidence_span（完整单句，含 key_text，无遗漏限定）与 dept（FDA 安全报告指南归 PV）均成立。",
+          "suggestion": "将 key_text 改为页内逐字连续片段 “the two IND safety reporting provisions (§ 312.32(c)(1)(i)(C) and (c)(1)(iv)) that require assessment of aggregate data”，evidence_span 与偏移可保持不变。"
+        }
+      ],
+      "input_path": "chunk_inputs/input_00e8492fccf697788b5d2f8de497433ceb999b528a1900dc1bf8d52dbcb0d559.jsonl",
+      "sample_input_sha256": {
+        "pc-0046": "9b2092fb12c6b60d0b4710ea028b92cd3ca38bef529d99f20cfdc79b935803c8",
+        "pc-0047": "ff04a78015bd2516332ea06db8374f98e4974fa50736e63a26efea367041d496",
+        "pc-0048": "089091a77bbd8c8de143004bea9e2b9d7d233b1294c58bf45eecbe70bdf6b15f",
+        "pc-0049": "e6a60f97c715215eff9b062a961bf1f1eea5f5e8f94900651c17b25748688dcc",
+        "pc-0050": "c765363b5ca077f801bdebbc6429476c092a3f80b9af93d5beec0f8ca41e2a9e"
+      },
+      "review_prompt_sha256": "f4a3804e969b23ec9ab467406937e62f0b9e30933d6a680d4b00ee59b2631c38"
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "fd1f21a8-cab4-4058-93a8-8b38bbaf4395",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "8689",
+      "cost_usd": 0.2699975,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "pc-0051",
+        "pc-0052",
+        "pc-0053",
+        "pc-0054",
+        "pc-0055"
+      ],
+      "started_at": "2026-09-20T06:15:38+00:00",
+      "finished_at": "2026-09-20T06:17:05+00:00",
+      "prompt_chars": 21197,
+      "prompt_sha256": "c955156103bf4712542965b49e7eb2b016cc0dc94d00fd37102a6ff2617f59c7",
+      "verdicts": [
+        {
+          "sample_id": "pc-0051",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0052",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0053",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0054",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0055",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_c955156103bf4712542965b49e7eb2b016cc0dc94d00fd37102a6ff2617f59c7.jsonl",
+      "sample_input_sha256": {
+        "pc-0051": "41415665659ba27c11115b7b3b3b7c021ccc466636b6a8c0c80b0d478f421b4d",
+        "pc-0052": "09c30c0dcf276e7ee8aa9ea234e8da51888990b48f6fb4af5aa2864176a790f2",
+        "pc-0053": "d0e28b64cf4261f3eeb0d9b808256dd61d552054c9c06343198556ee1c3a1848",
+        "pc-0054": "019c76417a77ed2fb04956f5c27161119f92dacbfbb0f4edfcf04efba19c1645",
+        "pc-0055": "b39312b7f04dae6880b1ce26dd93ae94cb78131ef85fc2769f5d2c813b717386"
+      },
+      "review_prompt_sha256": "f4a3804e969b23ec9ab467406937e62f0b9e30933d6a680d4b00ee59b2631c38"
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "1d701045-28e4-4a44-9311-2b666d16d764",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "9836",
+      "cost_usd": 0.28782250000000004,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "pc-0056",
+        "pc-0057",
+        "pc-0058",
+        "pc-0059"
+      ],
+      "started_at": "2026-09-20T06:17:05+00:00",
+      "finished_at": "2026-09-20T06:18:39+00:00",
+      "prompt_chars": 9945,
+      "prompt_sha256": "567fb79dde85eea4cd5e6cebc85e431748c24d224bcecbe8d8400f0d42c602ed",
+      "verdicts": [
+        {
+          "sample_id": "pc-0056",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0057",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0058",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "issue",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "key_text 为「10mg」、「5mg/kg」，只剩孤立的数值加单位，未保留被约束的对象（投予劑量、劑量單位）；与已批准 P1「最小性以同时保留对象与约束的命中含义为前提，不要缩成孤立数字」冲突。页内原句为「請填寫通報藥品或產品之投予劑量、劑量單位,例如:「10mg」、「5mg/kg」。」其余四项无问题：negation/time_window/protocol_id 均不适用，query 与 key_text 中的 mg、mg/kg 属单位符号，按 P2 不计英文术语，故未标 mixed_zh_en 正确；span 偏移长度 40 与 char_start 41、char_end 81 一致。",
+          "suggestion": "将 key_text 改为「投予劑量、劑量單位,例如:「10mg」、「5mg/kg」」（或至少「劑量單位,例如:「10mg」、「5mg/kg」」），该串在页文本中仍唯一出现一次。"
+        },
+        {
+          "sample_id": "pc-0059",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_567fb79dde85eea4cd5e6cebc85e431748c24d224bcecbe8d8400f0d42c602ed.jsonl",
+      "sample_input_sha256": {
+        "pc-0056": "8b8dabb4788d6865b25ac28b3454ca825f53f0527a6892459c47b567e525d33b",
+        "pc-0057": "dd8774e18f2b70d4de544ebec98107f3214527b8a6c00dc77f6305665c37151a",
+        "pc-0058": "96c89e35501723d089f9a68b5f1e7031ce62a44c138e0fff833afe1c818911a5",
+        "pc-0059": "8e47ccb0dc174ad238c40ba4c6c99ff40e5e3ebf2eeeb19ed804e8edd154c327"
+      },
+      "review_prompt_sha256": "f4a3804e969b23ec9ab467406937e62f0b9e30933d6a680d4b00ee59b2631c38"
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "08ad1795-f78a-4a4f-b465-d704a4fc506b",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "6263",
+      "cost_usd": 0.20962875,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "pc-0033",
+        "pc-0036",
+        "pc-0044",
+        "pc-0045",
+        "pc-0047"
+      ],
+      "started_at": "2026-09-20T07:56:36+00:00",
+      "finished_at": "2026-09-20T07:57:41+00:00",
+      "prompt_chars": 18132,
+      "prompt_sha256": "8b9019db8972b924206c55b806f9812b8046f528200d4b236565ee4f7b9c6ec2",
+      "verdicts": [
+        {
+          "sample_id": "pc-0033",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0036",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "issue",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "切片缺 dose_unit。按切片定义，dose_unit 覆盖“数值加单位或频次表达”，而所取 evidence_span 中含明确频次表达：“患者每 6 个月测一次肝酶,没有按照推荐日程即每月一次”与“药物说明书上的监测日程是每月一次”，该频次正是命中该条款的关键限定。negation（“没有按照推荐日程”“没有遵照推荐的实验室检查”）与 mixed_zh_en（query 含 LLT）成立；key_text“用药监测步骤执行不正确”页内唯一且为逐字原文，evidence_span 偏移长度与 text 一致（478-391=87），部门归属 PV 正确。",
+          "suggestion": "在 slices 中补加 dose_unit，改为 [\"dose_unit\", \"negation\", \"mixed_zh_en\"]；若判定人认为监测频次不属于 dose_unit（仅限给药频次），请在裁决说明中明确该口径，以便与 3.15 节同类样本保持一致。"
+        },
+        {
+          "sample_id": "pc-0044",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0045",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0047",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_8b9019db8972b924206c55b806f9812b8046f528200d4b236565ee4f7b9c6ec2.jsonl",
+      "sample_input_sha256": {
+        "pc-0033": "1fa922b2653d442f5645014cc5a423d3f03e26c3bcd8d8146dcca34feda87216",
+        "pc-0036": "a2044d7f9c29c9ca85158b182324bd580ab6cfccad06f49191320c556c4a90a0",
+        "pc-0044": "fa2c62068b9c4691277c667844447fecba415cfe14ee475ba1b27bd3542baa80",
+        "pc-0045": "4b3cec7e0024243e5163353b6e0c967c1fa8da08016ac32e68357bd88b9b9663",
+        "pc-0047": "721e27bd2762489bad2ec21f341c52bb2acb910ba1fc1a7f7dd7d905b2841d02"
+      },
+      "review_prompt_sha256": "f4a3804e969b23ec9ab467406937e62f0b9e30933d6a680d4b00ee59b2631c38"
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "e5aa7404-24a4-4eef-9b99-02b6a67df587",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "6962",
+      "cost_usd": 0.20146,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "pc-0050",
+        "pc-0058"
+      ],
+      "started_at": "2026-09-20T07:57:41+00:00",
+      "finished_at": "2026-09-20T07:58:51+00:00",
+      "prompt_chars": 6915,
+      "prompt_sha256": "35561e65e4b3519efd2238f5dff186a7801068e7ef1457491ca1d4bbbf6371aa",
+      "verdicts": [
+        {
+          "sample_id": "pc-0050",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0058",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_35561e65e4b3519efd2238f5dff186a7801068e7ef1457491ca1d4bbbf6371aa.jsonl",
+      "sample_input_sha256": {
+        "pc-0050": "3d7cfa977f9a44bbc8722bddf3238ed91f47915546af545ab1335ed15595bd9e",
+        "pc-0058": "63986c05a1931147e398890fd23ab5706e8af2674836ca3f37f8d24bab358466"
+      },
+      "review_prompt_sha256": "f4a3804e969b23ec9ab467406937e62f0b9e30933d6a680d4b00ee59b2631c38"
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "c81032fc-38fc-46b8-8e9a-2c89a8a6576f",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "18626",
+      "cost_usd": 0.5121100000000001,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "pc-0031",
+        "pc-0032",
+        "pc-0034",
+        "pc-0035",
+        "pc-0037"
+      ],
+      "started_at": "2026-09-20T08:43:34+00:00",
+      "finished_at": "2026-09-20T08:46:31+00:00",
+      "prompt_chars": 8746,
+      "prompt_sha256": "09ede5faf8407a75206385b878d99831a6f59f383f4db1926dc1fff0f33365ba",
+      "verdicts": [
+        {
+          "sample_id": "pc-0031",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": "可考虑在同节内确认是否需要把“用户不得对 MedDRA 进行临时的结构改动,包括变更主 SOC 分配”一并作为备选 gold，但现 gold 已是完整条款且含否定语义，不影响判定。"
+        },
+        {
+          "sample_id": "pc-0032",
+          "verdict": "dispute",
+          "items": {
+            "query": "issue",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "query 基本是证据原句的极性反转：页文本为“进行术语选择时不应使用非现行 LLT。”，query 为“选择 MedDRA 术语时，可以使用非现行 LLT 吗？”，除把“进行术语选择时”改写为“选择 MedDRA 术语时”、“不应”改为“可以…吗”外未增加任何场景或限定信息，接近复核提示所禁止的“把 key_text 原句改成问句”。其余四项无问题：key_text“不应使用非现行 LLT”在页内仅出现一次且保留否定语义，evidence_span 偏移长度 19 与 text 一致且为完整条款，negation 与 mixed_zh_en（query 含 LLT、MedDRA）标签均成立，PV 指南归 PV 正确。",
+          "suggestion": "把 query 改为场景化提问，避免整句极性反转，例如“MedDRA 编码时对所选 LLT 的现行状态有什么要求？”或“发现候选 LLT 已被置为非现行时，术语选择该怎么办？”"
+        },
+        {
+          "sample_id": "pc-0034",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0035",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0037",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_09ede5faf8407a75206385b878d99831a6f59f383f4db1926dc1fff0f33365ba.jsonl",
+      "sample_input_sha256": {
+        "pc-0031": "7f8625c530884ff8358cb795acd3cfb0a0ecf477e4c19578958a98a7b253445a",
+        "pc-0032": "36bbeffeeb1fe6209eb177101d75094612dc512aa22709efe308a9c9e1c54e11",
+        "pc-0034": "9c0c7a382820d3276e4b005e40a680e22aea6486203f9fda8325d27faa793b64",
+        "pc-0035": "12964c834f9f6cc75ba855d8b65247195d6fc61062e0aa597f2d870ce560ae9a",
+        "pc-0037": "f904d13b01264a1ca97a619c44cb2c2f7cde4f0a98e1f3f1098aa36192643a71"
+      },
+      "review_prompt_sha256": "f4a3804e969b23ec9ab467406937e62f0b9e30933d6a680d4b00ee59b2631c38"
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "4f61b269-f958-441c-82d3-1deaba905f68",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "11950",
+      "cost_usd": 0.35477875000000003,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "pc-0038",
+        "pc-0039",
+        "pc-0040",
+        "pc-0041",
+        "pc-0042"
+      ],
+      "started_at": "2026-09-20T08:46:31+00:00",
+      "finished_at": "2026-09-20T08:48:35+00:00",
+      "prompt_chars": 15959,
+      "prompt_sha256": "d872994d7d7b8c1950a4c46b6f3da52c4741de3d203f11538c256ceee007ffc8",
+      "verdicts": [
+        {
+          "sample_id": "pc-0038",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0039",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "issue",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "query 问的是“次 SOC 分支缺失可能与什么数据库限制有关”，页文本中给出该答案的是原因从句“因为数据库结构可能不允许次 SOC 路径的输出或者展示”；而 key_text “不要假定 PT 会显示在其次 SOC 路径中”只是前面的告诫，并未包含所问的数据库限制，命中该 key_text 不等于命中答案。evidence_span 本身完整、偏移长度与 text 一致（440-368=72），部门与切片（negation：“不要假定”“不允许”；mixed_zh_en：query 含 HLT/HLGT/PT/SOC）均成立。",
+          "suggestion": "将 key_text 改为“数据库结构可能不允许次 SOC 路径的输出或者展示”（页内唯一，保留对象“数据库结构/次 SOC 路径”与否定约束“不允许”）；或保留现 key_text 并把 query 改为“按 HLT 或 HLGT 检索时，能否假定多轴性 PT 会显示在其次 SOC 路径中？”"
+        },
+        {
+          "sample_id": "pc-0040",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0041",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0042",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_d872994d7d7b8c1950a4c46b6f3da52c4741de3d203f11538c256ceee007ffc8.jsonl",
+      "sample_input_sha256": {
+        "pc-0038": "3c38596c5c9af31f2954d3042e143465edd0da5c08056a3fdfaa3d671c0bc8a8",
+        "pc-0039": "73d953e370ed4337427c0a0eaa76bdab71cf549258685db74ce46dd2c2f20390",
+        "pc-0040": "df5a324bb36e03f71c9b0566222367cf8171588b0d918f17a20ee782119c9855",
+        "pc-0041": "de416971972921ca750431259c3e7ec61837d84c4b63fe9f3850e0d0c2a1d19e",
+        "pc-0042": "1375c31f9064f7d02bf0f6a879b1ee9a40552e415137d50020b6283f170a2f86"
+      },
+      "review_prompt_sha256": "f4a3804e969b23ec9ab467406937e62f0b9e30933d6a680d4b00ee59b2631c38"
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "b04a7665-d869-4682-b344-68f370619165",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "15919",
+      "cost_usd": 0.4568475,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "pc-0043",
+        "pc-0046",
+        "pc-0048",
+        "pc-0049",
+        "pc-0056"
+      ],
+      "started_at": "2026-09-20T08:48:35+00:00",
+      "finished_at": "2026-09-20T08:51:11+00:00",
+      "prompt_chars": 23481,
+      "prompt_sha256": "2ad2818a1b2a903ba71f5e03cc00e4cadb81ad22b866c1ad66c33349fdfa4632",
+      "verdicts": [
+        {
+          "sample_id": "pc-0043",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0046",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0048",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0049",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0056",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_2ad2818a1b2a903ba71f5e03cc00e4cadb81ad22b866c1ad66c33349fdfa4632.jsonl",
+      "sample_input_sha256": {
+        "pc-0043": "92598bb5ed413ae0e7d3c2af27d23d7965c064c388304cbe5779b0e9bfe9fb17",
+        "pc-0046": "9b2092fb12c6b60d0b4710ea028b92cd3ca38bef529d99f20cfdc79b935803c8",
+        "pc-0048": "089091a77bbd8c8de143004bea9e2b9d7d233b1294c58bf45eecbe70bdf6b15f",
+        "pc-0049": "e6a60f97c715215eff9b062a961bf1f1eea5f5e8f94900651c17b25748688dcc",
+        "pc-0056": "8b8dabb4788d6865b25ac28b3454ca825f53f0527a6892459c47b567e525d33b"
+      },
+      "review_prompt_sha256": "f4a3804e969b23ec9ab467406937e62f0b9e30933d6a680d4b00ee59b2631c38"
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "d0e854bd-b225-4d55-9eb4-5f6076048855",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "5151",
+      "cost_usd": 0.15596625000000003,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "pc-0057",
+        "pc-0059"
+      ],
+      "started_at": "2026-09-20T08:51:11+00:00",
+      "finished_at": "2026-09-20T08:52:00+00:00",
+      "prompt_chars": 4882,
+      "prompt_sha256": "fdb07f79e5be810f8a55afc91b18b3b7ca2d0c905082e823d47b3b900647fa66",
+      "verdicts": [
+        {
+          "sample_id": "pc-0057",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0059",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_fdb07f79e5be810f8a55afc91b18b3b7ca2d0c905082e823d47b3b900647fa66.jsonl",
+      "sample_input_sha256": {
+        "pc-0057": "dd8774e18f2b70d4de544ebec98107f3214527b8a6c00dc77f6305665c37151a",
+        "pc-0059": "8e47ccb0dc174ad238c40ba4c6c99ff40e5e3ebf2eeeb19ed804e8edd154c327"
+      },
+      "review_prompt_sha256": "f4a3804e969b23ec9ab467406937e62f0b9e30933d6a680d4b00ee59b2631c38"
+    },
+    {
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "988ebdb1-642f-40ec-9717-a336045b5bd0",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "6342",
+      "cost_usd": 0.2145975,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "sample_ids": [
+        "pc-0038",
+        "pc-0039",
+        "pc-0040",
+        "pc-0041",
+        "pc-0042"
+      ],
+      "started_at": "2026-09-20T09:13:19+00:00",
+      "finished_at": "2026-09-20T09:14:26+00:00",
+      "prompt_chars": 15962,
+      "prompt_sha256": "21834b1fd78a03290c63dc298b526af268b50210b93599a0aa6f97a04741e556",
+      "verdicts": [
+        {
+          "sample_id": "pc-0038",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0039",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0040",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0041",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        },
+        {
+          "sample_id": "pc-0042",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_21834b1fd78a03290c63dc298b526af268b50210b93599a0aa6f97a04741e556.jsonl",
+      "sample_input_sha256": {
+        "pc-0038": "3c38596c5c9af31f2954d3042e143465edd0da5c08056a3fdfaa3d671c0bc8a8",
+        "pc-0039": "d2b4f23e19bcde47dfc73289e03be0329ce1e7e92f803438073a4fa781a675d1",
+        "pc-0040": "df5a324bb36e03f71c9b0566222367cf8171588b0d918f17a20ee782119c9855",
+        "pc-0041": "de416971972921ca750431259c3e7ec61837d84c4b63fe9f3850e0d0c2a1d19e",
+        "pc-0042": "1375c31f9064f7d02bf0f6a879b1ee9a40552e415137d50020b6283f170a2f86"
+      },
+      "review_prompt_sha256": "f4a3804e969b23ec9ab467406937e62f0b9e30933d6a680d4b00ee59b2631c38"
+    }
+  ],
+  "provenance_version": 2,
+  "latest": {
+    "pc-0051": {
+      "chunk_index": 4,
+      "sample_input_sha256": "41415665659ba27c11115b7b3b3b7c021ccc466636b6a8c0c80b0d478f421b4d",
+      "prompt_sha256": "c955156103bf4712542965b49e7eb2b016cc0dc94d00fd37102a6ff2617f59c7",
+      "verdict_sha256": "e0c0cca0ef51185a48f4b84f7ed5202e5e5712bba20aa57e6df84edf5f39120f"
+    },
+    "pc-0052": {
+      "chunk_index": 4,
+      "sample_input_sha256": "09c30c0dcf276e7ee8aa9ea234e8da51888990b48f6fb4af5aa2864176a790f2",
+      "prompt_sha256": "c955156103bf4712542965b49e7eb2b016cc0dc94d00fd37102a6ff2617f59c7",
+      "verdict_sha256": "6514f41b8c440e13aebeb7daa98f309695d9f29de5e1af0897421b5258180ccd"
+    },
+    "pc-0053": {
+      "chunk_index": 4,
+      "sample_input_sha256": "d0e28b64cf4261f3eeb0d9b808256dd61d552054c9c06343198556ee1c3a1848",
+      "prompt_sha256": "c955156103bf4712542965b49e7eb2b016cc0dc94d00fd37102a6ff2617f59c7",
+      "verdict_sha256": "162663541e126baf4bc8000c6823d61b3201a64837b0a67e6231fdf084023cdd"
+    },
+    "pc-0054": {
+      "chunk_index": 4,
+      "sample_input_sha256": "019c76417a77ed2fb04956f5c27161119f92dacbfbb0f4edfcf04efba19c1645",
+      "prompt_sha256": "c955156103bf4712542965b49e7eb2b016cc0dc94d00fd37102a6ff2617f59c7",
+      "verdict_sha256": "47a7433886cea22da3808753b3535f2472e9251990dd958cb9df42ab84086c30"
+    },
+    "pc-0055": {
+      "chunk_index": 4,
+      "sample_input_sha256": "b39312b7f04dae6880b1ce26dd93ae94cb78131ef85fc2769f5d2c813b717386",
+      "prompt_sha256": "c955156103bf4712542965b49e7eb2b016cc0dc94d00fd37102a6ff2617f59c7",
+      "verdict_sha256": "ba335876cfc66b20b57ee1d323ee13c1aca9f7d682efa09f5bfc45c7ef5bd4be"
+    },
+    "pc-0033": {
+      "chunk_index": 6,
+      "sample_input_sha256": "1fa922b2653d442f5645014cc5a423d3f03e26c3bcd8d8146dcca34feda87216",
+      "prompt_sha256": "8b9019db8972b924206c55b806f9812b8046f528200d4b236565ee4f7b9c6ec2",
+      "verdict_sha256": "d113a1d828fd74774f0609a0f2bb71a0d8fdc0e66405f0db02debea19b2b1bf4"
+    },
+    "pc-0036": {
+      "chunk_index": 6,
+      "sample_input_sha256": "a2044d7f9c29c9ca85158b182324bd580ab6cfccad06f49191320c556c4a90a0",
+      "prompt_sha256": "8b9019db8972b924206c55b806f9812b8046f528200d4b236565ee4f7b9c6ec2",
+      "verdict_sha256": "4848244c9f0eeee8af39eb4b4c60b377ecc09e9235016574410eaf2729f6d5c1"
+    },
+    "pc-0044": {
+      "chunk_index": 6,
+      "sample_input_sha256": "fa2c62068b9c4691277c667844447fecba415cfe14ee475ba1b27bd3542baa80",
+      "prompt_sha256": "8b9019db8972b924206c55b806f9812b8046f528200d4b236565ee4f7b9c6ec2",
+      "verdict_sha256": "ab57048c5fff9618fb3996c1e6993406807da9ffacf77e185ad974d09ff7dccf"
+    },
+    "pc-0045": {
+      "chunk_index": 6,
+      "sample_input_sha256": "4b3cec7e0024243e5163353b6e0c967c1fa8da08016ac32e68357bd88b9b9663",
+      "prompt_sha256": "8b9019db8972b924206c55b806f9812b8046f528200d4b236565ee4f7b9c6ec2",
+      "verdict_sha256": "b76c948c52a54249b71f5bda69424f6627136e6c3e52b5760037d9f9aa14f868"
+    },
+    "pc-0047": {
+      "chunk_index": 6,
+      "sample_input_sha256": "721e27bd2762489bad2ec21f341c52bb2acb910ba1fc1a7f7dd7d905b2841d02",
+      "prompt_sha256": "8b9019db8972b924206c55b806f9812b8046f528200d4b236565ee4f7b9c6ec2",
+      "verdict_sha256": "26da7e81d20df44579aa7f9f2290ed10f68c6e2e81ae40bef7c9f78afed396da"
+    },
+    "pc-0050": {
+      "chunk_index": 7,
+      "sample_input_sha256": "3d7cfa977f9a44bbc8722bddf3238ed91f47915546af545ab1335ed15595bd9e",
+      "prompt_sha256": "35561e65e4b3519efd2238f5dff186a7801068e7ef1457491ca1d4bbbf6371aa",
+      "verdict_sha256": "581120a82a79a44a102a539396ac93c6f2a8368078055207f001cfb6f1db5ea5"
+    },
+    "pc-0058": {
+      "chunk_index": 7,
+      "sample_input_sha256": "63986c05a1931147e398890fd23ab5706e8af2674836ca3f37f8d24bab358466",
+      "prompt_sha256": "35561e65e4b3519efd2238f5dff186a7801068e7ef1457491ca1d4bbbf6371aa",
+      "verdict_sha256": "197fbd176d2b6d58f7fce5d3b4e1673e6b8899f34a3c2440bd94afe3ccb4ba8d"
+    },
+    "pc-0031": {
+      "chunk_index": 8,
+      "sample_input_sha256": "7f8625c530884ff8358cb795acd3cfb0a0ecf477e4c19578958a98a7b253445a",
+      "prompt_sha256": "09ede5faf8407a75206385b878d99831a6f59f383f4db1926dc1fff0f33365ba",
+      "verdict_sha256": "9e3c32a5aa057744db961dcedb1c0bbaa03ef03d253df04f4cd5457136d2e6d5"
+    },
+    "pc-0032": {
+      "chunk_index": 8,
+      "sample_input_sha256": "36bbeffeeb1fe6209eb177101d75094612dc512aa22709efe308a9c9e1c54e11",
+      "prompt_sha256": "09ede5faf8407a75206385b878d99831a6f59f383f4db1926dc1fff0f33365ba",
+      "verdict_sha256": "30f891525f7508eb2d3b27696e28d1bdd8f450f650469b0e6e75ac90dce06e6e"
+    },
+    "pc-0034": {
+      "chunk_index": 8,
+      "sample_input_sha256": "9c0c7a382820d3276e4b005e40a680e22aea6486203f9fda8325d27faa793b64",
+      "prompt_sha256": "09ede5faf8407a75206385b878d99831a6f59f383f4db1926dc1fff0f33365ba",
+      "verdict_sha256": "85c41c11d124493c394a5f9b46b9d5dc68e8217b34a0e97d75bb5e8b3781b5d7"
+    },
+    "pc-0035": {
+      "chunk_index": 8,
+      "sample_input_sha256": "12964c834f9f6cc75ba855d8b65247195d6fc61062e0aa597f2d870ce560ae9a",
+      "prompt_sha256": "09ede5faf8407a75206385b878d99831a6f59f383f4db1926dc1fff0f33365ba",
+      "verdict_sha256": "374cdb8b9642ee6a93b2811a7d4241d39d34ef396f84be8b77d167586c23e007"
+    },
+    "pc-0037": {
+      "chunk_index": 8,
+      "sample_input_sha256": "f904d13b01264a1ca97a619c44cb2c2f7cde4f0a98e1f3f1098aa36192643a71",
+      "prompt_sha256": "09ede5faf8407a75206385b878d99831a6f59f383f4db1926dc1fff0f33365ba",
+      "verdict_sha256": "cfbae9e8def3ce7cbe12d55ea6b08508bf55469fb2355c68ae257ff2c283f8b9"
+    },
+    "pc-0043": {
+      "chunk_index": 10,
+      "sample_input_sha256": "92598bb5ed413ae0e7d3c2af27d23d7965c064c388304cbe5779b0e9bfe9fb17",
+      "prompt_sha256": "2ad2818a1b2a903ba71f5e03cc00e4cadb81ad22b866c1ad66c33349fdfa4632",
+      "verdict_sha256": "8da70c7201aafb6b035e28881a74edf92b37d153dea71abb32e4a7b090a0f374"
+    },
+    "pc-0046": {
+      "chunk_index": 10,
+      "sample_input_sha256": "9b2092fb12c6b60d0b4710ea028b92cd3ca38bef529d99f20cfdc79b935803c8",
+      "prompt_sha256": "2ad2818a1b2a903ba71f5e03cc00e4cadb81ad22b866c1ad66c33349fdfa4632",
+      "verdict_sha256": "d541fcaa94d54a1b19da67b5f28a7093c4045a62f78c3317acf1be7c4c7b0198"
+    },
+    "pc-0048": {
+      "chunk_index": 10,
+      "sample_input_sha256": "089091a77bbd8c8de143004bea9e2b9d7d233b1294c58bf45eecbe70bdf6b15f",
+      "prompt_sha256": "2ad2818a1b2a903ba71f5e03cc00e4cadb81ad22b866c1ad66c33349fdfa4632",
+      "verdict_sha256": "490642c0955324fd3cb419e3bb9c53b2fda8883393ab8f539bb03c32876fcab8"
+    },
+    "pc-0049": {
+      "chunk_index": 10,
+      "sample_input_sha256": "e6a60f97c715215eff9b062a961bf1f1eea5f5e8f94900651c17b25748688dcc",
+      "prompt_sha256": "2ad2818a1b2a903ba71f5e03cc00e4cadb81ad22b866c1ad66c33349fdfa4632",
+      "verdict_sha256": "3fe3c79e55e43857ba4c80ed7816b83c388f49ec72772a7b55de13f58b1e2f3f"
+    },
+    "pc-0056": {
+      "chunk_index": 10,
+      "sample_input_sha256": "8b8dabb4788d6865b25ac28b3454ca825f53f0527a6892459c47b567e525d33b",
+      "prompt_sha256": "2ad2818a1b2a903ba71f5e03cc00e4cadb81ad22b866c1ad66c33349fdfa4632",
+      "verdict_sha256": "94ce9a8b8962b3ff637e666bfef1684839aa82d8c2ba3bc3ac5b8ef3fb63516d"
+    },
+    "pc-0057": {
+      "chunk_index": 11,
+      "sample_input_sha256": "dd8774e18f2b70d4de544ebec98107f3214527b8a6c00dc77f6305665c37151a",
+      "prompt_sha256": "fdb07f79e5be810f8a55afc91b18b3b7ca2d0c905082e823d47b3b900647fa66",
+      "verdict_sha256": "b5cf6b875499f26d09c728c67be100c6b4482eefd49c519f65e66413c282b9af"
+    },
+    "pc-0059": {
+      "chunk_index": 11,
+      "sample_input_sha256": "8e47ccb0dc174ad238c40ba4c6c99ff40e5e3ebf2eeeb19ed804e8edd154c327",
+      "prompt_sha256": "fdb07f79e5be810f8a55afc91b18b3b7ca2d0c905082e823d47b3b900647fa66",
+      "verdict_sha256": "da23302ce0fe23bc2219662fe98b80bd007f8b1986739de91a5995511ce9dde0"
+    },
+    "pc-0038": {
+      "chunk_index": 12,
+      "sample_input_sha256": "3c38596c5c9af31f2954d3042e143465edd0da5c08056a3fdfaa3d671c0bc8a8",
+      "prompt_sha256": "21834b1fd78a03290c63dc298b526af268b50210b93599a0aa6f97a04741e556",
+      "verdict_sha256": "5697094541dc9d0c0434aeee7739e5eb2743ec9a96e03d1a032d44edd16cdcbd"
+    },
+    "pc-0039": {
+      "chunk_index": 12,
+      "sample_input_sha256": "d2b4f23e19bcde47dfc73289e03be0329ce1e7e92f803438073a4fa781a675d1",
+      "prompt_sha256": "21834b1fd78a03290c63dc298b526af268b50210b93599a0aa6f97a04741e556",
+      "verdict_sha256": "baed1d776f1485a0a22fc089a58677d4c261eb06bc6b5ed4a1ec8842104256b0"
+    },
+    "pc-0040": {
+      "chunk_index": 12,
+      "sample_input_sha256": "df5a324bb36e03f71c9b0566222367cf8171588b0d918f17a20ee782119c9855",
+      "prompt_sha256": "21834b1fd78a03290c63dc298b526af268b50210b93599a0aa6f97a04741e556",
+      "verdict_sha256": "0c7d3ca9dae3acafe23b3a72cdd70235d1296ef2bc8e0cebff028c1db2b01ace"
+    },
+    "pc-0041": {
+      "chunk_index": 12,
+      "sample_input_sha256": "de416971972921ca750431259c3e7ec61837d84c4b63fe9f3850e0d0c2a1d19e",
+      "prompt_sha256": "21834b1fd78a03290c63dc298b526af268b50210b93599a0aa6f97a04741e556",
+      "verdict_sha256": "a404e5391629ffb944b39bf05c639f675112ab241c603fee9bfd9c09519eb6b7"
+    },
+    "pc-0042": {
+      "chunk_index": 12,
+      "sample_input_sha256": "1375c31f9064f7d02bf0f6a879b1ee9a40552e415137d50020b6283f170a2f86",
+      "prompt_sha256": "21834b1fd78a03290c63dc298b526af268b50210b93599a0aa6f97a04741e556",
+      "verdict_sha256": "20614379a70743dd87782846e1088cea9e2189c52fc67b9f85a2b15bcd501fcc"
+    }
+  },
+  "active_review": null
+}

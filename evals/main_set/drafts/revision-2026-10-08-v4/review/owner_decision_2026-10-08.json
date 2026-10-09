@@ -1,0 +1,30 @@
+{
+  "format": "owner-adjudication-event-v1",
+  "status": "applied_to_v4",
+  "decided_on": "2026-10-08",
+  "timezone": "Australia/Sydney",
+  "actor": {
+    "kind": "human",
+    "id": "project-owner"
+  },
+  "verbatim": "可以",
+  "question_context": "Whether to accept the recommended ms-0241/ms-0242 g3 key, create v4, and authorize at most two review calls under 0.50 USD.",
+  "source_followup": "evals/main_set/drafts/revision-2026-10-08-v3/review/followup_adjudication_2026-10-08.json",
+  "source_followup_sha256": "8c42e8a4eb00437eb3c6eb4394c603177b5bfb0316e7fb5bb02b7fba0fc0dc70",
+  "applied_revision": "evals/main_set/drafts/revision-2026-10-08-v4",
+  "applied_revision_manifest_sha256": "4adb18739e21261ab6a4a22d391301751488dfd6286ea3afa301a4e8a47ea8a3",
+  "decision": {
+    "sample_ids": [
+      "ms-0241",
+      "ms-0242"
+    ],
+    "field": "required_gold_evidence[2].key_text",
+    "action": "accept_and_apply_to_both_linked_samples"
+  },
+  "execution_result": {
+    "ms-0241": "agree",
+    "ms-0242": "pending_no_verdict_error_max_budget_usd",
+    "budget_ledger_sha256": "d9e8c752dd4c978ca6d005d20db190f19c9757b15012bee44f4d9a65f9e0fb1c"
+  },
+  "independent_second_human": false
+}

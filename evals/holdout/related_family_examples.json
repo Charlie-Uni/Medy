@@ -1,0 +1,46 @@
+{
+  "status": "partial_examples_not_complete_grouping",
+  "groups": [
+    {
+      "proposed_group": "ich-e2d",
+      "document_keys": [
+        "ich-e2d-step4-2003",
+        "ich-e2d-r1-step4-2025"
+      ],
+      "reason": "同一 ICH E2D 标准的修订版",
+      "status": "proposed_conservative_merge",
+      "database_family_ids": [
+        "37af7b02-32f2-472e-8626-07564555fee7",
+        "c3c86f8d-5d21-4e82-af6e-875592a6b913"
+      ]
+    },
+    {
+      "proposed_group": "ich-e6",
+      "document_keys": [
+        "ich-e6-r3-step4-2025",
+        "fda-e6r3-gcp-2025",
+        "ich-e6-r3-step4-2026"
+      ],
+      "reason": "ICH 原版、FDA 载体及 Annex 2，保守按同一家族隔离",
+      "status": "proposed_conservative_merge",
+      "database_family_ids": [
+        "24fa3bb8-a1f0-4e06-81cf-f221a4004e5d",
+        "8eff6af2-fcf4-497e-9114-25bfaff3bc01",
+        "f9eb92f2-eecf-4320-9b4b-47a238a6b040"
+      ]
+    },
+    {
+      "proposed_group": "ingredient-glimepiride",
+      "document_keys": [
+        "tfda-label-amaryl-2-0-tablets",
+        "tfda-label-glimaryl-tablets-2mg-glimepiride"
+      ],
+      "reason": "同成分不同品牌；先并组，避免同句条款泄漏",
+      "status": "proposed_conservative_merge",
+      "database_family_ids": [
+        "4454d90a-89f8-4dcd-adb6-ddce960fd43d",
+        "565981fd-c4a4-4b46-a0e8-9b04e1e1eb10"
+      ]
+    }
+  ]
+}

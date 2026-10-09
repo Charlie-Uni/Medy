@@ -13,7 +13,8 @@ import pathlib
 import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
-from common import DRAFT_FILES, DRAFTS, REPO, read_jsonl  # noqa: E402
+from medops.evals.datasets import read_rows  # noqa: E402
+from medops.evals.safety_data import DRAFT_FILES, DRAFTS, REPO  # noqa: E402
 
 SHEETS = DRAFTS / "sheets"
 TITLES = {
@@ -110,7 +111,7 @@ def main() -> int:
     SHEETS.mkdir(parents=True, exist_ok=True)
     total = 0
     for category, name in DRAFT_FILES.items():
-        rows = read_jsonl(DRAFTS / name)
+        rows = read_rows(DRAFTS / name)
         if not rows:
             continue
         lines = [

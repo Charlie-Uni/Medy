@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import pytest
 
+from medops.harness.dependencies import HarnessDeps
 from medops.harness.graph import build_graph, graph_edges, simple_paths
-from medops.harness.nodes import HarnessDeps
 from medops.harness.retrieval_port import RetrievalOutcome, RetrievalRequest
 from medops.infrastructure.llm.fake import FakeModelGateway
 

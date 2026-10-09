@@ -14,7 +14,8 @@ import sys
 import time
 
 import httpx
-import jwt
+
+from medops.evals.api_client import issue_demo_token as token
 
 SCENARIOS = [
     ("1 中文问题，引用仿單作答", "穩壓膜衣錠50毫克用於治療第Ⅱ型糖尿病腎病變時,起始劑量應如何給予?", "answered"),
@@ -36,16 +37,6 @@ SCENARIOS = [
     ),
     ("6 版本与灰度：同一问题看策略版本", "Oxipurinol 的半衰期大約多久", "answered"),
 ]
-
-
-def token(pem: bytes, *, kid: str, issuer: str, audience: str, sub: str) -> str:
-    now = int(time.time())
-    return jwt.encode(
-        {"sub": sub, "iss": issuer, "aud": audience, "iat": now, "exp": now + 3600},
-        pem,
-        algorithm="RS256",
-        headers={"kid": kid},
-    )
 
 
 def main() -> int:

@@ -14,7 +14,8 @@ from typing import Any
 
 from langgraph.graph import END, START, StateGraph
 
-from medops.harness.nodes import NODE_ORDER, HarnessDeps, HarnessState, build_nodes
+from medops.harness.dependencies import HarnessDeps
+from medops.harness.nodes import NODE_ORDER, HarnessState, build_nodes
 
 _TRACING_VARS = ("LANGSMITH_TRACING", "LANGCHAIN_TRACING_V2", "LANGSMITH_API_KEY", "LANGCHAIN_API_KEY")
 

@@ -1,0 +1,131 @@
+{
+  "chunker_version": "chunker-v2",
+  "extraction": {
+    "extractor": "pypdf",
+    "extractor_version": "6.18.1",
+    "params_hash": "7c3f1766ee925cd0175429abce29a029d834b8be9ffa33f45813e3a4944f6b8d"
+  },
+  "normalization": "norm-v1",
+  "chunks": [
+    {
+      "chunk_id": "14df2d36-4290-41c7-98c4-f6a134c203e4",
+      "source_hash": "cbe681cf342eeefb477c1a30770d12798fadcf2d00079faa0aa66047ce4ca330",
+      "spans": [
+        {
+          "char_end": 1772,
+          "char_start": 1219,
+          "page": 6
+        }
+      ],
+      "version_label": "Step 4, 1993-06-24"
+    },
+    {
+      "chunk_id": "241b4443-151b-4246-923b-8175b5f6527c",
+      "source_hash": "e6ce19e36ce7d2e294f89ee89492b9e035178c3cca48984392bbd92eec9b002c",
+      "spans": [
+        {
+          "char_end": 502,
+          "char_start": 0,
+          "page": 18
+        }
+      ],
+      "version_label": "E6(R3) Step 4, 2025-01-06"
+    },
+    {
+      "chunk_id": "4f96968c-1aa5-4f26-8c3e-f0a6f144bc49",
+      "source_hash": "e6ce19e36ce7d2e294f89ee89492b9e035178c3cca48984392bbd92eec9b002c",
+      "spans": [
+        {
+          "char_end": 870,
+          "char_start": 503,
+          "page": 18
+        }
+      ],
+      "version_label": "E6(R3) Step 4, 2025-01-06"
+    },
+    {
+      "chunk_id": "788d5661-bed9-4496-a2a8-38811c1588e5",
+      "source_hash": "cbe681cf342eeefb477c1a30770d12798fadcf2d00079faa0aa66047ce4ca330",
+      "spans": [
+        {
+          "char_end": 756,
+          "char_start": 406,
+          "page": 6
+        }
+      ],
+      "version_label": "Step 4, 1993-06-24"
+    },
+    {
+      "chunk_id": "7f268133-cfc5-47f1-857d-a138c0a04bcc",
+      "source_hash": "e6ce19e36ce7d2e294f89ee89492b9e035178c3cca48984392bbd92eec9b002c",
+      "spans": [
+        {
+          "char_end": 1290,
+          "char_start": 871,
+          "page": 18
+        }
+      ],
+      "version_label": "E6(R3) Step 4, 2025-01-06"
+    },
+    {
+      "chunk_id": "888afd9a-9fb4-41ab-a82b-eb26e5f2aa5d",
+      "source_hash": "cbe681cf342eeefb477c1a30770d12798fadcf2d00079faa0aa66047ce4ca330",
+      "spans": [
+        {
+          "char_end": 2356,
+          "char_start": 1773,
+          "page": 6
+        }
+      ],
+      "version_label": "Step 4, 1993-06-24"
+    },
+    {
+      "chunk_id": "969e7c7a-b058-4fb4-8184-0cb56e0322b8",
+      "source_hash": "e6ce19e36ce7d2e294f89ee89492b9e035178c3cca48984392bbd92eec9b002c",
+      "spans": [
+        {
+          "char_end": 1795,
+          "char_start": 1291,
+          "page": 18
+        }
+      ],
+      "version_label": "E6(R3) Step 4, 2025-01-06"
+    },
+    {
+      "chunk_id": "b42ec76a-fd3d-49a5-bb6c-e096889a05ed",
+      "source_hash": "cbe681cf342eeefb477c1a30770d12798fadcf2d00079faa0aa66047ce4ca330",
+      "spans": [
+        {
+          "char_end": 2793,
+          "char_start": 2357,
+          "page": 6
+        }
+      ],
+      "version_label": "Step 4, 1993-06-24"
+    },
+    {
+      "chunk_id": "bd24c5cb-5c63-43b3-b492-606e974a85de",
+      "source_hash": "cbe681cf342eeefb477c1a30770d12798fadcf2d00079faa0aa66047ce4ca330",
+      "spans": [
+        {
+          "char_end": 405,
+          "char_start": 0,
+          "page": 6
+        }
+      ],
+      "version_label": "Step 4, 1993-06-24"
+    },
+    {
+      "chunk_id": "c5a708f1-c7de-4ff4-b12e-935591af1eba",
+      "source_hash": "cbe681cf342eeefb477c1a30770d12798fadcf2d00079faa0aa66047ce4ca330",
+      "spans": [
+        {
+          "char_end": 1218,
+          "char_start": 757,
+          "page": 6
+        }
+      ],
+      "version_label": "Step 4, 1993-06-24"
+    }
+  ]
+}

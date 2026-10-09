@@ -1,0 +1,155 @@
+{
+  "format": "review-total-budget-v1",
+  "total_budget_usd": "1.950000",
+  "scope_sha256": "d8ff6558a0ffb4cce0534cc7d757ee53c9ea76e87b507f8be2cdd31d8325342a",
+  "scope": {
+    "format": "review-budget-authorization-v1",
+    "approved_by": "project-owner",
+    "approval_quote": "授权 EVAL-11 复核，最多 1.95 USD",
+    "approval_context": "Authorization of the fixed six-sample EVAL-11 independent review prepared after owner confirmation: one sample per call, at most six calls, no automatic retry, and a total ledger cap of 1.95 USD.",
+    "total_budget_usd": 1.95,
+    "max_attempts": 6,
+    "stop_on_nonvalidated_attempt": true,
+    "automatic_retry": false,
+    "review_root": "evals/main_set/drafts/revision-2026-10-08-v5/review",
+    "model": "claude-opus-5",
+    "effort": "high",
+    "recommended_call_cap_usd": 0.3,
+    "budget_buffer_usd": 0.15,
+    "authorized_sample_ids": [
+      "ms-0197",
+      "ms-0198",
+      "ms-0440",
+      "ms-0441",
+      "pc-0070",
+      "pc-0102"
+    ],
+    "revision_manifest_sha256": "10c1b34d7b1cafa76483276a3668573ff4de2ad13c8c8b03cb8e082893f15916",
+    "confirmation_sha256": "0b12b5fdef14172745ed2746b649d5ec1402e4d49413965d502e3b87e125e0b1",
+    "preparation_sha256": "14d46ce6efbbf989a3ec1dfd090fe938c7cced4774b56387170684ddb31e81bf",
+    "batches": {
+      "main/CO": {
+        "input_sha256": "675abc6914e93cacda3ef150a20b9cad5db1ce961dde965e5f3418c8c683bd98",
+        "prompt_sha256": "7572d16e88b638cbc6fa888f4e1a86fe6ffb4869583df357ee1ce0bd012eb758"
+      },
+      "main/EN": {
+        "input_sha256": "5a7cb5ab4235a2702b280af0b6bb5d94a6bee52fd903e334d7943ac0ac5b6f3e",
+        "prompt_sha256": "7572d16e88b638cbc6fa888f4e1a86fe6ffb4869583df357ee1ce0bd012eb758"
+      },
+      "main/PV": {
+        "input_sha256": "fcdbf8d7dab57355c8331a4a976154114d795248c35680a7b99d15d8ae9ae484",
+        "prompt_sha256": "7572d16e88b638cbc6fa888f4e1a86fe6ffb4869583df357ee1ce0bd012eb758"
+      },
+      "probe/CO": {
+        "input_sha256": "1ea035ef6e33dab0f2eaafa62fb8e2a20713e366704362e97ea3640b872dca38",
+        "prompt_sha256": "ba856262c67512e5c0c1e79d7e8cea497074f6180eeb0d206d9c0eca359435be"
+      },
+      "probe/EN": {
+        "input_sha256": "ea2153520251bfb7cb49a6925837da6fce0da9923329b942e7851a8f2c8ebbc7",
+        "prompt_sha256": "ba856262c67512e5c0c1e79d7e8cea497074f6180eeb0d206d9c0eca359435be"
+      }
+    },
+    "independent_second_human": false,
+    "cost_basis": "Claude CLI reported USD estimate; distinguish from provider invoice/subscription billing",
+    "limit_note": "Each call stops at 0.30 USD; the 1.95 USD total includes a 0.15 USD buffer beyond six reservations for possible small CLI threshold overrun. Any failed, invalid, unknown-charge, or cap-exceeded attempt stops the authorization without retry."
+  },
+  "created_at": "2026-10-08T12:23:15.933087+00:00",
+  "attempts": [
+    {
+      "attempt_id": "4b08035c879f4730b7695a99473da6bf",
+      "status": "accounted",
+      "reserved_usd": "0.300000",
+      "cost_usd": "0.074861",
+      "started_at": "2026-10-08T12:23:16.276082+00:00",
+      "identity": {
+        "batch": "PV",
+        "scope": "main",
+        "sample_ids": [
+          "ms-0197"
+        ],
+        "prompt_sha256": "4229e5eacaf5bffb57097d0794d6bd51851980f3fd21a427d66530e4ceef68f1",
+        "model": "claude-opus-5",
+        "cli_version": "2.1.79 (Claude Code)"
+      },
+      "finished_at": "2026-10-08T12:23:41.510537+00:00",
+      "outcome": "validated_reply",
+      "metadata": {
+        "model": "claude-opus-5",
+        "session_id": "a5a1d653-bff3-431b-863a-0fcbb9689035",
+        "cli_capture_sha256": "d21ca98bc3f24ecaa978f8a0d788e99a7e2f0a808004e803fcc39de15082e423"
+      }
+    },
+    {
+      "attempt_id": "ebbd0f75ac724a279d3ab0d8f7e5d1e9",
+      "status": "accounted",
+      "reserved_usd": "0.300000",
+      "cost_usd": "0.270936",
+      "started_at": "2026-10-08T12:24:05.250034+00:00",
+      "identity": {
+        "batch": "CO",
+        "scope": "main",
+        "sample_ids": [
+          "ms-0440"
+        ],
+        "prompt_sha256": "d3ffecc3ba5d5fd8ec0f921947d873b90039ea73875bc2039811dca473e0f0ad",
+        "model": "claude-opus-5",
+        "cli_version": "2.1.79 (Claude Code)"
+      },
+      "finished_at": "2026-10-08T12:25:47.197900+00:00",
+      "outcome": "validated_reply",
+      "metadata": {
+        "model": "claude-opus-5",
+        "session_id": "ad908c49-2c97-4a2e-bdb1-f8779addc4be",
+        "cli_capture_sha256": "021b18261ce95362d449464e6c13b063e23aeb908144a0e9df88089c6b510343"
+      }
+    },
+    {
+      "attempt_id": "446fdc06faa54e0eae299e0f06b2e83e",
+      "status": "accounted",
+      "reserved_usd": "0.300000",
+      "cost_usd": "0.162092",
+      "started_at": "2026-10-08T12:26:23.913285+00:00",
+      "identity": {
+        "batch": "EN",
+        "scope": "main",
+        "sample_ids": [
+          "ms-0441"
+        ],
+        "prompt_sha256": "18a8c279063dbf7a20d9acf2f73b70f7e903f0867d39204f912f184498c03d9e",
+        "model": "claude-opus-5",
+        "cli_version": "2.1.79 (Claude Code)"
+      },
+      "finished_at": "2026-10-08T12:27:27.482440+00:00",
+      "outcome": "validated_reply",
+      "metadata": {
+        "model": "claude-opus-5",
+        "session_id": "e894cd2c-0f8e-4761-8664-e91f74a3d909",
+        "cli_capture_sha256": "f696cf743cb8aa1b3d604beb8cfd98212ac03ba73442fb27ca9eb88d730e734b"
+      }
+    },
+    {
+      "attempt_id": "f0a53f8e5c4b4bf6b6a561cde1fc00b8",
+      "status": "accounted",
+      "reserved_usd": "0.300000",
+      "cost_usd": "0.071173",
+      "started_at": "2026-10-08T12:27:34.584367+00:00",
+      "identity": {
+        "batch": "CO",
+        "scope": "probe",
+        "sample_ids": [
+          "pc-0070"
+        ],
+        "prompt_sha256": "b1db9b63160e9d56c7ffb84e15ff5401f564514637588d7b1783376df95e2e28",
+        "model": "claude-opus-5",
+        "cli_version": "2.1.79 (Claude Code)"
+      },
+      "finished_at": "2026-10-08T12:28:02.972695+00:00",
+      "outcome": "validated_reply",
+      "metadata": {
+        "model": "claude-opus-5",
+        "session_id": "e8ee6367-70e7-42cd-8915-5a16a2389495",
+        "cli_capture_sha256": "682644c041d385831234b4993662b86914fec5b45943a45ca309f29a764f5764"
+      }
+    }
+  ]
+}

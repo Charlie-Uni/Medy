@@ -1,0 +1,37 @@
+{
+  "format": "review-budget-authorization-v1",
+  "approved_by": "project-owner",
+  "approved_at": "2026-10-09",
+  "approval_quote": "EVAL-11 v6 复核，最多 0.65 USD",
+  "approval_context": "Authorization of the exact EVAL-11 v6 differential review prepared after owner confirmation: only pc-0070 and pc-0102, one sample per call, at most two calls, no automatic retry, and a total ledger cap of 0.65 USD.",
+  "total_budget_usd": 0.65,
+  "max_attempts": 2,
+  "stop_on_nonvalidated_attempt": true,
+  "automatic_retry": false,
+  "review_root": "evals/main_set/drafts/revision-2026-10-08-v6/review",
+  "model": "claude-opus-5",
+  "effort": "high",
+  "recommended_call_cap_usd": 0.3,
+  "budget_buffer_usd": 0.05,
+  "authorized_sample_ids": [
+    "pc-0070",
+    "pc-0102"
+  ],
+  "revision_manifest_sha256": "9eba65082184d9f9311287ed6af4309d616a08566e40ee83de936eb2609b5c3c",
+  "confirmation_sha256": "d23e9326d6c8989dbf8b6fb8ec8928b6f6d1df6067b026e50532db8856243171",
+  "preparation_sha256": "518f1c9928238699a848651e2aa1aa8b5439029cd8af03654b7030c6cd7c0863",
+  "budget_request_sha256": "2148c0fa6465fa73288f3d335bd79a16789e17d5641509d8ce1b7a8bb1b8c745",
+  "batches": {
+    "probe/CO": {
+      "input_sha256": "95d45fdd2ab24c9fed565a20c55fbd2823e5c85b4cd4762d59ebd85fb8c6fccb",
+      "prompt_sha256": "ba856262c67512e5c0c1e79d7e8cea497074f6180eeb0d206d9c0eca359435be"
+    },
+    "probe/EN": {
+      "input_sha256": "5724d2555f0faee71b2c140f8e8acd91d589b85cd49f841d383056e1f7816a61",
+      "prompt_sha256": "ba856262c67512e5c0c1e79d7e8cea497074f6180eeb0d206d9c0eca359435be"
+    }
+  },
+  "independent_second_human": false,
+  "cost_basis": "Claude CLI reported USD estimate; distinguish from provider invoice/subscription billing",
+  "limit_note": "Each call stops at 0.30 USD; the 0.65 USD total includes a 0.05 USD buffer beyond two reservations for possible small CLI threshold overrun. Any failed, invalid, unknown-charge, or cap-exceeded attempt stops the authorization without retry."
+}

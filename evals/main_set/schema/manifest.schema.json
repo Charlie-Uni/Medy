@@ -391,7 +391,7 @@
     "files": {
       "type": "array",
       "minItems": 3,
-      "maxItems": 5,
+      "maxItems": 6,
       "uniqueItems": true,
       "items": {
         "type": "object",
@@ -407,7 +407,8 @@
               "samples.jsonl",
               "review_prompt.md",
               "acl_probes.jsonl",
-              "pii_exceptions.json"
+              "pii_exceptions.json",
+              "revision_provenance.json"
             ]
           },
           "sha256": {
@@ -638,6 +639,15 @@
         "prompt_hash": {
           "$ref": "#/$defs/sha256"
         },
+        "prompt_hashes": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 16,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/sha256"
+          }
+        },
         "reviewer_id": {
           "type": "string",
           "minLength": 1
@@ -648,7 +658,7 @@
           "maxLength": 600
         }
       },
-      "description": "spec-m1 §2: the frozen probe samples merged verbatim (their review blocks keep the probe review prompt hash)"
+      "description": "spec-m1 §2: frozen probe samples merged verbatim; prompt_hash is the probe's current prompt and optional prompt_hashes records every per-sample historical/current prompt binding"
     },
     "second_human_review": {
       "type": "object",
@@ -855,7 +865,7 @@
         "artifacts": {
           "type": "array",
           "minItems": 12,
-          "maxItems": 12,
+          "maxItems": 140,
           "uniqueItems": true,
           "items": {
             "type": "object",
@@ -866,19 +876,31 @@
             ],
             "properties": {
               "path": {
-                "enum": [
-                  "review_evidence/run_MA.json",
-                  "review_evidence/run_PV.json",
-                  "review_evidence/run_CO.json",
-                  "review_evidence/run_EN.json",
-                  "review_evidence/run_NA.json",
-                  "review_evidence/verdicts_MA.jsonl",
-                  "review_evidence/verdicts_PV.jsonl",
-                  "review_evidence/verdicts_CO.jsonl",
-                  "review_evidence/verdicts_EN.jsonl",
-                  "review_evidence/verdicts_NA.jsonl",
-                  "review_evidence/resolutions.json",
-                  "review_evidence/reviewer_runtime_metadata.json"
+                "oneOf": [
+                  {
+                    "enum": [
+                      "review_evidence/run_MA.json",
+                      "review_evidence/run_PV.json",
+                      "review_evidence/run_CO.json",
+                      "review_evidence/run_EN.json",
+                      "review_evidence/run_NA.json",
+                      "review_evidence/verdicts_MA.jsonl",
+                      "review_evidence/verdicts_PV.jsonl",
+                      "review_evidence/verdicts_CO.jsonl",
+                      "review_evidence/verdicts_EN.jsonl",
+                      "review_evidence/verdicts_NA.jsonl",
+                      "review_evidence/resolutions.json",
+                      "review_evidence/reviewer_runtime_metadata.json"
+                    ]
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^review_evidence/chunk_inputs/input_[0-9a-f]{64}\\.jsonl$"
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^review_evidence/review_prompts/review_prompt_[0-9a-f]{64}\\.md$"
+                  }
                 ]
               },
               "sha256": {

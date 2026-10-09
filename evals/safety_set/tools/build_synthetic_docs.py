@@ -24,7 +24,14 @@ from xml.sax.saxutils import escape
 import psycopg
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
-from common import CORPUS_SAFETY, INJECTION_PLAN, SAFETY_DB, SYNTHETIC_DIR, admin_dsn, canary_for  # noqa: E402
+from medops.evals.safety_data import (  # noqa: E402
+    CORPUS_SAFETY,
+    INJECTION_PLAN,
+    SAFETY_DB,
+    SYNTHETIC_DIR,
+    admin_dsn,
+    canary_for,
+)
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[3] / "src"))
 from medops.ingestion import docx as docx_mod  # noqa: E402

@@ -1,0 +1,59 @@
+{
+  "format": "review-followup-adjudication-v1",
+  "status": "pending_owner_decision",
+  "created_at": "2026-10-08T14:22:15+11:00",
+  "independent_second_human": false,
+  "source": {
+    "revision_manifest_sha256": "279c91a6ab2c7a667399419b51d97aeb27ea59972fe77716d75412550f46398d",
+    "eval08_authorization_sha256": "9686f77ee883bcd5898c1d8d04dd99c3367c1e8be97b64244302d505372314ca",
+    "budget_sha256": "2598dfb5ac89256075b285784c800f9a09b9f8df3d5a51faffd7b581bd383b8a",
+    "run_en_sha256": "f3707dcc4f1cde9b089ca1c2aa811206a035896518d58fdb9fed62d2458f23c9",
+    "run_pv_sha256": "b49d41423bbba82fbb92605158a0ea1b31799c1b3ea5c433c996e0817ddbc6de",
+    "verdicts_en_sha256": "7b893dfa68ae90a299f532ac3f8f3c4dde84f9aba208e53fad3ef65c70318964",
+    "verdicts_pv_sha256": "591d8505d489500d21f947ac898668ae8a74a5f047a503c17e2b4b1f6a3dc1c5"
+  },
+  "decision": {
+    "sample_ids": [
+      "ms-0241",
+      "ms-0242"
+    ],
+    "field": "required_gold_evidence[2].key_text",
+    "current_value": "An aggregate analysis of specific events observed in a clinical trial that indicates those events occur more frequently",
+    "recommended_value": "An aggregate analysis of specific events observed in a clinical trial that indicates those events occur more frequently in the drug treatment group than in a concurrent or historical control group",
+    "recommended_action": "accept_and_apply_to_both_linked_samples",
+    "reviewer_decision": null,
+    "reviewer_id": null,
+    "decided_at": null,
+    "deterministic_check": {
+      "page": 7,
+      "key_start": 1365,
+      "key_end": 1561,
+      "length": 196,
+      "page_occurrences": 1,
+      "evidence_span_unchanged": [
+        1363,
+        1731
+      ]
+    },
+    "reason": "The comparison target is the material constraint that makes the third example meaningful. Extending the key keeps the aggregate-analysis object and the drug-versus-control comparison. The Chinese parent and English twin must remain byte-equivalent apart from gold_id. Do not add negation: “not commonly associated” in g2 is a descriptive property, not a prohibition or limiting instruction under the current slice rule."
+  },
+  "model_disagreement": {
+    "ms-0241": "dispute:key_text",
+    "ms-0242": "agree",
+    "same_current_key_text": true,
+    "meaning": "Two isolated sessions disagreed on identical inherited content; neither verdict is silently overwritten."
+  },
+  "rerun": {
+    "required_if_changed": true,
+    "samples": [
+      "ms-0241",
+      "ms-0242"
+    ],
+    "current_authorization_exhausted_by_attempt_count": true,
+    "existing_remaining_usd": "0.194100",
+    "new_authorization_required": true,
+    "recommended_max_calls": 2,
+    "recommended_total_cap_usd": "0.50",
+    "automatic_retry": false
+  }
+}

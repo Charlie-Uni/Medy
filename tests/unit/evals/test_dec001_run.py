@@ -9,6 +9,7 @@ from datetime import date
 import pytest
 
 from medops.evals.experiments import dec001_run as r
+from medops.evals.safety_data import with_database
 from medops.retrieval.contracts import LexicalCandidate, LexicalSearchResult
 
 VERSIONS = {
@@ -188,6 +189,6 @@ def test_gate_scope_rule_and_twin_overlay(tmp_path):
 
 
 def test_with_database_rewrites_only_the_path():
-    assert r._with_database("postgresql://u:p@localhost:5433/medops?sslmode=disable", "medops_v2") == (
+    assert with_database("postgresql://u:p@localhost:5433/medops?sslmode=disable", "medops_v2") == (
         "postgresql://u:p@localhost:5433/medops_v2?sslmode=disable"
     )

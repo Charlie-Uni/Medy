@@ -1,0 +1,44 @@
+{
+  "format": "paid-review-outcome-v1",
+  "status": "stopped_after_parent_disputes",
+  "completed_at": "2026-10-08",
+  "authorization_quote": "授权 EVAL-11 复核，最多 1.95 USD",
+  "authorization_sha256": "29867e55fc3fcc1de6d9ba2e546cb24d5ccf530befe981bba391f0b59f08694a",
+  "attempts": 4,
+  "validated_replies": 4,
+  "agrees": 2,
+  "disputes": 2,
+  "known_cost_usd": "0.579062",
+  "authorized_total_usd": "1.950000",
+  "unused_authorized_balance_usd": "1.370938",
+  "verdicts": {
+    "ms-0197": "dispute",
+    "ms-0440": "agree",
+    "ms-0441": "agree",
+    "pc-0070": "dispute"
+  },
+  "not_called": [
+    {
+      "sample_id": "ms-0198",
+      "reason": "ms-0197 parent dispute identifies the same gold defect"
+    },
+    {
+      "sample_id": "pc-0102",
+      "reason": "pc-0070 parent dispute identifies the same gold defect"
+    }
+  ],
+  "run_artifacts": {
+    "main/run_PV.json": "38b395957d03178fb07eb6615e90886a1c52601bc1f585aca223d2d944c1c0eb",
+    "main/verdicts_PV.jsonl": "e4ad91eb3c15aeb490e37c2aaefb6cd5f3c3ccfd96bf43d9ca812b15a43a7368",
+    "main/run_CO.json": "574d2c5fc77a6d9804f8be30f87ab66608c9cb58371859f08cea392af295c50a",
+    "main/verdicts_CO.jsonl": "71682ef8020363a30563f0d06ea3524db3f42387fb757991ba714b7485b8fd50",
+    "main/run_EN.json": "7c8782c5aea27f1e6f0379a2f968379c3562de4c63c9064377e6fceb758d9f5c",
+    "main/verdicts_EN.jsonl": "ea885b75572d90f4cc9316147f70c6a9691acb0cdd5f856fe8a57a297c37fd74",
+    "probe/run_CO.json": "080db426e9f0bb0670ca9b5ee2b3a81dbd1f15d50ff0bc0e13ba88548c1fe36f",
+    "probe/verdicts_CO.jsonl": "37e9255669c6ccc0488778cecb24aad67ce82217046161942a2da77b2af9dcf0"
+  },
+  "budget_sha256": "05db95eabb5cb3c9ff479a417ca9f4d65420a481fb2de0376f47939ba953ca8c",
+  "unresolved_attempts": [],
+  "automatic_retries": 0,
+  "next_revision": "evals/main_set/drafts/revision-2026-10-08-v6"
+}

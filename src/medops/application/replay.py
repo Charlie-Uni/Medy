@@ -17,7 +17,7 @@ from medops.core.errors import BusinessError, ErrorCode
 from medops.domain.common import ReasonCode
 from medops.domain.identity import UserContext
 from medops.domain.state import VersionSet
-from medops.harness.nodes import HarnessDeps
+from medops.harness.dependencies import HarnessDeps
 from medops.harness.runtime import HarnessRun, initial_state, run_ask
 from medops.infrastructure.llm.meter import MeteredGateway
 
@@ -46,7 +46,7 @@ def _side(
 
 def outcome_of(run: HarnessRun) -> str:
     """Same mapping as the public ask response: refused for policy refusals, escalated otherwise."""
-    from medops.api.app import REFUSAL_CODES
+    from medops.api.responses import REFUSAL_CODES
 
     if run.state.answer is not None:
         return "answered"
@@ -117,14 +117,14 @@ class ReplayService:
             trace.reason_codes,
             trace.cited_chunk_ids,
             trace.evidence_chunk_ids,
-            self.versions,
+            versions,  # the versions the replay actually ran with (routed per principal, M4-09), not the base set
         )
         changed = tuple(f for f in DIFF_FIELDS if getattr(src, f) != getattr(rep, f))
         report = ReplayReport(
             replay_id=str(uuid.uuid4()),
             source=src,
             replay=rep,
-            versions_match=source_versions == self.versions,
+            versions_match=source_versions == versions,
             changed=changed,
             created_at=self.clock(),
         )
@@ -142,7 +142,3 @@ class ReplayService:
             )
         )
         return report
-
-
-def _unused(_: Any) -> None:  # pragma: no cover - keeps optional imports referenced for type checkers
-    return None

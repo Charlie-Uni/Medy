@@ -1,0 +1,1271 @@
+[
+  {
+    "sample_id": "ms-0124",
+    "origin": "existing_decision",
+    "before_sha256": "c8adb48a2f3508e7d4bb932f67d18ef5383ffcbd0d3e247e45d67e77d99c2d2c",
+    "decision_sample_id": "ms-0124",
+    "source_document_key": "ema-gvp-module-iv-rev1",
+    "rationale": [
+      "分开完整证据单元并保留上下文，组间共同必需；按现行 PR-19 重算 long_context。"
+    ],
+    "review_state": {
+      "human_annotation": "pending",
+      "independent_llm": "pending",
+      "second_human": "pending"
+    },
+    "after": {
+      "dept": "PV",
+      "drafted_by": {
+        "kind": "llm",
+        "id": "codex-annotation-revision-20261008"
+      },
+      "language": "mixed",
+      "notes": "",
+      "query": "根据 GVP Module IV,药物警戒审计发现(audit findings)应如何分级为 critical、major、minor 三个等级?每个等级的具体定义是什么?",
+      "required_gold_evidence": [
+        {
+          "evidence_span": {
+            "text": "Audit findings should be reported in line with their relative risk level and should be graded in order to indicate their relative criticality to risks impacting the pharmacovigilance system, processes and parts of processes.",
+            "char_start": 952,
+            "char_end": 1176
+          },
+          "gold_id": "ms-0124-g1",
+          "key_text": "should be graded in order to indicate their relative criticality",
+          "page": 8,
+          "printed_page_label": null,
+          "section": "IV.B.2.3.2. Reporting",
+          "source_hash": "d0e530f1b15c00987e77a97eb2c310c3267c13a3351a42b9143fee4f899293e8",
+          "version_label": "EMA/228028/2012 Rev 1 (2015-08-03)"
+        },
+        {
+          "evidence_span": {
+            "text": "The grading system should be defined in the description of the quality system for pharmacovigilance, and should take into consideration the thresholds noted below which would be used in further reporting under the legislation as set out in IV.C.2.: • critical is a fundamental weakness in one or more pharmacovigilance processes or practices that adversely affects the whole pharmacovigilance system and/or the rights, safety or well-being of patients, or that poses a potential risk to public health and/or represents a serious violation of applicable regulatory requirements.",
+            "char_start": 1177,
+            "char_end": 1754
+          },
+          "gold_id": "ms-0124-g2",
+          "key_text": "critical is a fundamental weakness in one or more pharmacovigilance processes or practices",
+          "page": 8,
+          "printed_page_label": null,
+          "section": "IV.B.2.3.2. Reporting",
+          "source_hash": "d0e530f1b15c00987e77a97eb2c310c3267c13a3351a42b9143fee4f899293e8",
+          "version_label": "EMA/228028/2012 Rev 1 (2015-08-03)"
+        },
+        {
+          "evidence_span": {
+            "text": "• major is a significant weakness in one or more pharmacovigilance processes or practices, or a fundamental weakness in part of one or more pharmacovigilance processes or practices that is detrimental to the whole process and/or could potentially adversely affect the rights, safety or well-being of patients and/or could potentially pose a risk to public health and/or represents a violation of applicable regulatory requirements which is however not considered serious.",
+            "char_start": 1755,
+            "char_end": 2226
+          },
+          "gold_id": "ms-0124-g3",
+          "key_text": "major is a significant weakness in one or more pharmacovigilance processes or practices",
+          "page": 8,
+          "printed_page_label": null,
+          "section": "IV.B.2.3.2. Reporting",
+          "source_hash": "d0e530f1b15c00987e77a97eb2c310c3267c13a3351a42b9143fee4f899293e8",
+          "version_label": "EMA/228028/2012 Rev 1 (2015-08-03)"
+        },
+        {
+          "evidence_span": {
+            "text": "• minor is a weakness in the part of one or more pharmacovigilance processes or practices that is not expected to adversely affect the whole pharmacovigilance system or process and/or the rights, safety or well-being of patients.",
+            "char_start": 2227,
+            "char_end": 2456
+          },
+          "gold_id": "ms-0124-g4",
+          "key_text": "minor is a weakness in the part of one or more pharmacovigilance processes or practices",
+          "page": 8,
+          "printed_page_label": null,
+          "section": "IV.B.2.3.2. Reporting",
+          "source_hash": "d0e530f1b15c00987e77a97eb2c310c3267c13a3351a42b9143fee4f899293e8",
+          "version_label": "EMA/228028/2012 Rev 1 (2015-08-03)"
+        }
+      ],
+      "sample_id": "ms-0124",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ]
+    },
+    "required_gold_groups": [
+      [
+        "c0cb043c-cd67-4888-9e19-d1c822acd461"
+      ],
+      [
+        "fc140511-65be-4a82-87ad-9dc9dd4e8543"
+      ],
+      [
+        "05a7926d-889c-4182-a023-4b6f5cb97ee4"
+      ],
+      [
+        "7313c35d-8d97-46d2-a2cf-f4724e14ecb4"
+      ]
+    ]
+  },
+  {
+    "sample_id": "ms-0125",
+    "origin": "linked_english_twin",
+    "before_sha256": "fd52b0dfc2c98c46de2beb503c854dd474a78b02c978e8d436fd29be09608d4e",
+    "decision_sample_id": "ms-0124",
+    "source_document_key": "ema-gvp-module-iv-rev1",
+    "rationale": [
+      "分开完整证据单元并保留上下文，组间共同必需；按现行 PR-19 重算 long_context。",
+      "与父题 ms-0124 同步 gold、切片和问题范围；旧复核不覆盖修订输入。"
+    ],
+    "review_state": {
+      "human_annotation": "pending",
+      "independent_llm": "pending",
+      "second_human": "pending"
+    },
+    "after": {
+      "dept": "PV",
+      "derived_from": "ms-0124",
+      "drafted_by": {
+        "kind": "llm",
+        "id": "codex-annotation-revision-20261008"
+      },
+      "language": "en",
+      "notes": "",
+      "query": "According to GVP Module IV, how should pharmacovigilance audit findings be graded as critical, major, or minor, and what is the specific definition of each grade?",
+      "required_gold_evidence": [
+        {
+          "evidence_span": {
+            "text": "Audit findings should be reported in line with their relative risk level and should be graded in order to indicate their relative criticality to risks impacting the pharmacovigilance system, processes and parts of processes.",
+            "char_start": 952,
+            "char_end": 1176
+          },
+          "gold_id": "ms-0125-g1",
+          "key_text": "should be graded in order to indicate their relative criticality",
+          "page": 8,
+          "printed_page_label": null,
+          "section": "IV.B.2.3.2. Reporting",
+          "source_hash": "d0e530f1b15c00987e77a97eb2c310c3267c13a3351a42b9143fee4f899293e8",
+          "version_label": "EMA/228028/2012 Rev 1 (2015-08-03)"
+        },
+        {
+          "evidence_span": {
+            "text": "The grading system should be defined in the description of the quality system for pharmacovigilance, and should take into consideration the thresholds noted below which would be used in further reporting under the legislation as set out in IV.C.2.: • critical is a fundamental weakness in one or more pharmacovigilance processes or practices that adversely affects the whole pharmacovigilance system and/or the rights, safety or well-being of patients, or that poses a potential risk to public health and/or represents a serious violation of applicable regulatory requirements.",
+            "char_start": 1177,
+            "char_end": 1754
+          },
+          "gold_id": "ms-0125-g2",
+          "key_text": "critical is a fundamental weakness in one or more pharmacovigilance processes or practices",
+          "page": 8,
+          "printed_page_label": null,
+          "section": "IV.B.2.3.2. Reporting",
+          "source_hash": "d0e530f1b15c00987e77a97eb2c310c3267c13a3351a42b9143fee4f899293e8",
+          "version_label": "EMA/228028/2012 Rev 1 (2015-08-03)"
+        },
+        {
+          "evidence_span": {
+            "text": "• major is a significant weakness in one or more pharmacovigilance processes or practices, or a fundamental weakness in part of one or more pharmacovigilance processes or practices that is detrimental to the whole process and/or could potentially adversely affect the rights, safety or well-being of patients and/or could potentially pose a risk to public health and/or represents a violation of applicable regulatory requirements which is however not considered serious.",
+            "char_start": 1755,
+            "char_end": 2226
+          },
+          "gold_id": "ms-0125-g3",
+          "key_text": "major is a significant weakness in one or more pharmacovigilance processes or practices",
+          "page": 8,
+          "printed_page_label": null,
+          "section": "IV.B.2.3.2. Reporting",
+          "source_hash": "d0e530f1b15c00987e77a97eb2c310c3267c13a3351a42b9143fee4f899293e8",
+          "version_label": "EMA/228028/2012 Rev 1 (2015-08-03)"
+        },
+        {
+          "evidence_span": {
+            "text": "• minor is a weakness in the part of one or more pharmacovigilance processes or practices that is not expected to adversely affect the whole pharmacovigilance system or process and/or the rights, safety or well-being of patients.",
+            "char_start": 2227,
+            "char_end": 2456
+          },
+          "gold_id": "ms-0125-g4",
+          "key_text": "minor is a weakness in the part of one or more pharmacovigilance processes or practices",
+          "page": 8,
+          "printed_page_label": null,
+          "section": "IV.B.2.3.2. Reporting",
+          "source_hash": "d0e530f1b15c00987e77a97eb2c310c3267c13a3351a42b9143fee4f899293e8",
+          "version_label": "EMA/228028/2012 Rev 1 (2015-08-03)"
+        }
+      ],
+      "sample_id": "ms-0125",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ]
+    },
+    "required_gold_groups": [
+      [
+        "c0cb043c-cd67-4888-9e19-d1c822acd461"
+      ],
+      [
+        "fc140511-65be-4a82-87ad-9dc9dd4e8543"
+      ],
+      [
+        "05a7926d-889c-4182-a023-4b6f5cb97ee4"
+      ],
+      [
+        "7313c35d-8d97-46d2-a2cf-f4724e14ecb4"
+      ]
+    ]
+  },
+  {
+    "sample_id": "ms-0177",
+    "origin": "existing_decision",
+    "before_sha256": "43606094c89e3e6f2e34a5471a808ea7bd007932a85c1746c7749a23d7e7f19b",
+    "decision_sample_id": "ms-0177",
+    "source_document_key": "ema-gvp-module-viii-rev3",
+    "rationale": [
+      "明确文档身份、版本或条件式问法；不再以未点名来源限定旧问题。"
+    ],
+    "review_state": {
+      "human_annotation": "pending",
+      "independent_llm": "pending",
+      "second_human": "pending"
+    },
+    "after": {
+      "dept": "PV",
+      "drafted_by": {
+        "kind": "llm",
+        "id": "codex-annotation-revision-20261008"
+      },
+      "language": "mixed",
+      "notes": "",
+      "query": "根据 GVP Module VIII Rev 3 中对 REG Art 10a(2) 和 DIR Art 22a(2) 的说明，MAH 若选择请求陈述书面意见，应在收到施加义务的书面通知后多久内提出请求？",
+      "required_gold_evidence": [
+        {
+          "evidence_span": {
+            "char_end": 427,
+            "char_start": 187,
+            "text": "Within 30 days of receipt of the written notification of an obligation imposed, the marketing authorisation holder may request to present written observations in response to the imposition of the obligation [REG Art 10a(2), DIR Art 22a(2)]."
+          },
+          "gold_id": "ms-0177-g1",
+          "key_text": "Within 30 days of receipt of the written notification of an obligation imposed",
+          "page": 19,
+          "printed_page_label": null,
+          "section": "VIII.C.1.5. Written observations in response to the imposition of an obligation",
+          "source_hash": "847b0c095bc647e02aa577e2116a03b14ff237982af6b850d88e77fcc69e343e",
+          "version_label": "EMA/813938/2011 Rev 3 (2017-10-09)"
+        }
+      ],
+      "sample_id": "ms-0177",
+      "slices": [
+        "time_window",
+        "protocol_id",
+        "mixed_zh_en"
+      ]
+    },
+    "required_gold_groups": [
+      [
+        "7cdac483-63f7-460f-a19b-d42a18eecf6a"
+      ]
+    ]
+  },
+  {
+    "sample_id": "ms-0178",
+    "origin": "linked_english_twin",
+    "before_sha256": "ba41ed155fa50c2659414a2857b00bdb197124a8348c1aee3d24136981366ea4",
+    "decision_sample_id": "ms-0177",
+    "source_document_key": "ema-gvp-module-viii-rev3",
+    "rationale": [
+      "明确文档身份、版本或条件式问法；不再以未点名来源限定旧问题。",
+      "与父题 ms-0177 同步 gold、切片和问题范围；旧复核不覆盖修订输入。"
+    ],
+    "review_state": {
+      "human_annotation": "pending",
+      "independent_llm": "pending",
+      "second_human": "pending"
+    },
+    "after": {
+      "dept": "PV",
+      "derived_from": "ms-0177",
+      "drafted_by": {
+        "kind": "llm",
+        "id": "codex-annotation-revision-20261008"
+      },
+      "language": "en",
+      "notes": "",
+      "query": "Under GVP Module VIII Rev 3, which cites REG Art 10a(2) and DIR Art 22a(2), if the marketing authorisation holder chooses to request to present written observations, within how many days of receiving written notification of the imposed obligation should it make that request?",
+      "required_gold_evidence": [
+        {
+          "evidence_span": {
+            "char_end": 427,
+            "char_start": 187,
+            "text": "Within 30 days of receipt of the written notification of an obligation imposed, the marketing authorisation holder may request to present written observations in response to the imposition of the obligation [REG Art 10a(2), DIR Art 22a(2)]."
+          },
+          "gold_id": "ms-0178-g1",
+          "key_text": "Within 30 days of receipt of the written notification of an obligation imposed",
+          "page": 19,
+          "printed_page_label": null,
+          "section": "VIII.C.1.5. Written observations in response to the imposition of an obligation",
+          "source_hash": "847b0c095bc647e02aa577e2116a03b14ff237982af6b850d88e77fcc69e343e",
+          "version_label": "EMA/813938/2011 Rev 3 (2017-10-09)"
+        }
+      ],
+      "sample_id": "ms-0178",
+      "slices": [
+        "time_window",
+        "protocol_id",
+        "mixed_zh_en"
+      ]
+    },
+    "required_gold_groups": [
+      [
+        "7cdac483-63f7-460f-a19b-d42a18eecf6a"
+      ]
+    ]
+  },
+  {
+    "sample_id": "ms-0205",
+    "origin": "existing_decision",
+    "before_sha256": "b1907e5db408a5123bd7255daa444a7f3c02d5315ae059d51f64d179c98afbcd",
+    "decision_sample_id": "ms-0205",
+    "source_document_key": "ema-gvp-module-xvi-rev3",
+    "rationale": [
+      "分开完整证据单元并保留上下文，组间共同必需；按现行 PR-19 重算 long_context。"
+    ],
+    "review_state": {
+      "human_annotation": "pending",
+      "independent_llm": "pending",
+      "second_human": "pending"
+    },
+    "after": {
+      "dept": "PV",
+      "drafted_by": {
+        "kind": "llm",
+        "id": "codex-annotation-revision-20261008"
+      },
+      "language": "mixed",
+      "notes": "",
+      "query": "根据GVP Module XVI，SmPC(产品特性概要)各相关章节应呈现哪些与风险最小化措施(RMM)相关的信息，如果该药品配有额外RMM材料，SmPC 4.4节又应额外说明什么？",
+      "required_gold_evidence": [
+        {
+          "evidence_span": {
+            "text": "the summary of product characteristics (SmPC) (see GVP Annex I) presents information relevant to RMM in: • SmPC section 4.8 ‘Undesirable Effects’: Information on adverse reactions, including information characterising the reaction which may be useful to prevent, monitor or manage its occurrence;",
+            "char_start": 362,
+            "char_end": 658
+          },
+          "gold_id": "ms-0205-g1",
+          "key_text": "Information on adverse reactions, including information characterising the reaction",
+          "page": 36,
+          "printed_page_label": null,
+          "section": "XVI.App1.1. Summary of product characteristics",
+          "source_hash": "9f4ae57fdfa9aba723fdb41b134889e259ec9919d4ba0f363f4d3df35d18fe1b",
+          "version_label": "EMA/204715/2012 Rev 3 (2024-07-26)"
+        },
+        {
+          "evidence_span": {
+            "text": "• SmPC section 4.4 ‘Special Warnings and Precautions for Use’: Warnings and actions to be taken to avoid specific possible adverse reactions or to be taken if a specific reaction occurs or, if deemed necessary, actions to be taken as a precaution for potential risks; • SmPC section 4.6 ‘Fertility, Pregnancy and Lactation’: Information on risks of the medicinal product impacting on fertility, pregnancy and lactation, including risks for the embryo/foetus/child due to adverse effects at conception, in utero or through breastfeeding, and actions to be taken to avoid or minimise these risks;",
+            "char_start": 659,
+            "char_end": 1253
+          },
+          "gold_id": "ms-0205-g2",
+          "key_text": "Warnings and actions to be taken to avoid specific possible adverse reactions",
+          "page": 36,
+          "printed_page_label": null,
+          "section": "XVI.App1.1. Summary of product characteristics",
+          "source_hash": "9f4ae57fdfa9aba723fdb41b134889e259ec9919d4ba0f363f4d3df35d18fe1b",
+          "version_label": "EMA/204715/2012 Rev 3 (2024-07-26)"
+        },
+        {
+          "evidence_span": {
+            "text": "• SmPC sections 4.1 ‘Therapeutic Indications’, 4.2 ‘Posology and Method of Administration’, 4.3 ‘Contraindications’, 4.5 ‘Interaction with Other Medicinal Products and Other Forms of Interaction’, 4.7 ‘Effects on Ability to Drive and Use Machines’ and 4.9’ Overdose’: Safe use advice regarding indications, dosing and administration, contraindications, interactions, ability to drive and use machines, and overdose.",
+            "char_start": 1254,
+            "char_end": 1669
+          },
+          "gold_id": "ms-0205-g3",
+          "key_text": "Safe use advice regarding indications, dosing and administration, contraindications, interactions",
+          "page": 36,
+          "printed_page_label": null,
+          "section": "XVI.App1.1. Summary of product characteristics",
+          "source_hash": "9f4ae57fdfa9aba723fdb41b134889e259ec9919d4ba0f363f4d3df35d18fe1b",
+          "version_label": "EMA/204715/2012 Rev 3 (2024-07-26)"
+        },
+        {
+          "evidence_span": {
+            "text": "For medicinal products with additional RMM materials, according to the Guideline on Summary of Product Characteristics26 and supplementary Guidance on Frequently Asked Questions on SmPC Section 4.427, the SmPC section 4.4. should describe the intended actions for risk minimisation and should include a statement on the educational/safety advice materials addressed to healthcare professionals or patients which clearly and succinctly explains the purpose (e.g. “to be handed out to the patient”) and scope of the materials.",
+            "char_start": 1670,
+            "char_end": 2194
+          },
+          "gold_id": "ms-0205-g4",
+          "key_text": "should describe the intended actions for risk minimisation and should include a statement",
+          "page": 36,
+          "printed_page_label": null,
+          "section": "XVI.App1.1. Summary of product characteristics",
+          "source_hash": "9f4ae57fdfa9aba723fdb41b134889e259ec9919d4ba0f363f4d3df35d18fe1b",
+          "version_label": "EMA/204715/2012 Rev 3 (2024-07-26)"
+        }
+      ],
+      "sample_id": "ms-0205",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ]
+    },
+    "required_gold_groups": [
+      [
+        "05f240dd-a36c-414d-a2bc-61130c47f651"
+      ],
+      [
+        "b7f9d06b-d380-4bcf-966f-f05b371b7cf9"
+      ],
+      [
+        "62b7f077-0073-44cf-aab0-0740a2d7898f"
+      ],
+      [
+        "737c819a-dd24-4ac1-9862-88fdd83e7113"
+      ]
+    ]
+  },
+  {
+    "sample_id": "ms-0206",
+    "origin": "linked_english_twin",
+    "before_sha256": "7f9cf3f940070e6a549545cc374a235b3056f4f17a81e01dfe662d296e11fab7",
+    "decision_sample_id": "ms-0205",
+    "source_document_key": "ema-gvp-module-xvi-rev3",
+    "rationale": [
+      "分开完整证据单元并保留上下文，组间共同必需；按现行 PR-19 重算 long_context。",
+      "与父题 ms-0205 同步 gold、切片和问题范围；旧复核不覆盖修订输入。"
+    ],
+    "review_state": {
+      "human_annotation": "pending",
+      "independent_llm": "pending",
+      "second_human": "pending"
+    },
+    "after": {
+      "dept": "PV",
+      "derived_from": "ms-0205",
+      "drafted_by": {
+        "kind": "llm",
+        "id": "codex-annotation-revision-20261008"
+      },
+      "language": "en",
+      "notes": "",
+      "query": "According to GVP Module XVI, what information relevant to risk minimisation measures (RMM) should the relevant SmPC sections contain, and what additional information should Section 4.4 include when additional RMM materials are provided?",
+      "required_gold_evidence": [
+        {
+          "evidence_span": {
+            "text": "the summary of product characteristics (SmPC) (see GVP Annex I) presents information relevant to RMM in: • SmPC section 4.8 ‘Undesirable Effects’: Information on adverse reactions, including information characterising the reaction which may be useful to prevent, monitor or manage its occurrence;",
+            "char_start": 362,
+            "char_end": 658
+          },
+          "gold_id": "ms-0206-g1",
+          "key_text": "Information on adverse reactions, including information characterising the reaction",
+          "page": 36,
+          "printed_page_label": null,
+          "section": "XVI.App1.1. Summary of product characteristics",
+          "source_hash": "9f4ae57fdfa9aba723fdb41b134889e259ec9919d4ba0f363f4d3df35d18fe1b",
+          "version_label": "EMA/204715/2012 Rev 3 (2024-07-26)"
+        },
+        {
+          "evidence_span": {
+            "text": "• SmPC section 4.4 ‘Special Warnings and Precautions for Use’: Warnings and actions to be taken to avoid specific possible adverse reactions or to be taken if a specific reaction occurs or, if deemed necessary, actions to be taken as a precaution for potential risks; • SmPC section 4.6 ‘Fertility, Pregnancy and Lactation’: Information on risks of the medicinal product impacting on fertility, pregnancy and lactation, including risks for the embryo/foetus/child due to adverse effects at conception, in utero or through breastfeeding, and actions to be taken to avoid or minimise these risks;",
+            "char_start": 659,
+            "char_end": 1253
+          },
+          "gold_id": "ms-0206-g2",
+          "key_text": "Warnings and actions to be taken to avoid specific possible adverse reactions",
+          "page": 36,
+          "printed_page_label": null,
+          "section": "XVI.App1.1. Summary of product characteristics",
+          "source_hash": "9f4ae57fdfa9aba723fdb41b134889e259ec9919d4ba0f363f4d3df35d18fe1b",
+          "version_label": "EMA/204715/2012 Rev 3 (2024-07-26)"
+        },
+        {
+          "evidence_span": {
+            "text": "• SmPC sections 4.1 ‘Therapeutic Indications’, 4.2 ‘Posology and Method of Administration’, 4.3 ‘Contraindications’, 4.5 ‘Interaction with Other Medicinal Products and Other Forms of Interaction’, 4.7 ‘Effects on Ability to Drive and Use Machines’ and 4.9’ Overdose’: Safe use advice regarding indications, dosing and administration, contraindications, interactions, ability to drive and use machines, and overdose.",
+            "char_start": 1254,
+            "char_end": 1669
+          },
+          "gold_id": "ms-0206-g3",
+          "key_text": "Safe use advice regarding indications, dosing and administration, contraindications, interactions",
+          "page": 36,
+          "printed_page_label": null,
+          "section": "XVI.App1.1. Summary of product characteristics",
+          "source_hash": "9f4ae57fdfa9aba723fdb41b134889e259ec9919d4ba0f363f4d3df35d18fe1b",
+          "version_label": "EMA/204715/2012 Rev 3 (2024-07-26)"
+        },
+        {
+          "evidence_span": {
+            "text": "For medicinal products with additional RMM materials, according to the Guideline on Summary of Product Characteristics26 and supplementary Guidance on Frequently Asked Questions on SmPC Section 4.427, the SmPC section 4.4. should describe the intended actions for risk minimisation and should include a statement on the educational/safety advice materials addressed to healthcare professionals or patients which clearly and succinctly explains the purpose (e.g. “to be handed out to the patient”) and scope of the materials.",
+            "char_start": 1670,
+            "char_end": 2194
+          },
+          "gold_id": "ms-0206-g4",
+          "key_text": "should describe the intended actions for risk minimisation and should include a statement",
+          "page": 36,
+          "printed_page_label": null,
+          "section": "XVI.App1.1. Summary of product characteristics",
+          "source_hash": "9f4ae57fdfa9aba723fdb41b134889e259ec9919d4ba0f363f4d3df35d18fe1b",
+          "version_label": "EMA/204715/2012 Rev 3 (2024-07-26)"
+        }
+      ],
+      "sample_id": "ms-0206",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ]
+    },
+    "required_gold_groups": [
+      [
+        "05f240dd-a36c-414d-a2bc-61130c47f651"
+      ],
+      [
+        "b7f9d06b-d380-4bcf-966f-f05b371b7cf9"
+      ],
+      [
+        "62b7f077-0073-44cf-aab0-0740a2d7898f"
+      ],
+      [
+        "737c819a-dd24-4ac1-9862-88fdd83e7113"
+      ]
+    ]
+  },
+  {
+    "sample_id": "ms-0241",
+    "origin": "existing_decision",
+    "before_sha256": "e6e23610ed3e82dc1595a9191755418bf51cf9f141e698ddf913c6c7740137f8",
+    "decision_sample_id": "ms-0241",
+    "source_document_key": "fda-investigator-safety-reporting-2025",
+    "rationale": [
+      "明确文档身份、版本或条件式问法；不再以未点名来源限定旧问题。",
+      "分开完整证据单元并保留上下文，组间共同必需；按现行 PR-19 重算 long_context。",
+      "原页另发现示例及汇总分析说明跨三个块，不能只命中导语；此扩展为实现方新增修订建议，尚待复核。"
+    ],
+    "review_state": {
+      "human_annotation": "pending",
+      "independent_llm": "pending",
+      "second_human": "pending"
+    },
+    "after": {
+      "dept": "PV",
+      "drafted_by": {
+        "kind": "llm",
+        "id": "codex-annotation-revision-20261008"
+      },
+      "language": "mixed",
+      "notes": "",
+      "query": "根据 FDA 2025 年 12 月《Investigator Responsibilities — Safety Reporting for Investigational Drugs and Devices》指南，§ 312.32(c)(1)(i) 的哪些示例说明药物与不良事件间存在因果关系的“合理可能性”（reasonable possibility）？",
+      "required_gold_evidence": [
+        {
+          "evidence_span": {
+            "text": "The following examples are also provided in the IND safety reporting regulation (§ 312.32(c)(1)(i)) and illustrate the meaning of reasonable possibility with respect to a determination that there may be a causal relationship between the drug and the adverse event: • A single occurrence of an event that is uncommon and known to be strongly associated with drug exposure (e.g., angioedema, hepatic injury, Stevens-Johnson Syndrome).",
+            "char_start": 753,
+            "char_end": 1185
+          },
+          "gold_id": "ms-0241-g1",
+          "key_text": "A single occurrence of an event that is uncommon and known to be strongly associated with drug exposure",
+          "page": 7,
+          "printed_page_label": null,
+          "section": "III.A.2. Adverse Reaction and Suspected Adverse Reaction",
+          "source_hash": "c597c1d15d048c48d94be46710658eebdff9c8017f82ec3f04ebd54ad16e577c",
+          "version_label": "Final guidance, December 2025 (FDA media 152530)"
+        },
+        {
+          "evidence_span": {
+            "text": "• One or more occurrences of an event that is not commonly associated with drug exposure but is otherwise uncommon in the population exposed to the drug (e.g., tendon rupture). • An aggregate analysis of specific events observed in a clinical trial that indicates those events occur more frequently in the drug treatment group than in a concurrent or historical control group. Examples of such events are known consequences of the underlying disease or condition or events that commonly occur in the study population independent of drug therapy.",
+            "char_start": 1186,
+            "char_end": 1731
+          },
+          "gold_id": "ms-0241-g2",
+          "key_text": "An aggregate analysis of specific events observed in a clinical trial that indicates those events occur more frequently",
+          "page": 7,
+          "printed_page_label": null,
+          "section": "III.A.2. Adverse Reaction and Suspected Adverse Reaction",
+          "source_hash": "c597c1d15d048c48d94be46710658eebdff9c8017f82ec3f04ebd54ad16e577c",
+          "version_label": "Final guidance, December 2025 (FDA media 152530)"
+        },
+        {
+          "evidence_span": {
+            "text": "For aggregate analysis under § 312.32(c)(1)(i)(C), such events could also be associated with treatment or therapy that is standard of care for the disease or condition.",
+            "char_start": 1732,
+            "char_end": 1900
+          },
+          "gold_id": "ms-0241-g3",
+          "key_text": "such events could also be associated with treatment or therapy that is standard of care",
+          "page": 7,
+          "printed_page_label": null,
+          "section": "III.A.2. Adverse Reaction and Suspected Adverse Reaction",
+          "source_hash": "c597c1d15d048c48d94be46710658eebdff9c8017f82ec3f04ebd54ad16e577c",
+          "version_label": "Final guidance, December 2025 (FDA media 152530)"
+        }
+      ],
+      "sample_id": "ms-0241",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ]
+    },
+    "required_gold_groups": [
+      [
+        "03b274ab-a8e2-4032-bbc7-10379ae547b9"
+      ],
+      [
+        "dc317e2b-b2e7-49ab-b9e7-298ff69fb957"
+      ],
+      [
+        "cd331ebb-3faf-4c10-b8a6-47ddc7194b39"
+      ]
+    ]
+  },
+  {
+    "sample_id": "ms-0242",
+    "origin": "existing_decision",
+    "before_sha256": "e161ae31bd20b02e875fd8ff58b0d64bdfab436e47edff52271428b05f5460c2",
+    "decision_sample_id": "ms-0242",
+    "source_document_key": "fda-investigator-safety-reporting-2025",
+    "rationale": [
+      "明确文档身份、版本或条件式问法；不再以未点名来源限定旧问题。",
+      "分开完整证据单元并保留上下文，组间共同必需；按现行 PR-19 重算 long_context。",
+      "原页另发现示例及汇总分析说明跨三个块，不能只命中导语；此扩展为实现方新增修订建议，尚待复核。",
+      "与父题 ms-0241 同步 gold、切片和问题范围；旧复核不覆盖修订输入。"
+    ],
+    "review_state": {
+      "human_annotation": "pending",
+      "independent_llm": "pending",
+      "second_human": "pending"
+    },
+    "after": {
+      "dept": "PV",
+      "derived_from": "ms-0241",
+      "drafted_by": {
+        "kind": "llm",
+        "id": "codex-annotation-revision-20261008"
+      },
+      "language": "en",
+      "notes": "",
+      "query": "According to FDA’s December 2025 guidance “Investigator Responsibilities — Safety Reporting for Investigational Drugs and Devices”, what examples under § 312.32(c)(1)(i) illustrate a reasonable possibility of a causal relationship between a drug and an adverse event?",
+      "required_gold_evidence": [
+        {
+          "evidence_span": {
+            "text": "The following examples are also provided in the IND safety reporting regulation (§ 312.32(c)(1)(i)) and illustrate the meaning of reasonable possibility with respect to a determination that there may be a causal relationship between the drug and the adverse event: • A single occurrence of an event that is uncommon and known to be strongly associated with drug exposure (e.g., angioedema, hepatic injury, Stevens-Johnson Syndrome).",
+            "char_start": 753,
+            "char_end": 1185
+          },
+          "gold_id": "ms-0242-g1",
+          "key_text": "A single occurrence of an event that is uncommon and known to be strongly associated with drug exposure",
+          "page": 7,
+          "printed_page_label": null,
+          "section": "III.A.2. Adverse Reaction and Suspected Adverse Reaction",
+          "source_hash": "c597c1d15d048c48d94be46710658eebdff9c8017f82ec3f04ebd54ad16e577c",
+          "version_label": "Final guidance, December 2025 (FDA media 152530)"
+        },
+        {
+          "evidence_span": {
+            "text": "• One or more occurrences of an event that is not commonly associated with drug exposure but is otherwise uncommon in the population exposed to the drug (e.g., tendon rupture). • An aggregate analysis of specific events observed in a clinical trial that indicates those events occur more frequently in the drug treatment group than in a concurrent or historical control group. Examples of such events are known consequences of the underlying disease or condition or events that commonly occur in the study population independent of drug therapy.",
+            "char_start": 1186,
+            "char_end": 1731
+          },
+          "gold_id": "ms-0242-g2",
+          "key_text": "An aggregate analysis of specific events observed in a clinical trial that indicates those events occur more frequently",
+          "page": 7,
+          "printed_page_label": null,
+          "section": "III.A.2. Adverse Reaction and Suspected Adverse Reaction",
+          "source_hash": "c597c1d15d048c48d94be46710658eebdff9c8017f82ec3f04ebd54ad16e577c",
+          "version_label": "Final guidance, December 2025 (FDA media 152530)"
+        },
+        {
+          "evidence_span": {
+            "text": "For aggregate analysis under § 312.32(c)(1)(i)(C), such events could also be associated with treatment or therapy that is standard of care for the disease or condition.",
+            "char_start": 1732,
+            "char_end": 1900
+          },
+          "gold_id": "ms-0242-g3",
+          "key_text": "such events could also be associated with treatment or therapy that is standard of care",
+          "page": 7,
+          "printed_page_label": null,
+          "section": "III.A.2. Adverse Reaction and Suspected Adverse Reaction",
+          "source_hash": "c597c1d15d048c48d94be46710658eebdff9c8017f82ec3f04ebd54ad16e577c",
+          "version_label": "Final guidance, December 2025 (FDA media 152530)"
+        }
+      ],
+      "sample_id": "ms-0242",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ]
+    },
+    "required_gold_groups": [
+      [
+        "03b274ab-a8e2-4032-bbc7-10379ae547b9"
+      ],
+      [
+        "dc317e2b-b2e7-49ab-b9e7-298ff69fb957"
+      ],
+      [
+        "cd331ebb-3faf-4c10-b8a6-47ddc7194b39"
+      ]
+    ]
+  },
+  {
+    "sample_id": "ms-0243",
+    "origin": "existing_decision",
+    "before_sha256": "00b25efb75517050c2820cfbeb277acaefd3da4e738760ccbc7601c1608dde88",
+    "decision_sample_id": "ms-0243",
+    "source_document_key": "fda-investigator-safety-reporting-2025",
+    "rationale": [
+      "明确文档身份、版本或条件式问法；不再以未点名来源限定旧问题。",
+      "分开完整证据单元并保留上下文，组间共同必需；按现行 PR-19 重算 long_context。"
+    ],
+    "review_state": {
+      "human_annotation": "pending",
+      "independent_llm": "pending",
+      "second_human": "pending"
+    },
+    "after": {
+      "dept": "PV",
+      "drafted_by": {
+        "kind": "llm",
+        "id": "codex-annotation-revision-20261008"
+      },
+      "language": "mixed",
+      "notes": "",
+      "query": "根据 FDA 2025 年 12 月《Investigator Responsibilities — Safety Reporting for Investigational Drugs and Devices》指南，哪些事件即使不符合 IND 安全报告或 BA/BE 研究上市前 SAE 报告标准，仍须作为涉及受试者或他人风险的意外问题报告给 IRB？请举例说明。",
+      "required_gold_evidence": [
+        {
+          "evidence_span": {
+            "text": "Certain events may not meet the criteria for reporting in an IND safety report or as a BA/BE study premarket SAE, but still must be reported to the IRB because they represent unanticipated problems involving risk to human participants or others.",
+            "char_start": 816,
+            "char_end": 1061
+          },
+          "gold_id": "ms-0243-g1",
+          "key_text": "still must be reported to the IRB because they represent unanticipated problems",
+          "page": 12,
+          "printed_page_label": null,
+          "section": "VI. Investigator reporting to institutional review boards for IND studies",
+          "source_hash": "c597c1d15d048c48d94be46710658eebdff9c8017f82ec3f04ebd54ad16e577c",
+          "version_label": "Final guidance, December 2025 (FDA media 152530)"
+        },
+        {
+          "evidence_span": {
+            "text": "− Such events may occur at the participant, site, and/or study level and may include serious and unexpected adverse events that occur prior to test article administration, during a washout period, or that are attributable to a screening procedure. − Other examples may include reports of medication errors (such as receipt of wrong dose or contaminated study medication), breach of privacy/confidentiality (such as disclosure of personally identifiable information), untimely destruction of study records, and other scenarios.",
+            "char_start": 1062,
+            "char_end": 1588
+          },
+          "gold_id": "ms-0243-g2",
+          "key_text": "Other examples may include reports of medication errors",
+          "page": 12,
+          "printed_page_label": null,
+          "section": "VI. Investigator reporting to institutional review boards for IND studies",
+          "source_hash": "c597c1d15d048c48d94be46710658eebdff9c8017f82ec3f04ebd54ad16e577c",
+          "version_label": "Final guidance, December 2025 (FDA media 152530)"
+        }
+      ],
+      "sample_id": "ms-0243",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ]
+    },
+    "required_gold_groups": [
+      [
+        "56c2d993-45d3-4934-a083-ecfdfb2861e3"
+      ],
+      [
+        "f22428d5-feb0-473b-9c17-41c005048f26"
+      ]
+    ]
+  },
+  {
+    "sample_id": "ms-0244",
+    "origin": "linked_english_twin",
+    "before_sha256": "4080efd5925d802f4ecc784a1c03bd6353724094bcd1421d02b88290939c8c5b",
+    "decision_sample_id": "ms-0243",
+    "source_document_key": "fda-investigator-safety-reporting-2025",
+    "rationale": [
+      "明确文档身份、版本或条件式问法；不再以未点名来源限定旧问题。",
+      "分开完整证据单元并保留上下文，组间共同必需；按现行 PR-19 重算 long_context。",
+      "与父题 ms-0243 同步 gold、切片和问题范围；旧复核不覆盖修订输入。"
+    ],
+    "review_state": {
+      "human_annotation": "pending",
+      "independent_llm": "pending",
+      "second_human": "pending"
+    },
+    "after": {
+      "dept": "PV",
+      "derived_from": "ms-0243",
+      "drafted_by": {
+        "kind": "llm",
+        "id": "codex-annotation-revision-20261008"
+      },
+      "language": "en",
+      "notes": "",
+      "query": "Under FDA’s December 2025 investigator safety-reporting guidance, which events still require IRB reporting as unanticipated problems even if they do not qualify for an IND safety report or a BA/BE premarket SAE? Give examples.",
+      "required_gold_evidence": [
+        {
+          "evidence_span": {
+            "text": "Certain events may not meet the criteria for reporting in an IND safety report or as a BA/BE study premarket SAE, but still must be reported to the IRB because they represent unanticipated problems involving risk to human participants or others.",
+            "char_start": 816,
+            "char_end": 1061
+          },
+          "gold_id": "ms-0244-g1",
+          "key_text": "still must be reported to the IRB because they represent unanticipated problems",
+          "page": 12,
+          "printed_page_label": null,
+          "section": "VI. Investigator reporting to institutional review boards for IND studies",
+          "source_hash": "c597c1d15d048c48d94be46710658eebdff9c8017f82ec3f04ebd54ad16e577c",
+          "version_label": "Final guidance, December 2025 (FDA media 152530)"
+        },
+        {
+          "evidence_span": {
+            "text": "− Such events may occur at the participant, site, and/or study level and may include serious and unexpected adverse events that occur prior to test article administration, during a washout period, or that are attributable to a screening procedure. − Other examples may include reports of medication errors (such as receipt of wrong dose or contaminated study medication), breach of privacy/confidentiality (such as disclosure of personally identifiable information), untimely destruction of study records, and other scenarios.",
+            "char_start": 1062,
+            "char_end": 1588
+          },
+          "gold_id": "ms-0244-g2",
+          "key_text": "Other examples may include reports of medication errors",
+          "page": 12,
+          "printed_page_label": null,
+          "section": "VI. Investigator reporting to institutional review boards for IND studies",
+          "source_hash": "c597c1d15d048c48d94be46710658eebdff9c8017f82ec3f04ebd54ad16e577c",
+          "version_label": "Final guidance, December 2025 (FDA media 152530)"
+        }
+      ],
+      "sample_id": "ms-0244",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ]
+    },
+    "required_gold_groups": [
+      [
+        "56c2d993-45d3-4934-a083-ecfdfb2861e3"
+      ],
+      [
+        "f22428d5-feb0-473b-9c17-41c005048f26"
+      ]
+    ]
+  },
+  {
+    "sample_id": "ms-0280",
+    "origin": "existing_decision",
+    "before_sha256": "d0737826ce002b2c3fd62b6ce24aaa0aa77f532e535944cd803474b21e546aae",
+    "decision_sample_id": "ms-0280",
+    "source_document_key": "meddra-data-retrieval-ptc-3-26-zh-hans",
+    "rationale": [
+      "明确文档身份、版本或条件式问法；不再以未点名来源限定旧问题。"
+    ],
+    "review_state": {
+      "human_annotation": "pending",
+      "independent_llm": "pending",
+      "second_human": "pending"
+    },
+    "after": {
+      "dept": "PV",
+      "drafted_by": {
+        "kind": "llm",
+        "id": "codex-annotation-revision-20261008"
+      },
+      "language": "mixed",
+      "notes": "",
+      "query": "根据《MedDRA 数据检索和展示：考虑要点》发布版本 3.26（2026 年 3 月），用户能否临时改动 MedDRA 的术语层级结构，例如变更某个 PT 的主 SOC 分配？",
+      "required_gold_evidence": [
+        {
+          "evidence_span": {
+            "char_end": 657,
+            "char_start": 535,
+            "text": "MedDRA 是一个标准术语集,有预先界定的术语层级结构,不应更改。用户不得对 MedDRA 进行临时的结构改动,包括变更主 SOC 分配;这样做将有损该标准的完整性。如果发现术语的 MedDRA 层级结构不正确,应向 MSSO 提交变更申请。"
+          },
+          "gold_id": "ms-0280-g1",
+          "key_text": "用户不得对 MedDRA 进行临时的结构改动,包括变更主 SOC 分配",
+          "page": 8,
+          "printed_page_label": null,
+          "section": "2.3 不要改动 MedDRA",
+          "source_hash": "ea0824b58213d740df8ac7459c3c9b08819aa21127a7c63fe04b81ec056f9938",
+          "version_label": "发布版本 3.26（2026-03）"
+        }
+      ],
+      "sample_id": "ms-0280",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ]
+    },
+    "required_gold_groups": [
+      [
+        "b0373069-8929-4b2e-aab7-48212775ac10"
+      ]
+    ]
+  },
+  {
+    "sample_id": "ms-0298",
+    "origin": "existing_decision",
+    "before_sha256": "3881a5829da4e108b65cf9b56add3986b871a1366dc249d502085411ba9c4962",
+    "decision_sample_id": "ms-0298",
+    "source_document_key": "fda-e6r3-gcp-2025",
+    "rationale": [
+      "明确文档身份、版本或条件式问法；不再以未点名来源限定旧问题。",
+      "原 key_text 跨 chunk，属于旧 7 条 unmappable 之一；拆成“紧急危险”和“法规允许的行政/后勤变更”两组，保留完整共同上下文，两个条件都须覆盖。"
+    ],
+    "review_state": {
+      "human_annotation": "pending",
+      "independent_llm": "pending",
+      "second_human": "pending"
+    },
+    "after": {
+      "dept": "CO",
+      "drafted_by": {
+        "kind": "llm",
+        "id": "codex-annotation-revision-20261008"
+      },
+      "language": "mixed",
+      "notes": "",
+      "query": "根据 FDA 2025 年 9 月《E6(R3) Good Clinical Practice》指南，在哪些情况下，可以不经 IRB/IEC 事先记录在案的批准或赞同意见就对已批准的试验方案进行偏离或变更？",
+      "required_gold_evidence": [
+        {
+          "evidence_span": {
+            "char_end": 1554,
+            "char_start": 1177,
+            "text": "no deviations from or changes to the protocol should be initiated without prior documented IRB/IEC approval/favorable opinion of an appropriate protocol amendment except when necessary to eliminate immediate hazards to the participants or, in accordance with applicable regulatory requirements, when the change(s) involves only logistical or administrative aspects of the trial"
+          },
+          "gold_id": "ms-0298-g1",
+          "key_text": "when necessary to eliminate immediate hazards to the participants",
+          "page": 18,
+          "printed_page_label": null,
+          "section": "4. Procedures (1.4)",
+          "source_hash": "e57e9fc0134abebec409d7144aed6e3047c0939d1bd758163fea4e1169472109",
+          "version_label": "Final guidance, September 2025"
+        },
+        {
+          "evidence_span": {
+            "char_end": 1554,
+            "char_start": 1177,
+            "text": "no deviations from or changes to the protocol should be initiated without prior documented IRB/IEC approval/favorable opinion of an appropriate protocol amendment except when necessary to eliminate immediate hazards to the participants or, in accordance with applicable regulatory requirements, when the change(s) involves only logistical or administrative aspects of the trial"
+          },
+          "gold_id": "ms-0298-g2",
+          "key_text": "in accordance with applicable regulatory requirements, when the change(s) involves only logistical or administrative aspects of the trial",
+          "page": 18,
+          "printed_page_label": null,
+          "section": "4. Procedures (1.4)",
+          "source_hash": "e57e9fc0134abebec409d7144aed6e3047c0939d1bd758163fea4e1169472109",
+          "version_label": "Final guidance, September 2025"
+        }
+      ],
+      "sample_id": "ms-0298",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ]
+    },
+    "required_gold_groups": [
+      [
+        "9a07ba2f-4043-4450-8b53-49b3fa9507db"
+      ],
+      [
+        "00062a43-08f0-4114-b843-b9ef14106733"
+      ]
+    ]
+  },
+  {
+    "sample_id": "ms-0299",
+    "origin": "existing_decision",
+    "before_sha256": "8775c9300a25208201d492c177e81b814ea02be0d1d1cea1e10dbad2614a4db4",
+    "decision_sample_id": "ms-0299",
+    "source_document_key": "fda-e6r3-gcp-2025",
+    "rationale": [
+      "明确文档身份、版本或条件式问法；不再以未点名来源限定旧问题。"
+    ],
+    "review_state": {
+      "human_annotation": "pending",
+      "independent_llm": "pending",
+      "second_human": "pending"
+    },
+    "after": {
+      "dept": "CO",
+      "drafted_by": {
+        "kind": "llm",
+        "id": "codex-annotation-revision-20261008"
+      },
+      "language": "mixed",
+      "notes": "",
+      "query": "根据 FDA 2025 年 9 月《E6(R3) Good Clinical Practice》指南，研究者或研究机构工作人员是否可以胁迫或不当影响受试者，使其继续参与临床试验？",
+      "required_gold_evidence": [
+        {
+          "evidence_span": {
+            "char_end": 377,
+            "char_start": 209,
+            "text": "Neither the investigator nor the investigator site staff should coerce or unduly influence a participant to participate or to continue their participation in the trial."
+          },
+          "gold_id": "ms-0299-g1",
+          "key_text": "Neither the investigator nor the investigator site staff should coerce or unduly influence a participant to participate or to continue their participation in the trial",
+          "page": 24,
+          "printed_page_label": null,
+          "section": "8. Informed Consent of Trial Participants (2.8)",
+          "source_hash": "e57e9fc0134abebec409d7144aed6e3047c0939d1bd758163fea4e1169472109",
+          "version_label": "Final guidance, September 2025"
+        }
+      ],
+      "sample_id": "ms-0299",
+      "slices": [
+        "negation",
+        "mixed_zh_en"
+      ]
+    },
+    "required_gold_groups": [
+      [
+        "c38214e4-2dd1-49f1-b311-b50697a427c7"
+      ]
+    ]
+  },
+  {
+    "sample_id": "ms-0336",
+    "origin": "existing_decision",
+    "before_sha256": "03e0992387584ce93b40dbe5c5285c3919bb522f3132b83a34b96380f84c0f8f",
+    "decision_sample_id": "ms-0336",
+    "source_document_key": "fda-risk-based-monitoring-2013",
+    "rationale": [
+      "明确文档身份、版本或条件式问法；不再以未点名来源限定旧问题。"
+    ],
+    "review_state": {
+      "human_annotation": "pending",
+      "independent_llm": "pending",
+      "second_human": "pending"
+    },
+    "after": {
+      "dept": "CO",
+      "drafted_by": {
+        "kind": "llm",
+        "id": "codex-annotation-revision-20261008"
+      },
+      "language": "mixed",
+      "notes": "",
+      "query": "根据 FDA 2013 年 8 月《Oversight of Clinical Investigations — A Risk-Based Approach to Monitoring》指南引述的 21 CFR 312.50，申办者在临床试验监查方面须确保哪两件事？",
+      "required_gold_evidence": [
+        {
+          "evidence_span": {
+            "char_end": 3467,
+            "char_start": 3227,
+            "text": "21 CFR 312.50 requires a sponsor to, among other things, ensure “proper monitoring of the investigation(s)” and “that the investigation(s) is conducted in accordance with the general investigational plan and protocols contained in the IND.”"
+          },
+          "gold_id": "ms-0336-g1",
+          "key_text": "ensure “proper monitoring of the investigation(s)” and “that the investigation(s) is conducted in accordance with the general investigational plan and protocols contained in the IND.”",
+          "page": 5,
+          "printed_page_label": null,
+          "section": "II. BACKGROUND",
+          "source_hash": "76556b1dcf148a1929f110bb1bfdf17d554630b665d23ad2b885473c5e8f2561",
+          "version_label": "Final guidance, August 2013 (PRA update 2022-11-21)"
+        }
+      ],
+      "sample_id": "ms-0336",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ]
+    },
+    "required_gold_groups": [
+      [
+        "233db844-7a4a-426f-a28d-dcc0b8b6ee41"
+      ]
+    ]
+  },
+  {
+    "sample_id": "ms-0337",
+    "origin": "linked_english_twin",
+    "before_sha256": "f65dc128b3b269cc77e798ea6d901365104f3f7dd0483a8ce76bf35a52d93afa",
+    "decision_sample_id": "ms-0336",
+    "source_document_key": "fda-risk-based-monitoring-2013",
+    "rationale": [
+      "明确文档身份、版本或条件式问法；不再以未点名来源限定旧问题。",
+      "与父题 ms-0336 同步 gold、切片和问题范围；旧复核不覆盖修订输入。"
+    ],
+    "review_state": {
+      "human_annotation": "pending",
+      "independent_llm": "pending",
+      "second_human": "pending"
+    },
+    "after": {
+      "dept": "CO",
+      "derived_from": "ms-0336",
+      "drafted_by": {
+        "kind": "llm",
+        "id": "codex-annotation-revision-20261008"
+      },
+      "language": "en",
+      "notes": "",
+      "query": "According to the passage quoting 21 CFR 312.50 in FDA’s August 2013 guidance “Oversight of Clinical Investigations — A Risk-Based Approach to Monitoring”, which two things must a sponsor ensure regarding trial monitoring and conduct?",
+      "required_gold_evidence": [
+        {
+          "evidence_span": {
+            "char_end": 3467,
+            "char_start": 3227,
+            "text": "21 CFR 312.50 requires a sponsor to, among other things, ensure “proper monitoring of the investigation(s)” and “that the investigation(s) is conducted in accordance with the general investigational plan and protocols contained in the IND.”"
+          },
+          "gold_id": "ms-0337-g1",
+          "key_text": "ensure “proper monitoring of the investigation(s)” and “that the investigation(s) is conducted in accordance with the general investigational plan and protocols contained in the IND.”",
+          "page": 5,
+          "printed_page_label": null,
+          "section": "II. BACKGROUND",
+          "source_hash": "76556b1dcf148a1929f110bb1bfdf17d554630b665d23ad2b885473c5e8f2561",
+          "version_label": "Final guidance, August 2013 (PRA update 2022-11-21)"
+        }
+      ],
+      "sample_id": "ms-0337",
+      "slices": [
+        "protocol_id",
+        "mixed_zh_en"
+      ]
+    },
+    "required_gold_groups": [
+      [
+        "233db844-7a4a-426f-a28d-dcc0b8b6ee41"
+      ]
+    ]
+  },
+  {
+    "sample_id": "pc-0017",
+    "origin": "existing_decision",
+    "before_sha256": "0eaed1e95cd90fbe989237599a2bedc3c2e327cdbb1badb0c8ee150d6d3ada5b",
+    "decision_sample_id": "pc-0017",
+    "source_document_key": "tfda-label-zosaa-50mg",
+    "rationale": [
+      "明确文档身份、版本或条件式问法；不再以未点名来源限定旧问题。",
+      "探针导入题须先完成 probe 新版本复核/冻结，再供主集导入；不绕过 PR-16。"
+    ],
+    "review_state": {
+      "human_annotation": "pending",
+      "independent_llm": "pending",
+      "second_human": "pending"
+    },
+    "after": {
+      "dept": "MA",
+      "language": "mixed",
+      "notes": "",
+      "query": "根據穩壓膜衣錠50毫克仿單，糖尿病腎病變患者已使用 ACEI 時，可以再加用 ARB 嗎？",
+      "required_gold_evidence": [
+        {
+          "evidence_span": {
+            "char_end": 2859,
+            "char_start": 2612,
+            "text": "雙重阻斷腎素-血管昇壓素-醛固酮系統(renin-angiotensin-aldosterone system, RAAS):有證據顯示,合併使用 ACEIs、ARBs 或含 aliskiren 成分藥品會增加低血壓、高鉀血症及腎功能下降(包括急性腎衰竭)之風險,故不建議合併使用 ACEIs、ARBs 或含 aliskiren 成分藥品來雙重阻斷 RAAS,若確有必要使用雙重阻斷治療,應密切監測患者之腎+A12 功能、電解質及血壓。ACEIs 及 ARBs 不應合併使用於糖尿病腎病變患者。"
+          },
+          "gold_id": "pc-0017-g1",
+          "key_text": "ACEIs 及 ARBs 不應合併使用於糖尿病腎病變患者",
+          "page": 1,
+          "printed_page_label": null,
+          "section": "注意事項",
+          "source_hash": "81069adaf87d21e640d9b5cbc83a799a59a33acbdc4ead46ed338c9ad6d06b3a",
+          "version_label": "B版 104.10.27（2015-10-27）"
+        }
+      ],
+      "sample_id": "pc-0017",
+      "slices": [
+        "negation",
+        "mixed_zh_en",
+        "drug_name_zh"
+      ],
+      "drafted_by": {
+        "kind": "llm",
+        "id": "codex-annotation-revision-20261008"
+      }
+    },
+    "required_gold_groups": [
+      [
+        "189c6570-b688-4b28-83ec-a94026d9f772"
+      ]
+    ]
+  },
+  {
+    "sample_id": "pc-0028",
+    "origin": "existing_decision",
+    "before_sha256": "38bf361f8bc59e12bc5ee42b40fa21a1b65ca4492720a19953f43b22edb700ba",
+    "decision_sample_id": "pc-0028",
+    "source_document_key": "tfda-label-esomen-40mg",
+    "rationale": [
+      "明确文档身份、版本或条件式问法；不再以未点名来源限定旧问题。",
+      "探针导入题须先完成 probe 新版本复核/冻结，再供主集导入；不绕过 PR-16。"
+    ],
+    "review_state": {
+      "human_annotation": "pending",
+      "independent_llm": "pending",
+      "second_human": "pending"
+    },
+    "after": {
+      "dept": "MA",
+      "language": "mixed",
+      "notes": "",
+      "query": "根據胃所樂腸溶膜衣錠40毫克（esomeprazole）仿單，可以與 nelfinavir 一起服用嗎？",
+      "required_gold_evidence": [
+        {
+          "evidence_span": {
+            "char_end": 924,
+            "char_start": 811,
+            "text": "由於omeprazole 與 esomeprazole 的藥效學效應與藥動學性質類似,故不建議同時投予 esomeprazole 和 atazanavir ,禁止同時併用 esomeprazole 和 nelfinavir 。"
+          },
+          "gold_id": "pc-0028-g1",
+          "key_text": "禁止同時併用 esomeprazole 和 nelfinavir",
+          "page": 2,
+          "printed_page_label": null,
+          "section": "藥物交互作用",
+          "source_hash": "f80b904f4e2f15a59cb78fe1baed5c1c06b8b975d43dc0291217d64c43e43fbb",
+          "version_label": "pdf-meta 2013-11-08（未见版本行）"
+        }
+      ],
+      "sample_id": "pc-0028",
+      "slices": [
+        "negation",
+        "mixed_zh_en",
+        "drug_name_zh"
+      ],
+      "drafted_by": {
+        "kind": "llm",
+        "id": "codex-annotation-revision-20261008"
+      }
+    },
+    "required_gold_groups": [
+      [
+        "61c0abb1-c83b-4b30-9ebf-e93935edf2f3"
+      ]
+    ]
+  },
+  {
+    "sample_id": "pc-0029",
+    "origin": "existing_decision",
+    "before_sha256": "456b28430d723028ffd0ed50dd6f4c3e1a6ae8bd08cc916a5514cfbcb624a9df",
+    "decision_sample_id": "pc-0029",
+    "source_document_key": "tfda-label-esomen-40mg",
+    "rationale": [
+      "明确文档身份、版本或条件式问法；不再以未点名来源限定旧问题。",
+      "探针导入题须先完成 probe 新版本复核/冻结，再供主集导入；不绕过 PR-16。"
+    ],
+    "review_state": {
+      "human_annotation": "pending",
+      "independent_llm": "pending",
+      "second_human": "pending"
+    },
+    "after": {
+      "dept": "MA",
+      "language": "mixed",
+      "notes": "",
+      "query": "根據胃所樂腸溶膜衣錠40毫克仿單，嚴重肝功能不良病人的 esomeprazole 最高劑量是多少？",
+      "required_gold_evidence": [
+        {
+          "evidence_span": {
+            "char_end": 4258,
+            "char_start": 4174,
+            "text": "嚴重肝功能不良的病人的 esomeprazole 代謝率降低,導致血漿濃度時間曲線下的面積加倍,因此此類病人的esomeprazole 最高劑量不可超過 20 mg 。"
+          },
+          "gold_id": "pc-0029-g1",
+          "key_text": "此類病人的esomeprazole 最高劑量不可超過 20 mg",
+          "page": 3,
+          "printed_page_label": null,
+          "section": "特殊族群",
+          "source_hash": "f80b904f4e2f15a59cb78fe1baed5c1c06b8b975d43dc0291217d64c43e43fbb",
+          "version_label": "pdf-meta 2013-11-08（未见版本行）"
+        }
+      ],
+      "sample_id": "pc-0029",
+      "slices": [
+        "dose_unit",
+        "negation",
+        "mixed_zh_en",
+        "drug_name_zh"
+      ],
+      "drafted_by": {
+        "kind": "llm",
+        "id": "codex-annotation-revision-20261008"
+      }
+    },
+    "required_gold_groups": [
+      [
+        "2576704b-ffbb-46b0-a301-ad2f6a5301d4"
+      ]
+    ]
+  }
+]

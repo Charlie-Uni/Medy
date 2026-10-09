@@ -1,0 +1,56 @@
+{
+  "format": "paid-review-budget-request-v1",
+  "status": "pending_user_authorization",
+  "created_at": "2026-10-08",
+  "purpose": "EVAL-11 v6 independent LLM review of the two changed IRB/IEC single-gold inputs",
+  "review_root": "evals/main_set/drafts/revision-2026-10-08-v6/review",
+  "model": "claude-opus-5",
+  "effort": "high",
+  "chunk_size": 1,
+  "max_calls": 2,
+  "max_call_cost_usd": 0.3,
+  "requested_total_budget_usd": 0.65,
+  "budget_buffer_usd": 0.05,
+  "automatic_retries": false,
+  "stop_conditions": [
+    "any CLI failure",
+    "invalid verdict",
+    "unknown cost",
+    "per-call cap reached or exceeded",
+    "total ledger cannot reserve the next call"
+  ],
+  "batches": {
+    "probe/CO": {
+      "input_sha256": "95d45fdd2ab24c9fed565a20c55fbd2823e5c85b4cd4762d59ebd85fb8c6fccb",
+      "prompt_sha256": "ba856262c67512e5c0c1e79d7e8cea497074f6180eeb0d206d9c0eca359435be",
+      "sample_ids": [
+        "pc-0070"
+      ],
+      "calls": 1
+    },
+    "probe/EN": {
+      "input_sha256": "5724d2555f0faee71b2c140f8e8acd91d589b85cd49f841d383056e1f7816a61",
+      "prompt_sha256": "ba856262c67512e5c0c1e79d7e8cea497074f6180eeb0d206d9c0eca359435be",
+      "sample_ids": [
+        "pc-0102"
+      ],
+      "calls": 1
+    }
+  },
+  "excluded_as_exact_reuse": [
+    "ms-0440",
+    "ms-0441"
+  ],
+  "evidence": {
+    "revision_manifest_sha256": "9eba65082184d9f9311287ed6af4309d616a08566e40ee83de936eb2609b5c3c",
+    "human_confirmation_sha256": "d23e9326d6c8989dbf8b6fb8ec8928b6f6d1df6067b026e50532db8856243171",
+    "preparation_sha256": "518f1c9928238699a848651e2aa1aa8b5439029cd8af03654b7030c6cd7c0863"
+  },
+  "prior_authorization": {
+    "revision": "annotation-revision-20261008-v5",
+    "unused_authorized_balance_usd": 1.370938,
+    "transferable": false,
+    "reason": "The v5 authorization binds exact revision, confirmation, preparation, batch input and prompt hashes; both pc reviewer inputs changed in v6."
+  },
+  "note": "This request is not authorization. A budget_authorization artifact may be created only after the project owner explicitly approves this exact v6 scope and cap."
+}

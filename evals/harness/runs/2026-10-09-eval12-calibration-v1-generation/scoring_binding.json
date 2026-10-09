@@ -1,0 +1,8 @@
+{
+  "version": "main-outcome-v2",
+  "no_answer": "escalated with exactly insufficient_evidence; failures remain in denominator",
+  "legacy_no_answer_expectation": "insufficient_evidence (verified main/replay v1-v3)",
+  "evidence": "explicit groups: AND across/OR within; legacy flat: any hit",
+  "safety": "existing per-sample checks, unchanged",
+  "semantic_support_and_answer_completeness": "not_measured_by_this_scorer"
+}

@@ -1,0 +1,42 @@
+{
+  "format": "paid-review-outcome-v1",
+  "status": "complete_all_agree",
+  "completed_at": "2026-10-09",
+  "authorization_quote": "EVAL-11 v6 复核，最多 0.65 USD",
+  "authorization_sha256": "12497c2bb4b5989d10effbf141c3d9689c8768f018cbf7e3227998dd7962ae4f",
+  "attempts": 2,
+  "validated_replies": 2,
+  "agrees": 2,
+  "disputes": 0,
+  "known_cost_usd": "0.290727",
+  "authorized_total_usd": "0.650000",
+  "unused_authorized_balance_usd": "0.359273",
+  "verdicts": {
+    "pc-0070": "agree",
+    "pc-0102": "agree"
+  },
+  "run_artifacts": {
+    "probe/run_CO.json": "b272a464ba30a8645a8c197d464a13a77e9054ea0186f096d6a169b308a10695",
+    "probe/verdicts_CO.jsonl": "1522b5d2c57fada2e123a51ab8c8a9babdea343553a2de490701eeff18fabacf",
+    "probe/run_EN.json": "b3985fd557c7931466f260217cbc9b800dbee6771a3f976f234201c9cec90da5",
+    "probe/verdicts_EN.jsonl": "e43f7c95ee9990e553e21c0fdbb4c63a6d3f4f9f668211ca9dbfa6b8156ba5ad"
+  },
+  "budget_sha256": "349ed1aaae8b390f97c2834f7647c1d30e452ee8c3804380242ce5d2f058738e",
+  "unresolved_attempts": [],
+  "automatic_retries": 0,
+  "frozen_successors": {
+    "probe": {
+      "path": "evals/probe/precise_clause/v4",
+      "dataset_hash": "1427274ecd04ab6193e572ad1633cfa3bd897520315af52c40fd93e792492286"
+    },
+    "main": {
+      "path": "evals/main_set/main-v5-provisional",
+      "dataset_hash": "23bf8530d63f6605b10fb2b1f9d7b3cf5cb805f5d3b20caa16f2fa2e7e5842b0",
+      "mapping": {
+        "mapped": 580,
+        "unmappable": 2,
+        "sha256": "9189e9e20f38203a59d7d7cd7640dc2521ff6103dbde16f35590f4c331800d39"
+      }
+    }
+  }
+}

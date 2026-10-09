@@ -12,7 +12,7 @@ from mcp.shared.memory import create_client_server_memory_streams
 from starlette.testclient import TestClient
 
 from medops.api.auth import Authenticator, JwtVerifier, Principal, StaticDirectory, pseudonym
-from medops.core.errors import BusinessError, ErrorCode
+from medops.core.errors import BusinessError, ErrorCode, InfrastructureError
 from medops.domain.common import Dept, DocStatus, DocType
 from medops.mcp.contracts import (
     MCP_TOOLS,
@@ -23,6 +23,7 @@ from medops.mcp.contracts import (
     VerifyCitationOutput,
 )
 from medops.mcp.server import build_server
+from medops.mcp.service import SearchExecution
 from tests.unit.api._auth_fixtures import AUDIENCE, ISSUER, PSEUDONYM_KEY, TestIssuer
 from tests.unit.harness._fixtures import evidence, user
 
@@ -35,8 +36,20 @@ CHUNK = evidence(
 class FakeService:
     def __init__(self, user):
         self.user = user
+        self.audit_stats = SearchExecution(())
 
     def search_documents(self, inp):
+        self.audit_stats = SearchExecution(
+            (),
+            model_calls=1,
+            tokens=17,
+            cost_usd=0.002,
+            retrieval_version="retrieval-canary",
+            policy_version="policy-canary",
+            cache_hit=False,
+        )
+        if inp.query == "fail-after-model":
+            raise InfrastructureError(ErrorCode.dependency_unavailable, "retrieval failed")
         return SearchDocumentsOutput(hits=(), requested_k=inp.k, candidate_exhausted=True)
 
     def get_chunk(self, inp):
@@ -214,3 +227,24 @@ def test_every_tool_call_writes_an_mcp_trace_and_audit_failure_fails_closed():
     runtime.fail_audit = True
     _, closed = call(server, "get_chunk", {"input": {"chunk_id": chunk_id}})
     assert closed.is_error and "audit unavailable" in closed.content[0].text and closed.structured_content is None
+
+
+def test_search_audit_includes_translation_usage_and_routed_versions():
+    runtime = FakeRuntime(with_auth=False, dev_identity=user(Dept.MA))
+    server = build_server(runtime)
+    _, result = call(server, "search_documents", {"input": {"query": "剂量", "k": 8}})
+    assert not result.is_error
+    trace = runtime.audited[-1]
+    assert (trace.model_calls, trace.tokens, trace.cost_usd) == (1, 17, 0.002)
+    assert trace.versions["retrieval_version"] == "retrieval-canary"
+    assert trace.versions["policy_version"] == "policy-canary"
+
+
+def test_failed_search_audit_keeps_model_usage_before_the_failure():
+    runtime = FakeRuntime(with_auth=False, dev_identity=user(Dept.MA))
+    server = build_server(runtime)
+    _, result = call(server, "search_documents", {"input": {"query": "fail-after-model", "k": 8}})
+    assert result.is_error
+    trace = runtime.audited[-1]
+    assert trace.outcome == "escalated" and (trace.model_calls, trace.tokens, trace.cost_usd) == (1, 17, 0.002)
+    assert trace.versions["policy_version"] == "policy-canary"

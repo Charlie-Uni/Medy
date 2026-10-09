@@ -1,0 +1,94 @@
+{
+  "format": "answer-quality-calibration-supplement-plan-v1",
+  "created_at": "2026-10-09",
+  "status": "prepared_no_model_calls_waiting_authorization",
+  "reason": "The preregistered generation completion condition requires at least 8 answered cases; the exact ten-case run produced 6 answered and 4 safe escalations.",
+  "dataset": {
+    "dataset_id": "precise_clause_main",
+    "dataset_version": "main-v5-provisional",
+    "dataset_hash": "23bf8530d63f6605b10fb2b1f9d7b3cf5cb805f5d3b20caa16f2fa2e7e5842b0",
+    "samples_sha256": "9add753a8672aa655a645a47d8a66199ede395d014507cbc44e8bfc00edf9b43"
+  },
+  "parent_run": {
+    "path": "evals/harness/runs/2026-10-09-eval12-calibration-v1-generation",
+    "rows_sha256": "c9ce5386c3b52c3ae9425033bdd785e19cd40c7066b10c3eb9d11e8b9d1e1b7d",
+    "run_conditions_sha256": "e1d3fac61455a25a507b1bfbf51d7e8db586be0aa6cae09178c83d303e207797",
+    "terminal_cases": 10,
+    "answered": 6,
+    "escalated": 4,
+    "actual_cost_usd": 0.085875
+  },
+  "selection": {
+    "method": "purposeful direct-answer supplement; development data, not an unseen estimate",
+    "cases": 4,
+    "items": [
+      {
+        "sample_id": "ms-0001",
+        "sample_input_sha256": "e5a88a1b04b93c7c70c90a8ee40d94bf980157a7886dcf5631d4d6e33295e179",
+        "dept": "MA",
+        "language": "mixed",
+        "gold_groups": 1,
+        "dimensions": [
+          "direct_product_dose"
+        ],
+        "rationale": "A short named-product dose question with one gold group; adds a MA dosage answer."
+      },
+      {
+        "sample_id": "ms-0099",
+        "sample_input_sha256": "a13a464c1168901e0f9c29a957fe1198490644d9c2415e97ca2bed9e8a4d21da",
+        "dept": "PV",
+        "language": "en",
+        "gold_groups": 1,
+        "dimensions": [
+          "english_named_rule"
+        ],
+        "rationale": "A short English PV question with one gold group and an explicit regulation field."
+      },
+      {
+        "sample_id": "ms-0104",
+        "sample_input_sha256": "7ac3adacc77f66b99da997aea20300a83ac2b3147be1b69908f87345745d19af",
+        "dept": "PV",
+        "language": "mixed",
+        "gold_groups": 1,
+        "dimensions": [
+          "chinese_time_window"
+        ],
+        "rationale": "A short Chinese PV deadline question with one gold group."
+      },
+      {
+        "sample_id": "ms-0317",
+        "sample_input_sha256": "411d6e98a44d3ff1b76b89a2d8cca9434caac2c584386d9fd2a23bcca143c2a3",
+        "dept": "CO",
+        "language": "en",
+        "gold_groups": 1,
+        "dimensions": [
+          "english_co_time_window"
+        ],
+        "rationale": "A short English compliance deadline question with one gold group and explicit CFR source."
+      }
+    ]
+  },
+  "generation": {
+    "runner": "evals/harness/tools/smoke_ask.py",
+    "released": true,
+    "as_of": "2026-09-23",
+    "database": "medops_v2",
+    "requested_run_cap_usd": 0.15,
+    "stop_conditions": [
+      "hard pre-call run cap",
+      "provider/system failure",
+      "fact-plane drift"
+    ]
+  },
+  "completion": {
+    "combined_minimum_answered": 8,
+    "all_supplement_rows_need_exact_review_snapshot": true,
+    "no_system_failure": true,
+    "formal_gate": false
+  },
+  "limitations": [
+    "Replacement cases are chosen for a high chance of producing judgeable answers, so they do not estimate population accuracy.",
+    "The supplement does not erase or replace the four escalations in the original panel.",
+    "This file authorizes no model call; the requested 0.15 USD cap requires a new explicit user approval."
+  ]
+}

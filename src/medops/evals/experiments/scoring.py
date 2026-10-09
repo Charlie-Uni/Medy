@@ -19,6 +19,8 @@ import random
 from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import dataclass
 
+from medops.evals.statistics import nearest_rank
+
 
 def strict_recall(retrieved: Iterable[str], required: Sequence[str]) -> float:
     """Per-query strict recall: fraction of required gold chunk groups that appear in `retrieved`.
@@ -109,10 +111,10 @@ def _percentile_index(p: float, n: int) -> int:
 
 
 def p95_nearest_rank(latencies: Sequence[float]) -> float:
-    if not latencies:
+    result = nearest_rank(latencies, 0.95)
+    if result is None:
         raise ValueError("no latencies")
-    ordered = sorted(latencies)
-    return ordered[_percentile_index(0.95, len(ordered))]
+    return result
 
 
 def rankings_identical(rankings: Sequence[Sequence[str]]) -> bool:

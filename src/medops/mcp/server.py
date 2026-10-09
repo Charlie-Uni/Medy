@@ -27,6 +27,7 @@ from medops.api.auth import Authenticator, PrincipalDirectory
 from medops.application.audit import TraceRecord
 from medops.core.errors import BusinessError, ErrorCode, MedOpsError
 from medops.core.telemetry import annotate, span
+from medops.core.tracing import bind_trace_id
 from medops.domain.identity import UserContext
 from medops.mcp.contracts import (
     MCP_TOOLS,
@@ -35,13 +36,15 @@ from medops.mcp.contracts import (
     SearchDocumentsInput,
     VerifyCitationInput,
 )
-from medops.mcp.service import McpService
+from medops.mcp.service import McpService, SearchExecution
 from medops.retrieval.production import PRODUCTION_RETRIEVAL_VERSION
 
 READ_ONLY = ToolAnnotations(read_only_hint=True, destructive_hint=False, idempotent_hint=True, open_world_hint=False)
 
 
 class ServiceLike(Protocol):
+    audit_stats: SearchExecution
+
     def search_documents(self, inp: SearchDocumentsInput) -> Any: ...
 
     def get_chunk(self, inp: GetChunkInput) -> Any: ...
@@ -130,11 +133,18 @@ def _audit(
     reason_codes: tuple[str, ...],
     result: dict[str, Any] | None,
     started: float,
+    stats: SearchExecution | None = None,
 ) -> None:
     """One trace per tool call (M3-07): principal pseudonym, tool + input summary, outcome, chunk ids handed out.
     An audit failure is surfaced as a tool error and the data is withheld, like /v1/ask (record 60)."""
     principal = user.user_id if _HEX.match(user.user_id) else hashlib.sha256(user.user_id.encode()).hexdigest()
     summary = json.dumps(inp.model_dump(mode="json"), ensure_ascii=False)[:500]
+    stats = stats or SearchExecution(())
+    versions = {"mcp_server": SERVER_VERSION, "retrieval_version": PRODUCTION_RETRIEVAL_VERSION}
+    if stats.retrieval_version:
+        versions["retrieval_version"] = stats.retrieval_version
+    if stats.policy_version:
+        versions["policy_version"] = stats.policy_version
     trace = TraceRecord(
         trace_id=trace_id,
         run_id=trace_id,
@@ -144,13 +154,13 @@ def _audit(
         query=f"{tool} {summary}",
         outcome=outcome,
         reason_codes=reason_codes,
-        versions={"mcp_server": SERVER_VERSION, "retrieval_version": PRODUCTION_RETRIEVAL_VERSION},
+        versions=versions,
         evidence_chunk_ids=_chunk_ids(result),
         cited_chunk_ids=(),
         flagged_chunk_ids=(),
-        model_calls=0,
-        tokens=0,
-        cost_usd=0.0,
+        model_calls=stats.model_calls,
+        tokens=stats.tokens,
+        cost_usd=stats.cost_usd,
         duration_ms=(perf_counter() - started) * 1000.0,
         spans=(),
     )
@@ -173,21 +183,23 @@ def build_server(runtime: McpRuntime, *, issuer_url: str | None = None, resource
     server = MCPServer(name="medops-copilot", version="0.0.1", token_verifier=verifier, auth=auth)
     specs = {t.name: t for t in MCP_TOOLS}
 
-    specs = {t.name: t for t in MCP_TOOLS}
-
     def run(name: str, method: str, inp: Any) -> dict[str, Any]:
         started = perf_counter()
         trace_id = uuid.uuid4().hex
-        with span("mcp.tool", tool=name) as current:
+        with bind_trace_id(trace_id), span("mcp.tool", tool=name) as current:
             user = None
+            svc = None
+            stats = None
             try:
                 user = _current_user(runtime)
                 annotate(current, dept=user.dept.value)
                 with runtime.service(user) as svc:
                     result = getattr(svc, method)(inp).model_dump(mode="json")
+                    stats = getattr(svc, "audit_stats", None)
             except MedOpsError as exc:
                 annotate(current, error_code=exc.code.value)
                 if user is not None:
+                    stats = getattr(svc, "audit_stats", None)
                     _audit(
                         runtime,
                         user,
@@ -198,11 +210,20 @@ def build_server(runtime: McpRuntime, *, issuer_url: str | None = None, resource
                         (exc.code.value,),
                         None,
                         started,
+                        stats,
                     )
                 # ToolError text is returned verbatim as isError; anything else would be wrapped as an unexpected error
                 raise ToolError(f"{exc.code.value}: {exc.message}") from None
             # the trace is written before the data leaves the process: no audit row, no answer (fail closed)
-            _audit(runtime, user, trace_id, name, inp, "answered", (), result, started)
+            if stats is not None:
+                annotate(
+                    current,
+                    model_calls=stats.model_calls,
+                    cache_hit=stats.cache_hit,
+                    retrieval_version=stats.retrieval_version or PRODUCTION_RETRIEVAL_VERSION,
+                    policy_version=stats.policy_version or "",
+                )
+            _audit(runtime, user, trace_id, name, inp, "answered", (), result, started, stats)
             return result
 
     @server.tool(name="search_documents", description=specs["search_documents"].description, annotations=READ_ONLY)

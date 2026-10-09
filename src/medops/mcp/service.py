@@ -41,8 +41,21 @@ select c.chunk_id::text, c.doc_id::text, d.version, d.status::text, d.effective_
 """
 
 
+@dataclass(frozen=True)
+class SearchExecution:
+    evidence: Sequence[Evidence]
+    model_calls: int = 0
+    tokens: int = 0
+    cost_usd: float = 0.0
+    retrieval_version: str | None = None
+    policy_version: str | None = None
+    cache_hit: bool = False
+
+
 class Searcher(Protocol):
-    def __call__(self, query: str, k: int, *, as_of: date | None, allow_historical: bool) -> Sequence[Evidence]: ...
+    def __call__(
+        self, query: str, k: int, *, as_of: date | None, allow_historical: bool
+    ) -> Sequence[Evidence] | SearchExecution: ...
 
 
 @dataclass(frozen=True)
@@ -84,6 +97,7 @@ class McpService:
         self._conn = conn
         self.user = user
         self._searcher = searcher
+        self.audit_stats = SearchExecution(())
 
     # ------------------------------------------------------------------ helpers
     def _chunk(self, chunk_id: str) -> _ChunkRow | None:
@@ -129,7 +143,17 @@ class McpService:
         if self._searcher is None:
             raise BusinessError(ErrorCode.invalid_request, "search is not available on this server")
         as_of = self._historical_as_of(inp.historical_version)
-        evidence = self._searcher(inp.query, inp.k, as_of=as_of, allow_historical=as_of is not None)
+        try:
+            searched = self._searcher(inp.query, inp.k, as_of=as_of, allow_historical=as_of is not None)
+        finally:
+            latest = getattr(self._searcher, "audit_stats", None)
+            if isinstance(latest, SearchExecution):
+                self.audit_stats = latest
+        if isinstance(searched, SearchExecution):
+            self.audit_stats = searched
+            evidence = searched.evidence
+        else:
+            evidence = searched
         hits: list[SearchHit] = []
         seen: set[str] = set()
         for ev in evidence:

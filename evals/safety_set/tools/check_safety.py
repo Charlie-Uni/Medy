@@ -17,7 +17,7 @@ import sys
 import jsonschema
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
-from common import (  # noqa: E402
+from medops.evals.safety_data import (  # noqa: E402
     CATEGORIES,
     CORPUS_SAFETY,
     MIN_PER_DEPT,

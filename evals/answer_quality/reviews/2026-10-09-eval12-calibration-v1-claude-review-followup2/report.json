@@ -1,0 +1,39 @@
+{
+  "scorer_version": "answer-quality-v1-provisional",
+  "formal_gate": false,
+  "cases": 14,
+  "reviewed_cases": 10,
+  "claim_support": {
+    "numerator": 12,
+    "denominator": 12,
+    "pending": 0,
+    "unverifiable": 0,
+    "rate": 1.0
+  },
+  "citation_support": {
+    "numerator": 13,
+    "denominator": 14,
+    "pending": 0,
+    "unverifiable": 0,
+    "rate": 0.9285714285714286
+  },
+  "answer_completeness": {
+    "numerator": 7,
+    "denominator": 14,
+    "pending": 0,
+    "unverifiable": 0,
+    "rate": 0.5
+  },
+  "note": "Separate diagnostic judgments; no structural/gold proxy, no second-human inference, no retrospective replacement of original scores.",
+  "budget": {
+    "attempts": 8,
+    "known_cost_usd": "0.578090",
+    "unresolved_reserved_usd": "0",
+    "remaining_usd": "1.821910",
+    "unresolved_attempts": [],
+    "total_budget_usd": "2.400000"
+  },
+  "prior_reviewed_cases": 2,
+  "request_sha256": "6e6d0503a1e6c67d28e6feb4618c41b2c4fcea43a1aaae9085b951a5ba11e276",
+  "authorization_sha256": "89ea00f973125112b34bf54386ef4f87a11c5125048b63b7dba82feeb0cd3527"
+}

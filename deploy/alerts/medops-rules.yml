@@ -44,5 +44,16 @@ groups:
         for: 30m
         labels: {severity: warning}
         annotations: {summary: "Verifier contradictions above the hourly baseline; check rules/judge drift before trusting answers"}
+      # Operational diagnostics, not new quality/latency acceptance thresholds (record 137).
+      - alert: MedopsRetrievalIndexesNotReady
+        expr: medops_retrieval_indexes_ready == 0
+        for: 1m
+        labels: {severity: critical}
+        annotations: {summary: "Retrieval index inspection failed or active corpus/index versions are incomplete"}
+      - alert: MedopsOutboxConsumerStale
+        expr: medops_outbox_oldest_age_seconds > 300
+        for: 5m
+        labels: {severity: warning}
+        annotations: {summary: "A retrieval consumer has unacknowledged events older than five minutes; inspect consumer recovery"}
       # Not yet measurable from /metrics (record 64 §3): ACL denial anomalies (401/403 happen before a trace exists),
       # invalid-version candidates, cache hit rate, per-node error rates.

@@ -1,0 +1,18 @@
+{
+  "format": "review-retry-outcome-v1",
+  "status": "validated_reply",
+  "completed_at": "2026-10-08T11:34:08.978867+00:00",
+  "sample_id": "ms-0242",
+  "verdict": "agree",
+  "authorization_sha256": "c5f14659f1768bc24be23078aefd9bf7324451a8c62f849dc6ac3c510f2aa5f3",
+  "budget_sha256": "3a9461d1840c178e8338d30f7495943ab50832ef1d35c3cbc5f96eacb0fb9796",
+  "run_sha256": "ec02f7372ba6fe79ba2fe2bb152482e24bd83202efda83f782b5def623ea7ec5",
+  "verdicts_sha256": "24e41240b9d530db3a5f8d561a82fb30675ef204ddf25b48073ef055550c6aed",
+  "attempt_id": "b20eba3dba444efe81ad748ef76471e9",
+  "cost_usd_raw": "0.1852475",
+  "cost_usd_ledger": "0.185248",
+  "session_id": "2ac5ca5c-1c28-4eb3-85cf-30c013fabc4b",
+  "cli_capture_sha256": "32e663e712f1dd27ed32af90b60d753a8aa24b78a2dc3b9bdcda5fd6e18e2e3d",
+  "automatic_retries": 0,
+  "independent_second_human": false
+}

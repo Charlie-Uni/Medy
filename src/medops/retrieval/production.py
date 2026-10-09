@@ -37,6 +37,7 @@ from medops.retrieval.lexical.tokenizer import JiebaTokenizerV2
 from medops.retrieval.query_translation import QUERY_TRANSLATION_OFF, QUERY_TRANSLATION_VERSION
 from medops.retrieval.rerank import MAX_INPUT, MAX_LENGTH, RERANK_MODEL_ID, RERANK_REVISION, RerankerSpec
 from medops.retrieval.rewrite import GLOSSARY_NONE
+from medops.retrieval.source_constraints import SOURCE_CONSTRAINT_VERSION
 from medops.retrieval.vector import pg_vector
 from medops.retrieval.vector.embedding import EMBEDDING_VERSION, EmbeddingProvider
 from medops.retrieval.versioning import RetrievalVersionInputs, compute_retrieval_version
@@ -93,6 +94,7 @@ def production_retrieval_inputs(
     glossary_version: str | None = None,
     multi_query: bool = False,
     doc_focus: bool = False,
+    source_constraint: bool = False,
     query_translation: str = QUERY_TRANSLATION_OFF,
 ) -> RetrievalVersionInputs:
     """Defaults are the pinned production values; a released retrieval policy (M4-03) passes its effective config so the
@@ -106,6 +108,8 @@ def production_retrieval_inputs(
         rewrite["multi_query"] = True
     if doc_focus:
         rewrite["doc_focus"] = DOC_FOCUS_VERSION
+    if source_constraint:
+        rewrite["source_constraint"] = SOURCE_CONSTRAINT_VERSION
     if query_translation != QUERY_TRANSLATION_OFF:
         rewrite["query_translation"] = f"{QUERY_TRANSLATION_VERSION}:{query_translation}"
     return RetrievalVersionInputs.from_lexical(
@@ -180,9 +184,9 @@ def index_coverage(conn: psycopg.Connection[Any]) -> dict[str, int]:
     evaluation until 2026-10-02 silently searched the older 76 documents only (record 109)."""
     row = conn.execute(
         f"""select count(*),
-                   count(*) filter (where l.chunk_id is null),
+                   count(*) filter (where l.chunk_id is null or l.tsv = ''::tsvector),
                    count(*) filter (where e.chunk_id is null),
-                   count(distinct d.doc_id) filter (where l.chunk_id is null or e.chunk_id is null)
+                   count(distinct d.doc_id) filter (where l.chunk_id is null or l.tsv = ''::tsvector or e.chunk_id is null)
               from chunks ch
               join documents d on d.doc_id = ch.doc_id and d.status = 'active'
               left join {PRODUCTION_LEXICAL_TABLE} l on l.chunk_id = ch.chunk_id
@@ -213,7 +217,8 @@ def require_index_coverage(conn: psycopg.Connection[Any], *, plane: str = "") ->
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Production retrieval configuration tools")
     parser.add_argument(
-        "action", choices=("show", "build-lexical", "build-embeddings", "check-indexes", "invalidate-cache")
+        "action",
+        choices=("show", "build-lexical", "build-embeddings", "check-indexes", "check-readiness", "invalidate-cache"),
     )
     parser.add_argument("--device", default="cpu", help="build-embeddings: torch device for the local bge-m3 model")
     parser.add_argument("--admin-url", help="admin DSN (default: DATABASE_ADMIN_URL from settings)")
@@ -239,6 +244,12 @@ def main(argv: Sequence[str] | None = None) -> int:
     if not dsn:
         settings = Settings()  # type: ignore[call-arg]
         dsn = (settings.database_admin_url or settings.database_url).get_secret_value()
+    if args.action == "check-readiness":
+        from medops.retrieval.integrity import inspect_readiness
+
+        status = inspect_readiness(dsn)
+        print(json.dumps(status, ensure_ascii=False))
+        return 0 if status["ready"] else 1
     if args.action == "check-indexes":
         with psycopg.connect(dsn) as conn:
             cov = index_coverage(conn)

@@ -1,0 +1,186 @@
+{
+  "format": "answer-quality-calibration-plan-v1",
+  "created_at": "2026-10-09",
+  "status": "prepared_no_model_calls",
+  "dataset": {
+    "dataset_id": "precise_clause_main",
+    "dataset_version": "main-v5-provisional",
+    "dataset_hash": "23bf8530d63f6605b10fb2b1f9d7b3cf5cb805f5d3b20caa16f2fa2e7e5842b0",
+    "samples_sha256": "9add753a8672aa655a645a47d8a66199ede395d014507cbc44e8bfc00edf9b43"
+  },
+  "rubric": {
+    "version": "answer-quality-v1-provisional",
+    "path": "evals/answer_quality/RUBRIC.md",
+    "sha256": "9230f46fecf5a7e012dc21a803582d894685944f29f162239b5998700b37925d"
+  },
+  "selection": {
+    "method": "purposeful calibration panel; development data, not an unseen estimate",
+    "cases": 10,
+    "items": [
+      {
+        "sample_id": "ms-0012",
+        "sample_input_sha256": "3821e3c041665a9c574001a2bfb089fc6236d2fc93439f56c145af0d3d6d3643",
+        "dept": "MA",
+        "language": "mixed",
+        "gold_groups": 1,
+        "dimensions": [
+          "dose_condition",
+          "prior_judge_false_negative"
+        ],
+        "rationale": "Question condition changes the applicable dose; tests whether the reviewer reads the query with the cited claim."
+      },
+      {
+        "sample_id": "ms-0056",
+        "sample_input_sha256": "335765b78bc0d3f5671fd99f1e609693b2ee3f215432678aa6ad5f8a6c3dabf4",
+        "dept": "MA",
+        "language": "mixed",
+        "gold_groups": 1,
+        "dimensions": [
+          "named_product",
+          "time_window"
+        ],
+        "rationale": "Named marketed product and a precise recovery interval."
+      },
+      {
+        "sample_id": "ms-0149",
+        "sample_input_sha256": "15da0b7c4c30076ffe586626acc3a6ef08a355a59f9ca543dd2398d5877d3e11",
+        "dept": "PV",
+        "language": "mixed",
+        "gold_groups": 1,
+        "dimensions": [
+          "equivalent_carrier",
+          "negation",
+          "protocol_field"
+        ],
+        "rationale": "The named standard is carried by an adjudicated equivalent GVP document; duplicate-report polarity matters."
+      },
+      {
+        "sample_id": "ms-0177",
+        "sample_input_sha256": "76a515a42c088c6a0afe88fadc6806188f4ed37853057400f3f0f020fc0f79a0",
+        "dept": "PV",
+        "language": "mixed",
+        "gold_groups": 1,
+        "dimensions": [
+          "conditional_modality",
+          "time_window",
+          "prior_judge_false_negative"
+        ],
+        "rationale": "Tests may/if language without turning an optional request into a mandatory action."
+      },
+      {
+        "sample_id": "ms-0227",
+        "sample_input_sha256": "3cbbb9247b450bbf004cb4e7bb9f5f2c07ee321a528867b43f2b9d6a3ef526da",
+        "dept": "PV",
+        "language": "mixed",
+        "gold_groups": 1,
+        "dimensions": [
+          "premise_ellipsis",
+          "negation",
+          "prior_judge_false_negative"
+        ],
+        "rationale": "The answer may omit a premise already supplied by the question without becoming unsupported."
+      },
+      {
+        "sample_id": "ms-0242",
+        "sample_input_sha256": "c94527e1b884518250a122e4afa7537fc7c6ae73083cd310203e177750f07f35",
+        "dept": "PV",
+        "language": "en",
+        "gold_groups": 3,
+        "dimensions": [
+          "english",
+          "named_document_version",
+          "multi_gold_3"
+        ],
+        "rationale": "English answer requiring three jointly necessary example classes from one named FDA edition."
+      },
+      {
+        "sample_id": "ms-0298",
+        "sample_input_sha256": "566d59a25b9a23c1571e2ba95fe42282f5ab76fd28f6522512cdb0830ced4c76",
+        "dept": "CO",
+        "language": "mixed",
+        "gold_groups": 2,
+        "dimensions": [
+          "named_document_version",
+          "multi_gold_2",
+          "exception",
+          "negation"
+        ],
+        "rationale": "Two independently necessary exceptions must both remain complete and correctly scoped."
+      },
+      {
+        "sample_id": "ms-0338",
+        "sample_input_sha256": "715e8b6f1216ebb9a70770500d2d7c6bef9d926a661442e3ead052bcd1bd2bbd",
+        "dept": "CO",
+        "language": "mixed",
+        "gold_groups": 1,
+        "dimensions": [
+          "host_document_reference",
+          "negation",
+          "protocol_id"
+        ],
+        "rationale": "The FDA host document discusses ICH/ISO references; tests source identity and an absolute-monitoring exception."
+      },
+      {
+        "sample_id": "ms-0440",
+        "sample_input_sha256": "e5e63b147de4c7c3a00f22b6b956c16e9e833b94a8ab18f57a4cca65a7ce6292",
+        "dept": "CO",
+        "language": "mixed",
+        "gold_groups": 5,
+        "dimensions": [
+          "long_context",
+          "version_conflict",
+          "multi_gold_5",
+          "negation"
+        ],
+        "rationale": "Five jointly necessary evidence units across a long current-version answer."
+      },
+      {
+        "sample_id": "pc-0068",
+        "sample_input_sha256": "c93d190f6e21c699b7b0c961bf76a435efdf51b101c6de9ce174bb4ad18be63c",
+        "dept": "CO",
+        "language": "mixed",
+        "gold_groups": 1,
+        "dimensions": [
+          "relationship_statement",
+          "protocol_id"
+        ],
+        "rationale": "Asks for the relationship between two ICH documents; a single-source shortcut is not sufficient."
+      }
+    ]
+  },
+  "generation": {
+    "runner": "evals/harness/tools/smoke_ask.py",
+    "released": true,
+    "as_of": "2026-09-23",
+    "database": "medops_v2",
+    "requested_run_cap_usd": 0.35,
+    "stop_conditions": [
+      "hard pre-call run cap",
+      "provider/system failure",
+      "fact-plane drift"
+    ]
+  },
+  "review": {
+    "reviewer_kind": "llm",
+    "reviewer_id": "reviewer-llm-answer-quality-01",
+    "model": "claude-opus-5",
+    "reasoning_effort": "high",
+    "one_case_per_call": true,
+    "requested_per_call_cap_usd": 0.3,
+    "requested_total_cap_usd": 3.0,
+    "max_attempts": 10,
+    "stop_on_nonvalidated_attempt": true,
+    "independent_second_human": false
+  },
+  "calibration_decision": {
+    "owner_review_required": true,
+    "minimum_cases": 8,
+    "pass_rule": "Owner resolves every material model disagreement; no formal gate is created from this panel.",
+    "formal_gate": false
+  },
+  "limitations": [
+    "Purposefully selected development cases measure rubric failure modes, not population accuracy.",
+    "The project owner is the only human; owner adjudication is not an independent second-human review.",
+    "Generation and review require separate explicit paid authorization before execution."
+  ]
+}

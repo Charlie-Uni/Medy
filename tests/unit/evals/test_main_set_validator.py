@@ -89,6 +89,17 @@ def test_pr09_imported_samples_keep_the_probe_reviewer_binding(frozen):
     assert "PR-09" in _rules(report)
 
 
+def test_pr16_imported_prompt_hash_set_must_cover_probe_sample_bindings(frozen):
+    version, pages, root = frozen
+
+    def edit(m):
+        m["imported_samples"]["prompt_hashes"] = ["0" * 64]
+
+    _rewrite(version, edit, manifest=True)
+    report = _validator(pages, root).validate(version, mode="frozen")
+    assert "PR-16" in _rules(report)
+
+
 def test_pr17_no_answer_scope_must_be_a_corpus_document(frozen):
     version, pages, root = frozen
 

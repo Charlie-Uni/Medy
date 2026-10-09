@@ -40,7 +40,6 @@ from medops.evals.experiments.dec001_run import (
     QueryOutcome,
     _git_head,
     _sha256,
-    _with_database,
     leak_check,
     load_mapping,
     load_queries,
@@ -49,6 +48,7 @@ from medops.evals.experiments.dec001_run import (
 )
 from medops.evals.experiments.dec001_run import server_facts as lexical_facts
 from medops.evals.experiments.dec002_run import server_facts as vector_facts
+from medops.evals.safety_data import with_database
 from medops.retrieval.hybrid import HybridConfig, retrieve_evidence
 from medops.retrieval.rerank import Reranker, rerank_evidence
 from medops.retrieval.vector import pg_vector
@@ -662,7 +662,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         description="End-to-end hybrid retrieval run with fact re-check (frozen manifest first)"
     )
-    parser.add_argument("--dataset", type=Path, default=Path("evals/probe/precise_clause/v2"))
+    parser.add_argument("--dataset", type=Path, default=Path("evals/probe/precise_clause/v3"))
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--as-of", type=date.fromisoformat, required=True)
     parser.add_argument(
@@ -715,8 +715,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         srv = servers[lexical]
         systems[f"{lexical}+V"] = {
             "lexical": lexical,
-            "app_dsn": _with_database(srv.app_dsn, args.database),
-            "admin_dsn": _with_database(srv.admin_dsn, args.database),
+            "app_dsn": with_database(srv.app_dsn, args.database),
+            "admin_dsn": with_database(srv.admin_dsn, args.database),
             "mapping_path": mapping,
         }
     from medops.retrieval.vector.embedding import BgeM3EmbeddingProvider

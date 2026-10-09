@@ -1,0 +1,47 @@
+{
+  "format": "annotation-revision-v2",
+  "status": "draft",
+  "version": "annotation-revision-20261008-v6",
+  "created_at": "2026-10-08",
+  "base_dataset": {
+    "path": "evals/main_set/main-v4-provisional",
+    "dataset_hash": "79e0c56920252a6e86694e1228c3c4f5ab47fbdfab2f89aa85dd9891ac618c7d"
+  },
+  "decision_source": {
+    "path": "evals/review/unmappable_gold_worklist-v2.json",
+    "sha256": "1164f0bae01e80231b2a387b7a3d77bac15542f6da78f0c9cf0c8139a91210d6"
+  },
+  "schema_dir": "evals/main_set/schema",
+  "target_sample_ids": [
+    "ms-0440",
+    "pc-0070"
+  ],
+  "linked_sample_ids": [
+    "ms-0441",
+    "pc-0102"
+  ],
+  "intended_versions": {
+    "probe": "probe-v4-provisional (pending owner decision/review)",
+    "main": "main-v5-provisional (pending owner decision/review)"
+  },
+  "files": {
+    "proposals.json": "f2b77ed5f2c647c06da5b8fefcff86129cf41f85ab879d8197cc87e057da80ed",
+    "chunk_mapping.preview.json": "94be4699cb5cc2689648e585bcee2ee53d07a321d32521feb4d675baea09bf2d",
+    "chunks.snapshot.json": "9923c324b54661dfcb22856af6aaaeca93a18fa0d8d547fb49d99963d2440dfc",
+    "page_inputs.json": "614e99f8d211aebe2dbcb6a4b78a121d928f6610251634275c48c361960319ff",
+    "corpus_edits.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "document_verification.json": "49d1fb996bc87d874ea5cd8be011920cce100e828e6e817f6ec6ad80b6c28ce3"
+  },
+  "freeze_ready": false,
+  "chunker_version": "chunker-v2",
+  "new_sample_ids": [],
+  "supersedes": {
+    "path": "evals/main_set/drafts/revision-2026-10-08-v5",
+    "manifest_sha256": "10c1b34d7b1cafa76483276a3668573ff4de2ad13c8c8b03cb8e082893f15916"
+  },
+  "retained_unmappable_gold_ids": [
+    "ms-0197-g1",
+    "ms-0198-g1"
+  ],
+  "note": "EVAL-11 successor after paid review: retain the two GVP misses, keep the agreed ICH E7 split, and replace the disputed IRB/IEC physical split with one complete-list gold. Awaiting owner decision."
+}

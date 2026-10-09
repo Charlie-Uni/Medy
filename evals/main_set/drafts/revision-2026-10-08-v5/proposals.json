@@ -1,0 +1,557 @@
+[
+  {
+    "sample_id": "ms-0197",
+    "origin": "unmappable_gold_repair",
+    "before_sha256": "775cec8e4ec6781d09b1f1617a452e58f4a2b67c48b61cdd3c223e4596adcab0",
+    "decision_sample_id": "ms-0197",
+    "source_document_key": "ema-gvp-module-xvi-rev3",
+    "rationale": [
+      "GVP Module XVI 的引导语与两个时间点跨相邻 chunk；现有单一 key 同时跨界，无法映射。",
+      "拆为 2 个共同必需 gold：第 1 组确认“初步评价”，第 2 组覆盖 12–24 个月与 4 年总体评价时间点。",
+      "现有 query、来源、版本和答案范围不变；只把跨界单一 gold 改为共同必需的可映射证据单元。",
+      "冻结 main-v4 不改写；确认后进入新 probe/main 版本并重新复核。"
+    ],
+    "review_state": {
+      "human_annotation": "pending",
+      "independent_llm": "pending",
+      "second_human": "pending"
+    },
+    "after": {
+      "dept": "PV",
+      "drafted_by": {
+        "kind": "llm",
+        "id": "codex-unmappable-revision-20261008"
+      },
+      "language": "mixed",
+      "notes": "",
+      "query": "GVP Module XVI 对 MAH 与主管机关商定 RMM 有效性评价计划提出了哪些初步评价和总体评价时间点？",
+      "required_gold_evidence": [
+        {
+          "evidence_span": {
+            "char_start": 1325,
+            "char_end": 1542,
+            "text": "The following timepoints should be considered by marketing authorisation holders for establishing and agreeing schedules with competent authorities: • After regulatory implementation an initial evaluation of RMM, e.g."
+          },
+          "gold_id": "ms-0197-g1",
+          "key_text": "After regulatory implementation an initial evaluation of RMM, e.g.",
+          "page": 19,
+          "printed_page_label": null,
+          "section": "XVI.B.5.2. Schedule and documentation of studies evaluating risk minimisation measures",
+          "source_hash": "9f4ae57fdfa9aba723fdb41b134889e259ec9919d4ba0f363f4d3df35d18fe1b",
+          "version_label": "EMA/204715/2012 Rev 3 (2024-07-26)"
+        },
+        {
+          "evidence_span": {
+            "char_start": 1543,
+            "char_end": 1840,
+            "text": "within 12-24 months to allow the possibility of necessary changes in healthcare; and • Within 4 years of regulatory implementation the overall effectiveness evaluation of the RMM (see XVI.B.5.3.), which, where applicable, can also inform the evaluation of the renewal of a marketing authorisation."
+          },
+          "gold_id": "ms-0197-g2",
+          "key_text": "within 12-24 months to allow the possibility of necessary changes in healthcare; and • Within 4 years of regulatory implementation the overall effectiveness evaluation of the RMM",
+          "page": 19,
+          "printed_page_label": null,
+          "section": "XVI.B.5.2. Schedule and documentation of studies evaluating risk minimisation measures",
+          "source_hash": "9f4ae57fdfa9aba723fdb41b134889e259ec9919d4ba0f363f4d3df35d18fe1b",
+          "version_label": "EMA/204715/2012 Rev 3 (2024-07-26)"
+        }
+      ],
+      "sample_id": "ms-0197",
+      "slices": [
+        "time_window",
+        "mixed_zh_en"
+      ]
+    },
+    "required_gold_groups": [
+      [
+        "b8f83416-e4a7-4ecd-be10-c470288a3352"
+      ],
+      [
+        "5747f498-a9ae-49a4-a634-eb06c872e56d"
+      ]
+    ]
+  },
+  {
+    "sample_id": "ms-0198",
+    "origin": "linked_english_twin",
+    "before_sha256": "c6b89d37f291ee9845050d9fe93f90f93b3a9b043ee1ece5339e1e6d74d63fc3",
+    "decision_sample_id": "ms-0197",
+    "source_document_key": "ema-gvp-module-xvi-rev3",
+    "rationale": [
+      "GVP Module XVI 的引导语与两个时间点跨相邻 chunk；现有单一 key 同时跨界，无法映射。",
+      "拆为 2 个共同必需 gold：第 1 组确认“初步评价”，第 2 组覆盖 12–24 个月与 4 年总体评价时间点。",
+      "现有 query、来源、版本和答案范围不变；只把跨界单一 gold 改为共同必需的可映射证据单元。",
+      "冻结 main-v4 不改写；确认后进入新 probe/main 版本并重新复核。"
+    ],
+    "review_state": {
+      "human_annotation": "pending",
+      "independent_llm": "pending",
+      "second_human": "pending"
+    },
+    "after": {
+      "dept": "PV",
+      "derived_from": "ms-0197",
+      "drafted_by": {
+        "kind": "llm",
+        "id": "codex-unmappable-revision-20261008"
+      },
+      "language": "en",
+      "notes": "",
+      "query": "What timepoints does GVP Module XVI identify for MAHs to consider when agreeing with competent authorities on schedules for the initial and overall effectiveness evaluations of risk minimisation measures?",
+      "required_gold_evidence": [
+        {
+          "evidence_span": {
+            "char_start": 1325,
+            "char_end": 1542,
+            "text": "The following timepoints should be considered by marketing authorisation holders for establishing and agreeing schedules with competent authorities: • After regulatory implementation an initial evaluation of RMM, e.g."
+          },
+          "gold_id": "ms-0198-g1",
+          "key_text": "After regulatory implementation an initial evaluation of RMM, e.g.",
+          "page": 19,
+          "printed_page_label": null,
+          "section": "XVI.B.5.2. Schedule and documentation of studies evaluating risk minimisation measures",
+          "source_hash": "9f4ae57fdfa9aba723fdb41b134889e259ec9919d4ba0f363f4d3df35d18fe1b",
+          "version_label": "EMA/204715/2012 Rev 3 (2024-07-26)"
+        },
+        {
+          "evidence_span": {
+            "char_start": 1543,
+            "char_end": 1840,
+            "text": "within 12-24 months to allow the possibility of necessary changes in healthcare; and • Within 4 years of regulatory implementation the overall effectiveness evaluation of the RMM (see XVI.B.5.3.), which, where applicable, can also inform the evaluation of the renewal of a marketing authorisation."
+          },
+          "gold_id": "ms-0198-g2",
+          "key_text": "within 12-24 months to allow the possibility of necessary changes in healthcare; and • Within 4 years of regulatory implementation the overall effectiveness evaluation of the RMM",
+          "page": 19,
+          "printed_page_label": null,
+          "section": "XVI.B.5.2. Schedule and documentation of studies evaluating risk minimisation measures",
+          "source_hash": "9f4ae57fdfa9aba723fdb41b134889e259ec9919d4ba0f363f4d3df35d18fe1b",
+          "version_label": "EMA/204715/2012 Rev 3 (2024-07-26)"
+        }
+      ],
+      "sample_id": "ms-0198",
+      "slices": [
+        "time_window",
+        "mixed_zh_en"
+      ]
+    },
+    "required_gold_groups": [
+      [
+        "b8f83416-e4a7-4ecd-be10-c470288a3352"
+      ],
+      [
+        "5747f498-a9ae-49a4-a634-eb06c872e56d"
+      ]
+    ]
+  },
+  {
+    "sample_id": "ms-0440",
+    "origin": "unmappable_gold_repair",
+    "before_sha256": "90b1c194cb42c99ad0b2b60c5d081e5b1d240d585592754e585f2eeae2980f51",
+    "decision_sample_id": "ms-0440",
+    "source_document_key": "ich-e7-step4-1993",
+    "rationale": [
+      "ICH E7 的适用条件和四类通常建议研究分布在 3 个连续 chunk；现有单一 key 跨界。",
+      "拆为 5 个共同必需 gold：适用条件、digoxin/口服抗凝、肝酶诱导/抑制、CYP450 抑制剂、其他预期合用药。",
+      "现有 query、来源、版本和答案范围不变；只把跨界单一 gold 改为共同必需的可映射证据单元。",
+      "冻结 main-v4 不改写；确认后进入新 probe/main 版本并重新复核。",
+      "题目仍需 3 个连续 chunk；首组保留原 1542 字整体审阅上下文并维持 long_context，key 仍只锚定本组条件事实。"
+    ],
+    "review_state": {
+      "human_annotation": "pending",
+      "independent_llm": "pending",
+      "second_human": "pending"
+    },
+    "after": {
+      "conflict": {
+        "clause_topic": "IX. Drug-Drug Interaction Studies",
+        "current_document_key": "ich-e7-step4-1993",
+        "family_document_keys": [
+          "ich-e7-step4-1993",
+          "ich-e7-step4-1993--synthetic-old"
+        ],
+        "synthetic": true
+      },
+      "dept": "CO",
+      "drafted_by": {
+        "kind": "llm",
+        "id": "codex-unmappable-revision-20261008"
+      },
+      "language": "mixed",
+      "notes": "合成冲突（spec-m1 §5）：ich-e7-step4-1993--synthetic-old 为同一 PDF 的合成旧版（effective_from 1991-06-24），发布现行版（effective_from 1993-06-24）时归档；正文相同，检验版本状态与时效过滤（INV-DATA-03），不检验内容差异。",
+      "query": "根据ICH E7，在什么情况下应考虑具体的药物相互作用研究，针对老年患者用药又通常推荐哪些研究类型？",
+      "required_gold_evidence": [
+        {
+          "evidence_span": {
+            "char_start": 1249,
+            "char_end": 2791,
+            "text": "Such interactions are of particular impo rtance to geriatric patients, who are more likely to be using concomitant me dications than younger patients, but of course are not limited to this age group. Therefore it is a general principle, not specific to these guidelines, that in cases where the therapeutic range (i.e., range of toxic to therapeutic doses) of the drug or likely concomitant drugs is narrow, and the likelihood of the concomitant ther apy is great, that specific drug-drug interaction studies be considered. The studies needed must be determined case- by-case, but the following are ordinarily recommended: • Digoxin and oral anticoagulant interacti on studies, because so many drugs alter serum concentrations of these drugs, they are widely prescribed in the elderly, and they have narrow therapeutic ranges • For drugs that undergo extensive hepa tic metabolism, determination of the effects of hepatic-enzyme inducers (e.g ., phenobarbital) and inhibitors (e.g., cimetidine) • For drugs metabolized by cytochrome P- 450 enzymes, it is critical to examine the effects of known inhibitors, such as quinidine (for cytochrome P-450 2D6) or ketoconazole and macrolide antibiotics (for drugs metabolized by cytochrome P-450 3A4). There is a rapidly growing list of drugs that can interfere with other drugs that metabolism, and sponsors should remain aware of it. • Interaction studies with other drugs that are likely to be used with the test drug (unless important interactions have been ruled out by a Pharmacokinetic Screen)"
+          },
+          "gold_id": "ms-0440-g1",
+          "key_text": "where the therapeutic range (i.e., range of toxic to therapeutic doses) of the drug or likely concomitant drugs is narrow, and the likelihood of the concomitant ther apy is great",
+          "page": 6,
+          "printed_page_label": null,
+          "section": "IX. Drug-Drug Interaction Studies",
+          "source_hash": "cbe681cf342eeefb477c1a30770d12798fadcf2d00079faa0aa66047ce4ca330",
+          "version_label": "Step 4, 1993-06-24"
+        },
+        {
+          "evidence_span": {
+            "char_start": 1773,
+            "char_end": 2074,
+            "text": "The studies needed must be determined case- by-case, but the following are ordinarily recommended: • Digoxin and oral anticoagulant interacti on studies, because so many drugs alter serum concentrations of these drugs, they are widely prescribed in the elderly, and they have narrow therapeutic ranges"
+          },
+          "gold_id": "ms-0440-g2",
+          "key_text": "Digoxin and oral anticoagulant interacti on studies",
+          "page": 6,
+          "printed_page_label": null,
+          "section": "IX. Drug-Drug Interaction Studies",
+          "source_hash": "cbe681cf342eeefb477c1a30770d12798fadcf2d00079faa0aa66047ce4ca330",
+          "version_label": "Step 4, 1993-06-24"
+        },
+        {
+          "evidence_span": {
+            "char_start": 2075,
+            "char_end": 2243,
+            "text": "• For drugs that undergo extensive hepa tic metabolism, determination of the effects of hepatic-enzyme inducers (e.g ., phenobarbital) and inhibitors (e.g., cimetidine)"
+          },
+          "gold_id": "ms-0440-g3",
+          "key_text": "For drugs that undergo extensive hepa tic metabolism, determination of the effects of hepatic-enzyme inducers",
+          "page": 6,
+          "printed_page_label": null,
+          "section": "IX. Drug-Drug Interaction Studies",
+          "source_hash": "cbe681cf342eeefb477c1a30770d12798fadcf2d00079faa0aa66047ce4ca330",
+          "version_label": "Step 4, 1993-06-24"
+        },
+        {
+          "evidence_span": {
+            "char_start": 2244,
+            "char_end": 2492,
+            "text": "• For drugs metabolized by cytochrome P- 450 enzymes, it is critical to examine the effects of known inhibitors, such as quinidine (for cytochrome P-450 2D6) or ketoconazole and macrolide antibiotics (for drugs metabolized by cytochrome P-450 3A4)."
+          },
+          "gold_id": "ms-0440-g4",
+          "key_text": "For drugs metabolized by cytochrome P- 450 enzymes, it is critical to examine the effects of known inhibitors",
+          "page": 6,
+          "printed_page_label": null,
+          "section": "IX. Drug-Drug Interaction Studies",
+          "source_hash": "cbe681cf342eeefb477c1a30770d12798fadcf2d00079faa0aa66047ce4ca330",
+          "version_label": "Step 4, 1993-06-24"
+        },
+        {
+          "evidence_span": {
+            "char_start": 2627,
+            "char_end": 2791,
+            "text": "• Interaction studies with other drugs that are likely to be used with the test drug (unless important interactions have been ruled out by a Pharmacokinetic Screen)"
+          },
+          "gold_id": "ms-0440-g5",
+          "key_text": "Interaction studies with other drugs that are likely to be used with the test drug",
+          "page": 6,
+          "printed_page_label": null,
+          "section": "IX. Drug-Drug Interaction Studies",
+          "source_hash": "cbe681cf342eeefb477c1a30770d12798fadcf2d00079faa0aa66047ce4ca330",
+          "version_label": "Step 4, 1993-06-24"
+        }
+      ],
+      "sample_id": "ms-0440",
+      "slices": [
+        "negation",
+        "version_conflict",
+        "mixed_zh_en",
+        "long_context"
+      ]
+    },
+    "required_gold_groups": [
+      [
+        "14df2d36-4290-41c7-98c4-f6a134c203e4"
+      ],
+      [
+        "888afd9a-9fb4-41ab-a82b-eb26e5f2aa5d"
+      ],
+      [
+        "888afd9a-9fb4-41ab-a82b-eb26e5f2aa5d"
+      ],
+      [
+        "888afd9a-9fb4-41ab-a82b-eb26e5f2aa5d"
+      ],
+      [
+        "b42ec76a-fd3d-49a5-bb6c-e096889a05ed"
+      ]
+    ]
+  },
+  {
+    "sample_id": "ms-0441",
+    "origin": "linked_english_twin",
+    "before_sha256": "1f2c37c49b703e5b8383bf75f743867b7731218c2e141c111ac08dea2063bc08",
+    "decision_sample_id": "ms-0440",
+    "source_document_key": "ich-e7-step4-1993",
+    "rationale": [
+      "ICH E7 的适用条件和四类通常建议研究分布在 3 个连续 chunk；现有单一 key 跨界。",
+      "拆为 5 个共同必需 gold：适用条件、digoxin/口服抗凝、肝酶诱导/抑制、CYP450 抑制剂、其他预期合用药。",
+      "现有 query、来源、版本和答案范围不变；只把跨界单一 gold 改为共同必需的可映射证据单元。",
+      "冻结 main-v4 不改写；确认后进入新 probe/main 版本并重新复核。",
+      "题目仍需 3 个连续 chunk；首组保留原 1542 字整体审阅上下文并维持 long_context，key 仍只锚定本组条件事实。"
+    ],
+    "review_state": {
+      "human_annotation": "pending",
+      "independent_llm": "pending",
+      "second_human": "pending"
+    },
+    "after": {
+      "conflict": {
+        "clause_topic": "IX. Drug-Drug Interaction Studies",
+        "current_document_key": "ich-e7-step4-1993",
+        "family_document_keys": [
+          "ich-e7-step4-1993",
+          "ich-e7-step4-1993--synthetic-old"
+        ],
+        "synthetic": true
+      },
+      "dept": "CO",
+      "derived_from": "ms-0440",
+      "drafted_by": {
+        "kind": "llm",
+        "id": "codex-unmappable-revision-20261008"
+      },
+      "language": "en",
+      "notes": "合成冲突（spec-m1 §5）：ich-e7-step4-1993--synthetic-old 为同一 PDF 的合成旧版（effective_from 1991-06-24），发布现行版（effective_from 1993-06-24）时归档；正文相同，检验版本状态与时效过滤（INV-DATA-03），不检验内容差异。",
+      "query": "According to ICH E7, in what circumstances should specific drug-drug interaction studies be considered, and which types are ordinarily recommended in the context of drug use in older patients?",
+      "required_gold_evidence": [
+        {
+          "evidence_span": {
+            "char_start": 1249,
+            "char_end": 2791,
+            "text": "Such interactions are of particular impo rtance to geriatric patients, who are more likely to be using concomitant me dications than younger patients, but of course are not limited to this age group. Therefore it is a general principle, not specific to these guidelines, that in cases where the therapeutic range (i.e., range of toxic to therapeutic doses) of the drug or likely concomitant drugs is narrow, and the likelihood of the concomitant ther apy is great, that specific drug-drug interaction studies be considered. The studies needed must be determined case- by-case, but the following are ordinarily recommended: • Digoxin and oral anticoagulant interacti on studies, because so many drugs alter serum concentrations of these drugs, they are widely prescribed in the elderly, and they have narrow therapeutic ranges • For drugs that undergo extensive hepa tic metabolism, determination of the effects of hepatic-enzyme inducers (e.g ., phenobarbital) and inhibitors (e.g., cimetidine) • For drugs metabolized by cytochrome P- 450 enzymes, it is critical to examine the effects of known inhibitors, such as quinidine (for cytochrome P-450 2D6) or ketoconazole and macrolide antibiotics (for drugs metabolized by cytochrome P-450 3A4). There is a rapidly growing list of drugs that can interfere with other drugs that metabolism, and sponsors should remain aware of it. • Interaction studies with other drugs that are likely to be used with the test drug (unless important interactions have been ruled out by a Pharmacokinetic Screen)"
+          },
+          "gold_id": "ms-0441-g1",
+          "key_text": "where the therapeutic range (i.e., range of toxic to therapeutic doses) of the drug or likely concomitant drugs is narrow, and the likelihood of the concomitant ther apy is great",
+          "page": 6,
+          "printed_page_label": null,
+          "section": "IX. Drug-Drug Interaction Studies",
+          "source_hash": "cbe681cf342eeefb477c1a30770d12798fadcf2d00079faa0aa66047ce4ca330",
+          "version_label": "Step 4, 1993-06-24"
+        },
+        {
+          "evidence_span": {
+            "char_start": 1773,
+            "char_end": 2074,
+            "text": "The studies needed must be determined case- by-case, but the following are ordinarily recommended: • Digoxin and oral anticoagulant interacti on studies, because so many drugs alter serum concentrations of these drugs, they are widely prescribed in the elderly, and they have narrow therapeutic ranges"
+          },
+          "gold_id": "ms-0441-g2",
+          "key_text": "Digoxin and oral anticoagulant interacti on studies",
+          "page": 6,
+          "printed_page_label": null,
+          "section": "IX. Drug-Drug Interaction Studies",
+          "source_hash": "cbe681cf342eeefb477c1a30770d12798fadcf2d00079faa0aa66047ce4ca330",
+          "version_label": "Step 4, 1993-06-24"
+        },
+        {
+          "evidence_span": {
+            "char_start": 2075,
+            "char_end": 2243,
+            "text": "• For drugs that undergo extensive hepa tic metabolism, determination of the effects of hepatic-enzyme inducers (e.g ., phenobarbital) and inhibitors (e.g., cimetidine)"
+          },
+          "gold_id": "ms-0441-g3",
+          "key_text": "For drugs that undergo extensive hepa tic metabolism, determination of the effects of hepatic-enzyme inducers",
+          "page": 6,
+          "printed_page_label": null,
+          "section": "IX. Drug-Drug Interaction Studies",
+          "source_hash": "cbe681cf342eeefb477c1a30770d12798fadcf2d00079faa0aa66047ce4ca330",
+          "version_label": "Step 4, 1993-06-24"
+        },
+        {
+          "evidence_span": {
+            "char_start": 2244,
+            "char_end": 2492,
+            "text": "• For drugs metabolized by cytochrome P- 450 enzymes, it is critical to examine the effects of known inhibitors, such as quinidine (for cytochrome P-450 2D6) or ketoconazole and macrolide antibiotics (for drugs metabolized by cytochrome P-450 3A4)."
+          },
+          "gold_id": "ms-0441-g4",
+          "key_text": "For drugs metabolized by cytochrome P- 450 enzymes, it is critical to examine the effects of known inhibitors",
+          "page": 6,
+          "printed_page_label": null,
+          "section": "IX. Drug-Drug Interaction Studies",
+          "source_hash": "cbe681cf342eeefb477c1a30770d12798fadcf2d00079faa0aa66047ce4ca330",
+          "version_label": "Step 4, 1993-06-24"
+        },
+        {
+          "evidence_span": {
+            "char_start": 2627,
+            "char_end": 2791,
+            "text": "• Interaction studies with other drugs that are likely to be used with the test drug (unless important interactions have been ruled out by a Pharmacokinetic Screen)"
+          },
+          "gold_id": "ms-0441-g5",
+          "key_text": "Interaction studies with other drugs that are likely to be used with the test drug",
+          "page": 6,
+          "printed_page_label": null,
+          "section": "IX. Drug-Drug Interaction Studies",
+          "source_hash": "cbe681cf342eeefb477c1a30770d12798fadcf2d00079faa0aa66047ce4ca330",
+          "version_label": "Step 4, 1993-06-24"
+        }
+      ],
+      "sample_id": "ms-0441",
+      "slices": [
+        "negation",
+        "version_conflict",
+        "mixed_zh_en",
+        "long_context"
+      ]
+    },
+    "required_gold_groups": [
+      [
+        "14df2d36-4290-41c7-98c4-f6a134c203e4"
+      ],
+      [
+        "888afd9a-9fb4-41ab-a82b-eb26e5f2aa5d"
+      ],
+      [
+        "888afd9a-9fb4-41ab-a82b-eb26e5f2aa5d"
+      ],
+      [
+        "888afd9a-9fb4-41ab-a82b-eb26e5f2aa5d"
+      ],
+      [
+        "b42ec76a-fd3d-49a5-bb6c-e096889a05ed"
+      ]
+    ]
+  },
+  {
+    "sample_id": "pc-0070",
+    "origin": "unmappable_gold_repair",
+    "before_sha256": "26c530e4b430cc815a0bf5d64f635c506331b74aec083f8b3c9641611cd44c2d",
+    "decision_sample_id": "pc-0070",
+    "source_document_key": "ich-e6-r3-step4-2025",
+    "rationale": [
+      "ICH E6(R3) 的保留义务主语与完整示例列表跨相邻 chunk；现有 key 跨界。",
+      "拆为 2 个共同必需 gold：第 1 组保留义务上下文，第 2 组完整列举六类记录。",
+      "现有 query、来源、版本和答案范围不变；只把跨界单一 gold 改为共同必需的可映射证据单元。",
+      "冻结 main-v4 不改写；确认后进入新 probe/main 版本并重新复核。"
+    ],
+    "review_state": {
+      "human_annotation": "pending",
+      "independent_llm": "pending",
+      "second_human": "pending"
+    },
+    "after": {
+      "dept": "CO",
+      "language": "mixed",
+      "notes": "",
+      "query": "ICH E6(R3) 对 IRB/IEC 应保留的相关记录列举了哪些例子？",
+      "required_gold_evidence": [
+        {
+          "evidence_span": {
+            "char_start": 818,
+            "char_end": 870,
+            "text": "The IRB/IEC should retain all relevant records (e.g."
+          },
+          "gold_id": "pc-0070-g1",
+          "key_text": "The IRB/IEC should retain all relevant records (e.g.",
+          "page": 18,
+          "printed_page_label": null,
+          "section": "III. ANNEX 1 / 1.5 Records / 1.5.1",
+          "source_hash": "e6ce19e36ce7d2e294f89ee89492b9e035178c3cca48984392bbd92eec9b002c",
+          "version_label": "E6(R3) Step 4, 2025-01-06"
+        },
+        {
+          "evidence_span": {
+            "char_start": 871,
+            "char_end": 1020,
+            "text": ", documented procedures, membership lists, lists of occupations/affiliations of members, submitted documents, minutes of meetings and correspondence)"
+          },
+          "gold_id": "pc-0070-g2",
+          "key_text": "documented procedures, membership lists, lists of occupations/affiliations of members, submitted documents, minutes of meetings and correspondence",
+          "page": 18,
+          "printed_page_label": null,
+          "section": "III. ANNEX 1 / 1.5 Records / 1.5.1",
+          "source_hash": "e6ce19e36ce7d2e294f89ee89492b9e035178c3cca48984392bbd92eec9b002c",
+          "version_label": "E6(R3) Step 4, 2025-01-06"
+        }
+      ],
+      "sample_id": "pc-0070",
+      "slices": [
+        "mixed_zh_en",
+        "protocol_id"
+      ],
+      "drafted_by": {
+        "kind": "llm",
+        "id": "codex-unmappable-revision-20261008"
+      }
+    },
+    "required_gold_groups": [
+      [
+        "4f96968c-1aa5-4f26-8c3e-f0a6f144bc49"
+      ],
+      [
+        "7f268133-cfc5-47f1-857d-a138c0a04bcc"
+      ]
+    ]
+  },
+  {
+    "sample_id": "pc-0102",
+    "origin": "linked_english_twin",
+    "before_sha256": "2610d0e859dbeb7d402077dd16e893b7e65da04686ec3afbc25551030f7aea93",
+    "decision_sample_id": "pc-0070",
+    "source_document_key": "ich-e6-r3-step4-2025",
+    "rationale": [
+      "ICH E6(R3) 的保留义务主语与完整示例列表跨相邻 chunk；现有 key 跨界。",
+      "拆为 2 个共同必需 gold：第 1 组保留义务上下文，第 2 组完整列举六类记录。",
+      "现有 query、来源、版本和答案范围不变；只把跨界单一 gold 改为共同必需的可映射证据单元。",
+      "冻结 main-v4 不改写；确认后进入新 probe/main 版本并重新复核。"
+    ],
+    "review_state": {
+      "human_annotation": "pending",
+      "independent_llm": "pending",
+      "second_human": "pending"
+    },
+    "after": {
+      "dept": "CO",
+      "derived_from": "pc-0070",
+      "language": "en",
+      "notes": "spec-v1.1 English query twin of pc-0070; gold, dept and slices inherited unchanged",
+      "query": "What examples of relevant records does ICH E6(R3) list that the IRB/IEC should retain?",
+      "required_gold_evidence": [
+        {
+          "evidence_span": {
+            "char_start": 818,
+            "char_end": 870,
+            "text": "The IRB/IEC should retain all relevant records (e.g."
+          },
+          "gold_id": "pc-0102-g1",
+          "key_text": "The IRB/IEC should retain all relevant records (e.g.",
+          "page": 18,
+          "printed_page_label": null,
+          "section": "III. ANNEX 1 / 1.5 Records / 1.5.1",
+          "source_hash": "e6ce19e36ce7d2e294f89ee89492b9e035178c3cca48984392bbd92eec9b002c",
+          "version_label": "E6(R3) Step 4, 2025-01-06"
+        },
+        {
+          "evidence_span": {
+            "char_start": 871,
+            "char_end": 1020,
+            "text": ", documented procedures, membership lists, lists of occupations/affiliations of members, submitted documents, minutes of meetings and correspondence)"
+          },
+          "gold_id": "pc-0102-g2",
+          "key_text": "documented procedures, membership lists, lists of occupations/affiliations of members, submitted documents, minutes of meetings and correspondence",
+          "page": 18,
+          "printed_page_label": null,
+          "section": "III. ANNEX 1 / 1.5 Records / 1.5.1",
+          "source_hash": "e6ce19e36ce7d2e294f89ee89492b9e035178c3cca48984392bbd92eec9b002c",
+          "version_label": "E6(R3) Step 4, 2025-01-06"
+        }
+      ],
+      "sample_id": "pc-0102",
+      "slices": [
+        "mixed_zh_en",
+        "protocol_id"
+      ],
+      "drafted_by": {
+        "kind": "llm",
+        "id": "codex-unmappable-revision-20261008"
+      }
+    },
+    "required_gold_groups": [
+      [
+        "4f96968c-1aa5-4f26-8c3e-f0a6f144bc49"
+      ],
+      [
+        "7f268133-cfc5-47f1-857d-a138c0a04bcc"
+      ]
+    ]
+  }
+]

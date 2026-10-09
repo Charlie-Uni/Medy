@@ -1,0 +1,24 @@
+{
+  "format": "targeted-review-input-v1",
+  "source_preparation": "evals/main_set/drafts/revision-2026-10-08-v3/review/preparation.json",
+  "source_preparation_sha256": "ce0900b18cde9a36410e2dfc6e13dab548b9759cb82eec0b08919d90127eca21",
+  "selection_reason": "Only owner-adjudicated changed samples require a fresh EVAL-08 call; ms-0125 is unchanged.",
+  "batches": {
+    "EN": {
+      "sample_ids": [
+        "ms-0242"
+      ],
+      "input_sha256": "9358dcf8b31f25be985c27886fc8e86c0f8a418f9531b3b0d5a4ecce6531e01e",
+      "prompt_sha256": "7572d16e88b638cbc6fa888f4e1a86fe6ffb4869583df357ee1ce0bd012eb758"
+    },
+    "PV": {
+      "sample_ids": [
+        "ms-0241",
+        "ms-0280"
+      ],
+      "input_sha256": "486a839e018ce12c7b4e8217414e530b8c4a249dd81c1f4287eeb6caa0c68e1b",
+      "prompt_sha256": "7572d16e88b638cbc6fa888f4e1a86fe6ffb4869583df357ee1ce0bd012eb758"
+    }
+  },
+  "model_calls_by_preparation": 0
+}

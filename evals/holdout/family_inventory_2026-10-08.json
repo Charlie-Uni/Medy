@@ -1,0 +1,3935 @@
+{
+  "status": "metadata_inventory_not_a_holdout",
+  "created_at": "2026-10-08",
+  "coverage": "current main+revision gold/no-answer scope; explicit safety references; DB family_id. Not a complete history/exposure or semantic duplicate audit.",
+  "counts": {
+    "documents": 339,
+    "active": 333,
+    "active_without_explicit_family_reference": 258,
+    "not_present_in_db": 3
+  },
+  "documents": [
+    {
+      "document_key": "meddra-term-selection-ptc-4-26-zh-hans",
+      "source_hash": "440123f479ab3c324337ef6f731fb6ab9303576c6c21ce30043e99a6d6b1a097",
+      "dept": "PV",
+      "database_family_id": "cc922d77-09c1-4ec9-810f-ff1d06e809a5",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "meddra-data-retrieval-ptc-3-26-zh-hans",
+      "source_hash": "ea0824b58213d740df8ac7459c3c9b08819aa21127a7c63fe04b81ec056f9938",
+      "dept": "PV",
+      "database_family_id": "9b64a1c4-9320-4812-82e2-444cd066bd8d",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ich-e8-r1-step4-2021",
+      "source_hash": "99d56638828c823bb603ff3ef451fcfafc607de8a5b3926136d64980f27baa13",
+      "dept": "CO",
+      "database_family_id": "4cdce381-f602-4496-8cd6-a61425fa9e49",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope",
+        "explicit_safety_reference"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-loformin-850mg",
+      "source_hash": "b6af0d88b1f0e3b5660e6e3c6678e18c40616073bc082b6cb7214604b2f81f98",
+      "dept": "MA",
+      "database_family_id": "d658efda-699f-4046-8884-9e0cfc78c412",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope",
+        "explicit_safety_reference"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-deurinol-300mg",
+      "source_hash": "42f20f2b5b0ea0ed7afe8bb709699a58b222985b70ccada6e0c470f5c3f58a7f",
+      "dept": "MA",
+      "database_family_id": "f7503e96-c4ab-47d2-87c6-1964ba6ed420",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope",
+        "explicit_safety_reference"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-zosaa-50mg",
+      "source_hash": "81069adaf87d21e640d9b5cbc83a799a59a33acbdc4ead46ed338c9ad6d06b3a",
+      "dept": "MA",
+      "database_family_id": "04e54786-18d0-4777-b9b3-8f0bca324e2e",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-cancliol-100mg",
+      "source_hash": "2b8ab3b1bfea619d8eba938864e10614313dfa92e036bdba6a8fec2cb5fd2425",
+      "dept": "MA",
+      "database_family_id": "b7db1b52-5033-4085-a849-9b39d413b103",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-esomen-40mg",
+      "source_hash": "f80b904f4e2f15a59cb78fe1baed5c1c06b8b975d43dc0291217d64c43e43fbb",
+      "dept": "MA",
+      "database_family_id": "b3997b49-1e2e-44ce-8d0a-bc389a75e649",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope",
+        "explicit_safety_reference"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-gvp-module-vi-rev2",
+      "source_hash": "f27a7f0d678b17f2d6374946ae03d0b59db18217ed0fabae0b2f8a9111513b9e",
+      "dept": "PV",
+      "database_family_id": "2012af93-07e5-4106-a7e2-d03448443182",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope",
+        "explicit_safety_reference"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-gvp-module-ix-rev1",
+      "source_hash": "801755430dbf3ac68dfed481afc642937b9dbb3c73e38a83e8cd767dc165d1b5",
+      "dept": "PV",
+      "database_family_id": "a98d9dcd-e1f9-4a85-ba4b-9826442fb64e",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope",
+        "explicit_safety_reference"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-sponsor-safety-reporting-2025",
+      "source_hash": "7124849af0417893a1c5d93fa6ccf2c4b4c67d5945e09060ae3977f6e0646bac",
+      "dept": "PV",
+      "database_family_id": "fcecdc5a-f8fa-4448-a856-6aaaa4a8bc34",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope",
+        "explicit_safety_reference"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ich-e2a-step4-1994",
+      "source_hash": "1c095d80419287187bf5b2db5eba83864adccebf07b9c593bf5925b4ab6f7cf7",
+      "dept": "PV",
+      "database_family_id": "5631f41f-d994-49a4-9ed9-fd33ed84d33b",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope",
+        "explicit_safety_reference"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ich-e2f-step4-2010",
+      "source_hash": "7912d4d0f2b5fa407a5e8fe3908a7e8262e4034c23409cd903e3646c5b7a693b",
+      "dept": "PV",
+      "database_family_id": "91157475-b94f-4feb-888c-b08ba43ff394",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope",
+        "explicit_safety_reference"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-adr-report-form-guide-4th",
+      "source_hash": "f5f597affd022ec5b57293bf47d437f2f1fadff51f15dc263cfa58f4a6134c92",
+      "dept": "PV",
+      "database_family_id": "cad79b3e-89d8-465e-b755-9b91f9953006",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope",
+        "explicit_safety_reference"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ich-e6-r3-step4-2025",
+      "source_hash": "e6ce19e36ce7d2e294f89ee89492b9e035178c3cca48984392bbd92eec9b002c",
+      "dept": "CO",
+      "database_family_id": "8eff6af2-fcf4-497e-9114-25bfaff3bc01",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope",
+        "explicit_safety_reference"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-protocol-deviations-draft-2024",
+      "source_hash": "3b172d83fd5310029d0933a2efdb821c31d77c31d874e292dff7fb7da9abd42f",
+      "dept": "CO",
+      "database_family_id": "c51eed6b-2b2a-41a6-8e8d-0a8cbc632a0b",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope",
+        "explicit_safety_reference"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ich-e2c-r2-step4-2012",
+      "source_hash": "0f883c2e4804d8da84883b205755e7795d4e928e69624fafd2cdaa86db73eada",
+      "dept": "PV",
+      "database_family_id": "e48695bb-1c3e-4995-bb2d-6a69a74c25f0",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope",
+        "explicit_safety_reference"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ich-e2d-step4-2003",
+      "source_hash": "c8a076cc8567c9eb1154f798e1e83aa495f2629c17fcc7bb5c1378eabda0719d",
+      "dept": "PV",
+      "database_family_id": "c3c86f8d-5d21-4e82-af6e-875592a6b913",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope",
+        "explicit_safety_reference"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ich-e2e-step4-2004",
+      "source_hash": "8b5ee323558888ad4c3846f85736636c942fb7a84612acde37f7dfadcecfbbb7",
+      "dept": "PV",
+      "database_family_id": "2bd04ece-a9fc-448c-85ce-aba153bd242f",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ich-e3-step4-1995",
+      "source_hash": "032d53bb6d693151b64bdc87aa4cf42b90e096db6e52dad73c2093cd62ffa24d",
+      "dept": "CO",
+      "database_family_id": "93353677-2e7d-4a2b-9aae-63e467e5bb3a",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope",
+        "explicit_safety_reference"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ich-e9-step4-1998",
+      "source_hash": "0c0ddc93cb427a70265dbcb0e7c25bfc9a3f7b52e178212b3630ea2408ad9c7e",
+      "dept": "CO",
+      "database_family_id": "bca50aa2-38c7-4b23-99a5-69e495afd776",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope",
+        "explicit_safety_reference"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ich-e9-r1-step4-2019",
+      "source_hash": "f7471f411f1c87ee76783d5b2b9faaeca31d01d530213f71b50d136b39e3b0d9",
+      "dept": "CO",
+      "database_family_id": "37cb1da6-bd89-43b5-bc14-27c5b33f6347",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ich-e10-step4-2000",
+      "source_hash": "034b29a6d1b565e4f466fd17df8b6506a7b65508328701b14b11fc42ed0c1881",
+      "dept": "CO",
+      "database_family_id": "95594ea5-b342-422d-baa7-381ed3a3296c",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope",
+        "explicit_safety_reference"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ich-e11-r1-step4-2017",
+      "source_hash": "be9f56e84b67bb2d726c24da0096340e2788e92d7197bbd0f2d4f72972299763",
+      "dept": "CO",
+      "database_family_id": "e06a4f18-a01d-48bd-bcd8-28aa9b826047",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ich-e14-step4-2005",
+      "source_hash": "6199a1a27063c31e6d935e062ad0b581618f123473b13a854fe61eea5ffe0a5c",
+      "dept": "CO",
+      "database_family_id": "55428443-f80c-493f-99b0-3f47e88ebd28",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope",
+        "explicit_safety_reference"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ich-e17-step4-2017",
+      "source_hash": "e67211a8358fa94236ef0a0dd0a76538271584ab93a71b9f9bf841d94d3f5371",
+      "dept": "CO",
+      "database_family_id": "598d1e01-1063-48c9-bd40-ccf201cd070a",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope",
+        "explicit_safety_reference"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ich-e18-step4-2017",
+      "source_hash": "5dbb1b7247cf7ac1fd9629e3545e20df95b648785dfa50b0024fae96b49eb418",
+      "dept": "CO",
+      "database_family_id": "e8cd8340-14cf-433f-b290-8296e6bdd2f3",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope",
+        "explicit_safety_reference"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ich-e19-step4-2022",
+      "source_hash": "6daddce21ed23e1899b05b555335402aae49873d8560b9ea7c4a74bf5fc77fdd",
+      "dept": "CO",
+      "database_family_id": "eb623cdb-fb88-44cd-8f2c-0ed7649885ba",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope",
+        "explicit_safety_reference"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-gvp-module-i",
+      "source_hash": "197de2bc0cfb6bdafe8d322934ece6e9bd4c5901651a5a828e74076470d7ff59",
+      "dept": "PV",
+      "database_family_id": "796d3b29-5968-4f8b-bf94-ba0562005777",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope",
+        "explicit_safety_reference"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-gvp-module-ii-rev2",
+      "source_hash": "14f23bbae2e09a1d0c3925922492afeefef83e5fc67501ea217d68bcbe0647d1",
+      "dept": "PV",
+      "database_family_id": "266b7943-12b8-4838-bed9-c43c557f6ae0",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-gvp-module-iii-rev2",
+      "source_hash": "d4b744c043ea16938c3e53fab9cf3344b3ffd3aa66df0b25277878897b0d1b64",
+      "dept": "PV",
+      "database_family_id": "4077d675-c336-4f0c-ac51-b0f8a02cb6d0",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-gvp-module-iv-rev1",
+      "source_hash": "d0e530f1b15c00987e77a97eb2c310c3267c13a3351a42b9143fee4f899293e8",
+      "dept": "PV",
+      "database_family_id": "ef834589-3bf6-425f-b25d-9735435d22e2",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-gvp-module-v-rev2",
+      "source_hash": "85f6186f5981799864df2a2f1a4a2b0c8bc73bec777f92605c2ef5afe51e6125",
+      "dept": "PV",
+      "database_family_id": "a041f5c3-684b-49ca-93bc-517d774863a7",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope",
+        "explicit_safety_reference"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-gvp-module-vi-addendum-i",
+      "source_hash": "4993d9f6a6a6cb8828a36f604743c8dd8724b0c40d9c2082f2a4d1158b14a9b6",
+      "dept": "PV",
+      "database_family_id": "5e1afa17-484d-4fd2-b671-aea422462080",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-gvp-module-vi-addendum-ii",
+      "source_hash": "53bb1c46db481ae94009a302ca87cb44325cf1a82e7908c41e33c01649878b4c",
+      "dept": "PV",
+      "database_family_id": "c56d4ba3-8b23-41dd-b975-049b62d977ce",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-gvp-module-vii-rev1",
+      "source_hash": "49c5e574e9296c38a5a1ddcb6cf7903a4b91c3b28bd98088c839eea50f0a23a8",
+      "dept": "PV",
+      "database_family_id": "3122f58a-c092-4c88-aa6b-d2f117325ed4",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-gvp-module-viii-rev3",
+      "source_hash": "847b0c095bc647e02aa577e2116a03b14ff237982af6b850d88e77fcc69e343e",
+      "dept": "PV",
+      "database_family_id": "fa4f2f86-04a6-4a06-90b8-1f98b86d09dd",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-gvp-module-ix-addendum-i",
+      "source_hash": "7a649643af0a390cfb0246714325cb1adf11ebc1d6980b6039c8b643a2f5d674",
+      "dept": "PV",
+      "database_family_id": "8d06b7b2-30e9-4fe7-b35b-5b5828980557",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-gvp-module-x",
+      "source_hash": "15eb6d4ef94b955204fbe276f11a98f08e712a19d9f0e1b6599f8d11d2e55baf",
+      "dept": "PV",
+      "database_family_id": "920b7deb-ea72-462f-a894-ba3ef1bd997c",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-gvp-module-xv-rev1",
+      "source_hash": "790ce9ffdcf7a785c9de90904e295f4e228bdd0b0974c40c3d51cd13659af53a",
+      "dept": "PV",
+      "database_family_id": "2d582d08-fbde-41b3-ae05-0c1dc1541213",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-gvp-module-xvi-rev3",
+      "source_hash": "9f4ae57fdfa9aba723fdb41b134889e259ec9919d4ba0f363f4d3df35d18fe1b",
+      "dept": "PV",
+      "database_family_id": "8eaa0f73-9bc5-49a9-9f80-9521ac06118d",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-gvp-pp-iv",
+      "source_hash": "e5225fabe9ae7fb363bbfc683e2c7e802ba909d102c56e1c222f48dcf24f4cd4",
+      "dept": "PV",
+      "database_family_id": "ae19924a-b453-49f0-851f-89f30a3b65b9",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-gvp-pp-iii",
+      "source_hash": "fab70a9f661fa38f9deef967096f7fc92fcf9730e084a700a4116eba1d273edd",
+      "dept": "PV",
+      "database_family_id": "03ae3f76-3105-4791-9fa7-1e3d71dbbd31",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-investigator-safety-reporting-2025",
+      "source_hash": "c597c1d15d048c48d94be46710658eebdff9c8017f82ec3f04ebd54ad16e577c",
+      "dept": "PV",
+      "database_family_id": "9f7174de-a61e-45a0-afed-9c567f338ac4",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope",
+        "explicit_safety_reference"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-risk-based-monitoring-2013",
+      "source_hash": "76556b1dcf148a1929f110bb1bfdf17d554630b665d23ad2b885473c5e8f2561",
+      "dept": "CO",
+      "database_family_id": "0a08061a-d3ee-4588-98ba-25dce4777d2e",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-informed-consent-2023",
+      "source_hash": "96b26b2edb06e20ee2872ca59f4ec7c04cde8a8b1adf98bc150764e3d52f906a",
+      "dept": "CO",
+      "database_family_id": "936bb024-12b0-4af9-96f5-0e09bb412aac",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope",
+        "explicit_safety_reference"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-e6r3-gcp-2025",
+      "source_hash": "e57e9fc0134abebec409d7144aed6e3047c0939d1bd758163fea4e1169472109",
+      "dept": "CO",
+      "database_family_id": "f9eb92f2-eecf-4320-9b4b-47a238a6b040",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-investigator-responsibilities-2009",
+      "source_hash": "140b612e6fe3e830256fc9c47794cdf5708b28f2df5d7abe146e14dfd0efadfc",
+      "dept": "CO",
+      "database_family_id": "7b96f8f3-7220-41e1-9739-a3e4e2d31a75",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-rbm-qa-2023",
+      "source_hash": "2c0d04faa13f3cfd95bb3b4c5359f699ede4f48dcb055ad2d0ae89d3aa9c423c",
+      "dept": "CO",
+      "database_family_id": "a824373e-6cb2-4b27-974e-2fd0d59cea2b",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope",
+        "explicit_safety_reference"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "meddra-intro-guide-25-zh-hans",
+      "source_hash": "0f49c22f2c453ce74d202cf60ddef28f9aa1291d01192945d1574252500920c1",
+      "dept": "PV",
+      "database_family_id": "f5991321-071a-4a42-a639-044638e6ef0d",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope",
+        "explicit_safety_reference"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "meddra-smq-intro-guide-25-zh-hans",
+      "source_hash": "ae1ef0a4b12c2c1c914f03d1bb6503f3f3a3922f0eb176cca854927556fffffb",
+      "dept": "PV",
+      "database_family_id": "015b7ea8-0611-4754-99cf-181b1a5ece9b",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "meddra-whats-new-25-zh-hans",
+      "source_hash": "5fedc7fea0158b48c7fa8d3bb21d87bff04cf4f77df089f15e2f60f80f8f3be8",
+      "dept": "PV",
+      "database_family_id": "0536af09-20be-4a04-bc29-cd2a43754e5a",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-vaks-f-c-tablets-80mg",
+      "source_hash": "4c211906545934a9ea4a41ce0cdaeed1ce9d882da06b7e5fd376d50f4a94d794",
+      "dept": "MA",
+      "database_family_id": "233fa068-e3cf-44e7-9fff-4e8c72d6eca3",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope",
+        "explicit_safety_reference"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-quetialin-f-c-tablets-100mg-quetiapine",
+      "source_hash": "6e54ef6f412df596ff6b2e1fe58aabbedde6264cdcb2028c322852370015f4e7",
+      "dept": "MA",
+      "database_family_id": "153cabe7-639a-4e03-a844-c888211e8b3d",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope",
+        "explicit_safety_reference"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-lamofree-er-tablets-25mg",
+      "source_hash": "ad8b0ba2d6c9421349f86080b4a35218088fb6895493ae13fbb3aa32f0fd7ae2",
+      "dept": "MA",
+      "database_family_id": "9a666a3f-13bc-4002-8d6f-86624a0efbd9",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope",
+        "explicit_safety_reference"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-cinolone-iv-infusion-10-mg-ml",
+      "source_hash": "5ef121b394cb2d28407c17ddb29655abfbda65e030e6dee83e5ba148abfef276",
+      "dept": "MA",
+      "database_family_id": "cbab8424-cbf9-430b-8471-bb70e1fb0c82",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-venton-injection-diclofenac-lita",
+      "source_hash": "3b1d0b7fb71d65e81493f10a46bb1640d2a5635e70621a5e6a38867d8f65aab3",
+      "dept": "MA",
+      "database_family_id": "e37c70a8-df3e-4916-a5db-9d49474dccb1",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-staren-injection-n-k-diclofenac",
+      "source_hash": "0e8e316abd1fcd16b0890516b340fa47311dea7e2fb8313e625db1e4fb1150d1",
+      "dept": "MA",
+      "database_family_id": "5ce3b939-d58b-42a1-9ea7-be0532f1b64c",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope",
+        "explicit_safety_reference"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-ifonol-tablets-300mg-astar",
+      "source_hash": "8988edefb2825b18a9d5ebdb53b6f3bd09b7b75410d24814dd8f5ee2c8c7dfe7",
+      "dept": "MA",
+      "database_family_id": "0caac156-5cf4-414b-86ed-41da261e650b",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-purinol-tablets",
+      "source_hash": "4c21c14e2cedd67e401aedf2f678a9fceaf9d3935751cb19d40bf62117c89dd9",
+      "dept": "MA",
+      "database_family_id": "6192f951-6cbd-418b-9db5-be87a930b5ae",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-supercillin-powder-for-oral-suspension-v",
+      "source_hash": "ae19948cda596b498b1a41437faafbced402d7e69ecf0fc07df16b0c9ade0e6a",
+      "dept": "MA",
+      "database_family_id": "5334c7e7-c183-497b-849a-a28697250582",
+      "status": "draft",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-zotan-s-r-capsules-0-2mg",
+      "source_hash": "5d8b4f9a0a39ac56144a8899628756bd30cb140cf41907136a8dbb4128fed73a",
+      "dept": "MA",
+      "database_family_id": "25097e0a-744f-4ab9-860e-281818402b78",
+      "status": "draft",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-rodamine-syrup-w-p",
+      "source_hash": "0c80faec13d3404834be06c3212ccdf81b5e63af80064009d93106ecca47f293",
+      "dept": "MA",
+      "database_family_id": "c7d868c3-f705-421a-a98a-458ba1fc39c1",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-amaryl-2-0-tablets",
+      "source_hash": "35ae3bb3cb14ba859cfc2ee006aba20762f79fc80834d19e8c606badbf07dc59",
+      "dept": "MA",
+      "database_family_id": "565981fd-c4a4-4b46-a0e8-9b04e1e1eb10",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope",
+        "explicit_safety_reference"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-glimaryl-tablets-2mg-glimepiride",
+      "source_hash": "b1756268da31c9205cea8766181345921bdbec9c1930137428c79c5c3d8729f7",
+      "dept": "MA",
+      "database_family_id": "4454d90a-89f8-4dcd-adb6-ddce960fd43d",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-xyrizine-f-c-tablets-5mg-levocetirizine",
+      "source_hash": "480f38a6f097780989d1dc0eccf575a47cc22b639eea3e9375b797be63049a83",
+      "dept": "MA",
+      "database_family_id": "1af7c83d-96b9-491e-a95f-35007cb69866",
+      "status": "draft",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-carvetone-f-c-tablets-75-mg",
+      "source_hash": "662b69e6044ed9746280815bc3bb5e45a2911c9f5edebf610a5a26aac44e95c9",
+      "dept": "MA",
+      "database_family_id": "60474480-65a1-48e8-94b2-ed60f8f3d760",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-vomiz-for-iv-injection-2mg-ml",
+      "source_hash": "c96703065f145c812f38466a545fe62d0dbe6c566d380892d1702a720dd6c1ce",
+      "dept": "MA",
+      "database_family_id": "024d2da4-edbf-48d5-8aa7-79ef3e29e3dc",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-losacar-100-tablets",
+      "source_hash": "3981295da5a68ef3bf43b30c4d7783b9ebfa351319c134bb2f5710a11ac14d5b",
+      "dept": "MA",
+      "database_family_id": "157145cc-14d5-47fd-ad7e-b8bae79b3885",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope",
+        "explicit_safety_reference"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-hetlosar-100-losartan-tablets-100mg",
+      "source_hash": "c59161e8c6b42e149351ccc8c1d5ca8337627fa490861e6fb7dceb2bbca13f36",
+      "dept": "MA",
+      "database_family_id": "4cbf479e-3647-4bd1-ad0b-19b2d52f0a51",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-perisafe-tablets-10mg-enalapil",
+      "source_hash": "0879f3f5e1a1b31a420dddc8510817aee8b57abe074ab656de7fc7da2afe5d4c",
+      "dept": "MA",
+      "database_family_id": "668f0670-6f5d-4052-ad98-6bea6144bc54",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-concor-5",
+      "source_hash": "8f274dc347f717feba8b9745949dd8ef4d17ea1ff35995fbbe41848fef93c171",
+      "dept": "MA",
+      "database_family_id": "c432a6a7-50d8-4da7-8093-046b31ad6f58",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope",
+        "explicit_safety_reference"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-esomepsun-40mg-tablets-sunyet",
+      "source_hash": "70d3d976a3b4ef70d192755440066618dd538d1bdf16659daa255b6f04dcaa81",
+      "dept": "MA",
+      "database_family_id": "e0ca30e3-0708-4054-ad3f-524c7fa364bb",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-lanoxin-digoxin-tablets-0-25mg-b-p",
+      "source_hash": "cb1abe12731f9292a0a49937fb33ba1fe79e1e775883af4be74741c5eaf978ce",
+      "dept": "MA",
+      "database_family_id": "531885cb-0e88-46d7-8b51-827ff8df89b5",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope",
+        "explicit_safety_reference"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ich-e7-step4-1993",
+      "source_hash": "cbe681cf342eeefb477c1a30770d12798fadcf2d00079faa0aa66047ce4ca330",
+      "dept": "CO",
+      "database_family_id": "eeab1bec-cf9b-4744-a926-aca8888e4a7c",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope",
+        "explicit_safety_reference"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ich-e12a-principle-2000",
+      "source_hash": "d09627c2d02dc3c6675be445232a7312e0aa295f6b1748da68fc9d771405a9ac",
+      "dept": "CO",
+      "database_family_id": "d6069722-ac21-489b-b31b-9742ee2dedc9",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope",
+        "explicit_safety_reference"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ich-e15-step4-2007",
+      "source_hash": "40516566c939436147ade1b076a2e46d716755d3062c1102732ae394cf8e02fc",
+      "dept": "CO",
+      "database_family_id": "50767586-953b-4411-a69f-b6989979c2fc",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope",
+        "explicit_safety_reference"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-gvp-annex-i-rev5",
+      "source_hash": "409f9f85c1ff025dfc0a5ff9f0b21afc2c7d09cc1b47484a40c9ee11e1da536f",
+      "dept": "PV",
+      "database_family_id": "ebc683cc-c633-4ca6-8b10-f766cca4b249",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope",
+        "explicit_safety_reference"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-gvp-pp-i",
+      "source_hash": "0d68ef884e7293e1ef0fb09fbdbc23f646948c4c9627401336ff98d47886c412",
+      "dept": "PV",
+      "database_family_id": "b6439800-312a-4cba-acfa-801abc1f5e6c",
+      "status": "active",
+      "known_exposure": [
+        "main_gold_or_no_answer_scope",
+        "explicit_safety_reference"
+      ],
+      "family_has_explicit_annotation_exposure": true,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ich-e1-step4-1994",
+      "source_hash": "0257161d37aba9757c030e69cd2ab539486b67c6aad1304bd7c91437f4fb2ddf",
+      "dept": "PV",
+      "database_family_id": "c6b0001b-b468-4b3c-a666-3e19c89dc5be",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ich-e4-step4-1994",
+      "source_hash": "2bd6c8be24ac7238f7ed61da6c1c345b3fade38a149eb8b801fd44438442b432",
+      "dept": "CO",
+      "database_family_id": "cf2d6aea-8bef-4c23-a6e7-27a2c2fc485e",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ich-e5-r1-step4-1998",
+      "source_hash": "a1ba88341f65b995100d2e44a94294dbb3676107e4401eca00a5478c4ae21b21",
+      "dept": "CO",
+      "database_family_id": "c48acc38-0fff-4b1f-af8f-0fe2fbf486e4",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ich-e16-step4-2010",
+      "source_hash": "8ed68c67138ab718bf21226f98fc5a824df424e48359bc50646f9abfedf73c65",
+      "dept": "CO",
+      "database_family_id": "3673a66a-845a-485e-8485-b379566581e6",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ich-e11a-step4-2024",
+      "source_hash": "fbc513ace47f346d8a46145ac23f94a969a83e1b3e8f4f6314cfab3ec10d5f5a",
+      "dept": "CO",
+      "database_family_id": "5c0f8174-b409-4b2b-b441-f924e068b02b",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ich-e6-r3-step4-2026",
+      "source_hash": "1cd3d44bcbaa55b083029d333f0b1a2c921da4892eecf326c5648e4446a02f22",
+      "dept": "CO",
+      "database_family_id": "24fa3bb8-a1f0-4e06-81cf-f221a4004e5d",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ich-m11-step4-2025",
+      "source_hash": "28c72a19ba6062d7dc00d67154421ab3cfe09dbdf73d3d88deb2fabd03085ddc",
+      "dept": "CO",
+      "database_family_id": "7fed1033-6414-4b0c-a518-06871c1f11d3",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ich-m4e-r2-step4-2016",
+      "source_hash": "c7a781bd072768ac5fb148515fdd53f4631fc5f6e02aa693bedc2f898386ae42",
+      "dept": "CO",
+      "database_family_id": "09ede481-4217-4cb9-b453-e71a0bd70d1e",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ich-e3-qa-2012",
+      "source_hash": "54f0e6747c037276cd41bbf8be125382f9177f6e19e36b9f248bd5f95355655a",
+      "dept": "CO",
+      "database_family_id": "dfaa5da2-fef6-4146-b53f-c1180316f0ff",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ich-e14-qa-2015",
+      "source_hash": "5903281f6f4c44965ce1e0312f84c7edd1fd9811f015073e8585c8bdbd0a8d28",
+      "dept": "CO",
+      "database_family_id": "ad0c2cbb-8e0a-465c-8236-fa146c545af3",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ich-e2b-r3-qa-2022",
+      "source_hash": "b590e433009ccbfa53021bb7c75fb26d91a41f0b4e9ef5d2a7941d0f7c16ccf4",
+      "dept": "PV",
+      "database_family_id": "073f0dc4-8925-4d45-8842-695242371b38",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ich-e2d-r1-step4-2025",
+      "source_hash": "6fe0285e65c3e6cd90ce6b0439355ce8e8b81e1a32c60263da845d7ed4f92e89",
+      "dept": "PV",
+      "database_family_id": "37af7b02-32f2-472e-8626-07564555fee7",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ich-m14-step4-2025",
+      "source_hash": "c82a4a50b0c9bf1cfcfff3118152e218257dca5d16d21e0531a052321d3903e6",
+      "dept": "PV",
+      "database_family_id": "af98e5b8-726c-43e5-8e06-22562176d128",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-gvp-module-viii-addendum-i-rev3",
+      "source_hash": "6dab437ddad4323ca9d8d3ef372268242df6d264f3f097bb16dede3e69012760",
+      "dept": "PV",
+      "database_family_id": "2856fa77-8cc3-46b6-933c-2574f5b4eafe",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-gvp-module-xvi-addendum-i",
+      "source_hash": "7489dab6277cf9232c8938c31a7219ed12e8e9e7540fea30a76f26ec0dffc0cd",
+      "dept": "PV",
+      "database_family_id": "49206a42-c92a-4f16-8129-3fd17d0fe9b9",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-gvp-module-xvi-addendum-ii",
+      "source_hash": "205f71888379b55c4bebb05e13a5c5c3d5ef997d6473d2192191e888517fb060",
+      "dept": "PV",
+      "database_family_id": "a3c30758-6ed0-46a4-bad9-d57262fa75a2",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-gvp-pp-ii",
+      "source_hash": "c25e4c0521a1c914c4c1b7596b26c1c876570c1aada9842a0c3a44f9ad3d845f",
+      "dept": "PV",
+      "database_family_id": "d5fdd37f-9dd0-469a-8979-0b6d6fdfaeac",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-gvp-annex-ii-cover-page-of-periodic-safety",
+      "source_hash": "107441fc8d8a18ff0087fe7733394f82bdd17ece81f5acee49b1d378d653f9eb",
+      "dept": "PV",
+      "database_family_id": "402e8eca-48a6-401d-bf1d-b5fd24a9f0cc",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-gvp-annex-ii-direct-healthcare-professional-rev1",
+      "source_hash": "be0b03e30c6313a0e67bb6f24fa5c9f208247549772bf9f12583de4b14dd6910",
+      "dept": "PV",
+      "database_family_id": "4f9d4f13-b22d-416b-b511-49ab7b2425d9",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-gvp-annex-ii-communication-plan-for-direct",
+      "source_hash": "ec176527ca50823a5ac4d3d86831115629a272b144806dd3751ef51c3237e579",
+      "dept": "PV",
+      "database_family_id": "e81ff0dd-74e9-426c-9432-f5d5d83af156",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-gvp-annex-v-rev1",
+      "source_hash": "24dad37e65b4eb791b70422e7fc6ed8126924acb1290b48083b8d38f6f31657a",
+      "dept": "PV",
+      "database_family_id": "71c9167a-1d80-431e-807c-3720a6daeb09",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-gvp-module-vii-rev4",
+      "source_hash": "712206d13405c58daa67831d09a996f901b470073dccb19397677d03e8b18895",
+      "dept": "PV",
+      "database_family_id": "2351269d-cf5d-4ba4-a0a4-f17a11da7941",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-good-practice-guide-on-recording-coding-repor-2015",
+      "source_hash": "292687854118632fa6ba7ad4cf07a30feace24f3cc9b75cf21a8f6ad1df59e8c",
+      "dept": "PV",
+      "database_family_id": "c1ece693-3d07-4ade-ae24-98a56a3889f9",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-good-practice-guide-on-risk-minimisation-and-2015",
+      "source_hash": "ccedba88f1377bb0696dbf3b08668b0c89a10c96dc28bcf0ae363c91182c1fec",
+      "dept": "PV",
+      "database_family_id": "64792a4f-88b3-4c75-a448-d76994cd4fe3",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-risk-minimisation-strategy-for-high-strength-2015",
+      "source_hash": "3d2f545496395940229d513e58364eba3bb517df0e3f825a45d971bf9082d710",
+      "dept": "PV",
+      "database_family_id": "3625122b-3cf5-451b-b968-2da2d0d2cffb",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-questions-and-answers-on-the-periodic-safety-rev1-2026",
+      "source_hash": "69b37244471dd3cb24a3cdd00e6143c4f5118e33943bb83249e3a53adf62983b",
+      "dept": "PV",
+      "database_family_id": "0784cfff-474c-41bc-9192-712183d0a31b",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-pharmacovigilance-risk-assessment-committee-p-rev31-2021",
+      "source_hash": "46db5c3d98d9b54b9886429f55c2f0e6129ad74fa13d057ba22edad893df358b",
+      "dept": "PV",
+      "database_family_id": "90ef1690-db91-485e-a6d9-93ba3f6151ea",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-guideline-on-key-aspects-for-the-use-of-pharm-2015",
+      "source_hash": "9cb8f32858a7ee6070c595b2f47d43945b987f7a89025df1a5c55256395ebf86",
+      "dept": "PV",
+      "database_family_id": "31adf5a9-379b-496e-a9f3-37f34b833f2a",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-gvp-module-iii",
+      "source_hash": "3e9231b246f582d78d3ea83163d78f24daad5a19e046c69be5c0901550f6ab14",
+      "dept": "PV",
+      "database_family_id": "7488aef2-8f4b-418d-b4ec-b64d8bfc5684",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-reporting-requirements-for-marketing-authoris-2015",
+      "source_hash": "1a520d84ea1d09aec4238739f46905616a4c142f8d39fed4a882d7187616326f",
+      "dept": "PV",
+      "database_family_id": "e1558ead-6757-4f4d-b1f1-35473bde0c8a",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-screening-for-adverse-reactions-in-eudravigil-2016",
+      "source_hash": "6309a4e0f25eb43b5397c7ee47ec47679850245a7d65543970628bbebc19dfd3",
+      "dept": "PV",
+      "database_family_id": "adeda0e0-9bf3-4acf-a762-9ab61e288695",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-questions-and-answers-on-signal-management-rev5-2026",
+      "source_hash": "c285e14341569b37d635ed1d3ad1bd62f93376dda91ad50a3f769b87a055f0af",
+      "dept": "PV",
+      "database_family_id": "a32e3231-03e1-4178-96e3-65bbf28addda",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-questions-and-answers-on-implementing-regulat-rev2-2026",
+      "source_hash": "540b1fb3c7ad7461125c44dedf6ae5ad22f677669a50f08110932f4ad8096876",
+      "dept": "PV",
+      "database_family_id": "c33cfdb8-6cc4-434b-a334-bea9bcd16345",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-periodic-safety-update-report-psur-repository-2016",
+      "source_hash": "41ec202b5db61c0ac7bf3d12cbe26a9353a9dc2594bb7489e3d449a43cc2ae90",
+      "dept": "PV",
+      "database_family_id": "4726ea61-0612-4349-80a3-2e4dad85dd04",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-introductory-cover-note-to-the-list-of-europe-rev17-2019",
+      "source_hash": "225c8bf4e5dd6dbdb64d0c6fbb1f435c231bc2b30ba732951087f373cb5505a5",
+      "dept": "PV",
+      "database_family_id": "ce49b6c0-8865-46e1-aae9-01ba54da71ea",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-guideline-on-registry-based-studies-2021",
+      "source_hash": "07e145df2bab25ea1fe0768842b348d215ef851b840e1f4e8c3d21b77bf947f5",
+      "dept": "PV",
+      "database_family_id": "e11968af-fcec-4908-ac72-a6b5419444a9",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-guideline-on-the-exposure-to-medicinal-produc-2005",
+      "source_hash": "b700855925c70c7444210442caa8b577f1efcd07a4722fe46937785218a70bd1",
+      "dept": "PV",
+      "database_family_id": "1cbee1b8-540e-420e-a3fe-4971c2b2dca1",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-guideline-on-the-use-of-statistical-signal-de-2008",
+      "source_hash": "688d424ffd873674594e2f21cddc44dcdebb258dddd9dd7706ecfcb72a2a5999",
+      "dept": "PV",
+      "database_family_id": "e9c86bdf-73ef-40f5-9149-38605b041be4",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-eu-individual-case-safety-report-icsr-impleme-rev2-2014",
+      "source_hash": "53526c41b4ff3aadd82e7fb599cf88401de5ebcf1fe823f98c5f4300844579d4",
+      "dept": "PV",
+      "database_family_id": "3cff3905-7856-46bb-bbd2-bf4187f2c68e",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-guide-on-the-interpretation-of-spontaneous-ca-2011",
+      "source_hash": "350317306304d092123fc9b5d0f8c4d949253477338b4b099b8d2a86b8b4feb1",
+      "dept": "PV",
+      "database_family_id": "e733e38d-69f2-4d54-bd04-ceadde9d0339",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-reporting-requirements-of-individual-case-saf-rev9-2015",
+      "source_hash": "ee6058600aede1302bfd50e907b14e506f48ae71eb60938987d489893430e2c2",
+      "dept": "PV",
+      "database_family_id": "ed0e2225-b1ca-488b-bcea-f95fac970350",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-reflection-paper-on-use-of-real-world-data-in-2025",
+      "source_hash": "5adbcb2745ebfa0335be34cde4a1fd97bf13af09eee23b1ef5956d06e38019f8",
+      "dept": "PV",
+      "database_family_id": "00a94670-bbf9-47d4-b76f-61c687dad994",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-guideline-on-computerised-systems-and-electro-2023",
+      "source_hash": "43a7673c4125519160c159b9c117a7a2437e93a51af39da47a8fe3f9c34b85b2",
+      "dept": "CO",
+      "database_family_id": "14be773e-2400-44e9-a86c-bf66d920fae3",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-guideline-on-the-content-management-and-archi-2018",
+      "source_hash": "69e6299397472765372c610785e79b323778b89621eeb03e8f0ebc43b27f105f",
+      "dept": "CO",
+      "database_family_id": "2e4eb0e9-c9d1-48f0-803f-468b29a6128a",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-guideline-on-strategies-to-identify-and-mitig-2017",
+      "source_hash": "6d05cacd3b6da723f15d608ded724b620d76309e275bc6424a229e804411d719",
+      "dept": "CO",
+      "database_family_id": "97f10f6d-ee3e-4b6f-9051-12f07f93864e",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-guideline-on-data-monitoring-committees-2005",
+      "source_hash": "b03bc3a2c538490c6a7f70d837405a94b8ad65997d706c363327463e3dfdad6c",
+      "dept": "CO",
+      "database_family_id": "c4e9ce10-385b-4877-a278-467115101b31",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-questions-and-answers-on-data-monitoring-comm-2020",
+      "source_hash": "a09a9d7a4d8ac3ff6e19087c1b71994c07f39962a238a736188a3aec74d39354",
+      "dept": "CO",
+      "database_family_id": "76413185-a048-40ad-97e0-99823b7cefc4",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-guideline-on-missing-data-in-confirmatory-cli-2010",
+      "source_hash": "a600b7936e603d8b90c7e91beeb21f2c2dd6ebbd709a05c9f1af8a4055b2d273",
+      "dept": "CO",
+      "database_family_id": "2a58f3df-6f5d-46f7-8afa-ac1b49d8665c",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-guideline-on-adjustment-for-baseline-covariat-2015",
+      "source_hash": "e20cf15d0cfcb5a1fb807e369814f02d3a665aad6b4864d1e5eb9327c31fdb26",
+      "dept": "CO",
+      "database_family_id": "4a427ccf-2120-466b-b503-5136ffcb2b42",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-guideline-on-the-investigation-of-subgroups-i-2019",
+      "source_hash": "416dbed1170bcbd12175c31958e6286fbe49bf25dda20704d1f38c9a867c3855",
+      "dept": "CO",
+      "database_family_id": "07c6ed9d-8a99-4153-b236-dfb14a5f1b4c",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-guideline-on-clinical-trials-in-small-populat-2006",
+      "source_hash": "d2198f65640acffe3241285c055352ade7a638f3d4acad7ec20eb44e4385bff7",
+      "dept": "CO",
+      "database_family_id": "c18b826e-deb2-4425-9526-ee8fc3ebbe81",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-guideline-on-the-choice-of-the-non-inferiorit-2005",
+      "source_hash": "f18020102ce9f10d4145612be9d86c13991a2441e293494fe4f66907f76de01c",
+      "dept": "CO",
+      "database_family_id": "9bd4622b-9e7b-47fd-810d-1dd778bf4843",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-points-to-consider-on-multiplicity-issues-in-2002",
+      "source_hash": "897bb9d6e9ced1865f709ca5fde8bbdcc2258ac6d89ed831cd6dcfaa0621e284",
+      "dept": "CO",
+      "database_family_id": "dc97b242-e2a6-48d4-ab74-6046c868a513",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-reflection-paper-on-methodological-issues-in-2007",
+      "source_hash": "5c163dc5dcb94fda398eb4e2ec53419ab8621f3c133494edf6657cefb1ef6b7a",
+      "dept": "CO",
+      "database_family_id": "ff6885f1-0112-433b-828e-1be9393ffef2",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-reflection-paper-on-ethical-and-gcp-aspects-o-2012",
+      "source_hash": "78f1e6af095686b0883755fa2ed049db96f040c5c65a98f2fd8b2bb31ae90304",
+      "dept": "CO",
+      "database_family_id": "5a80a6cb-cfde-4ddb-ba6a-7c935ba1f8ee",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-scientific-guidance-on-post-authorisation-eff-2016",
+      "source_hash": "3c990e891190a93617b1c469bab5988aea1d56e63afa67dd1783adec67abbba8",
+      "dept": "CO",
+      "database_family_id": "e28b7f6d-a785-4c54-9c74-0d375ed891df",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-guideline-on-clinical-development-of-fixed-co-2017",
+      "source_hash": "67271220ec413bcedc16f5d3817a9dfdf2ee5e8b52905b07dc78d14e64a9851d",
+      "dept": "CO",
+      "database_family_id": "1dc0edb6-2f12-4131-978a-4d4ae9c0ff2f",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-data-quality-framework-for-eu-medicines-regul-2023",
+      "source_hash": "4abe9494f4a55fea36ccfaa1548c1dc8de93dfde062bd63c47a548ce4cc7a25f",
+      "dept": "CO",
+      "database_family_id": "b894f732-4043-4893-b081-84bf99c8aa83",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-position-paper-on-the-non-acceptability-of-re-2015",
+      "source_hash": "2c1164ce2eb3c02864776990d27c71ab6bedd2c5fc25285ec4136e149f9ebbfa",
+      "dept": "CO",
+      "database_family_id": "7b40c6fb-768d-4ec2-9f55-3bfc20deae24",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-quality-review-of-documents-qrd-convention-to-2011",
+      "source_hash": "01c4f1bcdd37e6d2368b2449db5d53cc8c049687ae7ec053321a357164b7a6d9",
+      "dept": "MA",
+      "database_family_id": "24ca022c-8594-412b-a199-4b55f6b25151",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-guideline-on-risk-assessment-of-medicinal-pro-2008",
+      "source_hash": "8b4c63f7ad2bf98e1e8ad8b44886a5c4bcac8d854382a9ea4283574015e63be8",
+      "dept": "MA",
+      "database_family_id": "01f9f67d-b9d5-4ed9-8098-1e547a058147",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-labeling-for-human-prescription-drug-and-biological-2013",
+      "source_hash": "0e217acff2110d4c4ffa1bb8ac907f10eb5090d454149732a23ac20818d18df7",
+      "dept": "MA",
+      "database_family_id": "54ac159e-4d64-4cd5-8c06-541fd5788a52",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-warnings-and-precautions-contraindications-and-boxe-2011",
+      "source_hash": "9a0546384c4e570b3b4a3b905e5c3b5b825b0a33339efa5fdeaba7b1985e80ef",
+      "dept": "MA",
+      "database_family_id": "ff2d7e71-a4af-48dc-a57a-39a90a23ac20",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-adverse-reactions-section-of-labeling-for-human-pre-2006",
+      "source_hash": "6daed123bf6df018efd66cbdffb41d4cb11b8a8d7d94b9dc4c73796fe92d4d19",
+      "dept": "MA",
+      "database_family_id": "940f021c-69dd-4643-a785-0dd772460aa4",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-clinical-studies-section-of-labeling-for-human-pres-2006",
+      "source_hash": "13299b1169413b51a633e856dfd9a11851c6b9599385cfaffeae94c5ae0d07ea",
+      "dept": "MA",
+      "database_family_id": "8fb25432-e0ba-4da2-b46d-0dd99b326fed",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-clinical-pharmacology-labeling-for-human-prescripti-2016",
+      "source_hash": "053d6f6c1c98411848dd0fc4278d6d32b0250f043c88b505543c29b14a492dff",
+      "dept": "MA",
+      "database_family_id": "c85bad68-36d2-4e8e-8af2-e1e3f9207965",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-patient-counseling-information-section-of-labeling-2014",
+      "source_hash": "80ec2f783eac568b17216099ed5e5f2afbc1ca7fe018fc9e115f62902360165c",
+      "dept": "MA",
+      "database_family_id": "5627d7e5-f4c4-4a0e-9fa2-c3754787880d",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-dosage-and-administration-section-of-labeling-draft-2023",
+      "source_hash": "026f68174a8cc0bc6f579f419926a45f7fcb7b9d71ca03dd4222e330211ae316",
+      "dept": "MA",
+      "database_family_id": "597a9103-33cd-4765-8688-2c40d448e2c1",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-indications-and-usage-section-of-labeling-for-draft-2018",
+      "source_hash": "e881ab8fea0506642afec95b81b0ffba8a52e1de893be84c036dd2f27fd28fed",
+      "dept": "MA",
+      "database_family_id": "fad5dceb-c21a-4b14-aae6-657cf01e481f",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-drug-interaction-information-in-human-prescri-draft-2024",
+      "source_hash": "ba862d84ca7fca2b77ac86e3eb0aebed0a5dc23ad0e25d8e29e9cb3edccaeaad",
+      "dept": "MA",
+      "database_family_id": "d09f245e-102e-4995-9f28-228adc7121e1",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-pregnancy-lactation-and-reproductive-potentia-draft-2020",
+      "source_hash": "99b97938b4f7ecb5594645dfd2e76859a22ebcf486b98bbf28ce6596ed1b2379",
+      "dept": "MA",
+      "database_family_id": "da9b3674-afa0-4ae3-bea2-85f425524e25",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-pediatric-information-incorporated-into-human-presc-2019",
+      "source_hash": "9aead1a1b0a2ab740197e2c3d48dfedca73041087a49397454d2d25eff0ab2af",
+      "dept": "MA",
+      "database_family_id": "381c0ee1-34e3-4317-83af-d0181d9bd38e",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-geriatric-information-in-human-prescription-d-draft-2020",
+      "source_hash": "f664da6ee75ae7529f6a925d502429be78fe0156b4cab3b3f05592a228dfec4c",
+      "dept": "MA",
+      "database_family_id": "75bff4b3-8a7b-4dd3-acfc-9e16006249ec",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-drug-abuse-and-dependence-section-of-labeling-draft-2019",
+      "source_hash": "8694377426cef2cac0a0338b6b4655f281154e73b94a2605fb168d6e9d8edbba",
+      "dept": "MA",
+      "database_family_id": "e75b68eb-e466-44fa-8968-6f7c86e9b4bd",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-instructions-for-use-2022",
+      "source_hash": "feee15f61c6d04cb236fc77ae9157073ab5ed3a0cc064e32f1ca383b49dd9d9a",
+      "dept": "MA",
+      "database_family_id": "1ac388ae-c605-49d6-8e2d-9dd1eb35d74e",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-human-prescription-drug-and-biological-products-lab-2023",
+      "source_hash": "1b6a126df49c6403268cce3f00adafa3cb5bb2d4ca916cf3328259271a347517",
+      "dept": "MA",
+      "database_family_id": "11f75b53-b7d4-46e6-ac6c-aea7fd95e0b3",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-qtc-information-in-human-prescription-drug-and-biol-2025",
+      "source_hash": "b3bd6d7e714b7e0861847401d0d325a12b015ea9604628d6b7249b3deccb090e",
+      "dept": "MA",
+      "database_family_id": "f7948951-fe8f-4ba0-aefc-b5abb8e236c9",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-labeling-for-human-prescription-drug-and-biological-2009",
+      "source_hash": "66cef4562f2f2506835f135be33a1158b6a999862f12279fb42259757dc600a3",
+      "dept": "MA",
+      "database_family_id": "bc0fc5b5-237e-43e5-a8f4-4c9edf42b0f6",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-labeling-for-biosimilar-products-2018",
+      "source_hash": "2e3724d61082afbd4d731bdb09885f4eca9531abe77557c1ce2ae4c55602e7c3",
+      "dept": "MA",
+      "database_family_id": "d846313c-a1b8-4e18-8136-3fd36b37b872",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-presenting-quantitative-efficacy-and-risk-informati-2023",
+      "source_hash": "1973177d5a8d280a30696fd4535dce38fad5f954523bed437798c5448cb79135",
+      "dept": "MA",
+      "database_family_id": "fb4e61d1-4103-43ce-a1de-97c7103cdad0",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-direct-to-consumer-prescription-drug-advertisements-2023",
+      "source_hash": "867f813d97a94976c31c4dc2349365db4580c36812bf153e784e0776c84cfefc",
+      "dept": "MA",
+      "database_family_id": "11e0ce41-8bac-4b1b-b2c3-ba30ce607407",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-product-name-placement-size-and-prominence-in-adver-2017",
+      "source_hash": "f6f78606542ef91596ef21f6b2e42580510265c6f43f36fc422eac56390e7bc4",
+      "dept": "MA",
+      "database_family_id": "1031e921-4e19-4bf9-9264-c6209ddaee6e",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-presenting-risk-information-in-prescription-d-draft-2009",
+      "source_hash": "f5654ab082f6cd4408143f16ebd0b4cabb4a8ce743bdc38ee840b65a4101aa50",
+      "dept": "MA",
+      "database_family_id": "24858278-2b0d-455e-9f8e-ce3cbe44039a",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-responding-to-unsolicited-requests-for-off-la-draft-2011",
+      "source_hash": "8ab6bfda34ad39a70987805b80f3972dfbcde27b370a3c6401b26101f7eee493",
+      "dept": "MA",
+      "database_family_id": "6e099af8-991a-4a91-b26f-6acf38f021be",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-medical-product-communications-that-are-consistent-2018",
+      "source_hash": "1a18b7f242bfbbf897f198dfd5703d75bb66e428e9c5234a907327b7cbbe7bd8",
+      "dept": "MA",
+      "database_family_id": "85e405a9-6435-4de8-a010-96d7270ec349",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-communications-from-firms-to-health-care-providers-2025",
+      "source_hash": "a36a07e1efd950b7a2a8f6b3217b7c1b3db1f51d8c316af446d587c2f585ffa4",
+      "dept": "MA",
+      "database_family_id": "36e87e76-54de-48c7-bb9a-bb6e46e6a1fb",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-good-pharmacovigilance-practices-and-pharmacoepidem-2005",
+      "source_hash": "33eff0cd8f8c288605927d7a99ff2670dc0c9e25da2e078acbc51623e2f01d54",
+      "dept": "PV",
+      "database_family_id": "9eaa5de9-9878-445c-9342-bc9335831e4f",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-premarketing-risk-assessment-2005",
+      "source_hash": "2e25b78fd71bd48260a279cf6f917364ecea77e78f7b0b629e2871b8bfdfc8b9",
+      "dept": "PV",
+      "database_family_id": "37ea80c1-69d2-41d0-b805-dffed2c9890c",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-development-and-use-of-risk-minimization-action-pla-2005",
+      "source_hash": "9e1a602c5da6a85f4fe29b679188e7c18ebf042855e9732bce65e27609db5e4f",
+      "dept": "PV",
+      "database_family_id": "18092ddc-374b-405e-9f32-dc69c80c65ee",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-providing-postmarket-periodic-safety-reports-in-the-2016",
+      "source_hash": "b691b39ba2c9a5c40f56ba77ed25d72a11a8aaa00bcccedaeeb835cd90e5ee0f",
+      "dept": "PV",
+      "database_family_id": "420b989f-819f-4f90-9adb-fe8b4ed77737",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-postmarketing-safety-reporting-for-human-drug-draft-2001",
+      "source_hash": "945621bc6926713a8c7caac972abbdeb9b23174916664e12678031bd2196b803",
+      "dept": "PV",
+      "database_family_id": "db672b64-455f-457e-821e-b8d57a317baa",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-postmarketing-adverse-experience-reporting-for-huma-1997",
+      "source_hash": "4a82eae0fb84dc1f1b354edf32d6170eaf071e9747ae400b928f94e118f76e30",
+      "dept": "PV",
+      "database_family_id": "3779e85d-97e5-426e-b2e6-d1c9627ebc56",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-format-and-content-of-a-rems-document-2023",
+      "source_hash": "0383fa7d30b432b37cdcbd905979d3246972aea0ec53b48162a07597d6b4fd65",
+      "dept": "PV",
+      "database_family_id": "e31fb0fc-1db7-4455-b799-46d062396010",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-risk-evaluation-and-mitigation-strategies-2019",
+      "source_hash": "48f86090be850dcfb3779f46a3566e50b1fe1001769184fea28d85120279bca4",
+      "dept": "PV",
+      "database_family_id": "8412f5ba-2edb-4526-8bcf-66e5534b13ab",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-fdas-application-of-statutory-factors-in-determinin-2019",
+      "source_hash": "9b4ea85afa22f663705867567a4cff7cded1053b23f068a80e5c41bbbd98a48e",
+      "dept": "PV",
+      "database_family_id": "ba85aeda-4de1-4d08-a1a4-d348254851e2",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-rems-logic-model-draft-2024",
+      "source_hash": "9e27f8945c2ef34b7e4c2ab3914865a3d0e22cd211f2bece800fba7d7dba1b2e",
+      "dept": "PV",
+      "database_family_id": "ced04a6a-ae09-4026-bb6e-09d322685507",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-survey-methodologies-to-assess-rems-goals-tha-draft-2019",
+      "source_hash": "9e6a8d7eaa88208a3a7027ce6b78d0ac70516d133e3c1fc40bcef64eaf2a036f",
+      "dept": "PV",
+      "database_family_id": "9b1eea6a-1c16-460e-bcfb-9964723c2d6b",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-development-of-a-shared-system-rems-draft-2018",
+      "source_hash": "61996a01d4b74d72c1d5d8ce098e79f8858d095cbd3b621482aff78027406749",
+      "dept": "PV",
+      "database_family_id": "ccbb44a5-5334-4973-b198-d0f953f3715e",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-medication-guides-2011",
+      "source_hash": "34ffdbcb0acdbb8d317d03dd23683529cc6e7535f6d4305fb3d8ec1ba11389bf",
+      "dept": "PV",
+      "database_family_id": "ce7e64a5-967e-4f81-9a03-9ff4d000edac",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-medication-guides-2009",
+      "source_hash": "6e6651aa9eace19b979f3ec9be9b00848d6396e188c635bb915206dca9b178c9",
+      "dept": "PV",
+      "database_family_id": "1663ccd0-1586-4c1c-b8c6-67b653f3405f",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-safety-labeling-changes-implementation-of-section-5-2013",
+      "source_hash": "7f6f6d006b8f2558194c1415650d147c905ce4e53be35591c905ed8b2358d8b9",
+      "dept": "PV",
+      "database_family_id": "97fff606-778c-44cf-8f5d-c05dbfd81656",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-postmarketing-studies-and-clinical-trials-2011",
+      "source_hash": "96d6def6be184aedca24bc20b478581448fca2b8eb44c982ea2c2421114348b5",
+      "dept": "PV",
+      "database_family_id": "6efb93d1-a586-4985-b870-2f81de68519c",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-determining-the-extent-of-safety-data-collection-ne-2016",
+      "source_hash": "abfcc3a81cdd2f4289f6fd02226a041318546a1ab58a3cac44494b2fc144e133",
+      "dept": "PV",
+      "database_family_id": "43e5015a-1952-4322-9225-d00f433b2645",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-safety-considerations-for-product-design-to-minimiz-2016",
+      "source_hash": "70d8e8b7bfae649a3b784ccee1de06a4111ab526ba7f70ac732e47abe0b81929",
+      "dept": "PV",
+      "database_family_id": "3a39dbe4-5664-4d7e-a3b6-f66172a21a6a",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-safety-considerations-for-container-labels-and-cart-2022",
+      "source_hash": "f20e64f4b660f09f41e9c06b9f085f378074d6ac625a3f4c0751127c5bab5ab7",
+      "dept": "PV",
+      "database_family_id": "1e325581-d65a-4747-a284-267175522ec6",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-best-practices-in-developing-proprietary-names-for-2020",
+      "source_hash": "379ca1c5392d13551f06eaf01355c5fc2cc162f480e1b4d0089ac52f99cfe8e9",
+      "dept": "PV",
+      "database_family_id": "5d85d960-650d-454a-8cc2-2a089f0516b3",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-contents-of-a-complete-submission-for-the-evaluatio-2016",
+      "source_hash": "4ae727af9abca93acea030d0c86a3f2e1f347066ecb014be6d32bd17b511c91f",
+      "dept": "PV",
+      "database_family_id": "9be8bf3a-a0e5-4138-881b-7a09dfb9bf17",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-drug-induced-liver-injury-2009",
+      "source_hash": "81ca15230303336a78a0b3788ddcc6714f13b9bdbcef244778fc5750a3f208ca",
+      "dept": "PV",
+      "database_family_id": "75bd54b7-17ef-418d-9ddd-5dd636649f07",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-suicidal-ideation-and-behavior-draft-2012",
+      "source_hash": "a242965d21ee649f0b3eb70254c71027bf6271df687d1ed31951a4140fa9dd5c",
+      "dept": "PV",
+      "database_family_id": "488ce044-fb0c-4a56-872b-92a396aa4a5a",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-assessment-of-abuse-potential-of-drugs-2017",
+      "source_hash": "4d28c76a3758f33a87e6fc4d325d2490e4b0eb32620b0819e34833c5936eafd7",
+      "dept": "PV",
+      "database_family_id": "a1ddff7a-7dbf-4811-aef2-a99bab6ff72f",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-meta-analyses-of-randomized-controlled-clinic-draft-2018",
+      "source_hash": "03d8ab2abd19b0f1e1799bbe0ef3be99d0ffd21f69b26258d11b3f4add39ab1b",
+      "dept": "PV",
+      "database_family_id": null,
+      "status": "not_present_in_db",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": null,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null,
+      "known_ingestion_reason": "ADR-0009 rejection; implementation record 98 (Launch/JavaScript/embedded-file); not an index omission"
+    },
+    {
+      "document_key": "fda-specifications-for-preparing-and-submitting-electro-2020",
+      "source_hash": "6486b3a28e9437302bfda3bc8a9ed3bfce8adbece0854f3fe0c53ad4b1d8f9eb",
+      "dept": "PV",
+      "database_family_id": "b90e7426-45d8-4fe2-b938-e891a0a25fac",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-postmarketing-adverse-event-reporting-for-medical-p-2020",
+      "source_hash": "d95ccaefb4b7609dd68f8d4388ee76bc3de1c6529df14c523e0f534c2525a9c2",
+      "dept": "PV",
+      "database_family_id": "91ee0afd-e321-4f7c-b187-069f51de9812",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-postmarketing-adverse-event-reporting-for-nonprescr-2009",
+      "source_hash": "a328678c3012a283c7e0947d0cbd3bd14c08926a172d9d60c582ac3561557739",
+      "dept": "PV",
+      "database_family_id": "2d010c78-3502-4d5f-8514-c9a34d0e481d",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-providing-submissions-in-electronic-format-2022",
+      "source_hash": "7598c88cecdd7bb1015a3a2988adfbbdd72031b349acb9e2d6510d4bf967c824",
+      "dept": "PV",
+      "database_family_id": "4bd43384-0fbc-4b96-82ea-ca7f363f8f83",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-annual-status-report-information-and-other-submissi-2023",
+      "source_hash": "2eeca86629e6e46edefd2906e140d9d6e47d91ea471bc4752d98dfa2d57908e8",
+      "dept": "PV",
+      "database_family_id": "29a0ee01-969d-4299-9246-a734c7974261",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-reports-on-the-status-of-postmarketing-study-commit-2006-r2",
+      "source_hash": "6fe3b6f3d483abfe5abb1a681d0bb700404e99954f6e782b2fbaac5f0033fe28",
+      "dept": "PV",
+      "database_family_id": "57a65085-ddf2-4940-ac43-c1db9752f0b0",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-conducting-clinical-trials-with-decentralized-eleme-2024",
+      "source_hash": "b757ad57d2216bf2fa8931bfe0546cf38364f5342a8c65ac89513275f8bcf68d",
+      "dept": "CO",
+      "database_family_id": "3ddb29e5-7662-4ede-b181-e0a70bc123cf",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-electronic-systems-electronic-records-and-electroni-2024",
+      "source_hash": "f74ce1b061edfa634aaf0a0b07a472995a6d215f310a562e17ae46c0b67b47a6",
+      "dept": "CO",
+      "database_family_id": "75762d45-1526-4e23-a3ba-ac55945a506c",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-considerations-for-the-design-and-conduct-of-draft-2023",
+      "source_hash": "25187984f6b02afea0e10fc80a1e3660747205c0720dba689ba085a64557ddf3",
+      "dept": "CO",
+      "database_family_id": "210292df-888e-4099-9b0b-43e577519b57",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-clinical-investigator-administrative-actions-2022",
+      "source_hash": "8d0c9a80e861858a22b345fc764639d105b3cda283273b2a21eb10c327c97cde",
+      "dept": "CO",
+      "database_family_id": "8d7a7e0a-202d-4550-b347-fb3cd1475793",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-ethical-considerations-for-clinical-investiga-draft-2022",
+      "source_hash": "4e11cef034f27e50b38671ec286d4181db82ff09e1153e50844fe5704009df1e",
+      "dept": "CO",
+      "database_family_id": "06723970-8c88-4181-85f4-5b1fef97ebc6",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-digital-health-technologies-for-remote-data-acquisi-2023",
+      "source_hash": "8beb76ed0d20be27958d1aaaf274485a2b7443b69c173d0f5cdc27f35874a174",
+      "dept": "CO",
+      "database_family_id": "c38ef2c8-6963-4c36-a649-28b92080d43b",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-statement-of-investigator-form-fda-1572-revis-draft-2021",
+      "source_hash": "efd8acabb2d255d1b3ebe8a0b7619b4002fe9424ef93d708d946408a4f4b6ff9",
+      "dept": "CO",
+      "database_family_id": "6ea6d690-7d90-4b15-a086-5a0b0b28a1a9",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-adaptive-design-clinical-trials-for-drugs-and-biolo-2019",
+      "source_hash": "c8b48547036f69ad95b4aac55510bd0c37ead058dd35dbc7cd0c15085e371a89",
+      "dept": "CO",
+      "database_family_id": "a1ab0b1d-07e9-4cd3-8f27-72459e4c5dd5",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-enrichment-strategies-for-clinical-trials-to-suppor-2019",
+      "source_hash": "68862bdb5f23863fe4aca23f05cbe3e0a161436d9d6c6a3c840afee395a8642a",
+      "dept": "CO",
+      "database_family_id": "d61ef3d0-fecb-4905-b50b-a3002f729e38",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-demonstrating-substantial-evidence-of-effecti-draft-2026",
+      "source_hash": "981b1c7de7a158b1aeb3d8e80d57d5eb94c4b388378748e15bc264efb6303cb6",
+      "dept": "CO",
+      "database_family_id": "fcc31e8f-cc2c-46b8-94a6-e4850dbe7e08",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-multiple-endpoints-in-clinical-trials-2022",
+      "source_hash": "40284a050aab0037799072b2340e37d4b02ab6f7f2339fff6ea1cd55673a9563",
+      "dept": "CO",
+      "database_family_id": "a78696f2-c7cf-4326-a4ef-e1f766d689e8",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-non-inferiority-clinical-trials-2016",
+      "source_hash": "9eb8993e8be5ce94d6accb24f35d179993bb48f2899d275b4d0f837944cbfc61",
+      "dept": "CO",
+      "database_family_id": "e51d1f99-2d66-4031-a175-200c52b46803",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-master-protocols-2022",
+      "source_hash": "8ca4c05cace3d271e4e421a9cbb8b9bf73ab6737b9f306567300f8a7a4b70fc9",
+      "dept": "CO",
+      "database_family_id": "0d6c251b-1b28-46a5-a41c-95a6625456a1",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-establishment-and-operation-of-clinical-trial-data-2006",
+      "source_hash": "edd2c3017170d113954e8a19df3a4e3ea20c1bbf69c76b0c57a99201ebe82174",
+      "dept": "CO",
+      "database_family_id": "280f3e78-81f0-4df9-92f3-ab0b6ef942f0",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-waiver-of-irb-requirements-for-drug-and-biological-2017",
+      "source_hash": "0fb948758eac0e5f4d1f697204ddcbeab2639e2ad0e64863d52d073126f8440e",
+      "dept": "CO",
+      "database_family_id": "7b5f7177-5df5-4dee-9f81-97c8823b8b6e",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-use-of-electronic-informed-consent-in-clinical-inve-2016",
+      "source_hash": "1b91423ca521396e9128d10b199c816d2f61625b0193aa26c9c4b2b1bd6fb6d7",
+      "dept": "CO",
+      "database_family_id": "5f332663-6e91-4fe1-8153-79fcd78f8e58",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-collection-of-race-and-ethnicity-data-in-clinical-t-2016",
+      "source_hash": "e2798849c2bdc63fa57fcd19a31b63867f820259cd9ec750136456e90c14c157",
+      "dept": "CO",
+      "database_family_id": "1ff7f714-d0ff-4560-9f5b-13385a61bd43",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-charging-for-investigational-drugs-under-an-ind-2024",
+      "source_hash": "8e10ac8c411dbfbd7d48da8ec69ed24b22c0e01f40d69ddda6d3301cb8c1d42f",
+      "dept": "CO",
+      "database_family_id": "98a0d255-a1d8-42af-aab0-d85804d26330",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-expanded-access-to-investigational-drugs-for-treatm-2026",
+      "source_hash": "320bef49ad694943e96e491b85b4cbc802bf49e4a9ea98e0cc894cedb5f4cc77",
+      "dept": "CO",
+      "database_family_id": "053a7521-8c7e-4e0b-a693-ee852d2538e9",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-electronic-source-data-in-clinical-investigations-2013",
+      "source_hash": "9d8c2151c81996cc363fb0948608b3461008b14fd154339954d6c876caecc7e8",
+      "dept": "CO",
+      "database_family_id": "da4cc18c-f7ab-4ea8-931a-042b4b2ade43",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-investigational-new-drug-applications-inds-2013",
+      "source_hash": "267203372d37d33b5782d5cefc8f8894f12e5c40f13764912a492407c6685e37",
+      "dept": "CO",
+      "database_family_id": "dda96e32-985b-4297-b72a-f3e667bfde2f",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-irb-responsibilities-for-reviewing-the-qualificatio-2013",
+      "source_hash": "b9c7ce00d7233736728c796426b3789fb0f6ed7646e4b179093a59af3713bcf3",
+      "dept": "CO",
+      "database_family_id": "bbeedda3-f6b7-4f56-8995-ee7f50de6d97",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-exception-from-informed-consent-requirements-for-em-2013",
+      "source_hash": "555ee0a35b4fe11e9ad6ac6778372bfe28af8bb4b1fabba89bc944a30298b68b",
+      "dept": "CO",
+      "database_family_id": "087d9f88-003e-4730-91fd-32c590010902",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-financial-disclosure-by-clinical-investigators-2013",
+      "source_hash": "cbc9e92cb251b2bdd004adb62a5cc4c1ff98f327e5cf8ebc2889bf92643306cb",
+      "dept": "CO",
+      "database_family_id": "f93d01c2-653c-4b74-bbae-97ac23801b21",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-fda-acceptance-of-foreign-clinical-studies-not-cond-2012",
+      "source_hash": "aeb2f35573e56a18e4cf548e9729ceafcdbe71f97bfbd201197bce4705b9988e",
+      "dept": "CO",
+      "database_family_id": "0ebb75bd-0be1-41ec-a56a-bd16436d1cd3",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-irb-continuing-review-after-clinical-investigation-2012",
+      "source_hash": "73c8623fd3567738585994e2e182d08661854be1df11af048b9bd0b959d95cda",
+      "dept": "CO",
+      "database_family_id": "522c5147-2b84-40e7-a75c-776de2a2c5c8",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-questions-and-answers-on-informed-consent-elements-2012",
+      "source_hash": "147e4bba6d33e85e05e06064e168b03c0aad6b236f5bbcbda37fccaa9f2d0554",
+      "dept": "CO",
+      "database_family_id": "10d06e2d-201a-4c40-882d-ae5456fab526",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-data-retention-when-subjects-withdraw-from-fda-regu-2008",
+      "source_hash": "923c724074a9351087e6f2e06f12fc957d04f4cc7eb5b52defca3f5e56e540b7",
+      "dept": "CO",
+      "database_family_id": "20cb4824-ec0f-4e6f-a28d-3643abefb7ae",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-part-11-electronic-records-electronic-signatures-2003",
+      "source_hash": "306013031df65004566799023444b3fd66d17dca72eea4c7eb5bacfd4a697ac5",
+      "dept": "CO",
+      "database_family_id": "4eb6b9e9-b737-43c7-9a44-83d839c3fbee",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-processes-and-practices-applicable-to-bioresearch-m-2025",
+      "source_hash": "70d929bf4281a38b695dba0c8a4d7fa9e5459904eb2967b8688eb4a6eea3681f",
+      "dept": "CO",
+      "database_family_id": "fa0c2d28-a2cc-4c7b-8b8b-e0fe66531a6f",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-considerations-for-the-use-of-real-world-data-and-r-2023",
+      "source_hash": "98d0b2daf2ce394ac543bc66fa5334a2033faef89a88276de22d59e5fc4ab799",
+      "dept": "CO",
+      "database_family_id": "964d7128-715d-410a-9fb9-06cee9680c3a",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-gpvp-guidance-2014",
+      "source_hash": "db751b496b1fe5c87c390bb40fc032681dca491a993529e70fe6907da87e82ed",
+      "dept": "PV",
+      "database_family_id": "158e23fb-5555-45d1-b552-76a4255e2ddd",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-drug-safety-surveillance-regulation",
+      "source_hash": "ab0cdaefdfbb062e516f6cce5bc07d5e690b7b5332357d791d5bf4f190a26e7e",
+      "dept": "PV",
+      "database_family_id": "88d2b547-0a53-4ea0-8aeb-3808e2d7e5f5",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-psur-format-and-schedule-2005",
+      "source_hash": "3308028bed10f902c3302f09ed2f32cdca8e44f2954101e4525f4803ec6d6d89",
+      "dept": "PV",
+      "database_family_id": "7ee63edb-49e8-4459-9376-777154a45a2b",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-rems-plan-required-items-2023",
+      "source_hash": "26a9260537c7c19b126aa6646be0fba3057222b7b66ab4f26f099ae2db681a1a",
+      "dept": "PV",
+      "database_family_id": "7d4526f9-121e-48e7-9b2e-0af9153415ce",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-adr-report-acceptance-principles-2013",
+      "source_hash": "1c646f4a5bd6209d5042d33e578ade22fd6492e3b676447c9fb1229e81c1d24a",
+      "dept": "PV",
+      "database_family_id": "62d12e04-8e64-493d-9989-b0466a50f4d4",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-vaccine-ae-report-form-guide-4th-2025",
+      "source_hash": "a3d3daaaf08210fec7ad6830fee42c2d455cd6d179572a5254226dcc528838ec",
+      "dept": "PV",
+      "database_family_id": "38a5e3c5-4cdf-46db-8d9b-d8e076238c7b",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-gcp-regulation-2020",
+      "source_hash": "731cc32e440d6567d21b452f8bdc4963928bfedd0f819d7232b89c22a4abe8db",
+      "dept": "CO",
+      "database_family_id": "3ade58c7-ed7a-4d9a-b649-1139ed8e3ecc",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-ind-application-guide-2025-12",
+      "source_hash": "5b61be271f55ce4197015a7186dea9127d71758dbdb00ecbc4f31d21c4f6717e",
+      "dept": "CO",
+      "database_family_id": "97b7dd9f-f4df-4ba2-b333-8db32d933a88",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-bridging-study-guidance",
+      "source_hash": "e2164ae82f6f783ef6a2cfb1641ca6e3cc6abfe44eaf22384473fe23f06bc9ee",
+      "dept": "CO",
+      "database_family_id": "fe164430-13be-4ba2-b47c-d0b2bc38bbfa",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-cell-therapy-ct-application-review-2014",
+      "source_hash": "d48e2b1895a7ad5310fedc07a291df146f08283fb4faf9109cdc218eda190bca",
+      "dept": "CO",
+      "database_family_id": "6daed9e2-256c-40ff-838f-1e712cccdf28",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-e-labeling-implementation-schedule-2025",
+      "source_hash": "c670facb94140ebb6dd5cf1a9ecf17ab069b9073a2ed197480e20772e8865ca3",
+      "dept": "MA",
+      "database_family_id": "803cd8c0-89c4-4e03-a213-3eef7b4928d1",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-otc-label-format-qa-2016",
+      "source_hash": "c109027197733a2ec035d218f11c7570b0f0b8d4646bb0aa52766c413171ec1a",
+      "dept": "MA",
+      "database_family_id": "ec14fe77-5284-43c2-b053-cb687e3ff573",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-ezzicad-ezetimibe-10mg-tablets",
+      "source_hash": "413bae57231185b3241d5f0308143f1cef08823623244e33383049f1a8aab286",
+      "dept": "MA",
+      "database_family_id": "51ac6ba8-a04b-45fc-9476-bc9ac9742e5c",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-actos-tablets-15mg",
+      "source_hash": "e6691af68ae0e0fb1d8dbbc9657c28154a0cc9922c265f19a09331800fc478ea",
+      "dept": "MA",
+      "database_family_id": "a3dfddb1-fa49-4a05-ae84-2443e29f33dd",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-glicalin-tablets-80mg-gliclazide-kojar",
+      "source_hash": "8adee1d5da23e0954c0fe65194793b2829cd52eb3828b1d2f8b6009340f9e6b6",
+      "dept": "MA",
+      "database_family_id": "b6abd0ee-d458-42b8-aa98-107cc932db15",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-repade-tablets-2mg-repaglinide",
+      "source_hash": "00556d521e03a6eb86599040b850700720a21b45bf88ba794238c0609c78794f",
+      "dept": "MA",
+      "database_family_id": "6a67607d-20e1-498a-b49c-7054e2aee057",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-tesaa-tablets-40mg",
+      "source_hash": "7bb53321b0334fd210a325f6a0df6b87f1bd7dc48d55570317f4caa22d628803",
+      "dept": "MA",
+      "database_family_id": "1d4ecf5f-0e36-47a8-ae8a-cb4142762337",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-carvedil-tablets-25mg-r2",
+      "source_hash": "9640462a442205a27899ba26dccaf6cc2282d8185231d8b69942472d62e7b264",
+      "dept": "MA",
+      "database_family_id": "c62de8f6-7869-4544-9094-89214458bed0",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-anlipin-f-c-tablets-50mg-atenolol-kojar",
+      "source_hash": "785490beec3827220c49e930c39af83582e17523bf976249854db577de6dad39",
+      "dept": "MA",
+      "database_family_id": "21d4b1f7-39ba-4940-97de-569cad8c8231",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-pranolol-tablets-propranolol-n-c-p",
+      "source_hash": "dea8c0f126fab99a976749e9e5f3508aa158d7daaf489b1d5046f91ce1c9f4e5",
+      "dept": "MA",
+      "database_family_id": "259ae385-0b27-4155-9583-fbced71ff404",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-slatone-tablets-50mg",
+      "source_hash": "cc7349dcee89cc7db720abd64411e20d8ca7920aeedeec40c12d7c6f0a58ab18",
+      "dept": "MA",
+      "database_family_id": "1a87fa9e-306a-4066-a86b-ccd661334efc",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-utrilix-capsule-2-5mg-root",
+      "source_hash": "cf79fda746187d5c67039971227affa3c774619ef9e50e8cabd9c18774d4382b",
+      "dept": "MA",
+      "database_family_id": "20175435-8cb9-4020-8980-e355db56c5d9",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-danxosin-cors-tablets-4mg",
+      "source_hash": "5c562a4f2b3c6623d644e0ef7d94b36c220de205e1d2f0637ffcfe5cd6429eee",
+      "dept": "MA",
+      "database_family_id": "2968171d-d9c8-4aee-8cb5-bc9996c492b5",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-tempo-tablets",
+      "source_hash": "b91def264fdd237c9b05c9e41d2a5e784082c761a704a2b667e71c0b25fd2d1f",
+      "dept": "MA",
+      "database_family_id": "aba9e62e-c732-4083-97f7-2b40244eb532",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-easy-isosorbide-injection-0-01",
+      "source_hash": "01d4b8c1b925b79ceb60066fde3e9d02007d464324eb299294715b66c6fe8988",
+      "dept": "MA",
+      "database_family_id": "ef0f37b9-586e-4844-be59-54a7f3c16073",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-n-t-g-premixed-injection-0-4mg-ml",
+      "source_hash": "7711f03a43bb804e55f320226d75c98f08f757c6dd53b756d61488b81f18a78c",
+      "dept": "MA",
+      "database_family_id": "218568f8-813b-4c45-a869-e5f8367c941f",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-quimadine-f-c-tablets-20mg-famotidine-r2",
+      "source_hash": "f9654ff24ab60f119999e12a1f58e9259483c8a9fb40aa6c90a5bef4ecaa6f11",
+      "dept": "MA",
+      "database_family_id": "4a4a4c6d-30b4-4f52-b28e-6937b2afda08",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-motin-tablets-10mg-honten-domperidone",
+      "source_hash": "878f2f0d5ba5ff7547bf0280342198e5aa5176ef28688391052d2fbba63f5990",
+      "dept": "MA",
+      "database_family_id": "db2df70f-800a-45e3-8184-9bc233dfdaee",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-dringen-s-c-tablets-10mg-metoclopramide",
+      "source_hash": "40d056564e7838f0744428e0bea848ed5a06d252a2ba97e204dd982e15136ada",
+      "dept": "MA",
+      "database_family_id": "9f32b754-30c9-4dfd-a9fd-7907ad61c7f0",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-genlatin-capsules-taiten-loperamide",
+      "source_hash": "0894b5e6cb6b00eca9079fc310ff486f407cc798bb8cec4810d4e3797eb988a9",
+      "dept": "MA",
+      "database_family_id": "083b858e-1722-428e-b1cf-5f3eb8304c0f",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-legan-capsules-300mg-chinteng",
+      "source_hash": "69c710a78696d1414582bb08272ea31ab1a7c110a98bee179d7d6d30f8b1a46c",
+      "dept": "MA",
+      "database_family_id": "c0cf4301-4466-4c1b-a3cb-e52509254b23",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-lustraline-film-coated-tablets-50mg",
+      "source_hash": "45f87457f2e1f4882b1731d44794b3f57448a67f8d75b8892eacd4a45b999b3e",
+      "dept": "MA",
+      "database_family_id": "3a563882-76f0-4395-a520-dbfd9f13127b",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-flux-microencapsulated-cap-10mg-standard",
+      "source_hash": "0c22efd16547a33e31ebe4e0e0a55d4b856dc628abdbafc7183ee3cac349e578",
+      "dept": "MA",
+      "database_family_id": "4d1aee5b-ef2b-4987-9cf2-d7321af29f1c",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-calmdown-tablets-37-5mg",
+      "source_hash": "1b8411a6e6249bcd8a3bae78e295db08e13a782e38418908be619856c7c6bf99",
+      "dept": "MA",
+      "database_family_id": "03a0e135-652b-43e4-af2c-e0a7a1f538fa",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-ulitine-capsules-30mg",
+      "source_hash": "f2a1cc1e3b017818e81993dfd4afad1bf5b2fcc2a5d5b0606e05f6b250f39dbe",
+      "dept": "MA",
+      "database_family_id": "9f1b55f8-a45e-4772-9cb3-9686b8f8b507",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-minivane-f-c-tablets-15mgsynray",
+      "source_hash": "f025919899721b62ff246d4ed2404eb82a75dc6974070c01a4ff3781bf7ea672",
+      "dept": "MA",
+      "database_family_id": "60837f69-1d1b-4ccf-a458-cecb229fcf72",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-bestrim-xl-300mg-tablets-y-y",
+      "source_hash": "7dc6d2defc328a1c29cd2027fc9155314010b9ab103677636761585e5a17e4fb",
+      "dept": "MA",
+      "database_family_id": "8e1dd7d7-1715-4435-b059-2f917c041250",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-cirzodone-tablet-50mg-sinphar-trazodone",
+      "source_hash": "476a868d1f88446d6bb9ad12ddc08796f04cc122e02cc9ca8f62a39473a3419d",
+      "dept": "MA",
+      "database_family_id": "e90a13fd-9850-4708-8319-b5f46619319d",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-arizole-orally-disintegrating-tablets-10-r2",
+      "source_hash": "0eb9dde38a2ebee3de666bce159b91e05aa71b89a34bd9a0bdde3ab850546d7b",
+      "dept": "MA",
+      "database_family_id": "e79aed1a-d843-4147-89af-a792fb090674",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-lithcan-capsules-300-mg",
+      "source_hash": "ee5a8ff6eba0f73ca15678ce1c88ca0f3bdce2907956d6f653478fddf470c189",
+      "dept": "MA",
+      "database_family_id": "4205c0c4-d41b-4229-beb1-9e88e87322f7",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-larpam-tablets-1-mg-w-s",
+      "source_hash": "31080eb6cae6a9f4f3bc300397c021492cb6231397ec4859daf485846cc73212",
+      "dept": "MA",
+      "database_family_id": "04181f12-a481-433f-a20c-0d16c8cff677",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-sindilium-tablets-n-c-p",
+      "source_hash": "a871c19709dbbbb696aac5bbd617f980431a943e2476530e99d9dca0fa63ce43",
+      "dept": "MA",
+      "database_family_id": "e2c21091-7404-4752-8a6f-58303f34dc7a",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-pregabalin-capsules-75mg-c-c-p-c",
+      "source_hash": "277de489e773df0efb4794d12e96c5af36ba6c2d4212c8450b24c456cd3787b7",
+      "dept": "MA",
+      "database_family_id": "186253a3-3e0c-47e0-a2f3-560f2de0aa08",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-epileptin-capsules-100mg",
+      "source_hash": "108856274ac380a6fb1a7ddd9f1ef5d48a75fa2105d17eafc350181cce5f2253",
+      "dept": "MA",
+      "database_family_id": "c73337cb-9034-447a-9d47-87f9bbb6cdf6",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-seconbrex-capsule-400mg",
+      "source_hash": "6fec0eb1e7bad5a545f1334ca436a7a69e00d445f8bd57c893440720742846b0",
+      "dept": "MA",
+      "database_family_id": "fa16a9db-43c0-46ee-bd88-14cabb7ebbb0",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-macsafe-f-c-tablets-400mg-ibuprofen",
+      "source_hash": "751ad3d5df0efba0f73b19e07898ef4c8cafab4a7bb7ce9c80e66a63d68ed796",
+      "dept": "MA",
+      "database_family_id": "5d41888e-662f-46de-8a8d-bc565fbe0937",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-natoxen-tablets-250mg-y-y-naproxen",
+      "source_hash": "53c6ae2af9fb991555bd38bbb541b11f7805c3b4a23deaf922aba2c86dedfcfc",
+      "dept": "MA",
+      "database_family_id": "7159fb2d-18f3-4fa1-b4b0-01123f833c3a",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-terexib-film-coated-tablets-120mg",
+      "source_hash": "2c6c70d1f3b54731f2d2a2dedc25d8717293964592872d58c1304f6599f20a6b",
+      "dept": "MA",
+      "database_family_id": "ce06fa00-f8d2-4358-ab55-c6d9e5f4b148",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-monteka-f-c-tablets-10-mg",
+      "source_hash": "aa1998f77f494b2127a9568e3d22ca962230b52f38d9ca9f610815bb0a645cd2",
+      "dept": "MA",
+      "database_family_id": "ef28d363-a1f9-470d-91f0-c774f14d989d",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-theolin-oral-solution-5-34mg-ml-kojar",
+      "source_hash": "5035b814783d6770d65213ab6b739cedf8d6e32b079107f271e2bc39f211db23",
+      "dept": "MA",
+      "database_family_id": "fa43ed3e-ae2a-4852-8abc-6f5f94f2857c",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-fencare-fct-5mg-johnson",
+      "source_hash": "779d52c6ffc95a37b6113d9278ef9f097dcf65533406c825db253b1fa2010279",
+      "dept": "MA",
+      "database_family_id": "305933af-efb4-46d4-8eb5-41d938a1a589",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-zan-film-coated-tablets-10mg",
+      "source_hash": "76fa0f715ca7b1ce135847bb2f3eb4c0d309268cb6df34408a8587ceb7c07f94",
+      "dept": "MA",
+      "database_family_id": "f3138a44-a5e0-4e3c-b454-6122bea63bd8",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-sliting-f-c-tablets-50mg",
+      "source_hash": "fa2dc9f72d56510838af3f37a421fce31c817a122cd373bd1407e4c5f1b2eb88",
+      "dept": "MA",
+      "database_family_id": "5cf8f590-a1f4-4111-88b7-31bc38c20485",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-polupi-tablet-50mg-panbiotic",
+      "source_hash": "207fa66f2ddc4d2adc740da6ca1570389d370e501b365092b4bffcb422d31d90",
+      "dept": "MA",
+      "database_family_id": "bd7cea9b-b236-4c39-9878-a33955f516cf",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-shi-ru-jian-capsules",
+      "source_hash": "833f469e47157b432f28b62931524addf343a95d9ea5120f586cc5950ffb376c",
+      "dept": "MA",
+      "database_family_id": "9542c8a4-190f-4314-9501-5130f4836256",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-deca-tablets-0-5mg-dexamethasone-kojar",
+      "source_hash": "f508ec5b1aefe5e1afa233c8acc72f167e054ee3a875ea06ef7e1531d7d45472",
+      "dept": "MA",
+      "database_family_id": "301f1ac5-9188-4e08-89d4-00bb87d14634",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-plusdmax-tablets-sinphar",
+      "source_hash": "ee6b7834f3050ce2f349f05bf161f761c5433869115adeaa1c89e66d6926dbb9",
+      "dept": "MA",
+      "database_family_id": null,
+      "status": "not_present_in_db",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": null,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null,
+      "known_ingestion_reason": "ADR-0009 rejection; implementation record 98 (Launch/JavaScript/embedded-file); not an index omission"
+    },
+    {
+      "document_key": "tfda-label-cofoncin-tablets-0-5mg-astar",
+      "source_hash": "16ff17601a1c30bf507017ebd1b22b43f43a3a819857182fb0d069626a773180",
+      "dept": "MA",
+      "database_family_id": "5efcfad6-6a74-4601-9d8a-ec6a862d8f5a",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-ecycle-f-c-tablets-8mg-y-y",
+      "source_hash": "5ad56c5d55cfeec2c0b60fc29eaa703361a57d9ac6fbb72067001e01ab1e6596",
+      "dept": "MA",
+      "database_family_id": "70d4db04-fb11-4901-95c5-8cc3ed76f543",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-uroxime-injection-cefuroxime",
+      "source_hash": "fec58574116bf3f53a05387c9ddcc9caf17e893ed3e92324a846aea48bc5a6bd",
+      "dept": "MA",
+      "database_family_id": "88d82e2d-2d73-474c-b7a1-c03cbd7d1bb7",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-micromox-eye-drops-moxifloxacin-ophthalm",
+      "source_hash": "e10a420b291670548ee5fc6a4610ff97bd5d63b9c495c5c2a0f5ae07b3c905a7",
+      "dept": "MA",
+      "database_family_id": "faa29334-7d9f-4547-9ea3-3c48ca128511",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-bistor-capsule-doxycycline-shiteh",
+      "source_hash": "d7d44de84ac1dcca08e61ae5ad9e9502795d12abae9b88e62313a20ce818017d",
+      "dept": "MA",
+      "database_family_id": "ab5e2e2b-bff3-4bc9-bae4-80a15999adac",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-azol-flucon-capsules-50mg-flucnazole",
+      "source_hash": "e233c8107d71372e6343cdf663ba1ac7e18b0598457c089c84ea64234fa42b20",
+      "dept": "MA",
+      "database_family_id": "89977dc1-fee2-439d-95ef-9d960266111c",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-acylete-tablets-200-mg-acyclovir-r2",
+      "source_hash": "a1eca633a1faa24944330e3e4009664857e6e8ef40476d7754396bd72ebafe4e",
+      "dept": "MA",
+      "database_family_id": "288a25c2-eca0-438c-815c-b7bc698bad48",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-sinzuin-tablets-yung-chi",
+      "source_hash": "32307bcd27292df91f49bb6d637d321944fe62601a2035fbdf30744daf580795",
+      "dept": "MA",
+      "database_family_id": "8ab18003-9acb-4d78-a759-a979f3b3b951",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-hepato-ease-f-c-tablets-0-5mg",
+      "source_hash": "87d4ebe5ec0022ff2fd877dcfb5687c21b66e4c46b0af1acb42fe8c159764dd2",
+      "dept": "MA",
+      "database_family_id": "1c50ba58-0faf-4e00-b3b1-df9c5c5dc7ad",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-hucanon-tablets-300mg",
+      "source_hash": "633a3e4a4c3ced88ae7609a109597661ab89791313fbefed35fa5c8c5805d712",
+      "dept": "MA",
+      "database_family_id": "cfed1f2b-d0cf-47dc-9f03-aa73bcef2650",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-letramase-f-c-tablets-2-5mg",
+      "source_hash": "c6682a5b9edc168892842a6a9d69b0cf8552d1b8b66eb0199c6b24d7fd54e1c3",
+      "dept": "MA",
+      "database_family_id": "329bffd8-8201-4406-be13-82b4fa54d9e0",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-arbreast-f-c-tab-1mg-anastrozole",
+      "source_hash": "4e8e71f882b3b1f86bbe77f731165c6ab4be40cec3cca6bde4f644252c116648",
+      "dept": "MA",
+      "database_family_id": "94b6e744-25df-44e3-ad2e-295781acaf43",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-bicalutamide-acepharm-film-coated-tablet",
+      "source_hash": "c2e4333d130c6ce282bff8023279864d0955f97e649c9e543bdcead3f774e97b",
+      "dept": "MA",
+      "database_family_id": "ac537dc5-602d-4507-8cc3-e73e235d873c",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-leukure-micro-t-capsules-100mg",
+      "source_hash": "8fe533a937fdbf834c31d40a1c15a3417361d8e4f3826bb8a4d8a329b0eded9d",
+      "dept": "MA",
+      "database_family_id": "0a63e73b-28df-467f-945f-66322781e818",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-guidance-on-the-format-of-the-risk-management-rev2-2018",
+      "source_hash": "fa09df2f5151397f7731b60fc8efafff3a00ce3d38c9c2396b136a383150f785",
+      "dept": "PV",
+      "database_family_id": "5676253e-7d2c-4141-a5e1-54a6fa10fe8b",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-consideration-on-core-requirements-for-rmps-o-2022",
+      "source_hash": "36419985fa3107cc0f59a36dcd77d77564beee1ce228b2238b2d6f36328d5471",
+      "dept": "PV",
+      "database_family_id": "aa732bae-aef7-4ba1-8a80-2d2a2a5bfc43",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-guideline-on-specific-adverse-reaction-follow-2023",
+      "source_hash": "247dcadd018fb6e0003169b8152363029ed6bcf50b67a18cbc17273bea8047a5",
+      "dept": "PV",
+      "database_family_id": "c56cfaea-d186-4965-a753-a5e08b993a78",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-anonymisation-of-personal-data-and-assessment-rev3-2025",
+      "source_hash": "0484e6d398bd9e342781f66a1c94807f59f420349f09b49177465e42cb5d37b3",
+      "dept": "PV",
+      "database_family_id": "f5575a7a-393e-4c81-aff2-d13719cbd919",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-eudravigilance-evweb-user-manual-2018",
+      "source_hash": "7d55f2f25c74a963ea39dfd2967a5ba7d1be410637b5359e238e80ad7f326070",
+      "dept": "PV",
+      "database_family_id": "06748b28-af45-4f54-a03b-df1420b9a743",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-eudravigilance-user-manual-individual-case-sa-2016",
+      "source_hash": "ff3c71961ef108bb8550a6c15376a475f8629fb9dab26b2ab9ca667f3bb4994e",
+      "dept": "PV",
+      "database_family_id": "8c28151f-e1e2-4af8-ae3c-c49f92e7d037",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-eudravigilance-user-manual-for-online-access-2026",
+      "source_hash": "287504a08e166dc0b35805bac7d68cfb5d1f846040b82fa793319a97797c73fe",
+      "dept": "PV",
+      "database_family_id": "31fe7044-42a2-4dc1-8e96-57a7153df3b9",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-eudravigilance-user-manual-for-marketing-auth-2016",
+      "source_hash": "f4d0c789d09b970ffcb3df8f424fc048833ef9415b82bad7ef64e6d25edaf98d",
+      "dept": "PV",
+      "database_family_id": "14b62653-492c-4ee1-9b3e-787c2af6fe9f",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-compliance-notifications-explanation-and-q-a-2025",
+      "source_hash": "5d21c78aec6bdb740e34094dbae95ddcc89e40401bc45c3ca6c3049f68d57e75",
+      "dept": "PV",
+      "database_family_id": "a9882e00-5f99-4271-813b-eab026410ed3",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "ema-detailed-guide-regarding-the-eudravigilance-d-rev1-2019",
+      "source_hash": "6831728d59e2b86992f0caf4b3c62d026a5e3be9190dbb7975c4e9c3f1d7d1af",
+      "dept": "PV",
+      "database_family_id": "eb2f17fb-581f-4750-ad1b-11e0767c01da",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-postapproval-pregnancy-safety-studies-2026",
+      "source_hash": "ae10b3c86f5f0fac157c8a58159488fbbab24a60d0a82b6a74cb49c0edf9699e",
+      "dept": "PV",
+      "database_family_id": "353a5df7-eaef-49a0-b8f4-31c82530fe5a",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-best-practices-for-fda-staff-in-the-postmarketing-s-2024",
+      "source_hash": "b7d23e7c34ea525323cc2a7779be9f20cc3b02ed1f5053394b2114da86028b0d",
+      "dept": "PV",
+      "database_family_id": "a246728b-9c9f-4cf6-a1f8-0cc7671e9d3f",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-rems-document-technical-conformance-guide-2023",
+      "source_hash": "2710e27fa1b4c2fcad05cbd727092f8de7f42a29f14eef848d805352d74c6ff0",
+      "dept": "PV",
+      "database_family_id": "7aa5cff7-8a03-470f-ac55-bcd8db3603ea",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-providing-submissions-in-electronic-format-2015",
+      "source_hash": "d41b33c6098b505e6feed2c27eb8e2697d4c9946dee34dbb3f1527d70c2670d5",
+      "dept": "PV",
+      "database_family_id": null,
+      "status": "not_present_in_db",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": null,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null,
+      "known_ingestion_reason": "ADR-0009 rejection; implementation record 98 (Launch/JavaScript/embedded-file); not an index omission"
+    },
+    {
+      "document_key": "fda-rems-assessment-draft-2019",
+      "source_hash": "7df6c6d734e0db9e549ad008e9874f34fb108753a9592815aeb4685697e7314c",
+      "dept": "PV",
+      "database_family_id": "790195e2-5674-4da2-a5a3-e1e885c6c0c5",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-fda-regional-implementation-guide-for-e2b-r3-electr-2024",
+      "source_hash": "7a88a44dcd245df5cfe2e73c8f3eabfdf904a8817b36a708a2b9df7e743d1707",
+      "dept": "PV",
+      "database_family_id": "a7d73d72-03fc-4edd-b134-ec40a78130da",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-safety-reporting-requirements-for-inds-and-ba-be-st-2012",
+      "source_hash": "203990b96023cebe0e98c6ad6aef073b6e03f311adc8ad02e35400c550f8da2a",
+      "dept": "PV",
+      "database_family_id": "a930226d-57f3-4903-bdb6-0f9c331d6ddb",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-providing-regulatory-submissions-in-electronic-form-2024",
+      "source_hash": "953be79d1805a473fd7d5e2db61872f082729266872fc9e21e44c8d28ce577f0",
+      "dept": "PV",
+      "database_family_id": "cfb9cee9-f5f2-4ddf-868b-dfe94fdc60d8",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-electronic-submission-of-ind-safety-reports-technic-2022",
+      "source_hash": "758e9d7fbe21fc07845155452a22aeb8e2468299ecc12a45e014509c0e9405af",
+      "dept": "PV",
+      "database_family_id": "46af92c9-2a1c-49a8-ac77-8ffe4bc8a0f3",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-electronic-submission-of-expedited-safety-reports-f-2024",
+      "source_hash": "49f0007af25bb6ba89f1ebddf8d1aa3add3bfdb267de58b16a223177aa2c5b3e",
+      "dept": "PV",
+      "database_family_id": "82432149-3fc4-4337-8254-87818745e274",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-providing-submissions-in-electronic-format-2013",
+      "source_hash": "c03f27625338e913ed71426d1d1ff4336ccdd75c3f0982edb782b6d1f6e7e1d2",
+      "dept": "PV",
+      "database_family_id": "7e3dbbf2-e207-44b9-9e8d-2016babb9d38",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-providing-regulatory-submissions-in-electronic-form-2020",
+      "source_hash": "d230ab57b7dfe39ed9640b3b2f2ca510dd16756e5533939d6cd4c74934913946",
+      "dept": "PV",
+      "database_family_id": "9ffc8d28-cd03-40be-875a-70ac7f8deffb",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-postmarketing-safety-reporting-for-combination-prod-2019",
+      "source_hash": "08bf651bdc29ecb91fdaf0c0ae96f2582b7a0efcb8da1c1f96879ae10e2be95f",
+      "dept": "PV",
+      "database_family_id": "e0d036bb-bdba-4030-bf14-a7916528a129",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-dear-health-care-provider-letters-2014",
+      "source_hash": "1fa631a5e99416978644c6cf97221b3dbfbb679058f619e13659898dd1c7ec6c",
+      "dept": "PV",
+      "database_family_id": "90499277-b02e-4536-a367-12b6186d7007",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-real-world-data-2023",
+      "source_hash": "5f83cf1732a4318b9b1979e1755647649607b191ef2bf7e978154a87946b4643",
+      "dept": "PV",
+      "database_family_id": "1e0c0a7c-2edc-4126-98a5-9665a7c6ab04",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-real-world-data-2024",
+      "source_hash": "3aea088926cffe0f5cf5d4989540d888a720a6be68ee7fe2f0fb245fba5fdfd9",
+      "dept": "PV",
+      "database_family_id": "13b577bf-081b-453c-a92f-bcb6e7540750",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "fda-benefit-risk-assessment-for-new-drug-and-biological-2023",
+      "source_hash": "61bbca493078c7d995a486bfa42948fbe1e2d5bcd772645d95e1275d24242163",
+      "dept": "PV",
+      "database_family_id": "250a4462-66fb-4ccc-a599-fa19fdb998b4",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-oxipan-tablets-5mg-oxybutynin-chloride-e",
+      "source_hash": "5c6f2c360454f33203e47d68eb21a5bc207507c71cf359ec7dbd9d82d82d1068",
+      "dept": "MA",
+      "database_family_id": "7d52bf49-dac8-4dcf-a227-ec9b6e4acf66",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-urotin-tablets-50mg-s-y-benzbromarone",
+      "source_hash": "44e9090a9eca00094c2734b9a85d4b08600f65bad33daade62918ac3ae692bb7",
+      "dept": "MA",
+      "database_family_id": "95b3bea6-ab0e-432c-a28e-6b9d747ce5d5",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-procid-tablets",
+      "source_hash": "6635142c1af9d18afe0329e4bcffa828bef791d549bd425fae276dc798a7884e",
+      "dept": "MA",
+      "database_family_id": "cd65ac2d-52a7-44da-8385-bef21b9f926f",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-analif-for-iv-injection-r2",
+      "source_hash": "497a3eeb25a332aee2a1b036215be0c1bf9c0ba4670fcb5710325b08e7129047",
+      "dept": "MA",
+      "database_family_id": "bc1c1704-95a8-4f57-8945-81a8d12ff657",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-mefenamic-acid-tablets-500mg-m-t",
+      "source_hash": "5e2cefeb8ffab9347834509eecd64992c41a8847302d802eea42c28b626c52de",
+      "dept": "MA",
+      "database_family_id": "8ab9d6d9-4a16-434f-8bb6-7741a60c06d3",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-antochin-capsules",
+      "source_hash": "496f8d47907a62c652f8324894e19ccd1af316f19d7108fae681d206dfc8cfcb",
+      "dept": "MA",
+      "database_family_id": "ec4bc974-27e3-4fc6-b27c-4afdf7775dcd",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-honsuton-capsules-10mg-piroxicam",
+      "source_hash": "604f9ad3a41b50e7ca3d894bc79f2a154145ec66e9caa9ce866803dd9fbfde0b",
+      "dept": "MA",
+      "database_family_id": "fa7bd41b-a5b1-40b9-9e3a-12660ea4ff44",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-subuton-f-c-tablets-500mg-n-k",
+      "source_hash": "4340c30f4709439d49005344ec72087f147221675b55650017f1865dd97d26ba",
+      "dept": "MA",
+      "database_family_id": "cdf2e423-8647-4b81-98fd-f4147276457b",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-mezapin-tablets-100mg-clozapine",
+      "source_hash": "d4f41b0bcd67f65ba60b42c2b19ef3c8ab331be9d53f2258829aa93f9bcc08fb",
+      "dept": "MA",
+      "database_family_id": "452548c3-b800-430c-a1e9-4b3eeeb0e58c",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-susine-f-c-tablets-200mg-swiss-sulpiride",
+      "source_hash": "9de12c57fd10afbc0807090707526333b91b99bf3a31e6ad87c14d98aa7996d4",
+      "dept": "MA",
+      "database_family_id": "3249142e-4b1f-4113-88d7-6eebbb68d4fb",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-misul-tablets-200-mg",
+      "source_hash": "d020630e9556202a8859b9100e4c261d17b250a8847848f21ab4d77ede0be54e",
+      "dept": "MA",
+      "database_family_id": "a3580e9c-f786-4978-9489-810215fbaee7",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-pardone-extended-release-tablets-3mg",
+      "source_hash": "96c4df1da3b01bfcc297ad393239c6704cedfb0c1778052f91d4012d19b3398c",
+      "dept": "MA",
+      "database_family_id": "88502c47-9380-47f1-aa91-f38c29eac52e",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-fuxitol-s-c-tablets-3mg-taxo",
+      "source_hash": "dabff1bb561b946cc2946764565723f922c4fc759110e25d4689feb16ace0241",
+      "dept": "MA",
+      "database_family_id": "ce4e76d9-972f-484d-ab23-e8d42d6baed2",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    },
+    {
+      "document_key": "tfda-label-chlorpromazine-hcl-s-c-tablets-50mg-vpp-r2",
+      "source_hash": "adf35f47d2b73d65169d2ba199b35a5b73b5f679f202a46d5caecb22d56e193a",
+      "dept": "MA",
+      "database_family_id": "303edbf2-ad48-4693-902e-8defacee6ccd",
+      "status": "active",
+      "known_exposure": [],
+      "family_has_explicit_annotation_exposure": false,
+      "near_duplicate_review": "pending",
+      "blind_holdout_eligible": null
+    }
+  ]
+}

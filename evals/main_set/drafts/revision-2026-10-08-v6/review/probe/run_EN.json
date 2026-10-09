@@ -1,0 +1,87 @@
+{
+  "batch": "EN",
+  "reviewer_cli": "claude-code",
+  "cli_binary": "/Users/leaf/.local/bin/claude",
+  "cli_version": "2.1.79 (Claude Code)",
+  "model": "claude-opus-5",
+  "model_version_source": "pinned_model_id",
+  "reasoning_effort_requested": "high",
+  "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+  "review_prompt_sha256": "ba856262c67512e5c0c1e79d7e8cea497074f6180eeb0d206d9c0eca359435be",
+  "sample_input_sha256": {
+    "pc-0102": "209d75a9cc204bf27e853c9325761d3cf1a7cbc5570e1f47a9b6d30955216147"
+  },
+  "chunks": [
+    {
+      "cli_capture_sha256": "21d72c2dd62393d5125b83d223755029e419a34673226693602e34aa14fd8664",
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "bfc233f2-1067-44c6-bc08-b582c19f9268",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "9810",
+      "usage": {
+        "input_tokens": 2,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 3486,
+        "total_input_tokens": 3488,
+        "output_tokens": 6322,
+        "model_usage": {
+          "claude-opus-5": {
+            "inputTokens": 2,
+            "outputTokens": 6322,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 3486,
+            "webSearchRequests": 0,
+            "costUSD": 0.1798475,
+            "contextWindow": 200000,
+            "maxOutputTokens": 32000
+          }
+        }
+      },
+      "cost_usd": 0.1798475,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "requested_max_cost_usd": 0.3,
+      "sample_ids": [
+        "pc-0102"
+      ],
+      "started_at": "2026-10-08T13:20:14+00:00",
+      "finished_at": "2026-10-08T13:21:26+00:00",
+      "prompt_chars": 5666,
+      "prompt_sha256": "a7b9067086b9fc57c20d92b7ec2e983cf87623e52bd85e13b04a837807088969",
+      "verdicts": [
+        {
+          "sample_id": "pc-0102",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "Query is a natural CO/GCP-records question and matches the scope of parent_query 'ICH E6(R3) 对 IRB/IEC 应保留的相关记录列举了哪些例子？'; only 1.5.1 answers it (1.5.2 mentions only 'documented procedures and membership lists' on request, not the retention example list). key_text is verbatim, occurs exactly once on the page, and keeps the full example list required by the query without extra wording. evidence_span 818-1147 (329 chars) reproduces the complete clause 1.5.1 verbatim and contains the key_text; offsets recomputed against the page text match. Slices hold: per P2 the query/key_text contain English terms/abbreviations (ICH E6(R3), IRB/IEC) and the slice set is inherited unchanged from the parent as required for derived twins; protocol_id holds because recall depends on exact matching of the guideline version designator 'ICH E6(R3)' present in the query and in the page header, and the page evidence does support the asked field. dept CO is correct for a GCP guideline.",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_a7b9067086b9fc57c20d92b7ec2e983cf87623e52bd85e13b04a837807088969.jsonl",
+      "sample_input_sha256": {
+        "pc-0102": "209d75a9cc204bf27e853c9325761d3cf1a7cbc5570e1f47a9b6d30955216147"
+      },
+      "budget_attempt_id": "9e46a65d7bc64f298b244a99b6e021ac"
+    }
+  ],
+  "provenance_version": 2,
+  "latest": {
+    "pc-0102": {
+      "chunk_index": 0,
+      "sample_input_sha256": "209d75a9cc204bf27e853c9325761d3cf1a7cbc5570e1f47a9b6d30955216147",
+      "prompt_sha256": "a7b9067086b9fc57c20d92b7ec2e983cf87623e52bd85e13b04a837807088969",
+      "verdict_sha256": "6cb89d87d301f7b4ec496c9fb07510adad003419403be1a6b72808acb4b7472a"
+    }
+  },
+  "active_review": null
+}

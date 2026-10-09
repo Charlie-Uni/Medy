@@ -1,0 +1,223 @@
+{
+  "batch": "EN",
+  "reviewer_cli": "claude-code",
+  "cli_binary": "/Users/leaf/.local/bin/claude",
+  "cli_version": "2.1.79 (Claude Code)",
+  "model": "claude-opus-5",
+  "model_version_source": "pinned_model_id",
+  "reasoning_effort_requested": "high",
+  "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+  "review_prompt_sha256": "7572d16e88b638cbc6fa888f4e1a86fe6ffb4869583df357ee1ce0bd012eb758",
+  "sample_input_sha256": {
+    "ms-0236": "c9909a67dead1d4c0ef47d0d3b112464fd23b452d1cf5534de8ba1dd40bcaca4",
+    "ms-0238": "b26189304864d6c24817cd0ed315ababd28e2bb41ccba56c4e0b2577a2434e2e",
+    "ms-0240": "ac04ad642e22c805c747ecf142ff6a8c3e0706382cfd2a6edd9744eba6672ef7"
+  },
+  "chunks": [
+    {
+      "cli_capture_sha256": "73e73e2a16f36331fd89d0e85752d0b3b5f7b73d0d189c7826dd9947f5755e2d",
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "bf784278-c296-40e0-abb4-d2c8a95e9ad4",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "7257",
+      "usage": {
+        "input_tokens": 2,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 5075,
+        "total_input_tokens": 5077,
+        "output_tokens": 2180,
+        "model_usage": {
+          "claude-opus-5": {
+            "inputTokens": 2,
+            "outputTokens": 2180,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 5075,
+            "webSearchRequests": 0,
+            "costUSD": 0.08622874999999999,
+            "contextWindow": 200000,
+            "maxOutputTokens": 32000
+          }
+        }
+      },
+      "cost_usd": 0.08622874999999999,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "requested_max_cost_usd": 0.3,
+      "sample_ids": [
+        "ms-0236"
+      ],
+      "started_at": "2026-10-08T11:47:57+00:00",
+      "finished_at": "2026-10-08T11:48:25+00:00",
+      "prompt_chars": 8539,
+      "prompt_sha256": "c1a1ccc858b705e4e3fe10cfde573012ec06c6743a031c95169e7f205eec1999",
+      "verdicts": [
+        {
+          "sample_id": "ms-0236",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_c1a1ccc858b705e4e3fe10cfde573012ec06c6743a031c95169e7f205eec1999.jsonl",
+      "sample_input_sha256": {
+        "ms-0236": "c9909a67dead1d4c0ef47d0d3b112464fd23b452d1cf5534de8ba1dd40bcaca4"
+      },
+      "budget_attempt_id": "bade874cfca84d9db225118abef4d1e1"
+    },
+    {
+      "cli_capture_sha256": "1419844c512384929138b0aebbb2e101e4eb9e191ff29fcef2099a075fc8ae2f",
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "54a525f9-6779-433d-8bb3-e7f96f0c86c7",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "5822",
+      "usage": {
+        "input_tokens": 2,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 5091,
+        "total_input_tokens": 5093,
+        "output_tokens": 729,
+        "model_usage": {
+          "claude-opus-5": {
+            "inputTokens": 2,
+            "outputTokens": 729,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 5091,
+            "webSearchRequests": 0,
+            "costUSD": 0.05005375,
+            "contextWindow": 200000,
+            "maxOutputTokens": 32000
+          }
+        }
+      },
+      "cost_usd": 0.05005375,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "requested_max_cost_usd": 0.3,
+      "sample_ids": [
+        "ms-0238"
+      ],
+      "started_at": "2026-10-08T11:48:25+00:00",
+      "finished_at": "2026-10-08T11:48:36+00:00",
+      "prompt_chars": 8308,
+      "prompt_sha256": "66960e9c5f920d1eb9ff00ed48c315ab6329bda51b51884cd01073a66538b069",
+      "verdicts": [
+        {
+          "sample_id": "ms-0238",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_66960e9c5f920d1eb9ff00ed48c315ab6329bda51b51884cd01073a66538b069.jsonl",
+      "sample_input_sha256": {
+        "ms-0238": "b26189304864d6c24817cd0ed315ababd28e2bb41ccba56c4e0b2577a2434e2e"
+      },
+      "budget_attempt_id": "6f12e3fae228481693d537c36ce00457"
+    },
+    {
+      "cli_capture_sha256": "63e10c7a2fd7284f643d1ffaf6653dab926f3f7bca36fa4948cd5662c90c6846",
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "6b2bc628-0cd9-4b55-8eae-34b8fd270135",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "8406",
+      "usage": {
+        "input_tokens": 2,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 5095,
+        "total_input_tokens": 5097,
+        "output_tokens": 3309,
+        "model_usage": {
+          "claude-opus-5": {
+            "inputTokens": 2,
+            "outputTokens": 3309,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 5095,
+            "webSearchRequests": 0,
+            "costUSD": 0.11457874999999998,
+            "contextWindow": 200000,
+            "maxOutputTokens": 32000
+          }
+        }
+      },
+      "cost_usd": 0.11457874999999998,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "requested_max_cost_usd": 0.3,
+      "sample_ids": [
+        "ms-0240"
+      ],
+      "started_at": "2026-10-08T11:48:36+00:00",
+      "finished_at": "2026-10-08T11:49:11+00:00",
+      "prompt_chars": 8113,
+      "prompt_sha256": "9074a4e11e5ab41d26e8f39feca0224c55714a6e604d3bc114c362b1a3c41a52",
+      "verdicts": [
+        {
+          "sample_id": "ms-0240",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_9074a4e11e5ab41d26e8f39feca0224c55714a6e604d3bc114c362b1a3c41a52.jsonl",
+      "sample_input_sha256": {
+        "ms-0240": "ac04ad642e22c805c747ecf142ff6a8c3e0706382cfd2a6edd9744eba6672ef7"
+      },
+      "budget_attempt_id": "bafe5d1d1ae64c5abe86cee2039ac700"
+    }
+  ],
+  "provenance_version": 2,
+  "latest": {
+    "ms-0236": {
+      "chunk_index": 0,
+      "sample_input_sha256": "c9909a67dead1d4c0ef47d0d3b112464fd23b452d1cf5534de8ba1dd40bcaca4",
+      "prompt_sha256": "c1a1ccc858b705e4e3fe10cfde573012ec06c6743a031c95169e7f205eec1999",
+      "verdict_sha256": "178b242223c0887f6451d2e17f172ff509e3367d6bc98d94de9a6edfcaf91de6"
+    },
+    "ms-0238": {
+      "chunk_index": 1,
+      "sample_input_sha256": "b26189304864d6c24817cd0ed315ababd28e2bb41ccba56c4e0b2577a2434e2e",
+      "prompt_sha256": "66960e9c5f920d1eb9ff00ed48c315ab6329bda51b51884cd01073a66538b069",
+      "verdict_sha256": "d95c6a9a3ea57d3e049bf69cb4dce2460c5afe7142184b203f9f8c735f8434f5"
+    },
+    "ms-0240": {
+      "chunk_index": 2,
+      "sample_input_sha256": "ac04ad642e22c805c747ecf142ff6a8c3e0706382cfd2a6edd9744eba6672ef7",
+      "prompt_sha256": "9074a4e11e5ab41d26e8f39feca0224c55714a6e604d3bc114c362b1a3c41a52",
+      "verdict_sha256": "17eace38beaea2f4dd05e31c13892d0d39bf0c35b29d9d5f08e4412858474d6e"
+    }
+  },
+  "active_review": null
+}

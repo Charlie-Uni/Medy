@@ -34,7 +34,6 @@ from medops.evals.experiments.dec001_run import (
     QueryOutcome,
     _git_head,
     _sha256,
-    _with_database,
     execute_passes,
     leak_check,
     load_mapping,
@@ -42,6 +41,7 @@ from medops.evals.experiments.dec001_run import (
     resolve_servers,
     summarize,
 )
+from medops.evals.safety_data import with_database
 from medops.retrieval.vector import pg_vector
 from medops.retrieval.vector.boundary import run_vector_search
 from medops.retrieval.vector.contracts import VectorSearchResult, VectorVersions
@@ -340,7 +340,7 @@ def run(
 
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="DEC-002 vector-channel run (frozen manifest first)")
-    parser.add_argument("--dataset", type=Path, default=Path("evals/probe/precise_clause/v2"))
+    parser.add_argument("--dataset", type=Path, default=Path("evals/probe/precise_clause/v3"))
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--as-of", type=date.fromisoformat, required=True)
     parser.add_argument("--k", type=int, default=20)
@@ -357,8 +357,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         (repo / "evals/experiments/lexical/preparation-v1/experiment_plan.json").read_text(encoding="utf-8")
     )
     server = resolve_servers(repo, {"A": args.mapping}, plan)["A"]
-    app_dsn = _with_database(server.app_dsn, args.database)
-    admin_dsn = _with_database(server.admin_dsn, args.database)
+    app_dsn = with_database(server.app_dsn, args.database)
+    admin_dsn = with_database(server.admin_dsn, args.database)
     from medops.retrieval.vector.embedding import BgeM3EmbeddingProvider
 
     provider = BgeM3EmbeddingProvider(device=args.device)

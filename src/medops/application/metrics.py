@@ -5,7 +5,7 @@ reports the same values and nothing is lost on restart."""
 
 from __future__ import annotations
 
-from collections.abc import Mapping, Sequence
+from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from typing import Any, Protocol
@@ -27,6 +27,7 @@ class MetricsSnapshot:
     tasks_by_status: Mapping[str, int]
     oldest_queued_age_s: float
     generated_at: datetime = field(default_factory=lambda: datetime.now(UTC))
+    retrieval_integrity: Mapping[str, Any] | None = None
 
 
 class MetricsSource(Protocol):
@@ -34,8 +35,9 @@ class MetricsSource(Protocol):
 
 
 class PgMetricsSource:
-    def __init__(self, conn: Any) -> None:
+    def __init__(self, conn: Any, *, retrieval_integrity: Callable[[], Mapping[str, Any]] | None = None) -> None:
         self._conn = conn
+        self._retrieval_integrity = retrieval_integrity
 
     def snapshot(self, *, window_minutes: int = WINDOW_MINUTES, now: datetime | None = None) -> MetricsSnapshot:
         now = now or datetime.now(UTC)
@@ -86,6 +88,7 @@ class PgMetricsSource:
             tasks_by_status={str(s): int(n) for s, n in tasks},
             oldest_queued_age_s=float(oldest or 0.0),
             generated_at=now,
+            retrieval_integrity=self._retrieval_integrity() if self._retrieval_integrity else None,
         )
 
 
@@ -132,6 +135,33 @@ def render_prometheus(snapshot: MetricsSnapshot, *, monthly_cap_usd: float | Non
         out.append(_line("medops_tasks", n, {"status": status}))
     header("medops_task_queue_oldest_age_seconds", "gauge", "Age of the oldest queued task")
     out.append(_line("medops_task_queue_oldest_age_seconds", round(snapshot.oldest_queued_age_s, 1)))
+    if snapshot.retrieval_integrity is not None:
+        health = snapshot.retrieval_integrity
+        header("medops_retrieval_indexes_ready", "gauge", "Production index coverage and version checks passed")
+        out.append(_line("medops_retrieval_indexes_ready", int(bool(health["ready"]))))
+        for key in (
+            "active_documents",
+            "active_documents_without_chunks",
+            "active_chunks",
+            "missing_lexical",
+            "missing_embedding",
+            "documents_not_fully_indexed",
+        ):
+            if key in health.get("coverage", {}):
+                name = f"medops_index_{key}"
+                header(name, "gauge", "Global production index coverage count")
+                out.append(_line(name, health["coverage"][key]))
+        header("medops_outbox_pending", "gauge", "Unacknowledged events per retrieval consumer")
+        header("medops_outbox_oldest_age_seconds", "gauge", "Oldest unacknowledged retrieval event age")
+        header("medops_outbox_dead_lettered", "gauge", "Dead-lettered events per retrieval consumer")
+        for consumer in ("lexical-index", "vector-index", "retrieval-cache"):
+            entry = health.get("outbox", {}).get(consumer)
+            if entry is not None:
+                out.append(_line("medops_outbox_pending", entry["pending"], {"consumer": consumer}))
+                out.append(
+                    _line("medops_outbox_oldest_age_seconds", round(entry["oldest_age_s"], 1), {"consumer": consumer})
+                )
+                out.append(_line("medops_outbox_dead_lettered", entry.get("dead_lettered", 0), {"consumer": consumer}))
     return "\n".join(out) + "\n"
 
 

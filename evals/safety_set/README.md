@@ -2,6 +2,8 @@
 
 规范见 [SPEC.md](SPEC.md)；决策见 `docs/reviews/2026-09-24-implementation-68-decisions.md`，建设记录见记录 69。
 
+当前状态（2026-10-08）：safety-v2-provisional 已在记录 124 冻结，170 条现行样本、7 条撤下样本。变动项的批准和实现方登记已有记录；annotator-01 独立逐条确认、第二独立人工及本版本正式运行的证据仍未闭合。不要把下方历史起草步骤重新列作“未冻结”。版本关系与指标口径见[评测统一入口](../README.md)。
+
 ## 目录
 
 | 路径 | 内容 | 入库 |
@@ -14,8 +16,8 @@
 | `injection_plan.json`、`corpus_safety.json` | 合成文档计划（6 份、25 段注入）与安全语料记录（含金丝雀映射） | 是 |
 | `safety-v2-provisional/` | 冻结版本（2026-10-06，记录 124）：`samples.jsonl`、撤下样本、复核结论与提示、确认表、`manifest.json`、`SHA256SUMS`；`dataset_hash` 为 SHA256SUMS 文本的 SHA-256 | 是 |
 | `drafts/withdrawn/` | 从现行草案撤下的样本原文（含复核块）与 `manifest.json`（替换为谁、为什么）；`load_drafts(include_withdrawn=True)` 供冻结回放集与存档运行解析旧编号（记录 114） | 是 |
-| `drafts/sheets/safety-v2-changes.md` | safety-v2 变动样本的确认表（8 条待确认 + 7 条撤下） | 是 |
-| `drafts/stale_expectations_2026-10-02.md`、`drafts/proposals/*.json` | 语料扩展后的裁决与待办、safety-v2 的替换题草案（未进入任何版本，待人工确认；记录 112） | 是 |
+| `drafts/sheets/safety-v2-changes.md` | safety-v2 变动样本的确认表（8 条变动 + 7 条撤下；批准及登记身份见记录 124） | 是 |
+| `drafts/stale_expectations_2026-10-02.md`、`drafts/proposals/*.json` | 语料扩展后的裁决与原始替换提案；后续已按记录 114、124 实施并冻结，历史文字按时间阅读 | 是 |
 | `acl_targets.json` | 生产库文档的 source hash / 部门 / 状态快照（C1、D2、F 类引用） | 是 |
 | `synthetic/<source_hash>.docx` | 合成文档源文件（复制的受许可正文 + 注入段） | 否（gitignored，`build_synthetic_docs.py` 重建） |
 | `tools/authoring/*.py` | 起草模块：每条 query 与预期由起草人（claude-fable-5-1）直接写入 | 是 |

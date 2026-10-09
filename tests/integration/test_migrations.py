@@ -25,6 +25,9 @@ EXPECTED_TABLES = {
     "doc_audit",
     "outbox_events",
     "outbox_consumer_acks",
+    "outbox_consumer_failures",
+    "llm_monthly_spend",
+    "llm_spend_reservations",
     "embedding_index_meta",
     "chunk_embeddings",
     "lexical_index_meta",
@@ -182,7 +185,7 @@ def set_actor(conn: psycopg.Connection, actor: str = "reviewer-01", reason: str 
 
 def test_single_head_and_offline_sql_render(migrated):
     heads = ScriptDirectory.from_config(alembic_config(migrated)).get_heads()
-    assert heads == ["0019"]
+    assert heads == ["0021"]
 
 
 def test_upgrade_downgrade_upgrade_round_trip_leaves_nothing_behind(scratch_database):
@@ -198,6 +201,9 @@ def test_upgrade_downgrade_upgrade_round_trip_leaves_nothing_behind(scratch_data
         "medops_append_only_with_retention",
         "medops_spans_append_only_with_retention",
         "medops_payload_rewrap_guard",
+        "medops_llm_reserve",
+        "medops_llm_settle",
+        "medops_llm_month_total",
         "medops_source_objects_immutable",
         "medops_documents_guard",
         "medops_documents_audit",

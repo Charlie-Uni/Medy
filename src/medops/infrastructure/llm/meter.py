@@ -26,7 +26,17 @@ class MeteredGateway:
             model_id=request.model_id,
             **{"gen_ai.operation.name": "chat", "gen_ai.request.model": request.model_id},
         ) as current:
-            response = self._inner.complete(request)
+            before_accounted = getattr(self._inner, "run_accounted_cost_usd", None)
+            try:
+                response = self._inner.complete(request)
+            except Exception:
+                after_accounted = getattr(self._inner, "run_accounted_cost_usd", None)
+                if isinstance(before_accounted, (int, float)) and isinstance(after_accounted, (int, float)):
+                    charged = max(0.0, float(after_accounted) - float(before_accounted))
+                    if charged:
+                        self.calls += 1
+                        self.cost_usd += charged
+                raise
             annotate(
                 current,
                 input_tokens=response.usage.input_tokens,
@@ -37,6 +47,7 @@ class MeteredGateway:
                     "gen_ai.response.model": response.model_id,
                     "gen_ai.usage.input_tokens": response.usage.input_tokens,
                     "gen_ai.usage.output_tokens": response.usage.output_tokens,
+                    "gen_ai.usage.cost": response.cost_usd,
                 },
             )
         self.calls += 1

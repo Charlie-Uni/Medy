@@ -6,8 +6,10 @@
 
 ## 1. 目的与门禁
 
+当前数据版本与执行状态（2026-10-08）见[评测统一入口](../README.md)及[复核工作清单](../review/README.md)。本规范中的初版计划与历史配额保留；当前登记版本为 main-v3-provisional。
+
 - M1-21 的判定输入：事实回查后（可含 ADR-0007 重排）的 **严格宏平均 Recall@5 ≥ 85%**，另报 Hit@5、失效版本引用率（必须为 0）、按部门 / 语言 / 切片的可复现报告；探针集（107 条）并入后保留独立报告。
-- 无答案样本单独评测：abstention / no-answer accuracy（应声明证据不足或拒答的样本中被正确处理的比例），不进入 Recall@5 分母（基线 5.9）。目标值待决策人定（建议 ≥ 90%）。
+- 无答案样本单独评测：abstention / no-answer accuracy（应声明证据不足或拒答的样本中被正确处理的比例），不进入 Recall@5 分母（基线 5.9）。目标值 **≥ 90%**（已由本文件 §7 的 2026-09-21 决定确认）。
 - 冲突场景（同 family 多版本、同题多文档矛盾）单独切片报告：当前版本被引用且历史版本未被当作现行证据的比例必须为 100%（INV-DATA-03）。
 
 ## 2. 规模与构成（建议值，待定稿）
@@ -39,7 +41,7 @@
 
 1. 起草：LLM 起草助手（`drafter-llm-03`，claude-sonnet-5，Claude Code CLI、工具关闭；提示原文 `drafts/main-v1/drafting_prompt.md` 与 `drafting_prompt_noanswer.md`，每次调用记录提示哈希、模型回显与费用于 `drafts/main-v1/raw*/`）按文档页文本提出候选；工具逐条在 norm-v1 页文本中重新定位 `key_text` 与 span、重算偏移、核对页内唯一、按 P2 机械计算 `mixed_zh_en`、按规则计算 `long_context`；无答案候选的 `absence_terms` 须在 scope 文档全部页文本中出现 0 次。实现方筛选后每条标注 `drafted_by`。起草者与 LLM 复核人（claude-opus-5）不同（spec-v1.1 §8.1）。
 2. 人工标注：annotator-01 逐条确认或改写（query、gold、slices、answerable）；确认表为 `drafts/main-v1/samples_draft_{MA,PV,CO,EN,NA}.md`。
-3. LLM 独立复核：固定模型标识 claude-opus-5（同探针 spec-v1.1 §8.1），提示原文 `review_prompt.md`（主集版本，含无答案四项与孪生对照），批次 `MA`、`PV`、`CO`（非派生有答案样本，含冲突样本）、`EN`（英文孪生）、`NA`（无答案，输入为 scope 文档的打包页文本）；并入的探针样本不重复复核。
+3. LLM 独立复核：固定模型标识 claude-opus-5（同探针 spec-v1.1 §8.1），当前提示原文为 `review_prompt.md`（主集版本，含无答案四项、孪生对照与多证据规则），批次 `MA`、`PV`、`CO`（非派生有答案样本，含冲突样本）、`EN`（英文孪生）、`NA`（无答案，输入为 scope 文档的打包页文本）；并入的探针样本不重复复核。后继版本可保留未变化样本的既有意见；若提示已升级，旧提示须按内容哈希归档在 `review_evidence/review_prompts/`，每个调用块和样本分别绑定其实际提示哈希，不能把旧意见标成新提示的结果。
 4. 第二人工复核：**全部争议样本**，以及 `dose_unit`、`negation`、`time_window`、`version_conflict`、`no_answer` 样本必须有第二人工复核；其余随机抽取 ≥ 20%。LLM 不计作第二人工。**决策人 2026-09-21 答复“第二人工复核人暂无”**：manifest `second_human_review.status=pending`，数据集只能以 `main-v1-provisional` 冻结与运行（schema 强制），所有引用本集的报告须标注“第二人工复核未完成”；指定复核人并完成复核后再以 `main-v1` 升版。
 5. 争议裁决：人工裁决并写 `resolution_note`；同族联动规则同探针。
 6. 冻结：复用 `freeze_v2.py` 流程（哈希、SHA256SUMS、映射、复核证据绑定），版本 `main-v1`。
@@ -70,7 +72,7 @@
 | --- | --- |
 | PR-03 | `manifest.minimums`：有答案 ≥ 300（含探针与孪生）、无答案 ≥ 40、冲突 ≥ 20、九个切片各 ≥ 20、部门各 ≥ 60、zh-Hans ≥ 20、zh-Hant ≥ 80、en ≥ 150（语言按 gold 文档计，无答案按 scope 文档计）；`counts` 另含 `answerable`、`no_answer`、`conflict`、`derived`、`imported` |
 | PR-04 | 每文档非派生上限取 `manifest.minimums.max_samples_per_document`（主集 8，探针 6） |
-| PR-09 | 并入的 `pc-` 样本按 `manifest.imported_samples` 的 `reviewer_id` 与 `prompt_hash` 校验；`ms-` 样本按本版复核人校验；复核证据批次为 `MA/PV/CO/EN/NA`，无答案样本的复核输入由 `abstention.document_pages` 重建 |
+| PR-09 | 并入的 `pc-` 样本按 `manifest.imported_samples` 的 `reviewer_id` 与 `prompt_hash` 校验；`ms-` 样本按本版复核人身份、模型及各自实际提示哈希校验；复核证据批次为 `MA/PV/CO/EN/NA`，无答案样本的复核输入由 `abstention.document_pages` 重建；提示升级时，历史提示必须作为哈希证据归档并逐调用重建实际 prompt |
 | PR-16 | 并入样本恰为 `imported_samples.path` 所指冻结探针版本的全部样本，逐条 canonical 字节一致；探针文件哈希、`dataset_hash`、`status=frozen` 一致 |
 | PR-17 | 无答案样本：`scope_document_key` 在语料中、无 gold、`expected_behaviour` 为 `insufficient_evidence|refuse`、带 `no_answer` 切片、不得为孪生；有答案样本至少一条 gold |
 | PR-18 | 冲突样本：`conflict` 块与 `version_conflict` 切片同现；`current_document_key` 在语料中且全部 gold 落在该文档；family 键与 `manifest.conflict_fixtures` 登记一致；`synthetic=true` 时 `notes` 写明合成 |

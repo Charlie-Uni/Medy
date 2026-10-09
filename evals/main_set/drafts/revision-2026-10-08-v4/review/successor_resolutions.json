@@ -1,0 +1,12 @@
+{
+  "ms-0125": {
+    "approval_source": "evals/main_set/drafts/revision-2026-10-08-v2/review/adjudication_2026-10-08.json",
+    "sample_input_sha256": "d176847449872e393f75d205d7b9940224a62da6dc00ce99fb96e33b5f17c343",
+    "verdict_sha256": "3a3e3b6786e44005b60e20cbe30be1eafa6b5d12cde41e225984cb2fbb0c7442",
+    "issue_scope": [
+      "evidence_span"
+    ],
+    "accepted": false,
+    "resolution_note": "保留当前标注：复核意见把 ms-0125-g3 的 char_end 误读为 2227；本次确认并经页文本确定性校验的实际值已是 2226，区间 [1755,2226) 与 471 字符 span 文本逐字一致，无需再次修改。项目所有者于 2026-10-08 按建议裁决保留。"
+  }
+}

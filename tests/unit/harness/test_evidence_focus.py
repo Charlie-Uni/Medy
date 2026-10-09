@@ -7,17 +7,16 @@ from __future__ import annotations
 import pytest
 
 from medops.domain.common import DocStatus
+from medops.harness.dependencies import HarnessDeps
 from medops.harness.evidence_focus import (
     ELISION,
-    EVIDENCE_FOCUS_COMPACT,
-    EVIDENCE_FOCUS_SENTENCE,
     KEEP_RATIO,
     MAX_UNIT_CHARS,
     focus_texts,
     render_evidence,
     split_units,
 )
-from medops.harness.nodes import HarnessDeps
+from medops.harness.focus_profiles import EVIDENCE_FOCUS_COMPACT, EVIDENCE_FOCUS_SENTENCE
 from medops.infrastructure.llm.fake import FakeModelGateway
 from medops.infrastructure.llm.gateway import estimate_tokens
 from medops.retrieval.rerank import OverlapReranker
@@ -157,7 +156,7 @@ def test_an_invented_alias_fails_grounding_like_a_forged_chunk_id():
 
 
 def test_v2_keeps_neighbours_the_first_chunk_whole_and_scores_rewritten_queries_too():
-    from medops.harness.evidence_focus import EVIDENCE_FOCUS_SENTENCE_V2, FOCUS_PARAMS
+    from medops.harness.focus_profiles import EVIDENCE_FOCUS_SENTENCE_V2, FOCUS_PARAMS
 
     other = "臨床試驗的監查計畫應依風險訂定。試驗主持人應保存受試者同意書。稽核報告不提供給試驗機構。資料管理計畫應事先核准。"
     params = FOCUS_PARAMS[EVIDENCE_FOCUS_SENTENCE_V2]
@@ -184,7 +183,7 @@ def test_v2_keeps_neighbours_the_first_chunk_whole_and_scores_rewritten_queries_
 
 def test_deps_accept_every_sentence_version_and_the_loader_lists_them():
     from medops.application.policy_loader import ReleasedPolicy, ReleasedPolicySet
-    from medops.harness.evidence_focus import ALLOWED_EVIDENCE_FOCUS, FOCUS_PARAMS
+    from medops.harness.focus_profiles import ALLOWED_EVIDENCE_FOCUS, FOCUS_PARAMS
 
     assert set(FOCUS_PARAMS) == {f"sentfocus-v{n}" for n in range(1, 9)}
     assert set(FOCUS_PARAMS) < ALLOWED_EVIDENCE_FOCUS
@@ -199,7 +198,7 @@ def test_deps_accept_every_sentence_version_and_the_loader_lists_them():
 
 
 def test_v4_keeps_only_the_better_scoring_neighbour_of_the_best_unit():
-    from medops.harness.evidence_focus import FOCUS_PARAMS, FocusParams
+    from medops.harness.focus_profiles import FOCUS_PARAMS, FocusParams
 
     units = [
         "甲" * 20 + "。",

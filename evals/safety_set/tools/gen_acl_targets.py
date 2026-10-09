@@ -11,7 +11,7 @@ import sys
 import psycopg
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
-from common import PRODUCTION_DB, SAFETY, admin_dsn  # noqa: E402
+from medops.evals.safety_data import PRODUCTION_DB, SAFETY, admin_dsn  # noqa: E402
 
 OUT = SAFETY / "acl_targets.json"
 

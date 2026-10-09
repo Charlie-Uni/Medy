@@ -1,0 +1,41 @@
+{
+  "verified_on": "2026-10-08",
+  "mode": "archived_read_only_snapshot_plus_local_regeneration",
+  "archive_snapshot": "evals/experiments/e2e/main-v1-provisional/chunks.snapshot.json",
+  "archive_snapshot_sha256": "2a5e1bdd63e9a2650f3c63ca1258bf84d6d22bc88685b5b57a7fb9ec72602027",
+  "documents": [
+    {
+      "document_key": "ema-gvp-module-xvi-rev3",
+      "source_hash": "9f4ae57fdfa9aba723fdb41b134889e259ec9919d4ba0f363f4d3df35d18fe1b",
+      "version_label": "EMA/204715/2012 Rev 3 (2024-07-26)",
+      "owner_dept": "PV",
+      "archived_chunk_count": 304,
+      "regenerated_chunk_count": 304,
+      "all_spans_match_regenerated": true
+    },
+    {
+      "document_key": "ich-e7-step4-1993",
+      "source_hash": "cbe681cf342eeefb477c1a30770d12798fadcf2d00079faa0aa66047ce4ca330",
+      "version_label": "Step 4, 1993-06-24",
+      "owner_dept": "CO",
+      "archived_chunk_count": 31,
+      "regenerated_chunk_count": 31,
+      "all_spans_match_regenerated": true
+    },
+    {
+      "document_key": "ich-e6-r3-step4-2025",
+      "source_hash": "e6ce19e36ce7d2e294f89ee89492b9e035178c3cca48984392bbd92eec9b002c",
+      "version_label": "E6(R3) Step 4, 2025-01-06",
+      "owner_dept": "CO",
+      "archived_chunk_count": 485,
+      "regenerated_chunk_count": 485,
+      "all_spans_match_regenerated": true
+    }
+  ],
+  "included_gold_page_chunks": 16,
+  "checks": [
+    "source/version match frozen main-v4 corpus",
+    "all archived chunk spans match fresh chunker-v2 regeneration over local norm-v1 pages",
+    "each proposed key is unique on its normalized page and fully covered by exactly one archived chunk"
+  ]
+}

@@ -48,10 +48,11 @@ jobs:
       - run: python -m pip check
       - name: package importable outside the repo
         run: cd /tmp && python -c "import medops.evals.probe.validator"
-      - run: python -m ruff check src tests migrations
-      - run: python -m ruff format --check src tests migrations
+      - run: make PY=python lint format-check
       - run: python -m mypy
       - run: python -m pytest -q
+      - name: frozen evaluation inputs and lineage
+        run: make PY=python eval-check
       - name: migration check (single head, upgrade/downgrade round trip)
         run: |
           test "$(python -m alembic heads | wc -l | tr -d ' ')" = "1"

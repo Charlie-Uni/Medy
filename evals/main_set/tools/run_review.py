@@ -24,6 +24,8 @@ HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import draft_common as dc  # noqa: E402
 
+from medops.evals.review_budget import ReviewBudget  # noqa: E402
+
 _spec = importlib.util.spec_from_file_location(
     "v2_codex_tooling", dc.REPO / "evals/probe/precise_clause/drafts/v2/tooling/run_codex_review.py"
 )
@@ -44,6 +46,14 @@ SYSTEM_PROMPT = (
     "You are an independent second reviewer. Follow the instructions in the user message exactly and output "
     "only what they ask for."
 )
+
+
+def selected_ids(only: list[str] | None, all_ids: list[str]) -> set[str]:
+    """Resolve a full or targeted selection before any run record or model call is created."""
+    selected = set(all_ids) if only is None else set(only)
+    if not selected or not selected.issubset(all_ids):
+        raise ValueError("--only must name existing sample_ids")
+    return selected
 
 
 def parse_reply(text: str, expected_ids: list[str], keys: tuple[str, ...]) -> list[dict]:
@@ -82,10 +92,29 @@ def parse_reply(text: str, expected_ids: list[str], keys: tuple[str, ...]) -> li
 
 
 def run_chunk(
-    binary: str, model: str, effort: str, prompt: str, workdir: pathlib.Path, version: str
+    binary: str,
+    model: str,
+    effort: str,
+    prompt: str,
+    workdir: pathlib.Path,
+    version: str,
+    *,
+    max_cost_usd: float | None = None,
+    capture_path: pathlib.Path | None = None,
 ) -> tuple[str, dict]:
-    reply, meta = dc.run_claude(binary, model, effort, SYSTEM_PROMPT, prompt, workdir, timeout=1800)
+    reply, meta = dc.run_claude(
+        binary,
+        model,
+        effort,
+        SYSTEM_PROMPT,
+        prompt,
+        workdir,
+        timeout=1800,
+        max_cost_usd=max_cost_usd,
+        capture_path=capture_path,
+    )
     return reply, {
+        "cli_capture_sha256": meta.get("cli_capture_sha256"),
         "returncode": 0,
         "cli": "claude-code",
         "cli_version": version,
@@ -93,10 +122,22 @@ def run_chunk(
         "session_id": meta["session_id"],
         "reasoning_effort": effort,
         "effort_source": "requested --effort flag; not echoed by the CLI",
-        "tokens_used": str(meta["input_tokens"] + meta["output_tokens"]),
+        "tokens_used": str(meta["total_input_tokens"] + meta["output_tokens"]),
+        "usage": {
+            key: meta[key]
+            for key in (
+                "input_tokens",
+                "cache_read_input_tokens",
+                "cache_creation_input_tokens",
+                "total_input_tokens",
+                "output_tokens",
+                "model_usage",
+            )
+        },
         "cost_usd": meta["cost_usd"],
         "system_prompt_sha256": meta["system_prompt_sha256"],
         "tools_disabled": True,
+        "requested_max_cost_usd": max_cost_usd,
     }
 
 
@@ -107,20 +148,56 @@ def main() -> None:
     ap.add_argument("--model", default="claude-opus-5")
     ap.add_argument("--effort", default="high")
     ap.add_argument("--binary", default=dc.DEFAULT_BINARY)
+    ap.add_argument("--review-dir", type=pathlib.Path, default=REVIEW)
+    ap.add_argument("--prompt-file", type=pathlib.Path, default=PROMPT_FILE)
+    ap.add_argument(
+        "--max-call-cost-usd",
+        type=float,
+        help="CLI-enforced per-call cap; total budget must also account for failed calls",
+    )
+    ap.add_argument("--budget-ledger", type=pathlib.Path)
+    ap.add_argument(
+        "--budget-authorization", type=pathlib.Path, help="fixed model, inputs and total USD approved by user"
+    )
     ap.add_argument("--only", nargs="*")
     ap.add_argument("--max-chunks", type=int, default=None, help="stop after N chunks (the run stays resumable)")
     args = ap.parse_args()
+    review = args.review_dir.resolve()
     if args.chunk < 1:
         ap.error("--chunk must be positive")
     keys = tuple(ITEM_KEYS[args.batch])
-    prompt_text = PROMPT_FILE.read_bytes().decode("utf-8")
+    prompt_text = args.prompt_file.read_bytes().decode("utf-8")
     prompt_hash = hashlib.sha256(prompt_text.encode("utf-8")).hexdigest()
-    all_records = codex.load_records(REVIEW / f"input_{args.batch}.jsonl")
+    all_records = codex.load_records(review / f"input_{args.batch}.jsonl")
     all_ids = [r["sample_id"] for r in all_records]
     if len(set(all_ids)) != len(all_ids) or not all_records:
         sys.exit("duplicate or empty input")
-    run_path = REVIEW / f"run_{args.batch}.json"
-    out_path = REVIEW / f"verdicts_{args.batch}.jsonl"
+    try:
+        selected = selected_ids(args.only, all_ids)
+    except ValueError as exc:
+        ap.error(str(exc))
+    run_path = review / f"run_{args.batch}.json"
+    out_path = review / f"verdicts_{args.batch}.jsonl"
+    budget = None
+    if bool(args.budget_ledger) != bool(args.budget_authorization):
+        ap.error("budget ledger and authorization must be supplied together")
+    if args.budget_ledger:
+        scope = json.loads(args.budget_authorization.read_text(encoding="utf-8"))
+        root = (dc.REPO / scope["review_root"]).resolve()
+        batch_key = f"{review.resolve().relative_to(root).as_posix()}/{args.batch}"
+        expected = scope["batches"].get(batch_key)
+        actual = {
+            "input_sha256": hashlib.sha256((review / f"input_{args.batch}.jsonl").read_bytes()).hexdigest(),
+            "prompt_sha256": prompt_hash,
+        }
+        if (
+            expected != actual
+            or args.model != scope["model"]
+            or args.effort != scope["effort"]
+            or args.max_call_cost_usd is None
+        ):
+            ap.error("review call differs from its authorized model/effort/inputs or lacks per-call cap")
+        budget = ReviewBudget(args.budget_ledger.resolve(), total_usd=scope["total_budget_usd"], scope=scope)
     version = dc.cli_version(args.binary)
     if run_path.exists():
         run = json.loads(run_path.read_text(encoding="utf-8"))
@@ -140,10 +217,7 @@ def main() -> None:
                 sys.exit("cannot resume: inputs of the unfinished selection changed")
             records = [r for r in all_records if r["sample_id"] in pending]
         elif args.only is not None:
-            selected = set(args.only)
-            if not selected or not selected.issubset(all_ids):
-                sys.exit("--only must name existing sample_ids")
-            dropped_path = REVIEW / "dropped_after_review.json"
+            dropped_path = review / "dropped_after_review.json"
             dropped_after = (
                 set(json.loads(dropped_path.read_text(encoding="utf-8"))) if dropped_path.exists() else set()
             )
@@ -173,7 +247,7 @@ def main() -> None:
             "latest": {},
             "active_review": None,
         }
-        records = codex.start_targeted_review(run, all_records, set(all_ids))
+        records = codex.start_targeted_review(run, all_records, selected)
     codex.checkpoint(run, run_path, out_path)
     with tempfile.TemporaryDirectory(prefix="main-review-") as tmp:
         workdir = pathlib.Path(tmp)
@@ -185,25 +259,76 @@ def main() -> None:
             ids = [r["sample_id"] for r in chunk]
             prompt = codex.build_prompt(prompt_text, chunk)
             started = dt.datetime.now(dt.UTC).isoformat(timespec="seconds")
-            reply, meta = run_chunk(args.binary, args.model, args.effort, prompt, workdir, version)
+            reservation = None
+            capture = None
+            if budget is not None:
+                reservation = budget.reserve(
+                    args.max_call_cost_usd,
+                    identity={
+                        "batch": args.batch,
+                        "scope": str(review.relative_to(budget.path.parent)),
+                        "sample_ids": ids,
+                        "prompt_sha256": hashlib.sha256(prompt.encode()).hexdigest(),
+                        "model": args.model,
+                        "cli_version": version,
+                    },
+                )
+                capture = budget.path.parent / "call_artifacts" / (reservation["attempt_id"] + ".json")
+            meta = {}
+            reply = ""
             try:
+                reply, meta = run_chunk(
+                    args.binary,
+                    args.model,
+                    args.effort,
+                    prompt,
+                    workdir,
+                    version,
+                    max_cost_usd=args.max_call_cost_usd,
+                    capture_path=capture,
+                )
                 parsed = parse_reply(reply, ids, keys)
-            except ValueError as e:
-                bad = REVIEW / "bad_replies" / f"input_{args.batch}_{ids[0]}_bad.jsonl"
-                codex.atomic_write(bad, json.dumps({"raw_reply": reply}, ensure_ascii=False) + "\n")
-                sys.exit(f"chunk {ids[0]}..{ids[-1]}: {e} (raw reply saved; rerun resumes pending ids)")
-            meta.update(
-                {
-                    "sample_ids": ids,
-                    "started_at": started,
-                    "finished_at": dt.datetime.now(dt.UTC).isoformat(timespec="seconds"),
-                    "prompt_chars": len(prompt),
-                    "prompt_sha256": hashlib.sha256(prompt.encode("utf-8")).hexdigest(),
-                    "verdicts": parsed,
-                }
-            )
-            codex.save_chunk_inputs(meta, chunk, REVIEW)
-            codex.verify_chunk(meta, chunk, prompt_text, args.model, args.effort, REVIEW)
+                meta.update(
+                    {
+                        "sample_ids": ids,
+                        "started_at": started,
+                        "finished_at": dt.datetime.now(dt.UTC).isoformat(timespec="seconds"),
+                        "prompt_chars": len(prompt),
+                        "prompt_sha256": hashlib.sha256(prompt.encode("utf-8")).hexdigest(),
+                        "verdicts": parsed,
+                    }
+                )
+                codex.save_chunk_inputs(meta, chunk, review)
+                codex.verify_chunk(meta, chunk, prompt_text, args.model, args.effort, review)
+            except BaseException as exc:
+                metering = exc.metadata if isinstance(exc, dc.ClaudeCallError) else meta
+                if budget is not None and reservation is not None:
+                    budget.finish(
+                        reservation["attempt_id"],
+                        cost_usd=metering.get("cost_usd"),
+                        outcome=str(exc) if isinstance(exc, dc.ClaudeCallError) else type(exc).__name__,
+                        metadata={k: metering.get(k) for k in ("model_observed", "session_id", "cli_capture_sha256")},
+                    )
+                if reply:
+                    bad = (
+                        review
+                        / "bad_replies"
+                        / f"input_{args.batch}_{ids[0]}_{reservation['attempt_id'] if reservation else 'bad'}.jsonl"
+                    )
+                    codex.atomic_write(bad, json.dumps({"raw_reply": reply}, ensure_ascii=False) + "\n")
+                if isinstance(exc, (ValueError, dc.ClaudeCallError)):
+                    sys.exit(
+                        f"chunk {ids[0]}: {type(exc).__name__}; call retained and budget settled (no automatic retry)"
+                    )
+                raise
+            if budget is not None and reservation is not None:
+                budget.finish(
+                    reservation["attempt_id"],
+                    cost_usd=meta["cost_usd"],
+                    outcome="validated_reply",
+                    metadata={k: meta.get(k) for k in ("model", "session_id", "cli_capture_sha256")},
+                )
+                meta["budget_attempt_id"] = reservation["attempt_id"]
             index = len(run["chunks"])
             run["chunks"].append(meta)
             for v in parsed:
@@ -216,6 +341,8 @@ def main() -> None:
                 f"{ids[0]}..{ids[-1]}: {sum(v['verdict'] == 'dispute' for v in parsed)} dispute / {len(parsed)}; cost {meta['cost_usd']}",
                 flush=True,
             )
+    if budget is not None:
+        print(json.dumps({"total_budget_ledger": budget.summary()}), flush=True)
     verdicts = codex.current_verdicts(run)
     cost = sum(float(c.get("cost_usd") or 0) for c in run["chunks"])
     print(

@@ -1,9 +1,10 @@
 """Probe set validator implementing PR-01 .. PR-15 of evals/probe/precise_clause/SPEC.md.
 
 A version directory holds manifest.json, corpus.json, samples.jsonl, review_prompt.md and
-optionally acl_probes.jsonl, SHA256SUMS and mappings/. Page texts for PR-05 are read from a
-local, never-committed directory laid out as <pages_dir>/<source_hash>/<page>.txt containing
-the raw extractor output for that page; the validator applies norm-v1 itself.
+optionally acl_probes.jsonl, revision_provenance.json, SHA256SUMS and mappings/. Page texts
+for PR-05 are read from a local, never-committed directory laid out as
+<pages_dir>/<source_hash>/<page>.txt containing the raw extractor output for that page; the
+validator applies norm-v1 itself.
 
 Modes: `draft` reports count shortfalls and missing page texts as warnings; `frozen` treats
 every rule as an error and additionally runs the PR-10 and PR-12 integrity checks.
@@ -38,7 +39,14 @@ DEPTS = ("MA", "PV", "CO")
 LANGS = ("zh-Hans", "zh-Hant", "en", "mixed")
 REQUIRED_FILES = ("manifest.json", "corpus.json", "samples.jsonl", "review_prompt.md")
 PII_EXCEPTIONS_FILE = "pii_exceptions.json"
-SUMS_FILES = ("corpus.json", "samples.jsonl", "review_prompt.md", "acl_probes.jsonl", PII_EXCEPTIONS_FILE)
+SUMS_FILES = (
+    "corpus.json",
+    "samples.jsonl",
+    "review_prompt.md",
+    "acl_probes.jsonl",
+    PII_EXCEPTIONS_FILE,
+    "revision_provenance.json",
+)
 _SUMS_LINE = re.compile(r"^([0-9a-f]{64})  (\S+)$")
 
 
@@ -683,7 +691,8 @@ class ProbeSetValidator:
             if imported and self._imported(s):
                 # spec-m1: merged probe samples keep the probe reviewer binding (PR-16 checks byte identity)
                 sr = rv["second_reviewer"]
-                if sr.get("prompt_hash") != imported["prompt_hash"] or sr.get("id") != imported["reviewer_id"]:
+                prompt_hashes = set(imported.get("prompt_hashes", [imported["prompt_hash"]]))
+                if sr.get("prompt_hash") not in prompt_hashes or sr.get("id") != imported["reviewer_id"]:
                     add(
                         Finding(
                             "PR-09", "error", "imported sample review differs from imported_samples", s["sample_id"]
@@ -691,7 +700,12 @@ class ProbeSetValidator:
                     )
             elif second:
                 sr = rv["second_reviewer"]
-                for key in ("id", "model", "model_version", "prompt_hash"):
+                keys = (
+                    ("id", "model", "model_version")
+                    if isinstance(manifest.get("review_provenance"), dict)
+                    else ("id", "model", "model_version", "prompt_hash")
+                )
+                for key in keys:
                     if sr.get(key) != second.get(key):
                         add(
                             Finding(
@@ -864,6 +878,17 @@ class ProbeSetValidator:
                 )
         if pm.get("status") != "frozen":
             add(Finding("PR-16", "error", "imported probe version is not frozen", imp["path"]))
+        probe_second = next((row for row in pm.get("reviewers", []) if row.get("role") == "second_reviewer"), None)
+        if (
+            probe_second is None
+            or imp["reviewer_id"] != probe_second.get("id")
+            or imp["prompt_hash"] != probe_second.get("prompt_hash")
+        ):
+            add(Finding("PR-16", "error", "imported reviewer binding differs from the probe manifest"))
+        actual_prompt_hashes = sorted({sample["review"]["second_reviewer"]["prompt_hash"] for sample in imported})
+        declared_prompt_hashes = sorted(imp.get("prompt_hashes", [imp["prompt_hash"]]))
+        if declared_prompt_hashes != actual_prompt_hashes:
+            add(Finding("PR-16", "error", "imported prompt_hashes differ from the probe sample bindings"))
 
     def _pr17_answerable(self, samples, docs, add: Add) -> None:
         """PR-17: no-answer samples name an in-corpus scope document, carry no gold, no twin and the

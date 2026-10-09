@@ -3,6 +3,7 @@ principals, computed by the runtime's metrics source."""
 
 from __future__ import annotations
 
+from dataclasses import replace
 from datetime import UTC, datetime
 
 from fastapi.testclient import TestClient
@@ -78,3 +79,27 @@ def test_metrics_route_requires_ops_or_admin_role():
     analyst = TestClient(create_app(MetricsRuntime(("analyst",))), raise_server_exceptions=False)
     assert analyst.get("/metrics", headers={"Authorization": "Bearer " + ISSUER_OBJ.token()}).status_code == 403
     assert ok.get("/metrics").status_code == 401
+
+
+def test_index_metrics_report_counts_and_backlog_without_database_identifiers_or_metadata():
+    health = {
+        "ready": False,
+        "database": "private-name",
+        "database_identity": "private-fingerprint",
+        "coverage": {"missing_embedding": 12, "active_documents_without_chunks": 1},
+        "outbox": {
+            "lexical-index": {"pending": 3, "oldest_age_s": 61.2},
+            "retrieval-cache": {"pending": 4, "oldest_age_s": 62.3},
+        },
+        "problems": ["embedding_coverage_gap"],
+    }
+    text = render_prometheus(replace(SNAP, retrieval_integrity=health))
+    assert "medops_retrieval_indexes_ready 0" in text
+    assert "medops_index_missing_embedding 12" in text
+    assert 'medops_outbox_pending{consumer="lexical-index"} 3' in text
+    assert 'medops_outbox_oldest_age_seconds{consumer="retrieval-cache"} 62.3' in text
+    assert 'medops_outbox_dead_lettered{consumer="lexical-index"} 0' in text
+    assert "private" not in text and "embedding_coverage_gap" not in text
+    unavailable = render_prometheus(replace(SNAP, retrieval_integrity={"ready": False}))
+    assert "medops_retrieval_indexes_ready 0" in unavailable
+    assert "medops_index_missing_embedding" not in unavailable  # unknown is not silently reported as zero

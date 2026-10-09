@@ -1,0 +1,71 @@
+{
+  "format": "paid-review-budget-request-v1",
+  "status": "pending_user_authorization",
+  "created_at": "2026-10-08",
+  "purpose": "EVAL-11 independent LLM review of six owner-confirmed changed inputs",
+  "review_root": "evals/main_set/drafts/revision-2026-10-08-v5/review",
+  "model": "claude-opus-5",
+  "effort": "high",
+  "chunk_size": 1,
+  "max_calls": 6,
+  "max_call_cost_usd": 0.3,
+  "requested_total_budget_usd": 1.95,
+  "budget_buffer_usd": 0.15,
+  "automatic_retries": false,
+  "stop_conditions": [
+    "any CLI failure",
+    "invalid verdict",
+    "unknown cost",
+    "per-call cap reached or exceeded",
+    "total ledger cannot reserve the next call"
+  ],
+  "batches": {
+    "main/CO": {
+      "input_sha256": "675abc6914e93cacda3ef150a20b9cad5db1ce961dde965e5f3418c8c683bd98",
+      "prompt_sha256": "7572d16e88b638cbc6fa888f4e1a86fe6ffb4869583df357ee1ce0bd012eb758",
+      "sample_ids": [
+        "ms-0440"
+      ],
+      "calls": 1
+    },
+    "main/EN": {
+      "input_sha256": "5a7cb5ab4235a2702b280af0b6bb5d94a6bee52fd903e334d7943ac0ac5b6f3e",
+      "prompt_sha256": "7572d16e88b638cbc6fa888f4e1a86fe6ffb4869583df357ee1ce0bd012eb758",
+      "sample_ids": [
+        "ms-0198",
+        "ms-0441"
+      ],
+      "calls": 2
+    },
+    "main/PV": {
+      "input_sha256": "fcdbf8d7dab57355c8331a4a976154114d795248c35680a7b99d15d8ae9ae484",
+      "prompt_sha256": "7572d16e88b638cbc6fa888f4e1a86fe6ffb4869583df357ee1ce0bd012eb758",
+      "sample_ids": [
+        "ms-0197"
+      ],
+      "calls": 1
+    },
+    "probe/CO": {
+      "input_sha256": "1ea035ef6e33dab0f2eaafa62fb8e2a20713e366704362e97ea3640b872dca38",
+      "prompt_sha256": "ba856262c67512e5c0c1e79d7e8cea497074f6180eeb0d206d9c0eca359435be",
+      "sample_ids": [
+        "pc-0070"
+      ],
+      "calls": 1
+    },
+    "probe/EN": {
+      "input_sha256": "ea2153520251bfb7cb49a6925837da6fce0da9923329b942e7851a8f2c8ebbc7",
+      "prompt_sha256": "ba856262c67512e5c0c1e79d7e8cea497074f6180eeb0d206d9c0eca359435be",
+      "sample_ids": [
+        "pc-0102"
+      ],
+      "calls": 1
+    }
+  },
+  "evidence": {
+    "revision_manifest_sha256": "10c1b34d7b1cafa76483276a3668573ff4de2ad13c8c8b03cb8e082893f15916",
+    "human_confirmation_sha256": "0b12b5fdef14172745ed2746b649d5ec1402e4d49413965d502e3b87e125e0b1",
+    "preparation_sha256": "14d46ce6efbbf989a3ec1dfd090fe938c7cced4774b56387170684ddb31e81bf"
+  },
+  "note": "This request is not authorization. A budget_authorization artifact may be created only after the project owner explicitly approves this scope and cap."
+}

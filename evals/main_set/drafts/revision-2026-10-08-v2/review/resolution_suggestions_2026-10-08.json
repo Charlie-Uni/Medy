@@ -1,0 +1,183 @@
+{
+  "format": "review-resolution-suggestions-v1",
+  "status": "accepted_and_applied_to_v3",
+  "author": "Codex implementation self-review",
+  "applied": true,
+  "rationale": "Proposed owner adjudications: make standard-of-care background optional and anchor each of three enumerated examples (ms-0241/0242); add protocol_id for explicit version 3.26 (ms-0280). No changes applied.",
+  "affected_samples": [
+    {
+      "sample_id": "ms-0241",
+      "based_on_input_file_sha256": "e23450038253aff37f97a290750ed5dda9491c3c8193df88b52f525424a74ae9",
+      "query_change": false,
+      "proposed_required_golds": [
+        {
+          "evidence_span": {
+            "char_end": 1185,
+            "char_start": 753,
+            "text": "The following examples are also provided in the IND safety reporting regulation (§ 312.32(c)(1)(i)) and illustrate the meaning of reasonable possibility with respect to a determination that there may be a causal relationship between the drug and the adverse event: • A single occurrence of an event that is uncommon and known to be strongly associated with drug exposure (e.g., angioedema, hepatic injury, Stevens-Johnson Syndrome)."
+          },
+          "gold_id": "ms-0241-g1",
+          "key_text": "A single occurrence of an event that is uncommon and known to be strongly associated with drug exposure",
+          "page": 7,
+          "section": "III.A.2. Adverse Reaction and Suspected Adverse Reaction",
+          "source_hash": "c597c1d15d048c48d94be46710658eebdff9c8017f82ec3f04ebd54ad16e577c",
+          "version_label": "Final guidance, December 2025 (FDA media 152530)"
+        },
+        {
+          "evidence_span": {
+            "char_start": 1186,
+            "char_end": 1362,
+            "text": "• One or more occurrences of an event that is not commonly associated with drug exposure but is otherwise uncommon in the population exposed to the drug (e.g., tendon rupture)."
+          },
+          "gold_id": "ms-0241-g2",
+          "key_text": "One or more occurrences of an event that is not commonly associated with drug exposure but is otherwise uncommon in the population exposed to the drug",
+          "page": 7,
+          "section": "III.A.2. Adverse Reaction and Suspected Adverse Reaction",
+          "source_hash": "c597c1d15d048c48d94be46710658eebdff9c8017f82ec3f04ebd54ad16e577c",
+          "version_label": "Final guidance, December 2025 (FDA media 152530)"
+        },
+        {
+          "evidence_span": {
+            "char_start": 1363,
+            "char_end": 1731,
+            "text": "• An aggregate analysis of specific events observed in a clinical trial that indicates those events occur more frequently in the drug treatment group than in a concurrent or historical control group. Examples of such events are known consequences of the underlying disease or condition or events that commonly occur in the study population independent of drug therapy."
+          },
+          "gold_id": "ms-0241-g3",
+          "key_text": "An aggregate analysis of specific events observed in a clinical trial that indicates those events occur more frequently",
+          "page": 7,
+          "section": "III.A.2. Adverse Reaction and Suspected Adverse Reaction",
+          "source_hash": "c597c1d15d048c48d94be46710658eebdff9c8017f82ec3f04ebd54ad16e577c",
+          "version_label": "Final guidance, December 2025 (FDA media 152530)"
+        }
+      ],
+      "optional_background": {
+        "evidence_span": {
+          "char_end": 1900,
+          "char_start": 1732,
+          "text": "For aggregate analysis under § 312.32(c)(1)(i)(C), such events could also be associated with treatment or therapy that is standard of care for the disease or condition."
+        },
+        "key_text": "such events could also be associated with treatment or therapy that is standard of care",
+        "page": 7,
+        "section": "III.A.2. Adverse Reaction and Suspected Adverse Reaction",
+        "source_hash": "c597c1d15d048c48d94be46710658eebdff9c8017f82ec3f04ebd54ad16e577c",
+        "version_label": "Final guidance, December 2025 (FDA media 152530)",
+        "previous_gold_id": "ms-0241-g3",
+        "required": false
+      },
+      "proposed_chunk_groups": [
+        [
+          "03b274ab-a8e2-4032-bbc7-10379ae547b9"
+        ],
+        [
+          "dc317e2b-b2e7-49ab-b9e7-298ff69fb957"
+        ],
+        [
+          "dc317e2b-b2e7-49ab-b9e7-298ff69fb957"
+        ]
+      ],
+      "note": "Suggestion only. Three semantic examples; the latter two share one physical chunk. Existing v2 input, approval, gold, and manifest unchanged."
+    },
+    {
+      "sample_id": "ms-0242",
+      "based_on_input_file_sha256": "edfebd3aa6e20d53a30318f2a2fea33d67bfbedbab7d4aef8e4c8c601602e940",
+      "query_change": false,
+      "proposed_required_golds": [
+        {
+          "evidence_span": {
+            "char_end": 1185,
+            "char_start": 753,
+            "text": "The following examples are also provided in the IND safety reporting regulation (§ 312.32(c)(1)(i)) and illustrate the meaning of reasonable possibility with respect to a determination that there may be a causal relationship between the drug and the adverse event: • A single occurrence of an event that is uncommon and known to be strongly associated with drug exposure (e.g., angioedema, hepatic injury, Stevens-Johnson Syndrome)."
+          },
+          "gold_id": "ms-0242-g1",
+          "key_text": "A single occurrence of an event that is uncommon and known to be strongly associated with drug exposure",
+          "page": 7,
+          "section": "III.A.2. Adverse Reaction and Suspected Adverse Reaction",
+          "source_hash": "c597c1d15d048c48d94be46710658eebdff9c8017f82ec3f04ebd54ad16e577c",
+          "version_label": "Final guidance, December 2025 (FDA media 152530)"
+        },
+        {
+          "evidence_span": {
+            "char_start": 1186,
+            "char_end": 1362,
+            "text": "• One or more occurrences of an event that is not commonly associated with drug exposure but is otherwise uncommon in the population exposed to the drug (e.g., tendon rupture)."
+          },
+          "gold_id": "ms-0242-g2",
+          "key_text": "One or more occurrences of an event that is not commonly associated with drug exposure but is otherwise uncommon in the population exposed to the drug",
+          "page": 7,
+          "section": "III.A.2. Adverse Reaction and Suspected Adverse Reaction",
+          "source_hash": "c597c1d15d048c48d94be46710658eebdff9c8017f82ec3f04ebd54ad16e577c",
+          "version_label": "Final guidance, December 2025 (FDA media 152530)"
+        },
+        {
+          "evidence_span": {
+            "char_start": 1363,
+            "char_end": 1731,
+            "text": "• An aggregate analysis of specific events observed in a clinical trial that indicates those events occur more frequently in the drug treatment group than in a concurrent or historical control group. Examples of such events are known consequences of the underlying disease or condition or events that commonly occur in the study population independent of drug therapy."
+          },
+          "gold_id": "ms-0242-g3",
+          "key_text": "An aggregate analysis of specific events observed in a clinical trial that indicates those events occur more frequently",
+          "page": 7,
+          "section": "III.A.2. Adverse Reaction and Suspected Adverse Reaction",
+          "source_hash": "c597c1d15d048c48d94be46710658eebdff9c8017f82ec3f04ebd54ad16e577c",
+          "version_label": "Final guidance, December 2025 (FDA media 152530)"
+        }
+      ],
+      "optional_background": {
+        "evidence_span": {
+          "char_end": 1900,
+          "char_start": 1732,
+          "text": "For aggregate analysis under § 312.32(c)(1)(i)(C), such events could also be associated with treatment or therapy that is standard of care for the disease or condition."
+        },
+        "key_text": "such events could also be associated with treatment or therapy that is standard of care",
+        "page": 7,
+        "section": "III.A.2. Adverse Reaction and Suspected Adverse Reaction",
+        "source_hash": "c597c1d15d048c48d94be46710658eebdff9c8017f82ec3f04ebd54ad16e577c",
+        "version_label": "Final guidance, December 2025 (FDA media 152530)",
+        "previous_gold_id": "ms-0242-g3",
+        "required": false
+      },
+      "proposed_chunk_groups": [
+        [
+          "03b274ab-a8e2-4032-bbc7-10379ae547b9"
+        ],
+        [
+          "dc317e2b-b2e7-49ab-b9e7-298ff69fb957"
+        ],
+        [
+          "dc317e2b-b2e7-49ab-b9e7-298ff69fb957"
+        ]
+      ],
+      "note": "Suggestion only. Three semantic examples; the latter two share one physical chunk. Existing v2 input, approval, gold, and manifest unchanged."
+    },
+    {
+      "sample_id": "ms-0280",
+      "based_on_input_file_sha256": "e23450038253aff37f97a290750ed5dda9491c3c8193df88b52f525424a74ae9",
+      "query_change": false,
+      "gold_change": false,
+      "current_slices": [
+        "negation",
+        "mixed_zh_en"
+      ],
+      "proposed_slices": [
+        "negation",
+        "mixed_zh_en",
+        "protocol_id"
+      ],
+      "basis": "main_set/SPEC.md:38; precise standard version identifier 3.26 in query",
+      "date_verification": {
+        "path": "evals/main_set/pages/ea0824b58213d740df8ac7459c3c9b08819aa21127a7c63fe04b81ec056f9938/1.txt",
+        "sha256": "bb6bf200e99f1a7a9b44f0ab49cac345f9af6c10cec640868baf2e6791ded790",
+        "page": 1,
+        "observed_version": "发布版本 3.26",
+        "observed_date": "2026 年 3 月",
+        "date_change": false
+      },
+      "note": "Suggestion only; current approved v2 input unchanged."
+    }
+  ],
+  "owner_decision_quote": "三项按建议裁决，允许 EVAL-08 最多 0.75 USD",
+  "applied_at": "2026-10-08T14:22:15+11:00",
+  "applied_revision": "evals/main_set/drafts/revision-2026-10-08-v3",
+  "applied_revision_manifest_sha256": "279c91a6ab2c7a667399419b51d97aeb27ea59972fe77716d75412550f46398d",
+  "followup_note": "Fresh review agreed on ms-0242 and ms-0280; ms-0241 raised a new key_text dispute."
+}

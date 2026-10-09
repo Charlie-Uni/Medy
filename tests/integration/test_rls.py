@@ -17,6 +17,7 @@ import psycopg
 import pytest
 from psycopg import errors
 
+from medops.evals.answer_review import source_documents
 from medops.infrastructure.db.login_users import GROUPS, drop_users, provision
 from tests.integration.conftest import user_dsn
 from tests.integration.test_migrations import document, job, source_object
@@ -140,6 +141,9 @@ def test_group_roles_login_users_and_forced_rls(migrated, login_users):
             "doc_audit",
             "outbox_events",  # migration 0005: admin-only transactional outbox
             "outbox_consumer_acks",
+            "outbox_consumer_failures",  # migration 0020: per-consumer retry and dead-letter state
+            "llm_monthly_spend",  # migration 0020: durable shared budget counters
+            "llm_spend_reservations",
             "embedding_index_meta",  # migration 0006: vector stage (ADR-0007)
             "chunk_embeddings",
             "lexical_index_meta",  # migration 0007: production lexical index (DEC-001 final)
@@ -367,3 +371,14 @@ def test_provisioning_is_idempotent_and_rotates_passwords(admin_dsn, migrated):
     finally:
         with psycopg.connect(admin_dsn, autocommit=True) as conn:
             drop_users(conn, prefix=prefix)
+
+
+@pytest.mark.parametrize("dept", [None, "MA", "PV", "CO"])
+def test_review_metadata_does_not_expose_forbidden_documents(seed, login_users, dept):
+    with psycopg.connect(login_users["app"]["dsn"]) as conn, conn.transaction():
+        if dept is not None:
+            conn.execute("select set_config('medops.dept', %s, true)", (dept,))
+        metadata = source_documents(conn, [str(doc) for doc in seed["all_docs"]])
+    expected = expected_visible(seed, dept) if dept else set()
+    assert set(metadata) == {str(doc) for doc in expected}
+    assert all(len(doc["source_hash"]) == 64 and doc["title"] and doc["version"] for doc in metadata.values())

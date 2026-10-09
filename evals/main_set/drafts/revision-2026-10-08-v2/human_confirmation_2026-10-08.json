@@ -1,0 +1,146 @@
+{
+  "format": "human-annotation-confirmation-v1",
+  "status": "confirmed",
+  "confirmed_on": "2026-10-08",
+  "timezone": "Australia/Sydney",
+  "actor": {
+    "kind": "human",
+    "id": "project-owner",
+    "identity_basis": "User of the current project conversation; no new personal identity inferred"
+  },
+  "evidence": {
+    "source": "current_user_conversation",
+    "verbatim": "同意",
+    "context": "Response to the item-by-item explanation of all 19 draft-v2 annotations, the FDA corpus title correction, and their remaining review status."
+  },
+  "scope": {
+    "revision_version": "annotation-revision-20261008-v2",
+    "sample_count": 19,
+    "corpus_title_edits": 1,
+    "independent_second_human": false,
+    "independent_llm_review": "pending"
+  },
+  "inputs": {
+    "manifest_sha256": "28b01b508f736a28ba5c0669ead5c45b25206f55a0ebacbd32cbee80ef0792bf",
+    "proposals_sha256": "02b8a085562a398aaba474ec28e13b6dff76fadb19eb22c3ebcd2f4c3e7551cc",
+    "corpus_edits_sha256": "2d65911a132bb61acef93347edd28caae6e55252173bc98fbf10e7a10df412e1"
+  },
+  "items": [
+    {
+      "sample_id": "ms-0124",
+      "decision": "confirmed",
+      "annotation_sha256": "09fa2192f455ed41b1290ac24677840e69fb3de9a10ca3f0f59209f99b47f334",
+      "required_gold_groups_sha256": "c05f2bf3f5c8430f110d8ecdce2ce712ad62246ef4e9600aca24e4a789ec8978"
+    },
+    {
+      "sample_id": "ms-0125",
+      "decision": "confirmed",
+      "annotation_sha256": "892d490811266f1225a68f3d989f44474c71a22ef73df9343a7c02721e2c99a9",
+      "required_gold_groups_sha256": "c05f2bf3f5c8430f110d8ecdce2ce712ad62246ef4e9600aca24e4a789ec8978"
+    },
+    {
+      "sample_id": "ms-0177",
+      "decision": "confirmed",
+      "annotation_sha256": "486e44a8b4b0f1c389929128eed9c453194dc86734c451d2ef5c704f35c2a163",
+      "required_gold_groups_sha256": "fece44368945760261838917892c37701b982972beb4ff7c2c91c39d2f773c99"
+    },
+    {
+      "sample_id": "ms-0178",
+      "decision": "confirmed",
+      "annotation_sha256": "b5281c87e84de763ab03995523c99b1f0fbcfe0f5cec912e016be3d835f63435",
+      "required_gold_groups_sha256": "fece44368945760261838917892c37701b982972beb4ff7c2c91c39d2f773c99"
+    },
+    {
+      "sample_id": "ms-0205",
+      "decision": "confirmed",
+      "annotation_sha256": "05f5f7d1a6f3153e5c889eda0908c2d4a000268b8ecf4ddc68b2682f283ed629",
+      "required_gold_groups_sha256": "8fe82cdeb8def41cb8e972019347c6a77d06342e5fd55832486ac24daea8dd8a"
+    },
+    {
+      "sample_id": "ms-0206",
+      "decision": "confirmed",
+      "annotation_sha256": "e4315d8007b951ac527831635c7c5dc382cee2fce8b54381b4738bad43aa4b46",
+      "required_gold_groups_sha256": "8fe82cdeb8def41cb8e972019347c6a77d06342e5fd55832486ac24daea8dd8a"
+    },
+    {
+      "sample_id": "ms-0241",
+      "decision": "confirmed",
+      "annotation_sha256": "e759284a8194fc83956cc012dd64549e629e20e8c29c156b54dbe3be0f43a512",
+      "required_gold_groups_sha256": "36e05464764f58ebb195c0d5d3745e4fd8249e75b7a66673fc981339523c3f9d"
+    },
+    {
+      "sample_id": "ms-0242",
+      "decision": "confirmed",
+      "annotation_sha256": "7e0599748ce9b35260e0b62c21edeb1ae90993ee7e195e68bd3c48c2e3d04319",
+      "required_gold_groups_sha256": "36e05464764f58ebb195c0d5d3745e4fd8249e75b7a66673fc981339523c3f9d"
+    },
+    {
+      "sample_id": "ms-0243",
+      "decision": "confirmed",
+      "annotation_sha256": "de68f5f06120e4f80b2de261d1fcec0c43b8ae99b63def897aa53d3f78532c45",
+      "required_gold_groups_sha256": "74df1a8b6f408c7549755510f1a70bec620416ef64e03c4d81cfd4134511cef5"
+    },
+    {
+      "sample_id": "ms-0244",
+      "decision": "confirmed",
+      "annotation_sha256": "516fe2200d142cc48438b39d44203eb37728be288ae855284f177988226ee90e",
+      "required_gold_groups_sha256": "74df1a8b6f408c7549755510f1a70bec620416ef64e03c4d81cfd4134511cef5"
+    },
+    {
+      "sample_id": "ms-0280",
+      "decision": "confirmed",
+      "annotation_sha256": "b5d89b21adfa45b4487a421529a2e24b573302ea7d01128bdd59740874303df0",
+      "required_gold_groups_sha256": "b804d4a40b22899c8096b6d8929791b4aba501e2614582b86bf8f143d3e12ad8"
+    },
+    {
+      "sample_id": "ms-0298",
+      "decision": "confirmed",
+      "annotation_sha256": "11c733e0727bbdf380701b464203ee8139726d84889b956267c9e04426a5a032",
+      "required_gold_groups_sha256": "d61c67a06552e047662d5d35a7ae6c5eda8114d79cca962b51f7c551018fd7c6"
+    },
+    {
+      "sample_id": "ms-0299",
+      "decision": "confirmed",
+      "annotation_sha256": "1ac20111a19828c1e949a259ce2a86c743b751ce38aef9859753737f6a9b4be9",
+      "required_gold_groups_sha256": "6b4507b08d85ca94a97c5991f2dc24cf1b86beff7441b8af58d8f515e7049298"
+    },
+    {
+      "sample_id": "ms-0336",
+      "decision": "confirmed",
+      "annotation_sha256": "b6d7dbd73b53ab23e485078a832f4010a3624ddaa1d0d780facb7f1b9fa4b91c",
+      "required_gold_groups_sha256": "b621de06737dc558c8d37f61b72f3900d20353fa34330936c630ed1bdd906840"
+    },
+    {
+      "sample_id": "ms-0337",
+      "decision": "confirmed",
+      "annotation_sha256": "916db199bf00a1122679ee5a6421d82bb0d3987745b5956c169f9f379015a48f",
+      "required_gold_groups_sha256": "b621de06737dc558c8d37f61b72f3900d20353fa34330936c630ed1bdd906840"
+    },
+    {
+      "sample_id": "pc-0017",
+      "decision": "confirmed",
+      "annotation_sha256": "d22a77d79328ae4f18d998fed7920982221d835f33aed60dcaea5ab6b46cefeb",
+      "required_gold_groups_sha256": "612066ca76d907e169874f68b792960f9930dd0e8d76cd44cb6fe1d0de0af8e9"
+    },
+    {
+      "sample_id": "pc-0028",
+      "decision": "confirmed",
+      "annotation_sha256": "56c5eb104626688692c49a275f82fdc8957869875fd1f5974862b0a6da10ccf7",
+      "required_gold_groups_sha256": "358f91c23c534c193885723033ed20298ef0f4690d3423357442cbcd0104d440"
+    },
+    {
+      "sample_id": "pc-0029",
+      "decision": "confirmed",
+      "annotation_sha256": "14505794c26ae2dd2c1866a7e5200ce92ebe7909a2bc32e273b634e9fcef7a7d",
+      "required_gold_groups_sha256": "4e844d2dc3e0549eacce5975d89002a807066cae7f3e25749125cc74791c3a34"
+    },
+    {
+      "sample_id": "ms-0525",
+      "decision": "confirmed",
+      "annotation_sha256": "90ebe2ec12998ea5055ec18da253b24dd33555efd1811a1292a568987150ff19",
+      "required_gold_groups_sha256": "29a35e15ce01900ec89e21a70a8eac861e4114a9aa4a5c65a0f40e5e5369a0ec"
+    }
+  ],
+  "corpus_edits_decision": "confirmed",
+  "note": "Approval applies to these exact inputs. proposals.json retains its pre-confirmation review_state snapshot; this event records the later human decision. No second-human or LLM verdict is asserted. Subsequent content changes require fresh confirmation."
+}

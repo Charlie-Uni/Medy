@@ -200,13 +200,23 @@ def manifest_schema() -> dict:
     for k in NEW_SLICES:
         ps["properties"][k] = {"type": "integer", "minimum": 0}
     prov = m["$defs"]["reviewProvenance"]["properties"]["artifacts"]
-    prov["items"]["properties"]["path"]["enum"] = (
+    required_evidence = (
         [f"review_evidence/run_{b}.json" for b in BATCHES]
         + [f"review_evidence/verdicts_{b}.jsonl" for b in BATCHES]
         + ["review_evidence/resolutions.json", "review_evidence/reviewer_runtime_metadata.json"]
     )
+    prov["items"]["properties"]["path"] = {
+        "oneOf": [
+            {"enum": required_evidence},
+            {"type": "string", "pattern": "^review_evidence/chunk_inputs/input_[0-9a-f]{64}\\.jsonl$"},
+            {
+                "type": "string",
+                "pattern": "^review_evidence/review_prompts/review_prompt_[0-9a-f]{64}\\.md$",
+            },
+        ]
+    }
     prov["minItems"] = 12
-    prov["maxItems"] = 12
+    prov["maxItems"] = 140
     p["imported_samples"] = {
         "type": "object",
         "additionalProperties": False,

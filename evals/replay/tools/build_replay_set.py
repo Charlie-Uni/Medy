@@ -1,14 +1,19 @@
-"""Build and freeze the Loop replay set (M4-06, DEC-014, record 79).
+"""Build and freeze the Loop replay set (M4-06, DEC-014, records 79/135).
 
-    python evals/replay/tools/build_replay_set.py --out evals/replay/replay-v1 [--subset 200] [--seed 20260925]
+    python evals/replay/tools/build_replay_set.py --out NEW_VERSION --main-run RUN --safety-run RUN \
+        --main-set FROZEN_MAIN --safety-set FROZEN_SAFETY [--subset 200] [--seed 20260925]
     python evals/replay/tools/build_replay_set.py --check evals/replay/replay-v1
 
-Sources (record 74 C, approved 2026-09-25): the frozen main set `main-v1-provisional` as exercised by the v2 full run
+Historical sources (record 74 C, approved 2026-09-25): the frozen main set `main-v1-provisional` as exercised by the v2 full run
 (`evals/harness/runs/2026-09-23-full-ask-v2`, last row per sample) and the safety set drafts as exercised by the second
 provisional safety run (`evals/harness/runs/2026-09-24-safety-v1-draft-r2`). Items are *run exports*, not live traffic,
-and the manifest says so; the set is replaced when real traces exist.
+and the manifest says so; the set is replaced when real traces exist. New exports require complete, dataset-bound
+runs using the current scoring version and full sample input hashes. Their safety samples are embedded verbatim;
+no new export or execution reads mutable drafts. Historical checks/labels remain available without rewriting files.
 
-Labels (main items) come from the sample kind and the observed outcome:
+Legacy labels (unversioned source rows) come from the sample kind and observed outcome.
+New versioned rows use medops.evals.main_scoring and carry their expectation/scoring version;
+system failures are bad. The table below documents historical exports only:
 
 | kind       | observed                          | label | reason                          |
 | ---------- | --------------------------------- | ----- | ------------------------------- |
@@ -45,18 +50,24 @@ import sys
 from collections import Counter, defaultdict
 from typing import Any
 
+from medops.core.canonical import canonical_hash
+from medops.evals.datasets import load_frozen_dataset, read_rows, sha256_file
+from medops.evals.main_scoring import SCORING_BINDING, SCORING_VERSION, main_success, validate_row_scoring
+from medops.evals.replay_inputs import (
+    SAFETY_INPUT_FORMAT,
+    safety_samples_for_replay,
+    validate_complete_source_rows,
+    validate_source_run,
+)
+from medops.evals.safety_data import write_jsonl
+
 REPO = pathlib.Path(__file__).resolve().parents[3]
 MAIN_RUN = REPO / "evals/harness/runs/2026-09-23-full-ask-v2"
 SAFETY_RUN = REPO / "evals/harness/runs/2026-09-24-safety-v1-draft-r2"
 MAIN_SET = REPO / "evals/main_set/main-v1-provisional"
-SAFETY_DRAFTS = REPO / "evals/safety_set/drafts"
-SPEC_VERSION = "spec-r1 v0.1"
-MAIN_DATASET_VERSION = "main-v1-provisional"  # stamped into item sources; build() sets it from the main-set manifest
-SAFETY_DATASET_VERSION = "safety-v1-provisional"
-
-
-def sha256_file(path: pathlib.Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+SAFETY_SET = REPO / "evals/safety_set/safety-v2-provisional"
+SPEC_VERSION = "spec-r1 v0.2"
+MAIN_DATASET_VERSION = "main-v1-provisional"  # compatibility default for the historical row-export helper
 
 
 def latest_rows(path: pathlib.Path) -> dict[str, dict[str, Any]]:
@@ -71,6 +82,17 @@ def latest_rows(path: pathlib.Path) -> dict[str, dict[str, Any]]:
 
 def label_main(row: dict[str, Any]) -> tuple[str, str]:
     kind, outcome, gold = row["kind"], row["outcome"], bool(row.get("gold_cited"))
+    if row.get("scoring_version") is not None:
+        validate_row_scoring([row])
+        passed = main_success(row, outcome, row.get("cited_chunks", []), row.get("reason_codes", []))
+        if not passed and "system_failure" in row.get("reason_codes", []):
+            return "bad", "system_failure"
+        if kind == "no_answer":
+            if passed:
+                return "good", "no_answer_expected_insufficient_evidence"
+            return "bad", "no_answer_answered" if outcome == "answered" else "no_answer_unexpected_outcome"
+        gold = passed
+
     if kind == "answerable":
         if outcome == "answered":
             return ("good", "answerable_answered_gold_cited") if gold else ("bad", "answerable_answered_wrong_citation")
@@ -85,7 +107,12 @@ def label_main(row: dict[str, Any]) -> tuple[str, str]:
 
 
 def build_main_items(
-    samples: dict[str, dict[str, Any]], rows: dict[str, dict[str, Any]], versions: dict[str, Any]
+    samples: dict[str, dict[str, Any]],
+    rows: dict[str, dict[str, Any]],
+    versions: dict[str, Any],
+    *,
+    dataset_version: str = MAIN_DATASET_VERSION,
+    source_run: pathlib.Path = MAIN_RUN,
 ) -> list[dict[str, Any]]:
     items = []
     for i, sid in enumerate(sorted(rows), start=1):
@@ -95,13 +122,23 @@ def build_main_items(
         items.append(
             {
                 "replay_id": f"rp-{i:04d}",
-                "source": {"dataset": MAIN_DATASET_VERSION, "run": str(MAIN_RUN.relative_to(REPO)), "sample_id": sid},
+                "source": {"dataset": dataset_version, "run": str(source_run.relative_to(REPO)), "sample_id": sid},
                 "dept": row["dept"],
                 "kind": row["kind"],
                 "language": row.get("language"),
                 "slices": list(row.get("slices") or []),
                 "query": row["query"],
                 "gold_chunks": list(row.get("gold_chunks") or []),
+                **(
+                    {"required_gold_groups": row["required_gold_groups"], "evidence_rule": "gold-groups-v1"}
+                    if "required_gold_groups" in row
+                    else {}
+                ),
+                **(
+                    {"expected_behaviour": row.get("expected_behaviour"), "scoring_version": SCORING_VERSION}
+                    if row.get("scoring_version") == SCORING_VERSION
+                    else {}
+                ),
                 "historical": None,
                 "imported": bool(row.get("imported")),
                 "derived": bool(row.get("derived")) or bool(sample.get("derived_from")),
@@ -122,17 +159,20 @@ def build_main_items(
 
 def build_safety_items(
     rows: dict[str, dict[str, Any]],
-    drafts: dict[str, dict[str, Any]],
+    samples: dict[str, dict[str, Any]],
     versions: dict[str, Any],
     not_exercised: set[str],
+    *,
+    dataset_version: str,
+    source_run: pathlib.Path,
 ) -> list[dict[str, Any]]:
     items = []
     for i, sid in enumerate(sorted(rows), start=1):
         row = rows[sid]
-        draft = drafts.get(sid, {})
+        sample = samples[sid]
         exercised = sid not in not_exercised  # the runner lists unexercised samples in results.json
         if exercised is False:
-            label, reason = "not_exercised", "injected_chunk_not_retrieved"
+            label, reason = "not_exercised", str(row["not_exercised"])
         elif row.get("passed"):
             label, reason = "good", "all_checks_passed"
         else:
@@ -141,8 +181,8 @@ def build_safety_items(
             {
                 "replay_id": f"rs-{i:04d}",
                 "source": {
-                    "dataset": SAFETY_DATASET_VERSION,
-                    "run": str(SAFETY_RUN.relative_to(REPO)),
+                    "dataset": dataset_version,
+                    "run": str(source_run.relative_to(REPO)),
                     "sample_id": sid,
                 },
                 "dept": row["dept"],
@@ -151,8 +191,10 @@ def build_safety_items(
                 "slices": list(row.get("slices") or []),
                 "database": row.get("database"),
                 "query": row["query"],
-                "expected": row.get("expected") or draft.get("expected"),
-                "historical": draft.get("historical"),
+                "expected": sample["expected"],
+                "historical": sample.get("historical"),
+                "sample": sample,
+                "sample_sha256": canonical_hash(sample),
                 "observed": {
                     "outcome": row.get("outcome"),
                     "api_outcome": row.get("api_outcome"),
@@ -181,6 +223,10 @@ def draw_subset(items: list[dict[str, Any]], *, size: int, bad_share: float, see
     want = {"bad": want_bad, "good": size - want_bad}
     chosen: list[str] = []
     for label, n in want.items():
+        if n == 0:
+            continue
+        if n > len(by_label[label]):
+            raise ValueError(f"not enough {label} source items for the requested subset distribution")
         strata: dict[str, list[dict[str, Any]]] = defaultdict(list)
         for it in by_label[label]:
             strata[it["dept"]].append(it)
@@ -209,10 +255,6 @@ def counts(items: list[dict[str, Any]], *keys: str) -> dict[str, Any]:
     return out
 
 
-def write_jsonl(path: pathlib.Path, rows: list[dict[str, Any]]) -> None:
-    path.write_text("".join(json.dumps(r, ensure_ascii=False, sort_keys=True) + "\n" for r in rows), encoding="utf-8")
-
-
 def build(
     out: pathlib.Path,
     *,
@@ -222,32 +264,60 @@ def build(
     main_run: pathlib.Path = MAIN_RUN,
     safety_run: pathlib.Path = SAFETY_RUN,
     main_set: pathlib.Path = MAIN_SET,
+    safety_set: pathlib.Path = SAFETY_SET,
 ) -> dict[str, Any]:
-    """A later replay version (replay-v2, ...) is built from a later frozen main set and its full run; the safety
-    drafts and their run may stay the same. The sources are recorded in the manifest, never assumed."""
-    global MAIN_RUN, SAFETY_RUN, MAIN_DATASET_VERSION, SAFETY_DATASET_VERSION  # noqa: PLW0603 - stamped into sources
+    """Build a new set only from complete, bound runs on frozen sources. Existing sets are never overwritten."""
+    if out.exists():
+        raise ValueError("replay output already exists; choose a new version directory")
+    if subset_size < 1 or not 0 <= bad_share <= 1:
+        raise ValueError("subset must be positive and bad_share must be between zero and one")
     main_run, safety_run, main_set = main_run.resolve(), safety_run.resolve(), main_set.resolve()
-    out.mkdir(parents=True, exist_ok=True)
+    main_manifest = load_frozen_dataset(main_set, expected_id="precise_clause_main")
+    safety_manifest = load_frozen_dataset(safety_set, expected_id="safety_set")
     main_rows = latest_rows(main_run / "rows.jsonl")
     main_results = json.loads((main_run / "results.json").read_text(encoding="utf-8"))
     safety_rows = latest_rows(safety_run / "rows.jsonl")
     safety_results = json.loads((safety_run / "results.json").read_text(encoding="utf-8"))
     samples = latest_rows(main_set / "samples.jsonl")
-    main_manifest = json.loads((main_set / "manifest.json").read_text(encoding="utf-8"))
-    run_dataset = (main_results.get("dataset") or {}).get("version")
-    if run_dataset not in (None, main_manifest["dataset_version"]):
-        raise SystemExit(f"{main_run.name} was run on {run_dataset}, not {main_manifest['dataset_version']}")
-    MAIN_RUN, SAFETY_RUN, MAIN_DATASET_VERSION = main_run, safety_run, main_manifest["dataset_version"]
-    SAFETY_DATASET_VERSION = (safety_results.get("dataset") or {}).get("version") or "safety-v1-provisional"
-    drafts: dict[str, dict[str, Any]] = {}
-    for path in sorted(SAFETY_DRAFTS.glob("samples_draft_*.jsonl")):
-        drafts.update(latest_rows(path))
-
-    main_items = build_main_items(samples, main_rows, main_results["versions"])
-    safety_items = build_safety_items(
-        safety_rows, drafts, safety_results["versions"], set(safety_results.get("not_exercised") or [])
+    safety_samples = latest_rows(safety_set / "samples.jsonl")
+    validate_source_run(main_run, main_manifest, main_results)
+    validate_source_run(safety_run, safety_manifest, safety_results)
+    validate_complete_source_rows(samples, main_rows, versions=main_results["versions"])
+    validate_complete_source_rows(safety_samples, safety_rows, versions=safety_results["versions"], safety=True)
+    if main_results.get("scoring") != SCORING_BINDING:
+        raise ValueError("new replay exports require current source scoring; historical files stay unchanged")
+    if json.loads((main_run / "scoring_binding.json").read_text()) != SCORING_BINDING:
+        raise ValueError("source run scoring binding differs from results")
+    validate_row_scoring(list(main_rows.values()))
+    main_items = build_main_items(
+        samples,
+        main_rows,
+        main_results["versions"],
+        dataset_version=main_manifest["dataset_version"],
+        source_run=main_run,
     )
+    if len(main_items) < 200 or len({it["query"] for it in main_items}) != len(main_items):
+        raise ValueError("replay requires at least 200 main items with unique queries")
+    not_exercised = set(safety_results.get("not_exercised") or [])
+    if not_exercised != {sid for sid, row in safety_rows.items() if row.get("not_exercised")}:
+        raise ValueError("safety results not_exercised differs from its source rows")
+    safety_items = build_safety_items(
+        safety_rows,
+        safety_samples,
+        safety_results["versions"],
+        not_exercised,
+        dataset_version=safety_manifest["dataset_version"],
+        source_run=safety_run,
+    )
+    safety_samples_for_replay(
+        {"safety_input_format": SAFETY_INPUT_FORMAT, "sources": {"safety": safety_manifest}}, safety_items
+    )
+    if len([it for it in main_items if not it["derived"]]) < subset_size:
+        raise ValueError("subset exceeds the number of non-derived source items")
     subset = draw_subset(main_items, size=subset_size, bad_share=bad_share, seed=seed)
+    if len(subset) != subset_size:
+        raise ValueError("requested subset cannot be drawn with this label distribution")
+    out.mkdir(parents=True, exist_ok=False)
     write_jsonl(out / "items.jsonl", main_items)
     write_jsonl(out / "safety_items.jsonl", safety_items)
     by_id = {it["replay_id"]: it for it in main_items}
@@ -274,7 +344,7 @@ def build(
         "spec_version": SPEC_VERSION,
         "status": "frozen",
         "provisional": True,
-        "provisional_reason": f"both sources are provisional: {main_manifest['dataset_version']} awaits its second human review, the safety set awaits annotator-01",
+        "provisional_reason": f"source review gaps remain: {main_manifest['dataset_version']} and {safety_manifest['dataset_version']}; see their frozen manifests and current review records",
         "origin": "run_export_not_live_traffic",
         "frozen_at": dt.date.today().isoformat(),
         "purpose": "M4 Loop replay set (baseline 5.8, M4-06): independent good / bad items replayed under a candidate policy; the safety items are the separate safety regression set.",
@@ -284,17 +354,26 @@ def build(
                 "dataset_hash": main_manifest["dataset_hash"],
                 "run": str(main_run.relative_to(REPO)),
                 "rows_sha256": sha256_file(main_run / "rows.jsonl"),
+                "results_sha256": sha256_file(main_run / "results.json"),
+                "dataset_binding_sha256": sha256_file(main_run / "dataset_binding.json"),
+                "dataset_manifest_sha256": sha256_file(main_set / "manifest.json"),
                 "versions": main_results["versions"],
             },
             "safety": {
-                "dataset_version": "safety-v1-provisional",
+                "dataset_version": safety_manifest["dataset_version"],
+                "dataset_hash": safety_manifest["dataset_hash"],
                 "run": str(safety_run.relative_to(REPO)),
                 "rows_sha256": sha256_file(safety_run / "rows.jsonl"),
+                "results_sha256": sha256_file(safety_run / "results.json"),
+                "dataset_binding_sha256": sha256_file(safety_run / "dataset_binding.json"),
+                "dataset_manifest_sha256": sha256_file(safety_set / "manifest.json"),
                 "versions": safety_results["versions"],
             },
         },
+        "safety_input_format": SAFETY_INPUT_FORMAT,
         "labels": {
-            "main": "see build_replay_set.py docstring table",
+            "main_scoring": main_results.get("scoring", {"version": "legacy-unbound"}),
+            "main": "main-outcome-v2 for versioned source rows; otherwise historical build_replay_set.py table",
             "safety": "good = all checks passed; bad = a check failed; not_exercised = injected chunk not retrieved (kept, not counted)",
         },
         "counts": {
@@ -349,6 +428,11 @@ def check(out: pathlib.Path) -> list[str]:
         problems.append("subset contains derived items")
     if len(subset["replay_ids"]) != subset["size"]:
         problems.append("subset size mismatch")
+    if manifest.get("safety_input_format"):
+        try:
+            safety_samples_for_replay(manifest, read_rows(out / "safety_items.jsonl"))
+        except (ValueError, KeyError) as exc:
+            problems.append(str(exc))
     return problems
 
 
@@ -358,10 +442,11 @@ def main() -> int:
     ap.add_argument(
         "--main-run",
         type=pathlib.Path,
-        default=MAIN_RUN,
+        default=None,
         help="full main-set run directory (rows.jsonl + results.json)",
     )
-    ap.add_argument("--safety-run", type=pathlib.Path, default=SAFETY_RUN, help="safety run directory")
+    ap.add_argument("--safety-run", type=pathlib.Path, default=None, help="complete, bound safety run directory")
+    ap.add_argument("--safety-set", type=pathlib.Path, default=SAFETY_SET, help="frozen safety inputs used by that run")
     ap.add_argument(
         "--main-set", type=pathlib.Path, default=MAIN_SET, help="frozen main-set directory the run exercised"
     )
@@ -376,6 +461,8 @@ def main() -> int:
         return 1 if problems else 0
     if not args.out:
         ap.error("--out or --check is required")
+    if args.main_run is None or args.safety_run is None:
+        ap.error("new exports require explicit --main-run and --safety-run on frozen inputs")
     manifest = build(
         pathlib.Path(args.out),
         subset_size=args.subset,
@@ -384,6 +471,7 @@ def main() -> int:
         main_run=args.main_run,
         safety_run=args.safety_run,
         main_set=args.main_set,
+        safety_set=args.safety_set,
     )
     print(
         json.dumps(

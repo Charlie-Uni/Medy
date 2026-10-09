@@ -10,7 +10,7 @@ from jsonschema import Draft202012Validator
 
 from medops.core.canonical import canonical_json
 from medops.evals.probe import review_provenance as provenance
-from medops.evals.probe.validator import PageTextProvider
+from medops.evals.probe.validator import PageTextProvider, ProbeSetValidator
 from tests.unit.evals.fixture_builder import build, refreeze
 
 SCHEMA = Path(__file__).resolve().parents[3] / "evals/probe/precise_clause/schema/manifest.schema.json"
@@ -31,6 +31,12 @@ def rehash(version, manifest, name):
     path = f"review_evidence/{name}"
     entry = next(a for a in manifest["review_provenance"]["artifacts"] if a["path"] == path)
     entry["sha256"] = hashlib.sha256((version / path).read_bytes()).hexdigest()
+
+
+def add_artifact(version, manifest, relative):
+    manifest["review_provenance"]["artifacts"].append(
+        {"path": relative, "sha256": hashlib.sha256((version / relative).read_bytes()).hexdigest()}
+    )
 
 
 @pytest.fixture
@@ -318,6 +324,110 @@ def test_changed_sample_cannot_reuse_review_after_refreezing(recorded, forge_inp
     manifest.update(json.loads((version / "manifest.json").read_text()))
     messages = failures(recorded)
     assert any("actual prompt" in message if forge_input_hashes else "input hash" in message for message in messages)
+
+
+def test_hashed_archived_pack_preserves_unchanged_member_of_a_mixed_historical_chunk(recorded):
+    version, manifest, pages = recorded
+    samples = [json.loads(line) for line in (version / "samples.jsonl").read_text().splitlines()]
+    by_id = {sample["sample_id"]: sample for sample in samples}
+    old_records = provenance._current_records(version, samples, pages)
+    run_path = version / "review_evidence/run_MA.json"
+    run = json.loads(run_path.read_text())
+    verdict_path = version / "review_evidence/verdicts_MA.jsonl"
+    verdicts = {row["sample_id"]: row for row in provenance._jsonl(verdict_path.read_bytes())}
+    stable, changed = "pc-0002", "pc-0003"
+
+    old_inputs = [old_records[stable], old_records[changed]]
+    historical = copy.deepcopy(run["chunks"][1])
+    historical.update(
+        session_id="mixed-historical-session",
+        sample_ids=[stable, changed],
+        sample_input_sha256={sid: provenance._digest(old_records[sid]) for sid in (stable, changed)},
+        prompt_sha256=provenance._actual_prompt_hash((version / "review_prompt.md").read_text(), old_inputs),
+        verdicts=[verdicts[stable], verdicts[changed]],
+        input_path="chunk_inputs/pending.jsonl",
+    )
+    historical["input_path"] = f"chunk_inputs/input_{historical['prompt_sha256']}.jsonl"
+    archive_path = version / "review_evidence" / historical["input_path"]
+    archive_path.parent.mkdir()
+    archive_path.write_text("".join(json.dumps(record, ensure_ascii=False) + "\n" for record in old_inputs))
+    historical_index = len(run["chunks"])
+    run["chunks"].append(historical)
+    for sid in (stable, changed):
+        run["latest"][sid] = {
+            "chunk_index": historical_index,
+            "sample_input_sha256": historical["sample_input_sha256"][sid],
+            "prompt_sha256": historical["prompt_sha256"],
+            "verdict_sha256": provenance._digest(verdicts[sid]),
+        }
+
+    by_id[changed]["query"] = "A changed, newly reviewed question for the same evidence?"
+    save_samples(version, samples)
+    current_records = provenance._current_records(version, samples, pages)
+    newer = copy.deepcopy(run["chunks"][2])
+    newer.update(
+        session_id="targeted-current-session",
+        sample_ids=[changed],
+        sample_input_sha256={changed: provenance._digest(current_records[changed])},
+        prompt_sha256=provenance._actual_prompt_hash(
+            (version / "review_prompt.md").read_text(), [current_records[changed]]
+        ),
+        verdicts=[verdicts[changed]],
+    )
+    newer.pop("input_path", None)
+    newer_index = len(run["chunks"])
+    run["chunks"].append(newer)
+    run["sample_input_sha256"][changed] = newer["sample_input_sha256"][changed]
+    run["latest"][changed] = {
+        "chunk_index": newer_index,
+        "sample_input_sha256": newer["sample_input_sha256"][changed],
+        "prompt_sha256": newer["prompt_sha256"],
+        "verdict_sha256": provenance._digest(verdicts[changed]),
+    }
+    save_json(run_path, run)
+    rehash(version, manifest, run_path.name)
+    runtime_path = version / "review_evidence/reviewer_runtime_metadata.json"
+    runtime = json.loads(runtime_path.read_text())
+    runtime["observed_successful_calls"] += 2
+    save_json(runtime_path, runtime)
+    rehash(version, manifest, runtime_path.name)
+    add_artifact(version, manifest, archive_path.relative_to(version).as_posix())
+    save_json(version / "manifest.json", manifest)
+    refreeze(version)
+    manifest.update(json.loads((version / "manifest.json").read_text()))
+
+    assert provenance.validate_review_provenance(version, manifest, pages=pages) == []
+    assert list(Draft202012Validator(json.loads(SCHEMA.read_text())).iter_errors(manifest)) == []
+
+    archive_path.write_text(archive_path.read_text().replace(stable, "pc-9999", 1))
+    assert any("artifact SHA-256 mismatch" in message for message in failures(recorded))
+
+
+def test_hashed_archived_prompt_preserves_historical_reviews_after_prompt_upgrade(recorded):
+    version, manifest, pages = recorded
+    old_prompt = (version / "review_prompt.md").read_bytes()
+    old_hash = hashlib.sha256(old_prompt).hexdigest()
+    archived = version / "review_evidence/review_prompts" / f"review_prompt_{old_hash}.md"
+    archived.parent.mkdir()
+    archived.write_bytes(old_prompt)
+    add_artifact(version, manifest, archived.relative_to(version).as_posix())
+
+    new_prompt = old_prompt + b"\nSuccessor-only multi-evidence instructions.\n"
+    (version / "review_prompt.md").write_bytes(new_prompt)
+    new_hash = hashlib.sha256(new_prompt).hexdigest()
+    next(r for r in manifest["reviewers"] if r["kind"] == "llm")["prompt_hash"] = new_hash
+    save_json(version / "manifest.json", manifest)
+    refreeze(version)
+    manifest.update(json.loads((version / "manifest.json").read_text()))
+
+    assert provenance.validate_review_provenance(version, manifest, pages=pages) == []
+    assert list(Draft202012Validator(json.loads(SCHEMA.read_text())).iter_errors(manifest)) == []
+    report = ProbeSetValidator(SCHEMA.parent, pages).validate(version, mode="frozen")
+    assert report.errors == []
+
+    archived.write_bytes(old_prompt + b"tampered")
+    rehash(version, manifest, archived.relative_to(version / "review_evidence").as_posix())
+    assert any("filename/content" in message for message in failures(recorded))
 
 
 def test_without_page_texts_only_metadata_is_verified(recorded):

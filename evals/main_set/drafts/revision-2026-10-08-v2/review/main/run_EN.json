@@ -1,0 +1,427 @@
+{
+  "batch": "EN",
+  "reviewer_cli": "claude-code",
+  "cli_binary": "/Users/leaf/.local/bin/claude",
+  "cli_version": "2.1.79 (Claude Code)",
+  "model": "claude-opus-5",
+  "model_version_source": "pinned_model_id",
+  "reasoning_effort_requested": "high",
+  "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+  "review_prompt_sha256": "7572d16e88b638cbc6fa888f4e1a86fe6ffb4869583df357ee1ce0bd012eb758",
+  "sample_input_sha256": {
+    "ms-0125": "d176847449872e393f75d205d7b9940224a62da6dc00ce99fb96e33b5f17c343",
+    "ms-0178": "3f9ec2d8d42fe6139a5bb18c88134757207309c2b0c138f9883c5564a91b4186",
+    "ms-0206": "c1dc63a9d577e8807ecb5edbdcb636f2f5f57d1325c7e799ec93e166cd6553ce",
+    "ms-0242": "77372b8a80449e900f209f2f90558aa2a79cc019299bbf69f0659a1f29c7ae76",
+    "ms-0244": "d4936d74a4bff2a0d64ccf71963737f4cee8b625aac497c7a6282c0d7da31eb9",
+    "ms-0337": "507833fc0a64934cfa4590e38011c7d64f9a990a1ee57dfe1cccabcf36785a23"
+  },
+  "chunks": [
+    {
+      "cli_capture_sha256": "74ea1bce7ee1b76fb2919009a51935dbb3f2038b08ed185cd44f1019a4ab8f39",
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "562f251e-66b2-4ec8-9a99-8a22fa973579",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "19459",
+      "usage": {
+        "input_tokens": 2,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 6596,
+        "total_input_tokens": 6598,
+        "output_tokens": 12861,
+        "model_usage": {
+          "claude-opus-5": {
+            "inputTokens": 2,
+            "outputTokens": 12861,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 6596,
+            "webSearchRequests": 0,
+            "costUSD": 0.36276,
+            "contextWindow": 200000,
+            "maxOutputTokens": 32000
+          }
+        }
+      },
+      "cost_usd": 0.36276,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "requested_max_cost_usd": 1.25,
+      "sample_ids": [
+        "ms-0125"
+      ],
+      "started_at": "2026-10-08T01:08:22+00:00",
+      "finished_at": "2026-10-08T01:10:54+00:00",
+      "prompt_chars": 12409,
+      "prompt_sha256": "5c01c84714852cf45a7251bc4172f763a0c0f0d24a6b143f7b239627ea523f2b",
+      "verdicts": [
+        {
+          "sample_id": "ms-0125",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "issue",
+            "dept": "ok"
+          },
+          "reason": "联合证据内容上成立：g1 给出分级要求（“Audit findings should be reported in line with their relative risk level and should be graded in order to indicate their relative criticality to risks impacting the pharmacovigilance system, processes and parts of processes.”），g2/g3/g4 分别给出 critical/major/minor 三级定义，四个单元共同必需、无冗余，negation 由 span 内“which is however not considered serious”“that is not expected to adversely affect”承载，key_text 各自在第 8 页唯一出现。问题在偏移一致性：按所附第 8 页规范化页文本，g1=[952,1176) 与其 224 字文本吻合、g2=[1177,1754) 与其 577 字文本吻合、g4=[2227,2456) 与其 229 字文本吻合（各 span 间以单个空格分隔），但 gold ms-0125-g3 的文本“• major is a significant weakness … which is however not considered serious.”实际长度为 471 字符，而声明区间 [1755,2227) 宽度为 472，多包含了“serious.”与“• minor”之间的那个分隔空格，故偏移所指文本与 text 不完全一致。",
+          "suggestion": "将 ms-0125-g3 的 evidence_span.char_end 由 2227 改为 2226（保持 char_start=1755），使偏移所指文本与 text 逐字一致；其余 gold 偏移与切片、部门标注保持不变。"
+        }
+      ],
+      "input_path": "chunk_inputs/input_5c01c84714852cf45a7251bc4172f763a0c0f0d24a6b143f7b239627ea523f2b.jsonl",
+      "sample_input_sha256": {
+        "ms-0125": "d176847449872e393f75d205d7b9940224a62da6dc00ce99fb96e33b5f17c343"
+      },
+      "budget_attempt_id": "d0a95a0457e4492b884a460fb5b94ab3"
+    },
+    {
+      "cli_capture_sha256": "1ecd5154b955035c7f3e7069941cd50561a608e30db0b138b36b7f92562df3ec",
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "9e88aaac-1cfb-49ed-9f60-0bebd4798ff9",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "7488",
+      "usage": {
+        "input_tokens": 2,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 5582,
+        "total_input_tokens": 5584,
+        "output_tokens": 1904,
+        "model_usage": {
+          "claude-opus-5": {
+            "inputTokens": 2,
+            "outputTokens": 1904,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 5582,
+            "webSearchRequests": 0,
+            "costUSD": 0.0824975,
+            "contextWindow": 200000,
+            "maxOutputTokens": 32000
+          }
+        }
+      },
+      "cost_usd": 0.0824975,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "requested_max_cost_usd": 1.25,
+      "sample_ids": [
+        "ms-0178"
+      ],
+      "started_at": "2026-10-08T01:10:54+00:00",
+      "finished_at": "2026-10-08T01:11:21+00:00",
+      "prompt_chars": 9632,
+      "prompt_sha256": "0c4fe0ccd7430beb630f451419216bb091519960a9a4a87e2f52d4812c6cb6a3",
+      "verdicts": [
+        {
+          "sample_id": "ms-0178",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "英文孪生与父问题一致：均问 MAH 在收到施加义务的书面通知后多少天内可请求陈述书面意见，限定条件（REG Art 10a(2)、DIR Art 22a(2) 引用、30 天、提出请求）一致，英文表述自然。key_text「Within 30 days of receipt of the written notification of an obligation imposed」在第 19 页恰出现一次且为逐字原文；evidence_span 为完整条款，偏移 187-427 与页文本一致（校验起止位置与文本长度 240 字符相符），包含「may request to present written observations」与法条引用，未遗漏限定条件。切片：time_window（30 days）、protocol_id（query 锁定 REG Art 10a(2)/DIR Art 22a(2) 并点名 GVP Module VIII Rev 3 节）成立；mixed_zh_en 由工具按 query/key_text 含英文术语规则计算并自继承，无明显错误。GVP 模块属 PV。",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_0c4fe0ccd7430beb630f451419216bb091519960a9a4a87e2f52d4812c6cb6a3.jsonl",
+      "sample_input_sha256": {
+        "ms-0178": "3f9ec2d8d42fe6139a5bb18c88134757207309c2b0c138f9883c5564a91b4186"
+      },
+      "budget_attempt_id": "2a2f59b59603484fb7d547b114dcb88a"
+    },
+    {
+      "cli_capture_sha256": "4f7a310a79ec5f1676f2b9555c08dc65434bb2237f3b172b733980982971c7e1",
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "0eae4a90-c1e8-427c-9c64-37be1cfc0e52",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "14665",
+      "usage": {
+        "input_tokens": 2,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 7162,
+        "total_input_tokens": 7164,
+        "output_tokens": 7501,
+        "model_usage": {
+          "claude-opus-5": {
+            "inputTokens": 2,
+            "outputTokens": 7501,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 7162,
+            "webSearchRequests": 0,
+            "costUSD": 0.2322975,
+            "contextWindow": 200000,
+            "maxOutputTokens": 32000
+          }
+        }
+      },
+      "cost_usd": 0.2322975,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "requested_max_cost_usd": 1.25,
+      "sample_ids": [
+        "ms-0206"
+      ],
+      "started_at": "2026-10-08T01:11:21+00:00",
+      "finished_at": "2026-10-08T01:15:09+00:00",
+      "prompt_chars": 12640,
+      "prompt_sha256": "5116c74ab5113ca19fd6cec5217b36087bdbeb56ca2b77aa7c63d2d02f33d866",
+      "verdicts": [
+        {
+          "sample_id": "ms-0206",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "英文孪生与父问题一致（两问：各相关SmPC章节应呈现的RMM相关信息；配有额外RMM材料时4.4节的额外说明），限定条件未增减，英文自然。四个 gold 的 key_text 均在第36页逐字出现且唯一（g1 以“including information characterising the reaction”区别于PL第4节的“Information on adverse reactions that may occur…”；g3 以“indications, dosing and administration, contraindications, interactions”区别于PL的“Safe use advice regarding dosing and”）。偏移核对一致：g1 362–658（长296，起点落在“Characteristics25, ”之后）、g2 659–1253（长594）、g3 1254–1669（长415）、g4 1670–2194（长524），文本与页文连续片段一致。联合证据覆盖问题两部分且无冗余：原文为并列项目符号清单（4.8；4.4；4.6；4.1/4.2/4.3/4.5/4.7/4.9 一组），非“或”关系，故 g1–g3 共同必需；g4 对应“For medicinal products with additional RMM materials … section 4.4. should describe the intended actions for risk minimisation and should include a statement…”，回答第二问，缺之不可。页内未被纳入的“Other SmPC sections may also refer to these materials if necessary.”与“The SmPC section 4.4 may, in exceptional cases, include especially important safety information in bold type within a box”均为“may”的可选内容，非必要条件，排除合理。切片：query 含“GVP Module XVI”“Section 4.4”等锁定章节编号，protocol_id 成立；query/key_text 含 SmPC、RMM 等英文术语，按 P2 mixed_zh_en 成立；全部 span 均不超过1,500字符且 gold 仅落第36页，不触发 long_context；“Posology/dosing”为抽象提及给药，不计 dose_unit。GVP 指南归 PV，部门正确。",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_5116c74ab5113ca19fd6cec5217b36087bdbeb56ca2b77aa7c63d2d02f33d866.jsonl",
+      "sample_input_sha256": {
+        "ms-0206": "c1dc63a9d577e8807ecb5edbdcb636f2f5f57d1325c7e799ec93e166cd6553ce"
+      },
+      "budget_attempt_id": "e5ac6d14ca934c7798d3ddd4260f6289"
+    },
+    {
+      "cli_capture_sha256": "53fcc3f865f83a43c3129cfeb5d3f70f658fd278bb9e5c5e97c27cca0bae048f",
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "04038d62-3941-48eb-abdd-043a9b12eb5b",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "8881",
+      "usage": {
+        "input_tokens": 2,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 6369,
+        "total_input_tokens": 6371,
+        "output_tokens": 2510,
+        "model_usage": {
+          "claude-opus-5": {
+            "inputTokens": 2,
+            "outputTokens": 2510,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 6369,
+            "webSearchRequests": 0,
+            "costUSD": 0.10256625,
+            "contextWindow": 200000,
+            "maxOutputTokens": 32000
+          }
+        }
+      },
+      "cost_usd": 0.10256625,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "requested_max_cost_usd": 1.25,
+      "sample_ids": [
+        "ms-0242"
+      ],
+      "started_at": "2026-10-08T01:15:09+00:00",
+      "finished_at": "2026-10-08T01:23:21+00:00",
+      "prompt_chars": 11601,
+      "prompt_sha256": "50d94d24e774559aaffeeca448addc97d376bb62c9007613a124c3c3192fd629",
+      "verdicts": [
+        {
+          "sample_id": "ms-0242",
+          "verdict": "dispute",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "issue",
+            "dept": "ok"
+          },
+          "reason": "ms-0242-g3（第 7 页）被列为共同必需单元，但其原文为「For aggregate analysis under § 312.32(c)(1)(i)(C), such events could also be associated with treatment or therapy that is standard of care for the disease or condition.」——这是指南对聚合分析中事件来源的补充说明，并不是 § 312.32(c)(1)(i) 列举的第三个「示例」本身；query 问的是哪些示例说明因果关系的「reasonable possibility」，该句属可选补充而非回答所必需。g1 + g2 的两个 span 已连续覆盖同页三个条目（单次罕见且与药物暴露强相关的事件、虽与药物暴露不常相关但在暴露人群中罕见的事件、以及「An aggregate analysis of specific events observed in a clinical trial that indicates those events occur more frequently in the drug treatment group than in a concurrent or historical control group.」），联合证据已完整。把 g3 设为共同必需构成冗余/过度要求。其余项核对无误：三个 key_text 均在第 7 页逐字出现且各只出现一次；偏移与 text 一致，span 连续衔接且保留限定条件；query 自然、含锁定条号 § 312.32(c)(1)(i) 符合 protocol_id；英文 query 与 parent_query 问同一件事、限定条件一致；safety reporting 指南归 PV 正确。",
+          "suggestion": "将 ms-0242-g3 从共同必需单元降为可选补充（或删除该 gold 单元），仅以 g1、g2 作为联合必需证据；如确需保留聚合分析的 standard-of-care 说明，建议把该句并入 g2 的 span 作为同一条款上下文，而不再作为独立的必需 gold。另可考虑为第二个示例（“not commonly associated with drug exposure but is otherwise uncommon in the population exposed to the drug”）补一个共享该 span 的 key_text，使三个示例的命中点齐备。"
+        }
+      ],
+      "input_path": "chunk_inputs/input_50d94d24e774559aaffeeca448addc97d376bb62c9007613a124c3c3192fd629.jsonl",
+      "sample_input_sha256": {
+        "ms-0242": "77372b8a80449e900f209f2f90558aa2a79cc019299bbf69f0659a1f29c7ae76"
+      },
+      "budget_attempt_id": "454909ffeb15432f9c88e66f079908ee"
+    },
+    {
+      "cli_capture_sha256": "dd720f2784dea88e7befc57102eb310d891b56169ff9aeec58c62e76020a4898",
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "cc901f0e-dc43-4539-b65c-c58a95d49971",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "11852",
+      "usage": {
+        "input_tokens": 2,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 5816,
+        "total_input_tokens": 5818,
+        "output_tokens": 6034,
+        "model_usage": {
+          "claude-opus-5": {
+            "inputTokens": 2,
+            "outputTokens": 6034,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 5816,
+            "webSearchRequests": 0,
+            "costUSD": 0.18721000000000002,
+            "contextWindow": 200000,
+            "maxOutputTokens": 32000
+          }
+        }
+      },
+      "cost_usd": 0.18721000000000002,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "requested_max_cost_usd": 1.25,
+      "sample_ids": [
+        "ms-0244"
+      ],
+      "started_at": "2026-10-08T01:23:21+00:00",
+      "finished_at": "2026-10-08T01:24:33+00:00",
+      "prompt_chars": 10075,
+      "prompt_sha256": "02b780b0653bc14823ff94705e37893f0e2df0bede6febbcc89e49953e19d728",
+      "verdicts": [
+        {
+          "sample_id": "ms-0244",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "英文孪生与 parent_query 问的是同一件事（不符合 IND safety report / BA/BE 上市前 SAE 标准但仍须报 IRB 的事件及示例），限定条件一致、英文自然，属 PV 安全报告指南故部门归属正确。两个 gold 单元确为共同必需：g1 给出规则条款“Certain events may not meet the criteria for reporting in an IND safety report or as a BA/BE study premarket SAE, but still must be reported to the IRB because they represent unanticipated problems involving risk to human participants or others.”，g2 给出两类示例（给药前/洗脱期/筛选程序相关的 SAE 与“reports of medication errors (such as receipt of wrong dose or contaminated study medication), breach of privacy/confidentiality…”），缺任一方则无法同时回答“哪些事件”与“举例”；无冗余单元，也未见遗漏其他必要条件（下一条 IRB 自有书面程序属补充而非回答本问）。两个 key_text 在第 12 页各出现一次且为逐字原文；偏移经核对与 text 一致（816–1061、1062–1588）。negation 成立（“may not meet the criteria … but still must be reported”，命中保留否定语义）；key_text 含 IND/BA/BE/SAE/IRB 等英文缩写，按 P2 mixed_zh_en 成立；span 均短于 1500 字符且 gold 同页，无 long_context；query 仅点名指南名称与日期，不构成 protocol_id；“wrong dose”为抽象提及，不计 dose_unit；span 内无时间窗，不计 time_window。",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_02b780b0653bc14823ff94705e37893f0e2df0bede6febbcc89e49953e19d728.jsonl",
+      "sample_input_sha256": {
+        "ms-0244": "d4936d74a4bff2a0d64ccf71963737f4cee8b625aac497c7a6282c0d7da31eb9"
+      },
+      "budget_attempt_id": "e2d881f4bd43447d90799c9258c6ad7c"
+    },
+    {
+      "cli_capture_sha256": "4a00d4a6279a1f4c6dfaba0a275afb775968b56f3e97ea869d7a11167aa35c96",
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "31a5f8b5-da8d-49df-aa73-58b2edac25c6",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "7286",
+      "usage": {
+        "input_tokens": 2,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 5530,
+        "total_input_tokens": 5532,
+        "output_tokens": 1754,
+        "model_usage": {
+          "claude-opus-5": {
+            "inputTokens": 2,
+            "outputTokens": 1754,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 5530,
+            "webSearchRequests": 0,
+            "costUSD": 0.0784225,
+            "contextWindow": 200000,
+            "maxOutputTokens": 32000
+          }
+        }
+      },
+      "cost_usd": 0.0784225,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "requested_max_cost_usd": 1.25,
+      "sample_ids": [
+        "ms-0337"
+      ],
+      "started_at": "2026-10-08T01:24:33+00:00",
+      "finished_at": "2026-10-08T01:25:00+00:00",
+      "prompt_chars": 9615,
+      "prompt_sha256": "d74e6971b93787c1e50bfa7dc87d544d597104ad2caf671e17daa2bdf51aa292",
+      "verdicts": [
+        {
+          "sample_id": "ms-0337",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": ""
+        }
+      ],
+      "input_path": "chunk_inputs/input_d74e6971b93787c1e50bfa7dc87d544d597104ad2caf671e17daa2bdf51aa292.jsonl",
+      "sample_input_sha256": {
+        "ms-0337": "507833fc0a64934cfa4590e38011c7d64f9a990a1ee57dfe1cccabcf36785a23"
+      },
+      "budget_attempt_id": "faba27d731ba4b7f802f1ac5634410ae"
+    }
+  ],
+  "provenance_version": 2,
+  "latest": {
+    "ms-0125": {
+      "chunk_index": 0,
+      "sample_input_sha256": "d176847449872e393f75d205d7b9940224a62da6dc00ce99fb96e33b5f17c343",
+      "prompt_sha256": "5c01c84714852cf45a7251bc4172f763a0c0f0d24a6b143f7b239627ea523f2b",
+      "verdict_sha256": "3a3e3b6786e44005b60e20cbe30be1eafa6b5d12cde41e225984cb2fbb0c7442"
+    },
+    "ms-0178": {
+      "chunk_index": 1,
+      "sample_input_sha256": "3f9ec2d8d42fe6139a5bb18c88134757207309c2b0c138f9883c5564a91b4186",
+      "prompt_sha256": "0c4fe0ccd7430beb630f451419216bb091519960a9a4a87e2f52d4812c6cb6a3",
+      "verdict_sha256": "53e38c098d071353ed99d50723cdc433b1323aca46ed7911fb48f27e0a42c38f"
+    },
+    "ms-0206": {
+      "chunk_index": 2,
+      "sample_input_sha256": "c1dc63a9d577e8807ecb5edbdcb636f2f5f57d1325c7e799ec93e166cd6553ce",
+      "prompt_sha256": "5116c74ab5113ca19fd6cec5217b36087bdbeb56ca2b77aa7c63d2d02f33d866",
+      "verdict_sha256": "fc11f0ec1fd89e3a1326649d95a885786d50f5f206ef168fd1a352e5848769bf"
+    },
+    "ms-0242": {
+      "chunk_index": 3,
+      "sample_input_sha256": "77372b8a80449e900f209f2f90558aa2a79cc019299bbf69f0659a1f29c7ae76",
+      "prompt_sha256": "50d94d24e774559aaffeeca448addc97d376bb62c9007613a124c3c3192fd629",
+      "verdict_sha256": "7a6a42b506f82d9b3eb1515ba8c569cfe8d5e7aa680a200df344ac41c115b1bc"
+    },
+    "ms-0244": {
+      "chunk_index": 4,
+      "sample_input_sha256": "d4936d74a4bff2a0d64ccf71963737f4cee8b625aac497c7a6282c0d7da31eb9",
+      "prompt_sha256": "02b780b0653bc14823ff94705e37893f0e2df0bede6febbcc89e49953e19d728",
+      "verdict_sha256": "606aefd463892f720f5e001bc63afade1addaf393200b33e8ceaa2cc05527b77"
+    },
+    "ms-0337": {
+      "chunk_index": 5,
+      "sample_input_sha256": "507833fc0a64934cfa4590e38011c7d64f9a990a1ee57dfe1cccabcf36785a23",
+      "prompt_sha256": "d74e6971b93787c1e50bfa7dc87d544d597104ad2caf671e17daa2bdf51aa292",
+      "verdict_sha256": "c0e627e8981c9a2db38d02ff740a7f3ffb7dd7f1a07d9d0d89df0188bc4cba67"
+    }
+  },
+  "active_review": null
+}

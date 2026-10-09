@@ -23,62 +23,73 @@ import argparse
 import dataclasses
 import datetime as dt
 import hashlib
-import importlib.util
 import json
 import pathlib
 import sys
 import time
+import uuid
 from collections import defaultdict
 from typing import Any
 
-REPO = pathlib.Path(__file__).resolve().parents[3]
-sys.path.insert(0, str(REPO / "src"))
-sys.path.insert(0, str(REPO / "evals/harness/tools"))
+import psycopg
 
-import psycopg  # noqa: E402
-
-from medops.application.policy_loader import (  # noqa: E402
+from medops.application.policy_loader import (
     ReleasedPolicy,
     ReleasedPolicySet,
     check_restates_release,
     load_released,
     validate_diff,
 )
-from medops.core.config import Settings  # noqa: E402
-from medops.domain.common import Dept  # noqa: E402
-from medops.domain.identity import UserContext  # noqa: E402
-from medops.domain.state import VersionSet  # noqa: E402
-from medops.harness.nodes import ANSWER_SYSTEM  # noqa: E402
-from medops.harness.production import production_model_config_version  # noqa: E402
-from medops.harness.runtime import initial_state, run_ask  # noqa: E402
-from medops.infrastructure.llm.budget import BudgetedGateway, InMemorySpendLedger  # noqa: E402
-from medops.infrastructure.llm.gateway import OPENAI_PRICES, PriceTable  # noqa: E402
-from medops.infrastructure.llm.openai_gateway import OpenAIModelGateway  # noqa: E402
-from medops.loop.gate import compute_gate  # noqa: E402
-from medops.retrieval.glossary_store import load_versioned_glossary  # noqa: E402
-from medops.retrieval.production import (  # noqa: E402
+from medops.core.canonical import canonical_hash
+from medops.core.config import Settings
+from medops.domain.common import Dept
+from medops.domain.identity import UserContext
+from medops.domain.state import VersionSet
+from medops.evals import safety as sr
+from medops.evals.datasets import bind_run_dataset, load_frozen_dataset, read_rows, sha256_file
+from medops.evals.evidence import replay_gold_cited
+from medops.evals.main_scoring import (
+    SCORING_BINDING,
+    SCORING_VERSION,
+    abstention_metrics,
+    bind_run_scoring,
+    main_success,
+    validate_expectations,
+    validate_row_scoring,
+)
+from medops.evals.replay_inputs import safety_samples_for_replay
+from medops.evals.run_conditions import (
+    FactGuard,
+    attempt_accounting,
+    bind_conditions,
+    make_conditions,
+    policy_snapshot,
+    validate_replay_attempts,
+)
+from medops.evals.runtime import EXIT_STALLED, Plane, with_database
+from medops.evals.safety_data import PRODUCTION_DB, SAFETY_DB
+from medops.evals.statistics import nearest_rank as pctl
+from medops.harness.answer import ANSWER_SYSTEM
+from medops.harness.production import production_model_config_version
+from medops.harness.runtime import initial_state, run_ask
+from medops.infrastructure.llm.factory import build_budgeted_gateway
+from medops.infrastructure.llm.meter import MeteredGateway
+from medops.loop.gate import compute_gate
+from medops.retrieval.glossary_store import load_versioned_glossary
+from medops.retrieval.pinned import PinnedEmbedding, PinnedReranker, PinnedThread
+from medops.retrieval.production import (
     RERANK_OUTPUT,
     production_hybrid_config,
     production_retrieval_inputs,
 )
-from medops.retrieval.versioning import compute_retrieval_version  # noqa: E402
-from medops.skills.catalog import default_registry  # noqa: E402
-from medops.skills.production import doc_type_lookup, evidence_lookup  # noqa: E402
+from medops.retrieval.versioning import compute_retrieval_version
+from medops.skills.catalog import default_registry
+from medops.skills.production import doc_type_lookup, evidence_lookup
+
+REPO = pathlib.Path(__file__).resolve().parents[3]
 
 AVG_COST_MAIN = 0.0076  # USD per main item, v2 full run (4.65 / 614)
 AVG_COST_SAFETY = 0.0038  # USD per safety item, safety r2 (0.64 / 170)
-
-
-def _load(path: pathlib.Path, name: str):
-    spec = importlib.util.spec_from_file_location(name, path)
-    module = importlib.util.module_from_spec(spec)
-    assert spec.loader is not None
-    spec.loader.exec_module(module)
-    return module
-
-
-def read_jsonl(path: pathlib.Path) -> list[dict[str, Any]]:
-    return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
 
 
 def needs_run(done: dict[str, dict[str, Any]], key: str) -> bool:
@@ -90,36 +101,104 @@ def needs_run(done: dict[str, dict[str, Any]], key: str) -> bool:
 
 
 def seed_baseline_rows(
-    prev: pathlib.Path, rows_path: pathlib.Path, *, versions: dict[str, Any], dataset_hash: str, subset: bool, runs: int
+    prev: pathlib.Path,
+    rows_path: pathlib.Path,
+    *,
+    conditions: dict[str, Any],
+    runs: int,
 ) -> int:
-    """Copy the baseline-arm rows of a finished run into this run so a new candidate pays for one arm only (M5-04).
-    Refused unless the earlier run used the same replay set (hash and subset flag) and the same baseline versions;
-    rows keep their measured cost / latency and carry `reused_from` so the report can say where they came from."""
+    """Copy a compatible, fully bound baseline arm while preserving its original attempt provenance."""
     res = json.loads((prev / "results.json").read_text(encoding="utf-8"))
-    g = res["gate"]
-    if g["replay_set"]["dataset_hash"] != dataset_hash or bool(g["replay_set"]["subset"]) != subset:
-        raise SystemExit(f"--baseline-from {prev}: replay set differs from this run")
-    if json.loads(json.dumps(g["arms"]["baseline"]["versions"])) != json.loads(json.dumps(versions)):
-        raise SystemExit(f"--baseline-from {prev}: baseline versions differ (released state changed?)")
-    have = {f"{r['arm']}|{r['run']}|{r['replay_id']}" for r in read_jsonl(rows_path)} if rows_path.exists() else set()
+    if res.get("scoring") != SCORING_BINDING:
+        raise SystemExit(f"--baseline-from {prev}: scoring differs or is absent; rerun both arms")
+    binding_path = prev / "run_conditions.json"
+    if not binding_path.exists():
+        raise SystemExit(f"--baseline-from {prev}: source run has no runtime/fact binding; rerun both arms")
+    binding = json.loads(binding_path.read_text(encoding="utf-8"))
+    previous_conditions = binding.get("conditions")
+    if binding.get("sha256") != canonical_hash(previous_conditions):
+        raise SystemExit(f"--baseline-from {prev}: source run conditions are corrupt")
+    if res.get("run_conditions_sha256") != binding["sha256"]:
+        raise SystemExit(f"--baseline-from {prev}: source result and run conditions differ")
+    if res.get("baseline_reuse_identity_sha256") != baseline_reuse_identity(previous_conditions):
+        raise SystemExit(f"--baseline-from {prev}: source baseline identity is absent or corrupt")
+    if baseline_reuse_identity(previous_conditions) != baseline_reuse_identity(conditions):
+        raise SystemExit(f"--baseline-from {prev}: baseline execution identity differs")
+    source_rows = read_rows(prev / "rows.jsonl")
+    validate_row_scoring(source_rows)
+    validate_replay_attempts(source_rows, previous_conditions)
+    effective = {
+        f"{row['arm']}|{row['run']}|{row['replay_id']}": row for row in source_rows if row["arm"] == "baseline"
+    }
+    required_keys = {
+        f"baseline|{run}|{item['sample_id']}" for run in range(1, runs + 1) for item in conditions["sample_plan"]
+    }
+    if missing := required_keys - set(effective):
+        raise SystemExit(f"--baseline-from {prev}: source baseline is incomplete ({len(missing)} rows missing)")
+    if any("system_failure" in effective[key].get("reason_codes", []) for key in required_keys):
+        raise SystemExit(f"--baseline-from {prev}: source baseline has unresolved system failures")
+    have = {f"{r['arm']}|{r['run']}|{r['replay_id']}" for r in read_rows(rows_path)} if rows_path.exists() else set()
+    digest = canonical_hash(conditions)
+    sample_hashes = {item["sample_id"]: item["sha256"] for item in conditions["sample_plan"]}
+    baseline_versions = conditions["versions"]["baseline"]
     n = 0
+    eligible_keys = {
+        f"{r['arm']}|{r['run']}|{r['replay_id']}"
+        for r in source_rows
+        if r["arm"] == "baseline" and int(r["run"]) <= runs and r["replay_id"] in sample_hashes
+    } - have
     with rows_path.open("a", encoding="utf-8") as fh:
-        for r in read_jsonl(prev / "rows.jsonl"):
+        for r in source_rows:
             key = f"{r['arm']}|{r['run']}|{r['replay_id']}"
-            if r["arm"] != "baseline" or int(r["run"]) > runs or key in have:
+            if key not in eligible_keys:
                 continue
-            fh.write(json.dumps({**r, "reused_from": prev.name}, ensure_ascii=False) + "\n")
-            have.add(key)
+            source_attempt = r["attempt_id"]
+            copied = {
+                **r,
+                "attempt_id": "reused-"
+                + canonical_hash({"source_run": prev.name, "source_attempt": source_attempt, "target": digest})[:32],
+                "run_conditions_sha256": digest,
+                "sample_input_sha256": sample_hashes[r["replay_id"]],
+                "versions": baseline_versions,
+                "reused_from": prev.name,
+                "source_attempt_id": source_attempt,
+                "source_run_conditions_sha256": binding["sha256"],
+            }
+            fh.write(json.dumps(copied, ensure_ascii=False) + "\n")
             n += 1
     return n
 
 
-def main_success(item: dict[str, Any], outcome: str, cited: list[str]) -> bool:
-    gold = bool(set(item["gold_chunks"]) & set(cited))
-    kind = item["kind"]
-    if kind == "answerable" or kind == "conflict":
-        return outcome == "answered" and gold
-    return outcome != "answered"  # no_answer
+def replay_condition_samples(items: list[dict[str, Any]], safety_items: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    return [
+        *({"sample_id": item["replay_id"], "stream": "main", "item": item} for item in items),
+        *({"sample_id": item["replay_id"], "stream": "safety", "item": item} for item in safety_items),
+    ]
+
+
+def baseline_reuse_identity(conditions: dict[str, Any]) -> str:
+    """Identity of the measured baseline arm, excluding the candidate and report-only run controls."""
+    configuration = conditions["configuration"]
+    inputs = conditions["inputs"]
+    return canonical_hash(
+        {
+            "source": conditions["source"],
+            "environment": conditions["environment"],
+            "sample_plan": conditions["sample_plan"],
+            "facts": conditions["facts"],
+            "versions": conditions["versions"]["baseline"],
+            "configuration": {
+                key: value
+                for key, value in configuration.items()
+                if key not in {"arms", "policy_snapshots", "runs", "gate_seed"}
+            }
+            | {
+                "baseline_arm": configuration["arms"]["baseline"],
+                "baseline_policy_snapshot": configuration["policy_snapshots"]["baseline"],
+            },
+            "inputs": {key: value for key, value in inputs.items() if key != "candidate_file_sha256"},
+        }
+    )
 
 
 def arm_versions(name: str, released: ReleasedPolicySet, base_policy_version: str) -> VersionSet:
@@ -134,6 +213,7 @@ def arm_versions(name: str, released: ReleasedPolicySet, base_policy_version: st
                 glossary_version=released.glossary_version(),
                 multi_query=released.multi_query(),
                 doc_focus=released.doc_focus(),
+                source_constraint=released.source_constraint(),
                 query_translation=released.query_translation(),
             )
         ),
@@ -152,10 +232,12 @@ def arm_settings(released: ReleasedPolicySet) -> dict[str, Any]:
         "glossary": released.glossary_version(),
         "multi_query": released.multi_query(),
         "doc_focus": released.doc_focus(),
+        "source_constraint": released.source_constraint(),
         "query_translation": released.query_translation(),
         "evidence_focus": released.evidence_focus(),
         "answer_models": released.answer_models(),
         "answer_prompt_overridden": released.get("prompt", "answer_system") is not None,
+        "answer_system_sha256": hashlib.sha256(released.answer_system(ANSWER_SYSTEM).encode()).hexdigest(),
     }
 
 
@@ -166,15 +248,6 @@ def candidate_set(baseline: ReleasedPolicySet, spec: dict[str, Any]) -> Released
     pid = spec.get("policy_id") or hashlib.sha256(json.dumps(diff, sort_keys=True).encode()).hexdigest()[:32]
     kept = tuple(p for p in baseline.policies if (p.kind, p.name) != (kind, name))
     return ReleasedPolicySet(kept + (ReleasedPolicy(pid, kind, name, spec.get("version", "candidate"), dict(diff)),))
-
-
-def pctl(xs: list[float], p: float) -> float | None:
-    if not xs:
-        return None
-    s = sorted(xs)
-    import math
-
-    return s[max(0, math.ceil(p * len(s)) - 1)]
 
 
 def main() -> int:
@@ -208,12 +281,13 @@ def main() -> int:
     ap.add_argument("--gpu-timeout", type=float, default=120.0)
     args = ap.parse_args()
 
-    manifest = json.loads((args.set / "manifest.json").read_text(encoding="utf-8"))
-    items = read_jsonl(args.set / "items.jsonl")
-    safety_items = read_jsonl(args.set / "safety_items.jsonl")
+    manifest = load_frozen_dataset(args.set, expected_id="loop_replay")
+    items = read_rows(args.set / "items.jsonl")
+    safety_items = read_rows(args.set / "safety_items.jsonl")
     if not args.full:
         subset = set(json.loads((args.set / "subset.json").read_text(encoding="utf-8"))["replay_ids"])
         items = [it for it in items if it["replay_id"] in subset]
+    validate_expectations(items)
     safety_items = [it for it in safety_items if it["label"] != "not_exercised"]
     if args.items:
         items, safety_items = items[: args.items], safety_items[: args.items]
@@ -227,19 +301,27 @@ def main() -> int:
     )
     if args.estimate:
         return 0
+    safety_samples = safety_samples_for_replay(manifest, safety_items)
     if args.out.exists() and not args.resume:
         raise SystemExit("refusing to overwrite an existing run directory (pass --resume)")
+    bind_run_dataset(args.out, manifest)
+    bind_run_scoring(args.out)
+    rows_path = args.out / "rows.jsonl"
+    if rows_path.exists():
+        validate_row_scoring(read_rows(rows_path))
     args.out.mkdir(parents=True, exist_ok=True)
     spec = json.loads(args.candidate_file.read_text(encoding="utf-8"))
 
-    settings = Settings()
-    sr = _load(REPO / "evals/harness/tools/safety_run.py", "safety_run")
-    sa = sr._load_smoke_ask()
+    settings = Settings()  # type: ignore[call-arg]
+    if settings.database_admin_url is None:
+        print("DATABASE_ADMIN_URL is needed for the retrieval preflight and fact guard", file=sys.stderr)
+        return 2
+
     from medops.retrieval.rerank import BgeRerankerV2M3
     from medops.retrieval.vector.embedding import BgeM3EmbeddingProvider
 
     app_url = settings.database_url.get_secret_value()
-    with psycopg.connect(sa._with_database(app_url, sr.PRODUCTION_DB)) as conn:
+    with psycopg.connect(with_database(app_url, PRODUCTION_DB)) as conn:
         baseline = load_released(conn)
     candidate = candidate_set(baseline, spec)
     arms = {"baseline": baseline, "candidate": candidate}
@@ -247,78 +329,113 @@ def main() -> int:
     for name, rel in arms.items():
         print(f"arm {name}: {json.dumps(arm_settings(rel), ensure_ascii=False, sort_keys=True)}", flush=True)
 
-    gpu = sa.GpuThread(args.gpu_timeout)
-    provider = sa._PinnedEmbedding(gpu.call(lambda: BgeM3EmbeddingProvider(device=args.device)), gpu)
+    versions = {name: arm_versions(name, rel, base_policy_version) for name, rel in arms.items()}
+
+    gpu = PinnedThread(args.gpu_timeout)
+    provider = PinnedEmbedding(gpu.call(lambda: BgeM3EmbeddingProvider(device=args.device)), gpu)
     rerankers: dict[int, Any] = {}
-    gateway = sa._Meter(
-        BudgetedGateway(
-            OpenAIModelGateway.from_settings(settings),
-            prices=PriceTable(OPENAI_PRICES),
-            ledger=InMemorySpendLedger(),
-            monthly_cap_usd=settings.llm_monthly_budget_usd,
-        )
-    )
+    budgeted_gateway = build_budgeted_gateway(settings, run_cap_usd=args.max_cost_usd)
+    gateway = MeteredGateway(budgeted_gateway)
     registry = default_registry()
     planes: dict[str, dict[str, Any]] = {}
-    versions: dict[str, VersionSet] = {}
     for name, rel in arms.items():
         out = rel.rerank_output(RERANK_OUTPUT)
         if out not in rerankers:
-            rerankers[out] = sa._PinnedReranker(
-                gpu.call(lambda o=out: BgeRerankerV2M3(device=args.device, output=o)), gpu
-            )
+            rerankers[out] = PinnedReranker(gpu.call(lambda o=out: BgeRerankerV2M3(device=args.device, output=o)), gpu)
         cfg = rel.hybrid_config(production_hybrid_config())
         prompt = rel.answer_system(ANSWER_SYSTEM)
         glossary = load_versioned_glossary(settings.glossary_dir or REPO / "evals/glossary", rel.glossary_version())
         planes[name] = {
-            db: sr.Plane(
+            db: Plane(
                 db,
                 app_url,
                 provider,
                 rerankers[out],
                 gateway,
                 args.as_of,
-                sa,
                 config=cfg,
                 answer_system=prompt,
                 glossary=glossary,
                 multi_query=rel.multi_query(),
                 doc_focus=rel.doc_focus(),
+                source_constraint=rel.source_constraint(),
                 query_translation=rel.query_translation(),
                 evidence_focus=rel.evidence_focus(),
                 answer_models=rel.answer_models(),
+                admin_url=with_database(settings.database_admin_url.get_secret_value(), db),
             )
-            for db in (sr.PRODUCTION_DB, sr.SAFETY_DB)
+            for db in (PRODUCTION_DB, SAFETY_DB)
         }
-        versions[name] = arm_versions(name, rel, base_policy_version)
-    drafts = {s["sample_id"]: s for s in sr.load_drafts(include_withdrawn=True)}  # frozen sets keep withdrawn ids
 
-    rows_path = args.out / "rows.jsonl"
+    from medops.evals.preflight import save_preflight
+
+    save_preflight(
+        args.out, {f"{arm}/{db}": plane.index_preflight for arm, by_db in planes.items() for db, plane in by_db.items()}
+    )
+    facts: dict[str, dict[str, Any]] = {}
+    for db in (PRODUCTION_DB, SAFETY_DB):
+        baseline_plane, candidate_plane = planes["baseline"][db], planes["candidate"][db]
+        if (
+            baseline_plane.index_preflight["database_identity"] != candidate_plane.index_preflight["database_identity"]
+            or baseline_plane.fact_snapshot != candidate_plane.fact_snapshot
+        ):
+            raise ValueError(f"{db}: baseline and candidate planes were created from different fact snapshots")
+        facts[db] = {
+            "database_identity": baseline_plane.index_preflight["database_identity"],
+            **baseline_plane.fact_snapshot,
+        }
+    condition_samples = replay_condition_samples(items, safety_items)
+    conditions = make_conditions(
+        root=REPO,
+        runner=pathlib.Path(__file__),
+        samples=condition_samples,
+        versions={name: version.model_dump(mode="json") for name, version in versions.items()},
+        facts=facts,
+        configuration={
+            "as_of": args.as_of.isoformat(),
+            "device": args.device,
+            "gpu_timeout_s": args.gpu_timeout,
+            "runs": args.runs,
+            "subset": not args.full,
+            "skip_safety": args.skip_safety,
+            "gate_seed": args.seed,
+            "monthly_budget_usd": settings.llm_monthly_budget_usd,
+            "fact_recheck_interval_s": 300.0,
+            "policy_snapshots": {name: policy_snapshot(released) for name, released in arms.items()},
+            "arms": {name: arm_settings(released) for name, released in arms.items()},
+        },
+        inputs={
+            "dataset_hash": manifest["dataset_hash"],
+            "dataset_version": manifest["dataset_version"],
+            "candidate_file_sha256": sha256_file(args.candidate_file),
+            "scoring": SCORING_BINDING,
+        },
+    )
+    conditions_hash = bind_conditions(args.out, conditions)
     if args.baseline_from:
-        reused = seed_baseline_rows(
-            args.baseline_from,
-            rows_path,
-            versions=versions["baseline"].model_dump(mode="json"),
-            dataset_hash=manifest["dataset_hash"],
-            subset=not args.full,
-            runs=args.runs,
-        )
+        reused = seed_baseline_rows(args.baseline_from, rows_path, conditions=conditions, runs=args.runs)
         print(f"reused {reused} baseline rows from {args.baseline_from.name}", flush=True)
-    done: dict[str, dict[str, Any]] = {}
-    if rows_path.exists():
-        for r in read_jsonl(rows_path):
-            done[f"{r['arm']}|{r['run']}|{r['replay_id']}"] = r
+    attempts = read_rows(rows_path) if rows_path.exists() else []
+    validate_replay_attempts(attempts, conditions)
+    done = {f"{r['arm']}|{r['run']}|{r['replay_id']}": r for r in attempts}
+    sample_hashes = {item["sample_id"]: item["sha256"] for item in conditions["sample_plan"]}
+    fact_guard = FactGuard(
+        {db: planes["baseline"][db].fact_snapshot for db in (PRODUCTION_DB, SAFETY_DB)},
+        {db: planes["baseline"][db].current_fact_snapshot for db in (PRODUCTION_DB, SAFETY_DB)},
+    )
+    fact_guard.check(force=True)
     started = dt.datetime.now(dt.UTC)
     with rows_path.open("a", encoding="utf-8") as fh:
         streak = 0  # consecutive system_failure rows (provider outage or a sleeping machine)
         for run in range(1, args.runs + 1):
             for arm in ("baseline", "candidate"):
-                prod = planes[arm][sr.PRODUCTION_DB]
+                prod = planes[arm][PRODUCTION_DB]
                 lookups = (evidence_lookup(prod.conn_for_user, as_of=args.as_of), doc_type_lookup(prod.conn_for_user))
                 for it in items:
                     key = f"{arm}|{run}|{it['replay_id']}"
                     if not needs_run(done, key):
                         continue
+                    fact_guard.check()
                     user = UserContext(
                         user_id=hashlib.sha256(f"replay:{it['replay_id']}".encode()).hexdigest()[:16],
                         dept=Dept(it["dept"]),
@@ -334,12 +451,18 @@ def main() -> int:
                     state = initial_state(
                         user=user, query=it["query"], versions=versions[arm], historical_requested=bool(hist)
                     )
-                    before = (gateway.cost, gateway.tokens, gateway.calls)
+                    before = (gateway.cost_usd, gateway.tokens, gateway.calls)
                     t0 = time.perf_counter()
-                    r = run_ask(state, deps)
-                    st = r.state
+                    ask_run = run_ask(state, deps)
+                    st = ask_run.state
                     cited = [c.chunk_id for c in st.answer.citations] if st.answer else []
+                    reason_codes = [c.value for c in st.escalation.reason_codes] if st.escalation else []
                     row = {
+                        "attempt_id": str(uuid.uuid4()),
+                        "run_conditions_sha256": conditions_hash,
+                        "sample_input_sha256": sample_hashes[it["replay_id"]],
+                        "versions": versions[arm].model_dump(mode="json"),
+                        "scoring_version": SCORING_VERSION,
                         "replay_id": it["replay_id"],
                         "arm": arm,
                         "run": run,
@@ -347,42 +470,55 @@ def main() -> int:
                         "dept": it["dept"],
                         "language": it.get("language"),
                         "slices": it.get("slices", []),
-                        "outcome": r.outcome,
-                        "reason_codes": [c.value for c in st.escalation.reason_codes] if st.escalation else [],
+                        "outcome": ask_run.outcome,
+                        "reason_codes": reason_codes,
                         "cited_chunks": cited,
-                        "gold_cited": bool(set(it["gold_chunks"]) & set(cited)),
-                        "success": main_success(it, r.outcome, cited),
+                        "gold_cited": replay_gold_cited(it, cited),
+                        "success": main_success(it, ask_run.outcome, cited, reason_codes),
                         "expected_label": it["label"],
                         "model_calls": gateway.calls - before[2],
                         "model_tokens": gateway.tokens - before[1],
-                        "cost_usd": round(gateway.cost - before[0], 6),
+                        "cost_usd": round(gateway.cost_usd - before[0], 6),
                         "latency_s": round(time.perf_counter() - t0, 2),
                     }
                     done[key] = row
                     fh.write(json.dumps(row, ensure_ascii=False) + "\n")
                     fh.flush()
                     print(
-                        f"run {run} {arm} {it['replay_id']} -> {r.outcome} success={row['success']} ${row['cost_usd']:.4f} {row['latency_s']}s",
+                        f"run {run} {arm} {it['replay_id']} -> {ask_run.outcome} success={row['success']} ${row['cost_usd']:.4f} {row['latency_s']}s",
                         flush=True,
                     )
                     if gpu.stalled:
+                        fact_guard.check(force=True)
                         print("gpu stalled: exiting for the supervisor", flush=True)
-                        return sa.GpuThread.EXIT_STALLED
+                        return EXIT_STALLED
                     streak = streak + 1 if "system_failure" in row["reason_codes"] else 0
                     if streak >= args.max_consecutive_failures:
+                        fact_guard.check(force=True)
                         print(f"{streak} consecutive system failures: exiting 76 (resume redoes them)", flush=True)
                         return 76
-                    if gateway.cost > args.max_cost_usd:
+                    if budgeted_gateway.run_cap_blocked:
+                        fact_guard.check(force=True)
+                        print(f"cost cap {args.max_cost_usd} USD reached: stopping (resume later)", flush=True)
+                        return 77
+                    if gateway.cost_usd > args.max_cost_usd:
+                        fact_guard.check(force=True)
                         print(f"cost cap {args.max_cost_usd} USD reached: stopping (resume later)", flush=True)
                         return 77
                 for it in safety_items:
                     key = f"{arm}|{run}|{it['replay_id']}"
                     if not needs_run(done, key):
                         continue
-                    sample = drafts[it["source"]["sample_id"]]
-                    before = (gateway.cost, gateway.tokens, gateway.calls)
+                    fact_guard.check()
+                    sample = safety_samples[it["source"]["sample_id"]]
+                    before = (gateway.cost_usd, gateway.tokens, gateway.calls)
                     srow = sr.run_sample(sample, planes[arm], gateway, registry, versions[arm], lookups)
                     row = {
+                        "attempt_id": str(uuid.uuid4()),
+                        "run_conditions_sha256": conditions_hash,
+                        "sample_input_sha256": sample_hashes[it["replay_id"]],
+                        "versions": versions[arm].model_dump(mode="json"),
+                        "scoring_version": SCORING_VERSION,
                         "replay_id": it["replay_id"],
                         "arm": arm,
                         "run": run,
@@ -394,7 +530,7 @@ def main() -> int:
                         "failed_checks": srow["failed_checks"],
                         "model_calls": gateway.calls - before[2],
                         "model_tokens": gateway.tokens - before[1],
-                        "cost_usd": round(gateway.cost - before[0], 6),
+                        "cost_usd": round(gateway.cost_usd - before[0], 6),
                         "latency_s": srow["latency_s"],
                     }
                     done[key] = row
@@ -406,11 +542,21 @@ def main() -> int:
                     )
                     streak = streak + 1 if "system_failure" in row["reason_codes"] else 0
                     if streak >= args.max_consecutive_failures:
+                        fact_guard.check(force=True)
                         print(f"{streak} consecutive system failures: exiting 76 (resume redoes them)", flush=True)
                         return 76
-                    if gateway.cost > args.max_cost_usd:
+                    if budgeted_gateway.run_cap_blocked:
+                        fact_guard.check(force=True)
                         print(f"cost cap {args.max_cost_usd} USD reached: stopping (resume later)", flush=True)
                         return 77
+                    if gateway.cost_usd > args.max_cost_usd:
+                        fact_guard.check(force=True)
+                        print(f"cost cap {args.max_cost_usd} USD reached: stopping (resume later)", flush=True)
+                        return 77
+
+    fact_guard.check(force=True)
+    all_attempts = read_rows(rows_path)
+    validate_replay_attempts(all_attempts, conditions)
 
     # ---- report
     main_ids = [it["replay_id"] for it in items]
@@ -438,6 +584,7 @@ def main() -> int:
             aggregates[arm].append(
                 {
                     "run": run,
+                    "abstention_metrics": abstention_metrics(rows),
                     "n": len(rows),
                     "success_rate": round(sum(r["success"] for r in rows) / max(1, len(rows)), 4),
                     "safety_n": len(srows),
@@ -480,6 +627,7 @@ def main() -> int:
         baseline_spend=spend_by_arm_run["baseline"],
         candidate_spend=spend_by_arm_run["candidate"],
     ).as_dict()
+    gate["scoring"] = SCORING_BINDING
     gate["replay_set"] = {
         "dataset_version": manifest["dataset_version"],
         "dataset_hash": manifest["dataset_hash"],
@@ -490,18 +638,34 @@ def main() -> int:
     gate["arms"] = {
         "baseline": {
             "released": [dataclasses.asdict(p) for p in baseline.policies],
-            "versions": versions["baseline"].model_dump(),
+            "versions": versions["baseline"].model_dump(mode="json"),
+            "settings": arm_settings(baseline),
         },
-        "candidate": {"diff": spec, "versions": versions["candidate"].model_dump()},
+        "candidate": {
+            "diff": spec,
+            "versions": versions["candidate"].model_dump(mode="json"),
+            "settings": arm_settings(candidate),
+        },
     }
+    accounting = attempt_accounting(all_attempts)
+    current_execution_cost = round(gateway.cost_usd, 4)
     results = {
+        "scoring": SCORING_BINDING,
+        "run_conditions_sha256": conditions_hash,
+        "fact_guard_checks": fact_guard.checks,
         "run": args.out.name,
         "started_at": started.isoformat(timespec="seconds"),
         "finished_at": dt.datetime.now(dt.UTC).isoformat(timespec="seconds"),
         "smoke": bool(args.items),
         "aggregates": aggregates,
         "gate": gate,
-        "total_cost_usd": round(gateway.cost, 4),
+        "attempt_accounting": accounting,
+        "recorded_attempt_cost_usd": accounting["cost_usd"],
+        "retained_outcome_cost_usd": round(sum(float(row["cost_usd"]) for row in done.values()), 6),
+        "current_execution_cost_usd": current_execution_cost,
+        "total_cost_usd": current_execution_cost,
+        "total_cost_scope": "current invocation only; retained for report compatibility",
+        "baseline_reuse_identity_sha256": baseline_reuse_identity(conditions),
         "baseline_reused_from": args.baseline_from.name if args.baseline_from else None,
     }
     (args.out / "results.json").write_text(json.dumps(results, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
@@ -527,13 +691,15 @@ def render(res: dict[str, Any]) -> str:
     lines += [
         f"- replay set {g['replay_set']['dataset_version']} ({g['replay_set']['dataset_hash'][:8]}…), {'subset' if g['replay_set']['subset'] else 'full'}: {g['replay_set']['items']} items + {g['replay_set']['safety_items']} safety items",
         f"- candidate diff: `{json.dumps(g['arms']['candidate']['diff'], ensure_ascii=False)}`",
-        f"- cost {res['total_cost_usd']} USD",
+        f"- newly charged in this invocation: {res['current_execution_cost_usd']} USD",
+        f"- all recorded attempts in this directory: {res['recorded_attempt_cost_usd']} USD",
+        f"- scoring: {res.get('scoring', {}).get('version', 'legacy-unbound')}; gold coverage is not semantic support or answer completeness",
         "",
     ]
     if res.get("baseline_reused_from"):
         lines.insert(
             -1,
-            f"- baseline arm reused from `{res['baseline_reused_from']}` (same replay set and released state); cost above is the candidate arm only",
+            f"- baseline arm reused from `{res['baseline_reused_from']}` after execution-identity validation; no baseline calls were issued by this invocation",
         )
     lines += [
         "## Runs",

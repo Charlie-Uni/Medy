@@ -25,9 +25,11 @@ from run_rules_arm import summarize  # noqa: E402
 from medops.core.config import Settings  # noqa: E402
 from medops.core.errors import InfrastructureError  # noqa: E402
 from medops.domain.answer import Claim  # noqa: E402
-from medops.infrastructure.llm.budget import BudgetedGateway, InMemorySpendLedger  # noqa: E402
-from medops.infrastructure.llm.gateway import OPENAI_PRICES, BudgetExceeded, ModelOutputInvalid, PriceTable  # noqa: E402
-from medops.infrastructure.llm.openai_gateway import OpenAIModelGateway  # noqa: E402
+from medops.infrastructure.llm.factory import build_budgeted_gateway  # noqa: E402
+from medops.infrastructure.llm.gateway import (  # noqa: E402
+    BudgetExceeded,
+    ModelOutputInvalid,
+)
 from medops.verification.verifier import _llm_judge, verify_claims  # noqa: E402
 
 
@@ -63,14 +65,7 @@ def main() -> int:
     out = args.out or REPO / f"evals/verifier/dec003/results_openai-{args.model}-{args.mode}.json"
     verdict_path = out.with_suffix(".verdicts.jsonl")
     settings = Settings()
-    gateway = _Meter(
-        BudgetedGateway(
-            OpenAIModelGateway.from_settings(settings),
-            prices=PriceTable(OPENAI_PRICES),
-            ledger=InMemorySpendLedger(),
-            monthly_cap_usd=settings.llm_monthly_budget_usd,
-        )
-    )
+    gateway = _Meter(build_budgeted_gateway(settings))
     pairs = [json.loads(l) for l in args.pairs.read_text(encoding="utf-8").splitlines() if l.strip()]
     if args.limit:
         pairs = random.Random(args.seed).sample(pairs, min(args.limit, len(pairs)))
@@ -107,12 +102,20 @@ def main() -> int:
             except (InfrastructureError, ModelOutputInvalid) as exc:
                 failures.append({"pair_id": p["pair_id"], "error": f"{type(exc).__name__}: {str(exc)[:200]}"})
                 continue
-            v = {"pair_id": p["pair_id"], "verdict": pred, "reason": reason, "rules_decisive": decisive, "model": args.model}
+            v = {
+                "pair_id": p["pair_id"],
+                "verdict": pred,
+                "reason": reason,
+                "rules_decisive": decisive,
+                "model": args.model,
+            }
             done[p["pair_id"]] = v
             fh.write(json.dumps(v, ensure_ascii=False) + "\n")
             fh.flush()
             if i % 25 == 0:
-                print(f"  {i}/{len(pending)}: {gateway.calls} calls, ${gateway.cost:.3f}, {time.perf_counter() - started:.0f}s")
+                print(
+                    f"  {i}/{len(pending)}: {gateway.calls} calls, ${gateway.cost:.3f}, {time.perf_counter() - started:.0f}s"
+                )
     rows = [
         {
             "pair_id": p["pair_id"],
@@ -134,7 +137,12 @@ def main() -> int:
     result["finished_at"] = dt.datetime.now(dt.UTC).isoformat()
     out.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     out.with_suffix(".md").write_text(report_markdown(result), encoding="utf-8")
-    print(json.dumps({k: result[k] for k in ("arm", "model", "n", "accuracy", "unsafe_accept_rate", "cost_usd", "calls")}, ensure_ascii=False))
+    print(
+        json.dumps(
+            {k: result[k] for k in ("arm", "model", "n", "accuracy", "unsafe_accept_rate", "cost_usd", "calls")},
+            ensure_ascii=False,
+        )
+    )
     return 0
 
 

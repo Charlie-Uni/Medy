@@ -1,0 +1,59 @@
+{
+  "format": "review-total-budget-v1",
+  "total_budget_usd": "2.400000",
+  "scope_sha256": "d3dce7e002dc2ab771ff2a09d1a44ec65dcc6cd884e4cc6162137d1612f52fee",
+  "scope": {
+    "format": "answer-quality-review-budget-authorization-v1",
+    "approved_by": "project-owner",
+    "approved_at": "2026-10-09",
+    "approval_quote": "授权 EVAL-12 Claude 后续裁判：重试 ms-0242 并处理剩余 7 条，最多 8 次，总费用上限 2.40 USD。",
+    "approval_context": "Authorization of the exact EVAL-12 follow-up request: retry ms-0242 and review the seven remaining cases, one tools-off Claude session per case, no automatic retry, and a 2.40 USD total ledger cap.",
+    "request_sha256": "66b4140ab1496b8b2ee87b41c4c406697407a5ec9cb46a766977e589f3cd1916",
+    "model": "claude-opus-5",
+    "reasoning_effort": "high",
+    "total_budget_usd": 2.4,
+    "reservation_usd_per_call": 0.3,
+    "cli_stop_usd_per_call": 0.28,
+    "max_attempts": 8,
+    "stop_on_nonvalidated_attempt": true,
+    "automatic_retry": false,
+    "authorized_sample_ids": [
+      "ms-0242",
+      "ms-0298",
+      "ms-0338",
+      "ms-0440",
+      "ms-0001",
+      "ms-0099",
+      "ms-0104",
+      "ms-0317"
+    ],
+    "independent_second_human": false,
+    "cost_basis": "Claude CLI reported USD estimate; distinguish from provider invoice/subscription billing",
+    "limit_note": "The 0.28 USD CLI stop threshold allows a 0.02 USD reservation buffer per call. Any failed, invalid, unknown-charge, model-mismatch, or over-reservation call stops without automatic retry.",
+    "authorization_sha256": "c26a0dd7c50a1f71f05aba4225f012933e6fed069200fa7080cbd3f0540fd6c2"
+  },
+  "created_at": "2026-10-09T03:00:37.867749+00:00",
+  "attempts": [
+    {
+      "attempt_id": "2628c370d4b041f4b44351aca69220ca",
+      "status": "accounted",
+      "reserved_usd": "0.300000",
+      "cost_usd": "0.056092",
+      "started_at": "2026-10-09T03:00:38.231903+00:00",
+      "identity": {
+        "sample_id": "ms-0242",
+        "case_sha256": "ee63406774feda4fd5ebec008a4d146edd5af1033233e0e6abf7e292706f0e77",
+        "prompt_sha256": "49c47a8bcd79ecb843f6c1d8ccacef8aeab5a6db852c26df1908e418f0c3e77b",
+        "model": "claude-opus-5",
+        "cli_version": "2.1.79 (Claude Code)"
+      },
+      "finished_at": "2026-10-09T03:00:49.054457+00:00",
+      "outcome": "ValueError",
+      "metadata": {
+        "model_observed": "claude-opus-5",
+        "session_id": "c8af8fdc-e313-40ec-9948-393dc1a6aa9d",
+        "cli_capture_sha256": "888acb1538f3d3a85b7a458c3715263a6bb4b9d4ac76762b72087471989076c6"
+      }
+    }
+  ]
+}

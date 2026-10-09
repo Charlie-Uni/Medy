@@ -1,0 +1,234 @@
+{
+  "format": "review-total-budget-v1",
+  "total_budget_usd": "2.400000",
+  "scope_sha256": "676232c0b42493e72abd5d93a2cab5bedfbc0c2af62a48d0d204054dc702f56f",
+  "scope": {
+    "format": "answer-quality-review-budget-authorization-v1",
+    "approved_by": "project-owner",
+    "approved_at": "2026-10-09",
+    "approval_quote": "授权 EVAL-12 Claude JSON Schema 后续裁判：再次重试 ms-0242 并处理剩余 7 条，最多 8 次，新增费用上限 2.40 USD。",
+    "approval_context": "Authorization of the exact EVAL-12 JSON-Schema follow-up request: retry ms-0242 and review the seven remaining cases, one tools-off Claude session per case, no automatic retry, and a new 2.40 USD total ledger cap.",
+    "request_sha256": "6e6d0503a1e6c67d28e6feb4618c41b2c4fcea43a1aaae9085b951a5ba11e276",
+    "model": "claude-opus-5",
+    "reasoning_effort": "high",
+    "total_budget_usd": 2.4,
+    "reservation_usd_per_call": 0.3,
+    "cli_stop_usd_per_call": 0.28,
+    "max_attempts": 8,
+    "stop_on_nonvalidated_attempt": true,
+    "automatic_retry": false,
+    "authorized_sample_ids": [
+      "ms-0242",
+      "ms-0298",
+      "ms-0338",
+      "ms-0440",
+      "ms-0001",
+      "ms-0099",
+      "ms-0104",
+      "ms-0317"
+    ],
+    "independent_second_human": false,
+    "cost_basis": "Claude CLI reported USD estimate; distinguish from provider invoice/subscription billing",
+    "limit_note": "The 0.28 USD CLI stop threshold allows a 0.02 USD reservation buffer per call. Any failed, invalid, unknown-charge, model-mismatch, schema-mismatch, or over-reservation call stops without automatic retry.",
+    "authorization_sha256": "89ea00f973125112b34bf54386ef4f87a11c5125048b63b7dba82feeb0cd3527"
+  },
+  "created_at": "2026-10-09T04:08:24.211424+00:00",
+  "attempts": [
+    {
+      "attempt_id": "2df7f21443084b41bc6e263559190844",
+      "status": "accounted",
+      "reserved_usd": "0.300000",
+      "cost_usd": "0.077425",
+      "started_at": "2026-10-09T04:08:24.576704+00:00",
+      "identity": {
+        "sample_id": "ms-0242",
+        "case_sha256": "ee63406774feda4fd5ebec008a4d146edd5af1033233e0e6abf7e292706f0e77",
+        "prompt_sha256": "49c47a8bcd79ecb843f6c1d8ccacef8aeab5a6db852c26df1908e418f0c3e77b",
+        "model": "claude-opus-5",
+        "cli_version": "2.1.79 (Claude Code)",
+        "output_schema_sha256": "f8dff58ee3a3af0cc1d1c096723b4d82fd085db83f2211bcb50ffadd5218e7ea"
+      },
+      "finished_at": "2026-10-09T04:08:37.933168+00:00",
+      "outcome": "ValueError",
+      "metadata": {
+        "model_observed": "claude-opus-5",
+        "session_id": "7f6ff086-519f-4855-a6a5-395c47be467c",
+        "cli_capture_sha256": "618f15e6a926634da1dd0e84728f6685e6948d4e77f251e2c4eaf5bed684903b",
+        "json_schema_sha256": "f8dff58ee3a3af0cc1d1c096723b4d82fd085db83f2211bcb50ffadd5218e7ea"
+      },
+      "reconciliation": {
+        "outcome": "validated_reply",
+        "reconciled_at": "2026-10-09T04:10:50.666776+00:00",
+        "evidence": {
+          "kind": "claude-structured-output-adapter-recovery-v1",
+          "case_sha256": "ee63406774feda4fd5ebec008a4d146edd5af1033233e0e6abf7e292706f0e77",
+          "prompt_sha256": "49c47a8bcd79ecb843f6c1d8ccacef8aeab5a6db852c26df1908e418f0c3e77b",
+          "output_schema_sha256": "f8dff58ee3a3af0cc1d1c096723b4d82fd085db83f2211bcb50ffadd5218e7ea",
+          "cli_capture_sha256": "618f15e6a926634da1dd0e84728f6685e6948d4e77f251e2c4eaf5bed684903b",
+          "structured_output_sha256": "01fd1db5bdf21a6daf57902ad43fc38ea8d12e4b2059a26f7615d55e832697a4"
+        }
+      }
+    },
+    {
+      "attempt_id": "3cafe7afac1c47d7a4d2a8852a580ce3",
+      "status": "accounted",
+      "reserved_usd": "0.300000",
+      "cost_usd": "0.066503",
+      "started_at": "2026-10-09T04:10:51.148624+00:00",
+      "identity": {
+        "sample_id": "ms-0298",
+        "case_sha256": "3bfa6b7d969e8d977e66ccb863dcbc9edd16613f8634157271e655dd7db8a34a",
+        "prompt_sha256": "a104ea0359d4a926791bbb6f20442f4e4424f1c14dcc43715f15850ad31d6c39",
+        "model": "claude-opus-5",
+        "cli_version": "2.1.79 (Claude Code)",
+        "output_schema_sha256": "f8dff58ee3a3af0cc1d1c096723b4d82fd085db83f2211bcb50ffadd5218e7ea"
+      },
+      "finished_at": "2026-10-09T04:11:05.823967+00:00",
+      "outcome": "validated_reply",
+      "metadata": {
+        "model_observed": "claude-opus-5",
+        "session_id": "23babebe-b654-453e-92f7-b62f0376cafc",
+        "cli_capture_sha256": "4e0e842286b54d5befc8b8347c42ec6cfe114be60f06aac03b77dbea8d7156a5",
+        "json_schema_sha256": "f8dff58ee3a3af0cc1d1c096723b4d82fd085db83f2211bcb50ffadd5218e7ea"
+      }
+    },
+    {
+      "attempt_id": "a75bf17ad21342e09c06387adaa9b89f",
+      "status": "accounted",
+      "reserved_usd": "0.300000",
+      "cost_usd": "0.060345",
+      "started_at": "2026-10-09T04:11:05.828064+00:00",
+      "identity": {
+        "sample_id": "ms-0338",
+        "case_sha256": "f38587aa10ce1eeba0923ecaf13b285a9a19209efc3b4e0054becc563182d7bd",
+        "prompt_sha256": "55d66d7a0df02ef39b72fe3eb35ce87fc8904032c3c97962a19704ec8379b54e",
+        "model": "claude-opus-5",
+        "cli_version": "2.1.79 (Claude Code)",
+        "output_schema_sha256": "f8dff58ee3a3af0cc1d1c096723b4d82fd085db83f2211bcb50ffadd5218e7ea"
+      },
+      "finished_at": "2026-10-09T04:11:20.972568+00:00",
+      "outcome": "validated_reply",
+      "metadata": {
+        "model_observed": "claude-opus-5",
+        "session_id": "4f81d722-8518-4fd0-851e-20f82eeea977",
+        "cli_capture_sha256": "a659674601d1230914db9f4259efb7465545bb8a716fdd14902c77a749457e41",
+        "json_schema_sha256": "f8dff58ee3a3af0cc1d1c096723b4d82fd085db83f2211bcb50ffadd5218e7ea"
+      }
+    },
+    {
+      "attempt_id": "b66b0b6de80245cbba8d5fc4a4a99509",
+      "status": "accounted",
+      "reserved_usd": "0.300000",
+      "cost_usd": "0.090923",
+      "started_at": "2026-10-09T04:11:20.974965+00:00",
+      "identity": {
+        "sample_id": "ms-0440",
+        "case_sha256": "3261ea66da54235e96ba50c2de5f88afd3fd8114e21e535227638b4c1457c6ab",
+        "prompt_sha256": "611d2deb3b1b414ee36bc1175ef2ac55ac5b62a6c892768c5febc187c0eef323",
+        "model": "claude-opus-5",
+        "cli_version": "2.1.79 (Claude Code)",
+        "output_schema_sha256": "f8dff58ee3a3af0cc1d1c096723b4d82fd085db83f2211bcb50ffadd5218e7ea"
+      },
+      "finished_at": "2026-10-09T04:11:39.921482+00:00",
+      "outcome": "validated_reply",
+      "metadata": {
+        "model_observed": "claude-opus-5",
+        "session_id": "52feab83-c5b4-4c35-b329-d1af1b2a0388",
+        "cli_capture_sha256": "c2ef15cdf4d9efec25423f14961e358e3712f5765d2ad99b8599cf189bd2b8f3",
+        "json_schema_sha256": "f8dff58ee3a3af0cc1d1c096723b4d82fd085db83f2211bcb50ffadd5218e7ea"
+      }
+    },
+    {
+      "attempt_id": "562a85d898bf444b93a312b540ff08a1",
+      "status": "accounted",
+      "reserved_usd": "0.300000",
+      "cost_usd": "0.075385",
+      "started_at": "2026-10-09T04:11:39.923234+00:00",
+      "identity": {
+        "sample_id": "ms-0001",
+        "case_sha256": "c7fa77385c2bc91099cfc4ffb0afab37c3e97a3f7f35223a72e898a8203243e5",
+        "prompt_sha256": "91196c3edd3b4b79741e84ffeba8c4e917f84e35cd00aa2d90bc78bceac2ccae",
+        "model": "claude-opus-5",
+        "cli_version": "2.1.79 (Claude Code)",
+        "output_schema_sha256": "f8dff58ee3a3af0cc1d1c096723b4d82fd085db83f2211bcb50ffadd5218e7ea"
+      },
+      "finished_at": "2026-10-09T04:11:51.420637+00:00",
+      "outcome": "validated_reply",
+      "metadata": {
+        "model_observed": "claude-opus-5",
+        "session_id": "8676ba23-3b62-4d91-8152-3dee750f09ba",
+        "cli_capture_sha256": "eabdadcdfbbc857597330525fe2672f43e52409f610b25d60c29035071284f45",
+        "json_schema_sha256": "f8dff58ee3a3af0cc1d1c096723b4d82fd085db83f2211bcb50ffadd5218e7ea"
+      }
+    },
+    {
+      "attempt_id": "78afffae42cf4a158f1df7be5b7871a7",
+      "status": "accounted",
+      "reserved_usd": "0.300000",
+      "cost_usd": "0.057679",
+      "started_at": "2026-10-09T04:11:51.422791+00:00",
+      "identity": {
+        "sample_id": "ms-0099",
+        "case_sha256": "9aa231f6dd6a30f52100892f0a123746aa5ea7d53ed924728e5d17cd66a9b93d",
+        "prompt_sha256": "ad5d7cd53f809dbd586810a140587d5da59cd1ef7d60b8967b170292029a64d3",
+        "model": "claude-opus-5",
+        "cli_version": "2.1.79 (Claude Code)",
+        "output_schema_sha256": "f8dff58ee3a3af0cc1d1c096723b4d82fd085db83f2211bcb50ffadd5218e7ea"
+      },
+      "finished_at": "2026-10-09T04:12:07.669793+00:00",
+      "outcome": "validated_reply",
+      "metadata": {
+        "model_observed": "claude-opus-5",
+        "session_id": "a605ca33-c0f3-4607-a50c-d230112ebc58",
+        "cli_capture_sha256": "91ba8fa04ba654bac9f904d4e83c9f99f28fa09745b425c1281bdf9fe31ff86a",
+        "json_schema_sha256": "f8dff58ee3a3af0cc1d1c096723b4d82fd085db83f2211bcb50ffadd5218e7ea"
+      }
+    },
+    {
+      "attempt_id": "502d21aec50e45f3b21b60411b98612d",
+      "status": "accounted",
+      "reserved_usd": "0.300000",
+      "cost_usd": "0.073894",
+      "started_at": "2026-10-09T04:12:07.672149+00:00",
+      "identity": {
+        "sample_id": "ms-0104",
+        "case_sha256": "79843f9a6df8e7efcefd99fbcb0a1d10f9d10516679ae25a874a6309c1ea0960",
+        "prompt_sha256": "be4f9f822e7d0c47336259ee395171e6e2ac7e7f2516938568bda5eb84f77e61",
+        "model": "claude-opus-5",
+        "cli_version": "2.1.79 (Claude Code)",
+        "output_schema_sha256": "f8dff58ee3a3af0cc1d1c096723b4d82fd085db83f2211bcb50ffadd5218e7ea"
+      },
+      "finished_at": "2026-10-09T04:12:23.959112+00:00",
+      "outcome": "validated_reply",
+      "metadata": {
+        "model_observed": "claude-opus-5",
+        "session_id": "1d862fef-3134-48cd-b233-a57cf44cf7c4",
+        "cli_capture_sha256": "8fd66e15440dfa0fe854ba8f7faa13b31045888e1111ed983ee9d5b4496cdc98",
+        "json_schema_sha256": "f8dff58ee3a3af0cc1d1c096723b4d82fd085db83f2211bcb50ffadd5218e7ea"
+      }
+    },
+    {
+      "attempt_id": "07fba39991204759ad37326b0bc41b9b",
+      "status": "accounted",
+      "reserved_usd": "0.300000",
+      "cost_usd": "0.075936",
+      "started_at": "2026-10-09T04:12:23.961590+00:00",
+      "identity": {
+        "sample_id": "ms-0317",
+        "case_sha256": "6221b8d645746ae7a93b227b35d77ef171f554089566e3639cb36d9da71944b1",
+        "prompt_sha256": "81205c8f2f89fd05c0a031edbe4bf763499a3acb21ad59e5f689e8bc218f2353",
+        "model": "claude-opus-5",
+        "cli_version": "2.1.79 (Claude Code)",
+        "output_schema_sha256": "f8dff58ee3a3af0cc1d1c096723b4d82fd085db83f2211bcb50ffadd5218e7ea"
+      },
+      "finished_at": "2026-10-09T04:12:39.524596+00:00",
+      "outcome": "validated_reply",
+      "metadata": {
+        "model_observed": "claude-opus-5",
+        "session_id": "a4459b30-97ec-406c-aa45-3dbf7848009d",
+        "cli_capture_sha256": "384bad7b8ccadafa571907cb1121a473fadd676303f821367e47fb641f037390",
+        "json_schema_sha256": "f8dff58ee3a3af0cc1d1c096723b4d82fd085db83f2211bcb50ffadd5218e7ea"
+      }
+    }
+  ]
+}

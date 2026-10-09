@@ -1,0 +1,458 @@
+{
+  "version": "review-worklist-v1",
+  "created_at": "2026-10-08",
+  "source": "evals/main_set/drafts/second_review_priority_2026-09-26.md",
+  "source_sha256": "6d95ad439bf639305e5e4bc5cf98e1edde42e666fe2faf9b0e89e562ede1c40f",
+  "source_rows": 32,
+  "unique_samples": 28,
+  "note": "Existing decisions transcribed for execution; not a new adjudication or independent human review. Chunk ids are from the historical snapshot and must be checked before new gold is frozen.",
+  "items": [
+    {
+      "sample_id": "ms-0056",
+      "replay_id": "rp-0053",
+      "dept": "MA",
+      "decision_records": [
+        {
+          "line": 9,
+          "decision": "标注对：点名拔痛酸錠，须引用该品种仿單；他牌同句不能替代。"
+        },
+        {
+          "line": 31,
+          "decision": "标注对：点名拔痛酸錠，须引用该品种仿單；他牌同句不能替代。"
+        }
+      ],
+      "action": "keep_gold_recheck_system",
+      "independent_second_human_review": "pending",
+      "full_query": "停止使用拔痛酸錠（Allopurinol）治療後，血清尿酸濃度通常多久會回復到治療前的數值？"
+    },
+    {
+      "sample_id": "ms-0241",
+      "replay_id": "rp-0236",
+      "dept": "PV",
+      "decision_records": [
+        {
+          "line": 10,
+          "decision": "标注改：问题点名法规条款，未点名 FDA 研究者指南；可接受同版本条款原文，或改写问题明确指定研究者指南。"
+        },
+        {
+          "line": 40,
+          "decision": "标注改：问题点名法规条款，未点名 FDA 研究者指南；可接受同版本条款原文，或改写问题明确指定研究者指南。"
+        }
+      ],
+      "action": "versioned_gold_or_query_revision",
+      "independent_second_human_review": "pending",
+      "full_query": "依据IND安全报告法规§ 312.32(c)(1)(i)所举实例,判定药物与不良事件之间存在'合理可能性'(reasonable possibility)因果关系时可参考哪些示例情形?"
+    },
+    {
+      "sample_id": "ms-0242",
+      "replay_id": "rp-0237",
+      "dept": "PV",
+      "decision_records": [
+        {
+          "line": 11,
+          "decision": "标注改：只点名法规条款，未点名 FDA 研究者指南；扩等价来源或把指南名称写入问题。"
+        }
+      ],
+      "action": "versioned_gold_or_query_revision",
+      "independent_second_human_review": "pending",
+      "full_query": "According to the examples provided under § 312.32(c)(1)(i) for IND safety reporting, what examples illustrate a 'reasonable possibility' of a causal relationship between a drug and an adverse event?"
+    },
+    {
+      "sample_id": "ms-0280",
+      "replay_id": "rp-0275",
+      "dept": "PV",
+      "decision_records": [
+        {
+          "line": 12,
+          "decision": "标注改：仅称 MedDRA，未指定“数据检索和展示”指南；扩等价来源或补指南全名。"
+        }
+      ],
+      "action": "versioned_gold_or_query_revision",
+      "independent_second_human_review": "pending",
+      "full_query": "使用 MedDRA 时,能否对术语的层级结构进行临时改动,比如变更某个 PT 的主 SOC 分配?"
+    },
+    {
+      "sample_id": "ms-0298",
+      "replay_id": "rp-0293",
+      "dept": "CO",
+      "decision_records": [
+        {
+          "line": 13,
+          "decision": "标注改：问题点名 ICH E6(R3)，gold 却定在 FDA 转载；应纳入 ICH 原版或明确问 FDA 版。"
+        }
+      ],
+      "action": "versioned_gold_or_query_revision",
+      "independent_second_human_review": "pending",
+      "full_query": "根据ICH E6(R3),在什么情况下可以不经IRB/IEC事先书面批准就对已批准的试验方案进行偏离或变更?"
+    },
+    {
+      "sample_id": "ms-0299",
+      "replay_id": "rp-0294",
+      "dept": "CO",
+      "decision_records": [
+        {
+          "line": 14,
+          "decision": "标注改：问题点名 ICH E6(R3)，gold 却定在 FDA 转载；应纳入 ICH 原版或明确问 FDA 版。"
+        }
+      ],
+      "action": "versioned_gold_or_query_revision",
+      "independent_second_human_review": "pending",
+      "full_query": "根据ICH E6(R3),研究者或研究机构工作人员是否可以对受试者施压以促使其继续参与临床试验?"
+    },
+    {
+      "sample_id": "ms-0336",
+      "replay_id": "rp-0325",
+      "dept": "CO",
+      "decision_records": [
+        {
+          "line": 15,
+          "decision": "标注改：问题点名 21 CFR 312.50，未点名 FDA 风险监查指南；扩等价法规来源或改写指向该指南。"
+        },
+        {
+          "line": 42,
+          "decision": "标注改：问题点名 21 CFR 312.50，未点名 FDA 风险监查指南；扩等价法规来源或改写指向该指南。"
+        }
+      ],
+      "action": "versioned_gold_or_query_revision",
+      "independent_second_human_review": "pending",
+      "full_query": "根据21 CFR 312.50，申办者对临床试验监查负有哪些具体职责？"
+    },
+    {
+      "sample_id": "pc-0011",
+      "replay_id": "rp-0518",
+      "dept": "MA",
+      "decision_records": [
+        {
+          "line": 16,
+          "decision": "标注对：点名痛風停錠，须引用该品种仿單。"
+        }
+      ],
+      "action": "keep_gold_recheck_system",
+      "independent_second_human_review": "pending",
+      "full_query": "痛風停錠單次劑量的上限是多少"
+    },
+    {
+      "sample_id": "pc-0017",
+      "replay_id": "rp-0524",
+      "dept": "MA",
+      "decision_records": [
+        {
+          "line": 17,
+          "decision": "标注改：未点名穩壓或具体药品，不能只认其仿單；补产品名或扩同内容有效来源。"
+        }
+      ],
+      "action": "versioned_gold_or_query_revision",
+      "independent_second_human_review": "pending",
+      "full_query": "糖尿病腎病變患者已使用 ACEI 時，可以再加用 ARB 嗎"
+    },
+    {
+      "sample_id": "pc-0026",
+      "replay_id": "rp-0533",
+      "dept": "MA",
+      "decision_records": [
+        {
+          "line": 18,
+          "decision": "标注对：点名胃所樂，须引用该品种仿單。"
+        }
+      ],
+      "action": "keep_gold_recheck_system",
+      "independent_second_human_review": "pending",
+      "full_query": "胃所樂泡在水裡崩散後要在多久之內喝完"
+    },
+    {
+      "sample_id": "pc-0028",
+      "replay_id": "rp-0535",
+      "dept": "MA",
+      "decision_records": [
+        {
+          "line": 19,
+          "decision": "标注改：只问 esomeprazole 成分，未点名胃所樂；补品牌或接受其他同成分仿單的相同禁忌。"
+        },
+        {
+          "line": 44,
+          "decision": "标注改：只问 esomeprazole 成分，未点名胃所樂；补品牌或接受其他同成分仿單的相同禁忌。"
+        }
+      ],
+      "action": "versioned_gold_or_query_revision",
+      "independent_second_human_review": "pending",
+      "full_query": "esomeprazole 可以和 nelfinavir 一起服用嗎"
+    },
+    {
+      "sample_id": "pc-0051",
+      "replay_id": "rp-0558",
+      "dept": "PV",
+      "decision_records": [
+        {
+          "line": 20,
+          "decision": "标注对：明确问 ICH E2A，应引用该指南而非转载定义。"
+        }
+      ],
+      "action": "keep_gold_recheck_system",
+      "independent_second_human_review": "pending",
+      "full_query": "按照 ICH E2A，不良事件的定义是否要求与治疗存在因果关系？"
+    },
+    {
+      "sample_id": "pc-0070",
+      "replay_id": "rp-0577",
+      "dept": "CO",
+      "decision_records": [
+        {
+          "line": 21,
+          "decision": "标注对：明确问 ICH E6(R3)，应引用 ICH 原件。"
+        }
+      ],
+      "action": "keep_gold_recheck_system",
+      "independent_second_human_review": "pending",
+      "full_query": "ICH E6(R3) 对 IRB/IEC 应保留的相关记录列举了哪些例子？"
+    },
+    {
+      "sample_id": "pc-0102",
+      "replay_id": "rp-0609",
+      "dept": "CO",
+      "decision_records": [
+        {
+          "line": 22,
+          "decision": "标注对：明确问 ICH E6(R3)，应引用 ICH 原件。"
+        }
+      ],
+      "action": "keep_gold_recheck_system",
+      "independent_second_human_review": "pending",
+      "full_query": "What examples of relevant records does ICH E6(R3) list that the IRB/IEC should retain?"
+    },
+    {
+      "sample_id": "ms-0012",
+      "replay_id": "rp-0012",
+      "dept": "MA",
+      "decision_records": [
+        {
+          "line": 28,
+          "decision": "标注改：回放失败标签为裁判误判；问题限定 CrCl<30，400 mg 答案适用，主集 gold 不改。"
+        }
+      ],
+      "action": "rejudge_in_new_run_keep_gold",
+      "independent_second_human_review": "pending",
+      "full_query": "需要血液透析且creatinine清除率低於30 ml/min/1.73m2的病人，使用信諾隆（Ciprofloxacin）靜脈輸注液時，每日最大劑量為何？"
+    },
+    {
+      "sample_id": "ms-0036",
+      "replay_id": "rp-0033",
+      "dept": "MA",
+      "decision_records": [
+        {
+          "line": 29,
+          "decision": "标注对：仿單禁忌直接回答可否使用，模型弃答错误。"
+        }
+      ],
+      "action": "keep_gold_recheck_system",
+      "independent_second_human_review": "pending",
+      "full_query": "「安星」伊風柔錠300毫克可以用於治療急性痛風性關節炎發作嗎？"
+    },
+    {
+      "sample_id": "ms-0049",
+      "replay_id": "rp-0046",
+      "dept": "MA",
+      "decision_records": [
+        {
+          "line": 30,
+          "decision": "标注对：起始剂量与加量证据已在前 8，唯一陈述被校验流程丢弃；修校验规则。"
+        }
+      ],
+      "action": "keep_gold_recheck_system",
+      "independent_second_human_review": "pending",
+      "full_query": "Losacar用於治療第II型糖尿病腎病變時，起始劑量為何，並可視血壓下降情形增加至多少？"
+    },
+    {
+      "sample_id": "ms-0124",
+      "replay_id": "rp-0121",
+      "dept": "PV",
+      "decision_records": [
+        {
+          "line": 32,
+          "decision": "标注改：三级定义跨 4 块，须共同覆盖 c0cb043c-cd67-4888-9e19-d1c822acd461、fc140511-65be-4a82-87ad-9dc9dd4e8543、05a7926d-889c-4182-a023-4b6f5cb97ee4、7313c35d-8d97-46d2-a2cf-f4724e14ecb4；当前任一 gold 命中即过的计分不适用，改为必需块组。"
+        }
+      ],
+      "action": "versioned_gold_or_query_revision",
+      "independent_second_human_review": "pending",
+      "group_semantics": "all groups required; any chunk within one group is an alternative",
+      "full_query": "根据 GVP Module IV,药物警戒审计发现(audit findings)应如何分级为 critical、major、minor 三个等级?每个等级的具体定义是什么?",
+      "required_gold_groups": [
+        [
+          "c0cb043c-cd67-4888-9e19-d1c822acd461"
+        ],
+        [
+          "fc140511-65be-4a82-87ad-9dc9dd4e8543"
+        ],
+        [
+          "05a7926d-889c-4182-a023-4b6f5cb97ee4"
+        ],
+        [
+          "7313c35d-8d97-46d2-a2cf-f4724e14ecb4"
+        ]
+      ]
+    },
+    {
+      "sample_id": "ms-0173",
+      "replay_id": "rp-0170",
+      "dept": "PV",
+      "decision_records": [
+        {
+          "line": 33,
+          "decision": "标注对：waiver 申请时限证据已在前 8，唯一陈述被校验流程丢弃；修校验规则。"
+        }
+      ],
+      "action": "keep_gold_recheck_system",
+      "independent_second_human_review": "pending",
+      "full_query": "当PRAC负责监督某项non-interventional PASS时，MAH应至少提前多久向Agency书面申请final study report的waiver？"
+    },
+    {
+      "sample_id": "ms-0177",
+      "replay_id": "rp-0174",
+      "dept": "PV",
+      "decision_records": [
+        {
+          "line": 34,
+          "decision": "标注改：问题改为“若选择请求，应在多久内”，保留 30 天 gold；裁判不能把 may 与条件式时限判为矛盾。"
+        }
+      ],
+      "action": "versioned_gold_or_query_revision",
+      "independent_second_human_review": "pending",
+      "full_query": "按 REG Art 10a(2) 和 DIR Art 22a(2)，MAH 希望针对被施加的义务陈述书面意见时，应在收到书面通知后多久内提出这一请求？"
+    },
+    {
+      "sample_id": "ms-0199",
+      "replay_id": "rp-0194",
+      "dept": "PV",
+      "decision_records": [
+        {
+          "line": 35,
+          "decision": "标注对：明确问 GVP Module XVI，他文档同句不能替代该来源。"
+        }
+      ],
+      "action": "keep_gold_recheck_system",
+      "independent_second_human_review": "pending",
+      "full_query": "根据GVP Module XVI, 依据DIR Art 107m(3), 非介入性上市后安全性研究(PASS)在什么情况下不得进行？"
+    },
+    {
+      "sample_id": "ms-0205",
+      "replay_id": "rp-0200",
+      "dept": "PV",
+      "decision_records": [
+        {
+          "line": 36,
+          "decision": "标注改：各 SmPC 章节与额外 RMM 说明跨 4 块，须共同覆盖 05f240dd-a36c-414d-a2bc-61130c47f651、b7f9d06b-d380-4bcf-966f-f05b371b7cf9、62b7f077-0073-44cf-aab0-0740a2d7898f、737c819a-dd24-4ac1-9862-88fdd83e7113；须用必需块组而非任一命中。"
+        }
+      ],
+      "action": "versioned_gold_or_query_revision",
+      "independent_second_human_review": "pending",
+      "group_semantics": "all groups required; any chunk within one group is an alternative",
+      "full_query": "根据GVP Module XVI，SmPC(产品特性概要)各相关章节应呈现哪些与风险最小化措施(RMM)相关的信息，如果该药品配有额外RMM材料，SmPC 4.4节又应额外说明什么？",
+      "required_gold_groups": [
+        [
+          "05f240dd-a36c-414d-a2bc-61130c47f651"
+        ],
+        [
+          "b7f9d06b-d380-4bcf-966f-f05b371b7cf9"
+        ],
+        [
+          "62b7f077-0073-44cf-aab0-0740a2d7898f"
+        ],
+        [
+          "737c819a-dd24-4ac1-9862-88fdd83e7113"
+        ]
+      ]
+    },
+    {
+      "sample_id": "ms-0227",
+      "replay_id": "rp-0222",
+      "dept": "PV",
+      "decision_records": [
+        {
+          "line": 37,
+          "decision": "标注改：问题已给“无法取得年龄或生日”的前提，答案省略此前提不构成矛盾；回放失败标签应重判。"
+        }
+      ],
+      "action": "rejudge_in_new_run_keep_gold",
+      "independent_second_human_review": "pending",
+      "full_query": "在儿科 ICSR 报告中，如果无法获得患儿的确切年龄或出生日期，应改为记录什么信息以替代？"
+    },
+    {
+      "sample_id": "ms-0235",
+      "replay_id": "rp-0230",
+      "dept": "PV",
+      "decision_records": [
+        {
+          "line": 38,
+          "decision": "标注对：“not exceed 1 calendar day”是时限上限，校验误弃答；gold 不改。"
+        }
+      ],
+      "action": "keep_gold_recheck_system",
+      "independent_second_human_review": "pending",
+      "full_query": "对于严重不良事件(SAE)的首次报告,FDA建议研究者向申办者提交初始信息的时限一般不应超过多久?"
+    },
+    {
+      "sample_id": "ms-0237",
+      "replay_id": "rp-0232",
+      "dept": "PV",
+      "decision_records": [
+        {
+          "line": 39,
+          "decision": "标注对：“in no event later than 10 working days”是同值上限，校验极性误判；gold 不改。"
+        }
+      ],
+      "action": "keep_gold_recheck_system",
+      "independent_second_human_review": "pending",
+      "full_query": "在IDE研究中,研究者首次获知UADE(unanticipated adverse device effect)后,最迟须在多长时间内向申办者和审查IRB提交报告?"
+    },
+    {
+      "sample_id": "ms-0243",
+      "replay_id": "rp-0238",
+      "dept": "PV",
+      "decision_records": [
+        {
+          "line": 41,
+          "decision": "标注改：原则与事件例子分别在 56c2d993-45d3-4934-a083-ecfdfb2861e3、f22428d5-feb0-473b-9c17-41c005048f26 两块；须共同引用，不能把第二块当可替代 gold。"
+        }
+      ],
+      "action": "versioned_gold_or_query_revision",
+      "independent_second_human_review": "pending",
+      "group_semantics": "all groups required; any chunk within one group is an alternative",
+      "full_query": "在IND研究中,除IND安全报告和BA/BE研究中的SAE外,哪些其他类型的事件即使不符合IND安全报告标准,仍必须作为涉及受试者风险的意外问题(unanticipated problem)报告给IRB,请举例说明?",
+      "required_gold_groups": [
+        [
+          "56c2d993-45d3-4934-a083-ecfdfb2861e3"
+        ],
+        [
+          "f22428d5-feb0-473b-9c17-41c005048f26"
+        ]
+      ]
+    },
+    {
+      "sample_id": "pc-0016",
+      "replay_id": "rp-0523",
+      "dept": "MA",
+      "decision_records": [
+        {
+          "line": 43,
+          "decision": "标注对：仿單明确列糖尿病患者合併 aliskiren 的禁忌，模型弃答错误。"
+        }
+      ],
+      "action": "keep_gold_recheck_system",
+      "independent_second_human_review": "pending",
+      "full_query": "糖尿病患者能同時使用穩壓膜衣錠和 aliskiren 嗎"
+    },
+    {
+      "sample_id": "pc-0029",
+      "replay_id": "rp-0536",
+      "dept": "MA",
+      "decision_records": [
+        {
+          "line": 45,
+          "decision": "标注改：只问 esomeprazole 成分，未点名胃所樂；补品牌或接受其他同成分仿單的相同剂量限制。"
+        }
+      ],
+      "action": "versioned_gold_or_query_revision",
+      "independent_second_human_review": "pending",
+      "full_query": "嚴重肝功能不良的病人 esomeprazole 最高劑量是多少"
+    }
+  ]
+}

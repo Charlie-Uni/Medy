@@ -1,0 +1,44 @@
+{
+  "format": "review-budget-authorization-v1",
+  "approved_by": "project-owner",
+  "approval_quote": "授权",
+  "approval_context": "Authorization of the prepared seven-sample corpus-title propagation review described in the active EVAL-10 work: seven exact samples, one sample per call, no automatic retry; execution uses a conservative cap derived from prior single-sample calls.",
+  "total_budget_usd": 2.25,
+  "max_attempts": 7,
+  "stop_on_nonvalidated_attempt": true,
+  "automatic_retry": false,
+  "review_root": "evals/main_set/drafts/revision-2026-10-08-v4/review/corpus_title_propagation",
+  "model": "claude-opus-5",
+  "effort": "high",
+  "recommended_call_cap_usd": 0.3,
+  "budget_buffer_usd": 0.15,
+  "authorized_sample_ids": [
+    "ms-0235",
+    "ms-0236",
+    "ms-0237",
+    "ms-0238",
+    "ms-0239",
+    "ms-0240",
+    "ms-0475"
+  ],
+  "revision_manifest_sha256": "4adb18739e21261ab6a4a22d391301751488dfd6286ea3afa301a4e8a47ea8a3",
+  "confirmation_sha256": "c251d81bf3078ca027458fbd8a291e404edf2310925d77ec7ab7e6024e80c304",
+  "preparation_sha256": "865bdffd563d0585b3eadc20a957cfa4744997c82f69ba02f02105c7db0bf791",
+  "batches": {
+    "main/EN": {
+      "input_sha256": "4cfc191d421273f2811bcd9c38290aeb56c220678e3c88bbca49a923d8c9ef8a",
+      "prompt_sha256": "7572d16e88b638cbc6fa888f4e1a86fe6ffb4869583df357ee1ce0bd012eb758"
+    },
+    "main/NA": {
+      "input_sha256": "7891515b3c1de5000e02e0d0fd512bc3d80a70dbbb47ee83cd11395d487cd8d3",
+      "prompt_sha256": "7572d16e88b638cbc6fa888f4e1a86fe6ffb4869583df357ee1ce0bd012eb758"
+    },
+    "main/PV": {
+      "input_sha256": "3f2295938a30ede4406558227088b539d79baf1e7cb9222d726d9c65aefe59bf",
+      "prompt_sha256": "7572d16e88b638cbc6fa888f4e1a86fe6ffb4869583df357ee1ce0bd012eb758"
+    }
+  },
+  "independent_second_human": false,
+  "cost_basis": "Claude CLI reported USD estimate; distinguish from provider invoice/subscription billing",
+  "limit_note": "Seven prior comparable single-item reviews ranged from 0.04786625 to 0.18141625 USD. Each call stops at 0.30 USD; the 2.25 USD total includes 0.15 USD beyond seven reservations for the observed possibility of a small CLI threshold overrun. Any failed, invalid, unknown-charge, or cap-exceeded attempt stops the authorization without retry."
+}

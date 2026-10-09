@@ -18,7 +18,14 @@ from medops.evals.probe.validator import PageTextProvider, ProbeSetValidator
 
 REPO = pathlib.Path(__file__).resolve().parents[3]
 SCHEMA_DIR = REPO / "evals/main_set/schema"
-SUMS_FILES = ("acl_probes.jsonl", "corpus.json", "pii_exceptions.json", "review_prompt.md", "samples.jsonl")
+SUMS_FILES = (
+    "acl_probes.jsonl",
+    "corpus.json",
+    "pii_exceptions.json",
+    "revision_provenance.json",
+    "review_prompt.md",
+    "samples.jsonl",
+)
 
 
 def main() -> int:
@@ -51,7 +58,8 @@ def main() -> int:
         return 1
     for f in [x for x in draft.findings if x.level == "warning"][:30]:
         print(f"DRAFT WARNING {f.rule} {f.location}: {f.message}")
-    names = [n for n in SUMS_FILES if (version / n).is_file()]
+    manifest_raw = (version / "manifest.json").read_bytes()
+    names = sorted(n for n in SUMS_FILES if (version / n).is_file())
     sums = "".join(f"{hashlib.sha256((version / n).read_bytes()).hexdigest()}  {n}\n" for n in names)
     (version / "SHA256SUMS").write_text(sums, encoding="utf-8")
     manifest["files"] = [{"path": n, "sha256": hashlib.sha256((version / n).read_bytes()).hexdigest()} for n in names]
@@ -61,6 +69,8 @@ def main() -> int:
     (version / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     frozen = validator.validate(version, mode="frozen")
     if frozen.errors:
+        (version / "manifest.json").write_bytes(manifest_raw)
+        (version / "SHA256SUMS").unlink(missing_ok=True)
         for f in frozen.errors[:30]:
             print(f"FROZEN ERROR {f.rule} {f.location}: {f.message}")
         return 1

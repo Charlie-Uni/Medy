@@ -18,19 +18,17 @@ import sys
 import time
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
-from common import DRAFT_FILES, DRAFTS, load_drafts, read_jsonl, write_jsonl  # noqa: E402
+from medops.evals.datasets import read_rows  # noqa: E402
+from medops.evals.safety_data import DRAFT_FILES, DRAFTS, load_drafts, write_jsonl  # noqa: E402
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[3] / "src"))
 from medops.core.config import Settings  # noqa: E402
-from medops.infrastructure.llm.budget import BudgetedGateway, InMemorySpendLedger  # noqa: E402
+from medops.infrastructure.llm.factory import build_budgeted_gateway
 from medops.infrastructure.llm.gateway import (  # noqa: E402
-    OPENAI_PRICES,
     Message,
     ModelOutputInvalid,
     ModelRequest,
-    PriceTable,
 )
-from medops.infrastructure.llm.openai_gateway import OpenAIModelGateway  # noqa: E402
 
 VERDICTS = DRAFTS / "review_verdicts.jsonl"
 PROMPT_FILE = DRAFTS / "review_prompt_safety.md"
@@ -117,7 +115,7 @@ def main() -> int:
         rows = [r for r in rows if r["sample_id"] in wanted]
     done = {
         v["sample_id"]: v
-        for v in read_jsonl(VERDICTS)
+        for v in (read_rows(VERDICTS) if VERDICTS.exists() else [])
         if v.get("prompt_hash") == prompt_hash and v.get("model") == args.model and "verdict" in v
     }
     by_id = {r["sample_id"]: r for r in rows}
@@ -130,12 +128,7 @@ def main() -> int:
         todo, args.apply = [], True
     if todo:
         settings = Settings()
-        gateway = BudgetedGateway(
-            OpenAIModelGateway.from_settings(settings),
-            prices=PriceTable(OPENAI_PRICES),
-            ledger=InMemorySpendLedger(),
-            monthly_cap_usd=settings.llm_monthly_budget_usd,
-        )
+        gateway = build_budgeted_gateway(settings)
         cost = 0.0
         with VERDICTS.open("a", encoding="utf-8") as out:
             for i, r in enumerate(todo, 1):
@@ -190,7 +183,7 @@ def main() -> int:
     if args.apply:
         for name in DRAFT_FILES.values():
             path = DRAFTS / name
-            drows = read_jsonl(path)
+            drows = read_rows(path)
             for r in drows:
                 v = done.get(r["sample_id"])
                 if not v:

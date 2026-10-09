@@ -1,0 +1,88 @@
+{
+  "verified_on": "2026-10-08",
+  "database": "medops_v2",
+  "read_only": true,
+  "documents": [
+    {
+      "document_key": "meddra-data-retrieval-ptc-3-26-zh-hans",
+      "source_hash": "ea0824b58213d740df8ac7459c3c9b08819aa21127a7c63fe04b81ec056f9938",
+      "version_label": "发布版本 3.26（2026-03）",
+      "status": "active",
+      "owner_dept": "PV",
+      "chunk_count": 87
+    },
+    {
+      "document_key": "tfda-label-zosaa-50mg",
+      "source_hash": "81069adaf87d21e640d9b5cbc83a799a59a33acbdc4ead46ed338c9ad6d06b3a",
+      "version_label": "B版 104.10.27（2015-10-27）",
+      "status": "active",
+      "owner_dept": "MA",
+      "chunk_count": 10
+    },
+    {
+      "document_key": "tfda-label-esomen-40mg",
+      "source_hash": "f80b904f4e2f15a59cb78fe1baed5c1c06b8b975d43dc0291217d64c43e43fbb",
+      "version_label": "pdf-meta 2013-11-08（未见版本行）",
+      "status": "active",
+      "owner_dept": "MA",
+      "chunk_count": 33
+    },
+    {
+      "document_key": "ema-gvp-module-iv-rev1",
+      "source_hash": "d0e530f1b15c00987e77a97eb2c310c3267c13a3351a42b9143fee4f899293e8",
+      "version_label": "EMA/228028/2012 Rev 1 (2015-08-03)",
+      "status": "active",
+      "owner_dept": "PV",
+      "chunk_count": 82
+    },
+    {
+      "document_key": "ema-gvp-module-viii-rev3",
+      "source_hash": "847b0c095bc647e02aa577e2116a03b14ff237982af6b850d88e77fcc69e343e",
+      "version_label": "EMA/813938/2011 Rev 3 (2017-10-09)",
+      "status": "active",
+      "owner_dept": "PV",
+      "chunk_count": 201
+    },
+    {
+      "document_key": "ema-gvp-module-xvi-rev3",
+      "source_hash": "9f4ae57fdfa9aba723fdb41b134889e259ec9919d4ba0f363f4d3df35d18fe1b",
+      "version_label": "EMA/204715/2012 Rev 3 (2024-07-26)",
+      "status": "active",
+      "owner_dept": "PV",
+      "chunk_count": 304
+    },
+    {
+      "document_key": "fda-investigator-safety-reporting-2025",
+      "source_hash": "c597c1d15d048c48d94be46710658eebdff9c8017f82ec3f04ebd54ad16e577c",
+      "version_label": "Final guidance, December 2025 (FDA media 152530)",
+      "status": "active",
+      "owner_dept": "PV",
+      "chunk_count": 79
+    },
+    {
+      "document_key": "fda-risk-based-monitoring-2013",
+      "source_hash": "76556b1dcf148a1929f110bb1bfdf17d554630b665d23ad2b885473c5e8f2561",
+      "version_label": "Final guidance, August 2013 (PRA update 2022-11-21)",
+      "status": "active",
+      "owner_dept": "CO",
+      "chunk_count": 147
+    },
+    {
+      "document_key": "fda-e6r3-gcp-2025",
+      "source_hash": "e57e9fc0134abebec409d7144aed6e3047c0939d1bd758163fea4e1169472109",
+      "version_label": "Final guidance, September 2025",
+      "status": "active",
+      "owner_dept": "CO",
+      "chunk_count": 502
+    }
+  ],
+  "all_document_chunks_verified": 1445,
+  "included_gold_page_chunks": 101,
+  "checks": [
+    "active source/version/department",
+    "extractor/version/params",
+    "chunk coordinates identical to archived snapshot",
+    "chunk content identical to normalized local page spans"
+  ],
+  "additional_page_verification": "Page 9 follows the same previously verified 1,445 document chunks; rechecked against read-only DB in record 131."
+}

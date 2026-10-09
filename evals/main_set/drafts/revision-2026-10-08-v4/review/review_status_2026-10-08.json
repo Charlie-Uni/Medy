@@ -1,0 +1,28 @@
+{
+  "format": "revision-review-status-v1",
+  "status": "changed_samples_independent_llm_review_complete",
+  "revision_manifest_sha256": "4adb18739e21261ab6a4a22d391301751488dfd6286ea3afa301a4e8a47ea8a3",
+  "owner_confirmation_sha256": "c251d81bf3078ca027458fbd8a291e404edf2310925d77ec7ab7e6024e80c304",
+  "samples": {
+    "ms-0241": {
+      "verdict": "agree",
+      "run": "evals/main_set/drafts/revision-2026-10-08-v4/review/eval08_followup/main/run_PV.json",
+      "run_sha256": "409eb41f3c8a9bb6d5c4a78b130353a7fdf864471884b705cfa16eeac6ce99d0"
+    },
+    "ms-0242": {
+      "verdict": "agree",
+      "run": "evals/main_set/drafts/revision-2026-10-08-v4/review/eval08_followup_retry1/main/run_EN.json",
+      "run_sha256": "ec02f7372ba6fe79ba2fe2bb152482e24bd83202efda83f782b5def623ea7ec5"
+    }
+  },
+  "costs": {
+    "initial_v4_attempts_ledger_usd": "0.442077",
+    "retry_ledger_usd": "0.185248",
+    "v4_followup_total_ledger_usd": "0.627325"
+  },
+  "limitations": [
+    "This completes independent LLM review only for the two v4-changed samples.",
+    "Second independent human review remains pending.",
+    "Probe import and provisional main-set freeze remain separate steps."
+  ]
+}

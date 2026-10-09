@@ -3,20 +3,23 @@
 
 from __future__ import annotations
 
+import json
+import logging
 from contextlib import contextmanager
 from datetime import UTC, datetime
 
 import pytest
 from fastapi.testclient import TestClient
 
-from medops.api.app import TRACE_HEADER, create_app
+from medops.api.app import create_app
 from medops.api.auth import Authenticator, JwtVerifier, Principal, StaticDirectory, pseudonym
+from medops.api.responses import TRACE_HEADER
 from medops.application.audit import InMemoryTraceStore
 from medops.application.policy_loader import ReleasedPolicySet, RequestPolicies
 from medops.core.errors import ErrorCode, InfrastructureError
 from medops.domain.common import Dept
+from medops.harness.dependencies import HarnessDeps
 from medops.harness.executions import InMemoryExecutionStore
-from medops.harness.nodes import HarnessDeps
 from medops.infrastructure.llm.fake import FakeModelGateway
 from medops.infrastructure.llm.gateway import ModelUnavailable
 from medops.infrastructure.llm.meter import MeteredGateway
@@ -199,3 +202,21 @@ def test_audit_failure_means_no_answer_and_a_retryable_503():
     assert r.status_code == 503
     assert r.json()["code"] == "audit_unavailable" and r.json()["retryable"] is True
     assert "claims" not in r.text and "disk full" not in r.text
+
+
+def test_unhandled_errors_log_the_frames_but_never_the_message(caplog):
+    """An unexpected exception is a 500 whose log says where it happened (file:line function) and nothing of what
+    was being processed: the exception message can quote the request (record 141), the frames cannot (record 144)."""
+    rt = FakeRuntime(FakeRetrieval(evidence("c1", LABEL)), FakeModelGateway({"answer": [ANSWER]}))
+
+    def boom(conn, user):
+        raise RuntimeError("patient asked about 50 mg")
+
+    rt.route_policies = boom
+    with caplog.at_level(logging.ERROR, logger="medops.api.app"):
+        r = client(rt).post("/v1/ask", json={"query": QUERY}, headers=auth())
+    assert r.status_code == 500 and r.json()["code"] == "internal_error" and "50 mg" not in r.text
+    record = next(x for x in caplog.records if x.getMessage() == "unhandled error")
+    fields = record.fields  # type: ignore[attr-defined]
+    assert fields["error_type"] == "RuntimeError" and any(frame.endswith(" boom") for frame in fields["frames"])
+    assert "50 mg" not in caplog.text and "50 mg" not in json.dumps(fields)

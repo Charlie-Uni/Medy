@@ -1,6 +1,7 @@
-# Loop 回放集规范 spec-r1 v0.1（M4-06，DEC-014）
+# Loop 回放集规范 spec-r1 v0.2（M4-06，DEC-014）
 
 - 日期：2026-09-25；决策：记录 74 C（决策人 2026-09-25「同意」）
+- 输入固化修订：2026-10-08，记录 135；原样本量、筛选、评分和发布门槛不变，历史 v0.1 冻结文件不改写。
 - 依据：工程基线 5.8（Replay）、§8 M4-06 / M4-07、`INV-EVAL-01`（冻结评测集与候选生成上下文隔离）
 
 ## 1. 目的
@@ -42,6 +43,29 @@ manifest 以 `origin = run_export_not_live_traffic` 与 `provisional = true` 如
 
 回放项的 id、问题文本与 gold id **不得进入** Adapt 的候选生成上下文。规则在 manifest 里声明；执行点在 M4-03：候选的 `evidence` 字段列出其生成所用的 bad case / Trace 来源，检查工具拒绝任何引用回放项的候选。
 
-## 8. 未做
+## 8. 当前执行状态（2026-10-08）
 
-- 真实流量回放集；M4-07 的运行器（三次运行 + 配对 bootstrap）；安全项的 `historical` 只对 F 类有值。
+- 三次运行、配对比较与 bootstrap 的回放运行器已经实现，入口为 `tools/replay_run.py`；本文件 §2 保留首版来源说明，不代表当前仍停在首版。
+- 当前登记 replay-v3：614 条主集项、170 条旧安全项、200 条筛选子集。来源仍是运行导出，没有真实用户流量集；它不能作为未见验证集。
+- replay-v3 的安全来源仍为 safety-v1 草案。下一版本需要 safety-v2 对应正式运行，不能只替换版本号或复用旧标签。
+- 新运行导出可保存 `required_gold_groups`，组内任选、组间全需；旧扁平 gold 保留原计分语义。记录 132 起新运行固定 `main-outcome-v2`，无答案必须按预期证据不足升级，系统失败不再算成功；评分绑定、基线复用与分项分母见[评测入口 §6](../README.md)。旧冻结标签与历史成绩保持原版本。
+- `make eval-check` 检查登记版本、文件哈希及来源运行关系。文件通过不等于独立人工复核完成；安全项的 `historical` 仍只对 F 类有值。
+
+## 9. 新回放的完整输入协议（记录 135）
+
+新导出要求两套来源均为冻结数据集，并且对应运行具有一致的 `dataset_binding.json`、结果中的版本/数据哈希和完整样本覆盖。主集运行必须使用当前 `scoring_binding.json`。逐行保存 `sample_input_sha256` 与运行 `versions`，导出时与冻结样本和运行汇总核对；不允许将旧行补写新哈希后冒充重新运行。
+
+安全项增加 `sample`（完整冻结样本）、`sample_sha256`；manifest 标识 `safety_input_format=embedded-safety-sample-v1`。ACL、攻击 canary、Skill 调用及 scopes、历史请求参数和预期均随回放冻结。执行时只读取这些内嵌输入，在加载模型前核对哈希、身份、版本和外层字段。源安全版本来自实际 manifest，同时固定来源 `dataset_hash`、结果和绑定文件的哈希，不再写死 v1。
+
+旧 replay-v1/v2/v3 缺少完整安全执行输入，仍可检查文件、读取旧成绩、估算费用和执行 `--skip-safety` 的主集诊断；不能在新的安全对照中从当前草案补全。安全项被跳过时，不能宣称通过安全发布门禁。记录 135 已发现 replay-v3 的 `ss-0125` 预期与当前草案不一致，这正是禁止该隐式补全的原因。
+
+新导出命令必须显式给出来源运行；缺绑定、缺行、题目/预期变动、样本哈希不符、版本混用或安全检查与结论不一致均拒绝。输出目录存在时拒绝覆盖。只有真实运行完成后才能执行以下命令创建正式新版本：
+
+```sh
+venv/bin/python evals/replay/tools/build_replay_set.py \
+  --out evals/replay/replay-v4 \
+  --main-set PATH_TO_FROZEN_MAIN --main-run PATH_TO_COMPLETE_MAIN_RUN \
+  --safety-set evals/safety_set/safety-v2-provisional --safety-run PATH_TO_COMPLETE_SAFETY_RUN
+```
+
+本协议实现不等于 replay-v4 已生成；当前仍等候对应的正式主集与安全运行。

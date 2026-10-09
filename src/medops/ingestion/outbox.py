@@ -60,11 +60,13 @@ def claim(conn: psycopg.Connection[Any], consumer: str, *, limit: int = 50) -> l
     rows = conn.execute(
         """select e.event_id, e.event_type, e.aggregate_id, e.family_id, e.payload, e.created_by, e.created_at
            from outbox_events e
+           left join outbox_consumer_failures f on f.consumer=%s and f.event_id=e.event_id
            where not exists (select 1 from outbox_consumer_acks a where a.consumer = %s and a.event_id = e.event_id)
+             and f.dead_lettered_at is null and coalesce(f.next_attempt_at, now()) <= now()
            order by e.event_id
            limit %s
            for update of e skip locked""",
-        (consumer, limit),
+        (consumer, consumer, limit),
     ).fetchall()
     return [OutboxEvent(int(r[0]), str(r[1]), r[2], r[3], dict(r[4]), str(r[5]), r[6]) for r in rows]
 
@@ -103,8 +105,59 @@ def run(conn: psycopg.Connection[Any], consumer: str, handler: Handler, *, limit
     return done
 
 
-def record_failure(conn: psycopg.Connection[Any], event_id: int, error: str) -> None:
+def record_failure(
+    conn: psycopg.Connection[Any],
+    consumer: str,
+    event_id: int,
+    error: str,
+    *,
+    max_attempts: int = 10,
+    backoff_base_s: int = 5,
+    backoff_max_s: int = 3600,
+) -> bool:
+    """Record one sanitized failure. Return true when this consumer/event is now dead-lettered."""
+    if max_attempts < 1 or backoff_base_s < 0 or backoff_max_s < backoff_base_s:
+        raise ValueError("invalid outbox retry policy")
+    row = conn.execute(
+        """insert into outbox_consumer_failures
+               (consumer,event_id,attempts,last_error,next_attempt_at,dead_lettered_at,updated_at)
+           values (%s,%s,1,left(%s,500),now()+make_interval(secs => %s),
+                   case when %s <= 1 then now() end,now())
+           on conflict (consumer,event_id) do update set
+               attempts=outbox_consumer_failures.attempts+1,
+               last_error=excluded.last_error,
+               next_attempt_at=now()+make_interval(secs => least(%s,
+                   %s * power(2,least(outbox_consumer_failures.attempts,20)))::integer),
+               dead_lettered_at=case when outbox_consumer_failures.attempts+1 >= %s then now() end,
+               updated_at=now()
+           returning dead_lettered_at is not null""",
+        (
+            consumer,
+            event_id,
+            error,
+            backoff_base_s,
+            max_attempts,
+            backoff_max_s,
+            backoff_base_s,
+            max_attempts,
+        ),
+    ).fetchone()
     conn.execute(
         "update outbox_events set attempts = attempts + 1, last_error = left(%s, 500) where event_id = %s",
         (error, event_id),
     )
+    return bool(row and row[0])
+
+
+def requeue_dead_letter(conn: psycopg.Connection[Any], consumer: str, event_id: int, *, actor: str) -> bool:
+    """Explicit operator replay. The event remains unacknowledged and will be claimed normally."""
+    if not actor or len(actor) > 200:
+        raise ValueError("dead-letter replay needs a bounded actor")
+    cur = conn.execute(
+        """update outbox_consumer_failures
+              set attempts=0,last_error='operator_requeued',next_attempt_at=now(),dead_lettered_at=null,
+                  requeued_at=now(),requeued_by=%s,updated_at=now()
+            where consumer=%s and event_id=%s and dead_lettered_at is not null""",
+        (actor, consumer, event_id),
+    )
+    return cur.rowcount == 1

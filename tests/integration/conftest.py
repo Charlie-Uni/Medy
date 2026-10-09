@@ -19,6 +19,7 @@ import pytest
 from alembic import command
 from alembic.config import Config
 
+from medops.evals.safety_data import with_database
 from medops.infrastructure.db.login_users import GROUPS, drop_users, provision
 
 REPO = Path(__file__).resolve().parents[2]
@@ -119,20 +120,12 @@ def _temporary_database(admin_dsn: str) -> Iterator[str]:
     name = f"medops_test_{uuid.uuid4().hex[:12]}"
     with psycopg.connect(admin_dsn, autocommit=True) as conn:
         conn.execute(f'create database "{name}"')
-    dsn = _with_database(admin_dsn, name)
+    dsn = with_database(admin_dsn, name)
     try:
         yield dsn
     finally:
         with psycopg.connect(admin_dsn, autocommit=True) as conn:
             conn.execute(f'drop database "{name}" with (force)')
-
-
-def _with_database(url: str, name: str) -> str:
-    """Same URL (user, password, host, port, options), different database name."""
-    parts = urlsplit(url)
-    if not parts.scheme.startswith("postgres"):
-        raise ValueError("admin DSN must be a postgresql:// URL")
-    return urlunsplit((parts.scheme, parts.netloc, "/" + name, parts.query, parts.fragment))
 
 
 @pytest.fixture(scope="session")

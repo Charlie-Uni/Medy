@@ -13,7 +13,7 @@ _SPEC = importlib.util.spec_from_file_location("author_drafts_test", REPO / "eva
 ad = importlib.util.module_from_spec(_SPEC)
 sys.modules["author_drafts_test"] = ad
 _SPEC.loader.exec_module(ad)
-import common  # noqa: E402
+from medops.evals import safety_data  # noqa: E402
 
 REVIEW = {"status": "agreed", "reviewer_verdict": "unique_and_decidable", "reviewer_note": "ok"}
 
@@ -51,11 +51,11 @@ def test_withdrawn_rows_move_verbatim_and_accumulate():
 
 
 def test_active_drafts_exclude_withdrawn_ids_but_frozen_sets_can_still_resolve_them():
-    active = {r["sample_id"] for r in common.load_drafts()}
-    everything = {r["sample_id"]: r for r in common.load_drafts(include_withdrawn=True)}
+    active = {r["sample_id"] for r in safety_data.load_drafts()}
+    everything = {r["sample_id"]: r for r in safety_data.load_drafts(include_withdrawn=True)}
     withdrawn = set(everything) - active
     assert {"ss-0116", "ss-0121", "ss-0128"} <= withdrawn  # record 112: replaced in safety-v2
     assert {"ss-0171", "ss-0172", "ss-0173"} <= active
     assert all(everything[k]["dataset_version"] == "safety-v1-provisional" for k in withdrawn)
-    assert all(r["dataset_version"] == common.DATASET_VERSION for r in common.load_drafts())
-    assert len(active) == common.TOTAL_MIN
+    assert all(r["dataset_version"] == safety_data.DATASET_VERSION for r in safety_data.load_drafts())
+    assert len(active) == safety_data.TOTAL_MIN

@@ -40,6 +40,32 @@ def test_no_answer_record_without_gold_yields_two_identical_variants_and_rebuild
     assert provenance._actual_prompt_hash(PROMPT, [record]) in provenance._actual_prompt_hashes(PROMPT, [record])
 
 
+def test_coordinate_first_span_order_rebuilds():
+    record = _record(gold=dict(GOLD))
+    span = record["gold"]["evidence_span"]
+    record["gold"]["evidence_span"] = {
+        "char_start": span["char_start"],
+        "char_end": span["char_end"],
+        "text": span["text"],
+    }
+    assert provenance._actual_prompt_hash(PROMPT, [record]) in provenance._actual_prompt_hashes(PROMPT, [record])
+
+
+def test_probe_derived_record_accepts_frozen_parent_context_variant():
+    record = _record(sample_id="pc-0002", gold=dict(GOLD))
+    sample = {"sample_id": "pc-0002", "derived_from": "pc-0001", "notes": "English twin"}
+    parent = {"sample_id": "pc-0001", "query": "父问题"}
+    by_id = {"pc-0001": parent, "pc-0002": sample}
+
+    variants = provenance._review_record_variants(record, sample, by_id, main_set=False)
+
+    assert len(variants) == 2
+    assert list(variants[1])[-2:] == ["notes", "parent_query"]
+    assert variants[1]["notes"] == "English twin"
+    assert variants[1]["parent_query"] == "父问题"
+    assert provenance._review_record_variants(record, sample, by_id, main_set=True) == [record]
+
+
 def test_mixed_chunk_of_gold_conflict_and_no_answer_records_is_covered():
     gold_only = _record(gold=dict(GOLD))
     with_conflict = dict(
@@ -52,6 +78,6 @@ def test_mixed_chunk_of_gold_conflict_and_no_answer_records_is_covered():
     no_answer = dict(_record(answerable=False, abstention={"topic": "x"}, document_text="p"), sample_id="ms-0003")
     chunk = [gold_only, with_conflict, no_answer]
     hashes = provenance._actual_prompt_hashes(PROMPT, chunk)
-    # 2 (span order) * 4 (span x conflict order) * 2 (duplicate) = 16 combinations, deduplicated by the set
+    # 3 span orders * 6 (span x conflict order) * 2 duplicate no-answer variants, deduplicated by the set.
     assert provenance._actual_prompt_hash(PROMPT, chunk) in hashes
-    assert 1 <= len(hashes) <= 16
+    assert 1 <= len(hashes) <= 36

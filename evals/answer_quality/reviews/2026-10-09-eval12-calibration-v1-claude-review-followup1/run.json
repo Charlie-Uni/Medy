@@ -1,0 +1,17 @@
+{
+  "format": "answer-quality-review-run-v1",
+  "request_sha256": "66b4140ab1496b8b2ee87b41c4c406697407a5ec9cb46a766977e589f3cd1916",
+  "authorization_sha256": "c26a0dd7c50a1f71f05aba4225f012933e6fed069200fa7080cbd3f0540fd6c2",
+  "cli": "claude-code",
+  "cli_version": "2.1.79 (Claude Code)",
+  "model": "claude-opus-5",
+  "reasoning_effort": "high",
+  "completed_case_sha256": [],
+  "attempts": [
+    {
+      "sample_id": "ms-0242",
+      "attempt_id": "2628c370d4b041f4b44351aca69220ca",
+      "outcome": "failed"
+    }
+  ]
+}

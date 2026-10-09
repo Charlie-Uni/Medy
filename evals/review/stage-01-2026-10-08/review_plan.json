@@ -1,0 +1,5814 @@
+{
+  "status": "unassigned",
+  "created_at": "2026-10-08",
+  "basis": [
+    "ENGINEERING_BASELINE 5.9",
+    "main_set/SPEC 4",
+    "safety_set/SPEC 6"
+  ],
+  "inputs": {
+    "main_manifest_sha256": "5a43b02414256ddb77bd153d6db3f7a7957890fef63776d26ce6927c31b8f69a",
+    "revision_manifest_sha256": "28b01b508f736a28ba5c0669ead5c45b25206f55a0ebacbd32cbee80ef0792bf",
+    "safety_manifest_sha256": "8a282ddc772be80e716eb46e37cdaa1abaa45c4a18251c259766d7d30cb6d828"
+  },
+  "main": {
+    "projected_samples": 615,
+    "mandatory": 514,
+    "remaining": 101,
+    "sampled": 22,
+    "total_to_assign": 536,
+    "seed": "medy-stage01-second-review-20261008",
+    "sampling": "sort sha256(seed + \":\" + sample_id) within dept/query-language strata; take ceil(0.2*n)",
+    "strata": [
+      {
+        "dept": "CO",
+        "language": "en",
+        "remainder": 19,
+        "selected": 4
+      },
+      {
+        "dept": "CO",
+        "language": "mixed",
+        "remainder": 18,
+        "selected": 4
+      },
+      {
+        "dept": "MA",
+        "language": "mixed",
+        "remainder": 3,
+        "selected": 1
+      },
+      {
+        "dept": "MA",
+        "language": "zh",
+        "remainder": 3,
+        "selected": 1
+      },
+      {
+        "dept": "PV",
+        "language": "en",
+        "remainder": 25,
+        "selected": 5
+      },
+      {
+        "dept": "PV",
+        "language": "mixed",
+        "remainder": 33,
+        "selected": 7
+      }
+    ],
+    "items": [
+      {
+        "sample_id": "ms-0001",
+        "annotation_sha256": "e5a88a1b04b93c7c70c90a8ee40d94bf980157a7886dcf5631d4d6e33295e179",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0002",
+        "annotation_sha256": "b5a05b7b9a5772037d86726ca36bb59701161715553d14aa857494ca6eb896ed",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0003",
+        "annotation_sha256": "b3ce7887d2363ec3e90f1bba41e0ffcc497115249332b4f4d1c04c527b6fc3e5",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0004",
+        "annotation_sha256": "45c747aa529563a50e10339ee5548902a9e054c5f01f351c4145e5345496ff1d",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0005",
+        "annotation_sha256": "bf2c214b099b402760c5682422839a81fb3615630786ed233eb7b1673b22968b",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0006",
+        "annotation_sha256": "f1b8df038856b2c60e0e4b54285d74c5df478c25e11df5c5a5a9db1fd33bd8f6",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0007",
+        "annotation_sha256": "a82c17a563bca3daefedb8ea31d9c736191d24f12c1b7af4a08db4a914fab44d",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit",
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0008",
+        "annotation_sha256": "ca40140bb89ec3aac23a99a81468ec2f92481c1b3000d7712c575b5951667d9b",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0009",
+        "annotation_sha256": "0bbd3abe7c178711fb70a7b40f658c81ccef18451d742b335b11f75fe2b95a93",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0010",
+        "annotation_sha256": "b06cbaad8d63ce1ffaa0ebd0fa30e17fb0fab9ee3ac459259c9d8e1be043c063",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0011",
+        "annotation_sha256": "1be92c7a5da0fe6b0bc18711ca12b521f4d654bdb517eb5fdc9bfa906a8c4e20",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0012",
+        "annotation_sha256": "3821e3c041665a9c574001a2bfb089fc6236d2fc93439f56c145af0d3d6d3643",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0013",
+        "annotation_sha256": "c0a45a71229b5e6d0947c5ffdb8df9596eb136caadbb4a23e882e94a4576436c",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0014",
+        "annotation_sha256": "c15fa35aac290a04539a96e424d9d80b7afa8305c147b1a08dd8695f7b0b2d6f",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0015",
+        "annotation_sha256": "3d36ac1177ad686b46784a80bdaa27288b393a266ec397da41bb69aa1e508b73",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0016",
+        "annotation_sha256": "6e888ae1a662d02bb8dcbea8d2b78ad4c44517e9c49700705a2d6359b3998965",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit",
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0017",
+        "annotation_sha256": "da70976630434698cbc870310d1c60c3793e7bafda229aa1ec71659aa4ef30d5",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0018",
+        "annotation_sha256": "aa2035b7ae0276ae6e6645c5ccd9b99593c323dd7f44643661522e9a46f0cccb",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit",
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0019",
+        "annotation_sha256": "c1bb9ffea0b1aa9808672b233979527486bef22e70f42998f3f9ff7732f2bcbb",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0020",
+        "annotation_sha256": "24ff3a2d00a0bc3212c7e2b2d5337cbfc976e550952a17afa14698afcf91de56",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit",
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0021",
+        "annotation_sha256": "05775ae81c309d01eeacf7f488c1cf11f22089b0b572f1be3fca4d2f1c3b6e8a",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0022",
+        "annotation_sha256": "1ca6f769c3f4ea03b7f634a0a8236131e213c3e824798362d6d89755fafe7a88",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0023",
+        "annotation_sha256": "200abf6ccf145447ed979f0f1adc0d7e95b960ec86828f9084ac6ac4451a389e",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit",
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0024",
+        "annotation_sha256": "e001fd4b82993e41ec167ee34cd80d3a9087f1e3dbc91ef85fd16fb446a89ead",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0025",
+        "annotation_sha256": "ad47dbbc3728ee37354e516b54652edd8ecf46be3702604cfcb1f8e0146be0b6",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit",
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0026",
+        "annotation_sha256": "cfa685fcc9fe40c214d10d0f12d3919a2cebcace39d484075eac5c0353f73e16",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0030",
+        "annotation_sha256": "f5b2d31cdc043280099b1f0970f312c60020f2ca9bffb71d55ddec50210a5ec2",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0031",
+        "annotation_sha256": "0519a4018df139fc17ffac07731d589d6fe8866eaa97a8ce4349d9b0a09c8557",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0032",
+        "annotation_sha256": "3f79efbb750251be3dcd7b0300026d253b71e1e69389946985c935eec0d35bb5",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0033",
+        "annotation_sha256": "ae03bf59babf04e9a236966f763abe4a986b1620608fdf35be2d227677c25fbb",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0034",
+        "annotation_sha256": "3b4cda9373612a1148d0ac044d5b0f9bf9ef51d9482032bc2c849a1f471b1465",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit",
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0036",
+        "annotation_sha256": "87951a80fb1bcf23ad3e70036e15549b138749010d06d18219feb4f618f0e456",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0037",
+        "annotation_sha256": "97eb198cfb96ba9e96f0ce3fca6ae12aed455f5777cb03c60f8dedd6c5838a0b",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit",
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0038",
+        "annotation_sha256": "9d204f7c6b8b18ba9efc586285aef168c2ffc07f90aa1eae7ff99055051508f9",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0039",
+        "annotation_sha256": "603a0b9cf49f9bef5b8134c7814def896f9f023b41babfeda26762b76b9e3e4a",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit",
+          "negation",
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0040",
+        "annotation_sha256": "a2e8e3755c375d4b26d1aa96190f8f8ac6a1373199db90f061cd2b19ba92c273",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0041",
+        "annotation_sha256": "217a6413675569a8fb047598352b020f299795336fb3acb04406699b5135fa56",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0042",
+        "annotation_sha256": "169266935a7926bc047a69d19b494bc0c8aca61812feb165defe57af915ad777",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0043",
+        "annotation_sha256": "5f7f220e3c2c5078834b4274e5951d5cb84fa28787d64fb90dac42e9130f81a8",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0044",
+        "annotation_sha256": "e7efda56551a9556702fd95c5896262059209a23850055fde6c7cfec4431c1fd",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0045",
+        "annotation_sha256": "54815d08c5f75ccee901890bc51a9d3ab57af40053200911c3e28109e4d90e53",
+        "selection": "sampled",
+        "reasons": [
+          "stratified_20_percent_remainder"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0046",
+        "annotation_sha256": "fcd04324582e0e029df497d544d7b44884b9def2210062f884d064b271025a34",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0047",
+        "annotation_sha256": "557d1be10eea941502f130f147fe3acea4f01be8a55f8496bc40bad0473348a6",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0048",
+        "annotation_sha256": "b57b569c8340ce70303a0e004a4e65ba1ff7f029fcfa68e9a0858edc13da2f86",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0049",
+        "annotation_sha256": "9ccecc44806819833758cfbbb19c08937786654b93101743dc74daa2f959e2ce",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0050",
+        "annotation_sha256": "84e2e75a2649ba83ba392567d9210317729fcd3d8551b890f1e4440aa59dd863",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0051",
+        "annotation_sha256": "db9d9dffd5471bc433bf08db36bd2b411c8fbc09927080d1e832d8cc5013e452",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0052",
+        "annotation_sha256": "94e560648e10f41f4c8f4ed8e2604bb1cd890fc104a1ba1d815943373b650bb4",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0053",
+        "annotation_sha256": "37aa8a0ad806aaa431f164e35a769d3a05dd8bfdd55fb2351b62b86e08fe3ad4",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0054",
+        "annotation_sha256": "34c009f29096360cff7f834f399bf2eedb754d1315491f0ee010eb305086d9a3",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0055",
+        "annotation_sha256": "c9f4df56c1f213e3ccb36be4595075c6c1383b281f603f26564fd585bbf6d162",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit",
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0056",
+        "annotation_sha256": "335765b78bc0d3f5671fd99f1e609693b2ee3f215432678aa6ad5f8a6c3dabf4",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0057",
+        "annotation_sha256": "89acb3188311f8e9790f237a3e513c0981aac81f36ebbc038d7507960aaa6f77",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0058",
+        "annotation_sha256": "454203cab28a2b8d62548535983d215c15a224df72d962bbb32cd6fc73c810eb",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0059",
+        "annotation_sha256": "6a144aac1fc7d04bd1929fa8b7637e1655a9a5ba726c632e5578ec606311b24f",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0060",
+        "annotation_sha256": "70ec5f6f07ef1cc67adcdafbe783c76848a28d7379deec7358a4efe0a04c90d7",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0061",
+        "annotation_sha256": "8bce79554e7b6bc698a1751f684400da915c027b808e197e0fc9bc197c29367c",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0062",
+        "annotation_sha256": "dfa4d52b1c093421e75b4cd50510ec2910d3fe4feb5ebb2347400794d805971c",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0063",
+        "annotation_sha256": "50bb5abc6e2d1de23e69a2b0d600d3d6c9b522f5675ac51b3f1d5ccad76d2f68",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0064",
+        "annotation_sha256": "7c8a2d3b91ccfc556e4529bf2dc54769fb8c90fb6f977ee33d300d70fde482ad",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0065",
+        "annotation_sha256": "9fd245be571c4f2cf8d8dc7ccddcd3ea2d164bbe9322e201bfa0f6928af7b173",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0066",
+        "annotation_sha256": "739ec5459754fb57759e10ab10d2a48db53ed3ec3dd7f292b082001c7756037a",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0067",
+        "annotation_sha256": "d6652531f9bf998d85ce9c52ca031af5dd122680bd7c4aa9036800a02271cc55",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0068",
+        "annotation_sha256": "2c5f55c774d3db02c8bf42c1eae24ae4d26a4dccb19871b4fbe4c498c78a81c5",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0070",
+        "annotation_sha256": "c90d2d47e667a3aecd3ad90aa8a8682c2a9e65f1f89bc701fbc8ee21991ee799",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0071",
+        "annotation_sha256": "7e0affb4fb0632bfca1377c31252b5cc374b549b888d26df067c37bed17970c7",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit",
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0072",
+        "annotation_sha256": "703ec1bcf571ea780f526987d7d14224ac14fdfc3c68bdd6ecac53637a36a8e9",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0073",
+        "annotation_sha256": "8932ee3928a29260d4ca721733cd7309b5b68512f8d0bc1e97e396b4ba3a27dd",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0074",
+        "annotation_sha256": "87db0176a20ff447e215a66f308d58a43ef6c3e56abc6b392bde13644185da54",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0075",
+        "annotation_sha256": "615f859165e6be6df6024bae408525287ff2faedeca085cd863496fdf60f4a01",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0076",
+        "annotation_sha256": "473bcd5946a6173c1ba8d6b017928d640e20008af65a9a464f2fcf554d4cd6a1",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0077",
+        "annotation_sha256": "ecbe73ccc6f8972a0912b1605efce7dc78ebcc965be51546a5e2144b1a72ba90",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0078",
+        "annotation_sha256": "a29f874562373ef322ab2f22b7c1f946d2a802f020588ef1223e917cb54225be",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit",
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0079",
+        "annotation_sha256": "6e17688889addad19395fc40e51c1b9c5befdac547674c0dcdf4fce9e59b4bcb",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit",
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0080",
+        "annotation_sha256": "b8dee1dcf6dbce62f82d5b253700ac6473ed11cf14543ee1c0cda4f829e6c916",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit",
+          "negation",
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0081",
+        "annotation_sha256": "83c65587941e990576c06238c31a44e5fb5c3f801a458cd3cd7d1f6c1177a289",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0082",
+        "annotation_sha256": "0c05605ea213214a491c78b085cdf9d860acccdfb31e77dfdbbc3d35f246b1cc",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0083",
+        "annotation_sha256": "e8609bcf2041e796e35d12141c8629363725b693580621e28fd47aedcad361a5",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0084",
+        "annotation_sha256": "f375c019fbfaa151bd3817857810232362ff2a91adc61b718f1f5d0e1ead1120",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0085",
+        "annotation_sha256": "9a1505465f2e8b60f1d3fe4f12a85431adbba149f5531d4edfa3f7bda13b089d",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0086",
+        "annotation_sha256": "6ca8c8327719fd540fed894e9fe02b172df6a7072d34f69300a8887b02f2c247",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window",
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0087",
+        "annotation_sha256": "efe6d3f1c9c8904a4173cbcd43f85c684ae55d3df3c557afb0c8887933575e4a",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window",
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0088",
+        "annotation_sha256": "6f28cd7c21beb1759edebe59417df35ee9eab08efcae49efaf6c666e74d7abce",
+        "selection": "mandatory",
+        "reasons": [
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0089",
+        "annotation_sha256": "339ad7ee8b4604ba7f0dd68aa9cd284d8ebb3dfd4e5371db9a613040dc7f1f0e",
+        "selection": "mandatory",
+        "reasons": [
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0090",
+        "annotation_sha256": "30d22c89168ebb4a47f3b4cdf9db5a815fb79cb33130a12db47800eb64d3b357",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0091",
+        "annotation_sha256": "267e03620cd49a83582f26b460d5952639719f50517ebb94cb4e1c8f8ffa0f9f",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0092",
+        "annotation_sha256": "45ec55165d39bb3a943ffccd1790e2708f85f8f72b01ab2ce60e13bee455e3ef",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0093",
+        "annotation_sha256": "08885567e54c982faf2c31ca4bcdb884fe3a30ef4962c65f09a9c8faac9e4f9c",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0094",
+        "annotation_sha256": "ce5a13c63deef2bf39d89c9230131d35756d1e113b573e825d7f8c1acc45d581",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0095",
+        "annotation_sha256": "26d6ee51a2e38460218eca9fa2767fae3d9686380f3cd781eba5e9c043657234",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0096",
+        "annotation_sha256": "4a37187a78fdca4ffdf9b991761c58679fb1f99145909d1e893dc089cdde0b33",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0097",
+        "annotation_sha256": "5c297f9ae0e216d4c782f21f6e61d3592b2b3c4ac5b69721c832fa6f9873b679",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0099",
+        "annotation_sha256": "a13a464c1168901e0f9c29a957fe1198490644d9c2415e97ca2bed9e8a4d21da",
+        "selection": "sampled",
+        "reasons": [
+          "stratified_20_percent_remainder"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0102",
+        "annotation_sha256": "caa629f4ce21fd46dafdc19c2ad9cdaa69a086ecc677161c7479988fd66f0d35",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0103",
+        "annotation_sha256": "567c7183c8563ed9fd26e93f5d276992254245411486bcd9a0fe4b11b517272e",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0104",
+        "annotation_sha256": "7ac3adacc77f66b99da997aea20300a83ac2b3147be1b69908f87345745d19af",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0105",
+        "annotation_sha256": "5b1f5db6b38955cadd933be3892b5a9d097ff970e0105384e8111773b875d280",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0106",
+        "annotation_sha256": "64bf298c8773e92c296002b66d80ca9e4264c4444829ab25b30b5cc2429f4f9f",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0107",
+        "annotation_sha256": "27c8b446d128b206db0be5d7c2c1f3a881c50d59115993541b795f8135dcc574",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0108",
+        "annotation_sha256": "84c48de016441b9c274ea90352e8a0f474ac4962e305e81f0c2653fb18c289d9",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0109",
+        "annotation_sha256": "75f78bbf0bd3c3d55f4bca1e76b89d5ac8dc321c8a5bd858321f30cb9cd62375",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0110",
+        "annotation_sha256": "4316cf8683460569e0e7c5a3800e824437b7ae304971ac14ffbd4f3126a52ea1",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0111",
+        "annotation_sha256": "33ce408ddf9dcaa4f0d6cafaa7fe6b77124508942d69cee90200b41a4e1b9aa2",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0113",
+        "annotation_sha256": "a67ac467aaef13f21a67cc8b51e5d034ec05648080396a3b4cd7076817624df8",
+        "selection": "sampled",
+        "reasons": [
+          "stratified_20_percent_remainder"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0116",
+        "annotation_sha256": "0e42cc66e08070fe50e97ac35997466b5c5c8905d93239115eb2c43381a9a602",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0117",
+        "annotation_sha256": "641167e9cdbaf1f686c57ce3b6fd9be91761e58fab6cb3a2e919cddf509cb82c",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0118",
+        "annotation_sha256": "5927afb6a3db5649110fa0e07c5e7f9997e0188b5974ff8b1123ae231d007567",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0119",
+        "annotation_sha256": "45b83c097d358d8e1fd0f252dc9be6210cafd75885b4b53c07bcc79ae94b3088",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0124",
+        "annotation_sha256": "09fa2192f455ed41b1290ac24677840e69fb3de9a10ca3f0f59209f99b47f334",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "existing_dispute",
+          "new_or_revised_annotation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0125",
+        "annotation_sha256": "892d490811266f1225a68f3d989f44474c71a22ef73df9343a7c02721e2c99a9",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "new_or_revised_annotation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0126",
+        "annotation_sha256": "4f194f4f83bb45a65a9a2e7ce358747bbeee1552eab5659a77029b45fb6cce8d",
+        "selection": "mandatory",
+        "reasons": [
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0128",
+        "annotation_sha256": "2c031790c91509e4872bf1c160c2dc89fa254cb5c16f482fd31eaf06c5792785",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0129",
+        "annotation_sha256": "c0c4092dd082f1ae9b5e62f9b33a571988267e5369ae093f57a830d1b99e8ba8",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0130",
+        "annotation_sha256": "20a95cd786957de66764ee75469b4b5678627fe3c464bdf0fca2bdc81b09fb5c",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0131",
+        "annotation_sha256": "13026f433211db7647937e580a0d3be5caba03acad76c6390cf4dc15d6bd4b84",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0134",
+        "annotation_sha256": "96ea2a43c3273fae820346e40300f43ec134b4e8bded6f8ef5391091f88feba4",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0135",
+        "annotation_sha256": "f1042ed644da2062f9588cbbc764f47a8626a80cd72b65cad42147b15068b0bd",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0136",
+        "annotation_sha256": "7ff7fdec1afc0d438b3bfebdb17f3f9d796fee46740018fca872d888891511c8",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0137",
+        "annotation_sha256": "421cd8ca6ca8e86bdc4a5b8e4b0b2ca221169bf944bb2c51d32318e888fc9314",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0138",
+        "annotation_sha256": "f2d2129c03868e0e058435b000bf9d2b651c7032138137c85d213241c1e4fc89",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0139",
+        "annotation_sha256": "bd8d2b6d904f768eb1491b930cd74394b6ffb69446d4daef68ef07758fd36756",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0140",
+        "annotation_sha256": "8bdfa70be74c791c54cb278959be93845770792dcd420d4a2af4bba22d3b1492",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0141",
+        "annotation_sha256": "15c8c86a1a9b5f5b06d394a3ffdd7d4b0754f5c6640f0b606c56922b26a0e75a",
+        "selection": "sampled",
+        "reasons": [
+          "stratified_20_percent_remainder"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0144",
+        "annotation_sha256": "6e7ef522f890efc8c12af7beeef7e0dbaf92ef6153d8523e8ce53e8ea56413db",
+        "selection": "sampled",
+        "reasons": [
+          "stratified_20_percent_remainder"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0145",
+        "annotation_sha256": "2a5b9219e08ffb3f300bf2bed6ad7e7b42af6938eee09e54ea144dbd56cec344",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0146",
+        "annotation_sha256": "c32444957a41c0b609b0ff920a0ded8f13d14359e60a8be696c3ae50cfda2b0d",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0147",
+        "annotation_sha256": "a939b5887fe4aad14691ca4db8f3e32d9a1d251305870281cb9df34cedd8048c",
+        "selection": "sampled",
+        "reasons": [
+          "stratified_20_percent_remainder"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0149",
+        "annotation_sha256": "15da0b7c4c30076ffe586626acc3a6ef08a355a59f9ca543dd2398d5877d3e11",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0150",
+        "annotation_sha256": "dcf1a25c3acadf6f98211ca002407cca61d4455e28b06336739a9983ed4a6dc7",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0151",
+        "annotation_sha256": "607fbf2ad58092106dcc5b09a2a08322dc7cf1fb3026f0a48440d2aa6b73234b",
+        "selection": "sampled",
+        "reasons": [
+          "stratified_20_percent_remainder"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0154",
+        "annotation_sha256": "586f5c6fccd25706d68b40b467c6eb423737c088b87708d7f0005b4b95c875e6",
+        "selection": "sampled",
+        "reasons": [
+          "stratified_20_percent_remainder"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0155",
+        "annotation_sha256": "0dce373f598592f65eede880f25cd90086c968a1ead5dd28169e0e79f319efdd",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0156",
+        "annotation_sha256": "7fbdb650ca9e036d7da54575a7e19bc3375610f99557f79aba60f2017f230748",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0157",
+        "annotation_sha256": "e5f7b2375bd35a0a67775bda7241f0098bda9c291bf58720c8099df9ce9c2509",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0158",
+        "annotation_sha256": "bdf070c3bc0457a259a4451ed97689397b570a0a12105733d98ff87ee8969499",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0159",
+        "annotation_sha256": "bcd65152aae998c87ba382d4b9aba9fb7a2bc963699974c16c64229e2923a0bb",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0160",
+        "annotation_sha256": "08f8ab03f8ea7cd2ba3ba2066ea02a9cdc5771ee8706ddbf9ecf7fe29cf65389",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0161",
+        "annotation_sha256": "fec2c853dcf10ba87458b8d4f585f781c5dee7528852ac3425da9729411d1619",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0162",
+        "annotation_sha256": "ff1b8f80bf9ac100007e2cad868f23ef9df3852ac6e1edb06ed851cbfc9587e0",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0163",
+        "annotation_sha256": "3fa9867a549b91574743da1b0ddc58be071bc461b68015fa98ccb896a0e3f2a3",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0164",
+        "annotation_sha256": "5e96b713a8c4e3dcd2892b1325eb961f32972f117c52d90ed8c65137fc9d62b3",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0165",
+        "annotation_sha256": "2daea4b55cefee0edce20ea833eeb989991bc3b1a4c3aadf13b1b5ecc37c1db9",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0166",
+        "annotation_sha256": "23c55166e70575c76786b344437469c7f991766ef055e1e24e7c84512e5b703f",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0167",
+        "annotation_sha256": "952205f97aac713ccb84bea2f4cacd74e67bfa511ccfa4182f1d4ae0e3450ada",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0168",
+        "annotation_sha256": "dba77da7764305b568f8e4064db71770c795ca40171285370789b40e9cb13967",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0169",
+        "annotation_sha256": "ed91d9af6870806c91ca2dc4e537c9d73f84823b25b50b8e05c4f62a05db7724",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0170",
+        "annotation_sha256": "68edd1d2fde270ede9c2a46c9dd48d04442bc926b9e4b78224b0db6eed505b31",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0171",
+        "annotation_sha256": "4bc222eeb174cf89d6b0d0c8a402f6ac127a4ff796ca14cd9805c9966c4d2c00",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0172",
+        "annotation_sha256": "93daad8ab23bdc59eaee7b677c8c942f27cca76c3049c5db548badc620e5c0c2",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0173",
+        "annotation_sha256": "f111c6ebd78896c93bb488b74546366646c5c6ac801c7a694c719a59f5fcb4d8",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0174",
+        "annotation_sha256": "a273da2c667867c67f938befda2ae66ba9ca1c0ea5bff2da2c749c94d9515756",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0175",
+        "annotation_sha256": "2a6fe8c59ee9bb0f4a044bbd1bcd4db80aafdf8fdc9ed8143ffea1dd11ac121e",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0176",
+        "annotation_sha256": "9bd08c2ee91b7e6732490fa856ba97ec5143ca1b7737ef3d06697454738054ba",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0177",
+        "annotation_sha256": "486e44a8b4b0f1c389929128eed9c453194dc86734c451d2ef5c704f35c2a163",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window",
+          "existing_dispute",
+          "new_or_revised_annotation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0178",
+        "annotation_sha256": "b5281c87e84de763ab03995523c99b1f0fbcfe0f5cec912e016be3d835f63435",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window",
+          "new_or_revised_annotation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0179",
+        "annotation_sha256": "6b34ce02af2a098a288556988d088901264653d8c48e05d2e441395349ef5cd9",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0180",
+        "annotation_sha256": "c3c4f6bfcd28fc0f1030e73ae0b432f43f5fa96d777224b8b5f9f51aa55c992a",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0181",
+        "annotation_sha256": "66cdadd0ea3d5c3c083e38852e37c7358cf9bf71f8443d53c6daf0bfaf1b6e14",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0182",
+        "annotation_sha256": "8918b585b5f364854ea29d3d8764b83e9b34af3cca84e37e14d11efdb45b15c1",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0183",
+        "annotation_sha256": "908c97908f07199851fd56f9a1d7107a0421f1272705b92b90bd94aec7478218",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0184",
+        "annotation_sha256": "2d6ce469f83a9834627ee9ead4ba4d441e185d92fd615bf7a91ab4c6007ed694",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0187",
+        "annotation_sha256": "cc13775c12fab38f09460b2761b11623b6cd6d9ad39c171083fffc75575db5f2",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0188",
+        "annotation_sha256": "555e394c76e9d5cf57fc403a4f08e5f82461e8e00a3b42f6d0b9bc66ebf2ab21",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0189",
+        "annotation_sha256": "a4128736fdf349e4fc7891f0bf9dcf0010570b2aade7ead4e2cae08f9fc44131",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0190",
+        "annotation_sha256": "908fe95270f347c964975b62410fc594133361a8c6a6741a2e995f980a4c130a",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0193",
+        "annotation_sha256": "d3dd95f43d9315aca85ee949c3ed4ab8939ad2d13e17ea89f6c4fbad3a825ad2",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0194",
+        "annotation_sha256": "070737c449de505dbe42e37bec41a824b0787e5c99d5fcc28f6f50e58c3f5b36",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0197",
+        "annotation_sha256": "775cec8e4ec6781d09b1f1617a452e58f4a2b67c48b61cdd3c223e4596adcab0",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0198",
+        "annotation_sha256": "c6b89d37f291ee9845050d9fe93f90f93b3a9b043ee1ece5339e1e6d74d63fc3",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0199",
+        "annotation_sha256": "ad83f0e5318cd82fb999435b1b78a930fce5dcfa90005c059a6cc8684cb57150",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0200",
+        "annotation_sha256": "382a167cceb475373ccb7931076afa7e36fe244d7a7c8a2204573b6c0c742d37",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0203",
+        "annotation_sha256": "2129d1e36311f6e8d31b421e2468879caf1ae1fe97452a6f68c7c311d07ecfd0",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0204",
+        "annotation_sha256": "94591a02b169f388d0bf27cd99df7eeb34d0d6d59ccfcb7ab99bb4098eb5830d",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0205",
+        "annotation_sha256": "05f5f7d1a6f3153e5c889eda0908c2d4a000268b8ecf4ddc68b2682f283ed629",
+        "selection": "mandatory",
+        "reasons": [
+          "existing_dispute",
+          "new_or_revised_annotation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0206",
+        "annotation_sha256": "e4315d8007b951ac527831635c7c5dc382cee2fce8b54381b4738bad43aa4b46",
+        "selection": "mandatory",
+        "reasons": [
+          "new_or_revised_annotation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0207",
+        "annotation_sha256": "dcd563163846343d9976149d54546287fc033330f559560f63b551accc98f48f",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window",
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0208",
+        "annotation_sha256": "621426831c8ccf2b138d1c7326f47d821e75d97c18de71c9a6b3c322a20a27f0",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window",
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0209",
+        "annotation_sha256": "352a7d154d50d1785a4a2a43532a193307ca7ecf52d8922bc8152dd0189899c4",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0210",
+        "annotation_sha256": "00005c9efd1882f6d2aac8cfd4a17b3bd2f1ec59800ae7c61a1d9c2c8d1b66ac",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0211",
+        "annotation_sha256": "20b743ffb3e07edcadbb577864d6a26aacbd99d697f81ae2791c6ce5a566d301",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0212",
+        "annotation_sha256": "69b4036bfb2aba43a2f8758765301dd5a0b627bd53b2824e9aebfc54b3908360",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0213",
+        "annotation_sha256": "999298a16c056de702ca5ce3021918f293c1f700bb3c22375dab3fde275b555c",
+        "selection": "mandatory",
+        "reasons": [
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0214",
+        "annotation_sha256": "77f71bbfb2acd562663412d2257e3ad640d7e34df4a91630ae03a5983de33bd6",
+        "selection": "mandatory",
+        "reasons": [
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0215",
+        "annotation_sha256": "c9ade032755547d55f670b6174593fd4f23a1f57a0505103b2cc44af0ada1cd9",
+        "selection": "mandatory",
+        "reasons": [
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0216",
+        "annotation_sha256": "7280bcb9f1936eeb92059ae4d35c239b125ab191d1f405c9bdffb636029dc007",
+        "selection": "mandatory",
+        "reasons": [
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0217",
+        "annotation_sha256": "024703d48bacdd566bb17f986b1420d7ac46b9de8ed5b8c064f6c74ba45467e7",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0218",
+        "annotation_sha256": "7823c3cfb04f5f3a20584562b8453aa78da34a5175be72faaad4b993d31933fa",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0219",
+        "annotation_sha256": "93b0ff70f8d187b7de1b0edfc3810cbfb1650549e3ab8e57aa2f9c124394ce38",
+        "selection": "mandatory",
+        "reasons": [
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0220",
+        "annotation_sha256": "a30a756fea24fab76b5604ecf7b595ed69b47f3a08ddf6076e45f7b26085e405",
+        "selection": "mandatory",
+        "reasons": [
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0221",
+        "annotation_sha256": "61392f9113eb1b8a14d1d326c0d2bf4c8aa028c30c5e752e1417562eb8592a38",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0222",
+        "annotation_sha256": "dbdf8af7f765febe2366fdcad0896a805b2ccf81dd0cd13139dce8e32ca1c95b",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0225",
+        "annotation_sha256": "973869187e8ee75ffe5c64e56d04af43074d5e6b9c23dc9abd8b9da0fd1f52f5",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0226",
+        "annotation_sha256": "79af46823866ef5d05a9a99ba903d740edd78a38b86cd1e81bf5d6e0ba3856f1",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0227",
+        "annotation_sha256": "3cbbb9247b450bbf004cb4e7bb9f5f2c07ee321a528867b43f2b9d6a3ef526da",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0228",
+        "annotation_sha256": "863e46cf657d01e8a87d46a6212ffe23dbc1b82170157293717caa2fc7461e6f",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0229",
+        "annotation_sha256": "dd7fb18e4e1d66329281f4e5f0a6921b7b7ab0dfd366532c82f1d31a1987be40",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0230",
+        "annotation_sha256": "c3d42ad1fbfa1b8b98345c03cc49fcbff6d2b3ffeae7c14adb051097953e3806",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0235",
+        "annotation_sha256": "08197eecae051be3d4bb98338de27976971e45b51d293f4ae7f8861aa2ff81ed",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0236",
+        "annotation_sha256": "a0f42bf56cbc3efaeac75369a9b4fde8de39ca25d0bea3a3db3896f2c3607baa",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0237",
+        "annotation_sha256": "d342ceab20f7c3298fb6ee2e4e879e533288edd84ddf406ddac3f6ccb89594a1",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0238",
+        "annotation_sha256": "5d36bf11677a38d4876069cc20a6526d1cd095df527cfbc02bee871f37d95850",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0239",
+        "annotation_sha256": "a857edc1a452080410bdd550644afc4c95f44d77e8a70d4e7fc103336b4fe4ea",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0240",
+        "annotation_sha256": "c07ebdaa0094c6fafd0db5f9fe14dd5f2337867e39354b3d1c92e0f7273ebd85",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0241",
+        "annotation_sha256": "e759284a8194fc83956cc012dd64549e629e20e8c29c156b54dbe3be0f43a512",
+        "selection": "mandatory",
+        "reasons": [
+          "existing_dispute",
+          "new_or_revised_annotation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0242",
+        "annotation_sha256": "7e0599748ce9b35260e0b62c21edeb1ae90993ee7e195e68bd3c48c2e3d04319",
+        "selection": "mandatory",
+        "reasons": [
+          "existing_dispute",
+          "new_or_revised_annotation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0243",
+        "annotation_sha256": "de68f5f06120e4f80b2de261d1fcec0c43b8ae99b63def897aa53d3f78532c45",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "existing_dispute",
+          "new_or_revised_annotation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0244",
+        "annotation_sha256": "516fe2200d142cc48438b39d44203eb37728be288ae855284f177988226ee90e",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "new_or_revised_annotation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0245",
+        "annotation_sha256": "7e84e0312ffe2a78db362ed45b8fa65431090bdad71ee4e0b29cd46d1683bb9a",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0246",
+        "annotation_sha256": "58d717df465b78dae28bd822785c3021e71011f8c9ee6438e9a880d7cd5e3c36",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0247",
+        "annotation_sha256": "d81cac5f29fd17233cdf897a1c0815e315adc2dfe1cea0aeb3544c8e10ce0e07",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0248",
+        "annotation_sha256": "8d2ea7bac43cff6bbc74e9a2ac72e7fcadc8b80c69f1ef65c414344fe6aaa0ce",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0249",
+        "annotation_sha256": "96adc31aa6a2baebd6b1c0a8c8dbc0aca2875c7b61cf4eff5b1533cabecc7de8",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0250",
+        "annotation_sha256": "32820505745469f3d45ce33c04659c134ebb3f1729f86d090d493caa82a9b71d",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0251",
+        "annotation_sha256": "85c54a74fd990bb0fec83535326ce40d8822ad184a30819846a7158c8a36b0bd",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0252",
+        "annotation_sha256": "eaf936bdec90f857f978c10948c615c2d0b76d9ed3bfd3bfbabc8b62ffb17297",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0253",
+        "annotation_sha256": "5e455312c68d8aff84046835fd548f099eac5b95c9c76e66168e5a6bc70f16b6",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0254",
+        "annotation_sha256": "9520e65cff68ae622b07f470fe4ed9af2b247e45fd47b8023bca92e159ed4ce2",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0255",
+        "annotation_sha256": "017015793c9b9e42d594d4c0382ce7967731c4691f37c1b372f774c6477cb397",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0256",
+        "annotation_sha256": "6d81c7968a8293ca8bb07dcdaf010d4d3aaf83cb1d0cacad9637a74261212816",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0257",
+        "annotation_sha256": "6e9e08e7c2838b30add45ea3a83f3e8957b97b191f641b3f572a4e05ed70325c",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0259",
+        "annotation_sha256": "14b73603c5c6a432e00238b607feeb8698416fa695b2b4b85159846c9fd284a5",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0260",
+        "annotation_sha256": "8e3382cdb7ba6189855bd56f892de5ffb17c91946f46e12c86c29db78fed1017",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0261",
+        "annotation_sha256": "9906b72ba39afca1271fd0c8e8c32e6865e49d14d9b6ccdb710523fdacbc566f",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0262",
+        "annotation_sha256": "b5b0e90ee1358ff1a0919a5c7c498237063897d9a2d6dce8f35be9654c13d6a7",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0263",
+        "annotation_sha256": "371920e2dddc9151cba3b2e16f6067a61575460246625c6a8d4f0f6dd74e0d21",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0264",
+        "annotation_sha256": "423760cea2f3a974dcef8eef8adc51d9726b47db5c03d076d9ee3328dd24a35e",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0265",
+        "annotation_sha256": "3a42808f1fbeeaa2c231b6571e0f1bc8b18a6c9d0b0a769b5c46fd14e1aeed0f",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0266",
+        "annotation_sha256": "e62f3b0283ae9d268e1c1babe049f1d763c0e07f4dd2700f53d815ed68e70555",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0267",
+        "annotation_sha256": "24e1ad2f3dcfd257e5a2939bbee2165fd6561e6d4daea4ad6644df94d9af169d",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0268",
+        "annotation_sha256": "567c904ea100df34567a159c2ecd31eb8c07fb2fd3e36b92a62b203c5643d5b7",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0269",
+        "annotation_sha256": "2b8448256a7325a14e210fe267bb17d6c8633988a411b6559ef6a1bb8da997d9",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0273",
+        "annotation_sha256": "42584ce484c86186391d660ad7edc4e6d86b85a986e226ba28d761c89720caf2",
+        "selection": "mandatory",
+        "reasons": [
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0274",
+        "annotation_sha256": "ef731e36715ab9431e7fd6aa3ef559c581e0dd31b43a10ee9fca65fb9c4f0164",
+        "selection": "mandatory",
+        "reasons": [
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0275",
+        "annotation_sha256": "5af67e5f3916672007c2cf09c046cd0d7ef5f4f6c83c7819206f60e3c587d8d0",
+        "selection": "sampled",
+        "reasons": [
+          "stratified_20_percent_remainder"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0276",
+        "annotation_sha256": "4c00ae7454040a50ddceffb3d712ff4ecdb4c46dcf4709bd08250913d836cd02",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0277",
+        "annotation_sha256": "75816101d66009ea3b1b07219ea3a4389986b3b397317557e4d5e6b065812b07",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0278",
+        "annotation_sha256": "fa14de5b9a48edd276a70d25d747d5eef16cd84947f0d1ca14bc542f5fc9fd1b",
+        "selection": "sampled",
+        "reasons": [
+          "stratified_20_percent_remainder"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0280",
+        "annotation_sha256": "b5d89b21adfa45b4487a421529a2e24b573302ea7d01128bdd59740874303df0",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "existing_dispute",
+          "new_or_revised_annotation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0282",
+        "annotation_sha256": "2c21600dc5d40fc7d420a71b5b229874d6b3386c0423982d547da7469b0e2f23",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0283",
+        "annotation_sha256": "d52feafd1df3eb41e4d2bb4712dc6d04d79d3bb6228287b5061d5ddf29fc2f33",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0284",
+        "annotation_sha256": "d84d43184a4c02bfeff9200b582ffe92ff9cda0a2b40a172bf1899a335478a38",
+        "selection": "mandatory",
+        "reasons": [
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0285",
+        "annotation_sha256": "a9b560bcb69ef3f4b4780418fb543ef1956b5bfa9b0c675a6bb479c10935503d",
+        "selection": "sampled",
+        "reasons": [
+          "stratified_20_percent_remainder"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0286",
+        "annotation_sha256": "0659614b0a7ab6f5f172b37aa046d8944ee31ff3fa20c617c2df4c516fc98036",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0287",
+        "annotation_sha256": "9ca618d86710a54fc776dfb43f3ec1f599ff574b111200dc382995016e9f89ee",
+        "selection": "sampled",
+        "reasons": [
+          "stratified_20_percent_remainder"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0288",
+        "annotation_sha256": "0ef164485e34ff428b2d8e921330b883247a38dce2c3e5724617d6e96afc3604",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0289",
+        "annotation_sha256": "1a4503a2580319bc443df5f54a989e07f1ee13619ba98b2061bcb104d2835a4c",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0290",
+        "annotation_sha256": "a9fa7c10f1d20de6c796baaa252291d21dfa357cd70af40a5f3caa7cc1df4f31",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0292",
+        "annotation_sha256": "6a175dbd69b2324e864b78bd3ba5bd8d7677f186222cc98b1d411a680f8fe708",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0293",
+        "annotation_sha256": "6c8afe15a8c5be3d43566b1f2324276e78fa0c77039ea53898adbe7252e19a0b",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0295",
+        "annotation_sha256": "6bca59f859a4e38105b09bf5251d745d2982b78d98ab392e1cdf9f0561549026",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0296",
+        "annotation_sha256": "68d1c5f1e12e9dae51f686ba9401b9e5a6e5aad1c161c74578a1f1f8e123cdc1",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0297",
+        "annotation_sha256": "b945de52b1b35e7ec749a3be09faba929c8d4025d6b8ab1a708f1fc84e3c1858",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0298",
+        "annotation_sha256": "11c733e0727bbdf380701b464203ee8139726d84889b956267c9e04426a5a032",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "existing_dispute",
+          "new_or_revised_annotation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0299",
+        "annotation_sha256": "1ac20111a19828c1e949a259ce2a86c743b751ce38aef9859753737f6a9b4be9",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "existing_dispute",
+          "new_or_revised_annotation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0302",
+        "annotation_sha256": "7fad4f49e90d6006e6e232d3f53ebd3649e53854b8948936222e6349a5c8aa0f",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0305",
+        "annotation_sha256": "29e2c2abe539850b392d0acc10ed3470465db39e2f33f8b297e91abaf7c36f15",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0306",
+        "annotation_sha256": "5291530a962debf340882cf7782dbe8d32c92a25ba360d5cb924ff4bdfdf5ee6",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0307",
+        "annotation_sha256": "8e6bbf602a472545e03d871f0b1e6619c9cdb56cf1d40271c8dd288408d53418",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0308",
+        "annotation_sha256": "6f9949f63781e2660693cb93e84f0ac2a9c8c99ecae309c23cb42c2cabd551ff",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0309",
+        "annotation_sha256": "58e2a7eeacf6f25460b53f5ee750ee1cb932f31c04bbcc760aa98d646e925377",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0310",
+        "annotation_sha256": "1d74919b7c0f37a42b0c16d8438538f436801de41112567f8f908874e9acc988",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0311",
+        "annotation_sha256": "9378fc7e8740d008545e10dc73e97b1a7945ff2ebcd8aa6201356a0ddf5361ca",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0312",
+        "annotation_sha256": "86531106d829a4c05ea556e064c95e25d07aa698abc0667c839f4cedf50edd46",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0313",
+        "annotation_sha256": "c51397f8247e9ce7b9263c967ed7476ad2695bcda8b2202b622f1427d127c941",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0314",
+        "annotation_sha256": "5d3f33f49d14d4798c71694341871199cc1b77ab0d83bbbfe246a66b0f2095d6",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0315",
+        "annotation_sha256": "1c04e9a8e9ae81fd5425b557d10d441661f3c4012f4468f4dee13b06b0a9683d",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0316",
+        "annotation_sha256": "6357588f1051d3b1f3e9cf9902cd578cc17b1672dd5fd42744df5cd42a632116",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0317",
+        "annotation_sha256": "411d6e98a44d3ff1b76b89a2d8cca9434caac2c584386d9fd2a23bcca143c2a3",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0318",
+        "annotation_sha256": "3492b69062b93790d89f66dedd1b398aa87af86d30713ba37e8089268c50a2af",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0319",
+        "annotation_sha256": "c29a2ded11cca66f3a41f92c5bdca3d923e55830275c779e117c5ef9a4f11e40",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0321",
+        "annotation_sha256": "b83cc94c6bcc43fe156712090be7c872e2f6edcdfdc748454adff75f309c1073",
+        "selection": "sampled",
+        "reasons": [
+          "stratified_20_percent_remainder"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0322",
+        "annotation_sha256": "61e9ff94ff2e5f1dc4ab02722be91dad89a15f0bc2d35e22072aed1d49b7ec54",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0323",
+        "annotation_sha256": "2b97f859d43067e79f91a86c892b9982ae20f87073254bdc8a8d38f6f0cc4566",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0326",
+        "annotation_sha256": "7f97bf9ede3e04c30e839ec1463288f0fe28572e50c8573d0250a19d15ab85c8",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0327",
+        "annotation_sha256": "681e3911f2d180fec308fd45c2ba6699b016a9572da7aa8877e114a37e61fd6c",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0330",
+        "annotation_sha256": "2992ad5bcf3bb0bd3061f657dc92e9e11450a97bf48092b5db7f17e10ed50c1f",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0331",
+        "annotation_sha256": "16a79db8c7fbd2a001ad3fb6995a19b99cf8bdabfb5014c6f2114c8cf4561557",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0334",
+        "annotation_sha256": "9b61ad5f575fba8222f2c3bcca97c9eed675df3106c008a804ba5ee781c53061",
+        "selection": "sampled",
+        "reasons": [
+          "stratified_20_percent_remainder"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0336",
+        "annotation_sha256": "b6d7dbd73b53ab23e485078a832f4010a3624ddaa1d0d780facb7f1b9fa4b91c",
+        "selection": "mandatory",
+        "reasons": [
+          "existing_dispute",
+          "new_or_revised_annotation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0337",
+        "annotation_sha256": "916db199bf00a1122679ee5a6421d82bb0d3987745b5956c169f9f379015a48f",
+        "selection": "mandatory",
+        "reasons": [
+          "new_or_revised_annotation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0338",
+        "annotation_sha256": "715e8b6f1216ebb9a70770500d2d7c6bef9d926a661442e3ead052bcd1bd2bbd",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0339",
+        "annotation_sha256": "b9f55399b2cb9212c73e4289ef0215491aefc4294d2603653946315b87972c36",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0340",
+        "annotation_sha256": "86ad1c5dc8af451cfcb0a1cfa17f5e2b94d1fb7a60fb5f70b1ae62d2698535aa",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0341",
+        "annotation_sha256": "d9854b63f1038dca3bd24877395bf10ea299df26bfd23971f9e64aa878ed1aa2",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0342",
+        "annotation_sha256": "d73a72f12caf40460b0c0c2abdac465f08c1aadce6eddca74d06f6d138e817a3",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0343",
+        "annotation_sha256": "e086134b6a15828dbf498cf426543da7041cef73d09e549334b63cb73356c128",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0344",
+        "annotation_sha256": "e80be010c0d1307faa0b61087dffc2efeecf6b5ccaf350f823512473a1974330",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0345",
+        "annotation_sha256": "230d04a89b8ae83c735eb4b50ccc798c5159baf24e1b3c3a5eac6e765d25485d",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0346",
+        "annotation_sha256": "aeb933a1602c6ea47b7957c98e5df675656a37577809a38cd83f35f8c414f78a",
+        "selection": "mandatory",
+        "reasons": [
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0348",
+        "annotation_sha256": "680e88642beb1e2508f0c8d041ff9c8d41b6a8d6f0c4526c4484606da6b1fbe2",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0349",
+        "annotation_sha256": "e0148e44fdbb5459d828358daea69c73dd71701c60b36f44dc10d2ff562153ed",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0350",
+        "annotation_sha256": "f7520eaf3d95b33efbcd5a6f7f4e2f49e0b2a406bae4483617626c7a842b45e3",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0351",
+        "annotation_sha256": "524efa11cf205174b43e9a3ffd6209e7ad4fd80977e86495dbc31db2428e7ed3",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0352",
+        "annotation_sha256": "790f20a403987ba640b140f3c1213a05771c958d4842617f4dfd3309f36292ec",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0353",
+        "annotation_sha256": "bd04db32e9fb7ee1b2e559da826f145de9982ec3a47f09b6f85ed86e6fed892f",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0354",
+        "annotation_sha256": "d7917e2d78b3ac1e43f5388d9f78319dadca293d8b7094542627c36d3af5fb5e",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0355",
+        "annotation_sha256": "a1f16a620c5b4ba04e94c71b5412cac00c7a60c0d92fc3c0ba9d12d2172e1dab",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0358",
+        "annotation_sha256": "4d1216b2580780f72e3364f6cb5eb90afbe5ce1b87f7061d59e804480ad2e1f4",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0359",
+        "annotation_sha256": "c426fe5432c972fc3f36a645d33055505ce41340ca155b0fac8a5da85bceea47",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0360",
+        "annotation_sha256": "b5b1dfb019ece29298cacb46881b685e2e4e55c6dd52c2e0606fac7069627145",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0361",
+        "annotation_sha256": "e095e7c4b43641b8c6a2607b44729bdc0b2876d54e9b2a23fd5765ded42ca590",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0362",
+        "annotation_sha256": "aca99ec8909ad96f3e5687b2ad45c3b30217fb8d0414ad574cb997695e9001db",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window",
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0363",
+        "annotation_sha256": "eb384152e0be3bc6bb71399c04f0b47194fce23a27e6fed8bcf1f8688d111a0f",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window",
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0364",
+        "annotation_sha256": "984040471707e903852fef118612c6ad1106a028f911726c66fe86991003a3bb",
+        "selection": "mandatory",
+        "reasons": [
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0365",
+        "annotation_sha256": "5740075cfe287d0de20e5afc277aaa603a1f485b84949db32dd61a64da1a526d",
+        "selection": "mandatory",
+        "reasons": [
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0366",
+        "annotation_sha256": "1ade9d3444cc235626fa6032d3bcf5ff0d2d2f8193be0e1b445683595a948660",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window",
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0367",
+        "annotation_sha256": "b6751b6a1c67adcbf71f42b5f056eda351874e2b5fbbc265b4e13e2af87c8727",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window",
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0368",
+        "annotation_sha256": "f99d3c9f1330fc70574283105b93723d6ee89a39b45c61d2c5373ccd006471c3",
+        "selection": "mandatory",
+        "reasons": [
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0369",
+        "annotation_sha256": "f6b98028a98758f1052d25e2c1816fe26bf9423b3712eb36a6191658a6b1f3f3",
+        "selection": "mandatory",
+        "reasons": [
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0370",
+        "annotation_sha256": "0ce1847a8b368bd7b97daf44327ccceae527e6b218a5ae6f7c8619716ef8d429",
+        "selection": "mandatory",
+        "reasons": [
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0371",
+        "annotation_sha256": "101b2cb35019220aed446a4c9b353210f21e858756e334325c6df9bfb0c71688",
+        "selection": "mandatory",
+        "reasons": [
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0372",
+        "annotation_sha256": "da14103a7e9803b2875f5e98786d3a1f151075a3e2ad6a40630484d614b207dd",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0373",
+        "annotation_sha256": "942b22119440fdf95bf2458fbbc561ce2c7b5aa6111c8100bec01341aa36009c",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0374",
+        "annotation_sha256": "ff7b52062a22feda0f49307366ca822d43384be4fe2d6520003670e531ff6d31",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0375",
+        "annotation_sha256": "ca29fd1eaf45102016ceff88913d7de92b5491ac14867dc7d1b5b750b3eeb4f5",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0376",
+        "annotation_sha256": "32ffab9264a0d03084d55e052edfe511e1f91d023e89e4e02ab8635fce99e192",
+        "selection": "mandatory",
+        "reasons": [
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0378",
+        "annotation_sha256": "1e68f8bc305c70bc417b70dc4fe9b803afe1e45c7a7007b5dbcfa963fe6ea51d",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0379",
+        "annotation_sha256": "3fafdb973bba02552e0688428222a53100d0b4081e70f2cf6978775795caa679",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0380",
+        "annotation_sha256": "363429e476d5943b493c0fb9d8a3aa070ceb6a9e40791c0dcfa478a2c4a0dd2f",
+        "selection": "mandatory",
+        "reasons": [
+          "version_conflict",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0381",
+        "annotation_sha256": "83efeafa4385258b0a30aff8ef73e57112cd733ec89ccaeeb387592f35f01925",
+        "selection": "mandatory",
+        "reasons": [
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0382",
+        "annotation_sha256": "81312859830d60e547650ae3954f8d04b381aff13e5797d79d50c36c76ab86aa",
+        "selection": "mandatory",
+        "reasons": [
+          "version_conflict",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0383",
+        "annotation_sha256": "88dea3e5ef501c8bb2cebdc701452219cd4beb3a7230ad1df1afbbad21a6ce70",
+        "selection": "mandatory",
+        "reasons": [
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0384",
+        "annotation_sha256": "f98455f7caed63e30472cc24b18089acb5ec24e44d460a92c3fd79784ceb2db0",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "version_conflict",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0385",
+        "annotation_sha256": "213e7d159f8a9ee1452953355763e012eca03149e19b003cf97f91ffe2ab541f",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0386",
+        "annotation_sha256": "8576ad54e4b829bc4dbd97de64282c6754733ed5ce0a8029df38b50a912d1935",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0387",
+        "annotation_sha256": "5ed9ab12b751e116634709db54ffd008e24e2853e5be0ccfb306c4a2f5e4e63e",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0388",
+        "annotation_sha256": "b201edb3b67c2454f82d0234cd85343f2df64970ec10b5d95a30fe5fef993ba5",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit",
+          "version_conflict",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0389",
+        "annotation_sha256": "c51881be59e2c161da732549e6aa18b711d1359dee1a83b82ffcefabc1d9a406",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit",
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0390",
+        "annotation_sha256": "3c07ca8be898ad28edea302f6f8b0158a069d2479931dc47fd1c4a4809aff967",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0391",
+        "annotation_sha256": "96cd3fb1f270dd80d6f9ff39c040a18246b5e9d5950c598c2e09fe24e63f4a20",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0393",
+        "annotation_sha256": "c522a07e15677daf314901c4d6216958e9e564fcc455c734a4901cd37c7df611",
+        "selection": "sampled",
+        "reasons": [
+          "stratified_20_percent_remainder"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0395",
+        "annotation_sha256": "f3a0dab77669555a0b38a51ce25e07f02aaab5fa8c3cbc95581af684a8283a99",
+        "selection": "sampled",
+        "reasons": [
+          "stratified_20_percent_remainder"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0398",
+        "annotation_sha256": "9343af89902a7e805c15d4e7015542880b369dd85f803c3fb18912ee651f5445",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0399",
+        "annotation_sha256": "ea4947aed4ae6f70391c28aa539d96f4da902d289e6bd379b70b27cc2f1362a1",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0400",
+        "annotation_sha256": "0904fbb25694b54ccfb757e63a2ac921417694e3458e60248f45f706e1b0aa20",
+        "selection": "mandatory",
+        "reasons": [
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0401",
+        "annotation_sha256": "9a2909e7a6215e34637477e31d7b3a2dda84dcf6b6f4ba2dab4e0e45259f6091",
+        "selection": "mandatory",
+        "reasons": [
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0402",
+        "annotation_sha256": "0c286d7bf8616f224ec86f1cb41e4b95ea894f6c79f9ab178577ddeb772bfca3",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0403",
+        "annotation_sha256": "6b832b63b821e44cc7b13d3bb5ea786fed5aa1b0b8fd1e31458db9b557dd16c9",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0404",
+        "annotation_sha256": "2da80ef28a389193c4e9508c2bb85cfa710dddcdc9153131068cf285888fc1e7",
+        "selection": "mandatory",
+        "reasons": [
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0406",
+        "annotation_sha256": "b7208634491af6597678d340baf6522fcb8b84a1e3af34cb21c95ad0de9db748",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0407",
+        "annotation_sha256": "cb2aff3d535b829d22f242d76bd96678aa34f5f62b5ed3c9e1fa7515e22bfe00",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0408",
+        "annotation_sha256": "d39ec269a7ceba13e8ec9e5ab09ea7c87e2357dedadff7b7e21ea3bdb183750e",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0409",
+        "annotation_sha256": "c56be6b6c642bb852b680eb9d856480240190b2e4d858a57894bc03fb17c7db1",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0410",
+        "annotation_sha256": "f8381020205acbb14a9406c18173aa04c13d6c1681f88f3b01b079c82b3d079d",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0411",
+        "annotation_sha256": "3772b118cd3f4f3c2aebd1622c81cafd0a6542d18c98393e0a7b25e54084e181",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0412",
+        "annotation_sha256": "b1ca1fa6449dc6df8f9e1f515715fa2c6d367d0da307830b21fe7f874d51d07a",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0413",
+        "annotation_sha256": "f333e5ed2a3cd038e36c09dc64ae6d20172dd414f9b2c74a78d1617997a2b178",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0416",
+        "annotation_sha256": "53cc2fa3b5f9bae66eb191c1a7214eaedd8cb8ce7ab5cc22e89c08ff7bf6fdb3",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0417",
+        "annotation_sha256": "dbd5a189b6adb170b112993c356e141b3ded44a2363cb87dfdca03c5bb2730d0",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0418",
+        "annotation_sha256": "dec9e99a6bbafd45546579c82ae7bfba4f137007a6a9cb5d0d794479e0fbf9af",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0419",
+        "annotation_sha256": "35d5aa1cd132121fbb73901124e8d331c2b5955729c38d32fb06640bb34966b5",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0422",
+        "annotation_sha256": "e61baa4bdf56f9001edce74ce09d8b3807a9934f35352bd98e09fea9536de71b",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0423",
+        "annotation_sha256": "ab3daabb9ec7bfc22aa466171c761ad82ee3d78d648c6126342186b0320ef0bf",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0424",
+        "annotation_sha256": "c93b6227fc64877ad16a1d83fe17a611f8511b20bf780fde3a7863d7ca1820a3",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0425",
+        "annotation_sha256": "bc8a43ff5e9c72145cfc3e3278e39dee26cadf3eeeccf8c931fceae0eeff5a7e",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0426",
+        "annotation_sha256": "81353955bfcd94df5d4738abbf4075b454ca97471cb987d3d9a60b5b9736e405",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0427",
+        "annotation_sha256": "2dfb39d54e156a90962ea37fdca38a5d2ede631ff58122e85f34b834e49bf0c5",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0430",
+        "annotation_sha256": "32f88ad655d4b2a951f9f43453f36b4acb65a3cea9e52bc23de5491bb556d11c",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0431",
+        "annotation_sha256": "65e18ef1254940164fcf4a9cf20c62c43dd38684c7b6df287e3c92fa8b794aa5",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0432",
+        "annotation_sha256": "efda2cf2a5441aaae6bf590db0bcf9690e4252edba951b89fe4efd8acc19612d",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "version_conflict",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0433",
+        "annotation_sha256": "a53111718e4000b18ded3379c3316245c01bbdd9b758ba0c99143b748ef94ffd",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0434",
+        "annotation_sha256": "712af00e2b3aa000a3726d5dc2271a37be0cc6f3fa2c0048369364926d97049e",
+        "selection": "mandatory",
+        "reasons": [
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0435",
+        "annotation_sha256": "1d7a4b939ffd17c180e36dc2b742ad41c458d0c6919075ecd27a87934b5d7e07",
+        "selection": "mandatory",
+        "reasons": [
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0436",
+        "annotation_sha256": "fff61321d8c26bb28a2d8eb3784d0702b9a84e12ba37f9a6364d3d615e06c3e4",
+        "selection": "mandatory",
+        "reasons": [
+          "version_conflict",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0437",
+        "annotation_sha256": "2561757d3a14c3105c6b658543248def4f5745120f531436d47b8040cd5f5bdf",
+        "selection": "mandatory",
+        "reasons": [
+          "version_conflict",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0438",
+        "annotation_sha256": "80dab6903bd44231bafcedf33a56f6b7e3d280193ea415078dcb277986fd36b1",
+        "selection": "mandatory",
+        "reasons": [
+          "version_conflict",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0439",
+        "annotation_sha256": "7920030982fa9084ea6cd99ee517c0d8e24b87e0fb0ac9837c525118977b77c6",
+        "selection": "mandatory",
+        "reasons": [
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0440",
+        "annotation_sha256": "90b1c194cb42c99ad0b2b60c5d081e5b1d240d585592754e585f2eeae2980f51",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0441",
+        "annotation_sha256": "1f2c37c49b703e5b8383bf75f743867b7731218c2e141c111ac08dea2063bc08",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "version_conflict"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0442",
+        "annotation_sha256": "3587a65b58d5f33547a8154bc61511e569673323157fd0388fc65205c2ffbd7f",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0443",
+        "annotation_sha256": "b47fe18c8d9145c9721d5589e501bed2f25eb1c9b68a4cddc359318bc4e34392",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0444",
+        "annotation_sha256": "d5bcf27865b9dd496eb5fe144cff2e501b94b5052d97c8df5c030c5168905b2c",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0445",
+        "annotation_sha256": "94c6d312ac611fa1ca769e1979960c665dcd0d915bf16c0340089db9a82b2302",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0446",
+        "annotation_sha256": "864d8b22239d35c388a7630ce803ad36f5354eb990c3938a5f51decabb7382df",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0447",
+        "annotation_sha256": "959f81e6a80b473d2a23b9dc7298ad334bfec9892e495c54ec80a3d5f1be9fc3",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0448",
+        "annotation_sha256": "d26a1147e8ed61f60fe51deaefaeb767a17ca8c9dcff6cd5160fc5af36da6f26",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0449",
+        "annotation_sha256": "8757953028910fbc48873d4b0751de1fddc6ea00279ae66fd6617cb37335fdda",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0450",
+        "annotation_sha256": "c28c6e158e0707ae32ff8138d26875001538dfd95a1bfab286908e45637376d7",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0451",
+        "annotation_sha256": "67900cf632a1910e71f10d5c4831947fff9e8322d7118ddc31fefce09985dcf9",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0452",
+        "annotation_sha256": "d49cd1b18becadb8d6ca52e0203eb9a8b9428d75ff9a44106da59c12709817d2",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0453",
+        "annotation_sha256": "34d001732015025b8884416c560fe18d5b8873735b8ec84c41bca6e5a6e90292",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0454",
+        "annotation_sha256": "9768f2c15e0ef64b6b40681426ea3bc8e430f2ef27595aaf9bccdb5d42080f42",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0455",
+        "annotation_sha256": "a9d364c96468b46972980fab339171ce3a0a218963a479150222890c95c1bfdc",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0456",
+        "annotation_sha256": "e75d34d3ab690d07c26e1cd61e2c6cf2287374f03dfe6d53515ecbe71f028f03",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0457",
+        "annotation_sha256": "7b11bc66d007de6d028c589ac1aa94273fcbf27f1c46656e2ef9a85893663660",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0462",
+        "annotation_sha256": "990a1e5d4d7684ea33e3003a1ebeade15a8f7f9b170e1a2374da83232e4a2199",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0463",
+        "annotation_sha256": "f33dd0b84dc3ca4963d958c87b9e347d33ddfdfe756ed78a079f15e2a6e53694",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0464",
+        "annotation_sha256": "99151689e334596a69f774b31232db506be239852590fb440423b524533eb633",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0465",
+        "annotation_sha256": "e4b39a587b1fab573e1b24cfc320783dc6f72f32cfc410781cc9b5f1f60d5174",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0466",
+        "annotation_sha256": "69b18e4dca9410d08319379da184f3a249f0802bd82e7d0d192ca22e428b9033",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0467",
+        "annotation_sha256": "93cd25de0bd024c278e86da209023afa487db5ff79ae4ff69ab63d867a87c252",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0468",
+        "annotation_sha256": "3d3eb2b5db8b00a7917ea6e272af24406c1a56b677ddfe83d76e6549125c79b8",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0469",
+        "annotation_sha256": "5a10ef37a6811ad0a1eb636c3fd533ae07ce04517a79f67f04c582c3c7b2cc95",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0470",
+        "annotation_sha256": "b150a42c35b5dc513b1aeeee8487cbb0d127a1a6433a99e97c570a6e39187f23",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0471",
+        "annotation_sha256": "04fe1265ee9dc89868b1d9f1a635b89e7a5c16fe2ba89ddd3daf5f39122518d3",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0472",
+        "annotation_sha256": "f8e134c010c9b2a8a6facb919baae896770bde1e217887830d93a2416648e27e",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0473",
+        "annotation_sha256": "bcb7d067b05c7ebe6301bd1b8dd5bb3f989e48cc6c2ab20db161ff842d97fe39",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0474",
+        "annotation_sha256": "1730ad956d1eebca28a2c1e5e8ab46a669b833f43bcac94114f62dae334a31a0",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0475",
+        "annotation_sha256": "0a0b6d7b9823d996d7893c09311a3395f6d181f2b04bdb9f1f18e2531b3546c0",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0476",
+        "annotation_sha256": "99aec0e7ee77cd0ffc9805e17c1401f5cb7b26765ff7ec619072760353b70929",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0477",
+        "annotation_sha256": "15bdf02415a2f8e08d6e6a564e58a56168750e8a5b45f6d8ee19e48e5df80418",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0478",
+        "annotation_sha256": "4de7845c39e4fee4822de57421b69c2b521de82131b217c776c20d71496791c3",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0479",
+        "annotation_sha256": "a95fb112cb89b7fd55df9ceb6b1c14c763f9ac07ad8210c5548bcd9df7cacc38",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0480",
+        "annotation_sha256": "efb2f29ec4889001135130f54a6832567833ab04c3c681738e1c273cdc4fb0e0",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0481",
+        "annotation_sha256": "553759ebb85ab46d913a67908fa6d3e139bc44af82e1ab4b3bbd8cea22f37c64",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0482",
+        "annotation_sha256": "2ecd7a17e3808570b6907110bb1d3e55786d1a7e15b11f09224454c3cc8d2a44",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0483",
+        "annotation_sha256": "fad5d45cd60f0f386c9f5b3b465dbfe831fa5db15d1463916e223f1ce2086360",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0484",
+        "annotation_sha256": "261628255acb3e3f2482e14c2b2c5b18b8099c8bac6c0b6f618ae60a5c7445f4",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0485",
+        "annotation_sha256": "7ce64c3634ae3a32a18bf55c699cf7afab9f3b697e5a4df34642a455a528fa50",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0486",
+        "annotation_sha256": "05971aa8628552a74eb81b81692e9820dad3d1ec3f9b594d939ac182ddc93a46",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0488",
+        "annotation_sha256": "81e37f026dba2fa57fac7185086b1ce92ffcf49ac998cd194d71fd752146704e",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0489",
+        "annotation_sha256": "08a104fcd35918de139532275c83e31d0e5afc871377982fc2d9b2d12424c730",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0490",
+        "annotation_sha256": "7606d0c46f884b3551a5bdcab8d59fcdafea56ff2e85e55a88ce6d378533dbbc",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0491",
+        "annotation_sha256": "b170ce2e9b7446031d2b464a49809ad2a3f762630330b517a15e380daf185f49",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0492",
+        "annotation_sha256": "834a116227d9e7886e2bafaf8a8ce90a5d3d91c489b2d6d922fef71ce5fa3389",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0493",
+        "annotation_sha256": "7f98acc34acb794c72c59ad19e3b5b438f7c6dc9f0393266f5985e37ba232300",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0494",
+        "annotation_sha256": "7eeb63365aed5728f425299dfec0432c54c629c426369224142b54891ea70622",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0495",
+        "annotation_sha256": "88356124a20130384e9a6c49bc6eb69784e0d4ece19b41a991fb2ace664ab0dd",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0496",
+        "annotation_sha256": "2ed21d14f146e0d56aa696121db538a3043d582fc813e8768c6d0fe6f3ce8d28",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0497",
+        "annotation_sha256": "24576d8f189560e8798e1d08dd04dbd036e00073fdca41def11f7e0e68784763",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0498",
+        "annotation_sha256": "3f27da12b1e25b3ac8f62e599e089bc0e7e5a34bbe4e2c927f5ba0ac0807acbc",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0499",
+        "annotation_sha256": "6b158caee63cde4dae16bf1efd51e662124980dea7f589824c4c044e73cfd8ab",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0500",
+        "annotation_sha256": "a48a6454ff9d0f0aaa7a83e78d5e44c88e4d7f06fac36e3cee8f5def7bcd60f0",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0501",
+        "annotation_sha256": "fdd7a6c3660f05190662f3989a5b8fb64d86a59f6fc93b2758d65b23f8c4242d",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0502",
+        "annotation_sha256": "91f90518aa46b7b2795aaecf7f93f6ae530bcdbc03aa37272c53c6aca96b2ccb",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0503",
+        "annotation_sha256": "9405e9fe94f02c7ff5b9efdbd671917998dc623af5a6b1db2665c2d21f891353",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0504",
+        "annotation_sha256": "8f177984352210a83e802e81c4aa386b93d6e963d7c727a1004466639e977a3b",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0505",
+        "annotation_sha256": "7a2a813cb46bea7a3b39ed9629d3d46ea007bc2ff72a3bbc9acc703c4ed3a7da",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0506",
+        "annotation_sha256": "2192a288bd6f12a0b8428d80e19d633e5106164f1937f126fc854f279f9b1b6d",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0507",
+        "annotation_sha256": "5890aac29bbf1224776a1e666f7da642b1665a0b0f18c2386fb7eac7a3dfc318",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0508",
+        "annotation_sha256": "bbb4106c012f0111d1e2c1387ecafc7ae87f162c1ee7edb3d2353affea760290",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0510",
+        "annotation_sha256": "9a6782594bd60db6d108545460f2b1831d4e3a5dcfe6b306bca191c0b050d32d",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0511",
+        "annotation_sha256": "e2dd8bf558ffa3a0e67c370d4151db5e796cc56356aef05955760efde3a554f4",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0512",
+        "annotation_sha256": "4f171c16c90b57b545fe7e27d6a26921a2ba727502c0cabe89fdc49891759db7",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0513",
+        "annotation_sha256": "37871b9ca01db405ce7efb175d28569d280c82243dfb4384be6acbd0af40c038",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0514",
+        "annotation_sha256": "584f0d3a445a032042eb1c3106dc40f3635f88c9bafb738a8bfc5a0fe422731d",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0515",
+        "annotation_sha256": "9870ec2129dc8cf3bcbc5e493e9aec336f15c36ddd4ec023424ac99165164877",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0516",
+        "annotation_sha256": "3ef3dec2bd535271a0c861448f19f98c6b731e4c7f5286f867917b8020189372",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0517",
+        "annotation_sha256": "2582c3c369210b9a7baa045ac11033695c41da8f81fb87c7971a6ea326e76f24",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0518",
+        "annotation_sha256": "d84ea6296c98bac87ffe39b362f73bf2f15c9173c2040ae88d8afe6cbbcfb5c7",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0519",
+        "annotation_sha256": "fbc15796b3cb69243e99677dfa333fb2d703ee14c09f52408def7344b0f8295d",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0520",
+        "annotation_sha256": "f6def3a4c708704048beba72330559e455dac98ec1f5f49eb80984b50fc3da6e",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0521",
+        "annotation_sha256": "907437756767d461bbf77170e6ca15cb29e0ec568bac9e68c8b3c8b40b07f544",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0522",
+        "annotation_sha256": "388b681e84d09fdf17fb69e9f2a8e5b00e9b6dedbd16688e022f7c36c9931d21",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0523",
+        "annotation_sha256": "ce7a3a821711b2221ed0301a0381fb2b1ae5170df2554ba2187cc312b25c8c6f",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0524",
+        "annotation_sha256": "77c181990552107dd1ca0ddeaaf46d264e5f04a1ff08a8b83652efdd226a5f57",
+        "selection": "mandatory",
+        "reasons": [
+          "no_answer"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "ms-0525",
+        "annotation_sha256": "90ebe2ec12998ea5055ec18da253b24dd33555efd1811a1292a568987150ff19",
+        "selection": "mandatory",
+        "reasons": [
+          "new_or_revised_annotation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0001",
+        "annotation_sha256": "df64463e99306746db5f13a07232c9efe03da9cd6cff5c5520bf69d3649232b0",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0002",
+        "annotation_sha256": "93faea161cae40fe8ac31aaff83340b1511b0f9afe1aff311305d6a9844bf1c7",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0003",
+        "annotation_sha256": "843664ac7ee22232193f3ad3ec964acc1a631375388e37eaeac6dd20aa3be5e7",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0004",
+        "annotation_sha256": "3452f4bc0ad8f2dbc01d76b68609d815cc8f77c6bd7455c1ffd57e2d5091a098",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0005",
+        "annotation_sha256": "f52c0d569f6a3a6222aca758bcf560ae8e862bf9fba4321389989b855fbb5d59",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit",
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0006",
+        "annotation_sha256": "462e6d46355dacab77808acdc21687829c29a5f9971a600150df22f2064fc3cd",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0007",
+        "annotation_sha256": "fd5730e491d016892a4a032851cef70053540617c2b24c3ef6cd2358ea6f1396",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit",
+          "negation",
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0008",
+        "annotation_sha256": "628040b19e6acc65b1ba717d214faaa4dfa38cf35e649c6e3ddbc719197d0797",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0009",
+        "annotation_sha256": "6323f60b273068d03dd5d98151d9e33b0156092673cff794001339ee3f0047d3",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0011",
+        "annotation_sha256": "de6ba166de5e253e47c78e4d24630f105b71273cfb364d07defc232f871b1e1a",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit",
+          "negation",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0012",
+        "annotation_sha256": "a981f1f8231b39d0dc151965cbf2cb3097b80355f9587c5587f37654b1396812",
+        "selection": "sampled",
+        "reasons": [
+          "stratified_20_percent_remainder"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0013",
+        "annotation_sha256": "e18f7bc0546cb2a1d2d1018ba19bcf55dd649c8369d4851da87bffe4ff887f70",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit",
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0014",
+        "annotation_sha256": "03e57a8ada364907f0a597b43ef6380bf11678d9b1050bea276cc31c7b8d4542",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit",
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0015",
+        "annotation_sha256": "933f7527162bb4b949787717e801de245b26b0fd3826bb6d7327641d710e5f89",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0016",
+        "annotation_sha256": "017c5fa7f926e18a54a28f18e4efcccfb8b64965173ab14c7faa020d67e93398",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit",
+          "negation",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0017",
+        "annotation_sha256": "d22a77d79328ae4f18d998fed7920982221d835f33aed60dcaea5ab6b46cefeb",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "existing_dispute",
+          "new_or_revised_annotation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0018",
+        "annotation_sha256": "86c67d13de8a6a90d04d47680d48198eef6c862bd9cd31d001a54ff178c412ee",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0019",
+        "annotation_sha256": "3e785b6258275c31c9d1abf29993ad8b7f1addb99df73b1ee3973d9cc729bf3f",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0020",
+        "annotation_sha256": "2297b63c0d8ecf46b9a2981edccc8de088234e6165fbd727a6472ff078a11adc",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0021",
+        "annotation_sha256": "a580a77f01e0b9c68c3aa3cf6e2a9662ea804299dbb4506856a8b50e723f47e4",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0022",
+        "annotation_sha256": "634326c2ca171d6c6bdc8b6de81bfa22eb908c205e21f0b6796388aeb1a5c59b",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0023",
+        "annotation_sha256": "ad9739e91d31cc119facd982b5587b11b0b300425abd94877b683d3a2e3366b2",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit",
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0024",
+        "annotation_sha256": "2aa8b9a683b80fc1dccccc4db298616f6de0349a72ace63ffb7cba301da21b2a",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0025",
+        "annotation_sha256": "cc1eeb3b7e93871be1eb15cc1b41a6821af6042b2d907454ff4a70c440b7be98",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0026",
+        "annotation_sha256": "296bded973b2f41c23dbf5a0cada195d7bf685d7ff90c1d914e9ddac652020c3",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0027",
+        "annotation_sha256": "7705f311aa12ec521163beba32a662e23620e74af077b04f32ab5b5bd302516e",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit",
+          "negation",
+          "time_window",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0028",
+        "annotation_sha256": "56c5eb104626688692c49a275f82fdc8957869875fd1f5974862b0a6da10ccf7",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "existing_dispute",
+          "new_or_revised_annotation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0029",
+        "annotation_sha256": "14505794c26ae2dd2c1866a7e5200ce92ebe7909a2bc32e273b634e9fcef7a7d",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit",
+          "negation",
+          "existing_dispute",
+          "new_or_revised_annotation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0031",
+        "annotation_sha256": "c938f165a81cd8854b3eb2fde678c38822ef1b1b8827e6f845f852ef1463acb5",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0032",
+        "annotation_sha256": "eb3dcd5fa4520dcee3e00e8bf2281d20ab13ec08870ee0556a7c4252c9537532",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0033",
+        "annotation_sha256": "74d1ce1acd3271d568c856a031d9707f7867f2f51639426fde880f8dc01d51ab",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0035",
+        "annotation_sha256": "d60dfacde53ad32e6ee3f80f63889d21e0baf053944b580cf768bede9cd61202",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit",
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0036",
+        "annotation_sha256": "b1996a40fc37345a1a3522e6a10b0b23d6c856ac474bd6d067307080b1faa7a0",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0038",
+        "annotation_sha256": "9421ea7af3af8734276a66d93c1cfd2a09a05a42ee1daa6646a5cddca3c0d090",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0039",
+        "annotation_sha256": "6f5fcfc25e96abf051c877f9795309d9640310ce60200daacc141a6e80a90152",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0040",
+        "annotation_sha256": "736db227077fa3627236422265059369f3eb5d3afe5025e1c27e6508168c6e3f",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0042",
+        "annotation_sha256": "3c93a437d04a9c2f9eeb2859390e6ecb0bb37d7507a89d002f08729513e10653",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0043",
+        "annotation_sha256": "4515c267eeca2578e57ec5d220c0fc72262691ab5013deb8018e1e8aa183c1fc",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0044",
+        "annotation_sha256": "e9becd050a1429819b1b0ed87bc3eb7ddc916aa3ef9b895f540bdb039ba78904",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0045",
+        "annotation_sha256": "ec1292739fe2b399056ff6fa194516bfc2933236a33498d9831188fb41260c5d",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0046",
+        "annotation_sha256": "e578dc2d455440d6e983037aeeed310aeb169943a8001e74004cf7fcc9a0d020",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0047",
+        "annotation_sha256": "b8ea7597e34001e82bb52690812fa5ff025ceac70a0b497464cd2db4f85d1f15",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0048",
+        "annotation_sha256": "08079d98f6ae7cd9df27dde80fe857fe69fb29e074afea0cb943b4884eba1a06",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0049",
+        "annotation_sha256": "f464b1201f1f4922e9913cb937757a43956991349e64d628772a606f8359f814",
+        "selection": "sampled",
+        "reasons": [
+          "stratified_20_percent_remainder"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0051",
+        "annotation_sha256": "b1a247a6be8c5e3e09e69a32815e5d54a10afdee0201d3397ac2c5bd4c7cab79",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0052",
+        "annotation_sha256": "0c6c82dfe3032100bad481d9a442c6684a9aebd3af676af0645897e9b55b49ba",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0053",
+        "annotation_sha256": "52f8a920727fd00fc6983a6d7d8bd580ccfbf8306e479d8cbb35bd96d390b64b",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0054",
+        "annotation_sha256": "deb7effd46defa37ae4b4fb9be3f158281c5ccb3cbe4004236fd1e699748ad31",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0055",
+        "annotation_sha256": "a84bc8e39594c3c3269eab7f7716ce8344f7d26faeb27ad2556a234393ffbbcc",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0056",
+        "annotation_sha256": "0efeb08c3f008c49ec70dc100cc596d21fc812c21f469d89050c24507ef71814",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0057",
+        "annotation_sha256": "0f709116f44e5e92151e4bfcbb298d7b05a8be3fad0485ddbd3522bcc528f25b",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0058",
+        "annotation_sha256": "37ca335bf9a32790bf329f8137933509a638dec21ac69a5cae3a363ecac4afa6",
+        "selection": "mandatory",
+        "reasons": [
+          "dose_unit"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0060",
+        "annotation_sha256": "15357cd9113a7bbf1d35657b7e0f18702933122512aea0f8b2d2a3dfe7ba750a",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0061",
+        "annotation_sha256": "43e170906cea65758d436d10bd8bbf2128a1bf0bcfcf8c52b7a22eccda9a48fd",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0062",
+        "annotation_sha256": "dc9373e292aa0e40934901723d7d01990d815cd6a2e9b8aa6665a06283718119",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0063",
+        "annotation_sha256": "163e8951562bd8a07131f4416b38ddc223eadc8b46a7c6ee102ab55876f421b2",
+        "selection": "sampled",
+        "reasons": [
+          "stratified_20_percent_remainder"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0065",
+        "annotation_sha256": "afa2a9ec99fab391d4776438117b9d7d507d315b024cf2fd37eaec5a82bb8caf",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0066",
+        "annotation_sha256": "460ecfa266352330f5b6f77613c194dcab5537e3b0bebc59d1d00a131627f821",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0067",
+        "annotation_sha256": "2a4ea759a73f8ff3501c9792cf1dc67c4c2b81dbfc35c996722b67925d3e82c7",
+        "selection": "sampled",
+        "reasons": [
+          "stratified_20_percent_remainder"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0070",
+        "annotation_sha256": "26c530e4b430cc815a0bf5d64f635c506331b74aec083f8b3c9641611cd44c2d",
+        "selection": "mandatory",
+        "reasons": [
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0071",
+        "annotation_sha256": "8e155805ceef054bfe6e2c0e393924a94d612d85ec60bd6a48d24e824b572b41",
+        "selection": "sampled",
+        "reasons": [
+          "stratified_20_percent_remainder"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0073",
+        "annotation_sha256": "87fe6092dba212296e3a04aaaba41c2e7873cebf1a9cdc3bb4a1ee89b13aa420",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0074",
+        "annotation_sha256": "65507c671df0124444aca8810b2ffeccc000303f9f2cbc9cf0f691c6dfc9caf7",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0075",
+        "annotation_sha256": "efb2097c4ab7a6b595bc1b86da6240c5b339f819640458a480593f837fb2916a",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0077",
+        "annotation_sha256": "09fb84ecea9cb65ffd307252d0e92994e7a2ff7feafa7eb188dab07afcd8638a",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0078",
+        "annotation_sha256": "e4a58a9806dbb42f0a3a8485ce5937577e626a3234a96d42598c633b88452716",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0079",
+        "annotation_sha256": "520c2ec396197338aa7c5f2911e807c936ae09a8089cc98cd8071e1478047ed0",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0080",
+        "annotation_sha256": "2d73c4ab48d5c9e775c3bdb75618e65a0f71f11152803bfa0c0742d90d4277b4",
+        "selection": "mandatory",
+        "reasons": [
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0081",
+        "annotation_sha256": "d55c7b9111362faa68c62a421c178bad82dc22f220e4b160c0c616393f6aa046",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "time_window",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0082",
+        "annotation_sha256": "f6bf0da094a83d6e3270781b139cef19ee9fd5c3ece4e8a1590575c622b85c29",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0083",
+        "annotation_sha256": "a8af0ba6cabae62f447ad77df011c12762c7fbced9793d857d3d74f4840c4ec6",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "time_window"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0086",
+        "annotation_sha256": "21d666713b7a68cb51055eb1ce3d06bb75a14575e0626672bec12a1426e3e20b",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0087",
+        "annotation_sha256": "81f37d1c1847d3fd0a6e697a7e7128018599c530981f14cabc82feb1f9a34a00",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0088",
+        "annotation_sha256": "f2eb54f40308e1936e89c38e0831363f65da7a15f2778fee385c74cbe0e77390",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "time_window",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0089",
+        "annotation_sha256": "c34e8614ae22e6cee42dcdfb6648d31112ec943f20de50aa7c67deb654567f24",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "time_window",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0090",
+        "annotation_sha256": "2dbdab4b7e5d13bc0e754558865256b90626e30d66996e49717c6016dee81a93",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "time_window",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0091",
+        "annotation_sha256": "e63ae7818f0dd2a41c651a93c671ee2e8cbfb8ee68a1380701f54fa3bca8c8fb",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0092",
+        "annotation_sha256": "1a8c9bcb9e0ad57c7944961313d42cf96580ae0bcbcb283176aa92875afa5412",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0093",
+        "annotation_sha256": "ef142aad4c324a6abe7037176f6fecb197629c8d4b0b33003ee54d7a4efff500",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0094",
+        "annotation_sha256": "9d5913bb864407385f344d5bbc2412d23a894f84c14b88a2030a082df5bc5bc5",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0095",
+        "annotation_sha256": "7ee7e2732752b74c709b04a3cdcf25333132a6aa44ecfe14988ebf927e62e7ae",
+        "selection": "mandatory",
+        "reasons": [
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0096",
+        "annotation_sha256": "edc7576b216fd227ab451a5dd4db4930b30a44d7cc055e5890ff1fda8612df26",
+        "selection": "sampled",
+        "reasons": [
+          "stratified_20_percent_remainder"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0097",
+        "annotation_sha256": "c53bbbe6a78c3a4b22a950c6405c45c1e673c7e4c1bbd7883c30c12b9ac4ab86",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0098",
+        "annotation_sha256": "48642963089c026cc9fc8ce1d661f7f2641251dd372a7537642b34a6627f886c",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0101",
+        "annotation_sha256": "e41bde0bc56a3449b5d2787191310f7cbd86646ffde45ef47366fc72a8500cdf",
+        "selection": "mandatory",
+        "reasons": [
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0102",
+        "annotation_sha256": "2610d0e859dbeb7d402077dd16e893b7e65da04686ec3afbc25551030f7aea93",
+        "selection": "mandatory",
+        "reasons": [
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0105",
+        "annotation_sha256": "7203a38d14dedf8e99053ae14a9ba282b94df97a4a77a642eb2f4a01c3fef268",
+        "selection": "mandatory",
+        "reasons": [
+          "negation",
+          "time_window",
+          "existing_dispute"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0106",
+        "annotation_sha256": "874f6305a30aebf0e8026c06935f1e656c9e27cafde0a644de5bfe42121290e2",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      },
+      {
+        "sample_id": "pc-0107",
+        "annotation_sha256": "79cfd2e218cd1489144f8b4c426563bf8aa41b1ec2b2c238e29f709723fcf169",
+        "selection": "mandatory",
+        "reasons": [
+          "negation"
+        ],
+        "reviewer_id": null,
+        "decision": null
+      }
+    ]
+  },
+  "new_annotation_confirmation": {
+    "count": 19,
+    "ids": [
+      "ms-0124",
+      "ms-0125",
+      "ms-0177",
+      "ms-0178",
+      "ms-0205",
+      "ms-0206",
+      "ms-0241",
+      "ms-0242",
+      "ms-0243",
+      "ms-0244",
+      "ms-0280",
+      "ms-0298",
+      "ms-0299",
+      "ms-0336",
+      "ms-0337",
+      "pc-0017",
+      "pc-0028",
+      "pc-0029",
+      "ms-0525"
+    ],
+    "status": "confirmed",
+    "independent_second_human": false,
+    "confirmed_on": "2026-10-08",
+    "reviewer_id": "project-owner",
+    "evidence": {
+      "path": "evals/main_set/drafts/revision-2026-10-08-v2/human_confirmation_2026-10-08.json",
+      "sha256": "92eb53204cef17458c3fc050404febeb61318129fbcabf58b599a31eb76d088f"
+    }
+  },
+  "safety": {
+    "samples": 170,
+    "first_annotation_evidence_gap": "manifest explicitly says annotator-01 per-item confirmation missing; retain existing D2 and change approvals",
+    "second_review_pool_ids": [
+      "ss-0001",
+      "ss-0002",
+      "ss-0003",
+      "ss-0004",
+      "ss-0005",
+      "ss-0006",
+      "ss-0007",
+      "ss-0008",
+      "ss-0009",
+      "ss-0010",
+      "ss-0011",
+      "ss-0012",
+      "ss-0013",
+      "ss-0014",
+      "ss-0015",
+      "ss-0016",
+      "ss-0017",
+      "ss-0018",
+      "ss-0019",
+      "ss-0020",
+      "ss-0021",
+      "ss-0022",
+      "ss-0023",
+      "ss-0024",
+      "ss-0025",
+      "ss-0026",
+      "ss-0027",
+      "ss-0028",
+      "ss-0029",
+      "ss-0030",
+      "ss-0031",
+      "ss-0032",
+      "ss-0033",
+      "ss-0034",
+      "ss-0035",
+      "ss-0036",
+      "ss-0037",
+      "ss-0038",
+      "ss-0039",
+      "ss-0040",
+      "ss-0041",
+      "ss-0042",
+      "ss-0043",
+      "ss-0044",
+      "ss-0045",
+      "ss-0046",
+      "ss-0047",
+      "ss-0048",
+      "ss-0049",
+      "ss-0050",
+      "ss-0051",
+      "ss-0052",
+      "ss-0053",
+      "ss-0054",
+      "ss-0055",
+      "ss-0056",
+      "ss-0057",
+      "ss-0058",
+      "ss-0059",
+      "ss-0060",
+      "ss-0061",
+      "ss-0062",
+      "ss-0063",
+      "ss-0064",
+      "ss-0065",
+      "ss-0066",
+      "ss-0067",
+      "ss-0068",
+      "ss-0069",
+      "ss-0070",
+      "ss-0071",
+      "ss-0072",
+      "ss-0073",
+      "ss-0074",
+      "ss-0075",
+      "ss-0076",
+      "ss-0077",
+      "ss-0078",
+      "ss-0079",
+      "ss-0080",
+      "ss-0081",
+      "ss-0082",
+      "ss-0083",
+      "ss-0084",
+      "ss-0085",
+      "ss-0086",
+      "ss-0087",
+      "ss-0088",
+      "ss-0089",
+      "ss-0090",
+      "ss-0091",
+      "ss-0092",
+      "ss-0093",
+      "ss-0094",
+      "ss-0095",
+      "ss-0096",
+      "ss-0097",
+      "ss-0098",
+      "ss-0099",
+      "ss-0100",
+      "ss-0101",
+      "ss-0102",
+      "ss-0103",
+      "ss-0104",
+      "ss-0105",
+      "ss-0106",
+      "ss-0107",
+      "ss-0108",
+      "ss-0109",
+      "ss-0110",
+      "ss-0113",
+      "ss-0114",
+      "ss-0115",
+      "ss-0117",
+      "ss-0118",
+      "ss-0119",
+      "ss-0122",
+      "ss-0124",
+      "ss-0125",
+      "ss-0126",
+      "ss-0127",
+      "ss-0129",
+      "ss-0130",
+      "ss-0171",
+      "ss-0172",
+      "ss-0173",
+      "ss-0174",
+      "ss-0175",
+      "ss-0176",
+      "ss-0177",
+      "ss-0131",
+      "ss-0132",
+      "ss-0133",
+      "ss-0134",
+      "ss-0135",
+      "ss-0136",
+      "ss-0137",
+      "ss-0138",
+      "ss-0139",
+      "ss-0140",
+      "ss-0141",
+      "ss-0142",
+      "ss-0143",
+      "ss-0144",
+      "ss-0145",
+      "ss-0146",
+      "ss-0147",
+      "ss-0148",
+      "ss-0149",
+      "ss-0150",
+      "ss-0151",
+      "ss-0152",
+      "ss-0153",
+      "ss-0154",
+      "ss-0155",
+      "ss-0156",
+      "ss-0157",
+      "ss-0158",
+      "ss-0159",
+      "ss-0160",
+      "ss-0161",
+      "ss-0162",
+      "ss-0163",
+      "ss-0164",
+      "ss-0165",
+      "ss-0166",
+      "ss-0167",
+      "ss-0168",
+      "ss-0169",
+      "ss-0170"
+    ],
+    "second_review_scope_status": "risk categorisation and sampling to be assigned; safety slices differ from main risk tags, so raw tag matching is insufficient",
+    "second_reviewer_id": null
+  },
+  "warning": "Selection is a work queue, not completed review. Freeze/revise then recompute hashes; no synthetic reviewer identity.",
+  "reviewer_availability": {
+    "as_of": "2026-10-08",
+    "second_human": "unavailable",
+    "evidence": {
+      "source": "current_user_conversation",
+      "verbatim": "那暂时没有第二个 只有我和模型"
+    },
+    "operating_mode": "single_human_plus_independent_llm_provisional",
+    "independent_llm_is_second_human": false,
+    "gate_change": false
+  }
+}

@@ -1,0 +1,1 @@
+{"sample_id": "ms-0440", "verdict": "agree", "items": {"query": "ok", "slices": "ok", "key_text": "ok", "evidence_span": "ok", "dept": "ok"}, "reason": "", "suggestion": "g1 的 span（1249-2791）已完整包含 g2-g5 的全部 span 文本，证据文本层面存在重叠；若要减少冗余，可将 g1 span 收至条件句（\"Such interactions ... be considered.\"），但此时 long_context 需按跨页/长度规则重新核算，故本次未判 issue。"}

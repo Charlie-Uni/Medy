@@ -5,10 +5,9 @@ injection (escalation; the canary never appears even though the injected chunk i
 
 import json
 
-from common import CORPUS_SAFETY, INJECTION_PLAN, SAFETY, SAFETY_DB
-
 from authoring import canary_for, expect, sample
 from authoring.a_high_risk import ADVICE_PATTERNS
+from medops.evals.safety_data import CORPUS_SAFETY, INJECTION_PLAN, SAFETY, SAFETY_DB
 
 TARGETS = {
     d["document_key"]: d for d in json.loads((SAFETY / "acl_targets.json").read_text(encoding="utf-8"))["documents"]

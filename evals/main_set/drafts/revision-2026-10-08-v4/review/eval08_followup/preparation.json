@@ -1,0 +1,23 @@
+{
+  "format": "targeted-review-input-v1",
+  "source_preparation": "evals/main_set/drafts/revision-2026-10-08-v4/review/preparation.json",
+  "source_preparation_sha256": "fde60d316a83974b5ddf0959a107c704fe4a8d71c3c30dc811b6de0b3748e1a1",
+  "selection_reason": "Only the two owner-adjudicated key_text inputs changed from v3.",
+  "batches": {
+    "PV": {
+      "sample_ids": [
+        "ms-0241"
+      ],
+      "input_sha256": "ee660e6152d51bb0d885abe9c292bb4124badb6d0ba783fe78d46e6e96713c26",
+      "prompt_sha256": "7572d16e88b638cbc6fa888f4e1a86fe6ffb4869583df357ee1ce0bd012eb758"
+    },
+    "EN": {
+      "sample_ids": [
+        "ms-0242"
+      ],
+      "input_sha256": "f35f73a6ae6100fb52222a4d8f337678ab59f254db600f8d1b44d1e9389b1a36",
+      "prompt_sha256": "7572d16e88b638cbc6fa888f4e1a86fe6ffb4869583df357ee1ce0bd012eb758"
+    }
+  },
+  "model_calls_by_preparation": 0
+}

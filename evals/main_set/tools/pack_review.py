@@ -17,6 +17,7 @@ import sys
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import draft_common as dc  # noqa: E402
 
+from medops.evals.probe.review_inputs import multi_gold_review_record  # noqa: E402
 from medops.evals.probe.review_provenance import no_answer_document_text  # noqa: E402
 from medops.evals.probe.validator import PageTextProvider  # noqa: E402
 
@@ -56,8 +57,14 @@ def pack(samples: list[dict], corpus_by_key: dict[str, dict], parents: dict[str,
                 }
             )
             continue
+        if len(s["required_gold_evidence"]) > 1:
+            record = multi_gold_review_record(s, by_hash, dc.page_text, parents.get(s.get("derived_from")))
+            if record is None:
+                raise ValueError(f"{s['sample_id']}: reviewer page missing")
+            records.append(record)
+            continue
         if len(s["required_gold_evidence"]) != 1:
-            raise ValueError(f"{s['sample_id']}: reviewer pack requires exactly one gold")
+            raise ValueError(f"{s['sample_id']}: answerable reviewer pack requires gold")
         g = s["required_gold_evidence"][0]
         d = by_hash[g["source_hash"]]
         page_text = dc.page_text(g["source_hash"], g["page"])

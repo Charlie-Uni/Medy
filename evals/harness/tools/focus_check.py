@@ -14,7 +14,7 @@ The layout parameters are constants of `medops.harness.evidence_focus`, fixed be
 tool measures them and offers no way to sweep them (INV-EVAL-01: evaluation material does not shape a candidate).
 
 python evals/harness/tools/focus_check.py --run evals/harness/runs/<stored run> --out evals/harness/runs/<name> \
-    [--dataset evals/main_set/main-v3-provisional] [--mapping <chunk mapping>] [--device mps] [--limit N]
+    [--dataset evals/main_set/main-v4-provisional] [--mapping <chunk mapping>] [--device mps] [--limit N]
 """
 
 from __future__ import annotations
@@ -32,22 +32,19 @@ from datetime import date
 
 import psycopg
 
+from medops.domain.common import DocStatus
+from medops.domain.evidence import Citation, Evidence
+from medops.evals.datasets import read_rows
+from medops.evals.safety_data import PRODUCTION_DB, admin_dsn
+from medops.harness import evidence_focus as ef
+from medops.harness import focus_profiles as fp
+from medops.harness.answer import ANSWER_SYSTEM
+from medops.infrastructure.llm.gateway import estimate_tokens
+from medops.retrieval.integrity import require_retrieval_integrity
+
 REPO = pathlib.Path(__file__).resolve().parents[3]
-sys.path.insert(0, str(REPO / "evals/safety_set/tools"))
-from common import PRODUCTION_DB, admin_dsn  # noqa: E402
 
-from medops.domain.common import DocStatus  # noqa: E402
-from medops.domain.evidence import Citation, Evidence  # noqa: E402
-from medops.harness import evidence_focus as ef  # noqa: E402
-from medops.harness.nodes import ANSWER_SYSTEM  # noqa: E402
-from medops.infrastructure.llm.gateway import estimate_tokens  # noqa: E402
-from medops.retrieval.production import require_index_coverage  # noqa: E402
-
-MODES = (ef.EVIDENCE_FOCUS_OFF, ef.EVIDENCE_FOCUS_COMPACT, *ef.FOCUS_PARAMS)
-
-
-def read_jsonl(path: pathlib.Path) -> list[dict]:
-    return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+MODES = (fp.EVIDENCE_FOCUS_OFF, fp.EVIDENCE_FOCUS_COMPACT, *fp.FOCUS_PARAMS)
 
 
 def tokenizer() -> tuple[str, object]:
@@ -114,11 +111,11 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--run", type=pathlib.Path, required=True, help="stored main-set run (rows.jsonl)")
     ap.add_argument("--out", type=pathlib.Path, required=True)
-    ap.add_argument("--dataset", type=pathlib.Path, default=REPO / "evals/main_set/main-v3-provisional")
+    ap.add_argument("--dataset", type=pathlib.Path, default=REPO / "evals/main_set/main-v4-provisional")
     ap.add_argument(
         "--mapping",
         type=pathlib.Path,
-        default=REPO / "evals/experiments/e2e/main-v3-provisional/chunk_mapping.chunker-v2.main-v3-provisional.json",
+        default=REPO / "evals/experiments/e2e/main-v4-provisional/chunk_mapping.chunker-v2.main-v4-provisional.json",
     )
     ap.add_argument("--device", default="mps")
     ap.add_argument("--limit", type=int, default=0)
@@ -132,9 +129,9 @@ def main() -> int:
     if args.out.exists():
         raise SystemExit("refusing to overwrite an existing output directory")
     modes = tuple(m for m in MODES if m in {x.strip() for x in args.modes.split(",")})
-    sentence_modes = [m for m in modes if m in ef.FOCUS_PARAMS]
+    sentence_modes = [m for m in modes if m in fp.FOCUS_PARAMS]
 
-    rows = list({r["sample_id"]: r for r in read_jsonl(args.run / "rows.jsonl")}.values())
+    rows = list({r["sample_id"]: r for r in read_rows(args.run / "rows.jsonl")}.values())
     rows = [r for r in rows if r.get("evidence_chunks")]
     if args.limit:
         rows = rows[: args.limit]
@@ -143,11 +140,12 @@ def main() -> int:
     if mapping["dataset_hash"] != manifest["dataset_hash"]:
         raise SystemExit("chunk mapping belongs to another dataset version")
     gold_chunks = {e["gold_id"]: set(e["chunk_ids"]) for e in mapping["entries"] if e["status"] == "mapped"}
-    samples = {s["sample_id"]: s for s in read_jsonl(args.dataset / "samples.jsonl")}
+    samples = {s["sample_id"]: s for s in read_rows(args.dataset / "samples.jsonl")}
 
-    with psycopg.connect(admin_dsn(PRODUCTION_DB)) as conn:
+    with psycopg.connect(admin_dsn(PRODUCTION_DB), connect_timeout=5, options="-c statement_timeout=5000") as conn:
         conn.read_only = True
-        require_index_coverage(conn, plane=PRODUCTION_DB)
+        conn.isolation_level = psycopg.IsolationLevel.REPEATABLE_READ
+        require_retrieval_integrity(conn, plane=PRODUCTION_DB)
         evidence = load_evidence(conn, sorted({c for r in rows for c in r["evidence_chunks"]}))
         from medops.retrieval.doc_focus import load_titles
 
@@ -239,7 +237,7 @@ def main() -> int:
         return sum(x["prompt_tokens"][mode] for x in out_rows)
 
     spent = sum(x["model_tokens"] for x in out_rows)
-    off = total(ef.EVIDENCE_FOCUS_OFF) if ef.EVIDENCE_FOCUS_OFF in modes else 0
+    off = total(fp.EVIDENCE_FOCUS_OFF) if fp.EVIDENCE_FOCUS_OFF in modes else 0
     gold = [g for x in out_rows for g in x["gold"]]
     claims = [c for x in out_rows for c in x["claims"]]
     wins = [x for x in out_rows if x["outcome"] == "answered" and x["gold_cited"] and x["gold"]]
@@ -269,7 +267,7 @@ def main() -> int:
         "tokenizer": tok_name,
         "glossary_for_rewrites": args.glossary,
         "parameters": {
-            "versions": {m: dataclasses.asdict(ef.FOCUS_PARAMS[m]) for m in sentence_modes},
+            "versions": {m: dataclasses.asdict(fp.FOCUS_PARAMS[m]) for m in sentence_modes},
             "min_chunk_tokens": ef.MIN_CHUNK_TOKENS,
             "min_unit_tokens": ef.MIN_UNIT_TOKENS,
             "max_unit_chars": ef.MAX_UNIT_CHARS,

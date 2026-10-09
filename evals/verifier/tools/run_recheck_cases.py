@@ -21,9 +21,7 @@ from medops.core.config import Settings  # noqa: E402
 from medops.domain.answer import Claim  # noqa: E402
 from medops.domain.common import DocStatus  # noqa: E402
 from medops.domain.evidence import Citation, Evidence  # noqa: E402
-from medops.infrastructure.llm.budget import BudgetedGateway, InMemorySpendLedger  # noqa: E402
-from medops.infrastructure.llm.gateway import OPENAI_PRICES, PriceTable  # noqa: E402
-from medops.infrastructure.llm.openai_gateway import OpenAIModelGateway  # noqa: E402
+from medops.infrastructure.llm.factory import build_budgeted_gateway  # noqa: E402
 from medops.verification.verifier import VERIFIER_VERSION, verify_claims  # noqa: E402
 
 
@@ -74,12 +72,7 @@ def main() -> int:
     args = ap.parse_args()
     cases = [json.loads(line) for line in args.cases.read_text(encoding="utf-8").splitlines() if line.strip()]
     settings = Settings()
-    gateway = BudgetedGateway(
-        OpenAIModelGateway.from_settings(settings),
-        prices=PriceTable(OPENAI_PRICES),
-        ledger=InMemorySpendLedger(),
-        monthly_cap_usd=settings.llm_monthly_budget_usd,
-    )
+    gateway = build_budgeted_gateway(settings)
     results = []
     for case in cases:
         with psycopg.connect(_admin_dsn(case["database"])) as conn:

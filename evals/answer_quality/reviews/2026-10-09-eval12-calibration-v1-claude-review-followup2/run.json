@@ -1,0 +1,145 @@
+{
+  "format": "answer-quality-review-run-v1",
+  "request_sha256": "6e6d0503a1e6c67d28e6feb4618c41b2c4fcea43a1aaae9085b951a5ba11e276",
+  "authorization_sha256": "89ea00f973125112b34bf54386ef4f87a11c5125048b63b7dba82feeb0cd3527",
+  "cli": "claude-code",
+  "cli_version": "2.1.79 (Claude Code)",
+  "model": "claude-opus-5",
+  "reasoning_effort": "high",
+  "completed_case_sha256": [
+    "3261ea66da54235e96ba50c2de5f88afd3fd8114e21e535227638b4c1457c6ab",
+    "3bfa6b7d969e8d977e66ccb863dcbc9edd16613f8634157271e655dd7db8a34a",
+    "6221b8d645746ae7a93b227b35d77ef171f554089566e3639cb36d9da71944b1",
+    "79843f9a6df8e7efcefd99fbcb0a1d10f9d10516679ae25a874a6309c1ea0960",
+    "9aa231f6dd6a30f52100892f0a123746aa5ea7d53ed924728e5d17cd66a9b93d",
+    "c7fa77385c2bc91099cfc4ffb0afab37c3e97a3f7f35223a72e898a8203243e5",
+    "ee63406774feda4fd5ebec008a4d146edd5af1033233e0e6abf7e292706f0e77",
+    "f38587aa10ce1eeba0923ecaf13b285a9a19209efc3b4e0054becc563182d7bd"
+  ],
+  "attempts": [
+    {
+      "sample_id": "ms-0242",
+      "attempt_id": "2df7f21443084b41bc6e263559190844",
+      "outcome": "failed"
+    },
+    {
+      "sample_id": "ms-0298",
+      "attempt_id": "3cafe7afac1c47d7a4d2a8852a580ce3",
+      "outcome": "validated_reply",
+      "prompt_sha256": "a104ea0359d4a926791bbb6f20442f4e4424f1c14dcc43715f15850ad31d6c39",
+      "cost_usd": 0.06650225,
+      "model_observed": "claude-opus-5",
+      "session_id": "23babebe-b654-453e-92f7-b62f0376cafc",
+      "cli_capture_sha256": "4e0e842286b54d5befc8b8347c42ec6cfe114be60f06aac03b77dbea8d7156a5",
+      "json_schema_sha256": "f8dff58ee3a3af0cc1d1c096723b4d82fd085db83f2211bcb50ffadd5218e7ea",
+      "input_tokens": 4,
+      "cache_read_input_tokens": 7602,
+      "cache_creation_input_tokens": 6757,
+      "output_tokens": 818
+    },
+    {
+      "sample_id": "ms-0338",
+      "attempt_id": "a75bf17ad21342e09c06387adaa9b89f",
+      "outcome": "validated_reply",
+      "prompt_sha256": "55d66d7a0df02ef39b72fe3eb35ce87fc8904032c3c97962a19704ec8379b54e",
+      "cost_usd": 0.06034425,
+      "model_observed": "claude-opus-5",
+      "session_id": "4f81d722-8518-4fd0-851e-20f82eeea977",
+      "cli_capture_sha256": "a659674601d1230914db9f4259efb7465545bb8a716fdd14902c77a749457e41",
+      "json_schema_sha256": "f8dff58ee3a3af0cc1d1c096723b4d82fd085db83f2211bcb50ffadd5218e7ea",
+      "input_tokens": 4,
+      "cache_read_input_tokens": 6711,
+      "cache_creation_input_tokens": 5887,
+      "output_tokens": 807
+    },
+    {
+      "sample_id": "ms-0440",
+      "attempt_id": "b66b0b6de80245cbba8d5fc4a4a99509",
+      "outcome": "validated_reply",
+      "prompt_sha256": "611d2deb3b1b414ee36bc1175ef2ac55ac5b62a6c892768c5febc187c0eef323",
+      "cost_usd": 0.09092225,
+      "model_observed": "claude-opus-5",
+      "session_id": "52feab83-c5b4-4c35-b329-d1af1b2a0388",
+      "cli_capture_sha256": "c2ef15cdf4d9efec25423f14961e358e3712f5765d2ad99b8599cf189bd2b8f3",
+      "json_schema_sha256": "f8dff58ee3a3af0cc1d1c096723b4d82fd085db83f2211bcb50ffadd5218e7ea",
+      "input_tokens": 4,
+      "cache_read_input_tokens": 9017,
+      "cache_creation_input_tokens": 8671,
+      "output_tokens": 1288
+    },
+    {
+      "sample_id": "ms-0001",
+      "attempt_id": "562a85d898bf444b93a312b540ff08a1",
+      "outcome": "validated_reply",
+      "prompt_sha256": "91196c3edd3b4b79741e84ffeba8c4e917f84e35cd00aa2d90bc78bceac2ccae",
+      "cost_usd": 0.07538475,
+      "model_observed": "claude-opus-5",
+      "session_id": "8676ba23-3b62-4d91-8152-3dee750f09ba",
+      "cli_capture_sha256": "eabdadcdfbbc857597330525fe2672f43e52409f610b25d60c29035071284f45",
+      "json_schema_sha256": "f8dff58ee3a3af0cc1d1c096723b4d82fd085db83f2211bcb50ffadd5218e7ea",
+      "input_tokens": 4,
+      "cache_read_input_tokens": 9467,
+      "cache_creation_input_tokens": 8597,
+      "output_tokens": 676
+    },
+    {
+      "sample_id": "ms-0099",
+      "attempt_id": "78afffae42cf4a158f1df7be5b7871a7",
+      "outcome": "validated_reply",
+      "prompt_sha256": "ad5d7cd53f809dbd586810a140587d5da59cd1ef7d60b8967b170292029a64d3",
+      "cost_usd": 0.057679,
+      "model_observed": "claude-opus-5",
+      "session_id": "a605ca33-c0f3-4607-a50c-d230112ebc58",
+      "cli_capture_sha256": "91ba8fa04ba654bac9f904d4e83c9f99f28fa09745b425c1281bdf9fe31ff86a",
+      "json_schema_sha256": "f8dff58ee3a3af0cc1d1c096723b4d82fd085db83f2211bcb50ffadd5218e7ea",
+      "input_tokens": 4,
+      "cache_read_input_tokens": 7018,
+      "cache_creation_input_tokens": 5988,
+      "output_tokens": 669
+    },
+    {
+      "sample_id": "ms-0104",
+      "attempt_id": "502d21aec50e45f3b21b60411b98612d",
+      "outcome": "validated_reply",
+      "prompt_sha256": "be4f9f822e7d0c47336259ee395171e6e2ac7e7f2516938568bda5eb84f77e61",
+      "cost_usd": 0.073894,
+      "model_observed": "claude-opus-5",
+      "session_id": "1d862fef-3134-48cd-b233-a57cf44cf7c4",
+      "cli_capture_sha256": "8fd66e15440dfa0fe854ba8f7faa13b31045888e1111ed983ee9d5b4496cdc98",
+      "json_schema_sha256": "f8dff58ee3a3af0cc1d1c096723b4d82fd085db83f2211bcb50ffadd5218e7ea",
+      "input_tokens": 6,
+      "cache_read_input_tokens": 14378,
+      "cache_creation_input_tokens": 6760,
+      "output_tokens": 977
+    },
+    {
+      "sample_id": "ms-0317",
+      "attempt_id": "07fba39991204759ad37326b0bc41b9b",
+      "outcome": "validated_reply",
+      "prompt_sha256": "81205c8f2f89fd05c0a031edbe4bf763499a3acb21ad59e5f689e8bc218f2353",
+      "cost_usd": 0.07593575,
+      "model_observed": "claude-opus-5",
+      "session_id": "a4459b30-97ec-406c-aa45-3dbf7848009d",
+      "cli_capture_sha256": "384bad7b8ccadafa571907cb1121a473fadd676303f821367e47fb641f037390",
+      "json_schema_sha256": "f8dff58ee3a3af0cc1d1c096723b4d82fd085db83f2211bcb50ffadd5218e7ea",
+      "input_tokens": 6,
+      "cache_read_input_tokens": 14699,
+      "cache_creation_input_tokens": 6961,
+      "output_tokens": 1002
+    }
+  ],
+  "reconciliations": [
+    {
+      "attempt_id": "2df7f21443084b41bc6e263559190844",
+      "kind": "claude-structured-output-adapter-recovery-v1",
+      "case_sha256": "ee63406774feda4fd5ebec008a4d146edd5af1033233e0e6abf7e292706f0e77",
+      "prompt_sha256": "49c47a8bcd79ecb843f6c1d8ccacef8aeab5a6db852c26df1908e418f0c3e77b",
+      "output_schema_sha256": "f8dff58ee3a3af0cc1d1c096723b4d82fd085db83f2211bcb50ffadd5218e7ea",
+      "cli_capture_sha256": "618f15e6a926634da1dd0e84728f6685e6948d4e77f251e2c4eaf5bed684903b",
+      "structured_output_sha256": "01fd1db5bdf21a6daf57902ad43fc38ea8d12e4b2059a26f7615d55e832697a4"
+    }
+  ],
+  "recovered_case_sha256": [
+    "ee63406774feda4fd5ebec008a4d146edd5af1033233e0e6abf7e292706f0e77"
+  ]
+}

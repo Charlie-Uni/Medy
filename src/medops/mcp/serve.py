@@ -8,11 +8,11 @@ import sys
 from datetime import date
 from typing import Any
 
-from medops.api.runtime import authenticator_from_settings
+from medops.api.runtime import POLICY_VERSION, authenticator_from_settings
 from medops.application.policy_loader import ReleaseState, load_release_state
 from medops.core.config import AppEnv, Settings, safe_config_errors
 from medops.core.logging import configure_logging, get_logger
-from medops.core.telemetry import configure_telemetry
+from medops.core.telemetry import configure_telemetry, telemetry_options
 from medops.core.telemetry import shutdown as shutdown_telemetry
 from medops.domain.common import Dept
 from medops.domain.identity import UserContext
@@ -25,23 +25,31 @@ def _searcher_factory(device: str, settings: Settings):
     split per principal exactly as the API does (M4-03 / M4-09)."""
     import time
 
-    from medops.harness.retrieval_port import ProductionRetrieval, RetrievalRequest
+    from medops.harness.assembly import build_retrieval
+    from medops.harness.retrieval_port import RetrievalRequest
+    from medops.infrastructure.llm.factory import build_budgeted_gateway
+    from medops.infrastructure.llm.meter import MeteredGateway
+    from medops.mcp.service import SearchExecution
     from medops.retrieval.pinned import PinnedEmbedding, PinnedReranker, PinnedThread
     from medops.retrieval.production import (
+        PRODUCTION_RETRIEVAL_VERSION,
         RERANK_OUTPUT,
         production_hybrid_config,
-        production_lexical_retriever,
-        production_lexical_versions,
-        production_vector_retriever,
+        production_retrieval_inputs,
     )
+    from medops.retrieval.query_translation import QUERY_TRANSLATION_OFF, QueryTranslator
     from medops.retrieval.rerank import BgeRerankerV2M3
+    from medops.retrieval.runtime import candidate_cache_from_settings
     from medops.retrieval.vector.embedding import BgeM3EmbeddingProvider
+    from medops.retrieval.versioning import compute_retrieval_version
 
     pinned = PinnedThread(120.0)
     embedding = PinnedEmbedding(pinned.call(lambda: BgeM3EmbeddingProvider(device=device)), pinned)
     rerankers: dict[int, Any] = {}
     cache: dict[str, Any] = {}
     ttl = float(settings.policy_reload_ttl_s)
+    candidate_cache = candidate_cache_from_settings(settings)
+    gateway: list[Any] = []
 
     def reranker_for(output: int):
         if output not in rerankers:
@@ -68,31 +76,82 @@ def _searcher_factory(device: str, settings: Settings):
     def factory(conn, user: UserContext):
         from contextlib import contextmanager
 
-        routed = state_for(conn).for_principal(user.user_id).policies
+        route = state_for(conn).for_principal(user.user_id)
+        routed = route.policies
         hybrid = routed.hybrid_config(production_hybrid_config())
         reranker = reranker_for(routed.rerank_output(RERANK_OUTPUT))
         glossary = glossary_for(routed.glossary_version())
+        retrieval_version = (
+            compute_retrieval_version(
+                production_retrieval_inputs(
+                    hybrid,
+                    rerank_output=routed.rerank_output(RERANK_OUTPUT),
+                    glossary_version=routed.glossary_version(),
+                    multi_query=routed.multi_query(),
+                    doc_focus=routed.doc_focus(),
+                    source_constraint=routed.source_constraint(),
+                    query_translation=routed.query_translation(),
+                )
+            )
+            if routed.retrieval_overridden()
+            else PRODUCTION_RETRIEVAL_VERSION
+        )
+        policy_version = route.policy_version(POLICY_VERSION)
 
         @contextmanager
         def conn_for_user(_u):
             yield conn
 
         def search(query: str, k: int, *, as_of: date | None, allow_historical: bool):
-            retrieval = ProductionRetrieval(
+            meter = None
+            translator = None
+            translation_model = routed.query_translation()
+            if translation_model != QUERY_TRANSLATION_OFF:
+                if not gateway:
+                    gateway.append(build_budgeted_gateway(settings))
+                meter = MeteredGateway(gateway[0])
+                translator = QueryTranslator(meter, translation_model).translate
+            search.audit_stats = SearchExecution(  # type: ignore[attr-defined]
+                (), retrieval_version=retrieval_version, policy_version=policy_version
+            )
+            retrieval = build_retrieval(
                 conn_for_user=conn_for_user,
-                lexical_factory=lambda c: production_lexical_retriever(c, as_of=as_of),
-                vector_factory=lambda c: production_vector_retriever(c, embedding, as_of=as_of),
+                provider=embedding,
                 reranker=reranker,
+                as_of=as_of,
                 config=hybrid,
-                lexical_versions=production_lexical_versions(),
                 glossary=glossary,
                 multi_query=routed.multi_query(),
                 doc_focus=routed.doc_focus(),
+                source_constraint=routed.source_constraint(),
+                translator=translator,
+                cache=candidate_cache,
+                cache_versions=(retrieval_version, policy_version) if candidate_cache else None,
             )
-            outcome = retrieval.retrieve(
-                RetrievalRequest(query=query, user=user, as_of=as_of, historical_requested=allow_historical)
-            )
-            return outcome.evidence
+            outcome = None
+            try:
+                outcome = retrieval.retrieve(
+                    RetrievalRequest(query=query, user=user, as_of=as_of, historical_requested=allow_historical)
+                )
+                return SearchExecution(
+                    outcome.evidence,
+                    model_calls=meter.calls if meter else 0,
+                    tokens=meter.tokens if meter else 0,
+                    cost_usd=meter.cost_usd if meter else 0.0,
+                    retrieval_version=retrieval_version,
+                    policy_version=policy_version,
+                    cache_hit=outcome.cache_hit,
+                )
+            finally:
+                search.audit_stats = SearchExecution(  # type: ignore[attr-defined]
+                    (),
+                    model_calls=meter.calls if meter else 0,
+                    tokens=meter.tokens if meter else 0,
+                    cost_usd=meter.cost_usd if meter else 0.0,
+                    retrieval_version=retrieval_version,
+                    policy_version=policy_version,
+                    cache_hit=bool(outcome and outcome.cache_hit),
+                )
 
         return search
 
@@ -119,11 +178,7 @@ def main(argv: list[str] | None = None) -> int:
         return 2
     # stdio: stdout is the JSON-RPC channel, so structured logs must go to stderr or they corrupt the protocol stream
     configure_logging(settings.log_level, stream=sys.stderr if args.transport == "stdio" else None)
-    configure_telemetry(
-        endpoint=settings.otel_exporter_otlp_endpoint,
-        service_name=settings.otel_service_name,
-        headers=settings.otel_exporter_otlp_headers.get_secret_value() if settings.otel_exporter_otlp_headers else None,
-    )
+    configure_telemetry(**telemetry_options(settings))
     log = get_logger(__name__)
     if settings.database_readonly_url is None:
         print(

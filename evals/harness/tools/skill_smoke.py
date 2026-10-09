@@ -11,7 +11,6 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import hashlib
-import importlib.util
 import json
 import pathlib
 import sys
@@ -23,22 +22,21 @@ import psycopg
 
 from medops.core.config import Settings
 from medops.core.errors import MedOpsError
+from medops.core.tracing import new_trace_id
 from medops.domain.common import Dept
 from medops.domain.identity import UserContext
 from medops.domain.state import VersionSet
-from medops.harness.nodes import HarnessDeps
+from medops.evals.runtime import with_database
+from medops.harness.assembly import build_retrieval
+from medops.harness.dependencies import HarnessDeps
 from medops.harness.production import PRODUCTION_ANSWER_MODEL, PRODUCTION_JUDGE_MODEL, production_model_config_version
-from medops.harness.retrieval_port import ProductionRetrieval
-from medops.infrastructure.llm.budget import BudgetedGateway, InMemorySpendLedger
-from medops.infrastructure.llm.gateway import OPENAI_PRICES, PriceTable
-from medops.infrastructure.llm.openai_gateway import OpenAIModelGateway
+from medops.infrastructure.llm.factory import build_budgeted_gateway
+from medops.infrastructure.llm.meter import MeteredGateway
+from medops.retrieval.pinned import PinnedEmbedding, PinnedReranker, PinnedThread
 from medops.retrieval.production import (
     PRODUCTION_RETRIEVAL_VERSION,
     RERANK_OUTPUT,
     production_hybrid_config,
-    production_lexical_retriever,
-    production_lexical_versions,
-    production_vector_retriever,
 )
 from medops.skills.catalog import default_registry
 from medops.skills.production import doc_type_lookup, evidence_lookup
@@ -48,12 +46,9 @@ REPO = pathlib.Path(__file__).resolve().parents[3]
 FULL_RUN = REPO / "evals/harness/runs/2026-09-23-full-ask-v1/rows.jsonl"
 
 
-def _load_smoke_ask():
-    spec = importlib.util.spec_from_file_location("smoke_ask", REPO / "evals/harness/tools/smoke_ask.py")
-    module = importlib.util.module_from_spec(spec)
-    assert spec.loader is not None
-    spec.loader.exec_module(module)
-    return module
+def execution_run_id(run_name: str, case_name: str, occurrence: int) -> str:
+    """Stable attempt identity for replaying a report; the trace remains unique for every execution."""
+    return hashlib.sha256(f"skill-smoke:{run_name}:{case_name}:{occurrence}".encode()).hexdigest()[:32]
 
 
 def user_for(dept: str, tag: str, *, scopes: frozenset[str] | None = None) -> UserContext:
@@ -276,15 +271,15 @@ def main() -> int:
     args = ap.parse_args()
     if args.out.exists():
         raise SystemExit("refusing to overwrite an existing run directory")
-    sa = _load_smoke_ask()
+
     settings = Settings()
     from medops.retrieval.rerank import BgeRerankerV2M3
     from medops.retrieval.vector.embedding import BgeM3EmbeddingProvider
 
-    gpu = sa.GpuThread(120.0)
-    provider = sa._PinnedEmbedding(gpu.call(lambda: BgeM3EmbeddingProvider(device=args.device)), gpu)
-    reranker = sa._PinnedReranker(gpu.call(lambda: BgeRerankerV2M3(device=args.device, output=RERANK_OUTPUT)), gpu)
-    conn = psycopg.connect(sa._with_database(settings.database_url.get_secret_value(), args.database))
+    gpu = PinnedThread(120.0)
+    provider = PinnedEmbedding(gpu.call(lambda: BgeM3EmbeddingProvider(device=args.device)), gpu)
+    reranker = PinnedReranker(gpu.call(lambda: BgeRerankerV2M3(device=args.device, output=RERANK_OUTPUT)), gpu)
+    conn = psycopg.connect(with_database(settings.database_url.get_secret_value(), args.database))
     as_of = args.as_of
 
     @contextmanager
@@ -293,22 +288,14 @@ def main() -> int:
             conn.execute("select set_config('medops.dept', %s, true)", (user.dept.value,))
             yield conn
 
-    retrieval = ProductionRetrieval(
+    retrieval = build_retrieval(
         conn_for_user=conn_for_user,
-        lexical_factory=lambda c: production_lexical_retriever(c, as_of=as_of),
-        vector_factory=lambda c: production_vector_retriever(c, provider, as_of=as_of),
+        as_of=as_of,
+        provider=provider,
         reranker=reranker,
         config=production_hybrid_config(),
-        lexical_versions=production_lexical_versions(),
     )
-    gateway = sa._Meter(
-        BudgetedGateway(
-            OpenAIModelGateway.from_settings(settings),
-            prices=PriceTable(OPENAI_PRICES),
-            ledger=InMemorySpendLedger(),
-            monthly_cap_usd=settings.llm_monthly_budget_usd,
-        )
-    )
+    gateway = MeteredGateway(build_budgeted_gateway(settings))
     deps = HarnessDeps(
         retrieval=retrieval,
         gateway=gateway,
@@ -337,8 +324,9 @@ def main() -> int:
     selected = [
         c for c in all_cases if not wanted or any(c["case"] == w or (w not in exact and w in c["case"]) for w in wanted)
     ]
-    for case in [c for c in selected for _ in range(args.repeat)]:
-        trace = hashlib.sha256(case["case"].encode()).hexdigest()[:32]
+    for occurrence, case in enumerate([c for c in selected for _ in range(args.repeat)]):
+        trace = new_trace_id()
+        run_id = execution_run_id(args.out.name, case["case"], occurrence)
         ctx = SkillContext(
             user=case["user"],
             versions=versions,
@@ -346,10 +334,10 @@ def main() -> int:
             evidence_lookup=ev_lookup,
             doc_type_lookup=dt_lookup,
             trace_id=trace,
-            run_id=trace,
+            run_id=run_id,
             as_of=as_of,
         )
-        before = (gateway.cost, gateway.calls)
+        before = (gateway.cost_usd, gateway.calls)
         t0 = time.perf_counter()
         record: dict = {
             "case": case["case"],
@@ -359,6 +347,8 @@ def main() -> int:
             "expect": case["expect"],
             "expect_verdicts": case.get("expect_verdicts"),
             "sample_id": case.get("sample_id"),
+            "trace_id": trace,
+            "run_id": run_id,
         }
         try:
             run = registry.execute(case["skill"], "1.0.0", case["input"], context=ctx)
@@ -378,7 +368,7 @@ def main() -> int:
                 error_message=exc.message,
                 error_detail=(exc.detail or "")[:200],
             )
-        record["cost_usd"] = round(gateway.cost - before[0], 6)
+        record["cost_usd"] = round(gateway.cost_usd - before[0], 6)
         record["model_calls"] = gateway.calls - before[1]
         record["latency_s"] = round(time.perf_counter() - t0, 2)
         results.append(record)

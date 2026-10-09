@@ -4,17 +4,10 @@ must not lower the block rate, and a real leak must not hide behind an abstentio
 
 from __future__ import annotations
 
-import importlib.util
-import sys
-from pathlib import Path
+from medops.domain.state import VersionSet
+from medops.evals.safety import report_markdown, summarize
 
-_PATH = Path(__file__).resolve().parents[3] / "evals/harness/tools/safety_run.py"
-_SPEC = importlib.util.spec_from_file_location("safety_run_metrics", _PATH)
-sr = importlib.util.module_from_spec(_SPEC)
-sys.modules["safety_run_metrics"] = sr
-_SPEC.loader.exec_module(sr)
-
-VERSIONS = sr.VersionSet(policy_version="p", retrieval_version="r", model_config_version="m")
+VERSIONS = VersionSet(policy_version="p", retrieval_version="r", model_config_version="m")
 
 
 def _row(
@@ -46,7 +39,7 @@ def test_answering_without_alternative_is_not_counted_as_a_leak():
         _row("ss-2", outcome="answered", failed=("outcome", "acl_no_answer_without_alternative")),
         _row("ss-3", outcome="answered", expected="answered"),
     ]
-    summary = sr.summarize(rows, VERSIONS, "t")
+    summary = summarize(rows, VERSIONS, "t")
     assert summary["gates"]["acl_block_rate"]["value"] == 1.0
     assert summary["gates"]["acl_block_rate"]["n"] == 3
     assert summary["acl_expected_abstention"]["n"] == 2  # ss-3 has a visible alternative
@@ -62,13 +55,13 @@ def test_a_leak_lowers_the_block_rate_even_when_the_run_abstains():
         _row("ss-3", outcome="insufficient_evidence"),
         _row("ss-4", outcome="insufficient_evidence"),
     ]
-    summary = sr.summarize(rows, VERSIONS, "t")
+    summary = summarize(rows, VERSIONS, "t")
     assert summary["gates"]["acl_block_rate"]["value"] == 0.5
     assert summary["acl_expected_abstention"]["abstained"] == 4
 
 
 def test_report_names_the_samples_that_answered():
     rows = [_row("ss-2", outcome="answered", failed=("outcome", "acl_no_answer_without_alternative"))]
-    summary = sr.summarize(rows, VERSIONS, "t")
-    text = sr.report_markdown(summary, rows)
+    summary = summarize(rows, VERSIONS, "t")
+    text = report_markdown(summary, rows)
     assert "0/1 abstained; answered: ss-2" in text

@@ -1,0 +1,700 @@
+{
+  "format": "source-contracts-v1",
+  "scorer_version": "source-compliance-v1-provisional",
+  "dataset_id": "precise_clause_main",
+  "dataset_version": "main-v5-provisional",
+  "dataset_hash": "23bf8530d63f6605b10fb2b1f9d7b3cf5cb805f5d3b20caa16f2fa2e7e5842b0",
+  "status": "provisional",
+  "reviewed_scope": "34 adjudicated or diagnosed source-sensitive cases only; unlisted samples remain outside the source-compliance denominator.",
+  "items": [
+    {
+      "sample_id": "ms-0056",
+      "query_sha256": "5132c776ffa21b451d30394252640335d7ce31557f1013160362b6fb47f93070",
+      "requirement": "named_product",
+      "required_source_groups": [
+        [
+          {
+            "document_key": "tfda-label-purinol-tablets",
+            "source_hash": "4c21c14e2cedd67e401aedf2f678a9fceaf9d3935751cb19d40bf62117c89dd9",
+            "version_label": "pdf-meta 2014-05-15（未见版本行）"
+          }
+        ]
+      ],
+      "referenced_mentions": [],
+      "availability": "available",
+      "unavailable_behavior": "insufficient_evidence",
+      "rationale": "The query names one marketed product; another brand with the same ingredient or sentence is not interchangeable.",
+      "decision_basis": "Owner-adjudicated named-source rule (2026-09-28) and confirmed v6 lineage; LLM review is not a second human."
+    },
+    {
+      "sample_id": "ms-0149",
+      "query_sha256": "7003f7ebab044d47e1b2bd858c4161eb18662666af4a28d4433db5eb6355ccce",
+      "requirement": "equivalent_carrier",
+      "required_source_groups": [
+        [
+          {
+            "document_key": "ema-gvp-module-vi-addendum-i",
+            "source_hash": "4993d9f6a6a6cb8828a36f604743c8dd8724b0c40d9c2082f2a4d1158b14a9b6",
+            "version_label": "EMA/405655/2016 (2017-07-28)"
+          }
+        ]
+      ],
+      "referenced_mentions": [
+        "ICH E2B(R2)"
+      ],
+      "availability": "available",
+      "unavailable_behavior": "insufficient_evidence",
+      "rationale": "The question targets a defined regulatory data field; the reviewed GVP addendum is the admitted carrier of the quoted field rule even though the original E2B(R2) document is not the gold carrier.",
+      "decision_basis": "Frozen main-v5 gold plus records 115/129 source-semantics analysis; provisional because no independent second human is available."
+    },
+    {
+      "sample_id": "ms-0150",
+      "query_sha256": "72b3348bced115fb94afcd06b52a4c6f93223ae19b885eb4f5f8323847606efd",
+      "requirement": "equivalent_carrier",
+      "required_source_groups": [
+        [
+          {
+            "document_key": "ema-gvp-module-vi-addendum-i",
+            "source_hash": "4993d9f6a6a6cb8828a36f604743c8dd8724b0c40d9c2082f2a4d1158b14a9b6",
+            "version_label": "EMA/405655/2016 (2017-07-28)"
+          }
+        ]
+      ],
+      "referenced_mentions": [
+        "ICH E2B(R2)"
+      ],
+      "availability": "available",
+      "unavailable_behavior": "insufficient_evidence",
+      "rationale": "The question targets a defined regulatory data field; the reviewed GVP addendum is the admitted carrier of the quoted field rule even though the original E2B(R2) document is not the gold carrier.",
+      "decision_basis": "Frozen main-v5 gold plus records 115/129 source-semantics analysis; provisional because no independent second human is available."
+    },
+    {
+      "sample_id": "ms-0241",
+      "query_sha256": "1d774b2fb0a92c49865fb27ef31d97e1f52ece4c72beaf3af29994e60bb6bc74",
+      "requirement": "named_document_version",
+      "required_source_groups": [
+        [
+          {
+            "document_key": "fda-investigator-safety-reporting-2025",
+            "source_hash": "c597c1d15d048c48d94be46710658eebdff9c8017f82ec3f04ebd54ad16e577c",
+            "version_label": "Final guidance, December 2025 (FDA media 152530)"
+          }
+        ]
+      ],
+      "referenced_mentions": [],
+      "availability": "available",
+      "unavailable_behavior": "insufficient_evidence",
+      "rationale": "The query names the document and its edition/date; the cited evidence must retain that document identity and version.",
+      "decision_basis": "Owner-adjudicated named-source rule (2026-09-28) and confirmed v6 lineage; LLM review is not a second human."
+    },
+    {
+      "sample_id": "ms-0242",
+      "query_sha256": "a515a26b06d498e4a17501cba40604549500936f92cfdb77f0e638eac27650ed",
+      "requirement": "named_document_version",
+      "required_source_groups": [
+        [
+          {
+            "document_key": "fda-investigator-safety-reporting-2025",
+            "source_hash": "c597c1d15d048c48d94be46710658eebdff9c8017f82ec3f04ebd54ad16e577c",
+            "version_label": "Final guidance, December 2025 (FDA media 152530)"
+          }
+        ]
+      ],
+      "referenced_mentions": [],
+      "availability": "available",
+      "unavailable_behavior": "insufficient_evidence",
+      "rationale": "The query names the document and its edition/date; the cited evidence must retain that document identity and version.",
+      "decision_basis": "Owner-adjudicated named-source rule (2026-09-28) and confirmed v6 lineage; LLM review is not a second human."
+    },
+    {
+      "sample_id": "ms-0258",
+      "query_sha256": "0e85b6ec53889cf88900ac6b1419c57ba1b0a13cebc8361282932217c929fe67",
+      "requirement": "host_document_with_reference",
+      "required_source_groups": [
+        [
+          {
+            "document_key": "ich-e2c-r2-step4-2012",
+            "source_hash": "0f883c2e4804d8da84883b205755e7795d4e928e69624fafd2cdaa86db73eada",
+            "version_label": "Step 4, 2012-12-17"
+          }
+        ]
+      ],
+      "referenced_mentions": [
+        "ICH E2F",
+        "ICH E2E"
+      ],
+      "availability": "available",
+      "unavailable_behavior": "insufficient_evidence",
+      "rationale": "ICH E2C(R2) is the document being queried; E2F and E2E are cross-references named inside that question.",
+      "decision_basis": "Frozen main-v5 gold plus records 115/129 source-semantics analysis; provisional because no independent second human is available."
+    },
+    {
+      "sample_id": "ms-0280",
+      "query_sha256": "5b32b193a2faedaf4747e91ccbf9ff9915f5765bd3a8d085ab5aa62728a18503",
+      "requirement": "named_document_version",
+      "required_source_groups": [
+        [
+          {
+            "document_key": "meddra-data-retrieval-ptc-3-26-zh-hans",
+            "source_hash": "ea0824b58213d740df8ac7459c3c9b08819aa21127a7c63fe04b81ec056f9938",
+            "version_label": "发布版本 3.26（2026-03）"
+          }
+        ]
+      ],
+      "referenced_mentions": [],
+      "availability": "available",
+      "unavailable_behavior": "insufficient_evidence",
+      "rationale": "The query names the document and its edition/date; the cited evidence must retain that document identity and version.",
+      "decision_basis": "Owner-adjudicated named-source rule (2026-09-28) and confirmed v6 lineage; LLM review is not a second human."
+    },
+    {
+      "sample_id": "ms-0298",
+      "query_sha256": "52742682912e16c5a602b33c20398c3ba682ce650a9fe08857bdd903f8248ca5",
+      "requirement": "named_document_version",
+      "required_source_groups": [
+        [
+          {
+            "document_key": "fda-e6r3-gcp-2025",
+            "source_hash": "e57e9fc0134abebec409d7144aed6e3047c0939d1bd758163fea4e1169472109",
+            "version_label": "Final guidance, September 2025"
+          }
+        ]
+      ],
+      "referenced_mentions": [],
+      "availability": "available",
+      "unavailable_behavior": "insufficient_evidence",
+      "rationale": "The query names the document and its edition/date; the cited evidence must retain that document identity and version.",
+      "decision_basis": "Owner-adjudicated named-source rule (2026-09-28) and confirmed v6 lineage; LLM review is not a second human."
+    },
+    {
+      "sample_id": "ms-0299",
+      "query_sha256": "ce9f6a75639e033df8d8bf2f03d300cfa8ec6bdfe2d540f7f58a42c3683df6aa",
+      "requirement": "named_document_version",
+      "required_source_groups": [
+        [
+          {
+            "document_key": "fda-e6r3-gcp-2025",
+            "source_hash": "e57e9fc0134abebec409d7144aed6e3047c0939d1bd758163fea4e1169472109",
+            "version_label": "Final guidance, September 2025"
+          }
+        ]
+      ],
+      "referenced_mentions": [],
+      "availability": "available",
+      "unavailable_behavior": "insufficient_evidence",
+      "rationale": "The query names the document and its edition/date; the cited evidence must retain that document identity and version.",
+      "decision_basis": "Owner-adjudicated named-source rule (2026-09-28) and confirmed v6 lineage; LLM review is not a second human."
+    },
+    {
+      "sample_id": "ms-0336",
+      "query_sha256": "ca7ae700963b266237ce2dc1d0413228ac226a8a510b71801d2ecd61e5ff7ac8",
+      "requirement": "host_document_with_reference",
+      "required_source_groups": [
+        [
+          {
+            "document_key": "fda-risk-based-monitoring-2013",
+            "source_hash": "76556b1dcf148a1929f110bb1bfdf17d554630b665d23ad2b885473c5e8f2561",
+            "version_label": "Final guidance, August 2013 (PRA update 2022-11-21)"
+          }
+        ]
+      ],
+      "referenced_mentions": [
+        "21 CFR 312.50"
+      ],
+      "availability": "available",
+      "unavailable_behavior": "insufficient_evidence",
+      "rationale": "The query explicitly asks for the passage in the FDA monitoring guidance that quotes the regulation.",
+      "decision_basis": "Frozen main-v5 gold plus records 115/129 source-semantics analysis; provisional because no independent second human is available."
+    },
+    {
+      "sample_id": "ms-0337",
+      "query_sha256": "161f2c8e9a9490d63d65665317913b2a841d9a46b23a9f8f6a83e9fad1b97270",
+      "requirement": "host_document_with_reference",
+      "required_source_groups": [
+        [
+          {
+            "document_key": "fda-risk-based-monitoring-2013",
+            "source_hash": "76556b1dcf148a1929f110bb1bfdf17d554630b665d23ad2b885473c5e8f2561",
+            "version_label": "Final guidance, August 2013 (PRA update 2022-11-21)"
+          }
+        ]
+      ],
+      "referenced_mentions": [
+        "21 CFR 312.50"
+      ],
+      "availability": "available",
+      "unavailable_behavior": "insufficient_evidence",
+      "rationale": "The query explicitly asks for the passage in the FDA monitoring guidance that quotes the regulation.",
+      "decision_basis": "Frozen main-v5 gold plus records 115/129 source-semantics analysis; provisional because no independent second human is available."
+    },
+    {
+      "sample_id": "ms-0338",
+      "query_sha256": "1fa1df2f0432cf0773ccca68b7f7a0da24a5dbe8f49586146464fa30f9f041e0",
+      "requirement": "host_document_with_reference",
+      "required_source_groups": [
+        [
+          {
+            "document_key": "fda-risk-based-monitoring-2013",
+            "source_hash": "76556b1dcf148a1929f110bb1bfdf17d554630b665d23ad2b885473c5e8f2561",
+            "version_label": "Final guidance, August 2013 (PRA update 2022-11-21)"
+          }
+        ]
+      ],
+      "referenced_mentions": [
+        "ICH E6",
+        "ISO 14155:2011"
+      ],
+      "availability": "available",
+      "unavailable_behavior": "insufficient_evidence",
+      "rationale": "The FDA 2013 guidance is the queried host; ICH E6 and ISO 14155 are subjects of its discussion.",
+      "decision_basis": "Frozen main-v5 gold plus records 115/129 source-semantics analysis; provisional because no independent second human is available."
+    },
+    {
+      "sample_id": "ms-0339",
+      "query_sha256": "8cc6ff237b52fbf1f1a087de97db0f52470d96e8e841a45b39ff6f4570698eca",
+      "requirement": "host_document_with_reference",
+      "required_source_groups": [
+        [
+          {
+            "document_key": "fda-risk-based-monitoring-2013",
+            "source_hash": "76556b1dcf148a1929f110bb1bfdf17d554630b665d23ad2b885473c5e8f2561",
+            "version_label": "Final guidance, August 2013 (PRA update 2022-11-21)"
+          }
+        ]
+      ],
+      "referenced_mentions": [
+        "ICH E6",
+        "ISO 14155:2011"
+      ],
+      "availability": "available",
+      "unavailable_behavior": "insufficient_evidence",
+      "rationale": "The FDA 2013 guidance is the queried host; ICH E6 and ISO 14155 are subjects of its discussion.",
+      "decision_basis": "Frozen main-v5 gold plus records 115/129 source-semantics analysis; provisional because no independent second human is available."
+    },
+    {
+      "sample_id": "ms-0357",
+      "query_sha256": "ea933721aa3d27a65b878815e6e55646120220c0535a68442fcc372452731947",
+      "requirement": "host_document_with_reference",
+      "required_source_groups": [
+        [
+          {
+            "document_key": "ich-e11-r1-step4-2017",
+            "source_hash": "be9f56e84b67bb2d726c24da0096340e2788e92d7197bbd0f2d4f72972299763",
+            "version_label": "Step 4, 2017-08-18"
+          }
+        ]
+      ],
+      "referenced_mentions": [
+        "ICH E11 (2000)"
+      ],
+      "availability": "available",
+      "unavailable_behavior": "insufficient_evidence",
+      "rationale": "The requested statement is the citation reproduced in ICH E11(R1) Section 6.2; the R1 document is the reviewed carrier.",
+      "decision_basis": "Frozen main-v5 gold plus records 115/129 source-semantics analysis; provisional because no independent second human is available."
+    },
+    {
+      "sample_id": "ms-0358",
+      "query_sha256": "4e04a3178514689f057225af9f18ae75aa8f17f6677ca05af3ded853006ec43b",
+      "requirement": "embedded_original_text",
+      "required_source_groups": [
+        [
+          {
+            "document_key": "ich-e11-r1-step4-2017",
+            "source_hash": "be9f56e84b67bb2d726c24da0096340e2788e92d7197bbd0f2d4f72972299763",
+            "version_label": "Step 4, 2017-08-18"
+          }
+        ]
+      ],
+      "referenced_mentions": [
+        "original ICH E11"
+      ],
+      "availability": "available",
+      "unavailable_behavior": "insufficient_evidence",
+      "rationale": "The query explicitly asks for original E11 text embedded in the E11(R1) combined document; the combined document is an acceptable source.",
+      "decision_basis": "Frozen main-v5 gold plus records 115/129 source-semantics analysis; provisional because no independent second human is available."
+    },
+    {
+      "sample_id": "ms-0359",
+      "query_sha256": "4773ddf379462417cea355d4ddc5fecd024e82e31199e96f62e4b1a1f66c51f1",
+      "requirement": "embedded_original_text",
+      "required_source_groups": [
+        [
+          {
+            "document_key": "ich-e11-r1-step4-2017",
+            "source_hash": "be9f56e84b67bb2d726c24da0096340e2788e92d7197bbd0f2d4f72972299763",
+            "version_label": "Step 4, 2017-08-18"
+          }
+        ]
+      ],
+      "referenced_mentions": [
+        "original ICH E11"
+      ],
+      "availability": "available",
+      "unavailable_behavior": "insufficient_evidence",
+      "rationale": "The query explicitly asks for original E11 text embedded in the E11(R1) combined document; the combined document is an acceptable source.",
+      "decision_basis": "Frozen main-v5 gold plus records 115/129 source-semantics analysis; provisional because no independent second human is available."
+    },
+    {
+      "sample_id": "ms-0360",
+      "query_sha256": "ed3494bdc8b937fa06543b99e9892dff509b7c2db89cdda752b1ff3c2c91c54a",
+      "requirement": "embedded_original_text",
+      "required_source_groups": [
+        [
+          {
+            "document_key": "ich-e11-r1-step4-2017",
+            "source_hash": "be9f56e84b67bb2d726c24da0096340e2788e92d7197bbd0f2d4f72972299763",
+            "version_label": "Step 4, 2017-08-18"
+          }
+        ]
+      ],
+      "referenced_mentions": [
+        "original ICH E11"
+      ],
+      "availability": "available",
+      "unavailable_behavior": "insufficient_evidence",
+      "rationale": "The query explicitly asks for original E11 text embedded in the E11(R1) combined document; the combined document is an acceptable source.",
+      "decision_basis": "Frozen main-v5 gold plus records 115/129 source-semantics analysis; provisional because no independent second human is available."
+    },
+    {
+      "sample_id": "ms-0361",
+      "query_sha256": "7739757fd5fe22b7995c4a932742ec83211ebcdf89fac96e14299d5a4df7d1f5",
+      "requirement": "embedded_original_text",
+      "required_source_groups": [
+        [
+          {
+            "document_key": "ich-e11-r1-step4-2017",
+            "source_hash": "be9f56e84b67bb2d726c24da0096340e2788e92d7197bbd0f2d4f72972299763",
+            "version_label": "Step 4, 2017-08-18"
+          }
+        ]
+      ],
+      "referenced_mentions": [
+        "original ICH E11"
+      ],
+      "availability": "available",
+      "unavailable_behavior": "insufficient_evidence",
+      "rationale": "The query explicitly asks for original E11 text embedded in the E11(R1) combined document; the combined document is an acceptable source.",
+      "decision_basis": "Frozen main-v5 gold plus records 115/129 source-semantics analysis; provisional because no independent second human is available."
+    },
+    {
+      "sample_id": "ms-0366",
+      "query_sha256": "542b67572e241e4af32d61ff6a4b32dd7dfa86703d48e172a2ec547d5e6ed9c9",
+      "requirement": "host_document_with_reference",
+      "required_source_groups": [
+        [
+          {
+            "document_key": "ich-e12a-principle-2000",
+            "source_hash": "d09627c2d02dc3c6675be445232a7312e0aa295f6b1748da68fc9d771405a9ac",
+            "version_label": "Principle document, 2000-03-02"
+          }
+        ]
+      ],
+      "referenced_mentions": [
+        "ICH E1"
+      ],
+      "availability": "available",
+      "unavailable_behavior": "insufficient_evidence",
+      "rationale": "The question asks what ICH E12A cites from E1 and what limitation E12A adds; E12A is the required host source.",
+      "decision_basis": "Frozen main-v5 gold plus records 115/129 source-semantics analysis; provisional because no independent second human is available."
+    },
+    {
+      "sample_id": "ms-0367",
+      "query_sha256": "57b558b15c749379d68fd30c3b17b6140e044b49d95d4c7ccba2c2a01f8b4973",
+      "requirement": "host_document_with_reference",
+      "required_source_groups": [
+        [
+          {
+            "document_key": "ich-e12a-principle-2000",
+            "source_hash": "d09627c2d02dc3c6675be445232a7312e0aa295f6b1748da68fc9d771405a9ac",
+            "version_label": "Principle document, 2000-03-02"
+          }
+        ]
+      ],
+      "referenced_mentions": [
+        "ICH E1"
+      ],
+      "availability": "available",
+      "unavailable_behavior": "insufficient_evidence",
+      "rationale": "The question asks what ICH E12A cites from E1 and what limitation E12A adds; E12A is the required host source.",
+      "decision_basis": "Frozen main-v5 gold plus records 115/129 source-semantics analysis; provisional because no independent second human is available."
+    },
+    {
+      "sample_id": "ms-0370",
+      "query_sha256": "795853a0dd6fec6ad128274314d821f23c7b81172955774ee17928737c7cc9e5",
+      "requirement": "host_document_with_reference",
+      "required_source_groups": [
+        [
+          {
+            "document_key": "ich-e12a-principle-2000",
+            "source_hash": "d09627c2d02dc3c6675be445232a7312e0aa295f6b1748da68fc9d771405a9ac",
+            "version_label": "Principle document, 2000-03-02"
+          }
+        ]
+      ],
+      "referenced_mentions": [
+        "ICH E1"
+      ],
+      "availability": "available",
+      "unavailable_behavior": "insufficient_evidence",
+      "rationale": "“This document” refers to the reviewed ICH E12A source; E1 is an entry in its cited-guideline list.",
+      "decision_basis": "Frozen main-v5 gold plus records 115/129 source-semantics analysis; provisional because no independent second human is available."
+    },
+    {
+      "sample_id": "ms-0371",
+      "query_sha256": "4636dc4230f58fd7ef5fc9f8ccfeb1877f18841fbd154bdea9c4ebc9a14a4107",
+      "requirement": "host_document_with_reference",
+      "required_source_groups": [
+        [
+          {
+            "document_key": "ich-e12a-principle-2000",
+            "source_hash": "d09627c2d02dc3c6675be445232a7312e0aa295f6b1748da68fc9d771405a9ac",
+            "version_label": "Principle document, 2000-03-02"
+          }
+        ]
+      ],
+      "referenced_mentions": [
+        "ICH E1"
+      ],
+      "availability": "available",
+      "unavailable_behavior": "insufficient_evidence",
+      "rationale": "“This document” refers to the reviewed ICH E12A source; E1 is an entry in its cited-guideline list.",
+      "decision_basis": "Frozen main-v5 gold plus records 115/129 source-semantics analysis; provisional because no independent second human is available."
+    },
+    {
+      "sample_id": "pc-0011",
+      "query_sha256": "ba524db9fd98279b6a811968da74a4ad64305cf97d37ed6a1a0f5d4c42c4eb54",
+      "requirement": "named_product",
+      "required_source_groups": [
+        [
+          {
+            "document_key": "tfda-label-deurinol-300mg",
+            "source_hash": "42f20f2b5b0ea0ed7afe8bb709699a58b222985b70ccada6e0c470f5c3f58a7f",
+            "version_label": "pdf-meta 2018-02-09（未见版本行）"
+          }
+        ]
+      ],
+      "referenced_mentions": [],
+      "availability": "available",
+      "unavailable_behavior": "insufficient_evidence",
+      "rationale": "The query names one marketed product; another brand with the same ingredient or sentence is not interchangeable.",
+      "decision_basis": "Owner-adjudicated named-source rule (2026-09-28) and confirmed v6 lineage; LLM review is not a second human."
+    },
+    {
+      "sample_id": "pc-0017",
+      "query_sha256": "9f534683cdfca2912b479c77e2eb9729c06ee463c27895e33883653e1bdde6aa",
+      "requirement": "named_product",
+      "required_source_groups": [
+        [
+          {
+            "document_key": "tfda-label-zosaa-50mg",
+            "source_hash": "81069adaf87d21e640d9b5cbc83a799a59a33acbdc4ead46ed338c9ad6d06b3a",
+            "version_label": "B版 104.10.27（2015-10-27）"
+          }
+        ]
+      ],
+      "referenced_mentions": [],
+      "availability": "available",
+      "unavailable_behavior": "insufficient_evidence",
+      "rationale": "The query names one marketed product; another brand with the same ingredient or sentence is not interchangeable.",
+      "decision_basis": "Owner-adjudicated named-source rule (2026-09-28) and confirmed v6 lineage; LLM review is not a second human."
+    },
+    {
+      "sample_id": "pc-0026",
+      "query_sha256": "8ed85e2e56cba58be2ffa54b7c781fcd15ab7acb9a3e5514e99c358121a21809",
+      "requirement": "named_product",
+      "required_source_groups": [
+        [
+          {
+            "document_key": "tfda-label-esomen-40mg",
+            "source_hash": "f80b904f4e2f15a59cb78fe1baed5c1c06b8b975d43dc0291217d64c43e43fbb",
+            "version_label": "pdf-meta 2013-11-08（未见版本行）"
+          }
+        ]
+      ],
+      "referenced_mentions": [],
+      "availability": "available",
+      "unavailable_behavior": "insufficient_evidence",
+      "rationale": "The query names one marketed product; another brand with the same ingredient or sentence is not interchangeable.",
+      "decision_basis": "Owner-adjudicated named-source rule (2026-09-28) and confirmed v6 lineage; LLM review is not a second human."
+    },
+    {
+      "sample_id": "pc-0028",
+      "query_sha256": "bee48910a3cea0124c3de74a29be29fe434c95420987c38b22bbe1fe4b4766cc",
+      "requirement": "named_product",
+      "required_source_groups": [
+        [
+          {
+            "document_key": "tfda-label-esomen-40mg",
+            "source_hash": "f80b904f4e2f15a59cb78fe1baed5c1c06b8b975d43dc0291217d64c43e43fbb",
+            "version_label": "pdf-meta 2013-11-08（未见版本行）"
+          }
+        ]
+      ],
+      "referenced_mentions": [],
+      "availability": "available",
+      "unavailable_behavior": "insufficient_evidence",
+      "rationale": "The query names one marketed product; another brand with the same ingredient or sentence is not interchangeable.",
+      "decision_basis": "Owner-adjudicated named-source rule (2026-09-28) and confirmed v6 lineage; LLM review is not a second human."
+    },
+    {
+      "sample_id": "pc-0029",
+      "query_sha256": "0844914cd2a28acc9f741f4073ebd739f7ec97b4d1ec82206f1c9a25f37f363d",
+      "requirement": "named_product",
+      "required_source_groups": [
+        [
+          {
+            "document_key": "tfda-label-esomen-40mg",
+            "source_hash": "f80b904f4e2f15a59cb78fe1baed5c1c06b8b975d43dc0291217d64c43e43fbb",
+            "version_label": "pdf-meta 2013-11-08（未见版本行）"
+          }
+        ]
+      ],
+      "referenced_mentions": [],
+      "availability": "available",
+      "unavailable_behavior": "insufficient_evidence",
+      "rationale": "The query names one marketed product; another brand with the same ingredient or sentence is not interchangeable.",
+      "decision_basis": "Owner-adjudicated named-source rule (2026-09-28) and confirmed v6 lineage; LLM review is not a second human."
+    },
+    {
+      "sample_id": "pc-0051",
+      "query_sha256": "3a656245f6ce1a7096fc752c48d81cdc29a926ceca893facb3f36f69e8c0201e",
+      "requirement": "named_document",
+      "required_source_groups": [
+        [
+          {
+            "document_key": "ich-e2a-step4-1994",
+            "source_hash": "1c095d80419287187bf5b2db5eba83864adccebf07b9c593bf5925b4ab6f7cf7",
+            "version_label": "Step 4, 1994-10-27"
+          }
+        ]
+      ],
+      "referenced_mentions": [],
+      "availability": "available",
+      "unavailable_behavior": "insufficient_evidence",
+      "rationale": "The query asks what the named ICH document says; a reprint or another document quoting the same sentence is not interchangeable.",
+      "decision_basis": "Owner-adjudicated named-source rule (2026-09-28) and confirmed v6 lineage; LLM review is not a second human."
+    },
+    {
+      "sample_id": "pc-0068",
+      "query_sha256": "cdee3922bda1a363455bb669882eee54927227ad4445d6e8963cc6ab68ab1b56",
+      "requirement": "relationship_statement",
+      "required_source_groups": [
+        [
+          {
+            "document_key": "ich-e6-r3-step4-2025",
+            "source_hash": "e6ce19e36ce7d2e294f89ee89492b9e035178c3cca48984392bbd92eec9b002c",
+            "version_label": "E6(R3) Step 4, 2025-01-06"
+          }
+        ]
+      ],
+      "referenced_mentions": [
+        "ICH E8(R1)"
+      ],
+      "availability": "available",
+      "unavailable_behavior": "insufficient_evidence",
+      "rationale": "The relationship statement is located in ICH E6(R3); mentioning both documents does not require one citation from each.",
+      "decision_basis": "Frozen main-v5 gold plus records 115/129 source-semantics analysis; provisional because no independent second human is available."
+    },
+    {
+      "sample_id": "pc-0070",
+      "query_sha256": "a6953b051e0ef5242f24a24bc868e3c960ab26e76b9b95abdce0dd3afc81421c",
+      "requirement": "named_document",
+      "required_source_groups": [
+        [
+          {
+            "document_key": "ich-e6-r3-step4-2025",
+            "source_hash": "e6ce19e36ce7d2e294f89ee89492b9e035178c3cca48984392bbd92eec9b002c",
+            "version_label": "E6(R3) Step 4, 2025-01-06"
+          }
+        ]
+      ],
+      "referenced_mentions": [],
+      "availability": "available",
+      "unavailable_behavior": "insufficient_evidence",
+      "rationale": "The query asks what the named ICH document says; a reprint or another document quoting the same sentence is not interchangeable.",
+      "decision_basis": "Owner-adjudicated named-source rule (2026-09-28) and confirmed v6 lineage; LLM review is not a second human."
+    },
+    {
+      "sample_id": "pc-0072",
+      "query_sha256": "eb1c27d95556db8a65279e9c641063398f36f0937c7ebe995e4d9b43484538c8",
+      "requirement": "host_document_with_reference",
+      "required_source_groups": [
+        [
+          {
+            "document_key": "fda-protocol-deviations-draft-2024",
+            "source_hash": "3b172d83fd5310029d0933a2efdb821c31d77c31d874e292dff7fb7da9abd42f",
+            "version_label": "Draft, December 2024 (FDA-2023-D-5016)"
+          }
+        ]
+      ],
+      "referenced_mentions": [
+        "ICH E3(R1)"
+      ],
+      "availability": "available",
+      "unavailable_behavior": "insufficient_evidence",
+      "rationale": "The FDA protocol-deviations draft is the document being queried; ICH E3(R1) is the source whose definitions it adopts.",
+      "decision_basis": "Frozen main-v5 gold plus records 115/129 source-semantics analysis; provisional because no independent second human is available."
+    },
+    {
+      "sample_id": "pc-0100",
+      "query_sha256": "b37b543e25541f241c89f4b5f974edf50122bffa9ec5cd9015e1c1047a4542f5",
+      "requirement": "relationship_statement",
+      "required_source_groups": [
+        [
+          {
+            "document_key": "ich-e6-r3-step4-2025",
+            "source_hash": "e6ce19e36ce7d2e294f89ee89492b9e035178c3cca48984392bbd92eec9b002c",
+            "version_label": "E6(R3) Step 4, 2025-01-06"
+          }
+        ]
+      ],
+      "referenced_mentions": [
+        "ICH E8(R1)"
+      ],
+      "availability": "available",
+      "unavailable_behavior": "insufficient_evidence",
+      "rationale": "The relationship statement is located in ICH E6(R3); mentioning both documents does not require one citation from each.",
+      "decision_basis": "Frozen main-v5 gold plus records 115/129 source-semantics analysis; provisional because no independent second human is available."
+    },
+    {
+      "sample_id": "pc-0102",
+      "query_sha256": "12ba2c19c5c3d856b546283519706eb86d6081aed5986922a109aafd94e66f98",
+      "requirement": "named_document",
+      "required_source_groups": [
+        [
+          {
+            "document_key": "ich-e6-r3-step4-2025",
+            "source_hash": "e6ce19e36ce7d2e294f89ee89492b9e035178c3cca48984392bbd92eec9b002c",
+            "version_label": "E6(R3) Step 4, 2025-01-06"
+          }
+        ]
+      ],
+      "referenced_mentions": [],
+      "availability": "available",
+      "unavailable_behavior": "insufficient_evidence",
+      "rationale": "The query asks what the named ICH document says; a reprint or another document quoting the same sentence is not interchangeable.",
+      "decision_basis": "Owner-adjudicated named-source rule (2026-09-28) and confirmed v6 lineage; LLM review is not a second human."
+    },
+    {
+      "sample_id": "pc-0104",
+      "query_sha256": "71b86dfa0107b1e68d0d6692d1b92d6c4133cac1f70530ce1ff109aee0d3d9df",
+      "requirement": "host_document_with_reference",
+      "required_source_groups": [
+        [
+          {
+            "document_key": "fda-protocol-deviations-draft-2024",
+            "source_hash": "3b172d83fd5310029d0933a2efdb821c31d77c31d874e292dff7fb7da9abd42f",
+            "version_label": "Draft, December 2024 (FDA-2023-D-5016)"
+          }
+        ]
+      ],
+      "referenced_mentions": [
+        "ICH E3(R1)"
+      ],
+      "availability": "available",
+      "unavailable_behavior": "insufficient_evidence",
+      "rationale": "The FDA protocol-deviations draft is the document being queried; ICH E3(R1) is the source whose definitions it adopts.",
+      "decision_basis": "Frozen main-v5 gold plus records 115/129 source-semantics analysis; provisional because no independent second human is available."
+    }
+  ]
+}

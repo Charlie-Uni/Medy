@@ -336,7 +336,7 @@
     "files": {
       "type": "array",
       "minItems": 3,
-      "maxItems": 5,
+      "maxItems": 6,
       "uniqueItems": true,
       "items": {
         "type": "object",
@@ -352,7 +352,8 @@
               "samples.jsonl",
               "review_prompt.md",
               "acl_probes.jsonl",
-              "pii_exceptions.json"
+              "pii_exceptions.json",
+              "revision_provenance.json"
             ]
           },
           "sha256": {
@@ -624,7 +625,7 @@
         "artifacts": {
           "type": "array",
           "minItems": 8,
-          "maxItems": 10,
+          "maxItems": 138,
           "uniqueItems": true,
           "items": {
             "type": "object",
@@ -635,17 +636,29 @@
             ],
             "properties": {
               "path": {
-                "enum": [
-                  "review_evidence/run_MA.json",
-                  "review_evidence/run_PV.json",
-                  "review_evidence/run_CO.json",
-                  "review_evidence/run_EN.json",
-                  "review_evidence/verdicts_MA.jsonl",
-                  "review_evidence/verdicts_PV.jsonl",
-                  "review_evidence/verdicts_CO.jsonl",
-                  "review_evidence/verdicts_EN.jsonl",
-                  "review_evidence/resolutions.json",
-                  "review_evidence/reviewer_runtime_metadata.json"
+                "oneOf": [
+                  {
+                    "enum": [
+                      "review_evidence/run_MA.json",
+                      "review_evidence/run_PV.json",
+                      "review_evidence/run_CO.json",
+                      "review_evidence/run_EN.json",
+                      "review_evidence/verdicts_MA.jsonl",
+                      "review_evidence/verdicts_PV.jsonl",
+                      "review_evidence/verdicts_CO.jsonl",
+                      "review_evidence/verdicts_EN.jsonl",
+                      "review_evidence/resolutions.json",
+                      "review_evidence/reviewer_runtime_metadata.json"
+                    ]
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^review_evidence/chunk_inputs/input_[0-9a-f]{64}\\.jsonl$"
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^review_evidence/review_prompts/review_prompt_[0-9a-f]{64}\\.md$"
+                  }
                 ]
               },
               "sha256": {

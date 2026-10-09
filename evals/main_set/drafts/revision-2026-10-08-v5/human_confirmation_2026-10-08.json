@@ -1,0 +1,77 @@
+{
+  "format": "human-annotation-confirmation-v1",
+  "status": "confirmed",
+  "confirmed_on": "2026-10-08",
+  "timezone": "Australia/Sydney",
+  "actor": {
+    "kind": "human",
+    "id": "project-owner",
+    "identity_basis": "User of the current project conversation; no new personal identity inferred"
+  },
+  "evidence": {
+    "source": "current_user_conversation",
+    "verbatim": "确认",
+    "context": "Response to the exact EVAL-11 request to confirm the three recommended jointly-required evidence repairs covering ms-0197/ms-0198, ms-0440/ms-0441, and pc-0070/pc-0102."
+  },
+  "scope": {
+    "revision_version": "annotation-revision-20261008-v5",
+    "sample_count": 6,
+    "corpus_title_edits": 0,
+    "independent_second_human": false,
+    "independent_llm_review": "pending; no model-call authorization inferred from the annotation confirmation"
+  },
+  "inputs": {
+    "manifest_sha256": "10c1b34d7b1cafa76483276a3668573ff4de2ad13c8c8b03cb8e082893f15916",
+    "proposals_sha256": "eb00526d7e225af0aafb44fd73584c94641b52ab41eea5f515298b0ad0e5d986",
+    "corpus_edits_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+  },
+  "items": [
+    {
+      "sample_id": "ms-0197",
+      "decision": "confirmed",
+      "annotation_sha256": "e8bb291ba96fd7237e05968be61b27d0db0324b18064c05b3bce2f416a9e7fb0",
+      "required_gold_groups_sha256": "ac305cc0c9e775b47781edad75ba0797a8b4c8ee7be276af1c39ae11335aeb7f",
+      "decision_source": "current_owner_confirmation_2026-10-08"
+    },
+    {
+      "sample_id": "ms-0198",
+      "decision": "confirmed",
+      "annotation_sha256": "1ad9287e9b43477d573b8b915fd0e95ee636099656314dd575f46cf3c0636c95",
+      "required_gold_groups_sha256": "ac305cc0c9e775b47781edad75ba0797a8b4c8ee7be276af1c39ae11335aeb7f",
+      "decision_source": "current_owner_confirmation_2026-10-08"
+    },
+    {
+      "sample_id": "ms-0440",
+      "decision": "confirmed",
+      "annotation_sha256": "df97235bd08d9c806bd514338af618935fb0eb49dfb8178b7b5482f08e4d4eb6",
+      "required_gold_groups_sha256": "10870ee338270a5c6eade506b77ec7c4bd5d7faae949d7f9ce6364e6111ecd5a",
+      "decision_source": "current_owner_confirmation_2026-10-08"
+    },
+    {
+      "sample_id": "ms-0441",
+      "decision": "confirmed",
+      "annotation_sha256": "9a0f755601aed297dfcc018e6e6b71695aa274e5e1dc86fcd2c29f2be492444c",
+      "required_gold_groups_sha256": "10870ee338270a5c6eade506b77ec7c4bd5d7faae949d7f9ce6364e6111ecd5a",
+      "decision_source": "current_owner_confirmation_2026-10-08"
+    },
+    {
+      "sample_id": "pc-0070",
+      "decision": "confirmed",
+      "annotation_sha256": "ab44d080b85544d86831dfad998b1fe23e5eafd675114c36a1b9ac50be523558",
+      "required_gold_groups_sha256": "588bae361a53701d36646beba1329f430f929e92b985f4d280fdd62d0c0fff34",
+      "decision_source": "current_owner_confirmation_2026-10-08"
+    },
+    {
+      "sample_id": "pc-0102",
+      "decision": "confirmed",
+      "annotation_sha256": "5950c6bb01828b8935dafd73e80267ecd40c13bc50a9054defef0ee84accecca",
+      "required_gold_groups_sha256": "588bae361a53701d36646beba1329f430f929e92b985f4d280fdd62d0c0fff34",
+      "decision_source": "current_owner_confirmation_2026-10-08"
+    }
+  ],
+  "corpus_edits_decision": "not_applicable",
+  "limitations": [
+    "This is the project owner/first-human annotation decision, not a second independent human review.",
+    "Independent LLM review remains pending and requires separate paid-run authorization."
+  ]
+}

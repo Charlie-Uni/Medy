@@ -11,6 +11,7 @@ import openai
 import pytest
 
 from medops.infrastructure.llm.budget import BudgetedGateway, InMemorySpendLedger
+from medops.infrastructure.llm.factory import build_budgeted_gateway
 from medops.infrastructure.llm.fake import FakeModelGateway
 from medops.infrastructure.llm.gateway import (
     OPENAI_PRICES,
@@ -25,6 +26,7 @@ from medops.infrastructure.llm.gateway import (
     PriceTable,
     estimate_tokens,
 )
+from medops.infrastructure.llm.meter import MeteredGateway
 from medops.infrastructure.llm.openai_gateway import OpenAIModelGateway
 
 PRICES = PriceTable(OPENAI_PRICES)
@@ -76,23 +78,108 @@ class _FixedCost:
 
 
 def test_budgeted_gateway_stops_at_the_monthly_cap_and_never_downgrades():
-    inner = _FixedCost(0.4)
+    request = req()
+    cost = PRICES.worst_case_usd(request)
+    inner = _FixedCost(cost)
     ledger = InMemorySpendLedger()
     clock = lambda: datetime(2026, 9, 23, tzinfo=UTC)  # noqa: E731
-    gw = BudgetedGateway(inner, prices=PRICES, ledger=ledger, monthly_cap_usd=1.0, clock=clock)
-    gw.complete(req())
-    gw.complete(req())
-    assert ledger.month_total("2026-09") == pytest.approx(0.8)
-    gw.complete(req())  # 0.8 + tiny worst case < 1.0
+    gw = BudgetedGateway(inner, prices=PRICES, ledger=ledger, monthly_cap_usd=cost * 3, clock=clock)
+    gw.complete(request)
+    gw.complete(request)
+    gw.complete(request)
+    assert ledger.month_total("2026-09") == pytest.approx(cost * 3)
     with pytest.raises(BudgetExceeded):
-        gw.complete(req())
+        gw.complete(request)
     assert inner.calls == 3
     # a new month starts from zero
     gw2 = BudgetedGateway(
-        inner, prices=PRICES, ledger=ledger, monthly_cap_usd=1.0, clock=lambda: datetime(2026, 10, 1, tzinfo=UTC)
+        inner,
+        prices=PRICES,
+        ledger=ledger,
+        monthly_cap_usd=cost * 3,
+        clock=lambda: datetime(2026, 10, 1, tzinfo=UTC),
     )
     gw2.complete(req())
     assert inner.calls == 4
+
+
+def test_gateway_assembly_keeps_budget_across_request_meters(monkeypatch):
+    request = req()
+    cost = PRICES.worst_case_usd(request)
+    inner = _FixedCost(cost)
+    settings = SimpleNamespace(llm_monthly_budget_usd=cost * 1.5)
+    monkeypatch.setattr(OpenAIModelGateway, "from_settings", lambda settings: inner)
+    gateway = build_budgeted_gateway(settings, ledger=InMemorySpendLedger())
+
+    first_request = MeteredGateway(gateway)
+    first_request.complete(request)
+    assert (first_request.calls, first_request.tokens, first_request.cost_usd) == (1, 15, cost)
+
+    # A new API request resets its meter, not the process's spend ledger.
+    second_request = MeteredGateway(gateway)
+    with pytest.raises(BudgetExceeded):
+        second_request.complete(request)
+    assert inner.calls == 1
+    assert (second_request.calls, second_request.tokens, second_request.cost_usd) == (0, 0, 0.0)
+
+    # The injectable in-memory ledger keeps unit tests isolated; production assembly uses PostgreSQL.
+    separate_run = MeteredGateway(build_budgeted_gateway(settings, ledger=InMemorySpendLedger()))
+    separate_run.complete(request)
+    assert inner.calls == 2
+    assert (separate_run.calls, separate_run.tokens, separate_run.cost_usd) == (1, 15, cost)
+
+
+def test_provider_failure_consumes_the_reservation_fail_closed():
+    request = req()
+    cost = PRICES.worst_case_usd(request)
+    ledger = InMemorySpendLedger()
+    inner = FakeModelGateway({"answer": [ModelTimeout()]})
+    clock = lambda: datetime(2026, 10, 8, tzinfo=UTC)  # noqa: E731
+    gateway = BudgetedGateway(inner, prices=PRICES, ledger=ledger, monthly_cap_usd=cost, clock=clock)
+    with pytest.raises(ModelTimeout):
+        gateway.complete(request)
+    assert ledger.month_total("2026-10") == pytest.approx(cost)
+    with pytest.raises(BudgetExceeded):
+        gateway.complete(request)
+
+
+def test_run_cap_reserves_before_call_and_blocks_without_calling_provider():
+    request = req()
+    cost = PRICES.worst_case_usd(request)
+    inner = _FixedCost(cost)
+    gateway = BudgetedGateway(
+        inner,
+        prices=PRICES,
+        ledger=InMemorySpendLedger(),
+        monthly_cap_usd=10,
+        run_cap_usd=cost * 2.5,
+    )
+    gateway.complete(request)
+    gateway.complete(request)
+    with pytest.raises(BudgetExceeded, match="run LLM cap"):
+        gateway.complete(request)
+    assert inner.calls == 2
+    assert gateway.run_accounted_cost_usd == pytest.approx(cost * 2)
+    assert gateway.run_cap_blocked
+
+
+def test_failed_provider_call_is_visible_to_the_request_meter_and_run_cap():
+    request = req()
+    cost = PRICES.worst_case_usd(request)
+    budgeted = BudgetedGateway(
+        FakeModelGateway({"answer": [ModelTimeout()]}),
+        prices=PRICES,
+        ledger=InMemorySpendLedger(),
+        monthly_cap_usd=10,
+        run_cap_usd=cost,
+    )
+    meter = MeteredGateway(budgeted)
+    with pytest.raises(ModelTimeout):
+        meter.complete(request)
+    assert (meter.calls, meter.tokens, meter.cost_usd) == (1, 0, pytest.approx(cost))
+    with pytest.raises(BudgetExceeded, match="run LLM cap"):
+        meter.complete(request)
+    assert budgeted.run_cap_blocked
 
 
 def test_fake_gateway_scripts_by_purpose_and_can_raise():

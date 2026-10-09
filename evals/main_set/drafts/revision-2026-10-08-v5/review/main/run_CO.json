@@ -1,0 +1,87 @@
+{
+  "batch": "CO",
+  "reviewer_cli": "claude-code",
+  "cli_binary": "/Users/leaf/.local/bin/claude",
+  "cli_version": "2.1.79 (Claude Code)",
+  "model": "claude-opus-5",
+  "model_version_source": "pinned_model_id",
+  "reasoning_effort_requested": "high",
+  "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+  "review_prompt_sha256": "7572d16e88b638cbc6fa888f4e1a86fe6ffb4869583df357ee1ce0bd012eb758",
+  "sample_input_sha256": {
+    "ms-0440": "7ba40a99172286d08fb545eb20d13def26c149b5c144b90d0eb8ca6fa0c7d453"
+  },
+  "chunks": [
+    {
+      "cli_capture_sha256": "021b18261ce95362d449464e6c13b063e23aeb908144a0e9df88089c6b510343",
+      "returncode": 0,
+      "cli": "claude-code",
+      "cli_version": "2.1.79 (Claude Code)",
+      "model": "claude-opus-5",
+      "session_id": "ad908c49-2c97-4a2e-bdb1-f8779addc4be",
+      "reasoning_effort": "high",
+      "effort_source": "requested --effort flag; not echoed by the CLI",
+      "tokens_used": "16131",
+      "usage": {
+        "input_tokens": 2,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 7056,
+        "total_input_tokens": 7058,
+        "output_tokens": 9073,
+        "model_usage": {
+          "claude-opus-5": {
+            "inputTokens": 2,
+            "outputTokens": 9073,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 7056,
+            "webSearchRequests": 0,
+            "costUSD": 0.27093500000000004,
+            "contextWindow": 200000,
+            "maxOutputTokens": 32000
+          }
+        }
+      },
+      "cost_usd": 0.27093500000000004,
+      "system_prompt_sha256": "cbab287fb0a2d703cfe10cc99df7b5a7eed40967b261e97bbe6392de6290d857",
+      "tools_disabled": true,
+      "requested_max_cost_usd": 0.3,
+      "sample_ids": [
+        "ms-0440"
+      ],
+      "started_at": "2026-10-08T12:24:05+00:00",
+      "finished_at": "2026-10-08T12:25:47+00:00",
+      "prompt_chars": 12740,
+      "prompt_sha256": "d3ffecc3ba5d5fd8ec0f921947d873b90039ea73875bc2039811dca473e0f0ad",
+      "verdicts": [
+        {
+          "sample_id": "ms-0440",
+          "verdict": "agree",
+          "items": {
+            "query": "ok",
+            "slices": "ok",
+            "key_text": "ok",
+            "evidence_span": "ok",
+            "dept": "ok"
+          },
+          "reason": "",
+          "suggestion": "g1 的 span（1249-2791）已完整包含 g2-g5 的全部 span 文本，证据文本层面存在重叠；若要减少冗余，可将 g1 span 收至条件句（\"Such interactions ... be considered.\"），但此时 long_context 需按跨页/长度规则重新核算，故本次未判 issue。"
+        }
+      ],
+      "input_path": "chunk_inputs/input_d3ffecc3ba5d5fd8ec0f921947d873b90039ea73875bc2039811dca473e0f0ad.jsonl",
+      "sample_input_sha256": {
+        "ms-0440": "7ba40a99172286d08fb545eb20d13def26c149b5c144b90d0eb8ca6fa0c7d453"
+      },
+      "budget_attempt_id": "ebbd0f75ac724a279d3ab0d8f7e5d1e9"
+    }
+  ],
+  "provenance_version": 2,
+  "latest": {
+    "ms-0440": {
+      "chunk_index": 0,
+      "sample_input_sha256": "7ba40a99172286d08fb545eb20d13def26c149b5c144b90d0eb8ca6fa0c7d453",
+      "prompt_sha256": "d3ffecc3ba5d5fd8ec0f921947d873b90039ea73875bc2039811dca473e0f0ad",
+      "verdict_sha256": "64a3d517cea56cb270184ff33b1f8b7a12ba7604e1fd77d33d6658b81d68433f"
+    }
+  },
+  "active_review": null
+}

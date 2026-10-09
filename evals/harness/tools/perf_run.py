@@ -31,7 +31,6 @@ import argparse
 import datetime as dt
 import importlib.metadata
 import json
-import math
 import os
 import pathlib
 import platform
@@ -49,8 +48,10 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from typing import Any
 
 import httpx
-import jwt
 import psycopg
+
+from medops.evals.api_client import issue_demo_token as token
+from medops.evals.statistics import nearest_rank as pctl
 
 # ------------------------------------------------------------------------------------------ OTLP receiver
 
@@ -155,13 +156,6 @@ def start_receiver(sink: SpanSink, port: int) -> ThreadingHTTPServer:
 # ------------------------------------------------------------------------------------------ helpers
 
 
-def pctl(values: list[float], p: float) -> float | None:
-    if not values:
-        return None
-    xs = sorted(values)
-    return xs[max(0, math.ceil(p * len(xs)) - 1)]
-
-
 def summary(values: list[float]) -> dict[str, Any]:
     return {
         "n": len(values),
@@ -172,16 +166,6 @@ def summary(values: list[float]) -> dict[str, Any]:
         "max": max(values) if values else None,
         "mean": round(statistics.fmean(values), 3) if values else None,
     }
-
-
-def token(pem: bytes, *, kid: str, issuer: str, audience: str, sub: str) -> str:
-    now = int(time.time())
-    return jwt.encode(
-        {"sub": sub, "iss": issuer, "aud": audience, "iat": now, "exp": now + 3600},
-        pem,
-        algorithm="RS256",
-        headers={"kid": kid},
-    )
 
 
 def wait_ready(base: str, timeout_s: float = 300.0) -> bool:
@@ -450,13 +434,19 @@ def main() -> int:
     out.mkdir(parents=True, exist_ok=True)
     spec = json.loads(pathlib.Path(args.queries).read_text(encoding="utf-8"))
     admin_dsn = os.environ.get(args.admin_dsn_env)
-    if admin_dsn:
-        import psycopg as _pg
+    if not admin_dsn:
+        raise SystemExit(f"{args.admin_dsn_env} is required for the retrieval preflight; no API process started")
+    import psycopg as _pg
 
-        from medops.retrieval.production import require_index_coverage
+    from medops.retrieval.integrity import require_retrieval_integrity
 
-        with _pg.connect(admin_dsn) as _conn:
-            require_index_coverage(_conn, plane="perf target")  # record 109: never measure an unindexed corpus
+    with _pg.connect(admin_dsn, connect_timeout=5, options="-c statement_timeout=5000") as _conn:
+        _conn.read_only = True
+        _conn.isolation_level = _pg.IsolationLevel.REPEATABLE_READ
+        index_preflight = require_retrieval_integrity(_conn, plane="perf target")
+    from medops.evals.preflight import save_preflight
+
+    preflight_reference = save_preflight(out, {index_preflight["database"]: index_preflight})
     pem = pathlib.Path(args.issuer_pem).read_bytes()
     headers = {
         "Authorization": "Bearer " + token(pem, kid=args.kid, issuer=args.issuer, audience=args.audience, sub=args.sub)
@@ -594,6 +584,8 @@ def main() -> int:
     }
 
     results = {
+        "preflight_reference": preflight_reference,
+        "index_preflight": index_preflight,
         "label": args.label,
         "started_at": started.isoformat(),
         "finished_at": dt.datetime.now(dt.UTC).isoformat(),

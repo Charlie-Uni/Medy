@@ -1,0 +1,93 @@
+{
+  "status": "inputs_prepared",
+  "revision": "evals/main_set/drafts/revision-2026-10-08-v3",
+  "revision_manifest_sha256": "279c91a6ab2c7a667399419b51d97aeb27ea59972fe77716d75412550f46398d",
+  "confirmation_sha256": "ee390f2e5b6df7f7dcbd4a6e86318bbe71a6f58860d605c984e8439b10075bfa",
+  "human_confirmation": {
+    "status": "confirmed",
+    "count": 19,
+    "independent_second_human": false
+  },
+  "samples": 19,
+  "gold_units": 39,
+  "multi_gold_records": 10,
+  "batches": [
+    {
+      "scope": "main",
+      "batch": "CO",
+      "count": 3,
+      "sample_ids": [
+        "ms-0298",
+        "ms-0299",
+        "ms-0336"
+      ],
+      "input_file": "main/input_CO.jsonl",
+      "input_sha256": "ebc83556f97891fc87e0d01a31cf62172127070e41372fe77bf008e0558d4eb8",
+      "prompt_file": "main/review_prompt.md",
+      "prompt_sha256": "7572d16e88b638cbc6fa888f4e1a86fe6ffb4869583df357ee1ce0bd012eb758",
+      "input_chars": 13747,
+      "prompt_chars_per_call": 4372,
+      "recommended_chunk_size": 1
+    },
+    {
+      "scope": "main",
+      "batch": "EN",
+      "count": 6,
+      "sample_ids": [
+        "ms-0125",
+        "ms-0178",
+        "ms-0206",
+        "ms-0242",
+        "ms-0244",
+        "ms-0337"
+      ],
+      "input_file": "main/input_EN.jsonl",
+      "input_sha256": "97cc198f0ae786ad70642c812be88ffd8f06864a9ce6985aaac69d5763e9cbb5",
+      "prompt_file": "main/review_prompt.md",
+      "prompt_sha256": "7572d16e88b638cbc6fa888f4e1a86fe6ffb4869583df357ee1ce0bd012eb758",
+      "input_chars": 38602,
+      "prompt_chars_per_call": 4372,
+      "recommended_chunk_size": 1
+    },
+    {
+      "scope": "main",
+      "batch": "PV",
+      "count": 7,
+      "sample_ids": [
+        "ms-0124",
+        "ms-0177",
+        "ms-0205",
+        "ms-0241",
+        "ms-0243",
+        "ms-0280",
+        "ms-0525"
+      ],
+      "input_file": "main/input_PV.jsonl",
+      "input_sha256": "670232f1fedc29380f0b79bf644d5383465202d087b0959e7776bad5652f5f9f",
+      "prompt_file": "main/review_prompt.md",
+      "prompt_sha256": "7572d16e88b638cbc6fa888f4e1a86fe6ffb4869583df357ee1ce0bd012eb758",
+      "input_chars": 42579,
+      "prompt_chars_per_call": 4372,
+      "recommended_chunk_size": 1
+    },
+    {
+      "scope": "probe",
+      "batch": "MA",
+      "count": 3,
+      "sample_ids": [
+        "pc-0017",
+        "pc-0028",
+        "pc-0029"
+      ],
+      "input_file": "probe/input_MA.jsonl",
+      "input_sha256": "4aea9077670f7a2d4f5fe1550103d6d5bb749c75e10016bf54d202adb5fa130b",
+      "prompt_file": "probe/review_prompt.md",
+      "prompt_sha256": "f4a3804e969b23ec9ab467406937e62f0b9e30933d6a680d4b00ee59b2631c38",
+      "input_chars": 15305,
+      "prompt_chars_per_call": 2225,
+      "recommended_chunk_size": 1
+    }
+  ],
+  "model_calls_by_preparation": 0,
+  "note": "Full page inputs stay local/ignored. No prior verdicts, owner approval or proposal rationale are sent. One item per call prevents unrelated re-review cascades."
+}

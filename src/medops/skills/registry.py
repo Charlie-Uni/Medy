@@ -9,6 +9,7 @@ results still pass the same per-output safety check (roadmap: parallel does not 
 
 from __future__ import annotations
 
+import contextvars
 import time
 from collections.abc import Callable, Mapping, Sequence
 from concurrent.futures import ThreadPoolExecutor
@@ -20,6 +21,7 @@ from pydantic import ValidationError
 
 from medops.core.canonical import operation_key
 from medops.core.errors import BusinessError, ErrorCode, InfrastructureError, MedOpsError
+from medops.core.telemetry import annotate, run_metadata, span
 from medops.domain.common import DocType, DomainModel, ReasonCode
 from medops.domain.evidence import Evidence
 from medops.domain.identity import UserContext
@@ -27,7 +29,7 @@ from medops.domain.safety import SafetyDecision, SafetyResult
 from medops.domain.skill import SkillOutput, SkillSpec, SkillStatus
 from medops.domain.state import VersionSet
 from medops.harness.contracts import MAX_RETRIES, NodeAttempt, NodeFailure, NodeSpec, run_node
-from medops.harness.nodes import HarnessDeps
+from medops.harness.dependencies import HarnessDeps
 from medops.safety.checks import SAFETY_VERSION, check_output_text
 
 OPERATION_SCOPE = "skill"
@@ -124,6 +126,15 @@ class SkillRegistry:
 
     # ------------------------------------------------------------------ execution
     def execute(self, name: str, version: str, raw_input: Mapping[str, object], *, context: SkillContext) -> SkillRun:
+        with (
+            run_metadata(context.trace_id, context.versions.model_dump(mode="json"), kind="skill"),
+            span("skill.run", skill=f"{name}@{version}") as current,
+        ):
+            result = self._execute(name, version, raw_input, context=context)
+            annotate(current, outcome=result.output.status.value)
+            return result
+
+    def _execute(self, name: str, version: str, raw_input: Mapping[str, object], *, context: SkillContext) -> SkillRun:
         entry = self.get(name, version)
         spec = entry.spec
         required = spec.resolve_scopes(context.user)
@@ -204,7 +215,10 @@ class SkillRegistry:
         parallel = [i for i, r in enumerate(requests) if self.get(r.name, r.version).spec.parallel_safe]
         if parallel:
             with ThreadPoolExecutor(max_workers=min(self._max_parallel, len(parallel))) as pool:
-                futures = {i: pool.submit(self._guarded, requests[i], context) for i in parallel}
+                futures = {
+                    i: pool.submit(contextvars.copy_context().run, self._guarded, requests[i], context)
+                    for i in parallel
+                }
                 for i, future in futures.items():
                     results[i] = future.result()
         for i, request in enumerate(requests):

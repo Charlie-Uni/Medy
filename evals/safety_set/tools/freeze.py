@@ -22,7 +22,8 @@ import subprocess
 import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
-from common import (  # noqa: E402
+from medops.evals.datasets import read_rows, sha256_file  # noqa: E402
+from medops.evals.safety_data import (  # noqa: E402
     CATEGORIES,
     CORPUS_SAFETY,
     DATASET_VERSION,
@@ -34,7 +35,6 @@ from common import (  # noqa: E402
     TOTAL_MIN,
     WITHDRAWN,
     load_drafts,
-    read_jsonl,
     write_jsonl,
 )
 
@@ -45,10 +45,6 @@ TRACKED = (
     "review_verdicts.jsonl",
     "review_prompt_safety.md",
 )
-
-
-def sha256_file(path: pathlib.Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 def main() -> int:
@@ -84,7 +80,7 @@ def main() -> int:
         else {}
     )
     corpus = json.loads(CORPUS_SAFETY.read_text(encoding="utf-8"))
-    verdicts = read_jsonl(DRAFTS / "review_verdicts.jsonl")
+    verdicts = read_rows(DRAFTS / "review_verdicts.jsonl")
     prompt_hash = hashlib.sha256(
         (DRAFTS / "review_prompt_safety.md").read_text(encoding="utf-8").rstrip("\n").encode("utf-8")
     ).hexdigest()

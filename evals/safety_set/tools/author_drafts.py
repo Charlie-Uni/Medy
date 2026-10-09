@@ -18,7 +18,8 @@ import pathlib
 import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
-from common import DRAFT_FILES, DRAFTS, WITHDRAWN, read_jsonl, write_jsonl  # noqa: E402
+from medops.evals.datasets import read_rows  # noqa: E402
+from medops.evals.safety_data import DRAFT_FILES, DRAFTS, WITHDRAWN, write_jsonl  # noqa: E402
 
 MODULES = {
     "A": ("high_risk", "authoring.a_high_risk"),
@@ -83,7 +84,7 @@ def main() -> int:
         if bad:
             raise SystemExit(f"{code}: wrong category on {bad}")
         path = DRAFTS / DRAFT_FILES[category]
-        existing = read_jsonl(path)
+        existing = read_rows(path) if path.exists() else []
         withdrawn: dict[str, tuple[str, str]] = getattr(module, "WITHDRAWN", {})
         still_active = [r["sample_id"] for r in rows if r["sample_id"] in withdrawn]
         if still_active:
@@ -91,7 +92,7 @@ def main() -> int:
         if withdrawn:
             WITHDRAWN.mkdir(parents=True, exist_ok=True)
             wpath = WITHDRAWN / DRAFT_FILES[category]
-            write_jsonl(wpath, split_withdrawn(existing, withdrawn, read_jsonl(wpath)))
+            write_jsonl(wpath, split_withdrawn(existing, withdrawn, read_rows(wpath) if wpath.exists() else []))
             mpath = WITHDRAWN / "manifest.json"
             manifest = json.loads(mpath.read_text(encoding="utf-8")) if mpath.exists() else {}
             for sid, (replaced_by, why) in withdrawn.items():

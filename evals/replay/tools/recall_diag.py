@@ -13,25 +13,17 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import hashlib
-import importlib.util
 import json
 import pathlib
-import sys
 import time
 from collections import Counter
 
+from medops.evals.runtime import Plane
+from medops.evals.safety_data import PRODUCTION_DB, admin_dsn
+from medops.infrastructure.llm.meter import MeteredGateway
+from medops.retrieval.pinned import PinnedEmbedding, PinnedReranker, PinnedThread
+
 REPO = pathlib.Path(__file__).resolve().parents[3]
-sys.path.insert(0, str(REPO / "src"))
-sys.path.insert(0, str(REPO / "evals/harness/tools"))
-
-
-def _load(path: pathlib.Path, name: str):
-    spec = importlib.util.spec_from_file_location(name, path)
-    mod = importlib.util.module_from_spec(spec)
-    sys.modules[name] = mod
-    assert spec.loader is not None
-    spec.loader.exec_module(mod)
-    return mod
 
 
 def classify(row: dict) -> str:
@@ -147,7 +139,12 @@ def main_set_items(main_set: pathlib.Path, mapping_doc: dict) -> list[dict]:
 
 def main_set_metrics(rows: list[dict]) -> dict:
     """Strict macro Recall@k = mean over samples of (golds hit in top-k / golds); Hit@5 = share of samples with any
-    gold in the top 5. top-5 / top-8 are taken from the reranked evidence, top-20 from the fused candidates."""
+    gold in the top 5. top-5 / top-8 are taken from the reranked evidence, top-20 from the fused candidates.
+    MRR = mean over samples of 1 / rank of the first gold (0 when no gold is in the list): `mrr_at_8` over the
+    reranked evidence (what the answer prompt sees), `mrr_at_20` over the fused candidates (record 144)."""
+
+    def rr(rank: int | None, k: int) -> float:
+        return 1.0 / rank if rank is not None and rank <= k else 0.0
 
     def block(rs: list[dict]) -> dict:
         n = len(rs)
@@ -159,6 +156,8 @@ def main_set_metrics(rows: list[dict]) -> dict:
             "hit_at_5": round(sum(1 for r in rs if r["golds_hit_top5"]) / n, 4),
             "recall_at_8": round(sum(r["golds_hit_top8"] / r["golds"] for r in rs) / n, 4),
             "recall_at_20": round(sum(r["golds_hit_top20"] / r["golds"] for r in rs) / n, 4),
+            "mrr_at_8": round(sum(rr(r["gold_rank_evidence"], 8) for r in rs) / n, 4),
+            "mrr_at_20": round(sum(rr(r["gold_rank_candidates"], 20) for r in rs) / n, 4),
         }
 
     slices = sorted({sl for r in rows for sl in r.get("slices", [])})
@@ -176,13 +175,14 @@ def main_set_metrics(rows: list[dict]) -> dict:
 
 def render_main_set(m: dict) -> str:
     lines = ["", "## Main set (strict macro recall over gold-bearing samples)", ""]
-    lines.append("| group | n | Recall@5 | Hit@5 | Recall@8 | Recall@20 |")
-    lines.append("| --- | ---: | ---: | ---: | ---: | ---: |")
+    lines.append("| group | n | Recall@5 | Hit@5 | Recall@8 | Recall@20 | MRR@8 | MRR@20 |")
+    lines.append("| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |")
 
     def row(name: str, b: dict) -> str:
         return (
             f"| {name} | {b['n']} | {b.get('recall_at_5', '')} | {b.get('hit_at_5', '')} | "
-            f"{b.get('recall_at_8', '')} | {b.get('recall_at_20', '')} |"
+            f"{b.get('recall_at_8', '')} | {b.get('recall_at_20', '')} | {b.get('mrr_at_8', '')} | "
+            f"{b.get('mrr_at_20', '')} |"
         )
 
     lines.append(row("all", m["all"]))
@@ -230,14 +230,12 @@ def main() -> int:
     ap.add_argument("--server-admin-url", default=None, help="admin DSN of that server (index coverage check)")
     args = ap.parse_args()
 
-    sr = _load(REPO / "evals/harness/tools/safety_run.py", "safety_run")
-    sa = sr._load_smoke_ask()
     import psycopg
 
     from medops.core.config import Settings
     from medops.domain.common import Dept
     from medops.domain.identity import UserContext
-    from medops.harness.nodes import ANSWER_SYSTEM
+    from medops.harness.answer import ANSWER_SYSTEM
     from medops.harness.retrieval_port import RetrievalRequest
     from medops.retrieval.glossary_store import load_versioned_glossary
     from medops.retrieval.production import RERANK_OUTPUT, production_hybrid_config
@@ -270,9 +268,9 @@ def main() -> int:
 
     settings = Settings()
     app_url = args.server_url or settings.database_url.get_secret_value()
-    gpu = sa.GpuThread(args.gpu_timeout)
-    provider = sa._PinnedEmbedding(gpu.call(lambda: BgeM3EmbeddingProvider(device=args.device)), gpu)
-    reranker = sa._PinnedReranker(gpu.call(lambda: BgeRerankerV2M3(device=args.device, output=RERANK_OUTPUT)), gpu)
+    gpu = PinnedThread(args.gpu_timeout)
+    provider = PinnedEmbedding(gpu.call(lambda: BgeM3EmbeddingProvider(device=args.device)), gpu)
+    reranker = PinnedReranker(gpu.call(lambda: BgeRerankerV2M3(device=args.device, output=RERANK_OUTPUT)), gpu)
 
     class NoGateway:
         def complete(self, *a, **k):
@@ -280,18 +278,9 @@ def main() -> int:
 
     gateway: object = NoGateway()
     if args.translate != "off":
-        from medops.infrastructure.llm.budget import BudgetedGateway, InMemorySpendLedger
-        from medops.infrastructure.llm.gateway import OPENAI_PRICES, PriceTable
-        from medops.infrastructure.llm.openai_gateway import OpenAIModelGateway
+        from medops.infrastructure.llm.factory import build_budgeted_gateway
 
-        gateway = sa._Meter(
-            BudgetedGateway(
-                OpenAIModelGateway.from_settings(settings),
-                prices=PriceTable(OPENAI_PRICES),
-                ledger=InMemorySpendLedger(),
-                monthly_cap_usd=settings.llm_monthly_budget_usd,
-            )
-        )
+        gateway = MeteredGateway(build_budgeted_gateway(settings))
 
     lexical_factory = None
     if args.lexical == "d":
@@ -299,15 +288,14 @@ def main() -> int:
         from medops.retrieval.production import production_tokenizer
 
         tokenizer = production_tokenizer()
-        lexical_factory = lambda c: PgTextsearchBm25Retriever(c, tokenizer, as_of=args.as_of)  # noqa: E731
-    plane = sr.Plane(
-        sr.PRODUCTION_DB,
+        lexical_factory = lambda c, *, as_of: PgTextsearchBm25Retriever(c, tokenizer, as_of=as_of)  # noqa: E731
+    plane = Plane(
+        PRODUCTION_DB,
         app_url,
         provider,
         reranker,
         gateway,
         args.as_of,
-        sa,
         config=production_hybrid_config(),
         answer_system=ANSWER_SYSTEM,
         glossary=load_versioned_glossary(args.glossary_dir, args.glossary),
@@ -323,9 +311,12 @@ def main() -> int:
         return sum("一" <= ch <= "鿿" for ch in letters) / max(1, len(letters))
 
     args.out.mkdir(parents=True, exist_ok=True)
+    from medops.evals.preflight import save_preflight
+
+    save_preflight(args.out, {PRODUCTION_DB: plane.index_preflight})
     rows: list[dict] = []
     with (
-        psycopg.connect(sr.admin_dsn(sr.PRODUCTION_DB)) as admin,
+        psycopg.connect(admin_dsn(PRODUCTION_DB)) as admin,
         (args.out / "rows.jsonl").open("w", encoding="utf-8") as fh,
     ):
         for it in todo:

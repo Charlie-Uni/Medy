@@ -1,0 +1,33 @@
+{
+  "format": "review-budget-authorization-v1",
+  "approved_by": "project-owner",
+  "approval_quote": "执行",
+  "approval_context": "19题模型复核，建议总预算上限5 USD，用户确认执行",
+  "total_budget_usd": 5.0,
+  "review_root": "evals/main_set/drafts/revision-2026-10-08-v2/review",
+  "model": "claude-opus-5",
+  "effort": "high",
+  "recommended_call_cap_usd": 0.25,
+  "revision_manifest_sha256": "28b01b508f736a28ba5c0669ead5c45b25206f55a0ebacbd32cbee80ef0792bf",
+  "confirmation_sha256": "92eb53204cef17458c3fc050404febeb61318129fbcabf58b599a31eb76d088f",
+  "batches": {
+    "main/CO": {
+      "input_sha256": "ebc83556f97891fc87e0d01a31cf62172127070e41372fe77bf008e0558d4eb8",
+      "prompt_sha256": "7572d16e88b638cbc6fa888f4e1a86fe6ffb4869583df357ee1ce0bd012eb758"
+    },
+    "main/EN": {
+      "input_sha256": "edfebd3aa6e20d53a30318f2a2fea33d67bfbedbab7d4aef8e4c8c601602e940",
+      "prompt_sha256": "7572d16e88b638cbc6fa888f4e1a86fe6ffb4869583df357ee1ce0bd012eb758"
+    },
+    "main/PV": {
+      "input_sha256": "e23450038253aff37f97a290750ed5dda9491c3c8193df88b52f525424a74ae9",
+      "prompt_sha256": "7572d16e88b638cbc6fa888f4e1a86fe6ffb4869583df357ee1ce0bd012eb758"
+    },
+    "probe/MA": {
+      "input_sha256": "4aea9077670f7a2d4f5fe1550103d6d5bb749c75e10016bf54d202adb5fa130b",
+      "prompt_sha256": "f4a3804e969b23ec9ab467406937e62f0b9e30933d6a680d4b00ee59b2631c38"
+    }
+  },
+  "independent_second_human": false,
+  "cost_basis": "Claude CLI reported USD estimate; distinguish from provider invoice/subscription billing"
+}
