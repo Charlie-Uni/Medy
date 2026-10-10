@@ -1,0 +1,83 @@
+{
+  "normal_cases_replayed": 614,
+  "render_and_retention_mismatches": 0,
+  "scorer_calls_bound": 1035,
+  "scored_pairs_bound": 27817,
+  "finite_score_vectors": true,
+  "profiles_unchanged": true,
+  "before_renderer_sha256": "25421573dd605c9656f318c3937aca10bfc47af28d2adbd6b511d4a2010a9a71",
+  "after_renderer_sha256": "da18b6ec2292f28ed2aae8c9f590fca5ddca84c5431e3964dc2dd5b1c7fd7936",
+  "snapshot_sha256": "61b6f15a84f5f59bde674ee145315b67383d4497bf0f216d603e1e33dfedf07f",
+  "raw_rows_sha256": "7ae5c31bb279be92968f7d777786cb922dbdea39d45f2bbaf50ca1fcb2d89ff5",
+  "summary_recomputed": true,
+  "legacy_v7_losses": [
+    {
+      "replay_id": "rp-0035",
+      "sample_id": "ms-0038",
+      "baseline_outcome": "answered",
+      "candidate_outcome": "escalated",
+      "all_keys_retained_in_full_ask_context": true
+    },
+    {
+      "replay_id": "rp-0045",
+      "sample_id": "ms-0048",
+      "baseline_outcome": "answered",
+      "candidate_outcome": "escalated",
+      "all_keys_retained_in_full_ask_context": true
+    },
+    {
+      "replay_id": "rp-0046",
+      "sample_id": "ms-0049",
+      "baseline_outcome": "answered",
+      "candidate_outcome": "escalated",
+      "all_keys_retained_in_full_ask_context": true
+    },
+    {
+      "replay_id": "rp-0379",
+      "sample_id": "ms-0390",
+      "baseline_outcome": "answered",
+      "candidate_outcome": "answered",
+      "all_keys_retained_in_full_ask_context": false
+    },
+    {
+      "replay_id": "rp-0409",
+      "sample_id": "ms-0422",
+      "baseline_outcome": "answered",
+      "candidate_outcome": "escalated",
+      "all_keys_retained_in_full_ask_context": true
+    },
+    {
+      "replay_id": "rp-0553",
+      "sample_id": "pc-0046",
+      "baseline_outcome": "answered",
+      "candidate_outcome": "escalated",
+      "all_keys_retained_in_full_ask_context": true
+    },
+    {
+      "replay_id": "rp-0581",
+      "sample_id": "pc-0074",
+      "baseline_outcome": "answered",
+      "candidate_outcome": "escalated",
+      "all_keys_retained_in_full_ask_context": true
+    }
+  ],
+  "legacy_note": "Old replay outcomes retained as history; current component inputs are full-ask archived contexts, not the exact old candidate prompts.",
+  "hosted_model_calls": 0,
+  "cost_usd": 0,
+  "verification_script_sha256": "0ba3b169f6955efb4b197473eef3015da404eb4ee57e7caa40f31b7c595a8ce3",
+  "invalid_scores_rejected_after": [
+    "nan",
+    "inf",
+    "-inf"
+  ],
+  "fake_harness_after": {
+    "outcome": "escalated",
+    "reason_code": "system_failure",
+    "generation_calls": 0
+  },
+  "targeted_tests_passed": 30,
+  "full_check": {
+    "passed": 1753,
+    "skipped": 70
+  }
+}
