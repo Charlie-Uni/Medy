@@ -137,6 +137,8 @@ def focus_texts(
             scores = scorer(variant, unit_texts)
             if len(scores) != len(scored):
                 raise ValueError("sentence scorer returned a score count that differs from the input")
+            if any(not math.isfinite(s) for s in scores):
+                raise ValueError("sentence scorer returned non-finite scores")
             for u, s in zip(scored, scores, strict=True):
                 by_unit[u] = max(by_unit[u], float(s))
         for i in {i for i, _ in scored}:  # every chunk keeps its best unit and the neighbours asked for

@@ -95,6 +95,32 @@ def test_scorer_returning_the_wrong_number_of_scores_is_an_error():
         focus_texts("q", [DOSE], lambda q, t: [1.0])
 
 
+@pytest.mark.parametrize("bad", [float("nan"), float("inf"), float("-inf")])
+def test_non_finite_sentence_scores_cannot_silently_choose_medical_evidence(bad):
+    from medops.harness.focus_profiles import FOCUS_PARAMS
+
+    with pytest.raises(ValueError, match="non-finite"):
+        focus_texts("dose", [DOSE, ENGLISH], lambda q, ts: [bad] * len(ts), params=FOCUS_PARAMS["sentfocus-v7"])
+
+
+def test_bad_sentence_scores_escalate_before_the_answer_gateway_is_called():
+    from medops.domain.common import ReasonCode
+    from medops.harness.runtime import run_ask
+
+    items = [evidence("c1", DOSE, doc_id="doc-1"), evidence("c2", ENGLISH, doc_id="doc-2")]
+    gateway = FakeModelGateway({"answer": [{"claims": [{"text": "100 mg", "citation_chunk_ids": ["E1"]}]}]})
+    deps = make_deps(
+        FakeRetrieval(*items),
+        gateway,
+        evidence_focus="sentfocus-v7",
+        sentence_scorer=lambda q, ts: [float("nan")] * len(ts),
+        doc_titles=lambda user, ids: {cid: "Document" for cid in ids},
+    )
+    run = run_ask(state(), deps)
+    assert run.outcome == "escalated" and run.state.escalation.reason_codes == (ReasonCode.system_failure,)
+    assert gateway.calls == []  # invalid local inference cannot trigger paid answer generation
+
+
 def test_off_is_the_historical_layout_and_compact_only_swaps_the_ids():
     items = [evidence("c1", DOSE, doc_id="doc-1"), evidence("c2", ENGLISH, doc_id="doc-2", historical=False)]
     off = render_evidence("q", items)
