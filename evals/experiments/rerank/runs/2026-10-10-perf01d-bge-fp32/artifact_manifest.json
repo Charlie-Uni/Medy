@@ -1,0 +1,48 @@
+{
+  "format": "rerank-burst-artifact-manifest-v1",
+  "source_commit": "c473e78477644249d5ee9f73851945bb12a1aeba",
+  "files": {
+    "capture_audit.json": {
+      "sha256": "ae296b4619018a6d9bc4f1f97ad5539815387cb068cf926eb02ef9a7f35ccd53",
+      "bytes": 198
+    },
+    "inputs.json": {
+      "sha256": "e977093e71a496001b027dfe76c4eef33e442c9fb91948e092c10502f68578dc",
+      "bytes": 107076
+    },
+    "measurement_log.txt": {
+      "sha256": "28e98ec6c1d8d5405c56b253cb1452f7ccfaccaeb48705998886e76e4032117c",
+      "bytes": 1008
+    },
+    "model.json": {
+      "sha256": "9252b55198077978a03aad47fd1420df381c1487e1024ed5884d868249620f09",
+      "bytes": 343
+    },
+    "plan.json": {
+      "sha256": "8d1a0b43ba71dd5085abf5ffb49e440e060f8a77bc37162ce10088f18f6a1489",
+      "bytes": 23226
+    },
+    "reference_scores.json": {
+      "sha256": "567ca2ac3fdb197b3f465b2e26b62ec67886385fa9fc533db9b2c93176d62021",
+      "bytes": 6200
+    },
+    "results.json": {
+      "sha256": "fef1a16bc6c6505e01d7dde572318de2368a33163206aa03a53315ade3203f8c",
+      "bytes": 2072
+    },
+    "rows.jsonl": {
+      "sha256": "746d85b73e19791aeb7a99cdeb9470a363d936a8e144f17affd19dfa539d6ae0",
+      "bytes": 171503
+    }
+  },
+  "audit": {
+    "rows": 108,
+    "measured_pairs": 2160,
+    "burst_totals_recomputed": true,
+    "rankings_recomputed": true,
+    "source_hash_verified": true,
+    "fault_recovery_verified": true,
+    "hosted_model_calls": 0,
+    "api_cost_usd": 0
+  }
+}

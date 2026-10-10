@@ -1,0 +1,13 @@
+{
+  "status": "ready",
+  "spec": {
+    "reranker_version": "rerank-bge-v2-m3-v1",
+    "model_id": "BAAI/bge-reranker-v2-m3",
+    "model_revision": "953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e",
+    "max_length": 512,
+    "max_input": 20,
+    "output": 8
+  },
+  "framework": "sentence-transformers 5.7.0; device mps",
+  "dtype": "torch.float32"
+}

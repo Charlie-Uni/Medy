@@ -1,0 +1,75 @@
+{
+  "arms": {
+    "fifo": {
+      "requests": 36,
+      "requests_per_second": 0.25000754457131485,
+      "completion_p50_ms": 10495.668603980448,
+      "completion_p95_ms": 20384.532417054288,
+      "full_order_changes": 0,
+      "top8_order_changes": 0,
+      "max_score_delta": 0.0,
+      "mean_burst_ipc_overhead_ms": 0.8931018851904405,
+      "department_completion_p95_ms": {
+        "MA": 20733.075291966088,
+        "PV": 15178.614374948665,
+        "CO": 13961.761999991722
+      }
+    },
+    "merge2": {
+      "requests": 36,
+      "requests_per_second": 0.23823019772422543,
+      "completion_p50_ms": 12791.337374947034,
+      "completion_p95_ms": 21749.409916927107,
+      "full_order_changes": 0,
+      "top8_order_changes": 0,
+      "max_score_delta": 0.0,
+      "mean_burst_ipc_overhead_ms": 0.8474212113974823,
+      "department_completion_p95_ms": {
+        "MA": 21749.409916927107,
+        "PV": 15904.591166065075,
+        "CO": 15667.091500014067
+      }
+    },
+    "merge4": {
+      "requests": 36,
+      "requests_per_second": 0.21659429065650332,
+      "completion_p50_ms": 18530.03666596487,
+      "completion_p95_ms": 20207.418292062357,
+      "full_order_changes": 0,
+      "top8_order_changes": 0,
+      "max_score_delta": 0.0,
+      "mean_burst_ipc_overhead_ms": 1.0970878906341062,
+      "department_completion_p95_ms": {
+        "MA": 20207.418292062357,
+        "PV": 18803.629041998647,
+        "CO": 18753.571707988158
+      }
+    }
+  },
+  "faults": [
+    {
+      "op": "crash",
+      "failed_closed": true,
+      "worker_stopped": true,
+      "parent_alive": true,
+      "detection_and_cleanup_ms": 55.36766699515283,
+      "recovered_order_same": true
+    },
+    {
+      "op": "hang",
+      "failed_closed": true,
+      "worker_stopped": true,
+      "parent_alive": true,
+      "detection_and_cleanup_ms": 311.5577499847859,
+      "recovered_order_same": true
+    }
+  ],
+  "startup_ms": [
+    7251.525458064862,
+    8597.700917045586,
+    7540.479499963112
+  ],
+  "formal_gate": false,
+  "hosted_model_calls": 0,
+  "api_cost_usd": 0
+}
