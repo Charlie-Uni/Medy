@@ -13,6 +13,7 @@ from collections.abc import Callable
 from typing import Annotated, Any, TypedDict
 
 from medops.core.canonical import operation_key
+from medops.core.deadline import check_deadline
 from medops.domain.common import ReasonCode
 from medops.domain.evidence import Evidence
 from medops.domain.intent import IntentType
@@ -69,6 +70,7 @@ def build_nodes(deps: HarnessDeps) -> dict[str, Callable[[HarnessState], dict[st
     def guarded(
         node: str, hs: HarnessState, key: str, body: Callable[[AgentState], AgentState | tuple[AgentState, list[str]]]
     ) -> dict[str, Any]:
+        check_deadline()
         state = hs["state"]
         store = deps.executions
         claim_no = 0

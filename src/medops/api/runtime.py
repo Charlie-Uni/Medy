@@ -52,8 +52,8 @@ from medops.ingestion import acl as acl_ops
 from medops.ingestion import activate as activation
 from medops.retrieval.doc_focus import load_titles
 from medops.retrieval.hybrid import HybridConfig
+from medops.retrieval.inference_process import InferenceProcess, ProcessEmbedding, ProcessReranker
 from medops.retrieval.integrity import database_identity, inspect_readiness
-from medops.retrieval.pinned import PinnedEmbedding, PinnedReranker, PinnedThread
 from medops.retrieval.production import (
     PRODUCTION_RETRIEVAL_VERSION,
     RERANK_OUTPUT,
@@ -147,9 +147,6 @@ class ProductionRuntime:
     def from_settings(
         cls, settings: Settings, *, device: str = "cpu", pinned_timeout_s: float = 120.0
     ) -> ProductionRuntime:
-        from medops.retrieval.rerank import BgeRerankerV2M3
-        from medops.retrieval.vector.embedding import BgeM3EmbeddingProvider
-
         dsn = settings.database_url.get_secret_value()
         with open_connection(dsn, settings) as conn, conn.transaction():
             released = load_released(
@@ -162,56 +159,65 @@ class ProductionRuntime:
         doc_focus = released.doc_focus()
         source_constraint = released.source_constraint()
         query_translation = released.query_translation()
-        pinned = PinnedThread(pinned_timeout_s)
-        embedding = PinnedEmbedding(pinned.call(lambda: BgeM3EmbeddingProvider(device=device)), pinned)
-        reranker = PinnedReranker(pinned.call(lambda: BgeRerankerV2M3(device=device, output=rerank_output)), pinned)
-        gateway = build_budgeted_gateway(settings)
-        retrieval_version = (
-            compute_retrieval_version(
-                production_retrieval_inputs(
-                    hybrid,
-                    rerank_output=rerank_output,
-                    glossary_version=glossary_version,
-                    multi_query=multi_query,
-                    doc_focus=doc_focus,
-                    source_constraint=source_constraint,
-                    query_translation=query_translation,
+        pinned = InferenceProcess(device=device, output=rerank_output, timeout_s=pinned_timeout_s)
+        embedding = ProcessEmbedding(pinned)
+        reranker = ProcessReranker(pinned, output=rerank_output)
+        gateway = None
+        try:
+            gateway = build_budgeted_gateway(settings)
+            retrieval_version = (
+                compute_retrieval_version(
+                    production_retrieval_inputs(
+                        hybrid,
+                        rerank_output=rerank_output,
+                        glossary_version=glossary_version,
+                        multi_query=multi_query,
+                        doc_focus=doc_focus,
+                        source_constraint=source_constraint,
+                        query_translation=query_translation,
+                    )
                 )
+                if released.retrieval_overridden()
+                else PRODUCTION_RETRIEVAL_VERSION
             )
-            if released.retrieval_overridden()
-            else PRODUCTION_RETRIEVAL_VERSION
-        )
-        versions = VersionSet(
-            policy_version=released.policy_version(POLICY_VERSION),
-            retrieval_version=retrieval_version,
-            skill_version_set=default_registry().version_set(),
-            model_config_version=production_model_config_version() + released.model_config_suffix(),
-        )
-        runtime = cls(
-            settings=settings,
-            authenticator=authenticator_from_settings(settings),
-            gateway=gateway,
-            embedding=embedding,
-            reranker=reranker,
-            versions=versions,
-        )
-        runtime._dsn = dsn
-        runtime.policies = released
-        runtime._hybrid = hybrid
-        runtime._pinned = pinned
-        runtime._device = device
-        runtime._rerankers = {rerank_output: reranker}
-        runtime.glossary_for(glossary_version)  # fail fast: a released glossary must be present and verified at start
-        runtime._retrieval_cache = retrieval_cache_from_settings(settings)
-        runtime._admin_dsn = settings.database_admin_url.get_secret_value() if settings.database_admin_url else None
-        runtime._restricted_dsn = (
-            settings.database_restricted_url.get_secret_value() if settings.database_restricted_url else None
-        )
-        if settings.payload_key_file:
-            from medops.core.envelope import LocalFileKeyProvider
+            versions = VersionSet(
+                policy_version=released.policy_version(POLICY_VERSION),
+                retrieval_version=retrieval_version,
+                skill_version_set=default_registry().version_set(),
+                model_config_version=production_model_config_version() + released.model_config_suffix(),
+            )
+            runtime = cls(
+                settings=settings,
+                authenticator=authenticator_from_settings(settings),
+                gateway=gateway,
+                embedding=embedding,
+                reranker=reranker,
+                versions=versions,
+            )
+            runtime._dsn = dsn
+            runtime.policies = released
+            runtime._hybrid = hybrid
+            runtime._pinned = pinned
+            runtime._device = device
+            runtime._rerankers = {rerank_output: reranker}
+            runtime.glossary_for(
+                glossary_version
+            )  # fail fast: a released glossary must be present and verified at start
+            runtime._retrieval_cache = retrieval_cache_from_settings(settings)
+            runtime._admin_dsn = settings.database_admin_url.get_secret_value() if settings.database_admin_url else None
+            runtime._restricted_dsn = (
+                settings.database_restricted_url.get_secret_value() if settings.database_restricted_url else None
+            )
+            if settings.payload_key_file:
+                from medops.core.envelope import LocalFileKeyProvider
 
-            runtime._key_provider = LocalFileKeyProvider(settings.payload_key_file)
-        return runtime
+                runtime._key_provider = LocalFileKeyProvider(settings.payload_key_file)
+            return runtime
+        except BaseException:
+            pinned.close()
+            if gateway is not None:
+                gateway.close()
+            raise
 
     def _open(self, dsn: str) -> psycopg.Connection[Any]:
         return open_connection(dsn, self.settings)
@@ -327,13 +333,7 @@ class ProductionRuntime:
         if output not in self._rerankers:
             if self._pinned is None:
                 return self.reranker
-            from medops.retrieval.pinned import PinnedReranker
-            from medops.retrieval.rerank import BgeRerankerV2M3
-
-            pinned, device = self._pinned, self._device
-            self._rerankers[output] = PinnedReranker(
-                pinned.call(lambda: BgeRerankerV2M3(device=device, output=output)), pinned
-            )
+            self._rerankers[output] = ProcessReranker(self._pinned, output=output)
         return self._rerankers[output]
 
     def glossary_for(self, version: str) -> Any:
@@ -352,6 +352,9 @@ class ProductionRuntime:
     ) -> HarnessDeps:
         as_of = request.historical.as_of if request.historical is not None else self.as_of
         routed = routed or self.route_policies(conn, user)
+        from medops.infrastructure.db.deadline import DeadlineConnection
+
+        conn = DeadlineConnection(conn)
         hybrid = routed.policies.hybrid_config(production_hybrid_config())
         reranker = self.reranker_for(routed.policies.rerank_output(RERANK_OUTPUT))
 
@@ -416,6 +419,9 @@ class ProductionRuntime:
         self, conn: Any, user: UserContext, trace_id: str, historical: Mapping[str, Any] | None
     ) -> SkillContext:
         as_of = date.fromisoformat(historical["as_of"]) if historical and historical.get("as_of") else self.as_of
+        from medops.infrastructure.db.deadline import DeadlineConnection
+
+        conn = DeadlineConnection(conn)
         request = AskRequest(query="task", historical=None)
         routed = self.route_policies(conn, user)
         deps = self.build_deps(conn, user, request, routed)
@@ -455,8 +461,17 @@ class ProductionRuntime:
             self._integrity_cache = (time.monotonic(), status)
             return status
 
+    def close(self) -> None:
+        try:
+            close = getattr(self.gateway, "close", None)
+            if close is not None:
+                close()
+        finally:
+            if self._pinned is not None:
+                self._pinned.close()
+
     def ready(self) -> bool:
-        if self._pinned is not None and self._pinned.stalled:
+        if self._pinned is not None and (self._pinned.stalled or not getattr(self._pinned, "available", True)):
             return False
         status = self.retrieval_integrity()
         if not status["ready"]:

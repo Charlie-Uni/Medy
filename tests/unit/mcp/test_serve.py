@@ -2,6 +2,7 @@
 
 import logging
 import sys
+from types import SimpleNamespace
 
 import pytest
 
@@ -49,3 +50,27 @@ def test_stdio_transport_needs_a_dev_dept(_env, monkeypatch, capsys):
     monkeypatch.setattr(serve_mod, "configure_telemetry", lambda **kw: None)
     assert serve_mod.main(["--transport", "stdio"]) == 2
     assert "--dev-dept" in capsys.readouterr().err
+
+
+@pytest.mark.parametrize("close_fails", [False, True])
+def test_server_failure_closes_owned_resources_and_telemetry_even_when_cleanup_fails(_env, monkeypatch, close_fails):
+    events = []
+
+    def run(_transport):
+        events.append("run")
+        raise RuntimeError("server failed")
+
+    def close():
+        events.append("close")
+        if close_fails:
+            raise ValueError("cleanup failed")
+
+    monkeypatch.setattr(serve_mod, "configure_logging", lambda *args, **kwargs: None)
+    monkeypatch.setattr(serve_mod, "configure_telemetry", lambda **kwargs: None)
+    monkeypatch.setattr(serve_mod, "shutdown_telemetry", lambda: events.append("telemetry"))
+    monkeypatch.setattr(serve_mod, "_searcher_factory", lambda *args: SimpleNamespace(close=close))
+    monkeypatch.setattr(serve_mod, "McpProductionRuntime", lambda **kwargs: object())
+    monkeypatch.setattr(serve_mod, "build_server", lambda *args, **kwargs: SimpleNamespace(run=run))
+    with pytest.raises(ValueError if close_fails else RuntimeError):
+        serve_mod.main(["--transport", "stdio", "--dev-dept", "MA"])
+    assert events == ["run", "close", "telemetry"]

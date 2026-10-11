@@ -32,7 +32,7 @@ from medops.harness.dependencies import HarnessDeps
 from medops.harness.production import PRODUCTION_ANSWER_MODEL, PRODUCTION_JUDGE_MODEL, production_model_config_version
 from medops.infrastructure.llm.factory import build_budgeted_gateway
 from medops.infrastructure.llm.meter import MeteredGateway
-from medops.retrieval.pinned import PinnedEmbedding, PinnedReranker, PinnedThread
+from medops.retrieval.inference_process import InferenceProcess, ProcessEmbedding, ProcessReranker
 from medops.retrieval.production import (
     PRODUCTION_RETRIEVAL_VERSION,
     RERANK_OUTPUT,
@@ -273,12 +273,10 @@ def main() -> int:
         raise SystemExit("refusing to overwrite an existing run directory")
 
     settings = Settings()
-    from medops.retrieval.rerank import BgeRerankerV2M3
-    from medops.retrieval.vector.embedding import BgeM3EmbeddingProvider
 
-    gpu = PinnedThread(120.0)
-    provider = PinnedEmbedding(gpu.call(lambda: BgeM3EmbeddingProvider(device=args.device)), gpu)
-    reranker = PinnedReranker(gpu.call(lambda: BgeRerankerV2M3(device=args.device, output=RERANK_OUTPUT)), gpu)
+    gpu = InferenceProcess(device=args.device, output=RERANK_OUTPUT)
+    provider = ProcessEmbedding(gpu)
+    reranker = ProcessReranker(gpu, output=RERANK_OUTPUT)
     conn = psycopg.connect(with_database(settings.database_url.get_secret_value(), args.database))
     as_of = args.as_of
 
@@ -286,7 +284,9 @@ def main() -> int:
     def conn_for_user(user: UserContext):
         with conn.transaction():
             conn.execute("select set_config('medops.dept', %s, true)", (user.dept.value,))
-            yield conn
+            from medops.infrastructure.db.deadline import DeadlineConnection
+
+            yield DeadlineConnection(conn)
 
     retrieval = build_retrieval(
         conn_for_user=conn_for_user,

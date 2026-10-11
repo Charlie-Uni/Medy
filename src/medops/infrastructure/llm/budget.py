@@ -16,6 +16,7 @@ from typing import Protocol
 
 import psycopg
 
+from medops.core.deadline import check_deadline, remaining_timeout
 from medops.infrastructure.llm.gateway import BudgetExceeded, ModelGateway, ModelRequest, ModelResponse, PriceTable
 
 
@@ -200,7 +201,14 @@ class BudgetedGateway:
             self._run_reserved -= worst
             self._run_spent += actual
 
+    def close(self) -> None:
+        close = getattr(self._inner, "close", None)
+        if close is not None:
+            close()
+
     def complete(self, request: ModelRequest) -> ModelResponse:
+        check_deadline()
+        request = request.model_copy(update={"timeout_s": remaining_timeout(request.timeout_s)})
         month = month_key(self._clock())
         worst = self._prices.worst_case_usd(request)
         self._reserve_run(worst)
@@ -215,13 +223,16 @@ class BudgetedGateway:
             raise BudgetExceeded(
                 f"monthly LLM cap {self._cap:.2f} USD would be exceeded: spent {spent:.4f}, next call up to {worst:.4f}"
             )
+        provider_started = False
         try:
+            check_deadline()  # reservation may have waited for the ledger; do not start a late call
+            provider_started = True
             response = self._inner.complete(request)
         except Exception:
             try:
-                self._ledger.settle(reservation, reservation.reserved_usd)
+                self._ledger.settle(reservation, reservation.reserved_usd if provider_started else 0.0)
             finally:
-                self._settle_run(worst, reservation.reserved_usd)
+                self._settle_run(worst, reservation.reserved_usd if provider_started else 0.0)
             raise
         try:
             self._ledger.settle(reservation, response.cost_usd)

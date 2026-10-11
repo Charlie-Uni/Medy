@@ -97,7 +97,9 @@ class Plane:
         def conn_for_user(user: UserContext):
             with self.conn.transaction():
                 self.conn.execute("select set_config('medops.dept', %s, true)", (user.dept.value,))
-                yield self.conn
+                from medops.infrastructure.db.deadline import DeadlineConnection
+
+                yield DeadlineConnection(self.conn)
 
         self.conn_for_user = conn_for_user
         self._provider, self._reranker = provider, reranker

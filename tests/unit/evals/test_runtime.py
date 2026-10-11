@@ -75,7 +75,7 @@ def test_historical_queries_keep_the_engine_and_apply_the_date_to_both_channels(
     for counted, effective in ((historical_retrieval, historical), (plane.retrieval, today)):
         port = counted._inner
         with port._conn_for_user(user) as conn:
-            assert conn is connections[0]
+            assert conn._conn is connections[0]  # the deadline facade preserves the identity-bound connection
             assert port._lexical_factory(conn) == ("candidate" if candidate else "production", conn, effective)
             assert port._vector_factory(conn) == ("vector", conn, effective)
         assert port._lv == (None if candidate else "production-pin")

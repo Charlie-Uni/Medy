@@ -25,12 +25,15 @@ def _searcher_factory(device: str, settings: Settings):
     split per principal exactly as the API does (M4-03 / M4-09)."""
     import time
 
+    from medops.core.deadline import deadline_scope, execution_admission
     from medops.harness.assembly import build_retrieval
+    from medops.harness.dependencies import default_specs
     from medops.harness.retrieval_port import RetrievalRequest
+    from medops.infrastructure.db.deadline import DeadlineConnection
     from medops.infrastructure.llm.factory import build_budgeted_gateway
     from medops.infrastructure.llm.meter import MeteredGateway
     from medops.mcp.service import SearchExecution
-    from medops.retrieval.pinned import PinnedEmbedding, PinnedReranker, PinnedThread
+    from medops.retrieval.inference_process import InferenceProcess, ProcessEmbedding, ProcessReranker
     from medops.retrieval.production import (
         PRODUCTION_RETRIEVAL_VERSION,
         RERANK_OUTPUT,
@@ -38,13 +41,11 @@ def _searcher_factory(device: str, settings: Settings):
         production_retrieval_inputs,
     )
     from medops.retrieval.query_translation import QUERY_TRANSLATION_OFF, QueryTranslator
-    from medops.retrieval.rerank import BgeRerankerV2M3
     from medops.retrieval.runtime import candidate_cache_from_settings
-    from medops.retrieval.vector.embedding import BgeM3EmbeddingProvider
     from medops.retrieval.versioning import compute_retrieval_version
 
-    pinned = PinnedThread(120.0)
-    embedding = PinnedEmbedding(pinned.call(lambda: BgeM3EmbeddingProvider(device=device)), pinned)
+    pinned = InferenceProcess(device=device, output=RERANK_OUTPUT)
+    embedding = ProcessEmbedding(pinned)
     rerankers: dict[int, Any] = {}
     cache: dict[str, Any] = {}
     ttl = float(settings.policy_reload_ttl_s)
@@ -53,9 +54,7 @@ def _searcher_factory(device: str, settings: Settings):
 
     def reranker_for(output: int):
         if output not in rerankers:
-            rerankers[output] = PinnedReranker(
-                pinned.call(lambda: BgeRerankerV2M3(device=device, output=output)), pinned
-            )
+            rerankers[output] = ProcessReranker(pinned, output=output)
         return rerankers[output]
 
     glossaries: dict[str, Any] = {}
@@ -100,7 +99,7 @@ def _searcher_factory(device: str, settings: Settings):
 
         @contextmanager
         def conn_for_user(_u):
-            yield conn
+            yield DeadlineConnection(conn)
 
         def search(query: str, k: int, *, as_of: date | None, allow_historical: bool):
             meter = None
@@ -130,9 +129,10 @@ def _searcher_factory(device: str, settings: Settings):
             )
             outcome = None
             try:
-                outcome = retrieval.retrieve(
-                    RetrievalRequest(query=query, user=user, as_of=as_of, historical_requested=allow_historical)
-                )
+                with deadline_scope(default_specs()["retrieve"].timeout_s), execution_admission():
+                    outcome = retrieval.retrieve(
+                        RetrievalRequest(query=query, user=user, as_of=as_of, historical_requested=allow_historical)
+                    )
                 return SearchExecution(
                     outcome.evidence,
                     model_calls=meter.calls if meter else 0,
@@ -155,6 +155,14 @@ def _searcher_factory(device: str, settings: Settings):
 
         return search
 
+    def close():
+        try:
+            if gateway:
+                gateway[0].close()
+        finally:
+            pinned.close()
+
+    factory.close = close  # type: ignore[attr-defined]
     return factory
 
 
@@ -199,23 +207,32 @@ def main(argv: list[str] | None = None) -> int:
             roles=("dev",),
             acl_scopes=frozenset({f"{args.dev_dept}:read"}),
         )
+        factory = _searcher_factory(args.device, settings)
         runtime = McpProductionRuntime(
             authenticator=None,
             dev_identity=dev,
             readonly_dsn=settings.database_readonly_url.get_secret_value(),
             app_dsn_for_directory=settings.database_url.get_secret_value(),
-            searcher_factory=_searcher_factory(args.device, settings),
+            searcher_factory=factory,
         )
         log.info("mcp stdio (dev) starting", extra={"dept": args.dev_dept})
-        build_server(runtime).run("stdio")
-        shutdown_telemetry()
+        try:
+            build_server(runtime).run("stdio")
+        finally:
+            try:
+                close = getattr(factory, "close", None)
+                if close is not None:
+                    close()
+            finally:
+                shutdown_telemetry()
         return 0
+    factory = _searcher_factory(args.device, settings)
     runtime = McpProductionRuntime(
         authenticator=authenticator_from_settings(settings),
         dev_identity=None,
         readonly_dsn=settings.database_readonly_url.get_secret_value(),
         app_dsn_for_directory=settings.database_url.get_secret_value(),
-        searcher_factory=_searcher_factory(args.device, settings),
+        searcher_factory=factory,
     )
     server = build_server(runtime, issuer_url=settings.oidc_issuer, resource_url=f"http://{args.host}:{args.port}/mcp")
     log.info("mcp streamable-http starting", extra={"host": args.host, "port": args.port})
@@ -223,8 +240,15 @@ def main(argv: list[str] | None = None) -> int:
 
     import anyio
 
-    anyio.run(functools.partial(server.run_streamable_http_async, host=args.host, port=args.port))
-    shutdown_telemetry()
+    try:
+        anyio.run(functools.partial(server.run_streamable_http_async, host=args.host, port=args.port))
+    finally:
+        try:
+            close = getattr(factory, "close", None)
+            if close is not None:
+                close()
+        finally:
+            shutdown_telemetry()
     return 0
 
 

@@ -51,29 +51,35 @@ def main(argv: list[str] | None = None) -> int:
     signal.signal(signal.SIGTERM, _stop)
     signal.signal(signal.SIGINT, _stop)
     log.info("worker starting", extra={"worker_id": runner.worker_id, "device": args.device, "lease_s": args.lease})
-    while not stop:
-        try:
-            done = runner.run_once()
-        except InfrastructureError as exc:  # database unreachable: keep polling instead of dying (record 78)
-            log.warning(
-                "worker: dependency unavailable, retrying", extra={"code": exc.code.value, "detail": exc.detail}
-            )
-            if args.once:
-                return 1
-            time.sleep(args.poll)
-            continue
-        if done is not None:
-            log.info(
-                "task finished", extra={"task_id": done.task_id, "status": done.status.value, "trace_id": done.trace_id}
-            )
+    try:
+        while not stop:
+            try:
+                done = runner.run_once()
+            except InfrastructureError as exc:  # database unreachable: keep polling instead of dying (record 78)
+                log.warning(
+                    "worker: dependency unavailable, retrying", extra={"code": exc.code.value, "detail": exc.detail}
+                )
+                if args.once:
+                    return 1
+                time.sleep(args.poll)
+                continue
+            if done is not None:
+                log.info(
+                    "task finished",
+                    extra={"task_id": done.task_id, "status": done.status.value, "trace_id": done.trace_id},
+                )
+                if args.once:
+                    break
+                continue
             if args.once:
                 break
-            continue
-        if args.once:
-            break
-        time.sleep(args.poll)
+            time.sleep(args.poll)
+    finally:
+        try:
+            runtime.close()
+        finally:
+            shutdown_telemetry()
     log.info("worker stopped", extra={"worker_id": runner.worker_id})
-    shutdown_telemetry()
     return 0
 
 

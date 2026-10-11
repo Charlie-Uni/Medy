@@ -41,8 +41,15 @@ def create_app(
 ) -> FastAPI:
     @asynccontextmanager
     async def lifespan(_: FastAPI) -> AsyncIterator[None]:
-        yield
-        flush_telemetry()  # graceful stop: the last spans leave before uvicorn re-raises the signal (record 77)
+        try:
+            yield
+        finally:
+            try:
+                close = getattr(runtime, "close", None)
+                if close is not None:
+                    close()
+            finally:
+                flush_telemetry()  # also flush when a resource reports a shutdown failure
 
     app = FastAPI(
         title="MedOps Copilot",

@@ -76,7 +76,7 @@ from medops.infrastructure.llm.factory import build_budgeted_gateway
 from medops.infrastructure.llm.meter import MeteredGateway
 from medops.loop.gate import compute_gate
 from medops.retrieval.glossary_store import load_versioned_glossary
-from medops.retrieval.pinned import PinnedEmbedding, PinnedReranker, PinnedThread
+from medops.retrieval.inference_process import InferenceProcess, ProcessEmbedding, ProcessReranker
 from medops.retrieval.production import (
     RERANK_OUTPUT,
     production_hybrid_config,
@@ -317,9 +317,6 @@ def main() -> int:
         print("DATABASE_ADMIN_URL is needed for the retrieval preflight and fact guard", file=sys.stderr)
         return 2
 
-    from medops.retrieval.rerank import BgeRerankerV2M3
-    from medops.retrieval.vector.embedding import BgeM3EmbeddingProvider
-
     app_url = settings.database_url.get_secret_value()
     with psycopg.connect(with_database(app_url, PRODUCTION_DB)) as conn:
         baseline = load_released(conn)
@@ -331,8 +328,8 @@ def main() -> int:
 
     versions = {name: arm_versions(name, rel, base_policy_version) for name, rel in arms.items()}
 
-    gpu = PinnedThread(args.gpu_timeout)
-    provider = PinnedEmbedding(gpu.call(lambda: BgeM3EmbeddingProvider(device=args.device)), gpu)
+    gpu = InferenceProcess(device=args.device, output=baseline.rerank_output(RERANK_OUTPUT), timeout_s=args.gpu_timeout)
+    provider = ProcessEmbedding(gpu)
     rerankers: dict[int, Any] = {}
     budgeted_gateway = build_budgeted_gateway(settings, run_cap_usd=args.max_cost_usd)
     gateway = MeteredGateway(budgeted_gateway)
@@ -341,7 +338,7 @@ def main() -> int:
     for name, rel in arms.items():
         out = rel.rerank_output(RERANK_OUTPUT)
         if out not in rerankers:
-            rerankers[out] = PinnedReranker(gpu.call(lambda o=out: BgeRerankerV2M3(device=args.device, output=o)), gpu)
+            rerankers[out] = ProcessReranker(gpu, output=out)
         cfg = rel.hybrid_config(production_hybrid_config())
         prompt = rel.answer_system(ANSWER_SYSTEM)
         glossary = load_versioned_glossary(settings.glossary_dir or REPO / "evals/glossary", rel.glossary_version())

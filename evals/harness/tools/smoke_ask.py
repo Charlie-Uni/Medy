@@ -63,7 +63,7 @@ from medops.harness.production import PRODUCTION_ANSWER_MODEL, PRODUCTION_JUDGE_
 from medops.harness.runtime import initial_state, run_ask
 from medops.infrastructure.llm.factory import build_budgeted_gateway
 from medops.infrastructure.llm.meter import MeteredGateway
-from medops.retrieval.pinned import PinnedEmbedding, PinnedReranker, PinnedThread
+from medops.retrieval.inference_process import InferenceProcess, ProcessEmbedding, ProcessReranker
 from medops.retrieval.production import (
     PRODUCTION_RETRIEVAL_VERSION,
     RERANK_OUTPUT,
@@ -218,24 +218,24 @@ def main() -> int:
     from medops.evals.preflight import save_preflight
 
     preflight_reference = save_preflight(args.out, {args.database: index_preflight})
-    from medops.retrieval.rerank import BgeRerankerV2M3
-    from medops.retrieval.vector.embedding import BgeM3EmbeddingProvider
 
-    gpu = PinnedThread(args.gpu_timeout)
-    provider = PinnedEmbedding(gpu.call(lambda: BgeM3EmbeddingProvider(device=args.device)), gpu)
     from medops.application.policy_loader import ReleasedPolicySet, load_released
 
     released = load_released(conn) if args.released else ReleasedPolicySet.empty()
     conn.rollback()
     rerank_output = released.rerank_output(RERANK_OUTPUT)
-    reranker = PinnedReranker(gpu.call(lambda: BgeRerankerV2M3(device=args.device, output=rerank_output)), gpu)
+    gpu = InferenceProcess(device=args.device, output=rerank_output, timeout_s=args.gpu_timeout)
+    provider = ProcessEmbedding(gpu)
+    reranker = ProcessReranker(gpu, output=rerank_output)
     as_of = args.as_of
 
     @contextmanager
     def conn_for_user(user: UserContext):
         with conn.transaction():
             conn.execute("select set_config('medops.dept', %s, true)", (user.dept.value,))
-            yield conn
+            from medops.infrastructure.db.deadline import DeadlineConnection
+
+            yield DeadlineConnection(conn)
 
     def doc_titles(user: UserContext, doc_ids) -> dict[str, str]:
         from medops.retrieval.doc_focus import load_titles

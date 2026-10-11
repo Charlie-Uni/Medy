@@ -34,7 +34,7 @@ from medops.harness.production import (
 )
 from medops.infrastructure.llm.factory import build_budgeted_gateway
 from medops.infrastructure.llm.meter import MeteredGateway
-from medops.retrieval.pinned import PinnedEmbedding, PinnedReranker, PinnedThread
+from medops.retrieval.inference_process import InferenceProcess, ProcessEmbedding, ProcessReranker
 from medops.retrieval.production import (
     PRODUCTION_RETRIEVAL_VERSION,
     RERANK_OUTPUT,
@@ -232,11 +232,7 @@ def main() -> int:
     if settings.database_admin_url is None:
         print("DATABASE_ADMIN_URL is needed for the retrieval preflight and fact guard", file=sys.stderr)
         return 2
-    from medops.retrieval.rerank import BgeRerankerV2M3
-    from medops.retrieval.vector.embedding import BgeM3EmbeddingProvider
 
-    gpu = PinnedThread(args.gpu_timeout)
-    provider = PinnedEmbedding(gpu.call(lambda: BgeM3EmbeddingProvider(device=args.device)), gpu)
     from medops.application.policy_loader import ReleasedPolicySet, load_released
 
     released = ReleasedPolicySet.empty()
@@ -244,7 +240,9 @@ def main() -> int:
         with psycopg.connect(with_database(settings.database_url.get_secret_value(), PRODUCTION_DB)) as rconn:
             released = load_released(rconn)
     rerank_output = released.rerank_output(RERANK_OUTPUT)
-    reranker = PinnedReranker(gpu.call(lambda: BgeRerankerV2M3(device=args.device, output=rerank_output)), gpu)
+    gpu = InferenceProcess(device=args.device, output=rerank_output, timeout_s=args.gpu_timeout)
+    provider = ProcessEmbedding(gpu)
+    reranker = ProcessReranker(gpu, output=rerank_output)
     budgeted_gateway = build_budgeted_gateway(settings, run_cap_usd=args.max_cost_usd)
     gateway = MeteredGateway(budgeted_gateway)
     app_url = settings.database_url.get_secret_value()

@@ -57,14 +57,18 @@ def test_business_errors_and_unexpected_exceptions_never_retry():
     assert exc2.value.attempts[0].error_code == "ValueError"
 
 
-def test_timeout_does_not_wait_for_the_runaway_body_and_counts_as_retryable():
+def test_expired_body_settles_before_return_and_never_overlaps_a_retry():
+    entered, finished = [], []
+
     def slow():
-        time.sleep(0.5)
+        entered.append("started")
+        time.sleep(0.06)  # non-cooperative fake: inline execution must wait, then discard the late result
+        finished.append("finished")
         return "late"
 
-    started = time.perf_counter()
     with pytest.raises(NodeFailure) as exc:
-        run_node(NodeSpec(name="n", timeout_s=0.05, max_retries=1), KEY, slow, sleep=lambda s: None)
-    assert time.perf_counter() - started < 0.4
-    assert [a.outcome for a in exc.value.attempts] == ["timeout", "failed"]
+        run_node(NodeSpec(name="n", timeout_s=0.03, max_retries=1), KEY, slow, sleep=lambda s: None)
+    assert entered == ["started"] and finished == ["finished"]
+    assert len(exc.value.attempts) == 1
     assert exc.value.attempts[-1].error_code == "dependency_timeout"
+    assert exc.value.error.retryable is False

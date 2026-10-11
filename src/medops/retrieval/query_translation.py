@@ -24,6 +24,7 @@ from concurrent.futures import Future, ThreadPoolExecutor
 from contextvars import copy_context
 from typing import Any
 
+from medops.core.deadline import check_deadline, remaining_timeout
 from medops.core.errors import ErrorCode, InfrastructureError
 from medops.core.telemetry import annotate, span
 from medops.infrastructure.llm.budget import BudgetExceeded
@@ -80,15 +81,20 @@ class TranslationPool:
         self._executor = ThreadPoolExecutor(max_workers=workers, thread_name_prefix="query-translation")
 
     def submit(self, translate: Callable[[str], str | None], query: str) -> Future[str | None]:
-        if not self._slots.acquire(timeout=self._queue_wait_s):
+        if not self._slots.acquire(timeout=remaining_timeout(self._queue_wait_s)):
             raise InfrastructureError(
                 ErrorCode.dependency_timeout,
                 detail="query translation queue remained saturated",
                 retryable=True,
             )
+
+        def checked() -> str | None:
+            check_deadline()  # expired queued translations must not reach their gateway
+            return translate(query)
+
         context = copy_context()
         try:
-            future = self._executor.submit(context.run, translate, query)
+            future = self._executor.submit(context.run, checked)
         except BaseException:  # executor shutdown/race: release the capacity before preserving the original error
             self._slots.release()
             raise

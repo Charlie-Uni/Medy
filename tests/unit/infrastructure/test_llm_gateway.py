@@ -32,6 +32,24 @@ from medops.infrastructure.llm.openai_gateway import OpenAIModelGateway
 PRICES = PriceTable(OPENAI_PRICES)
 
 
+def test_temperature_compatibility_resend_uses_the_remaining_call_deadline():
+    import time
+
+    timeouts = []
+
+    def create(**kwargs):
+        timeouts.append(kwargs["timeout"])
+        if len(timeouts) == 1:
+            time.sleep(0.02)
+            response = httpx.Response(400, request=httpx.Request("POST", "https://offline.invalid"))
+            raise openai.BadRequestError("unsupported temperature", response=response, body={"param": "temperature"})
+        return _completion("ok")
+
+    client = SimpleNamespace(chat=SimpleNamespace(completions=SimpleNamespace(create=create)))
+    OpenAIModelGateway(client).complete(req().model_copy(update={"timeout_s": 0.2}))
+    assert len(timeouts) == 2 and 0 < timeouts[1] < timeouts[0] - 0.015
+
+
 def req(model="gpt-6-luna", purpose="answer", schema=None, text="hello"):
     return ModelRequest(
         purpose=purpose,
@@ -228,7 +246,7 @@ def test_openai_adapter_forwards_only_the_request_and_prices_the_usage():
         resp.response_id == "chatcmpl-1" and resp.system_fingerprint == "fp_1" and resp.model_id == "gpt-6-luna-2026-09"
     )
     sent = client.kwargs
-    assert sent["model"] == "gpt-6-luna" and sent["timeout"] == 30.0 and sent["temperature"] == 0.0
+    assert sent["model"] == "gpt-6-luna" and 0 < sent["timeout"] <= 30.0 and sent["temperature"] == 0.0
     assert sent["messages"] == [{"role": "system", "content": "sys"}, {"role": "user", "content": "statement"}]
     assert sent["response_format"]["json_schema"]["strict"] is True
     assert set(sent) == {"model", "messages", "max_completion_tokens", "temperature", "timeout", "response_format"}

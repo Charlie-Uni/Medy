@@ -133,9 +133,9 @@ def test_run_version_set_must_record_the_skill():
     assert exc.value.code is ErrorCode.internal_error
 
 
-def test_timeout_escalates_as_system_failure_and_retries_only_idempotent_skills():
+def test_exhausted_total_deadline_escalates_without_retry_even_for_idempotent_skills():
     def slow(ctx, inp):
-        time.sleep(0.3)
+        time.sleep(0.06)
         return echo(ctx, inp)
 
     reg = registry(entry(handler=slow, timeout_s=0.05))
@@ -145,7 +145,8 @@ def test_timeout_escalates_as_system_failure_and_retries_only_idempotent_skills(
 
     reg2 = registry(entry(handler=slow, timeout_s=0.05, idempotent=True))
     run2 = reg2.execute("echo_skill", "1.0.0", {"text": "hi"}, context=context(reg2))
-    assert [a.outcome for a in run2.attempts] == ["timeout", "timeout", "failed"]
+    assert [a.outcome for a in run2.attempts] == ["failed"]
+    assert run2.attempts[0].error_code == "dependency_timeout"
 
 
 def test_output_contract_violation_is_an_internal_error():

@@ -14,6 +14,8 @@ from typing import Any
 import openai
 
 from medops.core.config import Settings
+from medops.core.deadline import deadline_scope, remaining_timeout
+from medops.infrastructure.llm.async_transport import AsyncChatTransport
 from medops.infrastructure.llm.gateway import (
     OPENAI_PRICES,
     ModelOutputInvalid,
@@ -31,8 +33,9 @@ SCHEMA_NAME = "medops_output"
 class OpenAIModelGateway:
     provider = "openai"
 
-    def __init__(self, client: Any, *, prices: PriceTable | None = None) -> None:
+    def __init__(self, client: Any, *, prices: PriceTable | None = None, asynchronous: bool = False) -> None:
         self._client = client
+        self._transport = AsyncChatTransport(client) if asynchronous else None
         self._prices = prices or PriceTable(OPENAI_PRICES)
         self._no_temperature: set[str] = set()  # models that only accept their default sampling temperature
 
@@ -40,8 +43,21 @@ class OpenAIModelGateway:
     def from_settings(cls, settings: Settings, *, prices: PriceTable | None = None) -> OpenAIModelGateway:
         if settings.openai_api_key is None:
             raise ModelUnavailable("OPENAI_API_KEY is not configured (ADR-0010)", retryable=False)
-        client = openai.OpenAI(api_key=settings.openai_api_key.get_secret_value(), max_retries=0)
-        return cls(client, prices=prices)
+        client = openai.AsyncOpenAI(api_key=settings.openai_api_key.get_secret_value(), max_retries=0)
+        return cls(client, prices=prices, asynchronous=True)
+
+    def close(self) -> None:
+        if self._transport is not None:
+            self._transport.close()
+        else:
+            close = getattr(self._client, "close", None)
+            if close is not None:
+                close()
+
+    def _send(self, kwargs: dict[str, Any]) -> Any:
+        if self._transport is not None:
+            return self._transport.create(kwargs)
+        return self._client.chat.completions.create(**kwargs)
 
     def _create(self, kwargs: dict[str, Any]) -> Any:
         """One provider call. Reasoning-tier models reject any non-default `temperature` with a 400
@@ -49,17 +65,24 @@ class OpenAIModelGateway:
         parameter and the model is remembered. Determinism then rests on the JSON schema and re-verification,
         which is recorded on the trace through the response's model id."""
         try:
-            return self._client.chat.completions.create(**kwargs)
+            kwargs["timeout"] = remaining_timeout(kwargs["timeout"])
+            return self._send(kwargs)
         except openai.BadRequestError as exc:
             body = getattr(exc, "body", None) or {}
             err = body.get("error", body) if isinstance(body, dict) else {}
             if isinstance(err, dict) and err.get("param") == "temperature" and "temperature" in kwargs:
                 self._no_temperature.add(kwargs["model"])
                 retry = {k: v for k, v in kwargs.items() if k != "temperature"}
-                return self._client.chat.completions.create(**retry)
+                retry["timeout"] = remaining_timeout(retry["timeout"])
+                return self._send(retry)
             raise
 
     def complete(self, request: ModelRequest) -> ModelResponse:
+        # Also covers the one temperature-compatibility resend when there is no enclosing node.
+        with deadline_scope(request.timeout_s):
+            return self._complete(request)
+
+    def _complete(self, request: ModelRequest) -> ModelResponse:
         self._prices.require(request.model_id)  # refuse unpriced models before spending anything
         kwargs: dict[str, Any] = {
             "model": request.model_id,

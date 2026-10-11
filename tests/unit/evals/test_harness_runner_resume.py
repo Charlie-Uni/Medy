@@ -55,16 +55,16 @@ def setup_runner(monkeypatch, filename):
         def transaction(self):
             yield
 
-    def gpu(*args):
-        return SimpleNamespace(call=lambda fn: fn(), stalled=False)
+    def gpu(**kwargs):
+        return SimpleNamespace(stalled=False)
 
     health = {"ready": True, "problems": [], "database_identity": "test-only-database"}
     facts = {"sha256": "test-only-facts", "tables": {}}
     released = ReleasedPolicySet((ReleasedPolicy("test-policy", "prompt", "answer_system", "1", {"text": PROMPT}),))
     monkeypatch.setitem(glob, "Settings", lambda: settings)
-    monkeypatch.setitem(glob, "PinnedThread", gpu)
-    monkeypatch.setitem(glob, "PinnedEmbedding", lambda provider, thread: provider)
-    monkeypatch.setitem(glob, "PinnedReranker", lambda provider, thread: provider)
+    monkeypatch.setitem(glob, "InferenceProcess", gpu)
+    monkeypatch.setitem(glob, "ProcessEmbedding", lambda lane: SimpleNamespace(spec=None))
+    monkeypatch.setitem(glob, "ProcessReranker", lambda lane, **kwargs: SimpleNamespace(score=lambda *args: []))
     monkeypatch.setitem(
         glob,
         "build_budgeted_gateway",
@@ -161,7 +161,7 @@ def test_main_retry_preserves_fees_applies_released_prompt_and_refuses_changed_d
 def test_safety_persists_failed_paid_attempt_before_stalled_gpu_exit(tmp_path, monkeypatch):
     glob = setup_runner(monkeypatch, "safety_run.py")
     gpu = SimpleNamespace(call=lambda fn: fn(), stalled=False)
-    monkeypatch.setitem(glob, "PinnedThread", lambda *args: gpu)
+    monkeypatch.setitem(glob, "InferenceProcess", lambda **kwargs: gpu)
     sample = {
         "sample_id": "ss-0001",
         "query": "Synthetic safety question?",

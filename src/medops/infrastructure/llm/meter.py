@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from medops.core.deadline import check_deadline, remaining_timeout
 from medops.core.telemetry import annotate, span
 from medops.infrastructure.llm.gateway import ModelGateway, ModelRequest, ModelResponse
 
@@ -18,6 +19,8 @@ class MeteredGateway:
         return self._inner.provider
 
     def complete(self, request: ModelRequest) -> ModelResponse:
+        check_deadline()
+        request = request.model_copy(update={"timeout_s": remaining_timeout(request.timeout_s)})
         # the `gen_ai.*` names are the OpenTelemetry GenAI conventions, which trace viewers for model calls read
         # (model, token counts); still structure only — never the prompt or the reply (INV-OBS-03)
         with span(

@@ -8,10 +8,11 @@ candidates as facts (only `evidence` may be cited) and never exceeds the state c
 from __future__ import annotations
 
 from collections.abc import Callable, Sequence
-from contextlib import AbstractContextManager
+from contextlib import AbstractContextManager, contextmanager
 from datetime import UTC, date, datetime
 from typing import Any, Protocol
 
+from medops.core.deadline import check_deadline
 from medops.core.errors import InfrastructureError
 from medops.core.telemetry import annotate, span
 from medops.domain.common import DomainModel, NonEmptyStr
@@ -117,10 +118,12 @@ class ProductionRetrieval:
         self._cache_versions = cache_versions
 
     def retrieve(self, request: RetrievalRequest) -> RetrievalOutcome:
+        check_deadline()
         with span(
             "retrieval.retrieve", dept=request.user.dept.value, historical=request.historical_requested
         ) as current:
             outcome = self._retrieve(request)
+            check_deadline()
             annotate(
                 current,
                 candidates=len(outcome.candidates),
@@ -231,83 +234,90 @@ class ProductionRetrieval:
             with span("retrieval.translation_dispatch") as current:
                 translation = self._translation_pool.submit(self._translator, request.query)
                 annotate(current, mode="async")
-        with self._conn_for_user(request.user) as conn:
-            lexical = self._lexical_factory(conn)
-            vector = self._vector_factory(conn)
-            if self._lv is None:
-                self._lv = lexical.versions
-            if self._vv is None:
-                self._vv = vector.versions
-            with span("retrieval.fact_plane", base_queries=len(queries)) as current:
-                results = [
-                    retrieve_evidence(
-                        conn,
-                        lexical,
-                        vector,
-                        q,
-                        config=self._config,
-                        lexical_expected=self._lv,
-                        vector_expected=self._vv,
-                        as_of=request.as_of,
-                        allow_historical=request.historical_requested,
-                        doc_ids=source_doc_ids,
-                    )
-                    for q in queries
-                ]
-                focus_rankings: dict[str, list[str]] = {}
-                focus_rechecked: list[RecheckResult] = []
-                if self._doc_focus:
-                    focused = focus_documents(request.query, load_documents(conn))
-                    if source_doc_ids is not None:
-                        allowed = set(source_doc_ids)
-                        focused = [doc for doc in focused if doc.doc_id in allowed]
-                    for i, doc in enumerate(focused, start=1):
-                        try:
-                            lex_ids = [
-                                c.chunk_id
-                                for c in lexical.search(
-                                    query, FOCUS_K, allow_historical=request.historical_requested, doc_ids=[doc.doc_id]
-                                ).candidates
-                            ]
-                            vec_ids = [
-                                c.chunk_id
-                                for c in vector.search(
-                                    query, FOCUS_K, allow_historical=request.historical_requested, doc_ids=[doc.doc_id]
-                                ).candidates
-                            ]
-                        except InfrastructureError:
-                            continue  # a starved or failing focused scan never blocks the corpus-wide answer
-                        if lex_ids:
-                            focus_rankings[f"focus{i}:lexical"] = lex_ids
-                        if vec_ids:
-                            focus_rankings[f"focus{i}:vector"] = vec_ids
-                    extra = list(dict.fromkeys(cid for ids in focus_rankings.values() for cid in ids))
-                    if extra:
-                        focus_rechecked.append(
-                            recheck_candidates(
-                                conn, extra, as_of=request.as_of, allow_historical=request.historical_requested
-                            )
+        with _settle_translation(translation):
+            with self._conn_for_user(request.user) as conn:
+                lexical = self._lexical_factory(conn)
+                vector = self._vector_factory(conn)
+                if self._lv is None:
+                    self._lv = lexical.versions
+                if self._vv is None:
+                    self._vv = vector.versions
+                with span("retrieval.fact_plane", base_queries=len(queries)) as current:
+                    results = [
+                        retrieve_evidence(
+                            conn,
+                            lexical,
+                            vector,
+                            q,
+                            config=self._config,
+                            lexical_expected=self._lv,
+                            vector_expected=self._vv,
+                            as_of=request.as_of,
+                            allow_historical=request.historical_requested,
+                            doc_ids=source_doc_ids,
                         )
-                if translation is not None:
-                    translated = translation.result()
-                    if translated and translated not in queries:
-                        queries.append(translated)
-                        translation_added = True
-                        results.append(
-                            retrieve_evidence(
-                                conn,
-                                lexical,
-                                vector,
-                                translated,
-                                config=self._config,
-                                lexical_expected=self._lv,
-                                vector_expected=self._vv,
-                                as_of=request.as_of,
-                                allow_historical=request.historical_requested,
-                                doc_ids=source_doc_ids,
+                        for q in queries
+                    ]
+                    focus_rankings: dict[str, list[str]] = {}
+                    focus_rechecked: list[RecheckResult] = []
+                    if self._doc_focus:
+                        focused = focus_documents(request.query, load_documents(conn))
+                        if source_doc_ids is not None:
+                            allowed = set(source_doc_ids)
+                            focused = [doc for doc in focused if doc.doc_id in allowed]
+                        for i, doc in enumerate(focused, start=1):
+                            try:
+                                lex_ids = [
+                                    c.chunk_id
+                                    for c in lexical.search(
+                                        query,
+                                        FOCUS_K,
+                                        allow_historical=request.historical_requested,
+                                        doc_ids=[doc.doc_id],
+                                    ).candidates
+                                ]
+                                vec_ids = [
+                                    c.chunk_id
+                                    for c in vector.search(
+                                        query,
+                                        FOCUS_K,
+                                        allow_historical=request.historical_requested,
+                                        doc_ids=[doc.doc_id],
+                                    ).candidates
+                                ]
+                            except InfrastructureError:
+                                continue  # a starved or failing focused scan never blocks the corpus-wide answer
+                            if lex_ids:
+                                focus_rankings[f"focus{i}:lexical"] = lex_ids
+                            if vec_ids:
+                                focus_rankings[f"focus{i}:vector"] = vec_ids
+                        extra = list(dict.fromkeys(cid for ids in focus_rankings.values() for cid in ids))
+                        if extra:
+                            focus_rechecked.append(
+                                recheck_candidates(
+                                    conn, extra, as_of=request.as_of, allow_historical=request.historical_requested
+                                )
                             )
-                        )
-                annotate(current, queries=len(queries), translation_added=translation_added)
+                    if translation is not None:
+                        translated = translation.result()
+                        if translated and translated not in queries:
+                            queries.append(translated)
+                            translation_added = True
+                            results.append(
+                                retrieve_evidence(
+                                    conn,
+                                    lexical,
+                                    vector,
+                                    translated,
+                                    config=self._config,
+                                    lexical_expected=self._lv,
+                                    vector_expected=self._vv,
+                                    as_of=request.as_of,
+                                    allow_historical=request.historical_requested,
+                                    doc_ids=source_doc_ids,
+                                )
+                            )
+                    annotate(current, queries=len(queries), translation_added=translation_added)
         candidates: tuple[CandidateRef, ...]
         accepted: tuple[Evidence, ...]
         rejected: tuple[Rejection, ...]
@@ -333,3 +343,16 @@ class ProductionRetrieval:
             accepted = tuple(by_id[c.chunk_id] for c in fused if c.chunk_id in by_id)
             rejected = tuple(r for cid, r in seen_rejections.items() if cid not in by_id)
         return candidates, accepted, rejected
+
+
+@contextmanager
+def _settle_translation(future):
+    """Cancel queued work or join a started call before the node's transaction/trace can exit."""
+    try:
+        yield
+    finally:
+        if future is not None and not future.cancel():
+            try:
+                future.result()
+            except Exception:  # noqa: BLE001 - already observed or irrelevant to the original failure; settled
+                pass

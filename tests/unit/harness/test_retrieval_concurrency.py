@@ -131,3 +131,53 @@ def test_saturated_pool_fails_closed_before_searching(monkeypatch):
         pool.shutdown()
     assert caught.value.code is ErrorCode.dependency_timeout and caught.value.retryable
     assert calls == [] and searched == []
+
+
+def test_original_search_failure_joins_started_translation_before_return(monkeypatch):
+    import time
+
+    pool = TranslationPool(workers=1, capacity=1)
+    started, settled = threading.Event(), threading.Event()
+
+    def translate(_query):
+        started.set()
+        time.sleep(0.04)
+        settled.set()
+        return "translated query"
+
+    def retrieve(*_args, **_kwargs):
+        assert started.wait(1)
+        raise ValueError("original search failed")
+
+    monkeypatch.setattr(rp, "retrieve_evidence", retrieve)
+    try:
+        with pytest.raises(ValueError, match="original search failed"):
+            _port(pool, translate)._search(_request(), ["原始问题"], "原始问题")
+        assert settled.is_set()
+        assert pool.submit(lambda _q: "next", "q").result(timeout=1) == "next"
+    finally:
+        pool.shutdown()
+
+
+def test_expired_queued_translation_never_reaches_its_callback():
+    import time
+
+    from medops.core.deadline import DeadlineExceeded, deadline_scope
+
+    pool = TranslationPool(workers=1, capacity=2)
+    started, release = threading.Event(), threading.Event()
+    first = pool.submit(lambda _q: started.set() or release.wait(1), "occupied")
+    calls = []
+    try:
+        assert started.wait(1)
+        with deadline_scope(0.02):
+            second = pool.submit(lambda q: calls.append(q), "expired")
+        time.sleep(0.03)
+        release.set()
+        first.result(timeout=1)
+        with pytest.raises(DeadlineExceeded):
+            second.result(timeout=1)
+        assert not calls
+    finally:
+        release.set()
+        pool.shutdown()
