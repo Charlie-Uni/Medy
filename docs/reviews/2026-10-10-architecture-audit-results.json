@@ -1,0 +1,440 @@
+{
+  "audit_date": "2026-10-10",
+  "completed_at_utc": "2026-10-10T07:08:04.239209+00:00",
+  "reviewed_commit": "5a604050b9c0706bfd823685e5befcb9619d64a6",
+  "scope": "Architecture inventory across src/medops; targeted review of execution, skills, history, trace, feedback, deployment and CI",
+  "production_code_changed": false,
+  "hosted_model_calls": 0,
+  "hosted_model_cost_usd": 0,
+  "inventory": {
+    "python_modules": 189,
+    "loc": 30937,
+    "largest_files": [
+      [
+        1041,
+        "src/medops/evals/probe/validator.py"
+      ],
+      [
+        758,
+        "src/medops/evals/experiments/e2e_run.py"
+      ],
+      [
+        757,
+        "src/medops/evals/experiments/dec001_run.py"
+      ],
+      [
+        699,
+        "src/medops/evals/probe/review_provenance.py"
+      ],
+      [
+        494,
+        "src/medops/api/runtime.py"
+      ],
+      [
+        488,
+        "src/medops/evals/experiments/dec002_run.py"
+      ],
+      [
+        459,
+        "src/medops/api/contracts.py"
+      ],
+      [
+        451,
+        "src/medops/api/openapi.py"
+      ],
+      [
+        450,
+        "src/medops/evals/answer_review.py"
+      ],
+      [
+        438,
+        "src/medops/application/policy_loader.py"
+      ],
+      [
+        437,
+        "src/medops/ingestion/pipeline.py"
+      ],
+      [
+        431,
+        "src/medops/infrastructure/observability.py"
+      ],
+      [
+        424,
+        "src/medops/evals/safety.py"
+      ],
+      [
+        418,
+        "src/medops/evals/probe/chunk_mapping.py"
+      ],
+      [
+        412,
+        "src/medops/application/tasks.py"
+      ],
+      [
+        380,
+        "src/medops/evals/annotation_revision.py"
+      ],
+      [
+        362,
+        "src/medops/retrieval/vector/pg_vector.py"
+      ],
+      [
+        345,
+        "src/medops/verification/rules.py"
+      ],
+      [
+        342,
+        "src/medops/verification/elements.py"
+      ],
+      [
+        335,
+        "src/medops/retrieval/cache.py"
+      ]
+    ],
+    "large_functions": [
+      [
+        282,
+        "src/medops/evals/probe/review_provenance.py",
+        383,
+        "_validate"
+      ],
+      [
+        255,
+        "src/medops/api/openapi.py",
+        117,
+        "_paths"
+      ],
+      [
+        212,
+        "src/medops/ingestion/pipeline.py",
+        210,
+        "ingest_document"
+      ],
+      [
+        170,
+        "src/medops/harness/nodes.py",
+        66,
+        "build_nodes"
+      ],
+      [
+        170,
+        "src/medops/evals/experiments/e2e_run.py",
+        198,
+        "summarize"
+      ],
+      [
+        169,
+        "src/medops/loop/gate.py",
+        107,
+        "compute_gate"
+      ],
+      [
+        147,
+        "src/medops/evals/experiments/e2e_run.py",
+        512,
+        "run"
+      ],
+      [
+        144,
+        "src/medops/api/routes/admin.py",
+        35,
+        "build_router"
+      ],
+      [
+        143,
+        "src/medops/evals/audit.py",
+        144,
+        "audit"
+      ],
+      [
+        137,
+        "src/medops/mcp/serve.py",
+        22,
+        "_searcher_factory"
+      ],
+      [
+        131,
+        "src/medops/evals/experiments/dec001_report.py",
+        123,
+        "render_markdown"
+      ],
+      [
+        129,
+        "src/medops/evals/safety.py",
+        154,
+        "run_sample"
+      ],
+      [
+        126,
+        "src/medops/evals/annotation_revision.py",
+        78,
+        "check_annotations"
+      ],
+      [
+        121,
+        "src/medops/ingestion/load.py",
+        52,
+        "main"
+      ],
+      [
+        119,
+        "src/medops/harness/retrieval_port.py",
+        217,
+        "_search"
+      ],
+      [
+        110,
+        "src/medops/harness/answer.py",
+        98,
+        "generate_answer"
+      ],
+      [
+        109,
+        "src/medops/evals/safety.py",
+        43,
+        "judge"
+      ],
+      [
+        96,
+        "src/medops/evals/experiments/e2e_run.py",
+        414,
+        "write_report"
+      ],
+      [
+        95,
+        "src/medops/retrieval/integrity.py",
+        68,
+        "inspect_retrieval"
+      ],
+      [
+        94,
+        "src/medops/evals/experiments/e2e_run.py",
+        661,
+        "main"
+      ],
+      [
+        93,
+        "src/medops/evals/experiments/dec001_run.py",
+        479,
+        "summarize"
+      ],
+      [
+        93,
+        "src/medops/evals/annotation_revision.py",
+        206,
+        "check_revision"
+      ],
+      [
+        91,
+        "src/medops/evals/experiments/dec002_run.py",
+        328,
+        "run"
+      ],
+      [
+        90,
+        "src/medops/evals/experiments/dec002_run.py",
+        98,
+        "build_manifest"
+      ],
+      [
+        90,
+        "src/medops/evals/experiments/dec001_run.py",
+        577,
+        "run"
+      ]
+    ],
+    "cross_package_imports": {
+      "api -> application": 18,
+      "api -> core": 18,
+      "api -> domain": 13,
+      "api -> harness": 9,
+      "api -> infrastructure": 10,
+      "api -> ingestion": 2,
+      "api -> retrieval": 14,
+      "api -> skills": 3,
+      "application -> api": 7,
+      "application -> core": 16,
+      "application -> domain": 11,
+      "application -> harness": 7,
+      "application -> infrastructure": 4,
+      "application -> loop": 1,
+      "application -> retrieval": 4,
+      "application -> skills": 1,
+      "contracts_export -> api": 2,
+      "contracts_export -> core": 1,
+      "contracts_export -> mcp": 1,
+      "evals -> application": 1,
+      "evals -> core": 21,
+      "evals -> domain": 9,
+      "evals -> harness": 4,
+      "evals -> infrastructure": 1,
+      "evals -> ingestion": 1,
+      "evals -> retrieval": 25,
+      "evals -> safety": 1,
+      "evals -> skills": 1,
+      "harness -> core": 7,
+      "harness -> domain": 27,
+      "harness -> infrastructure": 4,
+      "harness -> retrieval": 18,
+      "harness -> safety": 2,
+      "harness -> verification": 3,
+      "infrastructure -> api": 2,
+      "infrastructure -> application": 2,
+      "infrastructure -> core": 11,
+      "infrastructure -> domain": 2,
+      "infrastructure -> retrieval": 2,
+      "ingestion -> core": 3,
+      "ingestion -> evals": 2,
+      "ingestion -> retrieval": 2,
+      "loop -> application": 1,
+      "loop -> core": 4,
+      "loop -> domain": 1,
+      "loop -> evals": 1,
+      "loop -> infrastructure": 1,
+      "loop -> retrieval": 2,
+      "mcp -> api": 3,
+      "mcp -> application": 2,
+      "mcp -> core": 8,
+      "mcp -> domain": 8,
+      "mcp -> harness": 2,
+      "mcp -> infrastructure": 3,
+      "mcp -> retrieval": 9,
+      "retrieval -> core": 21,
+      "retrieval -> domain": 13,
+      "retrieval -> infrastructure": 4,
+      "retrieval -> ingestion": 3,
+      "safety -> domain": 6,
+      "skills -> core": 3,
+      "skills -> domain": 33,
+      "skills -> harness": 4,
+      "skills -> infrastructure": 1,
+      "skills -> retrieval": 1,
+      "skills -> safety": 2,
+      "skills -> verification": 1,
+      "verification -> domain": 7,
+      "verification -> infrastructure": 1,
+      "worker -> api": 1,
+      "worker -> application": 1,
+      "worker -> core": 7,
+      "worker -> evals": 1,
+      "worker -> infrastructure": 2,
+      "worker -> ingestion": 1,
+      "worker -> retrieval": 3,
+      "worker -> skills": 1
+    },
+    "static_import_cycles": [
+      [
+        "medops.evals.probe.review_provenance",
+        "medops.evals.probe.validator"
+      ],
+      [
+        "medops.retrieval.production",
+        "medops.retrieval.maintenance",
+        "medops.retrieval.integrity"
+      ],
+      [
+        "medops.harness.answer",
+        "medops.harness.dependencies"
+      ]
+    ]
+  },
+  "local_reproductions": {
+    "timeout_and_cost": {
+      "timeout": {
+        "attempts": 2,
+        "bodies_started": 2,
+        "bodies_still_running_on_return": 2,
+        "error": "NodeTimeout"
+      },
+      "meter": {
+        "failed_call_own_charge": 0.011,
+        "failed_trace_recorded_cost": 0.031,
+        "successful_trace_recorded_cost": 0.02,
+        "sum_of_trace_costs": 0.051000000000000004,
+        "shared_accounted_cost": 0.031,
+        "cost_from_other_trace_in_failed_trace": 0.02
+      },
+      "hosted_model_calls": 0
+    },
+    "history_feedback_ci": {
+      "historical_task": {
+        "requested_as_of": "2025-01-01",
+        "context_as_of": "2025-01-01",
+        "retrieval_deps_as_of": "2026-10-10",
+        "build_deps_request_historical": null,
+        "harness_historical_requested": false
+      },
+      "feedback_restart_identity": {
+        "same_feedback_id": true,
+        "same_trace_id": true,
+        "score_id_before": "27c50ace88ee8aabe4e0b725fc42ab44bd13801940095dd05ccd6c3f5d39cdbf",
+        "score_id_after": "7be2249d307b68c7a7cd2e9705bac0bea60af468f73e36c8bede2900393234ef",
+        "id_changed": true
+      },
+      "required_dependency_fixture": {
+        "unavailable_database_outcome": "skip",
+        "no_network": true
+      },
+      "hosted_model_calls": 0
+    },
+    "skill_verification_and_trace": {
+      "second_stage_contradiction": {
+        "first_stage_clause": "A visit is permitted only on days 8 through 10.",
+        "observation": "Visit on day 9.",
+        "accepted_deviation": "yes",
+        "accepted_rationale": "Day 9 is outside the permitted interval of days 8 through 10.",
+        "valid_statement_index": [
+          1
+        ],
+        "skill_status": "completed",
+        "task_status": "completed",
+        "first_stage_stubbed": true,
+        "real_second_stage_handler_and_registry": true
+      },
+      "task_trace_evidence": {
+        "output_citation_count": 1,
+        "trace_evidence_chunk_ids": [],
+        "trace_cited_chunk_ids": [],
+        "trace_node_names": [
+          "skill:protocol_deviation"
+        ]
+      },
+      "hosted_model_calls": 0
+    }
+  },
+  "reproduction_scripts": [
+    {
+      "path": ".local/architecture-review-2026-10-10/reproduce.py",
+      "sha256": "2b1ba206c693c74b9abe4c96eccd91851ea2932b6d728f02aba6f1861290edc5",
+      "git_status": "ignored local evidence"
+    },
+    {
+      "path": ".local/architecture-review-2026-10-10/skill_proof.py",
+      "sha256": "bed05c74e5fc595c6efdf6da2bff3316ee31ca7a6eb457213e54c877b35e8dfc",
+      "git_status": "ignored local evidence"
+    },
+    {
+      "path": ".local/architecture-review-2026-10-10/trace_proof.py",
+      "sha256": "8548d9a5519cc0fba6c255f49594bf94d48cfb8fe509bbfffaec6923d243f0b7",
+      "git_status": "ignored local evidence"
+    }
+  ],
+  "targeted_tests": {
+    "command": "env -u DEBUG venv/bin/python -m pytest -q tests/unit/harness/test_node_policy.py tests/unit/infrastructure/test_llm_gateway.py tests/unit/application/test_tasks.py tests/unit/api/test_replay_route.py tests/unit/core/test_telemetry_correlation.py tests/unit/retrieval/test_maintenance_worker.py tests/unit/infrastructure/test_observability.py tests/unit/evals/test_replay_inputs.py",
+    "exit_code": 0,
+    "passed": 102,
+    "duration_seconds": 3.32
+  },
+  "previous_full_check": {
+    "source": "docs/reviews/2026-10-10-implementation-170-focus-v7-evidence-retention-audit.md",
+    "passed": 1753,
+    "skipped": 70,
+    "rerun_in_this_audit": false
+  },
+  "limitations": [
+    "Local counterexamples use synthetic gateways; medical dataset error rates and hosted latency were not measured.",
+    "The first stage of the two-stage Skill counterexample was stubbed as a grounded answer; the actual second-stage handler, registry and task runner executed.",
+    "No Docker image startup, PostgreSQL restart, production load test, independent human clinical review or paid model evaluation was performed in this audit.",
+    "Static dependency counts include TYPE_CHECKING and local imports; listed cycles are not evidence of failing runtime imports."
+  ]
+}
