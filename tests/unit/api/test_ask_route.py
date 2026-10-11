@@ -18,6 +18,7 @@ from medops.application.audit import InMemoryTraceStore
 from medops.application.policy_loader import ReleasedPolicySet, RequestPolicies
 from medops.core.errors import ErrorCode, InfrastructureError
 from medops.domain.common import Dept
+from medops.domain.query import resolve_query_context
 from medops.harness.dependencies import HarnessDeps
 from medops.harness.executions import InMemoryExecutionStore
 from medops.infrastructure.llm.fake import FakeModelGateway
@@ -65,7 +66,10 @@ class FakeRuntime:
     def route_policies(self, conn, user):
         return RequestPolicies(ReleasedPolicySet.empty(), self.versions)
 
-    def build_deps(self, conn, user, request, routed=None):
+    def build_deps(self, conn, user, request, routed=None, *, query_context=None):
+        context = query_context or resolve_query_context(
+            request.historical.model_dump() if request.historical else None
+        )
         return HarnessDeps(
             retrieval=self.retrieval,
             gateway=MeteredGateway(self.gateway),
@@ -74,6 +78,8 @@ class FakeRuntime:
             sleep=lambda s: None,
             clock=lambda: datetime(2026, 9, 23, tzinfo=UTC),
             executions=self.store,
+            as_of=context.as_of,
+            query_context=context,
         )
 
     def trace_store(self, conn):

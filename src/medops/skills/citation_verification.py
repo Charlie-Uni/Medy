@@ -107,7 +107,11 @@ def _run(ctx: SkillContext, inp: CitationVerificationInput) -> CitationVerificat
     if flagged:
         detail += f"; {len(flagged)} cited chunk(s) screened out as injected content"
     return CitationVerificationOutput(
-        status=SkillStatus.completed, verdicts=tuple(verdicts), verifier_version=VERIFIER_VERSION, detail=detail
+        status=SkillStatus.completed,
+        verdicts=tuple(verdicts),
+        verifier_version=VERIFIER_VERSION,
+        detail=detail,
+        historical_notice=any(e.historical for e in visible),
     )
 
 

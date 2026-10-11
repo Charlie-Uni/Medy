@@ -5,14 +5,17 @@ to an existing trace with a receipt-bearing idempotency key; the read-only role 
 from __future__ import annotations
 
 from collections.abc import Iterator
-from datetime import UTC, datetime, timedelta
+from dataclasses import replace
+from datetime import UTC, date, datetime, timedelta
 
 import psycopg
 import pytest
 from psycopg.errors import InsufficientPrivilege, RestrictViolation
+from psycopg.types.json import Jsonb
 
 from medops.application.audit import EscalationRecord, FeedbackRecord, IdempotencyRace, TraceRecord
 from medops.domain.common import Dept
+from medops.domain.query import QueryContext
 from medops.harness.contracts import NodeAttempt
 from medops.infrastructure.db.audit import PgTraceStore
 from tests.integration.lexical_adapter_suite import make_database
@@ -21,6 +24,39 @@ NOW = datetime(
     2026, 9, 23, 12, 0, tzinfo=UTC
 )  # fixed for stored timestamps; idempotency expiry is relative to the DB clock (expires_at > now())
 PRINCIPAL = "0123456789abcdef" * 2
+
+
+def test_query_context_is_saved_as_metadata_and_legacy_rows_remain_unknown(db):
+    context = QueryContext(as_of=date(2025, 1, 1), historical_requested=True)
+    with psycopg.connect(db["users"]["app"]) as conn:
+        store = PgTraceStore(conn)
+        store.record(replace(trace("d" * 32), query_context=context), None)
+        store.record(trace("e" * 32), None)
+        assert store.read_trace("d" * 32).query_context == context
+        assert store.read_trace("e" * 32).query_context is None
+
+
+@pytest.mark.parametrize(
+    "bad",
+    [
+        {},
+        {"as_of": "2025-01-01"},
+        {"as_of": "2025-01-01", "historical_requested": None},
+        {"as_of": "2025-01-01", "historical_requested": True, "query": "body"},
+        {"as_of": "2025-01-01", "historical_requested": "true"},
+        {"as_of": "2025-02-30", "historical_requested": True},
+    ],
+)
+def test_query_context_column_rejects_untyped_body_or_invalid_date(db, bad):
+    with psycopg.connect(db["users"]["app"]) as conn:
+        with pytest.raises(psycopg.Error) as exc, conn.transaction():
+            conn.execute(
+                "insert into traces (trace_id,run_id,kind,principal,dept,query,outcome,versions,query_context,duration_ms) values (%s,%s,'ask',%s,'MA','q','answered','{}',%s,0)",
+                ("f" * 32, "f" * 32, PRINCIPAL, Jsonb(bad)),
+            )
+        assert exc.value.sqlstate in {"23514", "22007", "22008"}
+        if exc.value.sqlstate == "23514":
+            assert exc.value.diag.constraint_name == "traces_query_context_shape"
 
 
 @pytest.fixture(scope="module")

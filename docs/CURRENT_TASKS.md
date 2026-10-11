@@ -16,9 +16,9 @@
 | --- | --- | --- | --- |
 | ENV-01 | 本地 `DATABASE_URL` 与 `DATABASE_ADMIN_URL` 指向具备持久费用账本的正式本地事实库 | DONE | 本机 `.env` 已由 `medops` 改为 `medops_v2`；不记录凭据 |
 | ENV-02 | 锁定依赖运行环境迁出 iCloud 管理范围 | DONE | 本地 `venv` 链接外部缓存目录，原环境保留；锁哈希安装、pip check、repo 外导入通过；记录 168 |
-| DB-01 | `medops_v2` 升至 migration 0022 | DONE | 0020/0021 为费用账本；0022 为部门隔离 BM25；记录 162。本机现已追加 0023 调用回执，记录 175 |
-| DB-02 | `medops_v2_safety` 升至 migration 0022 | DONE | PG17 逻辑恢复核对后由 0021 升至 0022，索引零缺口；本机现为 0023，记录 175 |
-| DB-03 | 旧开发库 `medops` 的去留 | DONE | 同步迁移到 PG17/0022 并保留；没有向量索引，API/正式评测不连接它；本机现为 0023，记录 175 |
+| DB-01 | `medops_v2` 升至 migration 0022 | DONE | 0020/0021 为费用账本；0022 为部门隔离 BM25；记录 162。本机现已追加 0023 调用回执，记录 175 ；本机已追加 0024 查询上下文，三库保护摘要不变，记录 178 |
+| DB-02 | `medops_v2_safety` 升至 migration 0022 | DONE | PG17 逻辑恢复核对后由 0021 升至 0022，索引零缺口；本机现为 0023，记录 175 ；本机已追加 0024 查询上下文，三库保护摘要不变，记录 178 |
+| DB-03 | 旧开发库 `medops` 的去留 | DONE | 同步迁移到 PG17/0022 并保留；没有向量索引，API/正式评测不连接它；本机现为 0023，记录 175 ；本机已追加 0024 查询上下文，三库保护摘要不变，记录 178 |
 | ADJ-01 | 裁决 `ms-0125` | DONE | 项目所有者按建议保留现有 `char_end=2226` |
 | ADJ-02 | 裁决 `ms-0241/ms-0242` 的证据组 | DONE | 三类正式示例共同必需，standard-of-care 仅作补充；已落实到 v3 |
 | ADJ-03 | 裁决 `ms-0280` | DONE | 已增加 `protocol_id`，query、gold 与日期保留 |
@@ -38,7 +38,7 @@ probe v4 与 `main-v5-provisional` 均已冻结。EVAL-11 已完成：580 个 go
 
 ### 0.1 架构修复任务
 
-架构审查已完成；ARCH-01、ARCH-04、ARCH-11、ARCH-05 已分别通过对应范围工程自审，其余修复按下表推进。`ARCH-xx` 对应[架构审查](reviews/2026-10-10-architecture-audit.md)及[复现证据](reviews/2026-10-10-architecture-audit-results.json)中的 `ARxx`。保留模块化单体、独立 API/worker/MCP 进程、Harness 的强制约束、数据库 RLS、事实回查和受控发布；新增 Agent 循环不受“所有业务都只能走固定节点顺序”的实现限制，具体结构与兼容规则由 PLAN-02 登记。原组件切换及历史测试记录继续保留，不能用那些记录证明新缺陷已经解决。
+架构审查已完成；ARCH-01、ARCH-04、ARCH-11、ARCH-05、ARCH-02 已分别通过对应范围工程自审，其余修复按下表推进。`ARCH-xx` 对应[架构审查](reviews/2026-10-10-architecture-audit.md)及[复现证据](reviews/2026-10-10-architecture-audit-results.json)中的 `ARxx`。保留模块化单体、独立 API/worker/MCP 进程、Harness 的强制约束、数据库 RLS、事实回查和受控发布；新增 Agent 循环不受“所有业务都只能走固定节点顺序”的实现限制，具体结构与兼容规则由 PLAN-02 登记。原组件切换及历史测试记录继续保留，不能用那些记录证明新缺陷已经解决。
 
 `READY` 任务可以进行不调用托管模型的实现和核验；`BLOCKED` 任务列出具体工程前置。Skill 医学语义质量、真实问答与容量测量仍需单独付费授权；工程完成不替代正式质量门禁。
 
@@ -46,7 +46,7 @@ probe v4 与 `main-v5-provisional` 均已冻结。EVAL-11 已完成：580 个 go
 | --- | --- | --- | --- |
 | ARCH-01 | 修复 Harness 超时后继续执行及重叠重试 | DONE | [记录 171](reviews/2026-10-10-implementation-171-harness-deadline-and-cancellation.md)：节点总截止时间、inline body、SQL/HTTP 取消及 BGE 子进程回收、翻译收束；等价仓库外快照全量 1774/70；真实 BGE 输出一致、事实库检索成功，费用 0。任意不合作插件不属通用强杀承诺。OPT-11、INV-HAR-04 |
 | ARCH-05 | 对齐任务总时长、租约和持有权 | DONE | [记录 177](reviews/2026-10-11-implementation-177-task-lease-and-ownership.md)：从领取计入总期限与租约余量，数据库时钟/锁后重验、SKIP LOCKED、调用前持有权、独立 attempt/失租记录；真实两 worker 的已知/未知费用保留与新结果保护通过。全量 1857/70、491 维护输入 SHA 一致、0 托管调用，本轮工程自审通过；外部恰好一次、完整恢复/审计不在完成声明内。OPT-11、任务幂等 |
-| ARCH-02 | 统一 Ask、Skill、Replay 的历史输入 | READY | 日期、历史模式和版本选择一致传递；未支持或无法唯一解释的选择器明确拒绝；验证日期边界、归档、权限、提示与缓存隔离。OPT-13、INV-DATA-03 |
+| ARCH-02 | 统一 Ask、Skill、Replay 的历史输入 | DONE | [记录 178](reviews/2026-10-11-implementation-178-historical-query-context.md)：QueryContext 统一日期/显式模式，归档来源与引用回查、四类 Skill 提示、缓存/key 与 Ask 诊断回放；裸 version/旧未知输入/Task-MCP 回放拒绝。三库 0024、25 表内容/5 索引计数不变，1908/70 全量、501 维护输入 SHA 一致、0 托管调用，工程自审通过；完整原条件复现仍待 ARCH-07。OPT-13、INV-DATA-03 |
 | ARCH-03 | 核验二阶段 Skill 的最终业务判断 | READY | 规则与语义核验覆盖判断、理由、条款和用户观察；矛盾/无支持不能 completed；数字、单位、否定、条件与合法错引有反例。工程核验后单独申请真实质量校准。五类 Skill、INV-SAF-03 |
 | ARCH-04 | 修复并发失败调用的费用归属 | DONE | [记录 175](reviews/2026-10-11-implementation-175-call-receipts-and-fee-attribution.md)：调用回执关联 Trace/run/call/attempt/reservation，成功/失败/拒绝/取消与结算故障独立归属；已知 usage 本地费用与保守预留分开。本机三库 0023、保护摘要相同，1807/70、486 维护输入 SHA 一致，0 托管调用；本轮工程自审通过。账单对账/完整复现仍待后续。OPT-09、INV-OBS-01 |
 | ARCH-11 | 统一单次执行的 Token 与费用预算 | DONE | [记录 176](reviews/2026-10-11-implementation-176-shared-execution-budget.md)：所有者确认兼容上限 12,000 Token / 0.60 USD，Ask 125 秒、Skill/MCP 不扩大原期限；翻译、生成、判定、结构化与重试共享预留/结算，嵌套/线程不能重开。全量 1830/70、490 维护输入与配置 SHA 一致，0 托管调用，本轮工程自审通过；未来 Agent/模型 Loop 必须显式 profile＋强制上下文，尚未实现，跨进程恢复归 ARCH-05/06/07。OPT-11、INV-HAR-08 |
@@ -72,7 +72,7 @@ probe v4 与 `main-v5-provisional` 均已冻结。EVAL-11 已完成：580 个 go
 
 贯穿工作：ARCH-08/10/13/14、CODE-03～07、IDX-03、OBS-03、DEV-BACKLOG-01 按依赖穿插；ARCH-12 有实测收益再实施。BM25-09、CACHE-10、PERF-10、SRC-05、FOCUS-01/02/09、ROUTE-01/02 全部保留，先分别验证再 COMBO-01。人工事项 PLAN-02、EVAL-29/30/31、LIC-03、DEPLOY-01 单独跟踪；EVOL-09 已决定限实验，生产自动批准不再列为待问事项。
 
-**当前下一项：ARCH-02 统一 Ask、Skill、Replay 的历史输入；ARCH-04/11 两项工程硬前置已分别自审通过，ARCH-05 当前任务租约/尝试保护也已通过，证据见记录 [175](reviews/2026-10-11-implementation-175-call-receipts-and-fee-attribution.md) / [176](reviews/2026-10-11-implementation-176-shared-execution-budget.md) / [177](reviews/2026-10-11-implementation-177-task-lease-and-ownership.md)。** PLAN-02 剩余 Agent 行动/profile 与验收契约继续完善；PV 场景与现有执行兼容预算已确认，原生产门槛问题仍待答。两项通过不等于 S2 已完成或已获准真实试跑；相关历史、判断和审计前置按依赖推进。PLAN-01 与 12 个开发用例仍是设计输入，未建未见盲测；医学质量、容量与付费实验独立留证，整体工期仍按新增复核/盲测范围重估。
+**当前下一项：ARCH-03 核验二阶段 Skill 的最终业务判断。** ARCH-04/11 两项硬前置、ARCH-05 租约、ARCH-02 历史输入均已在对应范围自审通过，证据见记录 [175](reviews/2026-10-11-implementation-175-call-receipts-and-fee-attribution.md) / [176](reviews/2026-10-11-implementation-176-shared-execution-budget.md) / [177](reviews/2026-10-11-implementation-177-task-lease-and-ownership.md) / [178](reviews/2026-10-11-implementation-178-historical-query-context.md)。PLAN-02 剩余 Agent 行动/profile 与验收契约继续完善；ARCH-06 仍等 ARCH-03，完整回放仍等 ARCH-07。本轮不代替真实质量、未见盲测或 S2/S3 完成，费用运行继续逐次授权。三库已到 0024，代码仍在工作区未提交、未重启服务。
 
 每次只推进一个主切片。纯契约设计、机械检查和无付费测试可先准备；依赖未通过时不得把相关集成或阶段标为完成。真实并发/费用运行先满足 ARCH-01/04/11；历史 Skill/二阶段判断先满足 ARCH-02/03/06；回放先满足 ARCH-07；所有检索运行先核对事实库、索引覆盖和积压。EVAL-22/23/24 → EVAL-25/26 → EVAL-27/28 的基线依赖保留，S2/S3 开发演示不能替代正式门禁。等待人工/授权时继续无关 READY 项。
 

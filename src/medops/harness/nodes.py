@@ -59,6 +59,7 @@ def _key(state: AgentState, node: str, **inputs: Any) -> str:
         "query": state.query,
         "dept": state.user.dept.value,
         "historical_requested": state.historical_requested,
+        "query_context": state.query_context.model_dump(mode="json") if state.query_context else None,
         "versions": state.versions.model_dump(),
         **inputs,
     }

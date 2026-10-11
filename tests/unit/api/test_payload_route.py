@@ -108,6 +108,9 @@ def test_ask_seals_three_payloads_and_only_an_admin_with_a_purpose_can_read_them
     assert body["trace_id"] == trace_id and body["purpose"] == "incident review 42"
     by_kind = {i["kind"]: i for i in body["items"]}
     assert by_kind["input"]["payload"]["query"] == QUERY
+    assert by_kind["input"]["payload"]["query_context"] == rt.traces.read_trace(trace_id).query_context.model_dump(
+        mode="json"
+    )
     assert by_kind["evidence_snapshot"]["payload"]["evidence"][0]["text"]
     assert by_kind["model_output"]["payload"]["answer"]["claims"]
     assert all(i["kek_version"] == "k1" for i in body["items"])

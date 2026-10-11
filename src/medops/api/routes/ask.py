@@ -13,7 +13,7 @@ from medops.api.contracts import (
 from medops.api.ports import ApiRuntime
 from medops.api.responses import to_ask_response
 from medops.application.audit import record_or_fail_closed, trace_from_run
-from medops.core.errors import BusinessError, ErrorCode
+from medops.domain.query import resolve_query_context
 from medops.harness.runtime import initial_state, run_ask
 from medops.infrastructure.llm.meter import MeteredGateway
 
@@ -24,10 +24,7 @@ def build_router(runtime: ApiRuntime) -> APIRouter:
     @router.post("/v1/ask", response_model=AskResponse, response_model_exclude_none=False)
     def ask(body: AskRequest, request: Request) -> AskResponse:
         trace_id: str = request.state.trace_id
-        if body.historical is not None and body.historical.version is not None:
-            raise BusinessError(
-                ErrorCode.invalid_request, "historical version selector arrives with the task API (M3-03); use as_of"
-            )
+        resolve_query_context(body.historical.model_dump() if body.historical else None)
         with runtime.connection() as conn:
             user = runtime.authenticator.authenticate(request.headers.get("authorization"), runtime.directory(conn))
             runtime.bind_identity(conn, user)
@@ -39,6 +36,10 @@ def build_router(runtime: ApiRuntime) -> APIRouter:
                 versions=routed.versions,
                 trace_id=trace_id,
                 historical_requested=body.historical is not None,
+                query_context=deps.query_context
+                or resolve_query_context(
+                    body.historical.model_dump() if body.historical else None, default_as_of=deps.as_of
+                ),
             )
             started = time.perf_counter()
             run = run_ask(state, deps)

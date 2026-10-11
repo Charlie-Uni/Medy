@@ -201,15 +201,26 @@ def test_a_cache_without_versions_is_refused_and_a_failing_store_degrades_to_a_m
 
 def test_source_constraint_scopes_search_or_fails_closed_without_revealing_a_document(monkeypatch, visible):
     doc = DocRef("doc-1", "ICH E2F: Development Safety Update Report", "guideline", "ich-e2f-step4-2010")
-    monkeypatch.setattr(rp, "load_documents", lambda conn: [doc])
+    monkeypatch.setattr(rp, "load_documents", lambda conn, **kw: [doc])
     port = Port(source_constraint=True)
     found = port.retrieve(request(query="ICH E2F 的 DSUR 需要涵蓋哪些內容？"))
     assert found.source_constraint_applied and not found.source_constraint_missing
     assert port.source_doc_ids == ("doc-1",)
 
-    monkeypatch.setattr(rp, "load_documents", lambda conn: [])
+    monkeypatch.setattr(rp, "load_documents", lambda conn, **kw: [])
     missing_port = Port(source_constraint=True)
     missing = missing_port.retrieve(request(query="ICH E2F 的 DSUR 需要涵蓋哪些內容？"))
     assert missing.source_constraint_applied and missing.source_constraint_missing
     assert not missing.candidates and not missing.evidence and missing_port.searches == 0
     assert "ICH E2F" not in missing.detail and "Development Safety Update Report" not in missing.detail
+
+
+def test_cache_separates_effective_day_and_explicit_history_on_the_same_day(visible):
+    port = Port(cache=CandidateCache(InMemoryCandidateCacheStore()), cache_versions=(RV, "policy-1"))
+    normal = request().model_copy(update={"as_of": date(2025, 1, 1)})
+    historical = normal.model_copy(update={"historical_requested": True})
+    next_day = historical.model_copy(update={"as_of": date(2025, 1, 2)})
+    for value in [normal, historical, next_day]:
+        assert port.retrieve(value).cache_hit is False
+        assert port.retrieve(value).cache_hit is True
+    assert port.searches == 3

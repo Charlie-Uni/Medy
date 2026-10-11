@@ -35,7 +35,9 @@
 
 ARCH-08/10/13/14、CODE-03～07、IDX/OBS/DEPLOY 按依赖穿插，ARCH-12 有收益再实施。BM25/缓存/裁剪/路由先单变量后组合；新主集与安全基线、正式回放和人工缺口保留。开发演示不支持改进声明；盲测材料与调优隔离，已暴露题移入回归，后续改进用新未见材料。生产保留人工签字。
 
-[记录 171](reviews/2026-10-10-implementation-171-harness-deadline-and-cancellation.md)的 ARCH-01 工程证据继续有效：源码一致的仓库外快照 1774 passed、70 skipped，真实 BGE/事实库核验、模型 API 费用 0；它不证明任务租约或全部医学/容量指标通过。PLAN-01 已提供设计证据；PLAN-02 剩余行动/验收契约继续沟通，ARCH-04 已通过调用计量范围工程自审，1807/70 全量门禁与本机三库 0023 迁移见[记录 175](reviews/2026-10-11-implementation-175-call-receipts-and-fee-attribution.md)；ARCH-11 已通过共享预算工程自审，全量 1830/70、0 托管调用见[记录 176](reviews/2026-10-11-implementation-176-shared-execution-budget.md)；ARCH-05 当前租约/尝试保护通过，全量 1857/70、0 托管调用见[记录 177](reviews/2026-10-11-implementation-177-task-lease-and-ownership.md)，下一项 ARCH-02。
+[记录 171](reviews/2026-10-10-implementation-171-harness-deadline-and-cancellation.md)的 ARCH-01 工程证据继续有效：源码一致的仓库外快照 1774 passed、70 skipped，真实 BGE/事实库核验、模型 API 费用 0；它不证明任务租约或全部医学/容量指标通过。PLAN-01 已提供设计证据；PLAN-02 剩余行动/验收契约继续沟通，ARCH-04 已通过调用计量范围工程自审，1807/70 全量门禁与本机三库 0023 迁移见[记录 175](reviews/2026-10-11-implementation-175-call-receipts-and-fee-attribution.md)；ARCH-11 已通过共享预算工程自审，全量 1830/70、0 托管调用见[记录 176](reviews/2026-10-11-implementation-176-shared-execution-budget.md)；ARCH-05 当前租约/尝试保护通过，全量 1857/70、0 托管调用见[记录 177](reviews/2026-10-11-implementation-177-task-lease-and-ownership.md)，下一项 ARCH-03。
+
+ARCH-02 的日期/显式历史输入、四类 Skill 提示及 Ask 诊断 Replay 已通过工程自审；三库 0024、1908/70 全量、501 维护输入 SHA 一致、0 托管调用，见[记录 178](reviews/2026-10-11-implementation-178-historical-query-context.md)及[输入契约](HISTORICAL_QUERIES.md)。裸 version 和未知旧输入明确拒绝；完整原条件回放仍待 ARCH-07，下一项 ARCH-03。此轮不是独立人工或模型质量验收，新代码未重启上线。
 
 LangGraph 当前仍是固定主图，动态循环是新增待办；LG-01 仅为 checkpoint 技术选型选做，恢复要求按实际 Agent 契约落实。模型路由和 provisional 标签保持真实状态。
 

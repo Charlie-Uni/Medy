@@ -43,6 +43,7 @@ def payloads_from_run(run: HarnessRun, *, query: str) -> dict[str, Mapping[str, 
             "rewritten_queries": list(st.rewritten_queries),
             "session_entities": [e.model_dump(mode="json") for e in st.session_entities],
             "historical_requested": st.historical_requested,
+            "query_context": st.query_context.model_dump(mode="json") if st.query_context else None,
             "intent": st.intent.model_dump(mode="json") if st.intent else None,
         },
         "evidence_snapshot": {

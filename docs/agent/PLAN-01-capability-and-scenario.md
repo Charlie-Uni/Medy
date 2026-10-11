@@ -24,7 +24,7 @@
 
 | 能力 | 原要求与本轮目标 | 当前证据 | 状态与后续任务 |
 | --- | --- | --- | --- |
-| 文档事实平面 | 身份、版本、生效期、原页与 ACL 可核查 | 文档迁移/RLS；检索 `recheck`；现有来源与 gold 映射 | 已有；历史输入一致性继续 ARCH-02 |
+| 文档事实平面 | 身份、版本、生效期、原页与 ACL 可核查 | 文档迁移/RLS；检索 `recheck`；现有来源与 gold 映射 | 已有；ARCH-02 日期/显式历史修复完成，裸 version 拒绝 |
 | 混合检索 | BM25、向量、RRF、重排、翻译/词表与来源约束 | `retrieval/production.py`、`fusion.py`；BM25/Redis 已接线，来源候选默认 off | 已有组件；完整质量及性能对照待对应 PAID 项 |
 | 固定 Harness | 检索、证据和安全检查后回答/升级 | `harness/graph.py::build_graph` 明确固定边；`nodes.py` | 已有；不能当作结果驱动的工具行动循环 |
 | Agent 行动选择 | 模型按观察结果选择允许动作，再次检索/澄清/停止 | 当前固定图无此工具循环 | 未实现；AGENT-01～08，先满足 ARCH-04/11 |
@@ -160,4 +160,4 @@ EVAL-32 后续把任务成功、完整性、来源符合、合理停止、安全
 
 本文件完成表示设计证据包可审阅；不表示 Agent 工程、模型生成 Prompt/Skill、盲测、医学质量、性能或生产采用通过。
 
-2026-10-11 后续进展：ARCH-04/11 已分别通过工程自审；现有执行兼容预算获确认，接口与限制见[执行预算说明](../LLM_ACCOUNTING.md#6-单次执行共享预算arch-11)及[记录 176](../reviews/2026-10-11-implementation-176-shared-execution-budget.md)。本方案的 Agent 行动/profile 仍是草案，规划/工具调用尚未接线；ARCH-05 当前任务租约/持有权通过工程自审，见[记录 177](../reviews/2026-10-11-implementation-177-task-lease-and-ownership.md)；持久 Agent 恢复尚未实现。下一运行时修复 ARCH-02，具体状态仍以台账为准。
+2026-10-11 后续进展：ARCH-04/11 已分别通过工程自审；现有执行兼容预算获确认，接口与限制见[执行预算说明](../LLM_ACCOUNTING.md#6-单次执行共享预算arch-11)及[记录 176](../reviews/2026-10-11-implementation-176-shared-execution-budget.md)。本方案的 Agent 行动/profile 仍是草案，规划/工具调用尚未接线；ARCH-05 当前任务租约/持有权通过工程自审，见[记录 177](../reviews/2026-10-11-implementation-177-task-lease-and-ownership.md)；持久 Agent 恢复尚未实现。ARCH-02 日期/历史模式已修复，裸 version 明确拒绝，四类文档 Skill 历史提示及 Ask 诊断回放通过，见[记录 178](../reviews/2026-10-11-implementation-178-historical-query-context.md)；它不代替完整 Agent 历史工具/恢复实现。下一运行时修复 ARCH-03，具体状态仍以台账为准。

@@ -21,6 +21,9 @@ import re
 import unicodedata
 from collections.abc import Iterable, Sequence
 from dataclasses import dataclass
+from datetime import date
+
+from medops.core.errors import BusinessError, ErrorCode
 
 DOC_FOCUS_VERSION = "docfocus-v1"
 MAX_FOCUS_DOCS = 3  # more matches than this means the mention is not a specific document
@@ -164,10 +167,16 @@ def focus_documents(query: str, docs: Iterable[DocRef]) -> list[DocRef]:
     return matched if 0 < len(matched) <= MAX_FOCUS_DOCS else []
 
 
-def load_documents(conn: object) -> list[DocRef]:
-    """Active documents visible on this connection (row-level security scopes them to the caller's department)."""
+def load_documents(conn: object, *, as_of: date | None = None, allow_historical: bool = False) -> list[DocRef]:
+    """Visible documents in this execution's effective window; archives require an explicit date."""
+    if allow_historical and as_of is None:
+        raise BusinessError(ErrorCode.invalid_request, "historical document selection requires an explicit date")
     rows = conn.execute(  # type: ignore[attr-defined]
-        "select doc_id::text, title, doc_type, document_key from documents where status = 'active'"
+        """select doc_id::text, title, doc_type, document_key from documents
+        where (status = 'active' or (%(historical)s and status = 'archived'))
+          and effective_from <= %(as_of)s
+          and (effective_to is null or effective_to > %(as_of)s)""",
+        {"historical": allow_historical, "as_of": as_of or date.today()},
     ).fetchall()
     return [DocRef(str(r[0]), str(r[1]), str(r[2]), str(r[3])) for r in rows]
 

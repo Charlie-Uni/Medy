@@ -1,7 +1,10 @@
 """Single-trace replay (M3-08): run the source trace's question again under the original principal's current
 identity, this deployment's pinned versions and a fresh `replay_run_id`, then diff outcome, reason codes and
 citations against the stored trace. The replay is recorded as its own trace (kind `replay`); it never creates
-a human escalation and never reuses an operation-key result of the production run (different run id)."""
+a human escalation and never reuses an operation-key result of the production run (different run id).
+The original effective day and explicit archival mode are preserved, but permissions, facts and policies
+are current. Legacy traces without this metadata and Task/MCP traces are explicitly rejected; reconstructing
+their complete typed inputs and historical snapshots belongs to ARCH-07."""
 
 from __future__ import annotations
 
@@ -16,6 +19,7 @@ from medops.application.audit import ReplayRecord, TraceStore, record_or_fail_cl
 from medops.core.errors import BusinessError, ErrorCode
 from medops.domain.common import ReasonCode
 from medops.domain.identity import UserContext
+from medops.domain.query import QueryContext
 from medops.domain.state import VersionSet
 from medops.harness.dependencies import HarnessDeps
 from medops.harness.runtime import HarnessRun, initial_state, run_ask
@@ -32,6 +36,7 @@ def _side(
     cited: tuple[str, ...],
     evidence: tuple[str, ...],
     versions: VersionSet,
+    query_context: QueryContext,
 ) -> ReplaySide:
     return ReplaySide(
         trace_id=trace_id,
@@ -41,6 +46,7 @@ def _side(
         cited_chunk_ids=cited,
         evidence_chunk_ids=evidence,
         versions=versions,
+        query_context=query_context,
     )
 
 
@@ -59,7 +65,7 @@ def outcome_of(run: HarnessRun) -> str:
 class ReplayService:
     store: TraceStore
     versions: VersionSet
-    build_deps: Callable[[UserContext], HarnessDeps]
+    build_deps: Callable[[UserContext, QueryContext], HarnessDeps]
     resolve_user: Callable[[str], UserContext | None]
     clock: Callable[[], datetime] = lambda: datetime.now(UTC)
     payload_writer: Any = None  # PayloadWriter | None (DEC-013): the replay's own payload, same transaction
@@ -69,6 +75,16 @@ class ReplayService:
         source = self.store.read_trace(source_trace_id)
         if source is None or source.kind == "replay":
             raise BusinessError(ErrorCode.not_found, "trace not found")
+        if source.kind != "ask":
+            raise BusinessError(
+                ErrorCode.invalid_request,
+                "this replay supports Ask traces only; Task/MCP need their original typed input",
+            )
+        if source.query_context is None:
+            raise BusinessError(
+                ErrorCode.invalid_request,
+                "source trace has no saved query context; historical input cannot be inferred",
+            )
         user = self.resolve_user(source.principal)
         if user is None or user.dept is not source.dept:
             raise BusinessError(
@@ -76,10 +92,15 @@ class ReplayService:
             )
         replay_trace_id = uuid.uuid4().hex
         replay_run_id = uuid.uuid4().hex  # independent of the source run: no operation key can be reused
-        deps = self.build_deps(user)
+        deps = self.build_deps(user, source.query_context)
         versions = self.versions_for(user) if self.versions_for is not None else self.versions
         state = initial_state(
-            user=user, query=source.query, versions=versions, trace_id=replay_trace_id, run_id=replay_run_id
+            user=user,
+            query=source.query,
+            versions=versions,
+            trace_id=replay_trace_id,
+            run_id=replay_run_id,
+            query_context=source.query_context,
         )
         started = self.clock()
         run = run_ask(state, deps)
@@ -109,6 +130,7 @@ class ReplayService:
             source.cited_chunk_ids,
             source.evidence_chunk_ids,
             source_versions,
+            source.query_context,
         )
         rep = _side(
             trace.trace_id,
@@ -118,6 +140,7 @@ class ReplayService:
             trace.cited_chunk_ids,
             trace.evidence_chunk_ids,
             versions,  # the versions the replay actually ran with (routed per principal, M4-09), not the base set
+            source.query_context,
         )
         changed = tuple(f for f in DIFF_FIELDS if getattr(src, f) != getattr(rep, f))
         report = ReplayReport(

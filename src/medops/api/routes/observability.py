@@ -9,6 +9,7 @@ from fastapi.responses import PlainTextResponse
 
 from medops.api.contracts import (
     AskRequest,
+    HistoricalRequest,
     ReplayReport,
     ReplayRequest,
     TracePayloadResponse,
@@ -18,6 +19,7 @@ from medops.application.metrics import has_role, render_prometheus
 from medops.application.replay import ReplayService
 from medops.core.errors import BusinessError, ErrorCode
 from medops.domain.identity import UserContext
+from medops.domain.query import QueryContext
 from medops.harness.dependencies import HarnessDeps
 
 
@@ -43,9 +45,16 @@ def build_router(runtime: ApiRuntime) -> APIRouter:
             if not has_role(admin.roles, "admin"):
                 raise BusinessError(ErrorCode.forbidden, "replay requires the admin role")
 
-            def deps_for(user: UserContext) -> HarnessDeps:
+            def deps_for(user: UserContext, context: QueryContext) -> HarnessDeps:
                 runtime.bind_identity(conn, user)  # the replay runs under the original principal, not the admin
-                return runtime.build_deps(conn, user, AskRequest(query="replay"), runtime.route_policies(conn, user))
+                historical = HistoricalRequest(as_of=context.as_of) if context.historical_requested else None
+                return runtime.build_deps(
+                    conn,
+                    user,
+                    AskRequest(query="replay", historical=historical),
+                    runtime.route_policies(conn, user),
+                    query_context=context,
+                )
 
             service = ReplayService(
                 store=runtime.trace_store(conn),

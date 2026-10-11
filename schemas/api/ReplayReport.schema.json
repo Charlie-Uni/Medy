@@ -1,5 +1,25 @@
 {
   "$defs": {
+    "QueryContext": {
+      "additionalProperties": false,
+      "properties": {
+        "as_of": {
+          "format": "date",
+          "title": "As Of",
+          "type": "string"
+        },
+        "historical_requested": {
+          "default": false,
+          "title": "Historical Requested",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "as_of"
+      ],
+      "title": "QueryContext",
+      "type": "object"
+    },
     "ReasonCode": {
       "description": "Stable refusal/escalation reason codes (baseline 5.5, F4.1).",
       "enum": [
@@ -39,6 +59,17 @@
           "minLength": 1,
           "title": "Outcome",
           "type": "string"
+        },
+        "query_context": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/QueryContext"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "reason_codes": {
           "default": [],

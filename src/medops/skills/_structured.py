@@ -27,6 +27,7 @@ def grounded_run(ctx: SkillContext, query: str, entities: Sequence[Entity] = ())
         trace_id=ctx.trace_id,
         run_id=ctx.run_id,
         session_entities=tuple(entities),
+        query_context=ctx.query_context,
     )
     return run_ask(state, ctx.deps)
 

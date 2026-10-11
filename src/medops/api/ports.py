@@ -21,6 +21,7 @@ from medops.application.payloads import PayloadReader, PayloadWriter
 from medops.application.policy_loader import RequestPolicies
 from medops.application.tasks import TaskStore
 from medops.domain.identity import UserContext
+from medops.domain.query import QueryContext
 from medops.domain.state import VersionSet
 from medops.harness.dependencies import HarnessDeps
 
@@ -42,7 +43,13 @@ class ApiRuntime(Protocol):
     def route_policies(self, conn: Any, user: UserContext) -> RequestPolicies: ...
 
     def build_deps(
-        self, conn: Any, user: UserContext, request: AskRequest, routed: RequestPolicies | None = None
+        self,
+        conn: Any,
+        user: UserContext,
+        request: AskRequest,
+        routed: RequestPolicies | None = None,
+        *,
+        query_context: QueryContext | None = None,
     ) -> HarnessDeps: ...
 
     def task_store(self, conn: Any) -> TaskStore: ...

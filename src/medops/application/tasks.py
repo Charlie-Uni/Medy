@@ -33,6 +33,7 @@ from medops.core.telemetry import ATTR_TASK, ATTR_TRACE, annotate, span
 from medops.core.tracing import bind_trace_id, new_trace_id
 from medops.domain.common import Dept
 from medops.domain.identity import UserContext
+from medops.domain.query import resolve_query_context
 from medops.infrastructure.db.deadline import DeadlineConnection
 from medops.infrastructure.llm.accounting import call_scope
 from medops.infrastructure.llm.meter import MeteredGateway
@@ -127,6 +128,7 @@ class TaskService:
     max_attempts: int = DEFAULT_MAX_ATTEMPTS
 
     def create(self, user: UserContext, request: TaskCreateRequest, idempotency_key: str | None) -> TaskRecord:
+        resolve_query_context(request.historical.model_dump() if request.historical else None)
         payload_hash = canonical_hash(request.model_dump(mode="json"))
         if idempotency_key is not None:
             key = idempotency_key.strip()
@@ -408,6 +410,7 @@ class TaskRunner:
                     duration_ms=(time.perf_counter() - started) * 1000,
                     spans=run.attempts if run else (),
                     task_id=claimed.task_id,
+                    query_context=ctx.query_context,
                 ),
                 None,
             )

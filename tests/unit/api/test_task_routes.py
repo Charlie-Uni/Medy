@@ -54,6 +54,7 @@ def test_create_get_and_idempotency():
         json={**BODY, "input": {"product": "x", "question": "y"}},
         headers={**auth(), "Idempotency-Key": "abc"},
     )
+
     assert mismatch.status_code == 422 and mismatch.json()["code"] == "idempotency_payload_mismatch"
     fresh = c.post("/v1/tasks", json=BODY, headers=auth())
     assert fresh.status_code == 202 and fresh.json()["task_id"] != task["task_id"]
@@ -111,3 +112,21 @@ def test_retry_only_for_failed_retryable_and_completed_carries_the_result():
     done = c.get(f"/v1/tasks/{task_id}", headers=auth()).json()
     assert done["status"] == "completed" and done["result"]["skill"] == "label_query@1.0.0" and done["error"] is None
     assert c.post(f"/v1/tasks/{task_id}/retry", headers=auth()).status_code == 409
+
+
+def test_unsupported_version_is_rejected_before_queueing_and_dates_remain_distinct():
+    rt = TaskRuntime()
+    c = client(rt)
+    rejected = c.post("/v1/tasks", json={**BODY, "historical": {"version": "v1"}}, headers=auth())
+    assert rejected.status_code == 400 and rejected.json()["code"] == "invalid_request"
+    assert rt.tasks.tasks == {} and rt.gateway.calls == []
+    queued = c.post(
+        "/v1/tasks", json={**BODY, "historical": {"as_of": "2025-01-01"}}, headers={**auth(), "Idempotency-Key": "date"}
+    )
+    assert queued.status_code == 202
+    record = rt.tasks.get(queued.json()["task_id"])
+    assert record.historical == {"as_of": "2025-01-01", "version": None}
+    conflict = c.post(
+        "/v1/tasks", json={**BODY, "historical": {"as_of": "2025-01-02"}}, headers={**auth(), "Idempotency-Key": "date"}
+    )
+    assert conflict.status_code == 422 and conflict.json()["code"] == "idempotency_payload_mismatch"

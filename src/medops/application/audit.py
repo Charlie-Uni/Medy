@@ -15,6 +15,7 @@ from medops.api.contracts import FeedbackReceipt, FeedbackRequest, FeedbackSigna
 from medops.core.errors import BusinessError, ErrorCode, ErrorResponse, InfrastructureError
 from medops.domain.common import Dept
 from medops.domain.identity import UserContext
+from medops.domain.query import QueryContext
 from medops.domain.state import VersionSet
 from medops.harness.contracts import NodeAttempt
 from medops.harness.runtime import HarnessRun
@@ -42,6 +43,7 @@ class TraceRecord:
     duration_ms: float
     spans: tuple[NodeAttempt, ...]
     task_id: str | None = None
+    query_context: QueryContext | None = None  # None = legacy/other transport, never guessed by Replay
 
 
 @dataclass(frozen=True)
@@ -72,6 +74,7 @@ class TraceSummary:
     versions: Mapping[str, Any]
     evidence_chunk_ids: tuple[str, ...]
     cited_chunk_ids: tuple[str, ...]
+    query_context: QueryContext | None = None
 
 
 @dataclass(frozen=True)
@@ -151,6 +154,7 @@ def trace_from_run(
         duration_ms=duration_ms,
         spans=run.attempts,
         task_id=task_id,
+        query_context=state.query_context,
     )
     escalation = None
     if esc is not None:
@@ -292,6 +296,7 @@ class InMemoryTraceStore:
             versions=t.versions,
             evidence_chunk_ids=t.evidence_chunk_ids,
             cited_chunk_ids=t.cited_chunk_ids,
+            query_context=t.query_context,
         )
 
     def record_replay(self, record: ReplayRecord) -> None:

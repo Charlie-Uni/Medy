@@ -16,7 +16,7 @@ from typing import Any
 import psycopg
 
 from medops.api.auth import Authenticator, JwtVerifier, PgDirectory, RemoteJwks
-from medops.api.contracts import AskRequest
+from medops.api.contracts import AskRequest, HistoricalRequest
 from medops.api.ports import ApiRuntime
 from medops.application.audit import TraceStore
 from medops.application.metrics import MetricsSource, PgMetricsSource
@@ -33,6 +33,7 @@ from medops.application.tasks import TaskStore
 from medops.core.config import Settings
 from medops.core.errors import ErrorCode, InfrastructureError
 from medops.domain.identity import UserContext
+from medops.domain.query import QueryContext, resolve_query_context
 from medops.domain.state import VersionSet
 from medops.harness.answer import ANSWER_SYSTEM
 from medops.harness.assembly import build_retrieval
@@ -349,9 +350,24 @@ class ProductionRuntime:
         return self._glossaries[version]
 
     def build_deps(
-        self, conn: Any, user: UserContext, request: AskRequest, routed: RequestPolicies | None = None
+        self,
+        conn: Any,
+        user: UserContext,
+        request: AskRequest,
+        routed: RequestPolicies | None = None,
+        *,
+        query_context: QueryContext | None = None,
     ) -> HarnessDeps:
-        as_of = request.historical.as_of if request.historical is not None else self.as_of
+        selected = resolve_query_context(
+            request.historical.model_dump() if request.historical else None, default_as_of=self.as_of
+        )
+        if query_context is not None:
+            if query_context.selector != selected.selector:
+                from medops.core.errors import BusinessError
+
+                raise BusinessError(ErrorCode.invalid_request, "request and execution historical selectors disagree")
+            selected = query_context
+        as_of = selected.as_of
         routed = routed or self.route_policies(conn, user)
         from medops.infrastructure.db.deadline import DeadlineConnection
 
@@ -394,6 +410,7 @@ class ProductionRuntime:
             judge_model_id=PRODUCTION_JUDGE_MODEL,
             as_of=as_of,
             executions=PgExecutionStore(conn),
+            query_context=selected,
             execution_limits=configured_limits(self.settings),
         )
 
@@ -420,13 +437,15 @@ class ProductionRuntime:
     def skill_context(
         self, conn: Any, user: UserContext, trace_id: str, historical: Mapping[str, Any] | None
     ) -> SkillContext:
-        as_of = date.fromisoformat(historical["as_of"]) if historical and historical.get("as_of") else self.as_of
+        selected = resolve_query_context(historical, default_as_of=self.as_of)
         from medops.infrastructure.db.deadline import DeadlineConnection
 
         conn = DeadlineConnection(conn)
-        request = AskRequest(query="task", historical=None)
+        request = AskRequest(
+            query="task", historical=HistoricalRequest(as_of=selected.as_of) if selected.historical_requested else None
+        )
         routed = self.route_policies(conn, user)
-        deps = self.build_deps(conn, user, request, routed)
+        deps = self.build_deps(conn, user, request, routed, query_context=selected)
 
         @contextmanager
         def conn_for_user(_user: UserContext) -> Iterator[Any]:
@@ -436,11 +455,13 @@ class ProductionRuntime:
             user=user,
             versions=routed.versions,
             deps=deps,
-            evidence_lookup=evidence_lookup(conn_for_user, as_of=as_of),
+            evidence_lookup=evidence_lookup(
+                conn_for_user, as_of=selected.as_of, allow_historical=selected.historical_requested
+            ),
             doc_type_lookup=doc_type_lookup(conn_for_user),
             trace_id=trace_id,
             run_id=trace_id,
-            as_of=as_of,
+            as_of=selected.as_of,
         )
 
     def retrieval_integrity(self) -> dict[str, Any]:

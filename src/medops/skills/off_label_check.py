@@ -153,6 +153,7 @@ def _run(ctx: SkillContext, inp: OffLabelCheckInput) -> OffLabelCheckOutput:
         findings=tuple(findings),
         clauses=clauses,
         citations=answer.citations,
+        historical_notice=answer.historical_notice,
     )
 
 

@@ -3,7 +3,7 @@ agree, and every failure mode ends in an escalation with a stable reason code.""
 
 from __future__ import annotations
 
-from datetime import UTC, datetime
+from datetime import UTC, date, datetime
 
 from medops.domain.common import DocStatus, ReasonCode
 from medops.domain.state import MAX_CANDIDATES, CandidateRef, SourceRank
@@ -172,7 +172,9 @@ def test_historical_evidence_requires_the_flag_and_sets_the_notice():
     gateway = FakeModelGateway(
         {"answer": [{"claims": [{"text": "6 至 12 歲孩童口服 100 mg，一天三次。", "citation_chunk_ids": ["c1"]}]}]}
     )
-    run = run_ask(state(historical_requested=True), make_deps(FakeRetrieval(archived), gateway))
+    run = run_ask(
+        state(historical_requested=True), make_deps(FakeRetrieval(archived), gateway, as_of=date(2026, 9, 23))
+    )
     assert run.outcome == "answered" and run.state.answer.historical_notice is True
     # without the explicit request the state model refuses historical evidence (INV-DATA-03); the node fails closed
     bad = run_ask(state(), make_deps(FakeRetrieval(archived), gateway))

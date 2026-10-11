@@ -52,6 +52,7 @@ class SkillOutput(DomainModel):
     status: SkillStatus
     reason_codes: tuple[ReasonCode, ...] = ()
     detail: str = ""
+    historical_notice: bool = False  # set when the result actually uses archived document evidence
 
     @model_validator(mode="after")
     def _non_completion_has_a_reason(self) -> SkillOutput:

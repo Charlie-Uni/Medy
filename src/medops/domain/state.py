@@ -14,6 +14,7 @@ from medops.domain.common import DomainModel, NonEmptyStr
 from medops.domain.evidence import Evidence
 from medops.domain.identity import UserContext
 from medops.domain.intent import Entity, Intent, IntentType
+from medops.domain.query import QueryContext
 from medops.domain.safety import SafetyDecision, SafetyResult
 from medops.domain.verification import VerifyResult
 
@@ -80,6 +81,7 @@ class AgentState(DomainModel):
     budget: TokenBudget
     session_entities: tuple[Entity, ...] = ()
     historical_requested: bool = False
+    query_context: QueryContext | None = None
     intent: Intent | None = None
     rewritten_queries: tuple[NonEmptyStr, ...] = Field(default=(), max_length=MAX_REWRITTEN_QUERIES)
     candidates: tuple[CandidateRef, ...] = Field(default=(), max_length=MAX_CANDIDATES)
@@ -91,6 +93,8 @@ class AgentState(DomainModel):
 
     @model_validator(mode="after")
     def _invariants(self) -> AgentState:
+        if self.query_context is not None and self.historical_requested != self.query_context.historical_requested:
+            raise ValueError("state and query context historical modes disagree")
         chunk_ids = [e.citation.chunk_id for e in self.evidence]
         if len(set(chunk_ids)) != len(chunk_ids):
             raise ValueError("evidence chunk ids must be unique")

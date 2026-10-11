@@ -17,11 +17,14 @@ import psycopg
 import pytest
 
 from medops.core.errors import BusinessError, ErrorCode, InfrastructureError
+from medops.retrieval.doc_focus import load_documents
 from medops.retrieval.lexical import pg_simple_fts as a
 from medops.retrieval.lexical.boundary import run_lexical_search
 from medops.retrieval.recheck import RejectReason, recheck_candidates
+from medops.skills.production import evidence_lookup
 from tests.integration.lexical_adapter_suite import make_database, txn
 from tests.integration.test_migrations import document, job, source_object
+from tests.unit.harness._fixtures import user
 
 pytest.importorskip("jieba")
 from medops.retrieval.lexical.tokenizer import JiebaTokenizerV1  # noqa: E402
@@ -29,6 +32,36 @@ from medops.retrieval.lexical.tokenizer import JiebaTokenizerV1  # noqa: E402
 TOKENIZER = JiebaTokenizerV1()
 AS_OF = date(2026, 6, 1)
 WORD = "kappa"  # present in every seeded chunk so one lexical query returns them all
+
+
+@pytest.mark.parametrize(
+    "when,historical,accepted",
+    [
+        (date(2024, 12, 31), True, False),
+        (date(2025, 1, 1), True, True),
+        (date(2025, 12, 31), True, True),
+        (date(2026, 1, 1), True, False),
+        (date(2025, 6, 1), False, False),
+    ],
+)
+def test_skill_history_uses_inclusive_start_exclusive_end_and_never_widens_rls(db, seed, when, historical, accepted):
+    from contextlib import contextmanager
+
+    from medops.domain.common import Dept
+
+    @contextmanager
+    def connection(_user):
+        with txn(db["users"]["app"], "MA") as conn:
+            yield conn
+
+    lookup = evidence_lookup(connection, as_of=when, allow_historical=historical)
+    rows = lookup(user(Dept.MA), [seed["archived"], seed["pv_only"], seed["archived_low_trust"]])
+    assert tuple(e.citation.chunk_id for e in rows) == ((seed["archived"],) if accepted else ())
+    assert all(e.historical and e.status.value == "archived" for e in rows)
+    with txn(db["users"]["app"], "MA") as conn:
+        refs = load_documents(conn, as_of=when, allow_historical=historical)
+        targets = conn.execute("select doc_id::text from chunks where chunk_id = %s", (seed["archived"],)).fetchone()
+        assert (targets[0] in {d.doc_id for d in refs}) is accepted
 
 
 @pytest.fixture(scope="module")

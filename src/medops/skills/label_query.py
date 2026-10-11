@@ -43,7 +43,6 @@ class LabelQueryOutput(SkillOutput):
     claims: tuple[Claim, ...] = ()
     excerpts: tuple[LabelExcerpt, ...] = ()
     citations: tuple[Citation, ...] = ()
-    historical_notice: bool = False
 
 
 def _run(ctx: SkillContext, inp: LabelQueryInput) -> LabelQueryOutput:
@@ -54,6 +53,7 @@ def _run(ctx: SkillContext, inp: LabelQueryInput) -> LabelQueryOutput:
         trace_id=ctx.trace_id,
         run_id=ctx.run_id,
         session_entities=(Entity(kind="drug", value=inp.product),),
+        query_context=ctx.query_context,
     )
     run = run_ask(state, ctx.deps)
     answer = run.state.answer

@@ -8,6 +8,7 @@ from dataclasses import dataclass, field
 from datetime import UTC, date, datetime
 
 from medops.domain.identity import UserContext
+from medops.domain.query import QueryContext
 from medops.harness.answer import ANSWER_SYSTEM
 from medops.harness.contracts import NodeSpec
 from medops.harness.evidence_focus import SentenceScorer, needs_titles
@@ -41,6 +42,7 @@ class HarnessDeps:
     sleep: Callable[[float], None] = time.sleep
     clock: Callable[[], datetime] = lambda: datetime.now(UTC)
     as_of: date | None = None
+    query_context: QueryContext | None = None
     answer_max_output_tokens: int = 800
     executions: ExecutionStore | None = None  # M2-03 operation-key ledger; None = no persistence (unit tests)
     answer_system: str = ANSWER_SYSTEM  # released prompt policy may override (M4-03); the trace's model config says so
@@ -53,6 +55,8 @@ class HarnessDeps:
     execution_limits: ExecutionLimits | None = None  # server-owned; nested operations share the parent's allowance
 
     def __post_init__(self) -> None:
+        if self.query_context is not None and self.as_of is not None and self.as_of != self.query_context.as_of:
+            raise ValueError("query context and dependency date disagree")
         if self.evidence_focus not in ALLOWED_EVIDENCE_FOCUS:
             raise ValueError(f"unknown evidence focus mode {self.evidence_focus!r}")
         if self.evidence_focus in FOCUS_PARAMS and self.sentence_scorer is None:

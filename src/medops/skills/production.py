@@ -29,13 +29,15 @@ def _uuids(ids: Sequence[str]) -> list[str]:
     return out
 
 
-def evidence_lookup(conn_for_user: ConnForUser, *, as_of: date | None = None) -> Callable[..., tuple[Evidence, ...]]:
+def evidence_lookup(
+    conn_for_user: ConnForUser, *, as_of: date | None = None, allow_historical: bool = False
+) -> Callable[..., tuple[Evidence, ...]]:
     def lookup(user: UserContext, chunk_ids: Sequence[str]) -> tuple[Evidence, ...]:
         ids = _uuids(chunk_ids)
         if not ids:
             return ()
         with conn_for_user(user) as conn:
-            return tuple(recheck_candidates(conn, ids, as_of=as_of).evidence)
+            return tuple(recheck_candidates(conn, ids, as_of=as_of, allow_historical=allow_historical).evidence)
 
     return lookup
 

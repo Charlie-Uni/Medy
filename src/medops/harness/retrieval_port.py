@@ -13,7 +13,7 @@ from datetime import UTC, date, datetime
 from typing import Any, Protocol
 
 from medops.core.deadline import check_deadline
-from medops.core.errors import InfrastructureError
+from medops.core.errors import BusinessError, ErrorCode, InfrastructureError
 from medops.core.telemetry import annotate, span
 from medops.domain.common import DomainModel, NonEmptyStr
 from medops.domain.evidence import Evidence
@@ -118,6 +118,9 @@ class ProductionRetrieval:
         self._cache_versions = cache_versions
 
     def retrieve(self, request: RetrievalRequest) -> RetrievalOutcome:
+        if request.historical_requested and request.as_of is None:
+            raise BusinessError(ErrorCode.invalid_request, "historical retrieval requires an explicit date")
+        request = request.model_copy(update={"as_of": request.as_of or date.today()})
         check_deadline()
         with span(
             "retrieval.retrieve", dept=request.user.dept.value, historical=request.historical_requested
@@ -201,7 +204,9 @@ class ProductionRetrieval:
 
     def _resolve_source_constraint(self, request: RetrievalRequest) -> SourceConstraint:
         with self._conn_for_user(request.user) as conn:
-            return resolve_source_constraint(request.query, load_documents(conn))
+            return resolve_source_constraint(
+                request.query, load_documents(conn, as_of=request.as_of, allow_historical=request.historical_requested)
+            )
 
     def _cache_inputs(self, request: RetrievalRequest) -> CacheKeyInputs | None:
         if self._cache is None or self._cache_versions is None:
@@ -261,7 +266,10 @@ class ProductionRetrieval:
                     focus_rankings: dict[str, list[str]] = {}
                     focus_rechecked: list[RecheckResult] = []
                     if self._doc_focus:
-                        focused = focus_documents(request.query, load_documents(conn))
+                        focused = focus_documents(
+                            request.query,
+                            load_documents(conn, as_of=request.as_of, allow_historical=request.historical_requested),
+                        )
                         if source_doc_ids is not None:
                             allowed = set(source_doc_ids)
                             focused = [doc for doc in focused if doc.doc_id in allowed]

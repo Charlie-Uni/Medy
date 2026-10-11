@@ -1,0 +1,138 @@
+{
+  "record": 178,
+  "date": "2026-10-11",
+  "task_id": "ARCH-02",
+  "status": "DONE",
+  "reviewer": "Codex (implementer self-review)",
+  "independent_human_review": false,
+  "status_transitions": [
+    "READY",
+    "IN_PROGRESS",
+    "REVIEW",
+    "DONE"
+  ],
+  "hosted_model_calls": 0,
+  "actual_fee_usd": 0,
+  "committed": false,
+  "pushed": false,
+  "services_restarted": false,
+  "validation": {
+    "original_regression": {
+      "failed": 1,
+      "seconds": 0.79
+    },
+    "existing_path_regression": {
+      "passed": 92,
+      "seconds": 2.65
+    },
+    "extended_directed": {
+      "passed": 80,
+      "seconds": 5.3,
+      "exit_code": 0
+    },
+    "skills_and_real_pg": {
+      "passed": 86,
+      "seconds": 2.74,
+      "exit_code": 0
+    },
+    "strict_calendar_and_batch": {
+      "passed": 26,
+      "seconds": 0.99,
+      "exit_code": 0
+    },
+    "final_make_check": {
+      "passed": 1908,
+      "skipped": 70,
+      "warnings": 1,
+      "seconds": 50.94,
+      "exit_code": 0,
+      "formatted_files": 468,
+      "mypy_source_files": 196,
+      "log": "/Users/leaf/.cache/medy-checks/arch02-verified-y0509r6m/.local/arch02-check.log"
+    },
+    "optional_skip_audit": {
+      "skipped": 70,
+      "seconds": 0.06,
+      "reason": "B/C experimental servers unreachable"
+    },
+    "source_sha_count": 501,
+    "source_mismatches": [],
+    "task_ids_before": 141,
+    "task_ids_after": 141,
+    "task_id_set_equal": true,
+    "only_status_change": {
+      "ARCH-02": [
+        "READY",
+        "DONE"
+      ]
+    },
+    "local_links_checked": 177,
+    "broken_links": [],
+    "preexisting_files": 85,
+    "preserved_unchanged": 70,
+    "intentional_overlap": [
+      "README.md",
+      "docs/CURRENT_TASKS.md",
+      "docs/DEPLOY.md",
+      "docs/ITERATION_PLAN.md",
+      "docs/ITERATION_STAGES.md",
+      "src/medops/api/runtime.py",
+      "src/medops/application/tasks.py",
+      "src/medops/harness/dependencies.py",
+      "src/medops/harness/nodes.py",
+      "src/medops/harness/retrieval_port.py",
+      "src/medops/harness/runtime.py",
+      "src/medops/skills/registry.py",
+      "tests/integration/test_migrations.py",
+      "tests/unit/skills/test_registry.py",
+      "docs/agent/PLAN-01-capability-and-scenario.md"
+    ],
+    "missing_files": [],
+    "request_schema_shapes_equal": {
+      "schemas/api/AskRequest.schema.json": true,
+      "schemas/api/TaskCreateRequest.schema.json": true
+    }
+  },
+  "databases": {
+    "medops_v2": {
+      "revision": "0024",
+      "protected_content_tables": 25,
+      "index_count_tables": 5,
+      "protection_equal": true
+    },
+    "medops_v2_safety": {
+      "revision": "0024",
+      "protected_content_tables": 25,
+      "index_count_tables": 5,
+      "protection_equal": true
+    },
+    "medops": {
+      "revision": "0024",
+      "protected_content_tables": 25,
+      "index_count_tables": 5,
+      "protection_equal": true
+    }
+  },
+  "self_review": {
+    "requirements": "PASS (current engineering scope)",
+    "correctness_and_failures": "PASS (current engineering scope)",
+    "permissions_and_data": "PASS (current engineering scope)",
+    "budget_and_side_effects": "PASS (current engineering scope)",
+    "traceability": "PASS (current engineering scope)",
+    "validation": "PASS (current engineering scope)",
+    "ledger_and_documentation": "PASS (current engineering scope)",
+    "independent_review_and_phase_boundaries": "PASS (current engineering scope)"
+  },
+  "limits": [
+    "Bare Ask/Task version selectors rejected; document/family version resolution unimplemented",
+    "Legacy NULL contexts and non-Ask traces explicitly rejected by single-trace Replay",
+    "Replay retains original day/mode against current facts/permissions/policies; not original-condition reconstruction",
+    "ARCH-03/06/07 and Agent/evolution remain pending",
+    "No hosted quality/performance benchmark or unseen holdout run",
+    "Strongly typed legacy response consumers may need model regeneration",
+    "Database downgraded before metadata export loses newly stored context"
+  ],
+  "next_task": "ARCH-03",
+  "backup": "/var/folders/zj/6djhy_4x7vx_7t8xcgt_v62c0000gn/T/medy-arch02-we_nvmtc",
+  "verified_worktree": "/Users/leaf/.cache/medy-checks/arch02-verified-y0509r6m"
+}

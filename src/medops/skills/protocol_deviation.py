@@ -125,6 +125,7 @@ def _run(ctx: SkillContext, inp: ProtocolDeviationInput) -> ProtocolDeviationOut
         deviation_type=dev_type,
         clauses=clauses,
         citations=answer.citations,
+        historical_notice=answer.historical_notice,
         applicable_versions=versions,
         rationale=str(parsed.get("rationale", ""))[:600],
         rationale_clause_indices=indices,

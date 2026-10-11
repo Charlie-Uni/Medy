@@ -25,6 +25,7 @@ from medops.core.telemetry import annotate, run_metadata, span
 from medops.domain.common import DocType, DomainModel, ReasonCode
 from medops.domain.evidence import Evidence
 from medops.domain.identity import UserContext
+from medops.domain.query import QueryContext, resolve_query_context
 from medops.domain.safety import SafetyDecision, SafetyResult
 from medops.domain.skill import SkillOutput, SkillSpec, SkillStatus
 from medops.domain.state import VersionSet
@@ -55,6 +56,19 @@ class SkillContext:
     trace_id: str
     run_id: str
     as_of: date | None = None
+
+    @property
+    def query_context(self) -> QueryContext:
+        context = self.deps.query_context or resolve_query_context(None, default_as_of=self.as_of or self.deps.as_of)
+        if self.as_of is not None and self.as_of != context.as_of:
+            raise BusinessError(ErrorCode.invalid_request, "skill and retrieval dates disagree")
+        return context
+
+    def pin_query_context(self) -> SkillContext:
+        selected = self.query_context
+        return replace(
+            self, as_of=selected.as_of, deps=replace(self.deps, as_of=selected.as_of, query_context=selected)
+        )
 
 
 Handler = Callable[[SkillContext, Any], SkillOutput]
@@ -130,6 +144,7 @@ class SkillRegistry:
 
     # ------------------------------------------------------------------ execution
     def execute(self, name: str, version: str, raw_input: Mapping[str, object], *, context: SkillContext) -> SkillRun:
+        context = context.pin_query_context()
         limits = context.deps.execution_limits or default_limits(timeout_s=self.get(name, version).spec.timeout_s)
         limits = limits.model_copy(update={"timeout_s": min(limits.timeout_s, self.get(name, version).spec.timeout_s)})
         if not isinstance(context.deps.gateway, MeteredGateway):
@@ -191,7 +206,7 @@ class SkillRegistry:
                 "input": payload.model_dump(mode="json"),
                 "user": context.user.model_dump(mode="json"),
                 "versions": context.versions.model_dump(mode="json"),
-                "as_of": context.as_of.isoformat() if context.as_of else None,
+                "query_context": context.query_context.model_dump(mode="json"),
             },
         )
         node = NodeSpec(
@@ -236,6 +251,7 @@ class SkillRegistry:
     def execute_many(
         self, requests: Sequence[SkillRequest], *, context: SkillContext
     ) -> tuple[SkillRun | MedOpsError, ...]:
+        context = context.pin_query_context()  # every child shares the same day even when a batch crosses midnight
         limits = context.deps.execution_limits or default_limits(
             timeout_s=sum(self.get(r.name, r.version).spec.timeout_s for r in requests) or 1
         )

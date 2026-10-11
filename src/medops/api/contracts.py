@@ -20,12 +20,13 @@ from datetime import date, datetime
 from enum import StrEnum
 from typing import Annotated
 
-from pydantic import BaseModel, ConfigDict, Field, JsonValue, model_validator
+from pydantic import BaseModel, ConfigDict, Field, JsonValue, field_validator, model_validator
 from pydantic.config import JsonDict
 
 from medops.core.errors import ErrorResponse
 from medops.domain.answer import Answer
 from medops.domain.common import Dept, ReasonCode
+from medops.domain.query import QueryContext, resolve_query_context
 from medops.domain.state import VersionSet
 
 TraceId = Annotated[str, Field(pattern=r"^[0-9a-f]{32}$")]
@@ -39,7 +40,9 @@ class ApiModel(BaseModel):
 
 
 class HistoricalRequest(ApiModel):
-    """Explicit request for an archived version (INV-DATA-03); exactly one selector."""
+    """Explicit historical request (INV-DATA-03); exactly one selector. Ask/Task support as_of.
+    The version field is retained for wire compatibility but bare versions lack a document identity
+    and are rejected with invalid_request; they never silently select the current document."""
 
     model_config = ConfigDict(
         json_schema_extra={
@@ -52,6 +55,18 @@ class HistoricalRequest(ApiModel):
 
     version: NonEmptyStr | None = None
     as_of: date | None = None
+
+    @field_validator("as_of", mode="before")
+    @classmethod
+    def _calendar_date(cls, value: object) -> date | None:
+        if value is None:
+            return None
+        from medops.core.errors import BusinessError
+
+        try:
+            return resolve_query_context({"as_of": value}).as_of
+        except BusinessError:
+            raise ValueError("historical.as_of must be a YYYY-MM-DD calendar date") from None
 
     @model_validator(mode="after")
     def _one_selector(self) -> HistoricalRequest:
@@ -249,7 +264,9 @@ class FeedbackReceipt(ApiModel):
 class ReplayRequest(ApiModel):
     """Admin request to re-run one trace (M3-08). The replay runs the original question under the original
     principal's current identity, with this deployment's pinned versions, under a fresh `replay_run_id` so no
-    operation-key result of the production run can be reused."""
+    operation-key result of the production run can be reused. The saved effective day and explicit historical
+    mode are preserved against current facts; this is not an original fact snapshot. Missing context and
+    non-Ask traces are rejected before execution."""
 
     reason: Annotated[str, Field(min_length=1, max_length=500)]
 
@@ -262,6 +279,7 @@ class ReplaySide(ApiModel):
     cited_chunk_ids: tuple[str, ...] = ()
     evidence_chunk_ids: tuple[str, ...] = ()
     versions: VersionSet
+    query_context: QueryContext | None = None
 
 
 class ReplayReport(ApiModel):

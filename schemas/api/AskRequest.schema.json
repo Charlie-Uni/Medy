@@ -2,7 +2,7 @@
   "$defs": {
     "HistoricalRequest": {
       "additionalProperties": false,
-      "description": "Explicit request for an archived version (INV-DATA-03); exactly one selector.",
+      "description": "Explicit historical request (INV-DATA-03); exactly one selector. Ask/Task support as_of.\nThe version field is retained for wire compatibility but bare versions lack a document identity\nand are rejected with invalid_request; they never silently select the current document.",
       "oneOf": [
         {
           "properties": {

@@ -1069,7 +1069,7 @@
       },
       "HistoricalRequest": {
         "additionalProperties": false,
-        "description": "Explicit request for an archived version (INV-DATA-03); exactly one selector.",
+        "description": "Explicit historical request (INV-DATA-03); exactly one selector. Ask/Task support as_of.\nThe version field is retained for wire compatibility but bare versions lack a document identity\nand are rejected with invalid_request; they never silently select the current document.",
         "oneOf": [
           {
             "properties": {
@@ -1395,6 +1395,26 @@
         "title": "PolicyStatus",
         "type": "string"
       },
+      "QueryContext": {
+        "additionalProperties": false,
+        "properties": {
+          "as_of": {
+            "format": "date",
+            "title": "As Of",
+            "type": "string"
+          },
+          "historical_requested": {
+            "default": false,
+            "title": "Historical Requested",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "as_of"
+        ],
+        "title": "QueryContext",
+        "type": "object"
+      },
       "ReasonCode": {
         "description": "Stable refusal/escalation reason codes (baseline 5.5, F4.1).",
         "enum": [
@@ -1479,7 +1499,7 @@
       },
       "ReplayRequest": {
         "additionalProperties": false,
-        "description": "Admin request to re-run one trace (M3-08). The replay runs the original question under the original\nprincipal's current identity, with this deployment's pinned versions, under a fresh `replay_run_id` so no\noperation-key result of the production run can be reused.",
+        "description": "Admin request to re-run one trace (M3-08). The replay runs the original question under the original\nprincipal's current identity, with this deployment's pinned versions, under a fresh `replay_run_id` so no\noperation-key result of the production run can be reused. The saved effective day and explicit historical\nmode are preserved against current facts; this is not an original fact snapshot. Missing context and\nnon-Ask traces are rejected before execution.",
         "properties": {
           "reason": {
             "maxLength": 500,
@@ -1517,6 +1537,17 @@
             "minLength": 1,
             "title": "Outcome",
             "type": "string"
+          },
+          "query_context": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/QueryContext"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
           },
           "reason_codes": {
             "default": [],

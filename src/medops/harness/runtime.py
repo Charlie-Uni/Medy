@@ -4,10 +4,12 @@ from __future__ import annotations
 
 from dataclasses import dataclass, replace
 
+from medops.core.errors import BusinessError, ErrorCode
 from medops.core.telemetry import annotate, run_metadata, span
 from medops.core.tracing import new_trace_id
 from medops.domain.identity import UserContext
 from medops.domain.intent import Entity
+from medops.domain.query import QueryContext, resolve_query_context
 from medops.domain.state import AgentState, TokenBudget, VersionSet
 from medops.harness.contracts import NodeAttempt
 from medops.harness.dependencies import HarnessDeps
@@ -42,6 +44,7 @@ def initial_state(
     token_limit: int = DEFAULT_TRACE_TOKEN_LIMIT,
     session_entities: tuple[Entity, ...] = (),
     historical_requested: bool = False,
+    query_context: QueryContext | None = None,
 ) -> AgentState:
     trace = trace_id or new_trace_id()
     return AgentState(
@@ -52,11 +55,28 @@ def initial_state(
         versions=versions,
         budget=TokenBudget(limit=token_limit, used=0),
         session_entities=session_entities,
-        historical_requested=historical_requested,
+        historical_requested=query_context.historical_requested if query_context is not None else historical_requested,
+        query_context=query_context,
     )
 
 
 def run_ask(state: AgentState, deps: HarnessDeps, *, recursion_limit: int = 12) -> HarnessRun:
+    context = state.query_context or deps.query_context
+    if context is None:
+        if state.historical_requested:
+            if deps.as_of is None:
+                raise BusinessError(ErrorCode.invalid_request, "historical execution requires an explicit date")
+            context = QueryContext(as_of=deps.as_of, historical_requested=True)
+        else:
+            context = resolve_query_context(None, default_as_of=deps.as_of)
+    if (
+        context.historical_requested != state.historical_requested
+        or (deps.as_of is not None and context.as_of != deps.as_of)
+        or (deps.query_context is not None and context != deps.query_context)
+    ):
+        raise BusinessError(ErrorCode.invalid_request, "execution historical context disagrees")
+    state = state.advance(query_context=context)
+    deps = replace(deps, as_of=context.as_of, query_context=context)
     limits = deps.execution_limits or default_limits(
         timeout_s=sum(s.timeout_s for s in deps.specs.values()), token_limit=state.budget.limit
     )

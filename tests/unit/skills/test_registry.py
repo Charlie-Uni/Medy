@@ -5,6 +5,8 @@ from __future__ import annotations
 
 import threading
 import time
+from datetime import date
+from unittest.mock import Mock
 
 import pytest
 from pydantic import ValidationError
@@ -12,6 +14,7 @@ from pydantic import ValidationError
 from medops.core.errors import BusinessError, ErrorCode, InfrastructureError
 from medops.domain.common import Dept, DomainModel, NonEmptyStr, ReasonCode, RiskLevel
 from medops.domain.identity import UserContext
+from medops.domain.query import QueryContext
 from medops.domain.safety import SafetyDecision
 from medops.domain.skill import SkillOutput, SkillSpec, SkillStatus
 from medops.infrastructure.llm.fake import FakeModelGateway
@@ -67,6 +70,26 @@ def context(reg: SkillRegistry, u: UserContext | None = None) -> SkillContext:
         trace_id="a" * 32,
         run_id="a" * 32,
     )
+
+
+def test_a_multi_skill_execution_pins_one_day_before_dispatch(monkeypatch):
+    import medops.skills.registry as module
+
+    resolver = Mock(side_effect=[QueryContext(as_of=date(2026, 6, 1)), QueryContext(as_of=date(2026, 6, 2))])
+    monkeypatch.setattr(module, "resolve_query_context", resolver)
+    seen = []
+
+    def handler(ctx, inp):
+        seen.append(ctx.query_context.as_of)
+        return EchoOut(status=SkillStatus.completed, text=inp.text)
+
+    reg = registry(entry(handler=handler))
+    results = reg.execute_many(
+        [SkillRequest("echo_skill", "1.0.0", {"text": "a"}), SkillRequest("echo_skill", "1.0.0", {"text": "b"})],
+        context=context(reg),
+    )
+    assert len(results) == 2 and all(isinstance(r, module.SkillRun) for r in results)
+    assert seen == [date(2026, 6, 1)] * 2 and resolver.call_count == 1
 
 
 def test_execute_checks_scopes_and_schema_then_returns_the_typed_output_with_an_attempt_record():

@@ -18,6 +18,7 @@ from medops.application.audit import (
     TraceSummary,
 )
 from medops.domain.common import Dept
+from medops.domain.query import QueryContext
 
 
 class PgTraceStore:
@@ -28,8 +29,8 @@ class PgTraceStore:
         self._conn.execute(
             """
             insert into traces (trace_id, run_id, kind, task_id, principal, dept, query, outcome, reason_codes, versions,
-                                evidence_chunk_ids, cited_chunk_ids, flagged_chunk_ids, model_calls, tokens, cost_usd, duration_ms)
-            values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                                evidence_chunk_ids, cited_chunk_ids, flagged_chunk_ids, model_calls, tokens, cost_usd, duration_ms, query_context)
+            values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """,
             (
                 trace.trace_id,
@@ -49,6 +50,7 @@ class PgTraceStore:
                 trace.tokens,
                 round(trace.cost_usd, 6),
                 trace.duration_ms,
+                Jsonb(trace.query_context.model_dump(mode="json")) if trace.query_context is not None else None,
             ),
         )
         if trace.spans:
@@ -97,7 +99,7 @@ class PgTraceStore:
 
     def read_trace(self, trace_id: str) -> TraceSummary | None:
         row = self._conn.execute(
-            "select trace_id, run_id, kind, principal, dept::text, query, outcome, reason_codes, versions, evidence_chunk_ids, cited_chunk_ids from traces where trace_id = %s",
+            "select trace_id, run_id, kind, principal, dept::text, query, outcome, reason_codes, versions, evidence_chunk_ids, cited_chunk_ids, query_context from traces where trace_id = %s",
             (trace_id,),
         ).fetchone()
         if row is None:
@@ -114,6 +116,7 @@ class PgTraceStore:
             versions=row[8],
             evidence_chunk_ids=tuple(row[9]),
             cited_chunk_ids=tuple(row[10]),
+            query_context=QueryContext.model_validate(row[11]) if row[11] is not None else None,
         )
 
     def record_replay(self, record: ReplayRecord) -> None:

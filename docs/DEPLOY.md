@@ -51,7 +51,7 @@ docker compose --env-file .env --profile app ps
 
 ## 调用费用账本（ARCH-04，2026-10-11）
 
-启动新 API、worker、MCP 或付费评测之前，目标费用库须先执行 `make migrate` 到 **0023**。本机 medops_v2、medops_v2_safety、medops 已升级；外部环境不自动升级。新代码使用调用级 reserve/settle 函数，仍停在 0022 的库不能承担新模型调用。旧函数保留，可先升级数据库再滚动更新应用；回滚应用可保留附加结构，降级数据库会删除新回执元数据，需先导出并停写。字段、已知/保守费用、故障对账和权限见[费用说明](LLM_ACCOUNTING.md)与[记录 175](reviews/2026-10-11-implementation-175-call-receipts-and-fee-attribution.md)。
+启动新 API、worker、MCP 或付费评测之前，目标库须先执行 `make migrate` 到 **0024**。0023 提供调用级 reserve/settle 函数，0024 增加 Trace 的查询日期/显式历史模式；新 Trace store 会读写该列。本机 medops_v2、medops_v2_safety、medops 已升级，三库各 25 张受保护表的内容摘要及 5 张索引表计数不变；外部环境不自动升级。旧代码兼容新增 nullable 列，可先升级数据库再滚动更新应用；降级数据库会删除新回执/上下文元数据，需先导出并停写。费用见[记录 175](reviews/2026-10-11-implementation-175-call-receipts-and-fee-attribution.md)，历史输入、旧 Trace 拒绝和回放范围见[执行契约](HISTORICAL_QUERIES.md)与[记录 178](reviews/2026-10-11-implementation-178-historical-query-context.md)。服务本轮未重启，不把数据库升级当作新代码已经上线。
 
 ## 持久化
 

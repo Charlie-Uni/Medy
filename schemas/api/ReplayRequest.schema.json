@@ -1,6 +1,6 @@
 {
   "additionalProperties": false,
-  "description": "Admin request to re-run one trace (M3-08). The replay runs the original question under the original\nprincipal's current identity, with this deployment's pinned versions, under a fresh `replay_run_id` so no\noperation-key result of the production run can be reused.",
+  "description": "Admin request to re-run one trace (M3-08). The replay runs the original question under the original\nprincipal's current identity, with this deployment's pinned versions, under a fresh `replay_run_id` so no\noperation-key result of the production run can be reused. The saved effective day and explicit historical\nmode are preserved against current facts; this is not an original fact snapshot. Missing context and\nnon-Ask traces are rejected before execution.",
   "properties": {
     "reason": {
       "maxLength": 500,

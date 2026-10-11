@@ -7,11 +7,15 @@ output ever carries individual medical advice. Functional happy paths are the pe
 
 from __future__ import annotations
 
+from dataclasses import replace
+from datetime import date
+
 import pytest
 
 from medops.core.errors import BusinessError, ErrorCode, InfrastructureError
-from medops.domain.common import Dept, DocType, ReasonCode
+from medops.domain.common import Dept, DocStatus, DocType, ReasonCode
 from medops.domain.identity import UserContext
+from medops.domain.query import QueryContext
 from medops.domain.skill import SkillStatus
 from medops.infrastructure.llm.fake import FakeModelGateway
 from medops.infrastructure.llm.gateway import ModelTimeout
@@ -96,6 +100,20 @@ SKILLS: dict[str, dict] = {
     },
 }
 NAMES = tuple(SKILLS)
+
+
+@pytest.mark.parametrize("name", ["label_query", "citation_verification", "off_label_check", "protocol_deviation"])
+def test_all_document_skills_preserve_a_notice_for_archived_evidence(name):
+    reg = default_registry(sleep=lambda _s: None)
+    spec = SKILLS[name]
+    archived = evidence("c1", spec["evidence"][0], status=DocStatus.archived, historical=True)
+    port = FakeRetrieval(archived)
+    ctx = context(reg, spec, gateway=scripted(spec), retrieval=port, lookup=lambda _u, _ids: (archived,))
+    selected = QueryContext(as_of=date(2026, 6, 1), historical_requested=True)
+    ctx = replace(ctx, as_of=selected.as_of, deps=replace(ctx.deps, as_of=selected.as_of, query_context=selected))
+    output = reg.execute(name, "1.0.0", spec["input"], context=ctx).output
+    assert output.status is SkillStatus.completed and output.historical_notice is True
+    assert output.model_dump(mode="json")["historical_notice"] is True
 
 
 def user(dept: str, scopes: set[str] | None = None) -> UserContext:
