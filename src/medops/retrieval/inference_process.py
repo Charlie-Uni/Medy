@@ -33,7 +33,6 @@ def _providers(device: str, output: int) -> tuple[Any, Any]:
 def _serve(conn: Any, device: str, output: int, factory: Callable[..., tuple[Any, Any]]) -> None:
     try:
         embedding, reranker = factory(device, output)
-        rerankers = {output: reranker}
         conn.send(
             {
                 "status": "ready",
@@ -52,13 +51,8 @@ def _serve(conn: Any, device: str, output: int, factory: Callable[..., tuple[Any
                 elif message["op"] == "embed_documents":
                     value = embedding.embed_documents(message["texts"])
                 elif message["op"] == "score":
-                    size = message["output"]
-                    if size not in rerankers:
-                        # Preserve the existing per-output model semantics. Weight sharing is ARCH-10.
-                        from medops.retrieval.rerank import BgeRerankerV2M3
-
-                        rerankers[size] = BgeRerankerV2M3(device=device, output=size)
-                    value = rerankers[size].score(message["query"], message["texts"])
+                    # Output truncation belongs to the parent's immutable view, never to model loading.
+                    value = reranker.score(message["query"], message["texts"])
                 else:
                     raise ValueError("unsupported inference operation")
                 conn.send({"status": "ok", "value": value})
@@ -218,11 +212,15 @@ class ProcessEmbedding:
 
 class ProcessReranker:
     def __init__(self, lane: InferenceProcess, *, output: int) -> None:
-        if not 1 <= output <= lane.reranker_spec.max_input:
+        if type(output) is not int or not 1 <= output <= lane.reranker_spec.max_input:
             raise ValueError("invalid reranker output")
         self._lane = lane
-        self.spec = lane.reranker_spec.model_copy(update={"output": output})
+        self._spec = lane.reranker_spec.model_copy(update={"output": output})
         self.framework = lane.framework
 
+    @property
+    def spec(self) -> RerankerSpec:
+        return self._spec
+
     def score(self, query: str, texts: Sequence[str]) -> list[float]:
-        return self._lane.call({"op": "score", "output": self.spec.output, "query": query, "texts": list(texts)})
+        return self._lane.call({"op": "score", "query": query, "texts": list(texts)})

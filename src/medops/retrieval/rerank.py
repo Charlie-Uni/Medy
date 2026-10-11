@@ -12,6 +12,7 @@ from __future__ import annotations
 import os
 import re
 from collections.abc import Sequence
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Protocol
 
@@ -46,6 +47,27 @@ class Reranker(Protocol):
     def spec(self) -> RerankerSpec: ...
 
     def score(self, query: str, texts: Sequence[str]) -> list[float]: ...
+
+
+@dataclass(frozen=True, init=False)
+class RerankerView:
+    """Immutable output configuration over one scorer; no model loading or scoring state of its own."""
+
+    _scorer: Reranker = field(repr=False)
+    spec: RerankerSpec
+
+    def __init__(self, scorer: Reranker, *, output: int) -> None:
+        if type(output) is not int or not 1 <= output <= scorer.spec.max_input:
+            raise ValueError("invalid reranker output")
+        object.__setattr__(self, "_scorer", scorer)
+        object.__setattr__(self, "spec", scorer.spec.model_copy(update={"output": output}))
+
+    @property
+    def framework(self) -> str:
+        return getattr(self._scorer, "framework", "")
+
+    def score(self, query: str, texts: Sequence[str]) -> list[float]:
+        return self._scorer.score(query, texts)
 
 
 class RankedEvidence(BaseModel):

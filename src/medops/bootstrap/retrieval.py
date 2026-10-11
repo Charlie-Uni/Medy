@@ -18,9 +18,9 @@ from medops.harness.retrieval_port import ProductionRetrieval
 from medops.infrastructure.db.deadline import DeadlineConnection
 from medops.infrastructure.llm.meter import MeteredGateway
 from medops.retrieval.glossary_store import load_versioned_glossary
-from medops.retrieval.inference_process import ProcessReranker
 from medops.retrieval.production import RERANK_OUTPUT, production_hybrid_config
 from medops.retrieval.query_translation import QUERY_TRANSLATION_OFF, QueryTranslator
+from medops.retrieval.rerank import RerankerView
 from medops.retrieval.rewrite import GLOSSARY_NONE
 
 
@@ -43,11 +43,11 @@ class RetrievalServices:
             self._rerankers.setdefault(output, self.reranker)
 
     def reranker_for(self, output: int) -> Any:
+        if type(output) is not int or not 1 <= output <= self.reranker.spec.max_input:
+            raise ValueError("invalid reranker output")
         with self._lock:
             if output not in self._rerankers:
-                self._rerankers[output] = (
-                    ProcessReranker(self.pinned, output=output) if self.pinned is not None else self.reranker
-                )
+                self._rerankers[output] = RerankerView(self.reranker, output=output)
             return self._rerankers[output]
 
     def glossary_for(self, version: str) -> Any:

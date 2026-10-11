@@ -34,6 +34,60 @@ def _hung_startup(device, output):
     return _factory(device, output)
 
 
+class _FaultReranker(OverlapReranker):
+    def score(self, query, texts):
+        if query == "hang":
+            time.sleep(60)
+        return super().score(query, texts)
+
+
+def _shared_factory(device, output):
+    from medops.retrieval import rerank
+
+    def reject_reload(**kwargs):
+        raise AssertionError("output policy attempted another model load")
+
+    # The pre-ARCH-10 child tries this constructor on the first changed output.
+    rerank.BgeRerankerV2M3 = reject_reload
+    return _FaultEmbedding(dimension=8), _FaultReranker(output=output)
+
+
+def test_concurrent_outputs_use_one_child_scorer_without_reloading_or_mutating_specs():
+    lane = InferenceProcess(factory=_shared_factory, timeout_s=5)
+    outputs = (4, 5, 8, 12, 20, 4, 8, 5)
+    barrier = threading.Barrier(len(outputs))
+
+    def score(output):
+        view = ProcessReranker(lane, output=output)
+        barrier.wait(timeout=2)
+        return view.spec.output, view.score("critical audit", ["critical", "minor", "audit"])
+
+    try:
+        with ThreadPoolExecutor(max_workers=len(outputs)) as pool:
+            assert list(pool.map(score, outputs)) == [(o, [0.5, 0, 0.5]) for o in outputs]
+        assert lane.reranker_spec.output == 8 and lane.available
+        view = ProcessReranker(lane, output=4)
+        with pytest.raises(AttributeError):
+            view.spec = lane.reranker_spec
+    finally:
+        lane.close()
+    assert not lane.process.is_alive()
+
+
+def test_timed_out_shared_scorer_stops_all_views_without_reload():
+    lane = InferenceProcess(factory=_shared_factory, timeout_s=5)
+    try:
+        small, normal = ProcessReranker(lane, output=4), ProcessReranker(lane, output=8)
+        with deadline_scope(0.05), pytest.raises(InfrastructureError):
+            small.score("hang", ["audit"])
+        assert lane.stalled and not lane.process.is_alive()
+        with pytest.raises(InfrastructureError) as exc:
+            normal.score("audit", ["audit"])
+        assert not exc.value.retryable
+    finally:
+        lane.close()
+
+
 def test_process_preserves_embedding_and_reranking_results_and_close_is_idempotent():
     lane = InferenceProcess(factory=_factory, timeout_s=5)
     try:

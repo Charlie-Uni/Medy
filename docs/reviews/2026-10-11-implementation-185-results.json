@@ -1,0 +1,115 @@
+{
+  "record": 185,
+  "task": "ARCH-10",
+  "goal": "OPT-11",
+  "date": "2026-10-11",
+  "baseline_head": "69fca598e405423b14f7a04e9336bdadc8f33163",
+  "implementer": "Codex",
+  "self_reviewer": "Codex",
+  "independent_human_review": false,
+  "status": "DONE",
+  "state_transitions": [
+    "READY",
+    "IN_PROGRESS",
+    "REVIEW",
+    "DONE"
+  ],
+  "preexisting_dirty_paths": 0,
+  "committed": false,
+  "pushed": false,
+  "services_restarted": false,
+  "business_database_migration": false,
+  "hosted_model_calls": 0,
+  "cost_usd": 0,
+  "scope": "One scorer per inference lane; output views share it within the same owner. No cross-process pool.",
+  "targeted_tests": {
+    "command": "env -u DEBUG PYTHONPATH=src:. venv/bin/python -m pytest -q tests/unit/retrieval/test_rerank.py tests/unit/retrieval/test_inference_process.py tests/unit/bootstrap",
+    "passed": 37,
+    "seconds": 6.61,
+    "exit_code": 0
+  },
+  "full_check": {
+    "command": "env -u DEBUG PYTHONPATH=<snapshot>/src:<snapshot> make check",
+    "exit_code": 0,
+    "passed": 2105,
+    "skipped": 70,
+    "warnings": 1,
+    "pytest_seconds": 180.95,
+    "formatted_files": 504,
+    "mypy_source_files": 216,
+    "architecture_modules": 216,
+    "architecture_violations": 0,
+    "architecture_exact_exceptions": 2,
+    "datasets": 4,
+    "schemas": "up to date",
+    "log_sha256": "a5cc24133c2b8d8f20c19f38ccc0983c844808b2b10ee8264a1468217c412cd2"
+  },
+  "maintenance_input_count": 537,
+  "source_mismatches": [],
+  "real_local_reranker": {
+    "device": "cpu",
+    "offline": true,
+    "synthetic_text_count": 4,
+    "requests": 8,
+    "outputs": [
+      4,
+      5,
+      8,
+      12,
+      20,
+      4,
+      8,
+      5
+    ],
+    "startup_seconds": 10.788956000003964,
+    "child_rss_ready_bytes": 865239040,
+    "child_rss_after_requests_bytes": 1681424384,
+    "model": {
+      "cross_encoder_loads": 1,
+      "score_calls": 8,
+      "main_thread_only": true,
+      "parameter_storage_bytes": 2271023108,
+      "revision": "953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e"
+    },
+    "max_absolute_score_difference": 0.0,
+    "baseline_spec_unchanged": true,
+    "all_output_specs_match_previous_configuration": true,
+    "hosted_model_calls": 0,
+    "cost_usd": 0,
+    "child_reaped": true
+  },
+  "failures_and_repairs": [
+    {
+      "issue": "Ruff I001 in the new sharing test import block.",
+      "repair": "Use the repository import grouping; rerun Ruff (exit 0) and type checking."
+    }
+  ],
+  "limitations": [
+    "Local reranker smoke uses four synthetic texts and a hashing embedding stand-in, not a full API or corpus benchmark.",
+    "CPU scores and RSS measured; MPS-specific allocation/performance not measured this round. Child main-thread dispatch unchanged.",
+    "RSS changes include lazy page residency and prediction caches; do not infer a total-memory reduction percentage.",
+    "API/worker/MCP own independent processes; no cross-process weight or admission sharing.",
+    "Existing sentence-transformers cache_dir deprecation warning remains; no dependency change.",
+    "No new quality, holdout, performance or release acceptance result."
+  ],
+  "next_task": "ARCH-13",
+  "documentation_validation": {
+    "maintenance_inputs": 537,
+    "source_mismatches": [],
+    "documents": 6,
+    "local_links": 152,
+    "missing_links": [],
+    "task_ids": 141,
+    "task_ids_unchanged": true,
+    "protected_json_paths_unchanged": 1023,
+    "diff_check_exit_code": 0
+  },
+  "documentation_tests": {
+    "command": "env -u DEBUG PYTHONPATH=<snapshot>/src:<snapshot> venv/bin/python -m pytest -q tests/unit/docs",
+    "exit_code": 0,
+    "passed": 27,
+    "seconds": 5.98
+  },
+  "protected_json_paths_unchanged": 1023,
+  "elapsed_since_start_seconds": 874.09
+}
