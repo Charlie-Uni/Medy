@@ -1,0 +1,169 @@
+{
+  "task": "ARCH-09",
+  "date": "2026-10-11",
+  "implementer": "Codex",
+  "reviewer": "Codex self-review; not independent human",
+  "status": "DONE",
+  "head": "5a604050b9c0706bfd823685e5befcb9619d64a6",
+  "hosted_model_calls": 0,
+  "cost_usd": 0,
+  "committed": false,
+  "pushed": false,
+  "service_restarted": false,
+  "live_langfuse_export": false,
+  "verification": {
+    "full_check": {
+      "exit_code": 0,
+      "passed": 2089,
+      "skipped": 70,
+      "warnings": 1,
+      "pytest_seconds": 174.56,
+      "formatted_files": 503,
+      "mypy_modules": 216,
+      "architecture_modules": 216,
+      "architecture_violations": 0,
+      "architecture_exceptions": 2
+    },
+    "first_targeted": {
+      "passed": 82,
+      "seconds": 6.14
+    },
+    "identity_expanded": {
+      "passed": 22,
+      "seconds": 1.24
+    },
+    "deadline_and_lease_regression": {
+      "passed": 50,
+      "seconds": 33.59
+    },
+    "offline_migration_render": {
+      "exit_code": 0,
+      "revision": "0024:0025"
+    },
+    "maintenance_input_count": 536,
+    "source_mismatches": [],
+    "protected_eval_schema_inputs": 1023,
+    "cli": [
+      {
+        "case": "identity_help",
+        "exit_code": 0
+      },
+      {
+        "case": "worker_help",
+        "exit_code": 0
+      },
+      {
+        "case": "missing_clone_expectation",
+        "exit_code": 2
+      },
+      {
+        "case": "invalid_feedback_binding",
+        "exit_code": 2
+      },
+      {
+        "case": "read_current_identity",
+        "exit_code": 0,
+        "binding_matches": true
+      }
+    ],
+    "documentation": {
+      "files": 6,
+      "local_links": 128,
+      "task_ids": 141,
+      "tests_passed": 27,
+      "seconds": 2.01,
+      "exit_code": 0
+    },
+    "optional_skip_check": {
+      "skipped": 70,
+      "seconds": 0.1,
+      "causes": {
+        "B_zhparser": 45,
+        "C_pg_search": 25
+      },
+      "error_type": "OperationalError"
+    }
+  },
+  "database_migration": {
+    "revision": "0025",
+    "protected_tables_per_database": 31,
+    "index_count_tables_per_database": 5,
+    "identities_distinct": true,
+    "address_aliases_same_identity": true,
+    "database_restart": false,
+    "databases": [
+      {
+        "database": "medops_v2",
+        "before": "0024",
+        "after": "0025",
+        "content_unchanged": true,
+        "runtime_fingerprint_unchanged": true,
+        "feedback_rows_scanned": 2,
+        "rescan_enqueued": 0
+      },
+      {
+        "database": "medops_v2_safety",
+        "before": "0024",
+        "after": "0025",
+        "content_unchanged": true,
+        "runtime_fingerprint_unchanged": true,
+        "feedback_rows_scanned": 2,
+        "rescan_enqueued": 0
+      },
+      {
+        "database": "medops",
+        "before": "0024",
+        "after": "0025",
+        "content_unchanged": true,
+        "runtime_fingerprint_unchanged": true,
+        "feedback_rows_scanned": 0,
+        "rescan_enqueued": 0
+      }
+    ]
+  },
+  "failed_attempts": [
+    {
+      "phase": "first_full_gate",
+      "exit_code": 2,
+      "failed": 5,
+      "passed": 2084,
+      "skipped": 70,
+      "seconds": 187.21
+    },
+    {
+      "phase": "second_full_gate",
+      "exit_code": 2,
+      "failed": 2,
+      "passed": 2087,
+      "skipped": 70,
+      "seconds": 314.83
+    }
+  ],
+  "limitations": [
+    "no actual PostgreSQL restart or new live cross-day Langfuse replay",
+    "unknown legacy namespace requires explicit deployment binding",
+    "copied identity/manifest cannot automatically distinguish recovery from clone",
+    "old remote duplicates are not removed",
+    "at-least-once transport; no cross-system exactly-once guarantee",
+    "independent human/holdout/model quality/Agent/evolution are not completed"
+  ],
+  "self_audit": {
+    "scope": "pass",
+    "adr_and_stage_gates": "pass",
+    "correctness_and_failure_paths": "pass",
+    "permissions_and_data": "pass",
+    "budget_cancellation_side_effects": "pass",
+    "traceability_and_versions": "pass",
+    "verification": "pass",
+    "status_and_documentation": "pass"
+  },
+  "next_task": "ARCH-10",
+  "preservation": {
+    "prior_paths": 246,
+    "unchanged": 240,
+    "intentional_overlaps": 6,
+    "missing": 0,
+    "slice_files": 19
+  },
+  "elapsed_minutes_including_review_and_waits": 29.6
+}

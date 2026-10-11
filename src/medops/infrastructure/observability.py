@@ -250,6 +250,9 @@ class ScoreQueue:
                 attempts integer not null default 0, last_error text, updated_at text not null
             );
             create table if not exists scans (source text primary key, cursor text not null);
+            create table if not exists feedback_sources (
+                source text primary key, namespace text not null unique
+            );
         """)
         columns = {row[1] for row in self.conn.execute("pragma table_info(scores)")}
         for name in ("created_at", "next_attempt_at", "dead_lettered_at"):
@@ -401,9 +404,17 @@ class ScoreQueue:
         }
 
 
-def harvest_feedback(conn: Any, queue: ScoreQueue, *, limit: int = 100) -> dict[str, int | bool]:
+def harvest_feedback(
+    conn: Any,
+    queue: ScoreQueue,
+    *,
+    limit: int = 100,
+    expected_fact_plane: str | None = None,
+    legacy_source: str | None = None,
+) -> dict[str, int | bool]:
     """Read only committed feedback metadata; never select correction_text, principal or query."""
-    from medops.retrieval.integrity import database_identity
+    from medops.infrastructure.db.fact_plane import fact_plane_identity
+    from medops.infrastructure.feedback_identity import feedback_namespace
 
     if not 1 <= limit <= 1000:
         raise ValueError("feedback batch must be 1..1000")
@@ -414,7 +425,8 @@ def harvest_feedback(conn: Any, queue: ScoreQueue, *, limit: int = 100) -> dict[
     ).fetchone()
     if not allowed or not all(allowed):
         raise ValueError("feedback export requires a read-only transaction and global audit visibility")
-    source = database_identity(conn)
+    source = fact_plane_identity(conn, expected=expected_fact_plane)
+    namespace = feedback_namespace(queue.conn, source, legacy_source=legacy_source)
     cursor = queue.scan_cursor(source)
     rows = conn.execute(
         "select feedback_id::text,trace_id,signal,created_at from feedback "
@@ -424,7 +436,7 @@ def harvest_feedback(conn: Any, queue: ScoreQueue, *, limit: int = 100) -> dict[
     enqueued = 0
     for row in rows:
         event = feedback_event(
-            dict(zip(("feedback_id", "trace_id", "signal", "created_at"), row, strict=True)), fact_plane=source
+            dict(zip(("feedback_id", "trace_id", "signal", "created_at"), row, strict=True)), fact_plane=namespace
         )
         enqueued += queue.enqueue(event)
     queue.advance_scan(source, rows[-1][0] if rows else None)

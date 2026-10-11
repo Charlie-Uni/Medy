@@ -156,7 +156,12 @@ def test_run_version_set_must_record_the_skill():
     assert exc.value.code is ErrorCode.internal_error
 
 
-def test_exhausted_total_deadline_escalates_without_retry_even_for_idempotent_skills():
+def test_exhausted_total_deadline_escalates_without_retry_even_for_idempotent_skills(monkeypatch):
+    from medops.harness import execution_record
+
+    # Isolate handler/retry timing from filesystem/package scanning. Artifact deadlines have dedicated tests.
+    monkeypatch.setattr(execution_record, "online_artifacts", lambda: {"synthetic_test": True})
+
     def slow(ctx, inp):
         time.sleep(0.06)
         return echo(ctx, inp)

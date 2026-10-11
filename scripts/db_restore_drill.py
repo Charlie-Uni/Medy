@@ -32,6 +32,11 @@ def inventory(dsn: str) -> dict:
             t: conn.execute(sql.SQL("select count(*) from {}").format(sql.Identifier(t))).fetchone()[0] for t in tables
         }
         rev = conn.execute("select version_num from alembic_version").fetchone()[0]
+        fact_plane_id = None
+        if "fact_plane_identity" in tables:
+            from medops.infrastructure.db.fact_plane import fact_plane_identity
+
+            fact_plane_id = fact_plane_identity(conn)
         corpus = ""
         if "chunks" in tables:
             corpus = conn.execute(
@@ -43,7 +48,14 @@ def inventory(dsn: str) -> dict:
                 "select distinct grantee from information_schema.role_table_grants where table_schema = 'public' and grantee like 'medops_%'"
             )
         )
-    return {"alembic": rev, "tables": tables, "counts": counts, "corpus_md5": corpus, "grantees": grantees}
+    return {
+        "alembic": rev,
+        "tables": tables,
+        "counts": counts,
+        "corpus_md5": corpus,
+        "grantees": grantees,
+        "fact_plane_id": fact_plane_id,
+    }
 
 
 def main() -> int:
@@ -122,6 +134,7 @@ def main() -> int:
                 "alembic_match": src["alembic"] == dst["alembic"],
                 "corpus_match": src["corpus_md5"] == dst["corpus_md5"],
                 "grantees_match": src["grantees"] == dst["grantees"],
+                "fact_plane_identity_match": src["fact_plane_id"] == dst["fact_plane_id"],
             }
         )
         report["ok"] = (
@@ -131,6 +144,7 @@ def main() -> int:
             and report["alembic_match"]
             and report["corpus_match"]
             and report["grantees_match"]
+            and report["fact_plane_identity_match"]
         )
     finally:
         with psycopg.connect(maint_dsn, autocommit=True) as conn:
@@ -145,6 +159,7 @@ def main() -> int:
         f"- pg_restore rc {report.get('pg_restore_rc')} in {report.get('restore_seconds')} s; alembic {src.get('alembic')}; {len(src.get('tables', []))} tables; {report.get('total_rows')} rows",
         f"- tables match: {report.get('tables_match')}; alembic match: {report.get('alembic_match')}; corpus md5 match: {report.get('corpus_match')}; grantees match: {report.get('grantees_match')}; row-count mismatches: {diffs or 'none'}",
         f"- **ok: {report.get('ok')}**",
+        f"- stable fact-plane identity preserved: {report.get('fact_plane_identity_match')}",
         "",
     ]
     (out / "report.md").write_text("\n".join(lines))

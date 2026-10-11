@@ -141,6 +141,7 @@ def test_group_roles_login_users_and_forced_rls(migrated, login_users):
             )
         }
         assert forced == {
+            "fact_plane_identity",  # 0025: only audit readers, no app/MCP privilege
             "source_objects",
             "ingestion_jobs",
             "documents",

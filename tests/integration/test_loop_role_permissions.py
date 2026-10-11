@@ -19,6 +19,7 @@ EXPECTED_GRANTS = {
     "document_requests": {"INSERT", "SELECT"},
     "escalations": {"SELECT"},
     "feedback": {"SELECT"},
+    "fact_plane_identity": {"SELECT"},  # 0025: metadata identity for read-only feedback export, no write grant
     "policies": {"INSERT", "SELECT"},
     "policy_releases": {"SELECT"},
     "released_policies": {"SELECT"},

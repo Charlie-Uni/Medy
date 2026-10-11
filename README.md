@@ -10,7 +10,7 @@ MedOps Copilot 是面向医学事务、药物警戒和临床运营的可信医�
 
 ## 最新执行入口（2026-10-11）
 
-后续统一按[当前任务台账](docs/CURRENT_TASKS.md)推进：保留此前架构、评测、BM25、Redis、Langfuse、模型路由和使用闭环任务，新增受控 Agent 与模型生成 Prompt/声明式 Skill 的自进化任务。顺序为目标与验收 → 必要执行保护 → 首个业务 Agent → Prompt 自进化 → Skill/使用闭环 → 完整验证与交付。PLAN-01 设计证据与 PV 场景范围已确认，PLAN-02 的 [ADR-0012](docs/adr/ADR-0012-agent-evolution-goals-and-acceptance.md) 剩余契约继续沟通；ARCH-04/11 及当前任务租约 ARCH-05、历史输入 ARCH-02、最终判断 ARCH-03、异步审计 ARCH-06、执行记录和诊断边界 ARCH-07 工程自审通过，下一项 ARCH-08；S2 仍须满足 PLAN-02 相关契约和其他正确性前置。自动激活仅实验，S3 改进声明须有未见盲测，每轮付费单独授权。新增能力尚未实现；盲测新增工作量确认后重估工期。
+后续统一按[当前任务台账](docs/CURRENT_TASKS.md)推进：保留此前架构、评测、BM25、Redis、Langfuse、模型路由和使用闭环任务，新增受控 Agent 与模型生成 Prompt/声明式 Skill 的自进化任务。顺序为目标与验收 → 必要执行保护 → 首个业务 Agent → Prompt 自进化 → Skill/使用闭环 → 完整验证与交付。PLAN-01 设计证据与 PV 场景范围已确认，PLAN-02 的 [ADR-0012](docs/adr/ADR-0012-agent-evolution-goals-and-acceptance.md) 剩余契约继续沟通；ARCH-04/11 及当前任务租约 ARCH-05、历史输入 ARCH-02、最终判断 ARCH-03、异步审计 ARCH-06、执行记录和诊断边界 ARCH-07 及共用装配 ARCH-08 工程自审通过；ARCH-09 稳定反馈身份也已通过工程自审，下一项ARCH-10；S2 仍须满足 PLAN-02 相关契约和其他正确性前置。自动激活仅实验，S3 改进声明须有未见盲测，每轮付费单独授权。新增能力尚未实现；盲测新增工作量确认后重估工期。
 
 **每轮代码、文档、实验与部署都必须自审核，问题修复复测且证据齐备后才能标记完成。** 固定执行要求见[AGENTS.md](AGENTS.md)，模板见[分阶段执行与自审](docs/ITERATION_STAGES.md)。评测标准修订、来源契约、回放绑定和模型裁判校准已形成冻结的 `probe-v4` 与 `main-v5-provisional`；第二独立人工仍未具备，相应结论继续标为 provisional；生产签字和逐次付费授权要求保留。
 
@@ -41,10 +41,12 @@ Redis 候选缓存已切换到本机主运行配置：主库与 safety 使用独
 
 ARCH-07 已补 Ask/Task 完整执行记录、实际模型请求/SDK回复/回执、渲染正文/哈希与 Unicode 来源区间；Ask 诊断回放恢复输入并分项报告条件差异，见[回放契约](docs/EXECUTION_REPLAY.md)和[记录181](docs/reviews/2026-10-11-implementation-181-execution-records-and-replay-boundaries.md)。全量2038/70、518维护输入一致；614存档上下文的6140布局比较零差异，0托管调用。原条件恢复未交付，当前明确拒绝；Task/MCP回放与完整跨块定位仍待做，不作真实质量或发布声明。
 
-ARCH-08 已将跨入口契约移至 application、解析/PII/norm-v1移至 knowledge、生产装配移至 bootstrap。API/worker/MCP 共用策略版本与检索/缓存规则；新增自动导入边界，214模块零违例、2精确允许项。全量2071 passed、70 skipped、532维护输入一致、0托管费用，见[装配说明](docs/PRODUCTION_COMPOSITION.md)和[记录182](docs/reviews/2026-10-11-implementation-182-shared-composition-and-import-boundaries.md)。仅工程自审通过；MCP受限正文与回放、Agent/自进化尚未交付，当前下一项ARCH-09，未提交或部署。
+ARCH-08 已将跨入口契约移至 application、解析/PII/norm-v1移至 knowledge、生产装配移至 bootstrap。API/worker/MCP 共用策略版本与检索/缓存规则；新增自动导入边界，214模块零违例、2精确允许项。全量2071 passed、70 skipped、532维护输入一致、0托管费用，见[装配说明](docs/PRODUCTION_COMPOSITION.md)和[记录182](docs/reviews/2026-10-11-implementation-182-shared-composition-and-import-boundaries.md)。仅工程自审通过；MCP受限正文与回放、Agent/自进化尚未交付，当时下一项ARCH-09，未提交或部署。
 
 ## 早期进度快照（历史）
 
 截至 2026-09-20：P0 加权进度 24.1%（19/79，局部实现口径，非整体验收率）。75 条探针已完成冻结和 Git 归档（`213dbe8`）：71 条复核通过、4 条人工裁决、0 条待决；M1-01 已实现，基线首项探针验收已勾选。现在进入 M1-02 / DEC-001 实验准备：已记录候选源码、环境和测量参数草案，并完成 2,661 个 chunk 的只读核验与 gold 映射（73 mapped、2 unmappable，保留并计 miss）。B/C 构建、候选适配器、low_trust 文档处理及正式运行清单仍待完成，尚无检索选型结论。证据与逐轮自审见[实现记录 27](docs/reviews/2026-09-20-implementation-27-archive-and-experiment-preparation.md)，具体下一步见[实验准备说明](evals/experiments/lexical/README.md)。
 
 本轮 `env -u DEBUG -u PYTHONPATH make check`：549 passed（485 单元 + 64 项 PostgreSQL 集成测试），格式、类型及 Schema 漂移检查通过；环境变量处理原因与验证边界见[实现记录 27](docs/reviews/2026-09-20-implementation-27-archive-and-experiment-preparation.md)。
+
+ARCH-09 持久反馈身份已完成代码核验：0025随机UUID与readiness运行指纹分离，旧namespace显式绑定保留评分ID/时间，克隆与恢复有校验契约。三库31表内容/5索引计数不变，全量2089 passed、70 skipped、536维护输入一致、0托管费用；八项工程自审通过，见[反馈身份契约](docs/FEEDBACK_IDENTITY.md)和[记录183](docs/reviews/2026-10-11-implementation-183-stable-feedback-identity.md)。下一主项ARCH-10；没有重启、提交或生产上线。

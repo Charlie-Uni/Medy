@@ -214,22 +214,27 @@ def test_finish_rechecks_database_clock_after_waiting_for_row_lock(db):
 
 
 @pytest.mark.parametrize("unknown_first_response", [False, True])
-def test_two_real_workers_keep_lost_costs_and_new_result_separate(db, unknown_first_response):
+def test_two_real_workers_keep_lost_costs_and_new_result_separate(db, unknown_first_response, monkeypatch):
     from concurrent.futures import ThreadPoolExecutor
     from contextlib import contextmanager
+    from dataclasses import replace
     from threading import Event
 
     from medops.application.tasks import TaskRunner, TaskService
     from medops.core.errors import MedOpsError
     from medops.domain.skill import SkillStatus
+    from medops.harness import execution_record
     from medops.infrastructure.db.audit import PgTraceStore
     from medops.infrastructure.llm.budget import BudgetedGateway, PostgresSpendLedger
     from medops.infrastructure.llm.gateway import OPENAI_PRICES, ModelTimeout, PriceTable
+    from medops.skills.registry import SkillRegistry
     from tests.unit.application.test_task_lease import PaidFakeEnv
-    from tests.unit.application.test_tasks import EchoOut, registry, req, user
+    from tests.unit.application.test_tasks import Clock, EchoOut, registry, req, user
     from tests.unit.infrastructure.test_llm_gateway import _FixedCost
     from tests.unit.infrastructure.test_llm_gateway import req as model_request
 
+    # Keep the short lease test about ownership/fees, not disk scanning before the first provider call.
+    monkeypatch.setattr(execution_record, "online_artifacts", lambda: {"synthetic_test": True})
     entered, release = Event(), Event()
     u = user(uid=PRINCIPAL)
     ledger = PostgresSpendLedger(db["users"]["app"])
@@ -258,7 +263,11 @@ def test_two_real_workers_keep_lost_costs_and_new_result_separate(db, unknown_fi
                 ctx.deps.gateway.complete(model_request())
         return EchoOut(status=SkillStatus.completed, text=ctx.trace_id)
 
-    reg = registry(handler)
+    original = registry(handler).get("echo_skill", "1.0.0")
+    reg = SkillRegistry(sleep=lambda _: None)
+    reg.register(replace(original, spec=original.spec.model_copy(update={"timeout_s": 5})))
+    clock = Clock()
+    clock.now = datetime.now(UTC)
 
     class PgEnv(PaidFakeEnv):
         @contextmanager
@@ -275,17 +284,18 @@ def test_two_real_workers_keep_lost_costs_and_new_result_separate(db, unknown_fi
     env = PgEnv(None, reg, {u.user_id: u}, gateway)
     with env.connection() as conn:
         task = TaskService(store=PgTaskStore(conn)).create(u, req(), None)
-    a = TaskRunner(env=env, registry=reg, worker_id="w1", lease_s=0.3)
-    b = TaskRunner(env=env, registry=reg, worker_id="w2", lease_s=1)
+    # Ownership/fees use real DB transactions but controlled lease time. DB-clock/lock-wait expiry and
+    # short body deadlines have separate tests; CPU/IO load must not decide when this takeover occurs.
+    a = TaskRunner(env=env, registry=reg, worker_id="w1", lease_s=10, clock=clock)
+    b = TaskRunner(env=env, registry=reg, worker_id="w2", lease_s=10, clock=clock)
     with ThreadPoolExecutor(max_workers=1) as pool:
         pending = pool.submit(a.run_once)
         try:
-            assert entered.wait(5)
+            assert entered.wait(5), pending.result(timeout=1) if pending.done() else "worker did not reach handler"
             assert b.run_once() is None
             with env.connection() as conn:
                 lease_until = PgTaskStore(conn).get(task.task_id).lease_until
-                seconds = max(0, (lease_until - datetime.now(UTC)).total_seconds()) + 0.02
-                conn.execute("select pg_sleep(%s)", (seconds,))
+                clock.now = lease_until + timedelta(seconds=1)
             replacement = b.run_once()
         finally:
             release.set()

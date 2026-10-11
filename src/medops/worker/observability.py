@@ -20,6 +20,7 @@ from psycopg.conninfo import make_conninfo
 
 from medops.core.config import Settings
 from medops.evals.telemetry import events_from_run
+from medops.infrastructure.db.fact_plane import canonical_fact_plane_id
 from medops.infrastructure.observability import LangfuseScores, ScoreQueue, harvest_feedback
 
 
@@ -27,6 +28,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--queue", type=Path, required=True, help="local SQLite delivery ledger; keep outside Git")
     ap.add_argument("--database", help="explicit fact plane for feedback collection; no default DB")
+    ap.add_argument("--fact-plane-id", help="optional expected persistent UUID from the deployment manifest")
+    ap.add_argument("--legacy-feedback-source", help="explicit pre-UUID runtime hash; preserve old score IDs")
     ap.add_argument("--run", type=Path, help="import a condition-bound main/safety run")
     ap.add_argument("--batch", type=int, default=100)
     ap.add_argument("--poll", type=float, default=5)
@@ -36,6 +39,15 @@ def main(argv: Sequence[str] | None = None) -> int:
     args = ap.parse_args(argv)
     if args.database and not re.fullmatch(r"[A-Za-z][A-Za-z0-9_]{0,62}", args.database):
         ap.error("invalid explicit database name")
+    if (args.fact_plane_id or args.legacy_feedback_source) and not args.database:
+        ap.error("feedback identity options require --database")
+    if args.fact_plane_id:
+        try:
+            canonical_fact_plane_id(args.fact_plane_id)
+        except ValueError:
+            ap.error("invalid fact-plane UUID")
+    if args.legacy_feedback_source and not re.fullmatch(r"[0-9a-f]{64}", args.legacy_feedback_source):
+        ap.error("invalid legacy feedback source")
     if not 1 <= args.batch <= 1000 or not math.isfinite(args.poll) or not 0.1 <= args.poll <= 60:
         ap.error("batch must be 1..1000 and poll must be 0.1..60 seconds")
     sender = queue = None
@@ -89,7 +101,13 @@ def main(argv: Sequence[str] | None = None) -> int:
                 if dsn:
                     with psycopg.connect(dsn, connect_timeout=5, options="-c statement_timeout=5000") as conn:
                         conn.read_only = True
-                        collected = harvest_feedback(conn, queue, limit=args.batch)
+                        collected = harvest_feedback(
+                            conn,
+                            queue,
+                            limit=args.batch,
+                            expected_fact_plane=args.fact_plane_id,
+                            legacy_source=args.legacy_feedback_source,
+                        )
                 sent = {} if args.enqueue_only else queue.drain(sender, limit=args.batch, cancelled=stop.is_set)
                 print(json.dumps({"collection": collected, "delivery": sent}), flush=True)
                 if args.once or args.enqueue_only:
