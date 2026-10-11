@@ -22,7 +22,7 @@ ARCH-02 已统一 Ask、Skill 与单条 Ask Replay 的日期/历史模式，修�
 
 ARCH-03 已增加两类结构化 Skill 的最终比较核验，结论、理由、条款适用和原观察四项须分别支持；数字反转、错误引用或无支持不再业务完成，矛盾进入升级。严格回复、共享预算及五类兼容回归通过，全量 1969 passed、70 skipped、0 托管调用，见[核验契约](docs/SKILL_JUDGMENT_VERIFICATION.md)及[记录 179](docs/reviews/2026-10-11-implementation-179-final-skill-judgment-verification.md)。真实语义比较校准仍待单次费用授权；当时下一项 ARCH-06，最新工程结论见下段，代码未重启上线。
 
-ARCH-06 已补齐 Ask/Task 共用审计、五类 Skill 内层证据与最终核验、结构化候选、安全和重试材料；结果引用逐字段绑定实际证据，撤权、失租及审计故障均失败关闭。真实 PostgreSQL 原子回滚与访问日志验证通过，全量 2008 passed、70 skipped、0 托管调用，见[执行审计契约](docs/TASK_EXECUTION_AUDIT.md)及[记录 180](docs/reviews/2026-10-11-implementation-180-task-execution-audit.md)。无 key 配置仍仅保存元数据；Task/MCP 精确回放仍待下一项 ARCH-07。新代码未提交、未重启上线。
+ARCH-06 已补齐 Ask/Task 共用审计、五类 Skill 内层证据与最终核验、结构化候选、安全和重试材料；结果引用逐字段绑定实际证据，撤权、失租及审计故障均失败关闭。真实 PostgreSQL 原子回滚与访问日志验证通过，全量 2008 passed、70 skipped、0 托管调用，见[执行审计契约](docs/TASK_EXECUTION_AUDIT.md)及[记录 180](docs/reviews/2026-10-11-implementation-180-task-execution-audit.md)。无 key 配置仍仅保存元数据；Task/MCP 精确回放仍待下一项 ARCH-07。该轮验证时尚未提交；当前已按记录184提交，未重启上线。
 
 生产词法通道已按项目所有者决定切换到部门隔离的 `pg_textsearch` BM25：PostgreSQL 17、extension 1.5.1、migration 0022，MA/PV/CO 各用独立物理语料，避免 RLS 隐藏行参与跨部门 IDF/词频统计。正式库与安全库已完成逻辑迁移、索引构建和 readiness 核验，旧 PG16 卷及逐库逻辑备份保留。设计、实测数据、故障和回滚边界见[实现记录 162](docs/reviews/2026-10-09-implementation-162-production-bm25-cutover.md)，许可与发布资产见[许可记录](docs/reviews/2026-10-09-licence-dossier-pg-textsearch.md)。新冻结集上的付费检索与答案级 BM25 对照仍需单独授权，工程切换不等同于质量门禁通过。
 
@@ -41,7 +41,7 @@ Redis 候选缓存已切换到本机主运行配置：主库与 safety 使用独
 
 ARCH-07 已补 Ask/Task 完整执行记录、实际模型请求/SDK回复/回执、渲染正文/哈希与 Unicode 来源区间；Ask 诊断回放恢复输入并分项报告条件差异，见[回放契约](docs/EXECUTION_REPLAY.md)和[记录181](docs/reviews/2026-10-11-implementation-181-execution-records-and-replay-boundaries.md)。全量2038/70、518维护输入一致；614存档上下文的6140布局比较零差异，0托管调用。原条件恢复未交付，当前明确拒绝；Task/MCP回放与完整跨块定位仍待做，不作真实质量或发布声明。
 
-ARCH-08 已将跨入口契约移至 application、解析/PII/norm-v1移至 knowledge、生产装配移至 bootstrap。API/worker/MCP 共用策略版本与检索/缓存规则；新增自动导入边界，214模块零违例、2精确允许项。全量2071 passed、70 skipped、532维护输入一致、0托管费用，见[装配说明](docs/PRODUCTION_COMPOSITION.md)和[记录182](docs/reviews/2026-10-11-implementation-182-shared-composition-and-import-boundaries.md)。仅工程自审通过；MCP受限正文与回放、Agent/自进化尚未交付，当时下一项ARCH-09，未提交或部署。
+ARCH-08 已将跨入口契约移至 application、解析/PII/norm-v1移至 knowledge、生产装配移至 bootstrap。API/worker/MCP 共用策略版本与检索/缓存规则；新增自动导入边界，214模块零违例、2精确允许项。全量2071 passed、70 skipped、532维护输入一致、0托管费用，见[装配说明](docs/PRODUCTION_COMPOSITION.md)和[记录182](docs/reviews/2026-10-11-implementation-182-shared-composition-and-import-boundaries.md)。仅工程自审通过；MCP受限正文与回放、Agent/自进化尚未交付，当时下一项ARCH-09，当轮未提交或部署；当前提交见记录184。
 
 ## 早期进度快照（历史）
 
@@ -49,4 +49,4 @@ ARCH-08 已将跨入口契约移至 application、解析/PII/norm-v1移至 knowl
 
 本轮 `env -u DEBUG -u PYTHONPATH make check`：549 passed（485 单元 + 64 项 PostgreSQL 集成测试），格式、类型及 Schema 漂移检查通过；环境变量处理原因与验证边界见[实现记录 27](docs/reviews/2026-09-20-implementation-27-archive-and-experiment-preparation.md)。
 
-ARCH-09 持久反馈身份已完成代码核验：0025随机UUID与readiness运行指纹分离，旧namespace显式绑定保留评分ID/时间，克隆与恢复有校验契约。三库31表内容/5索引计数不变，全量2089 passed、70 skipped、536维护输入一致、0托管费用；八项工程自审通过，见[反馈身份契约](docs/FEEDBACK_IDENTITY.md)和[记录183](docs/reviews/2026-10-11-implementation-183-stable-feedback-identity.md)。下一主项ARCH-10；没有重启、提交或生产上线。
+ARCH-09 持久反馈身份已完成代码核验：0025随机UUID与readiness运行指纹分离，旧namespace显式绑定保留评分ID/时间，克隆与恢复有校验契约。三库31表内容/5索引计数不变，全量2089 passed、70 skipped、536维护输入一致、0托管费用；八项工程自审通过，见[反馈身份契约](docs/FEEDBACK_IDENTITY.md)和[记录183](docs/reviews/2026-10-11-implementation-183-stable-feedback-identity.md)。下一主项ARCH-10；当前已按[记录184](docs/reviews/2026-10-11-implementation-184-batched-architecture-commits.md)分批提交，未重启或生产上线。

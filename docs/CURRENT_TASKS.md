@@ -52,8 +52,8 @@ probe v4 与 `main-v5-provisional` 均已冻结。EVAL-11 已完成：580 个 go
 | ARCH-11 | 统一单次执行的 Token 与费用预算 | DONE | [记录 176](reviews/2026-10-11-implementation-176-shared-execution-budget.md)：所有者确认兼容上限 12,000 Token / 0.60 USD，Ask 125 秒、Skill/MCP 不扩大原期限；翻译、生成、判定、结构化与重试共享预留/结算，嵌套/线程不能重开。全量 1830/70、490 维护输入与配置 SHA 一致，0 托管调用，本轮工程自审通过；未来 Agent/模型 Loop 必须显式 profile＋强制上下文，尚未实现，跨进程恢复归 ARCH-05/06/07。OPT-11、INV-HAR-08 |
 | ARCH-06 | 补齐异步 Skill 的证据和核验审计 | DONE | [记录 180](reviews/2026-10-11-implementation-180-task-execution-audit.md)、[执行审计契约](TASK_EXECUTION_AUDIT.md)：Ask/Task 共用写入；五类内层证据、候选、最终核验、安全与重试有受限材料；完整 Citation 绑定、撤权/失败/lost 及数据库原子回滚通过。定向172、修复复测49、数据库24；全量2008/70、510维护输入 SHA 一致、0托管调用，工程自审通过。原条件回放仍ARCH-07；无 key 配置仅元数据，未重启上线。OPT-09、INV-OBS-01/03 |
 | ARCH-07 | 补完整回放输入和逐调用追溯 | DONE | [记录181](reviews/2026-10-11-implementation-181-execution-records-and-replay-boundaries.md)、[执行记录/回放契约](EXECUTION_REPLAY.md)：Ask/Task 完整输入、实际配置/策略内容/运行文件摘要、逐调用 SDK 参数与回复/指纹/回执、真实渲染哈希和 Unicode 来源区间；Ask 诊断恢复输入、分别报告差异。2038/70 全量、518维护输入 SHA 一致；614存档/6140布局比较零差异、54355区间，0托管调用，工程自审通过。原条件恢复未交付，原条件模式模型前409；Task/MCP回放、MCP受限正文持久化和 FOCUS-02 完整跨块 span 仍未完成，未重启上线。OPT-09、OPT-16 |
-| ARCH-09 | 稳定反馈来源、score ID 和扫描游标 | DONE | [记录183](reviews/2026-10-11-implementation-183-stable-feedback-identity.md)、[恢复契约](FEEDBACK_IDENTITY.md)：0025持久UUID/旧namespace显式绑定/原ID保持/部署及克隆恢复校验；三库31表内容/5索引计数不变，全量2089/70、536维护输入一致、0托管费用；八项工程自审通过；未重启/提交/真实导出。OPT-09、OPT-16 |
-| ARCH-08 | 收敛契约、生产共用模块与三入口装配 | DONE | [记录182](reviews/2026-10-11-implementation-182-shared-composition-and-import-boundaries.md)、[装配/边界契约](PRODUCTION_COMPOSITION.md)：共用DTO/身份、knowledge解析/PII/norm-v1、bootstrap策略/检索/连接与三入口装配；静态214模块0违例/2精确允许边，59定义AST与12配置/灰度版本比较一致；全量2071/70、532维护输入SHA一致，0托管调用，八项工程自审通过。MCP受限正文/回放、ARCH-10底层scorer仍待；稳定反馈后续已由记录183完成；未提交部署。OPT-01～06 |
+| ARCH-09 | 稳定反馈来源、score ID 和扫描游标 | DONE | [记录183](reviews/2026-10-11-implementation-183-stable-feedback-identity.md)、[恢复契约](FEEDBACK_IDENTITY.md)：0025持久UUID/旧namespace显式绑定/原ID保持/部署及克隆恢复校验；三库31表内容/5索引计数不变，全量2089/70、536维护输入一致、0托管费用；八项工程自审通过；已按记录184提交，未重启/真实导出。OPT-09、OPT-16 |
+| ARCH-08 | 收敛契约、生产共用模块与三入口装配 | DONE | [记录182](reviews/2026-10-11-implementation-182-shared-composition-and-import-boundaries.md)、[装配/边界契约](PRODUCTION_COMPOSITION.md)：共用DTO/身份、knowledge解析/PII/norm-v1、bootstrap策略/检索/连接与三入口装配；静态214模块0违例/2精确允许边，59定义AST与12配置/灰度版本比较一致；全量2071/70、532维护输入SHA一致，0托管调用，八项工程自审通过。MCP受限正文/回放、ARCH-10底层scorer仍待；稳定反馈后续已由记录183完成；已按记录184提交，未部署。OPT-01～06 |
 | ARCH-10 | 共享重排 scorer 并限制重复初始化 | READY | 同 revision 的权重共享，输出数量由不可变配置控制；初始化 singleflight；验证并发、策略切换、排序与实际加载/内存，保持设备线程约束。OPT-11 |
 | ARCH-13 | 补部署资源、常驻消费者与监督 | READY | 术语文件/密钥有容器可见的声明与挂载；持续词法/向量和评分同步、清理/Loop 调度有责任；消费心跳、毒事件、停机、恢复可演练。IDX-03、DEPLOY-02 |
 | ARCH-14 | 让 CI 必需依赖缺失时失败 | READY | 明确 required 环境下 PostgreSQL/Redis 不可用不得 skip；保留可选实验跳过规则；加已发布配置容器启动和架构边界检查。DEPLOY-02 |
@@ -72,7 +72,7 @@ probe v4 与 `main-v5-provisional` 均已冻结。EVAL-11 已完成：580 个 go
 
 贯穿工作：ARCH-08/10/13/14、CODE-03～07、IDX-03、OBS-03、DEV-BACKLOG-01 按依赖穿插；ARCH-12 有实测收益再实施。BM25-09、CACHE-10、PERF-10、SRC-05、FOCUS-01/02/09、ROUTE-01/02 全部保留，先分别验证再 COMBO-01。人工事项 PLAN-02、EVAL-29/30/31、LIC-03、DEPLOY-01 单独跟踪；EVOL-09 已决定限实验，生产自动批准不再列为待问事项。
 
-**当前下一项：ARCH-10 共享重排 scorer 并限制重复初始化。** ARCH-09稳定反馈身份八项工程自审通过，见[记录183](reviews/2026-10-11-implementation-183-stable-feedback-identity.md)及[恢复契约](FEEDBACK_IDENTITY.md)：三库0025、31表内容/5索引计数不变，全量2089 passed/70 skipped，536维护输入SHA一致，0托管调用。旧来源必须明确绑定，未自动猜测、未向真实Langfuse导出或重启。ARCH-08已通过记录182；CODE-04/05/07可按顺序穿插，CODE-07仍须完成观测职责与MCP受限完整材料。ARCH-07原条件恢复未交付，原条件模式明确409拒绝；Task/MCP回放、FOCUS-02跨块完整定位、PLAN-02剩余Agent契约、真实语义校准、独立人工、未见盲测及S2/S3均未完成。ARCH-12仍等ARCH-14；付费逐次授权，新代码未提交上线。
+**当前下一项：ARCH-10 共享重排 scorer 并限制重复初始化。** W-03/W-04 本轮分批提交与提交后全量核验完成，见[记录184](reviews/2026-10-11-implementation-184-batched-architecture-commits.md)。 ARCH-09稳定反馈身份八项工程自审通过，见[记录183](reviews/2026-10-11-implementation-183-stable-feedback-identity.md)及[恢复契约](FEEDBACK_IDENTITY.md)：三库0025、31表内容/5索引计数不变，全量2089 passed/70 skipped，536维护输入SHA一致，0托管调用。旧来源必须明确绑定，未自动猜测、未向真实Langfuse导出或重启。ARCH-08已通过记录182；CODE-04/05/07可按顺序穿插，CODE-07仍须完成观测职责与MCP受限完整材料。ARCH-07原条件恢复未交付，原条件模式明确409拒绝；Task/MCP回放、FOCUS-02跨块完整定位、PLAN-02剩余Agent契约、真实语义校准、独立人工、未见盲测及S2/S3均未完成。ARCH-12仍等ARCH-14；付费逐次授权，当前代码已分批提交，未重启或上线。
 
 每次只推进一个主切片。纯契约设计、机械检查和无付费测试可先准备；依赖未通过时不得把相关集成或阶段标为完成。真实并发/费用运行先满足 ARCH-01/04/11；历史 Skill/二阶段判断先满足 ARCH-02/03/06；回放先满足 ARCH-07；所有检索运行先核对事实库、索引覆盖和积压。EVAL-22/23/24 → EVAL-25/26 → EVAL-27/28 的基线依赖保留，S2/S3 开发演示不能替代正式门禁。等待人工/授权时继续无关 READY 项。
 
@@ -93,11 +93,11 @@ probe v4 与 `main-v5-provisional` 均已冻结。EVAL-11 已完成：580 个 go
 | --- | --- | --- | --- |
 | W-01 | 删除 Finder 副本 `src/medops/infrastructure/llm/budget 2.py` | DONE | 文件未跟踪，已删除，避免 `git add -A` 误收 |
 | W-02 | 区分源码、评测产物和临时 `output/` | DONE | BM25 提交只含实现、测试、迁移、部署配置与文档；备份及 `output/` 未纳入 Git |
-| W-03 | 按功能边界拆分提交 | DONE | BM25 实现与文档分两批提交；不按作者拆分 |
-| W-04 | 每组提交前运行定向检查，最终运行 `make check` | DONE | 记录 171：1774 passed、70 skipped；ruff、格式、mypy、Schema 漂移与评测审计均通过。原目录 iCloud 读取阻塞，最终在源码 SHA 一致的仓库外工作树核验；并非原目录中断运行通过。本轮记录 175：1807/70，486 个维护输入 SHA 一致 |
+| W-03 | 按功能边界拆分提交 | DONE | 记录184：259原状态路径全部纳入12个功能提交，第13批同步自审/台账；逐轮备份和暂存tree/路径/源码比对，无遗漏；不按作者或目录硬拆；output/pdf、凭据与本地产物排除；未推送部署 |
+| W-04 | 每组提交前运行定向检查，最终运行 `make check` | DONE | 记录184：每批语法/diff/路径/tree和历史工程快照一致；第12批提交后的独立工作树make check退出0，2089 passed/70 skipped/1 warning，536维护输入一致，lint/格式/mypy/架构/评测/Schema全过；末批仅文档，定向检查见记录184 |
 | W-05 | 更新 README、阶段表、路线图和验收报告 | DONE | BM25、Langfuse、Redis 工程切换与待付费质量门禁已分开记录 |
 
-此前实现已按功能边界提交。当前架构报告、证据、ARCH-01 实现及本次任务更新尚未提交；后续按 ARCH/AGENT/EVOL 等功能切片整理提交范围，保留实现、回归与自审证据，`output/pdf` 和本地临时产物沿用既有排除规则。
+此前实现已按功能边界提交。本轮根据所有者的新指令，将当前架构审查、目标设计与 ARCH 实现按依赖和经过验证的阶段快照分批提交；工程自审见[记录 184](reviews/2026-10-11-implementation-184-batched-architecture-commits.md)。`output/pdf`、凭据、备份和本地临时产物继续排除；提交不表示已部署、模型质量达标或 S2/S3 完成。
 
 ## 2. 第一批：评测可信
 
