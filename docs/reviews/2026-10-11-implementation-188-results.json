@@ -1,0 +1,441 @@
+{
+  "record": 188,
+  "task": "ARCH-12",
+  "scope": "assessment and conditional adoption decision; no production transaction/pool change",
+  "reviewer": "Codex self-review; not independent human",
+  "head": "69fca598e405423b14f7a04e9336bdadc8f33163",
+  "decision": "keep production request transaction; no pooling/phased activation; ARCH-15 output-boundary verification/fix is separate READY task",
+  "diagnostic_sha256": "24affe0d3b7599395e14845b16477fd5ec1326bfa872d31557a8f512814a8e86",
+  "benchmark": {
+    "method": "actual ProductionRuntime.connection; synthetic fact/operation key; alternating arms; final fact/principal comparison in BOTH arms",
+    "external_wait_s": 0.25,
+    "server": {
+      "version": "17.11 (Debian 17.11-1.pgdg12+2)",
+      "max_connections": 100,
+      "reserved_connections": 0,
+      "superuser_reserved_connections": 3,
+      "backends_before_diagnostic": 1
+    },
+    "arms": [
+      {
+        "repetition": 1,
+        "mode": "held",
+        "concurrency": 8,
+        "synthetic_connection_slots": null,
+        "n": 24,
+        "p50_ms": 292.281,
+        "p95_ms": 299.632,
+        "elapsed_s": 0.879,
+        "requests_per_s": 27.29,
+        "connection_leases": 24,
+        "lease_ms_per_request": 292.078,
+        "peak_observed_backends": 8,
+        "peak_idle_in_transaction": 8,
+        "lock_wait_samples": 0,
+        "monitor_samples": 69,
+        "mean_observed_backends": 7.594
+      },
+      {
+        "repetition": 1,
+        "mode": "phased",
+        "concurrency": 8,
+        "synthetic_connection_slots": null,
+        "n": 24,
+        "p50_ms": 320.025,
+        "p95_ms": 353.231,
+        "elapsed_s": 0.988,
+        "requests_per_s": 24.285,
+        "connection_leases": 48,
+        "lease_ms_per_request": 74.143,
+        "peak_observed_backends": 8,
+        "peak_idle_in_transaction": 6,
+        "lock_wait_samples": 0,
+        "monitor_samples": 77,
+        "mean_observed_backends": 0.623
+      },
+      {
+        "repetition": 1,
+        "mode": "held",
+        "concurrency": 8,
+        "synthetic_connection_slots": 4,
+        "n": 24,
+        "p50_ms": 301.755,
+        "p95_ms": 1482.274,
+        "elapsed_s": 1.864,
+        "requests_per_s": 12.874,
+        "connection_leases": 24,
+        "lease_ms_per_request": 306.371,
+        "peak_observed_backends": 4,
+        "peak_idle_in_transaction": 4,
+        "lock_wait_samples": 0,
+        "monitor_samples": 140,
+        "mean_observed_backends": 3.736
+      },
+      {
+        "repetition": 1,
+        "mode": "phased",
+        "concurrency": 8,
+        "synthetic_connection_slots": 4,
+        "n": 24,
+        "p50_ms": 299.017,
+        "p95_ms": 358.311,
+        "elapsed_s": 0.943,
+        "requests_per_s": 25.463,
+        "connection_leases": 48,
+        "lease_ms_per_request": 49.817,
+        "peak_observed_backends": 4,
+        "peak_idle_in_transaction": 4,
+        "lock_wait_samples": 0,
+        "monitor_samples": 75,
+        "mean_observed_backends": 0.587
+      },
+      {
+        "repetition": 2,
+        "mode": "phased",
+        "concurrency": 8,
+        "synthetic_connection_slots": null,
+        "n": 24,
+        "p50_ms": 313.416,
+        "p95_ms": 338.476,
+        "elapsed_s": 0.963,
+        "requests_per_s": 24.917,
+        "connection_leases": 48,
+        "lease_ms_per_request": 63.034,
+        "peak_observed_backends": 7,
+        "peak_idle_in_transaction": 6,
+        "lock_wait_samples": 0,
+        "monitor_samples": 73,
+        "mean_observed_backends": 0.644
+      },
+      {
+        "repetition": 2,
+        "mode": "held",
+        "concurrency": 8,
+        "synthetic_connection_slots": null,
+        "n": 24,
+        "p50_ms": 286.161,
+        "p95_ms": 300.287,
+        "elapsed_s": 0.865,
+        "requests_per_s": 27.761,
+        "connection_leases": 24,
+        "lease_ms_per_request": 285.844,
+        "peak_observed_backends": 8,
+        "peak_idle_in_transaction": 8,
+        "lock_wait_samples": 0,
+        "monitor_samples": 69,
+        "mean_observed_backends": 7.594
+      },
+      {
+        "repetition": 2,
+        "mode": "phased",
+        "concurrency": 8,
+        "synthetic_connection_slots": 4,
+        "n": 24,
+        "p50_ms": 297.25,
+        "p95_ms": 339.98,
+        "elapsed_s": 0.934,
+        "requests_per_s": 25.704,
+        "connection_leases": 48,
+        "lease_ms_per_request": 36.034,
+        "peak_observed_backends": 4,
+        "peak_idle_in_transaction": 1,
+        "lock_wait_samples": 0,
+        "monitor_samples": 76,
+        "mean_observed_backends": 0.316
+      },
+      {
+        "repetition": 2,
+        "mode": "held",
+        "concurrency": 8,
+        "synthetic_connection_slots": 4,
+        "n": 24,
+        "p50_ms": 284.662,
+        "p95_ms": 1693.484,
+        "elapsed_s": 1.698,
+        "requests_per_s": 14.138,
+        "connection_leases": 24,
+        "lease_ms_per_request": 282.568,
+        "peak_observed_backends": 4,
+        "peak_idle_in_transaction": 4,
+        "lock_wait_samples": 0,
+        "monitor_samples": 134,
+        "mean_observed_backends": 3.843
+      },
+      {
+        "repetition": 3,
+        "mode": "held",
+        "concurrency": 8,
+        "synthetic_connection_slots": null,
+        "n": 24,
+        "p50_ms": 289.951,
+        "p95_ms": 302.592,
+        "elapsed_s": 0.883,
+        "requests_per_s": 27.173,
+        "connection_leases": 24,
+        "lease_ms_per_request": 292.252,
+        "peak_observed_backends": 8,
+        "peak_idle_in_transaction": 8,
+        "lock_wait_samples": 0,
+        "monitor_samples": 69,
+        "mean_observed_backends": 7.609
+      },
+      {
+        "repetition": 3,
+        "mode": "phased",
+        "concurrency": 8,
+        "synthetic_connection_slots": null,
+        "n": 24,
+        "p50_ms": 305.973,
+        "p95_ms": 317.992,
+        "elapsed_s": 0.924,
+        "requests_per_s": 25.973,
+        "connection_leases": 48,
+        "lease_ms_per_request": 54.775,
+        "peak_observed_backends": 7,
+        "peak_idle_in_transaction": 4,
+        "lock_wait_samples": 0,
+        "monitor_samples": 72,
+        "mean_observed_backends": 0.514
+      },
+      {
+        "repetition": 3,
+        "mode": "held",
+        "concurrency": 8,
+        "synthetic_connection_slots": 4,
+        "n": 24,
+        "p50_ms": 288.228,
+        "p95_ms": 1408.306,
+        "elapsed_s": 1.686,
+        "requests_per_s": 14.236,
+        "connection_leases": 24,
+        "lease_ms_per_request": 280.756,
+        "peak_observed_backends": 4,
+        "peak_idle_in_transaction": 4,
+        "lock_wait_samples": 0,
+        "monitor_samples": 134,
+        "mean_observed_backends": 3.836
+      },
+      {
+        "repetition": 3,
+        "mode": "phased",
+        "concurrency": 8,
+        "synthetic_connection_slots": 4,
+        "n": 24,
+        "p50_ms": 293.877,
+        "p95_ms": 333.109,
+        "elapsed_s": 0.924,
+        "requests_per_s": 25.973,
+        "connection_leases": 48,
+        "lease_ms_per_request": 37.283,
+        "peak_observed_backends": 4,
+        "peak_idle_in_transaction": 3,
+        "lock_wait_samples": 0,
+        "monitor_samples": 75,
+        "mean_observed_backends": 0.533
+      }
+    ],
+    "locks_and_freshness": {
+      "isolation": "read committed",
+      "held_transaction_blocks_ddl_sqlstate": "55P03",
+      "acl_delete_commits_while_fact_transaction_open": true,
+      "fresh_read_rejects_revoked_evidence": true,
+      "cached_python_evidence_remains": true,
+      "ddl_lock_succeeds_after_request_close": true
+    },
+    "freshness_cases": {
+      "archive": {
+        "final_comparison_rejects": true,
+        "fresh_principal_matches": true,
+        "fresh_evidence_matches": false,
+        "rejection_reasons": [
+          "status_not_active"
+        ]
+      },
+      "source_integrity": {
+        "final_comparison_rejects": true,
+        "fresh_principal_matches": true,
+        "fresh_evidence_matches": false,
+        "rejection_reasons": [
+          "source_integrity_not_verified"
+        ]
+      },
+      "content_hash": {
+        "final_comparison_rejects": true,
+        "fresh_principal_matches": true,
+        "fresh_evidence_matches": false,
+        "rejection_reasons": [
+          "content_hash_mismatch"
+        ]
+      },
+      "principal_deactivate": {
+        "final_comparison_rejects": true,
+        "fresh_principal_matches": false,
+        "fresh_evidence_matches": true,
+        "rejection_reasons": []
+      }
+    },
+    "hosted_calls": 0,
+    "cost_usd": 0,
+    "limitations": [
+      "not real QA or model capacity",
+      "phased arm commits initial intent separately; atomicity/recovery contract not implemented",
+      "sampled backend peaks are lower bounds; client lease timing includes connect/close",
+      "monitor connection and test setup are excluded from arm counts",
+      "synthetic slot limiter is not deployed pooling"
+    ]
+  },
+  "median_of_three_arm_statistics": [
+    {
+      "slots": null,
+      "mode": "held",
+      "p50_ms": 289.951,
+      "p95_ms": 300.287,
+      "requests_per_s": 27.29,
+      "lease_ms_per_request": 292.078,
+      "peak_observed_backends": 8,
+      "mean_observed_backends": 7.594
+    },
+    {
+      "slots": null,
+      "mode": "phased",
+      "p50_ms": 313.416,
+      "p95_ms": 338.476,
+      "requests_per_s": 24.917,
+      "lease_ms_per_request": 63.034,
+      "peak_observed_backends": 7,
+      "mean_observed_backends": 0.623
+    },
+    {
+      "slots": 4,
+      "mode": "held",
+      "p50_ms": 288.228,
+      "p95_ms": 1482.274,
+      "requests_per_s": 14.138,
+      "lease_ms_per_request": 282.568,
+      "peak_observed_backends": 4,
+      "mean_observed_backends": 3.836
+    },
+    {
+      "slots": 4,
+      "mode": "phased",
+      "p50_ms": 297.25,
+      "p95_ms": 339.98,
+      "requests_per_s": 25.704,
+      "lease_ms_per_request": 37.283,
+      "peak_observed_backends": 4,
+      "mean_observed_backends": 0.533
+    }
+  ],
+  "verification": {
+    "diagnostic": {
+      "exit_code": 0,
+      "elapsed_s": 15.518
+    },
+    "targeted": {
+      "mode": "targeted",
+      "exit_code": 0,
+      "elapsed_s": 27.667,
+      "worktree": "/Users/leaf/.cache/medy-checks/arch12-verified-bo31u6wz",
+      "required_services": true
+    },
+    "targeted_tests": 36,
+    "passed": 2163,
+    "skipped": 70,
+    "warnings": 1,
+    "pytest_elapsed_s": 71.5,
+    "ruff_formatted_files": 519,
+    "mypy_source_files": 218,
+    "architecture_modules": 218,
+    "architecture_violations": 0,
+    "architecture_existing_exceptions": 2,
+    "datasets_pass": 4,
+    "schemas": "up to date",
+    "maintained_inputs": 559,
+    "source_mismatches": [],
+    "preserved_existing_files": 57,
+    "head_unchanged": true,
+    "frozen_git_diff_empty": true,
+    "staged_diff_empty": true,
+    "make_check": {
+      "mode": "gate",
+      "exit_code": 0,
+      "elapsed_s": 75.138,
+      "worktree": "/Users/leaf/.cache/medy-checks/arch12-verified-bo31u6wz",
+      "required_services": true
+    },
+    "cleanup": {
+      "test_databases_now": 0,
+      "lexical_fixture_logins_now": 0
+    },
+    "source_manifest_sha256": "7e23c8bb2c240362f9a4466837acfc5db7f648108a8c8d5ca03359080433b163",
+    "required_services": true,
+    "skip_reasons": {
+      "optional_B_zhparser": 45,
+      "optional_C_pg_search": 25
+    },
+    "documents": {
+      "files": 5,
+      "local_links": 165,
+      "missing_links": [],
+      "original_task_ids_preserved": 141,
+      "new_task_ids": [
+        "ARCH-15"
+      ],
+      "final_task_ids": 142,
+      "changed_original_task_rows": [
+        "ARCH-12"
+      ],
+      "protected_preexisting_paths": 57,
+      "protected_differences": [],
+      "verified_source_inputs": 559,
+      "source_mismatches": [],
+      "private_env_bytes_identical": true,
+      "head_unchanged": true,
+      "staged_diff_empty": true,
+      "frozen_diff_empty": true
+    },
+    "document_tests": {
+      "command": "env -u DEBUG PYTHONPATH=src:. venv/bin/python -m pytest -q tests/unit/docs",
+      "exit_code": 0,
+      "passed": 27,
+      "elapsed_s": 2.49
+    }
+  },
+  "commands": [
+    "env -u DEBUG PYTHONPATH=<snapshot>/src:<snapshot> <snapshot>/venv/bin/python -m tests.diagnostics.request_transactions --concurrency 8 --rounds 3 --wait-ms 250",
+    "env -u DEBUG <snapshot>/venv/bin/python -m pytest -q tests/unit/deploy/test_transaction_diagnostic.py tests/integration/test_fact_recheck.py tests/integration/test_task_audit.py tests/unit/api/test_ask_route.py",
+    "env -u DEBUG make check (required PG/Redis URLs injected through process environment)"
+  ],
+  "cost_usd": 0,
+  "hosted_calls": 0,
+  "production_deployment_changed": false,
+  "committed": false,
+  "pushed": false,
+  "self_review": {
+    "scope": "PASS for assessment scope",
+    "adr_and_stage": "PASS for assessment scope",
+    "correctness_and_failures": "PASS for assessment scope",
+    "permission_and_data": "PASS for assessment scope",
+    "budget_cancellation_side_effects": "PASS for assessment scope",
+    "trace_versions": "PASS for assessment scope",
+    "verification": "PASS for assessment scope",
+    "docs_state": "PASS for assessment scope"
+  },
+  "limitations": [
+    "synthetic workload, 250ms simulated external wait; not real QA or model capacity",
+    "4-slot constraint artificially imposed; not evidence of current operational connection limit",
+    "no production result fence implemented or runtime entry vulnerability reproduction completed; tracked ARCH-15",
+    "phased arm commits claim independently; production audit/recovery semantics not delivered",
+    "shared host resources; small n; p95 median of arm p95 not pooled",
+    "remote CI/amd64, actual capacity, model quality, independent human, holdout and S2/S3 unchanged"
+  ],
+  "status": "DONE for assessment/plan only",
+  "previous_make_check": {
+    "mode": "gate",
+    "exit_code": 0,
+    "elapsed_s": 191.007,
+    "worktree": "/Users/leaf/.cache/medy-checks/arch12-verified-bo31u6wz",
+    "required_services": true
+  },
+  "wall_elapsed_s": 1519.322
+}
