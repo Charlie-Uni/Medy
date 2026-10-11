@@ -72,6 +72,7 @@ from medops.evals.statistics import nearest_rank as pctl
 from medops.harness.answer import ANSWER_SYSTEM
 from medops.harness.production import production_model_config_version
 from medops.harness.runtime import initial_state, run_ask
+from medops.infrastructure.llm.execution_budget import configured_limits
 from medops.infrastructure.llm.factory import build_budgeted_gateway
 from medops.infrastructure.llm.meter import MeteredGateway
 from medops.loop.gate import compute_gate
@@ -331,7 +332,7 @@ def main() -> int:
     gpu = InferenceProcess(device=args.device, output=baseline.rerank_output(RERANK_OUTPUT), timeout_s=args.gpu_timeout)
     provider = ProcessEmbedding(gpu)
     rerankers: dict[int, Any] = {}
-    budgeted_gateway = build_budgeted_gateway(settings, run_cap_usd=args.max_cost_usd)
+    budgeted_gateway = build_budgeted_gateway(settings, run_cap_usd=args.max_cost_usd, require_execution_budget=True)
     gateway = MeteredGateway(budgeted_gateway)
     registry = default_registry()
     planes: dict[str, dict[str, Any]] = {}
@@ -351,6 +352,7 @@ def main() -> int:
                 gateway,
                 args.as_of,
                 config=cfg,
+                execution_limits=configured_limits(settings),
                 answer_system=prompt,
                 glossary=glossary,
                 multi_query=rel.multi_query(),

@@ -6,7 +6,7 @@
 
 导航：§0 架构与执行顺序；§1 工作区；§2 评测；§3 来源/索引/观测；§4 检索/缓存/性能；§5 会话/人工接手/交付；§6 许可/选做；§7 强制自审；§8 Agent；§9 自进化；§10 代码质量；§11 工期；§12 最终成果与人工决定。
 
-**最新约束与沟通（2026-10-10）：** [ADR-0012 讨论稿 v0.3](adr/ADR-0012-agent-evolution-goals-and-acceptance.md)先记录目标/验收变更并与所有者沟通；S2/S3 映射及首个 PV 资料整理场景已确认。ARCH-04、ARCH-11 是进入 S2 的共同硬前置；自动激活仅实验环境；S3 改进声明须基于合格盲测；每轮付费实验继续单独授权。所有者选择至少 200 未见任务、建议目标/非目标各 100、三轮配对与 CI 方向，并补充提升幅度不必是硬指标：新增盲测取消固定 +5pp，原生产 +5pp 是否同步修改仍待沟通。五项限制已生效，不能把待答验收细则或盲测题准备记为完成。约束自审见[记录 173](reviews/2026-10-10-implementation-173-adr12-owner-constraints.md)，本轮设计及场景确认见[记录 174](reviews/2026-10-10-implementation-174-plan01-capability-and-scenario.md)。
+**最新约束与沟通（2026-10-10）：** [ADR-0012 讨论稿 v0.4](adr/ADR-0012-agent-evolution-goals-and-acceptance.md)先记录目标/验收变更并与所有者沟通；S2/S3 映射及首个 PV 资料整理场景已确认。ARCH-04、ARCH-11 是进入 S2 的共同硬前置；自动激活仅实验环境；S3 改进声明须基于合格盲测；每轮付费实验继续单独授权。所有者选择至少 200 未见任务、建议目标/非目标各 100、三轮配对与 CI 方向，并补充提升幅度不必是硬指标：新增盲测取消固定 +5pp，原生产 +5pp 是否同步修改仍待沟通。五项限制已生效，不能把待答验收细则或盲测题准备记为完成。约束自审见[记录 173](reviews/2026-10-10-implementation-173-adr12-owner-constraints.md)，本轮设计及场景确认见[记录 174](reviews/2026-10-10-implementation-174-plan01-capability-and-scenario.md)。
 
 最终目标：在权限、证据和预算约束内自主选择工具、根据结果调整行动的医药业务 Agent；基于开发失败案例由模型生成真实 Prompt、声明式 Skill 及允许的检索策略候选，隔离评测后按发布策略启用并可回滚。保留现有 RAG、五类 Skill、BM25、Redis、Langfuse、模型路由与模块化单体。固定流程继续服务适合的单次任务；动态行动路径必须经过相同的最终证据与安全约束。
 
@@ -38,7 +38,7 @@ probe v4 与 `main-v5-provisional` 均已冻结。EVAL-11 已完成：580 个 go
 
 ### 0.1 架构修复任务
 
-架构审查已完成；ARCH-01、ARCH-04 已分别通过对应范围工程自审，其余修复按下表推进。`ARCH-xx` 对应[架构审查](reviews/2026-10-10-architecture-audit.md)及[复现证据](reviews/2026-10-10-architecture-audit-results.json)中的 `ARxx`。保留模块化单体、独立 API/worker/MCP 进程、Harness 的强制约束、数据库 RLS、事实回查和受控发布；新增 Agent 循环不受“所有业务都只能走固定节点顺序”的实现限制，具体结构与兼容规则由 PLAN-02 登记。原组件切换及历史测试记录继续保留，不能用那些记录证明新缺陷已经解决。
+架构审查已完成；ARCH-01、ARCH-04、ARCH-11 已分别通过对应范围工程自审，其余修复按下表推进。`ARCH-xx` 对应[架构审查](reviews/2026-10-10-architecture-audit.md)及[复现证据](reviews/2026-10-10-architecture-audit-results.json)中的 `ARxx`。保留模块化单体、独立 API/worker/MCP 进程、Harness 的强制约束、数据库 RLS、事实回查和受控发布；新增 Agent 循环不受“所有业务都只能走固定节点顺序”的实现限制，具体结构与兼容规则由 PLAN-02 登记。原组件切换及历史测试记录继续保留，不能用那些记录证明新缺陷已经解决。
 
 `READY` 任务可以进行不调用托管模型的实现和核验；`BLOCKED` 任务列出具体工程前置。Skill 医学语义质量、真实问答与容量测量仍需单独付费授权；工程完成不替代正式质量门禁。
 
@@ -49,7 +49,7 @@ probe v4 与 `main-v5-provisional` 均已冻结。EVAL-11 已完成：580 个 go
 | ARCH-02 | 统一 Ask、Skill、Replay 的历史输入 | READY | 日期、历史模式和版本选择一致传递；未支持或无法唯一解释的选择器明确拒绝；验证日期边界、归档、权限、提示与缓存隔离。OPT-13、INV-DATA-03 |
 | ARCH-03 | 核验二阶段 Skill 的最终业务判断 | READY | 规则与语义核验覆盖判断、理由、条款和用户观察；矛盾/无支持不能 completed；数字、单位、否定、条件与合法错引有反例。工程核验后单独申请真实质量校准。五类 Skill、INV-SAF-03 |
 | ARCH-04 | 修复并发失败调用的费用归属 | DONE | [记录 175](reviews/2026-10-11-implementation-175-call-receipts-and-fee-attribution.md)：调用回执关联 Trace/run/call/attempt/reservation，成功/失败/拒绝/取消与结算故障独立归属；已知 usage 本地费用与保守预留分开。本机三库 0023、保护摘要相同，1807/70、486 维护输入 SHA 一致，0 托管调用；本轮工程自审通过。账单对账/完整复现仍待后续。OPT-09、INV-OBS-01 |
-| ARCH-11 | 统一单次执行的 Token 与费用预算 | READY | S2 硬前置，ARCH-04 已通过本轮工程自审，记录 175；翻译、规划、生成、判定、结构化、重试/回退均调用前预留并结算；整体 Token/费用/时间与月度上限区分，新 Agent/Loop 入口逐项核验。OPT-11、INV-HAR-08 |
+| ARCH-11 | 统一单次执行的 Token 与费用预算 | DONE | [记录 176](reviews/2026-10-11-implementation-176-shared-execution-budget.md)：所有者确认兼容上限 12,000 Token / 0.60 USD，Ask 125 秒、Skill/MCP 不扩大原期限；翻译、生成、判定、结构化与重试共享预留/结算，嵌套/线程不能重开。全量 1830/70、490 维护输入与配置 SHA 一致，0 托管调用，本轮工程自审通过；未来 Agent/模型 Loop 必须显式 profile＋强制上下文，尚未实现，跨进程恢复归 ARCH-05/06/07。OPT-11、INV-HAR-08 |
 | ARCH-06 | 补齐异步 Skill 的证据和核验审计 | BLOCKED | 先完成 ARCH-02/03 的执行上下文和最终判断；Ask/Task 共享审计服务；结果引用与 Trace 一致；内层节点、失败及受限载荷有明确保存责任。OPT-09、INV-OBS-01/03 |
 | ARCH-07 | 补完整回放输入和逐调用追溯 | BLOCKED | 依赖 ARCH-02/04/06；保存完整输入、实际版本和模型回执；区分当前事实诊断与原条件复现；与 FOCUS-02 共用实际渲染片段哈希/来源区间。OPT-09、OPT-16 |
 | ARCH-09 | 稳定反馈来源、score ID 和扫描游标 | READY | 使用稳定事实库/部署身份；与包含启动时间的运行身份分开；重启/地址变化不改变同一反馈标识，克隆库身份与恢复去重有规则。OPT-09、OPT-16 |
@@ -72,7 +72,7 @@ probe v4 与 `main-v5-provisional` 均已冻结。EVAL-11 已完成：580 个 go
 
 贯穿工作：ARCH-08/10/13/14、CODE-03～07、IDX-03、OBS-03、DEV-BACKLOG-01 按依赖穿插；ARCH-12 有实测收益再实施。BM25-09、CACHE-10、PERF-10、SRC-05、FOCUS-01/02/09、ROUTE-01/02 全部保留，先分别验证再 COMBO-01。人工事项 PLAN-02、EVAL-29/30/31、LIC-03、DEPLOY-01 单独跟踪；EVOL-09 已决定限实验，生产自动批准不再列为待问事项。
 
-**当前下一项：ARCH-11 整体执行 Token/费用预算；ARCH-04 已自审通过，证据见[记录 175](reviews/2026-10-11-implementation-175-call-receipts-and-fee-attribution.md)；PLAN-02 剩余行动/验收契约继续完善。** PLAN-01 的设计证据包已通过本轮自审，首个 PV 场景范围已确认；剩余原生产门槛问题见 ADR-0012。[首个 PV 场景方案](agent/PLAN-01-capability-and-scenario.md)与 12 个开发用例是 S0 输入，不解锁 S2。首个约 3 天工作包和整体工期在盲测/复核范围明确后重估；ARCH-04 完成只证明调用计量工程范围，统一预算、医学质量和容量仍未通过。
+**当前下一项：ARCH-05 任务总时长、租约与持有权；ARCH-04/11 两项工程硬前置已分别自审通过，证据见记录 [175](reviews/2026-10-11-implementation-175-call-receipts-and-fee-attribution.md) / [176](reviews/2026-10-11-implementation-176-shared-execution-budget.md)。** PLAN-02 剩余 Agent 行动/profile 与验收契约继续完善；PV 场景与现有执行兼容预算已确认，原生产门槛问题仍待答。两项通过不等于 S2 已完成或已获准真实试跑；相关租约、历史、判断和审计前置按依赖推进。PLAN-01 与 12 个开发用例仍是设计输入，未建未见盲测；医学质量、容量与付费实验独立留证，整体工期仍按新增复核/盲测范围重估。
 
 每次只推进一个主切片。纯契约设计、机械检查和无付费测试可先准备；依赖未通过时不得把相关集成或阶段标为完成。真实并发/费用运行先满足 ARCH-01/04/11；历史 Skill/二阶段判断先满足 ARCH-02/03/06；回放先满足 ARCH-07；所有检索运行先核对事实库、索引覆盖和积压。EVAL-22/23/24 → EVAL-25/26 → EVAL-27/28 的基线依赖保留，S2/S3 开发演示不能替代正式门禁。等待人工/授权时继续无关 READY 项。
 
@@ -230,7 +230,7 @@ Redis 已在本机主运行配置切到 `redis`，TTL 300 秒；实际 smoke 为
 | ID | Goal / 任务 | 状态 | 依赖、范围与完成证据 |
 | --- | --- | --- | --- |
 | PLAN-01 | 对齐原要求、参考代码、当前实现和首个业务场景 | DONE | [S0 证据包](agent/PLAN-01-capability-and-scenario.md)：参考源码只读核验、16 项能力矩阵、已确认 PV 场景、固定 Workflow 对照、7 个拟议动作及 12 个合成开发用例。[记录 174](reviews/2026-10-10-implementation-174-plan01-capability-and-scenario.md)设计自审通过、文档测试 5 passed、141 条任务保留，费用 0；不是 Agent 实现或盲测 |
-| PLAN-02 | 先沟通 ADR，再明确目标变更、行动契约与验收 | HUMAN | ADR-0012 v0.3 部分确认，五项约束、阶段映射/A 方向和 PV 资料整理范围已确认；原生产 +5pp 是否同步取消待答。[PLAN-01 场景方案](agent/PLAN-01-capability-and-scenario.md)已具备；动作/状态/8 步 profile 是草案，完整预算和 EVAL-32 验收尚未冻结。批准后才更新对应基线/规范 |
+| PLAN-02 | 先沟通 ADR，再明确目标变更、行动契约与验收 | HUMAN | ADR-0012 v0.4 部分确认，五项约束、阶段映射/A 方向和 PV 资料整理范围已确认；原生产 +5pp 是否同步取消待答。[PLAN-01 场景方案](agent/PLAN-01-capability-and-scenario.md)已具备；动作/状态/8 步 profile 是草案；现有执行兼容预算已确认，未来 Agent profile 和 EVAL-32 验收尚未冻结。批准后才更新对应基线/规范 |
 | AGENT-01 | 定义动作、状态、观察结果与停止契约 | BLOCKED | S2 共同入口 PLAN-02、ARCH-04/11 通过；S0 可先准备假数据用例。Pydantic/JSON Schema 定义动作/观察/澄清/终止；未知工具、非法参数、伪造证据 ID 拒绝，状态可序列化 |
 | AGENT-02 | 将检索和现有 Skill 暴露为受控工具 | BLOCKED | AGENT-01、ARCH-02；工具白名单、入参/结果校验、用户身份透传、文档/产品/版本约束、原文和相邻块读取；复用 Registry/检索装配，不能由模型自授权限 |
 | AGENT-03 | 实现模型选择动作与结果驱动循环 | BLOCKED | AGENT-02、ARCH-05/11；模型按结果决定补检索、换查询、调用 Skill 或结束；用假网关验证不同结果导致不同合法路径，托管模型试跑归 AGENT-08 |

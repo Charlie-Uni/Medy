@@ -19,13 +19,14 @@ from medops.domain.evidence import Evidence
 from medops.domain.intent import IntentType
 from medops.domain.safety import SafetyDecision, SafetyResult
 from medops.domain.state import MAX_CANDIDATES, AgentState, TokenBudget
-from medops.harness.answer import answer_model, generate_answer
+from medops.harness.answer import answer_fits_budget, answer_model, generate_answer
 from medops.harness.contracts import NodeAttempt, NodeFailure, run_node
 from medops.harness.dependencies import HarnessDeps
 from medops.harness.executions import apply_delta, state_delta
 from medops.harness.intent import INTENT_VERSION, classify
 from medops.harness.retrieval_port import RetrievalRequest
 from medops.harness.transitions import escalate as _escalate
+from medops.infrastructure.llm.execution_budget import current_budget
 from medops.infrastructure.llm.gateway import (
     BudgetExceeded,
     ModelOutputInvalid,
@@ -106,6 +107,13 @@ def build_nodes(deps: HarnessDeps) -> dict[str, Callable[[HarnessState], dict[st
             new_state, flagged = result
         else:
             new_state, flagged = result, []
+        if new_state.answer is not None or new_state.escalation is not None:
+            budget = current_budget()
+            snapshot = budget.snapshot() if budget is not None else None
+            if snapshot is not None and snapshot.accounted_tokens <= new_state.budget.limit:
+                new_state = new_state.advance(
+                    budget=TokenBudget(limit=new_state.budget.limit, used=snapshot.accounted_tokens)
+                )
         if store is not None:
             store.record_attempts(claim_no, attempts)
             store.complete(key, {"state_delta": state_delta(state, new_state), "flagged": list(flagged)}, deps.clock())
@@ -154,13 +162,15 @@ def build_nodes(deps: HarnessDeps) -> dict[str, Callable[[HarnessState], dict[st
             cost = estimate_tokens(e.text)
             if used + cost + reserve > state.budget.limit:
                 break
+            if not answer_fits_budget(state.advance(evidence=tuple(fit + [e])), deps):
+                break
             fit.append(e)
             used += cost
         new_state = state.advance(
             rewritten_queries=outcome.rewritten_queries,
             candidates=outcome.candidates[:MAX_CANDIDATES],
             evidence=tuple(fit),
-            budget=TokenBudget(limit=state.budget.limit, used=used),
+            budget=TokenBudget(limit=state.budget.limit, used=state.budget.used),
         )
         if kept and not fit:
             return _escalate(

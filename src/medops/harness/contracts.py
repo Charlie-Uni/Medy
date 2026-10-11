@@ -29,6 +29,7 @@ from medops.core.errors import ErrorCode, InfrastructureError, MedOpsError
 from medops.core.telemetry import annotate, span
 from medops.domain.common import DomainModel, NonEmptyStr
 from medops.infrastructure.llm.accounting import call_scope
+from medops.infrastructure.llm.execution_budget import check_execution_budget
 
 MAX_RETRIES = 2  # baseline 3.2
 T = TypeVar("T")
@@ -90,6 +91,7 @@ def run_node(
             ):
                 try:
                     check_deadline()
+                    check_execution_budget()
                     with execution_admission():
                         result = body()
                     check_deadline()  # discard a late result; never launch another attempt after expiry

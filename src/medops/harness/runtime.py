@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 
 from medops.core.telemetry import annotate, run_metadata, span
 from medops.core.tracing import new_trace_id
@@ -13,6 +13,8 @@ from medops.harness.contracts import NodeAttempt
 from medops.harness.dependencies import HarnessDeps
 from medops.harness.graph import build_graph
 from medops.infrastructure.llm.accounting import call_scope
+from medops.infrastructure.llm.execution_budget import EXECUTION_BUDGET_VERSION, default_limits, execution_scope
+from medops.infrastructure.llm.meter import MeteredGateway
 
 DEFAULT_TRACE_TOKEN_LIMIT = 12_000  # INV-HAR-08: whole-trace budget, not a per-call max_tokens
 
@@ -55,9 +57,16 @@ def initial_state(
 
 
 def run_ask(state: AgentState, deps: HarnessDeps, *, recursion_limit: int = 12) -> HarnessRun:
+    limits = deps.execution_limits or default_limits(
+        timeout_s=sum(s.timeout_s for s in deps.specs.values()), token_limit=state.budget.limit
+    )
+    limits = limits.model_copy(update={"token_limit": min(limits.token_limit, state.budget.limit)})
+    if not isinstance(deps.gateway, MeteredGateway):
+        deps = replace(deps, gateway=MeteredGateway(deps.gateway))
     with (
         run_metadata(state.trace_id, state.versions.model_dump(mode="json"), kind="ask"),
         call_scope(run_id=state.run_id),
+        execution_scope(limits) as budget,
         span("harness.run") as current,
     ):
         app = build_graph(deps)
@@ -65,6 +74,20 @@ def run_ask(state: AgentState, deps: HarnessDeps, *, recursion_limit: int = 12) 
             {"state": state, "attempts": [], "flagged": []}, config={"recursion_limit": recursion_limit}
         )
         final: AgentState = result["state"]
+        snapshot = budget.snapshot()
+        if snapshot.accounted_tokens and snapshot.accounted_tokens <= state.budget.limit:
+            final = final.advance(budget=TokenBudget(limit=state.budget.limit, used=snapshot.accounted_tokens))
+        annotate(
+            current,
+            execution_budget_version=EXECUTION_BUDGET_VERSION,
+            execution_timeout_s=snapshot.limits.timeout_s,
+            execution_token_limit=snapshot.limits.token_limit,
+            execution_cost_limit_usd=snapshot.limits.cost_limit_usd,
+            execution_accounted_tokens=snapshot.accounted_tokens,
+            execution_accounted_cost_usd=snapshot.accounted_cost_usd,
+            execution_reserved_tokens=snapshot.reserved_tokens,
+            execution_budget_blocked=snapshot.blocked_reason,
+        )
         if final.answer is None and final.escalation is None:
             raise AssertionError("harness ended without an answer or an escalation")
         annotate(current, outcome="answered" if final.answer is not None else "escalated")

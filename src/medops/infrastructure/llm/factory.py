@@ -9,7 +9,11 @@ from medops.infrastructure.llm.openai_gateway import OpenAIModelGateway
 
 
 def build_budgeted_gateway(
-    settings: Settings, *, ledger: SpendLedger | None = None, run_cap_usd: float | None = None
+    settings: Settings,
+    *,
+    ledger: SpendLedger | None = None,
+    run_cap_usd: float | None = None,
+    require_execution_budget: bool = False,
 ) -> BudgetedGateway:
     """Create a gateway against the shared durable monthly ledger (or an explicit test ledger)."""
     durable = ledger or PostgresSpendLedger(
@@ -23,4 +27,5 @@ def build_budgeted_gateway(
         ledger=durable,
         monthly_cap_usd=settings.llm_monthly_budget_usd,
         run_cap_usd=run_cap_usd,
+        require_execution_budget=require_execution_budget,
     )

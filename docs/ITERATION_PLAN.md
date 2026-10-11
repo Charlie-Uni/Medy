@@ -4,13 +4,13 @@
 
 2026-10-10 用户已要求将 Agent、自进化与之前的架构/评测/性能任务统一纳入后续执行，并强制每轮自审核。任务状态与顺序只在[当前任务台账](CURRENT_TASKS.md)维护，执行规则见[AGENTS.md](../AGENTS.md)；本文件解释设计。纳入待办不代表实现或发布完成。原 ADR、冻结数据、许可与生产签字要求继续有效；动态 Agent 的结构调整在 PLAN-02 留下明确决定，不改写历史门禁。
 
-后续约束见 [ADR-0012 v0.3](adr/ADR-0012-agent-evolution-goals-and-acceptance.md)：先沟通目标/验收 ADR；S2 入口必须 ARCH-04/11 通过；自动激活仅实验；S3 改进声明必须未见盲测；付费逐轮授权。已确认 S2/S3 映射、A 的 ≥200 任务/三轮配对/CI 方向及首个 PV 资料整理场景；新增盲测取消固定 +5pp 幅度要求，原生产门槛是否同步修改仍待答，不在本页悄悄改写。
+后续约束见 [ADR-0012 v0.4](adr/ADR-0012-agent-evolution-goals-and-acceptance.md)：先沟通目标/验收 ADR；S2 入口必须 ARCH-04/11 通过；自动激活仅实验；S3 改进声明必须未见盲测；付费逐轮授权。已确认 S2/S3 映射、A 的 ≥200 任务/三轮配对/CI 方向及首个 PV 资料整理场景；新增盲测取消固定 +5pp 幅度要求，原生产门槛是否同步修改仍待答，不在本页悄悄改写。
 
 阅读导航：§2 看事实基线，§3 看 Goal 总表，§4–7 看 BM25/Redis/Langfuse/模型路由，§8 看性能，§9–10 看评测与数据，§11–15 看会话/索引/Loop/文档/部署，§16 查名词，§17–19 看执行顺序、共同约束和验收模板，§20 看新增 Agent 与最终成果。已完成的六项维护，其问题原因、修改文件、兼容约束与测试结果集中在[记录 126](reviews/2026-10-07-implementation-126-code-maintenance.md)。
 
 2026-10-10 的[架构审查](reviews/2026-10-10-architecture-audit.md)14 项风险保留为 ARCH-01～14；[代码质量审查](reviews/2026-10-10-code-quality-audit.md)待核实问题纳入 CODE-01～07。先补必要正确性和计量能力，尽早交付 Agent 与模型候选生成；其余架构/性能按依赖穿插。此次任务整合未修改业务实现、数据或发布策略。
 
-架构修复首项 ARCH-01 已完成，见[记录 171](reviews/2026-10-10-implementation-171-harness-deadline-and-cancellation.md)：总截止时间、inline 执行、SQL/HTTP 取消和本地推理进程回收已接 API/worker/MCP 与活动运行工具。等价仓库外快照全量 1774/70，真实 BGE 输出一致、事实库单题检索成功，费用 0。保留清理耗时与供应商计费限制；完整任务租约、统一预算、医学质量和容量尚未达标。ARCH-04 调用归属已完成实现、1807/70 全量门禁及本机三库 0023 迁移，调用计量范围工程自审通过；[记录 175](reviews/2026-10-11-implementation-175-call-receipts-and-fee-attribution.md)与[费用说明](LLM_ACCOUNTING.md)保留已知费用/保守预留及对账边界。PLAN-01 已提供能力矩阵与场景设计证据，场景范围已确认；PLAN-02 剩余契约继续沟通，下一运行时修复 ARCH-11；ARCH-04 通过不代替整体预算及 S2 通过。
+架构修复首项 ARCH-01 已完成，见[记录 171](reviews/2026-10-10-implementation-171-harness-deadline-and-cancellation.md)：总截止时间、inline 执行、SQL/HTTP 取消和本地推理进程回收已接 API/worker/MCP 与活动运行工具。等价仓库外快照全量 1774/70，真实 BGE 输出一致、事实库单题检索成功，费用 0。保留清理耗时与供应商计费限制；完整任务租约、医学质量和容量尚未达标。ARCH-04 调用归属已完成实现、1807/70 全量门禁及本机三库 0023 迁移，调用计量范围工程自审通过；[记录 175](reviews/2026-10-11-implementation-175-call-receipts-and-fee-attribution.md)与[费用说明](LLM_ACCOUNTING.md)保留已知费用/保守预留及对账边界。PLAN-01 已提供能力矩阵与场景设计证据，场景范围已确认；PLAN-02 剩余契约继续沟通，ARCH-11 共享预算已由所有者确认兼容 profile，并通过 1830/70 全量核验与工程自审，见[记录 176](reviews/2026-10-11-implementation-176-shared-execution-budget.md)；未来 Agent/模型 Loop 尚未接线，跨进程预算恢复仍待租约/审计实现。下一运行时修复 ARCH-05；两项工程通过不代替 PLAN-02 完整契约或 S2 通过。
 
 此前功能复核：[记录 128](reviews/2026-10-07-implementation-128-functional-verification.md)。1337 项测试通过（含 254 项数据库/Redis 集成），B/C 实验服务不可达跳过 70 项；真实 API 已成功启动并通过七项健康/请求边界检查，外部模型回答与容量未重测。
 

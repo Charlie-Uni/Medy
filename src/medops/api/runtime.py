@@ -45,6 +45,7 @@ from medops.infrastructure.db.idempotency import PgReceiptStore
 from medops.infrastructure.db.payloads import PgPayloadStore
 from medops.infrastructure.db.policies import PgPolicyStore
 from medops.infrastructure.db.tasks import PgTaskStore
+from medops.infrastructure.llm.execution_budget import configured_limits
 from medops.infrastructure.llm.factory import build_budgeted_gateway
 from medops.infrastructure.llm.gateway import ModelGateway
 from medops.infrastructure.llm.meter import MeteredGateway
@@ -164,7 +165,7 @@ class ProductionRuntime:
         reranker = ProcessReranker(pinned, output=rerank_output)
         gateway = None
         try:
-            gateway = build_budgeted_gateway(settings)
+            gateway = build_budgeted_gateway(settings, require_execution_budget=True)
             retrieval_version = (
                 compute_retrieval_version(
                     production_retrieval_inputs(
@@ -393,6 +394,7 @@ class ProductionRuntime:
             judge_model_id=PRODUCTION_JUDGE_MODEL,
             as_of=as_of,
             executions=PgExecutionStore(conn),
+            execution_limits=configured_limits(self.settings),
         )
 
     def task_store(self, conn: Any) -> TaskStore:

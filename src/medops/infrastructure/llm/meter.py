@@ -7,12 +7,14 @@ import threading
 from medops.core.deadline import check_deadline, remaining_timeout
 from medops.core.telemetry import annotate, span
 from medops.infrastructure.llm.accounting import capture_call, new_call
+from medops.infrastructure.llm.execution_budget import PRICES, complete_in_execution
 from medops.infrastructure.llm.gateway import (
     ModelCallReceipt,
     ModelGateway,
     ModelOutputInvalid,
     ModelRequest,
     ModelResponse,
+    PriceTable,
 )
 
 
@@ -51,6 +53,10 @@ class MeteredGateway:
     def provider(self) -> str:
         return self._inner.provider
 
+    @property
+    def execution_prices(self) -> PriceTable:
+        return getattr(self._inner, "execution_prices", PRICES)
+
     def complete(self, request: ModelRequest) -> ModelResponse:
         check_deadline()
         call = request.call or new_call(request, self.provider)
@@ -65,7 +71,9 @@ class MeteredGateway:
         ) as current:
             with capture_call(call.call_id) as capture:
                 try:
-                    response = self._inner.complete(request)
+                    response = complete_in_execution(
+                        request, self._inner.complete, provider=self.provider, prices=self.execution_prices
+                    )
                 except BaseException as exc:
                     known = exc.model_response if isinstance(exc, ModelOutputInvalid) else None
                     receipt = capture.receipt or ModelCallReceipt(

@@ -13,7 +13,7 @@ import contextvars
 import time
 from collections.abc import Callable, Mapping, Sequence
 from concurrent.futures import ThreadPoolExecutor
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import date, datetime
 from typing import Any, NamedTuple
 
@@ -31,6 +31,9 @@ from medops.domain.state import VersionSet
 from medops.harness.contracts import MAX_RETRIES, NodeAttempt, NodeFailure, NodeSpec, run_node
 from medops.harness.dependencies import HarnessDeps
 from medops.infrastructure.llm.accounting import call_scope
+from medops.infrastructure.llm.execution_budget import EXECUTION_BUDGET_VERSION, default_limits, execution_scope
+from medops.infrastructure.llm.gateway import BudgetExceeded
+from medops.infrastructure.llm.meter import MeteredGateway
 from medops.safety.checks import SAFETY_VERSION, check_output_text
 
 OPERATION_SCOPE = "skill"
@@ -127,13 +130,30 @@ class SkillRegistry:
 
     # ------------------------------------------------------------------ execution
     def execute(self, name: str, version: str, raw_input: Mapping[str, object], *, context: SkillContext) -> SkillRun:
+        limits = context.deps.execution_limits or default_limits(timeout_s=self.get(name, version).spec.timeout_s)
+        limits = limits.model_copy(update={"timeout_s": min(limits.timeout_s, self.get(name, version).spec.timeout_s)})
+        if not isinstance(context.deps.gateway, MeteredGateway):
+            context = replace(context, deps=replace(context.deps, gateway=MeteredGateway(context.deps.gateway)))
         with (
             run_metadata(context.trace_id, context.versions.model_dump(mode="json"), kind="skill"),
             call_scope(run_id=context.run_id),
+            execution_scope(limits) as budget,
             span("skill.run", skill=f"{name}@{version}") as current,
         ):
             result = self._execute(name, version, raw_input, context=context)
-            annotate(current, outcome=result.output.status.value)
+            snapshot = budget.snapshot()
+            annotate(
+                current,
+                outcome=result.output.status.value,
+                execution_budget_version=EXECUTION_BUDGET_VERSION,
+                execution_timeout_s=snapshot.limits.timeout_s,
+                execution_token_limit=snapshot.limits.token_limit,
+                execution_cost_limit_usd=snapshot.limits.cost_limit_usd,
+                execution_accounted_tokens=snapshot.accounted_tokens,
+                execution_accounted_cost_usd=snapshot.accounted_cost_usd,
+                execution_reserved_tokens=snapshot.reserved_tokens,
+                execution_budget_blocked=snapshot.blocked_reason,
+            )
             return result
 
     def _execute(self, name: str, version: str, raw_input: Mapping[str, object], *, context: SkillContext) -> SkillRun:
@@ -188,7 +208,11 @@ class SkillRegistry:
                 raise failure.error from None
             output = SkillOutput(
                 status=SkillStatus.escalated,
-                reason_codes=(ReasonCode.system_failure,),
+                reason_codes=(
+                    ReasonCode.budget_exceeded
+                    if isinstance(failure.error, BudgetExceeded)
+                    else ReasonCode.system_failure,
+                ),
                 detail=f"{type(failure.error).__name__}: {str(failure.error)[:160]}",
             )
             return SkillRun(
@@ -210,6 +234,15 @@ class SkillRegistry:
         return SkillRun(spec=spec, output=output, attempts=tuple(attempts), operation_key=key, safety=safety)
 
     def execute_many(
+        self, requests: Sequence[SkillRequest], *, context: SkillContext
+    ) -> tuple[SkillRun | MedOpsError, ...]:
+        limits = context.deps.execution_limits or default_limits(
+            timeout_s=sum(self.get(r.name, r.version).spec.timeout_s for r in requests) or 1
+        )
+        with execution_scope(limits):
+            return self._execute_many(requests, context=context)
+
+    def _execute_many(
         self, requests: Sequence[SkillRequest], *, context: SkillContext
     ) -> tuple[SkillRun | MedOpsError, ...]:
         """Concurrent only for `parallel_safe` skills; the rest run one after another in request order."""

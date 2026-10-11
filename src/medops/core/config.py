@@ -157,6 +157,10 @@ class Settings(BaseSettings):
     # Model Gateway ledger (M2-06). Offline drafting/review keep using subscription CLIs and never read this key.
     openai_api_key: SecretStr | None = None
     llm_monthly_budget_usd: float = Field(default=30.0, ge=0)
+    # Owner-confirmed ARCH-11 compatibility profile; operational caps never authorize a paid experiment.
+    llm_execution_token_limit: int = Field(default=12_000, gt=0)
+    llm_execution_cost_limit_usd: float = Field(default=0.60, ge=0, allow_inf_nan=False)
+    llm_execution_timeout_s: float = Field(default=125.0, gt=0, allow_inf_nan=False)
     # Identity boundary (ADR-0001, M3-05): OIDC issuer/audience the API accepts and the JWK set it trusts (a JSON
     # document; dev/test use the local synthetic issuer). Group claims map to scopes only via the allowlist JSON.
     oidc_issuer: str | None = None

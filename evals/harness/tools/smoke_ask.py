@@ -61,6 +61,7 @@ from medops.harness.assembly import build_retrieval
 from medops.harness.dependencies import HarnessDeps
 from medops.harness.production import PRODUCTION_ANSWER_MODEL, PRODUCTION_JUDGE_MODEL
 from medops.harness.runtime import initial_state, run_ask
+from medops.infrastructure.llm.execution_budget import configured_limits
 from medops.infrastructure.llm.factory import build_budgeted_gateway
 from medops.infrastructure.llm.meter import MeteredGateway
 from medops.retrieval.inference_process import InferenceProcess, ProcessEmbedding, ProcessReranker
@@ -243,7 +244,7 @@ def main() -> int:
         with conn_for_user(user) as c:
             return load_titles(c, doc_ids)
 
-    budgeted_gateway = build_budgeted_gateway(settings, run_cap_usd=args.max_cost_usd)
+    budgeted_gateway = build_budgeted_gateway(settings, run_cap_usd=args.max_cost_usd, require_execution_budget=True)
     gateway = MeteredGateway(budgeted_gateway)
     from medops.retrieval.glossary_store import load_versioned_glossary
     from medops.retrieval.query_translation import QueryTranslator
@@ -262,6 +263,7 @@ def main() -> int:
         translator=QueryTranslator(gateway, translation).translate if translation != "off" else None,
     )
     deps = HarnessDeps(
+        execution_limits=configured_limits(settings),
         retrieval=retrieval,
         gateway=gateway,
         answer_model_id=args.answer_model,

@@ -20,6 +20,12 @@ from psycopg.types.json import Jsonb
 from medops.core.deadline import check_deadline, remaining_timeout
 from medops.core.errors import ErrorCode, InfrastructureError
 from medops.infrastructure.llm.accounting import new_call, publish_receipt
+from medops.infrastructure.llm.execution_budget import (
+    ExecutionBudgetExceeded,
+    admitted_cost,
+    complete_in_execution,
+    current_budget,
+)
 from medops.infrastructure.llm.gateway import (
     BudgetExceeded,
     ModelCall,
@@ -211,6 +217,7 @@ class BudgetedGateway:
         monthly_cap_usd: float,
         run_cap_usd: float | None = None,
         clock: Callable[[], datetime] | None = None,
+        require_execution_budget: bool = False,
     ) -> None:
         if monthly_cap_usd < 0 or (run_cap_usd is not None and run_cap_usd <= 0):
             raise ValueError("monthly cap cannot be negative and run cap must be positive")
@@ -224,10 +231,15 @@ class BudgetedGateway:
         self._run_cap_blocked = False
         self._run_lock = threading.Lock()
         self._clock = clock or (lambda: datetime.now(UTC))
+        self._require_execution_budget = require_execution_budget
 
     @property
     def provider(self) -> str:
         return self._inner.provider
+
+    @property
+    def execution_prices(self) -> PriceTable:
+        return self._prices
 
     @property
     def monthly_cap_usd(self) -> float:
@@ -272,15 +284,38 @@ class BudgetedGateway:
             close()
 
     def complete(self, request: ModelRequest) -> ModelResponse:
-        check_deadline()
+        if self._require_execution_budget and current_budget() is None:
+            call = request.call or new_call(request, self.provider)
+            publish_receipt(
+                ModelCallReceipt(
+                    call=call,
+                    outcome="denied",
+                    provider_started=False,
+                    estimated_cost_usd=0,
+                    actual_cost_usd=0,
+                    accounted_cost_usd=0,
+                    cost_basis="not_started",
+                    settlement_status="not_required",
+                    error_type="ExecutionBudgetExceeded",
+                )
+            )
+            raise ExecutionBudgetExceeded("context")
+        return complete_in_execution(request, self._complete, provider=self.provider, prices=self._prices)
+
+    def _complete(self, request: ModelRequest) -> ModelResponse:
         call = (request.call or new_call(request, self.provider)).model_copy(
             update={"reservation_id": str(uuid.uuid4())}
         )
-        request = request.model_copy(update={"timeout_s": remaining_timeout(request.timeout_s), "call": call})
+        request = request.model_copy(update={"call": call})
         month = month_key(self._clock())
         worst = 0.0
         try:
+            check_deadline()
+            request = request.model_copy(update={"timeout_s": remaining_timeout(request.timeout_s)})
             worst = self._prices.worst_case_usd(request)
+            reserved = admitted_cost(call.call_id)
+            if reserved is not None:
+                worst = max(worst, reserved)
             self._reserve_run(worst)
         except BaseException as exc:
             publish_receipt(

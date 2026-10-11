@@ -14,6 +14,7 @@ from psycopg.types.json import Jsonb
 from medops.core.tracing import bind_trace_id
 from medops.infrastructure.llm.accounting import call_scope
 from medops.infrastructure.llm.budget import BudgetedGateway, PostgresSpendLedger
+from medops.infrastructure.llm.execution_budget import default_limits, execution_scope, request_tokens
 from medops.infrastructure.llm.fake import FakeModelGateway
 from medops.infrastructure.llm.gateway import OPENAI_PRICES, ModelCall, ModelCallReceipt, ModelTimeout, PriceTable
 from medops.infrastructure.llm.meter import MeteredGateway
@@ -115,6 +116,35 @@ def test_duplicate_and_changed_receipts_are_atomic_and_idempotent(migrated):
             "select spent_usd,reserved_usd from llm_monthly_spend where month='2097-02-01'"
         ).fetchone()
         assert float(spent) == 0.05 and float(reserved) == 0
+
+
+def test_execution_reservation_and_known_usage_agree_with_durable_call_receipts(login_users, migrated):
+    ledger = PostgresSpendLedger(login_users["app"]["dsn"])
+    meter = MeteredGateway(
+        BudgetedGateway(
+            FakeModelGateway({"answer": [ModelTimeout()]}),
+            prices=PriceTable(OPENAI_PRICES),
+            ledger=ledger,
+            monthly_cap_usd=10,
+            clock=lambda: datetime(2097, 6, 1, tzinfo=UTC),
+            require_execution_budget=True,
+        )
+    )
+    request = req(text="繁體字" * 100, schema={"type": "object", "properties": {"result": {"type": "string"}}})
+    with execution_scope(default_limits(timeout_s=10)) as budget, pytest.raises(ModelTimeout):
+        meter.complete(request)
+    snapshot = budget.snapshot()
+    receipt = meter.receipts[0]
+    assert snapshot.accounted_tokens == request_tokens(request) and snapshot.known_tokens == 0
+    assert snapshot.accounted_cost_usd == receipt.accounted_cost_usd == receipt.estimated_cost_usd
+    with psycopg.connect(migrated) as conn:
+        row = conn.execute(
+            "select reserved_usd,call_receipt from llm_spend_reservations where reservation_id=%s::uuid",
+            (receipt.call.reservation_id,),
+        ).fetchone()
+        assert float(row[0]) == pytest.approx(snapshot.accounted_cost_usd, abs=0.0000005)
+        assert row[1] == receipt.model_dump(mode="json")
+    assert ledger.month_total("2097-06") == pytest.approx(snapshot.accounted_cost_usd, abs=0.0000005)
 
 
 @pytest.mark.parametrize("location", ["context", "receipt", "usage", "nested_scalar"])

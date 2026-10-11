@@ -30,6 +30,7 @@ def _searcher_factory(device: str, settings: Settings):
     from medops.harness.dependencies import default_specs
     from medops.harness.retrieval_port import RetrievalRequest
     from medops.infrastructure.db.deadline import DeadlineConnection
+    from medops.infrastructure.llm.execution_budget import check_execution_budget, configured_limits, execution_scope
     from medops.infrastructure.llm.factory import build_budgeted_gateway
     from medops.infrastructure.llm.meter import MeteredGateway
     from medops.mcp.service import SearchExecution
@@ -107,7 +108,7 @@ def _searcher_factory(device: str, settings: Settings):
             translation_model = routed.query_translation()
             if translation_model != QUERY_TRANSLATION_OFF:
                 if not gateway:
-                    gateway.append(build_budgeted_gateway(settings))
+                    gateway.append(build_budgeted_gateway(settings, require_execution_budget=True))
                 meter = MeteredGateway(gateway[0])
                 translator = QueryTranslator(meter, translation_model).translate
             search.audit_stats = SearchExecution(  # type: ignore[attr-defined]
@@ -129,10 +130,15 @@ def _searcher_factory(device: str, settings: Settings):
             )
             outcome = None
             try:
-                with deadline_scope(default_specs()["retrieve"].timeout_s), execution_admission():
+                with (
+                    execution_scope(configured_limits(settings, timeout_s=default_specs()["retrieve"].timeout_s)),
+                    deadline_scope(default_specs()["retrieve"].timeout_s),
+                    execution_admission(),
+                ):
                     outcome = retrieval.retrieve(
                         RetrievalRequest(query=query, user=user, as_of=as_of, historical_requested=allow_historical)
                     )
+                    check_execution_budget()
                 return SearchExecution(
                     outcome.evidence,
                     model_calls=meter.calls if meter else 0,

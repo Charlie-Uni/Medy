@@ -19,6 +19,7 @@ from medops.harness.evidence_focus import (
     render_evidence,
 )
 from medops.harness.transitions import escalate as _escalate
+from medops.infrastructure.llm.execution_budget import request_fits_budget
 from medops.infrastructure.llm.gateway import (
     Message,
     ModelGateway,
@@ -218,6 +219,11 @@ def answer_model(state: AgentState, deps: HarnessDeps) -> str:
     """The model that writes the answer for this question's intent (the judge model is not routed)."""
     intent = state.intent.type.value if state.intent is not None else ""
     return deps.answer_model_by_intent.get(intent, deps.answer_model_id)
+
+
+def answer_fits_budget(state: AgentState, deps: HarnessDeps) -> bool:
+    # Full text is a conservative preflight even when the released prompt later focuses the evidence.
+    return request_fits_budget(_answer_request(state, deps))
 
 
 def _answer_request(

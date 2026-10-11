@@ -32,6 +32,7 @@ from medops.harness.answer import ANSWER_SYSTEM
 from medops.harness.production import (
     production_model_config_version,
 )
+from medops.infrastructure.llm.execution_budget import configured_limits
 from medops.infrastructure.llm.factory import build_budgeted_gateway
 from medops.infrastructure.llm.meter import MeteredGateway
 from medops.retrieval.inference_process import InferenceProcess, ProcessEmbedding, ProcessReranker
@@ -243,7 +244,7 @@ def main() -> int:
     gpu = InferenceProcess(device=args.device, output=rerank_output, timeout_s=args.gpu_timeout)
     provider = ProcessEmbedding(gpu)
     reranker = ProcessReranker(gpu, output=rerank_output)
-    budgeted_gateway = build_budgeted_gateway(settings, run_cap_usd=args.max_cost_usd)
+    budgeted_gateway = build_budgeted_gateway(settings, run_cap_usd=args.max_cost_usd, require_execution_budget=True)
     gateway = MeteredGateway(budgeted_gateway)
     app_url = settings.database_url.get_secret_value()
     from medops.retrieval.glossary_store import load_versioned_glossary
@@ -274,6 +275,7 @@ def main() -> int:
             gateway,
             args.as_of,
             admin_url=with_database(settings.database_admin_url.get_secret_value(), name),
+            execution_limits=configured_limits(settings),
             **plane_kwargs,
         )
         for name in (PRODUCTION_DB, SAFETY_DB)

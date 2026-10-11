@@ -2,7 +2,7 @@
 
 更新：2026-10-11。依据用户要求，将 Agent、自进化、架构及既有十项迭代统一执行。[当前任务台账](CURRENT_TASKS.md)是唯一状态与顺序入口；本页规定阶段通过条件和每轮自审核，设计见[完整迭代计划](ITERATION_PLAN.md)。[原项目描述](source/PROJECT_DESCRIPTION_v0.1.md)和[工程基线](ENGINEERING_BASELINE.md)的质量、安全、独立复核及生产签字约束继续保留。
 
-最新沟通见 [ADR-0012 v0.3](adr/ADR-0012-agent-evolution-goals-and-acceptance.md)：所有者确认第二阶段=S2、第三阶段=S3 及首个 PV 资料整理场景；ARCH-04/11 是进入 S2 的硬前置；自动激活仅实验；S3 改进声明以未见盲测为前提。至少 200 任务、三轮配对与 CI 方向已确认，新增盲测不设固定 +5pp 幅度硬线，原生产 +5pp 是否同步修改待沟通。每轮付费仍单独授权，ADR 不构成费用批准。
+最新沟通见 [ADR-0012 v0.4](adr/ADR-0012-agent-evolution-goals-and-acceptance.md)：所有者确认第二阶段=S2、第三阶段=S3 及首个 PV 资料整理场景；ARCH-04/11 是进入 S2 的硬前置；自动激活仅实验；S3 改进声明以未见盲测为前提。至少 200 任务、三轮配对与 CI 方向已确认，新增盲测不设固定 +5pp 幅度硬线，原生产 +5pp 是否同步修改待沟通。每轮付费仍单独授权，ADR 不构成费用批准。
 
 ## 1. 执行规则
 
@@ -35,11 +35,11 @@
 
 ARCH-08/10/13/14、CODE-03～07、IDX/OBS/DEPLOY 按依赖穿插，ARCH-12 有收益再实施。BM25/缓存/裁剪/路由先单变量后组合；新主集与安全基线、正式回放和人工缺口保留。开发演示不支持改进声明；盲测材料与调优隔离，已暴露题移入回归，后续改进用新未见材料。生产保留人工签字。
 
-[记录 171](reviews/2026-10-10-implementation-171-harness-deadline-and-cancellation.md)的 ARCH-01 工程证据继续有效：源码一致的仓库外快照 1774 passed、70 skipped，真实 BGE/事实库核验、模型 API 费用 0；它不证明任务租约或全部医学/容量指标通过。PLAN-01 已提供设计证据；PLAN-02 剩余行动/验收契约继续沟通，ARCH-04 已通过调用计量范围工程自审，1807/70 全量门禁与本机三库 0023 迁移见[记录 175](reviews/2026-10-11-implementation-175-call-receipts-and-fee-attribution.md)；下一项 ARCH-11。
+[记录 171](reviews/2026-10-10-implementation-171-harness-deadline-and-cancellation.md)的 ARCH-01 工程证据继续有效：源码一致的仓库外快照 1774 passed、70 skipped，真实 BGE/事实库核验、模型 API 费用 0；它不证明任务租约或全部医学/容量指标通过。PLAN-01 已提供设计证据；PLAN-02 剩余行动/验收契约继续沟通，ARCH-04 已通过调用计量范围工程自审，1807/70 全量门禁与本机三库 0023 迁移见[记录 175](reviews/2026-10-11-implementation-175-call-receipts-and-fee-attribution.md)；ARCH-11 已通过共享预算工程自审，全量 1830/70、0 托管调用见[记录 176](reviews/2026-10-11-implementation-176-shared-execution-budget.md)，下一项 ARCH-05。
 
 LangGraph 当前仍是固定主图，动态循环是新增待办；LG-01 仅为 checkpoint 技术选型选做，恢复要求按实际 Agent 契约落实。模型路由和 provisional 标签保持真实状态。
 
-S0 的 PLAN-01 证据入口为[能力矩阵与 PV 场景方案](agent/PLAN-01-capability-and-scenario.md)，包括参考源码重新核验、固定 Workflow 对照及 12 个合成开发用例。其完成仅表示设计输入可审阅；所有者已确认 PV 场景范围，完整契约仍归 PLAN-02，EVAL-32 尚未冻结，ARCH-04/11 必须分别通过；ARCH-04 本轮已自审通过，ARCH-11 现为 READY，S2 仍未解锁。
+S0 的 PLAN-01 证据入口为[能力矩阵与 PV 场景方案](agent/PLAN-01-capability-and-scenario.md)，包括参考源码重新核验、固定 Workflow 对照及 12 个合成开发用例。其完成仅表示设计输入可审阅；所有者已确认 PV 场景范围，完整契约仍归 PLAN-02，EVAL-32 尚未冻结，ARCH-04/11 已分别通过工程自审；PLAN-02 剩余 Agent 行动/profile 与验收契约未决，相关正确性前置继续满足，不能据此把 S2 标为已解锁或完成。
 
 ### 2.2 原三批十项的能力映射与进展
 

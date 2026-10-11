@@ -30,6 +30,7 @@ from medops.evals.runtime import with_database
 from medops.harness.assembly import build_retrieval
 from medops.harness.dependencies import HarnessDeps
 from medops.harness.production import PRODUCTION_ANSWER_MODEL, PRODUCTION_JUDGE_MODEL, production_model_config_version
+from medops.infrastructure.llm.execution_budget import configured_limits
 from medops.infrastructure.llm.factory import build_budgeted_gateway
 from medops.infrastructure.llm.meter import MeteredGateway
 from medops.retrieval.inference_process import InferenceProcess, ProcessEmbedding, ProcessReranker
@@ -295,8 +296,9 @@ def main() -> int:
         reranker=reranker,
         config=production_hybrid_config(),
     )
-    gateway = MeteredGateway(build_budgeted_gateway(settings))
+    gateway = MeteredGateway(build_budgeted_gateway(settings, require_execution_budget=True))
     deps = HarnessDeps(
+        execution_limits=configured_limits(settings),
         retrieval=retrieval,
         gateway=gateway,
         answer_model_id=PRODUCTION_ANSWER_MODEL,

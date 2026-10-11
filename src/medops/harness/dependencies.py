@@ -14,6 +14,7 @@ from medops.harness.evidence_focus import SentenceScorer, needs_titles
 from medops.harness.executions import ExecutionStore
 from medops.harness.focus_profiles import ALLOWED_EVIDENCE_FOCUS, EVIDENCE_FOCUS_OFF, FOCUS_PARAMS
 from medops.harness.retrieval_port import RetrievalPort
+from medops.infrastructure.llm.execution_budget import ExecutionLimits
 from medops.infrastructure.llm.gateway import (
     ModelGateway,
 )
@@ -49,6 +50,7 @@ class HarnessDeps:
     sentence_scorer: SentenceScorer | None = None  # the reranker's scorer; required by the sentfocus versions
     # titles of evidence documents as the reader's own connection sees them; required by `sentfocus-v7`
     doc_titles: Callable[[UserContext, Sequence[str]], Mapping[str, str]] | None = None
+    execution_limits: ExecutionLimits | None = None  # server-owned; nested operations share the parent's allowance
 
     def __post_init__(self) -> None:
         if self.evidence_focus not in ALLOWED_EVIDENCE_FOCUS:

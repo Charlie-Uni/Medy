@@ -156,6 +156,8 @@ EVAL-32 后续把任务成功、完整性、来源符合、合理停止、安全
 
 原生产 +5pp 是否同步调整仍按 ADR-0012 的既有待答项处理，不因本轮场景准备自行改 gate。8 动作/无进展限制是拟议开发 profile，Agent rubric 和完整预算契约仍需后续明确。
 
-本轮 PLAN-01 设计自审通过，证据见[记录 174](../reviews/2026-10-10-implementation-174-plan01-capability-and-scenario.md)，台账仅将该设计交付标为 DONE。继续 PLAN-02 剩余行动/验收契约；下一运行时切片为 ARCH-04 → ARCH-11 无付费修复。两项硬前置通过及相关契约确定后，才开始 S2。EVAL-32 保持 BLOCKED，本轮仅提供其 S0 输入。
+2026-10-10 的 PLAN-01 设计自审通过，证据见[记录 174](../reviews/2026-10-10-implementation-174-plan01-capability-and-scenario.md)，台账仅将该设计交付标为 DONE。继续 PLAN-02 剩余行动/验收契约；当时下一运行时切片为 ARCH-04 → ARCH-11 无付费修复。两项硬前置通过及相关契约确定后，才开始 S2。EVAL-32 保持 BLOCKED，本轮仅提供其 S0 输入。
 
 本文件完成表示设计证据包可审阅；不表示 Agent 工程、模型生成 Prompt/Skill、盲测、医学质量、性能或生产采用通过。
+
+2026-10-11 后续进展：ARCH-04/11 已分别通过工程自审；现有执行兼容预算获确认，接口与限制见[执行预算说明](../LLM_ACCOUNTING.md#6-单次执行共享预算arch-11)及[记录 176](../reviews/2026-10-11-implementation-176-shared-execution-budget.md)。本方案的 Agent 行动/profile 仍是草案，规划/工具调用尚未接线；下一运行时修复 ARCH-05，具体状态仍以台账为准。

@@ -1,0 +1,153 @@
+{
+  "record": 176,
+  "date": "2026-10-11",
+  "task": "ARCH-11",
+  "status": "engineering_self_review_passed",
+  "reviewer": "Codex implementer; not independent human",
+  "baseline_head": "5a604050b9c0706bfd823685e5befcb9619d64a6",
+  "committed": false,
+  "pushed": false,
+  "hosted_model_calls": 0,
+  "cost_usd": 0,
+  "service_restarted": false,
+  "migration_added": false,
+  "owner_decision": {
+    "reply": "采用现有规则推导的上限",
+    "token_limit": 12000,
+    "cost_limit_usd": 0.6,
+    "ask_timeout_s": 125,
+    "skill_mcp": "min(existing timeout, configured root timeout)",
+    "future_agent_profile_approved": false
+  },
+  "budget_version": "execution-budget-v1+utf8-preflight",
+  "original_failure": {
+    "exit_code": 1,
+    "failed": 1,
+    "seconds": 0.55,
+    "message": "DID NOT RAISE ExecutionBudgetExceeded",
+    "cause": "Old ARCH-04 gateway wiring ignored execution context."
+  },
+  "directed_validation": [
+    {
+      "phase": "first_idempotency_failure",
+      "passed": 216,
+      "failed": 1,
+      "exit_code": 1
+    },
+    {
+      "phase": "earlier_scope_deadline_caught_at_wrong_boundary",
+      "passed": 229,
+      "failed": 1,
+      "exit_code": 1
+    },
+    {
+      "phase": "extended_entries_pg",
+      "passed": 230,
+      "failed": 0,
+      "exit_code": 0,
+      "seconds": 3.42
+    },
+    {
+      "phase": "git_metadata_fixture_deadline_fix",
+      "passed": 22,
+      "failed": 0,
+      "exit_code": 0,
+      "seconds": 2.88
+    }
+  ],
+  "earlier_full_checks": [
+    {
+      "phase": "missing_git_metadata_and_mock_settings",
+      "passed": 1824,
+      "failed": 4,
+      "skipped": 70,
+      "warnings": 1,
+      "seconds": 48.61,
+      "exit_code": 2,
+      "log": "/Users/leaf/.cache/medy-checks/arch11-fgpwxx7z/.local/arch11-check.log"
+    },
+    {
+      "phase": "before_final_parent_deadline_counterexample",
+      "passed": 1829,
+      "failed": 0,
+      "skipped": 70,
+      "warnings": 1,
+      "seconds": 48.28,
+      "exit_code": 0,
+      "log": "/Users/leaf/.cache/medy-checks/arch11-verified-3smansb5/.local/arch11-check-before-parent-deadline.log"
+    }
+  ],
+  "full_check": {
+    "command": "env -u DEBUG PYTHONPATH=<worktree>/src:<worktree> make check",
+    "worktree": "/Users/leaf/.cache/medy-checks/arch11-verified-3smansb5",
+    "exit_code": 0,
+    "passed": 1830,
+    "skipped": 70,
+    "warnings": 1,
+    "pytest_seconds": 46.78,
+    "format_files": 462,
+    "mypy_source_files": 195,
+    "datasets": 4,
+    "schemas": "up to date",
+    "log": "/Users/leaf/.cache/medy-checks/arch11-verified-3smansb5/.local/arch11-check.log",
+    "log_sha256": "0d76855e374e76e3a798f68862eed8a6643cf871136daada59df44c1beb73069",
+    "maintained_inputs_identical": 490,
+    "source_comparison": "/Users/leaf/.cache/medy-checks/arch11-verified-3smansb5/.local/source-comparison.json",
+    "source_comparison_sha256": "ba7f63008cb998fd6ca1e3f1f230800c1fbafb39786283ddc74217bb7c083040",
+    "required_pg_redis_integration_executed": true,
+    "optional_skip_reason": "DEC-001 B/C optional environments absent"
+  },
+  "protected_work": {
+    "preexisting_files": 68,
+    "unchanged": 45,
+    "intentional_overlap": [
+      "README.md",
+      "docs/CURRENT_TASKS.md",
+      "docs/DEPLOY.md",
+      "docs/ITERATION_PLAN.md",
+      "docs/ITERATION_STAGES.md",
+      "evals/harness/tools/safety_run.py",
+      "evals/harness/tools/skill_smoke.py",
+      "evals/harness/tools/smoke_ask.py",
+      "evals/replay/tools/replay_run.py",
+      "src/medops/api/runtime.py",
+      "src/medops/evals/runtime.py",
+      "src/medops/harness/contracts.py",
+      "src/medops/harness/nodes.py",
+      "src/medops/harness/runtime.py",
+      "src/medops/infrastructure/llm/budget.py",
+      "src/medops/infrastructure/llm/meter.py",
+      "src/medops/mcp/serve.py",
+      "src/medops/skills/registry.py",
+      "tests/unit/evals/test_harness_runner_resume.py",
+      "docs/LLM_ACCOUNTING.md",
+      "docs/adr/ADR-0012-agent-evolution-goals-and-acceptance.md",
+      "docs/agent/PLAN-01-capability-and-scenario.md",
+      "tests/integration/test_llm_call_receipts.py"
+    ],
+    "missing": [],
+    "task_ids_before": 141,
+    "task_ids_after": 141,
+    "state_changes": {
+      "ARCH-11": [
+        "READY",
+        "DONE"
+      ]
+    }
+  },
+  "limits": [
+    "Process-local execution object; cross-process recovery pending ARCH-05/06/07.",
+    "New Agent and model Reflect/Adapt not implemented; must require explicit profile and context.",
+    "UTF-8 preflight can reject earlier or trim evidence; real model quality and capacity not rerun.",
+    "Provider billing/hidden framing and physical compatibility resend not exact bill guarantees.",
+    "Provisional human review and unseen holdout warnings unchanged."
+  ],
+  "next_task": "ARCH-05",
+  "documentation_validation": {
+    "markdown_files": 21,
+    "local_links_checked": 317,
+    "missing_links": 0,
+    "git_diff_check_exit_code": 0,
+    "stale_current_status_references_fixed": true
+  }
+}

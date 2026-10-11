@@ -26,6 +26,8 @@ docker run --rm medops-copilot:dev python -m medops.api.serve --help
 
 API / worker 的每个数据库连接带 `DB_CONNECT_TIMEOUT_S`（默认 5 秒）与 `DB_STATEMENT_TIMEOUT_MS`（默认 30 秒）：数据库不可达时请求立刻以 503 `dependency_unavailable`（可重试）失败而不是挂起，worker 记录警告后继续轮询（记录 78 的暂停数据库演练）。`/readyz` 的检查连接使用 2 秒连接超时、每条 SQL 1 秒超时；全局索引检查走 `DATABASE_ADMIN_URL` 的只读 REPEATABLE READ 事务，结果最多缓存 5 秒。未配置检查连接、检查失败或应用连接实际库不一致均返回 503。语句超时必须大于最慢的合法语句（摄取与索引重建走独立脚本，不受此限）。
 
+ARCH-11 的根执行上限为 `LLM_EXECUTION_TOKEN_LIMIT=12000`、`LLM_EXECUTION_COST_LIMIT_USD=0.60`、`LLM_EXECUTION_TIMEOUT_S=125`。API/worker/MCP 与四个活动 Ask/Skill/安全/回放运行工具共享此配置；Skill 及 MCP 仍取原期限与根配置的较小值。翻译、判定、结构化调用及重试共用额度，不能在嵌套调用处重开。服务网关要求执行上下文，缺失时在模型供应商前拒绝；批次/月度封顶另计。预算不是模型费用授权或 P95 承诺。该轮不增迁移，沿用已完成的 0023；修改后需重启相应进程才加载新代码/配置。算法和恢复限制见[执行预算说明](LLM_ACCOUNTING.md#6-单次执行共享预算arch-11)，新 Agent profile 仍须单独确定。
+
 compose 中三个服务的 `stop_grace_period` 为 30 秒；worker 的单任务上限（Skill 超时 ≤ 120 秒）大于该值时，超出部分依赖租约回收，不会重复副作用（operation key 账本）。
 
 ## compose

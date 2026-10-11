@@ -53,6 +53,7 @@ class Plane:
         answer_models=None,
         lexical_factory=None,
         admin_url=None,
+        execution_limits=None,
     ):
         # `config` / `answer_system`: an arm of the replay runner (M4-07) evaluates a candidate policy overlay; the
         # safety runner itself keeps the production values
@@ -115,6 +116,7 @@ class Plane:
             sentence_scorer=reranker.score,
             doc_titles=self._doc_titles,
             answer_model_by_intent=dict(answer_models or {}),
+            execution_limits=execution_limits,
             **extra,
         )
         self.as_of = as_of
