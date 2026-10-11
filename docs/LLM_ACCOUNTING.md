@@ -1,6 +1,6 @@
 # 模型调用回执与费用归属
 
-更新：2026-10-11。任务 ARCH-04/11；调用计量与迁移证据见[记录 175](reviews/2026-10-11-implementation-175-call-receipts-and-fee-attribution.md)，单次预算实现及自审证据见[记录 176](reviews/2026-10-11-implementation-176-shared-execution-budget.md)。
+更新：2026-10-11。任务 ARCH-04/11/05；调用计量与迁移证据见[记录 175](reviews/2026-10-11-implementation-175-call-receipts-and-fee-attribution.md)，单次预算见[记录 176](reviews/2026-10-11-implementation-176-shared-execution-budget.md)，任务租约/尝试归属见[记录 177](reviews/2026-10-11-implementation-177-task-lease-and-ownership.md)。
 
 ## 1. 为什么需要调用回执
 
@@ -120,9 +120,19 @@ ORDER BY created_at;
 
 ### 6.3 范围和限制
 
-- 执行预算对象目前在进程内，约束本次调用期间的嵌套、线程与重试。PostgreSQL 已持久化单调用回执/月度额度，但没有持久化可跨进程恢复的执行 profile、累计 Token 与截止时间。worker 接管是新根尝试；ARCH-05/06/07 必须补租约、尝试责任和恢复审计，未来持久 Agent 恢复不能直接重新发放一份额度。
+- 执行预算对象目前在进程内，约束本次调用期间的嵌套、线程与重试。PostgreSQL 已持久化单调用回执/月度额度，但没有持久化可跨进程恢复的执行 profile、累计 Token 与截止时间。worker 接管是新根尝试；ARCH-05 已补当前租约/尝试责任；ARCH-06/07 与 Agent 契约仍须补完整恢复审计，未来持久 Agent 恢复不能直接重新发放一份额度。
 - 参数兼容重发仍属于一个逻辑调用；未知物理 HTTP 尝试可能发生费用，不能保证供应商账单完全等于本地预留。月度精度和 pending 对账限制沿用 §4/5。
 - `AgentState.TokenBudget` 的既有 Schema 不允许 used 大于 limit。意外超额不会截断成虚假的精确数字；完整超额值在共享预算快照和回执/遥测中保留，业务输出失败关闭。Schema 和冻结数据未改。
 - 字节预检可能减少装入的证据或提前拒绝请求；其真实质量、成本和吞吐影响尚未重测，不等同于质量门禁通过。更精细 tokenizer 或新 Agent profile 需要另行评估。
 - 期限是协作式截止时间，已开始调用的取消、资源回收与结算需要收束；不是任意代码的通用强杀承诺，也不是原 P95 8 秒 / 15 秒性能目标。
 - 本轮只有离线网关、数据库和代码验证；0 次托管模型调用、0 USD。所有付费实验、生产发布与独立人工要求不变。
+
+## 7. 任务接管、失租与重复费用
+
+`task_id` 是稳定任务身份；`attempt` 是每次领取递增的编号，worker ID 不能单独作为栅栏。每个 attempt 有独立 Trace/run；调用回执的 `attempt_id` 以 `task:<task_id>:<attempt>/…` 连接内部节点尝试。`TaskExecution` 报告本 worker 的 `completed / failed / lost`，公开 API 继续返回当前任务状态，两者不能混用。
+
+模型调用前用独立短事务验证当前 owner、attempt 与未过期租约，月度费用预留等待后再次验证；可确定尚未开始的调用结算为零。失租之前已经返回 usage 的费用按原尝试记录；已经发出但没有 usage 的调用保留保守费用。旧 worker 返回时，将自己的 Trace 写入原 lost attempt，不能覆盖新结果或清空旧费用。硬崩溃无法补写 Trace 时，0023 账本中的调用上下文/回执仍可关联原 task/attempt，pending 需对账。
+
+单执行 12,000 Token / 0.60 USD 当前作用于一个 attempt；接管会创建新执行预算，并非已实现跨进程恢复同一预算。默认最多 3 次尝试，重跑的费用与旧尝试累加受共享月度账本限制；不能把 0.60 USD 声称为整个任务生命周期的硬账单上限。相同 run 的安全复用与新 attempt 自动重做也不同。未来 Agent 恢复、完整证据审计和回放继续按 ARCH-06/07 与 Agent 契约处理。
+
+在一次持有权检查与真正发送之间，进程仍可能被暂停；已发送请求也不能由数据库撤回。因此执行截止、请求超时、写入栅栏、调用回执提供有界执行与可解释记账，不提供供应商“恰好一次”保证。当前 Skill 为读取/判断；新增业务写工具需另外设计事务栅栏/幂等契约。

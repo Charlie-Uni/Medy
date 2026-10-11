@@ -173,7 +173,9 @@ def test_worker_runs_the_skill_under_the_stored_identity_and_persists_the_result
     u = user()
     TaskService(store=store, clock=clock).create(u, req("hello"), None)
     runner = TaskRunner(env=FakeEnv(store, reg, {u.user_id: u}), registry=reg, worker_id="w1", clock=clock)
-    done = runner.run_once()
+    execution = runner.run_once()
+    assert execution is not None and execution.outcome == "completed" and execution.attempt == 1
+    done = execution.record
     assert done is not None and done.status is TaskStatus.completed and done.trace_id
     assert (
         done.result["skill"] == "echo_skill@1.0.0"
@@ -199,7 +201,9 @@ def test_worker_fails_closed_when_the_principal_is_gone_or_the_skill_errors():
     u = user()
     svc = TaskService(store=store, clock=clock)
     gone = svc.create(u, req(), None)
-    done = TaskRunner(env=FakeEnv(store, reg, {}), registry=reg, worker_id="w1", clock=clock).run_once()
+    execution = TaskRunner(env=FakeEnv(store, reg, {}), registry=reg, worker_id="w1", clock=clock).run_once()
+    assert execution.outcome == "failed"
+    done = execution.record
     assert done.task_id == gone.task_id and done.status is TaskStatus.failed and done.error["code"] == "forbidden"
 
     def boom(ctx, inp):
@@ -207,7 +211,11 @@ def test_worker_fails_closed_when_the_principal_is_gone_or_the_skill_errors():
 
     reg2 = registry(handler=boom)
     crash = svc.create(u, req(), None)
-    done2 = TaskRunner(env=FakeEnv(store, reg2, {u.user_id: u}), registry=reg2, worker_id="w1", clock=clock).run_once()
+    execution2 = TaskRunner(
+        env=FakeEnv(store, reg2, {u.user_id: u}), registry=reg2, worker_id="w1", clock=clock
+    ).run_once()
+    assert execution2.outcome == "completed"
+    done2 = execution2.record
     # the Registry turns a crash inside the handler into an escalated skill output (system_failure): the task
     # itself completed, the result says the skill did not; nothing internal leaks
     assert done2.task_id == crash.task_id and done2.status is TaskStatus.completed

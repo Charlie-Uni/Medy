@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import uuid
-from collections.abc import Iterator
+from collections.abc import Callable, Iterator
 from contextlib import contextmanager
 from contextvars import ContextVar
 from dataclasses import dataclass
@@ -16,6 +16,7 @@ from medops.infrastructure.llm.gateway import ModelCall, ModelCallReceipt, Model
 class CallScope:
     run_id: str | None = None
     attempt_id: str | None = None
+    guards: tuple[Callable[[], None], ...] = ()
 
 
 @dataclass
@@ -29,16 +30,26 @@ _CAPTURE: ContextVar[CallCapture | None] = ContextVar("model_call_capture", defa
 
 
 @contextmanager
-def call_scope(*, run_id: str | None = None, attempt_id: str | None = None) -> Iterator[None]:
+def call_scope(
+    *, run_id: str | None = None, attempt_id: str | None = None, before_call: Callable[[], None] | None = None
+) -> Iterator[None]:
     parent = _SCOPE.get() or CallScope()
     attempt = parent.attempt_id
     if attempt_id is not None:
         attempt = f"{attempt}/{attempt_id}" if attempt else attempt_id
-    token = _SCOPE.set(CallScope(run_id=run_id or parent.run_id, attempt_id=attempt))
+    guards = parent.guards + ((before_call,) if before_call is not None else ())
+    token = _SCOPE.set(CallScope(run_id=run_id or parent.run_id, attempt_id=attempt, guards=guards))
     try:
         yield
     finally:
         _SCOPE.reset(token)
+
+
+def check_call_ownership() -> None:
+    """Nested scopes inherit all fences; a fresh child scope cannot remove its task's guard."""
+    scope = _SCOPE.get()
+    for guard in scope.guards if scope else ():
+        guard()
 
 
 def new_call(request: ModelRequest, provider: str) -> ModelCall:

@@ -160,4 +160,4 @@ EVAL-32 后续把任务成功、完整性、来源符合、合理停止、安全
 
 本文件完成表示设计证据包可审阅；不表示 Agent 工程、模型生成 Prompt/Skill、盲测、医学质量、性能或生产采用通过。
 
-2026-10-11 后续进展：ARCH-04/11 已分别通过工程自审；现有执行兼容预算获确认，接口与限制见[执行预算说明](../LLM_ACCOUNTING.md#6-单次执行共享预算arch-11)及[记录 176](../reviews/2026-10-11-implementation-176-shared-execution-budget.md)。本方案的 Agent 行动/profile 仍是草案，规划/工具调用尚未接线；下一运行时修复 ARCH-05，具体状态仍以台账为准。
+2026-10-11 后续进展：ARCH-04/11 已分别通过工程自审；现有执行兼容预算获确认，接口与限制见[执行预算说明](../LLM_ACCOUNTING.md#6-单次执行共享预算arch-11)及[记录 176](../reviews/2026-10-11-implementation-176-shared-execution-budget.md)。本方案的 Agent 行动/profile 仍是草案，规划/工具调用尚未接线；ARCH-05 当前任务租约/持有权通过工程自审，见[记录 177](../reviews/2026-10-11-implementation-177-task-lease-and-ownership.md)；持久 Agent 恢复尚未实现。下一运行时修复 ARCH-02，具体状态仍以台账为准。

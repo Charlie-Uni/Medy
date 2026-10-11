@@ -13,8 +13,8 @@ from typing import TYPE_CHECKING, Literal
 
 from pydantic import Field
 
-from medops.core.deadline import CURRENT_DEADLINE, DeadlineExceeded, check_deadline, deadline_scope
-from medops.infrastructure.llm.accounting import capture_call, new_call, publish_receipt
+from medops.core.deadline import CURRENT_DEADLINE, DeadlineExceeded, check_deadline, deadline_scope, remaining_timeout
+from medops.infrastructure.llm.accounting import capture_call, check_call_ownership, new_call, publish_receipt
 from medops.infrastructure.llm.gateway import (
     OPENAI_PRICES,
     BudgetExceeded,
@@ -251,6 +251,9 @@ def complete_in_execution(
         return operation(request)  # nested meter/monthly gateway, one admission and one settlement
     try:
         check_deadline()
+        check_call_ownership()
+        check_deadline()  # ownership checking may have consumed the remaining execution time
+        request = request.model_copy(update={"timeout_s": remaining_timeout(request.timeout_s)})
         item = allowance(request, prices)
     except BaseException as exc:
         publish_receipt(

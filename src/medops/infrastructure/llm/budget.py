@@ -19,7 +19,7 @@ from psycopg.types.json import Jsonb
 
 from medops.core.deadline import check_deadline, remaining_timeout
 from medops.core.errors import ErrorCode, InfrastructureError
-from medops.infrastructure.llm.accounting import new_call, publish_receipt
+from medops.infrastructure.llm.accounting import check_call_ownership, new_call, publish_receipt
 from medops.infrastructure.llm.execution_budget import (
     ExecutionBudgetExceeded,
     admitted_cost,
@@ -370,6 +370,9 @@ class BudgetedGateway:
         provider_started = False
         try:
             check_deadline()  # reservation may have waited for the ledger; do not start a late call
+            check_call_ownership()
+            check_deadline()
+            request = request.model_copy(update={"timeout_s": remaining_timeout(request.timeout_s)})
             provider_started = True
             response = self._inner.complete(request)
         except BaseException as exc:

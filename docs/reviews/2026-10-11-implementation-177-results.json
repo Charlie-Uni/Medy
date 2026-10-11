@@ -1,0 +1,159 @@
+{
+  "record": 177,
+  "date": "2026-10-11",
+  "task": "ARCH-05",
+  "status": "engineering_self_review_passed",
+  "reviewer": "Codex implementer; not independent human",
+  "baseline_head": "5a604050b9c0706bfd823685e5befcb9619d64a6",
+  "committed": false,
+  "pushed": false,
+  "hosted_model_calls": 0,
+  "cost_usd": 0,
+  "service_restarted": false,
+  "migration_added": false,
+  "business_databases_upgraded": false,
+  "lease_design": {
+    "method": "bounded deadline, no heartbeat renewal",
+    "default_lease_s": 300,
+    "cleanup_reserve": "min(5 seconds, 10% lease)",
+    "body_start": "before claim transaction; Skill/profile deadlines include elapsed setup",
+    "production_clock": "PostgreSQL clock_timestamp plus monotonic body deadline",
+    "task_identity": "task_id",
+    "attempt_identity": "worker plus monotonic task attempt plus separate trace/run",
+    "external_exactly_once_guarantee": false,
+    "cross_process_execution_budget_restored": false
+  },
+  "original_failure": {
+    "exit_code": 1,
+    "failed": 2,
+    "seconds": 0.37,
+    "messages": [
+      "AssertionError: assert True is False",
+      "AssertionError: assert 'completed' == 'failed'"
+    ]
+  },
+  "directed_validation": [
+    {
+      "phase": "initial_tasks_receipts_regression",
+      "passed": 32,
+      "exit_code": 0,
+      "seconds": 3.07
+    },
+    {
+      "phase": "owner_ledger_read_permission_fixture_error",
+      "passed": 19,
+      "failed": 2,
+      "exit_code": 1,
+      "seconds": 4.72
+    },
+    {
+      "phase": "fixture_dsn_key_error",
+      "passed": 116,
+      "failed": 2,
+      "exit_code": 1,
+      "seconds": 6.84
+    },
+    {
+      "phase": "expanded_directed",
+      "passed": 126,
+      "exit_code": 0,
+      "seconds": 7.36,
+      "log": "/Users/leaf/Documents/GitHub/Medy/.local/arch05-directed.log"
+    },
+    {
+      "phase": "final_time_ownership_boundaries",
+      "passed": 31,
+      "exit_code": 0,
+      "seconds": 5.73,
+      "log": "/Users/leaf/Documents/GitHub/Medy/.local/arch05-final-boundaries.log"
+    }
+  ],
+  "earlier_full_checks": [
+    {
+      "phase": "fixed_length_tuple_inference",
+      "exit_code": 2,
+      "mypy_errors": 1,
+      "pytest_executed": false,
+      "log": "/Users/leaf/.cache/medy-checks/arch05-verified-2nwqwl6t/.local/arch05-check-before-type-fix.log"
+    },
+    {
+      "phase": "missing_ignored_dec001_configuration",
+      "exit_code": 0,
+      "passed": 1835,
+      "skipped": 92,
+      "warnings": 1,
+      "pytest_seconds": 54.53,
+      "log": "/Users/leaf/.cache/medy-checks/arch05-verified-2nwqwl6t/.local/arch05-check-without-dec001.log",
+      "insufficient_for_final_gate": true,
+      "skip_reason": "22 BM25 candidate D cases lacked DEC001_D_ADMIN_URL; new unit cases did execute"
+    }
+  ],
+  "full_check": {
+    "command": "env -u DEBUG PYTHONPATH=<worktree>/src:<worktree> make check",
+    "worktree": "/Users/leaf/.cache/medy-checks/arch05-verified-2nwqwl6t",
+    "exit_code": 0,
+    "passed": 1857,
+    "skipped": 70,
+    "warnings": 1,
+    "pytest_seconds": 52.34,
+    "format_files": 463,
+    "mypy_source_files": 195,
+    "datasets": 4,
+    "schemas": "up to date",
+    "log": "/Users/leaf/.cache/medy-checks/arch05-verified-2nwqwl6t/.local/arch05-check.log",
+    "log_sha256": "4afde0ff12fa2f1db1e13462bf0f5592fc6c8c23892c51dd498bced760d10942",
+    "source_comparison": "/Users/leaf/.cache/medy-checks/arch05-verified-2nwqwl6t/.local/source-comparison.json",
+    "source_comparison_sha256": "2dbaf60bee190ec3d3452a666273878a44d79b184b603040db3bb2f42bdc64da",
+    "maintained_inputs_identical": 491,
+    "private_test_configuration_identical": {
+      ".env": true,
+      ".env.dec001": true
+    },
+    "required_pg_redis_and_bm25_d_executed": true,
+    "optional_skip_reason": "DEC-001 B/C environments absent"
+  },
+  "protected_work": {
+    "backup": "/var/folders/zj/6djhy_4x7vx_7t8xcgt_v62c0000gn/T/medy-arch05-7h1y1spg",
+    "preexisting_files": 78,
+    "unchanged": 66,
+    "intentional_overlap": [
+      "README.md",
+      "docs/CURRENT_TASKS.md",
+      "docs/DEPLOY.md",
+      "docs/ITERATION_PLAN.md",
+      "docs/ITERATION_STAGES.md",
+      "src/medops/application/tasks.py",
+      "src/medops/infrastructure/llm/budget.py",
+      "src/medops/worker/serve.py",
+      "docs/LLM_ACCOUNTING.md",
+      "docs/agent/PLAN-01-capability-and-scenario.md",
+      "src/medops/infrastructure/llm/accounting.py",
+      "src/medops/infrastructure/llm/execution_budget.py"
+    ],
+    "missing": [],
+    "task_ids_before": 141,
+    "task_ids_after": 141,
+    "state_changes": {
+      "ARCH-05": [
+        "READY",
+        "DONE"
+      ]
+    },
+    "frozen_data_and_public_schemas_changed": false
+  },
+  "limits": [
+    "Cooperative deadlines; cleanup/auditing may overrun reserve and must settle/fence results.",
+    "No vendor exactly-once guarantee; in-flight work can bill after crash or lease loss.",
+    "Current per-attempt budget is not a whole-task lifetime bill cap or persisted Agent budget.",
+    "Full Skill evidence/replay payload audit remains ARCH-06/07; early setup loss or hard crash can lack a business Trace.",
+    "No real model quality/performance/billing comparison or service deployment.",
+    "Independent human review/unseen holdout requirements remain."
+  ],
+  "next_task": "ARCH-02",
+  "documentation_validation": {
+    "markdown_files": 8,
+    "local_links_checked": 170,
+    "missing_links": [],
+    "git_diff_check_exit_code": 0
+  }
+}

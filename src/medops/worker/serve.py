@@ -1,11 +1,13 @@
 """`python -m medops.worker.serve [--poll 2.0] [--lease 300] [--once] [--device cpu|mps]`: the task worker over
 the production runtime. PostgreSQL is the queue and the source of truth (baseline 5.7); polling is bounded and
 idle-friendly. `--lease` is how long a claimed task stays this worker's before another worker may take it over
-(record 59); fault drills shorten it, production keeps the default."""
+(record 59); execution ends before it with a cleanup reserve. Fault drills shorten both lease and body;
+production keeps the default. A late attempt is reported as lost, never as its replacement's completion."""
 
 from __future__ import annotations
 
 import argparse
+import math
 import signal
 import sys
 import time
@@ -23,12 +25,16 @@ from medops.skills.catalog import default_registry
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--poll", type=float, default=2.0, help="seconds to sleep when no task is claimable")
-    ap.add_argument("--lease", type=float, default=DEFAULT_LEASE_S, help="seconds a claimed task is leased")
+    ap.add_argument(
+        "--lease", type=float, default=DEFAULT_LEASE_S, help="lease seconds; caps body duration with a cleanup reserve"
+    )
     ap.add_argument("--once", action="store_true", help="process at most one task and exit")
     ap.add_argument("--device", default="cpu")
     args = ap.parse_args(argv)
-    if args.lease <= 0:
-        ap.error("--lease must be positive")
+    if not math.isfinite(args.lease) or args.lease <= 0:
+        ap.error("--lease must be finite and positive")
+    if not math.isfinite(args.poll) or args.poll <= 0:
+        ap.error("--poll must be finite and positive")
     try:
         settings = Settings()  # type: ignore[call-arg]
     except Exception as exc:  # noqa: BLE001 - configuration errors are reported in their safe form only
@@ -64,9 +70,15 @@ def main(argv: list[str] | None = None) -> int:
                 time.sleep(args.poll)
                 continue
             if done is not None:
-                log.info(
-                    "task finished",
-                    extra={"task_id": done.task_id, "status": done.status.value, "trace_id": done.trace_id},
+                report = log.warning if done.outcome == "lost" else log.info
+                report(
+                    "task attempt lost lease" if done.outcome == "lost" else "task attempt finished",
+                    extra={
+                        "task_id": done.task_id,
+                        "attempt": done.attempt,
+                        "outcome": done.outcome,
+                        "trace_id": done.trace_id,
+                    },
                 )
                 if args.once:
                     break

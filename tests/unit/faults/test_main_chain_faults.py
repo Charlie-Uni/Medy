@@ -164,7 +164,9 @@ def test_worker_dying_mid_task_is_recovered_by_another_worker_after_the_lease():
     assert runner2.run_once() is None
     # lease expired: worker 2 takes over, finishes, and the record shows what happened
     clock.now = T0 + timedelta(seconds=61)
-    done = runner2.run_once()
+    execution = runner2.run_once()
+    assert execution is not None and execution.outcome == "completed" and execution.attempt == 2
+    done = execution.record
     assert done is not None and done.status is TaskStatus.completed and done.attempts == 2
     assert [(a["attempt"], a["worker"], a["outcome"]) for a in store.attempts] == [
         (1, "worker-1", "lost"),
