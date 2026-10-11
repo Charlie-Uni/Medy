@@ -8,7 +8,9 @@ on:
 jobs:
   check:
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     env:
+      MEDOPS_TEST_REQUIRED_SERVICES: "1"
       # integration tests create and drop throwaway databases through this admin DSN (tests/integration/conftest.py)
       MEDOPS_TEST_ADMIN_URL: postgresql://medops_admin:ci-only-password@localhost:5432/medops
       MEDOPS_TEST_REDIS_URL: redis://localhost:6379/0
@@ -106,6 +108,8 @@ jobs:
         run: cd /tmp && python -c "import medops.evals.probe.validator"
       - run: make PY=python lint format-check
       - run: python -m mypy
+      - name: architecture import boundaries
+        run: make PY=python architecture-check
       - run: python -m pytest -q
       - name: frozen evaluation inputs and lineage
         run: make PY=python eval-check
@@ -122,6 +126,39 @@ jobs:
           cp evals/probe/precise_clause/examples/samples.example.jsonl /tmp/probe-draft/samples.jsonl
           cp evals/probe/precise_clause/examples/review_prompt.example.md /tmp/probe-draft/review_prompt.md
           python -m medops.evals.probe /tmp/probe-draft --mode draft
+      - name: build the exact production runtime image
+        run: docker build --tag medops-copilot:ci .
+      - name: cache pinned public BGE model files (no secrets or corpus)
+        uses: actions/cache@v4
+        with:
+          path: ${{ runner.temp }}/medy-models
+          key: medy-bge-models-${{ hashFiles('src/medops/retrieval/vector/embedding.py', 'src/medops/retrieval/rerank.py', 'scripts/ci_download_models.py') }}
+      - name: prefetch pinned models through the runtime image
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/medy-models"
+          # Cache files are public. Download as the runner UID so Actions can save/restore them.
+          docker run --rm --user "$(id -u):$(id -g)" \
+            --mount "type=bind,source=$RUNNER_TEMP/medy-models,target=/models" \
+            --mount "type=bind,source=$GITHUB_WORKSPACE/scripts/ci_download_models.py,target=/app/ci_download_models.py,readonly" \
+            medops-copilot:ci python /app/ci_download_models.py
+      - name: real container boot with published policy and readiness failure
+        env:
+          MEDOPS_TEST_RUNTIME_IMAGE: medops-copilot:ci
+          MEDOPS_TEST_MODEL_CACHE: ${{ runner.temp }}/medy-models
+          MEDOPS_TEST_CONTAINER_DB_HOST: medy-ci-postgres
+          MEDOPS_TEST_CONTAINER_NETWORK: medy-ci-runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker network create --internal medy-ci-runtime
+          docker network connect medy-ci-runtime medy-ci-postgres
+          make PY=python ci-container-check
       - name: remove CI services
         if: always()
-        run: docker rm -f medy-ci-postgres medy-ci-redis || true
+        run: |
+          runtime_ids=$(docker ps -aq --filter label=medy.ci-runtime=1)
+          if test -n "$runtime_ids"; then docker rm -f $runtime_ids; fi
+          docker rm -f medy-ci-postgres medy-ci-redis || true
+          docker network rm medy-ci-runtime || true

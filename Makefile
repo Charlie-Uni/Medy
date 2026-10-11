@@ -1,6 +1,6 @@
 .PHONY: observability-up observability-down langfuse-init langfuse-up langfuse-down langfuse-ps langfuse-check langfuse-smoke langfuse-outage-test cache-worker-up cache-worker-down cache-worker-ps cache-invalidate demo demo-check demo-ask help install install-check install-embed lock schemas lint format format-check typecheck test test-integration check migrate migrate-down migration-check db-users load-corpus index-build index-check lexical-index-a lexical-index activate-docs validate-probe canonicalize-probe up down ps
 .PHONY: eval-check
-.PHONY: retrieval-check architecture-check
+.PHONY: retrieval-check architecture-check index-workers-up index-workers-ps ci-container-check
 
 # venv lives in a NON-dot directory on purpose: ~/Documents is an iCloud Drive domain that marks every file
 # inside dot-directories as hidden, and CPython >= 3.11.16 skips hidden .pth files, which silently breaks
@@ -8,6 +8,7 @@
 PY ?= venv/bin/python
 # Active tooling is maintained code; frozen draft tooling and historical runs stay outside formatting.
 CHECK_PATHS = src tests migrations evals/harness/tools evals/replay/tools scripts
+CHECK_PATHS += deploy/ci
 CHECK_PATHS += evals/main_set/tools/pack_review.py evals/main_set/tools/prepare_revision_review.py evals/main_set/tools/run_review.py evals/main_set/tools/draft_common.py
 CHECK_PATHS += evals/main_set/tools/prepare_successor_review.py evals/main_set/tools/assemble_successor.py evals/main_set/tools/build_successor_mapping.py
 CHECK_PATHS += evals/main_set/tools/freeze.py evals/main_set/tools/make_schemas.py
@@ -21,7 +22,7 @@ help:
 	@echo "make format          ruff format the maintained CHECK_PATHS"
 	@echo "make format-check    ruff format --check CHECK_PATHS (part of make check)"
 	@echo "make typecheck       mypy src"
-	@echo "make test            pytest (unit + integration; integration skips with a reason when PostgreSQL is down)"
+	@echo "make test            pytest (local optional services may skip; CI / MEDOPS_TEST_REQUIRED_SERVICES=1 must fail)"
 	@echo "make test-integration pytest tests/integration only (needs make up or MEDOPS_TEST_ADMIN_URL)"
 	@echo "make migrate | migrate-down | migration-check   alembic upgrade head | downgrade -1 | single head + round-trip tests"
 	@echo "make db-users        create/rotate LOGIN users for the 0002 group roles (DB_*_PASSWORD from .env)"
@@ -32,6 +33,7 @@ help:
 	@echo "make index-check [ADMIN_URL=<dsn>]        exit 1 if an active chunk is missing from the lexical index or the embeddings"
 	@echo "make retrieval-check [ADMIN_URL=<dsn>]    read-only index coverage, corpus, versions and consumer backlog; no model calls"
 	@echo "make cache-worker-up / cache-worker-down / cache-worker-ps   manage continuous Redis invalidation"
+	@echo "make index-workers-up / index-workers-ps   supervised lexical/vector/cache workers (check resource budget first)"
 	@echo "make cache-invalidate [ADMIN_URL=<dsn>]   apply pending publish / archive events to the shared retrieval cache"
 	@echo "make observability-up / observability-down   start / remove the Jaeger trace viewer (profile observability)"
 	@echo "make langfuse-up / langfuse-down / langfuse-ps   manage the local metadata-only Langfuse v4 stack"
@@ -43,6 +45,7 @@ help:
 	@echo "make activate-docs PLAN=<plan.json> ACTOR=<id> ADMIN_URL=<dsn>   activate draft documents all-or-nothing with audited reasons"
 	@echo "make check           lint + format-check + typecheck + architecture-check + test + schema drift (CI gate)"
 	@echo "make architecture-check   enforce protocol/evaluation import boundaries without executing modules"
+	@echo "make ci-container-check   real image + pinned BGE + published-config ready/not-ready (explicit CI env required; no hosted calls)"
 	@echo "make eval-check [EVAL_ARGS=--with-pages]   frozen dataset integrity, versions and lineage; no model calls"
 	@echo "make validate-probe DIR=<version_dir> [MODE=draft|frozen] [PAGES=<pages_dir>]"
 	@echo "make canonicalize-probe DIR=<draft_dir> [PAGES=<pages_dir>] [CHECK=1]  rewrite draft JSONL to canonical form, then validate"
@@ -161,6 +164,13 @@ langfuse-outage-test:
 	env -u DEBUG $(PY) scripts/langfuse_local.py outage-recovery
 
 # Continuous cache invalidation. The explicit database and namespace in `.env` must match the API/MCP deployment.
+index-workers-up:
+	docker compose --env-file .env --profile app build lexical-index-worker vector-index-worker retrieval-cache-worker
+	docker compose --env-file .env --profile app up -d --no-build --wait lexical-index-worker vector-index-worker retrieval-cache-worker
+
+index-workers-ps:
+	docker compose --env-file .env --profile app ps lexical-index-worker vector-index-worker retrieval-cache-worker
+
 cache-worker-up:
 	docker compose --env-file .env --profile app build retrieval-cache-worker
 	docker compose --env-file .env --profile app up -d --no-build --wait retrieval-cache-worker
@@ -197,6 +207,9 @@ eval-check:
 
 architecture-check:
 	$(PY) scripts/check_architecture.py
+
+ci-container-check:
+	$(PY) -m pytest -q -s -p tests.integration.conftest deploy/ci/test_container_boot.py
 
 check: install-check lint format-check typecheck architecture-check test eval-check
 	$(PY) -m medops.contracts_export --out schemas --check

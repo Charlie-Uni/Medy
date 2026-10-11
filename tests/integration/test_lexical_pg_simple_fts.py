@@ -9,15 +9,13 @@ import psycopg
 import pytest
 
 from medops.retrieval.lexical import pg_simple_fts as a
+from medops.retrieval.lexical.tokenizer import JiebaTokenizerV1  # noqa: E402
 from tests.integration.lexical_adapter_suite import (
     CandidateUnderTest,
     LexicalAdapterSuite,
     make_database,
     seed_candidate,
 )
-
-pytest.importorskip("jieba")
-from medops.retrieval.lexical.tokenizer import JiebaTokenizerV1  # noqa: E402
 
 TOKENIZER = JiebaTokenizerV1()
 

@@ -25,11 +25,9 @@ from medops.retrieval.cache import CacheKeyInputs, CandidateCache, InMemoryCandi
 from medops.retrieval.lexical import index_consumer
 from medops.retrieval.lexical import pg_simple_fts as a
 from medops.retrieval.lexical.boundary import run_lexical_search
+from medops.retrieval.lexical.tokenizer import JiebaTokenizerV1  # noqa: E402
 from tests.integration.lexical_adapter_suite import make_database, txn
 from tests.integration.pdf_factory import make_pdf
-
-pytest.importorskip("jieba")
-from medops.retrieval.lexical.tokenizer import JiebaTokenizerV1  # noqa: E402
 
 TOKENIZER = JiebaTokenizerV1()
 AS_OF = date(2026, 9, 20)

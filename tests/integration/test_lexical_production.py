@@ -11,15 +11,13 @@ import pytest
 
 from medops.retrieval import production
 from medops.retrieval.lexical import pg_textsearch_departmental as bm25
+from medops.retrieval.lexical.tokenizer import JiebaTokenizerV1  # noqa: E402
 from tests.integration.lexical_adapter_suite import (
     CandidateUnderTest,
     LexicalAdapterSuite,
     make_database,
     seed_candidate,
 )
-
-pytest.importorskip("jieba")
-from medops.retrieval.lexical.tokenizer import JiebaTokenizerV1  # noqa: E402
 
 DRIFTED = JiebaTokenizerV1()
 

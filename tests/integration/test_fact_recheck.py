@@ -20,14 +20,12 @@ from medops.core.errors import BusinessError, ErrorCode, InfrastructureError
 from medops.retrieval.doc_focus import load_documents
 from medops.retrieval.lexical import pg_simple_fts as a
 from medops.retrieval.lexical.boundary import run_lexical_search
+from medops.retrieval.lexical.tokenizer import JiebaTokenizerV1  # noqa: E402
 from medops.retrieval.recheck import RejectReason, recheck_candidates
 from medops.skills.production import evidence_lookup
 from tests.integration.lexical_adapter_suite import make_database, txn
 from tests.integration.test_migrations import document, job, source_object
 from tests.unit.harness._fixtures import user
-
-pytest.importorskip("jieba")
-from medops.retrieval.lexical.tokenizer import JiebaTokenizerV1  # noqa: E402
 
 TOKENIZER = JiebaTokenizerV1()
 AS_OF = date(2026, 6, 1)

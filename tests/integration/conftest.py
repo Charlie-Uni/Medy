@@ -1,8 +1,8 @@
 """Integration fixtures: a throwaway PostgreSQL database per test session, migrated to head.
 
 The admin DSN comes from MEDOPS_TEST_ADMIN_URL, else from the repo `.env` (DATABASE_ADMIN_URL, then
-DATABASE_URL). Without a reachable PostgreSQL the whole directory is skipped with an explicit reason;
-CI provides a pgvector service so these tests always run there.
+DATABASE_URL). Local services may skip; CI or MEDOPS_TEST_REQUIRED_SERVICES=1 requires explicit
+PostgreSQL and Redis URLs and fails when either is absent, malformed or unreachable.
 """
 
 from __future__ import annotations
@@ -21,14 +21,18 @@ from alembic.config import Config
 
 from medops.evals.safety_data import with_database
 from medops.infrastructure.db.login_users import GROUPS, drop_users, provision
+from tests.service_requirements import required_services, unavailable
 
 REPO = Path(__file__).resolve().parents[2]
 
 
 def _admin_dsn() -> str | None:
+    required = required_services()
     explicit = os.environ.get("MEDOPS_TEST_ADMIN_URL")
     if explicit:
         return explicit
+    if required:
+        return None  # CI must never accidentally use a developer's .env database.
     env_file = REPO / ".env"
     if not env_file.is_file():
         return None
@@ -65,18 +69,24 @@ def run_alembic(dsn: str, action: str, target: str) -> None:
 def admin_dsn() -> str:
     dsn = _admin_dsn()
     if not dsn:
-        pytest.skip("integration: no MEDOPS_TEST_ADMIN_URL and no usable .env (DATABASE_ADMIN_URL)")
+        unavailable("PostgreSQL URL missing; set MEDOPS_TEST_ADMIN_URL (local mode also accepts .env)")
+    error_type = None
     try:
         psycopg.connect(dsn, connect_timeout=3).close()
-    except psycopg.Error as exc:
-        pytest.skip(f"integration: PostgreSQL unreachable ({type(exc).__name__}); start it with `make up`")
+    except (psycopg.Error, ValueError) as exc:
+        error_type = type(exc).__name__
+    if error_type:
+        unavailable(f"PostgreSQL unavailable ({error_type}); start it with `make up`")
     return dsn
 
 
 def _redis_url() -> str | None:
+    required = required_services()
     explicit = os.environ.get("MEDOPS_TEST_REDIS_URL")
     if explicit:
         return explicit
+    if required:
+        return None
     env_file = REPO / ".env"
     if not env_file.is_file():
         return None
@@ -94,13 +104,18 @@ def redis_url() -> str:
     """A reachable Redis for the cache-store tests: MEDOPS_TEST_REDIS_URL, else REDIS_URL from `.env`."""
     url = _redis_url()
     if not url:
-        pytest.skip("integration: no MEDOPS_TEST_REDIS_URL and no usable .env (REDIS_URL)")
+        unavailable("Redis URL missing; set MEDOPS_TEST_REDIS_URL (local mode also accepts .env)")
     import redis
 
+    error_type = None
     try:
-        redis.Redis.from_url(url, socket_connect_timeout=2, socket_timeout=2).ping()
-    except redis.RedisError as exc:
-        pytest.skip(f"integration: Redis unreachable ({type(exc).__name__}); start it with `make up`")
+        with redis.Redis.from_url(url, socket_connect_timeout=2, socket_timeout=2) as client:
+            if not client.ping():
+                error_type = "PingRejected"
+    except (redis.RedisError, ValueError) as exc:
+        error_type = type(exc).__name__
+    if error_type:
+        unavailable(f"Redis unavailable ({error_type}); start it with `make up`")
     return url
 
 

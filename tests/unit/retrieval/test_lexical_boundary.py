@@ -42,7 +42,6 @@ def test_expected_versions_are_mandatory_and_checked_against_the_index_build(ind
 
 
 def test_tokenizer_swap_without_rebuild_is_refused_and_rebuild_updates_versions(index):
-    pytest.importorskip("jieba")
     built = index.versions
     index.tokenizer = JiebaTokenizerV1()  # configuration drift without index()
     assert index.versions == built  # declared versions stay bound to the build

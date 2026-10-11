@@ -8,7 +8,6 @@ from tests.unit.retrieval.lexical_contract import assert_lexical_adapter_contrac
 
 @pytest.mark.parametrize("tokenizer_factory", [RegexTokenizerV1, JiebaTokenizerV1], ids=["regex", "jieba"])
 def test_offline_bm25_satisfies_the_adapter_contract(tokenizer_factory):
-    pytest.importorskip("jieba")
 
     def build(corpus):
         idx = OfflineBM25Index(tokenizer_factory())

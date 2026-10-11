@@ -11,6 +11,7 @@ import psycopg
 import pytest
 
 from medops.retrieval.lexical import pg_textsearch_bm25 as d
+from medops.retrieval.lexical.tokenizer import JiebaTokenizerV1, JiebaTokenizerV2  # noqa: E402
 from medops.retrieval.production import stopwords_path
 from tests.integration.lexical_adapter_suite import (
     AS_OF,
@@ -21,9 +22,6 @@ from tests.integration.lexical_adapter_suite import (
     seed_candidate,
     txn,
 )
-
-pytest.importorskip("jieba")
-from medops.retrieval.lexical.tokenizer import JiebaTokenizerV1, JiebaTokenizerV2  # noqa: E402
 
 TOKENIZER = JiebaTokenizerV2(stopwords=stopwords_path())  # the production tokenizer: D differs from A2 in ranking only
 DRIFTED = JiebaTokenizerV1()

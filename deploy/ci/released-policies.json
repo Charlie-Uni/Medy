@@ -1,0 +1,16 @@
+{
+  "description": "Public released retrieval configuration captured on 2026-10-11; copied only into a throwaway CI database. Not a production approval or release command.",
+  "policies": [
+    {
+      "kind": "retrieval_params",
+      "name": "hybrid",
+      "version": "hybrid@2026-09-30-c41bd6d8",
+      "diff": {
+        "glossary": {"from": "glossary-none", "to": "glossary-20260926-e4daca58a8e4"},
+        "doc_focus": {"from": false, "to": true},
+        "multi_query": {"from": false, "to": true},
+        "query_translation": {"from": "off", "to": "gpt-6-luna"}
+      }
+    }
+  ]
+}

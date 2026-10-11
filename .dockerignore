@@ -1,5 +1,5 @@
 # Build context for the MedOps Copilot image: source, locks and migrations only. Secrets, virtualenvs, data,
-# evaluation runs, corpora and model caches never enter the image (baseline 4.3 config/secret isolation).
+# evaluation runs, corpora and model caches never enter the image. Public versioned glossaries are runtime config.
 .git
 .github
 venv
@@ -13,6 +13,11 @@ __pycache__
 .mypy_cache
 .ruff_cache
 .pytest_cache
+.local
+output
+evals/**
+!evals/glossary
+!evals/glossary/glossary-*.json
 evals/**/runs
 evals/**/raw*
 evals/**/*.pdf

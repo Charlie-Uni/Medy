@@ -48,7 +48,6 @@ def test_server_limits_are_applied_client_side():
 
 
 def test_configured_versions_come_from_the_tokenizer():
-    pytest.importorskip("jieba")
     versions = a.configured_versions(JiebaTokenizerV1())
     assert versions.retriever_version == a.RETRIEVER_VERSION == "pg-simple-fts-v1"
     assert versions.tokenizer_version == "tok-jieba-v1"

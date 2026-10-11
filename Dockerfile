@@ -21,15 +21,17 @@ COPY migrations ./migrations
 COPY alembic.ini ./alembic.ini
 RUN pip install --no-build-isolation --no-deps . && pip check
 
-# ---- runtime: virtualenv + migrations only; runs as an unprivileged user ------------------------------------
+# ---- runtime: virtualenv + migrations + public glossary configuration; unprivileged user ------------------
 FROM ${PYTHON_IMAGE} AS runtime
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PATH="/opt/venv/bin:${PATH}" \
-    MODEL_CACHE_DIR=/models HF_HOME=/models/hf
+    MODEL_CACHE_DIR=/models HF_HOME=/models/hf GLOSSARY_DIR=/app/glossary
 RUN groupadd --gid 10001 medops && useradd --uid 10001 --gid 10001 --create-home --shell /usr/sbin/nologin medops \
- && mkdir -p /models /app && chown -R medops:medops /models /app
+ && mkdir -p /models /queue /app && chown -R medops:medops /models /queue /app
 COPY --from=builder --chown=medops:medops /opt/venv /opt/venv
 COPY --from=builder --chown=medops:medops /build/migrations /app/migrations
 COPY --from=builder --chown=medops:medops /build/alembic.ini /app/alembic.ini
+# Public, versioned runtime configuration only; no evaluation questions, corpus or secrets.
+COPY evals/glossary/*.json /app/glossary/
 WORKDIR /app
 USER medops
 VOLUME ["/models"]

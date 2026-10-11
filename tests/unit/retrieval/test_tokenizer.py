@@ -2,8 +2,6 @@ import pytest
 
 from medops.retrieval.lexical.tokenizer import JiebaTokenizerV1, RegexTokenizerV1
 
-jieba = pytest.importorskip("jieba")
-
 
 @pytest.fixture(scope="module")
 def tok():
@@ -67,7 +65,6 @@ def test_default_instance_is_unaffected_by_later_dictionary_loads(tmp_path):
 
 
 def test_jieba_v2_drops_pinned_english_stopwords_and_hashes_the_list(tmp_path):
-    pytest.importorskip("jieba")
     from medops.retrieval.lexical.tokenizer import JiebaTokenizerV1, JiebaTokenizerV2
 
     stop = tmp_path / "english.stop"

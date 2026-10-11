@@ -11,8 +11,6 @@ from medops.core.errors import InfrastructureError
 from medops.retrieval import production
 from medops.retrieval.versioning import compute_retrieval_version
 
-pytest.importorskip("jieba")
-
 
 def test_pinned_members_and_composite_version():
     inputs = production.production_retrieval_inputs()
