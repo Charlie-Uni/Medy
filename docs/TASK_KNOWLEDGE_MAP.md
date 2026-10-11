@@ -1,5 +1,7 @@
 # Medy 全量任务、当前进度与八股知识点对照
 
+> **当前状态入口（2026-10-10）**：[统一待办](CURRENT_TASKS.md)包含新增 Agent、自进化、架构和代码质量任务；后续按其顺序及[每轮自审规则](ITERATION_STAGES.md#3-每轮强制自审记录)执行。本页下方统计是 2026-09-21 的知识点/里程碑快照，不能代替当前完成度；最终成果更新由 DOC-01 汇总。
+
 > 核查日期：2026-09-21（[实现记录 49](reviews/2026-09-21-implementation-49-main-set-corpus-ingested.md)）。编号与 [开发路线图](DEVELOPMENT_ROADMAP.md) 一致，验收文字以 [工程基线 v0.6](ENGINEERING_BASELINE.md) 为准；本文只补每个任务对应的基础知识，不新增门禁。
 > 状态口径同路线图：已实现（小范围产物有代码与证据，不等于整体验收完成）、部分、待做、阻塞、选做、未验收。基线 99 个复选项目前 1 项勾选（M1-01 探针冻结）。
 > `tests/unit/docs/test_baseline_roadmap_consistency.py` 机械检查本文与路线图、基线的编号数量一致。

@@ -1,0 +1,63 @@
+{
+  "kind": "ADR and documentation self-review",
+  "old_tasks": 140,
+  "current_tasks": 141,
+  "missing_tasks": [],
+  "added_tasks": [
+    "EVAL-36"
+  ],
+  "status_changes": {
+    "PLAN-02": [
+      "BLOCKED",
+      "HUMAN"
+    ],
+    "EVOL-09": [
+      "HUMAN",
+      "DONE"
+    ]
+  },
+  "local_links_checked": 125,
+  "tables_checked": 34,
+  "protected_paths": [
+    "docs/ENGINEERING_BASELINE.md",
+    "docs/source/PROJECT_DESCRIPTION_v0.1.md",
+    "schemas",
+    "evals/dataset_catalog.json",
+    "evals/probe/precise_clause/v4",
+    "evals/probe/precise_clause/schema",
+    "evals/main_set/main-v5-provisional",
+    "evals/main_set/schema",
+    "evals/experiments/e2e/main-v5-provisional/chunk_mapping.chunker-v2.main-v5-provisional.json",
+    "evals/safety_set/safety-v2-provisional",
+    "evals/safety_set/schema",
+    "evals/replay/replay-v3",
+    "evals/source_semantics/main-v5-provisional.json"
+  ],
+  "protected_diff": "",
+  "preexisting_code_files": 31,
+  "preexisting_code_changed": [],
+  "doc_tests": {
+    "command": "venv/bin/python -m pytest tests/unit/docs/test_baseline_roadmap_consistency.py -q",
+    "passed": 5,
+    "exit_code": 0
+  },
+  "diff_check_exit_code": 0,
+  "model_calls": 0,
+  "api_cost_usd": 0,
+  "ADR_status": "v0.2; five constraints, S2/S3 and A direction confirmed; original production +5pp scope pending",
+  "errors": [],
+  "review_status": "passed",
+  "historical_reference_scope": "Current normative documents checked in full; historical roadmap only new references. Review narratives describing old identifiers are not current task dependencies.",
+  "initial_check_correction": "Initial scan misclassified historical EVAL-01 in roadmap and review explanation; corrected scope without changing historical IDs or adding phantom tasks.",
+  "document_sha256": {
+    "AGENTS.md": "1efce4e9195ecf7393e730dd5729716e3dba013baa3e6b6d32d5c3712a084ce7",
+    "README.md": "d1afe8ed099039fbfd3f54d820ac88b099eb0421cce375c4f2c0cf560dd55d38",
+    "docs/CURRENT_TASKS.md": "5dcb017230a67005e538aba40d30f22cbe1c679d2a16843f2727b550498de1d7",
+    "docs/ITERATION_PLAN.md": "d5c14f90bc1197f3c0e2ce29cee01d62bd6ddb383e687528143df2e80ad91cd8",
+    "docs/ITERATION_STAGES.md": "e05ea3d104feca5a556440450b108de9b1a74cde8e1429546dd537f73c20fdec",
+    "docs/DEVELOPMENT_ROADMAP.md": "3478f15d92a3932005979ccfbd2f796860ab86b59faa4f1b91cb2a96608df118",
+    "evals/holdout/README.md": "674e47b65394ca6d421d3991334b2eb3a4ebaddc802d0a52b78718ee6714b116",
+    "docs/adr/ADR-0012-agent-evolution-goals-and-acceptance.md": "15b80c31c372f79619bae13a29c05173374e8709c40ad145178ec870e5204bbf",
+    "docs/reviews/2026-10-10-implementation-173-adr12-owner-constraints.md": "368cc5627c8c0125f1bca7250bed5bf3afa2df29de95c034f31b389f3058f1a9"
+  }
+}

@@ -10,9 +10,13 @@ MedOps Copilot 是面向医学事务、药物警戒和临床运营的可信医�
 
 ## 最新执行入口（2026-10-10）
 
-按用户确认的十项优先级及每轮自审规则推进，见[当前任务台账](docs/CURRENT_TASKS.md)和[分阶段执行与自审](docs/ITERATION_STAGES.md)。评测标准修订、来源契约、回放绑定和模型裁判校准已经形成冻结的 `probe-v4` 与 `main-v5-provisional`；第二独立人工仍未具备，因此相应结论继续标为 provisional。
+后续统一按[当前任务台账](docs/CURRENT_TASKS.md)推进：保留此前架构、评测、BM25、Redis、Langfuse、模型路由和使用闭环任务，新增受控 Agent 与模型生成 Prompt/声明式 Skill 的自进化任务。顺序为目标与验收 → 必要执行保护 → 首个业务 Agent → Prompt 自进化 → Skill/使用闭环 → 完整验证与交付。当前先沟通 PLAN-02 的 [ADR-0012](docs/adr/ADR-0012-agent-evolution-goals-and-acceptance.md) 并补 PLAN-01 证据，下一运行时修复 ARCH-04 → ARCH-11；两项通过才可进入 S2。自动激活仅实验，S3 改进声明须有未见盲测，每轮付费单独授权。新增能力尚未实现；盲测新增工作量确认后重估工期。
 
-生产词法通道已按项目所有者决定切换到部门隔离的 `pg_textsearch` BM25：PostgreSQL 17、extension 1.5.1、migration 0022，MA/PV/CO 各用独立物理语料，避免 RLS 隐藏行参与跨部门 IDF/词频统计。正式库与安全库已完成逻辑迁移、索引构建和 readiness 核验，旧 PG16 卷及逐库逻辑备份保留。设计、实测数据、故障和回滚边界见[实现记录 162](docs/reviews/2026-10-09-implementation-162-production-bm25-cutover.md)，许可与发布资产见[许可记录](docs/reviews/2026-10-09-licence-dossier-pg-textsearch.md)。最新本地全量检查为 1753 passed、70 skipped；新冻结集上的付费检索与答案级 BM25 对照仍需单独授权，工程切换不等同于质量门禁通过。
+**每轮代码、文档、实验与部署都必须自审核，问题修复复测且证据齐备后才能标记完成。** 固定执行要求见[AGENTS.md](AGENTS.md)，模板见[分阶段执行与自审](docs/ITERATION_STAGES.md)。评测标准修订、来源契约、回放绑定和模型裁判校准已形成冻结的 `probe-v4` 与 `main-v5-provisional`；第二独立人工仍未具备，相应结论继续标为 provisional；生产签字和逐次付费授权要求保留。
+
+最新[架构审查](docs/reviews/2026-10-10-architecture-audit.md)发现 14 项缺陷/风险，已并入台账 ARCH-01～14。首项 ARCH-01 已完成总截止时间、旧尝试收束、SQL/HTTP 取消及本地 BGE 推理进程回收；该轮工程自审与等价快照全量检查通过，1774 passed、70 skipped，费用 0。后续任务租约、历史 Skill、二阶段判断、费用归属和任务审计按统一依赖推进。范围、实际模型核验、iCloud 核验限制和错误补救见[记录 171](docs/reviews/2026-10-10-implementation-171-harness-deadline-and-cancellation.md)；原组件切换、历史成绩和验收门槛保留。本次统一待办及自审见[记录 172](docs/reviews/2026-10-10-implementation-172-unified-agent-evolution-backlog.md)。
+
+生产词法通道已按项目所有者决定切换到部门隔离的 `pg_textsearch` BM25：PostgreSQL 17、extension 1.5.1、migration 0022，MA/PV/CO 各用独立物理语料，避免 RLS 隐藏行参与跨部门 IDF/词频统计。正式库与安全库已完成逻辑迁移、索引构建和 readiness 核验，旧 PG16 卷及逐库逻辑备份保留。设计、实测数据、故障和回滚边界见[实现记录 162](docs/reviews/2026-10-09-implementation-162-production-bm25-cutover.md)，许可与发布资产见[许可记录](docs/reviews/2026-10-09-licence-dossier-pg-textsearch.md)。新冻结集上的付费检索与答案级 BM25 对照仍需单独授权，工程切换不等同于质量门禁通过。
 
 Langfuse v4.54.0 已以同网络、metadata-only 方式部署：真实 OTLP trace、评分与反馈类别关联、API 回读及服务中断后的队列恢复均通过，模型调用 0、费用 0；登录后的 UI detail 仍待人工目视。启动与复验见 [Langfuse 运维说明](docs/LANGFUSE.md)，实现与失败补救见[记录 163](docs/reviews/2026-10-09-implementation-163-langfuse-deployment-and-recovery.md)。
 
@@ -20,7 +24,7 @@ Redis 候选缓存已切换到本机主运行配置：主库与 safety 使用独
 
 向量检索现固定定制规划模式，避免连接复用后自动换计划导致候选漂移；107 题新连接/复用的候选与分数逐项一致，重复排名无变化。通用计划候选在主集 554 道 gold 题上仅 +0.54 pp，却有一题受保护切片回归和更高的排序扫描耗时，未选为默认值。基础组合版本为 `5ae70f4f…28d9`；这次是稳定性修复，未宣称完整问答召回或 P95 改善。详细错误、取舍与复现证据见[记录 167](docs/reviews/2026-10-09-implementation-167-channel-overlap-and-vector-plan-drift.md)、[记录 168](docs/reviews/2026-10-10-implementation-168-fixed-vector-plan-and-quality-audit.md)。
 
-重排合批评估已完成：固定模型/fp32/batch 8，每臂 36 个就绪请求；两题/四题合批吞吐下降 4.71% / 13.36%，分数与排名一致，未接入生产。独立本地进程的退出、阻塞和重新加载恢复原型通过，生产服务化仍为选做；完整 API 容量未复测。方法、原始结果、故障边界与术语见[记录 169](docs/reviews/2026-10-10-implementation-169-rerank-burst-and-process-isolation.md)。
+重排合批评估已完成：固定模型/fp32/batch 8，每臂 36 个就绪请求；两题/四题合批吞吐下降 4.71% / 13.36%，分数与排名一致，未接入生产。记录 169 的独立本地进程原型已在 ARCH-01 演进为运行入口的可终止推理，用于取消收束；独立网络服务与完整 API 容量复测仍待评估。方法、原始结果、故障边界与术语见[记录 169](docs/reviews/2026-10-10-implementation-169-rerank-burst-and-process-isolation.md)及[记录 171](docs/reviews/2026-10-10-implementation-171-harness-deadline-and-cancellation.md)。
 
 上下文裁剪 v7 已完成 614 条历史证据诊断：未改 query 的 600 条中隐藏 4 个 key，完整 key 证据组从 482 降至 480；14 条改 query 的旧上下文单列，另保留 `ms-0525` 的未测缺口。原 v7 暂不启用。句子评分接受 NaN/无穷仍继续生成的缺陷已修；614 条真实有限分数重放，渲染与保留结果逐字段一致。数据、错误原文、范围与下一步见[记录 170](docs/reviews/2026-10-10-implementation-170-focus-v7-evidence-retention-audit.md)；实际片段追溯与跨块 span 定位仍待补，API 费用 0，未通过正式成本门禁。
 
