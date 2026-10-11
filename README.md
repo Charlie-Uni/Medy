@@ -56,3 +56,5 @@ ARCH-09 持久反馈身份已完成代码核验：0025随机UUID与readiness运�
 ARCH-13已补版本词表、KEK只读overlay、评分持久卷、8个监督入口与清理/Observe调度；隔离Docker卡死重启、真实PG毒事件/晚到审计记录保护通过，全量2136 passed/70 skipped、0托管费用。见[部署契约](docs/DEPLOYMENT_WORKERS.md)与[记录186](docs/reviews/2026-10-11-implementation-186-worker-deployment-and-supervision.md)。这是工程交付，目标环境长期驻留/容量仍待IDX-03/DEPLOY-02；该轮未提交或替换现有服务；后续CI门见下段。
 
 ARCH-14已补required依赖失败门、架构显式检查与已发布配置真实容器启动；独立PG/internal网络、真实BGE向量及200→503就绪核验通过，全量2157 passed/70 skipped、556输入一致、0托管调用。见[CI契约](docs/CI_GATES.md)与[记录187](docs/reviews/2026-10-11-implementation-187-required-ci-and-container-gates.md)。远端CI/amd64冷构建仍待实际运行，本轮未提交、推送或替换共享服务；ARCH-12现已完成条件收益评估，见[记录188](docs/reviews/2026-10-11-implementation-188-request-transaction-assessment.md)及[事务方案](docs/REQUEST_TRANSACTION_PLAN.md)：12臂288次合成执行、5种变化诊断、全量2163/70、559输入一致、0费用；无限额未证明提速，Pool/事务拆分不启用。ARCH-15先核验和修复实际输出边界，不能将原型检测能力记为生产栅栏已完成。
+
+2026-10-12：已完成记录185～188的五批提交与推送，并同步此前13个提交。再次required全量2163 passed、70 skipped，559维护输入一致、0托管费用；远端CI已触发尚未得出结论，没有部署。见[记录189](docs/reviews/2026-10-12-implementation-189-batched-push.md)；下一项ARCH-15实际最终输出核验。

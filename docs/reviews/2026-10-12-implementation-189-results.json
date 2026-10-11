@@ -1,0 +1,168 @@
+{
+  "record": 189,
+  "date": "2026-10-12",
+  "tasks": [
+    "W-03",
+    "W-04"
+  ],
+  "implementer": "Codex",
+  "self_reviewer": "Codex",
+  "independent_human_review": false,
+  "baseline_head": "69fca598e405423b14f7a04e9336bdadc8f33163",
+  "pushed_engineering_head": "80cba0a52537e32153e5976fdae9b8a949305914",
+  "remote_head_verified": "80cba0a52537e32153e5976fdae9b8a949305914",
+  "commits": [
+    {
+      "commit": "69cce16e2b5db533f4139f4aeadd38600c9df778",
+      "tree": "096f688e04868563f25fe2d12ebe84ba74a619c2",
+      "message": "refactor(retrieval): share reranker weights across frozen output views",
+      "paths": [
+        "src/medops/bootstrap/retrieval.py",
+        "src/medops/retrieval/inference_process.py",
+        "src/medops/retrieval/rerank.py",
+        "tests/unit/bootstrap/test_reranker_sharing.py",
+        "tests/unit/retrieval/test_inference_process.py",
+        "tests/unit/retrieval/test_rerank.py",
+        "docs/reviews/2026-10-11-implementation-185-results.json",
+        "docs/reviews/2026-10-11-implementation-185-shared-reranker-scorer.md"
+      ]
+    },
+    {
+      "commit": "4c0a1bca3e07751cf22ff8912b47a0a9e92db260",
+      "tree": "85db8fa4bc7b4c47856b0c868359764269f7431a",
+      "message": "feat(workers): supervise progress and isolate scheduled maintenance",
+      "paths": [
+        ".env.example",
+        "docker-compose.yml",
+        "docker-compose.payload.yml",
+        "deploy/systemd/medops-score-sync.service",
+        "src/medops/application/retention.py",
+        "src/medops/core/config.py",
+        "src/medops/worker/maintenance.py",
+        "src/medops/worker/supervision.py",
+        "src/medops/worker/observability.py",
+        "src/medops/worker/retrieval.py",
+        "src/medops/worker/serve.py",
+        "tests/unit/config/test_settings.py",
+        "tests/unit/worker/test_maintenance.py",
+        "tests/unit/worker/test_supervision.py",
+        "tests/integration/test_maintenance_schedule.py",
+        "tests/integration/test_retention_and_rotation.py",
+        "docs/DEPLOYMENT_WORKERS.md",
+        "docs/reviews/2026-10-11-implementation-186-results.json",
+        "docs/reviews/2026-10-11-implementation-186-worker-deployment-and-supervision.md"
+      ]
+    },
+    {
+      "commit": "d151e341f7a7f8037691426c9f0128d0cafcec1e",
+      "tree": "4441c38f7a833e9d60f339642569c5f01cbea8e0",
+      "message": "ci: require service dependencies and verify the production container",
+      "paths": [
+        ".dockerignore",
+        ".github/workflows/ci.yml",
+        "Dockerfile",
+        "Makefile",
+        "scripts/ci_download_models.py",
+        "deploy/ci/http_probe.py",
+        "deploy/ci/test_container_boot.py",
+        "deploy/ci/released-policies.json",
+        "tests/service_requirements.py",
+        "tests/integration/conftest.py",
+        "tests/integration/test_cache_invalidation.py",
+        "tests/integration/test_fact_recheck.py",
+        "tests/integration/test_lexical_pg_simple_fts.py",
+        "tests/integration/test_lexical_pg_textsearch_bm25.py",
+        "tests/integration/test_lexical_production.py",
+        "tests/integration/test_publish_outbox.py",
+        "tests/unit/retrieval/test_lexical_boundary.py",
+        "tests/unit/retrieval/test_offline_bm25_contract.py",
+        "tests/unit/retrieval/test_pg_simple_fts_literals.py",
+        "tests/unit/retrieval/test_production.py",
+        "tests/unit/retrieval/test_tokenizer.py",
+        "tests/unit/deploy/test_container_probe.py",
+        "tests/unit/deploy/test_service_requirements.py",
+        "tests/unit/deploy/test_worker_manifest.py",
+        "docs/CI_GATES.md",
+        "docs/reviews/2026-10-11-implementation-187-results.json",
+        "docs/reviews/2026-10-11-implementation-187-required-ci-and-container-gates.md"
+      ]
+    },
+    {
+      "commit": "558a5d998ba48481ec4fd974fdb2159aa2e7d903",
+      "tree": "c8760d3edc02212482a5111543b292889543ebd7",
+      "message": "test(database): assess transaction lifetime and final fact freshness",
+      "paths": [
+        "tests/diagnostics/__init__.py",
+        "tests/diagnostics/request_transactions.py",
+        "tests/unit/deploy/test_transaction_diagnostic.py",
+        "docs/REQUEST_TRANSACTION_PLAN.md",
+        "docs/reviews/2026-10-11-implementation-188-results.json",
+        "docs/reviews/2026-10-11-implementation-188-request-transaction-assessment.md"
+      ]
+    },
+    {
+      "commit": "80cba0a52537e32153e5976fdae9b8a949305914",
+      "tree": "6e1b7df8b3810a96f50bdab99b48d03caa1a2d42",
+      "message": "docs: synchronize audited architecture results and remaining gates",
+      "paths": [
+        "README.md",
+        "docs/CURRENT_TASKS.md",
+        "docs/DEPLOY.md",
+        "docs/ITERATION_STAGES.md",
+        "docs/OPERATIONS.md",
+        "docs/PRODUCTION_COMPOSITION.md"
+      ]
+    }
+  ],
+  "preexisting_commits_pushed": 13,
+  "pending_files_committed": 66,
+  "maintenance_inputs_verified": 559,
+  "source_mismatches": [],
+  "full_check": {
+    "exit_code": 0,
+    "elapsed_s": 76.362,
+    "input_count": 559,
+    "worktree": "/Users/leaf/.cache/medy-checks/arch12-verified-bo31u6wz",
+    "passed": 2163,
+    "skipped": 70,
+    "warnings": 1,
+    "pytest_seconds": 72.25
+  },
+  "hosted_model_calls": 0,
+  "cost_usd": 0,
+  "deployed": false,
+  "ci": {
+    "run_id": 38182444634,
+    "status_at_review": "in_progress",
+    "url": "https://github.com/Charlie-Uni/Medy/actions/runs/38182444634"
+  },
+  "failures_and_repairs": [
+    {
+      "issue": "Credential regex matched sk- within a task filename.",
+      "repair": "Require a token boundary; rescan and finish fifth commit."
+    },
+    {
+      "issue": "Two Git pack attempts stalled; sample located loose-object mmap. Both were terminated without updating remote.",
+      "repair": "Clone remote object database outside Documents; copy 821 recent loose objects; push with external GIT_OBJECT_DIRECTORY. Exit 0, remote SHA verified."
+    }
+  ],
+  "self_review": {
+    "scope": "PASS",
+    "adr_stage_gates": "PASS",
+    "correctness_failure": "PASS",
+    "permissions_data": "PASS",
+    "budget_cancellation": "PASS",
+    "traceability": "PASS",
+    "verification": "PASS",
+    "status_documentation": "PASS"
+  },
+  "next_task": "ARCH-15",
+  "documentation_verification": {
+    "exit_code": 0,
+    "task_ids": 142,
+    "documents": 4,
+    "local_links": 157,
+    "missing_links": [],
+    "passed": 27
+  }
+}

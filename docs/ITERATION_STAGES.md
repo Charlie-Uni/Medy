@@ -1,6 +1,6 @@
 # 分阶段执行与每轮自审
 
-更新：2026-10-11。依据用户要求，将 Agent、自进化、架构及既有十项迭代统一执行。[当前任务台账](CURRENT_TASKS.md)是唯一状态与顺序入口；本页规定阶段通过条件和每轮自审核，设计见[完整迭代计划](ITERATION_PLAN.md)。[原项目描述](source/PROJECT_DESCRIPTION_v0.1.md)和[工程基线](ENGINEERING_BASELINE.md)的质量、安全、独立复核及生产签字约束继续保留。
+更新：2026-10-12。依据用户要求，将 Agent、自进化、架构及既有十项迭代统一执行。[当前任务台账](CURRENT_TASKS.md)是唯一状态与顺序入口；本页规定阶段通过条件和每轮自审核，设计见[完整迭代计划](ITERATION_PLAN.md)。[原项目描述](source/PROJECT_DESCRIPTION_v0.1.md)和[工程基线](ENGINEERING_BASELINE.md)的质量、安全、独立复核及生产签字约束继续保留。
 
 最新沟通见 [ADR-0012 v0.4](adr/ADR-0012-agent-evolution-goals-and-acceptance.md)：所有者确认第二阶段=S2、第三阶段=S3 及首个 PV 资料整理场景；ARCH-04/11 是进入 S2 的硬前置；自动激活仅实验；S3 改进声明以未见盲测为前提。至少 200 任务、三轮配对与 CI 方向已确认，新增盲测不设固定 +5pp 幅度硬线，原生产 +5pp 是否同步修改待沟通。每轮付费仍单独授权，ADR 不构成费用批准。
 
@@ -162,3 +162,5 @@ ARCH-13八项工程自审通过，见[记录186](reviews/2026-10-11-implementati
 ARCH-14八项工程自审通过，见[记录187](reviews/2026-10-11-implementation-187-required-ci-and-container-gates.md)与[CI契约](CI_GATES.md)：required PG/Redis/Docker失败、optional实验保留、架构显式门、真实BGE/private网络和已发布配置200→503通过；全量2157/70、556输入一致、0托管调用。远端CI及amd64冷构建待DEPLOY-02实际执行，未提交/推送/替换共享服务。下一项ARCH-12解锁零费用诊断，实测收益后实施；PLAN-02及S2/S3、盲测、独立人工和付费授权要求保持。
 
 ARCH-12评估范围八项自审通过，见[记录188](reviews/2026-10-11-implementation-188-request-transaction-assessment.md)与[事务方案](REQUEST_TRANSACTION_PLAN.md)：真实ProductionRuntime连接/临时PG、12臂288次合成执行、DDL/5种变化诊断；无限额未证明吞吐/时延收益，决定不启用Pool或分阶段事务。全量2163/70、559输入一致、0托管费用。新增ARCH-15 READY，先复现/修复Ask、五类Skill、MCP实际最终输出权限与事实边界；当前未实现生产栅栏。PLAN-02、原ARCH-04/11硬门、盲测/独立人工/付费与生产签字保持，未提交/推送/部署；下一主项ARCH-15。
+
+记录185～188已按[记录189](reviews/2026-10-12-implementation-189-batched-push.md)分批提交推送，连同此前13个提交一并同步。10月12日required全量2163/70、559维护输入一致；远端CI运行中，未部署。下一主项ARCH-15，S2/S3与付费、盲测、独立人工门不变。
