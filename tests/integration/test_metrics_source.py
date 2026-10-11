@@ -8,8 +8,8 @@ from datetime import UTC, datetime, timedelta
 import psycopg
 import pytest
 
-from medops.api.contracts import TaskStatus
 from medops.application.audit import EscalationRecord, TraceRecord
+from medops.application.contracts import TaskStatus
 from medops.application.metrics import PgMetricsSource
 from medops.application.tasks import TaskRecord
 from medops.domain.common import Dept

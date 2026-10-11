@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from medops.retrieval.lexical.normalization import NORMALIZATION_VERSION, UNIT_MAP_V1, UNIT_MAP_VERSION, normalize_text
+from medops.knowledge.normalization import NORMALIZATION_VERSION, UNIT_MAP_V1, UNIT_MAP_VERSION, normalize_text
 
 VECTORS = Path(__file__).resolve().parents[3] / "evals" / "probe" / "precise_clause" / "tests" / "norm_v1_vectors.json"
 

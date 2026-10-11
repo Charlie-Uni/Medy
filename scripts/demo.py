@@ -116,7 +116,7 @@ def check(env: dict[str, str]) -> list[str]:
 def ensure_principals(env: dict[str, str], depts: set[str]) -> None:
     import psycopg
 
-    from medops.api.auth import pseudonym
+    from medops.infrastructure.identity import pseudonym
 
     key = env["IDENTITY_PSEUDONYM_KEY"].encode("utf-8")
     with psycopg.connect(env["DATABASE_ADMIN_URL"]) as conn:

@@ -10,8 +10,8 @@ import psycopg
 import pytest
 from psycopg.errors import CheckViolation, InsufficientPrivilege, RestrictViolation
 
-from medops.api.auth import PgDirectory, pseudonym
 from medops.domain.common import Dept
+from medops.infrastructure.identity import PgDirectory, pseudonym
 from tests.integration.lexical_adapter_suite import make_database
 
 KEY = b"integration-pseudonym-key"

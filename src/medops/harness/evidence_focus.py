@@ -19,7 +19,7 @@ from medops.harness.focus_profiles import (
     FocusParams,
 )
 from medops.infrastructure.llm.gateway import estimate_tokens
-from medops.retrieval.lexical.normalization import normalize_text
+from medops.knowledge.normalization import normalize_text
 
 KEEP_RATIO = FOCUS_PARAMS[EVIDENCE_FOCUS_SENTENCE].keep_ratio
 MIN_CHUNK_TOKENS = 60  # a chunk this short is shown whole: trimming it saves almost nothing

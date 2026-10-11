@@ -20,8 +20,8 @@ from collections.abc import Sequence
 from pydantic import ValidationError
 
 from medops.core.errors import BusinessError, ErrorCode, InfrastructureError
+from medops.knowledge.normalization import normalize_text
 from medops.retrieval.contracts import LexicalRetriever, LexicalSearchResult, LexicalVersions
-from medops.retrieval.lexical.normalization import normalize_text
 
 MAX_K = 20  # ADR-0002 experiment setting (K=20 for Lexical Recall@20); not derived from the reranker cap
 

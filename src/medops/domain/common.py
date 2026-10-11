@@ -57,3 +57,9 @@ class ReasonCode(StrEnum):
     budget_exceeded = "budget_exceeded"
     intent_unclear = "intent_unclear"
     system_failure = "system_failure"
+
+
+# Policy outcomes are shared by HTTP response mapping and diagnostic replay.
+REFUSAL_CODES: frozenset[ReasonCode] = frozenset(
+    {ReasonCode.high_risk_medical, ReasonCode.prompt_injection, ReasonCode.acl_denied}
+)

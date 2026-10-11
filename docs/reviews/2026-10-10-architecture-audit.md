@@ -120,7 +120,7 @@ flowchart TD
 
 ### AR02 历史任务未使用一致的查询上下文
 
-位置：[Skill 上下文](../../src/medops/api/runtime.py#L415)、[说明书 Skill](../../src/medops/skills/label_query.py#L49)、[结构化 Skill 共用入口](../../src/medops/skills/_structured.py#L21)。
+位置：[Skill 上下文](../../src/medops/bootstrap/runtime.py#L415)、[说明书 Skill](../../src/medops/skills/label_query.py#L49)、[结构化 Skill 共用入口](../../src/medops/skills/_structured.py#L21)。
 
 `skill_context` 解析历史 `as_of` 写入 `SkillContext` 和 evidence lookup，却用 `AskRequest(query="task", historical=None)` 构造实际检索依赖。两个 Skill 入口构造 `initial_state` 时也没有传入 `historical_requested`，因此仍为 false。任务契约接受的 `historical.version` 没有在这条路径解析成目标版本。
 
@@ -146,7 +146,7 @@ flowchart TD
 
 ### AR04 并发失败费用归属错误
 
-位置：[请求计量](../../src/medops/infrastructure/llm/meter.py#L29)、[共享预算网关](../../src/medops/infrastructure/llm/budget.py#L175)、[请求装配](../../src/medops/api/runtime.py#L362)。
+位置：[请求计量](../../src/medops/infrastructure/llm/meter.py#L29)、[共享预算网关](../../src/medops/infrastructure/llm/budget.py#L175)、[请求装配](../../src/medops/bootstrap/runtime.py#L362)。
 
 异常路径用共享网关 `run_accounted_cost_usd` 的调用前后差值推断“这次失败调用的费用”。API 每个请求创建独立 meter，但这些 meter 的 inner 是同一个进程级网关。A 等待期间 B 完成结算，A 的差值会包含 B 的费用。
 
@@ -200,7 +200,7 @@ TaskRunner 写入的 `evidence_chunk_ids`、`cited_chunk_ids` 和 `flagged_chunk
 
 ### AR08 依赖方向和装配责任尚未收敛
 
-位置：[应用任务契约导入](../../src/medops/application/tasks.py#L18)、[数据库任务导入](../../src/medops/infrastructure/db/tasks.py#L13)、[入库解析导入](../../src/medops/ingestion/pipeline.py#L36)、[API runtime](../../src/medops/api/runtime.py#L120)、[MCP 装配](../../src/medops/mcp/serve.py#L22)。
+位置：[应用任务契约导入](../../src/medops/application/tasks.py#L18)、[数据库任务导入](../../src/medops/infrastructure/db/tasks.py#L13)、[入库解析导入](../../src/medops/ingestion/pipeline.py#L36)、[API runtime](../../src/medops/bootstrap/runtime.py#L120)、[MCP 装配](../../src/medops/mcp/serve.py#L22)。
 
 静态清单发现 application → api 7 处导入，infrastructure → api 2 处；入库解析和 PII 检查引用 `medops.evals.probe`。worker 从 API runtime 获取全套运行环境，MCP 另写策略、模型、缓存、术语与翻译装配。这使传输协议变化、评测模块调整和检索接线变化容易影响业务执行。
 
@@ -226,7 +226,7 @@ TaskRunner 写入的 `evidence_chunk_ids`、`cited_chunk_ids` 和 `flagged_chunk
 
 ### AR10 重排模型生命周期混入请求参数
 
-位置：[API 重排缓存](../../src/medops/api/runtime.py#L326)、[MCP 重排缓存](../../src/medops/mcp/serve.py#L54)、[模型加载](../../src/medops/retrieval/rerank.py#L115)。
+位置：[API 重排缓存](../../src/medops/bootstrap/runtime.py#L326)、[MCP 重排缓存](../../src/medops/mcp/serve.py#L54)、[模型加载](../../src/medops/retrieval/rerank.py#L115)。
 
 按 `output` 数量缓存 BGE reranker，每个新数量构造完整 `CrossEncoder`。该参数用于输出截断，不改变模型权重或打分函数。不同已发布输出数量会保留多份同模型；缺少 singleflight，首次并发还可能重复加载同一键。合法输出上限为 8，本次不声称会缓存 20 份模型。
 
@@ -248,7 +248,7 @@ Harness 有证据文本估算、回答预留和回答/判定的事后 Token 检�
 
 ### AR12 数据库事务跨越外部计算
 
-位置：[连接事务](../../src/medops/api/runtime.py#L219)、[Ask 执行](../../src/medops/api/routes/ask.py#L31)、[任务执行](../../src/medops/application/tasks.py#L225)。
+位置：[连接事务](../../src/medops/bootstrap/runtime.py#L219)、[Ask 执行](../../src/medops/api/routes/ask.py#L31)、[任务执行](../../src/medops/application/tasks.py#L225)。
 
 一个事务内完成身份/RLS、检索、外部模型调用、验证及 Trace 写入。这样有利于权限上下文和“无审计不答复”的原子性，但在模型延迟、重试和设备阻塞期间持有连接，相关锁也可能一直到事务结束。数据库 statement timeout 不会限制外部 HTTP 或设备等待。[PostgreSQL 锁说明](https://www.postgresql.org/docs/17/explicit-locking.html)。
 

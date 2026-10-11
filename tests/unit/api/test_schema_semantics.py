@@ -8,7 +8,7 @@ import pytest
 from jsonschema import Draft202012Validator, FormatChecker
 from pydantic import BaseModel, ValidationError
 
-from medops.api.contracts import AskResponse, FeedbackRequest, HistoricalRequest, TaskResponse
+from medops.application.contracts import AskResponse, FeedbackRequest, HistoricalRequest, TaskResponse
 from medops.mcp.contracts import ChunkView, SearchHit, VerifyCitationOutput
 
 TRACE = "a" * 32

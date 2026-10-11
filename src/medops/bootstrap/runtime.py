@@ -1,52 +1,50 @@
-"""Production wiring for the API (M3-01/05/12): PostgreSQL under the application role with one transaction per
+"""Shared production wiring for API and task workers (M3-01/05/12): PostgreSQL under the application role with one transaction per
 request, the principal directory, the production retrieval stack pinned to one model thread, the OpenAI gateway
 behind the monthly budget, the operation-key ledger, and the pinned production model configuration."""
 
 from __future__ import annotations
 
-import json
 import threading
 import time
 from collections.abc import Iterator, Mapping, Sequence
 from contextlib import contextmanager
-from dataclasses import asdict, dataclass, field
+from dataclasses import dataclass, field
 from datetime import date, timedelta
 from typing import Any
 
 import psycopg
 
-from medops.api.auth import Authenticator, JwtVerifier, PgDirectory, RemoteJwks
-from medops.api.contracts import AskRequest, HistoricalRequest
-from medops.api.ports import ApiRuntime
 from medops.application.audit import TraceStore
+from medops.application.contracts import AskRequest, HistoricalRequest
 from medops.application.metrics import MetricsSource, PgMetricsSource
 from medops.application.payloads import PayloadReader, PayloadWriter
 from medops.application.policy_loader import (
     ReleasedPolicySet,
-    ReleaseState,
     RequestPolicies,
     RoutedPolicies,
-    load_release_state,
     load_released,
-    policy_snapshot,
 )
 from medops.application.tasks import TaskStore
+from medops.bootstrap.connections import open_connection
+from medops.bootstrap.identity import authenticator_from_settings
+from medops.bootstrap.policies import PolicyRouter, request_policies
+from medops.bootstrap.retrieval import RetrievalServices, execution_binding
 from medops.core.config import Settings
 from medops.core.errors import ErrorCode, InfrastructureError
 from medops.domain.identity import UserContext
 from medops.domain.query import QueryContext, resolve_query_context
 from medops.domain.state import VersionSet
 from medops.harness.answer import ANSWER_SYSTEM
-from medops.harness.assembly import build_retrieval
 from medops.harness.dependencies import HarnessDeps
 from medops.harness.executions import PgExecutionStore
-from medops.harness.production import PRODUCTION_ANSWER_MODEL, PRODUCTION_JUDGE_MODEL, production_model_config_version
+from medops.harness.production import PRODUCTION_ANSWER_MODEL, PRODUCTION_JUDGE_MODEL
 from medops.infrastructure.db.audit import PgTraceStore
 from medops.infrastructure.db.documents import PgDocumentAdminStore
 from medops.infrastructure.db.idempotency import PgReceiptStore
 from medops.infrastructure.db.payloads import PgPayloadStore
 from medops.infrastructure.db.policies import PgPolicyStore
 from medops.infrastructure.db.tasks import PgTaskStore
+from medops.infrastructure.identity import Authenticator, PgDirectory
 from medops.infrastructure.llm.execution_budget import configured_limits
 from medops.infrastructure.llm.factory import build_budgeted_gateway
 from medops.infrastructure.llm.gateway import ModelGateway
@@ -54,70 +52,15 @@ from medops.infrastructure.llm.meter import MeteredGateway
 from medops.ingestion import acl as acl_ops
 from medops.ingestion import activate as activation
 from medops.retrieval.doc_focus import load_titles
-from medops.retrieval.hybrid import HybridConfig
 from medops.retrieval.inference_process import InferenceProcess, ProcessEmbedding, ProcessReranker
 from medops.retrieval.integrity import database_identity, inspect_readiness
 from medops.retrieval.production import (
-    PRODUCTION_RETRIEVAL_VERSION,
     RERANK_OUTPUT,
-    production_hybrid_config,
-    production_retrieval_inputs,
 )
-from medops.retrieval.query_translation import QUERY_TRANSLATION_OFF, QueryTranslator
-from medops.retrieval.versioning import compute_retrieval_version
+from medops.retrieval.runtime import candidate_cache_from_settings
 from medops.skills.catalog import default_registry
 from medops.skills.production import doc_type_lookup, evidence_lookup
 from medops.skills.registry import SkillContext
-
-POLICY_VERSION = "policy-m3-api-1"  # released policy records arrive with M4; until then one pinned constant
-
-
-def authenticator_from_settings(settings: Settings) -> Authenticator:
-    """Keys come from `OIDC_JWKS_JSON` (static) or from the issuer (discovery / `OIDC_JWKS_URL`); the pseudonym key
-    and issuer/audience are always required (ADR-0001)."""
-    missing = [k for k in ("oidc_issuer", "oidc_audience", "identity_pseudonym_key") if getattr(settings, k) is None]
-    if missing:
-        raise ValueError(f"API identity boundary needs {', '.join(missing)} (ADR-0001)")
-    assert settings.oidc_issuer and settings.oidc_audience and settings.identity_pseudonym_key
-    if settings.oidc_jwks_json:
-        verifier = JwtVerifier(
-            issuer=settings.oidc_issuer, audience=settings.oidc_audience, jwks=json.loads(settings.oidc_jwks_json)
-        )
-    else:
-        verifier = JwtVerifier(
-            issuer=settings.oidc_issuer,
-            audience=settings.oidc_audience,
-            key_source=RemoteJwks(settings.oidc_issuer, jwks_url=settings.oidc_jwks_url),
-        )
-    groups = json.loads(settings.oidc_group_scopes_json) if settings.oidc_group_scopes_json else {}
-    return Authenticator(
-        verifier=verifier,
-        pseudonym_key=settings.identity_pseudonym_key.get_secret_value().encode("utf-8"),
-        group_scopes={str(k): [str(x) for x in v] for k, v in groups.items()},
-    )
-
-
-def open_connection(dsn: str, settings: Any) -> psycopg.Connection[Any]:
-    """Every runtime connection fails fast (record 78): a connect timeout and a per-statement timeout, and an
-    unreachable database is `dependency_unavailable` (503, retryable) rather than a request that hangs until the
-    client gives up."""
-    try:
-        return psycopg.connect(
-            dsn,
-            connect_timeout=settings.db_connect_timeout_s,
-            options=f"-c statement_timeout={settings.db_statement_timeout_ms}",
-        )
-    except psycopg.OperationalError as exc:
-        raise InfrastructureError(
-            ErrorCode.dependency_unavailable, detail=f"database: {type(exc).__name__}", retryable=True
-        ) from None
-
-
-def retrieval_cache_from_settings(settings: Settings) -> Any:
-    """The retrieval candidate cache the settings ask for, or None (`retrieval_cache = off`, the default)."""
-    from medops.retrieval.runtime import candidate_cache_from_settings
-
-    return candidate_cache_from_settings(settings)
 
 
 @dataclass
@@ -136,15 +79,13 @@ class ProductionRuntime:
     _restricted_dsn: str | None = field(default=None, repr=False)
     _key_provider: Any = field(default=None, repr=False)
     policies: ReleasedPolicySet = field(default_factory=ReleasedPolicySet.empty)  # what production applies (M4-03)
-    _hybrid: HybridConfig | None = field(default=None, repr=False)
-    _state_cache: tuple[float, ReleaseState] | None = field(default=None, repr=False)  # TTL re-read (M4-09)
-    _rerankers: dict[int, Any] = field(default_factory=dict, repr=False)  # one reranker per released output size
-    _glossaries: dict[str, Any] = field(default_factory=dict, repr=False)  # verified glossaries by released version
-    _retrieval_cache: Any = field(default=None, repr=False)  # CandidateCache when `retrieval_cache` is not off
+    _retrieval_services: RetrievalServices | None = field(default=None, repr=False)
+    _policy_router: PolicyRouter | None = field(default=None, repr=False)
     _pinned: Any = field(default=None, repr=False)
     _device: str = field(default="cpu", repr=False)
     _integrity_cache: tuple[float, dict[str, Any]] | None = field(default=None, repr=False)
     _integrity_lock: Any = field(default_factory=threading.Lock, repr=False)
+    _composition_lock: Any = field(default_factory=threading.Lock, repr=False)
 
     @classmethod
     def from_settings(
@@ -155,40 +96,14 @@ class ProductionRuntime:
             released = load_released(
                 conn
             )  # INV-HAR-06: production applies the released pointers, never the repo's latest text
-        hybrid = released.hybrid_config(production_hybrid_config())
         rerank_output = released.rerank_output(RERANK_OUTPUT)
-        glossary_version = released.glossary_version()
-        multi_query = released.multi_query()
-        doc_focus = released.doc_focus()
-        source_constraint = released.source_constraint()
-        query_translation = released.query_translation()
         pinned = InferenceProcess(device=device, output=rerank_output, timeout_s=pinned_timeout_s)
-        embedding = ProcessEmbedding(pinned)
-        reranker = ProcessReranker(pinned, output=rerank_output)
         gateway = None
         try:
+            embedding = ProcessEmbedding(pinned)
+            reranker = ProcessReranker(pinned, output=rerank_output)
             gateway = build_budgeted_gateway(settings, require_execution_budget=True)
-            retrieval_version = (
-                compute_retrieval_version(
-                    production_retrieval_inputs(
-                        hybrid,
-                        rerank_output=rerank_output,
-                        glossary_version=glossary_version,
-                        multi_query=multi_query,
-                        doc_focus=doc_focus,
-                        source_constraint=source_constraint,
-                        query_translation=query_translation,
-                    )
-                )
-                if released.retrieval_overridden()
-                else PRODUCTION_RETRIEVAL_VERSION
-            )
-            versions = VersionSet(
-                policy_version=released.policy_version(POLICY_VERSION),
-                retrieval_version=retrieval_version,
-                skill_version_set=default_registry().version_set(),
-                model_config_version=production_model_config_version() + released.model_config_suffix(),
-            )
+            versions = request_policies(RoutedPolicies(released), default_registry().version_set()).versions
             runtime = cls(
                 settings=settings,
                 authenticator=authenticator_from_settings(settings),
@@ -199,14 +114,12 @@ class ProductionRuntime:
             )
             runtime._dsn = dsn
             runtime.policies = released
-            runtime._hybrid = hybrid
             runtime._pinned = pinned
             runtime._device = device
-            runtime._rerankers = {rerank_output: reranker}
-            runtime.glossary_for(
-                glossary_version
-            )  # fail fast: a released glossary must be present and verified at start
-            runtime._retrieval_cache = retrieval_cache_from_settings(settings)
+            runtime._retrieval_services = RetrievalServices(
+                settings, embedding, reranker, pinned=pinned, cache=candidate_cache_from_settings(settings)
+            )
+            runtime.retrieval_services.glossary_for(released.glossary_version())  # Fail fast on missing released data.
             runtime._admin_dsn = settings.database_admin_url.get_secret_value() if settings.database_admin_url else None
             runtime._restricted_dsn = (
                 settings.database_restricted_url.get_secret_value() if settings.database_restricted_url else None
@@ -291,64 +204,24 @@ class ProductionRuntime:
     def allow_drill(self) -> bool:
         return getattr(getattr(self.settings, "app_env", None), "value", None) == "dev"
 
-    def release_state(self, conn: Any) -> ReleaseState:
-        """The released pointers with their canary state, re-read at most every `policy_reload_ttl_s` seconds."""
-        ttl = float(getattr(self.settings, "policy_reload_ttl_s", 5.0))
-        now = time.monotonic()
-        if self._state_cache is not None and now - self._state_cache[0] < ttl:
-            return self._state_cache[1]
-        state = load_release_state(conn)
-        self._state_cache = (now, state)
-        return state
-
-    def request_policies(self, routed: RoutedPolicies) -> RequestPolicies:
-        pol = routed.policies
-        hybrid = pol.hybrid_config(production_hybrid_config())
-        rerank_output = pol.rerank_output(RERANK_OUTPUT)
-        retrieval_version = (
-            compute_retrieval_version(
-                production_retrieval_inputs(
-                    hybrid,
-                    rerank_output=rerank_output,
-                    glossary_version=pol.glossary_version(),
-                    multi_query=pol.multi_query(),
-                    doc_focus=pol.doc_focus(),
-                    source_constraint=pol.source_constraint(),
-                    query_translation=pol.query_translation(),
-                )
-            )
-            if pol.retrieval_overridden()
-            else PRODUCTION_RETRIEVAL_VERSION
-        )
-        versions = VersionSet(
-            policy_version=routed.policy_version(POLICY_VERSION),
-            retrieval_version=retrieval_version,
-            skill_version_set=self.versions.skill_version_set,
-            model_config_version=production_model_config_version() + pol.model_config_suffix(),
-        )
-        return RequestPolicies(policies=pol, versions=versions, canary_ids=routed.canary_ids)
+    @property
+    def policy_router(self) -> PolicyRouter:
+        with self._composition_lock:
+            if self._policy_router is None:
+                self._policy_router = PolicyRouter(self.settings, self.versions.skill_version_set)
+        return self._policy_router
 
     def route_policies(self, conn: Any, user: UserContext) -> RequestPolicies:
-        """Stable per-principal split across every canary; the versions name exactly what this request runs under."""
-        return self.request_policies(self.release_state(conn).for_principal(user.user_id))
+        return self.policy_router.route(conn, user)
 
-    def reranker_for(self, output: int) -> Any:
-        if output not in self._rerankers:
-            if self._pinned is None:
-                return self.reranker
-            self._rerankers[output] = ProcessReranker(self._pinned, output=output)
-        return self._rerankers[output]
-
-    def glossary_for(self, version: str) -> Any:
-        """The verified glossary a released version names (None for `glossary-none`); cached per version."""
-        from medops.retrieval.glossary_store import load_versioned_glossary
-        from medops.retrieval.rewrite import GLOSSARY_NONE
-
-        if version == GLOSSARY_NONE:
-            return None
-        if version not in self._glossaries:
-            self._glossaries[version] = load_versioned_glossary(getattr(self.settings, "glossary_dir", None), version)
-        return self._glossaries[version]
+    @property
+    def retrieval_services(self) -> RetrievalServices:
+        with self._composition_lock:
+            if self._retrieval_services is None:
+                self._retrieval_services = RetrievalServices(
+                    self.settings, self.embedding, self.reranker, pinned=self._pinned
+                )
+        return self._retrieval_services
 
     def build_deps(
         self,
@@ -373,32 +246,9 @@ class ProductionRuntime:
         from medops.infrastructure.db.deadline import DeadlineConnection
 
         conn = DeadlineConnection(conn)
-        hybrid = routed.policies.hybrid_config(production_hybrid_config())
-        reranker = self.reranker_for(routed.policies.rerank_output(RERANK_OUTPUT))
-
-        @contextmanager
-        def conn_for_user(_user: UserContext) -> Iterator[Any]:
-            yield conn  # already inside the request transaction with the department injected
-
-        metered = MeteredGateway(self.gateway)  # per-request calls/tokens/cost for the trace, translation included
-        qt_model = routed.policies.query_translation()
-        translator = QueryTranslator(metered, qt_model).translate if qt_model != QUERY_TRANSLATION_OFF else None
-        retrieval = build_retrieval(
-            conn_for_user=conn_for_user,
-            as_of=as_of,
-            provider=self.embedding,
-            reranker=reranker,
-            config=hybrid,
-            glossary=self.glossary_for(routed.policies.glossary_version()),
-            multi_query=routed.policies.multi_query(),
-            doc_focus=routed.policies.doc_focus(),
-            source_constraint=routed.policies.source_constraint(),
-            translator=translator,
-            cache=self._retrieval_cache,
-            cache_versions=(
-                (routed.versions.retrieval_version, routed.versions.policy_version) if self._retrieval_cache else None
-            ),
-        )
+        metered = MeteredGateway(self.gateway)  # Per-execution translation/generation/judgment accounting.
+        retrieval = self.retrieval_services.build(conn, user, selected, routed, metered)
+        reranker = self.retrieval_services.reranker_for(routed.policies.rerank_output(RERANK_OUTPUT))
         return HarnessDeps(
             retrieval=retrieval,
             answer_system=routed.policies.answer_system(ANSWER_SYSTEM),
@@ -413,17 +263,7 @@ class ProductionRuntime:
             executions=PgExecutionStore(conn),
             query_context=selected,
             execution_limits=configured_limits(self.settings),
-            execution_binding={
-                "policy_snapshot": policy_snapshot(routed.policies),
-                "canary_ids": list(routed.canary_ids),
-                "retrieval": asdict(hybrid),
-                "rerank_output": routed.policies.rerank_output(RERANK_OUTPUT),
-                "glossary_version": routed.policies.glossary_version(),
-                "multi_query": routed.policies.multi_query(),
-                "doc_focus": routed.policies.doc_focus(),
-                "source_constraint": routed.policies.source_constraint(),
-                "query_translation_model": qt_model,
-            },
+            execution_binding=execution_binding(routed),
         )
 
     def task_store(self, conn: Any) -> TaskStore:
@@ -516,10 +356,6 @@ class ProductionRuntime:
                 return database_identity(conn) == status["database_identity"]
         except (psycopg.Error, ValueError):
             return False
-
-
-def _check_protocol(runtime: ProductionRuntime) -> ApiRuntime:  # structural conformance, checked by mypy
-    return runtime
 
 
 class PgDocumentActions:

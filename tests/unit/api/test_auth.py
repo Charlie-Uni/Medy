@@ -6,9 +6,9 @@ from __future__ import annotations
 
 import pytest
 
-from medops.api.auth import Authenticator, JwtVerifier, Principal, StaticDirectory, pseudonym
 from medops.core.errors import BusinessError, ErrorCode
 from medops.domain.common import Dept
+from medops.infrastructure.identity import Authenticator, JwtVerifier, Principal, StaticDirectory, pseudonym
 from tests.unit.api._auth_fixtures import AUDIENCE, ISSUER, PSEUDONYM_KEY, TestIssuer
 
 ISSUER_OBJ = TestIssuer()

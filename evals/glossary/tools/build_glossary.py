@@ -24,7 +24,7 @@ REPO = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(REPO / "src"))
 
 from medops.core.canonical import canonical_json  # noqa: E402
-from medops.retrieval.lexical.normalization import normalize_text  # noqa: E402
+from medops.knowledge.normalization import normalize_text  # noqa: E402
 from medops.retrieval.rewrite import Glossary, GlossaryEntry  # noqa: E402
 
 TFDA_URL = "https://data.fda.gov.tw/data/opendata/export/36/csv"

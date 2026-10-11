@@ -18,8 +18,8 @@ from jsonschema import Draft202012Validator
 
 from medops.core.canonical import canonical_json
 from medops.evals.datasets import dataset_file, load_frozen_dataset, read_rows, sha256_file
-from medops.evals.probe.pii import find_pii
-from medops.retrieval.lexical.normalization import normalize_text
+from medops.knowledge.normalization import normalize_text
+from medops.knowledge.pii import find_pii
 
 
 def annotation_hash(sample: Any) -> str:

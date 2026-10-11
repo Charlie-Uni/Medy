@@ -17,15 +17,14 @@ from dataclasses import dataclass, field, replace
 from datetime import UTC, datetime, timedelta
 from typing import Any, Literal, Protocol
 
-from medops.api.contracts import (
-    IDEMPOTENCY_KEY_HEADER,
+from medops.application.audit import EscalationRecord, TraceRecord, TraceStore
+from medops.application.contracts import (
     TaskCreateRequest,
     TaskResponse,
     TaskResult,
     TaskResultStatus,
     TaskStatus,
 )
-from medops.application.audit import EscalationRecord, TraceRecord, TraceStore
 from medops.application.execution_audit import ExecutionAuditWriter, output_citations, task_payloads, task_spans
 from medops.application.payloads import PayloadWriter
 from medops.core.canonical import canonical_hash
@@ -136,7 +135,7 @@ class TaskService:
         if idempotency_key is not None:
             key = idempotency_key.strip()
             if not key or len(key) > 255:
-                raise BusinessError(ErrorCode.invalid_request, f"{IDEMPOTENCY_KEY_HEADER} must be 1-255 characters")
+                raise BusinessError(ErrorCode.invalid_request, "Idempotency-Key must be 1-255 characters")
             existing = self.store.find_idempotent(user.user_id, TASKS_ROUTE, key)
             if existing is not None:
                 stored_hash, task_id = existing
@@ -491,7 +490,7 @@ class InMemoryTaskStore:
                 slot = (record.principal, route, key)
                 if slot in self.idempotency and self.idempotency[slot][2] > self.clock():
                     raise IdempotencyRace()
-                from medops.api.contracts import HistoricalRequest  # local import to keep the module light
+                from medops.application.contracts import HistoricalRequest  # local import to keep the module light
 
                 request = TaskCreateRequest(
                     skill_name=record.skill_name,

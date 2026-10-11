@@ -35,7 +35,7 @@ from medops.core.errors import BusinessError, ErrorCode, InfrastructureError
 from medops.domain.common import DomainModel, NonEmptyStr
 from medops.domain.intent import Entity
 from medops.domain.state import MAX_REWRITTEN_QUERIES
-from medops.retrieval.lexical.normalization import NORMALIZATION_VERSION, normalize_text
+from medops.knowledge.normalization import NORMALIZATION_VERSION, normalize_text
 
 REWRITER_VERSION = "qr-rules-v1"
 MAX_QUERY_CHARS = 512

@@ -5,10 +5,6 @@ from __future__ import annotations
 from contextlib import AbstractContextManager
 from typing import Any, Protocol
 
-from medops.api.auth import Authenticator, PrincipalDirectory
-from medops.api.contracts import (
-    AskRequest,
-)
 from medops.application.admin import (
     DocumentActions,
     DocumentAdminStore,
@@ -16,6 +12,9 @@ from medops.application.admin import (
     ReceiptStore,
 )
 from medops.application.audit import TraceStore
+from medops.application.contracts import (
+    AskRequest,
+)
 from medops.application.metrics import MetricsSource
 from medops.application.payloads import PayloadReader, PayloadWriter
 from medops.application.policy_loader import RequestPolicies
@@ -24,6 +23,7 @@ from medops.domain.identity import UserContext
 from medops.domain.query import QueryContext
 from medops.domain.state import VersionSet
 from medops.harness.dependencies import HarnessDeps
+from medops.infrastructure.identity import Authenticator, PrincipalDirectory
 
 
 class ApiRuntime(Protocol):

@@ -39,7 +39,7 @@ from medops.domain.common import Dept, DomainModel, NonEmptyStr, Sha256
 from medops.domain.identity import UserContext
 from medops.domain.intent import Entity
 from medops.domain.state import MAX_CANDIDATES, CandidateRef
-from medops.retrieval.lexical.normalization import normalize_text
+from medops.knowledge.normalization import normalize_text
 from medops.retrieval.recheck import RecheckResult, recheck_candidates
 
 log = logging.getLogger(__name__)

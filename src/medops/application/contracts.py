@@ -1,4 +1,4 @@
-"""Public API contracts (baseline 5.7, M0-08): request/response models for the endpoints in the
+"""Transport-independent application contracts (baseline 5.7, M0-08): commands and result models shared by HTTP, workers and diagnostics in the
 design document (3.10). No server here. The OpenAPI 3.1 document is built from these same models by
 `medops.api.openapi` and exported to `schemas/openapi.json`.
 
@@ -33,13 +33,13 @@ TraceId = Annotated[str, Field(pattern=r"^[0-9a-f]{32}$")]
 NonEmptyStr = Annotated[str, Field(min_length=1)]
 
 
-class ApiModel(BaseModel):
+class ContractModel(BaseModel):
     # allow_inf_nan=False: NaN/Infinity would serialize to null and change the request's meaning
     # (and canonical JSON forbids them, baseline 3.2).
     model_config = ConfigDict(frozen=True, extra="forbid", allow_inf_nan=False)
 
 
-class HistoricalRequest(ApiModel):
+class HistoricalRequest(ContractModel):
     """Explicit historical request (INV-DATA-03); exactly one selector. Ask/Task support as_of.
     The version field is retained for wire compatibility but bare versions lack a document identity
     and are rejected with invalid_request; they never silently select the current document."""
@@ -75,7 +75,7 @@ class HistoricalRequest(ApiModel):
         return self
 
 
-class AskRequest(ApiModel):
+class AskRequest(ContractModel):
     query: Annotated[str, Field(min_length=1, max_length=2000)]
     session_id: Annotated[str, Field(min_length=1, max_length=128)] | None = None
     historical: HistoricalRequest | None = None
@@ -87,12 +87,12 @@ class OutcomeKind(StrEnum):
     escalated = "escalated"
 
 
-class Refusal(ApiModel):
+class Refusal(ContractModel):
     reason_codes: tuple[ReasonCode, ...] = Field(min_length=1)
     message: NonEmptyStr
 
 
-class EscalationReceipt(ApiModel):
+class EscalationReceipt(ContractModel):
     escalation_id: NonEmptyStr
     reason_codes: tuple[ReasonCode, ...] = Field(min_length=1)
     message: NonEmptyStr
@@ -105,7 +105,7 @@ def _outcome_rule(outcome: str, payload: str, others: tuple[str, ...]) -> JsonDi
     return {"if": {"properties": {"outcome": {"const": outcome}}}, "then": {"required": [payload], "properties": props}}
 
 
-class AskResponse(ApiModel):
+class AskResponse(ContractModel):
     model_config = ConfigDict(
         json_schema_extra={
             "allOf": [
@@ -142,7 +142,7 @@ class TaskStatus(StrEnum):
     failed = "failed"
 
 
-class TaskCreateRequest(ApiModel):
+class TaskCreateRequest(ContractModel):
     """Skill workflow submission. `input` is validated against the skill's registered schema at
     execution time (M2-11); the wire contract only requires a finite JSON object."""
 
@@ -158,7 +158,7 @@ class TaskResultStatus(StrEnum):
     escalated = "escalated"
 
 
-class TaskResult(ApiModel):
+class TaskResult(ContractModel):
     """Result of a skill task (M3-02): the skill's typed output as it was validated against the skill's registered
     output schema (`GET` the schema through the Registry's `describe`), plus the run status and reason codes.
     Skill outputs are structured per skill (AE elements, deviation findings, label excerpts), so they are not
@@ -177,7 +177,7 @@ class TaskResult(ApiModel):
         return self
 
 
-class TaskResponse(ApiModel):
+class TaskResponse(ContractModel):
     model_config = ConfigDict(
         json_schema_extra={
             "allOf": [
@@ -229,7 +229,7 @@ class FeedbackSignal(StrEnum):
     correction = "correction"
 
 
-class FeedbackRequest(ApiModel):
+class FeedbackRequest(ContractModel):
     model_config = ConfigDict(
         json_schema_extra={
             "allOf": [
@@ -256,12 +256,12 @@ class FeedbackRequest(ApiModel):
         return self
 
 
-class FeedbackReceipt(ApiModel):
+class FeedbackReceipt(ContractModel):
     feedback_id: NonEmptyStr
     trace_id: TraceId
 
 
-class ReplayRequest(ApiModel):
+class ReplayRequest(ContractModel):
     """Current-fact diagnosis is the compatibility default. Original-condition execution
     requires archived corpus/index and build bindings; this deployment refuses it before spending."""
 
@@ -269,7 +269,7 @@ class ReplayRequest(ApiModel):
     mode: Literal["diagnostic_current", "original_conditions"] = "diagnostic_current"
 
 
-class ReplayConditions(ApiModel):
+class ReplayConditions(ContractModel):
     input_complete: bool = False
     input_match: bool | None = None
     identity_match: bool | None = None
@@ -284,7 +284,7 @@ class ReplayConditions(ApiModel):
     limitations: tuple[str, ...] = ()
 
 
-class ReplaySide(ApiModel):
+class ReplaySide(ContractModel):
     trace_id: TraceId
     run_id: NonEmptyStr
     outcome: NonEmptyStr
@@ -295,7 +295,7 @@ class ReplaySide(ApiModel):
     query_context: QueryContext | None = None
 
 
-class ReplayReport(ApiModel):
+class ReplayReport(ContractModel):
     replay_id: NonEmptyStr
     source: ReplaySide
     replay: ReplaySide
@@ -304,12 +304,6 @@ class ReplayReport(ApiModel):
     conditions: ReplayConditions = Field(default_factory=ReplayConditions)
     changed: tuple[str, ...] = ()  # fields that differ between source and replay
     created_at: datetime
-
-
-IDEMPOTENCY_KEY_HEADER = "Idempotency-Key"
-"""POST /v1/tasks and POST /v1/feedback accept this header (baseline 3.2): scope is
-authenticated principal + route + key; same key and payload returns the original receipt, also while
-in progress; same key with a different payload returns 422 idempotency_payload_mismatch."""
 
 
 # ------------------------------------------------------------------------------- admin: documents (M3-03, DEC-012)
@@ -322,7 +316,7 @@ class DocumentStatus(StrEnum):
     withdrawn = "withdrawn"
 
 
-class DocumentSummary(ApiModel):
+class DocumentSummary(ContractModel):
     """Metadata only: admin views never return chunk content."""
 
     doc_id: NonEmptyStr
@@ -338,7 +332,7 @@ class DocumentSummary(ApiModel):
     read_depts: tuple[Dept, ...] = ()
 
 
-class DocumentAuditEntry(ApiModel):
+class DocumentAuditEntry(ContractModel):
     action: NonEmptyStr
     from_status: str | None = None
     to_status: str | None = None
@@ -354,7 +348,7 @@ class DocumentDetail(DocumentSummary):
     audit: tuple[DocumentAuditEntry, ...] = ()  # most recent first, at most 20
 
 
-class DocumentListResponse(ApiModel):
+class DocumentListResponse(ContractModel):
     items: tuple[DocumentSummary, ...]
     count: int = Field(ge=0)
 
@@ -365,7 +359,7 @@ class DocumentStatusAction(StrEnum):
     withdraw = "withdraw"  # draft -> withdrawn (terminal)
 
 
-class DocumentStatusRequest(ApiModel):
+class DocumentStatusRequest(ContractModel):
     """`effective_date` is the activation date for `activate` and the end of the window for `archive`;
     `withdraw` ignores it. `reason` is written to the audit row."""
 
@@ -380,7 +374,7 @@ class DocumentStatusRequest(ApiModel):
         return self
 
 
-class DocumentAclRequest(ApiModel):
+class DocumentAclRequest(ContractModel):
     grant: tuple[Dept, ...] = ()
     revoke: tuple[Dept, ...] = ()
     reason: Annotated[str, Field(min_length=1, max_length=500)]
@@ -394,7 +388,7 @@ class DocumentAclRequest(ApiModel):
         return self
 
 
-class DocumentAclResponse(ApiModel):
+class DocumentAclResponse(ContractModel):
     doc_id: NonEmptyStr
     document_key: NonEmptyStr
     granted: tuple[Dept, ...] = ()
@@ -420,7 +414,7 @@ class PolicyStatus(StrEnum):
     rolled_back = "rolled_back"
 
 
-class PolicyResponse(ApiModel):
+class PolicyResponse(ContractModel):
     policy_id: NonEmptyStr
     kind: PolicyKind
     name: NonEmptyStr
@@ -436,7 +430,7 @@ class PolicyResponse(ApiModel):
     released: bool = False  # the released pointer for (kind, name) currently points here
 
 
-class PolicyListResponse(ApiModel):
+class PolicyListResponse(ContractModel):
     items: tuple[PolicyResponse, ...]
     count: int = Field(ge=0)
 
@@ -446,25 +440,25 @@ class PolicyDecision(StrEnum):
     reject = "reject"
 
 
-class PolicyDecisionRequest(ApiModel):
+class PolicyDecisionRequest(ContractModel):
     """Four-eyes: the approver must not be the candidate's author."""
 
     decision: PolicyDecision
     reason: Annotated[str, Field(min_length=1, max_length=500)]
 
 
-class PolicyReleaseRequest(ApiModel):
+class PolicyReleaseRequest(ContractModel):
     """Initial canary never above 10% (baseline 5.6 / M4-09)."""
 
     canary_percent: Annotated[int, Field(ge=0, le=10)]
     reason: Annotated[str, Field(min_length=1, max_length=500)]
 
 
-class PolicyRollbackRequest(ApiModel):
+class PolicyRollbackRequest(ContractModel):
     reason: Annotated[str, Field(min_length=1, max_length=500)]
 
 
-class PolicyPromoteRequest(ApiModel):
+class PolicyPromoteRequest(ContractModel):
     """Widen a canary (M4-09): only upwards, only after the observation window (or with a recorded override)."""
 
     canary_percent: Annotated[int, Field(ge=11, le=100)]
@@ -475,7 +469,7 @@ class PolicyPromoteRequest(ApiModel):
 # ------------------------------------------------------------------------------- admin: restricted payloads (M3-07, DEC-013)
 
 
-class TracePayloadItem(ApiModel):
+class TracePayloadItem(ContractModel):
     node: NonEmptyStr
     kind: NonEmptyStr  # input | evidence_snapshot | model_output
     created_at: datetime
@@ -484,7 +478,7 @@ class TracePayloadItem(ApiModel):
     payload: JsonValue
 
 
-class TracePayloadResponse(ApiModel):
+class TracePayloadResponse(ContractModel):
     """Decrypted restricted payload of one trace; every read is logged with the caller's pseudonym and purpose."""
 
     trace_id: TraceId

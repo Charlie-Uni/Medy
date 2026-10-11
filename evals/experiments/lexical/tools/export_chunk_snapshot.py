@@ -20,7 +20,7 @@ from medops.core.config import Settings
 from medops.evals.probe.chunk_mapping import publish_artifact
 from medops.evals.probe.validator import PageTextProvider, ProbeSetValidator
 from medops.ingestion.chunker import CHUNKER_VERSION, chunk_pages
-from medops.retrieval.lexical.normalization import normalize_text
+from medops.knowledge.normalization import normalize_text
 
 
 class _CachedRawPages(PageTextProvider):

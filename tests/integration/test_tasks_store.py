@@ -12,7 +12,7 @@ import psycopg
 import pytest
 from psycopg.errors import InsufficientPrivilege
 
-from medops.api.contracts import TaskStatus
+from medops.application.contracts import TaskStatus
 from medops.application.tasks import IdempotencyRace, TaskRecord
 from medops.domain.common import Dept
 from medops.infrastructure.db.tasks import PgTaskStore

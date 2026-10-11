@@ -11,9 +11,10 @@ from mcp.client.session import ClientSession
 from mcp.shared.memory import create_client_server_memory_streams
 from starlette.testclient import TestClient
 
-from medops.api.auth import Authenticator, JwtVerifier, Principal, StaticDirectory, pseudonym
+from medops.application.search import SearchExecution
 from medops.core.errors import BusinessError, ErrorCode, InfrastructureError
 from medops.domain.common import Dept, DocStatus, DocType
+from medops.infrastructure.identity import Authenticator, JwtVerifier, Principal, StaticDirectory, pseudonym
 from medops.mcp.contracts import (
     MCP_TOOLS,
     ChunkView,
@@ -23,7 +24,6 @@ from medops.mcp.contracts import (
     VerifyCitationOutput,
 )
 from medops.mcp.server import build_server
-from medops.mcp.service import SearchExecution
 from tests.unit.api._auth_fixtures import AUDIENCE, ISSUER, PSEUDONYM_KEY, TestIssuer
 from tests.unit.harness._fixtures import evidence, user
 

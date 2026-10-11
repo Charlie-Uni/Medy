@@ -10,7 +10,7 @@ from medops.ingestion.chunker import (
     chunk_pages,
     chunker_record,
 )
-from medops.retrieval.lexical.normalization import normalize_text
+from medops.knowledge.normalization import normalize_text
 
 ZH_SENTENCE = "成人常用量：口服，每次 0.5 g，每日 2 次，疗程 7 天。"
 EN_SENTENCE = "Adults: 500 mg orally twice daily for seven days. "

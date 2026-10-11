@@ -12,7 +12,7 @@ import re
 import sys
 from collections import Counter
 
-from medops.retrieval.lexical.normalization import normalize_text
+from medops.knowledge.normalization import normalize_text
 
 REPO = pathlib.Path(__file__).resolve().parents[6]
 V1 = REPO / "evals/probe/precise_clause/v1"

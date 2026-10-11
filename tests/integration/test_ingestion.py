@@ -15,7 +15,8 @@ from medops.evals.probe import extract
 from medops.ingestion import load, pipeline
 from medops.ingestion.chunker import CHUNKER_VERSION, chunk_pages
 from medops.ingestion.pipeline import DocumentSpec, IngestRefused, ingest_document
-from medops.retrieval.lexical.normalization import normalize_text
+from medops.knowledge import pdf as pdf_text
+from medops.knowledge.normalization import normalize_text
 from tests.integration.pdf_factory import make_pdf
 
 SENTENCE = "Adults: 500 mg orally twice daily for seven days. "
@@ -68,7 +69,7 @@ def test_ingest_writes_every_table_with_offsets_hashes_and_provenance(admin, tmp
     result = ingest_document(admin, spec, pdf, actor="ingest-01")
     assert result.status == "ingested" and result.parse_quality == "trusted" and result.pii_hits == ()
 
-    texts, warnings = extract.extract_pages(data)
+    texts, warnings = pdf_text.extract_pages(data)
     assert warnings == 0 and len(texts) == 2
     expected = chunk_pages(texts)
     assert result.chunk_count == len(expected) >= 4
@@ -85,8 +86,8 @@ def test_ingest_writes_every_table_with_offsets_hashes_and_provenance(admin, tmp
     assert job == (
         "succeeded",
         "trusted",
-        f"pypdf {extract.EXTRACTOR_VERSION}",
-        extract.PARAMS_HASH,
+        f"pypdf {pdf_text.EXTRACTOR_VERSION}",
+        pdf_text.PARAMS_HASH,
         0,
         0,
         result.doc_id,
@@ -202,7 +203,7 @@ def test_stored_page_texts_must_match_the_extraction(admin, tmp_path):
     (pages_dir / spec.source_hash / "2.txt").write_text("tampered", encoding="utf-8")
     with pytest.raises(IngestRefused, match="extraction drift"):
         ingest_document(admin, spec, pdf, actor="x", pages_dir=pages_dir)
-    (pages_dir / spec.source_hash / "2.txt").write_text(extract.extract_pages(data)[0][1], encoding="utf-8")
+    (pages_dir / spec.source_hash / "2.txt").write_text(pdf_text.extract_pages(data)[0][1], encoding="utf-8")
     assert ingest_document(admin, spec, pdf, actor="x", pages_dir=pages_dir).status == "ingested"
 
 

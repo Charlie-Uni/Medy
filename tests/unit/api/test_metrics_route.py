@@ -9,9 +9,9 @@ from datetime import UTC, datetime
 from fastapi.testclient import TestClient
 
 from medops.api.app import create_app
-from medops.api.auth import Principal, StaticDirectory, pseudonym
 from medops.application.metrics import MetricsSnapshot, render_prometheus
 from medops.domain.common import Dept
+from medops.infrastructure.identity import Principal, StaticDirectory, pseudonym
 from medops.infrastructure.llm.fake import FakeModelGateway
 from tests.unit.api._auth_fixtures import PSEUDONYM_KEY
 from tests.unit.api.test_ask_route import ISSUER_OBJ, FakeRuntime

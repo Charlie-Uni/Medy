@@ -10,9 +10,9 @@ from pathlib import Path
 import pytest
 
 from medops.core.canonical import canonical_json
-from medops.evals.probe.pii import find_pii_matches, find_pii_spans
 from medops.evals.probe.validator import PageTextProvider, ProbeSetValidator
-from medops.retrieval.lexical.normalization import normalize_text
+from medops.knowledge.normalization import normalize_text
+from medops.knowledge.pii import find_pii_matches, find_pii_spans
 from tests.unit.evals.fixture_builder import build, refreeze
 
 SCHEMAS = Path(__file__).resolve().parents[3] / "evals/probe/precise_clause/schema"

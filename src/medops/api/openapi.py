@@ -19,7 +19,7 @@ from typing import Any
 from pydantic import BaseModel
 from pydantic.json_schema import models_json_schema
 
-from medops.api.contracts import IDEMPOTENCY_KEY_HEADER
+from medops.api.headers import IDEMPOTENCY_KEY_HEADER
 from medops.core.errors import HTTP_STATUS, ErrorCode
 
 OPENAPI_VERSION = "3.1.0"

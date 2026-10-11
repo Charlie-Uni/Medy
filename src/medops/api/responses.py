@@ -6,23 +6,20 @@ from collections.abc import Mapping
 
 from fastapi.responses import JSONResponse
 
-from medops.api.contracts import (
+from medops.application.contracts import (
     AskResponse,
     EscalationReceipt,
     OutcomeKind,
     Refusal,
 )
 from medops.core.errors import HTTP_STATUS, ErrorCode, ErrorResponse
-from medops.domain.common import ReasonCode
+from medops.domain.common import REFUSAL_CODES, ReasonCode
 from medops.domain.state import VersionSet
 from medops.harness.runtime import HarnessRun
 
 TRACE_HEADER = "X-Trace-Id"
 # Refusals (baseline 5.5): the request itself is not answerable by policy. Everything else is an escalation
 # the caller can wait on. High-risk questions are refused *and* recorded as an escalation inside the run.
-REFUSAL_CODES: frozenset[ReasonCode] = frozenset(
-    {ReasonCode.high_risk_medical, ReasonCode.prompt_injection, ReasonCode.acl_denied}
-)
 PUBLIC_MESSAGES: Mapping[ReasonCode, str] = {
     ReasonCode.high_risk_medical: "该问题涉及诊断、处方或个体用药调整，系统不提供此类回答；已转人工处理",
     ReasonCode.prompt_injection: "请求包含试图改变系统行为的内容，已拒绝",

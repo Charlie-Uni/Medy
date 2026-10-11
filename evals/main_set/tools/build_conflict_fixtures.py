@@ -26,7 +26,7 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import build_corpus as bc  # noqa: E402
 import jsonschema  # noqa: E402
 
-from medops.retrieval.lexical.normalization import normalize_text  # noqa: E402
+from medops.knowledge.normalization import normalize_text  # noqa: E402
 
 REPO = bc.REPO
 MAIN = REPO / "evals/main_set"

@@ -23,12 +23,15 @@ from mcp.server.mcpserver.exceptions import ToolError
 from mcp.types import ToolAnnotations
 from pydantic import AnyHttpUrl
 
-from medops.api.auth import Authenticator, PrincipalDirectory
 from medops.application.audit import TraceRecord
+from medops.application.search import SearchExecution
+from medops.bootstrap.connections import open_connection
+from medops.core.config import Settings
 from medops.core.errors import BusinessError, ErrorCode, MedOpsError
 from medops.core.telemetry import annotate, span
 from medops.core.tracing import bind_trace_id
 from medops.domain.identity import UserContext
+from medops.infrastructure.identity import Authenticator, PrincipalDirectory
 from medops.infrastructure.llm.accounting import call_scope
 from medops.mcp.contracts import (
     MCP_TOOLS,
@@ -37,7 +40,7 @@ from medops.mcp.contracts import (
     SearchDocumentsInput,
     VerifyCitationInput,
 )
-from medops.mcp.service import McpService, SearchExecution
+from medops.mcp.service import McpService
 from medops.retrieval.production import PRODUCTION_RETRIEVAL_VERSION
 
 READ_ONLY = ToolAnnotations(read_only_hint=True, destructive_hint=False, idempotent_hint=True, open_world_hint=False)
@@ -142,6 +145,8 @@ def _audit(
     summary = json.dumps(inp.model_dump(mode="json"), ensure_ascii=False)[:500]
     stats = stats or SearchExecution(())
     versions = {"mcp_server": SERVER_VERSION, "retrieval_version": PRODUCTION_RETRIEVAL_VERSION}
+    if stats.versions is not None:
+        versions.update(stats.versions.model_dump(mode="json"))
     if stats.retrieval_version:
         versions["retrieval_version"] = stats.retrieval_version
     if stats.policy_version:
@@ -265,29 +270,24 @@ class McpProductionRuntime:
     readonly_dsn: str
     app_dsn_for_directory: str
     searcher_factory: Any = None  # Callable[[conn, user], Searcher] | None
+    settings: Settings | None = None
 
     @contextmanager
     def directory(self) -> Iterator[PrincipalDirectory]:
-        import psycopg
+        from medops.infrastructure.identity import PgDirectory
 
-        from medops.api.auth import PgDirectory
-
-        with psycopg.connect(self.app_dsn_for_directory) as conn, conn.transaction():
+        with open_connection(self.app_dsn_for_directory, self.settings) as conn, conn.transaction():
             yield PgDirectory(conn)
 
     def audit(self, trace: TraceRecord) -> None:
-        import psycopg
-
         from medops.infrastructure.db.audit import PgTraceStore
 
-        with psycopg.connect(self.app_dsn_for_directory) as conn, conn.transaction():
+        with open_connection(self.app_dsn_for_directory, self.settings) as conn, conn.transaction():
             PgTraceStore(conn).record(trace, None)
 
     @contextmanager
     def service(self, user: UserContext) -> Iterator[ServiceLike]:
-        import psycopg
-
-        with psycopg.connect(self.readonly_dsn) as conn, conn.transaction():
+        with open_connection(self.readonly_dsn, self.settings) as conn, conn.transaction():
             conn.execute("select set_config('medops.dept', %s, true)", (user.dept.value,))
             searcher = self.searcher_factory(conn, user) if self.searcher_factory is not None else None
             yield McpService(conn, user, searcher)

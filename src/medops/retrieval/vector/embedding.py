@@ -19,7 +19,7 @@ from typing import Any, Protocol
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from medops.retrieval.lexical.normalization import normalize_text
+from medops.knowledge.normalization import normalize_text
 
 EMBEDDING_VERSION = "emb-bge-m3-dense-v1"
 BGE_M3_MODEL_ID = "BAAI/bge-m3"

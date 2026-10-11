@@ -4,7 +4,7 @@ from dataclasses import replace
 
 import pytest
 
-from medops.api.contracts import TaskCreateRequest, TaskStatus
+from medops.application.contracts import TaskCreateRequest, TaskStatus
 from medops.application.execution_audit import output_citations, task_spans
 from medops.application.payloads import PayloadReader, PayloadWriter
 from medops.application.tasks import InMemoryTaskStore, TaskRunner, TaskService

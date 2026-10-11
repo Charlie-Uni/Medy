@@ -11,7 +11,7 @@ from jsonschema import Draft202012Validator, FormatChecker
 
 from medops.core.canonical import canonical_json
 from medops.evals.probe import chunk_mapping as mapper
-from medops.retrieval.lexical.normalization import normalize_text
+from medops.knowledge.normalization import normalize_text
 from tests.unit.evals.fixture_builder import build, refreeze
 
 STAMP = "2026-09-20T00:00:00Z"

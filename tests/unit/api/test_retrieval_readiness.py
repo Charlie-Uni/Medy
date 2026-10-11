@@ -5,7 +5,7 @@ from types import SimpleNamespace
 import psycopg
 import pytest
 
-from medops.api import runtime as mod
+from medops.bootstrap import runtime as mod
 from medops.retrieval import integrity
 from tests.unit.harness._fixtures import versions
 

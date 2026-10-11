@@ -12,7 +12,6 @@ import pytest
 from fastapi.testclient import TestClient
 
 from medops.api.app import create_app
-from medops.api.auth import Authenticator, JwtVerifier, Principal, StaticDirectory, pseudonym
 from medops.api.responses import TRACE_HEADER
 from medops.application.audit import InMemoryTraceStore
 from medops.application.policy_loader import ReleasedPolicySet, RequestPolicies
@@ -21,6 +20,7 @@ from medops.domain.common import Dept
 from medops.domain.query import resolve_query_context
 from medops.harness.dependencies import HarnessDeps
 from medops.harness.executions import InMemoryExecutionStore
+from medops.infrastructure.identity import Authenticator, JwtVerifier, Principal, StaticDirectory, pseudonym
 from medops.infrastructure.llm.fake import FakeModelGateway
 from medops.infrastructure.llm.gateway import ModelUnavailable
 from medops.infrastructure.llm.meter import MeteredGateway

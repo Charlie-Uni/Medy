@@ -41,6 +41,8 @@ Redis 候选缓存已切换到本机主运行配置：主库与 safety 使用独
 
 ARCH-07 已补 Ask/Task 完整执行记录、实际模型请求/SDK回复/回执、渲染正文/哈希与 Unicode 来源区间；Ask 诊断回放恢复输入并分项报告条件差异，见[回放契约](docs/EXECUTION_REPLAY.md)和[记录181](docs/reviews/2026-10-11-implementation-181-execution-records-and-replay-boundaries.md)。全量2038/70、518维护输入一致；614存档上下文的6140布局比较零差异，0托管调用。原条件恢复未交付，当前明确拒绝；Task/MCP回放与完整跨块定位仍待做，不作真实质量或发布声明。
 
+ARCH-08 已将跨入口契约移至 application、解析/PII/norm-v1移至 knowledge、生产装配移至 bootstrap。API/worker/MCP 共用策略版本与检索/缓存规则；新增自动导入边界，214模块零违例、2精确允许项。全量2071 passed、70 skipped、532维护输入一致、0托管费用，见[装配说明](docs/PRODUCTION_COMPOSITION.md)和[记录182](docs/reviews/2026-10-11-implementation-182-shared-composition-and-import-boundaries.md)。仅工程自审通过；MCP受限正文与回放、Agent/自进化尚未交付，当前下一项ARCH-09，未提交或部署。
+
 ## 早期进度快照（历史）
 
 截至 2026-09-20：P0 加权进度 24.1%（19/79，局部实现口径，非整体验收率）。75 条探针已完成冻结和 Git 归档（`213dbe8`）：71 条复核通过、4 条人工裁决、0 条待决；M1-01 已实现，基线首项探针验收已勾选。现在进入 M1-02 / DEC-001 实验准备：已记录候选源码、环境和测量参数草案，并完成 2,661 个 chunk 的只读核验与 gold 映射（73 mapped、2 unmappable，保留并计 miss）。B/C 构建、候选适配器、low_trust 文档处理及正式运行清单仍待完成，尚无检索选型结论。证据与逐轮自审见[实现记录 27](docs/reviews/2026-09-20-implementation-27-archive-and-experiment-preparation.md)，具体下一步见[实验准备说明](evals/experiments/lexical/README.md)。

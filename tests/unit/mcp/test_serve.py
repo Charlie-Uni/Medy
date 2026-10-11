@@ -3,6 +3,7 @@
 import logging
 import sys
 from types import SimpleNamespace
+from unittest.mock import Mock
 
 import pytest
 
@@ -36,7 +37,7 @@ def test_stdio_transport_logs_to_stderr_and_runs_the_server(_env, monkeypatch):
     server = _Server()
     monkeypatch.setattr(serve_mod, "configure_logging", lambda level, stream=None: seen.setdefault("stream", stream))
     monkeypatch.setattr(serve_mod, "configure_telemetry", lambda **kw: None)
-    monkeypatch.setattr(serve_mod, "_searcher_factory", lambda device, settings: object())
+    monkeypatch.setattr(serve_mod.SearchRuntime, "from_settings", lambda *args, **kwargs: object())
     monkeypatch.setattr(serve_mod, "McpProductionRuntime", lambda **kw: seen.setdefault("runtime", kw))
     monkeypatch.setattr(serve_mod, "build_server", lambda runtime, **kw: server)
     assert serve_mod.main(["--transport", "stdio", "--dev-dept", "MA"]) == 0
@@ -68,9 +69,40 @@ def test_server_failure_closes_owned_resources_and_telemetry_even_when_cleanup_f
     monkeypatch.setattr(serve_mod, "configure_logging", lambda *args, **kwargs: None)
     monkeypatch.setattr(serve_mod, "configure_telemetry", lambda **kwargs: None)
     monkeypatch.setattr(serve_mod, "shutdown_telemetry", lambda: events.append("telemetry"))
-    monkeypatch.setattr(serve_mod, "_searcher_factory", lambda *args: SimpleNamespace(close=close))
+    monkeypatch.setattr(serve_mod.SearchRuntime, "from_settings", lambda *args, **kwargs: SimpleNamespace(close=close))
     monkeypatch.setattr(serve_mod, "McpProductionRuntime", lambda **kwargs: object())
     monkeypatch.setattr(serve_mod, "build_server", lambda *args, **kwargs: SimpleNamespace(run=run))
     with pytest.raises(ValueError if close_fails else RuntimeError):
         serve_mod.main(["--transport", "stdio", "--dev-dept", "MA"])
     assert events == ["run", "close", "telemetry"]
+
+
+def test_runtime_construction_failure_also_closes_the_search_owner(_env, monkeypatch):
+    events = []
+    monkeypatch.setattr(serve_mod, "configure_logging", lambda *args, **kwargs: None)
+    monkeypatch.setattr(serve_mod, "configure_telemetry", lambda **kwargs: None)
+    monkeypatch.setattr(serve_mod, "shutdown_telemetry", lambda: events.append("telemetry"))
+    monkeypatch.setattr(
+        serve_mod.SearchRuntime,
+        "from_settings",
+        lambda *args, **kwargs: SimpleNamespace(close=lambda: events.append("close")),
+    )
+    monkeypatch.setattr(serve_mod, "McpProductionRuntime", Mock(side_effect=RuntimeError("assembly failed")))
+    with pytest.raises(RuntimeError):
+        serve_mod.main(["--transport", "stdio", "--dev-dept", "PV"])
+    assert events == ["close", "telemetry"]
+
+
+def test_http_identity_configuration_fails_before_starting_model_resources(_env, monkeypatch):
+    events = []
+    monkeypatch.setattr(serve_mod, "configure_logging", lambda *args, **kwargs: None)
+    monkeypatch.setattr(serve_mod, "configure_telemetry", lambda **kwargs: None)
+    monkeypatch.setattr(serve_mod, "shutdown_telemetry", lambda: events.append("telemetry"))
+    constructor = Mock()
+    monkeypatch.setattr(serve_mod.SearchRuntime, "from_settings", constructor)
+    monkeypatch.setattr(
+        serve_mod, "authenticator_from_settings", Mock(side_effect=ValueError("identity not configured"))
+    )
+    with pytest.raises(ValueError):
+        serve_mod.main(["--transport", "streamable-http"])
+    assert not constructor.called and events == ["telemetry"]

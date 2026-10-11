@@ -33,11 +33,11 @@ from typing import Any
 
 import psycopg
 
-from medops.evals.probe import extract
-from medops.evals.probe.pii import PII_RULESET_VERSION, find_pii_matches
 from medops.ingestion import av, docx, filecheck
 from medops.ingestion.chunker import CHUNKER_VERSION, Chunk, chunk_pages
-from medops.retrieval.lexical.normalization import NORMALIZATION_VERSION, normalize_text
+from medops.knowledge import pdf
+from medops.knowledge.normalization import NORMALIZATION_VERSION, normalize_text
+from medops.knowledge.pii import PII_RULESET_VERSION, find_pii_matches
 
 MAX_PDF_BYTES = 50 * 1024 * 1024  # applies to every accepted format
 PDF_MAGIC = b"%PDF-"
@@ -166,7 +166,7 @@ def extract_docx(data: bytes) -> tuple[list[str], list[str], list[docx.Section]]
 
 
 def extract_and_check(data: bytes, source_hash: str, pages_dir: Path | None) -> tuple[list[str], list[str]]:
-    texts, warnings = extract.extract_pages_detailed(data)
+    texts, warnings = pdf.extract_pages_detailed(data)
     if pages_dir is not None:
         stored = Path(pages_dir) / source_hash
         if stored.is_dir():
@@ -304,8 +304,8 @@ def ingest_document(
                 source_object_id,
                 f"{docx.PARSER} {docx.PARSER_VERSION}"
                 if kind == "docx"
-                else f"{extract.EXTRACTOR} {extract.EXTRACTOR_VERSION}",
-                docx.PARAMS_HASH if kind == "docx" else extract.PARAMS_HASH,
+                else f"{pdf.EXTRACTOR} {pdf.EXTRACTOR_VERSION}",
+                docx.PARAMS_HASH if kind == "docx" else pdf.PARAMS_HASH,
                 parse_quality,
                 round(1 - empty_pages / len(texts), 4),
                 warnings,

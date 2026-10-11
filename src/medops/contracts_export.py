@@ -17,8 +17,8 @@ from pathlib import Path
 
 from pydantic import BaseModel
 
-from medops.api import contracts as api
 from medops.api.openapi import build_openapi
+from medops.application import contracts as api
 from medops.core.errors import ErrorResponse
 from medops.mcp import contracts as mcp
 

@@ -12,8 +12,8 @@ from datetime import UTC, datetime, timedelta
 from fastapi.testclient import TestClient
 
 from medops.api.app import create_app
-from medops.api.contracts import TaskCreateRequest, TaskStatus
 from medops.application.audit import InMemoryTraceStore
+from medops.application.contracts import TaskCreateRequest, TaskStatus
 from medops.application.tasks import InMemoryTaskStore, TaskRunner, TaskService
 from medops.domain.common import Dept, DomainModel, NonEmptyStr, RiskLevel
 from medops.domain.identity import UserContext

@@ -22,7 +22,7 @@ import re
 from collections.abc import Sequence
 from dataclasses import dataclass
 
-from medops.retrieval.lexical.normalization import NORMALIZATION_VERSION, normalize_text
+from medops.knowledge.normalization import NORMALIZATION_VERSION, normalize_text
 
 CHUNKER_VERSION = "chunker-v2"
 TARGET_CHARS = 400

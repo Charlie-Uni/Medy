@@ -7,8 +7,14 @@ from typing import Any
 
 from fastapi import APIRouter, Request
 
-from medops.api.contracts import (
-    IDEMPOTENCY_KEY_HEADER,
+from medops.api.headers import IDEMPOTENCY_KEY_HEADER
+from medops.api.ports import ApiRuntime
+from medops.application.admin import (
+    DocumentAdminService,
+    PolicyService,
+    idempotent,
+)
+from medops.application.contracts import (
     DocumentAclRequest,
     DocumentAclResponse,
     DocumentDetail,
@@ -20,12 +26,6 @@ from medops.api.contracts import (
     PolicyReleaseRequest,
     PolicyResponse,
     PolicyRollbackRequest,
-)
-from medops.api.ports import ApiRuntime
-from medops.application.admin import (
-    DocumentAdminService,
-    PolicyService,
-    idempotent,
 )
 from medops.application.metrics import has_role
 from medops.core.errors import BusinessError, ErrorCode

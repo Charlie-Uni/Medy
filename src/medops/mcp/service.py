@@ -10,14 +10,14 @@ from __future__ import annotations
 
 import hashlib
 import uuid
-from collections.abc import Sequence
 from dataclasses import dataclass
 from datetime import date
-from typing import Any, Protocol
+from typing import Any
 
+from medops.application.search import Searcher, SearchExecution
 from medops.core.errors import BusinessError, ErrorCode
 from medops.domain.common import DocStatus, DocType
-from medops.domain.evidence import Citation, Evidence
+from medops.domain.evidence import Citation
 from medops.domain.identity import UserContext
 from medops.mcp.contracts import (
     ChunkView,
@@ -39,23 +39,6 @@ select c.chunk_id::text, c.doc_id::text, d.version, d.status::text, d.effective_
   from chunks c join documents d on d.doc_id = c.doc_id
  where c.chunk_id = %s and d.status in ('active', 'archived')
 """
-
-
-@dataclass(frozen=True)
-class SearchExecution:
-    evidence: Sequence[Evidence]
-    model_calls: int = 0
-    tokens: int = 0
-    cost_usd: float = 0.0
-    retrieval_version: str | None = None
-    policy_version: str | None = None
-    cache_hit: bool = False
-
-
-class Searcher(Protocol):
-    def __call__(
-        self, query: str, k: int, *, as_of: date | None, allow_historical: bool
-    ) -> Sequence[Evidence] | SearchExecution: ...
 
 
 @dataclass(frozen=True)

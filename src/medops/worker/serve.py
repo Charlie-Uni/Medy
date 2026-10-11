@@ -12,8 +12,8 @@ import signal
 import sys
 import time
 
-from medops.api.runtime import ProductionRuntime
 from medops.application.tasks import DEFAULT_LEASE_S, TaskRunner
+from medops.bootstrap.runtime import ProductionRuntime
 from medops.core.config import Settings, safe_config_errors
 from medops.core.errors import InfrastructureError
 from medops.core.logging import configure_logging, get_logger

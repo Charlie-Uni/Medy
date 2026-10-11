@@ -61,7 +61,7 @@ def validate_cases(cases: Sequence[dict]) -> None:
 
 def score_burst(predict: Callable, cases: Sequence[dict], group_size: int) -> list[dict]:
     """Partition flat model results back into their request; fail on malformed scores before returning."""
-    from medops.retrieval.lexical.normalization import normalize_text
+    from medops.knowledge.normalization import normalize_text
 
     validate_cases(cases)
     if group_size not in (1, 2, 4):

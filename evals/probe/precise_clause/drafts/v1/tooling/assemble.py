@@ -26,7 +26,7 @@ from review_pack import pack_samples
 from run_codex_review import record_hash, verify_review
 
 from medops.core.canonical import canonical_json
-from medops.evals.probe import extract
+from medops.knowledge import pdf as pdf_text
 
 REPO = pathlib.Path(__file__).resolve().parents[6]
 DRAFTS = REPO / "evals/probe/precise_clause/drafts/v1"
@@ -289,10 +289,10 @@ def main() -> None:
 
     # extraction metadata must agree with every per-document extraction.json
     extraction = {
-        "extractor": extract.EXTRACTOR,
-        "extractor_version": extract.EXTRACTOR_VERSION,
-        "params": extract.PARAMS,
-        "params_hash": extract.PARAMS_HASH,
+        "extractor": pdf_text.EXTRACTOR,
+        "extractor_version": pdf_text.EXTRACTOR_VERSION,
+        "params": pdf_text.PARAMS,
+        "params_hash": pdf_text.PARAMS_HASH,
     }
     for h in docs:
         meta_path = out / "pages" / h / "extraction.json"

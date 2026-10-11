@@ -115,7 +115,7 @@ def test_boolean_string_or_float_indices_fail_before_final_judge(indices):
 
 
 def test_async_task_preserves_non_completion_of_the_business_judgment():
-    from medops.api.contracts import TaskCreateRequest, TaskStatus
+    from medops.application.contracts import TaskCreateRequest, TaskStatus
     from medops.application.tasks import InMemoryTaskStore, TaskRunner, TaskService
     from tests.unit.application.test_tasks import Clock, FakeEnv
     from tests.unit.skills.test_risk_skills import user

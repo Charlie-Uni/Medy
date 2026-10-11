@@ -9,9 +9,9 @@ import json
 import httpx
 import pytest
 
-from medops.api.auth import Authenticator, JwtVerifier, Principal, RemoteJwks, StaticDirectory, pseudonym
 from medops.core.errors import BusinessError, ErrorCode, InfrastructureError
 from medops.domain.common import Dept
+from medops.infrastructure.identity import Authenticator, JwtVerifier, Principal, RemoteJwks, StaticDirectory, pseudonym
 from tests.unit.api._auth_fixtures import AUDIENCE, ISSUER, PSEUDONYM_KEY, TestIssuer
 
 

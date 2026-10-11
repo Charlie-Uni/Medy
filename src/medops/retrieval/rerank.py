@@ -18,7 +18,7 @@ from typing import Any, Protocol
 from pydantic import BaseModel, ConfigDict, Field
 
 from medops.domain.evidence import Evidence
-from medops.retrieval.lexical.normalization import normalize_text
+from medops.knowledge.normalization import normalize_text
 
 RERANK_MODEL_ID = "BAAI/bge-reranker-v2-m3"
 RERANK_REVISION = "953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e"

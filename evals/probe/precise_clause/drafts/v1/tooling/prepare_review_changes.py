@@ -9,7 +9,7 @@ from pathlib import Path
 
 from jsonschema import Draft202012Validator
 
-from medops.retrieval.lexical.normalization import normalize_text
+from medops.knowledge.normalization import normalize_text
 
 REPO = Path(__file__).resolve().parents[6]
 ROOT = REPO / "evals/probe/precise_clause"

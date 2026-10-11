@@ -47,7 +47,9 @@ LangGraph 当前仍是固定主图，动态循环是新增待办；LG-01 仅为 
 
 S0 的 PLAN-01 证据入口为[能力矩阵与 PV 场景方案](agent/PLAN-01-capability-and-scenario.md)，包括参考源码重新核验、固定 Workflow 对照及 12 个合成开发用例。其完成仅表示设计输入可审阅；所有者已确认 PV 场景范围，完整契约仍归 PLAN-02，EVAL-32 尚未冻结，ARCH-04/11 已分别通过工程自审；PLAN-02 剩余 Agent 行动/profile 与验收契约未决，相关正确性前置继续满足，不能据此把 S2 标为已解锁或完成。
 
-ARCH-07 的执行记录和诊断边界已通过工程自审，见[记录181](reviews/2026-10-11-implementation-181-execution-records-and-replay-boundaries.md)及[回放契约](EXECUTION_REPLAY.md)：Ask/Task 完整输入、内容条件摘要、逐模型请求/实际 SDK 参数和回复/回执、渲染及 Unicode 来源区间；2038/70 全量、518维护输入一致，614条存档/6140布局比较零差异，0托管费用。原条件模式缺少归档事实/索引和经验证的旧运行工件，明确409拒绝，并未实现原条件恢复；Task/MCP回放、MCP受限正文和 FOCUS-02完整跨块定位仍未完成。当前下一项ARCH-08；真实模型质量、盲测和 S2/S3 约束保持，新代码未提交部署。
+ARCH-07 的执行记录和诊断边界已通过工程自审，见[记录181](reviews/2026-10-11-implementation-181-execution-records-and-replay-boundaries.md)及[回放契约](EXECUTION_REPLAY.md)：Ask/Task 完整输入、内容条件摘要、逐模型请求/实际 SDK 参数和回复/回执、渲染及 Unicode 来源区间；2038/70 全量、518维护输入一致，614条存档/6140布局比较零差异，0托管费用。原条件模式缺少归档事实/索引和经验证的旧运行工件，明确409拒绝，并未实现原条件恢复；Task/MCP回放、MCP受限正文和 FOCUS-02完整跨块定位仍未完成。当时下一项ARCH-08；真实模型质量、盲测和 S2/S3 约束保持，新代码未提交部署。
+
+ARCH-08的共用契约、knowledge文本规则、bootstrap三入口装配与静态边界工程自审通过，见[记录182](reviews/2026-10-11-implementation-182-shared-composition-and-import-boundaries.md)和[生产装配契约](PRODUCTION_COMPOSITION.md)：全量2071/70、532维护输入一致、59定义AST与12配置/灰度版本比较一致，0托管费用。CODE-04/05可无付费继续；CODE-07仍待ARCH-09，并保留MCP受限完整材料未交付项。当前下一项ARCH-09；没有改变PLAN-02、S2/S3、独立人工、盲测与生产签字门。未提交部署。
 
 ### 2.2 原三批十项的能力映射与进展
 

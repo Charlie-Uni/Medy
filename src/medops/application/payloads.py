@@ -11,7 +11,7 @@ from dataclasses import dataclass, field
 from datetime import UTC, datetime, timedelta
 from typing import Any, Protocol
 
-from medops.api.contracts import TracePayloadItem, TracePayloadResponse
+from medops.application.contracts import TracePayloadItem, TracePayloadResponse
 from medops.core.envelope import KeyProvider, Sealed, open_sealed, payload_aad, seal
 from medops.core.errors import BusinessError, ErrorCode
 from medops.domain.identity import UserContext

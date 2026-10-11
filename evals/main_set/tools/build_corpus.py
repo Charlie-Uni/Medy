@@ -27,8 +27,8 @@ sys.path.insert(0, str(REPO / "src"))
 
 import jsonschema  # noqa: E402
 
-from medops.evals.probe.pii import PII_RULESET_VERSION, find_pii_matches  # noqa: E402
-from medops.retrieval.lexical.normalization import normalize_text  # noqa: E402
+from medops.knowledge.pii import PII_RULESET_VERSION, find_pii_matches  # noqa: E402
+from medops.knowledge.normalization import normalize_text  # noqa: E402
 
 LICENCE_TEMPLATES = {
     "ich": {

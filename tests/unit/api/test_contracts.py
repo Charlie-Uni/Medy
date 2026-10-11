@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 from pydantic import ValidationError
 
-from medops.api.contracts import (
+from medops.application.contracts import (
     AskRequest,
     AskResponse,
     EscalationReceipt,

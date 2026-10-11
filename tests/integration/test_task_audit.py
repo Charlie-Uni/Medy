@@ -5,7 +5,7 @@ from contextlib import contextmanager
 import psycopg
 import pytest
 
-from medops.api.contracts import TaskCreateRequest, TaskStatus
+from medops.application.contracts import TaskCreateRequest, TaskStatus
 from medops.application.payloads import PayloadReader, PayloadWriter
 from medops.application.tasks import TaskRunner, TaskService
 from medops.core.errors import InfrastructureError

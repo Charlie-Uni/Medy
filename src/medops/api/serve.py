@@ -7,7 +7,8 @@ import argparse
 import sys
 
 from medops.api.app import create_app
-from medops.api.runtime import ProductionRuntime
+from medops.api.ports import ApiRuntime
+from medops.bootstrap.runtime import ProductionRuntime
 from medops.core.config import Settings, safe_config_errors
 from medops.core.logging import configure_logging, get_logger
 from medops.core.telemetry import configure_telemetry, telemetry_options
@@ -31,7 +32,8 @@ def main(argv: list[str] | None = None) -> int:
     configure_telemetry(**telemetry_options(settings))
     log = get_logger(__name__)
     runtime = ProductionRuntime.from_settings(settings, device=args.device)
-    app = create_app(runtime, docs_enabled=settings.docs_enabled, debug=settings.debug)
+    api_runtime: ApiRuntime = runtime
+    app = create_app(api_runtime, docs_enabled=settings.docs_enabled, debug=settings.debug)
     import uvicorn
 
     log.info("api starting", extra={"host": args.host, "port": args.port, "device": args.device})

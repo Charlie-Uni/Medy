@@ -23,7 +23,7 @@ import re
 import subprocess
 import sys
 
-from medops.retrieval.lexical.normalization import normalize_text
+from medops.knowledge.normalization import normalize_text
 
 HERE = pathlib.Path(__file__).resolve().parent
 _spec = importlib.util.spec_from_file_location("v2_codex_tooling", HERE / "run_codex_review.py")

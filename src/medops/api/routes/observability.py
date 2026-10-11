@@ -7,13 +7,13 @@ from datetime import UTC, datetime
 from fastapi import APIRouter, Request
 from fastapi.responses import PlainTextResponse
 
-from medops.api.contracts import (
+from medops.api.ports import ApiRuntime
+from medops.application.contracts import (
     AskRequest,
     ReplayReport,
     ReplayRequest,
     TracePayloadResponse,
 )
-from medops.api.ports import ApiRuntime
 from medops.application.metrics import has_role, render_prometheus
 from medops.application.replay import ReplayService
 from medops.core.errors import BusinessError, ErrorCode

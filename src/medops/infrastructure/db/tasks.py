@@ -10,7 +10,7 @@ from typing import Any
 from psycopg.errors import UniqueViolation
 from psycopg.types.json import Jsonb
 
-from medops.api.contracts import TaskStatus
+from medops.application.contracts import TaskStatus
 from medops.application.tasks import IdempotencyRace, TaskRecord, validate_lease
 from medops.core.canonical import canonical_hash
 from medops.domain.common import Dept
@@ -74,7 +74,7 @@ class PgTaskStore:
         return (row[0], row[1]) if row else None
 
     def create(self, record: TaskRecord, idempotency: tuple[str, str, datetime] | None) -> None:
-        from medops.api.contracts import HistoricalRequest, TaskCreateRequest
+        from medops.application.contracts import HistoricalRequest, TaskCreateRequest
 
         if idempotency is not None:
             route, key, expires = idempotency

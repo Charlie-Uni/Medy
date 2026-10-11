@@ -186,7 +186,7 @@ M1-01 同时是“部分”和“阻塞”，上表按“部分”计。P1/P2 11
 | 顺序 / 任务 | 本轮确认问题 | 代码或文档证据 | 能说明什么才算本轮理解到位 |
 | --- | --- | --- | --- |
 | 1 / M1-01 标注 | query、key_text、evidence_span 各负责什么？为什么概括答案不能直接作为 key_text？ | [SPEC §6](../evals/probe/precise_clause/SPEC.md#6-gold-锚定与命中规则)、[MA 对照](../evals/probe/precise_clause/drafts/v1/MA_reconcile_2026-09-19.md) | 用一条样本区分自然提问、最小连续原文锚点、含限定条件的完整证据；指出逐字匹配正确仍可能答非所问 |
-| 2 / M1-01、M1-10 偏移 | 为什么偏移基于 norm-v1 页文本？为什么 gold 不固定 chunk_id？ | [normalization.py](../src/medops/retrieval/lexical/normalization.py)、[chunker.py](../src/medops/ingestion/chunker.py) | 解释字符与字节、左闭右开区间、规范化前后坐标变化；说明换切分器后重新映射，unmappable 应计 miss |
+| 2 / M1-01、M1-10 偏移 | 为什么偏移基于 norm-v1 页文本？为什么 gold 不固定 chunk_id？ | [normalization.py](../src/medops/knowledge/normalization.py)、[chunker.py](../src/medops/ingestion/chunker.py) | 解释字符与字节、左闭右开区间、规范化前后坐标变化；说明换切分器后重新映射，unmappable 应计 miss |
 | 3 / M1-01 冻结 | Schema、页文本检查、人工/LLM 复核、哈希各能证明什么？ | [validator.py](../src/medops/evals/probe/validator.py)、SPEC §8～10 | 说明结构合法、定位一致、语义适配和内容未变的区别；哈希不能证明标注正确，75 条草稿不能冒充冻结集 |
 | 4 / M1-11 事务 | 为什么“先查没有 active 再插入”挡不住并发？为什么 outbox 与发布放在一个事务？ | [迁移 0001](../migrations/versions/0001_knowledge_governance.py)、[迁移测试](../tests/integration/test_migrations.py) | 给出两个事务竞争的时序；解释唯一部分索引、回滚、提交后进程崩溃与重复消费，区分约束已有和发布服务待做 |
 | 5 / M1-02～05 检索实验 | FTS 与 BM25 有何区别？为何 RRF/Reranker 无法补回未召回的 gold？ | [ADR-0002](adr/ADR-0002-lexical-retrieval-selection.md)、[bm25_offline.py](../src/medops/retrieval/lexical/bm25_offline.py)、[fusion.py](../src/medops/retrieval/fusion.py) | 用多 gold 样本算 Recall 与 Hit，区分 Recall@20 选型与 Recall@5 主评测；解释先冻结判据再看结果 |

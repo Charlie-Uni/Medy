@@ -1,6 +1,6 @@
 .PHONY: observability-up observability-down langfuse-init langfuse-up langfuse-down langfuse-ps langfuse-check langfuse-smoke langfuse-outage-test cache-worker-up cache-worker-down cache-worker-ps cache-invalidate demo demo-check demo-ask help install install-check install-embed lock schemas lint format format-check typecheck test test-integration check migrate migrate-down migration-check db-users load-corpus index-build index-check lexical-index-a lexical-index activate-docs validate-probe canonicalize-probe up down ps
 .PHONY: eval-check
-.PHONY: retrieval-check
+.PHONY: retrieval-check architecture-check
 
 # venv lives in a NON-dot directory on purpose: ~/Documents is an iCloud Drive domain that marks every file
 # inside dot-directories as hidden, and CPython >= 3.11.16 skips hidden .pth files, which silently breaks
@@ -41,7 +41,8 @@ help:
 	@echo "make demo                                 seven demo scenarios through the real API (about 0.1 USD of model calls)"
 	@echo "make demo-ask [Q=\"question\"] [DEPT=MA|PV|CO]   ask your own question; without Q an interactive prompt"
 	@echo "make activate-docs PLAN=<plan.json> ACTOR=<id> ADMIN_URL=<dsn>   activate draft documents all-or-nothing with audited reasons"
-	@echo "make check           lint + format-check + typecheck + test + schema drift (CI gate)"
+	@echo "make check           lint + format-check + typecheck + architecture-check + test + schema drift (CI gate)"
+	@echo "make architecture-check   enforce protocol/evaluation import boundaries without executing modules"
 	@echo "make eval-check [EVAL_ARGS=--with-pages]   frozen dataset integrity, versions and lineage; no model calls"
 	@echo "make validate-probe DIR=<version_dir> [MODE=draft|frozen] [PAGES=<pages_dir>]"
 	@echo "make canonicalize-probe DIR=<draft_dir> [PAGES=<pages_dir>] [CHECK=1]  rewrite draft JSONL to canonical form, then validate"
@@ -194,7 +195,10 @@ migration-check:
 eval-check:
 	$(PY) -m medops.evals.audit --summary $(EVAL_ARGS)
 
-check: install-check lint format-check typecheck test eval-check
+architecture-check:
+	$(PY) scripts/check_architecture.py
+
+check: install-check lint format-check typecheck architecture-check test eval-check
 	$(PY) -m medops.contracts_export --out schemas --check
 
 schemas:

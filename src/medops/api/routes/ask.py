@@ -7,13 +7,13 @@ from dataclasses import replace
 
 from fastapi import APIRouter, Request
 
-from medops.api.contracts import (
-    AskRequest,
-    AskResponse,
-)
 from medops.api.ports import ApiRuntime
 from medops.api.responses import to_ask_response
 from medops.application.audit import trace_from_run
+from medops.application.contracts import (
+    AskRequest,
+    AskResponse,
+)
 from medops.application.execution_audit import ExecutionAuditWriter
 from medops.application.payloads import payloads_from_run
 from medops.domain.query import resolve_query_context

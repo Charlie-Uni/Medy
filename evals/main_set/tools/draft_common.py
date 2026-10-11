@@ -15,7 +15,7 @@ import re
 import subprocess
 from typing import Any
 
-from medops.retrieval.lexical.normalization import normalize_text
+from medops.knowledge.normalization import normalize_text
 
 REPO = pathlib.Path(__file__).resolve().parents[3]
 MAIN = REPO / "evals/main_set"

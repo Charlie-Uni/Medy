@@ -352,7 +352,7 @@ PERF-01D 已完成当前本机评估：12 道固定题、每题 20 候选、每�
 
 ### 10.3 当前规则与改进方向
 
-源码 [normalization.py](../src/medops/retrieval/lexical/normalization.py) 的 norm-v1 顺序为 NFC、CJK 间抽取空白处理、全角 ASCII 映射、微符号统一、白名单单位替换、空白折叠；保留上下标与圈号，不进行通用 NFKC 折叠，不统一大小写。改动这些规则必须版本化，避免数值和证据坐标漂移。
+源码 [normalization.py](../src/medops/knowledge/normalization.py) 的 norm-v1 顺序为 NFC、CJK 间抽取空白处理、全角 ASCII 映射、微符号统一、白名单单位替换、空白折叠；保留上下标与圈号，不进行通用 NFKC 折叠，不统一大小写。改动这些规则必须版本化，避免数值和证据坐标漂移。
 
 [chunker.py](../src/medops/ingestion/chunker.py) 的 v2 在归一化页文本上切分：目标 400 字符、通常上限 600、短尾阈值 120、长段向前查找子句边界 200 字符；不跨页；分号作为子句分隔参与超长段处理。这里是字符数，不是模型 token 数；section 是启发式标签，引用主要依赖页和 chunk。
 
@@ -389,7 +389,7 @@ PERF-01D 已完成当前本机评估：12 道固定题、每题 20 候选、每�
 
 ## 12. OPT-15 索引覆盖与就绪
 
-记录 109 曾发生 257 份已入库文档约四天没有检索索引的问题。现有 `make index-build`、`make index-check` 和评测预检已减少这类风险；记录 137 已将 [ProductionRuntime.ready](../src/medops/api/runtime.py) 接入真实覆盖、active 空文档、版本与实际库一致性检查，并以只读事务、超时和 5 秒缓存限制开销。记录 138 为词法、向量、缓存分别提供持续消费者；记录 164 已部署缓存消费者并清空正式/安全库积压。缓存启用时，其超过 300 秒的积压或死信进入 readiness；词法和向量消费者的统一常驻部署与毒事件实演仍待完成。
+记录 109 曾发生 257 份已入库文档约四天没有检索索引的问题。现有 `make index-build`、`make index-check` 和评测预检已减少这类风险；记录 137 已将 [ProductionRuntime.ready](../src/medops/bootstrap/runtime.py) 接入真实覆盖、active 空文档、版本与实际库一致性检查，并以只读事务、超时和 5 秒缓存限制开销。记录 138 为词法、向量、缓存分别提供持续消费者；记录 164 已部署缓存消费者并清空正式/安全库积压。缓存启用时，其超过 300 秒的积压或死信进入 readiness；词法和向量消费者的统一常驻部署与毒事件实演仍待完成。
 
 建议建立明确状态：已下载→已抽取→已摄取→质量放行→索引完成→可检索。active 数量、可检索数量和未完成任务分别可见。
 

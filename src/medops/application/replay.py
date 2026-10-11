@@ -13,7 +13,8 @@ from dataclasses import dataclass, replace
 from datetime import UTC, datetime
 from typing import Any
 
-from medops.api.contracts import (
+from medops.application.audit import ReplayRecord, TraceStore, trace_from_run
+from medops.application.contracts import (
     AskRequest,
     HistoricalRequest,
     ReplayReport,
@@ -21,7 +22,6 @@ from medops.api.contracts import (
     ReplaySide,
     TracePayloadResponse,
 )
-from medops.application.audit import ReplayRecord, TraceStore, trace_from_run
 from medops.application.execution_audit import ExecutionAuditWriter
 from medops.application.payloads import payloads_from_run
 from medops.application.replay_inputs import compare_conditions, payload_sections, saved_input, validate_call_records
@@ -62,7 +62,7 @@ def _side(
 
 def outcome_of(run: HarnessRun) -> str:
     """Same mapping as the public ask response: refused for policy refusals, escalated otherwise."""
-    from medops.api.responses import REFUSAL_CODES
+    from medops.domain.common import REFUSAL_CODES
 
     if run.state.answer is not None:
         return "answered"

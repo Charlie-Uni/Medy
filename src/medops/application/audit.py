@@ -11,7 +11,7 @@ from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from typing import Any, Protocol
 
-from medops.api.contracts import FeedbackReceipt, FeedbackRequest, FeedbackSignal
+from medops.application.contracts import FeedbackReceipt, FeedbackRequest, FeedbackSignal
 from medops.core.errors import BusinessError, ErrorCode, ErrorResponse, InfrastructureError
 from medops.domain.common import Dept
 from medops.domain.identity import UserContext

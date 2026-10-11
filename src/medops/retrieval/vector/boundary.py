@@ -7,8 +7,8 @@ from collections.abc import Sequence
 from pydantic import ValidationError
 
 from medops.core.errors import BusinessError, ErrorCode, InfrastructureError
+from medops.knowledge.normalization import normalize_text
 from medops.retrieval.lexical.boundary import MAX_K
-from medops.retrieval.lexical.normalization import normalize_text
 from medops.retrieval.vector.contracts import VectorRetriever, VectorSearchResult, VectorVersions
 
 

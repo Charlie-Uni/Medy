@@ -29,7 +29,7 @@ from uuid import UUID
 import psycopg
 
 from medops.core.errors import BusinessError, ErrorCode, InfrastructureError
-from medops.retrieval.lexical.normalization import NORMALIZATION_VERSION, normalize_text
+from medops.knowledge.normalization import NORMALIZATION_VERSION, normalize_text
 from medops.retrieval.lexical.pg_lexical_common import check_k, require_identity
 from medops.retrieval.vector.contracts import Candidate, VectorSearchResult, VectorVersions
 from medops.retrieval.vector.embedding import EmbeddingProvider, EmbeddingSpec

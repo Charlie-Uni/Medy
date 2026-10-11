@@ -8,7 +8,7 @@ from typing import Any
 import pytest
 from openapi_spec_validator import validate as validate_openapi
 
-from medops.api.contracts import IDEMPOTENCY_KEY_HEADER
+from medops.api.headers import IDEMPOTENCY_KEY_HEADER
 from medops.api.openapi import BEARER_SCHEME, IDEMPOTENCY_PARAMETER, OPENAPI_VERSION, build_openapi
 from medops.contracts_export import API_MODELS, render
 from medops.core.errors import HTTP_STATUS

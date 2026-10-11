@@ -11,7 +11,7 @@ from typing import Any, Protocol, TypeVar
 
 from pydantic import BaseModel
 
-from medops.api.contracts import (
+from medops.application.contracts import (
     DocumentAclRequest,
     DocumentAclResponse,
     DocumentDetail,

@@ -11,7 +11,7 @@ import json
 import pathlib
 import sys
 
-from medops.retrieval.lexical.normalization import normalize_text
+from medops.knowledge.normalization import normalize_text
 
 REPO = pathlib.Path(__file__).resolve().parents[6]
 V1 = REPO / "evals/probe/precise_clause/v2"  # version directory under construction (name kept from the v1 tooling)

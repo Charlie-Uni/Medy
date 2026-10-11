@@ -21,9 +21,9 @@ from typing import Any
 
 import psycopg
 
+from medops.knowledge.normalization import NORMALIZATION_VERSION
 from medops.retrieval.contracts import LexicalSearchResult, LexicalVersions
 from medops.retrieval.lexical import index_consumer
-from medops.retrieval.lexical.normalization import NORMALIZATION_VERSION
 from medops.retrieval.lexical.pg_lexical_common import (
     IndexBuildReport,
     check_k,

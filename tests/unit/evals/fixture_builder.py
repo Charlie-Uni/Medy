@@ -11,7 +11,7 @@ import json
 from pathlib import Path
 
 from medops.core.canonical import canonical_json
-from medops.retrieval.lexical.normalization import normalize_text
+from medops.knowledge.normalization import normalize_text
 
 SLICES = ["drug_name_zh", "dose_unit", "negation", "time_window", "protocol_id", "mixed_zh_en"]
 DEPT_LANG = {"MA": "zh-Hans", "PV": "zh-Hant", "CO": "en"}

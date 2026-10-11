@@ -11,11 +11,11 @@ import pytest
 from fastapi.testclient import TestClient
 
 from medops.api.app import create_app
-from medops.api.auth import Principal, StaticDirectory, pseudonym
 from medops.application.policy_loader import ReleasedPolicySet, RequestPolicies
 from medops.domain.common import Dept, DocStatus
 from medops.domain.identity import UserContext
 from medops.domain.query import QueryContext
+from medops.infrastructure.identity import Principal, StaticDirectory, pseudonym
 from medops.infrastructure.llm.fake import FakeModelGateway
 from tests.unit.api._auth_fixtures import PSEUDONYM_KEY
 from tests.unit.api.test_ask_route import ANSWER, ISSUER_OBJ, QUERY, FakeRuntime

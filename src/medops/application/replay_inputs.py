@@ -11,8 +11,8 @@ from typing import Any
 
 from pydantic import Field
 
-from medops.api.contracts import AskRequest, ReplayConditions, TracePayloadResponse
 from medops.application.audit import TraceSummary
+from medops.application.contracts import AskRequest, ReplayConditions, TracePayloadResponse
 from medops.core.canonical import canonical_hash
 from medops.domain.common import DomainModel
 from medops.domain.identity import UserContext

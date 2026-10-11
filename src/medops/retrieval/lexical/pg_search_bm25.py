@@ -36,8 +36,8 @@ from typing import Any
 
 import psycopg
 
+from medops.knowledge.normalization import NORMALIZATION_VERSION, normalize_text
 from medops.retrieval.contracts import LexicalSearchResult, LexicalVersions
-from medops.retrieval.lexical.normalization import NORMALIZATION_VERSION, normalize_text
 from medops.retrieval.lexical.pg_lexical_common import (
     META_DDL,
     META_TABLE,

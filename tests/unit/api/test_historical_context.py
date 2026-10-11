@@ -5,9 +5,9 @@ from unittest.mock import Mock
 
 import pytest
 
-from medops.api.contracts import AskRequest
-from medops.api.runtime import ProductionRuntime
+from medops.application.contracts import AskRequest
 from medops.application.policy_loader import ReleasedPolicySet, RequestPolicies
+from medops.bootstrap.runtime import ProductionRuntime
 from medops.core.config import Settings
 from medops.core.errors import BusinessError
 from medops.domain.query import resolve_query_context
@@ -46,7 +46,7 @@ def test_skill_assembly_forwards_the_requested_date_to_retrieval():
 
 @pytest.mark.parametrize("raw", [None, {"as_of": "2025-01-01"}])
 def test_production_assembly_shares_one_context_with_channels_and_lookups(monkeypatch, raw):
-    import medops.api.runtime as module
+    import medops.bootstrap.retrieval as module
 
     rt = ProductionRuntime(
         settings=Settings(
@@ -61,11 +61,13 @@ def test_production_assembly_shares_one_context_with_channels_and_lookups(monkey
     )
     routed = RequestPolicies(ReleasedPolicySet.empty(), versions())
     rt.route_policies = Mock(return_value=routed)
-    rt.reranker_for = Mock(return_value=Mock())
-    rt.glossary_for = Mock(return_value=None)
+    rt.retrieval_services.reranker_for = Mock(return_value=Mock())
+    rt.retrieval_services.glossary_for = Mock(return_value=None)
     builder, lookup = Mock(return_value=FakeRetrieval()), Mock(return_value=lambda _u, _ids: ())
     monkeypatch.setattr(module, "build_retrieval", builder)
-    monkeypatch.setattr(module, "evidence_lookup", lookup)
+    import medops.bootstrap.runtime as runtime_module
+
+    monkeypatch.setattr(runtime_module, "evidence_lookup", lookup)
     expected = resolve_query_context(raw, default_as_of=rt.as_of)
     ask = rt.build_deps(Mock(), user(), AskRequest(query="label", historical=raw), routed)
     skill = rt.skill_context(Mock(), user(), "a" * 32, raw)
@@ -87,7 +89,7 @@ def test_legacy_queued_version_selector_fails_before_dependency_assembly():
 def test_http_selector_does_not_coerce_numbers_or_timestamps_into_calendar_dates(value):
     from pydantic import ValidationError
 
-    from medops.api.contracts import TaskCreateRequest
+    from medops.application.contracts import TaskCreateRequest
 
     for constructor, body in [
         (AskRequest, {"query": "label"}),

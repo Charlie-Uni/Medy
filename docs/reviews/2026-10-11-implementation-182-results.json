@@ -1,0 +1,121 @@
+{
+  "task": "ARCH-08",
+  "date": "2026-10-11",
+  "implementer": "Codex",
+  "self_reviewer": "Codex (same implementer, not independent human)",
+  "head": "5a604050b9c0706bfd823685e5befcb9619d64a6",
+  "status": "DONE",
+  "full_gate": {
+    "command": "env -u DEBUG PYTHONPATH=<snapshot>/src:<snapshot> make check",
+    "exit_code": 0,
+    "passed": 2071,
+    "skipped": 70,
+    "warnings": 1,
+    "pytest_seconds": 60.15,
+    "formatted_files": 499,
+    "mypy_source_files": 214,
+    "eval_datasets": 4,
+    "schemas_unchanged": true,
+    "skip_reasons": "45 optional candidate B zhparser and 25 optional candidate C pg_search; unavailable (OperationalError), current PostgreSQL/Redis/D tests ran",
+    "warning_reason": "existing deliberate short HMAC JWT rejection test"
+  },
+  "targeted": {
+    "expanded_passed": 364,
+    "seconds": 10.42,
+    "database_passed": 30,
+    "database_seconds": 5.38,
+    "failure_paths_passed": 34,
+    "failure_paths_seconds": 1.61
+  },
+  "import_boundaries": {
+    "modules": 214,
+    "violations": 0,
+    "exact_exceptions": 2,
+    "bootstrap_loaded_api_modules": []
+  },
+  "equivalence": {
+    "definition_groups": 5,
+    "identical_definitions": 59,
+    "policy_version_cases": 12,
+    "all_equal": true
+  },
+  "maintained_source_comparison": {
+    "count": 532,
+    "missing": [],
+    "mismatches": [],
+    "ignored_env_files_identical": true
+  },
+  "preexisting_work": {
+    "stageable_paths": 154,
+    "unchanged_count": 120,
+    "intentional_overlaps": 34,
+    "missing": []
+  },
+  "protected_eval_schema_inputs": {
+    "eval_schema_inputs": 1023,
+    "changed": []
+  },
+  "document_audit": {
+    "task_ids_before": 141,
+    "task_ids_after": 141,
+    "missing_tasks": [],
+    "duplicate_tasks": 0,
+    "markdown_files": 10,
+    "local_links": 315,
+    "missing_links": []
+  },
+  "cli_help": [
+    {
+      "command": "python -m medops.api.serve --help",
+      "exit_code": 0,
+      "usage_present": true
+    },
+    {
+      "command": "python -m medops.worker.serve --help",
+      "exit_code": 0,
+      "usage_present": true
+    },
+    {
+      "command": "python -m medops.mcp.serve --help",
+      "exit_code": 0,
+      "usage_present": true
+    },
+    {
+      "command": "python -m medops.evals.probe.extract --help",
+      "exit_code": 0,
+      "usage_present": true
+    }
+  ],
+  "self_review": {
+    "requirements_scope": "PASS",
+    "adr_stage_gates": "PASS",
+    "correctness_failure_paths": "PASS",
+    "permissions_data": "PASS",
+    "budget_cancellation_side_effects": "PASS",
+    "traceability_versions": "PASS",
+    "verification": "PASS",
+    "ledger_docs": "PASS"
+  },
+  "hosted_model_calls": 0,
+  "hosted_cost_usd": 0,
+  "db_migrations": 0,
+  "committed": false,
+  "pushed": false,
+  "restarted_or_deployed": false,
+  "limitations": [
+    "MCP restricted complete inputs/model bodies not persisted",
+    "Task/MCP replay and original-condition replay not delivered",
+    "strict whole-repository onion architecture not claimed",
+    "ARCH-09 stable feedback identity pending",
+    "ARCH-10 underlying scorer sharing pending",
+    "independent human / unseen blind evaluation and S2/S3 pending"
+  ],
+  "next_task": "ARCH-09",
+  "elapsed_wall_clock_minutes_so_far": 23.3,
+  "final_docs_regression": {
+    "exit_code": 0,
+    "passed": 27,
+    "seconds": 1.18
+  },
+  "elapsed_wall_clock_minutes": 24.7
+}

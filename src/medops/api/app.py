@@ -1,5 +1,5 @@
 """FastAPI application (M3-01 first slice): `POST /v1/ask` through the fixed harness, health/readiness, and the
-public error contract. Identity comes only from `medops.api.auth`; every request runs inside one database
+public error contract. Identity comes only from `medops.infrastructure.identity`; every request runs inside one database
 transaction with the caller's department injected server-side (baseline 3.7) and the operation-key ledger
 attached (M2-03). Responses carry the trace id in `X-Trace-Id`; errors are `ErrorResponse` without detail.
 """

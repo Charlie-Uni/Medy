@@ -39,7 +39,7 @@ from jsonschema import Draft202012Validator, FormatChecker
 from medops.core.canonical import canonical_json
 from medops.evals.probe.validator import PageTextProvider, ProbeSetValidator
 from medops.ingestion.chunker import Span
-from medops.retrieval.lexical.normalization import NORMALIZATION_VERSION, normalize_text
+from medops.knowledge.normalization import NORMALIZATION_VERSION, normalize_text
 
 SCHEMA_DIR = Path(__file__).resolve().parents[4] / "evals/probe/precise_clause/schema"
 GENERATOR = "medops.evals.probe.chunk_mapping/v1"

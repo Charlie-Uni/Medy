@@ -21,7 +21,7 @@ from collections import Counter
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import draft_common as dc  # noqa: E402
 
-from medops.evals.probe.pii import find_pii_spans  # noqa: E402
+from medops.knowledge.pii import find_pii_spans  # noqa: E402
 
 IDS = dc.DRAFTS / "ids.json"
 FIXTURES = dc.MAIN / "conflict_fixtures/fixtures.json"

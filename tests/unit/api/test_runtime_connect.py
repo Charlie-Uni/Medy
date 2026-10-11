@@ -8,7 +8,7 @@ from unittest.mock import patch
 
 import pytest
 
-from medops.api.runtime import ProductionRuntime
+from medops.bootstrap.runtime import ProductionRuntime
 from medops.core.errors import ErrorCode, InfrastructureError
 
 
@@ -42,6 +42,6 @@ def test_connections_carry_connect_and_statement_timeouts():
         seen.update(kwargs)
         raise OSError("stop here")
 
-    with patch("medops.api.runtime.psycopg.connect", fake_connect), pytest.raises(OSError):
+    with patch("medops.bootstrap.connections.psycopg.connect", fake_connect), pytest.raises(OSError):
         runtime()._open("postgresql://u:p@127.0.0.1:1/db")
     assert seen == {"connect_timeout": 1, "options": "-c statement_timeout=1234"}

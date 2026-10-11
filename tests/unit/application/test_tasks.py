@@ -9,8 +9,8 @@ from datetime import UTC, datetime, timedelta
 
 import pytest
 
-from medops.api.contracts import TaskCreateRequest, TaskStatus
 from medops.application.audit import InMemoryTraceStore
+from medops.application.contracts import TaskCreateRequest, TaskStatus
 from medops.application.tasks import InMemoryTaskStore, TaskRunner, TaskService, to_response
 from medops.core.errors import BusinessError, ErrorCode
 from medops.domain.common import Dept, DomainModel, NonEmptyStr, RiskLevel

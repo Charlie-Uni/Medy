@@ -16,7 +16,7 @@ import pathlib
 import subprocess
 import sys
 
-from medops.retrieval.lexical.normalization import normalize_text
+from medops.knowledge.normalization import normalize_text
 
 HERE = pathlib.Path(__file__).resolve().parent
 REPO = HERE.parents[5]

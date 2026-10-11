@@ -11,8 +11,8 @@ from datetime import UTC, datetime
 from fastapi.testclient import TestClient
 
 from medops.api.app import create_app
-from medops.api.auth import Principal, StaticDirectory, pseudonym
 from medops.domain.common import Dept
+from medops.infrastructure.identity import Principal, StaticDirectory, pseudonym
 from medops.loop.gate import passing_gate_report
 from tests.unit.api._auth_fixtures import PSEUDONYM_KEY
 from tests.unit.api.test_ask_route import ISSUER_OBJ, FakeRuntime

@@ -26,9 +26,9 @@ from typing import Any, Literal
 from jsonschema import Draft202012Validator, FormatChecker
 
 from medops.core.canonical import canonical_json, sha256_hex
-from medops.evals.probe.pii import PII_RULESET_VERSION, find_pii_spans
 from medops.evals.probe.review_provenance import validate_review_provenance
-from medops.retrieval.lexical.normalization import NORMALIZATION_VERSION, normalize_text
+from medops.knowledge.normalization import NORMALIZATION_VERSION, normalize_text
+from medops.knowledge.pii import PII_RULESET_VERSION, find_pii_spans
 
 Mode = Literal["draft", "frozen"]
 Level = Literal["error", "warning"]

@@ -1,5 +1,7 @@
 # API 与 MCP 契约初版（M0-08，2026-09-10）
 
+
+ARCH-08 之后，共用模型的规范位置为 `medops.application.contracts`，HTTP Header 位于 `medops.api.headers`；对外字段与 Schema 字节保持。旧内部 Python 导入的迁移表见[生产装配契约](../PRODUCTION_COMPOSITION.md)。
 > 机器可读形式在 `schemas/`（15 个 Schema、`mcp/tools.json` 本地描述清单与 `openapi.json`），由 `make schemas` 从 Pydantic 模型导出，`make check` 会检测漂移；可用 JSON Schema 表达的跨字段规则已通过模型的 `json_schema_extra` 导出，需要服务端状态的规则（哈希重算、授权）只在服务端执行。OpenAPI 3.1 初版（2026-09-17，`info.version` 0.1.0）由 `src/medops/api/openapi.py` 从同一批模型生成，不引入 Web 框架：`components.schemas` 与单文件 Schema 逐模型相等（测试断言），错误响应由 `core.errors.HTTP_STATUS` 推导，每个操作列出统一错误处理器可能返回的全部状态码。本文只登记端点与模型的对应关系和语义，不是第二份契约。
 
 ## REST（设计文档 3.10）

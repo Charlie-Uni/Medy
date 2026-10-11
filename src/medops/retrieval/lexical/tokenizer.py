@@ -18,7 +18,7 @@ import re
 from pathlib import Path
 from typing import Protocol
 
-from medops.retrieval.lexical.normalization import NORMALIZATION_VERSION, normalize_text
+from medops.knowledge.normalization import NORMALIZATION_VERSION, normalize_text
 
 _ID_TOKEN = re.compile(r"[A-Za-z]{2,}(?:-\d{2,})+|\b[A-Z]{2,}\d{5,}\b|\b\d+(?:\.\d+)?\b")
 _PUNCT_ONLY = re.compile(r"^[\W_]+$")
