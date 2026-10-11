@@ -24,6 +24,7 @@ from medops.skills.registry import SkillContext
 from tests.unit.harness._fixtures import evidence, versions
 from tests.unit.harness.test_run_ask import LABEL as HARNESS_LABEL
 from tests.unit.harness.test_run_ask import FakeRetrieval, make_deps
+from tests.unit.skills.test_final_judgment_fixtures import supported_reply
 from tests.unit.skills.test_label_query import ANSWER as LQ_ANSWER
 from tests.unit.skills.test_label_query import INPUT as LQ_INPUT
 from tests.unit.skills.test_risk_skills import ANSWER_CLAUSE, ANSWER_LABEL, CLAUSE, LABEL, NARRATIVE
@@ -129,7 +130,13 @@ def context(reg, spec: dict, *, gateway: FakeModelGateway, u: UserContext | None
     return SkillContext(
         user=u or user(spec["dept"]),
         versions=versions().model_copy(update={"skill_version_set": reg.version_set()}),
-        deps=make_deps(retrieval if retrieval is not None else FakeRetrieval(*items), gateway),
+        deps=make_deps(
+            retrieval if retrieval is not None else FakeRetrieval(*items),
+            gateway,
+            judge_model_id="gpt-6-sol"
+            if spec["purpose"] in ("skill:protocol_deviation", "skill:off_label_check")
+            else None,
+        ),
         evidence_lookup=lookup or (lambda _u, ids: tuple(e for e in items if e.citation.chunk_id in ids)),
         doc_type_lookup=lambda _u, ids: {d: doc_types[d] for d in ids if d in doc_types},
         trace_id="e" * 32,
@@ -143,6 +150,8 @@ def scripted(spec: dict, **overrides) -> FakeModelGateway:
         script["answer"] = [spec["answer"]] * 6  # every retry re-runs the harness; keep the fault on the skill call
     if spec["purpose"]:
         script[spec["purpose"]] = [spec["reply"]]
+        if spec["purpose"] in ("skill:protocol_deviation", "skill:off_label_check"):
+            script["skill:verify_judgment"] = [supported_reply("deviation" if spec["dept"] == "CO" else "dose")]
     script.update(overrides)
     return FakeModelGateway(script)
 

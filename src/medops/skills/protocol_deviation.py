@@ -7,15 +7,25 @@ from __future__ import annotations
 
 from typing import Annotated, Any, Literal
 
-from pydantic import Field
+from pydantic import Field, StrictInt
 
 from medops.domain.answer import Claim
 from medops.domain.common import DocType, DomainModel, ReasonCode, RiskLevel
 from medops.domain.evidence import Citation
 from medops.domain.intent import Entity
+from medops.domain.safety import SafetyDecision
 from medops.domain.skill import SkillOutput, SkillSpec, SkillStatus
-from medops.skills._structured import grounded_run, numbered_statements, structured_call, valid_indices
+from medops.domain.skill_judgment import JudgmentVerification
+from medops.safety.checks import check_output_text
+from medops.skills._structured import (
+    grounded_run,
+    numbered_statements,
+    structured_call,
+    validate_structured,
+    verify_final_judgments,
+)
 from medops.skills.registry import RegisteredSkill, SkillContext
+from medops.verification.skill_judgment import BusinessJudgment
 
 SPEC = SkillSpec(
     name="protocol_deviation",
@@ -72,9 +82,27 @@ class ProtocolDeviationOutput(SkillOutput):
     applicable_versions: tuple[str, ...] = ()
     rationale: str = ""
     rationale_clause_indices: tuple[int, ...] = ()
+    judgment_verification: JudgmentVerification | None = None
     statement: Literal["结论仅比对文件条款与所述事实，不构成合规判定或处置建议"] = (
         "结论仅比对文件条款与所述事实，不构成合规判定或处置建议"
     )
+
+
+class _ProtocolReply(DomainModel):
+    deviation: Literal["yes", "no", "undetermined"]
+    deviation_type: Literal[
+        "visit_window",
+        "dosing",
+        "eligibility",
+        "procedure",
+        "consent",
+        "documentation",
+        "safety_reporting",
+        "other",
+        "none",
+    ]
+    rationale_statement_indices: tuple[StrictInt, ...]
+    rationale: Annotated[str, Field(strict=True, max_length=600)]
 
 
 def _run(ctx: SkillContext, inp: ProtocolDeviationInput) -> ProtocolDeviationOutput:
@@ -110,26 +138,53 @@ def _run(ctx: SkillContext, inp: ProtocolDeviationInput) -> ProtocolDeviationOut
         ),
         schema=SCHEMA,
     )
-    indices = valid_indices(parsed.get("rationale_statement_indices"), len(clauses))
-    deviation = parsed.get("deviation") if parsed.get("deviation") in ("yes", "no", "undetermined") else "undetermined"
-    dev_type = str(parsed.get("deviation_type")) if parsed.get("deviation_type") in DEVIATION_TYPES else "other"
-    if deviation != "undetermined" and not indices:
-        deviation, dev_type = "undetermined", "none"  # a conclusion that cites no clause is not a conclusion
-    if deviation == "no":
-        dev_type = "none"
+    reply = validate_structured(parsed, _ProtocolReply)
+    indices = tuple(dict.fromkeys(reply.rationale_statement_indices))
+    deviation, dev_type = reply.deviation, reply.deviation_type
     versions = tuple(sorted({f"{c.doc_id}@{c.version}" for c in answer.citations}))
-    return ProtocolDeviationOutput(
+    candidate = ProtocolDeviationOutput(
         status=SkillStatus.completed,
         detail=f"deviation={deviation} type={dev_type} clauses={len(clauses)}",
-        deviation=deviation,  # type: ignore[arg-type]
+        deviation=deviation,
         deviation_type=dev_type,
         clauses=clauses,
         citations=answer.citations,
         historical_notice=answer.historical_notice,
         applicable_versions=versions,
-        rationale=str(parsed.get("rationale", ""))[:600],
+        rationale=reply.rationale,
         rationale_clause_indices=indices,
     )
+    safety = check_output_text(candidate.rendered_texts())
+    if safety.decision is not SafetyDecision.allow:
+        # The Registry applies the existing safety gate and discards this payload before returning it.
+        return candidate.model_copy(update={"status": SkillStatus.escalated, "reason_codes": safety.reason_codes})
+    check = verify_final_judgments(
+        ctx,
+        (
+            BusinessJudgment(
+                key="deviation",
+                task="protocol_deviation",
+                observation=inp.observation,
+                conclusion=deviation,
+                category=dev_type,
+                rationale=reply.rationale,
+                clause_indices=indices,
+            ),
+        ),
+        clauses,
+    )
+    if not check.supported:
+        return ProtocolDeviationOutput(
+            status=SkillStatus.escalated if check.contradicted else SkillStatus.insufficient_evidence,
+            reason_codes=(ReasonCode.unsupported_conclusion,),
+            detail="final judgment not supported; comparison requires review",
+            clauses=clauses,
+            citations=answer.citations,
+            applicable_versions=versions,
+            historical_notice=answer.historical_notice,
+            judgment_verification=check,
+        )
+    return candidate.model_copy(update={"judgment_verification": check})
 
 
 ENTRY = RegisteredSkill(

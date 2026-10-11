@@ -6,15 +6,26 @@ from __future__ import annotations
 
 from typing import Annotated, Any, Literal
 
-from pydantic import Field, model_validator
+from pydantic import Field, StrictInt, model_validator
 
 from medops.domain.answer import Claim
 from medops.domain.common import DocType, DomainModel, ReasonCode, RiskLevel
 from medops.domain.evidence import Citation
 from medops.domain.intent import Entity
+from medops.domain.safety import SafetyDecision
 from medops.domain.skill import SkillOutput, SkillSpec, SkillStatus
-from medops.skills._structured import grounded_run, numbered_statements, structured_call, valid_indices
+from medops.domain.skill_judgment import JudgmentVerification
+from medops.infrastructure.llm.gateway import ModelOutputInvalid
+from medops.safety.checks import check_output_text
+from medops.skills._structured import (
+    grounded_run,
+    numbered_statements,
+    structured_call,
+    validate_structured,
+    verify_final_judgments,
+)
 from medops.skills.registry import RegisteredSkill, SkillContext
+from medops.verification.skill_judgment import BusinessJudgment
 
 SPEC = SkillSpec(
     name="off_label_check",
@@ -90,9 +101,21 @@ class OffLabelCheckOutput(SkillOutput):
     findings: tuple[DimensionFinding, ...] = ()
     clauses: tuple[Claim, ...] = ()
     citations: tuple[Citation, ...] = ()
+    judgment_verification: JudgmentVerification | None = None
     statement: Literal[
         "本核验只比对说明书文字范围，不构成用药建议；任何超出说明书的使用须由具资格的专业人员依法规评估"
     ] = "本核验只比对说明书文字范围，不构成用药建议；任何超出说明书的使用须由具资格的专业人员依法规评估"
+
+
+class _FindingReply(DomainModel):
+    dimension: Literal["indication", "population", "dose", "route"]
+    finding: Literal["within_label", "outside_label", "not_addressed"]
+    statement_indices: tuple[StrictInt, ...]
+    note: Annotated[str, Field(strict=True, max_length=300)]
+
+
+class _OffLabelReply(DomainModel):
+    findings: tuple[_FindingReply, ...] = Field(min_length=1, max_length=4)
 
 
 def _run(ctx: SkillContext, inp: OffLabelCheckInput) -> OffLabelCheckOutput:
@@ -127,27 +150,24 @@ def _run(ctx: SkillContext, inp: OffLabelCheckInput) -> OffLabelCheckOutput:
         ),
         schema=SCHEMA,
     )
-    by_dim: dict[str, dict[str, Any]] = {}
-    for item in parsed.get("findings") or []:
-        if isinstance(item, dict) and item.get("dimension") in use and item.get("dimension") not in by_dim:
-            by_dim[str(item["dimension"])] = item
+    reply = validate_structured(parsed, _OffLabelReply)
+    if len(reply.findings) != len(use) or {f.dimension for f in reply.findings} != set(use):
+        raise ModelOutputInvalid("off-label dimensions missing, duplicate or unexpected")
+    by_dim: dict[str, _FindingReply] = {f.dimension: f for f in reply.findings}
     findings: list[DimensionFinding] = []
     for dim, proposed in use.items():
-        item = by_dim.get(dim, {})
-        indices = valid_indices(item.get("statement_indices"), len(clauses))
-        finding = item.get("finding") if item.get("finding") in FINDINGS else "not_addressed"
-        if finding != "not_addressed" and not indices:
-            finding = "not_addressed"  # a scope finding without a clause is not a finding
+        item = by_dim[dim]
+        indices = tuple(dict.fromkeys(item.statement_indices))
         findings.append(
             DimensionFinding(
                 dimension=dim,  # type: ignore[arg-type]
                 proposed=proposed,
-                finding=finding,  # type: ignore[arg-type]
+                finding=item.finding,
                 clause_indices=indices,
-                note=str(item.get("note", ""))[:300],
+                note=item.note,
             )
         )
-    return OffLabelCheckOutput(
+    candidate = OffLabelCheckOutput(
         status=SkillStatus.completed,
         detail="; ".join(f"{f.dimension}={f.finding}" for f in findings),
         findings=tuple(findings),
@@ -155,6 +175,39 @@ def _run(ctx: SkillContext, inp: OffLabelCheckInput) -> OffLabelCheckOutput:
         citations=answer.citations,
         historical_notice=answer.historical_notice,
     )
+    safety = check_output_text(candidate.rendered_texts(), off_label=True)
+    if safety.decision is not SafetyDecision.allow:
+        return candidate.model_copy(update={"status": SkillStatus.escalated, "reason_codes": safety.reason_codes})
+    check = verify_final_judgments(
+        ctx,
+        tuple(
+            BusinessJudgment(
+                key=f.dimension,
+                task="off_label_check",
+                observation=f.proposed,
+                conclusion=f.finding,
+                category=f.dimension,
+                rationale=f.note,
+                clause_indices=f.clause_indices,
+            )
+            for f in findings
+        ),
+        clauses,
+    )
+    if not check.supported:
+        return OffLabelCheckOutput(
+            status=SkillStatus.escalated if check.contradicted else SkillStatus.insufficient_evidence,
+            reason_codes=(ReasonCode.unsupported_conclusion,),
+            detail="final scope findings not supported; comparison requires review",
+            findings=tuple(
+                DimensionFinding(dimension=f.dimension, proposed=f.proposed, finding="not_addressed") for f in findings
+            ),
+            clauses=clauses,
+            citations=answer.citations,
+            historical_notice=answer.historical_notice,
+            judgment_verification=check,
+        )
+    return candidate.model_copy(update={"judgment_verification": check})
 
 
 ENTRY = RegisteredSkill(spec=SPEC, input_model=OffLabelCheckInput, output_model=OffLabelCheckOutput, handler=_run)

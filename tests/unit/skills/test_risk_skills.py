@@ -18,6 +18,7 @@ from medops.skills.protocol_deviation import ProtocolDeviationOutput
 from medops.skills.registry import SkillContext
 from tests.unit.harness._fixtures import evidence, versions
 from tests.unit.harness.test_run_ask import FakeRetrieval, make_deps
+from tests.unit.skills.test_final_judgment_fixtures import supported_reply
 
 NARRATIVE = (
     "Call note 2026-09-20: a 67-year-old female patient started Drug X 10 mg once daily on 2026-09-01. "
@@ -38,7 +39,7 @@ def ctx(reg, gateway, retrieval=None, doc_types=None, u=None, dept="PV"):
     return SkillContext(
         user=u or user(dept),
         versions=versions().model_copy(update={"skill_version_set": reg.version_set()}),
-        deps=make_deps(retrieval or FakeRetrieval(), gateway),
+        deps=make_deps(retrieval or FakeRetrieval(), gateway, judge_model_id="gpt-6-sol"),
         evidence_lookup=lambda _u, _ids: (),
         doc_type_lookup=lambda _u, ids: {d: (doc_types or {}).get(d) for d in ids if d in (doc_types or {})},
         trace_id="d" * 32,
@@ -115,10 +116,11 @@ def test_protocol_deviation_concludes_from_verified_clauses_only():
                 {
                     "deviation": "yes",
                     "deviation_type": "procedure",
-                    "rationale_statement_indices": [1, 7],
+                    "rationale_statement_indices": [1],
                     "rationale": "器械交给了未获授权人员",
                 }
             ],
+            "skill:verify_judgment": [supported_reply("deviation")],
         }
     )
     c = ctx(reg, gateway, retrieval, {"doc-cfr": DocType.guideline}, dept="CO")
@@ -137,7 +139,7 @@ def test_protocol_deviation_concludes_from_verified_clauses_only():
     assert out.deviation == "yes" and out.deviation_type == "procedure" and out.rationale_clause_indices == (1,)
     assert out.clauses[0].text == CLAUSE and out.applicable_versions == ("doc-cfr@2024",)
     assert retrieval.requests[0].session_entities[0].kind == "protocol"
-    stage2 = gateway.calls[-1].messages[1].content
+    stage2 = next(c for c in gateway.calls if c.purpose == "skill:protocol_deviation").messages[1].content
     assert "[1] " + CLAUSE in stage2 and "研究者把器械交給中心外未獲授權的醫師" in stage2
 
 
@@ -156,6 +158,7 @@ def test_protocol_deviation_without_clause_support_is_undetermined_and_labels_ar
     inp = {"governing_document": "21 CFR 812.110", "topic": "器械交付", "observation": "x"}
     out = reg.execute("protocol_deviation", "1.0.0", inp, context=c).output
     assert out.deviation == "undetermined" and out.deviation_type == "none"
+    assert out.status is SkillStatus.insufficient_evidence and out.rationale == ""
     label_ctx = ctx(reg, gateway, retrieval, {"doc-cfr": DocType.label}, dept="CO")
     out2 = reg.execute("protocol_deviation", "1.0.0", inp, context=label_ctx).output
     assert out2.status is SkillStatus.insufficient_evidence and "protocol, SOP or guideline" in out2.detail
@@ -200,13 +203,14 @@ def test_off_label_check_reports_scope_per_dimension_with_clauses_and_a_fixed_st
                         },
                         {
                             "dimension": "route",
-                            "finding": "within_label",
+                            "finding": "not_addressed",
                             "statement_indices": [],
-                            "note": "沒有依據卻宣稱",
+                            "note": "当前提供的条款未涉及给药途径",
                         },
                     ]
                 }
             ],
+            "skill:verify_judgment": [supported_reply("indication", "dose", "route")],
         }
     )
     c = ctx(reg, gateway, retrieval, {"doc-label": DocType.label}, dept="MA")
@@ -226,7 +230,8 @@ def test_off_label_check_reports_scope_per_dimension_with_clauses_and_a_fixed_st
     assert by["indication"].finding == "outside_label" and by["indication"].clause_indices == (2,)
     assert by["route"].finding == "not_addressed" and by["route"].clause_indices == ()  # no clause, no finding
     assert len(out.clauses) == 2 and "不构成用药建议" in out.statement
-    assert "建議" not in "".join(f.note for f in out.findings) or True
+    assert by["dose"].note == "12 mg 超過每日最高 8 mg"
+    assert out.judgment_verification is not None and out.judgment_verification.supported
 
 
 def test_off_label_check_refuses_advice_non_label_sources_and_wrong_department():

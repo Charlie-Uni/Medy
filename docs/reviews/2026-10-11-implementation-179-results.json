@@ -1,0 +1,116 @@
+{
+  "record": 179,
+  "task": "ARCH-03",
+  "date": "2026-10-11",
+  "implementer": "Codex",
+  "self_reviewer": "Codex (same implementer)",
+  "independent_human_review": false,
+  "head": "5a604050b9c0706bfd823685e5befcb9619d64a6",
+  "scope": "Final comparisons in protocol_deviation and off_label_check; five-Skill compatibility matrix",
+  "status": "DONE within engineering scope",
+  "hosted_model_calls": 0,
+  "model_cost_usd": 0,
+  "commit_push_restart": false,
+  "database_migration": false,
+  "verification": {
+    "red": {
+      "result": "1 failed",
+      "log": ".local/arch03-red.log",
+      "wrapper_exit_code": 0,
+      "wrapper_note": "pytest failure was printed by a succeeding cat command"
+    },
+    "directed": {
+      "passed": 159,
+      "seconds": 1.35,
+      "exit_code": 0,
+      "log": ".local/arch03-directed.log"
+    },
+    "full": {
+      "passed": 1969,
+      "skipped": 70,
+      "warnings": 1,
+      "seconds": 52.05,
+      "exit_code": 0,
+      "formatted_files": 473,
+      "typed_source_files": 198,
+      "eval_datasets": 4,
+      "schemas": "up to date",
+      "snapshot": "/Users/leaf/.cache/medy-checks/arch03-verified-u2dxwin4",
+      "log": "/Users/leaf/.cache/medy-checks/arch03-verified-u2dxwin4/.local/arch03-check.log",
+      "log_sha256": "a39c71b2c813d74881cf7194971341b85ba25ff9d097b51d7ce58145675d7266"
+    },
+    "optional_skip_audit": {
+      "skipped": 70,
+      "seconds": 0.04,
+      "reason": "candidate B/C optional servers unreachable (OperationalError)",
+      "log": "/Users/leaf/.cache/medy-checks/arch03-verified-u2dxwin4/.local/arch03-optional-skips.log"
+    },
+    "source_comparison": {
+      "count": 506,
+      "mismatches": 0,
+      "secret_configs_equal": true,
+      "log": ".local/arch03-source-comparison.json"
+    },
+    "document_audit_correction": "Initial task parser omitted PERF-01A..D; verified all 141 IDs with letter suffix support. README paragraph matching failed before any write and was repaired with full-line selection.",
+    "documents": {
+      "files": 6,
+      "local_links": 166,
+      "bad_links": 0,
+      "task_ids": 141,
+      "log": ".local/arch03-document-audit.json",
+      "tests_passed": 10,
+      "seconds": 0.93,
+      "exit_code": 0,
+      "test_log": "/Users/leaf/.cache/medy-checks/arch03-verified-u2dxwin4/.local/arch03-doc-check.log"
+    }
+  },
+  "preservation": {
+    "before_files": 124,
+    "unchanged_files": 116,
+    "intentional_overlaps": [
+      "README.md",
+      "docs/CURRENT_TASKS.md",
+      "docs/ITERATION_PLAN.md",
+      "docs/ITERATION_STAGES.md",
+      "src/medops/skills/_structured.py",
+      "src/medops/skills/off_label_check.py",
+      "src/medops/skills/protocol_deviation.py",
+      "tests/unit/skills/test_matrix.py"
+    ],
+    "missing": [],
+    "task_ids": 141,
+    "frozen_data_and_gold_changed_by_this_slice": false,
+    "default_models_acl_thresholds_released_pointers_changed": false
+  },
+  "self_audit": {
+    "requirements_and_scope": "PASS within engineering scope",
+    "adr_and_stage_gates": "PASS within engineering scope",
+    "correctness_and_failure_paths": "PASS within engineering scope",
+    "permissions_and_data": "PASS within engineering scope",
+    "budget_cancellation_side_effects": "PASS within engineering scope",
+    "traceability_and_versions": "PASS within engineering scope",
+    "verification_sufficiency": "PASS within engineering scope",
+    "state_and_documentation": "PASS within engineering scope"
+  },
+  "limitations": [
+    "Scripted judge verdicts verify plumbing, not medical correctness.",
+    "New comparison judge requires separately authorized real-model calibration.",
+    "No second independent human review.",
+    "ARCH-06 complete Task evidence/audit and ARCH-07 original reproduction remain pending.",
+    "AE quote matching is not proof of all extracted value semantics.",
+    "No deployed service restart; no S2/S3 completion claim."
+  ],
+  "next_task": "ARCH-06",
+  "state_transitions": {
+    "ARCH-03": [
+      "READY",
+      "IN_PROGRESS",
+      "REVIEW",
+      "DONE"
+    ],
+    "ARCH-06": [
+      "BLOCKED",
+      "READY"
+    ]
+  }
+}

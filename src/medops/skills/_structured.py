@@ -6,16 +6,22 @@ from __future__ import annotations
 import json
 import re
 from collections.abc import Sequence
-from typing import Any
+from typing import Any, TypeVar
+
+from pydantic import ValidationError
 
 from medops.domain.answer import Claim
+from medops.domain.common import DomainModel
 from medops.domain.intent import Entity
+from medops.domain.skill_judgment import JudgmentVerification
 from medops.harness.runtime import HarnessRun, initial_state, run_ask
 from medops.infrastructure.llm.gateway import Message, ModelOutputInvalid, ModelRequest
 from medops.skills.registry import SkillContext
+from medops.verification.skill_judgment import BusinessJudgment, verify_business_judgments
 
 STRUCTURED_MAX_OUTPUT_TOKENS = 800  # reasoning tiers spend output tokens before the JSON (record 54 §3.1)
 _WS = re.compile(r"\s+")
+_T = TypeVar("_T", bound=DomainModel)
 
 
 def grounded_run(ctx: SkillContext, query: str, entities: Sequence[Entity] = ()) -> HarnessRun:
@@ -73,12 +79,21 @@ def quote_grounded(quote: str, source: str) -> bool:
     return len(q) >= 2 and q in normalize_quote(source)
 
 
-def valid_indices(raw: Any, upper: int) -> tuple[int, ...]:
-    """1-based statement indices from the model, de-duplicated; anything outside 1..upper is dropped."""
-    if not isinstance(raw, list):
-        return ()
-    out: list[int] = []
-    for item in raw:
-        if isinstance(item, int) and 1 <= item <= upper and item not in out:
-            out.append(item)
-    return tuple(out)
+def validate_structured(parsed: dict[str, Any], model: type[_T]) -> _T:
+    """Provider JSON Schema is not a substitute for checking the received payload locally."""
+    try:
+        return model.model_validate(parsed)
+    except ValidationError as exc:
+        raise ModelOutputInvalid("structured skill reply violates its contract") from exc
+
+
+def verify_final_judgments(
+    ctx: SkillContext, judgments: Sequence[BusinessJudgment], clauses: Sequence[Claim]
+) -> JudgmentVerification:
+    return verify_business_judgments(
+        judgments,
+        clauses,
+        gateway=ctx.deps.gateway,
+        judge_model_id=ctx.deps.judge_model_id,
+        timeout_s=ctx.deps.specs["verify"].timeout_s,
+    )
