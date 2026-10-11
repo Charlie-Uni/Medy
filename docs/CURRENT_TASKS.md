@@ -58,7 +58,7 @@ probe v4 与 `main-v5-provisional` 均已冻结。EVAL-11 已完成：580 个 go
 | ARCH-13 | 补部署资源、常驻消费者与监督 | DONE | [记录186](reviews/2026-10-11-implementation-186-worker-deployment-and-supervision.md)：版本词表/KEK overlay/评分卷与角色DSN；8监督入口/资源声明/进展心跳与强杀重启；清理及Observe opt-in调度，晚到审计记录清理保护；79定向+2Compose+22PG，Docker故障恢复，全量2136/70、548维护输入一致、0费用，八项工程自审通过。IDX-03长期驻留、DEPLOY-02目标资源/容量仍未验收；已由记录189提交推送，未替换共享部署。 |
 | ARCH-14 | 让 CI 必需依赖缺失时失败 | DONE | [记录187](reviews/2026-10-11-implementation-187-required-ci-and-container-gates.md)、[CI契约](CI_GATES.md)：required PG/Redis/Docker缺失非零，CI不能opt-out，jieba基础依赖必需；可选B/C的70 skip保留；架构显式门/真实已发布配置、BGE向量、UID10001及200→503启动核验，独立PG/internal网络通过。全量2157/70、556输入一致、0托管费用，八项工程自审通过；远端CI/amd64冷构建待实际运行，已由记录189提交推送，远端CI运行中，未替换部署。DEPLOY-02 |
 | ARCH-12 | 评估事务长度与数据库连接资源优化 | DONE | [记录188](reviews/2026-10-11-implementation-188-request-transaction-assessment.md)及[事务方案](REQUEST_TRANSACTION_PLAN.md)：12臂288次真实PG/连接合成对照、5种变化与DDL锁诊断；无限额未证明吞吐/时延收益，仅人工4槽有收益，决定不实施Pool/事务拆分。评估自审通过；原子提交/恢复/最终权限的生产实现没有交付，ARCH-15另列。36定向、全量2163/70、559输入一致，0费用；已由记录189提交推送，未部署。OPT-11、DEPLOY-02 |
-| ARCH-15 | 核验并补齐最终输出的授权与事实新鲜度栅栏 | READY | 记录188的真实库诊断表明长事务期间ACL/状态/来源/身份可改变；这不是已完成的API漏洞复现。先在Ask/五类Skill/MCP输出边界零费用复现，再修实际缺口；共同必需证据、完整身份/哈希/状态复核、检查至审计提交的竞态、最小权限、费用与失败审计必须核验。事务性能拆分不得绕过此项；原ARCH-04/11、PLAN-02及质量门保持。INV-AUTH-01/05、INV-DATA-03/06、INV-OBS-03 |
+| ARCH-15 | 核验并补齐最终输出的授权与事实新鲜度栅栏 | IN_PROGRESS | 记录188的真实库诊断表明长事务期间ACL/状态/来源/身份可改变；这不是已完成的API漏洞复现。先在Ask/五类Skill/MCP输出边界零费用复现，再修实际缺口；共同必需证据、完整身份/哈希/状态复核、检查至审计提交的竞态、最小权限、费用与失败审计必须核验。事务性能拆分不得绕过此项；原ARCH-04/11、PLAN-02及质量门保持。INV-AUTH-01/05、INV-DATA-03/06、INV-OBS-03 |
 
 ### 0.2 下一执行顺序
 
@@ -321,3 +321,5 @@ EVOL-06～08 按候选类型分切片记录，Prompt 先行；整项 DONE 需两
 人工/授权点：PLAN-02 的 ADR 剩余验收口径须沟通；EVAL-29/30/31 保留真实复核/盲测保管缺口；LIC-03 许可、DEPLOY-01 身份提供方按材料决定。EVOL-09 已决定限实验，不重复询问。每个 PAID 运行仍逐次批准范围、上限和停止条件；EVOL-13 的生产候选真实签字另行留证。已有裁决不重复索要，模型不冒充第二人工，单人＋模型的结果继续按 provisional 披露。
 
 最新提交/推送自审见[记录189](reviews/2026-10-12-implementation-189-batched-push.md)。远端CI结果单独回填，不能把推送成功当CI或部署通过。
+
+推送后的远端CI三项Compose测试失败，已按[记录190](reviews/2026-10-12-implementation-190-compose-ci-compatibility.md)修复：公开示例隔离渲染、合成.env，required独立全量2164/70；修复推送后的远端结果待核对。ARCH-15当前IN_PROGRESS，已做实际入口反例，尚未完成最终工程自审。

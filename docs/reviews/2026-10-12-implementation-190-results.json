@@ -1,0 +1,49 @@
+{
+  "record": 190,
+  "date": "2026-10-12",
+  "task": "ARCH-14 / DEPLOY-02 CI compatibility repair",
+  "implementer": "Codex",
+  "self_reviewer": "Codex",
+  "independent_human_review": false,
+  "baseline_head": "7a907291581238ebb821a666c58f9e255252c2d9",
+  "failed_remote_runs": [
+    38182444634,
+    38182537803
+  ],
+  "remote_failure": {
+    "failed": 3,
+    "passed": 2138,
+    "skipped": 92,
+    "scope": "Compose manifest rendering"
+  },
+  "root_cause": "Services require env_file .env absent in a clean checkout. Rendering now copies public example to an isolated synthetic .env, without the version-dependent --no-env-resolution flag.",
+  "targeted": {
+    "passed": 6,
+    "seconds": 1.47,
+    "exit_code": 0
+  },
+  "full_check": {
+    "exit_code": 0,
+    "elapsed_s": 330.011,
+    "worktree": "/Users/leaf/.cache/medy-checks/ci190-s54pl_9q",
+    "changed_test_sha256": "bb68bc18e6f40be958e0dabefd40adec346941ccf045b1817793df22ff6d9f2d",
+    "passed": 2164,
+    "skipped": 70,
+    "warnings": 1,
+    "pytest_seconds": 299.21
+  },
+  "hosted_model_calls": 0,
+  "cost_usd": 0,
+  "deployed": false,
+  "arch15_status": "IN_PROGRESS; its code excluded from this commit and isolated gate",
+  "self_review": {
+    "scope": "PASS",
+    "adr_stage_gates": "PASS",
+    "correctness_failure": "PASS",
+    "permissions_data": "PASS",
+    "budget_cancellation": "PASS",
+    "traceability": "PASS",
+    "verification": "PASS",
+    "status_documentation": "PASS"
+  }
+}

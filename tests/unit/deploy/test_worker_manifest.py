@@ -32,20 +32,38 @@ def configuration(tmp_path, *, payload=False):
     ):
         env.pop(name, None)
         env.pop(name + "_DOCKER", None)
-    cmd = ["docker", "compose", "--env-file", str(ROOT / ".env.example"), "-f", str(ROOT / "docker-compose.yml")]
+    # Render from an isolated directory containing public inputs only. This
+    # avoids reading a developer's optional .env without depending on the newer
+    # --no-env-resolution flag, which is absent from some CI Compose versions.
+    manifest = tmp_path / "compose-input"
+    manifest.mkdir(exist_ok=True)
+    for name in (".env.example", "docker-compose.yml", "docker-compose.payload.yml"):
+        shutil.copyfile(ROOT / name, manifest / name)
+    # Services declare env_file: .env. Some Compose releases still require the
+    # file with --no-env-resolution; CI has no private .env. Supply public test
+    # defaults in the isolated directory, never copy the developer's file.
+    shutil.copyfile(manifest / ".env.example", manifest / ".env")
+    cmd = [
+        "docker",
+        "compose",
+        "--env-file",
+        str(manifest / ".env.example"),
+        "-f",
+        str(manifest / "docker-compose.yml"),
+    ]
     if payload:
         key = tmp_path / "synthetic-kek.json"
         key.write_text("{}")  # no decryption attempted; config render needs a mount source only
         key.chmod(0o600)
         env["PAYLOAD_KEY_FILE"] = str(key)
-        cmd += ["-f", str(ROOT / "docker-compose.payload.yml")]
+        cmd += ["-f", str(manifest / "docker-compose.payload.yml")]
     for profile in ("app", "score-sync", "maintenance", "loop-observe"):
         cmd += ["--profile", profile]
     version = subprocess.run(["docker", "compose", "version"], env=env, capture_output=True, timeout=10)
     if version.returncode:
         unavailable("Docker Compose plugin unavailable")
     result = subprocess.run(
-        [*cmd, "config", "--no-env-resolution", "--format", "json"],
+        [*cmd, "config", "--format", "json"],
         env=env,
         capture_output=True,
         text=True,
@@ -104,6 +122,16 @@ def test_manifest_render_does_not_require_a_private_dotenv(tmp_path, monkeypatch
         shutil.copy2(ROOT / name, tmp_path / name)
     monkeypatch.setattr(__import__(__name__, fromlist=["ROOT"]), "ROOT", tmp_path)
     assert not (tmp_path / ".env").exists()
+    assert configuration(tmp_path)["services"]["api"]["environment"]["GLOSSARY_DIR"] == "/app/glossary"
+
+
+def test_manifest_render_never_reads_a_private_dotenv(tmp_path, monkeypatch):
+    for name in (".env.example", "docker-compose.yml", "docker-compose.payload.yml"):
+        shutil.copyfile(ROOT / name, tmp_path / name)
+    # Invalid syntax is deliberate: reading it would fail, even if an otherwise
+    # valid private environment happened to have the same public settings.
+    (tmp_path / ".env").write_text('BROKEN="unterminated\n')
+    monkeypatch.setattr(__import__(__name__, fromlist=["ROOT"]), "ROOT", tmp_path)
     assert configuration(tmp_path)["services"]["api"]["environment"]["GLOSSARY_DIR"] == "/app/glossary"
 
 
