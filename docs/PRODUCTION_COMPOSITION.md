@@ -78,8 +78,22 @@ flowchart TD
 
 该检查保证已声明的静态导入约束。它没有宣称整个项目满足严格的洋葱架构，也不证明任意反射或运行时代码均可静态分析。业务执行继续保留必要的 Harness、预算、数据库适配和政策规则依赖；实验专属适配器迁出、评测工具打包、夹具归一分别由 CODE-04/05/06 继续处理。
 
-## 5. 尚未交付的能力
+## 5. 共享重排权重与输出视图
 
-MCP 受限完整输入/逐模型正文持久化、Task/MCP 回放仍未交付，继续跟踪 CODE-07/回放契约。ARCH-07 的 Ask 诊断回放没有新增原条件恢复能力。反馈稳定来源身份仍待 ARCH-09；CI 必需数据库/Redis 缺失时不得 skip 的部署门禁仍待 ARCH-14。
+ARCH-10工程自审见[记录185](reviews/2026-10-11-implementation-185-shared-reranker-scorer.md)。一个InferenceProcess只在启动时初始化一个scorer，所有score请求在子进程主线程串行复用。RerankerView将冻结输出spec与模型分开；配置从8改4/5/12/20或回切不会重新加载CrossEncoder，取前N仍由父进程的rerank_evidence/检索链控制。
+
+RetrievalServices用既有RLock为同输出视图提供singleflight；失败不入缓存，坏输出拒绝。视图只持有scorer/spec，没有自己的权重、队列或正文缓存。模型/框架/分数与版本规则不改：策略输出不同仍使用原检索版本/Redis缓存绑定；共同scorer不合并不同主体的事实授权。
+
+这是一个runtime/lane内的复用。API、worker、MCP仍独立持有各自lane，不跨device、revision、owner共用权重；没有引入独立推理服务。原背压、期限和回收不变；lane超时/崩溃后所有视图失败关闭，由监督重启。
+
+真实CPU离线4合成文本/8并发请求核对：加载1次、分数差0、参数与RSS计数、主线程推理、关闭回收通过。此证据不代表整套API时延、总体内存下降百分比或MPS容量收益；这些限制在记录185逐项披露。
+
+## 6. 尚未交付的能力
+
+MCP 受限完整输入/逐模型正文持久化、Task/MCP 回放仍未交付，继续跟踪 CODE-07/回放契约。ARCH-07 的 Ask 诊断回放没有新增原条件恢复能力。反馈稳定来源身份已由ARCH-09/记录183完成；CI必需数据库/Redis缺失非零及真实容器门已由ARCH-14/记录187完成本机工程核验，远端运行仍待DEPLOY-02。
 
 本轮不会激活候选、提交/推送或重启服务，不修改冻结题目/gold、默认模型、生产批准或验收阈值。S2 Agent、S3 模型驱动自进化、盲测与正式付费运行仍按[当前任务台账](CURRENT_TASKS.md)逐项推进。
+
+## ARCH-13 部署监督边界
+
+常驻入口/资源、容器词表与KEK、评分卷、进展心跳及定时维护见[部署契约](DEPLOYMENT_WORKERS.md)和[记录186](reviews/2026-10-11-implementation-186-worker-deployment-and-supervision.md)。单运行时模型共享不等于跨服务共享；Docker故障恢复与全量2136/70是工程证据，不替代长期部署、目标容量或医学质量。required CI工程门见[CI契约](CI_GATES.md)与[记录187](reviews/2026-10-11-implementation-187-required-ci-and-container-gates.md)：全量2157/70、真实BGE/private网络200→503；远端CI、amd64冷构建和业务容量仍待验证。

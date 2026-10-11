@@ -2,10 +2,10 @@
 
 ## 镜像
 
-- `Dockerfile` 为多阶段构建：builder 阶段按 `Makefile install` 的顺序安装哈希锁定的依赖（`requirements-build.lock` → `requirements.lock` → `requirements-embed-linux-<arch>.lock` → 项目本身，`--require-hashes` / `--no-build-isolation`），运行阶段只复制虚拟环境与迁移。嵌入栈按 Linux 架构分别锁定（`make lock` 生成 `aarch64` 与 `x86_64` 两份，PyTorch 取 CPU-only 索引），因为 macOS 上生成的 `requirements-embed.lock` 不含 Linux 独有依赖（如 cuda-toolkit）。
+- `Dockerfile` 为多阶段构建：builder 阶段按 `Makefile install` 的顺序安装哈希锁定的依赖（`requirements-build.lock` → `requirements.lock` → `requirements-embed-linux-<arch>.lock` → 项目本身，`--require-hashes` / `--no-build-isolation`），运行阶段复制虚拟环境、迁移与公开版本词表。嵌入栈按 Linux 架构分别锁定（`make lock` 生成 `aarch64` 与 `x86_64` 两份，PyTorch 取 CPU-only 索引），因为 macOS 上生成的 `requirements-embed.lock` 不含 Linux 独有依赖（如 cuda-toolkit）。
 - 基础镜像 `python:3.11-slim` 以 digest 钉死（见 Dockerfile 注释，升级时标签与 digest 一起改）。
 - 运行阶段以非 root 用户 `medops`（uid 10001）运行，无包管理器缓存，无编译工具。
-- 镜像内不含 `.env`、密钥、语料、评测数据与模型缓存（`.dockerignore`）；配置全部来自环境变量（`Settings`，`.env.example` 列出每个键）。
+- 镜像内不含 `.env`、密钥、语料、评测题与模型缓存；公开词表放在 `/app/glossary`（`.dockerignore`）；配置全部来自环境变量（`Settings`，`.env.example` 列出每个键）。
 - `HEALTHCHECK` 请求 `GET /healthz`；就绪检查用 `GET /readyz`（应用与检查连接指向同一库、模型线程未卡死、active 语料与生产词法/向量索引完整且版本一致才返回 200，记录 137）。
 
 ```bash
@@ -28,11 +28,11 @@ API / worker 的每个数据库连接带 `DB_CONNECT_TIMEOUT_S`（默认 5 秒�
 
 ARCH-11 的根执行上限为 `LLM_EXECUTION_TOKEN_LIMIT=12000`、`LLM_EXECUTION_COST_LIMIT_USD=0.60`、`LLM_EXECUTION_TIMEOUT_S=125`。API/worker/MCP 与四个活动 Ask/Skill/安全/回放运行工具共享此配置；Skill 及 MCP 仍取原期限与根配置的较小值。翻译、判定、结构化调用及重试共用额度，不能在嵌套调用处重开。服务网关要求执行上下文，缺失时在模型供应商前拒绝；批次/月度封顶另计。预算不是模型费用授权或 P95 承诺。该轮不增迁移，沿用已完成的 0023；修改后需重启相应进程才加载新代码/配置。算法和恢复限制见[执行预算说明](LLM_ACCOUNTING.md#6-单次执行共享预算arch-11)，新 Agent profile 仍须单独确定。
 
-compose 中三个服务的 `stop_grace_period` 为 30 秒；worker 的 Skill 总期限不超过 120 秒，超过退出宽限的尝试可能被强制终止并在租约到期后接管。HTTP 创建去重、结果写入栅栏和外部模型请求去重是三个不同保证：本轮防止失租后的新调用与旧结果覆盖，不能保证供应商恰好执行一次。已发出的请求可能在进程终止后继续收费；接管是新的 attempt，其费用独立记录，旧尝试已知或保守费用仍保留。生产若希望完整收束当前任务，需按实际 profile 与结算时限调整部署宽限；本轮未改 compose、未重启服务。
+API/MCP 的 `stop_grace_period` 为 30 秒；自 ARCH-13 起任务 worker 为 150 秒（监督器先给 140 秒收束），索引/缓存/评分消费者为 30 秒。超过退出宽限的尝试可能被强制终止并在租约到期后接管。HTTP 创建去重、结果写入栅栏和外部模型请求去重是三个不同保证：本轮防止失租后的新调用与旧结果覆盖，不能保证供应商恰好执行一次。已发出的请求可能在进程终止后继续收费；接管是新的 attempt，其费用独立记录，旧尝试已知或保守费用仍保留。生产若希望完整收束当前任务，需按实际 profile 与结算时限调整部署宽限；ARCH-13 已更新 compose 的监督与宽限，尚未替换现有部署。
 
 ## compose
 
-`docker-compose.yml` 除 postgres / redis 外提供 `api`、任务 `worker`、`mcp` 和 `retrieval-cache-worker`（`profiles: [app]`，默认 `make up` 不启动它们）：
+`docker-compose.yml` 除 postgres / redis 外提供 `api`、任务 `worker`、`mcp` 、`lexical-index-worker`、`vector-index-worker` 和 `retrieval-cache-worker`（`profiles: [app]`，默认 `make up` 不启动它们）：
 
 ```bash
 docker compose --env-file .env --profile app up -d --build
@@ -41,7 +41,7 @@ docker compose --env-file .env --profile app ps
 
 - 容器内访问数据库与 Redis 用服务名，因此 `.env` 需要另给容器用的 DSN：`DATABASE_URL_DOCKER`、`DATABASE_ADMIN_URL_DOCKER`、`DATABASE_READONLY_URL_DOCKER`、`REDIS_URL_DOCKER`（主机名分别为 `postgres`、`redis`）；未设置时回退到主机用的同名键（仅在主机网络下可用）。
 - 模型缓存挂载到命名卷 `model_cache`（容器内 `/models`，`MODEL_CACHE_DIR=/models`），首次启动会下载嵌入与重排模型；离线环境请预先填充该卷。
-- 词表目录 `GLOSSARY_DIR`（记录 93）：存放已发布的查询改写词表 `glossary-<YYYYMMDD>-<sha12>.json`（仓库副本在 `evals/glossary/`）。一旦 released 的检索参数指向某个词表版本，API / worker / MCP 启动时会校验该文件存在且内容摘要与版本一致，缺失或不一致即以 `dependency_unavailable` 拒绝启动；未发布词表时可留空。检索参数 `multi_query` / `doc_focus` / `query_translation`（记录 93–95）及 `source_constraint`（记录 156，默认关闭）同样只经发布生效；API 与 MCP 搜索都按主体灰度结果应用同一参数，调用翻译模型时把调用次数、token、费用和实际策略/检索版本写入各自 Trace。`source_constraint` 启用后只在调用者可见的 active 文档内解析高置信点名来源，并将两个检索通道限制到该来源；正式答案级对照通过前不得发布。
+- 词表目录 `GLOSSARY_DIR`（记录 93）：存放已发布的查询改写词表 `glossary-<YYYYMMDD>-<sha12>.json`（仓库副本在 `evals/glossary/`，镜像为 `/app/glossary`）。一旦 released 的检索参数指向某个词表版本，API / worker / MCP 启动时会校验该文件存在且内容摘要与版本一致，缺失或不一致即以 `dependency_unavailable` 拒绝启动；未发布词表时可留空。检索参数 `multi_query` / `doc_focus` / `query_translation`（记录 93–95）及 `source_constraint`（记录 156，默认关闭）同样只经发布生效；API 与 MCP 搜索都按主体灰度结果应用同一参数，调用翻译模型时把调用次数、token、费用和实际策略/检索版本写入各自 Trace。`source_constraint` 启用后只在调用者可见的 active 文档内解析高置信点名来源，并将两个检索通道限制到该来源；正式答案级对照通过前不得发布。
 - 调用链查看：`make observability-up` 可启动轻量 Jaeger。需要 score/feedback 工作流时使用已验证的 Langfuse v4.54.0 本机栈：`make langfuse-up`，UI 为 `http://127.0.0.1:3000`。初始化会安全生成项目 key 并写入本机 `.env`，不要再设冲突的手工 OTLP target/header。两种后端的 span 都不含提示词、证据或回答（INV-OBS-03）。完整部署、资源和故障恢复见 [Langfuse 运维说明](LANGFUSE.md)与记录 163。
 - 模型路由 `model_route/answer`（记录 122）：第三个可发布目标，按意图类型指定作答模型（gpt-6-sol 或 gpt-6-luna）；未发布时全部走 gpt-6-sol。判定模型不受路由影响。生效的路由出现在响应的 `versions.model_config_version` 里（`;route=`）。它按 `spend` 档位（每题费用降 25%、质量不降）过门禁后才能发布。
 - 检索缓存 `RETRIEVAL_CACHE`（记录 121、145、164；部署示例为 `redis`）：`memory` 为每个 API/MCP 进程一份，`redis` 经 `REDIS_URL` 共享。`RETRIEVAL_CACHE_NAMESPACE` 必须按环境/数据库独立，`RETRIEVAL_CACHE_DATABASE` 是持续消费者的显式目标。缓存的是一次检索融合后的候选清单与重排顺序；**命中后仍在提问者的连接里逐块复核权限、版本状态与内容哈希**，所以撤权、归档、内容变更不会形成失效证据。`retrieval-cache-worker` 持续消费发布、归档、撤回及 ACL 事件并提升部门 epoch；`make cache-invalidate` 只作为一次性追赶。worker 停止时旧条目最多保留 `RETRIEVAL_CACHE_TTL_SECONDS`（默认 300 秒），期间可能发现不了新文档。Redis 不可用时自动降级为未命中；评测与回放工具不使用缓存。
@@ -51,16 +51,16 @@ docker compose --env-file .env --profile app ps
 
 ## 调用费用账本（ARCH-04，2026-10-11）
 
-启动新 API、worker、MCP 或付费评测之前，目标库须先执行 `make migrate` 到 **0024**。0023 提供调用级 reserve/settle 函数，0024 增加 Trace 的查询日期/显式历史模式；新 Trace store 会读写该列。本机 medops_v2、medops_v2_safety、medops 已升级，三库各 25 张受保护表的内容摘要及 5 张索引表计数不变；外部环境不自动升级。旧代码兼容新增 nullable 列，可先升级数据库再滚动更新应用；降级数据库会删除新回执/上下文元数据，需先导出并停写。费用见[记录 175](reviews/2026-10-11-implementation-175-call-receipts-and-fee-attribution.md)，历史输入、旧 Trace 拒绝和回放范围见[执行契约](HISTORICAL_QUERIES.md)与[记录 178](reviews/2026-10-11-implementation-178-historical-query-context.md)。服务本轮未重启，不把数据库升级当作新代码已经上线。
+启动新 API、worker、MCP 或付费评测之前，目标库须先执行 `make migrate` 到 **0025**。0025 提供稳定反馈事实库身份；0023 提供调用级 reserve/settle 函数，0024 增加 Trace 的查询日期/显式历史模式；新 Trace store 会读写该列。本机 medops_v2、medops_v2_safety、medops 已升级，三库各 25 张受保护表的内容摘要及 5 张索引表计数不变；外部环境不自动升级。旧代码兼容新增 nullable 列，可先升级数据库再滚动更新应用；降级数据库会删除新回执/上下文元数据，需先导出并停写。费用见[记录 175](reviews/2026-10-11-implementation-175-call-receipts-and-fee-attribution.md)，历史输入、旧 Trace 拒绝和回放范围见[执行契约](HISTORICAL_QUERIES.md)与[记录 178](reviews/2026-10-11-implementation-178-historical-query-context.md)。服务本轮未重启，不把数据库升级当作新代码已经上线。
 
 ## 持久化
 
-- PostgreSQL 数据卷 `postgres_data`（事实平面、任务、Trace、审计），Redis 数据卷 `redis_data`（检索缓存，可丢失），模型缓存卷 `model_cache`（可重建）。
+- PostgreSQL 数据卷 `postgres17_data`（事实平面、任务、Trace、审计），Redis 数据卷 `redis_data`（检索缓存，可丢失），模型缓存卷 `model_cache`（可重建）。
 - 备份、恢复演练、保留清理与密钥轮换见 `docs/OPERATIONS.md`（记录 87）；事故响应与发布 / 回滚操作见 `docs/RUNBOOK.md`。连续归档与异地灾备属 P1（基线 7.1）。
 
 ## 未做
 
-- SBOM、镜像扫描（P1）；镜像未推送到任何仓库；CI 里的镜像构建随 M0-10 CI 项。
+- SBOM、镜像扫描（P1）；镜像未推送到任何仓库。ARCH-14已接入CI镜像构建、必需服务/架构检查、已发布配置与真实BGE启动/index丢失核验，见[CI契约](CI_GATES.md)。本机Linux arm64隔离核验通过；远端CI/Linux amd64冷构建仍待最终提交实际执行。
 - 容器内的 GPU（MPS）不可用，运行时用 CPU 推理，延迟高于记录 54 的本机数字。
 
 ## 入库后的索引构建（记录 109）
@@ -87,7 +87,7 @@ make cache-worker-ps
 - 事件按当前文档状态处理，防止旧事件覆盖新状态。active 和 archived 的索引保留，供普通/显式历史检索分别过滤；draft/withdrawn 从派生索引移除。事实表和权限由原发布链维护，消费者不修改它们。
 - 向量增量只处理该文档缺失的块，需已有相符的索引元数据；缺元数据或版本漂移必须先明确构建，不能靠改版本字符串通过。元数据中的 build 数量是构建快照，当前覆盖以真实索引行检查为准。
 - SQL 使用配置的语句/连接超时和 5 秒锁等待超时；本机 embedding 推理在单个工作线程顺序执行。每批数量有界并不表示 embedding 有硬时长上限，GPU 驱动卡死仍需进程监督器处理。SIGTERM 在当前批次结束后退出。
-- 本轮提供可独立运行的入口，未自动启用长期系统服务、未追加 compose 服务；一次恢复和短时轮询检查不算长期驻留部署完成。CPU embedding 进程也需额外模型内存，部署时单独安排资源。
+- ARCH-13 已加入常驻词法/向量服务、基于进展的监督和资源上限；仍未在现有环境长期部署，本机 Docker 约 7.75 GiB 不足以证明全套模型进程容量。一次恢复和短时隔离验证不算长期驻留验收完成。
 - `lexical-index` 应统一由这个生产维护入口处理；早期候选实验消费者的归档删除策略仅供原实验使用，不与生产维护混用。首次恢复后检查 active 覆盖与历史查询；不能只看 ACK 数。
 
 `/readyz` 在线索法或向量消费者存在死信，或其未 ACK 事件最老年龄超过 300 秒时返回 503；`/metrics` 对三个消费者分别给出 pending、oldest age 与 dead-letter 数。`RETRIEVAL_CACHE=redis` 时，缓存消费者使用相同阻塞规则；`off` / `memory` 时仍只告警。阈值用于运行完整性，不修改质量验收门槛。
@@ -115,3 +115,7 @@ env -u DEBUG venv/bin/python -m medops.worker.observability \
 使用 loop 读取账号，未配置时才使用 admin 账号，并强制只读事务。实际数据库名必须显式给出。队列权限 0600、Git 忽略，绑定目标 URL/public key 指纹；更换项目应使用新队列，密钥轮换需要明确处理旧队列。示例命令本身不安装常驻服务。
 
 反馈只同步类别，无纠正文案。评测规则分不冒充语义质量分，未触发样本导出状态。发送前读取 observations v2 的 core 字段，trace 不存在则保留待送。SQLite 队列默认最多 10,000 行、30 天、10 次尝试，按 5 秒到 1 小时退避；到限进入死信，修复后用 `--requeue-score <score_id>` 重放。已投递收据在容量不足时最先清理，待送/死信占满则拒绝继续入队。score 使用固定 ID 与时间的 `score-create` ingestion 事件；真实 v4.54.0 已验证 ingestion 接受、scores v3 回读与 outage 恢复。完整约束见[记录 142](reviews/2026-10-08-implementation-142-durable-observation-scores.md)、[记录 145](reviews/2026-10-08-implementation-145-operational-ledgers-and-mcp-parity.md)及[记录 163](reviews/2026-10-09-implementation-163-langfuse-deployment-and-recovery.md)。
+
+## ARCH-13 常驻与调度配置
+
+完整资源、密钥 overlay、心跳/超时、毒事件处置、评分网络和运维责任见[常驻消费者与监督](DEPLOYMENT_WORKERS.md)。新增 `score-sync`、`maintenance`、`loop-observe` 为显式 opt-in profiles；清理遵守既有保留规则，Observe 只采集信号，不生成、评测或激活候选。镜像和隔离故障验证不等于生产上线。

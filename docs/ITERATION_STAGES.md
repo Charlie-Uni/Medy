@@ -55,6 +55,8 @@ ARCH-09 已完成持久UUID/稳定评分namespace/游标与恢复实现，八项
 
 2026-10-11 当前改动按所有者授权分为12个功能提交与1个记账提交，见[记录184](reviews/2026-10-11-implementation-184-batched-architecture-commits.md)。第12批提交后的独立工作树make check退出0：2089 passed、70 skipped、1 warning，536维护输入一致；末批仅同步文档。历史记录的“未提交”保留原时点含义，当前代码已入Git，未推送、重启或部署；模型费用0，质量/独立人工/盲测/S2/S3门保持，下一主项ARCH-10。
 
+ARCH-10共享scorer与冻结输出视图工程自审通过，见[记录185](reviews/2026-10-11-implementation-185-shared-reranker-scorer.md)：定向37、CPU五种输出/八请求只加载1次/分数差0，全量2105/70、537维护输入一致，0托管费用。没有跨进程权重池、API性能或MPS容量声明，本轮未提交部署；下一主项ARCH-13。Agent/盲测/独立人工/付费与生产签字门继续保持。
+
 ### 2.2 原三批十项的能力映射与进展
 
 下表保留原任务范围和已有证据；“第一/二/三批”是原分组，当前执行先后以 §2.1 的 S0～S5 及统一台账为准，不再将自动候选生成推迟到全部性能工作之后。
@@ -154,3 +156,9 @@ ARCH-09 已完成持久UUID/稳定评分namespace/游标与恢复实现，八项
 - [记录 169](reviews/2026-10-10-implementation-169-rerank-burst-and-process-isolation.md)：同模型/fp32/batch 8 的 FIFO 与合批对照，每臂 36 请求；合批吞吐 −4.71% / −13.36%，排序/分数相同，拒绝接线；真实模型进程退出/阻塞后失败关闭并恢复；1739 passed、70 skipped，API 费用 0。仅是本地就绪队列微基准，未通过完整 API P95 门禁。
 - [记录 170](reviews/2026-10-10-implementation-170-focus-v7-evidence-retention-audit.md)：新标注下 614 条旧上下文诊断，14 条改 query 单列，`ms-0525` 的 2 gold 保留未测；未改 query 隐藏 4 个 key，原完整 key 组 482→480。修复异常评分仍生成的问题，614 条正常分数重放逐字段一致；1753 passed、70 skipped，API 费用 0。原 v7 暂不采用，阶段未通过。
 - [记录 146](reviews/2026-10-08-implementation-146-task-ledger-and-paid-run-preflight.md)：发现本机 `.env` 仍指向 0007 的旧开发库并会阻断首次模型调用；已改指 `medops_v2`，将两个正式本地事实库升至 0021，补应用角色的受控月度费用读取函数，删除未跟踪 Finder 副本，并把所有模型运行改为逐次费用批准。
+
+ARCH-13八项工程自审通过，见[记录186](reviews/2026-10-11-implementation-186-worker-deployment-and-supervision.md)和[部署/监督契约](DEPLOYMENT_WORKERS.md)：79定向、2Compose、22PG，Docker隔离监督重启，清理冲突修复，全量2136/70、548输入一致、0托管调用。IDX-03长期驻留与DEPLOY-02目标容量尚未完成，未替换共享部署或提交；下一项ARCH-14，S2/S3/盲测/独立人工/付费与生产签字约束保持。
+
+ARCH-14八项工程自审通过，见[记录187](reviews/2026-10-11-implementation-187-required-ci-and-container-gates.md)与[CI契约](CI_GATES.md)：required PG/Redis/Docker失败、optional实验保留、架构显式门、真实BGE/private网络和已发布配置200→503通过；全量2157/70、556输入一致、0托管调用。远端CI及amd64冷构建待DEPLOY-02实际执行，未提交/推送/替换共享服务。下一项ARCH-12解锁零费用诊断，实测收益后实施；PLAN-02及S2/S3、盲测、独立人工和付费授权要求保持。
+
+ARCH-12评估范围八项自审通过，见[记录188](reviews/2026-10-11-implementation-188-request-transaction-assessment.md)与[事务方案](REQUEST_TRANSACTION_PLAN.md)：真实ProductionRuntime连接/临时PG、12臂288次合成执行、DDL/5种变化诊断；无限额未证明吞吐/时延收益，决定不启用Pool或分阶段事务。全量2163/70、559输入一致、0托管费用。新增ARCH-15 READY，先复现/修复Ask、五类Skill、MCP实际最终输出权限与事实边界；当前未实现生产栅栏。PLAN-02、原ARCH-04/11硬门、盲测/独立人工/付费与生产签字保持，未提交/推送/部署；下一主项ARCH-15。

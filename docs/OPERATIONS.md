@@ -127,3 +127,7 @@ P1 完整灾备（异地、连续归档、演练恢复整套环境）不在本�
 | 每月 | `python scripts/db_restore_drill.py --dump <最新>` | 管理 DSN |
 | 每季或泄露时 | KEK 轮换（2.1）；口令轮换（2.2） | 见各节 |
 | Loop 定时 | `observe → reflect run → tickets → adapt propose`（`docs/DEPLOY.md`） | loop |
+
+## 6. 调度落地与监督
+
+[ARCH-13 部署契约](DEPLOYMENT_WORKERS.md)提供词法/向量/缓存、评分和 Task 的进展监督，以及显式启用的载荷/审计清理和 Observe 调度。运维先以 `--dry-run` 核对规则，再在目标环境启用；备份、恢复演练和轮换仍由外部运维定时任务负责。当前模板和故障测试不表示这些作业已经在生产常驻。
