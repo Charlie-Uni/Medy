@@ -30,6 +30,7 @@ from medops.domain.skill import SkillOutput, SkillSpec, SkillStatus
 from medops.domain.state import VersionSet
 from medops.harness.contracts import MAX_RETRIES, NodeAttempt, NodeFailure, NodeSpec, run_node
 from medops.harness.dependencies import HarnessDeps
+from medops.infrastructure.llm.accounting import call_scope
 from medops.safety.checks import SAFETY_VERSION, check_output_text
 
 OPERATION_SCOPE = "skill"
@@ -128,6 +129,7 @@ class SkillRegistry:
     def execute(self, name: str, version: str, raw_input: Mapping[str, object], *, context: SkillContext) -> SkillRun:
         with (
             run_metadata(context.trace_id, context.versions.model_dump(mode="json"), kind="skill"),
+            call_scope(run_id=context.run_id),
             span("skill.run", skill=f"{name}@{version}") as current,
         ):
             result = self._execute(name, version, raw_input, context=context)

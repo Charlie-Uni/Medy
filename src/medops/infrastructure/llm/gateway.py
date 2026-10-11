@@ -38,6 +38,7 @@ class ModelRequest(GatewayModel):
     temperature: float = Field(default=0.0, ge=0.0, le=1.0)
     json_schema: dict[str, Any] | None = None  # strict structured output when set
     timeout_s: float = Field(default=30.0, gt=0, le=300)
+    call: ModelCall | None = None  # internal accounting identity; never forwarded to the provider
 
     @property
     def prompt_chars(self) -> int:
@@ -54,6 +55,37 @@ class ModelUsage(GatewayModel):
         return self.input_tokens + self.output_tokens
 
 
+class ModelCall(GatewayModel):
+    call_id: str = Field(min_length=1)
+    trace_id: str | None = None
+    run_id: str | None = None
+    attempt_id: str | None = None
+    reservation_id: str | None = None
+    purpose: str = Field(min_length=1)
+    requested_model: str = Field(min_length=1)
+    provider: str = Field(min_length=1)
+
+
+class ModelCallReceipt(GatewayModel):
+    """Local accounting, not a supplier invoice. Unknown usage stays unknown, never copied from another call."""
+
+    call: ModelCall
+    outcome: Literal["succeeded", "failed", "cancelled", "denied"]
+    provider_started: bool
+    estimated_cost_usd: float = Field(ge=0)
+    actual_cost_usd: float | None = Field(default=None, ge=0)
+    accounted_cost_usd: float = Field(ge=0)
+    cost_basis: Literal[
+        "reported_usage", "conservative_reservation", "reservation_uncertain", "not_started", "unreported"
+    ]
+    settlement_status: Literal["not_required", "settled", "pending"]
+    usage: ModelUsage | None = None
+    response_id: str | None = None
+    response_model: str | None = None
+    error_type: str | None = None
+    settlement_error_type: str | None = None
+
+
 class ModelResponse(GatewayModel):
     text: str
     parsed: dict[str, Any] | None = None
@@ -65,6 +97,7 @@ class ModelResponse(GatewayModel):
     system_fingerprint: str | None = None
     latency_ms: float = Field(ge=0)
     truncated: bool = False  # the provider stopped at max_output_tokens: never treat as a complete answer
+    call_receipt: ModelCallReceipt | None = None
 
 
 class ModelGateway(Protocol):
@@ -90,6 +123,10 @@ class ModelUnavailable(InfrastructureError):
 class ModelOutputInvalid(Exception):
     """The provider answered, but not in the requested structure. Not retryable: the same prompt produces the
     same failure at temperature 0, and guessing a repair would be an unverified answer path."""
+
+    def __init__(self, message: str, *, response: ModelResponse | None = None) -> None:
+        super().__init__(message)
+        self.model_response = response  # bill known usage even when the structured reply is invalid
 
 
 class BudgetExceeded(Exception):

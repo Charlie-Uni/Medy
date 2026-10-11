@@ -113,8 +113,8 @@ def test_admission_bounds_root_bodies_and_nested_nodes_do_not_deadlock():
 
 def test_expiry_during_reservation_refuses_provider_and_releases_unspent_capacity():
     class SlowLedger(InMemorySpendLedger):
-        def reserve(self, *args):
-            reservation = super().reserve(*args)
+        def reserve(self, *args, **kwargs):
+            reservation = super().reserve(*args, **kwargs)
             time.sleep(0.03)
             return reservation
 

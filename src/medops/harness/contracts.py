@@ -28,6 +28,7 @@ from medops.core.deadline import (
 from medops.core.errors import ErrorCode, InfrastructureError, MedOpsError
 from medops.core.telemetry import annotate, span
 from medops.domain.common import DomainModel, NonEmptyStr
+from medops.infrastructure.llm.accounting import call_scope
 
 MAX_RETRIES = 2  # baseline 3.2
 T = TypeVar("T")
@@ -83,7 +84,10 @@ def run_node(
             t0 = time.perf_counter()
             error: BaseException
             outcome: Literal["retry", "failed", "timeout"]
-            with span("harness.node", node=spec.name, attempt=attempt, operation_key=operation_key) as current:
+            with (
+                call_scope(attempt_id=f"{operation_key}:{attempt}"),
+                span("harness.node", node=spec.name, attempt=attempt, operation_key=operation_key) as current,
+            ):
                 try:
                     check_deadline()
                     with execution_admission():

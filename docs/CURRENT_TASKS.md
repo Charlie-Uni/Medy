@@ -1,6 +1,6 @@
 # 当前任务台账
 
-更新：2026-10-10。项目所有者要求将 Agent、自进化、架构修复及此前全部迭代任务统一登记，并规定每次工作必须自审核。**本页是后续任务、顺序、依赖和状态的唯一台账入口**；[迭代计划](ITERATION_PLAN.md)解释设计，[阶段表](ITERATION_STAGES.md)规定通过条件和自审模板，[仓库执行规则](../AGENTS.md)要求后续实现者遵守。历史记录中的旧待办不自动覆盖本页；下列未完成任务不会因本次整理成为已实现能力。此次整理与自审见[记录 172](reviews/2026-10-10-implementation-172-unified-agent-evolution-backlog.md)。
+更新：2026-10-11。项目所有者要求将 Agent、自进化、架构修复及此前全部迭代任务统一登记，并规定每次工作必须自审核。**本页是后续任务、顺序、依赖和状态的唯一台账入口**；[迭代计划](ITERATION_PLAN.md)解释设计，[阶段表](ITERATION_STAGES.md)规定通过条件和自审模板，[仓库执行规则](../AGENTS.md)要求后续实现者遵守。历史记录中的旧待办不自动覆盖本页；下列未完成任务不会因本次整理成为已实现能力。此次整理与自审见[记录 172](reviews/2026-10-10-implementation-172-unified-agent-evolution-backlog.md)。
 
 状态：`DONE` 对应范围已完成、验证且自审通过；`READY` 可无付费继续；`IN_PROGRESS` 正在实施；`REVIEW` 实现待自审/复测；`HUMAN` 需要真实人工决定或复核；`PAID` 每次运行前需要用户明确批准本次范围和费用；`BLOCKED` 等待前置；`OPTIONAL` 当前不要求交付。`PAID` 不代表工程前置已满足；每项开始前同时核对依赖和授权。工程完成、真实质量通过、候选已发布分别留证。
 
@@ -16,9 +16,9 @@
 | --- | --- | --- | --- |
 | ENV-01 | 本地 `DATABASE_URL` 与 `DATABASE_ADMIN_URL` 指向具备持久费用账本的正式本地事实库 | DONE | 本机 `.env` 已由 `medops` 改为 `medops_v2`；不记录凭据 |
 | ENV-02 | 锁定依赖运行环境迁出 iCloud 管理范围 | DONE | 本地 `venv` 链接外部缓存目录，原环境保留；锁哈希安装、pip check、repo 外导入通过；记录 168 |
-| DB-01 | `medops_v2` 升至 migration 0022 | DONE | 0020/0021 为费用账本；0022 为部门隔离 BM25；记录 162 |
-| DB-02 | `medops_v2_safety` 升至 migration 0022 | DONE | PG17 逻辑恢复核对后由 0021 升至 0022，索引零缺口 |
-| DB-03 | 旧开发库 `medops` 的去留 | DONE | 同步迁移到 PG17/0022 并保留；没有向量索引，API/正式评测不连接它 |
+| DB-01 | `medops_v2` 升至 migration 0022 | DONE | 0020/0021 为费用账本；0022 为部门隔离 BM25；记录 162。本机现已追加 0023 调用回执，记录 175 |
+| DB-02 | `medops_v2_safety` 升至 migration 0022 | DONE | PG17 逻辑恢复核对后由 0021 升至 0022，索引零缺口；本机现为 0023，记录 175 |
+| DB-03 | 旧开发库 `medops` 的去留 | DONE | 同步迁移到 PG17/0022 并保留；没有向量索引，API/正式评测不连接它；本机现为 0023，记录 175 |
 | ADJ-01 | 裁决 `ms-0125` | DONE | 项目所有者按建议保留现有 `char_end=2226` |
 | ADJ-02 | 裁决 `ms-0241/ms-0242` 的证据组 | DONE | 三类正式示例共同必需，standard-of-care 仅作补充；已落实到 v3 |
 | ADJ-03 | 裁决 `ms-0280` | DONE | 已增加 `protocol_id`，query、gold 与日期保留 |
@@ -38,7 +38,7 @@ probe v4 与 `main-v5-provisional` 均已冻结。EVAL-11 已完成：580 个 go
 
 ### 0.1 架构修复任务
 
-架构审查已完成；ARCH-01 已交付并通过本轮工程自审，其余修复按下表推进。`ARCH-xx` 对应[架构审查](reviews/2026-10-10-architecture-audit.md)及[复现证据](reviews/2026-10-10-architecture-audit-results.json)中的 `ARxx`。保留模块化单体、独立 API/worker/MCP 进程、Harness 的强制约束、数据库 RLS、事实回查和受控发布；新增 Agent 循环不受“所有业务都只能走固定节点顺序”的实现限制，具体结构与兼容规则由 PLAN-02 登记。原组件切换及历史测试记录继续保留，不能用那些记录证明新缺陷已经解决。
+架构审查已完成；ARCH-01、ARCH-04 已分别通过对应范围工程自审，其余修复按下表推进。`ARCH-xx` 对应[架构审查](reviews/2026-10-10-architecture-audit.md)及[复现证据](reviews/2026-10-10-architecture-audit-results.json)中的 `ARxx`。保留模块化单体、独立 API/worker/MCP 进程、Harness 的强制约束、数据库 RLS、事实回查和受控发布；新增 Agent 循环不受“所有业务都只能走固定节点顺序”的实现限制，具体结构与兼容规则由 PLAN-02 登记。原组件切换及历史测试记录继续保留，不能用那些记录证明新缺陷已经解决。
 
 `READY` 任务可以进行不调用托管模型的实现和核验；`BLOCKED` 任务列出具体工程前置。Skill 医学语义质量、真实问答与容量测量仍需单独付费授权；工程完成不替代正式质量门禁。
 
@@ -48,8 +48,8 @@ probe v4 与 `main-v5-provisional` 均已冻结。EVAL-11 已完成：580 个 go
 | ARCH-05 | 对齐任务总时长、租约和持有权 | READY | ARCH-01 前置已完成；租约覆盖执行或可靠续租；分开 task/attempt 身份；完成被拒时记录失去租约；验证两 worker 接管及重复费用。OPT-11、任务幂等 |
 | ARCH-02 | 统一 Ask、Skill、Replay 的历史输入 | READY | 日期、历史模式和版本选择一致传递；未支持或无法唯一解释的选择器明确拒绝；验证日期边界、归档、权限、提示与缓存隔离。OPT-13、INV-DATA-03 |
 | ARCH-03 | 核验二阶段 Skill 的最终业务判断 | READY | 规则与语义核验覆盖判断、理由、条款和用户观察；矛盾/无支持不能 completed；数字、单位、否定、条件与合法错引有反例。工程核验后单独申请真实质量校准。五类 Skill、INV-SAF-03 |
-| ARCH-04 | 修复并发失败调用的费用归属 | READY | S2 硬前置，必须自审通过并有回归证据；调用级回执关联 Trace/call/attempt/reservation；成功、失败、预留拒绝和结算故障交错可对账，估计/实际费用分开。OPT-09、INV-OBS-01 |
-| ARCH-11 | 统一单次执行的 Token 与费用预算 | BLOCKED | S2 硬前置，先完成 ARCH-04；翻译、规划、生成、判定、结构化、重试/回退均调用前预留并结算；整体 Token/费用/时间与月度上限区分，新 Agent/Loop 入口逐项核验。OPT-11、INV-HAR-08 |
+| ARCH-04 | 修复并发失败调用的费用归属 | DONE | [记录 175](reviews/2026-10-11-implementation-175-call-receipts-and-fee-attribution.md)：调用回执关联 Trace/run/call/attempt/reservation，成功/失败/拒绝/取消与结算故障独立归属；已知 usage 本地费用与保守预留分开。本机三库 0023、保护摘要相同，1807/70、486 维护输入 SHA 一致，0 托管调用；本轮工程自审通过。账单对账/完整复现仍待后续。OPT-09、INV-OBS-01 |
+| ARCH-11 | 统一单次执行的 Token 与费用预算 | READY | S2 硬前置，ARCH-04 已通过本轮工程自审，记录 175；翻译、规划、生成、判定、结构化、重试/回退均调用前预留并结算；整体 Token/费用/时间与月度上限区分，新 Agent/Loop 入口逐项核验。OPT-11、INV-HAR-08 |
 | ARCH-06 | 补齐异步 Skill 的证据和核验审计 | BLOCKED | 先完成 ARCH-02/03 的执行上下文和最终判断；Ask/Task 共享审计服务；结果引用与 Trace 一致；内层节点、失败及受限载荷有明确保存责任。OPT-09、INV-OBS-01/03 |
 | ARCH-07 | 补完整回放输入和逐调用追溯 | BLOCKED | 依赖 ARCH-02/04/06；保存完整输入、实际版本和模型回执；区分当前事实诊断与原条件复现；与 FOCUS-02 共用实际渲染片段哈希/来源区间。OPT-09、OPT-16 |
 | ARCH-09 | 稳定反馈来源、score ID 和扫描游标 | READY | 使用稳定事实库/部署身份；与包含启动时间的运行身份分开；重启/地址变化不改变同一反馈标识，克隆库身份与恢复去重有规则。OPT-09、OPT-16 |
@@ -72,7 +72,7 @@ probe v4 与 `main-v5-provisional` 均已冻结。EVAL-11 已完成：580 个 go
 
 贯穿工作：ARCH-08/10/13/14、CODE-03～07、IDX-03、OBS-03、DEV-BACKLOG-01 按依赖穿插；ARCH-12 有实测收益再实施。BM25-09、CACHE-10、PERF-10、SRC-05、FOCUS-01/02/09、ROUTE-01/02 全部保留，先分别验证再 COMBO-01。人工事项 PLAN-02、EVAL-29/30/31、LIC-03、DEPLOY-01 单独跟踪；EVOL-09 已决定限实验，生产自动批准不再列为待问事项。
 
-**当前下一项：ARCH-04 费用调用回执与归属修复，随后 ARCH-11 整体执行预算；PLAN-02 剩余行动/验收契约继续完善。** PLAN-01 的设计证据包已通过本轮自审，首个 PV 场景范围已确认；剩余原生产门槛问题见 ADR-0012。[首个 PV 场景方案](agent/PLAN-01-capability-and-scenario.md)与 12 个开发用例是 S0 输入，不解锁 S2。首个约 3 天工作包和整体工期在盲测/复核范围明确后重估；现有 ARCH-01 不等于费用/总预算、医学质量或容量通过。
+**当前下一项：ARCH-11 整体执行 Token/费用预算；ARCH-04 已自审通过，证据见[记录 175](reviews/2026-10-11-implementation-175-call-receipts-and-fee-attribution.md)；PLAN-02 剩余行动/验收契约继续完善。** PLAN-01 的设计证据包已通过本轮自审，首个 PV 场景范围已确认；剩余原生产门槛问题见 ADR-0012。[首个 PV 场景方案](agent/PLAN-01-capability-and-scenario.md)与 12 个开发用例是 S0 输入，不解锁 S2。首个约 3 天工作包和整体工期在盲测/复核范围明确后重估；ARCH-04 完成只证明调用计量工程范围，统一预算、医学质量和容量仍未通过。
 
 每次只推进一个主切片。纯契约设计、机械检查和无付费测试可先准备；依赖未通过时不得把相关集成或阶段标为完成。真实并发/费用运行先满足 ARCH-01/04/11；历史 Skill/二阶段判断先满足 ARCH-02/03/06；回放先满足 ARCH-07；所有检索运行先核对事实库、索引覆盖和积压。EVAL-22/23/24 → EVAL-25/26 → EVAL-27/28 的基线依赖保留，S2/S3 开发演示不能替代正式门禁。等待人工/授权时继续无关 READY 项。
 
@@ -94,7 +94,7 @@ probe v4 与 `main-v5-provisional` 均已冻结。EVAL-11 已完成：580 个 go
 | W-01 | 删除 Finder 副本 `src/medops/infrastructure/llm/budget 2.py` | DONE | 文件未跟踪，已删除，避免 `git add -A` 误收 |
 | W-02 | 区分源码、评测产物和临时 `output/` | DONE | BM25 提交只含实现、测试、迁移、部署配置与文档；备份及 `output/` 未纳入 Git |
 | W-03 | 按功能边界拆分提交 | DONE | BM25 实现与文档分两批提交；不按作者拆分 |
-| W-04 | 每组提交前运行定向检查，最终运行 `make check` | DONE | 记录 171：1774 passed、70 skipped；ruff、格式、mypy、Schema 漂移与评测审计均通过。原目录 iCloud 读取阻塞，最终在源码 SHA 一致的仓库外工作树核验；并非原目录中断运行通过 |
+| W-04 | 每组提交前运行定向检查，最终运行 `make check` | DONE | 记录 171：1774 passed、70 skipped；ruff、格式、mypy、Schema 漂移与评测审计均通过。原目录 iCloud 读取阻塞，最终在源码 SHA 一致的仓库外工作树核验；并非原目录中断运行通过。本轮记录 175：1807/70，486 个维护输入 SHA 一致 |
 | W-05 | 更新 README、阶段表、路线图和验收报告 | DONE | BM25、Langfuse、Redis 工程切换与待付费质量门禁已分开记录 |
 
 此前实现已按功能边界提交。当前架构报告、证据、ARCH-01 实现及本次任务更新尚未提交；后续按 ARCH/AGENT/EVOL 等功能切片整理提交范围，保留实现、回归与自审证据，`output/pdf` 和本地临时产物沿用既有排除规则。

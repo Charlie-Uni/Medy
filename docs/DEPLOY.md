@@ -47,6 +47,10 @@ docker compose --env-file .env --profile app ps
 - 迁移不在容器启动时自动执行：`make migrate`（主机）或 `docker compose --profile app run --rm api python -m alembic upgrade head`（使用管理 DSN）。
 - 端口只绑定 `127.0.0.1`；对外暴露须经反向代理与 TLS，bearer token 的 issuer / audience 见 `OIDC_*` 键。
 
+## 调用费用账本（ARCH-04，2026-10-11）
+
+启动新 API、worker、MCP 或付费评测之前，目标费用库须先执行 `make migrate` 到 **0023**。本机 medops_v2、medops_v2_safety、medops 已升级；外部环境不自动升级。新代码使用调用级 reserve/settle 函数，仍停在 0022 的库不能承担新模型调用。旧函数保留，可先升级数据库再滚动更新应用；回滚应用可保留附加结构，降级数据库会删除新回执元数据，需先导出并停写。字段、已知/保守费用、故障对账和权限见[费用说明](LLM_ACCOUNTING.md)与[记录 175](reviews/2026-10-11-implementation-175-call-receipts-and-fee-attribution.md)。
+
 ## 持久化
 
 - PostgreSQL 数据卷 `postgres_data`（事实平面、任务、Trace、审计），Redis 数据卷 `redis_data`（检索缓存，可丢失），模型缓存卷 `model_cache`（可重建）。

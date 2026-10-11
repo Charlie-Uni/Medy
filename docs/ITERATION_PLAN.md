@@ -1,6 +1,6 @@
 # Medy 项目完整迭代计划与工程建议
 
-更新日期：2026-10-10。生产 BM25 切换与迁移证据见[记录 162](reviews/2026-10-09-implementation-162-production-bm25-cutover.md)；Langfuse 部署见[记录 163](reviews/2026-10-09-implementation-163-langfuse-deployment-and-recovery.md)；Redis 缓存切换、清账与恢复见[记录 164](reviews/2026-10-09-implementation-164-redis-cache-cutover.md)；向量规划模式、质量取舍与连接等价性见[记录 168](reviews/2026-10-10-implementation-168-fixed-vector-plan-and-quality-audit.md)。本文汇总代码修复、BM25、Redis、Langfuse、模型路由、评测、性能和产品能力，为每项工作明确现状、价值、步骤、约束与验收依据。
+更新日期：2026-10-11。生产 BM25 切换与迁移证据见[记录 162](reviews/2026-10-09-implementation-162-production-bm25-cutover.md)；Langfuse 部署见[记录 163](reviews/2026-10-09-implementation-163-langfuse-deployment-and-recovery.md)；Redis 缓存切换、清账与恢复见[记录 164](reviews/2026-10-09-implementation-164-redis-cache-cutover.md)；向量规划模式、质量取舍与连接等价性见[记录 168](reviews/2026-10-10-implementation-168-fixed-vector-plan-and-quality-audit.md)。本文汇总代码修复、BM25、Redis、Langfuse、模型路由、评测、性能和产品能力，为每项工作明确现状、价值、步骤、约束与验收依据。
 
 2026-10-10 用户已要求将 Agent、自进化与之前的架构/评测/性能任务统一纳入后续执行，并强制每轮自审核。任务状态与顺序只在[当前任务台账](CURRENT_TASKS.md)维护，执行规则见[AGENTS.md](../AGENTS.md)；本文件解释设计。纳入待办不代表实现或发布完成。原 ADR、冻结数据、许可与生产签字要求继续有效；动态 Agent 的结构调整在 PLAN-02 留下明确决定，不改写历史门禁。
 
@@ -10,7 +10,7 @@
 
 2026-10-10 的[架构审查](reviews/2026-10-10-architecture-audit.md)14 项风险保留为 ARCH-01～14；[代码质量审查](reviews/2026-10-10-code-quality-audit.md)待核实问题纳入 CODE-01～07。先补必要正确性和计量能力，尽早交付 Agent 与模型候选生成；其余架构/性能按依赖穿插。此次任务整合未修改业务实现、数据或发布策略。
 
-架构修复首项 ARCH-01 已完成，见[记录 171](reviews/2026-10-10-implementation-171-harness-deadline-and-cancellation.md)：总截止时间、inline 执行、SQL/HTTP 取消和本地推理进程回收已接 API/worker/MCP 与活动运行工具。等价仓库外快照全量 1774/70，真实 BGE 输出一致、事实库单题检索成功，费用 0。保留清理耗时与供应商计费限制；完整任务租约、调用归属、医学质量和容量尚未达标。PLAN-01 已提供能力矩阵与场景设计证据，场景范围已确认；PLAN-02 剩余契约继续沟通，下一运行时修复 ARCH-04 → ARCH-11。
+架构修复首项 ARCH-01 已完成，见[记录 171](reviews/2026-10-10-implementation-171-harness-deadline-and-cancellation.md)：总截止时间、inline 执行、SQL/HTTP 取消和本地推理进程回收已接 API/worker/MCP 与活动运行工具。等价仓库外快照全量 1774/70，真实 BGE 输出一致、事实库单题检索成功，费用 0。保留清理耗时与供应商计费限制；完整任务租约、统一预算、医学质量和容量尚未达标。ARCH-04 调用归属已完成实现、1807/70 全量门禁及本机三库 0023 迁移，调用计量范围工程自审通过；[记录 175](reviews/2026-10-11-implementation-175-call-receipts-and-fee-attribution.md)与[费用说明](LLM_ACCOUNTING.md)保留已知费用/保守预留及对账边界。PLAN-01 已提供能力矩阵与场景设计证据，场景范围已确认；PLAN-02 剩余契约继续沟通，下一运行时修复 ARCH-11；ARCH-04 通过不代替整体预算及 S2 通过。
 
 此前功能复核：[记录 128](reviews/2026-10-07-implementation-128-functional-verification.md)。1337 项测试通过（含 254 项数据库/Redis 集成），B/C 实验服务不可达跳过 70 项；真实 API 已成功启动并通过七项健康/请求边界检查，外部模型回答与容量未重测。
 
@@ -40,7 +40,7 @@
 
 | 项目 | 可确认现状 | 边界 |
 | --- | --- | --- |
-| 代码整理与评测工具 | 维护 G1–G6、记录 127 去重与记录 129–162 已交付；两套正式本地事实库为 0022 | 跳过未计为通过；EVAL-12 已完成开发校准但不是正式主集成绩 |
+| 代码整理与评测工具 | 维护 G1–G6、记录 127 去重与记录 129–162 已交付；两套正式本地事实库现为 0023；0022 BM25、0023 费用回执 | 跳过未计为通过；EVAL-12 已完成开发校准但不是正式主集成绩 |
 | 生产词法引擎 | 部门隔离 `pg_textsearch` BM25 1.5.1 + `tok-jieba-v2`；PostgreSQL 17.11 | MA/PV/CO 各自独立物理语料；A2 表保留为回滚副本 |
 | BM25 候选 D | 已转为生产适配器，统计隔离、PG17 迁移、本机三库切换和回滚资产完成 | 新冻结集上的检索与答案级正式对照仍需付费授权；历史 +1.63 pp 结果不改写 |
 | 检索缓存 | 主运行配置已切到 Redis；API/MCP 共享数据库专属 namespace，持续失效 worker healthy | CACHE-10 的真实问题命中率、完整问答时延、质量和费用收益待付费授权 |

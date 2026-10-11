@@ -188,7 +188,7 @@ def set_actor(conn: psycopg.Connection, actor: str = "reviewer-01", reason: str 
 
 def test_single_head_and_offline_sql_render(migrated):
     heads = ScriptDirectory.from_config(alembic_config(migrated)).get_heads()
-    assert heads == ["0022"]
+    assert heads == ["0023"]
 
 
 def test_upgrade_downgrade_upgrade_round_trip_leaves_nothing_behind(scratch_database):
@@ -207,6 +207,8 @@ def test_upgrade_downgrade_upgrade_round_trip_leaves_nothing_behind(scratch_data
         "medops_llm_reserve",
         "medops_llm_settle",
         "medops_llm_month_total",
+        "medops_llm_reserve_call",
+        "medops_llm_settle_call",
         "medops_bm25_acl_revoke",
         "medops_source_objects_immutable",
         "medops_documents_guard",

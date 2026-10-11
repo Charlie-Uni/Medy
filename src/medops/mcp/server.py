@@ -29,6 +29,7 @@ from medops.core.errors import BusinessError, ErrorCode, MedOpsError
 from medops.core.telemetry import annotate, span
 from medops.core.tracing import bind_trace_id
 from medops.domain.identity import UserContext
+from medops.infrastructure.llm.accounting import call_scope
 from medops.mcp.contracts import (
     MCP_TOOLS,
     GetChunkInput,
@@ -186,7 +187,11 @@ def build_server(runtime: McpRuntime, *, issuer_url: str | None = None, resource
     def run(name: str, method: str, inp: Any) -> dict[str, Any]:
         started = perf_counter()
         trace_id = uuid.uuid4().hex
-        with bind_trace_id(trace_id), span("mcp.tool", tool=name) as current:
+        with (
+            bind_trace_id(trace_id),
+            call_scope(run_id=trace_id, attempt_id=f"mcp:{name}:1"),
+            span("mcp.tool", tool=name) as current,
+        ):
             user = None
             svc = None
             stats = None

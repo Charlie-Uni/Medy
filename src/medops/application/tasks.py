@@ -30,6 +30,7 @@ from medops.core.telemetry import ATTR_TASK, ATTR_TRACE, annotate, span
 from medops.core.tracing import bind_trace_id, new_trace_id
 from medops.domain.common import Dept
 from medops.domain.identity import UserContext
+from medops.infrastructure.llm.accounting import call_scope
 from medops.infrastructure.llm.meter import MeteredGateway
 from medops.skills.registry import SkillContext, SkillRegistry
 
@@ -213,6 +214,7 @@ class TaskRunner:
         attempt = claimed.attempts
         with (
             bind_trace_id(trace_id),
+            call_scope(run_id=trace_id, attempt_id=f"task:{claimed.task_id}:{attempt}"),
             span(
                 "worker.task",
                 **{ATTR_TASK: claimed.task_id, ATTR_TRACE: trace_id, "skill": claimed.skill_name, "attempt": attempt},

@@ -119,20 +119,8 @@ class OpenAIModelGateway:
             output_tokens=int(usage_obj.completion_tokens),
             cached_input_tokens=cached,
         )
-        parsed: dict[str, Any] | None = None
-        if request.json_schema is not None:
-            if finish == "length":
-                raise ModelOutputInvalid("structured output truncated by max_output_tokens")
-            try:
-                loaded = json.loads(text)
-            except json.JSONDecodeError as exc:
-                raise ModelOutputInvalid("structured output is not valid JSON") from exc
-            if not isinstance(loaded, dict):
-                raise ModelOutputInvalid("structured output is not a JSON object")
-            parsed = loaded
-        return ModelResponse(
+        response = ModelResponse(
             text=text,
-            parsed=parsed,
             usage=usage,
             cost_usd=self._prices.cost_usd(request.model_id, usage),
             provider=self.provider,
@@ -142,3 +130,14 @@ class OpenAIModelGateway:
             latency_ms=latency_ms,
             truncated=finish == "length",
         )
+        if request.json_schema is not None:
+            if finish == "length":
+                raise ModelOutputInvalid("structured output truncated by max_output_tokens", response=response)
+            try:
+                loaded = json.loads(text)
+            except json.JSONDecodeError as exc:
+                raise ModelOutputInvalid("structured output is not valid JSON", response=response) from exc
+            if not isinstance(loaded, dict):
+                raise ModelOutputInvalid("structured output is not a JSON object", response=response)
+            return response.model_copy(update={"parsed": loaded})
+        return response

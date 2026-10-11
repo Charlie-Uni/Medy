@@ -1,0 +1,385 @@
+{
+  "record": 175,
+  "date": "2026-10-11",
+  "task": "ARCH-04",
+  "status": "engineering_self_review_passed",
+  "baseline_head": "5a604050b9c0706bfd823685e5befcb9619d64a6",
+  "committed": false,
+  "hosted_model_calls": 0,
+  "cost_usd": 0,
+  "original_failure": {
+    "exit_code": 1,
+    "failed": 1,
+    "expected_usd": 5.02e-05,
+    "obtained_usd": 7.53e-05,
+    "cause": "Shared budget before/after delta included another request settlement."
+  },
+  "directed_validation": [
+    {
+      "phase": "initial_receipt_fix_and_old_gateway",
+      "passed": 13,
+      "exit_code": 0
+    },
+    {
+      "phase": "extended_cross_entry",
+      "passed": 52,
+      "exit_code": 0,
+      "seconds": 164.69
+    },
+    {
+      "phase": "receipts_pg_legacy_migrations",
+      "passed": 48,
+      "exit_code": 0,
+      "seconds": 3.71
+    },
+    {
+      "phase": "telemetry_missing_explicit_attribute",
+      "passed": 32,
+      "failed": 1,
+      "exit_code": 1,
+      "fixed": "Added explicit accounted_cost_usd; covered by full gate."
+    }
+  ],
+  "full_check": {
+    "command": "env -u DEBUG PYTHONPATH=<snapshot>/src:<snapshot> make check",
+    "worktree": "/Users/leaf/.cache/medy-checks/arch04-vzdp5qlh",
+    "exit_code": 0,
+    "passed": 1807,
+    "skipped": 70,
+    "warnings": 1,
+    "pytest_seconds": 51.14,
+    "format_files": 459,
+    "mypy_source_files": 194,
+    "datasets": 4,
+    "schemas": "up to date",
+    "log": "/Users/leaf/.cache/medy-checks/arch04-vzdp5qlh/.local/arch04-check.log",
+    "log_sha256": "38cae0defac405c1a1edfb1eba6e7eb3588f1132d72d7b5a35deb0e19072e131",
+    "maintained_inputs_identical": 486,
+    "source_comparison": "/Users/leaf/.cache/medy-checks/arch04-vzdp5qlh/.local/source-comparison.json",
+    "source_comparison_sha256": "c82c16e656e6cbca752132560da00622868a0a2fafab2bf6a3dc29b948812927",
+    "integration_dependencies_available": true,
+    "optional_skip_reason": "DEC-001 B/C environments absent"
+  },
+  "local_migrations": [
+    {
+      "database": "medops_v2",
+      "before_version": "0022",
+      "after_version": "0023",
+      "protected_before": {
+        "documents": {
+          "count": 350,
+          "digest": "c32f4516185e6db3ec854f67424f01a8"
+        },
+        "chunks": {
+          "count": 36100,
+          "digest": "4796b958a7ef9bb9dd64798d252b3873"
+        },
+        "document_acl": {
+          "count": 350,
+          "digest": "7dcf054bb50c72cf9be48a19fb90daa8"
+        },
+        "policies": {
+          "count": 2,
+          "digest": "d8435dfe0757b4a2c3434ce470937c0a"
+        },
+        "policy_releases": {
+          "count": 5,
+          "digest": "fcb5878865151e8e284141ff7e714967"
+        },
+        "released_policies": {
+          "count": 1,
+          "digest": "4f9a1846af1173c16e94610ee9c04475"
+        },
+        "llm_monthly_spend": {
+          "count": 1,
+          "digest": "053f68a76a41141d1f4280156f2dceaf"
+        },
+        "reservations_sha256": "788ca039c94a49e61fd6d0680d7ee8c0dc76d5ee1c4e43acc7c1b8373de83722",
+        "reservations_count": 40
+      },
+      "protected_after": {
+        "documents": {
+          "count": 350,
+          "digest": "c32f4516185e6db3ec854f67424f01a8"
+        },
+        "chunks": {
+          "count": 36100,
+          "digest": "4796b958a7ef9bb9dd64798d252b3873"
+        },
+        "document_acl": {
+          "count": 350,
+          "digest": "7dcf054bb50c72cf9be48a19fb90daa8"
+        },
+        "policies": {
+          "count": 2,
+          "digest": "d8435dfe0757b4a2c3434ce470937c0a"
+        },
+        "policy_releases": {
+          "count": 5,
+          "digest": "fcb5878865151e8e284141ff7e714967"
+        },
+        "released_policies": {
+          "count": 1,
+          "digest": "4f9a1846af1173c16e94610ee9c04475"
+        },
+        "llm_monthly_spend": {
+          "count": 1,
+          "digest": "053f68a76a41141d1f4280156f2dceaf"
+        },
+        "reservations_sha256": "788ca039c94a49e61fd6d0680d7ee8c0dc76d5ee1c4e43acc7c1b8373de83722",
+        "reservations_count": 40
+      },
+      "historical_receipts_not_fabricated": 40,
+      "readonly_cannot_reserve": true,
+      "ledger_backup": "/Users/leaf/.cache/medy-checks/arch04-vzdp5qlh/.local/medops_v2-pre0023-ledger.json",
+      "backup_sha256": "ad5e0aea809c1b6ac314e1b5cab766696a0b34348faace30cedd7574dde4679d"
+    },
+    {
+      "database": "medops_v2_safety",
+      "before_version": "0022",
+      "after_version": "0023",
+      "protected_before": {
+        "documents": {
+          "count": 351,
+          "digest": "6f88638e7745620c207637818ce3287d"
+        },
+        "chunks": {
+          "count": 36184,
+          "digest": "67e4d5c6fa987cf3015d7d55f5788c47"
+        },
+        "document_acl": {
+          "count": 351,
+          "digest": "6f45092988a6365d2e5ceef159ffe68d"
+        },
+        "policies": {
+          "count": 0,
+          "digest": "d41d8cd98f00b204e9800998ecf8427e"
+        },
+        "policy_releases": {
+          "count": 0,
+          "digest": "d41d8cd98f00b204e9800998ecf8427e"
+        },
+        "released_policies": {
+          "count": 0,
+          "digest": "d41d8cd98f00b204e9800998ecf8427e"
+        },
+        "llm_monthly_spend": {
+          "count": 0,
+          "digest": "d41d8cd98f00b204e9800998ecf8427e"
+        },
+        "reservations_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "reservations_count": 0
+      },
+      "protected_after": {
+        "documents": {
+          "count": 351,
+          "digest": "6f88638e7745620c207637818ce3287d"
+        },
+        "chunks": {
+          "count": 36184,
+          "digest": "67e4d5c6fa987cf3015d7d55f5788c47"
+        },
+        "document_acl": {
+          "count": 351,
+          "digest": "6f45092988a6365d2e5ceef159ffe68d"
+        },
+        "policies": {
+          "count": 0,
+          "digest": "d41d8cd98f00b204e9800998ecf8427e"
+        },
+        "policy_releases": {
+          "count": 0,
+          "digest": "d41d8cd98f00b204e9800998ecf8427e"
+        },
+        "released_policies": {
+          "count": 0,
+          "digest": "d41d8cd98f00b204e9800998ecf8427e"
+        },
+        "llm_monthly_spend": {
+          "count": 0,
+          "digest": "d41d8cd98f00b204e9800998ecf8427e"
+        },
+        "reservations_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "reservations_count": 0
+      },
+      "historical_receipts_not_fabricated": 0,
+      "readonly_cannot_reserve": true,
+      "ledger_backup": "/Users/leaf/.cache/medy-checks/arch04-vzdp5qlh/.local/medops_v2_safety-pre0023-ledger.json",
+      "backup_sha256": "8f0d16ae788b63ecb6012e5ae9d4cca3d23c23ef7fd9c6dc77dd8aa6d32eb15f"
+    },
+    {
+      "database": "medops",
+      "before_version": "0022",
+      "after_version": "0023",
+      "protected_before": {
+        "documents": {
+          "count": 247,
+          "digest": "944720c5284aa4ec3a1593b2aaa84787"
+        },
+        "chunks": {
+          "count": 25737,
+          "digest": "8df6f7d0b12b37a5b98090fd4c3c42af"
+        },
+        "document_acl": {
+          "count": 247,
+          "digest": "099b339c2746db303468d27169f16353"
+        },
+        "policies": {
+          "count": 0,
+          "digest": "d41d8cd98f00b204e9800998ecf8427e"
+        },
+        "policy_releases": {
+          "count": 0,
+          "digest": "d41d8cd98f00b204e9800998ecf8427e"
+        },
+        "released_policies": {
+          "count": 0,
+          "digest": "d41d8cd98f00b204e9800998ecf8427e"
+        },
+        "llm_monthly_spend": {
+          "count": 0,
+          "digest": "d41d8cd98f00b204e9800998ecf8427e"
+        },
+        "reservations_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "reservations_count": 0
+      },
+      "protected_after": {
+        "documents": {
+          "count": 247,
+          "digest": "944720c5284aa4ec3a1593b2aaa84787"
+        },
+        "chunks": {
+          "count": 25737,
+          "digest": "8df6f7d0b12b37a5b98090fd4c3c42af"
+        },
+        "document_acl": {
+          "count": 247,
+          "digest": "099b339c2746db303468d27169f16353"
+        },
+        "policies": {
+          "count": 0,
+          "digest": "d41d8cd98f00b204e9800998ecf8427e"
+        },
+        "policy_releases": {
+          "count": 0,
+          "digest": "d41d8cd98f00b204e9800998ecf8427e"
+        },
+        "released_policies": {
+          "count": 0,
+          "digest": "d41d8cd98f00b204e9800998ecf8427e"
+        },
+        "llm_monthly_spend": {
+          "count": 0,
+          "digest": "d41d8cd98f00b204e9800998ecf8427e"
+        },
+        "reservations_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "reservations_count": 0
+      },
+      "historical_receipts_not_fabricated": 0,
+      "readonly_cannot_reserve": true,
+      "ledger_backup": "/Users/leaf/.cache/medy-checks/arch04-vzdp5qlh/.local/medops-pre0023-ledger.json",
+      "backup_sha256": "8f0d16ae788b63ecb6012e5ae9d4cca3d23c23ef7fd9c6dc77dd8aa6d32eb15f"
+    }
+  ],
+  "self_review_checker": {
+    "path": "/Users/leaf/.cache/medy-checks/arch04-vzdp5qlh/.local/verify_arch04.py",
+    "sha256": "17e7cb4806701ff50bdc78b1a7513b807e6ab40089a4d3ca06cc19b080b1c299",
+    "status": "passed",
+    "prior_failure": "Checker attempted to read alembic_version with app role: InsufficientPrivilege. Corrected to check revision with admin and verify function/table privileges with app. No permission grants were added.",
+    "exit_code": 0,
+    "review": {
+      "preexisting_files": 54,
+      "changed_overlapping_files": [
+        "README.md",
+        "docs/CURRENT_TASKS.md",
+        "docs/ITERATION_PLAN.md",
+        "docs/ITERATION_STAGES.md",
+        "src/medops/harness/contracts.py",
+        "src/medops/infrastructure/llm/budget.py",
+        "src/medops/infrastructure/llm/meter.py",
+        "src/medops/infrastructure/llm/openai_gateway.py",
+        "tests/unit/harness/test_deadline.py"
+      ],
+      "preserved_files": 45,
+      "protected_paths_unchanged": true,
+      "default_prices_and_estimator_unchanged": true,
+      "arch01_transport_preserved": true,
+      "maintained_snapshot_files_identical": 486,
+      "slice_code_files_identical": 15,
+      "task_count": 141,
+      "status_changes": [
+        [
+          "ARCH-04",
+          "READY",
+          "DONE"
+        ],
+        [
+          "ARCH-11",
+          "BLOCKED",
+          "READY"
+        ]
+      ],
+      "runtime_app_can_execute_but_not_read_ledger": true,
+      "doc_links_missing": []
+    },
+    "task_parser_refinement": "Normalize status prefix before full-width colon; preserves all 141 tasks, including four annotated DONE rows."
+  },
+  "implementation_source_sha256": {
+    "src/medops/infrastructure/llm/gateway.py": "fe1fd6d2c6eaf887288c9457e58e1fc293323700f303b6e3f3c294588a2df0a0",
+    "src/medops/infrastructure/llm/accounting.py": "9f7962fdccced6ab333560f276fec09bdc3b680e9c2ff148da978ac356cccf5b",
+    "src/medops/infrastructure/llm/budget.py": "77caf2fee8d9e08fbcb8202858f2d1522296da0c3ccf7fa70dda4aaf4158a12e",
+    "src/medops/infrastructure/llm/meter.py": "cbcda496b25ef532b73edb22ec6d25e78efea8bd3009550c67756a2706389abf",
+    "src/medops/infrastructure/llm/openai_gateway.py": "b48528d1bef24dc5083b69d36d128ef6d6980037172d2071d653da08382bac34",
+    "src/medops/harness/runtime.py": "d106cde10730313f99d81b4d607a5d5178c6ce104692decf6fbe77920d090ca6",
+    "src/medops/harness/contracts.py": "812f792f5d0e140125484a83203f35567648171f266fc57a486fdbde24f1b7d2",
+    "src/medops/skills/registry.py": "ff8d999e32c58ecf55f21c15720d29e3799faa54e8aa13d36c5101519fde441a",
+    "src/medops/application/tasks.py": "ec5d7241e53ac3d14ec4ab4b22bd2254944b1a2a0d411013fba33dde9e38fc12",
+    "src/medops/mcp/server.py": "6ff9c48b058e7b55da9b30647479ec5d57233642826fd0de2c19d84f1efa2231",
+    "migrations/versions/0023_llm_call_receipts.py": "15db0bb9c44fb38f5800a09a4bc18c0ac87f15ce64c853c150c4f6482d21c1c5",
+    "tests/unit/infrastructure/test_llm_call_receipts.py": "79bcbb53daf6b704aa7ae9ecd804c51e775831c012e4de09fffecb73288a3ef2",
+    "tests/integration/test_llm_call_receipts.py": "61139ff9bb1c6ac017969a331c885c2ef90063a01083ccee07a0c4424eb9b88b",
+    "tests/integration/test_migrations.py": "7037f611bcba8d7a27e3b58fdf8927e76b11a36032a75997ce29657b4ff3cdf3",
+    "tests/unit/harness/test_deadline.py": "477d76c78c995f189da180ffd7cd6bdd11615c8d035e9f2309994161d3806c07"
+  },
+  "limitations": [
+    "Self review by implementer, not independent human review.",
+    "No hosted model quality, billing reconciliation or capacity run.",
+    "Reported usage priced locally is not a supplier invoice; missing usage stays null.",
+    "Reservation/settlement acknowledgment loss may require operator reconciliation.",
+    "DB outage plus process crash can lose final known usage.",
+    "Existing temperature compatibility resend remains one logical gateway call.",
+    "Denied or uncommitted reservations have no persistent receipt row.",
+    "ARCH-11 unified execution budgets and S2 Agent remain pending.",
+    "Downgrade preserves legacy spend but removes call metadata; export first.",
+    "Original whole tracked-file hash attempt hit iCloud TimeoutError; 486 maintained gate inputs matched successfully."
+  ],
+  "documentation_validation": {
+    "pytest_passed": 5,
+    "pytest_seconds": 0.01,
+    "exit_code": 0,
+    "diff_check_exit_code": 0,
+    "original_worktree_evaluation_audit": "PASS; 4 datasets; existing warnings retained",
+    "links": "pass",
+    "self_review_items": "8/8 passed in declared engineering scope"
+  },
+  "doc_initial_count_fix": {
+    "medops_v2_safety_chunks": 36184,
+    "medops_chunks": 25737,
+    "source": "actual migration results; initial draft counts corrected before final review"
+  },
+  "final_states": {
+    "ARCH-04": "DONE",
+    "ARCH-11": "READY",
+    "S2": "blocked by ARCH-11 and relevant contracts",
+    "others_unchanged": true
+  },
+  "documentation_sha256": {
+    "README.md": "778f10cd35b9a0cfb3449a0d3b6a85799f72626ec889827cc3a39eb6606cab3c",
+    "docs/CURRENT_TASKS.md": "a1d4255acf1bea76ed060a13db0964bf149369b07494c64a9e943ce28301ea05",
+    "docs/ITERATION_STAGES.md": "f19301d622f383c0a67bd348c18efb3dba4eb648e3487f0daf6039bc34f71d3e",
+    "docs/ITERATION_PLAN.md": "164de0c60482f60293dc68a261f281bddff930e8bab662c7fca3c08c76887564",
+    "docs/DEPLOY.md": "8f8acb8525bf6ad094c8928cba3a98fb61c6a31ddac98447d117e32404188fc4",
+    "docs/LLM_ACCOUNTING.md": "31810b96891f8548f49a34b94ac3f678774b069bb3720f93e8bfc18aa559e26b",
+    "docs/reviews/2026-10-11-implementation-175-call-receipts-and-fee-attribution.md": "0dac8910edfb9f9ec1c973a019234bc5e7ba476e4fcbbe3a77e84d29b509d50b"
+  }
+}

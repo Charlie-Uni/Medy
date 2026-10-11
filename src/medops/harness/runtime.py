@@ -12,6 +12,7 @@ from medops.domain.state import AgentState, TokenBudget, VersionSet
 from medops.harness.contracts import NodeAttempt
 from medops.harness.dependencies import HarnessDeps
 from medops.harness.graph import build_graph
+from medops.infrastructure.llm.accounting import call_scope
 
 DEFAULT_TRACE_TOKEN_LIMIT = 12_000  # INV-HAR-08: whole-trace budget, not a per-call max_tokens
 
@@ -56,6 +57,7 @@ def initial_state(
 def run_ask(state: AgentState, deps: HarnessDeps, *, recursion_limit: int = 12) -> HarnessRun:
     with (
         run_metadata(state.trace_id, state.versions.model_dump(mode="json"), kind="ask"),
+        call_scope(run_id=state.run_id),
         span("harness.run") as current,
     ):
         app = build_graph(deps)
