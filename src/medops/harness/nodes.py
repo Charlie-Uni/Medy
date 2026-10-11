@@ -160,6 +160,8 @@ def build_nodes(deps: HarnessDeps) -> dict[str, Callable[[HarnessState], dict[st
                 session_entities=state.session_entities,
             )
         )
+        if deps.audit is not None:
+            deps.audit.record_event("retrieval", {"result": outcome.model_dump(mode="json")})
         kept, flagged = screen_evidence(outcome.evidence)
         reserve = deps.answer_max_output_tokens + ANSWER_PROMPT_RESERVE
         fit: list[Evidence] = []

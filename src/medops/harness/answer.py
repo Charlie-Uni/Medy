@@ -9,6 +9,7 @@ import json
 import re
 from typing import TYPE_CHECKING, Any
 
+from medops.core.canonical import canonical_hash, sha256_hex
 from medops.domain.answer import Answer, Claim
 from medops.domain.common import ReasonCode
 from medops.domain.safety import SafetyDecision
@@ -112,7 +113,20 @@ def generate_answer(state: AgentState, deps: HarnessDeps) -> AgentState:
             else None
         ),
     )
-    response = meter.complete(_answer_request(state, deps, rendered=rendered))
+    request = _answer_request(state, deps, rendered=rendered)
+    if deps.audit is not None:
+        deps.audit.record_event(
+            "rendered_evidence",
+            {
+                "focus_mode": deps.evidence_focus,
+                "body": rendered.body(),
+                "body_sha256": sha256_hex(rendered.body()),
+                "chunk_aliases": rendered.chunk_ids,
+                "fragments": list(rendered.fragments),
+                "answer_request_messages_sha256": canonical_hash([m.model_dump(mode="json") for m in request.messages]),
+            },
+        )
+    response = meter.complete(request)
     if response.truncated:
         # reasoning tiers spend output tokens before the JSON (record 54: 1/614 truncated at 800); one retry
         # with a doubled allowance is still bounded by the trace budget, then the node fails as before

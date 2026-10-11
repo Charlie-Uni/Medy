@@ -7,7 +7,9 @@ import math
 import re
 from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass, field
+from typing import Any
 
+from medops.core.canonical import sha256_hex
 from medops.domain.evidence import Evidence
 from medops.harness.focus_profiles import (
     ALLOWED_EVIDENCE_FOCUS,
@@ -51,6 +53,7 @@ class RenderedEvidence:
     kept_tokens: int = 0
     units: int = 0
     kept_units: int = 0
+    fragments: tuple[Mapping[str, Any], ...] = ()  # source offsets are relative to Evidence.text, not PDF bytes
 
     def body(self) -> str:
         """The evidence part of the user message, after the "证据（共 N 段）：" line."""
@@ -115,6 +118,7 @@ def focus_texts(
     *,
     params: FocusParams = FOCUS_PARAMS[EVIDENCE_FOCUS_SENTENCE],
     rewritten: Sequence[str] = (),
+    source_ranges: list[list[dict[str, int]]] | None = None,
 ) -> tuple[list[str], dict[str, int]]:
     """The sentence-focused rendering of each text (same order) and the counters of the selection."""
     units = [split_units(t) for t in texts]
@@ -160,7 +164,10 @@ def focus_texts(
             if j not in keep[i]:
                 keep[i].add(j)
                 kept += tokens[i][j]
-    rendered = [_join(t, spans, chosen) for t, spans, chosen in zip(texts, units, keep, strict=True)]
+    joined = [_join_parts(t, spans, chosen) for t, spans, chosen in zip(texts, units, keep, strict=True)]
+    rendered = [item[0] for item in joined]
+    if source_ranges is not None:
+        source_ranges.extend(item[1] for item in joined)
     stats = {
         "full_tokens": full,
         "kept_tokens": sum(tokens[i][j] for i in range(len(texts)) for j in keep[i]),
@@ -172,22 +179,66 @@ def focus_texts(
 
 def _join(text: str, spans: Sequence[tuple[int, int]], chosen: set[int]) -> str:
     """Kept units in their original order; a run of adjacent units is the original text, a gap is marked."""
+    return _join_parts(text, spans, chosen)[0]
+
+
+def _join_parts(text: str, spans: Sequence[tuple[int, int]], chosen: set[int]) -> tuple[str, list[dict[str, int]]]:
     if len(chosen) == len(spans):
-        return text
+        return text, [{"source_start": 0, "source_end": len(text), "rendered_start": 0, "rendered_end": len(text)}]
     parts: list[str] = []
+    origins: list[tuple[int, int] | None] = []
     run: tuple[int, int] | None = None
+
+    def add_run(a: int, b: int) -> None:
+        raw = text[a:b]
+        start = a + len(raw) - len(raw.lstrip())
+        end = max(start, b - (len(raw) - len(raw.rstrip())))
+        parts.append(raw.strip())
+        origins.append((start, end))
+
     for j, (a, b) in enumerate(spans):
         if j in chosen:
             run = (run[0], b) if run else (a, b)
             continue
         if run:
-            parts.append(text[run[0] : run[1]].strip())
+            add_run(*run)
             run = None
         if not parts or parts[-1] != ELISION:
             parts.append(ELISION)
+            origins.append(None)
     if run:
-        parts.append(text[run[0] : run[1]].strip())
-    return " ".join(parts)
+        add_run(*run)
+    ranges: list[dict[str, int]] = []
+    offset = 0
+    for part, origin in zip(parts, origins, strict=True):
+        if origin is not None:
+            ranges.append(
+                {
+                    "source_start": origin[0],
+                    "source_end": origin[1],
+                    "rendered_start": offset,
+                    "rendered_end": offset + len(part),
+                }
+            )
+        offset += len(part) + 1
+    return " ".join(parts), ranges
+
+
+def _fragments(
+    evidence: Sequence[Evidence], texts: Sequence[str], ranges: Sequence[list[dict[str, int]]]
+) -> tuple[Mapping[str, Any], ...]:
+    return tuple(
+        {
+            "citation": e.citation.model_dump(mode="json"),
+            "source_text_sha256": e.evidence_text_hash,
+            "chunk_content_hash": e.chunk_content_hash,
+            "rendered_text": text,
+            "rendered_text_sha256": sha256_hex(text),
+            "source_ranges": spans,
+            "offset_basis": "unicode_codepoints_in_evidence_text",
+        }
+        for e, text, spans in zip(evidence, texts, ranges, strict=True)
+    )
 
 
 def render_evidence(
@@ -202,6 +253,7 @@ def render_evidence(
     if mode not in ALLOWED_EVIDENCE_FOCUS:
         raise ValueError(f"unknown evidence focus mode {mode!r}")
     texts = [e.text for e in evidence]
+    ranges = [[{"source_start": 0, "source_end": len(t), "rendered_start": 0, "rendered_end": len(t)}] for t in texts]
     full = sum(estimate_tokens(t) for t in texts)
     if mode == EVIDENCE_FOCUS_OFF:
         blocks = []
@@ -209,13 +261,16 @@ def render_evidence(
             c = e.citation
             head = f"<<证据 {i} | chunk={c.chunk_id} | doc={c.doc_id} | version={c.version} | page={c.page}{' | historical' if e.historical else ''}>>"
             blocks.append(f"{head}\n{e.text}\n<<证据 {i} 结束>>")
-        return RenderedEvidence(blocks=tuple(blocks), full_tokens=full, kept_tokens=full)
+        return RenderedEvidence(
+            blocks=tuple(blocks), full_tokens=full, kept_tokens=full, fragments=_fragments(evidence, texts, ranges)
+        )
     stats = {"full_tokens": full, "kept_tokens": full, "units": 0, "kept_units": 0}
     params = FOCUS_PARAMS.get(mode)
     if params is not None:
         if scorer is None:
             raise ValueError(f"{mode} needs a sentence scorer")
-        texts, stats = focus_texts(query, texts, scorer, params=params, rewritten=rewritten)
+        ranges = []
+        texts, stats = focus_texts(query, texts, scorer, params=params, rewritten=rewritten, source_ranges=ranges)
     markers = params.markers if params is not None else "v1"
     docs: dict[str, str] = {}
     versions: dict[str, str] = {}  # document alias -> version label (a doc id is one version of one document)
@@ -250,7 +305,9 @@ def render_evidence(
             f"{alias} = {_cut_title(titles[doc_id], params)}（v={versions[alias]}）" for doc_id, alias in docs.items()
         ]
         legend = "\n".join([NAMED_SOURCE_RULE if params.source_rule else "文档：", *lines])
-    return RenderedEvidence(blocks=tuple(blocks), chunk_ids=chunk_ids, legend=legend, **stats)
+    return RenderedEvidence(
+        blocks=tuple(blocks), chunk_ids=chunk_ids, legend=legend, fragments=_fragments(evidence, texts, ranges), **stats
+    )
 
 
 def _cut_title(title: str, params: FocusParams) -> str:

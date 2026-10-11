@@ -55,11 +55,8 @@ def test_admin_replay_reruns_under_the_original_principal_with_a_fresh_run_id():
     assert r.status_code == 201, r.text
     report = r.json()
     assert report["source"]["trace_id"] == src["trace_id"] and report["replay"]["trace_id"] != src["trace_id"]
-    assert (
-        report["replay"]["run_id"] != report["source"]["run_id"]
-        and report["replay"]["run_id"] == report["replay"]["trace_id"]
-        or True
-    )
+    assert report["replay"]["run_id"] != report["source"]["run_id"]
+    assert report["replay"]["run_id"] != report["replay"]["trace_id"]
     assert report["changed"] == [] and report["versions_match"] is True and report["replay"]["outcome"] == "answered"
     assert len(rt.store.rows) == ledger_before + 5  # every node ran again: no operation-key reuse across runs
     replay_trace = rt.traces.traces[report["replay"]["trace_id"]]

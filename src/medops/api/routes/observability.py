@@ -9,7 +9,6 @@ from fastapi.responses import PlainTextResponse
 
 from medops.api.contracts import (
     AskRequest,
-    HistoricalRequest,
     ReplayReport,
     ReplayRequest,
     TracePayloadResponse,
@@ -20,6 +19,7 @@ from medops.application.replay import ReplayService
 from medops.core.errors import BusinessError, ErrorCode
 from medops.domain.identity import UserContext
 from medops.domain.query import QueryContext
+from medops.domain.state import VersionSet
 from medops.harness.dependencies import HarnessDeps
 
 
@@ -45,24 +45,32 @@ def build_router(runtime: ApiRuntime) -> APIRouter:
             if not has_role(admin.roles, "admin"):
                 raise BusinessError(ErrorCode.forbidden, "replay requires the admin role")
 
-            def deps_for(user: UserContext, context: QueryContext) -> HarnessDeps:
+            def deps_for(
+                user: UserContext, context: QueryContext, original: AskRequest
+            ) -> tuple[HarnessDeps, VersionSet]:
                 runtime.bind_identity(conn, user)  # the replay runs under the original principal, not the admin
-                historical = HistoricalRequest(as_of=context.as_of) if context.historical_requested else None
-                return runtime.build_deps(
+                routed = runtime.route_policies(conn, user)
+                deps = runtime.build_deps(
                     conn,
                     user,
-                    AskRequest(query="replay", historical=historical),
-                    runtime.route_policies(conn, user),
+                    original,
+                    routed,
                     query_context=context,
                 )
+                return deps, routed.versions
+
+            def load_payload(user: UserContext, tid: str, purpose: str) -> TracePayloadResponse:
+                with runtime.restricted_connection() as rconn:
+                    return runtime.payload_reader(rconn).read(user, tid, purpose)
+
+            writer = runtime.payload_writer(conn)
 
             service = ReplayService(
                 store=runtime.trace_store(conn),
-                versions=runtime.versions,
-                versions_for=lambda user: runtime.route_policies(conn, user).versions,
                 build_deps=deps_for,
                 resolve_user=lambda principal: runtime.resolve_user(conn, principal),
-                payload_writer=runtime.payload_writer(conn),
+                payload_writer=writer,
+                load_payload=load_payload if writer is not None else None,
             )
             return service.replay(admin, trace_id, body)
 

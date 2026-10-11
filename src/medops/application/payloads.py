@@ -15,7 +15,7 @@ from medops.api.contracts import TracePayloadItem, TracePayloadResponse
 from medops.core.envelope import KeyProvider, Sealed, open_sealed, payload_aad, seal
 from medops.core.errors import BusinessError, ErrorCode
 from medops.domain.identity import UserContext
-from medops.harness.audit import run_payloads
+from medops.harness.audit import ExecutionAudit, run_payloads
 from medops.harness.runtime import HarnessRun
 
 KINDS = ("input", "evidence_snapshot", "model_output")
@@ -35,9 +35,21 @@ def _json_bytes(value: Any) -> bytes:
     return json.dumps(value, ensure_ascii=False, sort_keys=True, default=str).encode("utf-8")
 
 
-def payloads_from_run(run: HarnessRun, *, query: str) -> dict[str, Mapping[str, Any]]:
+def payloads_from_run(
+    run: HarnessRun, *, query: str, request: Mapping[str, Any] | None = None, audit: ExecutionAudit | None = None
+) -> dict[str, Mapping[str, Any]]:
     """The three replayable pieces of a harness run (baseline 3.5)."""
-    return run_payloads(run, query=query)
+    payloads = run_payloads(run, query=query)
+    payloads["input"] = {**payloads["input"], "request": dict(request) if request is not None else None}
+    if audit is not None:
+        audit.ensure_complete()
+        events = audit.snapshot().events
+        payloads["evidence_snapshot"] = {
+            **payloads["evidence_snapshot"],
+            "retrieval_events": [e for e in events if e["kind"] == "retrieval"],
+            "rendered_evidence": [e for e in events if e["kind"] == "rendered_evidence"],
+        }
+    return payloads
 
 
 @dataclass

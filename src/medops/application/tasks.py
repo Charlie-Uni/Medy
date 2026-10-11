@@ -450,6 +450,13 @@ class TaskRunner:
             safety=run.safety.model_dump(mode="json") if run else None,
             attempt=claimed.attempts,
             outcome=outcome,
+            historical=claimed.historical,
+            model_calls=meter.call_journal.snapshot() if isinstance(meter, MeteredGateway) else (),
+            conditions=ctx.deps.execution_binding if ctx is not None else None,
+            model_call_audit_complete=meter.call_journal.complete if isinstance(meter, MeteredGateway) else ctx is None,
+            call_receipts=tuple(r.model_dump(mode="json") for r in meter.receipts)
+            if isinstance(meter, MeteredGateway)
+            else (),
         )
         ExecutionAuditWriter(self.env.trace_store(conn), self.env.payload_writer(conn)).record(
             trace, escalation, node="task", payloads=payloads

@@ -18,7 +18,7 @@ from __future__ import annotations
 
 from datetime import date, datetime
 from enum import StrEnum
-from typing import Annotated
+from typing import Annotated, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, JsonValue, field_validator, model_validator
 from pydantic.config import JsonDict
@@ -262,13 +262,26 @@ class FeedbackReceipt(ApiModel):
 
 
 class ReplayRequest(ApiModel):
-    """Admin request to re-run one trace (M3-08). The replay runs the original question under the original
-    principal's current identity, with this deployment's pinned versions, under a fresh `replay_run_id` so no
-    operation-key result of the production run can be reused. The saved effective day and explicit historical
-    mode are preserved against current facts; this is not an original fact snapshot. Missing context and
-    non-Ask traces are rejected before execution."""
+    """Current-fact diagnosis is the compatibility default. Original-condition execution
+    requires archived corpus/index and build bindings; this deployment refuses it before spending."""
 
     reason: Annotated[str, Field(min_length=1, max_length=500)]
+    mode: Literal["diagnostic_current", "original_conditions"] = "diagnostic_current"
+
+
+class ReplayConditions(ApiModel):
+    input_complete: bool = False
+    input_match: bool | None = None
+    identity_match: bool | None = None
+    source_artifacts_match: bool | None = None
+    configuration_match: bool | None = None
+    routed_policy_match: bool | None = None
+    evidence_match: bool | None = None
+    rendered_evidence_match: bool | None = None
+    actual_models_match: bool | None = None
+    corpus_match: bool | None = None  # selected evidence does not bind BM25/vector corpus statistics
+    original_conditions_reproduced: bool = False
+    limitations: tuple[str, ...] = ()
 
 
 class ReplaySide(ApiModel):
@@ -286,7 +299,9 @@ class ReplayReport(ApiModel):
     replay_id: NonEmptyStr
     source: ReplaySide
     replay: ReplaySide
-    versions_match: bool  # the source ran under exactly this deployment's version set
+    versions_match: bool  # version labels only; not a claim about inputs, facts, code or provider weights
+    mode: Literal["diagnostic_current", "original_conditions"] = "diagnostic_current"
+    conditions: ReplayConditions = Field(default_factory=ReplayConditions)
     changed: tuple[str, ...] = ()  # fields that differ between source and replay
     created_at: datetime
 

@@ -6,6 +6,7 @@ import time
 from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass, field
 from datetime import UTC, date, datetime
+from typing import Any
 
 from medops.domain.identity import UserContext
 from medops.domain.query import QueryContext
@@ -55,6 +56,7 @@ class HarnessDeps:
     doc_titles: Callable[[UserContext, Sequence[str]], Mapping[str, str]] | None = None
     execution_limits: ExecutionLimits | None = None  # server-owned; nested operations share the parent's allowance
     audit: ExecutionAudit | None = None  # one Skill execution; bodies only enter restricted payloads
+    execution_binding: Mapping[str, Any] = field(default_factory=dict)  # effective retrieval and routed policy contents
 
     def __post_init__(self) -> None:
         if self.query_context is not None and self.as_of is not None and self.as_of != self.query_context.as_of:

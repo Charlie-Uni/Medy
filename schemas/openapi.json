@@ -1455,6 +1455,139 @@
         "title": "Refusal",
         "type": "object"
       },
+      "ReplayConditions": {
+        "additionalProperties": false,
+        "properties": {
+          "actual_models_match": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Actual Models Match"
+          },
+          "configuration_match": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Configuration Match"
+          },
+          "corpus_match": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Corpus Match"
+          },
+          "evidence_match": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Evidence Match"
+          },
+          "identity_match": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Identity Match"
+          },
+          "input_complete": {
+            "default": false,
+            "title": "Input Complete",
+            "type": "boolean"
+          },
+          "input_match": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Input Match"
+          },
+          "limitations": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Limitations",
+            "type": "array"
+          },
+          "original_conditions_reproduced": {
+            "default": false,
+            "title": "Original Conditions Reproduced",
+            "type": "boolean"
+          },
+          "rendered_evidence_match": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Rendered Evidence Match"
+          },
+          "routed_policy_match": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Routed Policy Match"
+          },
+          "source_artifacts_match": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Source Artifacts Match"
+          }
+        },
+        "title": "ReplayConditions",
+        "type": "object"
+      },
       "ReplayReport": {
         "additionalProperties": false,
         "properties": {
@@ -1466,9 +1599,21 @@
             "title": "Changed",
             "type": "array"
           },
+          "conditions": {
+            "$ref": "#/components/schemas/ReplayConditions"
+          },
           "created_at": {
             "format": "date-time",
             "title": "Created At",
+            "type": "string"
+          },
+          "mode": {
+            "default": "diagnostic_current",
+            "enum": [
+              "diagnostic_current",
+              "original_conditions"
+            ],
+            "title": "Mode",
             "type": "string"
           },
           "replay": {
@@ -1499,8 +1644,17 @@
       },
       "ReplayRequest": {
         "additionalProperties": false,
-        "description": "Admin request to re-run one trace (M3-08). The replay runs the original question under the original\nprincipal's current identity, with this deployment's pinned versions, under a fresh `replay_run_id` so no\noperation-key result of the production run can be reused. The saved effective day and explicit historical\nmode are preserved against current facts; this is not an original fact snapshot. Missing context and\nnon-Ask traces are rejected before execution.",
+        "description": "Current-fact diagnosis is the compatibility default. Original-condition execution\nrequires archived corpus/index and build bindings; this deployment refuses it before spending.",
         "properties": {
+          "mode": {
+            "default": "diagnostic_current",
+            "enum": [
+              "diagnostic_current",
+              "original_conditions"
+            ],
+            "title": "Mode",
+            "type": "string"
+          },
           "reason": {
             "maxLength": 500,
             "minLength": 1,

@@ -9,7 +9,7 @@ import threading
 import time
 from collections.abc import Iterator, Mapping, Sequence
 from contextlib import contextmanager
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field
 from datetime import date, timedelta
 from typing import Any
 
@@ -28,6 +28,7 @@ from medops.application.policy_loader import (
     RoutedPolicies,
     load_release_state,
     load_released,
+    policy_snapshot,
 )
 from medops.application.tasks import TaskStore
 from medops.core.config import Settings
@@ -412,6 +413,17 @@ class ProductionRuntime:
             executions=PgExecutionStore(conn),
             query_context=selected,
             execution_limits=configured_limits(self.settings),
+            execution_binding={
+                "policy_snapshot": policy_snapshot(routed.policies),
+                "canary_ids": list(routed.canary_ids),
+                "retrieval": asdict(hybrid),
+                "rerank_output": routed.policies.rerank_output(RERANK_OUTPUT),
+                "glossary_version": routed.policies.glossary_version(),
+                "multi_query": routed.policies.multi_query(),
+                "doc_focus": routed.policies.doc_focus(),
+                "source_constraint": routed.policies.source_constraint(),
+                "query_translation_model": qt_model,
+            },
         )
 
     def task_store(self, conn: Any) -> TaskStore:

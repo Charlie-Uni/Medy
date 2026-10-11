@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import time
+from dataclasses import replace
 
 from fastapi import APIRouter, Request
 
@@ -16,6 +17,7 @@ from medops.application.audit import trace_from_run
 from medops.application.execution_audit import ExecutionAuditWriter
 from medops.application.payloads import payloads_from_run
 from medops.domain.query import resolve_query_context
+from medops.harness.audit import ExecutionAudit
 from medops.harness.runtime import initial_state, run_ask
 from medops.infrastructure.llm.meter import MeteredGateway
 
@@ -31,7 +33,7 @@ def build_router(runtime: ApiRuntime) -> APIRouter:
             user = runtime.authenticator.authenticate(request.headers.get("authorization"), runtime.directory(conn))
             runtime.bind_identity(conn, user)
             routed = runtime.route_policies(conn, user)  # M4-09: released pointers + canary split, per request
-            deps = runtime.build_deps(conn, user, body, routed)
+            deps = replace(runtime.build_deps(conn, user, body, routed), audit=ExecutionAudit())
             state = initial_state(
                 user=user,
                 query=body.query,
@@ -61,7 +63,12 @@ def build_router(runtime: ApiRuntime) -> APIRouter:
             )
             # the audit write is part of the request transaction: no trace, no answer (baseline 5.10)
             ExecutionAuditWriter(runtime.trace_store(conn), runtime.payload_writer(conn)).record(
-                trace, escalation, node="ask", payloads=payloads_from_run(run, query=body.query)
+                trace,
+                escalation,
+                node="ask",
+                payloads=payloads_from_run(
+                    run, query=body.query, request=body.model_dump(mode="json"), audit=deps.audit
+                ),
             )
         return response
 

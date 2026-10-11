@@ -19,7 +19,7 @@ from typing import Any, NamedTuple
 
 from pydantic import ValidationError
 
-from medops.core.canonical import operation_key
+from medops.core.canonical import canonical_hash, operation_key
 from medops.core.errors import BusinessError, ErrorCode, InfrastructureError, MedOpsError
 from medops.core.telemetry import annotate, run_metadata, span
 from medops.domain.common import DocType, DomainModel, ReasonCode
@@ -32,6 +32,7 @@ from medops.domain.state import VersionSet
 from medops.harness.audit import ExecutionAudit, ExecutionAuditSnapshot
 from medops.harness.contracts import MAX_RETRIES, NodeAttempt, NodeFailure, NodeSpec, run_node
 from medops.harness.dependencies import HarnessDeps
+from medops.harness.execution_record import execution_conditions
 from medops.infrastructure.llm.accounting import call_scope
 from medops.infrastructure.llm.execution_budget import EXECUTION_BUDGET_VERSION, default_limits, execution_scope
 from medops.infrastructure.llm.gateway import BudgetExceeded
@@ -154,12 +155,33 @@ class SkillRegistry:
         limits = limits.model_copy(update={"timeout_s": min(limits.timeout_s, self.get(name, version).spec.timeout_s)})
         if not isinstance(context.deps.gateway, MeteredGateway):
             context = replace(context, deps=replace(context.deps, gateway=MeteredGateway(context.deps.gateway)))
+        meter = context.deps.gateway
+        assert isinstance(meter, MeteredGateway)
+        entry = self.get(name, version)
         with (
             run_metadata(context.trace_id, context.versions.model_dump(mode="json"), kind="skill"),
             call_scope(run_id=context.run_id),
             execution_scope(limits) as budget,
             span("skill.run", skill=f"{name}@{version}") as current,
         ):
+            journal.record_event(
+                "skill_execution_input",
+                {
+                    "input": {
+                        "skill": f"{name}@{version}",
+                        "input": raw_input,
+                        "user": context.user.model_dump(mode="json"),
+                        "versions": context.versions.model_dump(mode="json"),
+                        "query_context": context.query_context.model_dump(mode="json")
+                        if context.query_context
+                        else None,
+                    },
+                    "conditions": execution_conditions(context.deps, limits, shared_limits=budget.limits),
+                    "skill_spec": entry.spec.model_dump(mode="json"),
+                    "input_schema_sha256": canonical_hash(entry.input_model.model_json_schema()),
+                    "output_schema_sha256": canonical_hash(entry.output_model.model_json_schema()),
+                },
+            )
             result = self._execute(name, version, raw_input, context=context)
             snapshot = budget.snapshot()
             annotate(
@@ -175,6 +197,7 @@ class SkillRegistry:
                 execution_budget_blocked=snapshot.blocked_reason,
             )
             journal.ensure_complete()
+            meter.call_journal.ensure_complete()
             return replace(result, audit=journal.snapshot())
 
     def _execute(self, name: str, version: str, raw_input: Mapping[str, object], *, context: SkillContext) -> SkillRun:

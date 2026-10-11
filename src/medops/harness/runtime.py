@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass, replace
+from collections.abc import Mapping
+from dataclasses import dataclass, field, replace
+from typing import Any
 
 from medops.core.errors import BusinessError, ErrorCode
 from medops.core.telemetry import annotate, run_metadata, span
@@ -13,6 +15,7 @@ from medops.domain.query import QueryContext, resolve_query_context
 from medops.domain.state import AgentState, TokenBudget, VersionSet
 from medops.harness.contracts import NodeAttempt
 from medops.harness.dependencies import HarnessDeps
+from medops.harness.execution_record import execution_conditions, execution_input
 from medops.harness.graph import build_graph
 from medops.infrastructure.llm.accounting import call_scope
 from medops.infrastructure.llm.execution_budget import EXECUTION_BUDGET_VERSION, default_limits, execution_scope
@@ -26,6 +29,9 @@ class HarnessRun:
     state: AgentState
     attempts: tuple[NodeAttempt, ...]
     flagged_evidence: tuple[str, ...]
+    execution_input: Mapping[str, Any] = field(default_factory=dict)
+    conditions: Mapping[str, Any] = field(default_factory=dict)
+    model_calls: tuple[Mapping[str, Any], ...] = ()
 
     @property
     def outcome(self) -> str:
@@ -85,12 +91,19 @@ def run_ask(state: AgentState, deps: HarnessDeps, *, recursion_limit: int = 12) 
     limits = limits.model_copy(update={"token_limit": min(limits.token_limit, state.budget.limit)})
     if not isinstance(deps.gateway, MeteredGateway):
         deps = replace(deps, gateway=MeteredGateway(deps.gateway))
+    meter = deps.gateway
+    assert isinstance(meter, MeteredGateway)
+    inputs = execution_input(state, recursion_limit=recursion_limit)
+    prior_calls = {r["call_id"] for r in meter.call_journal.snapshot()}
     with (
         run_metadata(state.trace_id, state.versions.model_dump(mode="json"), kind="ask"),
         call_scope(run_id=state.run_id),
         execution_scope(limits) as budget,
         span("harness.run") as current,
     ):
+        conditions = execution_conditions(deps, limits, shared_limits=budget.limits)
+        if deps.audit is not None:
+            deps.audit.record_event("execution_input", {"input": inputs, "conditions": conditions})
         app = build_graph(deps)
         result = app.invoke(
             {"state": state, "attempts": [], "flagged": []}, config={"recursion_limit": recursion_limit}
@@ -113,7 +126,15 @@ def run_ask(state: AgentState, deps: HarnessDeps, *, recursion_limit: int = 12) 
         if final.answer is None and final.escalation is None:
             raise AssertionError("harness ended without an answer or an escalation")
         annotate(current, outcome="answered" if final.answer is not None else "escalated")
-        run = HarnessRun(state=final, attempts=tuple(result["attempts"]), flagged_evidence=tuple(result["flagged"]))
+        meter.call_journal.ensure_complete()
+        run = HarnessRun(
+            state=final,
+            attempts=tuple(result["attempts"]),
+            flagged_evidence=tuple(result["flagged"]),
+            execution_input=inputs,
+            conditions=conditions,
+            model_calls=tuple(r for r in meter.call_journal.snapshot() if r["call_id"] not in prior_calls),
+        )
         if deps.audit is not None:
             deps.audit.record_run(run)
         return run

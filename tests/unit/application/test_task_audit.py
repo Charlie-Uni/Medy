@@ -66,6 +66,12 @@ def test_five_real_skills_have_matching_trace_and_encrypted_audit(name):
     assert set(payloads) == {"input", "evidence_snapshot", "model_output"}
     assert payloads["input"]["input"] == env.spec["input"]
     assert payloads["input"]["versions"] == done.result["versions"]
+    assert payloads["input"]["conditions"]["artifacts"]["source"]["sha256"]
+    assert payloads["input"]["execution_inputs"][0]["input"]["user"]["user_id"] == env.u.user_id
+    calls = payloads["model_output"]["model_calls"]
+    assert len(calls) == trace.model_calls
+    assert all(c["receipt"]["call"]["trace_id"] == done.trace_id for c in calls)
+    assert all(c["response"]["system_fingerprint"] == "fake" for c in calls)
     assert [e["citation"]["chunk_id"] for e in payloads["evidence_snapshot"]["evidence"]] == list(expected)
     assert payloads["model_output"]["output"]["status"] == "completed"
     assert payloads["model_output"]["safety_result"]["decision"] == "allow"

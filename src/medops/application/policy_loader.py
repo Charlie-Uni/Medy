@@ -30,6 +30,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Any
 
+from medops.core.canonical import canonical_hash
 from medops.domain.state import MAX_EVIDENCE, VersionSet
 from medops.harness.focus_profiles import ALLOWED_EVIDENCE_FOCUS, EVIDENCE_FOCUS_OFF
 from medops.harness.production import ALLOWED_ANSWER_MODELS, ROUTABLE_INTENTS
@@ -41,6 +42,22 @@ from medops.retrieval.rewrite import GLOSSARY_NONE
 SUPPORTED_RELEASE_TARGETS: frozenset[tuple[str, str]] = frozenset(
     {("retrieval_params", "hybrid"), ("prompt", "answer_system"), ("model_route", "answer")}
 )
+
+
+def policy_snapshot(released: ReleasedPolicySet) -> list[dict[str, str]]:
+    """Bind the actual routed policy contents, independently of display version labels."""
+    return [
+        {
+            "policy_id": policy.policy_id,
+            "kind": policy.kind,
+            "name": policy.name,
+            "version": policy.version,
+            "diff_sha256": canonical_hash(policy.diff),
+        }
+        for policy in sorted(released.policies, key=lambda item: (item.kind, item.name, item.policy_id))
+    ]
+
+
 RETRIEVAL_PARAM_KEYS = (
     "k_lexical",
     "k_vector",

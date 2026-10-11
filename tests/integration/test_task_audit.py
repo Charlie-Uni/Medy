@@ -101,6 +101,12 @@ def test_real_retries_persist_unique_spans_and_access_logged_ciphertext(db):
         payload = PayloadReader(store, PROVIDER).read(env.u, done.trace_id, "incident review ARCH06")
         model = next(p.payload for p in payload.items if p.kind == "model_output")
         assert sum(e["kind"] == "harness" for e in model["events"]) == 3
+        assert model["model_call_audit_complete"]
+        assert len(model["model_calls"]) == len(env.gateway.calls)
+        assert all(c["receipt"]["call"]["trace_id"] == done.trace_id for c in model["model_calls"])
+        assert all(c["request"]["messages"] for c in model["model_calls"])
+        inputs = next(p.payload for p in payload.items if p.kind == "input")
+        assert inputs["conditions"]["artifacts"]["source"]["sha256"]
     with psycopg.connect(db["users"]["admin"]) as conn:
         assert conn.execute(
             "select purpose from payload_access_log where trace_id=%s", (done.trace_id,)

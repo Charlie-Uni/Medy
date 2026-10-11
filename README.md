@@ -10,7 +10,7 @@ MedOps Copilot 是面向医学事务、药物警戒和临床运营的可信医�
 
 ## 最新执行入口（2026-10-11）
 
-后续统一按[当前任务台账](docs/CURRENT_TASKS.md)推进：保留此前架构、评测、BM25、Redis、Langfuse、模型路由和使用闭环任务，新增受控 Agent 与模型生成 Prompt/声明式 Skill 的自进化任务。顺序为目标与验收 → 必要执行保护 → 首个业务 Agent → Prompt 自进化 → Skill/使用闭环 → 完整验证与交付。PLAN-01 设计证据与 PV 场景范围已确认，PLAN-02 的 [ADR-0012](docs/adr/ADR-0012-agent-evolution-goals-and-acceptance.md) 剩余契约继续沟通；ARCH-04/11 及当前任务租约 ARCH-05、历史输入 ARCH-02、最终判断 ARCH-03、异步审计 ARCH-06 工程自审通过，下一项 ARCH-07；S2 仍须满足 PLAN-02 相关契约和其他正确性前置。自动激活仅实验，S3 改进声明须有未见盲测，每轮付费单独授权。新增能力尚未实现；盲测新增工作量确认后重估工期。
+后续统一按[当前任务台账](docs/CURRENT_TASKS.md)推进：保留此前架构、评测、BM25、Redis、Langfuse、模型路由和使用闭环任务，新增受控 Agent 与模型生成 Prompt/声明式 Skill 的自进化任务。顺序为目标与验收 → 必要执行保护 → 首个业务 Agent → Prompt 自进化 → Skill/使用闭环 → 完整验证与交付。PLAN-01 设计证据与 PV 场景范围已确认，PLAN-02 的 [ADR-0012](docs/adr/ADR-0012-agent-evolution-goals-and-acceptance.md) 剩余契约继续沟通；ARCH-04/11 及当前任务租约 ARCH-05、历史输入 ARCH-02、最终判断 ARCH-03、异步审计 ARCH-06、执行记录和诊断边界 ARCH-07 工程自审通过，下一项 ARCH-08；S2 仍须满足 PLAN-02 相关契约和其他正确性前置。自动激活仅实验，S3 改进声明须有未见盲测，每轮付费单独授权。新增能力尚未实现；盲测新增工作量确认后重估工期。
 
 **每轮代码、文档、实验与部署都必须自审核，问题修复复测且证据齐备后才能标记完成。** 固定执行要求见[AGENTS.md](AGENTS.md)，模板见[分阶段执行与自审](docs/ITERATION_STAGES.md)。评测标准修订、来源契约、回放绑定和模型裁判校准已形成冻结的 `probe-v4` 与 `main-v5-provisional`；第二独立人工仍未具备，相应结论继续标为 provisional；生产签字和逐次付费授权要求保留。
 
@@ -37,6 +37,9 @@ Redis 候选缓存已切换到本机主运行配置：主库与 safety 使用独
 上下文裁剪 v7 已完成 614 条历史证据诊断：未改 query 的 600 条中隐藏 4 个 key，完整 key 证据组从 482 降至 480；14 条改 query 的旧上下文单列，另保留 `ms-0525` 的未测缺口。原 v7 暂不启用。句子评分接受 NaN/无穷仍继续生成的缺陷已修；614 条真实有限分数重放，渲染与保留结果逐字段一致。数据、错误原文、范围与下一步见[记录 170](docs/reviews/2026-10-10-implementation-170-focus-v7-evidence-retention-audit.md)；实际片段追溯与跨块 span 定位仍待补，API 费用 0，未通过正式成本门禁。
 
 
+
+
+ARCH-07 已补 Ask/Task 完整执行记录、实际模型请求/SDK回复/回执、渲染正文/哈希与 Unicode 来源区间；Ask 诊断回放恢复输入并分项报告条件差异，见[回放契约](docs/EXECUTION_REPLAY.md)和[记录181](docs/reviews/2026-10-11-implementation-181-execution-records-and-replay-boundaries.md)。全量2038/70、518维护输入一致；614存档上下文的6140布局比较零差异，0托管调用。原条件恢复未交付，当前明确拒绝；Task/MCP回放与完整跨块定位仍待做，不作真实质量或发布声明。
 
 ## 早期进度快照（历史）
 

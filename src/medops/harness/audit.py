@@ -34,8 +34,21 @@ def audit_step(
 
 def run_payloads(run: HarnessRun, *, query: str) -> dict[str, Mapping[str, Any]]:
     st = run.state
+    manifest = [
+        {
+            "citation": e.citation.model_dump(mode="json"),
+            "status": e.status.value,
+            "historical": e.historical,
+            "evidence_text_hash": e.evidence_text_hash,
+            "chunk_content_hash": e.chunk_content_hash,
+        }
+        for e in st.evidence
+    ]
     return {
         "input": {
+            "format_version": "ask-audit-v2",
+            "execution_input": dict(run.execution_input),
+            "conditions": dict(run.conditions),
             "query": query,
             "rewritten_queries": list(st.rewritten_queries),
             "session_entities": [e.model_dump(mode="json") for e in st.session_entities],
@@ -45,10 +58,15 @@ def run_payloads(run: HarnessRun, *, query: str) -> dict[str, Mapping[str, Any]]
         },
         "evidence_snapshot": {
             "candidates": [c.chunk_id for c in st.candidates],
+            "candidate_details": [c.model_dump(mode="json") for c in st.candidates],
+            "observed_fact_manifest": manifest,
+            "observed_fact_manifest_sha256": canonical_hash(manifest),
             "evidence": [e.model_dump(mode="json") | {"text_hash": e.evidence_text_hash} for e in st.evidence],
             "flagged": list(run.flagged_evidence),
         },
         "model_output": {
+            "model_calls": list(run.model_calls),
+            "model_call_audit_complete": True,
             "answer": st.answer.model_dump(mode="json") if st.answer else None,
             "escalation": st.escalation.model_dump(mode="json") if st.escalation else None,
             "verify_result": st.verify_result.model_dump(mode="json") if st.verify_result else None,
@@ -114,6 +132,9 @@ class ExecutionAudit:
     def record_run(self, run: HarnessRun) -> None:
         self.observe(run.state.evidence, run.flagged_evidence)
         self._append({"kind": "harness", "payloads": run_payloads(run, query=run.state.query)})
+
+    def record_event(self, kind: str, payload: Mapping[str, Any]) -> None:
+        self._append({"kind": kind, **dict(payload)})
 
     def record_attempts(self, attempts: Sequence[NodeAttempt]) -> None:
         self._append({"kind": "attempts", "attempts": [a.model_dump(mode="json") for a in attempts]})

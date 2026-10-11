@@ -16,6 +16,7 @@ import openai
 from medops.core.config import Settings
 from medops.core.deadline import deadline_scope, remaining_timeout
 from medops.infrastructure.llm.async_transport import AsyncChatTransport
+from medops.infrastructure.llm.call_audit import provider_attempt, record_provider_response
 from medops.infrastructure.llm.gateway import (
     OPENAI_PRICES,
     ModelOutputInvalid,
@@ -55,9 +56,13 @@ class OpenAIModelGateway:
                 close()
 
     def _send(self, kwargs: dict[str, Any]) -> Any:
-        if self._transport is not None:
-            return self._transport.create(kwargs)
-        return self._client.chat.completions.create(**kwargs)
+        with provider_attempt(kwargs):
+            if self._transport is not None:
+                response = self._transport.create(kwargs)
+            else:
+                response = self._client.chat.completions.create(**kwargs)
+            record_provider_response(response)
+            return response
 
     def _create(self, kwargs: dict[str, Any]) -> Any:
         """One provider call. Reasoning-tier models reject any non-default `temperature` with a 400

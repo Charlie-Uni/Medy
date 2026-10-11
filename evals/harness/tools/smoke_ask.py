@@ -27,6 +27,7 @@ from datetime import date
 
 import psycopg
 
+from medops.application.policy_loader import policy_snapshot
 from medops.core.canonical import canonical_hash
 from medops.core.config import Settings
 from medops.core.telemetry import configure_telemetry, flush, telemetry_options
@@ -52,7 +53,6 @@ from medops.evals.run_conditions import (
     fact_snapshot,
     fact_snapshot_from_dsn,
     make_conditions,
-    policy_snapshot,
     validate_attempts,
 )
 from medops.evals.runtime import EXIT_STALLED, with_database

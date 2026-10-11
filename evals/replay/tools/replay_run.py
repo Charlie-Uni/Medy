@@ -38,6 +38,7 @@ from medops.application.policy_loader import (
     ReleasedPolicySet,
     check_restates_release,
     load_released,
+    policy_snapshot,
     validate_diff,
 )
 from medops.core.canonical import canonical_hash
@@ -63,7 +64,6 @@ from medops.evals.run_conditions import (
     attempt_accounting,
     bind_conditions,
     make_conditions,
-    policy_snapshot,
     validate_replay_attempts,
 )
 from medops.evals.runtime import EXIT_STALLED, Plane, with_database

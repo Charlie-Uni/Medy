@@ -1,0 +1,173 @@
+{
+  "format": "implementation-review-v1",
+  "task_id": "ARCH-07",
+  "date": "2026-10-11",
+  "implementation_and_reviewer": "Codex (same implementer; not independent human)",
+  "head": "5a604050b9c0706bfd823685e5befcb9619d64a6",
+  "status": "engineering_pass",
+  "scope": "Ask/Task execution recording and explicit Ask diagnostic/original-condition boundaries; original-condition restoration not delivered",
+  "full_check": {
+    "command": "env -u DEBUG PYTHONPATH=<isolated-worktree>/src:<isolated-worktree> make check",
+    "exit_code": 0,
+    "passed": 2038,
+    "skipped": 70,
+    "warnings": 1,
+    "pytest_seconds": 57.36,
+    "mypy_sources": 204,
+    "formatted_files": 485,
+    "evaluation_datasets": 4,
+    "schema_check": "up_to_date"
+  },
+  "checks": [
+    {
+      "scope": "initial directed",
+      "passed": 94,
+      "seconds": 3.73
+    },
+    {
+      "scope": "expanded after repairs",
+      "passed": 330,
+      "seconds": 9.16
+    },
+    {
+      "scope": "final targeted",
+      "passed": 76,
+      "seconds": 3.38
+    },
+    {
+      "scope": "documents",
+      "passed": 10,
+      "seconds": 0.9
+    },
+    {
+      "scope": "expanded budget remediation",
+      "passed": 253,
+      "seconds": 7.61
+    },
+    {
+      "scope": "final budget/profile tests",
+      "passed": 25,
+      "seconds": 1.92
+    }
+  ],
+  "skip_reason": "optional lexical candidates B/C server unreachable (OperationalError); existing 70 skips; current PostgreSQL/Redis/BM25-D tests ran",
+  "warnings": [
+    "existing intentional short-HMAC JWT test warning",
+    "2 unmappable gold groups remain misses",
+    "historical replay uses old safety",
+    "independent review pending",
+    "no unseen holdout"
+  ],
+  "source_comparison": {
+    "maintained_inputs": 518,
+    "missing": [],
+    "mismatches": [],
+    "ignored_env_files_identical": true
+  },
+  "preservation": {
+    "before_files": 140,
+    "unchanged_files": 110,
+    "intentional_overlaps": [
+      "README.md",
+      "docs/CURRENT_TASKS.md",
+      "docs/HISTORICAL_QUERIES.md",
+      "docs/ITERATION_STAGES.md",
+      "docs/TASK_EXECUTION_AUDIT.md",
+      "evals/harness/tools/safety_run.py",
+      "evals/harness/tools/smoke_ask.py",
+      "evals/replay/tools/replay_run.py",
+      "schemas/api/ReplayReport.schema.json",
+      "schemas/api/ReplayRequest.schema.json",
+      "schemas/openapi.json",
+      "src/medops/api/contracts.py",
+      "src/medops/api/routes/ask.py",
+      "src/medops/api/routes/observability.py",
+      "src/medops/api/runtime.py",
+      "src/medops/application/execution_audit.py",
+      "src/medops/application/payloads.py",
+      "src/medops/application/replay.py",
+      "src/medops/application/tasks.py",
+      "src/medops/harness/answer.py",
+      "src/medops/harness/audit.py",
+      "src/medops/harness/dependencies.py",
+      "src/medops/harness/nodes.py",
+      "src/medops/harness/runtime.py",
+      "src/medops/infrastructure/llm/meter.py",
+      "src/medops/infrastructure/llm/openai_gateway.py",
+      "src/medops/skills/registry.py",
+      "tests/integration/test_task_audit.py",
+      "tests/unit/api/test_replay_route.py",
+      "tests/unit/application/test_task_audit.py"
+    ],
+    "missing_original_files": []
+  },
+  "render_verification": {
+    "cases": 614,
+    "layouts": 10,
+    "render_comparisons": 6140,
+    "render_mismatches": 0,
+    "archived_v7_score_calls": 1035,
+    "checked_source_intervals": 54355,
+    "hosted_model_calls": 0,
+    "cost_usd": 0,
+    "snapshot_sha256": "61b6f15a84f5f59bde674ee145315b67383d4497bf0f216d603e1e33dfedf07f",
+    "original_renderer_sha256": "da18b6ec2292f28ed2aae8c9f590fca5ddca84c5431e3964dc2dd5b1c7fd7936",
+    "current_renderer_sha256": "e4eb59a5c68efb0bc33498b632bb4c3de7aa2c9c01243e40733f5e1f18a50098",
+    "duration_s": 11.036
+  },
+  "document_audit": {
+    "markdown_files": 7,
+    "local_links": 123,
+    "bad_links": [],
+    "task_ids": 141,
+    "task_ids_preserved": true,
+    "duplicate_task_ids": [],
+    "final_task_state": "ARCH-07 DONE (recording/diagnostic engineering scope only)"
+  },
+  "hosted_model_calls": 0,
+  "actual_cost_usd": 0,
+  "database_migrations": 0,
+  "committed": false,
+  "pushed": false,
+  "restarted": false,
+  "elapsed_minutes": 66.6,
+  "limits": [
+    "original-condition corpus/index/build restoration not delivered; mode rejected before provider admission",
+    "Task/MCP replay and MCP restricted bodies not delivered",
+    "FOCUS-02 complete cross-chunk gold/PDF anchors pending",
+    "source files on disk are not attested loaded code",
+    "selected facts do not bind the full corpus",
+    "real hosted-model quality/performance, independent human and unseen holdout not verified"
+  ],
+  "review_items": {
+    "requirements_scope": "pass (stated engineering scope only)",
+    "adr_stage_gates": "pass (stated engineering scope only)",
+    "correctness_failures": "pass (stated engineering scope only)",
+    "permissions_data": "pass (stated engineering scope only)",
+    "budget_cancellation_effects": "pass (stated engineering scope only)",
+    "traceability_versions": "pass (stated engineering scope only)",
+    "verification": "pass (stated engineering scope only)",
+    "documentation_delivery": "pass (stated engineering scope only)"
+  },
+  "local_evidence": {
+    "backup": "/var/folders/zj/6djhy_4x7vx_7t8xcgt_v62c0000gn/T/medy-arch07-vudfp9cw",
+    "worktree": "/Users/leaf/.cache/medy-checks/arch07-verified-luesvt3o",
+    "full_gate_log": "<worktree>/.local/arch07-check.log",
+    "slice_diff": ".local/arch07-slice.diff",
+    "source_comparison": ".local/arch07-source-comparison.json",
+    "render_script": ".local/arch07-verify-rendering.py",
+    "failure_logs": [
+      ".local/arch07-directed-first.log",
+      ".local/arch07-directed-third.log",
+      ".local/arch07-remediation.log",
+      ".local/arch07-mypy-first.log",
+      ".local/arch07-mypy-second.log",
+      ".local/arch07-render-verification.log",
+      ".local/arch07-budget-remediation-first.log"
+    ],
+    "full_check_previous_logs": [
+      "<worktree>/.local/arch07-check-before-budget-remediation.log",
+      "<worktree>/.local/arch07-check-before-shared-budget-binding.log"
+    ]
+  }
+}

@@ -7,6 +7,7 @@ import threading
 from medops.core.deadline import check_deadline, remaining_timeout
 from medops.core.telemetry import annotate, span
 from medops.infrastructure.llm.accounting import capture_call, new_call
+from medops.infrastructure.llm.call_audit import CallJournal
 from medops.infrastructure.llm.execution_budget import PRICES, complete_in_execution
 from medops.infrastructure.llm.gateway import (
     ModelCallReceipt,
@@ -28,6 +29,7 @@ class MeteredGateway:
         self.conservative_cost_usd = 0.0
         self._receipts: dict[str, ModelCallReceipt] = {}
         self._lock = threading.Lock()
+        self.call_journal = CallJournal()
 
     @property
     def receipts(self) -> tuple[ModelCallReceipt, ...]:
@@ -63,12 +65,15 @@ class MeteredGateway:
         request = request.model_copy(update={"timeout_s": remaining_timeout(request.timeout_s), "call": call})
         # the `gen_ai.*` names are the OpenTelemetry GenAI conventions, which trace viewers for model calls read
         # (model, token counts); still structure only — never the prompt or the reply (INV-OBS-03)
-        with span(
-            "llm.call",
-            purpose=request.purpose,
-            model_id=request.model_id,
-            **{"gen_ai.operation.name": "chat", "gen_ai.request.model": request.model_id},
-        ) as current:
+        with (
+            self.call_journal.capture(request),
+            span(
+                "llm.call",
+                purpose=request.purpose,
+                model_id=request.model_id,
+                **{"gen_ai.operation.name": "chat", "gen_ai.request.model": request.model_id},
+            ) as current,
+        ):
             with capture_call(call.call_id) as capture:
                 try:
                     response = complete_in_execution(
@@ -93,6 +98,7 @@ class MeteredGateway:
                     if receipt.call.call_id != call.call_id:
                         raise ValueError("model receipt belongs to a different call") from exc
                     self._record(receipt)
+                    self.call_journal.finish(call.call_id, receipt, known, type(exc).__name__)
                     _annotate_receipt(current, receipt)
                     raise
                 receipt = (
@@ -115,9 +121,11 @@ class MeteredGateway:
                 if receipt.call.call_id != call.call_id:
                     raise ValueError("model receipt belongs to a different call")
                 self._record(receipt)
+                response = response.model_copy(update={"call_receipt": receipt})
+                self.call_journal.finish(call.call_id, receipt, response)
                 _annotate_receipt(current, receipt)
                 annotate(current, truncated=response.truncated)
-                return response.model_copy(update={"call_receipt": receipt})
+                return response
 
 
 def _annotate_receipt(current, receipt: ModelCallReceipt) -> None:

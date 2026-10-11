@@ -6,7 +6,7 @@ configured encrypted payloads commit. This service never retries business execut
 
 from __future__ import annotations
 
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from typing import Any
 
@@ -90,6 +90,11 @@ def task_payloads(
     safety: Mapping[str, Any] | None,
     attempt: int,
     outcome: str,
+    model_calls: Sequence[Mapping[str, Any]] = (),
+    historical: Mapping[str, Any] | None = None,
+    conditions: Mapping[str, Any] | None = None,
+    model_call_audit_complete: bool = True,
+    call_receipts: Sequence[Mapping[str, Any]] = (),
 ) -> dict[str, Mapping[str, Any]]:
     return {
         "input": {
@@ -99,6 +104,12 @@ def task_payloads(
             "query_context": query_context,
             "versions": dict(versions),
             "attempt": attempt,
+            "historical": dict(historical) if historical is not None else None,
+            "conditions": next(
+                (e["conditions"] for e in audit.events if e["kind"] == "skill_execution_input"),
+                dict(conditions) if conditions is not None else None,
+            ),
+            "execution_inputs": [e for e in audit.events if e["kind"] == "skill_execution_input"],
             "harness_inputs": [e["payloads"]["input"] for e in audit.events if e["kind"] == "harness"],
         },
         "evidence_snapshot": {
@@ -106,6 +117,8 @@ def task_payloads(
             "evidence": [e.model_dump(mode="json") for e in audit.evidence],
             "flagged": list(audit.flagged),
             "harness_snapshots": [e["payloads"]["evidence_snapshot"] for e in audit.events if e["kind"] == "harness"],
+            "rendered_evidence": [e for e in audit.events if e["kind"] == "rendered_evidence"],
+            "retrieval_events": [e for e in audit.events if e["kind"] == "retrieval"],
         },
         "model_output": {
             "format_version": "task-audit-v1",
@@ -114,5 +127,8 @@ def task_payloads(
             "safety_result": dict(safety) if safety else None,
             "attempt_outcome": outcome,
             "events": list(audit.events),
+            "model_calls": list(model_calls),
+            "model_call_audit_complete": model_call_audit_complete,
+            "call_receipts": list(call_receipts),
         },
     }

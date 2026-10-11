@@ -13,6 +13,7 @@ from datetime import date
 
 import psycopg
 
+from medops.application.policy_loader import policy_snapshot
 from medops.core.config import Settings
 from medops.core.telemetry import configure_telemetry, flush, telemetry_options
 from medops.domain.state import VersionSet
@@ -22,7 +23,6 @@ from medops.evals.run_conditions import (
     attempt_accounting,
     bind_conditions,
     make_conditions,
-    policy_snapshot,
     validate_attempts,
 )
 from medops.evals.runtime import EXIT_STALLED, Plane, with_database

@@ -9,36 +9,21 @@ from __future__ import annotations
 import hashlib
 import json
 import math
-import platform
 import time
 import uuid
 from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass, field
-from importlib import metadata
 from pathlib import Path
 from typing import Any
 
 import psycopg
 
-from medops.application.policy_loader import ReleasedPolicySet
 from medops.core.canonical import canonical_hash, canonical_json
-from medops.evals.datasets import sha256_file
+from medops.core.run_artifacts import environment_snapshot, file_manifest, runtime_files
 from medops.retrieval.integrity import has_global_view
 
 FORMAT = "eval-run-conditions-v1"
 FACT_RECHECK_INTERVAL_S = 300.0
-PACKAGES = (
-    "psycopg",
-    "pgvector",
-    "pydantic",
-    "openai",
-    "langgraph",
-    "jieba",
-    "numpy",
-    "torch",
-    "transformers",
-    "sentence-transformers",
-)
 FACT_TABLES = {
     "source_objects": "source_object_id",
     "documents": "doc_id",
@@ -48,19 +33,6 @@ FACT_TABLES = {
     "lexical_index_meta": "index_name",
     "embedding_index_meta": "embedding_version",
 }
-
-
-def policy_snapshot(released: ReleasedPolicySet) -> list[dict[str, str]]:
-    return [
-        {
-            "policy_id": policy.policy_id,
-            "kind": policy.kind,
-            "name": policy.name,
-            "version": policy.version,
-            "diff_sha256": canonical_hash(policy.diff),
-        }
-        for policy in sorted(released.policies, key=lambda item: (item.kind, item.name, item.policy_id))
-    ]
 
 
 def fact_snapshot(conn: psycopg.Connection[Any]) -> dict[str, Any]:
@@ -146,33 +118,11 @@ class FactGuard:
 def source_snapshot(root: Path, runner: Path) -> dict[str, Any]:
     """Hash runtime sources/resources, schemas, dependency locks and this runner, including uncommitted code."""
     root = root.resolve()
-    paths = {
-        path
-        for path in (root / "src/medops").rglob("*")
-        if path.is_file()
-        and "__pycache__" not in path.parts
-        and path.suffix in {".py", ".json", ".yaml", ".yml", ".txt", ".stop"}
-    }
+    paths = runtime_files(root / "src/medops")
     paths.update(root.glob("requirements*.lock"))
     paths.update((root / "schemas").glob("*.json"))
     paths.update((root / "pyproject.toml", runner.resolve()))
-    files = {str(path.resolve().relative_to(root)): sha256_file(path) for path in sorted(paths)}
-    return {"files": files, "sha256": canonical_hash(files)}
-
-
-def environment_snapshot() -> dict[str, Any]:
-    versions: dict[str, str | None] = {}
-    for package in PACKAGES:
-        try:
-            versions[package] = metadata.version(package)
-        except metadata.PackageNotFoundError:
-            versions[package] = None
-    return {
-        "python": platform.python_version(),
-        "system": platform.system(),
-        "machine": platform.machine(),
-        "packages": versions,
-    }
+    return file_manifest(root, paths)
 
 
 def make_conditions(
