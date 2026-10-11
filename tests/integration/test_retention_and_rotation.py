@@ -21,6 +21,46 @@ from medops.infrastructure.db.payloads import PgPayloadStore
 PRINCIPAL = "e" * 32
 
 
+@pytest.mark.parametrize("kind", ["case", "feedback", "span", "closed_escalation", "replay"])
+def test_old_trace_is_kept_until_its_late_audit_records_expire(seeded, migrated, kind):
+    protected, expired = uuid.uuid4().hex, uuid.uuid4().hex
+    # Only the fixture owner can seed Trace rows. Exercise the purge after dropping to the real admin role.
+    with psycopg.connect(migrated) as conn:
+        with conn.transaction(force_rollback=True):
+            _trace(conn, protected, age_days=400)
+            _trace(conn, expired, age_days=400)
+            if kind == "case":
+                conn.execute(
+                    "insert into bad_cases(trace_id,dept,signals,label,reasons) values (%s,'MA',%s,'bad','{feedback_down}')",
+                    (protected, Jsonb({})),
+                )
+            elif kind == "feedback":
+                conn.execute(
+                    "insert into feedback(feedback_id,trace_id,principal,signal) values (%s,%s,%s,'down')",
+                    (uuid.uuid4(), protected, PRINCIPAL),
+                )
+            elif kind == "span":
+                conn.execute(
+                    "insert into trace_spans(trace_id,node,attempt,operation_key,outcome,started_at,duration_ms) values (%s,'intent',2,%s,'ok',now(),1)",
+                    (protected, uuid.uuid4().hex + uuid.uuid4().hex),
+                )
+            elif kind == "closed_escalation":
+                _escalation(conn, protected, status="closed", age_days=0)
+            else:
+                replay_trace = uuid.uuid4().hex
+                _trace(conn, replay_trace, age_days=400)
+                conn.execute(
+                    "insert into replays(replay_id,source_trace_id,replay_trace_id,replay_run_id,requested_by,reason,versions_match,changed,report) values (%s,%s,%s,%s,%s,'late replay',true,'{}',%s)",
+                    (uuid.uuid4(), protected, replay_trace, replay_trace, PRINCIPAL, Jsonb({})),
+                )
+            conn.execute("set local role medops_admin_role")
+            purge(conn, days=365)
+            assert conn.execute("select count(*) from traces where trace_id=%s", (protected,)).fetchone()[0] == 1
+            assert conn.execute("select count(*) from traces where trace_id=%s", (expired,)).fetchone()[0] == 0
+            if kind == "replay":
+                assert conn.execute("select count(*) from traces where trace_id=%s", (replay_trace,)).fetchone()[0] == 1
+
+
 def _trace(conn, trace_id: str, *, age_days: int, dept: str = "MA") -> None:
     conn.execute(
         "insert into traces (trace_id, run_id, kind, principal, dept, query, outcome, reason_codes, versions, "

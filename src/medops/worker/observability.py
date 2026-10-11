@@ -22,6 +22,7 @@ from medops.core.config import Settings
 from medops.evals.telemetry import events_from_run
 from medops.infrastructure.db.fact_plane import canonical_fact_plane_id
 from medops.infrastructure.observability import LangfuseScores, ScoreQueue, harvest_feedback
+from medops.worker.supervision import pulse
 
 
 def main(argv: Sequence[str] | None = None) -> int:
@@ -109,6 +110,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                             legacy_source=args.legacy_feedback_source,
                         )
                 sent = {} if args.enqueue_only else queue.drain(sender, limit=args.batch, cancelled=stop.is_set)
+                pulse()
                 print(json.dumps({"collection": collected, "delivery": sent}), flush=True)
                 if args.once or args.enqueue_only:
                     return 1 if sent.get("failed") or sent.get("dead_lettered") else 0

@@ -1,0 +1,28 @@
+# Host-side option for a localhost-only Langfuse. Replace /srv/medy and medops_v2 before installation.
+# Settings reads /srv/medy/.env (0600, owned by medops); no credentials belong in this file or ExecStart.
+[Unit]
+Description=MedOps durable feedback score synchronization
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=medops
+Group=medops
+WorkingDirectory=/srv/medy
+StateDirectory=medops-score
+StateDirectoryMode=0700
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStart=/usr/bin/env -u DEBUG /srv/medy/venv/bin/python -m medops.worker.supervision --state /var/lib/medops-score/worker --kind scores --stall 180 -- --database medops_v2 --queue /var/lib/medops-score/scores.sqlite3 --batch 10
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=30
+MemoryMax=256M
+TasksMax=64
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/medops-score
+
+[Install]
+WantedBy=multi-user.target

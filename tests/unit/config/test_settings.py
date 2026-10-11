@@ -158,3 +158,15 @@ def test_loop_login_password_is_a_masked_optional_setting(monkeypatch):
     assert s.db_loop_password is not None and s.db_loop_password.get_secret_value() == "SYNTHETIC-LOOP-PW"
     assert s.db_restricted_password is None  # `KEY=` means unset for every login password
     assert "SYNTHETIC" not in repr(s) and "SYNTHETIC" not in str(s.model_dump())
+
+
+@pytest.mark.parametrize(
+    "name",
+    ["DATABASE_RESTRICTED_URL", "DATABASE_LOOP_URL", "DATABASE_RESTRICTED_URL_DOCKER", "DATABASE_LOOP_URL_DOCKER"],
+)
+def test_maintenance_dsns_validate_and_empty_values_are_unset(monkeypatch, name):
+    assert getattr(_settings(monkeypatch, **{name: ""}), name.lower()) is None
+    s = _settings(monkeypatch, **{name: "postgresql://role:SYNTHETIC@postgres/db"})
+    assert "SYNTHETIC" not in s.model_dump_json()
+    with pytest.raises(ValidationError):
+        _settings(monkeypatch, **{name: "mysql://role:SYNTHETIC@postgres/db"})

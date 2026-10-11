@@ -20,6 +20,7 @@ from medops.core.logging import configure_logging, get_logger
 from medops.core.telemetry import configure_telemetry, telemetry_options
 from medops.core.telemetry import shutdown as shutdown_telemetry
 from medops.skills.catalog import default_registry
+from medops.worker.supervision import pulse
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -61,6 +62,7 @@ def main(argv: list[str] | None = None) -> int:
         while not stop:
             try:
                 done = runner.run_once()
+                pulse()
             except InfrastructureError as exc:  # database unreachable: keep polling instead of dying (record 78)
                 log.warning(
                     "worker: dependency unavailable, retrying", extra={"code": exc.code.value, "detail": exc.detail}

@@ -1,0 +1,215 @@
+{
+  "record": 186,
+  "task": "ARCH-13",
+  "goals": [
+    "IDX-03",
+    "DEPLOY-02"
+  ],
+  "date": "2026-10-11",
+  "baseline_head": "69fca598e405423b14f7a04e9336bdadc8f33163",
+  "implementer": "Codex",
+  "self_reviewer": "Codex",
+  "independent_human_review": false,
+  "status": "DONE",
+  "state_transitions": [
+    "READY",
+    "IN_PROGRESS",
+    "REVIEW",
+    "DONE"
+  ],
+  "preexisting_dirty_paths": 12,
+  "committed": false,
+  "pushed": false,
+  "shared_services_restarted": false,
+  "database_migration": false,
+  "hosted_model_calls": 0,
+  "cost_usd": 0,
+  "targeted_tests": {
+    "passed": 79,
+    "seconds": 6.34,
+    "exit_code": 0
+  },
+  "compose_tests": {
+    "passed": 2,
+    "seconds": 0.23,
+    "exit_code": 0
+  },
+  "database_tests": {
+    "passed": 22,
+    "seconds": 2.11,
+    "exit_code": 0
+  },
+  "full_check": {
+    "exit_code": 0,
+    "duration_seconds": 180.755,
+    "log": "/Users/leaf/Documents/GitHub/Medy/.local/arch13/make-check.log",
+    "command": "env -u DEBUG PYTHONPATH=<snapshot>/src:<snapshot> make check",
+    "passed": 2136,
+    "skipped": 70,
+    "warnings": 1,
+    "pytest_seconds": 174.22,
+    "log_sha256": "e6a1792e859a89473a3316f14e306e4082d5b93bbb04fc4b5431068d4d01d9df",
+    "mypy_modules": 218,
+    "architecture_violations": 0,
+    "architecture_exact_exceptions": 2,
+    "schema": "up to date",
+    "dataset_audits": 4
+  },
+  "maintenance_input_count": 548,
+  "source_mismatches": [],
+  "container_drill": {
+    "image": {
+      "id": "sha256:04a5d57fa4c6f5973129b48d74cb082abad407817a0f669128a871822e7ff3dd",
+      "modules": 218,
+      "source_mismatches": [],
+      "uid": "10001"
+    },
+    "glossary": {
+      "version": "glossary-20260926-e4daca58a8e4",
+      "validated": true
+    },
+    "synthetic_secret": {
+      "uid": 10001,
+      "mode": "0o600",
+      "current": "k1",
+      "read": true,
+      "public_mode_refused": true
+    },
+    "restart_drill": {
+      "healthy_after_progress": true,
+      "restart_count": 1,
+      "stalled_detected": true,
+      "forced_process_group_cleanup": true,
+      "operator_stop_exit": 143
+    },
+    "queue_volume": {
+      "mode": "0o600",
+      "created": true
+    },
+    "model_calls": 0,
+    "hosted_cost_usd": 0,
+    "shared_services_modified": false,
+    "temporary_containers_and_volumes_removed": true,
+    "cli_graceful_stop": {
+      "dependency_failure_retried": true,
+      "supervisor_sigterm_exit": 0,
+      "restart_count": 0,
+      "shared_database_connected": false
+    },
+    "anonymous_test_volume_cleanup": [
+      {
+        "volume": "17ed0ccd01f7135525e46dd495541f10296370d0cf7d131f5fc9aab09244f37a",
+        "created_at": "2026-10-11T10:32:59Z",
+        "empty": true,
+        "anonymous": true
+      },
+      {
+        "volume": "726cad9c8dc969a291906e1e27818be4fb15fe1ccda1d930d0b84bc9c28d3bd2",
+        "created_at": "2026-10-11T10:31:26Z",
+        "empty": true,
+        "anonymous": true
+      }
+    ],
+    "image_before_retention_fix": {
+      "id": "sha256:c8d2fe0e40ac68976eca5f3d7aebe34c02bbc8660d8278f32fdd035f181fc2cd",
+      "modules": 218,
+      "source_mismatches": [],
+      "uid": "10001"
+    },
+    "final_package_contains_retention_fix": true
+  },
+  "audit": [
+    {
+      "item": "需求与范围",
+      "status": "PASS",
+      "evidence": "ARCH-13资源、词表/KEK/队列、三消费者/评分、清理/Observe调度与监督；IDX-03长期部署/DEPLOY-02目标容量保留未完成。"
+    },
+    {
+      "item": "ADR与阶段门",
+      "status": "PASS",
+      "evidence": "保留ADR-0012、ARCH-04/11、原生产签字/独立人工/盲测/逐次付费；未解锁S2/S3。"
+    },
+    {
+      "item": "正确性与失败路径",
+      "status": "PASS",
+      "evidence": "真实子进程启动停滞/完成后卡死/强杀/优雅停机；Docker重启；PG毒事件/回滚/重放；修复晚到审计记录清理冲突。"
+    },
+    {
+      "item": "权限与数据",
+      "status": "PASS",
+      "evidence": "显式库名及专用角色；Loop不回退admin；镜像UID10001；合成KEK0600可读、0644拒绝；MCP不挂KEK；冻结数据无变化。"
+    },
+    {
+      "item": "预算、取消与副作用",
+      "status": "PASS",
+      "evidence": "0托管调用/0USD；维护白名单不含生成、评测、激活；信号、进程组、超时及Task140/150秒宽限；共享服务未替换，真实保留清理未执行。"
+    },
+    {
+      "item": "追溯与版本",
+      "status": "PASS",
+      "evidence": "token/PID/单调时钟隔离心跳；评分队列身份/ID和outbox审计保持；不变模型/策略/检索版本。"
+    },
+    {
+      "item": "验证充分性",
+      "status": "PASS",
+      "evidence": "79定向+2Compose+22真实PG；最终make check 2136/70退出0；548维护输入SHA一致；镜像源码核验和隔离故障证据。"
+    },
+    {
+      "item": "状态与文档",
+      "status": "PASS",
+      "evidence": "记录186/台账/部署与运维契约同步；工程自审与生产驻留、容量、systemd安装分开；记录185原工作保留，当前改动未提交推送。"
+    }
+  ],
+  "limitations": [
+    "Target long-running deployment and capacity remain IDX-03/DEPLOY-02; Docker memory observed 8319770624 bytes.",
+    "Score container requires reachable HTTPS; localhost Langfuse uses a host OS-managed supervisor. No HTTP policy relaxed.",
+    "Systemd template not installed/validated by systemd on macOS.",
+    "Observe full retained-trace scans need target-scale measurement; no candidate evolution or activation scheduled.",
+    "No real KEK read/rotated, shared production poison injected, hosted model quality or new Agent claims."
+  ],
+  "errors_and_remedies": [
+    {
+      "error": "15 integration tests skipped: inherited DEBUG is not a valid boolean",
+      "remedy": "env -u DEBUG; explicit 15 PG tests passed; no skip accepted as proof."
+    },
+    {
+      "error": "ruff import ordering / unused imports / UP031; mypy Any|None number narrowing; format-check",
+      "remedy": "Corrected imports, f-strings, explicit isinstance/bool guards and formatting; final gates passed."
+    },
+    {
+      "error": "ValueError: could not convert string to float: '2m30s'",
+      "remedy": "Interpret rendered Compose duration units, not assume a seconds string."
+    },
+    {
+      "error": "TypeError: argument of type 'NoneType' is not iterable",
+      "remedy": "Diagnostic summary treats command=None as empty; Compose rendering itself succeeded."
+    },
+    {
+      "error": "psycopg.errors.RestrictViolation: bad cases are never deleted",
+      "remedy": "Protect old Trace parents until recent related cases/feedback/spans/escalations/replay reports expire; five real PG regressions."
+    },
+    {
+      "error": "psycopg.errors.InsufficientPrivilege: permission denied for table traces (new test seeding)",
+      "remedy": "Fixture owner seeds within rollback transaction, SET LOCAL ROLE medops_admin_role before exercising purge; no production grant broadened."
+    },
+    {
+      "error": "Disposable container image VOLUME /models produced two anonymous empty volumes",
+      "remedy": "Identified dangling anonymous volumes within private drill window, verified empty, removed only those two; unrelated volume retained."
+    }
+  ],
+  "final_verification": {
+    "preserved_preexisting_non_document_paths": 8,
+    "preexisting_mismatches": [],
+    "task_ids": 137,
+    "maintenance_input_count": 548,
+    "source_mismatches": [],
+    "document_files": 8,
+    "valid_local_links": 176,
+    "frozen_evaluation_or_schema_diffs": []
+  },
+  "document_check": {
+    "passed": 27,
+    "seconds": 4.91,
+    "exit_code": 0
+  }
+}

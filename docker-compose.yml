@@ -3,6 +3,27 @@
 # profile (M3-12). Object storage waits for DEC-007. Ports bind to localhost only. Passwords come from .env.
 name: medops
 
+# Shared deployment contract; each supervised service has its own state directory and restart boundary.
+x-supervised-worker: &supervised-worker
+  build: .
+  image: medops-copilot:dev
+  restart: unless-stopped
+  init: true
+  env_file: .env
+  mem_limit: 256m
+  cpus: 0.5
+  pids_limit: 64
+  depends_on:
+    postgres:
+      condition: service_healthy
+  healthcheck:
+    test: ["CMD", "python", "-m", "medops.worker.supervision", "--check"]
+    interval: 10s
+    timeout: 3s
+    retries: 3
+    start_period: 300s
+  stop_grace_period: 30s
+
 services:
   postgres:
     # ADR-0002 revision 6: PostgreSQL 17 + pgvector + pinned pg_textsearch 1.5.1.
@@ -57,6 +78,10 @@ services:
     container_name: medops-api
     profiles: ["app"]
     restart: unless-stopped
+    init: true
+    mem_limit: 8g
+    cpus: 2.0
+    pids_limit: 128
     env_file: .env
     environment:
       DATABASE_URL: ${DATABASE_URL_DOCKER:-${DATABASE_URL}}
@@ -64,6 +89,7 @@ services:
       DATABASE_READONLY_URL: ${DATABASE_READONLY_URL_DOCKER:-${DATABASE_READONLY_URL:-}}
       REDIS_URL: ${REDIS_URL_DOCKER:-${REDIS_URL}}
       MODEL_CACHE_DIR: /models
+      GLOSSARY_DIR: /app/glossary
     command: ["python", "-m", "medops.api.serve", "--host", "0.0.0.0", "--port", "8000", "--device", "cpu"]
     ports:
       - "127.0.0.1:8000:8000"
@@ -83,65 +109,39 @@ services:
     stop_grace_period: 30s
 
   worker:
-    build: .
-    image: medops-copilot:dev
+    <<: *supervised-worker
     container_name: medops-worker
     profiles: ["app"]
-    restart: unless-stopped
-    env_file: .env
+    mem_limit: 8g
+    cpus: 2.0
+    pids_limit: 128
     environment:
       DATABASE_URL: ${DATABASE_URL_DOCKER:-${DATABASE_URL}}
       DATABASE_ADMIN_URL: ${DATABASE_ADMIN_URL_DOCKER:-${DATABASE_ADMIN_URL:-}}
       REDIS_URL: ${REDIS_URL_DOCKER:-${REDIS_URL}}
       MODEL_CACHE_DIR: /models
-    command: ["python", "-m", "medops.worker.serve", "--device", "cpu"]
+      GLOSSARY_DIR: /app/glossary
+    command: ["python", "-m", "medops.worker.supervision", "--kind", "tasks", "--stall", "400", "--grace", "140", "--", "--device", "cpu"]
     volumes:
       - model_cache:/models
-    depends_on:
-      postgres:
-        condition: service_healthy
-    stop_grace_period: 30s
+    stop_grace_period: 150s
 
   # Shared candidate-cache invalidation is a separate durable outbox consumer. Its explicit database argument
   # prevents an operator DSN from silently selecting the wrong corpus; API/MCP and this worker share a namespace.
   retrieval-cache-worker:
-    build: .
-    image: medops-copilot:dev
+    <<: *supervised-worker
     container_name: medops-retrieval-cache-worker
     profiles: ["app"]
-    restart: unless-stopped
-    env_file: .env
+    pids_limit: 128
     environment:
       DATABASE_ADMIN_URL: ${DATABASE_ADMIN_URL_DOCKER:-${DATABASE_ADMIN_URL:-}}
       REDIS_URL: ${REDIS_URL_DOCKER:-${REDIS_URL}}
-    command:
-      [
-        "python",
-        "-m",
-        "medops.worker.retrieval",
-        "--database",
-        "${RETRIEVAL_CACHE_DATABASE:?set RETRIEVAL_CACHE_DATABASE in .env}",
-        "--consumer",
-        "retrieval-cache",
-      ]
+    command: ["python", "-m", "medops.worker.supervision", "--kind", "retrieval", "--stall", "90", "--", "--database", "${RETRIEVAL_CACHE_DATABASE:?set RETRIEVAL_CACHE_DATABASE in .env}", "--consumer", "retrieval-cache"]
     depends_on:
       postgres:
         condition: service_healthy
       redis:
         condition: service_healthy
-    healthcheck:
-      test:
-        [
-          "CMD",
-          "python",
-          "-c",
-          "from psycopg import connect; from psycopg.conninfo import make_conninfo; from medops.core.config import Settings; from medops.infrastructure.cache import RedisCandidateCacheStore; s=Settings(); RedisCandidateCacheStore.from_settings(s).ping(); c=connect(make_conninfo(s.database_admin_url.get_secret_value(), dbname=s.retrieval_cache_database), connect_timeout=s.db_connect_timeout_s); c.execute('select 1').fetchone(); c.close()",
-        ]
-      interval: 15s
-      timeout: 5s
-      retries: 3
-      start_period: 10s
-    stop_grace_period: 30s
 
   mcp:
     build: .
@@ -149,21 +149,87 @@ services:
     container_name: medops-mcp
     profiles: ["app"]
     restart: unless-stopped
+    init: true
+    mem_limit: 8g
+    cpus: 2.0
+    pids_limit: 128
     env_file: .env
     environment:
       DATABASE_URL: ${DATABASE_URL_DOCKER:-${DATABASE_URL}}
       DATABASE_READONLY_URL: ${DATABASE_READONLY_URL_DOCKER:-${DATABASE_READONLY_URL:-}}
       REDIS_URL: ${REDIS_URL_DOCKER:-${REDIS_URL}}
       MODEL_CACHE_DIR: /models
+      GLOSSARY_DIR: /app/glossary
     command: ["python", "-m", "medops.mcp.serve", "--transport", "streamable-http", "--host", "0.0.0.0", "--port", "8001", "--device", "cpu"]
     ports:
       - "127.0.0.1:8001:8001"
+    # Override the image's API:8000 healthcheck; this proves MCP socket liveness, not index readiness.
+    healthcheck:
+      test: ["CMD", "python", "-c", "import socket; socket.create_connection(('127.0.0.1',8001), timeout=3).close()"]
+      interval: 15s
+      timeout: 5s
+      retries: 6
+      start_period: 300s
     volumes:
       - model_cache:/models
     depends_on:
       postgres:
         condition: service_healthy
     stop_grace_period: 30s
+
+  lexical-index-worker:
+    <<: *supervised-worker
+    profiles: ["app"]
+    mem_limit: 512m
+    cpus: 1.0
+    environment:
+      DATABASE_ADMIN_URL: ${DATABASE_ADMIN_URL_DOCKER:-${DATABASE_ADMIN_URL:-}}
+    command: ["python", "-m", "medops.worker.supervision", "--kind", "retrieval", "--stall", "90", "--", "--database", "${RETRIEVAL_CACHE_DATABASE:?set RETRIEVAL_CACHE_DATABASE in .env}", "--consumer", "lexical-index", "--batch", "1"]
+
+  vector-index-worker:
+    <<: *supervised-worker
+    profiles: ["app"]
+    mem_limit: 4g
+    cpus: 2.0
+    pids_limit: 128
+    environment:
+      DATABASE_ADMIN_URL: ${DATABASE_ADMIN_URL_DOCKER:-${DATABASE_ADMIN_URL:-}}
+      MODEL_CACHE_DIR: /models
+    command: ["python", "-m", "medops.worker.supervision", "--kind", "retrieval", "--", "--database", "${RETRIEVAL_CACHE_DATABASE:?set RETRIEVAL_CACHE_DATABASE in .env}", "--consumer", "vector-index", "--device", "cpu", "--batch", "1"]
+    volumes:
+      - model_cache:/models
+
+  score-sync-worker:
+    <<: *supervised-worker
+    profiles: ["score-sync"]
+    environment:
+      DATABASE_LOOP_URL: ${DATABASE_LOOP_URL_DOCKER:-${DATABASE_LOOP_URL:-}}
+      DATABASE_ADMIN_URL: ${DATABASE_ADMIN_URL_DOCKER:-${DATABASE_ADMIN_URL:-}}
+    command: ["python", "-m", "medops.worker.supervision", "--kind", "scores", "--stall", "180", "--", "--database", "${RETRIEVAL_CACHE_DATABASE:?set RETRIEVAL_CACHE_DATABASE in .env}", "--queue", "/queue/scores.sqlite3", "--batch", "10"]
+    volumes:
+      - score_queue:/queue
+
+  payload-retention:
+    <<: *supervised-worker
+    profiles: ["maintenance"]
+    environment:
+      DATABASE_RESTRICTED_URL: ${DATABASE_RESTRICTED_URL_DOCKER:-${DATABASE_RESTRICTED_URL:-}}
+    command: ["python", "-m", "medops.worker.supervision", "--kind", "maintenance", "--interval", "86400", "--", "--database", "${RETRIEVAL_CACHE_DATABASE:?set RETRIEVAL_CACHE_DATABASE in .env}", "--job", "payload-retention"]
+
+  audit-retention:
+    <<: *supervised-worker
+    profiles: ["maintenance"]
+    environment:
+      DATABASE_ADMIN_URL: ${DATABASE_ADMIN_URL_DOCKER:-${DATABASE_ADMIN_URL:-}}
+    command: ["python", "-m", "medops.worker.supervision", "--kind", "maintenance", "--interval", "604800", "--", "--database", "${RETRIEVAL_CACHE_DATABASE:?set RETRIEVAL_CACHE_DATABASE in .env}", "--job", "audit-retention"]
+
+  loop-observe:
+    <<: *supervised-worker
+    profiles: ["loop-observe"]
+    environment:
+      DATABASE_LOOP_URL: ${DATABASE_LOOP_URL_DOCKER:-${DATABASE_LOOP_URL:-}}
+    # Scan all retained signals: a moving created_at window would lose late feedback on an old trace.
+    command: ["python", "-m", "medops.worker.supervision", "--kind", "maintenance", "--interval", "300", "--", "--database", "${RETRIEVAL_CACHE_DATABASE:?set RETRIEVAL_CACHE_DATABASE in .env}", "--job", "loop-observe", "--since", "1970-01-01"]
 
   jaeger:
     # Trace viewer for the OTLP spans the API / worker / MCP already emit (record 123). Apache-2.0, one container,
@@ -185,3 +251,4 @@ volumes:
     external: true
   redis_data:
   model_cache:
+  score_queue:

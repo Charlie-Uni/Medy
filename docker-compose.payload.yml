@@ -1,0 +1,14 @@
+# Explicit opt-in for encrypted replay payloads. Host file must be readable by UID 10001 and private (0600/0400).
+# Compose file secrets are bind mounts: uid/gid/mode cannot repair host ownership. Never bake this file into an image.
+services:
+  api:
+    environment:
+      PAYLOAD_KEY_FILE: /run/secrets/payload-kek
+    secrets: [payload-kek]
+  worker:
+    environment:
+      PAYLOAD_KEY_FILE: /run/secrets/payload-kek
+    secrets: [payload-kek]
+secrets:
+  payload-kek:
+    file: ${PAYLOAD_KEY_FILE:?set PAYLOAD_KEY_FILE to a private host KEK file before using this overlay}

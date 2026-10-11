@@ -104,6 +104,8 @@ class Settings(BaseSettings):
     database_url_docker: SecretStr | None = None
     database_admin_url_docker: SecretStr | None = None
     database_readonly_url_docker: SecretStr | None = None
+    database_restricted_url_docker: SecretStr | None = None
+    database_loop_url_docker: SecretStr | None = None
     # every runtime connection fails fast instead of hanging when PostgreSQL is unreachable or stalled (record 78)
     db_connect_timeout_s: int = Field(default=5, ge=1, le=60)
     db_statement_timeout_ms: int = Field(default=30_000, ge=1_000, le=600_000)
@@ -209,9 +211,13 @@ class Settings(BaseSettings):
         "identity_pseudonym_key",
         "database_admin_url",
         "database_readonly_url",
+        "database_restricted_url",
+        "database_loop_url",
         "database_url_docker",
         "database_admin_url_docker",
         "database_readonly_url_docker",
+        "database_restricted_url_docker",
+        "database_loop_url_docker",
         "redis_url_docker",
         "db_app_password",
         "db_readonly_password",
@@ -241,9 +247,13 @@ class Settings(BaseSettings):
         "database_url",
         "database_admin_url",
         "database_readonly_url",
+        "database_restricted_url",
+        "database_loop_url",
         "database_url_docker",
         "database_admin_url_docker",
         "database_readonly_url_docker",
+        "database_restricted_url_docker",
+        "database_loop_url_docker",
     )
     @classmethod
     def _postgres_dsn(cls, value: SecretStr | None) -> SecretStr | None:

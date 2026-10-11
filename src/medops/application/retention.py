@@ -28,6 +28,18 @@ select t.trace_id
    and not exists (select 1 from escalations e where e.trace_id = t.trace_id and e.status <> 'closed')
    and not exists (
         select 1 from bad_cases c join document_requests d on d.case_id = c.case_id where c.trace_id = t.trace_id)
+   -- A late feedback/replay/Observe case has its own retention clock. Preserve its parent trace until all
+   -- linked protected audit records expire; otherwise their append-only guards abort the entire purge.
+   and not exists (select 1 from bad_cases c where c.trace_id = t.trace_id
+                    and c.opened_at >= now() - make_interval(days => %(days)s))
+   and not exists (select 1 from feedback f where f.trace_id = t.trace_id
+                    and f.created_at >= now() - make_interval(days => %(days)s))
+   and not exists (select 1 from trace_spans s where s.trace_id = t.trace_id
+                    and s.started_at >= now() - make_interval(days => %(days)s))
+   and not exists (select 1 from escalations e where e.trace_id = t.trace_id
+                    and e.created_at >= now() - make_interval(days => %(days)s))
+   and not exists (select 1 from replays r where (r.source_trace_id = t.trace_id or r.replay_trace_id = t.trace_id)
+                    and r.created_at >= now() - make_interval(days => %(days)s))
    and not exists (
         select 1 from replays r join traces rt on rt.trace_id = r.replay_trace_id
          where r.source_trace_id = t.trace_id and rt.created_at >= now() - make_interval(days => %(days)s))
