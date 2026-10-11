@@ -10,7 +10,7 @@ MedOps Copilot 是面向医学事务、药物警戒和临床运营的可信医�
 
 ## 最新执行入口（2026-10-11）
 
-后续统一按[当前任务台账](docs/CURRENT_TASKS.md)推进：保留此前架构、评测、BM25、Redis、Langfuse、模型路由和使用闭环任务，新增受控 Agent 与模型生成 Prompt/声明式 Skill 的自进化任务。顺序为目标与验收 → 必要执行保护 → 首个业务 Agent → Prompt 自进化 → Skill/使用闭环 → 完整验证与交付。PLAN-01 设计证据与 PV 场景范围已确认，PLAN-02 的 [ADR-0012](docs/adr/ADR-0012-agent-evolution-goals-and-acceptance.md) 剩余契约继续沟通；ARCH-04/11 及当前任务租约 ARCH-05、历史输入 ARCH-02、最终判断 ARCH-03 工程自审通过，下一项 ARCH-06；S2 仍须满足 PLAN-02 相关契约和其他正确性前置。自动激活仅实验，S3 改进声明须有未见盲测，每轮付费单独授权。新增能力尚未实现；盲测新增工作量确认后重估工期。
+后续统一按[当前任务台账](docs/CURRENT_TASKS.md)推进：保留此前架构、评测、BM25、Redis、Langfuse、模型路由和使用闭环任务，新增受控 Agent 与模型生成 Prompt/声明式 Skill 的自进化任务。顺序为目标与验收 → 必要执行保护 → 首个业务 Agent → Prompt 自进化 → Skill/使用闭环 → 完整验证与交付。PLAN-01 设计证据与 PV 场景范围已确认，PLAN-02 的 [ADR-0012](docs/adr/ADR-0012-agent-evolution-goals-and-acceptance.md) 剩余契约继续沟通；ARCH-04/11 及当前任务租约 ARCH-05、历史输入 ARCH-02、最终判断 ARCH-03、异步审计 ARCH-06 工程自审通过，下一项 ARCH-07；S2 仍须满足 PLAN-02 相关契约和其他正确性前置。自动激活仅实验，S3 改进声明须有未见盲测，每轮付费单独授权。新增能力尚未实现；盲测新增工作量确认后重估工期。
 
 **每轮代码、文档、实验与部署都必须自审核，问题修复复测且证据齐备后才能标记完成。** 固定执行要求见[AGENTS.md](AGENTS.md)，模板见[分阶段执行与自审](docs/ITERATION_STAGES.md)。评测标准修订、来源契约、回放绑定和模型裁判校准已形成冻结的 `probe-v4` 与 `main-v5-provisional`；第二独立人工仍未具备，相应结论继续标为 provisional；生产签字和逐次付费授权要求保留。
 
@@ -20,7 +20,9 @@ ARCH-04 已为成功、失败、拒绝和取消调用建立独立回执，避免
 
 ARCH-02 已统一 Ask、Skill 与单条 Ask Replay 的日期/历史模式，修复归档来源选择与四类 Skill 历史提示；裸版本、缺上下文的旧 Trace 及 Task/MCP 回放明确拒绝。三库已到 0024，保护摘要不变；全量 1908 passed、70 skipped、0 托管调用，工程自审通过。输入、兼容和当前事实诊断边界见[历史查询契约](docs/HISTORICAL_QUERIES.md)及[记录 178](docs/reviews/2026-10-11-implementation-178-historical-query-context.md)。后续最终判断修复见下段，完整原条件回放仍待 ARCH-07；新代码本轮未重启到常驻服务。
 
-ARCH-03 已增加两类结构化 Skill 的最终比较核验，结论、理由、条款适用和原观察四项须分别支持；数字反转、错误引用或无支持不再业务完成，矛盾进入升级。严格回复、共享预算及五类兼容回归通过，全量 1969 passed、70 skipped、0 托管调用，见[核验契约](docs/SKILL_JUDGMENT_VERIFICATION.md)及[记录 179](docs/reviews/2026-10-11-implementation-179-final-skill-judgment-verification.md)。真实语义比较校准仍待单次费用授权；下一项 ARCH-06，完整 Task 审计和原条件回放尚未完成，代码未重启上线。
+ARCH-03 已增加两类结构化 Skill 的最终比较核验，结论、理由、条款适用和原观察四项须分别支持；数字反转、错误引用或无支持不再业务完成，矛盾进入升级。严格回复、共享预算及五类兼容回归通过，全量 1969 passed、70 skipped、0 托管调用，见[核验契约](docs/SKILL_JUDGMENT_VERIFICATION.md)及[记录 179](docs/reviews/2026-10-11-implementation-179-final-skill-judgment-verification.md)。真实语义比较校准仍待单次费用授权；当时下一项 ARCH-06，最新工程结论见下段，代码未重启上线。
+
+ARCH-06 已补齐 Ask/Task 共用审计、五类 Skill 内层证据与最终核验、结构化候选、安全和重试材料；结果引用逐字段绑定实际证据，撤权、失租及审计故障均失败关闭。真实 PostgreSQL 原子回滚与访问日志验证通过，全量 2008 passed、70 skipped、0 托管调用，见[执行审计契约](docs/TASK_EXECUTION_AUDIT.md)及[记录 180](docs/reviews/2026-10-11-implementation-180-task-execution-audit.md)。无 key 配置仍仅保存元数据；Task/MCP 精确回放仍待下一项 ARCH-07。新代码未提交、未重启上线。
 
 生产词法通道已按项目所有者决定切换到部门隔离的 `pg_textsearch` BM25：PostgreSQL 17、extension 1.5.1、migration 0022，MA/PV/CO 各用独立物理语料，避免 RLS 隐藏行参与跨部门 IDF/词频统计。正式库与安全库已完成逻辑迁移、索引构建和 readiness 核验，旧 PG16 卷及逐库逻辑备份保留。设计、实测数据、故障和回滚边界见[实现记录 162](docs/reviews/2026-10-09-implementation-162-production-bm25-cutover.md)，许可与发布资产见[许可记录](docs/reviews/2026-10-09-licence-dossier-pg-textsearch.md)。新冻结集上的付费检索与答案级 BM25 对照仍需单独授权，工程切换不等同于质量门禁通过。
 

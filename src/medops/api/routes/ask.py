@@ -12,7 +12,9 @@ from medops.api.contracts import (
 )
 from medops.api.ports import ApiRuntime
 from medops.api.responses import to_ask_response
-from medops.application.audit import record_or_fail_closed, trace_from_run
+from medops.application.audit import trace_from_run
+from medops.application.execution_audit import ExecutionAuditWriter
+from medops.application.payloads import payloads_from_run
 from medops.domain.query import resolve_query_context
 from medops.harness.runtime import initial_state, run_ask
 from medops.infrastructure.llm.meter import MeteredGateway
@@ -58,10 +60,9 @@ def build_router(runtime: ApiRuntime) -> APIRouter:
                 duration_ms=(time.perf_counter() - started) * 1000,
             )
             # the audit write is part of the request transaction: no trace, no answer (baseline 5.10)
-            record_or_fail_closed(runtime.trace_store(conn), trace, escalation)
-            writer = runtime.payload_writer(conn)
-            if writer is not None:  # same transaction: the replay payload exists iff the trace exists
-                writer.record_run(run, query=body.query)
+            ExecutionAuditWriter(runtime.trace_store(conn), runtime.payload_writer(conn)).record(
+                trace, escalation, node="ask", payloads=payloads_from_run(run, query=body.query)
+            )
         return response
 
     return router

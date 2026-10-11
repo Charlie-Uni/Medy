@@ -93,6 +93,9 @@ class FakeEnv:
     def trace_store(self, conn):
         return self.traces
 
+    def payload_writer(self, conn):
+        return None
+
     def skill_context(self, conn, user, trace_id, historical):
         return SkillContext(
             user=user,

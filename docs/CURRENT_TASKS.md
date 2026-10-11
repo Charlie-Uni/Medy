@@ -50,10 +50,10 @@ probe v4 与 `main-v5-provisional` 均已冻结。EVAL-11 已完成：580 个 go
 | ARCH-03 | 核验二阶段 Skill 的最终业务判断 | DONE | [记录 179](reviews/2026-10-11-implementation-179-final-skill-judgment-verification.md)：两类最终业务比较的结论/理由/条款适用/用户观察分别核验，窄规则拒绝明确数字反转，语义未支持不能完成；严格回复/错引/条件/否定/单位/超时/预算与五类矩阵通过。1969/70 全量、506 维护输入 SHA 一致、0 托管调用，本轮工程自审通过；真实语义校准仍待单次授权，完整 Task 审计/复现归 ARCH-06/07。INV-SAF-03 |
 | ARCH-04 | 修复并发失败调用的费用归属 | DONE | [记录 175](reviews/2026-10-11-implementation-175-call-receipts-and-fee-attribution.md)：调用回执关联 Trace/run/call/attempt/reservation，成功/失败/拒绝/取消与结算故障独立归属；已知 usage 本地费用与保守预留分开。本机三库 0023、保护摘要相同，1807/70、486 维护输入 SHA 一致，0 托管调用；本轮工程自审通过。账单对账/完整复现仍待后续。OPT-09、INV-OBS-01 |
 | ARCH-11 | 统一单次执行的 Token 与费用预算 | DONE | [记录 176](reviews/2026-10-11-implementation-176-shared-execution-budget.md)：所有者确认兼容上限 12,000 Token / 0.60 USD，Ask 125 秒、Skill/MCP 不扩大原期限；翻译、生成、判定、结构化与重试共享预留/结算，嵌套/线程不能重开。全量 1830/70、490 维护输入与配置 SHA 一致，0 托管调用，本轮工程自审通过；未来 Agent/模型 Loop 必须显式 profile＋强制上下文，尚未实现，跨进程恢复归 ARCH-05/06/07。OPT-11、INV-HAR-08 |
-| ARCH-06 | 补齐异步 Skill 的证据和核验审计 | READY | ARCH-02/03 工程前置已通过，记录 178/179；实现 Ask/Task 共享审计服务；结果引用与 Trace 一致；内层节点、失败及受限载荷有明确保存责任。OPT-09、INV-OBS-01/03 |
-| ARCH-07 | 补完整回放输入和逐调用追溯 | BLOCKED | 依赖 ARCH-02/04/06；保存完整输入、实际版本和模型回执；区分当前事实诊断与原条件复现；与 FOCUS-02 共用实际渲染片段哈希/来源区间。OPT-09、OPT-16 |
+| ARCH-06 | 补齐异步 Skill 的证据和核验审计 | DONE | [记录 180](reviews/2026-10-11-implementation-180-task-execution-audit.md)、[执行审计契约](TASK_EXECUTION_AUDIT.md)：Ask/Task 共用写入；五类内层证据、候选、最终核验、安全与重试有受限材料；完整 Citation 绑定、撤权/失败/lost 及数据库原子回滚通过。定向172、修复复测49、数据库24；全量2008/70、510维护输入 SHA 一致、0托管调用，工程自审通过。原条件回放仍ARCH-07；无 key 配置仅元数据，未重启上线。OPT-09、INV-OBS-01/03 |
+| ARCH-07 | 补完整回放输入和逐调用追溯 | READY | ARCH-02/04/06 工程前置已通过，记录175/178/180；保存完整输入、实际版本和模型回执；区分当前事实诊断与原条件复现；与 FOCUS-02 共用实际渲染片段哈希/来源区间。仅解锁无付费实现，真实模型校准逐次授权。OPT-09、OPT-16 |
 | ARCH-09 | 稳定反馈来源、score ID 和扫描游标 | READY | 使用稳定事实库/部署身份；与包含启动时间的运行身份分开；重启/地址变化不改变同一反馈标识，克隆库身份与恢复去重有规则。OPT-09、OPT-16 |
-| ARCH-08 | 收敛契约、生产共用模块与三入口装配 | BLOCKED | 正确性/审计契约经 ARCH-01/02/03/04/06 收敛后再搬迁；application 不导入 api，入库不依赖 evals；API/worker/MCP 共享装配；有导入边界检查。OPT-01～06 后续维护 |
+| ARCH-08 | 收敛契约、生产共用模块与三入口装配 | READY | ARCH-01/02/03/04/06 正确性/审计工程前置已通过（记录171/175/178/179/180），按顺序待实施；application 不导入 api，入库不依赖 evals；API/worker/MCP 共享装配；有导入边界检查。OPT-01～06 后续维护 |
 | ARCH-10 | 共享重排 scorer 并限制重复初始化 | READY | 同 revision 的权重共享，输出数量由不可变配置控制；初始化 singleflight；验证并发、策略切换、排序与实际加载/内存，保持设备线程约束。OPT-11 |
 | ARCH-13 | 补部署资源、常驻消费者与监督 | READY | 术语文件/密钥有容器可见的声明与挂载；持续词法/向量和评分同步、清理/Loop 调度有责任；消费心跳、毒事件、停机、恢复可演练。IDX-03、DEPLOY-02 |
 | ARCH-14 | 让 CI 必需依赖缺失时失败 | READY | 明确 required 环境下 PostgreSQL/Redis 不可用不得 skip；保留可选实验跳过规则；加已发布配置容器启动和架构边界检查。DEPLOY-02 |
@@ -72,7 +72,7 @@ probe v4 与 `main-v5-provisional` 均已冻结。EVAL-11 已完成：580 个 go
 
 贯穿工作：ARCH-08/10/13/14、CODE-03～07、IDX-03、OBS-03、DEV-BACKLOG-01 按依赖穿插；ARCH-12 有实测收益再实施。BM25-09、CACHE-10、PERF-10、SRC-05、FOCUS-01/02/09、ROUTE-01/02 全部保留，先分别验证再 COMBO-01。人工事项 PLAN-02、EVAL-29/30/31、LIC-03、DEPLOY-01 单独跟踪；EVOL-09 已决定限实验，生产自动批准不再列为待问事项。
 
-**当前下一项：ARCH-06 补齐异步 Skill 的证据和核验审计。** ARCH-03 已通过本轮工程自审。 ARCH-04/11、ARCH-05/02 保留记录 175～178 的工程结论，本轮证据见[记录 179](reviews/2026-10-11-implementation-179-final-skill-judgment-verification.md)和[最终判断契约](SKILL_JUDGMENT_VERIFICATION.md)。ARCH-06 的上下文/判断前置已具备，完整回放仍等 ARCH-07；PLAN-02 的 Agent 行动/profile 与验收契约继续完善。真实语义校准、独立人工、未见盲测及 S2/S3 未完成，付费逐次授权。三库仍为 0024，新代码仍未提交、未重启上线。
+**当前下一项：ARCH-07 补完整回放输入和逐调用追溯。** ARCH-06 已通过本轮工程自审，证据见[记录 180](reviews/2026-10-11-implementation-180-task-execution-audit.md)和[执行审计契约](TASK_EXECUTION_AUDIT.md)。五类 Skill 的内部证据、最终核验、原始尝试和安全结果进入统一审计，Ask/Task 共享失败关闭与受限载荷责任；全量 2008 passed、70 skipped，510 维护输入 SHA 一致，0 托管调用。ARCH-04/11、ARCH-05/02/03 保留记录175～179的工程结论；ARCH-07/08 仅解锁无付费实现，ARCH-12 仍等 ARCH-14。Task/MCP 精确回放、PLAN-02 剩余 Agent 契约、真实语义校准、独立人工、未见盲测及 S2/S3 未完成，付费逐次授权。三库仍为 0024，新代码仍未提交、未重启上线。
 
 每次只推进一个主切片。纯契约设计、机械检查和无付费测试可先准备；依赖未通过时不得把相关集成或阶段标为完成。真实并发/费用运行先满足 ARCH-01/04/11；历史 Skill/二阶段判断先满足 ARCH-02/03/06；回放先满足 ARCH-07；所有检索运行先核对事实库、索引覆盖和积压。EVAL-22/23/24 → EVAL-25/26 → EVAL-27/28 的基线依赖保留，S2/S3 开发演示不能替代正式门禁。等待人工/授权时继续无关 READY 项。
 

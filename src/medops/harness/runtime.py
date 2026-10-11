@@ -61,6 +61,8 @@ def initial_state(
 
 
 def run_ask(state: AgentState, deps: HarnessDeps, *, recursion_limit: int = 12) -> HarnessRun:
+    if deps.audit is not None:
+        deps.audit.check_owner(state.trace_id, state.user.user_id)
     context = state.query_context or deps.query_context
     if context is None:
         if state.historical_requested:
@@ -111,4 +113,7 @@ def run_ask(state: AgentState, deps: HarnessDeps, *, recursion_limit: int = 12) 
         if final.answer is None and final.escalation is None:
             raise AssertionError("harness ended without an answer or an escalation")
         annotate(current, outcome="answered" if final.answer is not None else "escalated")
-        return HarnessRun(state=final, attempts=tuple(result["attempts"]), flagged_evidence=tuple(result["flagged"]))
+        run = HarnessRun(state=final, attempts=tuple(result["attempts"]), flagged_evidence=tuple(result["flagged"]))
+        if deps.audit is not None:
+            deps.audit.record_run(run)
+        return run

@@ -25,7 +25,9 @@ from medops.api.contracts import (
     TaskResultStatus,
     TaskStatus,
 )
-from medops.application.audit import TraceRecord, TraceStore, record_or_fail_closed
+from medops.application.audit import EscalationRecord, TraceRecord, TraceStore
+from medops.application.execution_audit import ExecutionAuditWriter, output_citations, task_payloads, task_spans
+from medops.application.payloads import PayloadWriter
 from medops.core.canonical import canonical_hash
 from medops.core.deadline import check_deadline, deadline_scope
 from medops.core.errors import BusinessError, ErrorCode, ErrorResponse, InfrastructureError, MedOpsError
@@ -34,6 +36,7 @@ from medops.core.tracing import bind_trace_id, new_trace_id
 from medops.domain.common import Dept
 from medops.domain.identity import UserContext
 from medops.domain.query import resolve_query_context
+from medops.harness.audit import ExecutionAudit, ExecutionAuditSnapshot
 from medops.infrastructure.db.deadline import DeadlineConnection
 from medops.infrastructure.llm.accounting import call_scope
 from medops.infrastructure.llm.meter import MeteredGateway
@@ -225,6 +228,8 @@ class WorkerEnvironment(Protocol):
 
     def trace_store(self, conn: Any) -> TraceStore: ...
 
+    def payload_writer(self, conn: Any) -> PayloadWriter | None: ...
+
     def skill_context(
         self, conn: Any, user: UserContext, trace_id: str, historical: Mapping[str, Any] | None
     ) -> SkillContext: ...
@@ -330,7 +335,8 @@ class TaskRunner:
                             ErrorCode.forbidden, "task principal is no longer provisioned for this department"
                         )
                     self.env.bind_identity(guarded, user)
-                    ctx = self.env.skill_context(guarded, user, trace_id, claimed.historical)
+                    ctx = self.env.skill_context(guarded, user, trace_id, claimed.historical).pin_query_context()
+                    ctx = replace(ctx, deps=replace(ctx.deps, audit=ExecutionAudit()))
                     if not isinstance(ctx.deps.gateway, MeteredGateway):
                         ctx = replace(ctx, deps=replace(ctx.deps, gateway=MeteredGateway(ctx.deps.gateway)))
                     profile_until = body_until
@@ -359,6 +365,12 @@ class TaskRunner:
         started: float,
     ) -> TaskExecution:
         store = self.env.task_store(conn)
+        audit = (
+            ctx.deps.audit.snapshot()
+            if ctx is not None and ctx.deps.audit is not None
+            else ExecutionAuditSnapshot((), (), (), ())
+        )
+        cited = output_citations(run.output, audit) if error is None and run is not None else ()
         if error is None:
             assert run is not None and ctx is not None
             result = TaskResult(
@@ -380,40 +392,68 @@ class TaskRunner:
             raise InfrastructureError(
                 ErrorCode.audit_unavailable, detail="task attempt loss could not be recorded", retryable=False
             )
-        if ctx is not None:
-            meter = ctx.deps.gateway
-            assert isinstance(meter, MeteredGateway)
-            trace_outcome = "escalated"
-            reason_codes: tuple[str, ...] = ("system_failure",)
-            if outcome == "completed":
-                assert run is not None
-                trace_outcome = run.output.status.value
-                reason_codes = tuple(c.value for c in run.output.reason_codes)
-            record_or_fail_closed(
-                self.env.trace_store(conn),
-                TraceRecord(
-                    trace_id=trace_id,
-                    run_id=trace_id,
-                    kind="task",
-                    principal=claimed.principal,
-                    dept=claimed.dept,
-                    query=f"{claimed.skill_name}@{claimed.skill_version}",
-                    outcome=trace_outcome,
-                    reason_codes=reason_codes,
-                    versions=ctx.versions.model_dump(mode="json"),
-                    evidence_chunk_ids=(),
-                    cited_chunk_ids=(),
-                    flagged_chunk_ids=(),
-                    model_calls=meter.calls,
-                    tokens=meter.tokens,
-                    cost_usd=meter.cost_usd,
-                    duration_ms=(time.perf_counter() - started) * 1000,
-                    spans=run.attempts if run else (),
-                    task_id=claimed.task_id,
-                    query_context=ctx.query_context,
-                ),
-                None,
+        meter = ctx.deps.gateway if ctx is not None else None
+        trace_outcome = "escalated"
+        reason_codes: tuple[str, ...] = ("system_failure",)
+        if outcome == "completed":
+            assert run is not None
+            trace_outcome = run.output.status.value
+            reason_codes = tuple(c.value for c in run.output.reason_codes)
+        versions = ctx.versions.model_dump(mode="json") if ctx is not None else {}
+        query_context = ctx.query_context if ctx is not None else None
+        query = f"{claimed.skill_name}@{claimed.skill_version}"
+        trace = TraceRecord(
+            trace_id=trace_id,
+            run_id=trace_id,
+            kind="task",
+            principal=claimed.principal,
+            dept=claimed.dept,
+            query=query,
+            outcome=trace_outcome,
+            reason_codes=reason_codes,
+            versions=versions,
+            evidence_chunk_ids=tuple(e.citation.chunk_id for e in audit.evidence),
+            cited_chunk_ids=cited if outcome == "completed" else (),
+            flagged_chunk_ids=audit.flagged,
+            model_calls=meter.calls if isinstance(meter, MeteredGateway) else 0,
+            tokens=meter.tokens if isinstance(meter, MeteredGateway) else 0,
+            cost_usd=meter.cost_usd if isinstance(meter, MeteredGateway) else 0.0,
+            duration_ms=(time.perf_counter() - started) * 1000,
+            spans=task_spans(audit),
+            task_id=claimed.task_id,
+            query_context=query_context,
+        )
+        escalation = None
+        if trace_outcome == "escalated":
+            verification = getattr(run.output, "judgment_verification", None) if run else None
+            escalation = EscalationRecord(
+                trace_id,
+                trace_id,
+                claimed.principal,
+                claimed.dept,
+                reason_codes,
+                query,
+                trace.evidence_chunk_ids,
+                verification.model_dump(mode="json") if verification else None,
+                {"decision": run.safety.decision.value, "checker_version": run.safety.checker_version} if run else None,
+                str(versions.get("policy_version", "unresolved")),
+                f"task attempt {outcome}",
             )
+        payloads = task_payloads(
+            raw_input=claimed.input,
+            skill=query,
+            query_context=query_context.model_dump(mode="json") if query_context else None,
+            versions=versions,
+            audit=audit,
+            output=run.output if run else None,
+            error=error,
+            safety=run.safety.model_dump(mode="json") if run else None,
+            attempt=claimed.attempts,
+            outcome=outcome,
+        )
+        ExecutionAuditWriter(self.env.trace_store(conn), self.env.payload_writer(conn)).record(
+            trace, escalation, node="task", payloads=payloads
+        )
         # A lost attempt must not return the replacement worker's result as its own.
         final = store.get(claimed.task_id) if accepted else None
         return TaskExecution(claimed.task_id, claimed.attempts, trace_id, outcome, final)

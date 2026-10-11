@@ -10,6 +10,7 @@ from datetime import UTC, date, datetime
 from medops.domain.identity import UserContext
 from medops.domain.query import QueryContext
 from medops.harness.answer import ANSWER_SYSTEM
+from medops.harness.audit import ExecutionAudit
 from medops.harness.contracts import NodeSpec
 from medops.harness.evidence_focus import SentenceScorer, needs_titles
 from medops.harness.executions import ExecutionStore
@@ -53,6 +54,7 @@ class HarnessDeps:
     # titles of evidence documents as the reader's own connection sees them; required by `sentfocus-v7`
     doc_titles: Callable[[UserContext, Sequence[str]], Mapping[str, str]] | None = None
     execution_limits: ExecutionLimits | None = None  # server-owned; nested operations share the parent's allowance
+    audit: ExecutionAudit | None = None  # one Skill execution; bodies only enter restricted payloads
 
     def __post_init__(self) -> None:
         if self.query_context is not None and self.as_of is not None and self.as_of != self.query_context.as_of:

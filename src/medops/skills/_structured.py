@@ -14,6 +14,7 @@ from medops.domain.answer import Claim
 from medops.domain.common import DomainModel
 from medops.domain.intent import Entity
 from medops.domain.skill_judgment import JudgmentVerification
+from medops.harness.audit import audit_step
 from medops.harness.runtime import HarnessRun, initial_state, run_ask
 from medops.infrastructure.llm.gateway import Message, ModelOutputInvalid, ModelRequest
 from medops.skills.registry import SkillContext
@@ -46,6 +47,14 @@ def structured_call(
     ctx: SkillContext, *, purpose: str, system: str, user: str, schema: dict[str, Any]
 ) -> dict[str, Any]:
     """One strict-schema call through the gateway; the reply must be a JSON object or the Skill fails closed."""
+    with audit_step(ctx.deps.audit, f"{purpose}:generate", {"system": system, "user": user, "schema": schema}) as audit:
+        result = _structured_call(ctx, purpose=purpose, system=system, user=user, schema=schema, audit=audit)
+    return result
+
+
+def _structured_call(
+    ctx: SkillContext, *, purpose: str, system: str, user: str, schema: dict[str, Any], audit: dict[str, Any]
+) -> dict[str, Any]:
     response = ctx.deps.gateway.complete(
         ModelRequest(
             purpose=purpose,
@@ -56,6 +65,7 @@ def structured_call(
             timeout_s=min(ctx.deps.specs["answer"].timeout_s, 120),
         )
     )
+    audit["output"] = {"text": response.text, "parsed": response.parsed, "truncated": response.truncated}
     if response.truncated:
         raise ModelOutputInvalid(f"{purpose}: structured output truncated")
     parsed = response.parsed
@@ -90,10 +100,20 @@ def validate_structured(parsed: dict[str, Any], model: type[_T]) -> _T:
 def verify_final_judgments(
     ctx: SkillContext, judgments: Sequence[BusinessJudgment], clauses: Sequence[Claim]
 ) -> JudgmentVerification:
-    return verify_business_judgments(
-        judgments,
-        clauses,
-        gateway=ctx.deps.gateway,
-        judge_model_id=ctx.deps.judge_model_id,
-        timeout_s=ctx.deps.specs["verify"].timeout_s,
-    )
+    with audit_step(
+        ctx.deps.audit,
+        "skill:verify_judgment",
+        {
+            "judgments": [j.model_dump(mode="json") for j in judgments],
+            "clauses": [c.model_dump(mode="json") for c in clauses],
+        },
+    ) as audit:
+        result = verify_business_judgments(
+            judgments,
+            clauses,
+            gateway=ctx.deps.gateway,
+            judge_model_id=ctx.deps.judge_model_id,
+            timeout_s=ctx.deps.specs["verify"].timeout_s,
+        )
+        audit["output"] = result.model_dump(mode="json")
+        return result

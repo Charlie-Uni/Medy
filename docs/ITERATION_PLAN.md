@@ -14,7 +14,9 @@
 
 ARCH-02 的输入一致性工程自审通过：[记录 178](reviews/2026-10-11-implementation-178-historical-query-context.md)，1908/70 全量、501 个维护输入与配置 SHA 一致、三库 0024、0 托管调用。历史日期与显式模式沿用到实际检索、引用回查、缓存/节点 key 和 Ask Replay；裸版本及旧未知上下文拒绝，四类文档 Skill 输出历史提示。兼容和当前事实诊断边界见[历史查询契约](HISTORICAL_QUERIES.md)，完整回放仍待 ARCH-07。当时下一项 ARCH-03；最新结论见记录 179，尚未开始新的质量运行或 S2/S3 实现。
 
-ARCH-03 两类最终业务比较的工程修复与自审通过，见[记录 179](reviews/2026-10-11-implementation-179-final-skill-judgment-verification.md)和[最终判断契约](SKILL_JUDGMENT_VERIFICATION.md)：四项核验、窄规则/语义分工、严格回复与失败关闭，1969/70 全量、506 维护输入 SHA 一致、0 托管调用。真实语义校准仍待单次授权；下一主切片 ARCH-06，其执行上下文和最终判断工程前置已满足。完整异步审计、原条件复现、PLAN-02 剩余契约及 S2/S3 仍未完成。新代码本轮未重启上线。
+ARCH-03 两类最终业务比较的工程修复与自审通过，见[记录 179](reviews/2026-10-11-implementation-179-final-skill-judgment-verification.md)和[最终判断契约](SKILL_JUDGMENT_VERIFICATION.md)：四项核验、窄规则/语义分工、严格回复与失败关闭，1969/70 全量、506 维护输入 SHA 一致、0 托管调用。真实语义校准仍待单次授权；当时下一项 ARCH-06，最新工程结论见下段。原条件复现、PLAN-02 剩余契约及 S2/S3 仍未完成。新代码本轮未重启上线。
+
+ARCH-06 的 Ask/Task 共享审计与五类 Skill 内层证据链已通过工程自审，见[记录 180](reviews/2026-10-11-implementation-180-task-execution-audit.md)和[执行审计契约](TASK_EXECUTION_AUDIT.md)：完整引用绑定、结构化候选/最终核验、安全与重试保留，失败/撤权/lost 及数据库原子回滚通过。全量 2008/70、510 维护输入 SHA 一致、0 托管调用，无迁移；无 key 配置只存元数据。下一主切片 ARCH-07，ARCH-07/08 仅解锁无付费实现；Task/MCP 精确回放、真实语义校准、独立人工、未见盲测及 S2/S3 未完成，新代码未重启上线。
 
 此前功能复核：[记录 128](reviews/2026-10-07-implementation-128-functional-verification.md)。1337 项测试通过（含 254 项数据库/Redis 集成），B/C 实验服务不可达跳过 70 项；真实 API 已成功启动并通过七项健康/请求边界检查，外部模型回答与容量未重测。
 

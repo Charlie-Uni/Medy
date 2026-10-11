@@ -15,6 +15,7 @@ from medops.api.contracts import TracePayloadItem, TracePayloadResponse
 from medops.core.envelope import KeyProvider, Sealed, open_sealed, payload_aad, seal
 from medops.core.errors import BusinessError, ErrorCode
 from medops.domain.identity import UserContext
+from medops.harness.audit import run_payloads
 from medops.harness.runtime import HarnessRun
 
 KINDS = ("input", "evidence_snapshot", "model_output")
@@ -36,36 +37,7 @@ def _json_bytes(value: Any) -> bytes:
 
 def payloads_from_run(run: HarnessRun, *, query: str) -> dict[str, Mapping[str, Any]]:
     """The three replayable pieces of a harness run (baseline 3.5)."""
-    st = run.state
-    return {
-        "input": {
-            "query": query,
-            "rewritten_queries": list(st.rewritten_queries),
-            "session_entities": [e.model_dump(mode="json") for e in st.session_entities],
-            "historical_requested": st.historical_requested,
-            "query_context": st.query_context.model_dump(mode="json") if st.query_context else None,
-            "intent": st.intent.model_dump(mode="json") if st.intent else None,
-        },
-        "evidence_snapshot": {
-            "candidates": [c.chunk_id for c in st.candidates],
-            "evidence": [
-                {
-                    "citation": e.citation.model_dump(mode="json"),
-                    "text": e.text,
-                    "text_hash": e.evidence_text_hash,
-                    "status": e.status.value,
-                    "historical": e.historical,
-                }
-                for e in st.evidence
-            ],
-            "flagged": list(run.flagged_evidence),
-        },
-        "model_output": {
-            "answer": st.answer.model_dump(mode="json") if st.answer else None,
-            "escalation": st.escalation.model_dump(mode="json") if st.escalation else None,
-            "verify_result": st.verify_result.model_dump(mode="json") if st.verify_result else None,
-        },
-    }
+    return run_payloads(run, query=query)
 
 
 @dataclass

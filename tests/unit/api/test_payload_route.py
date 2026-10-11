@@ -80,6 +80,19 @@ class PayloadRuntime(FakeRuntime):
         return PayloadReader(store=self.payloads, provider=PROVIDER)
 
 
+def test_ask_payload_storage_failure_uses_shared_fail_closed_contract():
+    rt = PayloadRuntime()
+
+    def broken(*args, **kwargs):
+        raise RuntimeError("private storage detail")
+
+    rt.payloads.put = broken
+    client = TestClient(create_app(rt), raise_server_exceptions=False)
+    response = client.post("/v1/ask", json={"query": QUERY}, headers=auth("user-1"))
+    assert response.status_code == 503 and response.json()["code"] == "audit_unavailable"
+    assert "answer" not in response.json() and "private storage detail" not in response.text
+
+
 def auth(sub: str) -> dict[str, str]:
     return {"Authorization": f"Bearer {ISSUER_OBJ.token(sub)}"}
 

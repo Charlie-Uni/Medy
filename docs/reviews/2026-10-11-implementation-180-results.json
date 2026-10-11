@@ -1,0 +1,156 @@
+{
+  "task": "ARCH-06",
+  "date": "2026-10-11",
+  "implementer": "Codex",
+  "self_reviewer": "Codex (same implementer)",
+  "independent_human_review": false,
+  "head": "5a604050b9c0706bfd823685e5befcb9619d64a6",
+  "scope": "Shared Ask/Task transactional audit and five production Skills inner evidence/verification snapshots",
+  "status": "DONE within engineering scope",
+  "hosted_model_calls": 0,
+  "model_cost_usd": 0,
+  "commit_push_restart": false,
+  "database_migration": false,
+  "verification": {
+    "red": {
+      "result": "1 failed",
+      "pytest_exit_code": 1,
+      "wrapper_exit_code": 0,
+      "log": ".local/arch06-red.log"
+    },
+    "directed": {
+      "passed": 172,
+      "seconds": 2.25,
+      "exit_code": 0,
+      "log": ".local/arch06-directed.log"
+    },
+    "remediation": {
+      "passed": 49,
+      "seconds": 2.07,
+      "exit_code": 0,
+      "log": ".local/arch06-remediation.log"
+    },
+    "integration": {
+      "passed": 24,
+      "seconds": 7.34,
+      "exit_code": 0,
+      "log": ".local/arch06-integration.log"
+    },
+    "full": {
+      "passed": 2008,
+      "skipped": 70,
+      "warnings": 1,
+      "seconds": 53.92,
+      "exit_code": 0,
+      "formatted_files": 477,
+      "typed_source_files": 200,
+      "eval_datasets": 4,
+      "schemas": "up to date",
+      "snapshot": "/Users/leaf/.cache/medy-checks/arch06-verified-4mwb5pgz",
+      "log": "/Users/leaf/.cache/medy-checks/arch06-verified-4mwb5pgz/.local/arch06-check.log",
+      "log_sha256": "3e94272dede56ccef24835229fb8597b5212490ed0aaccec126b5fe7a5abbf77"
+    },
+    "full_failures": [
+      {
+        "exit_code": 2,
+        "reason": "Makefile expected venv/bin/python; only .venv symlink existed",
+        "log": "/Users/leaf/.cache/medy-checks/arch06-verified-4mwb5pgz/.local/arch06-check-first.log"
+      },
+      {
+        "passed": 2004,
+        "failed": 4,
+        "skipped": 70,
+        "exit_code": 2,
+        "reason": "Audit span missing actual versions; legacy fault WorkerEnv lacked payload_writer",
+        "log": "/Users/leaf/.cache/medy-checks/arch06-verified-4mwb5pgz/.local/arch06-check-second.log"
+      }
+    ],
+    "optional_skip_audit": {
+      "skipped": 70,
+      "seconds": 0.04,
+      "reason": "candidate B/C optional servers unreachable (OperationalError)",
+      "log": "/Users/leaf/.cache/medy-checks/arch06-verified-4mwb5pgz/.local/arch06-optional-skips.log"
+    },
+    "source_comparison": {
+      "count": 510,
+      "mismatches": 0,
+      "secret_configs_equal": true,
+      "log": ".local/arch06-source-comparison.json"
+    },
+    "documents": {
+      "files": 6,
+      "local_links": 173,
+      "bad_links": 0,
+      "task_ids": 141,
+      "status_changes": {
+        "ARCH-06": [
+          "READY",
+          "DONE"
+        ],
+        "ARCH-07": [
+          "BLOCKED",
+          "READY"
+        ],
+        "ARCH-08": [
+          "BLOCKED",
+          "READY"
+        ]
+      },
+      "tests_passed": 10,
+      "seconds": 0.87,
+      "exit_code": 0,
+      "log": "/Users/leaf/.cache/medy-checks/arch06-verified-4mwb5pgz/.local/arch06-doc-check.log",
+      "audit_log": ".local/arch06-document-audit.json",
+      "git_diff_check_exit_code": 0
+    }
+  },
+  "preservation": {
+    "before_files": 133,
+    "unchanged_files": 116,
+    "intentional_overlaps": [
+      "README.md",
+      "docs/CURRENT_TASKS.md",
+      "docs/ITERATION_PLAN.md",
+      "docs/ITERATION_STAGES.md",
+      "src/medops/api/routes/ask.py",
+      "src/medops/application/payloads.py",
+      "src/medops/application/tasks.py",
+      "src/medops/harness/dependencies.py",
+      "src/medops/harness/nodes.py",
+      "src/medops/harness/runtime.py",
+      "src/medops/skills/_structured.py",
+      "src/medops/skills/citation_verification.py",
+      "src/medops/skills/registry.py",
+      "tests/unit/api/test_payload_route.py",
+      "tests/unit/application/test_tasks.py",
+      "tests/unit/faults/test_main_chain_faults.py",
+      "tests/unit/skills/test_final_judgments.py"
+    ],
+    "missing": [],
+    "task_ids": 141,
+    "frozen_data_and_gold_changed_by_this_slice": false,
+    "default_models_acl_thresholds_released_pointers_changed": false
+  },
+  "backup": "/var/folders/zj/6djhy_4x7vx_7t8xcgt_v62c0000gn/T/medy-arch06-h050gsxq",
+  "slice_diff": ".local/arch06-slice.diff",
+  "self_audit": {
+    "requirements_and_scope": "PASS within engineering scope",
+    "adr_and_stage_gates": "PASS within engineering scope",
+    "correctness_and_failure_paths": "PASS within engineering scope",
+    "permissions_and_data": "PASS within engineering scope",
+    "budget_cancellation_side_effects": "PASS within engineering scope",
+    "traceability_and_versions": "PASS within engineering scope",
+    "verification_sufficiency": "PASS within engineering scope",
+    "state_and_documentation": "PASS within engineering scope"
+  },
+  "limitations": [
+    "No hosted semantic calibration or real traffic latency/storage measurement.",
+    "Scripted judgments are engineering evidence, not medical quality.",
+    "No second independent human review or new unseen holdout.",
+    "Payload key disabled configuration writes metadata only.",
+    "Original-condition reproduction, full rendered requests and Task/MCP replay remain ARCH-07.",
+    "S2 Agent and S3 evolution not delivered.",
+    "New code remains uncommitted and not restarted into production."
+  ],
+  "next_task": "ARCH-07"
+}

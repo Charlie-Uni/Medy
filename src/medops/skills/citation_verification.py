@@ -14,6 +14,7 @@ from medops.domain.common import DomainModel, NonEmptyStr, RiskLevel
 from medops.domain.evidence import Citation
 from medops.domain.skill import SkillOutput, SkillSpec, SkillStatus
 from medops.domain.verification import Verdict
+from medops.harness.audit import audit_step
 from medops.safety.checks import screen_evidence
 from medops.skills.registry import RegisteredSkill, SkillContext
 from medops.verification.verifier import VERIFIER_VERSION, verify_claims
@@ -57,6 +58,8 @@ class CitationVerificationOutput(SkillOutput):
 def _run(ctx: SkillContext, inp: CitationVerificationInput) -> CitationVerificationOutput:
     wanted = sorted({cid for claim in inp.claims for cid in claim.citation_chunk_ids})
     visible, flagged = screen_evidence(tuple(ctx.evidence_lookup(ctx.user, wanted)))
+    if ctx.deps.audit is not None:
+        ctx.deps.audit.observe(visible, flagged)
     by_id = {e.citation.chunk_id: e for e in visible}
     verdicts: list[ClaimVerdict] = []
     for item in inp.claims:
@@ -74,13 +77,22 @@ def _run(ctx: SkillContext, inp: CitationVerificationInput) -> CitationVerificat
             continue
         claim = Claim(text=item.text, citation_chunk_ids=tuple(known))
         cited = [by_id[c] for c in known]
-        vr = verify_claims(
-            [claim],
-            cited,
-            gateway=ctx.deps.gateway,
-            judge_model_id=ctx.deps.judge_model_id,
-            timeout_s=ctx.deps.specs["verify"].timeout_s,
-        )
+        with audit_step(
+            ctx.deps.audit,
+            "skill:verify_citation",
+            {
+                "claim": claim.model_dump(mode="json"),
+                "evidence_chunk_ids": known,
+            },
+        ) as audit:
+            vr = verify_claims(
+                [claim],
+                cited,
+                gateway=ctx.deps.gateway,
+                judge_model_id=ctx.deps.judge_model_id,
+                timeout_s=ctx.deps.specs["verify"].timeout_s,
+            )
+            audit["output"] = vr.model_dump(mode="json")
         if vr.contradicted:
             verdict = Verdict.contradicted
         elif vr.unsupported or not vr.structural_ok:

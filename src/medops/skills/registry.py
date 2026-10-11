@@ -29,6 +29,7 @@ from medops.domain.query import QueryContext, resolve_query_context
 from medops.domain.safety import SafetyDecision, SafetyResult
 from medops.domain.skill import SkillOutput, SkillSpec, SkillStatus
 from medops.domain.state import VersionSet
+from medops.harness.audit import ExecutionAudit, ExecutionAuditSnapshot
 from medops.harness.contracts import MAX_RETRIES, NodeAttempt, NodeFailure, NodeSpec, run_node
 from medops.harness.dependencies import HarnessDeps
 from medops.infrastructure.llm.accounting import call_scope
@@ -89,6 +90,7 @@ class SkillRun:
     attempts: tuple[NodeAttempt, ...]
     operation_key: str
     safety: SafetyResult
+    audit: ExecutionAuditSnapshot | None = None
 
 
 class SkillRequest(NamedTuple):
@@ -145,6 +147,9 @@ class SkillRegistry:
     # ------------------------------------------------------------------ execution
     def execute(self, name: str, version: str, raw_input: Mapping[str, object], *, context: SkillContext) -> SkillRun:
         context = context.pin_query_context()
+        journal = context.deps.audit or ExecutionAudit()
+        journal.bind(context.trace_id, context.user.user_id)
+        context = replace(context, deps=replace(context.deps, audit=journal))
         limits = context.deps.execution_limits or default_limits(timeout_s=self.get(name, version).spec.timeout_s)
         limits = limits.model_copy(update={"timeout_s": min(limits.timeout_s, self.get(name, version).spec.timeout_s)})
         if not isinstance(context.deps.gateway, MeteredGateway):
@@ -169,7 +174,8 @@ class SkillRegistry:
                 execution_reserved_tokens=snapshot.reserved_tokens,
                 execution_budget_blocked=snapshot.blocked_reason,
             )
-            return result
+            journal.ensure_complete()
+            return replace(result, audit=journal.snapshot())
 
     def _execute(self, name: str, version: str, raw_input: Mapping[str, object], *, context: SkillContext) -> SkillRun:
         entry = self.get(name, version)
@@ -219,6 +225,8 @@ class SkillRegistry:
                 node, key, lambda: entry.handler(context, payload), sleep=self._sleep, clock=self._clock
             )
         except NodeFailure as failure:
+            assert context.deps.audit is not None
+            context.deps.audit.record_attempts(failure.attempts)
             if isinstance(failure.error, BusinessError):
                 raise failure.error from None
             output = SkillOutput(
@@ -237,6 +245,8 @@ class SkillRegistry:
                 operation_key=key,
                 safety=SafetyResult(decision=SafetyDecision.allow, checker_version=SAFETY_VERSION),
             )
+        assert context.deps.audit is not None
+        context.deps.audit.record_attempts(attempts)
         if not isinstance(output, entry.output_model):
             raise InfrastructureError(
                 ErrorCode.internal_error,
@@ -279,6 +289,7 @@ class SkillRegistry:
 
     def _guarded(self, request: SkillRequest, context: SkillContext) -> SkillRun | MedOpsError:
         try:
+            context = replace(context, deps=replace(context.deps, audit=None))  # sibling audit isolation
             return self.execute(request.name, request.version, request.input, context=context)
         except MedOpsError as exc:
             return exc

@@ -99,6 +99,8 @@ def build_nodes(deps: HarnessDeps) -> dict[str, Callable[[HarnessState], dict[st
         try:
             result, attempts = run_node(specs[node], key, lambda: body(state), sleep=deps.sleep, clock=deps.clock)
         except NodeFailure as failure:
+            if deps.audit is not None:
+                deps.audit.record_attempts(failure.attempts)
             code, detail = _failure_codes(failure.error)
             if store is not None:
                 store.record_attempts(claim_no, failure.attempts)
@@ -108,6 +110,9 @@ def build_nodes(deps: HarnessDeps) -> dict[str, Callable[[HarnessState], dict[st
             new_state, flagged = result
         else:
             new_state, flagged = result, []
+        if deps.audit is not None:
+            deps.audit.record_attempts(attempts)
+            deps.audit.observe(new_state.evidence, flagged)
         if new_state.answer is not None or new_state.escalation is not None:
             budget = current_budget()
             snapshot = budget.snapshot() if budget is not None else None

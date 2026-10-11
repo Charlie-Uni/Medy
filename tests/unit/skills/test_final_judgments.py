@@ -162,6 +162,10 @@ def test_async_task_preserves_non_completion_of_the_business_judgment():
     assert result.record.result["output"]["deviation"] == "undetermined"
     assert result.record.result["output"]["rationale"] == ""
     assert env.traces.traces[result.record.trace_id].outcome == "escalated"
+    trace = env.traces.traces[result.record.trace_id]
+    assert trace.evidence_chunk_ids == ("c1",)
+    assert trace.cited_chunk_ids == ("c1",)  # preserved verified clauses, not the rejected comparison
+    assert {s.node for s in trace.spans} >= {"retrieve", "verify", "skill:verify_judgment"}
 
 
 def test_final_judge_timeout_is_bounded_and_keeps_no_candidate_payload():
