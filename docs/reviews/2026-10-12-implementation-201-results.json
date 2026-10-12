@@ -1,0 +1,190 @@
+{
+  "format": "implementation-review-v1",
+  "record": 201,
+  "date": "2026-10-12",
+  "implementer": "Codex",
+  "self_reviewer": "Codex",
+  "independent_second_human": false,
+  "baseline_sha": "c2dcdf2b7a4958b9058cc1048d06b5f604dbab34",
+  "task_ids": [
+    "EVAL-33"
+  ],
+  "main_slice": "offline isolation manifests, input projection and exposure ledger",
+  "result_scope": "application primitives and public synthetic canaries only",
+  "hosted_model_calls": 0,
+  "api_cost_usd": 0,
+  "business_database_writes": false,
+  "disposable_test_database_writes": true,
+  "deployment_changed": false,
+  "frozen_datasets_changed": false,
+  "production_gates_changed": false,
+  "owner_decisions": {
+    "D-01": "pending",
+    "D-02": "pending"
+  },
+  "task_statuses": {
+    "PLAN-02": "HUMAN",
+    "EVAL-32": "BLOCKED",
+    "EVAL-33": "IN_PROGRESS"
+  },
+  "S2_started": false,
+  "unchanged_maintenance_inputs": 704,
+  "new_maintained_python_files": 12,
+  "new_test_cases": 71,
+  "synthetic_canary_checks": 9,
+  "tests": [
+    {
+      "command": "pytest -q tests/unit/evals/test_isolation_*.py plus off_label_check regression",
+      "exit_code": 0,
+      "passed": 72,
+      "pytest_elapsed_s": 7.67,
+      "total_elapsed_s": 10.835
+    },
+    {
+      "command": "required-services make check",
+      "exit_code": 0,
+      "passed": 2393,
+      "skipped": 70,
+      "pytest_elapsed_s": 330.42,
+      "total_elapsed_s": 349.402,
+      "warnings": 1,
+      "warning_reason": "existing negative JWT algorithm test uses deliberately short HMAC key"
+    },
+    {
+      "command": "python -m medops.evals.isolation --self-check",
+      "exit_code": 0,
+      "checks": 9,
+      "model_calls": 0
+    },
+    {
+      "command": "pytest -q tests/unit/docs",
+      "exit_code": 0,
+      "passed": 41,
+      "pytest_elapsed_s": 4.72,
+      "total_elapsed_s": 6.596
+    }
+  ],
+  "self_review": [
+    {
+      "item": "scope",
+      "verdict": "pass",
+      "reason": "离线原语与公开合成验证；原有704维护输入不变，未改gold/评分器/模型/阈值"
+    },
+    {
+      "item": "ADR_and_stage",
+      "verdict": "pass",
+      "reason": "D-01/D-02仍pending；S0准备，S2未开始；ARCH-04/11既有证据不冒充新Agent契约"
+    },
+    {
+      "item": "correctness_and_failures",
+      "verdict": "pass",
+      "reason": "校验model_copy/重复键/绑定、权限、并发、篡改、fsync不确定性与文件权限；发现暴露用途缺陷后修复"
+    },
+    {
+      "item": "permissions_and_data",
+      "verdict": "pass",
+      "reason": "投影不出gold，拒绝不允许角色；无正文遥测；真实鉴权/封存隔离仍未实现，unknown不自动升级"
+    },
+    {
+      "item": "budget_cancellation_side_effects",
+      "verdict": "pass",
+      "reason": "无托管模型/业务库写入/部署；只中断自己的失败门禁进程，保留日志；合成临时目录自动清理"
+    },
+    {
+      "item": "traceability_and_versions",
+      "verdict": "pass",
+      "reason": "c2dcdf2基线、内容摘要、外部头CAS与本轮收据可定位；未承诺签名/WORM/原条件回放"
+    },
+    {
+      "item": "verification",
+      "verdict": "pass",
+      "reason": "71新用例＋旧失败用例定向72通过，完整required门禁通过；保留首次失败/中断及70可选skip"
+    },
+    {
+      "item": "status_and_documentation",
+      "verdict": "pass",
+      "reason": "EVAL-33 IN_PROGRESS，PLAN-02 HUMAN，EVAL-32 BLOCKED；文档和待办保持部分范围"
+    }
+  ],
+  "audit_failures": [
+    {
+      "kind": "lint",
+      "error": "UP017 / B904",
+      "fix": "UTC alias and explicit exception suppression; import order fixed by ruff",
+      "rerun_exit_code": 0
+    },
+    {
+      "kind": "semantic_review",
+      "error": "candidate_generation purpose could be ignored when role was not developer/generator",
+      "fix": "purpose marks exposure regardless of role; runtime test now uses runtime_execution; three contrary-role regressions",
+      "rerun_exit_code": 0
+    },
+    {
+      "kind": "filesystem_review",
+      "error": "pre-existing group/other-readable ledger was accepted",
+      "fix": "refuse public permissions without chmod/append; native regression",
+      "rerun_exit_code": 0
+    },
+    {
+      "kind": "initial_gate",
+      "exit_code": 2,
+      "total_elapsed_s": 552.807,
+      "failed": 1,
+      "passed_before_interrupt": 407,
+      "skipped": 70,
+      "error": "test_five_skills_unchanged_facts_still_complete[off_label_check]: dependency_timeout",
+      "interrupted_by_implementer": true,
+      "interrupt_reason": "stop owned pytest after semantic defect discovery; preserve failures before changing code",
+      "fix": "no production deadline/test relaxation; isolated regression and unchanged full required gate rerun passed",
+      "root_latency_cause": "not established",
+      "rerun_exit_code": 0
+    }
+  ],
+  "limitations": [
+    "trusted runner and storage paths required; no caller authentication or deployment identity isolation",
+    "no aggregate release guard, complete runner, real sealed tasks, historical exposure sweep or fuzzy duplicate method",
+    "external trusted head required; no signatures, WORM, backups, parent-path sandbox or Windows guarantee",
+    "fsync failures can leave uncertain bytes; no silent retry or rollback; checkpoint reconciliation required",
+    "no unseen eligibility or medical annotation certification; no independent second human",
+    "first existing Skill timeout root latency cause unproven; no latency/capacity claim",
+    "no Agent runtime, scorer, model quality claim, automatic activation or production deployment"
+  ],
+  "next_slice": "aggregate output guard and reviewable custodian deployment proposal; retain owner contract gate",
+  "consistency_audit": {
+    "exit_code": 0,
+    "elapsed_s": 3.194,
+    "baseline_sha": "c2dcdf2b7a4958b9058cc1048d06b5f604dbab34",
+    "scope": "EVAL-33 offline primitives and synthetic checks only",
+    "planned_paths": [
+      "src/medops/evals/isolation/__init__.py",
+      "src/medops/evals/isolation/__main__.py",
+      "src/medops/evals/isolation/contracts.py",
+      "src/medops/evals/isolation/manifests.py",
+      "src/medops/evals/isolation/projection.py",
+      "src/medops/evals/isolation/exposure.py",
+      "src/medops/evals/isolation/canary.py",
+      "tests/support/eval_isolation.py",
+      "tests/unit/evals/test_isolation_manifests.py",
+      "tests/unit/evals/test_isolation_projection.py",
+      "tests/unit/evals/test_isolation_exposure.py",
+      "tests/unit/evals/test_isolation_canary.py",
+      "docs/agent/EVALUATION_ISOLATION.md",
+      "docs/CURRENT_TASKS.md",
+      "docs/ITERATION_PLAN.md",
+      "docs/ITERATION_STAGES.md",
+      "docs/reviews/2026-10-12-implementation-201-evaluation-isolation-primitives.md",
+      "docs/reviews/2026-10-12-implementation-201-results.json"
+    ],
+    "task_ids": 143,
+    "removed_ids": [],
+    "added_ids": [],
+    "local_links_checked": 206,
+    "local_fragments_checked": 9,
+    "unchanged_maintenance_inputs": 704,
+    "maintenance_mismatches": [],
+    "original_development_spec_and_pending_contract_unchanged": true,
+    "unexpected_changed_paths": [],
+    "model_calls": 0,
+    "api_cost_usd": 0
+  }
+}

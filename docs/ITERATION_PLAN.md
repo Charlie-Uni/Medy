@@ -557,3 +557,5 @@ Goal / 对应基线任务：
 最终交付包括可运行 Agent、模型生成 Prompt/Skill 的优化 Loop、原文与人工接手入口、可复现评测、部署恢复说明、演示及 PDF/Word/简历材料。每个新版本需追到生成案例、内容哈希、实际调用、评测、批准和回滚；原 QA/安全/Loop/性能门禁与独立人工缺口按[台账 §12](CURRENT_TASKS.md#12-最终成果验收边界与决策点)明确报告。框架接通、试跑成功与正式验收通过是分别验证的成果。
 
 2026-10-12 S0 契约准备：[PLAN-02 v0.1](agent/PLAN-02-action-budget-and-acceptance.md)及[隔离方案](agent/EVALUATION_ISOLATION.md)已具备可审核提案，D-01/D-02 尚待所有者裁决；状态以台账为准。记录200只验证本轮文档/规格一致性，没有实现Agent、评分器或实际隔离，0托管调用。
+
+2026-10-12 EVAL-33 原语：[记录201](reviews/2026-10-12-implementation-201-evaluation-isolation-primitives.md)实现离线manifest/库存、运行输入投影、带可信头校验的暴露账本与合成canary。只完成应用层部分准备，不认证真实身份，不封存新盲测题；聚合出口/近重复/历史扫描及部署身份仍待。EVAL-33 为 IN_PROGRESS，PLAN-02 D-01/D-02 未决，S2 未开始；0托管调用，原评分、模型、ACL和生产门保持。
