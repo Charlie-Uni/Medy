@@ -126,32 +126,23 @@ class ReleasedPolicySet:
 
     def multi_query(self, base: bool = False) -> bool:
         """Whether every rewritten query is searched and fused (record 93); the repository default is off."""
-        p = self.get("retrieval_params", "hybrid")
-        if p is None or "multi_query" not in p.diff:
-            return base
-        value = _to(p.diff["multi_query"])
-        if not isinstance(value, bool):
-            raise PolicyDiffError("multi_query must be true or false")
-        return value
+        return self._retrieval_bool("multi_query", base)
 
     def doc_focus(self, base: bool = False) -> bool:
         """Whether a named corpus document is searched on its own and fused (record 94); default off."""
-        p = self.get("retrieval_params", "hybrid")
-        if p is None or "doc_focus" not in p.diff:
-            return base
-        value = _to(p.diff["doc_focus"])
-        if not isinstance(value, bool):
-            raise PolicyDiffError("doc_focus must be true or false")
-        return value
+        return self._retrieval_bool("doc_focus", base)
 
     def source_constraint(self, base: bool = False) -> bool:
         """Enforce high-confidence named-source identity during retrieval; repository default is off."""
+        return self._retrieval_bool("source_constraint", base)
+
+    def _retrieval_bool(self, name: str, base: bool) -> bool:
         p = self.get("retrieval_params", "hybrid")
-        if p is None or "source_constraint" not in p.diff:
+        if p is None or name not in p.diff:
             return base
-        value = _to(p.diff["source_constraint"])
+        value = _to(p.diff[name])
         if not isinstance(value, bool):
-            raise PolicyDiffError("source_constraint must be true or false")
+            raise PolicyDiffError(f"{name} must be true or false")
         return value
 
     def query_translation(self, base: str = QUERY_TRANSLATION_OFF) -> str:

@@ -166,6 +166,16 @@ def test_source_constraint_is_a_boolean_retrieval_parameter():
         validate_diff("retrieval_params", "hybrid", {"source_constraint": {"from": False, "to": 1}}, base=BASE)
 
 
+@pytest.mark.parametrize("name", ["multi_query", "doc_focus", "source_constraint"])
+def test_boolean_policy_preserves_custom_base_and_rejects_integer_with_the_right_key(name):
+    assert getattr(ReleasedPolicySet(), name)(True) is True
+    unrelated = released(ReleasedPolicy("x", "retrieval_params", "hybrid", "v", {"limit": {"to": 5}}))
+    assert getattr(unrelated, name)(True) is True
+    invalid = released(ReleasedPolicy("x", "retrieval_params", "hybrid", "v", {name: {"to": 0}}))
+    with pytest.raises(PolicyDiffError, match=f"^{name} must be true or false$"):
+        getattr(invalid, name)(True)
+
+
 def test_query_translation_is_an_allowlisted_model_and_marks_the_model_config():
     from medops.application.policy_loader import ReleasedPolicy, ReleasedPolicySet
 
