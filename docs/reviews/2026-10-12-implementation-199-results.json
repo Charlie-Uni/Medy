@@ -1,0 +1,649 @@
+{
+  "record": 199,
+  "task": "CODE-06",
+  "date": "2026-10-12",
+  "status": "DONE",
+  "baseline_commit": "230039a5671c54349a200cdb3493d1ca412b5d77",
+  "author": "Codex",
+  "reviewer": "Codex self review; no second independent human",
+  "hosted_model_calls": 0,
+  "cost_usd": 0,
+  "deployment_restarted": false,
+  "required_gate": {
+    "exit_code": 0,
+    "elapsed_s": 105.684,
+    "command": [
+      "make",
+      "check"
+    ],
+    "worktree": "/Users/leaf/.cache/medy-checks/audit199-verified-524y3kkc",
+    "required_services": true
+  },
+  "pytest": {
+    "passed": 2322,
+    "skipped": 70,
+    "warnings": 1,
+    "elapsed_s": 101.41
+  },
+  "targeted": {
+    "exit_code": 0,
+    "elapsed_s": 73.711,
+    "command": [
+      "/Users/leaf/.cache/medy-checks/audit199-verified-524y3kkc/venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/unit",
+      "tests/integration/test_database_fixtures.py",
+      "tests/integration/test_lexical_pg_simple_fts.py",
+      "tests/integration/test_lexical_production.py",
+      "tests/integration/test_retrieval_integrity.py",
+      "tests/integration/test_final_output.py",
+      "tests/integration/test_rls.py"
+    ],
+    "worktree": "/Users/leaf/.cache/medy-checks/audit199-verified-524y3kkc",
+    "required_services": true,
+    "passed": 2080,
+    "pytest_elapsed_s": 72.45
+  },
+  "final_scope_and_cleanup": {
+    "exit_code": 0,
+    "elapsed_s": 14.452,
+    "command": [
+      "/Users/leaf/.cache/medy-checks/audit199-verified-524y3kkc/venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/integration/test_task_audit.py",
+      "tests/integration/test_tasks_store.py",
+      "tests/integration/test_database_fixtures.py",
+      "tests/unit/evals/test_fixture_boundaries.py"
+    ],
+    "worktree": "/Users/leaf/.cache/medy-checks/audit199-verified-524y3kkc",
+    "required_services": true,
+    "passed": 23,
+    "pytest_elapsed_s": 13.46,
+    "parallel_with_final_gate": true
+  },
+  "compatibility": {
+    "shared_definition_AST_checked": 79,
+    "shared_definition_differences": [],
+    "test_body_AST_checked": 564,
+    "test_body_differences": [],
+    "collection": {
+      "before": 2383,
+      "after": 2392,
+      "removed": [],
+      "added": [
+        "tests/integration/test_database_fixtures.py::test_database_cleanup_still_runs_when_login_teardown_fails",
+        "tests/integration/test_database_fixtures.py::test_factory_and_default_fixture_keep_variant_databases_separate",
+        "tests/integration/test_database_fixtures.py::test_setup_and_body_failures_remove_all_owned_resources[body]",
+        "tests/integration/test_database_fixtures.py::test_setup_and_body_failures_remove_all_owned_resources[dsn]",
+        "tests/integration/test_database_fixtures.py::test_setup_and_body_failures_remove_all_owned_resources[migration]",
+        "tests/integration/test_database_fixtures.py::test_setup_and_body_failures_remove_all_owned_resources[provision]",
+        "tests/integration/test_database_fixtures.py::test_two_live_databases_and_login_groups_are_isolated_and_cleaned",
+        "tests/unit/evals/test_fixture_boundaries.py::test_shared_support_contains_no_collected_cases_or_conftest_imports",
+        "tests/unit/evals/test_fixture_boundaries.py::test_tests_do_not_import_collected_test_modules_or_load_scripts_by_filename"
+      ],
+      "duplicates": 0
+    }
+  },
+  "fixture_scopes": {
+    "count": 22,
+    "mismatches": [],
+    "rows": [
+      {
+        "path": "tests/integration/test_admin_stores.py",
+        "fixture": "db",
+        "before_scope": "module",
+        "after_scope": "module"
+      },
+      {
+        "path": "tests/integration/test_audit_store.py",
+        "fixture": "db",
+        "before_scope": "module",
+        "after_scope": "module"
+      },
+      {
+        "path": "tests/integration/test_cache_invalidation.py",
+        "fixture": "db",
+        "before_scope": "module",
+        "after_scope": "module"
+      },
+      {
+        "path": "tests/integration/test_fact_recheck.py",
+        "fixture": "db",
+        "before_scope": "module",
+        "after_scope": "module"
+      },
+      {
+        "path": "tests/integration/test_final_output.py",
+        "fixture": "db",
+        "before_scope": "module",
+        "after_scope": "module"
+      },
+      {
+        "path": "tests/integration/test_lexical_pg_search_bm25.py",
+        "fixture": "db",
+        "before_scope": "module",
+        "after_scope": "module"
+      },
+      {
+        "path": "tests/integration/test_lexical_pg_simple_fts.py",
+        "fixture": "db",
+        "before_scope": "module",
+        "after_scope": "module"
+      },
+      {
+        "path": "tests/integration/test_lexical_pg_simple_fts.py",
+        "fixture": "db_a2",
+        "before_scope": "module",
+        "after_scope": "module"
+      },
+      {
+        "path": "tests/integration/test_lexical_pg_textsearch_bm25.py",
+        "fixture": "db",
+        "before_scope": "module",
+        "after_scope": "module"
+      },
+      {
+        "path": "tests/integration/test_lexical_pg_zhparser_fts.py",
+        "fixture": "db",
+        "before_scope": "module",
+        "after_scope": "module"
+      },
+      {
+        "path": "tests/integration/test_lexical_pg_zhparser_fts.py",
+        "fixture": "db_b2",
+        "before_scope": "module",
+        "after_scope": "module"
+      },
+      {
+        "path": "tests/integration/test_lexical_production.py",
+        "fixture": "db",
+        "before_scope": "module",
+        "after_scope": "module"
+      },
+      {
+        "path": "tests/integration/test_mcp_audit.py",
+        "fixture": "db",
+        "before_scope": "module",
+        "after_scope": "module"
+      },
+      {
+        "path": "tests/integration/test_mcp_service.py",
+        "fixture": "db",
+        "before_scope": "module",
+        "after_scope": "module"
+      },
+      {
+        "path": "tests/integration/test_metrics_source.py",
+        "fixture": "db",
+        "before_scope": "module",
+        "after_scope": "module"
+      },
+      {
+        "path": "tests/integration/test_operation_executions.py",
+        "fixture": "db",
+        "before_scope": "module",
+        "after_scope": "module"
+      },
+      {
+        "path": "tests/integration/test_payload_store.py",
+        "fixture": "db",
+        "before_scope": "module",
+        "after_scope": "module"
+      },
+      {
+        "path": "tests/integration/test_principals.py",
+        "fixture": "db",
+        "before_scope": "module",
+        "after_scope": "module"
+      },
+      {
+        "path": "tests/integration/test_publish_outbox.py",
+        "fixture": "db",
+        "before_scope": "module",
+        "after_scope": "module"
+      },
+      {
+        "path": "tests/integration/test_task_audit.py",
+        "fixture": "db",
+        "before_scope": "function",
+        "after_scope": "function"
+      },
+      {
+        "path": "tests/integration/test_tasks_store.py",
+        "fixture": "db",
+        "before_scope": "function",
+        "after_scope": "function"
+      },
+      {
+        "path": "tests/integration/test_vector_pg.py",
+        "fixture": "db",
+        "before_scope": "module",
+        "after_scope": "module"
+      }
+    ]
+  },
+  "additional_moves": {
+    "byte_identical_modules": [
+      {
+        "source": "tests/unit/harness/_fixtures.py",
+        "target": "tests/support/harness_data.py",
+        "sha256": "b9b5fef28fc4f3525148ae6a8656b95e63eac7d3f3efc0eda8498efb02e612d5",
+        "byte_equal": true
+      },
+      {
+        "source": "tests/unit/api/_auth_fixtures.py",
+        "target": "tests/support/identity.py",
+        "sha256": "b9997bc8dc234897245a56b739498d3292bd6734e75e9e211d38c3c1e85de5b5",
+        "byte_equal": true
+      },
+      {
+        "source": "tests/unit/retrieval/lexical_contract.py",
+        "target": "tests/support/lexical_contract.py",
+        "sha256": "d18c7ec433c8a462f06df7907c5216a2266a241cc402eb685f26229ebca1528d",
+        "byte_equal": true
+      }
+    ],
+    "container_dsn_AST_identical": true
+  },
+  "baseline_setup_failure": {
+    "baseline": "230039a",
+    "fault": "user_dsn raises after provision transaction committed",
+    "exception_type": "RuntimeError",
+    "owned_role_leak_count": 5,
+    "database_leak_while_traceback_retained": 1,
+    "new_fixture_regression": "test_setup_and_body_failures_remove_all_owned_resources[dsn]",
+    "manual_cleanup_verified": true
+  },
+  "initial_full_gate": {
+    "exit_code": 2,
+    "elapsed_s": 120.756,
+    "command": [
+      "make",
+      "check"
+    ],
+    "worktree": "/Users/leaf/.cache/medy-checks/audit199-verified-524y3kkc",
+    "required_services": true,
+    "pytest": {
+      "failed": 1,
+      "passed": 2321,
+      "skipped": 70
+    },
+    "reason": "task audit function-scoped DB incorrectly consolidated to module scope; fixed"
+  },
+  "concurrent_failure": {
+    "targeted_failed": 6,
+    "targeted_passed": 17,
+    "reason": "whole-cluster cleanup assertions observed resources from concurrent suite; now exact owned-name assertions"
+  },
+  "interrupted_full_gate": {
+    "exit_code": 2,
+    "elapsed_s": 79.671,
+    "command": [
+      "make",
+      "check"
+    ],
+    "worktree": "/Users/leaf/.cache/medy-checks/audit199-verified-524y3kkc",
+    "required_services": true
+  },
+  "source_binding": {
+    "count": 704,
+    "basis": "230039a verified baseline + explicit 116 path original/snapshot SHA binding; source manifest, not a rehash of archived PDF/JSON data",
+    "changed_sha256": {
+      "deploy/ci/test_container_boot.py": "c7257081d64c7a595869af61a09273d32d122f691bca1c6163b24d4e7fefa932",
+      "tests/diagnostics/request_transactions.py": "c98478a5cc8bd36066f87c7cb63b2307d5f1d953cc0cf6045bf81eda8ddc3bce",
+      "tests/integration/conftest.py": "768437e74e5554993582398d0f678da0a378220bc7ca88677b77f5ee789c72f5",
+      "tests/integration/lexical_adapter_suite.py": "8360e47f7603f1311bc8caa71e493c4b0b00345b8ce49cb160ff617366192d29",
+      "tests/integration/test_activation.py": "bd73479e8f3dbb8e42133df9bc783e3e80eeaae315fba66c07e13df2c32bc3d3",
+      "tests/integration/test_admin_stores.py": "9f70de61eff4a5edeab9f6e91459fe11731c11e2a446fa9b766798e0648c4f70",
+      "tests/integration/test_audit_store.py": "58f7a7da6d1b0ed652a6e598dbb9ad8f4ea665609c5d8320818e8c0a99256aa6",
+      "tests/integration/test_cache_invalidation.py": "c0b4e1b022a706384a7a24a0a090b2e224ebf279f122e0c510b5fe98dedda7c1",
+      "tests/integration/test_database_fixtures.py": "77fb023b186aa01dbaa736f19171555bd5a670d1a8280e65ce1017e1e1e5ec7e",
+      "tests/integration/test_fact_recheck.py": "846eaba879ec848220d8452eb8eb0993b85c876e44ef958980454149c4aa2a31",
+      "tests/integration/test_feedback_export.py": "9d76daf1ce81a04bcdfa0b59aee78257857e67859b850c8e7301c23c04afde0d",
+      "tests/integration/test_final_output.py": "c4c36f345b98aef267533d5e2cf907e3ea52863ab15cbc0b3eb902ca204258b9",
+      "tests/integration/test_lexical_pg_search_bm25.py": "84d5f4fc1e4d06d147c948d13413870630d82b45a5a96b3c8a60dc219c69b21b",
+      "tests/integration/test_lexical_pg_simple_fts.py": "c7300d8769499024417261fdb0d2e2e5636a4cb7ccef0f62cdd1340cb3193274",
+      "tests/integration/test_lexical_pg_textsearch_bm25.py": "06340a70d94585420920ca39a4c7ee56e416c88c150c100a358be7e9ab642f4a",
+      "tests/integration/test_lexical_pg_zhparser_fts.py": "345b4cd39da183feb031225f47b20a01a94a26db46b0e6c2574822de28455720",
+      "tests/integration/test_lexical_production.py": "5627bdb79ee3c8ec41c28031369a7a9962bd4f83216526036fec2831aa5cae06",
+      "tests/integration/test_llm_call_receipts.py": "ff2bd6e348906597e8bdae7bf37c9e5a391071bc0111ac9a36dfb563bc62d64d",
+      "tests/integration/test_mcp_audit.py": "1bd5a8ac9d9559147ef7f19203c6fcb5d41eb4bbf431802fcc1004deeb049290",
+      "tests/integration/test_mcp_service.py": "91a35af186857ca973fa1320f46d6640a3e9ab255e7f3f2e36ea4e67fac355d9",
+      "tests/integration/test_metrics_source.py": "dd77398092007fdcc8dc2e1769e01714730b2861dc10471ec152d0e985495d33",
+      "tests/integration/test_migrations.py": "e6ca772371a139327f04cb623353c265b4f4a8bff85dc274d9d50ee846111339",
+      "tests/integration/test_operation_executions.py": "e4604a3579a1839868ba2edea8adf5f5e15a1aae9eae392bb0b282ee5970d14b",
+      "tests/integration/test_payload_store.py": "38a6cefa9e47d47eecfcf24ceba38780bea8733eddd7b7b60e3427ac1d9d1a15",
+      "tests/integration/test_principals.py": "0be1331d5d2ab4bdb4b0a39f641eebdd822579500c658a8d4a9be9a52138ee05",
+      "tests/integration/test_publish_outbox.py": "7513d73d0ade9f581f1c1df928f0560ebf3ded1bbffa71ae34fd8f8c1125f27c",
+      "tests/integration/test_retrieval_integrity.py": "85b8340d285c7608583c9a5dbeb7ad53dc3e28496620d2addb2b387ee88d7674",
+      "tests/integration/test_retrieval_maintenance.py": "0b8a7e29dde64c0242b729d5abde65c85e69d389da365c781e30a6ca9d3d85b4",
+      "tests/integration/test_rls.py": "f40a444e0c9f03fb5ad1474c57185328356afa36d134993c3f7e7554f55c055a",
+      "tests/integration/test_run_conditions_facts.py": "6b89b3822ede27fc3dbcf7add98c5599eb0829b042d101b152bbf363d824d1df",
+      "tests/integration/test_task_audit.py": "47fe5e4db2eaa474483f3855a6e6dab9e60a306d6f0a3667f5e305bd0aa342c6",
+      "tests/integration/test_tasks_store.py": "72fe0cf83af5d47ef9aeb9c68390f8dfb3a3c9ea507e87d672f470ecbe05934c",
+      "tests/integration/test_vector_pg.py": "bc8a32ab1fc6218772db8616111d0db9a25200f98783d4249d0dfaf3f99e97ee",
+      "tests/integration/test_withdrawn.py": "cb92b8907efce269ae825e4390ce16e707458686bc0f7b0a50f232747d0321ed",
+      "tests/support/__init__.py": "2a485bd3e46e9a44d4afd2e2aeedaa5ceaa9e085589cb9f0acdb882edaec9c1f",
+      "tests/support/api_runtime.py": "71597cc1371dfbd85c57f644e197d36c909f07bb83218465c8c3aee0466a390c",
+      "tests/support/audit_records.py": "091ba32d6d5881c49dbe762191771112fda5b1bfea31068c6e76f81988fb95eb",
+      "tests/support/composition.py": "1fc83ffd5e7b8cd24eeac30942752a1eb24f8ce27bef624d3e5b4d55125163dd",
+      "tests/support/database.py": "ac951c721d6dd585fd4da84360cb6e6290385ed6c71bba0262835d14e39a04a9",
+      "tests/support/documents.py": "3c0bba06dd56bf0345cfaf701fdd782af5bf4bd26db38422e90fc308dfb1e4f6",
+      "tests/support/focus_examples.py": "25991a0231d8b56b4b025765b6854efaeeb7e10acd2fa16f078f9bfca85a6628",
+      "tests/support/frozen_datasets.py": "0b54e2d3b89df5ff160a9fcaba67a26b3095a1a6d9d793e7de67541477005ec7",
+      "tests/support/harness.py": "ee8adba8365c5073d97fd0f140b6b581b6dbedab63836c9fe655b8bbed4d2a76",
+      "tests/support/harness_data.py": "b9b5fef28fc4f3525148ae6a8656b95e63eac7d3f3efc0eda8498efb02e612d5",
+      "tests/support/identity.py": "b9997bc8dc234897245a56b739498d3292bd6734e75e9e211d38c3c1e85de5b5",
+      "tests/support/label_query.py": "f3cd71970713a78a4f426cc8f701f6cc5f7752b6abd672a123cddf20a7ae494a",
+      "tests/support/lexical_contract.py": "d18c7ec433c8a462f06df7907c5216a2266a241cc402eb685f26229ebca1528d",
+      "tests/support/mcp_runtime.py": "6172beb5ed29b688ae2f77384cf73227628e326cf47c014a86921f6d24443130",
+      "tests/support/model_gateway.py": "36f358e117095d5ea840e7f93c313db4bfbcbccc9a7a6e72703ea7bf0e111026",
+      "tests/support/paid_task.py": "1e3f80e5d09148b0c2f54fa4eb3f28db4fdfad7abb0e8b589daa72f06ebf4f4a",
+      "tests/support/payloads.py": "21b3e2c820e7701c1ac897e469deaea876ad86158f4270c8f2e2ea0b4c7d6e0c",
+      "tests/support/production_lexical.py": "f18facd6de88b432fad6a2be6c56a7ed52468541526cb3c914f666f4f2365059",
+      "tests/support/replay_runtime.py": "cca30f220ee122c1fbb08cdc93bc99d871241d5569f976a3e1f9a36eaf2676f2",
+      "tests/support/risk_skills.py": "265bd685e0a267f9e9f32c76ebc8182c1b438122684380180fe80d4ced6bb640",
+      "tests/support/skill_judgments.py": "811ef38e611dd4878df0743757c9e759e903e97decb373ddf0db5fa162c4fca8",
+      "tests/support/skill_matrix.py": "9b4a186236dc64a35a5e305f5790e4e40d703b7d4e169a34c9b001dba53bf001",
+      "tests/support/skill_registry.py": "4788633ab6c13d7d885a0ca08912e119b2c83ccc71313aa1c20aa609c3cb6c0f",
+      "tests/support/skill_task.py": "161cb0c736bd0e65acc15cdd442b39ada1ba739b58bc648e8af6c785682bf4c6",
+      "tests/support/tasks.py": "0860e60c6c8334a426dae783b3a9ea9ce8157498277749f723464d826ade0d30",
+      "tests/unit/api/test_admin_routes.py": "f6d6cdd1e4aca193d0e7de3b298e86f3f32fecd6cde9be15e6316b5083968acf",
+      "tests/unit/api/test_ask_route.py": "8e5311d3f7797a334e4fd1c10f25661f2d4393be0759ba8bbb4437e7fd64b2b4",
+      "tests/unit/api/test_auth.py": "83396d8c0988b0be8f43e0222eec13ad4172e393e5fbc22aae35fd95ab69ef13",
+      "tests/unit/api/test_feedback_route.py": "171aa2e207994e9223bf0c1378b9ab3e5223938acafda9559be301d7711540b4",
+      "tests/unit/api/test_historical_context.py": "50b62cd89e0655a56a5ffb522ba8da4a8ed237a8a6d1755e8a9a09d666553a77",
+      "tests/unit/api/test_jwks_discovery.py": "b71040245c2041b128b542dcb4ad00583d852d2ad6f6d1d63cb33525d6ccd3ee",
+      "tests/unit/api/test_metrics_route.py": "797d37de857b872457b506bebaf95fe7651c03dc858ac6c24e37979d2fd9377b",
+      "tests/unit/api/test_payload_route.py": "7cad38f40a7794cc0d68c91a6055c3c4a1fb5e90fd68afe2a5d5a4a5e697e5d2",
+      "tests/unit/api/test_replay_conditions.py": "4096256b9e331f264724c47fca8bcf5f5adbce8c14df0fd87f2205bc21447824",
+      "tests/unit/api/test_replay_route.py": "5ac37d8ed3f4bf7473e93f7c6f8da050ac9df42e960a68c05fce9f694b7ff8f5",
+      "tests/unit/api/test_retrieval_readiness.py": "887c52aea2f2991b37c1d3d7577484feac4e52d7c4e85f4e8ac388f12fc64b21",
+      "tests/unit/api/test_task_routes.py": "2afd4c6520f4b75f9e8750bd20c30c36711e54586c2a8b8cda7dbda6678711b6",
+      "tests/unit/application/test_task_audit.py": "8fae7aacdb6000c4dce06a01dba6da88fcfd2b0d6c0af8714118e0423ca52bd0",
+      "tests/unit/application/test_task_lease.py": "53641cf25725c0e0c81f91781d55e64e04c16a81fae0042f31e7e8ea8c1d4014",
+      "tests/unit/application/test_tasks.py": "c02494f6ec6680b8141a32853ecb3e5ff5c1cc0f05117804ba3d2594fabcd9dc",
+      "tests/unit/bootstrap/test_composition.py": "0cf4cb772da86277735002cdb5691c3335599547f6a29352186a574a2dd4f0b9",
+      "tests/unit/bootstrap/test_reranker_sharing.py": "b82ec03e6594e145c05c7a9f00a51a7804edde1a9937d5bb3f126413a7d87ecd",
+      "tests/unit/core/test_telemetry.py": "74512717534c15178e6a16608a0d6d6b27858c6df77e68afb6cedcaa757e8c43",
+      "tests/unit/core/test_telemetry_correlation.py": "3f152f4ed8a68b2be4d1f5c2428cb3f42bcfc5804c2e10d20c2663c4831abfd0",
+      "tests/unit/deploy/test_container_probe.py": "d73723c61bd77e9117e61052d4152c6e4ce4b2fd8f392b8696209b69bdeaaacb",
+      "tests/unit/evals/test_answer_review.py": "043664360f329d6db728191c229f445c3da6b41fb9be9e078791fdd20ad11603",
+      "tests/unit/evals/test_demo_launcher.py": "8f15b10434d6978d4569800d22fafa16caaecbdb2fcde050f844a8ab757e8a47",
+      "tests/unit/evals/test_fixture_boundaries.py": "9d44fc926dac035ffabe24bfb4168b85014a63e261cc2afe3ca91b60168b5ea9",
+      "tests/unit/evals/test_focus_candidate_audit.py": "8cb688f6ce10b1ad7433fdb712d8f0d0e08ffe983d830ff5f430691cc482ac87",
+      "tests/unit/evals/test_harness_runner_resume.py": "ce7777e85dfdc46960c89d05fccbfc044ac3670ef571081f43e3adea2ca95030",
+      "tests/unit/evals/test_replay_inputs.py": "dc511f868be4242b932315e9ac46ebcff13b3a19897232423344ed25a2c956f6",
+      "tests/unit/faults/test_main_chain_faults.py": "1861755f8cd9f26dbda001befb6a2792fa591b50ef25202ff93d80f624c1e27d",
+      "tests/unit/harness/test_evidence_focus.py": "6f7208fa4f9fe339d150ec236f1455906a5382f1041d1cc295aba03295c900b8",
+      "tests/unit/harness/test_execution_budget.py": "ec8cf07f76e0be2d15d498105ce4c68d00fd8a5ad89773ff4fb80c4cfcba3e9b",
+      "tests/unit/harness/test_execution_record_deadline.py": "ff2d5e999a76d26dc1c7c415b8568b8d69c967fb612e566dfdbabdb20e7fb726",
+      "tests/unit/harness/test_executions.py": "f1e7438b2e4f70cd2d5f1826922808bbff7e806b148ea2038e17e11a72b5c7c5",
+      "tests/unit/harness/test_historical_context.py": "0667f31ca8d88fb043c0878aff799adc91b7f09e3d2b75c46d4b0ca8ed9048f0",
+      "tests/unit/harness/test_rendered_provenance.py": "e865572c5918cf6b6a85bee19471c7e94cb6fa988f96b161242b6d8c89e67f46",
+      "tests/unit/harness/test_retrieval_cache_port.py": "8d50b67d7ebc3b438450e9cc19810fe76630722e0dcd0cc122f0c38b3b7022ca",
+      "tests/unit/harness/test_retrieval_concurrency.py": "df991e97f313467bcd93019b300427bb2ed700b72dbde09c60de6fecd1c8fe18",
+      "tests/unit/harness/test_run_ask.py": "bf43c9bd76b10f8bf1542d8595c5cd132692c5646185ba2460423213b1d82367",
+      "tests/unit/infrastructure/test_execution_budget.py": "ef6f6bdf9e6058353ebfefd20723b0e4d83421f43511866b6e65d1e362fde4d3",
+      "tests/unit/infrastructure/test_llm_call_receipts.py": "f23d974d26d69c4b8827a3314a1d96e2032944bda8024ca410db90e3f2e96e9f",
+      "tests/unit/infrastructure/test_llm_gateway.py": "ef3abf5d772bfe5dd890fe794c72a6fc3ab51aa58b19ca1a7cce6c6d717ed8e4",
+      "tests/unit/infrastructure/test_model_call_audit.py": "800793aa30fa5f2a2e5a02610ee86f555196b8b6e65141c7eebe2f9189c21a5d",
+      "tests/unit/mcp/test_audit_material.py": "d78fac7bf23da803c8204c19f1b6ca142c5f08c91994d70c8de51861f5d9fcff",
+      "tests/unit/mcp/test_server.py": "285aa158f3c9774edd5e5799b981245247280523756d0a3fb9b87b32471f9e62",
+      "tests/unit/retrieval/test_offline_bm25_contract.py": "2bf3e4f7e0c06b97b6c63a0ef3ec8be8d6e507a5999c789a6b6852f2e2b739ec",
+      "tests/unit/safety/test_checks.py": "579e1252be017c0bb04b0ebc8ff9c660dad89c8ca6da815d6bdcfffea1f08bf8",
+      "tests/unit/skills/test_citation_verification.py": "b6c4573b783196d09bd9347b7a2d6d42db5a784fd4c0768e7cda635d1dd871bd",
+      "tests/unit/skills/test_final_judgments.py": "d59001aeb435c8385d26ea3bb23a7454911b459c8d77c01776325a1f7229a653",
+      "tests/unit/skills/test_label_query.py": "b73b30a639cb0d09623d677af0c22ba7067baf52964a543148c3c23d453e2191",
+      "tests/unit/skills/test_matrix.py": "5e71a1db79cfe4a926b004ad24dd3549ca613fdf0c4be1b4fee72a6961959878",
+      "tests/unit/skills/test_registry.py": "44523bda215034235b24d9756179e2d76fb907f1760656c4d94d70133c24e70f",
+      "tests/unit/skills/test_risk_skills.py": "9bcde2be7249514e67857933b158295a40f3af6569351f3b9f153a2f611a7e0b",
+      "tests/unit/verification/test_rules.py": "61ac4af2eb58ec54f504a1aa73f1e82a4c2587e273511ed279f9bc01bfe4317f",
+      "tests/unit/verification/test_skill_judgment.py": "c9a9ff043b7af6b896d98d68100751ebd0045e6b62ae94cf37bc236ad052a300",
+      "tests/unit/verification/test_verifier.py": "6265e58bd63a61a3c0f6a2f2560a45b771cf284255e9e35b7b3c0ea8ceca1667"
+    },
+    "deleted": [
+      "tests/unit/api/_auth_fixtures.py",
+      "tests/unit/harness/_fixtures.py",
+      "tests/unit/retrieval/lexical_contract.py",
+      "tests/unit/skills/test_final_judgment_fixtures.py"
+    ],
+    "mismatches": []
+  },
+  "limits": [
+    "engineering self review only",
+    "required optional candidate skips retained",
+    "no hosted quality or API capacity measurement",
+    "no shared service deployment",
+    "PLAN-02/EVAL-32 and unseen holdout constraints remain"
+  ],
+  "self_review": [
+    {
+      "item": "scope",
+      "status": "pass"
+    },
+    {
+      "item": "ADR",
+      "status": "pass"
+    },
+    {
+      "item": "correctness/failure",
+      "status": "pass"
+    },
+    {
+      "item": "permissions/data",
+      "status": "pass"
+    },
+    {
+      "item": "budget/cancellation",
+      "status": "pass"
+    },
+    {
+      "item": "traceability",
+      "status": "pass"
+    },
+    {
+      "item": "verification",
+      "status": "pass"
+    },
+    {
+      "item": "documentation",
+      "status": "pass"
+    }
+  ],
+  "documentation": {
+    "exit_code": 0,
+    "elapsed_s": 3.133,
+    "command": [
+      "/Users/leaf/.cache/medy-checks/audit199-verified-524y3kkc/venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/unit/docs"
+    ],
+    "worktree": "/Users/leaf/.cache/medy-checks/audit199-verified-524y3kkc",
+    "required_services": true,
+    "task_ids": 143,
+    "removed_ids": [],
+    "added_ids": [],
+    "duplicate_ids": [],
+    "local_links_checked": 129,
+    "link_mismatches": [],
+    "source_files_checked": 112,
+    "deletions_checked": 4,
+    "source_mismatches": [],
+    "passed": 41,
+    "final_test": {
+      "exit_code": 0,
+      "elapsed_s": 2.385,
+      "command": [
+        "/Users/leaf/.cache/medy-checks/audit199-verified-524y3kkc/venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/unit/docs"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit199-verified-524y3kkc",
+      "required_services": true,
+      "passed": 41
+    }
+  },
+  "code_commits": [
+    {
+      "group": "foundation",
+      "sha": "b7a55d38c42118563d0774bf55c42b1429302d34",
+      "paths": [
+        "tests/support/__init__.py",
+        "tests/support/harness_data.py",
+        "tests/support/identity.py",
+        "tests/support/lexical_contract.py",
+        "tests/support/documents.py",
+        "tests/support/frozen_datasets.py",
+        "tests/support/model_gateway.py",
+        "tests/support/skill_judgments.py",
+        "tests/support/focus_examples.py",
+        "tests/support/audit_records.py",
+        "tests/support/composition.py"
+      ]
+    },
+    {
+      "group": "runtime",
+      "sha": "11b57adf66fa488141edd9f1a87182ae48852f29",
+      "paths": [
+        "tests/support/harness.py",
+        "tests/support/api_runtime.py",
+        "tests/support/payloads.py",
+        "tests/support/replay_runtime.py",
+        "tests/support/mcp_runtime.py",
+        "tests/support/tasks.py",
+        "tests/support/paid_task.py"
+      ]
+    },
+    {
+      "group": "skills",
+      "sha": "d8d8adc5eaca2b61d10920254fdc7d4eee0b5d4d",
+      "paths": [
+        "tests/support/label_query.py",
+        "tests/support/risk_skills.py",
+        "tests/support/skill_registry.py",
+        "tests/support/skill_matrix.py",
+        "tests/support/skill_task.py"
+      ]
+    },
+    {
+      "group": "database",
+      "sha": "c3e623f6d5481487a705af5580d7debb017709c8",
+      "paths": [
+        "tests/support/database.py",
+        "tests/support/production_lexical.py"
+      ]
+    },
+    {
+      "group": "consumers",
+      "sha": "1fc56722fc58a89f6e69894376a63c4922fcbe83",
+      "paths": [
+        "deploy/ci/test_container_boot.py",
+        "tests/diagnostics/request_transactions.py",
+        "tests/integration/conftest.py",
+        "tests/integration/lexical_adapter_suite.py",
+        "tests/integration/test_activation.py",
+        "tests/integration/test_admin_stores.py",
+        "tests/integration/test_audit_store.py",
+        "tests/integration/test_cache_invalidation.py",
+        "tests/integration/test_fact_recheck.py",
+        "tests/integration/test_feedback_export.py",
+        "tests/integration/test_final_output.py",
+        "tests/integration/test_lexical_pg_search_bm25.py",
+        "tests/integration/test_lexical_pg_simple_fts.py",
+        "tests/integration/test_lexical_pg_textsearch_bm25.py",
+        "tests/integration/test_lexical_pg_zhparser_fts.py",
+        "tests/integration/test_lexical_production.py",
+        "tests/integration/test_llm_call_receipts.py",
+        "tests/integration/test_mcp_audit.py",
+        "tests/integration/test_mcp_service.py",
+        "tests/integration/test_metrics_source.py",
+        "tests/integration/test_migrations.py",
+        "tests/integration/test_operation_executions.py",
+        "tests/integration/test_payload_store.py",
+        "tests/integration/test_principals.py",
+        "tests/integration/test_publish_outbox.py",
+        "tests/integration/test_retrieval_integrity.py",
+        "tests/integration/test_retrieval_maintenance.py",
+        "tests/integration/test_rls.py",
+        "tests/integration/test_run_conditions_facts.py",
+        "tests/integration/test_task_audit.py",
+        "tests/integration/test_tasks_store.py",
+        "tests/integration/test_vector_pg.py",
+        "tests/integration/test_withdrawn.py",
+        "tests/unit/api/_auth_fixtures.py",
+        "tests/unit/api/test_admin_routes.py",
+        "tests/unit/api/test_ask_route.py",
+        "tests/unit/api/test_auth.py",
+        "tests/unit/api/test_feedback_route.py",
+        "tests/unit/api/test_historical_context.py",
+        "tests/unit/api/test_jwks_discovery.py",
+        "tests/unit/api/test_metrics_route.py",
+        "tests/unit/api/test_payload_route.py",
+        "tests/unit/api/test_replay_conditions.py",
+        "tests/unit/api/test_replay_route.py",
+        "tests/unit/api/test_retrieval_readiness.py",
+        "tests/unit/api/test_task_routes.py",
+        "tests/unit/application/test_task_audit.py",
+        "tests/unit/application/test_task_lease.py",
+        "tests/unit/application/test_tasks.py",
+        "tests/unit/bootstrap/test_composition.py",
+        "tests/unit/bootstrap/test_reranker_sharing.py",
+        "tests/unit/core/test_telemetry.py",
+        "tests/unit/core/test_telemetry_correlation.py",
+        "tests/unit/deploy/test_container_probe.py",
+        "tests/unit/evals/test_answer_review.py",
+        "tests/unit/evals/test_demo_launcher.py",
+        "tests/unit/evals/test_focus_candidate_audit.py",
+        "tests/unit/evals/test_harness_runner_resume.py",
+        "tests/unit/evals/test_replay_inputs.py",
+        "tests/unit/faults/test_main_chain_faults.py",
+        "tests/unit/harness/_fixtures.py",
+        "tests/unit/harness/test_evidence_focus.py",
+        "tests/unit/harness/test_execution_budget.py",
+        "tests/unit/harness/test_execution_record_deadline.py",
+        "tests/unit/harness/test_executions.py",
+        "tests/unit/harness/test_historical_context.py",
+        "tests/unit/harness/test_rendered_provenance.py",
+        "tests/unit/harness/test_retrieval_cache_port.py",
+        "tests/unit/harness/test_retrieval_concurrency.py",
+        "tests/unit/harness/test_run_ask.py",
+        "tests/unit/infrastructure/test_execution_budget.py",
+        "tests/unit/infrastructure/test_llm_call_receipts.py",
+        "tests/unit/infrastructure/test_llm_gateway.py",
+        "tests/unit/infrastructure/test_model_call_audit.py",
+        "tests/unit/mcp/test_audit_material.py",
+        "tests/unit/mcp/test_server.py",
+        "tests/unit/retrieval/lexical_contract.py",
+        "tests/unit/retrieval/test_offline_bm25_contract.py",
+        "tests/unit/safety/test_checks.py",
+        "tests/unit/skills/test_citation_verification.py",
+        "tests/unit/skills/test_final_judgment_fixtures.py",
+        "tests/unit/skills/test_final_judgments.py",
+        "tests/unit/skills/test_label_query.py",
+        "tests/unit/skills/test_matrix.py",
+        "tests/unit/skills/test_registry.py",
+        "tests/unit/skills/test_risk_skills.py",
+        "tests/unit/verification/test_rules.py",
+        "tests/unit/verification/test_skill_judgment.py",
+        "tests/unit/verification/test_verifier.py"
+      ]
+    },
+    {
+      "group": "regressions",
+      "sha": "33c13f9af44c94a00440939a3c9590a9db50836e",
+      "paths": [
+        "tests/integration/test_database_fixtures.py",
+        "tests/unit/evals/test_fixture_boundaries.py"
+      ]
+    }
+  ]
+}

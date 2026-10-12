@@ -70,3 +70,5 @@ CODE-05已完成[维护工具打包](docs/EVALUATION_TOOLING.md)，自审见[记
 CODE-07工程自审见[记录194](docs/reviews/2026-10-12-implementation-194-mcp-audit-and-observability.md)与[MCP执行审计](docs/MCP_EXECUTION_AUDIT.md)：四工具完整受限输入/事实/输出、搜索逐调用材料、原子加密持久化及失败超限控制；观测schema/HTTP/队列/反馈职责分开，原评分API/行为保持。194定向、全量2254/70、674输入一致，0费用；de0e6d3远端CI38190039254全步骤成功。下一CODE-01/02；未重启部署，Task/MCP回放、Agent/自进化和人工/盲测门保持。
 
 2026-10-12备份卫生：[记录195](docs/reviews/2026-10-12-implementation-195-backup-credential-boundaries.md)修复argv口令、失败日志、备份文件和演练库边界；required全量2265/70，实际恢复仅在隔离测试库。MCP/观测75c751d远端CI通过，业务Agent/自进化与正式灾备范围见[当前待办](docs/CURRENT_TASKS.md)。
+
+CODE-06八项工程自审通过，见[记录199](docs/reviews/2026-10-12-implementation-199-test-fixture-boundaries.md)与[测试辅助约定](docs/TEST_SUPPORT.md)：共享假对象/构造入tests.support，DB初始化失败清理、22处原scope保留，2383原用例加9回归；required全量2322/70、0托管费用。文档自审41项通过，实际提交/CI按新SHA核对；下一S0 PLAN-02决策材料与EVAL-33隔离准备，Agent/自进化及真实质量门尚待完成。
