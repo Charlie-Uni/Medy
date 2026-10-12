@@ -10,13 +10,13 @@ MedOps Copilot 是面向医学事务、药物警戒和临床运营的可信医�
 
 ## 最新执行入口（2026-10-12）
 
-后续统一按[当前任务台账](docs/CURRENT_TASKS.md)推进。目标保持为受控业务Agent与模型生成Prompt/声明式Skill的自进化，沿用RAG、Harness、BM25、Redis、Langfuse和模型路由资产。ARCH-01～15对应工程切片自审通过，其中ARCH-12仅完成条件收益评估，生产Pool/事务拆分未采用；CODE-04/05/07与CODE-01/02已核验完成，最新[记录196](docs/reviews/2026-10-12-implementation-196-test-assertion-discrimination.md)全量2276 passed、70 skipped，费用0。已推送61509bc的远端CI全部步骤成功；新提交的CI按自身SHA核对。下一项CODE-03死代码/重复设置契约，然后CODE-06测试夹具。
+后续统一按[当前任务台账](docs/CURRENT_TASKS.md)推进。目标保持为受控业务Agent与模型生成Prompt/声明式Skill的自进化，沿用RAG、Harness、BM25、Redis、Langfuse和模型路由资产。ARCH-01～16对应工程切片自审通过，其中ARCH-12仅完成条件收益评估，生产Pool/事务拆分未采用；CODE-04/05/07与CODE-01/02已核验完成。最新[记录197](docs/reviews/2026-10-12-implementation-197-architecture-authorization-review.md)重新复核当前架构，复现并修复MCP旧快照/错误权限角色与管理接口撤权竞态；229定向、全量2296 passed/70 skipped，费用0。基线8361d8d远端CI全部29步成功，新提交按自身SHA核对；没有重启部署。下一项CODE-03死代码/重复设置契约，然后CODE-06测试夹具。
 
 PLAN-01的合成PV资料整理场景已确认；PLAN-02的[ADR-0012](docs/adr/ADR-0012-agent-evolution-goals-and-acceptance.md)行动/profile与EVAL-32验收仍需沟通，S2业务Agent尚未实现。自动激活仅实验，S3改进声明须有合格未见盲测，每轮付费单独授权；工程通过、模型质量、正式发布和部署分别记录。下方保留历轮快照，当前状态以台账为准。
 
 **每轮代码、文档、实验与部署都必须自审核，问题修复复测且证据齐备后才能标记完成。** 固定执行要求见[AGENTS.md](AGENTS.md)，模板见[分阶段执行与自审](docs/ITERATION_STAGES.md)。评测标准修订、来源契约、回放绑定和模型裁判校准已形成冻结的 `probe-v4` 与 `main-v5-provisional`；第二独立人工仍未具备，相应结论继续标为 provisional；生产签字和逐次付费授权要求保留。
 
-最新[架构审查](docs/reviews/2026-10-10-architecture-audit.md)发现 14 项缺陷/风险，已并入台账 ARCH-01～14。首项 ARCH-01 已完成总截止时间、旧尝试收束、SQL/HTTP 取消及本地 BGE 推理进程回收；该轮工程自审与等价快照全量检查通过，1774 passed、70 skipped，费用 0。后续任务租约、历史 Skill、二阶段判断、整体预算和任务审计按统一依赖推进。范围、实际模型核验、iCloud 核验限制和错误补救见[记录 171](docs/reviews/2026-10-10-implementation-171-harness-deadline-and-cancellation.md)；原组件切换、历史成绩和验收门槛保留。本次统一待办及自审见[记录 172](docs/reviews/2026-10-10-implementation-172-unified-agent-evolution-backlog.md)。
+此前[架构审查](docs/reviews/2026-10-10-architecture-audit.md)发现 14 项缺陷/风险，已并入台账 ARCH-01～14。首项 ARCH-01 已完成总截止时间、旧尝试收束、SQL/HTTP 取消及本地 BGE 推理进程回收；该轮工程自审与等价快照全量检查通过，1774 passed、70 skipped，费用 0。后续任务租约、历史 Skill、二阶段判断、整体预算和任务审计按统一依赖推进。范围、实际模型核验、iCloud 核验限制和错误补救见[记录 171](docs/reviews/2026-10-10-implementation-171-harness-deadline-and-cancellation.md)；原组件切换、历史成绩和验收门槛保留。本次统一待办及自审见[记录 172](docs/reviews/2026-10-10-implementation-172-unified-agent-evolution-backlog.md)。
 
 ARCH-04 已为成功、失败、拒绝和取消调用建立独立回执，避免并发共享费用串入其他 Trace；实际 usage 计算与保守预留分开，结算不确定不重跑模型。本机三库已升至 0023，原业务和费用数据未变；全量 1807 passed、70 skipped，0 托管调用。工程自审通过；迁移和对账限制见[记录 175](docs/reviews/2026-10-11-implementation-175-call-receipts-and-fee-attribution.md)及[费用说明](docs/LLM_ACCOUNTING.md)。ARCH-11 已完成共享执行预算并通过自审核：[记录 176](docs/reviews/2026-10-11-implementation-176-shared-execution-budget.md)，全量 1830 passed、70 skipped，0 托管调用；现有 profile 为 12,000 Token / 0.60 USD、Ask 125 秒，Skill/MCP 保留较短原期限。翻译、作答、判定、结构化与重试共同扣减，不能在嵌套或线程中重开。新 Agent/模型 Loop 与跨进程恢复尚未实现，S2 仍未完成。
 

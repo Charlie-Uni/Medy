@@ -96,4 +96,8 @@ MCP受限完整输入/逐模型正文已由CODE-07补齐，见[执行审计](MCP
 
 ## ARCH-13 部署监督边界
 
-常驻入口/资源、容器词表与KEK、评分卷、进展心跳及定时维护见[部署契约](DEPLOYMENT_WORKERS.md)和[记录186](reviews/2026-10-11-implementation-186-worker-deployment-and-supervision.md)。单运行时模型共享不等于跨服务共享；Docker故障恢复与全量2136/70是工程证据，不替代长期部署、目标容量或医学质量。required CI工程门见[CI契约](CI_GATES.md)与[记录187](reviews/2026-10-11-implementation-187-required-ci-and-container-gates.md)：全量2157/70、真实BGE/private网络200→503；远端CI、amd64冷构建和业务容量仍待验证。
+常驻入口/资源、容器词表与KEK、评分卷、进展心跳及定时维护见[部署契约](DEPLOYMENT_WORKERS.md)和[记录186](reviews/2026-10-11-implementation-186-worker-deployment-and-supervision.md)。单运行时模型共享不等于跨服务共享；Docker故障恢复与全量2136/70是工程证据，不替代长期部署、目标容量或医学质量。required CI工程门见[CI契约](CI_GATES.md)与[记录187](reviews/2026-10-11-implementation-187-required-ci-and-container-gates.md)：全量2157/70、真实BGE/private网络200→503；远端CI工程门已由记录190及后续实际验证，基线8361d8d的CI38193674785全部29步通过；amd64冷构建和业务容量仍待验证。
+
+## ARCH-16 跨连接权限边界
+
+[记录197](reviews/2026-10-12-implementation-197-architecture-authorization-review.md)检查并修复MCP事实连接旧快照/错误角色和管理接口鉴权后撤权。api.authorization仅管理协议会话，bootstrap.runtime负责同库/当前身份/提交栅栏装配，基础数据库模块提供RC/RLS和读写锁；没有把数据库实现塞进业务路由。ApiRuntime显式声明灰度观察窗口和drill能力。20新增反例、229定向、2296/70全量及326模块0静态违例通过；不等于动态Agent、正式质量或实际部署完成。剩余冗余/测试供给分别CODE-03/06。

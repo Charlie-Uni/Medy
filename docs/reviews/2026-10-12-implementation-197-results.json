@@ -1,0 +1,179 @@
+{
+  "record": 197,
+  "task": "ARCH-16",
+  "base_commit": "8361d8dac1410b4e96bcb17c4e3088034fabc5fc",
+  "reviewer": "Codex self-review; no second independent human",
+  "hosted_model_calls": 0,
+  "cost_usd": 0,
+  "findings": [
+    {
+      "id": "AR16-01",
+      "priority": "P1",
+      "status": "fixed",
+      "case_count": 8,
+      "problem": "MCP fact connection stale transaction snapshots"
+    },
+    {
+      "id": "AR16-02",
+      "priority": "P1",
+      "status": "fixed",
+      "case_count": 6,
+      "problem": "MCP raw tools fact DSN bypasses ACL"
+    },
+    {
+      "id": "AR16-03",
+      "priority": "P1",
+      "status": "fixed",
+      "case_count": 2,
+      "problem": "stale admin identity in privileged transaction"
+    }
+  ],
+  "baseline": {
+    "exit_code": 0,
+    "passed": 2276,
+    "skipped": 70,
+    "warnings": 1,
+    "elapsed_s": 162.11
+  },
+  "corrected_pre_fix": {
+    "exit_code": 1,
+    "failed": 16,
+    "pytest_s": 2.9,
+    "elapsed_s": 3.88
+  },
+  "target": {
+    "exit_code": 0,
+    "passed": 229,
+    "warnings": 1,
+    "pytest_s": 16.22,
+    "elapsed_s": 17.294
+  },
+  "final_gate": {
+    "exit_code": 0,
+    "passed": 2296,
+    "skipped": 70,
+    "warnings": 1,
+    "pytest_s": 84.83,
+    "elapsed_s": 90.377,
+    "required_services": true,
+    "formatted_files": 680,
+    "mypy_source_files": 326,
+    "architecture_modules": 326,
+    "architecture_violations": 0,
+    "architecture_exact_exceptions": 2,
+    "static_assertion_files": 248,
+    "static_assertion_violations": 0,
+    "frozen_audits": 4,
+    "schemas": "up to date"
+  },
+  "source_binding": {
+    "count": 679,
+    "mismatches": [],
+    "basis": "initial full source comparison plus explicit Git change/deletion hashes",
+    "changed_hashes": {
+      "src/medops/api/authorization.py": "884137c88ccccc42964ef941a67d309895ee93c1e646f1e9196db5ba4bd6babb",
+      "src/medops/api/ports.py": "33fae289674fb302956e0717e72a7331899e3db4cdb45a8c6eddc8b8fece7916",
+      "src/medops/api/routes/admin.py": "02ecd33df7350265acd3dbdd24ab30a5ae5d3640033a47edc7dc7534a6cee411",
+      "src/medops/api/routes/observability.py": "e51ddbedf5baadf65add1ced6898bab3cd1c9b173948aa64c6230d3cedd12e9c",
+      "src/medops/bootstrap/runtime.py": "9ff1473e6a9505d011867df4f8bc74b28b6d8558a7c9949b79c09c4dc639b9ef",
+      "src/medops/infrastructure/db/final_output.py": "d95a9798e7f9c1929e9edada66b8d73b7ad8612dd81fbf0d64ecd0093fa11860",
+      "src/medops/mcp/server.py": "dbd36553297fc4c91fe635b49f2077bdfc6dce2b2b4abd2d8a826d06011c428a",
+      "tests/integration/test_final_output.py": "3f9b065005d437d46027916a3ebd127416eebc09cbfe0fb8192ed2e4bb3c8717",
+      "tests/unit/api/test_ask_route.py": "10ce8e4c375d65c32e72a28d80bc93b8fbd5aa0f2cc4b14cdbc0ff04ae182811"
+    }
+  },
+  "self_review": {
+    "scope": "pass within reviewed scope",
+    "adr_stage": "pass within reviewed scope",
+    "correctness_failure": "pass within reviewed scope",
+    "permissions_data": "pass within reviewed scope",
+    "budget_cancellation": "pass within reviewed scope",
+    "traceability": "pass within reviewed scope",
+    "verification": "pass within reviewed scope",
+    "status_docs": "pass within reviewed scope"
+  },
+  "limitations": [
+    "no formal proof of all runtime dependencies/security",
+    "no deployment or long-running/capacity validation",
+    "no paid medical quality/independent human/holdout validation",
+    "CODE-03 and CODE-06 remain ready",
+    "S2/S3 remain unimplemented and PLAN-02 gated",
+    "Task/MCP replay and original-condition restoration remain unimplemented"
+  ],
+  "commands": {
+    "baseline_gate": [
+      "make",
+      "check"
+    ],
+    "pre_fix": [
+      "venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/integration/test_authorization_boundaries.py"
+    ],
+    "target": [
+      "venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/integration/test_final_output.py",
+      "tests/integration/test_mcp_service.py",
+      "tests/integration/test_mcp_audit.py",
+      "tests/unit/api",
+      "tests/unit/mcp",
+      "tests/integration/test_admin_stores.py"
+    ],
+    "final_gate": [
+      "make",
+      "check"
+    ]
+  },
+  "documentation": {
+    "task_ids": 143,
+    "unique_task_ids": 143,
+    "local_links": 151,
+    "missing_links": [],
+    "copied_documents": [
+      "README.md",
+      "docs/CURRENT_TASKS.md",
+      "docs/FINAL_OUTPUT_VALIDATION.md",
+      "docs/PRODUCTION_COMPOSITION.md",
+      "docs/MCP_EXECUTION_AUDIT.md",
+      "docs/reviews/2026-10-12-implementation-197-architecture-authorization-review.md",
+      "docs/reviews/2026-10-12-implementation-197-results.json"
+    ],
+    "base_task_ids": 142,
+    "added_task_ids": [
+      "ARCH-16"
+    ],
+    "removed_task_ids": [],
+    "pytest_exit_code": 0,
+    "passed": 41,
+    "elapsed_s": 2.136
+  },
+  "functional_commits": [
+    {
+      "group": "core",
+      "sha": "7e4717bf8ccd1607066feff1b2bc64ec218abedb",
+      "paths": [
+        "src/medops/infrastructure/db/final_output.py",
+        "src/medops/bootstrap/runtime.py",
+        "src/medops/mcp/server.py"
+      ]
+    },
+    {
+      "group": "api",
+      "sha": "8908931df5a5f3dffc183b701a6302e10194b1c2",
+      "paths": [
+        "src/medops/api/authorization.py",
+        "src/medops/api/ports.py",
+        "src/medops/api/routes/admin.py",
+        "src/medops/api/routes/observability.py",
+        "tests/integration/test_final_output.py",
+        "tests/unit/api/test_ask_route.py"
+      ]
+    }
+  ],
+  "publish_state": "all code verified; final docs commit and its remote CI tracked separately"
+}

@@ -51,3 +51,7 @@ CallJournal沿用128调用/16MiB上限。MCP三类材料另有合计16MiB序列�
 评测工具、失败实验产物和历史draft源码继续保留；CODE-05规范包已有当前入口，不因候选被否决删证据。共享MCP测试client从单测模块提取到 `tests/mcp_client.py`，不把整个CODE-06夹具治理记为完成。
 
 回滚本轮代码与契约即可恢复旧MCP元数据审计与旧观测模块；没有新增迁移。新写的mcp-audit-v1按现有载荷保留/读取规则保存，回滚不删除历史执行材料。
+
+## 连接授权补充（ARCH-16）
+
+[记录197](reviews/2026-10-12-implementation-197-architecture-authorization-review.md)要求MCP实际事实连接在工具前和终检都受ACL/RLS、处于READ COMMITTED调用方事务。readonly变量误配owner/admin或旧快照时，不能返回成功；错误写失败Trace，模型前拒绝不产生新模型费用。审计连接正确不足以证明事实连接正确。四工具公开Schema及raw含义保持；没有重启常驻部署。
