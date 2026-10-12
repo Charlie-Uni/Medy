@@ -66,18 +66,24 @@ python -m medops.application.payload_retention
 ### 3.1 备份
 
 ```bash
-DATABASE_ADMIN_URL=<管理 DSN> python scripts/db_backup.py --db medops --out /backups
+# DATABASE_ADMIN_URL 由受控环境注入，不在命令行或 shell 历史填写真实 DSN
+venv/bin/python scripts/db_backup.py --db medops --out /backups
 ```
 
 `pg_dump -Fc` 在 Postgres 容器内执行，产物 `<db>-<UTC 时间>.dump` 与同名 `.sha256`。频率：每日一次（P0 的 RPO = 24 小时；连续归档与异地副本是 P1）。Redis 是检索缓存，可丢失，不备份；模型缓存卷可重建。备份文件含加密载荷的密文与已包裹的 DEK，但不含 KEK——**密钥文件必须单独、异地备份**，否则备份里的载荷无法解密（其他表不受影响）。
 
+[记录195](reviews/2026-10-12-implementation-195-backup-credential-boundaries.md)：Docker参数只有 `-e PGPASSWORD`，值由独立子进程环境提供，父环境不改，剔除child env中的 `DATABASE_ADMIN_URL`；已知DSN/原口令及URL编码先脱敏再截取stderr。环境仍可由宿主机/容器管理员读取，不代替密钥托管。新dump以mode0600排他创建；同秒目标已存在则拒绝覆盖，失败删除本次半成品。文件中包含数据库内容，需继续保护备份目录。
+
 ### 3.2 恢复演练（每月一次，且每次迁移上线前一次）
 
 ```bash
-DATABASE_ADMIN_URL=<管理 DSN> python scripts/db_restore_drill.py --dump /backups/<file>.dump --source medops
+# 已注入 DATABASE_ADMIN_URL，并安装项目依赖
+venv/bin/python scripts/db_restore_drill.py --dump /backups/<file>.dump --source medops
 ```
 
-脚本把 dump 恢复到 `<db>_restore_drill`，比对 alembic 版本、表集合、每表行数、语料指纹（chunk 哈希的 md5）与角色授权，写 `report.json` / `report.md`，最后**总是**删掉演练库。2026-09-26 在本机 medops_v2 上的演练结果见 `evals/harness/runs/2026-09-26-backup-drill-v1/report.md`。
+脚本把dump恢复到本次唯一的 `medops_restore_drill_<UUID>`，比对alembic版本、表集合、每表行数、语料指纹（chunk哈希的md5）、角色授权和稳定fact-plane identity，写 `report.json` / `report.md`。不预删同名库；创建失败不接管或删除已有库。恢复命令失败时不把半成品作为完整库继续inventory，记录失败；成功创建后的正常/异常路径均在finally尝试删除自己的演练库。若清理连接失败，不能认为已删除，运维按报告或本次创建名检查残留。旧固定命名的演练庫不自动删除。
+
+记录195在隔离测试库完成真实容器备份/恢复和坏dump失败清理；它不替代当前业务库/整个部署的灾备演练。2026-09-26在本机medops_v2上的历史演练结果见 `evals/harness/runs/2026-09-26-backup-drill-v1/report.md`。
 
 ### 3.3 真正恢复（P0：迁移失败回退或数据卷损坏）
 

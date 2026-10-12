@@ -1,0 +1,123 @@
+{
+  "record": 195,
+  "date": "2026-10-12",
+  "task": "CODE-01",
+  "baseline_head": "75c751d236dbee16f42d80c3fd3c39adb0f51974",
+  "implementer": "Codex",
+  "self_reviewer": "Codex",
+  "independent_human_review": false,
+  "targeted": {
+    "exit_code": 0,
+    "elapsed_s": 5.123,
+    "command": [
+      "/Users/leaf/.cache/medy-checks/code01-verified-xpqovxjq/venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/unit/scripts/test_db_tools.py",
+      "tests/integration/test_backup_restore.py",
+      "tests/integration/test_feedback_export.py"
+    ],
+    "worktree": "/Users/leaf/.cache/medy-checks/code01-verified-xpqovxjq",
+    "required_services": true,
+    "passed": 21,
+    "pytest_seconds": 4.23,
+    "skipped": 0
+  },
+  "hosted_model_calls": 0,
+  "actual_cost_usd": 0,
+  "shared_business_db_writes": false,
+  "shared_deployment_restarted": false,
+  "source_data": "isolated migrated test database only",
+  "formal_disaster_recovery_drill": false,
+  "full_check": {
+    "exit_code": 0,
+    "elapsed_s": 121.354,
+    "command": [
+      "make",
+      "check"
+    ],
+    "worktree": "/Users/leaf/.cache/medy-checks/code01-verified-xpqovxjq",
+    "required_services": true,
+    "passed": 2265,
+    "skipped": 70,
+    "warnings": 1,
+    "pytest_seconds": 92.85,
+    "formatted_files": 678,
+    "mypy_sources": 325,
+    "architecture_modules": 325,
+    "architecture_violations": 0,
+    "architecture_exceptions": 2
+  },
+  "source_comparison": {
+    "count": 677,
+    "mismatches": [],
+    "sha256_of_sorted_path_hash_json": "ad478396761a2fb98bc02dcd8509c6475781c702a8c7f83c09dd115816d35d9e"
+  },
+  "cli_compatibility": [
+    {
+      "script": "db_backup.py",
+      "cli_help_exact": true,
+      "exit_code": 0
+    },
+    {
+      "script": "db_restore_drill.py",
+      "cli_help_exact": true,
+      "exit_code": 0
+    }
+  ],
+  "previous_ci": {
+    "run": 38191713877,
+    "head_sha": "75c751d236dbee16f42d80c3fd3c39adb0f51974",
+    "conclusion": "success",
+    "steps_passed": 28
+  },
+  "limits": [
+    "environment visible to privileged host/container administrators",
+    "redaction matches known credential forms; not a universal classifier",
+    "container must match source instance; native client still connects inside it at localhost",
+    "process kill or database connectivity loss can prevent cleanup",
+    "full business disaster recovery and RPO/RTO remain DEPLOY-02",
+    "backup-only same-second collision intentionally fails instead of overwriting",
+    "no hosted calls, release changes or shared deployment restart"
+  ],
+  "documentation_checks": {
+    "exit_code": 0,
+    "elapsed_s": 1.772,
+    "command": [
+      "/Users/leaf/.cache/medy-checks/code01-verified-xpqovxjq/venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/unit/docs"
+    ],
+    "worktree": "/Users/leaf/.cache/medy-checks/code01-verified-xpqovxjq",
+    "required_services": true,
+    "passed": 32,
+    "pytest_seconds": 1.32,
+    "task_ids_unchanged": true,
+    "task_count": 142,
+    "local_links_checked": 115,
+    "protected_tracked_changes": []
+  },
+  "commits_before_documentation": [
+    {
+      "group": "security",
+      "sha": "d763cf1f3c09068c2aa2a13a5a8a86e449fd116a",
+      "paths": [
+        "scripts/db_backup.py",
+        "scripts/db_restore_drill.py",
+        "src/medops/infrastructure/db/pg_subprocess.py"
+      ]
+    },
+    {
+      "group": "verification",
+      "sha": "62c55567b0894184caac69969bf097f9050a106b",
+      "paths": [
+        ".github/workflows/ci.yml",
+        "tests/integration/test_backup_restore.py",
+        "tests/unit/scripts/test_db_tools.py"
+      ]
+    }
+  ]
+}

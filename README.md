@@ -66,3 +66,5 @@ ARCH-14已补required依赖失败门、架构显式检查与已发布配置真�
 CODE-05已完成[维护工具打包](docs/EVALUATION_TOOLING.md)，自审见[记录193](docs/reviews/2026-10-12-implementation-193-evaluation-tool-packaging.md)：79模块入规范包、67原命令入口保留，收敛预算启动/事务/文件/冻结/复核，修复MPS缓存消息类型与重判连接泄漏。595定向、全量2240/70、665维护输入一致；57帮助和170安全起草内容对照一致，0托管费用。CODE-04的68783f0远端CI38188078574全步骤通过；下一CODE-07，PLAN-02/S2/S3、真实质量与人工/盲测门保持。
 
 CODE-07工程自审见[记录194](docs/reviews/2026-10-12-implementation-194-mcp-audit-and-observability.md)与[MCP执行审计](docs/MCP_EXECUTION_AUDIT.md)：四工具完整受限输入/事实/输出、搜索逐调用材料、原子加密持久化及失败超限控制；观测schema/HTTP/队列/反馈职责分开，原评分API/行为保持。194定向、全量2254/70、674输入一致，0费用；de0e6d3远端CI38190039254全步骤成功。下一CODE-01/02；未重启部署，Task/MCP回放、Agent/自进化和人工/盲测门保持。
+
+2026-10-12备份卫生：[记录195](docs/reviews/2026-10-12-implementation-195-backup-credential-boundaries.md)修复argv口令、失败日志、备份文件和演练库边界；required全量2265/70，实际恢复仅在隔离测试库。MCP/观测75c751d远端CI通过，业务Agent/自进化与正式灾备范围见[当前待办](docs/CURRENT_TASKS.md)。
