@@ -111,6 +111,8 @@ jobs:
       - run: python -m mypy
       - name: architecture import boundaries
         run: make PY=python architecture-check
+      - name: test assertion discrimination
+        run: make PY=python test-assertion-check
       - run: python -m pytest -q
       - name: frozen evaluation inputs and lineage
         run: make PY=python eval-check

@@ -5,9 +5,38 @@ import subprocess
 import tomllib
 from pathlib import Path
 
+import pytest
+from scripts.check_test_assertions import truthy_assertions
+
 REPO = Path(__file__).resolve().parents[3]
 _SECRET = re.compile(r"sk-[A-Za-z0-9]{16,}|AKIA[0-9A-Z]{16}|-----BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY-----")
 _BINARY_SUFFIXES = {".pdf", ".png", ".zip", ".pyc"}
+
+
+@pytest.mark.parametrize(
+    "source, expected",
+    [
+        ("assert missing_value or True", [1]),
+        ("assert not False", [1]),
+        ("assert 1\nassert [1]", [1, 2]),
+        ("assert (True if condition else True)", [1]),
+        ("assert actual == expected", []),
+        ("assert actual and True\nassert actual or False", []),
+        ("assert False  # permitted in explicit negative test fixtures", []),
+        ("example = 'assert missing or True'\nassert actual", []),
+    ],
+)
+def test_static_assertion_guard_rejects_historical_bypass_and_keeps_real_conditions(source, expected):
+    assert truthy_assertions(source) == expected
+
+
+def test_no_statically_truthy_assertions_in_tests():
+    findings = {
+        str(path.relative_to(REPO)): lines
+        for path in (REPO / "tests").rglob("*.py")
+        if (lines := truthy_assertions(path.read_text()))
+    }
+    assert findings == {}, f"statically truthy assertions: {findings}"
 
 
 def _candidate_files() -> list[Path]:
