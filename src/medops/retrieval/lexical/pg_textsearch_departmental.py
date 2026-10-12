@@ -24,6 +24,12 @@ import psycopg
 from medops.knowledge.normalization import NORMALIZATION_VERSION
 from medops.retrieval.contracts import LexicalSearchResult, LexicalVersions
 from medops.retrieval.lexical import index_consumer
+from medops.retrieval.lexical.pg_bm25_common import (
+    bm25_page,
+    bm25_params,
+    bm25_search_sql,
+    flush_text_rows,
+)
 from medops.retrieval.lexical.pg_lexical_common import (
     IndexBuildReport,
     check_k,
@@ -76,23 +82,6 @@ def configured_versions(tokenizer: Tokenizer) -> LexicalVersions:
     )
 
 
-def _search_sql(dept: str) -> str:
-    table, index = TABLES[dept], INDEXES[dept]
-    return f"""
-select i.chunk_id, -(i.content <@> to_bm25query(%(q)s, '{index}')) as score
-from {table} i
-join chunks c on c.chunk_id = i.chunk_id
-join documents d on d.doc_id = c.doc_id
-where (i.content <@> to_bm25query(%(q)s, '{index}')) < 0
-  and (d.status = 'active' or (%(allow_historical)s and d.status = 'archived'))
-  and d.effective_from <= %(as_of)s
-  and (d.effective_to is null or d.effective_to > %(as_of)s)
-  and (%(doc_ids)s::uuid[] is null or c.doc_id = any(%(doc_ids)s::uuid[]))
-order by i.content <@> to_bm25query(%(q)s, '{index}'), i.chunk_id
-limit %(k_plus_one)s
-"""
-
-
 def _department(conn: psycopg.Connection[Any]) -> str:
     require_identity(conn)
     row = conn.execute("select medops_current_dept()::text").fetchone()
@@ -102,27 +91,6 @@ def _department(conn: psycopg.Connection[Any]) -> str:
         # failure sanitized if the database enum and application ever drift.
         raise ValueError("unsupported department identity")
     return str(dept)
-
-
-def _params(
-    query: str,
-    k: int,
-    as_of: date | None,
-    allow_historical: bool,
-    doc_ids: Sequence[str] | None,
-) -> dict[str, Any]:
-    return {
-        "q": query,
-        "as_of": as_of or date.today(),
-        "k_plus_one": k + 1,
-        "allow_historical": bool(allow_historical),
-        "doc_ids": list(doc_ids) if doc_ids else None,
-    }
-
-
-def _page(rows: Sequence[tuple[Any, Any]], k: int) -> list[tuple[Any, Any, int]]:
-    eligible = len(rows) if len(rows) <= k else k + 1
-    return [(chunk_id, score, eligible) for chunk_id, score in rows[:k]]
 
 
 class DepartmentalBm25Retriever:
@@ -161,9 +129,10 @@ class DepartmentalBm25Retriever:
         if not normalized:
             return empty_result(k, built)
         rows = self._conn.execute(
-            _search_sql(dept), _params(normalized, k, self._as_of, allow_historical, doc_ids)
+            bm25_search_sql(TABLES[dept], INDEXES[dept]),
+            bm25_params(normalized, k, self._as_of, allow_historical, doc_ids),
         ).fetchall()
-        return page_to_result(_page(rows, k), k, built)
+        return page_to_result(bm25_page(rows, k), k, built)
 
     def explain(self, query: str, k: int, *, allow_historical: bool = False) -> str:
         check_k(k)
@@ -173,17 +142,9 @@ class DepartmentalBm25Retriever:
             return ""
         return explain_json(
             self._conn,
-            _search_sql(dept),
-            _params(normalized, k, self._as_of, allow_historical, None),
+            bm25_search_sql(TABLES[dept], INDEXES[dept]),
+            bm25_params(normalized, k, self._as_of, allow_historical, None),
         )
-
-
-def _flush(conn: psycopg.Connection[Any], table: str, rows: list[tuple[Any, str]]) -> int:
-    if not rows:
-        return 0
-    with conn.cursor() as cur:
-        cur.executemany(f"insert into {table} (chunk_id, content) values (%s, %s)", rows)
-    return len(rows)
 
 
 def build_index(
@@ -234,11 +195,11 @@ def build_index(
                     raise ValueError("document ACL contains an unsupported department")
                 pending[dept].append((chunk_id, normalized))
                 if len(pending[dept]) >= batch:
-                    _flush(conn, TABLES[dept], pending[dept])
+                    flush_text_rows(conn, TABLES[dept], pending[dept])
                     pending[dept] = []
         cursor.close()
         for dept in DEPARTMENTS:
-            _flush(conn, TABLES[dept], pending[dept])
+            flush_text_rows(conn, TABLES[dept], pending[dept])
         upsert_meta(
             conn,
             INDEX_NAME,

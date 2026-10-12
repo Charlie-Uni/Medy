@@ -1,6 +1,6 @@
 """Shared pieces of the PostgreSQL lexical candidates (ADR-0002 A and B; C reuses the identity, meta
-and result helpers). Everything here is experiment-scoped: candidate tables are installed by the admin
-connection, not by an Alembic revision, until DEC-001 is decided.
+and result helpers). Production and experiments share the identity/meta/result contracts;
+experimental tables are installed separately, while production layout belongs to Alembic.
 
 Fixed recipe shared by the tsvector-based candidates (any change is a new retriever version):
 - matching predicate: OR across the distinct query lexemes;
