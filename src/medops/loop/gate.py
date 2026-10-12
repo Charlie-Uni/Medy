@@ -153,56 +153,39 @@ def compute_gate(
         thresholds["target_min_pp"] = TARGET_MIN_PP
         if not target["passes"]:
             blockers.append(f"target +{point:.2f} pp < +{TARGET_MIN_PP:.0f} pp")
-    elif profile == "cost":
-        if not baseline_tokens or not candidate_tokens:
-            raise ValueError("the cost profile needs per-item token maps for both arms")
-        ta, tb = per_item_mean(baseline_tokens), per_item_mean(candidate_tokens)
-        if set(ta) != set(a) or set(tb) != set(a):
-            raise ValueError("token maps must cover the same items as the success maps")
-        mean_a, mean_b = _mean(list(ta.values())), _mean(list(tb.values()))
-        reduction = 1.0 - (mean_b / mean_a) if mean_a else 0.0
-        quality_ok = round(point, 6) >= QUALITY_MIN_PP
-        tokens_ok = reduction >= TOKEN_REDUCTION_MIN
-        target.update(
-            {
-                "tokens_baseline": round(mean_a, 1),
-                "tokens_candidate": round(mean_b, 1),
-                "token_reduction": round(reduction, 4),
-                "quality_ok": quality_ok,
-                "tokens_ok": tokens_ok,
-                "passes": quality_ok and tokens_ok,
-            }
-        )
-        thresholds["token_reduction_min"] = TOKEN_REDUCTION_MIN
-        thresholds["quality_min_pp"] = QUALITY_MIN_PP
-        if not tokens_ok:
-            blockers.append(f"token reduction {100 * reduction:.1f}% < {100 * TOKEN_REDUCTION_MIN:.0f}%")
-        if not quality_ok:
-            blockers.append(f"quality {point:+.2f} pp < {QUALITY_MIN_PP:+.0f} pp")
     else:
-        if not baseline_spend or not candidate_spend:
-            raise ValueError("the spend profile needs per-item cost maps for both arms")
-        sa, sb = per_item_mean(baseline_spend), per_item_mean(candidate_spend)
-        if set(sa) != set(a) or set(sb) != set(a):
-            raise ValueError("cost maps must cover the same items as the success maps")
-        mean_a, mean_b = _mean(list(sa.values())), _mean(list(sb.values()))
+        token_profile = profile == "cost"
+        baseline_usage, candidate_usage = (
+            (baseline_tokens, candidate_tokens) if token_profile else (baseline_spend, candidate_spend)
+        )
+        input_name = "token" if token_profile else "cost"
+        if not baseline_usage or not candidate_usage:
+            raise ValueError(f"the {profile} profile needs per-item {input_name} maps for both arms")
+        usage_a, usage_b = per_item_mean(baseline_usage), per_item_mean(candidate_usage)
+        if set(usage_a) != set(a) or set(usage_b) != set(a):
+            raise ValueError(f"{input_name} maps must cover the same items as the success maps")
+        mean_a, mean_b = _mean(list(usage_a.values())), _mean(list(usage_b.values()))
         reduction = 1.0 - (mean_b / mean_a) if mean_a else 0.0
+        minimum = TOKEN_REDUCTION_MIN if token_profile else SPEND_REDUCTION_MIN
+        unit, metric, ok_key, digits = (
+            ("tokens", "token", "tokens_ok", 1) if token_profile else ("usd", "spend", "spend_ok", 6)
+        )
         quality_ok = round(point, 6) >= QUALITY_MIN_PP
-        spend_ok = reduction >= SPEND_REDUCTION_MIN
+        usage_ok = reduction >= minimum
         target.update(
             {
-                "usd_baseline": round(mean_a, 6),
-                "usd_candidate": round(mean_b, 6),
-                "spend_reduction": round(reduction, 4),
+                f"{unit}_baseline": round(mean_a, digits),
+                f"{unit}_candidate": round(mean_b, digits),
+                f"{metric}_reduction": round(reduction, 4),
                 "quality_ok": quality_ok,
-                "spend_ok": spend_ok,
-                "passes": quality_ok and spend_ok,
+                ok_key: usage_ok,
+                "passes": quality_ok and usage_ok,
             }
         )
-        thresholds["spend_reduction_min"] = SPEND_REDUCTION_MIN
+        thresholds[f"{metric}_reduction_min"] = minimum
         thresholds["quality_min_pp"] = QUALITY_MIN_PP
-        if not spend_ok:
-            blockers.append(f"spend reduction {100 * reduction:.1f}% < {100 * SPEND_REDUCTION_MIN:.0f}%")
+        if not usage_ok:
+            blockers.append(f"{metric} reduction {100 * reduction:.1f}% < {100 * minimum:.0f}%")
         if not quality_ok:
             blockers.append(f"quality {point:+.2f} pp < {QUALITY_MIN_PP:+.0f} pp")
 
