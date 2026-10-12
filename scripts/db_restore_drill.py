@@ -5,7 +5,8 @@
 Compares the alembic revision, the set of public tables, per-table row counts, the corpus fingerprint (md5 over the
 ordered chunk hashes) and the granted roles between the live source database and the restored copy; writes
 report.json / report.md; always drops the scratch database. `pg_restore` runs inside the Postgres container.
-Nothing secret leaves the process.
+Credentials are forwarded through the Docker child environment, not argv, and known credentials are redacted
+from stored stderr. Administrators can inspect process/container environments. Install the project first.
 """
 
 from __future__ import annotations
@@ -20,9 +21,12 @@ import re
 import subprocess
 import sys
 import urllib.parse
+import uuid
 
 import psycopg
 from psycopg import sql
+
+from medops.infrastructure.db.pg_subprocess import pg_environment, safe_stderr
 
 
 def inventory(dsn: str) -> dict:
@@ -72,7 +76,7 @@ def main() -> int:
     u = urllib.parse.urlsplit(dsn)
     source = args.source or u.path.lstrip("/")
     user, password = urllib.parse.unquote(u.username or ""), urllib.parse.unquote(u.password or "")
-    scratch = f"{source}_restore_drill"
+    scratch = f"medops_restore_drill_{uuid.uuid4().hex}"
     source_dsn = re.sub(r"/[^/?]+(\?|$)", f"/{source}\\1", dsn)
     scratch_dsn = re.sub(r"/[^/?]+(\?|$)", f"/{scratch}\\1", dsn)
     maint_dsn = re.sub(r"/[^/?]+(\?|$)", r"/postgres\1", dsn)
@@ -88,7 +92,6 @@ def main() -> int:
     }
     t0 = dt.datetime.now(dt.UTC)
     with psycopg.connect(maint_dsn, autocommit=True) as conn:
-        conn.execute(sql.SQL("drop database if exists {}").format(sql.Identifier(scratch)))
         conn.execute(sql.SQL("create database {}").format(sql.Identifier(scratch)))
     diffs: dict = {}
     src: dict = {}
@@ -100,7 +103,7 @@ def main() -> int:
                     "exec",
                     "-i",
                     "-e",
-                    f"PGPASSWORD={password}",
+                    "PGPASSWORD",
                     args.container,
                     "pg_restore",
                     "-U",
@@ -114,38 +117,45 @@ def main() -> int:
                 ],
                 stdin=fh,
                 stderr=subprocess.PIPE,
+                env=pg_environment(password),
             )
         report["pg_restore_rc"] = proc.returncode
-        report["pg_restore_stderr_tail"] = proc.stderr.decode()[-400:]
+        report["pg_restore_stderr_tail"] = safe_stderr(proc.stderr, dsn=dsn, password=password, limit=400)
         report["restore_seconds"] = round((dt.datetime.now(dt.UTC) - t0).total_seconds(), 1)
-        src, dst = inventory(source_dsn), inventory(scratch_dsn)
-        diffs = {
-            t: (src["counts"].get(t), dst["counts"].get(t))
-            for t in set(src["counts"]) | set(dst["counts"])
-            if src["counts"].get(t) != dst["counts"].get(t)
-        }
-        report.update(
-            {
-                "alembic": src["alembic"],
-                "tables": len(src["tables"]),
-                "total_rows": sum(src["counts"].values()),
-                "row_count_mismatches": diffs,
-                "tables_match": src["tables"] == dst["tables"],
-                "alembic_match": src["alembic"] == dst["alembic"],
-                "corpus_match": src["corpus_md5"] == dst["corpus_md5"],
-                "grantees_match": src["grantees"] == dst["grantees"],
-                "fact_plane_identity_match": src["fact_plane_id"] == dst["fact_plane_id"],
+        if proc.returncode != 0:
+            report["ok"] = False
+        else:
+            src, dst = inventory(source_dsn), inventory(scratch_dsn)
+            diffs = {
+                t: (src["counts"].get(t), dst["counts"].get(t))
+                for t in set(src["counts"]) | set(dst["counts"])
+                if src["counts"].get(t) != dst["counts"].get(t)
             }
-        )
-        report["ok"] = (
-            proc.returncode == 0
-            and not diffs
-            and report["tables_match"]
-            and report["alembic_match"]
-            and report["corpus_match"]
-            and report["grantees_match"]
-            and report["fact_plane_identity_match"]
-        )
+            report.update(
+                {
+                    "alembic": src["alembic"],
+                    "tables": len(src["tables"]),
+                    "total_rows": sum(src["counts"].values()),
+                    "row_count_mismatches": diffs,
+                    "tables_match": src["tables"] == dst["tables"],
+                    "alembic_match": src["alembic"] == dst["alembic"],
+                    "corpus_match": src["corpus_md5"] == dst["corpus_md5"],
+                    "grantees_match": src["grantees"] == dst["grantees"],
+                    "fact_plane_identity_match": src["fact_plane_id"] == dst["fact_plane_id"],
+                }
+            )
+            report["ok"] = (
+                proc.returncode == 0
+                and not diffs
+                and report["tables_match"]
+                and report["alembic_match"]
+                and report["corpus_match"]
+                and report["grantees_match"]
+                and report["fact_plane_identity_match"]
+            )
+    except OSError as exc:
+        report["launch_error_type"] = type(exc).__name__
+        report["ok"] = False
     finally:
         with psycopg.connect(maint_dsn, autocommit=True) as conn:
             conn.execute(sql.SQL("drop database if exists {}").format(sql.Identifier(scratch)))

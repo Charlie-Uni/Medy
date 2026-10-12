@@ -7,6 +7,9 @@ statements are kept: the group roles are cluster-wide and exist on any restore t
 and `make db-users`. The dump is written next to a `.sha256` file; the DSN comes from DATABASE_ADMIN_URL in the
 environment and never reaches stdout. RPO of this P0 flow is the dump interval; continuous archiving is P1
 (baseline 7.1).
+
+The password reaches Docker through the child environment, not command arguments. Host/container administrators
+can still inspect environments; this is not a secret store. Install the project before running this script.
 """
 
 from __future__ import annotations
@@ -19,6 +22,8 @@ import pathlib
 import subprocess
 import sys
 import urllib.parse
+
+from medops.infrastructure.db.pg_subprocess import pg_environment, safe_stderr
 
 
 def main() -> int:
@@ -42,7 +47,7 @@ def main() -> int:
         "docker",
         "exec",
         "-e",
-        f"PGPASSWORD={password}",
+        "PGPASSWORD",
         args.container,
         "pg_dump",
         "-U",
@@ -52,11 +57,17 @@ def main() -> int:
         "-Fc",
         db,
     ]
-    with target.open("wb") as fh:
-        proc = subprocess.run(cmd, stdout=fh, stderr=subprocess.PIPE)
+    fd = os.open(target, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+    with os.fdopen(fd, "wb") as fh:
+        try:
+            proc = subprocess.run(cmd, stdout=fh, stderr=subprocess.PIPE, env=pg_environment(password))
+        except OSError as exc:
+            target.unlink(missing_ok=True)
+            print(f"pg_dump launch failed: {type(exc).__name__}", file=sys.stderr)
+            return 1
     if proc.returncode != 0:
         target.unlink(missing_ok=True)
-        print(f"pg_dump failed: {proc.stderr.decode()[-300:]}", file=sys.stderr)
+        print(f"pg_dump failed: {safe_stderr(proc.stderr, dsn=dsn, password=password, limit=300)}", file=sys.stderr)
         return 1
     digest = hashlib.sha256(target.read_bytes()).hexdigest()
     target.with_suffix(".dump.sha256").write_text(f"{digest}  {target.name}\n")
