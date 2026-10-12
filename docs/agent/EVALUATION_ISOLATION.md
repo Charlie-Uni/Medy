@@ -1,6 +1,6 @@
 # EVAL-33：候选生成、优化验证与最终盲测的隔离准备
 
-- 日期：2026-10-12；版本：v0.2，**离线应用层原语已实现，真实身份/封存存储隔离尚未实现**。
+- 日期：2026-10-12；版本：v0.3，**离线原语与聚合出口已实现，真实身份/封存存储隔离尚未实现**。
 - 范围：PLAN-02 的配套准备与 EVAL-33 的部分工程切片；不把本文件算作 EVAL-33 DONE，不生成或读取新的盲测 query/gold。
 - 依据：[ADR-0012 §5](../adr/ADR-0012-agent-evolution-goals-and-acceptance.md#5-盲测资格与改进声明原则已确认)、[当前盲测准备资料](../../evals/holdout/README.md)、[PLAN-02](PLAN-02-action-budget-and-acceptance.md)。草拟/自审：Codex，不是第二独立人工。
 
@@ -36,7 +36,7 @@
 5. **候选锁定和结果出口**：先锁定单一候选/基线/事实条件/rubric/分母/轮数/种子/停止规则/授权；验证只给白名单聚合诊断。小样本切片也可能还原题目，应在协议中规定最小聚合规则并测试，不能任意打印细分内容。
 6. **边界验证和审计**：先用完全公开的合成 canary 数据验证正负访问、错误凭据、路径/跨环境、日志/缓存/telemetry、失败/恢复和候选修改评分器拒绝；通过后才接真实封存数据。合成 canary 不是盲测题。
 
-协议中的正式保管角色、存储方式、近重复算法/阈值和汇总最小规则仍待后续切片具体化；必须在接触新题之前确定，不能测完再决定。下面的离线原语不提供真实身份鉴权、完整 runner、历史暴露扫描或盲测资格自动批准。
+协议中的正式保管身份/存储、近重复算法/阈值及正式汇总最小值仍待确定；必须在接触新题之前明确，不能测完再决定。[保管部署提案](EVALUATION_CUSTODY.md)列出可审核选择和具体边界。下面的离线原语不提供真实身份鉴权、完整 runner、历史暴露扫描或盲测资格自动批准。
 
 ### 3.1 记录 201 实现了什么
 
@@ -74,6 +74,20 @@ env -u DEBUG PYTHONPATH=src venv/bin/python -m medops.evals.isolation --self-che
 
 只创建并删除临时目录，调用实际投影、重叠检查和文件账本函数。输出九项布尔检查和固定资格字段，不输出 synthetic query/gold，不连接数据库、Redis、Langfuse 或托管模型。公开合成 canary 已暴露，即使用 `holdout` split 演练，也不是正式盲测题。它验证公开投影、runtime 无 gold、生成者/缺 lock 拒绝、跨 split 重叠、账本往返、暴露登记、旧头拒绝和篡改拒绝；更多并发/权限/错误分支由定向测试覆盖。
 
+### 3.4 记录 202：固定批次聚合出口
+
+[aggregate.py](../../src/medops/evals/isolation/aggregate.py) 接受可信调用方提供的显式 `ExportPolicy` 和 `ReleaseGrant`，核对集合、运行锁、策略、完整行结果摘要及授权角色。只在两臂/全部轮次/全部登记任务和指标都有唯一结果时导出；unknown 保留分母，未完成批次、缺行、重复/额外行或内容变更拒绝。
+
+公开 `PublicSummary` 不含正文、逐题 ID/结果、自由标签或私有结果摘要。任一非空格的唯一任务/家族数不足，抑制整个指标的两臂，而不保留可反推补集；三轮不增加唯一任务数。正式最小值无默认，合成 20/2/5 只用于验证机制。完整规则和跨批次推断限制见[保管提案 §5](EVALUATION_CUSTODY.md#5-结果出口的具体规则)。
+
+```sh
+env -u DEBUG PYTHONPATH=src venv/bin/python -m medops.evals.isolation --export-self-check
+```
+
+新命令用公开合成 20 题、两臂三轮，输出六项布尔检查，0 模型调用；原 `--self-check` 九项保持。无参数、同时选两个命令或输入任意文件路径均拒绝。不把合成得分输出为质量改进证据。
+
+这是全任务二值结果的传输校验，未增加评分器、N/A/逐 claim/时延/CI 算法或 Agent rubric。授权签发、预登记时间门、持久审计先于披露、累计导出限制和真实身份/日志/缓存隔离须由后续 runner/部署落实；当前纯函数不承担这些保证。资格仍固定 unknown，部署及第二人工字段固定 false。
+
 ## 4. 暴露账本必须记录什么
 
 每条事件保存：事件 ID、时间、集合/任务或文档关联组 ID、访问者与角色、暴露层次（来源全文、query、gold、输出、逐题判词或聚合）、目的/本轮候选版本、证据回执以及后续资格处理。
@@ -94,4 +108,4 @@ env -u DEBUG PYTHONPATH=src venv/bin/python -m medops.evals.isolation --self-che
 
 EVAL-33 DONE 需要可执行访问边界、投影/输出规则、暴露账本、关联组与近重复检查、canary 正反测试及本轮自审证据；EVAL-31 另需真实封存任务、许可/标注与人工安排。EVAL-36 再负责实际三轮盲测。三个任务互不以文档存在代替运行/独立性证据。
 
-初始方案自审见[记录 200](../reviews/2026-10-12-implementation-200-plan02-contract-preparation.md)，本轮原语与失败修复见[记录 201](../reviews/2026-10-12-implementation-201-evaluation-isolation-primitives.md)。EVAL-33 保持 IN_PROGRESS，下一切片补聚合出口规则和可审核保管部署方案，再确定近重复方法及历史扫描。PLAN-02 D-01/D-02 仍待明确裁决，不能从“继续”推断批准新 Agent profile。没有新盲测题、模型费用、自动激活或生产门槛变动。
+初始方案自审见[记录 200](../reviews/2026-10-12-implementation-200-plan02-contract-preparation.md)，原语与失败修复见[记录 201](../reviews/2026-10-12-implementation-201-evaluation-isolation-primitives.md)，聚合出口及保管提案见[记录 202](../reviews/2026-10-12-implementation-202-evaluation-export-and-custody.md)。EVAL-33 保持 IN_PROGRESS；下一切片预登记近重复方法与历史扫描，保管身份/真实部署待所有者选择。PLAN-02 D-01/D-02 仍待明确裁决，不能从“继续”推断批准新 Agent profile。没有新盲测题、模型费用、自动激活或生产门槛变动。
