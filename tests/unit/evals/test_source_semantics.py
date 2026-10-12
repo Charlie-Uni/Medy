@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
+import importlib
 import json
-import runpy
 from pathlib import Path
 
 import pytest
@@ -160,7 +160,7 @@ def test_source_check_binds_the_run_and_keeps_missing_cases_pending(tmp_path):
         )
         + "\n"
     )
-    evaluate = runpy.run_path(str(REPO / "evals/harness/tools/source_check.py"))["evaluate"]
+    evaluate = vars(importlib.import_module("medops.evals.tools.harness.source_check"))["evaluate"]
     report = evaluate(tmp_path, DATASET, CONTRACTS)
     assert report["metrics"]["denominator"] == 34
     assert report["metrics"]["pending"] == 33 and report["metrics"]["rate"] is None

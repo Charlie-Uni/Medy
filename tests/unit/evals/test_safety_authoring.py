@@ -3,17 +3,8 @@ on unchanged rows, withdrawn samples move verbatim to drafts/withdrawn/ and stay
 
 from __future__ import annotations
 
-import importlib.util
-import sys
-from pathlib import Path
-
-REPO = Path(__file__).resolve().parents[3]
-sys.path.insert(0, str(REPO / "evals/safety_set/tools"))
-_SPEC = importlib.util.spec_from_file_location("author_drafts_test", REPO / "evals/safety_set/tools/author_drafts.py")
-ad = importlib.util.module_from_spec(_SPEC)
-sys.modules["author_drafts_test"] = ad
-_SPEC.loader.exec_module(ad)
-from medops.evals import safety_data  # noqa: E402
+from medops.evals import safety_data
+from medops.evals.tools.safety_set import author_drafts as ad
 
 REVIEW = {"status": "agreed", "reviewer_verdict": "unique_and_decidable", "reviewer_note": "ok"}
 

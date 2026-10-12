@@ -4,7 +4,6 @@ and the result validates as a runtime Glossary with a content-addressed version.
 
 from __future__ import annotations
 
-import importlib
 import json
 import zipfile
 from datetime import date
@@ -17,9 +16,9 @@ from medops.retrieval.rewrite import load_glossary
 
 @pytest.fixture
 def builder(monkeypatch):
-    tooling = Path(__file__).resolve().parents[3] / "evals/glossary/tools"
-    monkeypatch.syspath_prepend(str(tooling))
-    return importlib.import_module("build_glossary")
+    from medops.evals.tools.glossary import build_glossary
+
+    return build_glossary
 
 
 PAGES = {

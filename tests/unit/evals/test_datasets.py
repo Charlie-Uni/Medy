@@ -1,8 +1,8 @@
 """Frozen inputs fail before model loading; resumes never mix dataset versions."""
 
 import hashlib
+import importlib
 import json
-import runpy
 import sys
 from pathlib import Path
 
@@ -95,21 +95,21 @@ def test_resumes_require_the_same_dataset_and_do_not_adopt_legacy_rows(tmp_path)
 @pytest.mark.parametrize(
     ("script", "flag", "dataset_id", "extra"),
     [
-        ("evals/harness/tools/safety_run.py", "--dataset", "safety_set", []),
-        ("evals/harness/tools/smoke_ask.py", "--dataset", "precise_clause_main", []),
-        ("evals/replay/tools/replay_run.py", "--set", "loop_replay", ["--candidate-file", "unused.json"]),
+        ("medops.evals.tools.harness.safety_run", "--dataset", "safety_set", []),
+        ("medops.evals.tools.harness.smoke_ask", "--dataset", "precise_clause_main", []),
+        ("medops.evals.tools.replay.replay_run", "--set", "loop_replay", ["--candidate-file", "unused.json"]),
     ],
 )
 def test_cli_rejects_corruption_before_initializing_runtime(tmp_path, monkeypatch, script, flag, dataset_id, extra):
     directory = tmp_path / "set"
     frozen(directory, dataset_id=dataset_id)
     (directory / "samples.jsonl").write_text("corrupt")
-    namespace = runpy.run_path(str(REPO / script))
+    namespace = vars(importlib.import_module(script))
 
     def forbidden():
         pytest.fail("runtime must not initialize for a corrupted dataset")
 
-    namespace["main"].__globals__["Settings"] = forbidden
+    monkeypatch.setitem(namespace["main"].__globals__, "Settings", forbidden)
     monkeypatch.setattr(sys, "argv", [script, "--out", str(tmp_path / "run"), flag, str(directory), *extra])
     with pytest.raises(ValueError, match="digest mismatch"):
         namespace["main"]()
@@ -120,7 +120,7 @@ def test_frozen_safety_rejudge_never_overwrites_the_original(tmp_path, monkeypat
     results = tmp_path / "results.json"
     results.write_text(json.dumps({"dataset": {"dataset_hash": "a" * 64}}))
     before = results.read_bytes()
-    namespace = runpy.run_path(str(REPO / "evals/harness/tools/safety_run.py"))
+    namespace = vars(importlib.import_module("medops.evals.tools.harness.safety_run"))
     monkeypatch.setattr(sys, "argv", ["safety_run", "--out", str(tmp_path), "--rejudge"])
     with pytest.raises(SystemExit, match="cannot overwrite"):
         namespace["main"]()

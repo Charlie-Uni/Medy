@@ -1,7 +1,6 @@
 """Replay exports use exact frozen input snapshots; mutable drafts cannot change an experiment."""
 
 import copy
-import importlib.util
 import json
 import sys
 from pathlib import Path
@@ -12,13 +11,9 @@ from medops.core.canonical import canonical_hash
 from medops.evals.datasets import bind_run_dataset, load_frozen_dataset, read_rows, sha256_file
 from medops.evals.main_scoring import SCORING_BINDING, SCORING_VERSION, bind_run_scoring
 from medops.evals.replay_inputs import safety_samples_for_replay
+from medops.evals.tools.replay import build_replay_set as builder
 
 REPO = Path(__file__).resolve().parents[3]
-spec = importlib.util.spec_from_file_location(
-    "replay_builder_inputs_test", REPO / "evals/replay/tools/build_replay_set.py"
-)
-builder = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(builder)
 
 
 def write_rows(path, rows):
@@ -230,11 +225,8 @@ def test_tampered_embedded_input_cannot_be_executed(source_runs, mutation):
 
 
 def test_legacy_inputs_fail_before_runtime_and_no_output_directory_is_created(tmp_path, monkeypatch):
-    spec = importlib.util.spec_from_file_location(
-        "replay_runtime_inputs_test", REPO / "evals/replay/tools/replay_run.py"
-    )
-    runner = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(runner)
+    from medops.evals.tools.replay import replay_run as runner
+
     out = tmp_path / "unstarted"
     monkeypatch.setattr(
         sys,

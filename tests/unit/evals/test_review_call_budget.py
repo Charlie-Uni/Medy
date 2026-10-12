@@ -1,15 +1,15 @@
 """The model review call must pass its explicit cost limit to the CLI."""
 
+import importlib
 import json
-import runpy
 from pathlib import Path
 from types import SimpleNamespace
 
 import pytest
 
 REPO = Path(__file__).resolve().parents[3]
-HELPERS = runpy.run_path(str(REPO / "evals/main_set/tools/draft_common.py"))
-RUNNER = runpy.run_path(str(REPO / "evals/main_set/tools/run_review.py"))
+HELPERS = vars(importlib.import_module("medops.evals.tools.main_set.draft_common"))
+RUNNER = vars(importlib.import_module("medops.evals.tools.main_set.run_review"))
 
 
 def test_new_review_honors_targeted_selection_before_call():

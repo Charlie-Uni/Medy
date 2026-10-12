@@ -7,14 +7,12 @@ from __future__ import annotations
 import hashlib
 import json
 import pathlib
-import sys
 from collections import Counter
+
+from medops.evals.tools.replay.build_replay_set import check, label_main
 
 REPO = pathlib.Path(__file__).resolve().parents[3]
 OUT = REPO / "evals/replay/replay-v1"
-sys.path.insert(0, str(REPO / "evals/replay/tools"))
-
-from build_replay_set import check, label_main  # noqa: E402
 
 
 def load(name: str) -> list[dict]:

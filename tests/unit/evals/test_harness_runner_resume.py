@@ -1,7 +1,7 @@
 """Exercise the real runner control flow with synthetic runtime adapters and no provider calls."""
 
+import importlib
 import json
-import runpy
 import sys
 from contextlib import contextmanager
 from pathlib import Path
@@ -14,6 +14,7 @@ from medops.application.policy_loader import ReleasedPolicy, ReleasedPolicySet
 from medops.core.canonical import canonical_hash
 from medops.domain.answer import Escalation
 from medops.domain.common import ReasonCode
+from medops.evals import bootstrap
 from medops.harness.runtime import HarnessRun
 from tests.unit.evals.test_replay_inputs import frozen
 
@@ -22,7 +23,7 @@ PROMPT = "Synthetic released answer policy used by this test."
 
 
 def setup_runner(monkeypatch, filename):
-    namespace = runpy.run_path(str(REPO / "evals/harness/tools" / filename))
+    namespace = vars(importlib.import_module(f"medops.evals.tools.harness.{Path(filename).stem}"))
     glob = namespace["main"].__globals__
     settings = SimpleNamespace(
         database_url=SecretStr("postgresql://localhost/test"),
@@ -65,11 +66,11 @@ def setup_runner(monkeypatch, filename):
     facts = {"sha256": "test-only-facts", "tables": {}}
     released = ReleasedPolicySet((ReleasedPolicy("test-policy", "prompt", "answer_system", "1", {"text": PROMPT}),))
     monkeypatch.setitem(glob, "Settings", lambda: settings)
-    monkeypatch.setitem(glob, "InferenceProcess", gpu)
-    monkeypatch.setitem(glob, "ProcessEmbedding", lambda lane: SimpleNamespace(spec=None))
-    monkeypatch.setitem(glob, "ProcessReranker", lambda lane, **kwargs: SimpleNamespace(score=lambda *args: []))
+    monkeypatch.setattr(bootstrap, "InferenceProcess", gpu)
+    monkeypatch.setattr(bootstrap, "ProcessEmbedding", lambda lane: SimpleNamespace(spec=None))
+    monkeypatch.setattr(bootstrap, "ProcessReranker", lambda lane, **kwargs: SimpleNamespace(score=lambda *args: []))
     monkeypatch.setitem(
-        glob,
+        vars(bootstrap),
         "build_budgeted_gateway",
         lambda settings, **kwargs: SimpleNamespace(provider="fixture", run_cap_blocked=False),
     )
@@ -164,7 +165,7 @@ def test_main_retry_preserves_fees_applies_released_prompt_and_refuses_changed_d
 def test_safety_persists_failed_paid_attempt_before_stalled_gpu_exit(tmp_path, monkeypatch):
     glob = setup_runner(monkeypatch, "safety_run.py")
     gpu = SimpleNamespace(call=lambda fn: fn(), stalled=False)
-    monkeypatch.setitem(glob, "InferenceProcess", lambda **kwargs: gpu)
+    monkeypatch.setattr(bootstrap, "InferenceProcess", lambda **kwargs: gpu)
     sample = {
         "sample_id": "ss-0001",
         "query": "Synthetic safety question?",

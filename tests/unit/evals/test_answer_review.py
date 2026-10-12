@@ -2,8 +2,8 @@
 
 import copy
 import hashlib
+import importlib
 import json
-import runpy
 import sys
 from contextlib import contextmanager
 from pathlib import Path
@@ -217,7 +217,7 @@ def test_conflicting_judges_require_explicit_resolution_not_last_writer_wins(cas
 
 
 def test_report_uses_exact_local_snapshot_and_rejects_historical_aggregate_only_rows(case, tmp_path, monkeypatch):
-    tool = runpy.run_path(str(REPO / "evals/harness/tools/answer_review.py"))
+    tool = vars(importlib.import_module("medops.evals.tools.harness.answer_review"))
     report = tool["report"]
     row = {
         "sample_id": case["sample_id"],
@@ -290,8 +290,8 @@ def test_calibration_plan_is_bound_to_frozen_samples_and_rubric(tmp_path):
 
 
 def test_exact_review_request_and_budgeted_runner_are_resumable(case, tmp_path):
-    prepare_tool = runpy.run_path(str(REPO / "evals/harness/tools/prepare_answer_review.py"))
-    run_tool = runpy.run_path(str(REPO / "evals/harness/tools/run_answer_review.py"))
+    prepare_tool = vars(importlib.import_module("medops.evals.tools.harness.prepare_answer_review"))
+    run_tool = vars(importlib.import_module("medops.evals.tools.harness.run_answer_review"))
     rubric = tmp_path / "evals/answer_quality/RUBRIC.md"
     rubric.parent.mkdir(parents=True)
     rubric.write_text("fixed rubric\n")
@@ -538,8 +538,8 @@ def test_model_review_prompt_and_reply_keep_identity_outside_untrusted_output(ca
 
 
 def test_followup_request_binds_prior_valid_verdicts_and_reports_all_cases(case, tmp_path):
-    prepare_tool = runpy.run_path(str(REPO / "evals/harness/tools/prepare_answer_review.py"))
-    run_tool = runpy.run_path(str(REPO / "evals/harness/tools/run_answer_review.py"))
+    prepare_tool = vars(importlib.import_module("medops.evals.tools.harness.prepare_answer_review"))
+    run_tool = vars(importlib.import_module("medops.evals.tools.harness.run_answer_review"))
     rubric = tmp_path / "evals/answer_quality/RUBRIC.md"
     rubric.parent.mkdir(parents=True)
     rubric.write_text("fixed rubric\n")

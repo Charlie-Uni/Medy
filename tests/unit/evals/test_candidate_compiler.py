@@ -3,15 +3,7 @@ ordinary regulatory use of the same words, and the version / notice extractors m
 
 from __future__ import annotations
 
-import importlib.util
-import sys
-from pathlib import Path
-
-_PATH = Path(__file__).resolve().parents[3] / "evals/main_set/tools/compile_candidates.py"
-_SPEC = importlib.util.spec_from_file_location("compile_candidates", _PATH)
-cc = importlib.util.module_from_spec(_SPEC)
-sys.modules["compile_candidates"] = cc
-_SPEC.loader.exec_module(cc)
+from medops.evals.tools.main_set import compile_candidates as cc
 
 
 def names(text: str) -> set[str]:

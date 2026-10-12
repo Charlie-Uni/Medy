@@ -1,6 +1,6 @@
 """Required groups cannot be flattened into interchangeable chunks."""
 
-import runpy
+import importlib
 from pathlib import Path
 
 import pytest
@@ -27,7 +27,7 @@ def test_required_evidence_groups(groups, cited, expected):
 def test_legacy_replays_keep_their_original_rule_but_explicit_groups_are_strict():
     legacy = {"kind": "answerable", "gold_chunks": ["a", "b"]}
     grouped = {**legacy, "required_gold_groups": [["a"], ["b"]]}
-    namespace = runpy.run_path(str(REPO / "evals/replay/tools/replay_run.py"))
+    namespace = vars(importlib.import_module("medops.evals.tools.replay.replay_run"))
     assert replay_gold_cited(legacy, ["a"])
     assert namespace["main_success"](legacy, "answered", ["a"])
     assert not namespace["main_success"](grouped, "answered", ["a"])
@@ -36,7 +36,7 @@ def test_legacy_replays_keep_their_original_rule_but_explicit_groups_are_strict(
 
 
 def test_replay_export_preserves_groups_without_adding_them_to_historical_rows():
-    namespace = runpy.run_path(str(REPO / "evals/replay/tools/build_replay_set.py"))
+    namespace = vars(importlib.import_module("medops.evals.tools.replay.build_replay_set"))
     row = {
         "kind": "answerable",
         "outcome": "answered",

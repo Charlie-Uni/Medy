@@ -3,16 +3,9 @@ and safety items (record 97: safety rows of a collapsed run were kept, leaving t
 
 from __future__ import annotations
 
-import importlib.util
 import inspect
-import sys
-from pathlib import Path
 
-_PATH = Path(__file__).resolve().parents[3] / "evals/replay/tools/replay_run.py"
-_SPEC = importlib.util.spec_from_file_location("replay_run_resume", _PATH)
-rr = importlib.util.module_from_spec(_SPEC)
-sys.modules["replay_run_resume"] = rr
-_SPEC.loader.exec_module(rr)
+from medops.evals.tools.replay import replay_run as rr
 
 
 def test_missing_and_system_failure_rows_are_redone_others_kept():

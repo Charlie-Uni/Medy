@@ -1,7 +1,6 @@
 """Export validated source coordinates from one consistent frozen/page view."""
 
 import hashlib
-import importlib
 import json
 from pathlib import Path
 from types import SimpleNamespace
@@ -15,9 +14,9 @@ from tests.unit.evals.fixture_builder import build
 
 @pytest.fixture
 def exporter(monkeypatch):
-    tooling = Path(__file__).resolve().parents[3] / "evals/experiments/lexical/tools"
-    monkeypatch.syspath_prepend(str(tooling))
-    return importlib.import_module("export_chunk_snapshot")
+    from medops.evals.tools.lexical import export_chunk_snapshot
+
+    return export_chunk_snapshot
 
 
 class _Result:

@@ -1,7 +1,7 @@
 """A failed request cannot improve quality, and incompatible scores cannot join a comparison."""
 
+import importlib
 import json
-import runpy
 from pathlib import Path
 
 import pytest
@@ -96,7 +96,7 @@ def test_legacy_default_expectation_matches_all_three_frozen_main_sources():
 
 
 def test_replay_export_uses_new_scores_and_preserves_old_label_rule():
-    builder = runpy.run_path(str(REPO / "evals/replay/tools/build_replay_set.py"))
+    builder = vars(importlib.import_module("medops.evals.tools.replay.build_replay_set"))
     legacy = {"kind": "no_answer", "outcome": "escalated", "reason_codes": ["system_failure"]}
     current = {**legacy, "scoring_version": SCORING_VERSION, "expected_behaviour": "insufficient_evidence"}
     assert builder["label_main"](legacy) == ("good", "no_answer_abstained")
