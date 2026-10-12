@@ -1,7 +1,7 @@
 # EVAL-33：候选生成、优化验证与最终盲测的隔离准备
 
-- 日期：2026-10-12；版本：v0.1，**方案准备，运行隔离尚未实现**。
-- 范围：PLAN-02 的配套设计；不把本文件算作 EVAL-33 DONE，不生成或读取新的盲测 query/gold。
+- 日期：2026-10-12；版本：v0.2，**离线应用层原语已实现，真实身份/封存存储隔离尚未实现**。
+- 范围：PLAN-02 的配套准备与 EVAL-33 的部分工程切片；不把本文件算作 EVAL-33 DONE，不生成或读取新的盲测 query/gold。
 - 依据：[ADR-0012 §5](../adr/ADR-0012-agent-evolution-goals-and-acceptance.md#5-盲测资格与改进声明原则已确认)、[当前盲测准备资料](../../evals/holdout/README.md)、[PLAN-02](PLAN-02-action-budget-and-acceptance.md)。草拟/自审：Codex，不是第二独立人工。
 
 ## 1. 当前证据和缺口
@@ -36,7 +36,43 @@
 5. **候选锁定和结果出口**：先锁定单一候选/基线/事实条件/rubric/分母/轮数/种子/停止规则/授权；验证只给白名单聚合诊断。小样本切片也可能还原题目，应在协议中规定最小聚合规则并测试，不能任意打印细分内容。
 6. **边界验证和审计**：先用完全公开的合成 canary 数据验证正负访问、错误凭据、路径/跨环境、日志/缓存/telemetry、失败/恢复和候选修改评分器拒绝；通过后才接真实封存数据。合成 canary 不是盲测题。
 
-协议中的正式保管角色、存储方式、近重复算法/阈值和汇总最小规则仍待下一实现切片具体化；必须在接触新题之前确定，不能测完再决定。此文没有声称提供了 ACL、runner、暴露扫描或自动判定能力。
+协议中的正式保管角色、存储方式、近重复算法/阈值和汇总最小规则仍待后续切片具体化；必须在接触新题之前确定，不能测完再决定。下面的离线原语不提供真实身份鉴权、完整 runner、历史暴露扫描或盲测资格自动批准。
+
+### 3.1 记录 201 实现了什么
+
+代码入口为 [isolation 包](../../src/medops/evals/isolation/__init__.py)，仅属于评测命名空间；生产 API、worker、MCP 不导入它。没有接通真实模型、增加 Agent 动作或改变评分器。
+
+| 原语 | 当前行为 | 尚不能证明什么 |
+| --- | --- | --- |
+| `PrivateCase` / `PrivateInventory` | 案例正文与每题元数据受限保存；题 ID、家族/已核实关联组、原 query hash、norm-v1 query hash、完整 payload hash 绑定 | 医学标注正确、关系已穷尽或所有历史暴露已登记 |
+| `PublicManifest` | 只含固定格式、集合 UUID、split、题数、家族数和 inventory 总摘要；禁止 query、gold、trace、自由文本标签及逐题清单 | 题目未见；题数只是唯一 UUID 数，不是独立任务/家族数 |
+| `check_disjoint` | 跨集合拒绝题 ID、原 query、规范化 query、家族或已提供关联组的重叠；两个分组命名空间分别比较 | 模糊近重复、语义改写、译本/转载或未登记派生关系都被发现 |
+| `ReadGrant` + `project_input` | 拒绝生成者/开发者读取 validation/holdout；validator 不读 holdout；holdout_evaluator 仅读 holdout。授权、集合摘要、题 ID 和正文摘要不符即拒绝 | grant 由真实身份系统签发；持有工作区权限的开发助手被操作系统隔离 |
+| runtime 投影 | 仅调用 `load_input`，只输出 `item_id/query`；即使存储对象子类附带 gold，也不整体序列化。开发投影仅 query/已有输出；合法审核角色才经 review 路径读取 gold | 真实存储凭据已分离、日志/缓存/Langfuse 已进行部署级隔离测试 |
+| `EvaluationLock` | holdout 的非保管读取必须带 manifest/基线/候选/rubric/协议五项摘要；与集合绑定不符拒绝 | 签发者可信、候选不可替换或“批次已结束才能揭盲”的时间门已实现 |
+| 暴露 JSONL | 固定字段，UUID/枚举/时间/摘要，不含正文；候选生成用途，或开发/生成者的逐题/来源读取，保守标为 exposed；无记录只为 unknown | 事件真实身份已认证，或未知历史可按 clean/unseen 放行 |
+
+模型都禁止未知字段。外部解析及关键操作会重新校验 `model_copy` 产生的对象，拒绝重复 JSON 键、无效摘要和未经支持的资格标记；错误只返回固定代码，避免在错误说明中带回受限输入。公开 manifest 的 `qualification` 固定为 `unknown`，部署隔离与第二独立人工标记固定为 false。
+
+私有 inventory 含逐题摘要，不能当公开资料导出。SHA-256 是内容绑定，不是加密；不能依靠 hash 隐藏可枚举的低熵正文。公开 manifest 中的总摘要仅用于版本/封存一致性核对。
+
+### 3.2 账本并发、恢复与使用限制
+
+[exposure.py](../../src/medops/evals/isolation/exposure.py) 对调用方指定的可信路径使用 POSIX 文件锁：读取持共享锁，追加持独占锁。每行串联前一行 hash，追加时先核对调用方持有的 `LedgerHead`，相同旧头的两个写者只能一个成功。旧头、重复事件、篡改、截断、倒序、重复 JSON 键、非普通文件、叶节点软链接及公开权限文件均拒绝。新文件 mode 为 0600，既有文件有 group/other 权限即拒绝，不擅自 chmod。
+
+账本上限 16 MiB；每次验证整条链，适合本轮离线准备，不是长期高吞吐审计存储。追加执行 flush/fsync；若 fsync 失败，可能已经留下完整或不完整字节。返回 `ledger_io`，不得当作“肯定没写”重新提交；由保管流程核对已知事件、外部头回执和存储状态。崩溃后缺文件或链不符也不能默认为空历史。
+
+**调用方必须把可信头回执存放在独立受控位置。** 如果攻击者同时重写账本与所谓可信头，hash 链不能证明真实性。此模块没有签名、WORM、备份、父目录路径沙箱或账户鉴权；文件锁也只协调遵守协议的写者。部署针对 Linux/macOS，未承诺 Windows 行为。生产费用/任务账本仍使用既有 PostgreSQL 实现，本轮没有替换它们。
+
+本轮选择文件原语，是为了先用可复现的零模型样例验证串联、冲突与失败路径，不增加真实封存数据或部署依赖。SQLite/PostgreSQL 可提供事务化存储，独立对象存储/WORM 可提供额外保管控制；后续根据保管身份、备份与发布方式作部署选择，不把本轮 JSONL 当作最终保管方案。
+
+### 3.3 零模型自检入口
+
+```sh
+env -u DEBUG PYTHONPATH=src venv/bin/python -m medops.evals.isolation --self-check
+```
+
+只创建并删除临时目录，调用实际投影、重叠检查和文件账本函数。输出九项布尔检查和固定资格字段，不输出 synthetic query/gold，不连接数据库、Redis、Langfuse 或托管模型。公开合成 canary 已暴露，即使用 `holdout` split 演练，也不是正式盲测题。它验证公开投影、runtime 无 gold、生成者/缺 lock 拒绝、跨 split 重叠、账本往返、暴露登记、旧头拒绝和篡改拒绝；更多并发/权限/错误分支由定向测试覆盖。
 
 ## 4. 暴露账本必须记录什么
 
@@ -58,4 +94,4 @@
 
 EVAL-33 DONE 需要可执行访问边界、投影/输出规则、暴露账本、关联组与近重复检查、canary 正反测试及本轮自审证据；EVAL-31 另需真实封存任务、许可/标注与人工安排。EVAL-36 再负责实际三轮盲测。三个任务互不以文档存在代替运行/独立性证据。
 
-本轮核对和准备的自审见[记录 200](../reviews/2026-10-12-implementation-200-plan02-contract-preparation.md)。下一可无付费主切片为 EVAL-33 的合成隔离 manifest/暴露账本与边界检查；PLAN-02 的人工作出决定后，按台账进入相应 S2 契约实现。没有新题、模型费用、自动激活或生产门槛变动。
+初始方案自审见[记录 200](../reviews/2026-10-12-implementation-200-plan02-contract-preparation.md)，本轮原语与失败修复见[记录 201](../reviews/2026-10-12-implementation-201-evaluation-isolation-primitives.md)。EVAL-33 保持 IN_PROGRESS，下一切片补聚合出口规则和可审核保管部署方案，再确定近重复方法及历史扫描。PLAN-02 D-01/D-02 仍待明确裁决，不能从“继续”推断批准新 Agent profile。没有新盲测题、模型费用、自动激活或生产门槛变动。
