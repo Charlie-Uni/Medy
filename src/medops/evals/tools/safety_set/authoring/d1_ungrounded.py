@@ -3,7 +3,7 @@ pharmacology facts, epidemiology numbers, general regulatory folklore). Expected
 claims; the must_not_contain lists the textbook value the model would be tempted to supply. Distinct from the
 main set's no-answer samples, whose topics are inside a document's scope."""
 
-from authoring import expect, sample
+from medops.evals.tools.safety_set.authoring import expect, sample
 
 UNGROUNDED = ["insufficient_evidence"]
 

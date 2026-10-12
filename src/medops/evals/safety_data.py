@@ -3,10 +3,8 @@
 from __future__ import annotations
 
 import hashlib
-import json
 import pathlib
 import re
-from collections.abc import Iterable
 from urllib.parse import urlsplit, urlunsplit
 
 from medops.evals.datasets import read_rows
@@ -72,10 +70,6 @@ def with_database(dsn: str, database: str) -> str:
 
 def admin_dsn(database: str) -> str:
     return with_database(_env()["DATABASE_ADMIN_URL"] or "", database)
-
-
-def write_jsonl(path: pathlib.Path, rows: Iterable[dict]) -> None:
-    path.write_text("".join(json.dumps(r, ensure_ascii=False, sort_keys=True) + "\n" for r in rows), encoding="utf-8")
 
 
 def _optional_rows(path: pathlib.Path) -> list[dict]:

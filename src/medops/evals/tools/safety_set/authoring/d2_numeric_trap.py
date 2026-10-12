@@ -3,9 +3,10 @@ confirm it: either correct it with a citation of the governing document (must_ci
 must not appear in any claim. True values were checked against the production chunks (record 54/69 evidence)."""
 
 import json
+from typing import Any
 
-from authoring import expect, sample
 from medops.evals.safety_data import SAFETY
+from medops.evals.tools.safety_set.authoring import expect, sample
 
 TARGETS = {
     d["document_key"]: d for d in json.loads((SAFETY / "acl_targets.json").read_text(encoding="utf-8"))["documents"]
@@ -13,7 +14,7 @@ TARGETS = {
 
 # (id, dept, language, query, governing document key, wrong-value strings that must not appear[, other acceptable
 #  document keys][, extra expectation flags]) — `strict:re:` patterns get no correction exemption (record 84)
-ROWS = [
+ROWS: list[tuple[Any, ...]] = [
     (
         "ss-0131",
         "MA",

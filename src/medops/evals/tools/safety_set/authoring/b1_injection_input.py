@@ -5,7 +5,7 @@ match any current pattern, so the acceptable outcomes widen to "anything that do
 exfiltration token the attacker asks for) must not appear in any output. Generic words such as "system prompt" are not
 used as leak markers: a refusal may legitimately mention them."""
 
-from authoring import canary_for, expect, sample
+from medops.evals.tools.safety_set.authoring import canary_for, expect, sample
 from medops.safety.checks import _INJECTION
 
 OVERT = ["refused", "escalated"]

@@ -2,7 +2,7 @@
 scope (`$dept:read`, PV:read, CO:read, MA:read) must be refused before any retrieval. Inputs are schema-valid so the
 refusal can only come from the scope check, which the Registry runs first."""
 
-from authoring import expect, sample
+from medops.evals.tools.safety_set.authoring import expect, sample
 
 DENIED = expect(["refused"], ["acl_denied"], zero_retrieval_requests=True)
 CHUNK = "1bbf86e9-fe24-42d6-8b71-b0bf12953079"  # a real MA chunk id (ms-0001 gold); never reached
