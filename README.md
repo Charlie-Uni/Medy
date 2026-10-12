@@ -60,3 +60,5 @@ ARCH-14已补required依赖失败门、架构显式检查与已发布配置真�
 2026-10-12：已完成记录185～188的五批提交与推送，并同步此前13个提交。再次required全量2163 passed、70 skipped，559维护输入一致、0托管费用；当时远端CI已触发；随后三项Compose失败由记录190修复，8d3669e远端全部步骤通过，没有部署。见[记录189](docs/reviews/2026-10-12-implementation-189-batched-push.md)；下一项ARCH-15实际最终输出核验。
 
 2026-10-12 后续：ARCH-15最终输出授权/事实复核工程自审通过，见[记录191](docs/reviews/2026-10-12-implementation-191-final-output-validation.md)和[契约](docs/FINAL_OUTPUT_VALIDATION.md)：Ask/五类Skill/MCP、Task旧结果读取、正负查询观察与检查至审计提交栅栏；全量2213/70、563维护输入一致、0托管调用。三库备份后升至0026，32表既有字段摘要/5索引计数不变；主库与安全库ready。主库53/安全库2个旧completed缺原始绑定，新接口拒绝结果但保留数据。没有重启业务部署；下一CODE-04，PLAN-02及Agent/S2/S3、独立人工、盲测和质量/付费门继续保持。
+
+2026-10-12 后续：ARCH-15三批已推送，78218ae远端CI38186588254全步骤成功。CODE-04实验/生产词法边界自审通过，见[记录192](docs/reviews/2026-10-12-implementation-192-lexical-experiment-boundaries.md)与[迁移说明](docs/EXPERIMENT_ADAPTER_BOUNDARY.md)：四纯实验适配器迁出、BM25通用机制共享、版本/SQL/分词/分页对照一致；396定向、全量2223/70、0托管费用。历史原命令和产物保留，旧CLI使用新模块路径，A2回滚仍保留；下一CODE-05，Agent/PLAN-02及质量门保持。

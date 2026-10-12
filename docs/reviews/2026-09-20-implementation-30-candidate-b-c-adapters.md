@@ -12,11 +12,11 @@
 ## 2. 实现
 
 - 抽出 [pg_lexical_common.py](../../src/medops/retrieval/lexical/pg_lexical_common.py)：元数据表 DDL、tsvector 索引表 DDL、文本索引表 DDL、同一条"计数 + 分页"语句模板、字面量转义、身份要求、版本比对与结果装配。候选 A 改为复用，公开接口与测试不变。
-- 候选 B [pg_zhparser_fts.py](../../src/medops/retrieval/lexical/pg_zhparser_fts.py)（`pg-zhparser-fts-v1`）：
+- 候选 B [pg_zhparser_fts.py](https://github.com/Charlie-Uni/Medy/blob/78218ae6d0f9e91af613ba85e3f030eb6a808ccb/src/medops/retrieval/lexical/pg_zhparser_fts.py)（`pg-zhparser-fts-v1`）：
   - `install()` 以超级用户创建/核对 `zhparser 2.3`，逐字节核对镜像内 `dict.utf8.xdb` 与 `rules.utf8.ini` 的 SHA-256（与记录 28 证据一致），创建文本搜索配置 `dec001_b`（除 `w` 外全部词性映射到 `simple`，与 smoke 一致）并核对映射；
   - 分词在数据库内：入库 `to_tsvector('dec001_b', content)`，查询先 norm-v1 再 `to_tsvector`；`tokenizer_version` 由运行时扩展版本、配置映射哈希与 `zhparser.*` GUC 哈希组成，`dictionary_version` 为固定的词典/规则哈希 + SCWS 1.2.3；
   - 前置规则（本轮声明，未跑探针）：查询侧丢弃纯标点词元。原因：zhparser 保留 `。 . - /` 作为词元，OR 谓词带上它们会命中几乎所有 chunk。索引侧不改。
-- 候选 C [pg_search_bm25.py](../../src/medops/retrieval/lexical/pg_search_bm25.py)（`pg-search-bm25-v1`）：
+- 候选 C [pg_search_bm25.py](https://github.com/Charlie-Uni/Medy/blob/78218ae6d0f9e91af613ba85e3f030eb6a808ccb/src/medops/retrieval/lexical/pg_search_bm25.py)（`pg-search-bm25-v1`）：
   - `install()` 先建 `vector` 再建 `pg_search 0.25.9`，核对 `pg_search.so` 的 SHA-256（`74e90e4f…d50b`），建表 `lexical_index_c(chunk_id, content)` 与 bm25 索引（`key_field=chunk_id`，`pdb.jieba` 四项固定过滤器）；
   - 查询先 norm-v1，再用同一 `pdb.jieba` 配置在 SQL 内分词，丢弃空白与纯标点词元，谓词为 `||| text[]`（数组 OR）。探针前在 C 服务器临时库验证：`||| 'alpha gamma'`（文本）因空白词元命中 4/5 行，`||| ARRAY['alpha','gamma']` 命中正确的 3 行；`paradedb.score()` + `count(*) over ()` + `LIMIT` 计数正确；
   - 排序 `paradedb.score()` 降序、`chunk_id` 升序；过滤与计数语句与 A/B 同形。
@@ -61,3 +61,5 @@
 1. B/C 服务器：迁移到 head、建立登录用户、以同一 corpus.json 与 PDF 入库 16 份文档（含记录 21 的四条 PII 放行理由原文）、构建索引。
 2. 冻结运行清单（M1-02）：三服务器的 chunk UUID 不同，运行清单按服务器记录 `chunk_mapping`，gold 命中按 `source_hash/version_label/page/key_text` 位置判定，不依赖跨服务器 UUID 一致。
 3. 等决策人确认文档激活方案后执行 75 条对比（M1-05）。
+
+2026-10-12 位置补注：原代码链接固定到迁移前的78218ae，原命令及当时结论保持。当前模块/CLI见[实验边界与迁移](../EXPERIMENT_ADAPTER_BOUNDARY.md)；本注不将历史实验重记为新的质量门通过。

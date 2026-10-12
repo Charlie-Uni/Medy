@@ -189,7 +189,7 @@ M1-01 同时是“部分”和“阻塞”，上表按“部分”计。P1/P2 11
 | 2 / M1-01、M1-10 偏移 | 为什么偏移基于 norm-v1 页文本？为什么 gold 不固定 chunk_id？ | [normalization.py](../src/medops/knowledge/normalization.py)、[chunker.py](../src/medops/ingestion/chunker.py) | 解释字符与字节、左闭右开区间、规范化前后坐标变化；说明换切分器后重新映射，unmappable 应计 miss |
 | 3 / M1-01 冻结 | Schema、页文本检查、人工/LLM 复核、哈希各能证明什么？ | [validator.py](../src/medops/evals/probe/validator.py)、SPEC §8～10 | 说明结构合法、定位一致、语义适配和内容未变的区别；哈希不能证明标注正确，75 条草稿不能冒充冻结集 |
 | 4 / M1-11 事务 | 为什么“先查没有 active 再插入”挡不住并发？为什么 outbox 与发布放在一个事务？ | [迁移 0001](../migrations/versions/0001_knowledge_governance.py)、[迁移测试](../tests/integration/test_migrations.py) | 给出两个事务竞争的时序；解释唯一部分索引、回滚、提交后进程崩溃与重复消费，区分约束已有和发布服务待做 |
-| 5 / M1-02～05 检索实验 | FTS 与 BM25 有何区别？为何 RRF/Reranker 无法补回未召回的 gold？ | [ADR-0002](adr/ADR-0002-lexical-retrieval-selection.md)、[bm25_offline.py](../src/medops/retrieval/lexical/bm25_offline.py)、[fusion.py](../src/medops/retrieval/fusion.py) | 用多 gold 样本算 Recall 与 Hit，区分 Recall@20 选型与 Recall@5 主评测；解释先冻结判据再看结果 |
+| 5 / M1-02～05 检索实验 | FTS 与 BM25 有何区别？为何 RRF/Reranker 无法补回未召回的 gold？ | [ADR-0002](adr/ADR-0002-lexical-retrieval-selection.md)、[bm25_offline.py](../src/medops/evals/experiments/lexical/bm25_offline.py)、[fusion.py](../src/medops/retrieval/fusion.py) | 用多 gold 样本算 Recall 与 Hit，区分 Recall@20 选型与 Recall@5 主评测；解释先冻结判据再看结果 |
 
 当前先核对本节末的冻结哈希问题，再结合 MA pc-0027 检查“问题所问对象”和“证据所述对象”是否一致。这里只判断样本与原文的对应关系，不据此给出实际用药结论。pc-0023 等涉及紧急处理的检索样本，后续接入端到端问答评测时还需遵守 INV-SAF-01：检索命中不代表允许生成医疗处置建议。
 

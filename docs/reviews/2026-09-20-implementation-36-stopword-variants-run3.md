@@ -10,7 +10,7 @@ ADR-0002 修订 2 与 `experiment_plan.json` 的 `run_3_preregistration`：A2 = 
 
 - [tokenizer.py](../../src/medops/retrieval/lexical/tokenizer.py)：`JiebaTokenizerV2(stopwords=Path)`，`dictionary_version` 追加词表哈希；CJK、编号与数字词元不受影响。
 - [pg_simple_fts.py](../../src/medops/retrieval/lexical/pg_simple_fts.py)：`install/build_index/PgSimpleFtsRetriever` 增加 `index_name/table` 参数，变体索引 `lexical_index_a2` 与 `lexical_index_a` 共存于同一库；CLI `--variant a2`。
-- [pg_zhparser_fts.py](../../src/medops/retrieval/lexical/pg_zhparser_fts.py)：`ZhparserVariant`（配置名、字典、表、词典版本、是否停用词），`VARIANT_B`/`VARIANT_B2`；`install()` 对 B2 先核对 `english.stop` 字节并创建字典与配置；`tokenizer_version` 含配置名与映射哈希，B2 的 `dictionary_version` 追加 `+stop-english:<hash>`。CLI `--variant b2`。
+- [pg_zhparser_fts.py](https://github.com/Charlie-Uni/Medy/blob/78218ae6d0f9e91af613ba85e3f030eb6a808ccb/src/medops/retrieval/lexical/pg_zhparser_fts.py)：`ZhparserVariant`（配置名、字典、表、词典版本、是否停用词），`VARIANT_B`/`VARIANT_B2`；`install()` 对 B2 先核对 `english.stop` 字节并创建字典与配置；`tokenizer_version` 含配置名与映射哈希，B2 的 `dictionary_version` 追加 `+stop-english:<hash>`。CLI `--variant b2`。
 - 运行器：候选 `A2`/`B2` 复用基线服务器、数据库与映射，各自索引；`server_facts` 与 `make_retriever` 识别变体。
 - 测试：分词器 v2 单元测试；共享门禁套件新增 `TestCandidateA2`、`TestCandidateB2`（各自独立临时库，19 项断言全部通过），B2 的停用词侧向对比测试。
 - 索引：A2 与 B2 各 2,662 chunk。
@@ -50,3 +50,5 @@ ADR-0002 修订 2 与 `experiment_plan.json` 的 `run_3_preregistration`：A2 = 
 ## 7. 需要决策人决定
 
 三次预登记运行的证据显示：跨语言样本需要向量阶段；语言一致样本上最接近门禁的是 C（88.0%，许可证阻断）与 B2（80.0%）。剩余差距来自排序函数（无 IDF）与繁体药名切分，不是停用词。可选路径（均需新的预登记）：（1）排序侧变体：`ts_rank_cd` 归一化选项或应用层 IDF 加权（A 族）；（2）B 族加繁体医学词典（`custom_dictionary` 当前为 false）；（3）推进 C 的许可证审核；（4）接受"词法阶段不单独达标、由向量阶段补齐"的架构含义，把 DEC-001 的最终判定推迟到端到端实验，先做 M1 其余切片（M1-11 发布事务、向量阶段准备）。我的建议是 (4) 与 (3) 并行：继续在词法阶段追加变体的边际收益在下降，而 M1 其余切片与向量阶段是端到端门禁的前置条件。
+
+2026-10-12 位置补注：原代码链接固定到迁移前的78218ae，原命令及当时结论保持。当前模块/CLI见[实验边界与迁移](../EXPERIMENT_ADAPTER_BOUNDARY.md)；本注不将历史实验重记为新的质量门通过。
