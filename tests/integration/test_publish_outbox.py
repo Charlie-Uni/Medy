@@ -9,7 +9,6 @@ from __future__ import annotations
 import hashlib
 import random
 import string
-from collections.abc import Iterator
 from datetime import date
 
 import psycopg
@@ -23,7 +22,7 @@ from medops.retrieval.lexical import index_consumer
 from medops.retrieval.lexical import pg_simple_fts as a
 from medops.retrieval.lexical.boundary import run_lexical_search
 from medops.retrieval.lexical.tokenizer import JiebaTokenizerV1  # noqa: E402
-from tests.integration.lexical_adapter_suite import make_database, txn
+from tests.integration.lexical_adapter_suite import txn
 from tests.integration.pdf_factory import make_pdf
 
 TOKENIZER = JiebaTokenizerV1()
@@ -55,11 +54,6 @@ def _ingest(conn, tmp_path, key, version, text, *, supersedes=None):
     path = tmp_path / f"{key}.pdf"
     path.write_bytes(data)
     return ingest_document(conn, _spec(data, key, version), path, actor="ingest-01", supersedes=supersedes)
-
-
-@pytest.fixture(scope="module")
-def db(admin_dsn: str) -> Iterator[dict]:
-    yield from make_database(admin_dsn)
 
 
 @pytest.fixture

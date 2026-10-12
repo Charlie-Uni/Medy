@@ -17,9 +17,10 @@ from medops.infrastructure.llm.execution_budget import default_limits, execution
 from medops.infrastructure.llm.gateway import OPENAI_PRICES, PriceTable
 from medops.infrastructure.llm.meter import MeteredGateway
 from medops.skills.registry import SkillRegistry
-from tests.unit.application.test_tasks import Clock, EchoOut, FakeEnv, registry, req, user
-from tests.unit.infrastructure.test_llm_gateway import _FixedCost
-from tests.unit.infrastructure.test_llm_gateway import req as model_request
+from tests.support.model_gateway import _FixedCost
+from tests.support.model_gateway import req as model_request
+from tests.support.paid_task import PaidFakeEnv
+from tests.support.tasks import Clock, EchoOut, FakeEnv, registry, req, user
 
 
 def test_expired_lease_cannot_complete_without_takeover():
@@ -67,19 +68,6 @@ def test_lost_report_is_identity_fenced_and_preserves_takeover_timestamp():
     assert store.attempts[0]["finished_at"] == finished and store.attempts[0]["trace_id"] == "a" * 32
     assert store.owns_lease(task.task_id, "same-worker", 2, clock())
     assert not store.fail(task.task_id, "same-worker", 1, "a" * 32, {"code": "forbidden"}, clock())
-
-
-class PaidFakeEnv(FakeEnv):
-    def __init__(self, store, reg, principals, gateway):
-        super().__init__(store, reg, principals)
-        self.gateway = gateway
-        self.meters = {}
-
-    def skill_context(self, conn, user, trace_id, historical):
-        ctx = super().skill_context(conn, user, trace_id, historical)
-        meter = MeteredGateway(self.gateway)
-        self.meters[trace_id] = meter
-        return replace(ctx, deps=replace(ctx.deps, gateway=meter))
 
 
 def test_two_workers_old_attempt_cannot_pay_again_or_return_new_workers_result():

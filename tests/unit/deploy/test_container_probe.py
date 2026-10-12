@@ -5,7 +5,7 @@ from urllib.error import HTTPError
 
 import pytest
 from deploy.ci import http_probe
-from deploy.ci.test_container_boot import container_dsn
+from tests.support.database import container_dsn
 
 
 @pytest.mark.parametrize("error", [RemoteDisconnected("synthetic"), ConnectionResetError(), TimeoutError()])

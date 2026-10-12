@@ -7,45 +7,17 @@ from __future__ import annotations
 import pytest
 
 from medops.core.errors import BusinessError, ErrorCode
-from medops.domain.common import Dept, DocType, ReasonCode
-from medops.domain.identity import UserContext
+from medops.domain.common import DocType, ReasonCode
 from medops.domain.skill import SkillStatus
 from medops.infrastructure.llm.fake import FakeModelGateway
 from medops.skills.ae_extraction import AeExtractionOutput
 from medops.skills.catalog import default_registry
 from medops.skills.off_label_check import OffLabelCheckOutput
 from medops.skills.protocol_deviation import ProtocolDeviationOutput
-from medops.skills.registry import SkillContext
-from tests.unit.harness._fixtures import evidence, versions
-from tests.unit.harness.test_run_ask import FakeRetrieval, make_deps
-from tests.unit.skills.test_final_judgment_fixtures import supported_reply
-
-NARRATIVE = (
-    "Call note 2026-09-20: a 67-year-old female patient started Drug X 10 mg once daily on 2026-09-01. "
-    "On 2026-09-05 she developed severe rash and was hospitalised for 3 days. Drug X was discontinued and the rash resolved. "
-    "Reporter: hospital pharmacist. The pharmacist believes the rash is related to Drug X."
-)
-CLAUSE = "研究者不得將試驗用器械提供給未經 21 CFR Part 812 授權接收的人員。"
-LABEL = "Glimepiride 每日最高之建議劑量為 8mg。禁忌：胰島素依賴型糖尿病、糖尿性昏迷、酮酸中毒。"
-
-
-def user(dept: str, scopes: set[str] | None = None) -> UserContext:
-    return UserContext(
-        user_id=f"u-{dept}", dept=Dept(dept), acl_scopes=frozenset(scopes if scopes is not None else {f"{dept}:read"})
-    )
-
-
-def ctx(reg, gateway, retrieval=None, doc_types=None, u=None, dept="PV"):
-    return SkillContext(
-        user=u or user(dept),
-        versions=versions().model_copy(update={"skill_version_set": reg.version_set()}),
-        deps=make_deps(retrieval or FakeRetrieval(), gateway, judge_model_id="gpt-6-sol"),
-        evidence_lookup=lambda _u, _ids: (),
-        doc_type_lookup=lambda _u, ids: {d: (doc_types or {}).get(d) for d in ids if d in (doc_types or {})},
-        trace_id="d" * 32,
-        run_id="d" * 32,
-    )
-
+from tests.support.harness import FakeRetrieval
+from tests.support.harness_data import evidence
+from tests.support.risk_skills import ANSWER_CLAUSE, ANSWER_LABEL, CLAUSE, LABEL, NARRATIVE, ctx
+from tests.support.skill_judgments import supported_reply
 
 # ------------------------------------------------------------------------------------ ae_extraction
 
@@ -102,8 +74,6 @@ def test_ae_extraction_without_a_grounded_element_is_insufficient_evidence_and_p
 
 
 # ------------------------------------------------------------------------------------ protocol_deviation
-
-ANSWER_CLAUSE = {"claims": [{"text": CLAUSE, "citation_chunk_ids": ["c1"]}]}
 
 
 def test_protocol_deviation_concludes_from_verified_clauses_only():
@@ -171,13 +141,6 @@ def test_protocol_deviation_without_clause_support_is_undetermined_and_labels_ar
 
 
 # ------------------------------------------------------------------------------------ off_label_check
-
-ANSWER_LABEL = {
-    "claims": [
-        {"text": "Glimepiride 每日最高之建議劑量為 8mg。", "citation_chunk_ids": ["c1"]},
-        {"text": "禁忌：胰島素依賴型糖尿病、糖尿性昏迷、酮酸中毒。", "citation_chunk_ids": ["c1"]},
-    ]
-}
 
 
 def test_off_label_check_reports_scope_per_dimension_with_clauses_and_a_fixed_statement():

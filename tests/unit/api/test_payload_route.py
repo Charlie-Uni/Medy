@@ -3,53 +3,20 @@ the admin payload route decrypts them only for an admin with a purpose and logs 
 
 from __future__ import annotations
 
-import secrets
 from contextlib import contextmanager
-from datetime import UTC, datetime
 
 from fastapi.testclient import TestClient
 
 from medops.api.app import create_app
 from medops.application.payloads import PayloadReader, PayloadWriter
-from medops.core.envelope import StaticKeyProvider
 from medops.domain.common import Dept
 from medops.infrastructure.identity import Principal, StaticDirectory, pseudonym
 from medops.infrastructure.llm.fake import FakeModelGateway
-from tests.unit.api._auth_fixtures import PSEUDONYM_KEY
-from tests.unit.api.test_ask_route import ANSWER, ISSUER_OBJ, QUERY, FakeRuntime
-from tests.unit.harness._fixtures import evidence
-from tests.unit.harness.test_run_ask import LABEL, FakeRetrieval
-
-PROVIDER = StaticKeyProvider({"k1": secrets.token_bytes(32)}, "k1")
-
-
-class MemoryPayloads:
-    def __init__(self) -> None:
-        self.rows: list[dict] = []
-        self.access: list[tuple[str, str, str]] = []
-
-    def put(self, trace_id, node, kind, sealed, expires_at):
-        self.rows.append(
-            {
-                "payload_id": str(len(self.rows)),
-                "trace_id": trace_id,
-                "node": node,
-                "kind": kind,
-                "sealed": sealed,
-                "created_at": datetime.now(UTC),
-                "expires_at": expires_at,
-            }
-        )
-        return str(len(self.rows))
-
-    def list(self, trace_id):
-        return [r for r in self.rows if r["trace_id"] == trace_id]
-
-    def log_access(self, principal, trace_id, purpose):
-        self.access.append((principal, trace_id, purpose))
-
-    def purge(self, now, *, escalation_grace_days):
-        return 0
+from tests.support.api_runtime import ANSWER, ISSUER_OBJ, QUERY, FakeRuntime
+from tests.support.harness import LABEL, FakeRetrieval
+from tests.support.harness_data import evidence
+from tests.support.identity import PSEUDONYM_KEY
+from tests.support.payloads import PROVIDER, MemoryPayloads
 
 
 class PayloadRuntime(FakeRuntime):

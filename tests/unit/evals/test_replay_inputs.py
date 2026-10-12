@@ -12,28 +12,9 @@ from medops.evals.datasets import bind_run_dataset, load_frozen_dataset, read_ro
 from medops.evals.main_scoring import SCORING_BINDING, SCORING_VERSION, bind_run_scoring
 from medops.evals.replay_inputs import safety_samples_for_replay
 from medops.evals.tools.replay import build_replay_set as builder
+from tests.support.frozen_datasets import frozen, write_rows
 
 REPO = Path(__file__).resolve().parents[3]
-
-
-def write_rows(path, rows):
-    path.write_text("".join(json.dumps(row, ensure_ascii=False) + "\n" for row in rows))
-
-
-def frozen(path, rows, dataset_id):
-    path.mkdir()
-    write_rows(path / "samples.jsonl", rows)
-    files = {"samples.jsonl": sha256_file(path / "samples.jsonl")}
-    (path / "SHA256SUMS").write_text(f"{files['samples.jsonl']}  samples.jsonl\n")
-    manifest = {
-        "dataset_id": dataset_id,
-        "dataset_version": path.name,
-        "dataset_hash": sha256_file(path / "SHA256SUMS"),
-        "status": "frozen",
-        "files": files,
-    }
-    (path / "manifest.json").write_text(json.dumps(manifest))
-    return manifest
 
 
 @pytest.fixture

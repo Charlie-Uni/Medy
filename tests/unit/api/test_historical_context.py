@@ -13,8 +13,8 @@ from medops.core.errors import BusinessError
 from medops.domain.query import resolve_query_context
 from medops.harness.dependencies import HarnessDeps
 from medops.infrastructure.llm.fake import FakeModelGateway
-from tests.unit.harness._fixtures import user, versions
-from tests.unit.harness.test_run_ask import FakeRetrieval
+from tests.support.harness import FakeRetrieval
+from tests.support.harness_data import user, versions
 
 
 def test_skill_assembly_forwards_the_requested_date_to_retrieval():

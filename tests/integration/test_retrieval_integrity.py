@@ -10,9 +10,8 @@ from medops.retrieval.integrity import inspect_retrieval, require_retrieval_inte
 from medops.retrieval.production import IndexCoverageError
 from medops.retrieval.vector import pg_vector
 from medops.retrieval.vector.embedding import EMBEDDING_VERSION, HashingEmbeddingProvider
-from tests.integration.test_lexical_production import db as db  # noqa: F401
-from tests.integration.test_lexical_production import seed as seed  # noqa: F401
-from tests.integration.test_migrations import document, job, source_object
+from tests.support.documents import document, job, source_object
+from tests.support.production_lexical import seed as seed
 
 
 @pytest.fixture(scope="module")
@@ -125,7 +124,7 @@ def test_stale_optional_cache_backlog_is_visible_but_does_not_block_index_readin
 
 
 def test_empty_migrated_database_cannot_report_ready(scratch_database):
-    from tests.integration.conftest import run_alembic
+    from tests.support.database import run_alembic
 
     run_alembic(scratch_database, "upgrade", "head")
     with psycopg.connect(scratch_database) as conn:

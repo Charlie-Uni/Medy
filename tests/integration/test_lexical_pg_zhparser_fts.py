@@ -6,8 +6,6 @@ the implementation record."""
 
 from __future__ import annotations
 
-from collections.abc import Iterator
-
 import psycopg
 import pytest
 
@@ -15,11 +13,11 @@ from medops.evals.experiments.lexical import pg_zhparser_fts as b
 from tests.integration.lexical_adapter_suite import (
     CandidateUnderTest,
     LexicalAdapterSuite,
-    make_database,
     require_server,
     seed_candidate,
     txn,
 )
+from tests.support.database import database_fixture
 
 CUT = CandidateUnderTest(
     name="B",
@@ -43,9 +41,7 @@ def server() -> str:
     return require_server("B")
 
 
-@pytest.fixture(scope="module")
-def db(server: str) -> Iterator[dict]:
-    yield from make_database(server)
+db = database_fixture("server")
 
 
 @pytest.fixture(scope="module")
@@ -112,9 +108,7 @@ CUT_B2 = CandidateUnderTest(
 )
 
 
-@pytest.fixture(scope="module")
-def db_b2(server: str) -> Iterator[dict]:
-    yield from make_database(server)
+db_b2 = database_fixture("server")
 
 
 @pytest.fixture(scope="module")

@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-from collections.abc import Iterator
 from pathlib import Path
 
 import psycopg
@@ -10,12 +9,8 @@ import pytest
 
 from medops.retrieval.lexical import pg_simple_fts as a
 from medops.retrieval.lexical.tokenizer import JiebaTokenizerV1  # noqa: E402
-from tests.integration.lexical_adapter_suite import (
-    CandidateUnderTest,
-    LexicalAdapterSuite,
-    make_database,
-    seed_candidate,
-)
+from tests.integration.lexical_adapter_suite import CandidateUnderTest, LexicalAdapterSuite, seed_candidate
+from tests.support.database import database_fixture
 
 TOKENIZER = JiebaTokenizerV1()
 
@@ -37,11 +32,6 @@ CUT = CandidateUnderTest(
     drifted_versions=lambda conn, tmp: a.configured_versions(_drifted_tokenizer(tmp)),
     index_plan_markers=(f"{a.INDEX_TABLE}_tsv_gin", "Bitmap"),
 )
-
-
-@pytest.fixture(scope="module")
-def db(admin_dsn: str) -> Iterator[dict]:
-    yield from make_database(admin_dsn)
 
 
 @pytest.fixture(scope="module")
@@ -97,9 +87,7 @@ CUT_A2 = CandidateUnderTest(
 )
 
 
-@pytest.fixture(scope="module")
-def db_a2(admin_dsn: str) -> Iterator[dict]:
-    yield from make_database(admin_dsn)
+db_a2 = database_fixture("admin_dsn")
 
 
 @pytest.fixture(scope="module")

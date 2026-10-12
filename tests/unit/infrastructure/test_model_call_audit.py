@@ -12,7 +12,7 @@ from medops.infrastructure.llm.fake import FakeModelGateway
 from medops.infrastructure.llm.gateway import ModelOutputInvalid, ModelTimeout
 from medops.infrastructure.llm.meter import MeteredGateway
 from medops.infrastructure.llm.openai_gateway import OpenAIModelGateway
-from tests.unit.infrastructure.test_llm_gateway import _completion, _StubClient, _TemperatureRejectingClient, req
+from tests.support.model_gateway import _completion, _StubClient, _TemperatureRejectingClient, req
 
 
 def test_call_record_contains_actual_sdk_arguments_response_and_receipt():

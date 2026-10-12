@@ -10,8 +10,8 @@ from medops.harness import execution_record
 from medops.harness.runtime import run_ask
 from medops.infrastructure.llm.execution_budget import default_limits, execution_scope
 from medops.infrastructure.llm.fake import FakeModelGateway
-from tests.unit.application.test_task_audit import SkillEnv
-from tests.unit.harness.test_run_ask import FakeRetrieval, make_deps, state
+from tests.support.harness import FakeRetrieval, make_deps, state
+from tests.support.skill_task import SkillEnv
 
 
 @pytest.mark.parametrize("entry", ["ask", "skill"])

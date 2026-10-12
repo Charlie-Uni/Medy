@@ -5,7 +5,6 @@ from __future__ import annotations
 
 import secrets
 import uuid
-from collections.abc import Iterator
 from datetime import UTC, datetime, timedelta
 
 import psycopg
@@ -15,15 +14,9 @@ from psycopg.types.json import Jsonb
 
 from medops.core.envelope import StaticKeyProvider, payload_aad, seal
 from medops.infrastructure.db.payloads import PgPayloadStore
-from tests.integration.lexical_adapter_suite import make_database
 
 PROVIDER = StaticKeyProvider({"k1": secrets.token_bytes(32)}, "k1")
 PRINCIPAL = "a" * 64
-
-
-@pytest.fixture(scope="module")
-def db(admin_dsn: str) -> Iterator[dict]:
-    yield from make_database(admin_dsn)
 
 
 def _trace(conn, trace_id: str, *, escalation: str | None = None, handled_at: datetime | None = None) -> None:

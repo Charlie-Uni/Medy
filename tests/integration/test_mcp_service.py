@@ -6,7 +6,6 @@ version, search applies the same visibility to whatever the searcher returns, an
 from __future__ import annotations
 
 import uuid
-from collections.abc import Iterator
 from datetime import date
 
 import psycopg
@@ -19,13 +18,7 @@ from medops.domain.evidence import Citation, Evidence
 from medops.domain.identity import UserContext
 from medops.mcp.contracts import GetChunkInput, ListActiveVersionsInput, SearchDocumentsInput, VerifyCitationInput
 from medops.mcp.service import McpService
-from tests.integration.lexical_adapter_suite import make_database
-from tests.integration.test_migrations import document, job, source_object
-
-
-@pytest.fixture(scope="module")
-def db(admin_dsn: str) -> Iterator[dict]:
-    yield from make_database(admin_dsn)
+from tests.support.documents import document, job, source_object
 
 
 @pytest.fixture(scope="module")

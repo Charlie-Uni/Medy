@@ -19,8 +19,8 @@ from psycopg import errors
 
 from medops.evals.answer_review import source_documents
 from medops.infrastructure.db.login_users import GROUPS, drop_users, provision
-from tests.integration.conftest import user_dsn
-from tests.integration.test_migrations import document, job, source_object
+from tests.support.database import user_dsn
+from tests.support.documents import document, job, source_object
 
 DEPTS = ("MA", "PV", "CO")
 READ_TABLES = (

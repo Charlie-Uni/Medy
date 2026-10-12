@@ -29,7 +29,7 @@ from medops.infrastructure.llm.gateway import (
     PriceTable,
 )
 from medops.infrastructure.llm.meter import MeteredGateway
-from tests.unit.infrastructure.test_llm_gateway import _FixedCost, req
+from tests.support.model_gateway import _FixedCost, req
 
 
 def make_gateway(inner=None, **kw):

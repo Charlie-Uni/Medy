@@ -5,7 +5,6 @@ points at a reachable server built from builds/c (pg_search 0.25.9, shared_prelo
 from __future__ import annotations
 
 import json
-from collections.abc import Iterator
 
 import psycopg
 import pytest
@@ -15,11 +14,11 @@ from tests.integration.lexical_adapter_suite import (
     AS_OF,
     CandidateUnderTest,
     LexicalAdapterSuite,
-    make_database,
     require_server,
     seed_candidate,
     txn,
 )
+from tests.support.database import database_fixture
 
 OTHER_DICT = "jieba-rs-0.10.1+tantivy-jieba-0.20.0+pg_search.so:0000000000000000"
 CUT = CandidateUnderTest(
@@ -42,9 +41,7 @@ def server() -> str:
     return require_server("C")
 
 
-@pytest.fixture(scope="module")
-def db(server: str) -> Iterator[dict]:
-    yield from make_database(server)
+db = database_fixture("server")
 
 
 @pytest.fixture(scope="module")

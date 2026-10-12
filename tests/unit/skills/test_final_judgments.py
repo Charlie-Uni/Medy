@@ -9,10 +9,10 @@ from medops.domain.common import DocType, ReasonCode
 from medops.domain.skill import SkillStatus
 from medops.infrastructure.llm.fake import FakeModelGateway
 from medops.skills.catalog import default_registry
-from tests.unit.harness._fixtures import evidence
-from tests.unit.harness.test_run_ask import FakeRetrieval
-from tests.unit.skills.test_final_judgment_fixtures import supported_reply
-from tests.unit.skills.test_risk_skills import ctx
+from tests.support.harness import FakeRetrieval
+from tests.support.harness_data import evidence
+from tests.support.risk_skills import ctx
+from tests.support.skill_judgments import supported_reply
 
 
 def test_original_visit_window_inversion_cannot_complete():
@@ -117,8 +117,8 @@ def test_boolean_string_or_float_indices_fail_before_final_judge(indices):
 def test_async_task_preserves_non_completion_of_the_business_judgment():
     from medops.application.contracts import TaskCreateRequest, TaskStatus
     from medops.application.tasks import InMemoryTaskStore, TaskRunner, TaskService
-    from tests.unit.application.test_tasks import Clock, FakeEnv
-    from tests.unit.skills.test_risk_skills import user
+    from tests.support.risk_skills import user
+    from tests.support.tasks import Clock, FakeEnv
 
     clock = Clock()
     reg = default_registry(sleep=lambda _s: None)

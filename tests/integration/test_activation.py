@@ -10,7 +10,7 @@ import psycopg
 import pytest
 
 from medops.ingestion.activate import ActivationRefused, activate_document, apply_plan
-from tests.integration.test_migrations import document, job, source_object
+from tests.support.documents import document, job, source_object
 
 
 def _draft(conn, n, *, quality="trusted", key=None, family=None):

@@ -4,7 +4,6 @@ to an existing trace with a receipt-bearing idempotency key; the read-only role 
 
 from __future__ import annotations
 
-from collections.abc import Iterator
 from dataclasses import replace
 from datetime import UTC, date, datetime, timedelta
 
@@ -13,17 +12,11 @@ import pytest
 from psycopg.errors import InsufficientPrivilege, RestrictViolation
 from psycopg.types.json import Jsonb
 
-from medops.application.audit import EscalationRecord, FeedbackRecord, IdempotencyRace, TraceRecord
+from medops.application.audit import EscalationRecord, FeedbackRecord, IdempotencyRace
 from medops.domain.common import Dept
 from medops.domain.query import QueryContext
-from medops.harness.contracts import NodeAttempt
 from medops.infrastructure.db.audit import PgTraceStore
-from tests.integration.lexical_adapter_suite import make_database
-
-NOW = datetime(
-    2026, 9, 23, 12, 0, tzinfo=UTC
-)  # fixed for stored timestamps; idempotency expiry is relative to the DB clock (expires_at > now())
-PRINCIPAL = "0123456789abcdef" * 2
+from tests.support.audit_records import NOW, PRINCIPAL, trace
 
 
 def test_query_context_is_saved_as_metadata_and_legacy_rows_remain_unknown(db):
@@ -57,37 +50,6 @@ def test_query_context_column_rejects_untyped_body_or_invalid_date(db, bad):
         assert exc.value.sqlstate in {"23514", "22007", "22008"}
         if exc.value.sqlstate == "23514":
             assert exc.value.diag.constraint_name == "traces_query_context_shape"
-
-
-@pytest.fixture(scope="module")
-def db(admin_dsn: str) -> Iterator[dict]:
-    yield from make_database(admin_dsn)
-
-
-def trace(trace_id: str, outcome: str = "answered") -> TraceRecord:
-    return TraceRecord(
-        trace_id=trace_id,
-        run_id=trace_id,
-        kind="ask",
-        principal=PRINCIPAL,
-        dept=Dept.MA,
-        query="q",
-        outcome=outcome,
-        reason_codes=("insufficient_evidence",) if outcome == "escalated" else (),
-        versions={"policy_version": "p1"},
-        evidence_chunk_ids=("c1",),
-        cited_chunk_ids=("c1",) if outcome == "answered" else (),
-        flagged_chunk_ids=(),
-        model_calls=2,
-        tokens=100,
-        cost_usd=0.0123,
-        duration_ms=12.5,
-        spans=(
-            NodeAttempt(
-                node="intent", attempt=1, operation_key="a" * 64, started_at=NOW, duration_ms=1.0, outcome="ok"
-            ),
-        ),
-    )
 
 
 def test_trace_spans_escalation_are_appended_and_immutable(db):

@@ -13,9 +13,9 @@ from medops.application.metrics import MetricsSnapshot, render_prometheus
 from medops.domain.common import Dept
 from medops.infrastructure.identity import Principal, StaticDirectory, pseudonym
 from medops.infrastructure.llm.fake import FakeModelGateway
-from tests.unit.api._auth_fixtures import PSEUDONYM_KEY
-from tests.unit.api.test_ask_route import ISSUER_OBJ, FakeRuntime
-from tests.unit.harness.test_run_ask import FakeRetrieval
+from tests.support.api_runtime import ISSUER_OBJ, FakeRuntime
+from tests.support.harness import FakeRetrieval
+from tests.support.identity import PSEUDONYM_KEY
 
 SNAP = MetricsSnapshot(
     window_minutes=60,

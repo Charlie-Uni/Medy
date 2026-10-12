@@ -16,10 +16,7 @@ from medops.infrastructure.llm.fake import FakeModelGateway
 from medops.infrastructure.llm.gateway import (
     OPENAI_PRICES,
     BudgetExceeded,
-    Message,
     ModelOutputInvalid,
-    ModelRequest,
-    ModelResponse,
     ModelTimeout,
     ModelUnavailable,
     ModelUsage,
@@ -28,6 +25,7 @@ from medops.infrastructure.llm.gateway import (
 )
 from medops.infrastructure.llm.meter import MeteredGateway
 from medops.infrastructure.llm.openai_gateway import OpenAIModelGateway
+from tests.support.model_gateway import _completion, _FixedCost, _StubClient, _TemperatureRejectingClient, req
 
 PRICES = PriceTable(OPENAI_PRICES)
 
@@ -50,16 +48,6 @@ def test_temperature_compatibility_resend_uses_the_remaining_call_deadline():
     assert len(timeouts) == 2 and 0 < timeouts[1] < timeouts[0] - 0.015
 
 
-def req(model="gpt-6-luna", purpose="answer", schema=None, text="hello"):
-    return ModelRequest(
-        purpose=purpose,
-        model_id=model,
-        messages=(Message(role="system", content="sys"), Message(role="user", content=text)),
-        max_output_tokens=100,
-        json_schema=schema,
-    )
-
-
 def test_token_estimate_counts_cjk_per_character_and_latin_per_four_chars():
     assert estimate_tokens("藥品說明書") == 5
     assert estimate_tokens("abcdefgh") == 2
@@ -74,25 +62,6 @@ def test_price_table_costs_and_refuses_unpriced_models():
     with pytest.raises(ModelUnavailable) as exc:
         PRICES.require("gpt-99-unknown")
     assert exc.value.retryable is False
-
-
-class _FixedCost:
-    provider = "stub"
-
-    def __init__(self, cost):
-        self.cost = cost
-        self.calls = 0
-
-    def complete(self, request):
-        self.calls += 1
-        return ModelResponse(
-            text="ok",
-            usage=ModelUsage(input_tokens=10, output_tokens=5),
-            cost_usd=self.cost,
-            provider="stub",
-            model_id=request.model_id,
-            latency_ms=1,
-        )
 
 
 def test_budgeted_gateway_stops_at_the_monthly_cap_and_never_downgrades():
@@ -212,28 +181,6 @@ def test_fake_gateway_scripts_by_purpose_and_can_raise():
     assert [c.purpose for c in fake.calls] == ["answer", "answer", "verify", "verify"]
 
 
-class _StubClient:
-    def __init__(self, result=None, error=None):
-        self.result, self.error, self.kwargs = result, error, None
-        self.chat = SimpleNamespace(completions=SimpleNamespace(create=self._create))
-
-    def _create(self, **kwargs):
-        self.kwargs = kwargs
-        if self.error:
-            raise self.error
-        return self.result
-
-
-def _completion(content, finish="stop", prompt=120, completion=30, cached=0):
-    usage = SimpleNamespace(
-        prompt_tokens=prompt, completion_tokens=completion, prompt_tokens_details=SimpleNamespace(cached_tokens=cached)
-    )
-    choice = SimpleNamespace(message=SimpleNamespace(content=content), finish_reason=finish)
-    return SimpleNamespace(
-        choices=[choice], usage=usage, id="chatcmpl-1", model="gpt-6-luna-2026-09", system_fingerprint="fp_1"
-    )
-
-
 def test_openai_adapter_forwards_only_the_request_and_prices_the_usage():
     client = _StubClient(_completion(json.dumps({"verdict": "supported", "reason": "r"})))
     gw = OpenAIModelGateway(client)
@@ -273,22 +220,6 @@ def test_openai_adapter_maps_provider_errors_and_rejects_bad_structured_output()
     with pytest.raises(ModelUnavailable):
         OpenAIModelGateway(unpriced).complete(req(model="gpt-99"))
     assert unpriced.kwargs is None  # refused before any network call
-
-
-class _TemperatureRejectingClient:
-    """First call with `temperature` fails like a reasoning-tier model; the resend without it succeeds."""
-
-    def __init__(self):
-        self.calls = []
-        self.chat = SimpleNamespace(completions=SimpleNamespace(create=self._create))
-
-    def _create(self, **kwargs):
-        self.calls.append(kwargs)
-        if "temperature" in kwargs:
-            request = httpx.Request("POST", "https://api.openai.com/v1/chat/completions")
-            body = {"error": {"param": "temperature", "code": "unsupported_value", "message": "unsupported"}}
-            raise openai.BadRequestError("bad", response=httpx.Response(400, request=request), body=body)
-        return _completion("ok")
 
 
 def test_openai_adapter_resends_without_temperature_for_models_that_reject_it_and_remembers():

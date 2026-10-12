@@ -31,20 +31,14 @@ from medops.mcp.contracts import SearchDocumentsInput
 from medops.mcp.server import McpProductionRuntime, build_server
 from medops.retrieval.recheck import recheck_candidates
 from medops.skills.catalog import default_registry
-from tests.integration.lexical_adapter_suite import make_database
-from tests.integration.test_migrations import document, job, source_object
 from tests.mcp_client import call
-from tests.unit.api.test_ask_route import ANSWER, ISSUER_OBJ, PSEUDONYM_KEY, QUERY, auth
-from tests.unit.harness._fixtures import versions
-from tests.unit.harness.test_run_ask import FakeRetrieval, fast_specs
-from tests.unit.skills.test_matrix import SKILLS, scripted
+from tests.support.api_runtime import ANSWER, ISSUER_OBJ, PSEUDONYM_KEY, QUERY, auth
+from tests.support.documents import document, job, source_object
+from tests.support.harness import FakeRetrieval, fast_specs
+from tests.support.harness_data import versions
+from tests.support.skill_matrix import SKILLS, scripted
 
 AS_OF = date(2026, 10, 12)
-
-
-@pytest.fixture(scope="module")
-def db(admin_dsn):
-    yield from make_database(admin_dsn)
 
 
 @pytest.fixture
@@ -196,7 +190,7 @@ def runtime(f, *, mutate=None):
 class _Verifier:
     def verify(self, token):
         from medops.infrastructure.identity import JwtVerifier
-        from tests.unit.api._auth_fixtures import AUDIENCE, ISSUER
+        from tests.support.identity import AUDIENCE, ISSUER
 
         return JwtVerifier(issuer=ISSUER, audience=AUDIENCE, jwks=ISSUER_OBJ.jwks).verify(token)
 

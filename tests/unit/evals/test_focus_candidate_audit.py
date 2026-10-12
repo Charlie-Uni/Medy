@@ -3,7 +3,7 @@
 import pytest
 from scripts.audit_focus_candidate import RecordingScorer, audit_case, inspect_gold, summarize
 
-from tests.unit.harness._fixtures import evidence
+from tests.support.harness_data import evidence
 
 
 def gold(gid, key, span=None):

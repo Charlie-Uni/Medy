@@ -10,7 +10,6 @@ from __future__ import annotations
 
 import hashlib
 import uuid
-from collections.abc import Iterator
 from datetime import date
 
 import psycopg
@@ -23,9 +22,9 @@ from medops.retrieval.lexical.boundary import run_lexical_search
 from medops.retrieval.lexical.tokenizer import JiebaTokenizerV1  # noqa: E402
 from medops.retrieval.recheck import RejectReason, recheck_candidates
 from medops.skills.production import evidence_lookup
-from tests.integration.lexical_adapter_suite import make_database, txn
-from tests.integration.test_migrations import document, job, source_object
-from tests.unit.harness._fixtures import user
+from tests.integration.lexical_adapter_suite import txn
+from tests.support.documents import document, job, source_object
+from tests.support.harness_data import user
 
 TOKENIZER = JiebaTokenizerV1()
 AS_OF = date(2026, 6, 1)
@@ -60,11 +59,6 @@ def test_skill_history_uses_inclusive_start_exclusive_end_and_never_widens_rls(d
         refs = load_documents(conn, as_of=when, allow_historical=historical)
         targets = conn.execute("select doc_id::text from chunks where chunk_id = %s", (seed["archived"],)).fetchone()
         assert (targets[0] in {d.doc_id for d in refs}) is accepted
-
-
-@pytest.fixture(scope="module")
-def db(admin_dsn: str) -> Iterator[dict]:
-    yield from make_database(admin_dsn)
 
 
 @pytest.fixture(scope="module")

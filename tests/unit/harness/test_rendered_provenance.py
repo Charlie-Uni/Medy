@@ -5,8 +5,8 @@ import pytest
 from medops.core.canonical import sha256_hex
 from medops.harness.evidence_focus import _join_parts, render_evidence
 from medops.harness.focus_profiles import ALLOWED_EVIDENCE_FOCUS
-from tests.unit.harness._fixtures import evidence
-from tests.unit.harness.test_evidence_focus import DOSE, ENGLISH, SCORER
+from tests.support.focus_examples import DOSE, ENGLISH, SCORER
+from tests.support.harness_data import evidence
 
 
 def test_repeated_sentence_coordinates_refer_to_the_selected_occurrence():

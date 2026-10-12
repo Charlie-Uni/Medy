@@ -5,8 +5,6 @@ MEDOPS_TEST_D_ADMIN_URL points at a reachable server built from builds/d (shared
 
 from __future__ import annotations
 
-from collections.abc import Iterator
-
 import psycopg
 import pytest
 
@@ -17,11 +15,11 @@ from tests.integration.lexical_adapter_suite import (
     AS_OF,
     CandidateUnderTest,
     LexicalAdapterSuite,
-    make_database,
     require_server,
     seed_candidate,
     txn,
 )
+from tests.support.database import database_fixture
 
 TOKENIZER = JiebaTokenizerV2(stopwords=stopwords_path())  # the production tokenizer: D differs from A2 in ranking only
 DRIFTED = JiebaTokenizerV1()
@@ -44,9 +42,7 @@ def server() -> str:
     return require_server("D")
 
 
-@pytest.fixture(scope="module")
-def db(server: str) -> Iterator[dict]:
-    yield from make_database(server)
+db = database_fixture("server")
 
 
 @pytest.fixture(scope="module")

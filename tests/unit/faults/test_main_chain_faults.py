@@ -21,9 +21,9 @@ from medops.domain.skill import SkillOutput, SkillSpec, SkillStatus
 from medops.infrastructure.llm.fake import FakeModelGateway
 from medops.infrastructure.llm.gateway import ModelTimeout, ModelUnavailable
 from medops.skills.registry import RegisteredSkill, SkillContext, SkillRegistry
-from tests.unit.api.test_ask_route import ANSWER, QUERY, FakeRuntime, auth
-from tests.unit.harness._fixtures import evidence, versions
-from tests.unit.harness.test_run_ask import LABEL, FakeRetrieval, make_deps
+from tests.support.api_runtime import ANSWER, QUERY, FakeRuntime, auth
+from tests.support.harness import LABEL, FakeRetrieval, make_deps
+from tests.support.harness_data import evidence, versions
 
 T0 = datetime(2026, 9, 24, 9, 0, tzinfo=UTC)
 

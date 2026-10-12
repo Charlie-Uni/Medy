@@ -14,9 +14,9 @@ from medops.harness.runtime import initial_state, run_ask
 from medops.infrastructure.llm.fake import FakeModelGateway
 from medops.skills._structured import grounded_run
 from medops.skills.catalog import default_registry
-from tests.unit.harness._fixtures import evidence, user, versions
-from tests.unit.harness.test_run_ask import LABEL, FakeRetrieval, make_deps
-from tests.unit.skills.test_label_query import ANSWER, INPUT, ctx
+from tests.support.harness import LABEL, FakeRetrieval, make_deps
+from tests.support.harness_data import evidence, user, versions
+from tests.support.label_query import ANSWER, INPUT, ctx
 
 QUERY = "label 儿童剂量？"
 HISTORY = QueryContext(as_of=date(2026, 6, 1), historical_requested=True)

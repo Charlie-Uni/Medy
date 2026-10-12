@@ -18,7 +18,7 @@ from medops.retrieval.hybrid import HybridConfig
 from medops.retrieval.query_translation import TranslationPool
 from medops.retrieval.recheck import RecheckResult
 from medops.retrieval.rerank import OverlapReranker
-from tests.unit.harness._fixtures import evidence
+from tests.support.harness_data import evidence
 
 
 def test_translation_pool_bounds_pending_work_and_propagates_context():

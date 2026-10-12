@@ -13,14 +13,11 @@ from medops.infrastructure.db.audit import PgTraceStore
 from medops.infrastructure.db.payloads import PgPayloadStore
 from medops.infrastructure.db.tasks import PgTaskStore
 from medops.infrastructure.llm.gateway import ModelTimeout
-from tests.integration.lexical_adapter_suite import make_database
-from tests.unit.api.test_payload_route import PROVIDER
-from tests.unit.application.test_task_audit import SkillEnv
+from tests.support.database import database_fixture
+from tests.support.payloads import PROVIDER
+from tests.support.skill_task import SkillEnv
 
-
-@pytest.fixture
-def db(admin_dsn):
-    yield from make_database(admin_dsn)
+db = database_fixture("admin_dsn", scope="function")
 
 
 class PgEnv(SkillEnv):

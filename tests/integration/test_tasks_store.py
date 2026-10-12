@@ -5,7 +5,6 @@ and the read-only role has no access."""
 
 from __future__ import annotations
 
-from collections.abc import Iterator
 from datetime import UTC, datetime, timedelta
 
 import psycopg
@@ -16,18 +15,15 @@ from medops.application.contracts import TaskStatus
 from medops.application.tasks import IdempotencyRace, TaskRecord
 from medops.domain.common import Dept
 from medops.infrastructure.db.tasks import PgTaskStore
-from tests.integration.lexical_adapter_suite import make_database
+from tests.support.database import database_fixture
+
+# Tasks are never deleted; each test must receive a fresh claimable queue.
+db = database_fixture("admin_dsn", scope="function")
 
 NOW = datetime(
     2026, 9, 23, 12, 0, tzinfo=UTC
 )  # fixed for stored timestamps; idempotency expiry is relative to the DB clock (expires_at > now())
 PRINCIPAL = "0123456789abcdef" * 2  # pseudonyms are hex (migration 0010 check)
-
-
-@pytest.fixture
-def db(admin_dsn: str) -> Iterator[dict]:
-    """One fresh database per test: tasks are never deleted, so leftovers would be claimable by the next test."""
-    yield from make_database(admin_dsn)
 
 
 def record(task_id: str, text: str = "hi", max_attempts: int = 3) -> TaskRecord:
@@ -228,10 +224,10 @@ def test_two_real_workers_keep_lost_costs_and_new_result_separate(db, unknown_fi
     from medops.infrastructure.llm.budget import BudgetedGateway, PostgresSpendLedger
     from medops.infrastructure.llm.gateway import OPENAI_PRICES, ModelTimeout, PriceTable
     from medops.skills.registry import SkillRegistry
-    from tests.unit.application.test_task_lease import PaidFakeEnv
-    from tests.unit.application.test_tasks import Clock, EchoOut, registry, req, user
-    from tests.unit.infrastructure.test_llm_gateway import _FixedCost
-    from tests.unit.infrastructure.test_llm_gateway import req as model_request
+    from tests.support.model_gateway import _FixedCost
+    from tests.support.model_gateway import req as model_request
+    from tests.support.paid_task import PaidFakeEnv
+    from tests.support.tasks import Clock, EchoOut, registry, req, user
 
     # Keep the short lease test about ownership/fees, not disk scanning before the first provider call.
     monkeypatch.setattr(execution_record, "online_artifacts", lambda: {"synthetic_test": True})

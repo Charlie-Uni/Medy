@@ -9,9 +9,9 @@ from opentelemetry.trace import StatusCode
 from medops.core import telemetry
 from medops.core.tracing import bind_trace_id, current_trace_id
 from medops.infrastructure.llm.fake import FakeModelGateway
-from tests.unit.api.test_ask_route import ANSWER, QUERY, FakeRuntime, auth, client
-from tests.unit.harness._fixtures import evidence, user, versions
-from tests.unit.harness.test_run_ask import LABEL, FakeRetrieval, make_deps
+from tests.support.api_runtime import ANSWER, QUERY, FakeRuntime, auth, client
+from tests.support.harness import LABEL, FakeRetrieval, make_deps
+from tests.support.harness_data import evidence, user, versions
 
 
 @pytest.fixture
@@ -96,7 +96,7 @@ def test_offline_harness_has_one_root_and_one_trace(spans):
 
 def test_parallel_skills_keep_parent_and_distinct_span_ids(spans):
     from medops.skills.registry import SkillRequest
-    from tests.unit.skills.test_registry import context, entry, registry
+    from tests.support.skill_registry import context, entry, registry
 
     reg = registry(entry(parallel_safe=True))
     ctx = context(reg)
@@ -142,7 +142,7 @@ def test_caught_node_failure_is_marked_error(spans):
 def test_mcp_audit_and_telemetry_use_same_id(spans):
     from medops.mcp.server import build_server
     from tests.mcp_client import call
-    from tests.unit.mcp.test_server import FakeRuntime as McpRuntime
+    from tests.support.mcp_runtime import FakeRuntime as McpRuntime
 
     rt = McpRuntime(with_auth=False, dev_identity=user())
     server = build_server(rt)

@@ -10,7 +10,7 @@ import psycopg
 import pytest
 from psycopg import errors
 
-from tests.integration.test_migrations import active_document, document, job, set_actor, source_object
+from tests.support.documents import active_document, document, job, set_actor, source_object
 
 
 def test_withdrawn_is_in_the_status_enum(conn):

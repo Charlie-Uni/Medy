@@ -25,7 +25,7 @@ from medops.infrastructure.llm.gateway import (
 )
 from medops.infrastructure.llm.meter import MeteredGateway
 from medops.infrastructure.llm.openai_gateway import OpenAIModelGateway
-from tests.unit.infrastructure.test_llm_gateway import _completion, _FixedCost, _StubClient, req
+from tests.support.model_gateway import _completion, _FixedCost, _StubClient, req
 
 
 def test_failed_request_does_not_charge_an_interleaved_success():
@@ -370,8 +370,8 @@ def test_node_retries_have_distinct_call_ids_and_join_to_their_attempts():
 def test_real_harness_propagates_run_and_operation_identity_to_answer_receipt():
     from medops.harness.dependencies import HarnessDeps
     from medops.harness.runtime import initial_state, run_ask
-    from tests.unit.harness._fixtures import evidence, user, versions
-    from tests.unit.harness.test_run_ask import LABEL, FakeRetrieval, fast_specs
+    from tests.support.harness import LABEL, FakeRetrieval, fast_specs
+    from tests.support.harness_data import evidence, user, versions
 
     reply = {"claims": [{"text": "6 至 12 歲孩童口服 100 mg，一天三次。", "citation_chunk_ids": ["c1"]}]}
     meter, _, _ = metered(FakeModelGateway({"answer": [reply]}))

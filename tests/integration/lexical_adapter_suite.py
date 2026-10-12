@@ -12,7 +12,6 @@ from __future__ import annotations
 
 import json
 import os
-import secrets
 import uuid
 from collections.abc import Callable, Iterator
 from contextlib import contextmanager
@@ -20,20 +19,17 @@ from dataclasses import dataclass
 from datetime import date, timedelta
 from pathlib import Path
 from typing import Any
-from urllib.parse import urlsplit
 
 import psycopg
 import pytest
 from psycopg import errors
 
 from medops.core.errors import BusinessError, ErrorCode
-from medops.infrastructure.db.login_users import GROUPS, drop_users, provision
 from medops.retrieval.contracts import LexicalSearchResult, LexicalVersions
 from medops.retrieval.lexical.boundary import run_lexical_search
 from medops.retrieval.lexical.pg_lexical_common import META_TABLE, IndexBuildReport
-from tests.integration.conftest import _temporary_database, run_alembic, user_dsn
-from tests.integration.test_migrations import document, job, source_object
-from tests.unit.retrieval.lexical_contract import FIXTURE_TERMS, assert_lexical_adapter_contract, build_fixture_corpus
+from tests.support.documents import document, job, source_object
+from tests.support.lexical_contract import FIXTURE_TERMS, assert_lexical_adapter_contract, build_fixture_corpus
 
 REPO = Path(__file__).resolve().parents[2]
 DEPTS = ("MA", "PV", "CO")
@@ -88,30 +84,6 @@ def require_server(candidate: str) -> str:
     except psycopg.Error as exc:
         pytest.skip(f"candidate {candidate}: server unreachable ({type(exc).__name__})")
     return dsn
-
-
-def make_database(admin_dsn: str) -> Iterator[dict]:
-    """Temporary database migrated to head with three LOGIN users; dropped afterwards."""
-    gen = _temporary_database(admin_dsn)
-    dsn = next(gen)
-    run_alembic(dsn, "upgrade", "head")
-    prefix = f"lx{secrets.token_hex(3)}"
-    passwords = {kind: secrets.token_urlsafe(18) for kind in GROUPS}
-    with psycopg.connect(admin_dsn) as conn:
-        names = provision(conn, prefix=prefix, passwords=passwords)
-        conn.commit()
-    dbname = urlsplit(dsn).path.lstrip("/")
-    users = {kind: user_dsn(admin_dsn, names[kind], passwords[kind], dbname) for kind in GROUPS}
-    try:
-        yield {"owner": dsn, "users": users}
-    finally:
-        with psycopg.connect(admin_dsn, autocommit=True) as conn:
-            conn.execute(
-                "select pg_terminate_backend(pid) from pg_stat_activity where usename = any(%s) and pid <> pg_backend_pid()",
-                (list(names.values()),),
-            )
-            drop_users(conn, prefix=prefix)
-        next(gen, None)
 
 
 # ------------------------------------------------------------------------------------ seed

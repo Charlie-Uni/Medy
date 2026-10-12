@@ -9,7 +9,7 @@ import pytest
 from medops.core.errors import BusinessError, ErrorCode
 from medops.domain.common import Dept
 from medops.infrastructure.identity import Authenticator, JwtVerifier, Principal, StaticDirectory, pseudonym
-from tests.unit.api._auth_fixtures import AUDIENCE, ISSUER, PSEUDONYM_KEY, TestIssuer
+from tests.support.identity import AUDIENCE, ISSUER, PSEUDONYM_KEY, TestIssuer
 
 ISSUER_OBJ = TestIssuer()
 

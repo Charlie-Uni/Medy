@@ -6,7 +6,6 @@ run_kind constraint keeps replays and production apart; the read-only role canno
 from __future__ import annotations
 
 import uuid
-from collections.abc import Iterator
 from datetime import UTC, datetime, timedelta
 
 import psycopg
@@ -15,15 +14,9 @@ from psycopg.errors import CheckViolation, InsufficientPrivilege, RestrictViolat
 
 from medops.harness.contracts import NodeAttempt
 from medops.harness.executions import PgExecutionStore
-from tests.integration.lexical_adapter_suite import make_database
 
 NOW = datetime(2026, 9, 23, 12, 0, tzinfo=UTC)
 TRACE = "a" * 32
-
-
-@pytest.fixture(scope="module")
-def db(admin_dsn: str) -> Iterator[dict]:
-    yield from make_database(admin_dsn)
 
 
 def key(n: int) -> str:

@@ -13,11 +13,11 @@ from medops.infrastructure.llm.meter import MeteredGateway
 from medops.retrieval.query_translation import QueryTranslator, TranslationPool
 from medops.skills.catalog import default_registry
 from medops.skills.registry import SkillRequest
-from tests.unit.harness._fixtures import evidence
-from tests.unit.harness.test_run_ask import LABEL, FakeRetrieval, make_deps, state
-from tests.unit.infrastructure.test_llm_gateway import _FixedCost, req
-from tests.unit.skills.test_registry import EchoOut, context, entry, registry
-from tests.unit.skills.test_risk_skills import ANSWER_CLAUSE, CLAUSE, ctx
+from tests.support.harness import LABEL, FakeRetrieval, make_deps, state
+from tests.support.harness_data import evidence
+from tests.support.model_gateway import _FixedCost, req
+from tests.support.risk_skills import ANSWER_CLAUSE, CLAUSE, ctx
+from tests.support.skill_registry import EchoOut, context, entry, registry
 
 ANSWER = {"claims": [{"text": "6 至 12 歲孩童口服 100 mg，一天三次。", "citation_chunk_ids": ["c1"]}]}
 

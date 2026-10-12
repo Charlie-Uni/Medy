@@ -11,10 +11,10 @@ from fastapi.testclient import TestClient
 from medops.api.app import create_app
 from medops.application.tasks import InMemoryTaskStore
 from medops.infrastructure.llm.fake import FakeModelGateway
-from tests.unit.api._auth_fixtures import TestIssuer
-from tests.unit.api.test_ask_route import ISSUER_OBJ, FakeRuntime
-from tests.unit.harness._fixtures import evidence
-from tests.unit.harness.test_run_ask import LABEL, FakeRetrieval
+from tests.support.api_runtime import ISSUER_OBJ, FakeRuntime
+from tests.support.harness import LABEL, FakeRetrieval
+from tests.support.harness_data import evidence
+from tests.support.identity import TestIssuer
 
 BODY = {
     "skill_name": "label_query",

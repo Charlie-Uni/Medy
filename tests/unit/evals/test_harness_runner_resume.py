@@ -16,7 +16,7 @@ from medops.domain.answer import Escalation
 from medops.domain.common import ReasonCode
 from medops.evals import bootstrap
 from medops.harness.runtime import HarnessRun
-from tests.unit.evals.test_replay_inputs import frozen
+from tests.support.frozen_datasets import frozen
 
 REPO = Path(__file__).resolve().parents[3]
 PROMPT = "Synthetic released answer policy used by this test."

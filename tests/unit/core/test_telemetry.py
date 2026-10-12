@@ -9,9 +9,9 @@ from opentelemetry.sdk.trace.export.in_memory_span_exporter import InMemorySpanE
 from medops.core import telemetry
 from medops.infrastructure.llm.fake import FakeModelGateway
 from medops.infrastructure.llm.gateway import ModelUnavailable
-from tests.unit.api.test_ask_route import ANSWER, QUERY, FakeRuntime, auth, client
-from tests.unit.harness._fixtures import evidence
-from tests.unit.harness.test_run_ask import LABEL, FakeRetrieval
+from tests.support.api_runtime import ANSWER, QUERY, FakeRuntime, auth, client
+from tests.support.harness import LABEL, FakeRetrieval
+from tests.support.harness_data import evidence
 
 
 def exporter() -> InMemorySpanExporter:

@@ -2,11 +2,9 @@
 
 from __future__ import annotations
 
-from collections.abc import Iterator
 from datetime import UTC, datetime, timedelta
 
 import psycopg
-import pytest
 
 from medops.application.audit import EscalationRecord, TraceRecord
 from medops.application.contracts import TaskStatus
@@ -15,15 +13,9 @@ from medops.application.tasks import TaskRecord
 from medops.domain.common import Dept
 from medops.infrastructure.db.audit import PgTraceStore
 from medops.infrastructure.db.tasks import PgTaskStore
-from tests.integration.lexical_adapter_suite import make_database
 
 NOW = datetime.now(UTC)  # traces get created_at = now() in the database, so the window must use the real clock
 P = "0123456789abcdef" * 2
-
-
-@pytest.fixture(scope="module")
-def db(admin_dsn: str) -> Iterator[dict]:
-    yield from make_database(admin_dsn)
 
 
 def trace(tid: str, outcome: str, ms: float, cost: float, created: datetime) -> TraceRecord:

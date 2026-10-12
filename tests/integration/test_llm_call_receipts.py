@@ -18,8 +18,8 @@ from medops.infrastructure.llm.execution_budget import default_limits, execution
 from medops.infrastructure.llm.fake import FakeModelGateway
 from medops.infrastructure.llm.gateway import OPENAI_PRICES, ModelCall, ModelCallReceipt, ModelTimeout, PriceTable
 from medops.infrastructure.llm.meter import MeteredGateway
-from tests.integration.conftest import run_alembic
-from tests.unit.infrastructure.test_llm_gateway import _FixedCost, req
+from tests.support.database import run_alembic
+from tests.support.model_gateway import _FixedCost, req
 
 
 def call_identity():

@@ -34,8 +34,8 @@ from medops.harness.executions import PgExecutionStore
 from medops.infrastructure.identity import Authenticator
 from medops.infrastructure.llm.fake import FakeModelGateway
 from medops.retrieval.recheck import recheck_candidates
-from tests.integration.lexical_adapter_suite import make_database
-from tests.integration.test_migrations import document, job, source_object
+from tests.support.database import make_database
+from tests.support.documents import document, job, source_object
 
 AS_OF = date(2026, 10, 11)
 PRINCIPAL = "a" * 64

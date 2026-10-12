@@ -11,8 +11,8 @@ from medops.harness.executions import InMemoryExecutionStore, apply_delta, state
 from medops.harness.runtime import run_ask
 from medops.infrastructure.llm.fake import FakeModelGateway
 from medops.infrastructure.llm.gateway import ModelUnavailable
-from tests.unit.harness._fixtures import evidence
-from tests.unit.harness.test_run_ask import CONTRA, LABEL, FakeRetrieval, make_deps, state
+from tests.support.harness import CONTRA, LABEL, FakeRetrieval, make_deps, state
+from tests.support.harness_data import evidence
 
 ANSWER = {"claims": [{"text": "6 至 12 歲孩童口服 100 mg，一天三次。", "citation_chunk_ids": ["c1"]}]}
 NODES = ["intent", "retrieve", "verify", "safety", "answer"]

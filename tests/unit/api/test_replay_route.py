@@ -15,35 +15,11 @@ from medops.application.policy_loader import ReleasedPolicySet, RequestPolicies
 from medops.domain.common import Dept, DocStatus
 from medops.domain.identity import UserContext
 from medops.domain.query import QueryContext
-from medops.infrastructure.identity import Principal, StaticDirectory, pseudonym
 from medops.infrastructure.llm.fake import FakeModelGateway
-from tests.unit.api._auth_fixtures import PSEUDONYM_KEY
-from tests.unit.api.test_ask_route import ANSWER, ISSUER_OBJ, QUERY, FakeRuntime
-from tests.unit.harness._fixtures import evidence
-from tests.unit.harness.test_run_ask import LABEL, FakeRetrieval
-
-USER_PID = pseudonym("user-1", PSEUDONYM_KEY)
-ADMIN_PID = pseudonym("admin-1", PSEUDONYM_KEY)
-
-
-class ReplayRuntime(FakeRuntime):
-    def directory(self, conn):
-        return StaticDirectory(
-            {
-                USER_PID: Principal(dept=Dept.MA, roles=("analyst",), scopes=frozenset({"MA:read"})),
-                ADMIN_PID: Principal(dept=Dept.MA, roles=("admin",), scopes=frozenset({"MA:read"})),
-            }
-        )
-
-    def resolve_user(self, conn, principal):
-        p = self.directory(conn).resolve(principal)
-        if p is None or principal != USER_PID:
-            return None
-        return UserContext(user_id=principal, dept=p.dept, roles=p.roles, acl_scopes=p.scopes)
-
-
-def auth(sub: str) -> dict[str, str]:
-    return {"Authorization": "Bearer " + ISSUER_OBJ.token(sub=sub)}
+from tests.support.api_runtime import ANSWER, QUERY
+from tests.support.harness import LABEL, FakeRetrieval
+from tests.support.harness_data import evidence
+from tests.support.replay_runtime import ADMIN_PID, USER_PID, ReplayRuntime, auth
 
 
 def test_admin_replay_reruns_under_the_original_principal_with_a_fresh_run_id():

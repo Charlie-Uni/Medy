@@ -5,8 +5,7 @@ import pytest
 
 from medops.evals.run_conditions import fact_snapshot
 from medops.ingestion import outbox
-from tests.integration.test_lexical_production import db as db  # noqa: F401 - isolated module database
-from tests.integration.test_lexical_production import seed as seed  # noqa: F401
+from tests.support.production_lexical import seed as seed
 
 
 def capture(dsn):

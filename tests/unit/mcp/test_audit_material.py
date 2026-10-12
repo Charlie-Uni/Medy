@@ -5,7 +5,7 @@ import pytest
 from medops.application.search import SearchExecution
 from medops.core.errors import InfrastructureError
 from medops.mcp import audit
-from tests.unit.harness._fixtures import user
+from tests.support.harness_data import user
 
 
 def material(*, outcome="answered", stats=None, snapshot=None):

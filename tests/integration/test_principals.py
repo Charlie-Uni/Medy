@@ -4,22 +4,14 @@ immutable, and `PgDirectory` resolves a pseudonym to department, roles and scope
 
 from __future__ import annotations
 
-from collections.abc import Iterator
-
 import psycopg
 import pytest
 from psycopg.errors import CheckViolation, InsufficientPrivilege, RestrictViolation
 
 from medops.domain.common import Dept
 from medops.infrastructure.identity import PgDirectory, pseudonym
-from tests.integration.lexical_adapter_suite import make_database
 
 KEY = b"integration-pseudonym-key"
-
-
-@pytest.fixture(scope="module")
-def db(admin_dsn: str) -> Iterator[dict]:
-    yield from make_database(admin_dsn)
 
 
 def test_admin_provisions_app_reads_readonly_denied(db):

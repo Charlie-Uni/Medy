@@ -7,6 +7,7 @@ from types import SimpleNamespace
 from unittest.mock import Mock
 
 import pytest
+from tests.support.composition import settings
 
 from medops.application.contracts import AskRequest
 from medops.application.policy_loader import (
@@ -23,7 +24,6 @@ from medops.bootstrap.policies import PolicyRouter, request_policies
 from medops.bootstrap.retrieval import RetrievalServices
 from medops.bootstrap.runtime import ProductionRuntime
 from medops.bootstrap.search import SearchRuntime
-from medops.core.config import Settings
 from medops.core.deadline import DeadlineExceeded
 from medops.core.errors import BusinessError, ErrorCode, InfrastructureError
 from medops.domain.common import Dept
@@ -32,15 +32,6 @@ from medops.domain.query import resolve_query_context
 from medops.harness.retrieval_port import RetrievalOutcome
 from medops.infrastructure.llm.execution_budget import current_budget
 from medops.infrastructure.llm.fake import FakeModelGateway
-
-
-def settings(**kwargs):
-    return Settings(
-        _env_file=None,
-        database_url="postgresql://test:test@localhost/test",
-        redis_url="redis://localhost:6379/0",
-        **kwargs,
-    )
 
 
 def user(identity="a" * 64):

@@ -7,7 +7,7 @@ import pytest
 
 from medops.bootstrap import runtime as mod
 from medops.retrieval import integrity
-from tests.unit.harness._fixtures import versions
+from tests.support.harness_data import versions
 
 
 @pytest.fixture

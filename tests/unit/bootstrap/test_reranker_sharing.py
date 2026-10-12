@@ -4,7 +4,7 @@ import threading
 from concurrent.futures import ThreadPoolExecutor
 
 import pytest
-from tests.unit.bootstrap.test_composition import settings
+from tests.support.composition import settings
 
 from medops.bootstrap import retrieval as mod
 from medops.bootstrap.retrieval import RetrievalServices

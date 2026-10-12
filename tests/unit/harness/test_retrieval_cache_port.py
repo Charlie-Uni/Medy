@@ -20,7 +20,7 @@ from medops.retrieval.doc_focus import DocRef
 from medops.retrieval.hybrid import HybridConfig
 from medops.retrieval.recheck import RecheckResult, Rejection
 from medops.retrieval.rerank import OverlapReranker
-from tests.unit.harness._fixtures import evidence
+from tests.support.harness_data import evidence
 
 RV = hashlib.sha256(b"retrieval-version").hexdigest()
 RV2 = hashlib.sha256(b"retrieval-version-2").hexdigest()

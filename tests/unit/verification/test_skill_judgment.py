@@ -9,7 +9,7 @@ from medops.domain.verification import Verdict
 from medops.infrastructure.llm.fake import FakeModelGateway, Truncated
 from medops.infrastructure.llm.gateway import ModelOutputInvalid
 from medops.verification.skill_judgment import JUDGMENT_PURPOSE, BusinessJudgment, verify_business_judgments
-from tests.unit.skills.test_final_judgment_fixtures import supported_reply
+from tests.support.skill_judgments import supported_reply
 
 
 def claim(text):

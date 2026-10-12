@@ -14,9 +14,9 @@ from medops.api.app import create_app
 from medops.domain.common import Dept
 from medops.infrastructure.identity import Principal, StaticDirectory, pseudonym
 from medops.loop.gate import passing_gate_report
-from tests.unit.api._auth_fixtures import PSEUDONYM_KEY
-from tests.unit.api.test_ask_route import ISSUER_OBJ, FakeRuntime
-from tests.unit.harness.test_run_ask import LABEL, FakeRetrieval
+from tests.support.api_runtime import ISSUER_OBJ, FakeRuntime
+from tests.support.harness import LABEL, FakeRetrieval
+from tests.support.identity import PSEUDONYM_KEY
 
 DOC = str(uuid.uuid4())
 NOW = datetime(2026, 9, 25, 9, 0, tzinfo=UTC)

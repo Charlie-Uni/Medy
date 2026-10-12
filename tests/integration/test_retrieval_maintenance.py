@@ -7,8 +7,7 @@ from medops.ingestion import outbox
 from medops.retrieval import maintenance, production
 from medops.retrieval.vector import pg_vector
 from medops.retrieval.vector.embedding import EMBEDDING_VERSION, HashingEmbeddingProvider
-from tests.integration.test_lexical_production import db as db  # noqa: F401 - isolated module database
-from tests.integration.test_lexical_production import seed as seed  # noqa: F401
+from tests.support.production_lexical import seed as seed
 
 
 @pytest.fixture
@@ -199,8 +198,9 @@ def test_acl_event_for_a_draft_does_not_accidentally_index_unpublished_text(conn
 
 
 def test_actual_commit_survives_restart_and_other_worker_skips_locked_event(admin_dsn):
-    from tests.integration.lexical_adapter_suite import make_database, seed_candidate
-    from tests.integration.test_lexical_production import CUT
+    from tests.integration.lexical_adapter_suite import seed_candidate
+    from tests.support.database import make_database
+    from tests.support.production_lexical import CUT
 
     database = make_database(admin_dsn)
     isolated = next(database)

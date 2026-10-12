@@ -4,50 +4,19 @@ from dataclasses import replace
 
 import pytest
 
-from medops.application.contracts import TaskCreateRequest, TaskStatus
+from medops.application.contracts import TaskStatus
 from medops.application.execution_audit import output_citations, task_spans
-from medops.application.payloads import PayloadReader, PayloadWriter
 from medops.application.tasks import InMemoryTaskStore, TaskRunner, TaskService
 from medops.core.errors import ErrorCode, InfrastructureError
-from medops.domain.common import Dept
 from medops.domain.evidence import Citation
 from medops.domain.skill import SkillOutput, SkillStatus
 from medops.harness.audit import ExecutionAudit
 from medops.infrastructure.llm.gateway import ModelTimeout
-from medops.skills.catalog import default_registry
 from medops.skills.registry import RegisteredSkill, SkillRequest
-from tests.unit.api.test_payload_route import PROVIDER, MemoryPayloads
-from tests.unit.application.test_tasks import Clock, FakeEnv, req, user
-from tests.unit.harness._fixtures import evidence
-from tests.unit.skills.test_matrix import SKILLS, context, scripted
-
-
-class SkillEnv(FakeEnv):
-    def __init__(self, name, *, overrides=None):
-        self.clock = Clock()
-        self.name, self.spec = name, SKILLS[name]
-        self.gateway = scripted(self.spec, **(overrides or {}))
-        reg = default_registry(sleep=lambda _s: None)
-        self.u = user(dept=Dept(self.spec["dept"]))
-        super().__init__(InMemoryTaskStore(clock=self.clock), reg, {self.u.user_id: self.u})
-        self.payloads = MemoryPayloads()
-
-    def skill_context(self, conn, selected_user, trace_id, historical):
-        ctx = context(self.reg, self.spec, gateway=self.gateway, u=selected_user)
-        return replace(ctx, trace_id=trace_id, run_id=trace_id)
-
-    def payload_writer(self, conn):
-        return PayloadWriter(self.payloads, PROVIDER)
-
-    def run(self):
-        TaskService(self.store, clock=self.clock).create(
-            self.u, TaskCreateRequest(skill_name=self.name, skill_version="1.0.0", input=self.spec["input"]), None
-        )
-        return TaskRunner(self, self.reg, worker_id="w1", clock=self.clock).run_once()
-
-    def decrypted(self, trace_id):
-        read = PayloadReader(self.payloads, PROVIDER).read(self.u, trace_id, "test incident review")
-        return {item.kind: item.payload for item in read.items}
+from tests.support.harness_data import evidence
+from tests.support.skill_matrix import SKILLS, context
+from tests.support.skill_task import SkillEnv
+from tests.support.tasks import Clock, FakeEnv, req, user
 
 
 @pytest.mark.parametrize("name", tuple(SKILLS))
@@ -181,7 +150,7 @@ def test_bounded_journal_failure_cannot_complete_a_task():
 
 
 def test_failed_before_context_has_an_explicit_unresolved_audit():
-    from tests.unit.application.test_tasks import registry
+    from tests.support.tasks import registry
 
     clock = Clock()
     reg = registry()
@@ -241,7 +210,7 @@ def test_task_revoked_scope_has_audited_failure_without_provider_or_evidence(nam
 
 @pytest.mark.parametrize("name", tuple(SKILLS))
 def test_task_unsafe_candidate_does_not_escape_into_result_or_metadata(name):
-    from tests.unit.skills.test_matrix import ADVICE
+    from tests.support.skill_matrix import ADVICE
 
     spec = SKILLS[name]
     if spec["purpose"]:
@@ -261,7 +230,7 @@ def test_task_unsafe_candidate_does_not_escape_into_result_or_metadata(name):
 
 @pytest.mark.parametrize("name", ["label_query", "off_label_check", "protocol_deviation", "citation_verification"])
 def test_task_empty_evidence_remains_auditable_without_fabricated_citations(name):
-    from tests.unit.harness.test_run_ask import FakeRetrieval
+    from tests.support.harness import FakeRetrieval
 
     env = SkillEnv(name)
     selected = env.skill_context(None, env.u, "a" * 32, None)

@@ -10,7 +10,7 @@ from medops.domain.intent import Intent, IntentType
 from medops.domain.safety import SafetyDecision
 from medops.domain.verification import VerifyResult
 from medops.safety.checks import check_input, check_output, decide, screen_evidence
-from tests.unit.harness._fixtures import evidence
+from tests.support.harness_data import evidence
 
 
 @pytest.mark.parametrize(

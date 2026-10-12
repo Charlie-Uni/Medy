@@ -7,9 +7,9 @@ from fastapi.testclient import TestClient
 
 from medops.api.app import create_app
 from medops.infrastructure.llm.fake import FakeModelGateway
-from tests.unit.api.test_ask_route import ANSWER, ISSUER_OBJ, QUERY, FakeRuntime
-from tests.unit.harness._fixtures import evidence
-from tests.unit.harness.test_run_ask import LABEL, FakeRetrieval
+from tests.support.api_runtime import ANSWER, ISSUER_OBJ, QUERY, FakeRuntime
+from tests.support.harness import LABEL, FakeRetrieval
+from tests.support.harness_data import evidence
 
 
 def auth(sub: str = "user-1") -> dict[str, str]:

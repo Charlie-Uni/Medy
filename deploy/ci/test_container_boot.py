@@ -11,12 +11,12 @@ import time
 import uuid
 from datetime import UTC, date, datetime
 from pathlib import Path
-from urllib.parse import urlsplit, urlunsplit
 
 import psycopg
 import pytest
-from tests.integration.test_migrations import document, job, source_object
-from tests.unit.api._auth_fixtures import TestIssuer
+from tests.support.database import container_dsn
+from tests.support.documents import document, job, source_object
+from tests.support.identity import TestIssuer
 
 from medops.application.policy_loader import load_released
 from medops.infrastructure.db.policies import PgPolicyStore
@@ -44,13 +44,6 @@ def run(*args, timeout=30):
             f"container gate command failed: {args[0]} (exit {result.returncode}; raw output withheld)", pytrace=False
         )
     return result.stdout
-
-
-def container_dsn(dsn, host):
-    p = urlsplit(dsn)
-    credentials = p.netloc.rsplit("@", 1)[0]
-    # The test PostgreSQL container listens on 5432; a random host-published port is not its network port.
-    return urlunsplit((p.scheme, f"{credentials}@{host}:5432", p.path, p.query, p.fragment))
 
 
 def container_status(name, path):

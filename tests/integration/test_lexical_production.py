@@ -3,45 +3,15 @@ and BM25 corpus statistics stay inside the MA/PV/CO boundary."""
 
 from __future__ import annotations
 
-from collections.abc import Iterator
 from pathlib import Path
 
 import psycopg
-import pytest
 
 from medops.retrieval import production
 from medops.retrieval.lexical import pg_textsearch_departmental as bm25
-from medops.retrieval.lexical.tokenizer import JiebaTokenizerV1  # noqa: E402
-from tests.integration.lexical_adapter_suite import (
-    CandidateUnderTest,
-    LexicalAdapterSuite,
-    make_database,
-    seed_candidate,
-)
-
-DRIFTED = JiebaTokenizerV1()
-
-CUT = CandidateUnderTest(
-    name="production",
-    index_table=production.PRODUCTION_LEXICAL_TABLES["MA"],
-    install=lambda conn: None,  # migration 0022 creates the extension, tables and BM25 indexes
-    build=lambda conn, built_by: production.build_production_lexical_index(conn, built_by=built_by),
-    make_retriever=lambda conn, as_of: production.production_lexical_retriever(conn, as_of=as_of),
-    expected_versions=lambda conn: production.production_lexical_versions(),
-    make_drifted_retriever=lambda conn, as_of, tmp: bm25.DepartmentalBm25Retriever(conn, DRIFTED, as_of=as_of),
-    drifted_versions=lambda conn, tmp: bm25.configured_versions(DRIFTED),
-    index_plan_markers=tuple(bm25.INDEXES.values()),
-)
-
-
-@pytest.fixture(scope="module")
-def db(admin_dsn: str) -> Iterator[dict]:
-    yield from make_database(admin_dsn)
-
-
-@pytest.fixture(scope="module")
-def seed(db: dict) -> dict:
-    return seed_candidate(db, CUT)
+from tests.integration.lexical_adapter_suite import LexicalAdapterSuite
+from tests.support.production_lexical import CUT
+from tests.support.production_lexical import seed as seed
 
 
 class TestProductionLexical(LexicalAdapterSuite):
@@ -119,7 +89,7 @@ def test_production_index_target_keeps_the_table_in_step(db, seed):
 def test_department_corpora_and_scores_are_isolated(db, seed):
     """Adding a known term to MA changes MA's corpus only; PV's BM25 score is byte-for-byte stable."""
     from tests.integration.lexical_adapter_suite import AS_OF, txn
-    from tests.integration.test_migrations import document, job, source_object
+    from tests.support.documents import document, job, source_object
 
     with txn(db["users"]["app"], "PV") as conn:
         before = production.production_lexical_retriever(conn, as_of=AS_OF).search("sigma", 20)

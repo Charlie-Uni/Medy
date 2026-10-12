@@ -10,8 +10,8 @@ from medops.skills.catalog import default_registry
 from medops.skills.citation_verification import CitationVerificationOutput
 from medops.skills.registry import SkillContext
 from medops.verification.verifier import VERIFIER_VERSION
-from tests.unit.harness._fixtures import evidence, user, versions
-from tests.unit.harness.test_run_ask import LABEL, FakeRetrieval, make_deps
+from tests.support.harness import LABEL, FakeRetrieval, make_deps
+from tests.support.harness_data import evidence, user, versions
 
 STORE = {
     "c1": evidence("c1", LABEL, doc_id="doc-1"),

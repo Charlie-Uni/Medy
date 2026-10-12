@@ -27,13 +27,7 @@ from medops.infrastructure.llm.fake import FakeModelGateway
 from medops.infrastructure.llm.gateway import ModelRequest
 from medops.mcp.server import McpProductionRuntime, build_server
 from medops.retrieval.recheck import recheck_candidates
-from tests.integration.lexical_adapter_suite import make_database
 from tests.mcp_client import call
-
-
-@pytest.fixture(scope="module")
-def db(admin_dsn):
-    yield from make_database(admin_dsn)
 
 
 @pytest.fixture(scope="module")

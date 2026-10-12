@@ -7,7 +7,6 @@ from __future__ import annotations
 
 import json
 import uuid
-from collections.abc import Iterator
 from datetime import date
 
 import psycopg
@@ -19,7 +18,7 @@ from medops.retrieval.vector import pg_vector
 from medops.retrieval.vector.boundary import run_vector_search
 from medops.retrieval.vector.contracts import VectorVersions
 from medops.retrieval.vector.embedding import HashingEmbeddingProvider
-from tests.integration.lexical_adapter_suite import AS_OF, DEPTS, CandidateUnderTest, make_database, seed_candidate, txn
+from tests.integration.lexical_adapter_suite import AS_OF, DEPTS, CandidateUnderTest, seed_candidate, txn
 
 PROVIDER = HashingEmbeddingProvider()
 
@@ -34,11 +33,6 @@ CUT = CandidateUnderTest(
     drifted_versions=lambda conn, tmp: None,  # type: ignore[arg-type,return-value]
     index_plan_markers=(pg_vector.INDEX_NAME,),
 )
-
-
-@pytest.fixture(scope="module")
-def db(admin_dsn: str) -> Iterator[dict]:
-    yield from make_database(admin_dsn)
 
 
 @pytest.fixture(scope="module")

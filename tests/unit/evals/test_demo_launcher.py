@@ -3,15 +3,11 @@ its plan, and its scenarios stay in step with the demo guide."""
 
 from __future__ import annotations
 
-import importlib.util
-import sys
 from pathlib import Path
 
+from scripts import demo
+
 REPO = Path(__file__).resolve().parents[3]
-_SPEC = importlib.util.spec_from_file_location("demo_launcher", REPO / "scripts/demo.py")
-demo = importlib.util.module_from_spec(_SPEC)
-sys.modules["demo_launcher"] = demo
-_SPEC.loader.exec_module(demo)
 
 
 def test_database_urls_are_rewritten_to_the_demo_database_and_proxies_removed(monkeypatch):

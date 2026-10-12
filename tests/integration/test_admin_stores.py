@@ -19,13 +19,8 @@ from medops.infrastructure.db.idempotency import PgReceiptStore
 from medops.infrastructure.db.policies import PgPolicyStore
 from medops.ingestion import acl as acl_ops
 from medops.ingestion import activate as activation
-from tests.integration.conftest import user_dsn
-from tests.integration.lexical_adapter_suite import document, job, make_database, source_object
-
-
-@pytest.fixture(scope="module")
-def db(admin_dsn: str) -> Iterator[dict]:
-    yield from make_database(admin_dsn)
+from tests.support.database import user_dsn
+from tests.support.documents import document, job, source_object
 
 
 @pytest.fixture(scope="module")

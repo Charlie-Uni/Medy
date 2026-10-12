@@ -32,8 +32,8 @@ from medops.evals.answer_review import (
 from medops.evals.datasets import sha256_file
 from medops.harness.runtime import run_ask
 from medops.infrastructure.llm.fake import FakeModelGateway
-from tests.unit.harness._fixtures import evidence
-from tests.unit.harness.test_run_ask import LABEL, FakeRetrieval, make_deps, state
+from tests.support.harness import LABEL, FakeRetrieval, make_deps, state
+from tests.support.harness_data import evidence
 
 REPO = Path(__file__).resolve().parents[3]
 

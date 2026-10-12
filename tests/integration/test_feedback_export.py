@@ -9,8 +9,7 @@ from medops.application.audit import FeedbackRecord
 from medops.infrastructure.db.audit import PgTraceStore
 from medops.infrastructure.db.fact_plane import fact_plane_identity, rotate_clone_identity
 from medops.infrastructure.observability import ScoreQueue, feedback_event, harvest_feedback
-from tests.integration.test_audit_store import db as db  # noqa: F401
-from tests.integration.test_audit_store import trace
+from tests.support.audit_records import trace
 
 
 def insert_feedback(db, feedback_id, trace_id):
@@ -167,7 +166,7 @@ def test_identity_permissions_and_owner_clone_rotation_are_explicit(db):
 def test_identity_migration_has_no_body_changes_and_no_fallback_without_identity(scratch_database):
     from scripts.db_restore_drill import inventory
 
-    from tests.integration.conftest import run_alembic
+    from tests.support.database import run_alembic
 
     run_alembic(scratch_database, "upgrade", "0024")
     with psycopg.connect(scratch_database) as conn:

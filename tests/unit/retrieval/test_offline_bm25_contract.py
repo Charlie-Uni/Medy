@@ -3,7 +3,7 @@ import pytest
 from medops.evals.experiments.lexical.bm25_offline import OfflineBM25Index
 from medops.retrieval.contracts import ChunkRecord, LexicalSearchResult, LexicalVersions
 from medops.retrieval.lexical.tokenizer import JiebaTokenizerV1, RegexTokenizerV1
-from tests.unit.retrieval.lexical_contract import assert_lexical_adapter_contract
+from tests.support.lexical_contract import assert_lexical_adapter_contract
 
 
 @pytest.mark.parametrize("tokenizer_factory", [RegexTokenizerV1, JiebaTokenizerV1], ids=["regex", "jieba"])
@@ -42,7 +42,7 @@ def test_contract_harness_detects_undercounting_adapters():
 
 
 def test_fixture_corpus_is_well_formed():
-    from tests.unit.retrieval.lexical_contract import FIXTURE_TERMS, build_fixture_corpus
+    from tests.support.lexical_contract import FIXTURE_TERMS, build_fixture_corpus
 
     corpus = build_fixture_corpus()
     assert len(corpus) == max(FIXTURE_TERMS.values()) and len({c.chunk_id for c in corpus}) == len(corpus)

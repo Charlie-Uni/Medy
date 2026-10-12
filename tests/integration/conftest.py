@@ -8,20 +8,14 @@ PostgreSQL and Redis URLs and fails when either is absent, malformed or unreacha
 from __future__ import annotations
 
 import os
-import secrets
-import uuid
 from collections.abc import Iterator
 from pathlib import Path
-from urllib.parse import quote, urlsplit, urlunsplit
 
 import psycopg
 import pytest
-from alembic import command
-from alembic.config import Config
 
-from medops.evals.safety_data import with_database
-from medops.infrastructure.db.login_users import GROUPS, drop_users, provision
 from tests.service_requirements import required_services, unavailable
+from tests.support.database import make_database, run_alembic, temporary_database, temporary_login_users
 
 REPO = Path(__file__).resolve().parents[2]
 
@@ -43,26 +37,6 @@ def _admin_dsn() -> str | None:
     except Exception:  # noqa: BLE001 - any config problem means "no integration database here"
         return None
     return (settings.database_admin_url or settings.database_url).get_secret_value()
-
-
-def alembic_config(dsn: str) -> Config:
-    cfg = Config(str(REPO / "alembic.ini"))
-    cfg.set_main_option("script_location", str(REPO / "migrations"))
-    cfg.attributes["dsn"] = dsn
-    return cfg
-
-
-def run_alembic(dsn: str, action: str, target: str) -> None:
-    """Run `alembic <action> <target>` against `dsn` through the same env.py the CLI uses."""
-    previous = os.environ.get("MEDOPS_MIGRATION_URL")
-    os.environ["MEDOPS_MIGRATION_URL"] = dsn
-    try:
-        getattr(command, action)(alembic_config(dsn), target)
-    finally:
-        if previous is None:
-            os.environ.pop("MEDOPS_MIGRATION_URL", None)
-        else:
-            os.environ["MEDOPS_MIGRATION_URL"] = previous
 
 
 @pytest.fixture(scope="session")
@@ -122,25 +96,15 @@ def redis_url() -> str:
 @pytest.fixture(scope="session")
 def fresh_database(admin_dsn: str) -> Iterator[str]:
     """A brand-new database for this session, dropped afterwards."""
-    yield from _temporary_database(admin_dsn)
+    with temporary_database(admin_dsn) as dsn:
+        yield dsn
 
 
 @pytest.fixture
 def scratch_database(admin_dsn: str) -> Iterator[str]:
     """A brand-new database for one test (used for upgrade/downgrade round trips)."""
-    yield from _temporary_database(admin_dsn)
-
-
-def _temporary_database(admin_dsn: str) -> Iterator[str]:
-    name = f"medops_test_{uuid.uuid4().hex[:12]}"
-    with psycopg.connect(admin_dsn, autocommit=True) as conn:
-        conn.execute(f'create database "{name}"')
-    dsn = with_database(admin_dsn, name)
-    try:
+    with temporary_database(admin_dsn) as dsn:
         yield dsn
-    finally:
-        with psycopg.connect(admin_dsn, autocommit=True) as conn:
-            conn.execute(f'drop database "{name}" with (force)')
 
 
 @pytest.fixture(scope="session")
@@ -157,38 +121,13 @@ def conn(migrated: str) -> Iterator[psycopg.Connection]:
         connection.rollback()
 
 
-def user_dsn(admin_dsn: str, user: str, password: str, dbname: str) -> str:
-    """The admin URL rewritten to connect as `user` to `dbname` (host, port and options kept)."""
-    parts = urlsplit(admin_dsn)
-    hostport = (parts.hostname or "localhost") + (f":{parts.port}" if parts.port else "")
-    netloc = f"{quote(user, safe='')}:{quote(password, safe='')}@{hostport}"
-    return urlunsplit((parts.scheme, netloc, "/" + dbname, parts.query, parts.fragment))
-
-
 @pytest.fixture(scope="session")
 def login_users(admin_dsn: str, migrated: str) -> Iterator[dict[str, dict[str, str]]]:
-    """Three LOGIN users provisioned through the real script and attached to the migrated database;
-    their sessions are terminated and the users dropped at the end (group roles stay, see 0002)."""
-    prefix = f"mt{secrets.token_hex(3)}"
-    passwords = {kind: secrets.token_urlsafe(18) for kind in GROUPS}
-    with psycopg.connect(admin_dsn) as conn:
-        names = provision(conn, prefix=prefix, passwords=passwords)
-        conn.commit()
-    dbname = urlsplit(migrated).path.lstrip("/")
-    users = {
-        kind: {
-            "name": names[kind],
-            "password": passwords[kind],
-            "dsn": user_dsn(admin_dsn, names[kind], passwords[kind], dbname),
-        }
-        for kind in GROUPS
-    }
-    try:
+    with temporary_login_users(admin_dsn, migrated) as users:
         yield users
-    finally:
-        with psycopg.connect(admin_dsn, autocommit=True) as conn:
-            conn.execute(
-                "select pg_terminate_backend(pid) from pg_stat_activity where usename = any(%s) and pid <> pg_backend_pid()",
-                (list(names.values()),),
-            )
-            drop_users(conn, prefix=prefix)
+
+
+@pytest.fixture(scope="module")
+def db(admin_dsn: str) -> Iterator[dict]:
+    """A separate migrated fact plane and LOGIN group per requesting test module."""
+    yield from make_database(admin_dsn)

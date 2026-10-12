@@ -15,7 +15,7 @@ from medops.verification.rules import (
     polarity_relation,
     sentence_around,
 )
-from tests.unit.harness._fixtures import evidence
+from tests.support.harness_data import evidence
 
 
 def outcomes(claim, *texts):

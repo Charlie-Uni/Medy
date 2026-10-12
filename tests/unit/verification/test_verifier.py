@@ -9,7 +9,7 @@ from medops.domain.verification import ElementKind, Verdict
 from medops.infrastructure.llm.fake import FakeModelGateway
 from medops.infrastructure.llm.gateway import ModelOutputInvalid
 from medops.verification.verifier import structural_check, verify_claims, verify_evidence
-from tests.unit.harness._fixtures import evidence
+from tests.support.harness_data import evidence
 
 EV = [
     evidence("c1", "年齡 6 至 12 歲的孩童：口服，100 mg，一天三次；或 300 mg 當作一個單一劑量，一天一次。"),
@@ -115,7 +115,7 @@ def test_default_policy_leaves_everything_but_polarity_and_containment_to_the_ju
 
 def test_term_containment_with_opposite_polarity_is_left_to_the_judge():
     """A population or identifier term inside a negated evidence clause is not a rule contradiction (record 54 §3.2)."""
-    from tests.unit.harness._fixtures import evidence as ev
+    from tests.support.harness_data import evidence as ev
 
     cited = [ev("c9", "輕度至中度腎功能不全的病人通常不需要調整劑量。")]
     claim = Claim(text="嚴重腎功能不全病人使用本品時需調整劑量", citation_chunk_ids=("c9",))
@@ -128,7 +128,7 @@ def test_term_containment_with_opposite_polarity_is_left_to_the_judge():
 
 def test_population_negation_in_the_claim_does_not_flip_a_contained_frequency():
     """pc-0027 (record 54 §3.2): 沒有發炎 describes the patients; the frequency 每天 1 次 is contained with the same polarity."""
-    from tests.unit.harness._fixtures import evidence as ev
+    from tests.support.harness_data import evidence as ev
 
     cited = [
         ev(
