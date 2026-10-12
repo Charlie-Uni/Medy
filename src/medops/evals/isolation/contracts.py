@@ -27,6 +27,10 @@ Failure = Literal[
     "duplicate_event",
     "ledger_limit",
     "ledger_io",
+    "aggregate_too_small",
+    "batch_incomplete",
+    "release_denied",
+    "release_limit",
 ]
 
 
@@ -171,8 +175,8 @@ ModelT = TypeVar("ModelT", bound=DomainModel)
 def validated_copy(model: type[ModelT], value: DomainModel, *, code: Failure) -> ModelT:
     """Revalidate copies/subclasses; report only fixed failure codes."""
     try:
-        return model.model_validate(value.model_dump(mode="json"))
-    except ValidationError:
+        return model.model_validate(value.model_dump(mode="json", warnings=False))
+    except ValueError:
         raise IsolationError(code) from None
 
 
