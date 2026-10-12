@@ -1,15 +1,17 @@
 """Real spawn boundaries: normal forwarding, crash/hang cleanup, overload and shutdown."""
 
 import os
+import sys
 import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
+from types import SimpleNamespace
 
 import pytest
 
 from medops.core.deadline import deadline_scope
 from medops.core.errors import ErrorCode, InfrastructureError
-from medops.retrieval.inference_process import InferenceProcess, ProcessEmbedding, ProcessReranker
+from medops.retrieval.inference_process import InferenceProcess, ProcessEmbedding, ProcessReranker, _serve
 from medops.retrieval.rerank import OverlapReranker
 from medops.retrieval.vector.embedding import HashingEmbeddingProvider
 
@@ -96,11 +98,42 @@ def test_process_preserves_embedding_and_reranking_results_and_close_is_idempote
         assert embedding.spec == direct.spec
         assert embedding.embed_query("audit critical") == direct.embed_query("audit critical")
         assert embedding.embed_documents(["major", "minor"]) == direct.embed_documents(["major", "minor"])
+        lane.empty_cache()  # typed child protocol; CPU is a no-op and remains usable afterwards
         assert reranker.score("critical audit", ["critical", "minor"]) == [0.5, 0]
     finally:
         lane.close()
         lane.close()
     assert not lane.process.is_alive() and not lane.available
+
+
+def test_mps_cache_control_runs_in_the_child_loop_and_keeps_the_protocol_usable(monkeypatch):
+    cleared = []
+    monkeypatch.setitem(
+        sys.modules, "torch", SimpleNamespace(mps=SimpleNamespace(empty_cache=lambda: cleared.append(True)))
+    )
+
+    class Pipe:
+        def __init__(self):
+            self.messages = iter(
+                [{"op": "empty_cache"}, {"op": "score", "query": "audit", "texts": ["audit"]}, {"op": "close"}]
+            )
+            self.replies = []
+            self.closed = False
+
+        def recv(self):
+            return next(self.messages)
+
+        def send(self, reply):
+            self.replies.append(reply)
+
+        def close(self):
+            self.closed = True
+
+    pipe = Pipe()
+    _serve(pipe, "mps", 8, _factory)
+    assert cleared == [True]
+    assert pipe.replies[1:] == [{"status": "ok", "value": None}, {"status": "ok", "value": [1.0]}]
+    assert pipe.closed
 
 
 @pytest.mark.parametrize("text", ["hang", "crash"])

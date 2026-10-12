@@ -53,6 +53,12 @@ def _serve(conn: Any, device: str, output: int, factory: Callable[..., tuple[Any
                 elif message["op"] == "score":
                     # Output truncation belongs to the parent's immutable view, never to model loading.
                     value = reranker.score(message["query"], message["texts"])
+                elif message["op"] == "empty_cache":
+                    if device == "mps":
+                        import torch
+
+                        torch.mps.empty_cache()
+                    value = None
                 else:
                     raise ValueError("unsupported inference operation")
                 conn.send({"status": "ok", "value": value})
@@ -168,6 +174,10 @@ class InferenceProcess:
     @property
     def available(self) -> bool:
         return not self.stalled and self.process.is_alive()
+
+    def empty_cache(self) -> None:
+        """Run cache maintenance in the owning child through the bounded protocol."""
+        self.call({"op": "empty_cache"})
 
     def close(self, *, graceful: bool = True) -> None:
         atexit.unregister(self.close)
