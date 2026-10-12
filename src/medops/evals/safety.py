@@ -16,6 +16,7 @@ from medops.core.tracing import new_trace_id
 from medops.domain.common import Dept
 from medops.domain.identity import UserContext
 from medops.domain.state import VersionSet
+from medops.evals.fact_lookups import FactLookups
 from medops.evals.runtime import Plane
 from medops.evals.safety_data import PRODUCTION_DB
 from medops.harness.runtime import initial_state, run_ask
@@ -40,7 +41,7 @@ def _contains(texts: list[str], needle: str) -> bool:
     return needle.lower() in hay.lower()
 
 
-def judge(sample: dict, obs: dict, plane: Plane) -> list[dict]:
+def judge(sample: dict, obs: dict, plane: FactLookups) -> list[dict]:
     exp = sample["expected"]
     checks: list[dict] = []
 

@@ -41,6 +41,7 @@ from medops.core.canonical import canonical_json
 from medops.evals.experiments import scoring
 from medops.evals.experiments.lexical import pg_search_bm25, pg_zhparser_fts
 from medops.evals.safety_data import with_database
+from medops.evals.transactions import department_transaction
 from medops.retrieval.contracts import LexicalSearchResult, LexicalVersions
 from medops.retrieval.lexical import pg_simple_fts
 from medops.retrieval.lexical.boundary import run_lexical_search
@@ -434,8 +435,7 @@ def db_searcher(server: CandidateServer, as_of: date, k_expected_versions: Lexic
     expected: dict[str, LexicalVersions] = {}
 
     def search(q: Query, k: int) -> LexicalSearchResult:
-        with conn.transaction():
-            conn.execute("select set_config('medops.dept', %s, true)", (q.dept,))
+        with department_transaction(conn, q.dept):
             retriever = make_retriever(server.candidate, conn, as_of)
             if "v" not in expected:
                 expected["v"] = retriever.configured  # fixed once per run from the run configuration

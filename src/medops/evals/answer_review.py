@@ -21,6 +21,7 @@ from medops.domain.evidence import Evidence
 from medops.domain.identity import UserContext
 from medops.domain.state import AgentState
 from medops.evals.datasets import dataset_file, load_frozen_dataset, read_rows, sha256_file
+from medops.infrastructure.db.deadline import DeadlineConnection
 
 INPUT_FORMAT = "answer-review-input-v1"
 VERDICT_FORMAT = "answer-review-verdict-v1"
@@ -208,7 +209,7 @@ def model_review_verdict(
     return verdict
 
 
-def source_documents(conn: psycopg.Connection, doc_ids: list[str]) -> dict[str, dict]:
+def source_documents(conn: psycopg.Connection | DeadlineConnection, doc_ids: list[str]) -> dict[str, dict]:
     """Read metadata through the caller's authorized connection, only for the supplied evidence docs."""
     if not doc_ids:
         return {}
@@ -292,7 +293,7 @@ def capture_snapshot(
     sample: dict,
     state: AgentState,
     outcome: str,
-    conn_for_user: Callable[[UserContext], AbstractContextManager[psycopg.Connection]],
+    conn_for_user: Callable[[UserContext], AbstractContextManager[psycopg.Connection | DeadlineConnection]],
 ) -> dict:
     """Keep the already-paid result even if supplementary evidence capture fails; never pretend it was captured."""
     try:

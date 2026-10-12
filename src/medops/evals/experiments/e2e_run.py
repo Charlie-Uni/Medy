@@ -49,6 +49,7 @@ from medops.evals.experiments.dec001_run import (
 from medops.evals.experiments.dec001_run import server_facts as lexical_facts
 from medops.evals.experiments.dec002_run import server_facts as vector_facts
 from medops.evals.safety_data import with_database
+from medops.evals.transactions import department_transaction
 from medops.retrieval.hybrid import HybridConfig, retrieve_evidence
 from medops.retrieval.rerank import Reranker, rerank_evidence
 from medops.retrieval.vector import pg_vector
@@ -149,8 +150,7 @@ def run_system(
             for sid in order:
                 q = by_id[sid]
                 start = time.perf_counter_ns()
-                with conn.transaction():
-                    conn.execute("select set_config('medops.dept', %s, true)", (q.dept,))
+                with department_transaction(conn, q.dept):
                     lexical = make_retriever(lexical_candidate, conn, as_of)
                     vector = pg_vector.PgVectorRetriever(conn, provider, as_of=as_of)
                     if "lex" not in expected:

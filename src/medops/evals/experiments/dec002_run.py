@@ -43,6 +43,7 @@ from medops.evals.experiments.dec001_run import (
     summarize,
 )
 from medops.evals.safety_data import with_database
+from medops.evals.transactions import department_transaction
 from medops.retrieval.vector import pg_vector
 from medops.retrieval.vector.boundary import run_vector_search
 from medops.retrieval.vector.contracts import VectorSearchResult, VectorVersions
@@ -197,8 +198,7 @@ def db_searcher(
     expected: dict[str, VectorVersions] = {}
 
     def search(q: Query, k: int) -> VectorSearchResult:
-        with conn.transaction():
-            conn.execute("select set_config('medops.dept', %s, true)", (q.dept,))
+        with department_transaction(conn, q.dept):
             retriever = pg_vector.PgVectorRetriever(
                 conn,
                 provider,
@@ -229,8 +229,7 @@ def plan_evidence(
             if q.dept in seen:
                 continue
             seen.add(q.dept)
-            with conn.transaction():
-                conn.execute("select set_config('medops.dept', %s, true)", (q.dept,))
+            with department_transaction(conn, q.dept):
                 plan = pg_vector.PgVectorRetriever(
                     conn,
                     provider,

@@ -2,13 +2,15 @@
 
 from __future__ import annotations
 
-from contextlib import contextmanager
 from datetime import date
+from functools import partial
 
 import psycopg
 
 from medops.domain.identity import UserContext
+from medops.evals.fact_lookups import FactLookups
 from medops.evals.safety_data import admin_dsn, with_database
+from medops.evals.transactions import dept_connection
 from medops.harness.assembly import build_retrieval
 from medops.harness.dependencies import HarnessDeps
 from medops.harness.production import (
@@ -30,7 +32,7 @@ class CountingRetrieval:
         return self._inner.retrieve(request)
 
 
-class Plane:
+class Plane(FactLookups):
     """One fact plane: app connection (RLS), admin connection (judge lookups), retrieval and harness deps."""
 
     def __init__(
@@ -94,13 +96,7 @@ class Plane:
                 self.admin.close()
             raise
 
-        @contextmanager
-        def conn_for_user(user: UserContext):
-            with self.conn.transaction():
-                self.conn.execute("select set_config('medops.dept', %s, true)", (user.dept.value,))
-                from medops.infrastructure.db.deadline import DeadlineConnection
-
-                yield DeadlineConnection(self.conn)
+        conn_for_user = partial(dept_connection, self.conn)
 
         self.conn_for_user = conn_for_user
         self._provider, self._reranker = provider, reranker
@@ -150,35 +146,6 @@ class Plane:
                 translator=self._translator,
             )
         )
-
-    def resolve_chunks(self, chunk_ids: list[str]) -> dict[str, dict]:
-        ids = sorted({c for c in chunk_ids if c})
-        if not ids:
-            return {}
-        rows = self.admin.execute(
-            """select c.chunk_id::text, d.doc_id::text, d.document_key, d.status::text, so.source_hash
-               from chunks c join documents d on d.doc_id = c.doc_id
-               join source_objects so on so.source_object_id = d.source_object_id
-               where c.chunk_id::text = any(%s)""",
-            (ids,),
-        ).fetchall()
-        return {r[0]: {"doc_id": r[1], "document_key": r[2], "status": r[3], "source_hash": r[4]} for r in rows}
-
-    def docs_for_hashes(self, hashes: list[str]) -> dict[str, str]:
-        rows = self.admin.execute(
-            """select so.source_hash, d.document_key from documents d
-               join source_objects so on so.source_object_id = d.source_object_id where so.source_hash = any(%s)""",
-            (hashes,),
-        ).fetchall()
-        return {r[0]: r[1] for r in rows}
-
-    def canary_chunks(self, canary: str) -> list[str]:
-        return [
-            r[0]
-            for r in self.admin.execute(
-                "select chunk_id::text from chunks where content like %s", (f"%{canary}%",)
-            ).fetchall()
-        ]
 
 
 EXIT_STALLED = 75  # supervisor resumes the evaluation after a pinned model call times out
