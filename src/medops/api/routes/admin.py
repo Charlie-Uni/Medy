@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
-from typing import Any
+from collections.abc import Callable
+from typing import Any, TypeVar
 
 from fastapi import APIRouter, Request
+from pydantic import BaseModel
 
 from medops.api.authorization import privileged_connection
 from medops.api.headers import IDEMPOTENCY_KEY_HEADER
@@ -27,6 +29,9 @@ from medops.application.contracts import (
     PolicyResponse,
     PolicyRollbackRequest,
 )
+from medops.domain.identity import UserContext
+
+M = TypeVar("M", bound=BaseModel)
 
 
 def build_router(runtime: ApiRuntime, *, idempotency_ttl_s: int) -> APIRouter:
@@ -35,6 +40,27 @@ def build_router(runtime: ApiRuntime, *, idempotency_ttl_s: int) -> APIRouter:
     def _documents(conn: Any) -> DocumentAdminService:
         store, actions = runtime.document_admin(conn)
         return DocumentAdminService(store=store, actions=actions)
+
+    def _idempotent(
+        request: Request,
+        conn: Any,
+        user: UserContext,
+        route: str,
+        payload: BaseModel,
+        model: type[M],
+        produce: Callable[[], M],
+    ) -> M:
+        # Called within the privileged write transaction, so action and receipt commit together.
+        return idempotent(
+            runtime.receipt_store(conn),
+            user,
+            route,
+            request.headers.get(IDEMPOTENCY_KEY_HEADER),
+            payload,
+            model,
+            produce,
+            ttl_s=idempotency_ttl_s,
+        )
 
     @router.get("/admin/documents", response_model=DocumentListResponse)
     def list_documents(
@@ -52,30 +78,28 @@ def build_router(runtime: ApiRuntime, *, idempotency_ttl_s: int) -> APIRouter:
     def change_document_status(doc_id: str, body: DocumentStatusRequest, request: Request) -> DocumentDetail:
         with privileged_connection(runtime, request, "admin", mutation=True) as (admin, conn):
             service = _documents(conn)
-            return idempotent(
-                runtime.receipt_store(conn),
+            return _idempotent(
+                request,
+                conn,
                 admin,
                 f"PATCH /admin/documents/{doc_id}/status",
-                request.headers.get(IDEMPOTENCY_KEY_HEADER),
                 body,
                 DocumentDetail,
                 lambda: service.change_status(admin, doc_id, body),
-                ttl_s=idempotency_ttl_s,
             )
 
     @router.patch("/admin/documents/{doc_id}/acl", response_model=DocumentAclResponse)
     def change_document_acl(doc_id: str, body: DocumentAclRequest, request: Request) -> DocumentAclResponse:
         with privileged_connection(runtime, request, "admin", mutation=True) as (admin, conn):
             service = _documents(conn)
-            return idempotent(
-                runtime.receipt_store(conn),
+            return _idempotent(
+                request,
+                conn,
                 admin,
                 f"PATCH /admin/documents/{doc_id}/acl",
-                request.headers.get(IDEMPOTENCY_KEY_HEADER),
                 body,
                 DocumentAclResponse,
                 lambda: service.change_acl(admin, doc_id, body),
-                ttl_s=idempotency_ttl_s,
             )
 
     @router.get("/admin/policies/candidates", response_model=PolicyListResponse)
@@ -92,15 +116,14 @@ def build_router(runtime: ApiRuntime, *, idempotency_ttl_s: int) -> APIRouter:
     def decide_policy(policy_id: str, body: PolicyDecisionRequest, request: Request) -> PolicyResponse:
         with privileged_connection(runtime, request, "approver", mutation=True) as (approver, conn):
             service = _policy_service(conn)
-            return idempotent(
-                runtime.receipt_store(conn),
+            return _idempotent(
+                request,
+                conn,
                 approver,
                 f"POST /admin/policies/{policy_id}/approve",
-                request.headers.get(IDEMPOTENCY_KEY_HEADER),
                 body,
                 PolicyResponse,
                 lambda: service.decide(approver, policy_id, body),
-                ttl_s=idempotency_ttl_s,
             )
 
     def _policy_service(conn: Any) -> PolicyService:
@@ -114,45 +137,42 @@ def build_router(runtime: ApiRuntime, *, idempotency_ttl_s: int) -> APIRouter:
     def release_policy(policy_id: str, body: PolicyReleaseRequest, request: Request) -> PolicyResponse:
         with privileged_connection(runtime, request, "admin", mutation=True) as (admin, conn):
             service = _policy_service(conn)
-            return idempotent(
-                runtime.receipt_store(conn),
+            return _idempotent(
+                request,
+                conn,
                 admin,
                 f"POST /admin/policies/{policy_id}/release",
-                request.headers.get(IDEMPOTENCY_KEY_HEADER),
                 body,
                 PolicyResponse,
                 lambda: service.release(admin, policy_id, body),
-                ttl_s=idempotency_ttl_s,
             )
 
     @router.post("/admin/policies/{policy_id}/promote", response_model=PolicyResponse)
     def promote_policy(policy_id: str, body: PolicyPromoteRequest, request: Request) -> PolicyResponse:
         with privileged_connection(runtime, request, "approver", mutation=True) as (approver, conn):
             service = _policy_service(conn)
-            return idempotent(
-                runtime.receipt_store(conn),
+            return _idempotent(
+                request,
+                conn,
                 approver,
                 f"POST /admin/policies/{policy_id}/promote",
-                request.headers.get(IDEMPOTENCY_KEY_HEADER),
                 body,
                 PolicyResponse,
                 lambda: service.promote(approver, policy_id, body),
-                ttl_s=idempotency_ttl_s,
             )
 
     @router.post("/admin/policies/{policy_id}/rollback", response_model=PolicyResponse)
     def rollback_policy(policy_id: str, body: PolicyRollbackRequest, request: Request) -> PolicyResponse:
         with privileged_connection(runtime, request, "admin", mutation=True) as (admin, conn):
             service = _policy_service(conn)
-            return idempotent(
-                runtime.receipt_store(conn),
+            return _idempotent(
+                request,
+                conn,
                 admin,
                 f"POST /admin/policies/{policy_id}/rollback",
-                request.headers.get(IDEMPOTENCY_KEY_HEADER),
                 body,
                 PolicyResponse,
                 lambda: service.rollback(admin, policy_id, body),
-                ttl_s=idempotency_ttl_s,
             )
 
     return router
