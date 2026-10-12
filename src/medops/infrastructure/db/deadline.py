@@ -10,6 +10,7 @@ from __future__ import annotations
 from typing import Any
 
 import psycopg
+from psycopg.pq import TransactionStatus
 
 from medops.core.deadline import CURRENT_DEADLINE, check_deadline
 from medops.core.errors import ErrorCode, InfrastructureError
@@ -64,6 +65,16 @@ class DeadlineCursor:
             getattr(self._cursor, method)(*args, **kwargs)
             return
         check_deadline()  # before any SQL, including the savepoint/settings queries
+        # A normal `with psycopg.connect(...)` commits on exit but begins lazily.
+        # Without BEGIN here, transaction() around the first guarded statement
+        # is top-level and commits it, rather than creating the intended savepoint.
+        # Preserve caller ownership; never commit business/audit fragments here.
+        if getattr(getattr(self._conn, "info", None), "transaction_status", None) == TransactionStatus.IDLE:
+            if self._conn.autocommit:
+                raise InfrastructureError(
+                    ErrorCode.internal_error, detail="deadline SQL requires a caller-owned transaction", retryable=False
+                )
+            self._conn.execute("begin")
         try:
             with self._conn.transaction():
                 old = self._conn.execute("select current_setting('statement_timeout')").fetchone()[0]

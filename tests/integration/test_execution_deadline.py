@@ -2,11 +2,26 @@
 
 import time
 
+import psycopg
 import pytest
 
 from medops.core.deadline import DeadlineExceeded, deadline_scope
 from medops.harness.contracts import NodeFailure, NodeSpec, run_node
 from medops.infrastructure.db.deadline import DeadlineConnection
+
+
+def test_first_guarded_statement_does_not_commit_before_caller_rollback(migrated):
+    with psycopg.connect(migrated) as conn:
+        conn.execute("create table arch15_atomic_probe(value integer)")
+    try:
+        with pytest.raises(RuntimeError), psycopg.connect(migrated) as conn, deadline_scope(2):
+            DeadlineConnection(conn).execute("insert into arch15_atomic_probe values (1)")
+            raise RuntimeError("synthetic audit failure")
+        with psycopg.connect(migrated) as conn:
+            assert conn.execute("select count(*) from arch15_atomic_probe").fetchone() == (0,)
+    finally:
+        with psycopg.connect(migrated) as conn:
+            conn.execute("drop table arch15_atomic_probe")
 
 
 def test_statement_timeout_rolls_back_only_its_savepoint_and_allows_audit(conn):
