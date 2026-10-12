@@ -1,0 +1,207 @@
+{
+  "record": 196,
+  "date": "2026-10-12",
+  "task": "CODE-02",
+  "baseline_head": "61509bc5b6d67be2c1e0d29b0a78e8cc84a1d4dc",
+  "implementer": "Codex",
+  "self_reviewer": "Codex",
+  "independent_human_review": false,
+  "historical_fixes": [
+    "2f092181314e2825b5d0ab7fa575b81cedc75a51",
+    "8372cd6297d4b06b8fa6733d840ba248d30a7868"
+  ],
+  "targeted": {
+    "exit_code": 0,
+    "elapsed_s": 4.881,
+    "command": [
+      "/Users/leaf/.cache/medy-checks/code02-verified-nyc_elk7/venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/unit/docs",
+      "tests/unit/api/test_replay_route.py",
+      "tests/unit/skills/test_risk_skills.py",
+      "tests/unit/skills/test_final_judgments.py"
+    ],
+    "worktree": "/Users/leaf/.cache/medy-checks/code02-verified-nyc_elk7",
+    "required_services": true,
+    "passed": 71,
+    "pytest_seconds": 4.33
+  },
+  "expected_failed_mutations": [
+    {
+      "case": "replay-run-id",
+      "source": "src/medops/application/replay.py",
+      "test": "tests/unit/api/test_replay_route.py::test_admin_replay_reruns_under_the_original_principal_with_a_fresh_run_id",
+      "exit_code": 1,
+      "expected_assertion_failed": true,
+      "elapsed_s": 1.278,
+      "original_sha256": "4fa152d439413760e1b49155ce03f027e5f31661fccae3ee8d91311b2b5a02be"
+    },
+    {
+      "case": "off-label-note",
+      "source": "src/medops/skills/off_label_check.py",
+      "test": "tests/unit/skills/test_risk_skills.py::test_off_label_check_reports_scope_per_dimension_with_clauses_and_a_fixed_statement",
+      "exit_code": 1,
+      "expected_assertion_failed": true,
+      "elapsed_s": 0.81,
+      "original_sha256": "f2196767612183182658fa8c72f52450a270ba25f6c65b1889e744e90291cd05"
+    }
+  ],
+  "static_cli": [
+    {
+      "case": "bypass",
+      "exit_code": 1
+    },
+    {
+      "case": "valid",
+      "exit_code": 0
+    },
+    {
+      "case": "empty",
+      "exit_code": 2
+    }
+  ],
+  "failed_preparation": {
+    "exit_code": 4,
+    "cause": "mistyped test module path; no tests ran",
+    "corrected_module": "tests/unit/skills/test_final_judgments.py"
+  },
+  "hosted_model_calls": 0,
+  "actual_cost_usd": 0,
+  "business_source_changes": false,
+  "shared_business_db_writes": false,
+  "shared_deployment_restarted": false,
+  "worker_source_changed": true,
+  "first_full_failure": {
+    "exit_code": 2,
+    "elapsed_s": 111.473,
+    "command": [
+      "make",
+      "check"
+    ],
+    "worktree": "/Users/leaf/.cache/medy-checks/code02-verified-nyc_elk7",
+    "required_services": true,
+    "passed": 2273,
+    "failed": 1,
+    "skipped": 70,
+    "pytest_seconds": 83.81,
+    "error": "PermissionError: [Errno 1] Operation not permitted",
+    "location": "supervision.stop_child / os.killpg(child.pid, 0)"
+  },
+  "exit_probe_reproduction": {
+    "iterations": 20,
+    "transient_permission_errors": 2,
+    "platform": "Darwin",
+    "kernel_branch_confirmed": false,
+    "source": "local synthetic child experiment",
+    "stop_semantics": "unknown probe retried within original grace; SIGKILL permission errors still fail"
+  },
+  "excluded_racy_verification": {
+    "passed": 81,
+    "failed": 2,
+    "cause": "verification runner started before source-copy confirmation; old supervision imported",
+    "used_for_acceptance": false
+  },
+  "targeted_after_runtime_repair": {
+    "exit_code": 0,
+    "elapsed_s": 7.086,
+    "command": [
+      "/Users/leaf/.cache/medy-checks/code02-verified-nyc_elk7/venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/unit/docs",
+      "tests/unit/api/test_replay_route.py",
+      "tests/unit/skills/test_risk_skills.py",
+      "tests/unit/skills/test_final_judgments.py",
+      "tests/unit/worker/test_supervision.py"
+    ],
+    "worktree": "/Users/leaf/.cache/medy-checks/code02-verified-nyc_elk7",
+    "required_services": true,
+    "passed": 83,
+    "pytest_seconds": 6.51
+  },
+  "previous_ci": {
+    "run": 38192411532,
+    "head_sha": "61509bc5b6d67be2c1e0d29b0a78e8cc84a1d4dc",
+    "conclusion": "success",
+    "steps_passed": 28
+  },
+  "full_check": {
+    "exit_code": 0,
+    "elapsed_s": 89.644,
+    "command": [
+      "make",
+      "check"
+    ],
+    "worktree": "/Users/leaf/.cache/medy-checks/code02-verified-nyc_elk7",
+    "required_services": true,
+    "passed": 2276,
+    "skipped": 70,
+    "warnings": 1,
+    "pytest_seconds": 85.51,
+    "formatted_files": 679,
+    "mypy_sources": 325,
+    "architecture_modules": 325,
+    "architecture_violations": 0,
+    "architecture_exceptions": 2
+  },
+  "source_comparison": {
+    "count": 678,
+    "mismatches": [],
+    "sha256_of_sorted_path_hash_json": "cacf7e0ec948370f693a077f42c81b3b067239ea128d31d902656feaa572b9e0"
+  },
+  "static_repository_check": {
+    "files": 248,
+    "violations": 0,
+    "scope": "literal truth/boolean/not/conditional AST only"
+  },
+  "limits": [
+    "not complete semantic assert analysis or full mutation coverage",
+    "kernel branch causing observed transient EPERM not confirmed",
+    "persistent permission errors remain failures",
+    "no hosted medical quality or unseen holdout evaluation",
+    "no shared deployment restart"
+  ],
+  "documentation_checks": {
+    "exit_code": 0,
+    "elapsed_s": 2.113,
+    "command": [
+      "/Users/leaf/.cache/medy-checks/code02-verified-nyc_elk7/venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/unit/docs"
+    ],
+    "worktree": "/Users/leaf/.cache/medy-checks/code02-verified-nyc_elk7",
+    "required_services": true,
+    "task_count": 142,
+    "task_ids_unchanged": true,
+    "local_links_checked": 62,
+    "protected_tracked_changes": [],
+    "workflow_hygiene_guard_in_both_ci_and_make": true,
+    "passed": 41,
+    "pytest_seconds": 1.69
+  },
+  "commits_before_documentation": [
+    {
+      "group": "supervision",
+      "sha": "6da62e150e165c6fe716b61c2cf1e8298e990f35",
+      "paths": [
+        "src/medops/worker/supervision.py",
+        "tests/unit/worker/test_supervision.py"
+      ]
+    },
+    {
+      "group": "assertion-guard",
+      "sha": "49dfe7ee46266faa13315edab7df57a04eb83a38",
+      "paths": [
+        "scripts/check_test_assertions.py",
+        "tests/unit/docs/test_repo_hygiene.py",
+        "Makefile",
+        ".github/workflows/ci.yml"
+      ]
+    }
+  ]
+}

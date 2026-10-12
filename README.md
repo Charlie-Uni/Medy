@@ -10,7 +10,9 @@ MedOps Copilot 是面向医学事务、药物警戒和临床运营的可信医�
 
 ## 最新执行入口（2026-10-12）
 
-后续统一按[当前任务台账](docs/CURRENT_TASKS.md)推进：保留此前架构、评测、BM25、Redis、Langfuse、模型路由和使用闭环任务，新增受控 Agent 与模型生成 Prompt/声明式 Skill 的自进化任务。顺序为目标与验收 → 必要执行保护 → 首个业务 Agent → Prompt 自进化 → Skill/使用闭环 → 完整验证与交付。PLAN-01 设计证据与 PV 场景范围已确认，PLAN-02 的 [ADR-0012](docs/adr/ADR-0012-agent-evolution-goals-and-acceptance.md) 剩余契约继续沟通；ARCH-04/11 及当前任务租约 ARCH-05、历史输入 ARCH-02、最终判断 ARCH-03、异步审计 ARCH-06、执行记录和诊断边界 ARCH-07 及共用装配 ARCH-08 工程自审通过；ARCH-09稳定反馈身份、ARCH-10共享scorer和ARCH-13部署监督及ARCH-14必需CI均已通过对应工程自审，ARCH-12仅诊断/方案评估通过、事务拆分未采用，下一项ARCH-15最终输出权限/事实核验；S2 仍须满足 PLAN-02 相关契约和其他正确性前置。自动激活仅实验，S3 改进声明须有未见盲测，每轮付费单独授权。新增能力尚未实现；盲测新增工作量确认后重估工期。
+后续统一按[当前任务台账](docs/CURRENT_TASKS.md)推进。目标保持为受控业务Agent与模型生成Prompt/声明式Skill的自进化，沿用RAG、Harness、BM25、Redis、Langfuse和模型路由资产。ARCH-01～15对应工程切片自审通过，其中ARCH-12仅完成条件收益评估，生产Pool/事务拆分未采用；CODE-04/05/07与CODE-01/02已核验完成，最新[记录196](docs/reviews/2026-10-12-implementation-196-test-assertion-discrimination.md)全量2276 passed、70 skipped，费用0。已推送61509bc的远端CI全部步骤成功；新提交的CI按自身SHA核对。下一项CODE-03死代码/重复设置契约，然后CODE-06测试夹具。
+
+PLAN-01的合成PV资料整理场景已确认；PLAN-02的[ADR-0012](docs/adr/ADR-0012-agent-evolution-goals-and-acceptance.md)行动/profile与EVAL-32验收仍需沟通，S2业务Agent尚未实现。自动激活仅实验，S3改进声明须有合格未见盲测，每轮付费单独授权；工程通过、模型质量、正式发布和部署分别记录。下方保留历轮快照，当前状态以台账为准。
 
 **每轮代码、文档、实验与部署都必须自审核，问题修复复测且证据齐备后才能标记完成。** 固定执行要求见[AGENTS.md](AGENTS.md)，模板见[分阶段执行与自审](docs/ITERATION_STAGES.md)。评测标准修订、来源契约、回放绑定和模型裁判校准已形成冻结的 `probe-v4` 与 `main-v5-provisional`；第二独立人工仍未具备，相应结论继续标为 provisional；生产签字和逐次付费授权要求保留。
 

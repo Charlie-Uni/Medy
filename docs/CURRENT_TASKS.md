@@ -64,7 +64,7 @@ probe v4 与 `main-v5-provisional` 均已冻结。EVAL-11 已完成：580 个 go
 
 | 阶段 | 主任务与依赖 | 可审核交付 |
 | --- | --- | --- |
-| S0 目标与验收 | PLAN-02 先出 ADR 并沟通；PLAN-01 补能力/场景证据；EVAL-32/33 准备；CODE-01/02 核实 | 已确认决定与待答细则分开，按实际回复完善 PLAN-02；不把草案当批准 |
+| S0 目标与验收 | PLAN-02 先出 ADR 并沟通；PLAN-01 补能力/场景证据；EVAL-32/33 准备；CODE-01/02 工程核验已通过 | 已确认决定与待答细则分开，按实际回复完善 PLAN-02；不把草案当批准 |
 | S1 必要执行保护 | ARCH-04 → ARCH-11；ARCH-05/02/03 与相关 ARCH-06/07/09、FOCUS-02 | 优先补费用回执和整体预算，两项通过是 S2 入口条件；其余正确性依赖继续满足 |
 | S2 首个业务 Agent | 入口硬门：PLAN-02 相关契约、ARCH-04/11 自审通过；AGENT-01～08 与相关 SESSION、ARCH-06/07 | 未满足费用/预算门不得进入本阶段实施/集成或试跑；模型行动、澄清/停止/升级和真实试跑分别留证 |
 | S3 Prompt 自进化 | EVOL-01/02/03/06/07/08/10；EVAL-31/33/36 盲测；真实运行逐次授权 | 实验生成/加载/回滚证据与有效盲测报告齐备；不要求固定提升幅度，只有正向盲测证据支持时才声明改进 |
@@ -73,7 +73,7 @@ probe v4 与 `main-v5-provisional` 均已冻结。EVAL-11 已完成：580 个 go
 
 贯穿工作：ARCH-08/10/13/14、CODE-03～07、IDX-03、OBS-03、DEV-BACKLOG-01 按依赖穿插；ARCH-12 有实测收益再实施。BM25-09、CACHE-10、PERF-10、SRC-05、FOCUS-01/02/09、ROUTE-01/02 全部保留，先分别验证再 COMBO-01。人工事项 PLAN-02、EVAL-29/30/31、LIC-03、DEPLOY-01 单独跟踪；EVOL-09 已决定限实验，生产自动批准不再列为待问事项。
 
-**当前下一项：CODE-02核验恒真断言；PLAN-02人工契约保持。** CODE-01自审通过[记录195](reviews/2026-10-12-implementation-195-backup-credential-boundaries.md)：2265/70，隔离库实际backup/restore及坏dump清理通过；CODE-07的75c751d远端CI38191713877全部28步骤成功。 CODE-07工程自审见[记录194](reviews/2026-10-12-implementation-194-mcp-audit-and-observability.md)与[MCP契约](MCP_EXECUTION_AUDIT.md)：完整受限材料/原子持久化、观测四职责及静态边界；194定向、全量2254/70、674输入一致，0费用。CODE-05的de0e6d3远端CI38190039254全步骤成功。 CODE-05已通过[记录193](reviews/2026-10-12-implementation-193-evaluation-tool-packaging.md)与[工具契约](EVALUATION_TOOLING.md)：79维护模块入包、67原CLI保留，共用启动/事务/文件/冻结/后继复核，修复MPS消息类型和重判连接泄漏；595定向、全量2240/70、665维护输入一致，0费用。CODE-04的68783f0远端CI38188078574已全部步骤成功。ARCH-15已在实际入口复现并修复，见[记录191](reviews/2026-10-12-implementation-191-final-output-validation.md)和[输出契约](FINAL_OUTPUT_VALIDATION.md)：最终身份/完整证据及正负lookup、检查到提交的栅栏、已存Task重取、原子失败审计通过；全量2213/70，三库0026。旧completed未绑定结果分别53/2/0，原数据保留，新接口拒绝返回；有证据的恢复方案另行审计，不自动付费重跑。
+**当前下一项：CODE-03死代码/重复设置契约，然后CODE-06测试夹具；PLAN-02人工契约保持。** CODE-02通过[记录196](reviews/2026-10-12-implementation-196-test-assertion-discrimination.md)：83定向、全量2276/70、两次真实变异检出与静态必需门。CODE-01的61509bc远端CI38192411532全部28步骤成功。 CODE-01自审通过[记录195](reviews/2026-10-12-implementation-195-backup-credential-boundaries.md)：2265/70，隔离库实际backup/restore及坏dump清理通过；CODE-07的75c751d远端CI38191713877全部28步骤成功。 CODE-07工程自审见[记录194](reviews/2026-10-12-implementation-194-mcp-audit-and-observability.md)与[MCP契约](MCP_EXECUTION_AUDIT.md)：完整受限材料/原子持久化、观测四职责及静态边界；194定向、全量2254/70、674输入一致，0费用。CODE-05的de0e6d3远端CI38190039254全步骤成功。 CODE-05已通过[记录193](reviews/2026-10-12-implementation-193-evaluation-tool-packaging.md)与[工具契约](EVALUATION_TOOLING.md)：79维护模块入包、67原CLI保留，共用启动/事务/文件/冻结/后继复核，修复MPS消息类型和重判连接泄漏；595定向、全量2240/70、665维护输入一致，0费用。CODE-04的68783f0远端CI38188078574已全部步骤成功。ARCH-15已在实际入口复现并修复，见[记录191](reviews/2026-10-12-implementation-191-final-output-validation.md)和[输出契约](FINAL_OUTPUT_VALIDATION.md)：最终身份/完整证据及正负lookup、检查到提交的栅栏、已存Task重取、原子失败审计通过；全量2213/70，三库0026。旧completed未绑定结果分别53/2/0，原数据保留，新接口拒绝返回；有证据的恢复方案另行审计，不自动付费重跑。
 
 ARCH-12仅完成条件收益评估，生产Pool/事务拆分未采用；记录189已分批推送完成任务，记录190修复CI，8d3669e的远端38184157416全部步骤成功，包括真实容器门。ARCH-13仍未替换共享部署/长期驻留，容量仍待实测。MCP受限完整材料已由记录194补齐；原条件恢复、Task/MCP回放、FOCUS-02跨块定位、PLAN-02 Agent行动/profile和EVAL-32契约仍未完成；真实语义、第二独立人工、未见盲测、S2/S3及逐次付费授权门保持。
 
@@ -279,7 +279,7 @@ EVOL-06～08 按候选类型分切片记录，Prompt 先行；整项 DONE 需两
 | ID | 任务 | 状态 | 范围与完成证据 |
 | --- | --- | --- | --- |
 | CODE-01 | 核实并修复备份/恢复脚本口令出现在 argv | DONE | [记录195](reviews/2026-10-12-implementation-195-backup-credential-boundaries.md)：裸 `-e PGPASSWORD`＋child env、已知凭据先脱敏再截stderr、父环境不变；dump0600排他创建、唯一scratch仅清理本次库、失败不inventory半成品。21定向、真实容器/坏dump清理、全量2265/70、677输入一致、CLI帮助相同；0费用，八项工程自审通过。环境仍对管理员可见；正式业务灾备/RPO/RTO待DEPLOY-02。 |
-| CODE-02 | 核实并修复恒真测试断言 | READY | 检查审查指出的 `or True` 等断言，用有判别力的预期替换；反例会失败、正常路径通过，不按当前错误输出重写期望 |
+| CODE-02 | 核实并修复恒真测试断言 | DONE | [记录196](reviews/2026-10-12-implementation-196-test-assertion-discrimination.md)：两历史or True已由ARCH-03/07修正，实际run_id/note变异各在原断言失败；新增Makefile/CI静态门，248测试文件0已知恒真形式。修复门禁现场监督退出探测EPERM竞态，短暂重试/持续拒绝不吞；83定向、全量2276/70、678输入一致，0费用，八项工程自审通过。静态/2次变异不代表全测试质量或医学标注通过。 |
 | CODE-03 | 核实死代码并收敛重复实现/设置契约 | READY | 检查动态入口/公共 API 后删无用定义；归一重复策略读取、检索边界、幂等与预算辅助；显式协议字段/默认值，常量只在语义相同处共享；保留旧调用兼容与行为回归 |
 | CODE-04 | 实验适配器与生产实现边界 | DONE | [记录192](reviews/2026-10-12-implementation-192-lexical-experiment-boundaries.md)、[实验边界](EXPERIMENT_ADAPTER_BOUNDARY.md)：四纯实验适配器迁入evals.experiments.lexical，保留A2回滚路径，BM25 SQL/参数/k+1分页/批写共享；生产/候选版本、SQL、分词与分页对照相同，B/C/离线三文件字节不变，3CLI help通过；静态禁止生产词法依赖evals。396定向/70可选跳过，全量2223/70，566维护输入一致，0托管调用，八项工程自审通过；真实质量/容量不作完成声明。 |
 | CODE-05 | 评测工具打包与重复流水线收敛 | DONE | [记录193](reviews/2026-10-12-implementation-193-evaluation-tool-packaging.md)、[工具契约](EVALUATION_TOOLING.md)：79维护模块入规范包、67原CLI保留、12辅助去壳；共用预算启动/部门事务/JSONL/原SHA/冻结恢复/后继复核；13wire及3事实方法AST、57help、170起草内容一致。MPS消息类型及重判连接泄漏已修，595定向，全量2240/70、665维护输入一致，0托管调用，八项工程自审通过；历史/冻结/模型/评分门不变，不宣称完整真实后继重建或质量提升。 |
@@ -331,3 +331,5 @@ EVOL-06～08 按候选类型分切片记录，Prompt 先行；整项 DONE 需两
 2026-10-12工具整理：CODE-04的68783f0远端[CI38188078574](https://github.com/Charlie-Uni/Medy/actions/runs/38188078574)全部步骤成功；CODE-05本地工程自审完成，见记录193，全量2240/70。该轮分批推送与新SHA的远端结果单独留证；下一CODE-07。当前实现仍是固定RAG Workflow/Harness与五类Skill，业务Agent/模型自进化未交付；原人工、盲测、付费/生产批准门保持。
 
 2026-10-12后续安全卫生：CODE-07四批154cdb2/94580e3/84e4522/75c751d已推送，远端[CI38191713877](https://github.com/Charlie-Uni/Medy/actions/runs/38191713877)全部28步骤成功。CODE-01工程自审通过记录195；分批推送与其自身CI另按新SHA核对。无托管调用/业务部署重启，下一CODE-02。
+
+2026-10-12断言核验：CODE-01三批d763cf1/62c5556/61509bc已推送，[CI38192411532](https://github.com/Charlie-Uni/Medy/actions/runs/38192411532)全部28步骤成功。CODE-02工程自审记录196，全量2276/70；分批推送与自身CI按最终SHA另核。下一CODE-03/06，PLAN-02/盲测/付费边界不变。

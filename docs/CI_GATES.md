@@ -14,7 +14,7 @@
 | `jieba` | 基础锁定依赖，导入或初始化失败会报错 | 同样要求安装；不再跳过其测试 |
 | DEC-001 的 B/C/D 实验服务器 | 保留独立显式地址和可选跳过；生产 BM25 在必需 PostgreSQL 上测试 | 同一规则 |
 
-必需模式不回退读取开发者 `.env`，以免 CI 意外使用业务库。测试错误只写服务名称、固定原因和异常类型，不输出地址、密码或异常消息。Compose 检查使用公开 `.env.example` 做插值，`--no-env-resolution` 阻止读取服务的私有 `.env`。
+必需模式不回退读取开发者 `.env`，以免 CI 意外使用业务库。测试错误只写服务名称、固定原因和异常类型，不输出地址、密码或异常消息。Compose检查按[记录190](reviews/2026-10-12-implementation-190-compose-ci-compatibility.md)使用公开示例、隔离临时目录和合成.env渲染；不依赖版本敏感的 `--no-env-resolution`，不读取工作区私有.env。
 
 普通 `make check` 根据上述模式执行。要在本地强制服务门禁，先通过私有环境注入两条 `MEDOPS_TEST_*_URL`，再执行：
 
@@ -24,7 +24,9 @@ env -u DEBUG MEDOPS_TEST_REQUIRED_SERVICES=1 make check
 
 ## 2. 工作流次序
 
-`.github/workflows/ci.yml` 的必需步骤依次覆盖：固定 PostgreSQL 镜像和 pg_textsearch 安装、Redis 健康、锁定 Python 依赖、包安装、lint/format、mypy、静态架构边界、pytest、冻结数据审计、迁移往返、Schema 漂移和探针示例，然后构建实际运行镜像并执行容器启动门禁。整个 job 有 45 分钟上限。
+`.github/workflows/ci.yml` 的必需步骤依次覆盖：固定 PostgreSQL 镜像和 pg_textsearch 安装、Redis 健康、锁定 Python 依赖、包安装、lint/format、mypy、静态架构边界、静态恒真断言检查、pytest（包含真实容器backup/restore及失败清理）、冻结数据审计、迁移往返、Schema 漂移和探针示例，然后构建实际运行镜像并执行容器启动门禁。整个 job 有 45 分钟上限。
+
+[CODE-02/记录196](reviews/2026-10-12-implementation-196-test-assertion-discrimination.md)新增 `make test-assertion-check`（`scripts/check_test_assertions.py`）：AST拒绝可静态判断为真的字面量/布尔组合/not/条件断言，空输入非零，不执行源码。它只防已知恒真形式，不证明全覆盖或语义正确。[CODE-01/记录195](reviews/2026-10-12-implementation-195-backup-credential-boundaries.md)的原生备份测试需要 `MEDOPS_TEST_PG_CONTAINER`，CI显式为medy-ci-postgres；本机默认medops-postgres，须与测试admin URL的服务器匹配。
 
 架构检查直接运行 `scripts/check_architecture.py`，沿用既有两条精确例外。模型缓存只包含固定 revision 的公开 BGE 文件；缓存未命中会下载，缺失或损坏导致后续加载失败。使用 `actions/cache@v4` 的 `path`/`key` 接口，缓存键包含模型定义及下载脚本摘要，参见[官方说明](https://raw.githubusercontent.com/actions/cache/main/README.md)。缓存不包含环境文件、语料、评测题、模型 API 密钥或账单信息。
 
