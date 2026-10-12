@@ -141,8 +141,8 @@ def test_caught_node_failure_is_marked_error(spans):
 
 def test_mcp_audit_and_telemetry_use_same_id(spans):
     from medops.mcp.server import build_server
+    from tests.mcp_client import call
     from tests.unit.mcp.test_server import FakeRuntime as McpRuntime
-    from tests.unit.mcp.test_server import call
 
     rt = McpRuntime(with_auth=False, dev_identity=user())
     server = build_server(rt)

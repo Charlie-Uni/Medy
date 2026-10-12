@@ -87,3 +87,22 @@ def test_production_lexical_adapter_cannot_import_experiment_code(tmp_path, monk
     assert count == 1 and violations
     assert all(row.source == "medops.retrieval.lexical.example" for row in violations)
     assert boundaries.main(["--src", str(tmp_path)]) == 1
+
+
+@pytest.mark.parametrize(
+    "module,code",
+    [
+        ("schema", "import httpx"),
+        ("client", "from medops.infrastructure.observability.queue import ScoreQueue"),
+        ("queue", "from medops.infrastructure.observability.feedback import harvest_feedback"),
+    ],
+)
+def test_observation_schema_transport_queue_do_not_take_over_each_others_responsibilities(
+    tmp_path, monkeypatch, module, code
+):
+    monkeypatch.setattr(boundaries, "ALLOWLIST", {})
+    path = tmp_path / f"medops/infrastructure/observability/{module}.py"
+    path.parent.mkdir(parents=True)
+    path.write_text(code + "\n")
+    violations, count = boundaries.check(tmp_path)
+    assert count == 1 and violations

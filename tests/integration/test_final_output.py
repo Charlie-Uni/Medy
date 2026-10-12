@@ -30,10 +30,10 @@ from medops.retrieval.recheck import recheck_candidates
 from medops.skills.catalog import default_registry
 from tests.integration.lexical_adapter_suite import make_database
 from tests.integration.test_migrations import document, job, source_object
+from tests.mcp_client import call
 from tests.unit.api.test_ask_route import ANSWER, ISSUER_OBJ, PSEUDONYM_KEY, QUERY, auth
 from tests.unit.harness._fixtures import versions
 from tests.unit.harness.test_run_ask import FakeRetrieval, fast_specs
-from tests.unit.mcp.test_server import call
 from tests.unit.skills.test_matrix import SKILLS, scripted
 
 AS_OF = date(2026, 10, 12)

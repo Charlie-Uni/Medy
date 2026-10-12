@@ -6,9 +6,6 @@ from __future__ import annotations
 
 from contextlib import contextmanager
 
-import anyio
-from mcp.client.session import ClientSession
-from mcp.shared.memory import create_client_server_memory_streams
 from starlette.testclient import TestClient
 
 from medops.application.search import SearchExecution
@@ -24,6 +21,7 @@ from medops.mcp.contracts import (
     VerifyCitationOutput,
 )
 from medops.mcp.server import build_server
+from tests.mcp_client import call
 from tests.unit.api._auth_fixtures import AUDIENCE, ISSUER, PSEUDONYM_KEY, TestIssuer
 from tests.unit.harness._fixtures import evidence, user
 
@@ -38,6 +36,9 @@ class FakeService:
         self.user = user
         self.audit_stats = SearchExecution(())
 
+    def audit_snapshot(self):
+        return {"synthetic": True}
+
     def search_documents(self, inp):
         self.audit_stats = SearchExecution(
             (),
@@ -50,6 +51,8 @@ class FakeService:
         )
         if inp.query == "fail-after-model":
             raise InfrastructureError(ErrorCode.dependency_unavailable, "retrieval failed")
+        if inp.query == "uncaught-after-model":
+            raise ValueError("synthetic-private-error-message")
         return SearchDocumentsOutput(hits=(), requested_k=inp.k, candidate_exhausted=True)
 
     def get_chunk(self, inp):
@@ -97,6 +100,7 @@ class FakeRuntime:
         self.served: list[str] = []
         self.audited: list = []
         self.fail_audit = False
+        self.payloads = []
 
     @contextmanager
     def directory(self):
@@ -109,31 +113,16 @@ class FakeRuntime:
         self.served.append(user.dept.value)
         yield FakeService(user)
 
-    def audit(self, trace):
+    def audit(self, trace, *, payloads=None):
         if self.fail_audit:
             raise RuntimeError("audit store down")
         self.audited.append(trace)
+        self.payloads.append(payloads)
 
     @contextmanager
     def final_output(self, user, service, inp, result, *, authorization=None):
         # Explicit in-memory service; production is covered by ordinary-role PG tests.
         yield
-
-
-def call(server, tool: str, arguments: dict):
-    async def main():
-        async with create_client_server_memory_streams() as (client_streams, server_streams):
-            low = server._lowlevel_server
-            async with anyio.create_task_group() as tg:
-                tg.start_soon(low.run, server_streams[0], server_streams[1], low.create_initialization_options())
-                async with ClientSession(*client_streams) as session:
-                    await session.initialize()
-                    tools = await session.list_tools()
-                    result = await session.call_tool(tool, arguments)
-                tg.cancel_scope.cancel()
-            return tools, result
-
-    return anyio.run(main)
 
 
 def test_exactly_the_four_read_only_tools_and_no_identity_in_their_inputs():
@@ -193,6 +182,29 @@ def test_no_identity_at_all_is_refused():
     server = build_server(FakeRuntime(with_auth=False, dev_identity=None))
     _, result = call(server, "list_active_versions", {"input": {"family_id": "33333333-3333-4333-8333-333333333333"}})
     assert result.is_error and "unauthenticated" in result.content[0].text
+
+
+def test_complete_input_outside_trace_summary_and_tool_output_are_separate_restricted_material():
+    rt = FakeRuntime(with_auth=False, dev_identity=user(Dept.MA))
+    query = "synthetic query 中文 " * 80
+    _, result = call(build_server(rt), "search_documents", {"input": {"query": query, "k": 3}})
+    assert not result.is_error
+    material = rt.payloads[-1]
+    assert material["input"]["input"]["query"] == query and len(rt.audited[-1].query) < len(query)
+    assert material["input"]["tool"] == "search_documents"
+    assert material["input"]["user"] == rt.dev_identity.model_dump(mode="json")
+    assert material["model_output"]["tool_result"] == result.structured_content
+    assert material["evidence_snapshot"]["observed"] == {"synthetic": True}
+
+
+def test_unexpected_tool_failure_keeps_known_fees_and_never_returns_exception_message():
+    rt = FakeRuntime(with_auth=False, dev_identity=user(Dept.MA))
+    _, result = call(build_server(rt), "search_documents", {"input": {"query": "uncaught-after-model"}})
+    assert result.is_error and "internal_error" in result.content[0].text
+    assert "synthetic-private-error-message" not in result.content[0].text
+    assert rt.audited[-1].model_calls == 1 and rt.audited[-1].cost_usd == 0.002
+    assert rt.payloads[-1]["model_output"]["error_type"] == "ValueError"
+    assert rt.payloads[-1]["model_output"]["tool_result"] is None
 
 
 def test_tool_calls_are_traced_with_the_tool_name_and_department():

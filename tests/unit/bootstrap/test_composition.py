@@ -174,6 +174,12 @@ def test_search_translation_cost_and_versions_survive_a_later_retrieval_failure(
     assert len(gateway.calls) == execution.audit_stats.model_calls == 1
     assert execution.audit_stats.tokens > 0 and execution.audit_stats.versions == routed.versions
     assert not execution.audit_stats.cache_hit
+    assert execution.audit_stats.query_context.historical_requested is False
+    assert execution.audit_stats.conditions["routed"]["query_translation_model"] == "gpt-6-luna"
+    record = execution.audit_stats.call_records[0]
+    assert record["request"]["messages"] and record["response"]["parsed"] == {"translation": "audit findings"}
+    assert execution.audit_stats.call_receipts[0] == record["receipt"]
+    assert execution.audit_stats.call_audit_complete and execution.audit_stats.retrieval_snapshot is None
 
 
 def test_expired_search_assembly_cannot_call_a_provider(monkeypatch):
