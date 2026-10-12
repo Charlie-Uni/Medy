@@ -108,9 +108,9 @@ def main(argv: Sequence[str] | None = None) -> int:
                         args.consumer,
                         handler,
                         limit=args.batch,
-                        max_attempts=getattr(settings, "outbox_max_attempts", 10),
-                        backoff_base_s=getattr(settings, "outbox_backoff_base_s", 5),
-                        backoff_max_s=getattr(settings, "outbox_backoff_max_s", 3600),
+                        max_attempts=settings.outbox_max_attempts,
+                        backoff_base_s=settings.outbox_backoff_base_s,
+                        backoff_max_s=settings.outbox_backoff_max_s,
                     )
                     conn.commit()
                 pulse()  # connection + bounded consumption completed, including an empty successful poll

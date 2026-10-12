@@ -325,11 +325,11 @@ class ProductionRuntime:
     # ---- released policy per request (M4-09: canary split, rollback without restart)
     @property
     def observation_window(self) -> timedelta:
-        return timedelta(hours=float(getattr(self.settings, "observation_window_hours", 24.0)))
+        return timedelta(hours=self.settings.observation_window_hours)
 
     @property
     def allow_drill(self) -> bool:
-        return getattr(getattr(self.settings, "app_env", None), "value", None) == "dev"
+        return self.settings.app_env.value == "dev"
 
     @property
     def policy_router(self) -> PolicyRouter:
@@ -456,7 +456,7 @@ class ProductionRuntime:
                     status = inspect_readiness(
                         self._admin_dsn,
                         embedding=self.embedding.spec,
-                        cache_required=getattr(self.settings, "retrieval_cache", "off") == "redis",
+                        cache_required=self.settings.retrieval_cache == "redis",
                     )
                 except (psycopg.Error, InfrastructureError, ValueError):
                     status = {"ready": False, "problems": ["integrity_check_unavailable"]}

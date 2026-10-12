@@ -5,6 +5,7 @@ from types import SimpleNamespace
 import pytest
 from pydantic import SecretStr
 
+from medops.core.config import Settings
 from medops.retrieval.maintenance import BatchResult
 from medops.worker import retrieval as worker
 
@@ -35,10 +36,16 @@ def test_cache_consumer_refuses_off_and_process_local_cache():
 
 @pytest.mark.parametrize("failed", [(), (1,)])
 def test_once_targets_requested_database_and_returns_failure_for_unacked_events(monkeypatch, capsys, failed):
-    settings = SimpleNamespace(
+    settings = Settings(
+        _env_file=None,
+        database_url="postgresql://user:secret@localhost/old_db",
+        redis_url="redis://localhost:6379/0",
         database_admin_url=SecretStr("postgresql://user:secret@localhost/old_db"),
         db_connect_timeout_s=2,
         db_statement_timeout_ms=1000,
+        outbox_max_attempts=3,
+        outbox_backoff_base_s=7,
+        outbox_backoff_max_s=19,
     )
     monkeypatch.setattr(worker, "Settings", lambda: settings)
     monkeypatch.setattr(worker, "handler_from_settings", lambda *args, **kwargs: "handler")
@@ -61,9 +68,15 @@ def test_once_targets_requested_database_and_returns_failure_for_unacked_events(
         return Connection()
 
     monkeypatch.setattr(worker.psycopg, "connect", connect)
-    monkeypatch.setattr(worker.maintenance, "consume_batch", lambda *args, **kwargs: BatchResult((), failed))
+
+    def consume(*args, **kwargs):
+        observed["limits"] = (kwargs["max_attempts"], kwargs["backoff_base_s"], kwargs["backoff_max_s"])
+        return BatchResult((), failed)
+
+    monkeypatch.setattr(worker.maintenance, "consume_batch", consume)
     assert worker.main(["--database", "requested_db", "--consumer", "lexical-index", "--once"]) == (1 if failed else 0)
     assert observed["dbname"] == "requested_db" and observed["committed"]
+    assert observed["limits"] == (3, 7, 19)
     assert "secret" not in capsys.readouterr().out
 
 
