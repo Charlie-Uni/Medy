@@ -7,6 +7,7 @@ from datetime import UTC, datetime
 from fastapi import APIRouter, Request
 from fastapi.responses import PlainTextResponse
 
+from medops.api.authorization import privileged_connection
 from medops.api.ports import ApiRuntime
 from medops.application.contracts import (
     AskRequest,
@@ -33,6 +34,7 @@ def build_router(runtime: ApiRuntime) -> APIRouter:
             user = runtime.authenticator.authenticate(request.headers.get("authorization"), runtime.directory(conn))
             if not has_role(user.roles, "ops", "admin"):
                 raise BusinessError(ErrorCode.forbidden, "metrics require the ops or admin role")
+            runtime.validate_privileged_access(conn, conn, user, authorization=request.headers.get("authorization"))
             snapshot = runtime.metrics_source(conn).snapshot(window_minutes=60, now=datetime.now(UTC))
         return PlainTextResponse(
             render_prometheus(snapshot, monthly_cap_usd=runtime.monthly_cap_usd), media_type="text/plain; version=0.0.4"
@@ -60,8 +62,12 @@ def build_router(runtime: ApiRuntime) -> APIRouter:
                 return deps, routed.versions
 
             def load_payload(user: UserContext, tid: str, purpose: str) -> TracePayloadResponse:
-                with runtime.restricted_connection() as rconn:
-                    return runtime.payload_reader(rconn).read(user, tid, purpose)
+                from medops.infrastructure.db.final_output import require_same_user
+
+                # Release this separate identity fence before hosted replay work.
+                with privileged_connection(runtime, request, "admin", kind="restricted") as (current, rconn):
+                    require_same_user(user, current)
+                    return runtime.payload_reader(rconn).read(current, tid, purpose)
 
             writer = runtime.payload_writer(conn)
 
@@ -72,18 +78,16 @@ def build_router(runtime: ApiRuntime) -> APIRouter:
                 payload_writer=writer,
                 load_payload=load_payload if writer is not None else None,
             )
-            return service.replay(admin, trace_id, body)
+            report = service.replay(admin, trace_id, body)
+            runtime.validate_privileged_access(conn, conn, admin, authorization=request.headers.get("authorization"))
+            return report
 
     @router.get("/admin/traces/{trace_id}/payload", response_model=TracePayloadResponse)
     def read_trace_payload(trace_id: str, purpose: str, request: Request) -> TracePayloadResponse:
         """Restricted replay payload (DEC-013): admin role, stated purpose, every read logged before plaintext leaves."""
         if not 8 <= len(purpose) <= 500:
             raise BusinessError(ErrorCode.invalid_request, "purpose must be 8-500 characters")
-        with runtime.connection() as conn:
-            admin = runtime.authenticator.authenticate(request.headers.get("authorization"), runtime.directory(conn))
-        if not has_role(admin.roles, "admin"):
-            raise BusinessError(ErrorCode.forbidden, "restricted payloads require the admin role")
-        with runtime.restricted_connection() as rconn:
+        with privileged_connection(runtime, request, "admin", kind="restricted") as (admin, rconn):
             return runtime.payload_reader(rconn).read(admin, trace_id, purpose)
 
     return router

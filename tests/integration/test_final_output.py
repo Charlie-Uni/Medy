@@ -7,9 +7,12 @@ import uuid
 from contextlib import contextmanager
 from dataclasses import replace
 from datetime import date
+from urllib.parse import urlsplit
 
 import psycopg
 import pytest
+from fastapi.testclient import TestClient
+from psycopg import sql
 
 from medops.api.app import create_app
 from medops.application.contracts import TaskCreateRequest, TaskStatus
@@ -701,3 +704,171 @@ def test_explicit_historical_ask_remains_usable(facts):
         )
     assert response.status_code == 200 and response.json()["outcome"] == "answered"
     assert response.json()["answer"]["historical_notice"] is True
+
+
+# Review 197: reject stale/privileged MCP connections and stale admin identity.
+def mcp_runtime(f):
+    rt = runtime(f)
+    with rt.connection() as conn:
+        user = rt.resolve_user(conn, f["pid"])
+        rt.bind_identity(conn, user)
+        ev = recheck_candidates(conn, [f["cid"]], as_of=date.today()).evidence[0]
+        family = conn.execute("select family_id::text from documents where doc_id=%s", (f["doc"],)).fetchone()[0]
+    mcp = McpProductionRuntime(
+        authenticator=None,
+        dev_identity=user,
+        readonly_dsn=f["db"]["users"]["readonly"],
+        app_dsn_for_directory=f["db"]["users"]["app"],
+        searcher_factory=lambda conn, _user: (
+            lambda _q, _k, **_kw: recheck_candidates(conn, [f["cid"]], as_of=date.today()).evidence
+        ),
+    )
+    return mcp, {
+        "get_chunk": {"chunk_id": f["cid"]},
+        "verify_citation": {"citation": ev.citation.model_dump(mode="json")},
+        "list_active_versions": {"family_id": family},
+        "search_documents": {"query": "synthetic", "k": 1},
+    }
+
+
+@pytest.mark.parametrize("tool", ["get_chunk", "verify_citation", "list_active_versions", "search_documents"])
+@pytest.mark.parametrize("isolation", ["repeatable read", "serializable"])
+def test_mcp_rejects_stale_fact_transactions_and_records_failure(facts, tool, isolation):
+    mcp, inputs = mcp_runtime(facts)
+    parsed = urlsplit(mcp.readonly_dsn)
+    with psycopg.connect(facts["db"]["owner"]) as conn:
+        conn.execute(
+            sql.SQL("alter role {} in database {} set default_transaction_isolation to {}").format(
+                sql.Identifier(parsed.username), sql.Identifier(parsed.path.lstrip("/")), sql.Literal(isolation)
+            )
+        )
+    original = mcp.service
+
+    @contextmanager
+    def paused(user):
+        with original(user) as svc:
+            method = getattr(svc, tool)
+
+            def revoked(inp):
+                result = method(inp)
+                change(facts, "acl")
+                return result
+
+            setattr(svc, tool, revoked)
+            yield svc
+
+    mcp.service = paused
+    try:
+        _, result = call(build_server(mcp), tool, {"input": inputs[tool]})
+    finally:
+        with psycopg.connect(facts["db"]["owner"]) as conn:
+            conn.execute(
+                sql.SQL("alter role {} in database {} reset default_transaction_isolation").format(
+                    sql.Identifier(parsed.username), sql.Identifier(parsed.path.lstrip("/"))
+                )
+            )
+    assert result.is_error, "old fact snapshot passed the final authorization boundary"
+    assert facts["cid"] not in str(result.structured_content)
+    with psycopg.connect(facts["db"]["users"]["app"]) as conn:
+        row = conn.execute(
+            "select outcome,model_calls from traces where kind='mcp' and principal=%s order by created_at desc limit 1",
+            (facts["pid"],),
+        ).fetchone()
+    assert row == ("escalated", 0)
+
+
+@pytest.mark.parametrize("role", ["owner", "admin"])
+@pytest.mark.parametrize("tool", ["get_chunk", "verify_citation", "list_active_versions"])
+def test_mcp_refuses_fact_connections_that_bypass_acl(facts, role, tool):
+    mcp, inputs = mcp_runtime(facts)
+    change(facts, "acl")
+    mcp.readonly_dsn = facts["db"]["owner"] if role == "owner" else facts["db"]["users"][role]
+    _, result = call(build_server(mcp), tool, {"input": inputs[tool]})
+    assert result.is_error, "privileged fact connection exposed a document hidden from the user"
+    assert facts["cid"] not in str(result.structured_content)
+
+
+@pytest.mark.parametrize("operation", ["list", "acl"])
+def test_admin_reauthenticates_before_privileged_read_or_write(facts, operation):
+    rt = runtime(facts)
+    rt._admin_dsn = facts["db"]["users"]["admin"]
+    with psycopg.connect(facts["db"]["owner"]) as conn:
+        conn.execute("update principals set roles=array['admin'] where sub_pseudonym=%s", (facts["pid"],))
+        conn.execute(
+            "update documents set document_key=%s where doc_id=%s",
+            ("review-197-" + facts["doc"].replace("-", ""), facts["doc"]),
+        )
+    original = rt.admin_connection
+
+    @contextmanager
+    def revoked():
+        change(facts, "principal")
+        with original() as conn:
+            yield conn
+
+    rt.admin_connection = revoked
+    with TestClient(create_app(rt), raise_server_exceptions=False) as client:
+        if operation == "list":
+            result = client.get("/admin/documents", headers=auth())
+        else:
+            result = client.patch(
+                f"/admin/documents/{facts['doc']}/acl",
+                json={"grant": ["PV"], "reason": "synthetic review 197"},
+                headers=auth(),
+            )
+    assert result.status_code == 403, "revoked administrator retained a privileged operation"
+    with psycopg.connect(facts["db"]["owner"]) as conn:
+        assert not conn.execute(
+            "select exists(select 1 from document_acl where doc_id=%s and dept='PV')", (facts["doc"],)
+        ).fetchone()[0]
+
+
+@pytest.mark.parametrize("mutation", [False, True])
+def test_privileged_identity_fence_blocks_revocation_until_transaction_commit(facts, mutation):
+    rt = runtime(facts)
+    rt._admin_dsn = facts["db"]["users"]["admin"]
+    with rt.connection() as identity, rt.admin_connection() as target:
+        user = rt.authenticator.authenticate(auth()["Authorization"], rt.directory(identity))
+        rt.validate_privileged_access(identity, target, user, authorization=auth()["Authorization"], mutation=mutation)
+        with psycopg.connect(facts["db"]["owner"], options="-c lock_timeout=150ms") as writer:
+            with pytest.raises(psycopg.errors.LockNotAvailable):
+                writer.execute("update principals set active=false where sub_pseudonym=%s", (facts["pid"],))
+            writer.rollback()
+        if mutation:
+            # The write connection must reacquire the trigger's fence without
+            # waiting on a shared lock held by its own separate identity connection.
+            target.execute(
+                "insert into document_acl(doc_id,dept,granted_by) values (%s,'PV','review197')", (facts["doc"],)
+            )
+    change(facts, "principal")  # once the session commits, normal revocation succeeds
+
+
+def test_privileged_target_must_be_the_identity_database(facts, scratch_database):
+    from medops.core.errors import ErrorCode
+
+    rt = runtime(facts)
+    with rt.connection() as identity, psycopg.connect(scratch_database) as target, target.transaction():
+        user = rt.authenticator.authenticate(auth()["Authorization"], rt.directory(identity))
+        with pytest.raises(BusinessError) as exc:
+            rt.validate_privileged_access(identity, target, user, authorization=auth()["Authorization"], mutation=True)
+    assert exc.value.code is ErrorCode.forbidden
+
+
+def test_restricted_payload_read_rejects_revocation_before_plaintext_access(facts):
+    rt = runtime(facts)
+    with psycopg.connect(facts["db"]["owner"]) as conn:
+        conn.execute("update principals set roles=array['admin'] where sub_pseudonym=%s", (facts["pid"],))
+
+    @contextmanager
+    def restricted():
+        change(facts, "principal")
+        with psycopg.connect(facts["db"]["users"]["restricted"]) as conn, conn.transaction():
+            yield conn
+
+    rt.restricted_connection = restricted
+    rt.payload_reader = lambda _conn: pytest.fail("revoked administrator reached the plaintext reader")
+    with TestClient(create_app(rt), raise_server_exceptions=False) as client:
+        result = client.get(
+            "/admin/traces/" + "a" * 32 + "/payload", params={"purpose": "synthetic review 197"}, headers=auth()
+        )
+    assert result.status_code == 403

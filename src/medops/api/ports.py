@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Sequence
 from contextlib import AbstractContextManager
+from datetime import timedelta
 from typing import Any, Protocol
 
 from medops.application.admin import (
@@ -71,6 +72,22 @@ class ApiRuntime(Protocol):
         *,
         authorization: str | None = None,
     ) -> None: ...
+
+    def validate_privileged_access(
+        self,
+        identity_conn: Any,
+        target_conn: Any,
+        user: UserContext,
+        *,
+        authorization: str | None,
+        mutation: bool = False,
+    ) -> None: ...
+
+    @property
+    def observation_window(self) -> timedelta: ...
+
+    @property
+    def allow_drill(self) -> bool: ...
 
     # M3-03 admin routes run on the admin database role (INV-AUTH-05: separated roles); the unit-test runtime yields None
     def admin_connection(self) -> AbstractContextManager[Any]: ...

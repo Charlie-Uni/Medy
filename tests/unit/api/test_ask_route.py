@@ -6,7 +6,7 @@ from __future__ import annotations
 import json
 import logging
 from contextlib import contextmanager
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 
 import pytest
 from fastapi.testclient import TestClient
@@ -34,6 +34,9 @@ QUERY = "拔痛酸錠用於6至12歲兒童時口服劑量如何給予？"
 
 
 class FakeRuntime:
+    observation_window = timedelta(hours=24)
+    allow_drill = False
+
     def __init__(self, retrieval, gateway, *, fail_connection=False):
         self.authenticator = Authenticator(
             verifier=JwtVerifier(issuer=ISSUER, audience=AUDIENCE, jwks=ISSUER_OBJ.jwks), pseudonym_key=PSEUDONYM_KEY
@@ -93,6 +96,12 @@ class FakeRuntime:
         from medops.infrastructure.db.final_output import require_same_user
 
         require_same_user(user, self.authenticator.authenticate(authorization, self.directory(conn)))
+
+    def validate_privileged_access(self, identity_conn, target_conn, user, *, authorization, mutation=False):
+        # Memory directory revalidation only; real fences are integration-tested.
+        from medops.infrastructure.db.final_output import require_same_user
+
+        require_same_user(user, self.authenticator.authenticate(authorization, self.directory(identity_conn)))
 
     def ready(self):
         return self.readiness
