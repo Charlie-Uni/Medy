@@ -43,6 +43,33 @@ class LexicalCandidate(BaseModel):
     rank: int = Field(ge=1)
 
 
+def check_candidates(
+    candidates: Sequence[LexicalCandidate],
+    requested_k: int,
+    returned_count: int,
+    candidate_exhausted: bool,
+    *,
+    exhaustion_message: str,
+) -> None:
+    """Shared ordering/count invariants; version fields and channel error text stay in each wire model."""
+    if returned_count != len(candidates):
+        raise ValueError("returned_count must equal len(candidates)")
+    if returned_count > requested_k:
+        raise ValueError("returned_count must not exceed requested_k")
+    if candidate_exhausted != (returned_count < requested_k):
+        raise ValueError(exhaustion_message)
+    ranks = [c.rank for c in candidates]
+    if ranks != list(range(1, len(ranks) + 1)):
+        raise ValueError("ranks must be 1..n in order")
+    if len({c.chunk_id for c in candidates}) != len(candidates):
+        raise ValueError("chunk_id must be unique within a result")
+    for earlier, later in zip(candidates, candidates[1:], strict=False):
+        if later.raw_score > earlier.raw_score:
+            raise ValueError("raw_score must be non-increasing along rank")
+        if later.raw_score == earlier.raw_score and later.chunk_id <= earlier.chunk_id:
+            raise ValueError("equal raw_score must be ordered by chunk_id ascending (baseline 3.7)")
+
+
 class LexicalSearchResult(BaseModel):
     """Result-level contract. `raw_score` is for traces and diagnostics only; RRF uses `rank`.
     `returned_count` is the number of candidates after all database-side filtering; when it is
@@ -61,24 +88,13 @@ class LexicalSearchResult(BaseModel):
 
     @model_validator(mode="after")
     def _consistent(self) -> LexicalSearchResult:
-        if self.returned_count != len(self.candidates):
-            raise ValueError("returned_count must equal len(candidates)")
-        if self.returned_count > self.requested_k:
-            raise ValueError("returned_count must not exceed requested_k")
-        if self.candidate_exhausted != (self.returned_count < self.requested_k):
-            raise ValueError(
-                "candidate_exhausted must be True exactly when fewer than requested_k candidates were returned"
-            )
-        ranks = [c.rank for c in self.candidates]
-        if ranks != list(range(1, len(ranks) + 1)):
-            raise ValueError("ranks must be 1..n in order")
-        if len({c.chunk_id for c in self.candidates}) != len(self.candidates):
-            raise ValueError("chunk_id must be unique within a result")
-        for earlier, later in zip(self.candidates, self.candidates[1:], strict=False):
-            if later.raw_score > earlier.raw_score:
-                raise ValueError("raw_score must be non-increasing along rank")
-            if later.raw_score == earlier.raw_score and later.chunk_id <= earlier.chunk_id:
-                raise ValueError("equal raw_score must be ordered by chunk_id ascending (baseline 3.7)")
+        check_candidates(
+            self.candidates,
+            self.requested_k,
+            self.returned_count,
+            self.candidate_exhausted,
+            exhaustion_message="candidate_exhausted must be True exactly when fewer than requested_k candidates were returned",
+        )
         return self
 
     @property

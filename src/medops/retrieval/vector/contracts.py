@@ -13,7 +13,7 @@ from typing import Protocol
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
-from medops.retrieval.contracts import LexicalCandidate
+from medops.retrieval.contracts import LexicalCandidate, check_candidates
 
 Candidate = LexicalCandidate  # identical shape: chunk_id, raw_score, rank
 
@@ -39,22 +39,13 @@ class VectorSearchResult(BaseModel):
 
     @model_validator(mode="after")
     def _consistent(self) -> VectorSearchResult:
-        if self.returned_count != len(self.candidates):
-            raise ValueError("returned_count must equal len(candidates)")
-        if self.returned_count > self.requested_k:
-            raise ValueError("returned_count must not exceed requested_k")
-        if self.candidate_exhausted != (self.returned_count < self.requested_k):
-            raise ValueError("candidate_exhausted must be True exactly when fewer than requested_k were returned")
-        ranks = [c.rank for c in self.candidates]
-        if ranks != list(range(1, len(ranks) + 1)):
-            raise ValueError("ranks must be 1..n in order")
-        if len({c.chunk_id for c in self.candidates}) != len(self.candidates):
-            raise ValueError("chunk_id must be unique within a result")
-        for earlier, later in zip(self.candidates, self.candidates[1:], strict=False):
-            if later.raw_score > earlier.raw_score:
-                raise ValueError("raw_score must be non-increasing along rank")
-            if later.raw_score == earlier.raw_score and later.chunk_id <= earlier.chunk_id:
-                raise ValueError("equal raw_score must be ordered by chunk_id ascending (baseline 3.7)")
+        check_candidates(
+            self.candidates,
+            self.requested_k,
+            self.returned_count,
+            self.candidate_exhausted,
+            exhaustion_message="candidate_exhausted must be True exactly when fewer than requested_k were returned",
+        )
         return self
 
     @property

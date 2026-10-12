@@ -17,13 +17,10 @@ from __future__ import annotations
 
 from collections.abc import Sequence
 
-from pydantic import ValidationError
-
-from medops.core.errors import BusinessError, ErrorCode, InfrastructureError
-from medops.knowledge.normalization import normalize_text
+from medops.retrieval.boundary import MAX_K, run_search
 from medops.retrieval.contracts import LexicalRetriever, LexicalSearchResult, LexicalVersions
 
-MAX_K = 20  # ADR-0002 experiment setting (K=20 for Lexical Recall@20); not derived from the reranker cap
+__all__ = ["MAX_K", "run_lexical_search"]  # Preserve the existing public import path.
 
 
 def run_lexical_search(
@@ -35,41 +32,13 @@ def run_lexical_search(
     allow_historical: bool = False,
     doc_ids: Sequence[str] | None = None,
 ) -> LexicalSearchResult:
-    if isinstance(k, bool) or not isinstance(k, int):
-        raise BusinessError(ErrorCode.invalid_request, "k must be an integer")
-    if not 1 <= k <= MAX_K:
-        raise BusinessError(ErrorCode.invalid_request, f"k must be between 1 and {MAX_K}")
-    if not normalize_text(query):
-        raise BusinessError(ErrorCode.invalid_request, "query is empty after normalization")
-    declared = retriever.versions  # snapshot before the call
-    if expected != declared:
-        raise BusinessError(
-            ErrorCode.version_conflict,
-            "lexical index and query versions differ; rebuild the index or use the matching versions",
-            detail=f"expected={expected.model_dump()} index={declared.model_dump()}",
-        )
-    try:
-        if doc_ids is None:
-            result = retriever.search(query, k, allow_historical=allow_historical)
-        else:
-            result = retriever.search(query, k, allow_historical=allow_historical, doc_ids=doc_ids)
-        checked = LexicalSearchResult.model_validate(result.model_dump())  # re-validate, never trust model_construct
-    except ValidationError as exc:  # an adapter building an invalid result (inside search or here) is an adapter defect
-        raise InfrastructureError(
-            ErrorCode.internal_error,
-            detail=f"adapter produced an invalid result: {exc.error_count()} error(s)",
-            retryable=False,
-        ) from None
-    if checked.versions != declared:
-        raise InfrastructureError(
-            ErrorCode.internal_error,
-            detail=f"adapter returned versions {checked.versions.model_dump()} != declared {declared.model_dump()}",
-            retryable=False,
-        )
-    if checked.requested_k != k:
-        raise InfrastructureError(
-            ErrorCode.internal_error,
-            detail=f"adapter echoed requested_k={checked.requested_k} for k={k}",
-            retryable=False,
-        )
-    return checked
+    return run_search(
+        retriever,
+        query,
+        k,
+        expected,
+        result_model=LexicalSearchResult,
+        conflict_message="lexical index and query versions differ; rebuild the index or use the matching versions",
+        allow_historical=allow_historical,
+        doc_ids=doc_ids,
+    )
