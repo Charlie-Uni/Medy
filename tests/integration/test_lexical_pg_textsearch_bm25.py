@@ -10,7 +10,7 @@ from collections.abc import Iterator
 import psycopg
 import pytest
 
-from medops.retrieval.lexical import pg_textsearch_bm25 as d
+from medops.evals.experiments.lexical import pg_textsearch_bm25 as d
 from medops.retrieval.lexical.tokenizer import JiebaTokenizerV1, JiebaTokenizerV2  # noqa: E402
 from medops.retrieval.production import stopwords_path
 from tests.integration.lexical_adapter_suite import (

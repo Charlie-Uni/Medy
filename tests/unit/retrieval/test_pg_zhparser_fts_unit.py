@@ -3,7 +3,7 @@ tests/integration/test_lexical_pg_zhparser_fts.py when a candidate B server is c
 
 from __future__ import annotations
 
-from medops.retrieval.lexical import pg_zhparser_fts as b
+from medops.evals.experiments.lexical import pg_zhparser_fts as b
 
 
 def test_fixed_mapping_keeps_every_pos_type_except_w():

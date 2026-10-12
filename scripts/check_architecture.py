@@ -27,6 +27,7 @@ ALLOWLIST: dict[tuple[str, str], str] = {
     ): "The same optional frozen-score import, checked at its exact symbol edge.",
 }
 RULES: dict[str, tuple[str, ...]] = {
+    "medops.retrieval.lexical": ("medops.evals",),
     "medops.application": (
         "medops.api",
         "medops.mcp",

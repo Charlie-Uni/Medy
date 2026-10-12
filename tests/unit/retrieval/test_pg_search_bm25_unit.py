@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from medops.retrieval.lexical import pg_search_bm25 as c
+from medops.evals.experiments.lexical import pg_search_bm25 as c
 
 
 def test_fixed_tokenizer_configuration_matches_the_build_smoke():

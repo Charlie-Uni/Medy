@@ -3,8 +3,8 @@ import math
 import pytest
 
 from medops.core.errors import BusinessError, ErrorCode, InfrastructureError
+from medops.evals.experiments.lexical.bm25_offline import OfflineBM25Index
 from medops.retrieval.contracts import ChunkRecord, LexicalCandidate, LexicalSearchResult, LexicalVersions
-from medops.retrieval.lexical.bm25_offline import OfflineBM25Index
 from medops.retrieval.lexical.boundary import MAX_K, run_lexical_search
 from medops.retrieval.lexical.tokenizer import JiebaTokenizerV1, RegexTokenizerV1
 

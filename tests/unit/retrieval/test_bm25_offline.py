@@ -1,7 +1,7 @@
 import pytest
 
+from medops.evals.experiments.lexical.bm25_offline import OfflineBM25Index
 from medops.retrieval.contracts import ChunkRecord, LexicalSearchResult
-from medops.retrieval.lexical.bm25_offline import OfflineBM25Index
 from medops.retrieval.lexical.tokenizer import RegexTokenizerV1
 
 CORPUS = [

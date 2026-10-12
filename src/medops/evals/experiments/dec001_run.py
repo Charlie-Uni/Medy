@@ -39,9 +39,10 @@ import psycopg
 
 from medops.core.canonical import canonical_json
 from medops.evals.experiments import scoring
+from medops.evals.experiments.lexical import pg_search_bm25, pg_zhparser_fts
 from medops.evals.safety_data import with_database
 from medops.retrieval.contracts import LexicalSearchResult, LexicalVersions
-from medops.retrieval.lexical import pg_search_bm25, pg_simple_fts, pg_zhparser_fts
+from medops.retrieval.lexical import pg_simple_fts
 from medops.retrieval.lexical.boundary import run_lexical_search
 
 SLICES = ("drug_name_zh", "dose_unit", "negation", "time_window", "protocol_id", "mixed_zh_en")
@@ -236,7 +237,7 @@ def make_retriever(candidate: str, conn: psycopg.Connection[Any], as_of: date) -
     if candidate == "C":
         return pg_search_bm25.PgSearchBm25Retriever(conn, as_of=as_of)
     if candidate == "D":  # revision 5: A2's tokens, BM25 ranking
-        from medops.retrieval.lexical import pg_textsearch_bm25
+        from medops.evals.experiments.lexical import pg_textsearch_bm25
 
         return pg_textsearch_bm25.PgTextsearchBm25Retriever(conn, _jieba_v2_tokenizer(), as_of=as_of)
     raise ValueError(candidate)

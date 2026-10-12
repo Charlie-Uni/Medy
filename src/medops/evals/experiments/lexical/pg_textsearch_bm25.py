@@ -1,6 +1,6 @@
 """ADR-0002 candidate D (revision 5): `pg_textsearch` BM25 (Tiger Data, PostgreSQL License) on PostgreSQL 17.
 
-DEC-001 experiment adapter, not a selected production engine. It differs from the production engine A2 in the
+DEC-001 global-corpus experiment adapter; production uses the isolated departmental adapter. The historical A2 comparison differs in the
 ranking function and index engine ONLY: the index column holds the same `tok-jieba-v2` tokens (with the pinned
 English stopword list) that A2 puts into its tsvector, joined by spaces, and the BM25 index tokenizes them with
 the `simple` text search configuration (lower-casing, whitespace splitting). Queries go through the same tokenizer.
@@ -33,6 +33,12 @@ import psycopg
 
 from medops.knowledge.normalization import NORMALIZATION_VERSION
 from medops.retrieval.contracts import LexicalSearchResult, LexicalVersions
+from medops.retrieval.lexical.pg_bm25_common import (
+    bm25_page,
+    bm25_params,
+    bm25_search_sql,
+    flush_text_rows,
+)
 from medops.retrieval.lexical.pg_lexical_common import (
     META_DDL,
     META_TABLE,
@@ -70,19 +76,7 @@ INSTALL_SQL = (
 # top k in a few milliseconds, so exhaustion is established exactly by asking for one row more than k: fewer than
 # k+1 rows back means the visible matches are exhausted (the index scan with the RLS / status filters does not stop
 # early — builds/d smoke, 19,000 hidden rows). Ranking and filters are unchanged (ADR-0002 revision 5 addendum).
-SEARCH_SQL = f"""
-select i.chunk_id, -(i.content <@> to_bm25query(%(q)s, '{BM25_INDEX}')) as score
-from {INDEX_TABLE} i
-join chunks c on c.chunk_id = i.chunk_id
-join documents d on d.doc_id = c.doc_id
-where (i.content <@> to_bm25query(%(q)s, '{BM25_INDEX}')) < 0
-  and (d.status = 'active' or (%(allow_historical)s and d.status = 'archived'))
-  and d.effective_from <= %(as_of)s
-  and (d.effective_to is null or d.effective_to > %(as_of)s)
-  and (%(doc_ids)s::uuid[] is null or c.doc_id = any(%(doc_ids)s::uuid[]))
-order by i.content <@> to_bm25query(%(q)s, '{BM25_INDEX}'), i.chunk_id
-limit %(k_plus_one)s
-"""
+SEARCH_SQL = bm25_search_sql(INDEX_TABLE, BM25_INDEX)
 
 
 class InstallError(RuntimeError):
@@ -138,40 +132,12 @@ def build_index(
                 continue
             rows.append((chunk_id, " ".join(tokens)))
             if len(rows) >= batch:
-                count += _flush(conn, rows)
+                count += flush_text_rows(conn, INDEX_TABLE, rows)
                 rows = []
         cursor.close()
-        count += _flush(conn, rows)
+        count += flush_text_rows(conn, INDEX_TABLE, rows)
         upsert_meta(conn, INDEX_NAME, versions, chunk_count=count, built_by=built_by)
     return IndexBuildReport(index_name=INDEX_NAME, chunk_count=count, skipped_empty=skipped, versions=versions)
-
-
-def _flush(conn: psycopg.Connection[Any], rows: list[tuple[Any, str]]) -> int:
-    if not rows:
-        return 0
-    with conn.cursor() as cur:
-        cur.executemany(f"insert into {INDEX_TABLE} (chunk_id, content) values (%s, %s)", rows)
-    return len(rows)
-
-
-def _params(
-    q: str, k: int, as_of: date | None, allow_historical: bool = False, doc_ids: Sequence[str] | None = None
-) -> dict[str, Any]:
-    """`doc_ids` restricts the page to those documents (named-document focus, record 94); None keeps the corpus."""
-    return {
-        "q": q,
-        "as_of": as_of or date.today(),
-        "k_plus_one": k + 1,
-        "allow_historical": bool(allow_historical),
-        "doc_ids": list(doc_ids) if doc_ids else None,
-    }
-
-
-def _page(rows: Sequence[tuple[Any, Any]], k: int) -> list[tuple[Any, Any, int]]:
-    """k+1 rows -> the page rows `page_to_result` expects: eligible is exact when the fetch came back short, and
-    "at least k+1" otherwise (the page is then exactly k long and not exhausted)."""
-    eligible = len(rows) if len(rows) <= k else k + 1
-    return [(chunk_id, score, eligible) for chunk_id, score in rows[:k]]
 
 
 class PgTextsearchBm25Retriever:
@@ -205,15 +171,15 @@ class PgTextsearchBm25Retriever:
         q = self.query_text(query)
         if not q:
             return empty_result(k, built)
-        rows = self._conn.execute(SEARCH_SQL, _params(q, k, self._as_of, allow_historical, doc_ids)).fetchall()
-        return page_to_result(_page(rows, k), k, built)
+        rows = self._conn.execute(SEARCH_SQL, bm25_params(q, k, self._as_of, allow_historical, doc_ids)).fetchall()
+        return page_to_result(bm25_page(rows, k), k, built)
 
     def explain(self, query: str, k: int, *, allow_historical: bool = False) -> str:
         require_identity(self._conn)
         q = self.query_text(query)
         if not q:
             return ""
-        return explain_json(self._conn, SEARCH_SQL, _params(q, k, self._as_of, allow_historical))
+        return explain_json(self._conn, SEARCH_SQL, bm25_params(q, k, self._as_of, allow_historical))
 
 
 def main(argv: Sequence[str] | None = None) -> int:

@@ -1,7 +1,7 @@
 import pytest
 
+from medops.evals.experiments.lexical.bm25_offline import OfflineBM25Index
 from medops.retrieval.contracts import ChunkRecord, LexicalSearchResult, LexicalVersions
-from medops.retrieval.lexical.bm25_offline import OfflineBM25Index
 from medops.retrieval.lexical.tokenizer import JiebaTokenizerV1, RegexTokenizerV1
 from tests.unit.retrieval.lexical_contract import assert_lexical_adapter_contract
 

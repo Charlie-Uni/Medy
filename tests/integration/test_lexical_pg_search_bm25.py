@@ -10,7 +10,7 @@ from collections.abc import Iterator
 import psycopg
 import pytest
 
-from medops.retrieval.lexical import pg_search_bm25 as c
+from medops.evals.experiments.lexical import pg_search_bm25 as c
 from tests.integration.lexical_adapter_suite import (
     AS_OF,
     CandidateUnderTest,

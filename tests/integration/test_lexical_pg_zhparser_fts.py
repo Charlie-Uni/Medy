@@ -11,7 +11,7 @@ from collections.abc import Iterator
 import psycopg
 import pytest
 
-from medops.retrieval.lexical import pg_zhparser_fts as b
+from medops.evals.experiments.lexical import pg_zhparser_fts as b
 from tests.integration.lexical_adapter_suite import (
     CandidateUnderTest,
     LexicalAdapterSuite,

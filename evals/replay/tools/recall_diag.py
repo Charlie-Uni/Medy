@@ -284,7 +284,7 @@ def main() -> int:
 
     lexical_factory = None
     if args.lexical == "d":
-        from medops.retrieval.lexical.pg_textsearch_bm25 import PgTextsearchBm25Retriever
+        from medops.evals.experiments.lexical.pg_textsearch_bm25 import PgTextsearchBm25Retriever
         from medops.retrieval.production import production_tokenizer
 
         tokenizer = production_tokenizer()

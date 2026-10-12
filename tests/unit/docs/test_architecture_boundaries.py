@@ -69,3 +69,21 @@ def test_missing_source_tree_is_an_error(tmp_path):
     with pytest.raises(SystemExit) as exc:
         boundaries.main(["--src", str(tmp_path)])
     assert exc.value.code == 2
+
+
+@pytest.mark.parametrize(
+    "code",
+    [
+        "from medops.evals.experiments.lexical import pg_textsearch_bm25",
+        'importlib.import_module("medops.evals.experiments.lexical.pg_search_bm25")',
+    ],
+)
+def test_production_lexical_adapter_cannot_import_experiment_code(tmp_path, monkeypatch, code):
+    monkeypatch.setattr(boundaries, "ALLOWLIST", {})
+    path = tmp_path / "medops/retrieval/lexical/example.py"
+    path.parent.mkdir(parents=True)
+    path.write_text(code + "\n")
+    violations, count = boundaries.check(tmp_path)
+    assert count == 1 and violations
+    assert all(row.source == "medops.retrieval.lexical.example" for row in violations)
+    assert boundaries.main(["--src", str(tmp_path)]) == 1
