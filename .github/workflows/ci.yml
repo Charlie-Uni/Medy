@@ -14,6 +14,7 @@ jobs:
       # integration tests create and drop throwaway databases through this admin DSN (tests/integration/conftest.py)
       MEDOPS_TEST_ADMIN_URL: postgresql://medops_admin:ci-only-password@localhost:5432/medops
       MEDOPS_TEST_REDIS_URL: redis://localhost:6379/0
+      MEDOPS_TEST_PG_CONTAINER: medy-ci-postgres
     steps:
       - uses: actions/checkout@v4
       - name: start required PostgreSQL and Redis with cached image pulls
