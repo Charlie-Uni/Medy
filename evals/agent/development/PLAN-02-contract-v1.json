@@ -1,0 +1,87 @@
+{
+  "format": "agent-plan02-contract-proposal-v1",
+  "scenario_id": "pv_material_preparation",
+  "status": "pending_owner_decision",
+  "stage": "S0",
+  "runtime_implemented": false,
+  "executed": false,
+  "medical_gold": false,
+  "unseen_holdout": false,
+  "model_calls": 0,
+  "api_cost_usd": 0,
+  "owner_decisions": {
+    "D-01": {"scope": "actions_states_and_new_agent_profile", "status": "pending"},
+    "D-02": {"scope": "agent_rubric_and_first_version_acceptance", "status": "pending"}
+  },
+  "already_confirmed": ["pv_scenario_scope", "S2_S3_mapping", "ARCH-04_ARCH-11_entry_requirements", "experimental_only_auto_activation", "separate_paid_run_authorization", "unseen_holdout_required_for_improvement_claims"],
+  "action_names": ["extract_ae", "search_documents", "read_evidence", "verify_citations", "clarify", "finish", "escalate"],
+  "states": ["running", "awaiting_clarification", "completed", "escalated", "failed", "cancelled"],
+  "proposed_profile": {
+    "profile_id": "pv-agent-dev-v1",
+    "approval_status": "pending_not_runtime_configuration",
+    "max_decision_steps": 8,
+    "step_includes": ["successful_action", "failed_action", "invalid_action_or_unparseable_planning_response", "terminal_action_request"],
+    "logical_planning_requests_per_step": 1,
+    "sequential_actions": true,
+    "consecutive_same_action_without_progress_limit": 2,
+    "execution_token_cap": 12000,
+    "execution_cost_cap_usd": 0.6,
+    "execution_timeout_s": 125,
+    "deadline_basis": "root_start_absolute_deadline_no_pause_extension",
+    "budget_scope": "all_planning_translation_nested_tools_verification_retries_and_attempts",
+    "new_budget_on_resume": false,
+    "unsupported_resume_behavior": "fail_closed",
+    "subtool_deadline": "min_existing_tool_timeout_and_remaining_root_deadline",
+    "provider_usage_unknown": "retain_conservative_reservation",
+    "paid_run_authorized": false
+  },
+  "server_owned_fields": ["task_id", "run_id", "attempt_id", "trace_id", "principal", "query_context", "resolved_source_selector", "versions", "conditions_hash", "execution_limits", "expires_at", "budget_snapshot", "lease", "evidence_handles"],
+  "observation_types": ["ok", "empty", "ambiguous", "unsupported", "denied_or_unavailable", "invalid_action", "dependency_error", "budget_exceeded", "timeout", "cancelled", "lease_lost"],
+  "terminal_rules": {
+    "completed": "all_required_material_source_support_safety_ownership_budget_and_atomic_audit_checks_pass",
+    "awaiting_clarification": "necessary_user_information_missing_and_no_new_calls_after_pause",
+    "escalated": "business_or_safety_stop_with_authorized_incomplete_material",
+    "failed": "system_budget_deadline_unsupported_recovery_or_lease_failure_not_correct_no_answer",
+    "cancelled": "caller_cancelled_no_new_actions_inflight_work_and_receipts_settled"
+  },
+  "prohibited": ["causality_judgment", "medical_advice", "external_reporting", "arbitrary_generated_code", "model_granted_permissions", "hidden_source_existence_disclosure", "model_invented_facts", "production_policy_write", "private_gold_in_planning_input", "budget_reset_on_resume"],
+  "rubric": {
+    "version": "pv-agent-rubric-proposal-v1",
+    "frozen": false,
+    "dimensions": ["business_completion", "handling_correctness", "tool_appropriateness", "result_driven_adjustment", "narrative_fidelity", "claim_support", "citation_correctness", "source_compliance", "required_completeness", "clarification_stop_escalation", "execution_guards_and_traceability", "efficiency"],
+    "business_completion_requires_terminal": "completed",
+    "correct_stop_is_business_completion": false,
+    "system_failure_is_correct_no_answer": false,
+    "empty_output_passes_completeness": false,
+    "unknown_scoring": "report_separately_do_not_accept_as_completed",
+    "post_run_exclusions_allowed": false,
+    "new_overall_agent_quality_threshold": null,
+    "new_agent_p95_threshold_s": null,
+    "existing_quality_safety_and_production_gates_changed": false,
+    "development_case_gate": "all_listed_cases_and_variants_match_registered_engineering_expectations",
+    "case_ids": ["PV-S0-01", "PV-S0-02", "PV-S0-03", "PV-S0-04", "PV-S0-05", "PV-S0-06", "PV-S0-07", "PV-S0-08", "PV-S0-09", "PV-S0-10", "PV-S0-11", "PV-S0-12"],
+    "variant_requirements": {
+      "PV-S0-10": ["caller_cancelled", "worker_lease_lost"],
+      "PV-S0-11": ["onset_changed_to_2026-10-02", "quote_present_but_claim_unsupported", "missing_no_causality_condition"]
+    }
+  },
+  "isolation": {
+    "implementation_status": "design_preparation",
+    "development_cases_already_exposed": true,
+    "development_cases_may_be_counted_as_unseen": false,
+    "candidate_generator_may_read_validation_or_holdout_query_gold": false,
+    "actual_holdout_tasks_generated": 0,
+    "independent_second_human_available": false
+  },
+  "stage_entry": {
+    "PLAN-02_relevant_contract": "pending_owner_decision",
+    "ARCH-04": "engineering_self_review_passed_record_175",
+    "ARCH-11": "engineering_self_review_passed_record_176",
+    "S2_started_by_this_proposal": false
+  },
+  "unchanged_production_rule": {
+    "target_improvement_pp": 5,
+    "rule_status": "existing_effective_until_explicit_owner_change",
+    "new_unseen_improvement_claim_fixed_pp_requirement": null
+  }
+}
