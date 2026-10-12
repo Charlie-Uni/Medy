@@ -27,6 +27,19 @@ ALLOWLIST: dict[tuple[str, str], str] = {
     ): "The same optional frozen-score import, checked at its exact symbol edge.",
 }
 RULES: dict[str, tuple[str, ...]] = {
+    "medops.infrastructure.observability.schema": (
+        "httpx",
+        "sqlite3",
+        "medops.infrastructure.observability.client",
+        "medops.infrastructure.observability.queue",
+        "medops.infrastructure.observability.feedback",
+    ),
+    "medops.infrastructure.observability.client": (
+        "sqlite3",
+        "medops.infrastructure.observability.queue",
+        "medops.infrastructure.observability.feedback",
+    ),
+    "medops.infrastructure.observability.queue": ("httpx", "medops.infrastructure.observability.feedback"),
     "medops.retrieval.lexical": ("medops.evals",),
     "medops.application": (
         "medops.api",

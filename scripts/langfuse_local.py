@@ -23,7 +23,9 @@ import httpx
 
 from medops.core import telemetry
 from medops.core.config import Settings
-from medops.infrastructure.observability import LangfuseScores, ScoreQueue, feedback_event, score_event
+from medops.infrastructure.observability.client import LangfuseScores
+from medops.infrastructure.observability.queue import ScoreQueue
+from medops.infrastructure.observability.schema import feedback_event, score_event
 
 ROOT = Path(__file__).resolve().parents[1]
 DEPLOY_DIR = ROOT / "deploy" / "langfuse"

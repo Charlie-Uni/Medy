@@ -21,7 +21,9 @@ from psycopg.conninfo import make_conninfo
 from medops.core.config import Settings
 from medops.evals.telemetry import events_from_run
 from medops.infrastructure.db.fact_plane import canonical_fact_plane_id
-from medops.infrastructure.observability import LangfuseScores, ScoreQueue, harvest_feedback
+from medops.infrastructure.observability.client import LangfuseScores
+from medops.infrastructure.observability.feedback import harvest_feedback
+from medops.infrastructure.observability.queue import ScoreQueue
 from medops.worker.supervision import pulse
 
 

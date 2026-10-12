@@ -9,7 +9,7 @@ from typing import Any
 from medops.core.canonical import canonical_hash
 from medops.evals.main_scoring import SCORING_VERSION, main_success
 from medops.evals.run_conditions import FORMAT, validate_attempts
-from medops.infrastructure.observability import score_event
+from medops.infrastructure.observability.schema import score_event
 
 
 def events_from_run(out: Path) -> list[dict[str, Any]]:
