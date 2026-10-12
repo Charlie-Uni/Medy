@@ -10,7 +10,7 @@ MedOps Copilot 是面向医学事务、药物警戒和临床运营的可信医�
 
 ## 最新执行入口（2026-10-12）
 
-后续统一按[当前任务台账](docs/CURRENT_TASKS.md)推进。目标保持为受控业务Agent与模型生成Prompt/声明式Skill的自进化，沿用RAG、Harness、BM25、Redis、Langfuse和模型路由资产。ARCH-01～16对应工程切片自审通过，其中ARCH-12仅完成条件收益评估，生产Pool/事务拆分未采用；CODE-04/05/07与CODE-01/02已核验完成。最新[记录197](docs/reviews/2026-10-12-implementation-197-architecture-authorization-review.md)重新复核当前架构，复现并修复MCP旧快照/错误权限角色与管理接口撤权竞态；229定向、全量2296 passed/70 skipped，费用0。基线8361d8d远端CI全部29步成功，新提交按自身SHA核对；没有重启部署。下一项CODE-03死代码/重复设置契约，然后CODE-06测试夹具。
+后续统一按[当前任务台账](docs/CURRENT_TASKS.md)推进。目标保持为受控业务Agent与模型生成Prompt/声明式Skill的自进化，沿用RAG、Harness、BM25、Redis、Langfuse和模型路由资产。ARCH-01～16对应工程切片自审通过，其中ARCH-12仅完成条件收益评估，生产Pool/事务拆分未采用；CODE-01～05/07已核验完成。最新[记录198](docs/reviews/2026-10-12-implementation-198-code-contract-cleanup.md)核实后删9无用定义，保留PDF兼容入口，收敛策略/检索校验/幂等/效率计算与设置契约；433定向、1060旧行为对照0差异、required全量2313 passed/70 skipped，费用0。上轮5a21的远端CI38197199807全部29步成功，新提交按自身SHA核对；没有重启部署。下一项CODE-06测试夹具。
 
 PLAN-01的合成PV资料整理场景已确认；PLAN-02的[ADR-0012](docs/adr/ADR-0012-agent-evolution-goals-and-acceptance.md)行动/profile与EVAL-32验收仍需沟通，S2业务Agent尚未实现。自动激活仅实验，S3改进声明须有合格未见盲测，每轮付费单独授权；工程通过、模型质量、正式发布和部署分别记录。下方保留历轮快照，当前状态以台账为准。
 

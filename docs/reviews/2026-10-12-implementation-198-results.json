@@ -1,0 +1,389 @@
+{
+  "record": 198,
+  "task": "CODE-03",
+  "date": "2026-10-12",
+  "status": "DONE",
+  "baseline_commit": "5a21f74178b9a41956ff8ac23598f18a0a01bc55",
+  "author": "Codex",
+  "reviewer": "Codex self review; no second independent human",
+  "hosted_model_calls": 0,
+  "cost_usd": 0,
+  "deployment_restarted": false,
+  "required_gate": {
+    "exit_code": 0,
+    "elapsed_s": 303.384,
+    "command": [
+      "make",
+      "check"
+    ],
+    "worktree": "/Users/leaf/.cache/medy-checks/audit198-verified-2_ueoy2s",
+    "required_services": true
+  },
+  "pytest": {
+    "passed": 2313,
+    "skipped": 70,
+    "warnings": 1,
+    "pytest_elapsed_s": 285.79
+  },
+  "targeted": {
+    "exit_code": 0,
+    "elapsed_s": 57.739,
+    "command": [
+      "/Users/leaf/.cache/medy-checks/audit198-verified-2_ueoy2s/venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/unit/retrieval",
+      "tests/unit/application/test_policy_loader.py",
+      "tests/unit/loop/test_gate.py",
+      "tests/unit/api/test_admin_routes.py",
+      "tests/unit/api/test_runtime_connect.py",
+      "tests/unit/bootstrap",
+      "tests/integration/test_ingestion.py",
+      "tests/integration/test_publish_outbox.py",
+      "tests/integration/test_admin_stores.py",
+      "tests/integration/test_final_output.py"
+    ],
+    "worktree": "/Users/leaf/.cache/medy-checks/audit198-verified-2_ueoy2s",
+    "required_services": true,
+    "passed": 433,
+    "pytest_elapsed_s": 54.12
+  },
+  "initial_targeted": {
+    "exit_code": 1,
+    "elapsed_s": 36.036,
+    "command": [
+      "/Users/leaf/.cache/medy-checks/audit198-verified-2_ueoy2s/venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/unit/retrieval",
+      "tests/unit/application/test_policy_loader.py",
+      "tests/unit/loop/test_gate.py",
+      "tests/unit/api/test_admin_routes.py",
+      "tests/unit/api/test_runtime_connect.py",
+      "tests/unit/bootstrap"
+    ],
+    "worktree": "/Users/leaf/.cache/medy-checks/audit198-verified-2_ueoy2s",
+    "required_services": true,
+    "failed": 2,
+    "passed": 324,
+    "reason": "partial fake settings omitted required consumer attributes; use real Settings and verify custom limits"
+  },
+  "equivalence": {
+    "baseline_commit": "5a21f74178b9a41956ff8ac23598f18a0a01bc55",
+    "baseline_source_sha256": {
+      "src/medops/retrieval/contracts.py": "b6abfc89ad26f0b7601d891cc6954f0d735bdaa9c2a9a624310082bd03b9b0f1",
+      "src/medops/retrieval/vector/contracts.py": "db625e7e2db7ed7b18554a2bed7c84f8aff00465a09831216d0cd3a1d1260e80",
+      "src/medops/retrieval/lexical/boundary.py": "a8ec7a60210577683003d2fc0d5649df3ae4f545a985116d1e27b9155dd25b3b",
+      "src/medops/retrieval/vector/boundary.py": "d70db0daca355ec83e399d9efee36ad2b8a186cbe2b89879a900548b0d96ab6a",
+      "src/medops/application/policy_loader.py": "7f494abff1895d17b9fbdb4320403f1ae84e1cb51d6cf2c676cd00e1cccb7600",
+      "src/medops/loop/gate.py": "db190a3b4a70f182c5a225b221a1655cf37b0770eeb7c4845cc5479926f9cf51"
+    },
+    "counts": {
+      "schemas": 6,
+      "result_validation": 252,
+      "signatures": 2,
+      "boundaries": 630,
+      "policies": 54,
+      "gates": 108,
+      "gate_errors": 8
+    },
+    "comparisons": 1060,
+    "mismatches": []
+  },
+  "matrix": {
+    "result_variants": [
+      "normal",
+      "ties",
+      "wrong-ties",
+      "order",
+      "rank",
+      "duplicate",
+      "empty"
+    ],
+    "result_requested_k": [
+      1,
+      2,
+      3
+    ],
+    "result_returned_count": [
+      0,
+      1,
+      2
+    ],
+    "result_candidate_exhausted": [
+      false,
+      true
+    ],
+    "boundary_k": [
+      true,
+      0,
+      1,
+      20,
+      21,
+      1.5,
+      "1"
+    ],
+    "boundary_query": [
+      "query",
+      " 　 ",
+      "  Ａspirin　"
+    ],
+    "boundary_doc_ids": [
+      null,
+      [],
+      [
+        "a"
+      ]
+    ],
+    "boundary_behavior": [
+      "ok",
+      "versions",
+      "requested_k",
+      "invalid",
+      "mutate"
+    ],
+    "boolean_keys": [
+      "multi_query",
+      "doc_focus",
+      "source_constraint"
+    ],
+    "boolean_bases": [
+      false,
+      true
+    ],
+    "boolean_entries": [
+      null,
+      {},
+      true,
+      {
+        "to": true
+      },
+      {
+        "to": false
+      },
+      {
+        "to": 0
+      },
+      {
+        "to": 1
+      },
+      {
+        "to": "true"
+      },
+      {
+        "from": false
+      }
+    ],
+    "gate_profiles": [
+      "quality",
+      "cost",
+      "spend"
+    ],
+    "gate_items": 40,
+    "gate_runs": 3,
+    "gate_success_baseline": 28,
+    "gate_success_candidate": [
+      27,
+      28,
+      32
+    ],
+    "gate_usage_baseline": [
+      0.0,
+      1e-07,
+      2.123456789
+    ],
+    "gate_usage_candidate": [
+      0.0,
+      7.5e-08,
+      1.592592592,
+      2.0
+    ]
+  },
+  "initial_equivalence_mismatches": {
+    "count": 48,
+    "product_defect": false,
+    "reason": "old Pydantic version class compared with a new class; unify version class identity only, retain original function/model/gate source; final 1060 comparisons match"
+  },
+  "structural": {
+    "baseline_commit": "5a21f74178b9a41956ff8ac23598f18a0a01bc55",
+    "removed_definitions": [
+      "negation_count",
+      "env_flag",
+      "top_k_ids",
+      "as_sequence",
+      "sql_tsvector_target",
+      "content_target",
+      "public_error",
+      "snapshot_sizes",
+      "kinds_present"
+    ],
+    "remaining_ast_references": {
+      "negation_count": [],
+      "env_flag": [],
+      "top_k_ids": [],
+      "as_sequence": [],
+      "sql_tsvector_target": [],
+      "content_target": [],
+      "public_error": [],
+      "snapshot_sizes": [],
+      "kinds_present": []
+    },
+    "scanned_python_files": 586,
+    "validate_pdf_ast_preserved": true,
+    "admin_public_routes": 10,
+    "admin_mutation_routes_compared": [
+      "change_document_status",
+      "change_document_acl",
+      "decide_policy",
+      "release_policy",
+      "promote_policy",
+      "rollback_policy"
+    ],
+    "admin_signature_decorator_action_role_fence_preserved": true,
+    "changed_source_lines_before": 3339,
+    "changed_source_lines_after": 3304,
+    "line_delta": -35
+  },
+  "source_binding": {
+    "count": 681,
+    "mismatches": [],
+    "basis": "clean baseline HEAD verified against record 197, followed by explicit 21 implementation/test path SHA comparison after final formatting",
+    "changed_paths_sha256": {
+      "src/medops/api/routes/admin.py": "27a00dc5ef00d9ee103ba39813d4af06d591114f423c692892c058472e9927df",
+      "src/medops/application/audit.py": "bd3a2ac200c152439898343b52b4e72cd21ca1266055859df77160e75bef1022",
+      "src/medops/application/payloads.py": "078e2397ca7bc332f41c5dc00db8c6bf6a87a8092b5f57a3f8fb4ac3932b4319",
+      "src/medops/application/policy_loader.py": "e2cd43dd55f8523d00a35aecc05bc0c382303f76cbe76c957feb07140875d401",
+      "src/medops/bootstrap/connections.py": "430e6ce75c1fc8a1f0edb23e0a498074c0f2590880f8b539d90b0ef6722f05fa",
+      "src/medops/bootstrap/runtime.py": "7d2d96f80a2a149b9d7656f8652dbee4dc9b5115fa1cc3e2f161ec9ceb4e5f59",
+      "src/medops/loop/gate.py": "9ef17d2773fdbb4c7e7e703a34b8436f147c3367e9f42238e655d674ab8f4e8e",
+      "src/medops/retrieval/boundary.py": "6cb34a69633b6b5860406b17be8e53309d69a9f08f5885d4b25603d651880901",
+      "src/medops/retrieval/contracts.py": "c91a480f9317176a1799b28984676c6c5b49217e024db795fe2602d687fa6b73",
+      "src/medops/retrieval/doc_focus.py": "8deb7c00add3dc971f1306b52124dc6012e7a86a0ab0ff91b7b3faf8f9441927",
+      "src/medops/retrieval/hybrid.py": "d791f9ea68b93580e862e94a124fcd626a8660a9dd2e3341aa50ae466dff7ede",
+      "src/medops/retrieval/lexical/boundary.py": "a365044bc4ee3493454426a80ba643d23cf0db0ae819a1898faffb198c795e71",
+      "src/medops/retrieval/lexical/index_consumer.py": "fb96151261a71c17ffe7d008a7edad2de60a291a420b716e5c825726a3e119b0",
+      "src/medops/retrieval/rerank.py": "f4f4fb3c72a53c0fea3b18fd08849ca5699531fdd42f60aff275df1abb90b2a8",
+      "src/medops/retrieval/vector/boundary.py": "f13eed5056e59e44601cfafe6e3d702c9de4bef45d53e82e0a239567767f8833",
+      "src/medops/retrieval/vector/contracts.py": "d06489957858ca85d668e5869df3a02ad3e6b241961147afa94cf1acc4be7908",
+      "src/medops/verification/rules.py": "7f1d706bd5d1138eacd0ba4e028146625ac54739f4dea6a99cff32d031f45cb0",
+      "src/medops/worker/retrieval.py": "503706b2590dda894bb290c8aa15d1cdf23aa59d43771acb499c6215b6016328",
+      "tests/unit/application/test_policy_loader.py": "1d1f7c158f302474d132e62e8795d23c738527f1faea0a7a2004876a26d3d222",
+      "tests/unit/retrieval/test_maintenance_worker.py": "c54ecb493b58ea1d4e90104dd976d364a9d35c85b9e2b4f6eace320083512e43",
+      "tests/unit/retrieval/test_search_boundary_compatibility.py": "24b3991fd3f136fa55d474c58f989adbad640eb29b3aac9d368ca0fc674aea6f"
+    }
+  },
+  "private_probe_scripts_sha256": {
+    "equivalence.py": "1cdb754e42c02dd4de044fbe363fc680213396b9a3ffadd16ad6a41a647d5fff",
+    "structure.py": "c5002b0615c5814e48e06a2ae4100f26771c0908115a8d7a4ea422c3577d6ce4",
+    "sync-explicit.py": "8c10c80528d30bc0cc2ad273d4ed27122b2b53e88afea13b41b6c5292a18ba32"
+  },
+  "hygiene": {
+    "frozen_gold_scorer_versions_migrations_schema_release_policy_modified": false,
+    "private_outputs_committed": false,
+    "scope": "21 explicit code/test paths plus documentation; unchanged sets verified by audit and Git scope"
+  },
+  "self_review": {
+    "scope": "PASS",
+    "adr_stage": "PASS",
+    "correctness_failures": "PASS",
+    "permissions_data": "PASS",
+    "budget_cancellation_side_effects": "PASS",
+    "traceability": "PASS",
+    "verification": "PASS",
+    "documentation": "PASS"
+  },
+  "next_task": "CODE-06",
+  "remaining_boundaries": [
+    "PLAN-02/EVAL-32 not frozen",
+    "Dynamic Agent and model-generated evolution not implemented",
+    "No new unseen holdout or second human",
+    "No real model quality/API latency/capacity/deployment proof",
+    "Paid runs still require per-run authorization"
+  ],
+  "documentation": {
+    "exit_code": 0,
+    "elapsed_s": 11.04,
+    "command": [
+      "/Users/leaf/.cache/medy-checks/audit198-verified-2_ueoy2s/venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/unit/docs"
+    ],
+    "worktree": "/Users/leaf/.cache/medy-checks/audit198-verified-2_ueoy2s",
+    "required_services": true,
+    "passed": 41,
+    "pytest_elapsed_s": 10.2,
+    "structural": {
+      "unique_task_ids": 143,
+      "removed_task_ids": [],
+      "new_task_ids": [],
+      "duplicate_ids": [],
+      "local_links_checked": 129,
+      "missing_links": [],
+      "code_hashes_rechecked": 21
+    }
+  },
+  "publication_method": "explicit per-path stage/content hashes; initial stalled Git refresh safely aborted before HEAD changed; third and later commits use the verified external work tree for this command only, same original main branch and bytes, no permanent work-tree configuration",
+  "source_commits": [
+    {
+      "group": "dead",
+      "sha": "8874dc8d107ac2f123c0f030756c2797fb48935d",
+      "paths": [
+        "src/medops/application/audit.py",
+        "src/medops/application/payloads.py",
+        "src/medops/retrieval/doc_focus.py",
+        "src/medops/retrieval/hybrid.py",
+        "src/medops/retrieval/lexical/index_consumer.py",
+        "src/medops/retrieval/rerank.py",
+        "src/medops/verification/rules.py"
+      ]
+    },
+    {
+      "group": "retrieval",
+      "sha": "f43d275a457be1da5e3b706e2cd8320ac98b3d52",
+      "paths": [
+        "src/medops/retrieval/boundary.py",
+        "src/medops/retrieval/contracts.py",
+        "src/medops/retrieval/lexical/boundary.py",
+        "src/medops/retrieval/vector/boundary.py",
+        "src/medops/retrieval/vector/contracts.py",
+        "tests/unit/retrieval/test_search_boundary_compatibility.py"
+      ]
+    },
+    {
+      "group": "policy",
+      "sha": "7e00cc03a89a1f78b1f054daac345a42303124f1",
+      "paths": [
+        "src/medops/application/policy_loader.py",
+        "tests/unit/application/test_policy_loader.py"
+      ]
+    },
+    {
+      "group": "admin",
+      "sha": "cdf605ea1213aa1e9b048a9e4010a525e039194a",
+      "paths": [
+        "src/medops/api/routes/admin.py"
+      ]
+    },
+    {
+      "group": "gate",
+      "sha": "f03112b9b19643e917d7db696ee096fa64a73ca1",
+      "paths": [
+        "src/medops/loop/gate.py"
+      ]
+    },
+    {
+      "group": "settings",
+      "sha": "a6564f702615512729a556865e6bbbadbebdf105",
+      "paths": [
+        "src/medops/bootstrap/connections.py",
+        "src/medops/bootstrap/runtime.py",
+        "src/medops/worker/retrieval.py",
+        "tests/unit/retrieval/test_maintenance_worker.py"
+      ]
+    }
+  ]
+}
