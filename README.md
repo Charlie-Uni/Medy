@@ -8,7 +8,7 @@ MedOps Copilot 是面向医学事务、药物警戒和临床运营的可信医�
 
 每个任务的当前状态与对应基础知识点，见 [任务与知识点对照](docs/TASK_KNOWLEDGE_MAP.md)。
 
-## 最新执行入口（2026-10-11）
+## 最新执行入口（2026-10-12）
 
 后续统一按[当前任务台账](docs/CURRENT_TASKS.md)推进：保留此前架构、评测、BM25、Redis、Langfuse、模型路由和使用闭环任务，新增受控 Agent 与模型生成 Prompt/声明式 Skill 的自进化任务。顺序为目标与验收 → 必要执行保护 → 首个业务 Agent → Prompt 自进化 → Skill/使用闭环 → 完整验证与交付。PLAN-01 设计证据与 PV 场景范围已确认，PLAN-02 的 [ADR-0012](docs/adr/ADR-0012-agent-evolution-goals-and-acceptance.md) 剩余契约继续沟通；ARCH-04/11 及当前任务租约 ARCH-05、历史输入 ARCH-02、最终判断 ARCH-03、异步审计 ARCH-06、执行记录和诊断边界 ARCH-07 及共用装配 ARCH-08 工程自审通过；ARCH-09稳定反馈身份、ARCH-10共享scorer和ARCH-13部署监督及ARCH-14必需CI均已通过对应工程自审，ARCH-12仅诊断/方案评估通过、事务拆分未采用，下一项ARCH-15最终输出权限/事实核验；S2 仍须满足 PLAN-02 相关契约和其他正确性前置。自动激活仅实验，S3 改进声明须有未见盲测，每轮付费单独授权。新增能力尚未实现；盲测新增工作量确认后重估工期。
 
@@ -62,3 +62,5 @@ ARCH-14已补required依赖失败门、架构显式检查与已发布配置真�
 2026-10-12 后续：ARCH-15最终输出授权/事实复核工程自审通过，见[记录191](docs/reviews/2026-10-12-implementation-191-final-output-validation.md)和[契约](docs/FINAL_OUTPUT_VALIDATION.md)：Ask/五类Skill/MCP、Task旧结果读取、正负查询观察与检查至审计提交栅栏；全量2213/70、563维护输入一致、0托管调用。三库备份后升至0026，32表既有字段摘要/5索引计数不变；主库与安全库ready。主库53/安全库2个旧completed缺原始绑定，新接口拒绝结果但保留数据。没有重启业务部署；下一CODE-04，PLAN-02及Agent/S2/S3、独立人工、盲测和质量/付费门继续保持。
 
 2026-10-12 后续：ARCH-15三批已推送，78218ae远端CI38186588254全步骤成功。CODE-04实验/生产词法边界自审通过，见[记录192](docs/reviews/2026-10-12-implementation-192-lexical-experiment-boundaries.md)与[迁移说明](docs/EXPERIMENT_ADAPTER_BOUNDARY.md)：四纯实验适配器迁出、BM25通用机制共享、版本/SQL/分词/分页对照一致；396定向、全量2223/70、0托管费用。历史原命令和产物保留，旧CLI使用新模块路径，A2回滚仍保留；下一CODE-05，Agent/PLAN-02及质量门保持。
+
+CODE-05已完成[维护工具打包](docs/EVALUATION_TOOLING.md)，自审见[记录193](docs/reviews/2026-10-12-implementation-193-evaluation-tool-packaging.md)：79模块入规范包、67原命令入口保留，收敛预算启动/事务/文件/冻结/复核，修复MPS缓存消息类型与重判连接泄漏。595定向、全量2240/70、665维护输入一致；57帮助和170安全起草内容对照一致，0托管费用。CODE-04的68783f0远端CI38188078574全步骤通过；下一CODE-07，PLAN-02/S2/S3、真实质量与人工/盲测门保持。

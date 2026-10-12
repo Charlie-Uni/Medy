@@ -4,6 +4,10 @@
 
 本文汇总已有规则并明确实施状态，不修改[工程基线 §5.9](../docs/ENGINEERING_BASELINE.md)、原 ADR 门禁或已冻结版本。数字来自清单与实际文件检查，意见和待办不能当作人工签字。
 
+## 维护工具入口（2026-10-12）
+
+实现统一位于 `src/medops/evals/tools/`，67个原可执行文件保留相同参数和退出/清理行为；辅助Python导入使用规范包。79模块迁移、共享机制、历史兼容及首次失败补救见[工具契约](../docs/EVALUATION_TOOLING.md)与[记录193](../docs/reviews/2026-10-12-implementation-193-evaluation-tool-packaging.md)。历史draft工具和冻结字节保留；付费运行仍须本次授权。本节补维护入口，不改变下方数据/标注规范。
+
 ## 1. 现在使用哪些数据
 
 机器清单：[dataset_catalog.json](dataset_catalog.json)。它固定目录、dataset_hash、manifest 哈希、主集映射及复核任务来源。运行前显式选版本，不能仅以“最新”或目录存在判断有效。

@@ -170,3 +170,5 @@ ARCH-12评估范围八项自审通过，见[记录188](reviews/2026-10-11-implem
 记录189已分批推送完成工作；[记录190](reviews/2026-10-12-implementation-190-compose-ci-compatibility.md)修复干净CI的Compose输入，8d3669e远端38184157416全步骤成功。ARCH-15已通过[记录191](reviews/2026-10-12-implementation-191-final-output-validation.md)八项工程自审：真实输出边界复现、身份/完整证据/正负lookup终检、0026读写栅栏、旧Task读取和原子审计；全量2213 passed/70 skipped，三库升级且32表既有字段摘要/5索引计数保持，0费用。53/2/0个历史completed无原绑定，原数据保留，新接口失败关闭；没有重启部署。下一CODE-04；PLAN-02、S2/S3、盲测、第二独立人工、逐次付费与生产签字约束保持。
 
 CODE-04已通过[记录192](reviews/2026-10-12-implementation-192-lexical-experiment-boundaries.md)八项工程自审：四纯实验适配器迁入评测命名空间，生产/候选D的通用BM25机制共享且参数/版本/SQL/分词对照一致；396定向、全量2223/70、566维护输入一致，0托管调用。ARCH-15的78218ae远端CI38186588254全部步骤成功；CODE-04的远端结果按其推送SHA另记。下一CODE-05；A2回滚、冻结数据、Agent目标/PLAN-02、独立人工、盲测和逐次付费/生产批准保持。
+
+CODE-05已通过[记录193](reviews/2026-10-12-implementation-193-evaluation-tool-packaging.md)八项工程自审：79维护工具规范入包、67原CLI保留、12辅助去壳，预算启动/部门事务/文件/冻结失败恢复/后继复核共享；57help、170起草、13wire/3SQL方法对照一致。MPS协议和重判连接缺陷修复；595定向、全量2240/70、665维护输入一致，0费用。CODE-04的68783f0远端CI38188078574全部步骤成功；本轮推送及CI按新SHA另记。下一CODE-07；没有推进尚待PLAN-02契约的S2，没有把整理计作质量/容量/盲测完成。

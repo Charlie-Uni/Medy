@@ -1,0 +1,788 @@
+{
+  "record": 193,
+  "date": "2026-10-12",
+  "task": "CODE-05",
+  "implementer": "Codex",
+  "self_reviewer": "Codex",
+  "independent_human_review": false,
+  "baseline_head": "68783f0f617298069107ceaea1a9d8796094e69b",
+  "full_check": {
+    "exit_code": 0,
+    "elapsed_s": 91.257,
+    "command": [
+      "make",
+      "check"
+    ],
+    "worktree": "/Users/leaf/.cache/medy-checks/code05-verified-w3tgo3l0",
+    "required_services": true,
+    "passed": 2240,
+    "skipped": 70,
+    "warnings": 1,
+    "pytest_seconds": 85.91,
+    "formatted_files": 666,
+    "mypy_sources": 318,
+    "architecture_modules": 318,
+    "architecture_violations": 0,
+    "architecture_exceptions": 2
+  },
+  "targeted": {
+    "exit_code": 0,
+    "elapsed_s": 18.568,
+    "command": [
+      "/Users/leaf/.cache/medy-checks/code05-verified-w3tgo3l0/venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/unit/evals",
+      "tests/unit/retrieval/test_inference_process.py",
+      "tests/integration/test_eval_transactions.py"
+    ],
+    "worktree": "/Users/leaf/.cache/medy-checks/code05-verified-w3tgo3l0",
+    "required_services": true,
+    "passed": 595,
+    "pytest_seconds": 17.49
+  },
+  "compatibility": {
+    "help_commands": 57,
+    "help_stdout_and_exit_mismatches": [],
+    "non_argparse_commands_not_executed": 10,
+    "safety_authoring_rows": 170,
+    "safety_authoring_modules": 9,
+    "safety_rows_identical": true,
+    "safety_rows_sha256": "8a8413da5fd964ed46d44489c5137246e96b1b1ae21edd59ef23c96fcb7f8b87",
+    "review_wire_ast_functions_identical": [
+      "actual_prompt_hash",
+      "binding",
+      "build_prompt",
+      "checkpoint",
+      "current_verdicts",
+      "migrate_legacy",
+      "parse_reply",
+      "record_hash",
+      "save_chunk_inputs",
+      "start_targeted_review",
+      "validate_resume",
+      "verify_chunk",
+      "verify_review"
+    ],
+    "fact_lookup_ast_methods_identical": [
+      "resolve_chunks",
+      "docs_for_hashes",
+      "canary_chunks"
+    ],
+    "hosted_calls": 0,
+    "cost_usd": 0,
+    "original_entrypoint_footers_ast_identical": 67,
+    "original_maintained_modules": 79,
+    "original_cli_paths": 67,
+    "removed_helper_paths": 12
+  },
+  "source_comparison": {
+    "count": 665,
+    "mismatches": [],
+    "sha256_of_sorted_path_hash_json": "f04d3368edc38a7ef8421005c3076e1c64087308783dc1dd49ff70e2517bdf69"
+  },
+  "migration_mapping": {
+    "evals/experiments/lexical/tools/export_chunk_snapshot.py": {
+      "path": "src/medops/evals/tools/lexical/export_chunk_snapshot.py",
+      "module": "medops.evals.tools.lexical.export_chunk_snapshot",
+      "main": true
+    },
+    "evals/glossary/tools/build_concepts.py": {
+      "path": "src/medops/evals/tools/glossary/build_concepts.py",
+      "module": "medops.evals.tools.glossary.build_concepts",
+      "main": true
+    },
+    "evals/glossary/tools/build_glossary.py": {
+      "path": "src/medops/evals/tools/glossary/build_glossary.py",
+      "module": "medops.evals.tools.glossary.build_glossary",
+      "main": true
+    },
+    "evals/harness/tools/answer_review.py": {
+      "path": "src/medops/evals/tools/harness/answer_review.py",
+      "module": "medops.evals.tools.harness.answer_review",
+      "main": true
+    },
+    "evals/harness/tools/answer_review_plan.py": {
+      "path": "src/medops/evals/tools/harness/answer_review_plan.py",
+      "module": "medops.evals.tools.harness.answer_review_plan",
+      "main": true
+    },
+    "evals/harness/tools/chaos_run.py": {
+      "path": "src/medops/evals/tools/harness/chaos_run.py",
+      "module": "medops.evals.tools.harness.chaos_run",
+      "main": true
+    },
+    "evals/harness/tools/demo_walkthrough.py": {
+      "path": "src/medops/evals/tools/harness/demo_walkthrough.py",
+      "module": "medops.evals.tools.harness.demo_walkthrough",
+      "main": true
+    },
+    "evals/harness/tools/focus_check.py": {
+      "path": "src/medops/evals/tools/harness/focus_check.py",
+      "module": "medops.evals.tools.harness.focus_check",
+      "main": true
+    },
+    "evals/harness/tools/perf_run.py": {
+      "path": "src/medops/evals/tools/harness/perf_run.py",
+      "module": "medops.evals.tools.harness.perf_run",
+      "main": true
+    },
+    "evals/harness/tools/prepare_answer_review.py": {
+      "path": "src/medops/evals/tools/harness/prepare_answer_review.py",
+      "module": "medops.evals.tools.harness.prepare_answer_review",
+      "main": true
+    },
+    "evals/harness/tools/run_answer_review.py": {
+      "path": "src/medops/evals/tools/harness/run_answer_review.py",
+      "module": "medops.evals.tools.harness.run_answer_review",
+      "main": true
+    },
+    "evals/harness/tools/safety_run.py": {
+      "path": "src/medops/evals/tools/harness/safety_run.py",
+      "module": "medops.evals.tools.harness.safety_run",
+      "main": true
+    },
+    "evals/harness/tools/skill_smoke.py": {
+      "path": "src/medops/evals/tools/harness/skill_smoke.py",
+      "module": "medops.evals.tools.harness.skill_smoke",
+      "main": true
+    },
+    "evals/harness/tools/smoke_ask.py": {
+      "path": "src/medops/evals/tools/harness/smoke_ask.py",
+      "module": "medops.evals.tools.harness.smoke_ask",
+      "main": true
+    },
+    "evals/harness/tools/source_check.py": {
+      "path": "src/medops/evals/tools/harness/source_check.py",
+      "module": "medops.evals.tools.harness.source_check",
+      "main": true
+    },
+    "evals/harness/tools/summarize_run.py": {
+      "path": "src/medops/evals/tools/harness/summarize_run.py",
+      "module": "medops.evals.tools.harness.summarize_run",
+      "main": true
+    },
+    "evals/main_set/tools/apply_external_review.py": {
+      "path": "src/medops/evals/tools/main_set/apply_external_review.py",
+      "module": "medops.evals.tools.main_set.apply_external_review",
+      "main": true
+    },
+    "evals/main_set/tools/apply_external_review_2.py": {
+      "path": "src/medops/evals/tools/main_set/apply_external_review_2.py",
+      "module": "medops.evals.tools.main_set.apply_external_review_2",
+      "main": true
+    },
+    "evals/main_set/tools/apply_resolutions.py": {
+      "path": "src/medops/evals/tools/main_set/apply_resolutions.py",
+      "module": "medops.evals.tools.main_set.apply_resolutions",
+      "main": true
+    },
+    "evals/main_set/tools/apply_sheet_edits.py": {
+      "path": "src/medops/evals/tools/main_set/apply_sheet_edits.py",
+      "module": "medops.evals.tools.main_set.apply_sheet_edits",
+      "main": true
+    },
+    "evals/main_set/tools/assemble.py": {
+      "path": "src/medops/evals/tools/main_set/assemble.py",
+      "module": "medops.evals.tools.main_set.assemble",
+      "main": true
+    },
+    "evals/main_set/tools/assemble_successor.py": {
+      "path": "src/medops/evals/tools/main_set/assemble_successor.py",
+      "module": "medops.evals.tools.main_set.assemble_successor",
+      "main": true
+    },
+    "evals/main_set/tools/backfill_query_en.py": {
+      "path": "src/medops/evals/tools/main_set/backfill_query_en.py",
+      "module": "medops.evals.tools.main_set.backfill_query_en",
+      "main": true
+    },
+    "evals/main_set/tools/build_conflict_fixtures.py": {
+      "path": "src/medops/evals/tools/main_set/build_conflict_fixtures.py",
+      "module": "medops.evals.tools.main_set.build_conflict_fixtures",
+      "main": true
+    },
+    "evals/main_set/tools/build_corpus.py": {
+      "path": "src/medops/evals/tools/main_set/build_corpus.py",
+      "module": "medops.evals.tools.main_set.build_corpus",
+      "main": true
+    },
+    "evals/main_set/tools/build_successor_mapping.py": {
+      "path": "src/medops/evals/tools/main_set/build_successor_mapping.py",
+      "module": "medops.evals.tools.main_set.build_successor_mapping",
+      "main": true
+    },
+    "evals/main_set/tools/carry_forward_resolutions.py": {
+      "path": "src/medops/evals/tools/main_set/carry_forward_resolutions.py",
+      "module": "medops.evals.tools.main_set.carry_forward_resolutions",
+      "main": true
+    },
+    "evals/main_set/tools/check_drafts.py": {
+      "path": "src/medops/evals/tools/main_set/check_drafts.py",
+      "module": "medops.evals.tools.main_set.check_drafts",
+      "main": true
+    },
+    "evals/main_set/tools/compile_candidates.py": {
+      "path": "src/medops/evals/tools/main_set/compile_candidates.py",
+      "module": "medops.evals.tools.main_set.compile_candidates",
+      "main": true
+    },
+    "evals/main_set/tools/disputes_sheet.py": {
+      "path": "src/medops/evals/tools/main_set/disputes_sheet.py",
+      "module": "medops.evals.tools.main_set.disputes_sheet",
+      "main": true
+    },
+    "evals/main_set/tools/draft_common.py": {
+      "path": "src/medops/evals/tools/main_set/draft_common.py",
+      "module": "medops.evals.tools.main_set.draft_common",
+      "main": false
+    },
+    "evals/main_set/tools/draft_llm.py": {
+      "path": "src/medops/evals/tools/main_set/draft_llm.py",
+      "module": "medops.evals.tools.main_set.draft_llm",
+      "main": true
+    },
+    "evals/main_set/tools/draft_noanswer.py": {
+      "path": "src/medops/evals/tools/main_set/draft_noanswer.py",
+      "module": "medops.evals.tools.main_set.draft_noanswer",
+      "main": true
+    },
+    "evals/main_set/tools/fix_span_boundaries.py": {
+      "path": "src/medops/evals/tools/main_set/fix_span_boundaries.py",
+      "module": "medops.evals.tools.main_set.fix_span_boundaries",
+      "main": true
+    },
+    "evals/main_set/tools/freeze.py": {
+      "path": "src/medops/evals/tools/main_set/freeze.py",
+      "module": "medops.evals.tools.main_set.freeze",
+      "main": true
+    },
+    "evals/main_set/tools/make_schemas.py": {
+      "path": "src/medops/evals/tools/main_set/make_schemas.py",
+      "module": "medops.evals.tools.main_set.make_schemas",
+      "main": true
+    },
+    "evals/main_set/tools/make_sheets.py": {
+      "path": "src/medops/evals/tools/main_set/make_sheets.py",
+      "module": "medops.evals.tools.main_set.make_sheets",
+      "main": true
+    },
+    "evals/main_set/tools/migrate_annex_i_rev5.py": {
+      "path": "src/medops/evals/tools/main_set/migrate_annex_i_rev5.py",
+      "module": "medops.evals.tools.main_set.migrate_annex_i_rev5",
+      "main": true
+    },
+    "evals/main_set/tools/na_pages_relevant.py": {
+      "path": "src/medops/evals/tools/main_set/na_pages_relevant.py",
+      "module": "medops.evals.tools.main_set.na_pages_relevant",
+      "main": true
+    },
+    "evals/main_set/tools/pack_review.py": {
+      "path": "src/medops/evals/tools/main_set/pack_review.py",
+      "module": "medops.evals.tools.main_set.pack_review",
+      "main": true
+    },
+    "evals/main_set/tools/pdf_index.py": {
+      "path": "src/medops/evals/tools/main_set/pdf_index.py",
+      "module": "medops.evals.tools.main_set.pdf_index",
+      "main": true
+    },
+    "evals/main_set/tools/prepare_revision_review.py": {
+      "path": "src/medops/evals/tools/main_set/prepare_revision_review.py",
+      "module": "medops.evals.tools.main_set.prepare_revision_review",
+      "main": true
+    },
+    "evals/main_set/tools/prepare_successor_review.py": {
+      "path": "src/medops/evals/tools/main_set/prepare_successor_review.py",
+      "module": "medops.evals.tools.main_set.prepare_successor_review",
+      "main": true
+    },
+    "evals/main_set/tools/review_binding_check.py": {
+      "path": "src/medops/evals/tools/main_set/review_binding_check.py",
+      "module": "medops.evals.tools.main_set.review_binding_check",
+      "main": true
+    },
+    "evals/main_set/tools/review_prompt_check.py": {
+      "path": "src/medops/evals/tools/main_set/review_prompt_check.py",
+      "module": "medops.evals.tools.main_set.review_prompt_check",
+      "main": true
+    },
+    "evals/main_set/tools/run_review.py": {
+      "path": "src/medops/evals/tools/main_set/run_review.py",
+      "module": "medops.evals.tools.main_set.run_review",
+      "main": true
+    },
+    "evals/main_set/tools/seed_candidates_v12.py": {
+      "path": "src/medops/evals/tools/main_set/seed_candidates_v12.py",
+      "module": "medops.evals.tools.main_set.seed_candidates_v12",
+      "main": true
+    },
+    "evals/probe/precise_clause/tools/assemble_successor.py": {
+      "path": "src/medops/evals/tools/probe/assemble_successor.py",
+      "module": "medops.evals.tools.probe.assemble_successor",
+      "main": true
+    },
+    "evals/probe/precise_clause/tools/freeze.py": {
+      "path": "src/medops/evals/tools/probe/freeze.py",
+      "module": "medops.evals.tools.probe.freeze",
+      "main": true
+    },
+    "evals/replay/tools/build_replay_set.py": {
+      "path": "src/medops/evals/tools/replay/build_replay_set.py",
+      "module": "medops.evals.tools.replay.build_replay_set",
+      "main": true
+    },
+    "evals/replay/tools/recall_diag.py": {
+      "path": "src/medops/evals/tools/replay/recall_diag.py",
+      "module": "medops.evals.tools.replay.recall_diag",
+      "main": true
+    },
+    "evals/replay/tools/replay_run.py": {
+      "path": "src/medops/evals/tools/replay/replay_run.py",
+      "module": "medops.evals.tools.replay.replay_run",
+      "main": true
+    },
+    "evals/safety_set/tools/author_drafts.py": {
+      "path": "src/medops/evals/tools/safety_set/author_drafts.py",
+      "module": "medops.evals.tools.safety_set.author_drafts",
+      "main": true
+    },
+    "evals/safety_set/tools/authoring/__init__.py": {
+      "path": "src/medops/evals/tools/safety_set/authoring/__init__.py",
+      "module": "medops.evals.tools.safety_set.authoring",
+      "main": false
+    },
+    "evals/safety_set/tools/authoring/a_high_risk.py": {
+      "path": "src/medops/evals/tools/safety_set/authoring/a_high_risk.py",
+      "module": "medops.evals.tools.safety_set.authoring.a_high_risk",
+      "main": false
+    },
+    "evals/safety_set/tools/authoring/b1_injection_input.py": {
+      "path": "src/medops/evals/tools/safety_set/authoring/b1_injection_input.py",
+      "module": "medops.evals.tools.safety_set.authoring.b1_injection_input",
+      "main": false
+    },
+    "evals/safety_set/tools/authoring/b2_injection_document.py": {
+      "path": "src/medops/evals/tools/safety_set/authoring/b2_injection_document.py",
+      "module": "medops.evals.tools.safety_set.authoring.b2_injection_document",
+      "main": false
+    },
+    "evals/safety_set/tools/authoring/c1_acl_cross_dept.py": {
+      "path": "src/medops/evals/tools/safety_set/authoring/c1_acl_cross_dept.py",
+      "module": "medops.evals.tools.safety_set.authoring.c1_acl_cross_dept",
+      "main": false
+    },
+    "evals/safety_set/tools/authoring/c2_acl_skill_scope.py": {
+      "path": "src/medops/evals/tools/safety_set/authoring/c2_acl_skill_scope.py",
+      "module": "medops.evals.tools.safety_set.authoring.c2_acl_skill_scope",
+      "main": false
+    },
+    "evals/safety_set/tools/authoring/d1_ungrounded.py": {
+      "path": "src/medops/evals/tools/safety_set/authoring/d1_ungrounded.py",
+      "module": "medops.evals.tools.safety_set.authoring.d1_ungrounded",
+      "main": false
+    },
+    "evals/safety_set/tools/authoring/d2_numeric_trap.py": {
+      "path": "src/medops/evals/tools/safety_set/authoring/d2_numeric_trap.py",
+      "module": "medops.evals.tools.safety_set.authoring.d2_numeric_trap",
+      "main": false
+    },
+    "evals/safety_set/tools/authoring/e_combined.py": {
+      "path": "src/medops/evals/tools/safety_set/authoring/e_combined.py",
+      "module": "medops.evals.tools.safety_set.authoring.e_combined",
+      "main": false
+    },
+    "evals/safety_set/tools/authoring/f_version_guard.py": {
+      "path": "src/medops/evals/tools/safety_set/authoring/f_version_guard.py",
+      "module": "medops.evals.tools.safety_set.authoring.f_version_guard",
+      "main": false
+    },
+    "evals/safety_set/tools/build_synthetic_docs.py": {
+      "path": "src/medops/evals/tools/safety_set/build_synthetic_docs.py",
+      "module": "medops.evals.tools.safety_set.build_synthetic_docs",
+      "main": true
+    },
+    "evals/safety_set/tools/check_safety.py": {
+      "path": "src/medops/evals/tools/safety_set/check_safety.py",
+      "module": "medops.evals.tools.safety_set.check_safety",
+      "main": true
+    },
+    "evals/safety_set/tools/freeze.py": {
+      "path": "src/medops/evals/tools/safety_set/freeze.py",
+      "module": "medops.evals.tools.safety_set.freeze",
+      "main": true
+    },
+    "evals/safety_set/tools/gen_acl_targets.py": {
+      "path": "src/medops/evals/tools/safety_set/gen_acl_targets.py",
+      "module": "medops.evals.tools.safety_set.gen_acl_targets",
+      "main": true
+    },
+    "evals/safety_set/tools/intent_sweep.py": {
+      "path": "src/medops/evals/tools/safety_set/intent_sweep.py",
+      "module": "medops.evals.tools.safety_set.intent_sweep",
+      "main": true
+    },
+    "evals/safety_set/tools/make_sheets.py": {
+      "path": "src/medops/evals/tools/safety_set/make_sheets.py",
+      "module": "medops.evals.tools.safety_set.make_sheets",
+      "main": true
+    },
+    "evals/safety_set/tools/run_review.py": {
+      "path": "src/medops/evals/tools/safety_set/run_review.py",
+      "module": "medops.evals.tools.safety_set.run_review",
+      "main": true
+    },
+    "evals/verifier/tools/build_pairs.py": {
+      "path": "src/medops/evals/tools/verifier/build_pairs.py",
+      "module": "medops.evals.tools.verifier.build_pairs",
+      "main": true
+    },
+    "evals/verifier/tools/common.py": {
+      "path": "src/medops/evals/tools/verifier/common.py",
+      "module": "medops.evals.tools.verifier.common",
+      "main": false
+    },
+    "evals/verifier/tools/compare_arms.py": {
+      "path": "src/medops/evals/tools/verifier/compare_arms.py",
+      "module": "medops.evals.tools.verifier.compare_arms",
+      "main": true
+    },
+    "evals/verifier/tools/run_cli_arm.py": {
+      "path": "src/medops/evals/tools/verifier/run_cli_arm.py",
+      "module": "medops.evals.tools.verifier.run_cli_arm",
+      "main": true
+    },
+    "evals/verifier/tools/run_gateway_arm.py": {
+      "path": "src/medops/evals/tools/verifier/run_gateway_arm.py",
+      "module": "medops.evals.tools.verifier.run_gateway_arm",
+      "main": true
+    },
+    "evals/verifier/tools/run_recheck_cases.py": {
+      "path": "src/medops/evals/tools/verifier/run_recheck_cases.py",
+      "module": "medops.evals.tools.verifier.run_recheck_cases",
+      "main": true
+    },
+    "evals/verifier/tools/run_rules_arm.py": {
+      "path": "src/medops/evals/tools/verifier/run_rules_arm.py",
+      "module": "medops.evals.tools.verifier.run_rules_arm",
+      "main": true
+    },
+    "evals/verifier/tools/simulate_hybrid.py": {
+      "path": "src/medops/evals/tools/verifier/simulate_hybrid.py",
+      "module": "medops.evals.tools.verifier.simulate_hybrid",
+      "main": true
+    },
+    "evals/verifier/tools/simulate_policies.py": {
+      "path": "src/medops/evals/tools/verifier/simulate_policies.py",
+      "module": "medops.evals.tools.verifier.simulate_policies",
+      "main": true
+    }
+  },
+  "failed_iterations": {
+    "mypy_first_errors": 108,
+    "mypy_first_files": 35,
+    "mypy_second_errors": 33,
+    "targeted_first_passed": 577,
+    "targeted_first_failed": 2,
+    "targeted_fixed_passed": 579,
+    "make_first_exit": 2,
+    "make_first_cause": "E902 old draft_common.py CHECK_PATHS entry; updated all maintained CLI checks",
+    "help_probe_baseline_side_effects": {
+      "scope": "independent baseline worktree only",
+      "restored_tracked_artifacts": [
+        "evals/main_set/drafts/main-v1/pdf_index.md",
+        "evals/main_set/schema/manifest.schema.json",
+        "evals/safety_set/acl_targets.json"
+      ],
+      "production_database": "read only select by gen_acl_targets; no writes; no provider calls"
+    },
+    "archived_source_lint_restored_files": 9
+  },
+  "hosted_model_calls": 0,
+  "cost_usd": 0,
+  "shared_business_db_writes": false,
+  "shared_deployment_restarted": false,
+  "limits": [
+    "not independent human review",
+    "no unseen holdout or formal quality/capacity run",
+    "no actual MPS hardware performance measurement",
+    "freeze is not concurrent or cross-file crash transaction",
+    "repository resources are not packaged as standalone wheel data",
+    "no complete real successor dataset rebuild"
+  ],
+  "documentation_check": {
+    "exit_code": 0,
+    "elapsed_s": 2.712,
+    "command": [
+      "/Users/leaf/.cache/medy-checks/code05-verified-w3tgo3l0/venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/unit/docs"
+    ],
+    "worktree": "/Users/leaf/.cache/medy-checks/code05-verified-w3tgo3l0",
+    "required_services": true,
+    "passed": 29,
+    "pytest_seconds": 2.28,
+    "task_ids": 142,
+    "distinct_task_ids": 142,
+    "local_links_checked": 218
+  },
+  "code_and_test_commits": [
+    {
+      "batch": 1,
+      "sha": "2bdda66f8c3fa9284f01ffe9658543ef245b62ae",
+      "subject": "fix(inference): use typed child protocol for MPS cache maintenance",
+      "paths": [
+        "src/medops/retrieval/inference_process.py",
+        "tests/unit/retrieval/test_inference_process.py"
+      ]
+    },
+    {
+      "batch": 2,
+      "sha": "960bef67f500a5bc03b8f4a1abdce5c26c6e57c3",
+      "subject": "refactor(evals): share bootstrap transactions facts and review mechanics",
+      "paths": [
+        "src/medops/evals/answer_review.py",
+        "src/medops/evals/bootstrap.py",
+        "src/medops/evals/experiments/dec001_run.py",
+        "src/medops/evals/experiments/dec002_run.py",
+        "src/medops/evals/experiments/e2e_run.py",
+        "src/medops/evals/fact_lookups.py",
+        "src/medops/evals/files.py",
+        "src/medops/evals/freeze.py",
+        "src/medops/evals/paths.py",
+        "src/medops/evals/probe/review_wire.py",
+        "src/medops/evals/runtime.py",
+        "src/medops/evals/safety.py",
+        "src/medops/evals/successor_review.py",
+        "src/medops/evals/tools/__init__.py",
+        "src/medops/evals/transactions.py"
+      ]
+    },
+    {
+      "batch": 3,
+      "sha": "84ae99da1fdebe4f7c6db630b71cef264d30b905",
+      "subject": "refactor(evals): package main and probe tools with compatible commands",
+      "paths": [
+        "Makefile",
+        "evals/main_set/tools/apply_external_review.py",
+        "evals/main_set/tools/apply_external_review_2.py",
+        "evals/main_set/tools/apply_resolutions.py",
+        "evals/main_set/tools/apply_sheet_edits.py",
+        "evals/main_set/tools/assemble.py",
+        "evals/main_set/tools/assemble_successor.py",
+        "evals/main_set/tools/backfill_query_en.py",
+        "evals/main_set/tools/build_conflict_fixtures.py",
+        "evals/main_set/tools/build_corpus.py",
+        "evals/main_set/tools/build_successor_mapping.py",
+        "evals/main_set/tools/carry_forward_resolutions.py",
+        "evals/main_set/tools/check_drafts.py",
+        "evals/main_set/tools/compile_candidates.py",
+        "evals/main_set/tools/disputes_sheet.py",
+        "evals/main_set/tools/draft_common.py",
+        "evals/main_set/tools/draft_llm.py",
+        "evals/main_set/tools/draft_noanswer.py",
+        "evals/main_set/tools/fix_span_boundaries.py",
+        "evals/main_set/tools/freeze.py",
+        "evals/main_set/tools/make_schemas.py",
+        "evals/main_set/tools/make_sheets.py",
+        "evals/main_set/tools/migrate_annex_i_rev5.py",
+        "evals/main_set/tools/na_pages_relevant.py",
+        "evals/main_set/tools/pack_review.py",
+        "evals/main_set/tools/pdf_index.py",
+        "evals/main_set/tools/prepare_revision_review.py",
+        "evals/main_set/tools/prepare_successor_review.py",
+        "evals/main_set/tools/review_binding_check.py",
+        "evals/main_set/tools/review_prompt_check.py",
+        "evals/main_set/tools/run_review.py",
+        "evals/main_set/tools/seed_candidates_v12.py",
+        "evals/probe/precise_clause/tools/assemble_successor.py",
+        "evals/probe/precise_clause/tools/freeze.py",
+        "src/medops/evals/tools/main_set/__init__.py",
+        "src/medops/evals/tools/main_set/apply_external_review.py",
+        "src/medops/evals/tools/main_set/apply_external_review_2.py",
+        "src/medops/evals/tools/main_set/apply_resolutions.py",
+        "src/medops/evals/tools/main_set/apply_sheet_edits.py",
+        "src/medops/evals/tools/main_set/assemble.py",
+        "src/medops/evals/tools/main_set/assemble_successor.py",
+        "src/medops/evals/tools/main_set/backfill_query_en.py",
+        "src/medops/evals/tools/main_set/build_conflict_fixtures.py",
+        "src/medops/evals/tools/main_set/build_corpus.py",
+        "src/medops/evals/tools/main_set/build_successor_mapping.py",
+        "src/medops/evals/tools/main_set/carry_forward_resolutions.py",
+        "src/medops/evals/tools/main_set/check_drafts.py",
+        "src/medops/evals/tools/main_set/compile_candidates.py",
+        "src/medops/evals/tools/main_set/disputes_sheet.py",
+        "src/medops/evals/tools/main_set/draft_common.py",
+        "src/medops/evals/tools/main_set/draft_llm.py",
+        "src/medops/evals/tools/main_set/draft_noanswer.py",
+        "src/medops/evals/tools/main_set/fix_span_boundaries.py",
+        "src/medops/evals/tools/main_set/freeze.py",
+        "src/medops/evals/tools/main_set/make_schemas.py",
+        "src/medops/evals/tools/main_set/make_sheets.py",
+        "src/medops/evals/tools/main_set/migrate_annex_i_rev5.py",
+        "src/medops/evals/tools/main_set/na_pages_relevant.py",
+        "src/medops/evals/tools/main_set/pack_review.py",
+        "src/medops/evals/tools/main_set/pdf_index.py",
+        "src/medops/evals/tools/main_set/prepare_revision_review.py",
+        "src/medops/evals/tools/main_set/prepare_successor_review.py",
+        "src/medops/evals/tools/main_set/review_binding_check.py",
+        "src/medops/evals/tools/main_set/review_prompt_check.py",
+        "src/medops/evals/tools/main_set/run_review.py",
+        "src/medops/evals/tools/main_set/seed_candidates_v12.py",
+        "src/medops/evals/tools/probe/__init__.py",
+        "src/medops/evals/tools/probe/assemble_successor.py",
+        "src/medops/evals/tools/probe/freeze.py"
+      ]
+    },
+    {
+      "batch": 4,
+      "sha": "7c9eabadd72dd7af7ed37cfe0b392bc093f6bd88",
+      "subject": "refactor(evals): package harness commands and preserve cleanup",
+      "paths": [
+        "evals/harness/tools/answer_review.py",
+        "evals/harness/tools/answer_review_plan.py",
+        "evals/harness/tools/chaos_run.py",
+        "evals/harness/tools/demo_walkthrough.py",
+        "evals/harness/tools/focus_check.py",
+        "evals/harness/tools/perf_run.py",
+        "evals/harness/tools/prepare_answer_review.py",
+        "evals/harness/tools/run_answer_review.py",
+        "evals/harness/tools/safety_run.py",
+        "evals/harness/tools/skill_smoke.py",
+        "evals/harness/tools/smoke_ask.py",
+        "evals/harness/tools/source_check.py",
+        "evals/harness/tools/summarize_run.py",
+        "evals/replay/tools/build_replay_set.py",
+        "evals/replay/tools/recall_diag.py",
+        "evals/replay/tools/replay_run.py",
+        "src/medops/evals/tools/harness/__init__.py",
+        "src/medops/evals/tools/harness/answer_review.py",
+        "src/medops/evals/tools/harness/answer_review_plan.py",
+        "src/medops/evals/tools/harness/chaos_run.py",
+        "src/medops/evals/tools/harness/demo_walkthrough.py",
+        "src/medops/evals/tools/harness/focus_check.py",
+        "src/medops/evals/tools/harness/perf_run.py",
+        "src/medops/evals/tools/harness/prepare_answer_review.py",
+        "src/medops/evals/tools/harness/run_answer_review.py",
+        "src/medops/evals/tools/harness/safety_run.py",
+        "src/medops/evals/tools/harness/skill_smoke.py",
+        "src/medops/evals/tools/harness/smoke_ask.py",
+        "src/medops/evals/tools/harness/source_check.py",
+        "src/medops/evals/tools/harness/summarize_run.py",
+        "src/medops/evals/tools/replay/__init__.py",
+        "src/medops/evals/tools/replay/build_replay_set.py",
+        "src/medops/evals/tools/replay/recall_diag.py",
+        "src/medops/evals/tools/replay/replay_run.py"
+      ]
+    },
+    {
+      "batch": 5,
+      "sha": "fbfcad3a23fbea201acaf065849ddd89b432650a",
+      "subject": "refactor(evals): package safety tooling and authoring sources",
+      "paths": [
+        "evals/safety_set/tools/author_drafts.py",
+        "evals/safety_set/tools/authoring/__init__.py",
+        "evals/safety_set/tools/authoring/a_high_risk.py",
+        "evals/safety_set/tools/authoring/b1_injection_input.py",
+        "evals/safety_set/tools/authoring/b2_injection_document.py",
+        "evals/safety_set/tools/authoring/c1_acl_cross_dept.py",
+        "evals/safety_set/tools/authoring/c2_acl_skill_scope.py",
+        "evals/safety_set/tools/authoring/d1_ungrounded.py",
+        "evals/safety_set/tools/authoring/d2_numeric_trap.py",
+        "evals/safety_set/tools/authoring/e_combined.py",
+        "evals/safety_set/tools/authoring/f_version_guard.py",
+        "evals/safety_set/tools/build_synthetic_docs.py",
+        "evals/safety_set/tools/check_safety.py",
+        "evals/safety_set/tools/freeze.py",
+        "evals/safety_set/tools/gen_acl_targets.py",
+        "evals/safety_set/tools/intent_sweep.py",
+        "evals/safety_set/tools/make_sheets.py",
+        "evals/safety_set/tools/run_review.py",
+        "src/medops/evals/safety_data.py",
+        "src/medops/evals/tools/safety_set/__init__.py",
+        "src/medops/evals/tools/safety_set/author_drafts.py",
+        "src/medops/evals/tools/safety_set/authoring/__init__.py",
+        "src/medops/evals/tools/safety_set/authoring/a_high_risk.py",
+        "src/medops/evals/tools/safety_set/authoring/b1_injection_input.py",
+        "src/medops/evals/tools/safety_set/authoring/b2_injection_document.py",
+        "src/medops/evals/tools/safety_set/authoring/c1_acl_cross_dept.py",
+        "src/medops/evals/tools/safety_set/authoring/c2_acl_skill_scope.py",
+        "src/medops/evals/tools/safety_set/authoring/d1_ungrounded.py",
+        "src/medops/evals/tools/safety_set/authoring/d2_numeric_trap.py",
+        "src/medops/evals/tools/safety_set/authoring/e_combined.py",
+        "src/medops/evals/tools/safety_set/authoring/f_version_guard.py",
+        "src/medops/evals/tools/safety_set/build_synthetic_docs.py",
+        "src/medops/evals/tools/safety_set/check_safety.py",
+        "src/medops/evals/tools/safety_set/freeze.py",
+        "src/medops/evals/tools/safety_set/gen_acl_targets.py",
+        "src/medops/evals/tools/safety_set/intent_sweep.py",
+        "src/medops/evals/tools/safety_set/make_sheets.py",
+        "src/medops/evals/tools/safety_set/run_review.py"
+      ]
+    },
+    {
+      "batch": 6,
+      "sha": "d5fee35bdfdaee680d4dc00416f77ff4b1ee0859",
+      "subject": "refactor(evals): package verifier glossary and lexical tooling",
+      "paths": [
+        "evals/experiments/lexical/tools/export_chunk_snapshot.py",
+        "evals/glossary/tools/build_concepts.py",
+        "evals/glossary/tools/build_glossary.py",
+        "evals/verifier/tools/build_pairs.py",
+        "evals/verifier/tools/common.py",
+        "evals/verifier/tools/compare_arms.py",
+        "evals/verifier/tools/run_cli_arm.py",
+        "evals/verifier/tools/run_gateway_arm.py",
+        "evals/verifier/tools/run_recheck_cases.py",
+        "evals/verifier/tools/run_rules_arm.py",
+        "evals/verifier/tools/simulate_hybrid.py",
+        "evals/verifier/tools/simulate_policies.py",
+        "src/medops/evals/tools/glossary/__init__.py",
+        "src/medops/evals/tools/glossary/build_concepts.py",
+        "src/medops/evals/tools/glossary/build_glossary.py",
+        "src/medops/evals/tools/lexical/__init__.py",
+        "src/medops/evals/tools/lexical/export_chunk_snapshot.py",
+        "src/medops/evals/tools/verifier/__init__.py",
+        "src/medops/evals/tools/verifier/build_pairs.py",
+        "src/medops/evals/tools/verifier/common.py",
+        "src/medops/evals/tools/verifier/compare_arms.py",
+        "src/medops/evals/tools/verifier/run_cli_arm.py",
+        "src/medops/evals/tools/verifier/run_gateway_arm.py",
+        "src/medops/evals/tools/verifier/run_recheck_cases.py",
+        "src/medops/evals/tools/verifier/run_rules_arm.py",
+        "src/medops/evals/tools/verifier/simulate_hybrid.py",
+        "src/medops/evals/tools/verifier/simulate_policies.py"
+      ]
+    },
+    {
+      "batch": 7,
+      "sha": "7bc5365af50f26d2973b22f91850a000457e3083",
+      "subject": "test(evals): verify package bindings freeze recovery and resource lifetimes",
+      "paths": [
+        "tests/integration/test_eval_transactions.py",
+        "tests/unit/evals/test_answer_review.py",
+        "tests/unit/evals/test_build_glossary.py",
+        "tests/unit/evals/test_candidate_compiler.py",
+        "tests/unit/evals/test_chunk_snapshot_export.py",
+        "tests/unit/evals/test_datasets.py",
+        "tests/unit/evals/test_evidence_groups.py",
+        "tests/unit/evals/test_harness_runner_resume.py",
+        "tests/unit/evals/test_main_scoring.py",
+        "tests/unit/evals/test_rejudge_plane_lifetime.py",
+        "tests/unit/evals/test_replay_baseline_reuse.py",
+        "tests/unit/evals/test_replay_inputs.py",
+        "tests/unit/evals/test_replay_resume.py",
+        "tests/unit/evals/test_replay_set.py",
+        "tests/unit/evals/test_review_call_budget.py",
+        "tests/unit/evals/test_safety_authoring.py",
+        "tests/unit/evals/test_shared_tool_mechanics.py",
+        "tests/unit/evals/test_skill_smoke_ids.py",
+        "tests/unit/evals/test_source_semantics.py",
+        "tests/unit/evals/test_tool_boundaries.py"
+      ]
+    }
+  ]
+}

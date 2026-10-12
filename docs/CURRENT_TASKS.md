@@ -73,7 +73,7 @@ probe v4 与 `main-v5-provisional` 均已冻结。EVAL-11 已完成：580 个 go
 
 贯穿工作：ARCH-08/10/13/14、CODE-03～07、IDX-03、OBS-03、DEV-BACKLOG-01 按依赖穿插；ARCH-12 有实测收益再实施。BM25-09、CACHE-10、PERF-10、SRC-05、FOCUS-01/02/09、ROUTE-01/02 全部保留，先分别验证再 COMBO-01。人工事项 PLAN-02、EVAL-29/30/31、LIC-03、DEPLOY-01 单独跟踪；EVOL-09 已决定限实验，生产自动批准不再列为待问事项。
 
-**当前下一项：CODE-05，收敛评测工具打包和重复流水线；CODE-07按依赖穿插。** CODE-04已通过[记录192](reviews/2026-10-12-implementation-192-lexical-experiment-boundaries.md)工程自审：四纯实验适配器迁移、BM25共用机制与静态边界；全量2223/70、0费用。 ARCH-15已在实际入口复现并修复，见[记录191](reviews/2026-10-12-implementation-191-final-output-validation.md)和[输出契约](FINAL_OUTPUT_VALIDATION.md)：最终身份/完整证据及正负lookup、检查到提交的栅栏、已存Task重取、原子失败审计通过；全量2213/70，三库0026。旧completed未绑定结果分别53/2/0，原数据保留，新接口拒绝返回；有证据的恢复方案另行审计，不自动付费重跑。
+**当前下一项：CODE-07，补MCP受限完整材料与观测职责；PLAN-02人工契约保持。** CODE-05已通过[记录193](reviews/2026-10-12-implementation-193-evaluation-tool-packaging.md)与[工具契约](EVALUATION_TOOLING.md)：79维护模块入包、67原CLI保留，共用启动/事务/文件/冻结/后继复核，修复MPS消息类型和重判连接泄漏；595定向、全量2240/70、665维护输入一致，0费用。CODE-04的68783f0远端CI38188078574已全部步骤成功。ARCH-15已在实际入口复现并修复，见[记录191](reviews/2026-10-12-implementation-191-final-output-validation.md)和[输出契约](FINAL_OUTPUT_VALIDATION.md)：最终身份/完整证据及正负lookup、检查到提交的栅栏、已存Task重取、原子失败审计通过；全量2213/70，三库0026。旧completed未绑定结果分别53/2/0，原数据保留，新接口拒绝返回；有证据的恢复方案另行审计，不自动付费重跑。
 
 ARCH-12仅完成条件收益评估，生产Pool/事务拆分未采用；记录189已分批推送完成任务，记录190修复CI，8d3669e的远端38184157416全部步骤成功，包括真实容器门。ARCH-13仍未替换共享部署/长期驻留，容量仍待实测。原条件恢复、Task/MCP回放、MCP受限完整材料、FOCUS-02跨块定位、PLAN-02 Agent行动/profile和EVAL-32契约仍未完成；真实语义、第二独立人工、未见盲测、S2/S3及逐次付费授权门保持。
 
@@ -282,7 +282,7 @@ EVOL-06～08 按候选类型分切片记录，Prompt 先行；整项 DONE 需两
 | CODE-02 | 核实并修复恒真测试断言 | READY | 检查审查指出的 `or True` 等断言，用有判别力的预期替换；反例会失败、正常路径通过，不按当前错误输出重写期望 |
 | CODE-03 | 核实死代码并收敛重复实现/设置契约 | READY | 检查动态入口/公共 API 后删无用定义；归一重复策略读取、检索边界、幂等与预算辅助；显式协议字段/默认值，常量只在语义相同处共享；保留旧调用兼容与行为回归 |
 | CODE-04 | 实验适配器与生产实现边界 | DONE | [记录192](reviews/2026-10-12-implementation-192-lexical-experiment-boundaries.md)、[实验边界](EXPERIMENT_ADAPTER_BOUNDARY.md)：四纯实验适配器迁入evals.experiments.lexical，保留A2回滚路径，BM25 SQL/参数/k+1分页/批写共享；生产/候选版本、SQL、分词与分页对照相同，B/C/离线三文件字节不变，3CLI help通过；静态禁止生产词法依赖evals。396定向/70可选跳过，全量2223/70，566维护输入一致，0托管调用，八项工程自审通过；真实质量/容量不作完成声明。 |
-| CODE-05 | 评测工具打包与重复流水线收敛 | READY | ARCH-07/08工程前置已通过记录181/182；收敛运行器启动、部门事务、JSONL/哈希辅助、冻结和后继组装；减少 sys.path 脚本互引，保留历史产物/冻结字节与 CLI 兼容；按职责拆复杂校验，不因行数机械拆分 |
+| CODE-05 | 评测工具打包与重复流水线收敛 | DONE | [记录193](reviews/2026-10-12-implementation-193-evaluation-tool-packaging.md)、[工具契约](EVALUATION_TOOLING.md)：79维护模块入规范包、67原CLI保留、12辅助去壳；共用预算启动/部门事务/JSONL/原SHA/冻结恢复/后继复核；13wire及3事实方法AST、57help、170起草内容一致。MPS消息类型及重判连接泄漏已修，595定向，全量2240/70、665维护输入一致，0托管调用，八项工程自审通过；历史/冻结/模型/评分门不变，不宣称完整真实后继重建或质量提升。 |
 | CODE-06 | 测试夹具与数据库供给归一 | READY | 将测试模块被当公共库、重复 DB 供给和脚本动态加载收敛到明确夹具/工具；验证隔离/清理、用例数量和失败能力，不增加只镜像实现的测试 |
 | CODE-07 | 装配、观测职责及诊断脚本维护 | READY | ARCH-08装配/版本共用与ARCH-09稳定反馈已由记录182/183留证；观测 schema/客户端/队列/采集职责清楚；补 MCP 受限完整输入/模型正文接线（记录181未交付）；审查依赖环；失败实验与脚本按可复现价值归档，不因候选否决删除证据；与 ARCH-08 同一改动留证 |
 
@@ -327,3 +327,5 @@ EVOL-06～08 按候选类型分切片记录，Prompt 先行；整项 DONE 需两
 推送后的远端CI三项Compose测试失败，已按[记录190](reviews/2026-10-12-implementation-190-compose-ci-compatibility.md)修复：公开示例隔离渲染、合成.env，required独立全量2164/70；修复SHA8d3669e的远端38184157416全部步骤成功。ARCH-15已通过记录191工程自审，其后续提交的远端结果须按新SHA核对。
 
 2026-10-12后续：ARCH-15三批6d21fbb/c30fd12/78218ae已推送，[CI38186588254](https://github.com/Charlie-Uni/Medy/actions/runs/38186588254)全部步骤成功；CODE-04工程自审及迁移/兼容证据见记录192，推送后CI另按新SHA核对。PLAN-02仍为HUMAN，未提前进入S2；没有托管调用、候选发布或重启业务部署。
+
+2026-10-12工具整理：CODE-04的68783f0远端[CI38188078574](https://github.com/Charlie-Uni/Medy/actions/runs/38188078574)全部步骤成功；CODE-05本地工程自审完成，见记录193，全量2240/70。该轮分批推送与新SHA的远端结果单独留证；下一CODE-07。当前实现仍是固定RAG Workflow/Harness与五类Skill，业务Agent/模型自进化未交付；原人工、盲测、付费/生产批准门保持。
