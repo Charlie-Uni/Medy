@@ -2,7 +2,7 @@
 
 更新：2026-10-12。依据用户要求，将 Agent、自进化、架构及既有十项迭代统一执行。[当前任务台账](CURRENT_TASKS.md)是唯一状态与顺序入口；本页规定阶段通过条件和每轮自审核，设计见[完整迭代计划](ITERATION_PLAN.md)。[原项目描述](source/PROJECT_DESCRIPTION_v0.1.md)和[工程基线](ENGINEERING_BASELINE.md)的质量、安全、独立复核及生产签字约束继续保留。
 
-最新沟通见 [ADR-0012 v0.4](adr/ADR-0012-agent-evolution-goals-and-acceptance.md)：所有者确认第二阶段=S2、第三阶段=S3 及首个 PV 资料整理场景；ARCH-04/11 是进入 S2 的硬前置；自动激活仅实验；S3 改进声明以未见盲测为前提。至少 200 任务、三轮配对与 CI 方向已确认，新增盲测不设固定 +5pp 幅度硬线，原生产 +5pp 是否同步修改待沟通。每轮付费仍单独授权，ADR 不构成费用批准。
+最新沟通见 [ADR-0012 v0.5](adr/ADR-0012-agent-evolution-goals-and-acceptance.md)：所有者确认第二阶段=S2、第三阶段=S3 及首个 PV 资料整理场景；ARCH-04/11 是进入 S2 的硬前置；自动激活仅实验；S3 改进声明以未见盲测为前提。至少 200 任务、三轮配对与 CI 方向已确认，新增盲测不设固定 +5pp 幅度硬线，原生产 +5pp 是否同步修改待沟通。每轮付费仍单独授权，ADR 不构成费用批准。
 
 ## 1. 执行规则
 
@@ -174,3 +174,5 @@ CODE-04已通过[记录192](reviews/2026-10-12-implementation-192-lexical-experi
 CODE-05已通过[记录193](reviews/2026-10-12-implementation-193-evaluation-tool-packaging.md)八项工程自审：79维护工具规范入包、67原CLI保留、12辅助去壳，预算启动/部门事务/文件/冻结失败恢复/后继复核共享；57help、170起草、13wire/3SQL方法对照一致。MPS协议和重判连接缺陷修复；595定向、全量2240/70、665维护输入一致，0费用。CODE-04的68783f0远端CI38188078574全部步骤成功；本轮推送及CI按新SHA另记。下一CODE-07；没有推进尚待PLAN-02契约的S2，没有把整理计作质量/容量/盲测完成。
 
 CODE-07已完成[MCP受限材料及观测职责](MCP_EXECUTION_AUDIT.md)，[记录194](reviews/2026-10-12-implementation-194-mcp-audit-and-observability.md)八项工程自审通过；194定向、全量2254/70、674维护输入一致，0托管调用。9定义/3常量AST保持，提前显式import零环，原懒加载/类型三组不增；部分写失败原子回滚、超限失败有界化通过。CODE-05的de0e6d3遠端CI38190039254全部步骤成功。下一CODE-01/02；没有交付原条件/Task-MCP执行回放或重启部署；PLAN-02、独立人工、盲测、逐次付费与生产批准保持。
+
+2026-10-12 S0 契约准备：[PLAN-02 v0.1](agent/PLAN-02-action-budget-and-acceptance.md)及[隔离方案](agent/EVALUATION_ISOLATION.md)已具备可审核提案，D-01/D-02 尚待所有者裁决；状态以台账为准。记录200只验证本轮文档/规格一致性，没有实现Agent、评分器或实际隔离，0托管调用。

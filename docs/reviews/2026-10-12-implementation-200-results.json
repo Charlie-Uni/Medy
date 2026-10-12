@@ -1,0 +1,140 @@
+{
+  "format": "implementation-review-v1",
+  "record": 200,
+  "date": "2026-10-12",
+  "implementer": "Codex",
+  "self_reviewer": "Codex",
+  "independent_second_human": false,
+  "baseline_sha": "01d0aee668db45bbb8c3e0111db668beab3df5fb",
+  "task_ids": [
+    "PLAN-02",
+    "EVAL-32",
+    "EVAL-33"
+  ],
+  "main_slice": "S0 contract proposal and related isolation design",
+  "result_scope": "reviewable design materials only",
+  "runtime_implemented": false,
+  "hosted_model_calls": 0,
+  "api_cost_usd": 0,
+  "deployment_changed": false,
+  "database_writes": false,
+  "frozen_datasets_changed": false,
+  "production_gates_changed": false,
+  "owner_decisions": {
+    "D-01": "pending",
+    "D-02": "pending"
+  },
+  "task_statuses": {
+    "PLAN-02": "HUMAN",
+    "EVAL-32": "BLOCKED",
+    "EVAL-33": "READY"
+  },
+  "S2_started": false,
+  "tests": [
+    {
+      "command": "env -u DEBUG venv/bin/python .local/audit200/run.py docs tests/unit/docs",
+      "exit_code": 0,
+      "passed": 41,
+      "skipped": 0,
+      "pytest_elapsed_s": 18.9,
+      "total_elapsed_s": 25.613
+    }
+  ],
+  "self_review": [
+    {
+      "item": "scope",
+      "verdict": "pass",
+      "reason": "proposal only; scenario and existing behavior unchanged"
+    },
+    {
+      "item": "ADR_and_stage",
+      "verdict": "pass",
+      "reason": "v0.5 documents pending D-01/D-02; S2 entry remains closed"
+    },
+    {
+      "item": "correctness_and_failures",
+      "verdict": "pass_design_only",
+      "reason": "12 cases and named variants mapped; runtime not claimed"
+    },
+    {
+      "item": "permissions_and_data",
+      "verdict": "pass_design_only",
+      "reason": "server authorization, evidence and isolation boundaries specified; no new holdout data"
+    },
+    {
+      "item": "budget_cancellation_side_effects",
+      "verdict": "pass_design_only",
+      "reason": "shared proposal limits and no-reset recovery; no paid calls or deployment"
+    },
+    {
+      "item": "traceability_and_versions",
+      "verdict": "pass_materials_only",
+      "reason": "baseline, design artifacts and validation receipts linked; replay limitations retained"
+    },
+    {
+      "item": "verification",
+      "verdict": "pass",
+      "reason": "risk-matched document and specification consistency audit"
+    },
+    {
+      "item": "status_and_documentation",
+      "verdict": "pass",
+      "reason": "task IDs and HUMAN/BLOCKED/READY states preserved"
+    }
+  ],
+  "limitations": [
+    "owner decisions pending",
+    "no Agent runtime or scorer",
+    "no enforced isolation or sealed holdout",
+    "no real model quality or new SLA evidence",
+    "no independent second human",
+    "no production release"
+  ],
+  "consistency_audit": {
+    "exit_code": 0,
+    "elapsed_s": 1.078,
+    "baseline_sha": "01d0aee668db45bbb8c3e0111db668beab3df5fb",
+    "scope": "S0 proposal and consistency only; no runtime, frozen-set, scoring or production changes",
+    "planned_paths": [
+      "docs/agent/PLAN-02-action-budget-and-acceptance.md",
+      "docs/agent/EVALUATION_ISOLATION.md",
+      "evals/agent/development/PLAN-02-contract-v1.json",
+      "docs/adr/ADR-0012-agent-evolution-goals-and-acceptance.md",
+      "docs/CURRENT_TASKS.md",
+      "docs/ITERATION_PLAN.md",
+      "docs/ITERATION_STAGES.md",
+      "docs/reviews/2026-10-12-implementation-200-plan02-contract-preparation.md",
+      "docs/reviews/2026-10-12-implementation-200-results.json"
+    ],
+    "task_ids": 143,
+    "removed_ids": [],
+    "added_ids": [],
+    "duplicate_ids": [],
+    "local_links_checked": 228,
+    "local_fragments_checked": 12,
+    "link_mismatches": [],
+    "original_development_spec_bytes_unchanged": true,
+    "case_ids_checked": 12,
+    "named_variants_checked": 5,
+    "actions_checked": 7,
+    "unchanged_maintenance_inputs": 704,
+    "maintenance_mismatches": [],
+    "unexpected_changed_paths": [],
+    "decision_status": {
+      "D-01": "pending",
+      "D-02": "pending"
+    },
+    "model_calls": 0,
+    "api_cost_usd": 0
+  },
+  "audit_failures": [
+    {
+      "attempt": 1,
+      "exit_code": 1,
+      "error": "AssertionError: task ID count 139 versus expected 143",
+      "cause": "private audit regex excluded PERF-01A/B/C/D suffixes",
+      "fix": "accept existing alphabetic suffixes; compare full ordered IDs and uniqueness",
+      "rerun_exit_code": 0
+    }
+  ]
+}
