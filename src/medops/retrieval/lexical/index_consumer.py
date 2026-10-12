@@ -57,35 +57,6 @@ def tsvector_target(table: str, tokenizer: Tokenizer) -> IndexTarget:
     return IndexTarget(table, add, _remover(table))
 
 
-def sql_tsvector_target(table: str, ts_config: str) -> IndexTarget:
-    """Candidate B family: the database tokenizes with a fixed text search configuration."""
-
-    def add(conn: psycopg.Connection[Any], doc_id: uuid.UUID) -> int:
-        cur = conn.execute(
-            f"insert into {table} (chunk_id, tsv) "
-            f"select chunk_id, to_tsvector('{ts_config}', content) from chunks where doc_id = %s "
-            f"and to_tsvector('{ts_config}', content) <> ''::tsvector on conflict (chunk_id) do nothing",
-            (doc_id,),
-        )
-        return cur.rowcount
-
-    return IndexTarget(table, add, _remover(table))
-
-
-def content_target(table: str) -> IndexTarget:
-    """Candidate C: the bm25 index is maintained by the extension; the table holds chunk text."""
-
-    def add(conn: psycopg.Connection[Any], doc_id: uuid.UUID) -> int:
-        cur = conn.execute(
-            f"insert into {table} (chunk_id, content) select chunk_id, content from chunks where doc_id = %s "
-            f"and content <> '' on conflict (chunk_id) do nothing",
-            (doc_id,),
-        )
-        return cur.rowcount
-
-    return IndexTarget(table, add, _remover(table))
-
-
 def _remover(table: str) -> Callable[[psycopg.Connection[Any], uuid.UUID], int]:
     def remove(conn: psycopg.Connection[Any], doc_id: uuid.UUID) -> int:
         cur = conn.execute(

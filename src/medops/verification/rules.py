@@ -164,10 +164,6 @@ def negated(sentence: str) -> bool:
     return _NEGATION.search(sentence) is not None
 
 
-def negation_count(text: str) -> int:
-    return len(_NEGATION.findall(text))
-
-
 def sentences(text: str) -> list[str]:
     """Sentence-ish units used for polarity comparison (same breaks as `sentence_around`)."""
     out, last = [], 0

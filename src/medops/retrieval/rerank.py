@@ -9,7 +9,6 @@ stand-in for tests.
 
 from __future__ import annotations
 
-import os
 import re
 from collections.abc import Sequence
 from dataclasses import dataclass, field
@@ -178,7 +177,3 @@ class BgeRerankerV2M3:
         pairs = [(query, normalize_text(t)) for t in texts]
         scores = self._model.predict(pairs, batch_size=self._batch, show_progress_bar=False)
         return [float(s) for s in scores]
-
-
-def env_flag(name: str) -> bool:
-    return os.environ.get(name, "").lower() in ("1", "true", "yes")

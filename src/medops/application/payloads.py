@@ -6,7 +6,7 @@ keep their payloads until the escalation is closed plus `escalation_grace_days` 
 from __future__ import annotations
 
 import json
-from collections.abc import Callable, Mapping, Sequence
+from collections.abc import Callable, Mapping
 from dataclasses import dataclass, field
 from datetime import UTC, datetime, timedelta
 from typing import Any, Protocol
@@ -101,11 +101,3 @@ class PayloadReader:
 
 def purge_expired(store: PayloadStore, *, now: datetime | None = None, escalation_grace_days: int = 30) -> int:
     return store.purge(now or datetime.now(UTC), escalation_grace_days=escalation_grace_days)
-
-
-def snapshot_sizes(payloads: Mapping[str, Mapping[str, Any]]) -> dict[str, int]:
-    return {k: len(_json_bytes(v)) for k, v in payloads.items()}
-
-
-def kinds_present(items: Sequence[TracePayloadItem]) -> tuple[str, ...]:
-    return tuple(i.kind for i in items)

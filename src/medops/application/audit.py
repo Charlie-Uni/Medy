@@ -12,7 +12,7 @@ from datetime import UTC, datetime
 from typing import Any, Protocol
 
 from medops.application.contracts import FeedbackReceipt, FeedbackRequest, FeedbackSignal
-from medops.core.errors import BusinessError, ErrorCode, ErrorResponse, InfrastructureError
+from medops.core.errors import BusinessError, ErrorCode, InfrastructureError
 from medops.domain.common import Dept
 from medops.domain.identity import UserContext
 from medops.domain.query import QueryContext
@@ -244,14 +244,6 @@ class FeedbackService:
 
 class IdempotencyRace(Exception):
     pass
-
-
-def public_error(exc: BaseException, trace_id: str | None) -> ErrorResponse:
-    if isinstance(exc, InfrastructureError | BusinessError):
-        return ErrorResponse(code=exc.code, message=exc.message, trace_id=trace_id, retryable=exc.retryable)
-    return ErrorResponse(
-        code=ErrorCode.internal_error, message="服务暂时不可用，请稍后重试", trace_id=trace_id, retryable=False
-    )
 
 
 # ------------------------------------------------------------------------------------ in-memory (tests)

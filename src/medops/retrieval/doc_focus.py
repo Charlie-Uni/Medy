@@ -189,7 +189,3 @@ def load_titles(conn: object, doc_ids: Sequence[str]) -> dict[str, str]:
         "select doc_id::text, title from documents where doc_id = any(%s::uuid[])", (list(doc_ids),)
     ).fetchall()
     return {str(r[0]): str(r[1]) for r in rows}
-
-
-def as_sequence(docs: Sequence[DocRef]) -> list[str]:
-    return [d.doc_id for d in docs]

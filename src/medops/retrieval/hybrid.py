@@ -140,7 +140,3 @@ def fuse_rankings(rankings: Mapping[str, Sequence[str]], *, k: float, limit: int
 def fuse_queries(per_query: Sequence[Sequence[str]], *, k: float, limit: int) -> list[FusedCandidate]:
     """`fuse_rankings` over per-query lists named `q1`, `q2`, …; one query reproduces its own ranking order."""
     return fuse_rankings({f"q{i}": ids for i, ids in enumerate(per_query, start=1)}, k=k, limit=limit)
-
-
-def top_k_ids(rechecked: RecheckResult, k: int) -> Sequence[str]:
-    return rechecked.accepted_ids[:k]
