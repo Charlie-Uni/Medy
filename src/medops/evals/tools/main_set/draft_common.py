@@ -6,7 +6,6 @@ review (SPEC section 4)."""
 
 from __future__ import annotations
 
-import hashlib
 import json
 import math
 import os
@@ -15,9 +14,10 @@ import re
 import subprocess
 from typing import Any
 
+from medops.core.canonical import sha256_hex as sha256_bytes
+from medops.evals.paths import REPO
 from medops.knowledge.normalization import normalize_text
 
-REPO = pathlib.Path(__file__).resolve().parents[3]
 MAIN = REPO / "evals/main_set"
 CORPUS = MAIN / "corpus.json"
 PAGES_DIRS = (MAIN / "pages", REPO / "evals/probe/precise_clause/v1/pages")
@@ -70,10 +70,6 @@ UNIT_TOKENS = {
     "au",
 }
 _page_cache: dict[tuple[str, int], str | None] = {}
-
-
-def sha256_bytes(b: bytes) -> str:
-    return hashlib.sha256(b).hexdigest()
 
 
 def load_corpus() -> dict[str, dict]:
@@ -291,7 +287,7 @@ def run_claude(
         schema_text = json.dumps(json_schema, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
         schema_sha256 = sha256_bytes(schema_text.encode("utf-8"))
         cmd.extend(["--json-schema", schema_text])
-    meta = {
+    meta: dict[str, Any] = {
         "cli": "claude-code",
         "model_requested": model,
         "model_observed": None,

@@ -9,10 +9,8 @@ PY ?= venv/bin/python
 # Active tooling is maintained code; frozen draft tooling and historical runs stay outside formatting.
 CHECK_PATHS = src tests migrations evals/harness/tools evals/replay/tools scripts
 CHECK_PATHS += deploy/ci
-CHECK_PATHS += evals/main_set/tools/pack_review.py evals/main_set/tools/prepare_revision_review.py evals/main_set/tools/run_review.py evals/main_set/tools/draft_common.py
-CHECK_PATHS += evals/main_set/tools/prepare_successor_review.py evals/main_set/tools/assemble_successor.py evals/main_set/tools/build_successor_mapping.py
-CHECK_PATHS += evals/main_set/tools/freeze.py evals/main_set/tools/make_schemas.py
-CHECK_PATHS += evals/probe/precise_clause/tools
+CHECK_PATHS += evals/main_set/tools evals/probe/precise_clause/tools evals/safety_set/tools
+CHECK_PATHS += evals/verifier/tools evals/glossary/tools evals/experiments/lexical/tools
 # Installer pin: the only tool that is not in requirements.lock. Bump deliberately together with the lock.
 PIP_VERSION ?= 26.2.1
 
