@@ -14,9 +14,10 @@ from typing import Any
 from medops.application.policy_loader import RequestPolicies
 from medops.application.search import SearchExecution
 from medops.bootstrap.policies import PolicyRouter
-from medops.bootstrap.retrieval import RetrievalServices
+from medops.bootstrap.retrieval import RetrievalServices, execution_binding
 from medops.core.config import Settings
 from medops.core.deadline import check_deadline, deadline_scope, execution_admission
+from medops.core.run_artifacts import online_artifacts
 from medops.domain.identity import UserContext
 from medops.domain.query import resolve_query_context
 from medops.harness.dependencies import default_specs
@@ -102,12 +103,22 @@ class SearchOperation:
         timeout = default_specs()["retrieve"].timeout_s
         meter = None
         outcome = None
+        conditions = None
+        limits = configured_limits(self.owner.settings, timeout_s=timeout)
         try:
             with (
-                execution_scope(configured_limits(self.owner.settings, timeout_s=timeout)),
+                execution_scope(limits),
                 deadline_scope(timeout),
                 execution_admission(),
             ):
+                check_deadline()
+                conditions = {
+                    "artifacts": online_artifacts(),
+                    "routed": execution_binding(self.routed),
+                    "execution_limits": limits.model_dump(mode="json"),
+                    "facts_scope": "observed_retrieval_not_corpus_snapshot",
+                    "original_conditions_available": False,
+                }
                 check_deadline()
                 if self.routed.policies.query_translation() != QUERY_TRANSLATION_OFF:
                     meter = MeteredGateway(self.owner.gateway())
@@ -123,9 +134,11 @@ class SearchOperation:
                 )
                 check_deadline()
                 check_execution_budget()
+                if meter is not None:
+                    meter.call_journal.ensure_complete()
         finally:
             self.audit_stats = SearchExecution(
-                (),
+                outcome.evidence if outcome else (),
                 model_calls=meter.calls if meter else 0,
                 tokens=meter.tokens if meter else 0,
                 cost_usd=meter.cost_usd if meter else 0.0,
@@ -133,15 +146,12 @@ class SearchOperation:
                 policy_version=self.routed.versions.policy_version,
                 cache_hit=bool(outcome and outcome.cache_hit),
                 versions=self.routed.versions,
+                query_context=context,
+                conditions=conditions,
+                retrieval_snapshot=outcome.model_dump(mode="json") if outcome else None,
+                call_records=meter.call_journal.snapshot() if meter else (),
+                call_receipts=tuple(r.model_dump(mode="json") for r in meter.receipts) if meter else (),
+                call_audit_complete=meter.call_journal.complete if meter else True,
             )
         assert outcome is not None
-        return SearchExecution(
-            outcome.evidence,
-            model_calls=self.audit_stats.model_calls,
-            tokens=self.audit_stats.tokens,
-            cost_usd=self.audit_stats.cost_usd,
-            retrieval_version=self.audit_stats.retrieval_version,
-            policy_version=self.audit_stats.policy_version,
-            cache_hit=self.audit_stats.cache_hit,
-            versions=self.routed.versions,
-        )
+        return self.audit_stats

@@ -9,7 +9,7 @@ import hashlib
 import json
 import re
 import uuid
-from collections.abc import Iterator
+from collections.abc import Iterator, Mapping
 from contextlib import AbstractContextManager, ExitStack, contextmanager
 from contextvars import ContextVar
 from dataclasses import dataclass, field
@@ -26,10 +26,13 @@ from mcp.types import ToolAnnotations
 from pydantic import AnyHttpUrl
 
 from medops.application.audit import TraceRecord
+from medops.application.execution_audit import ExecutionAuditWriter
+from medops.application.payloads import PayloadWriter
 from medops.application.search import SearchExecution
 from medops.bootstrap.connections import open_connection
 from medops.core.config import Settings
 from medops.core.deadline import deadline_scope
+from medops.core.envelope import KeyProvider, LocalFileKeyProvider
 from medops.core.errors import BusinessError, ErrorCode, MedOpsError
 from medops.core.telemetry import annotate, span
 from medops.core.tracing import bind_trace_id
@@ -38,6 +41,7 @@ from medops.infrastructure.db.deadline import DeadlineConnection
 from medops.infrastructure.db.final_output import acquire_output_fence, directory_user, require_same_user
 from medops.infrastructure.identity import Authenticator, PgDirectory, PrincipalDirectory
 from medops.infrastructure.llm.accounting import call_scope
+from medops.mcp.audit import tool_payloads
 from medops.mcp.contracts import (
     MCP_TOOLS,
     GetChunkInput,
@@ -65,6 +69,8 @@ class ServiceLike(Protocol):
 
     def validate_final_output(self, inp: Any, result: dict[str, Any]) -> None: ...
 
+    def audit_snapshot(self) -> Mapping[str, Any]: ...
+
 
 class McpRuntime(Protocol):
     authenticator: Authenticator | None  # None only for stdio dev mode
@@ -78,7 +84,7 @@ class McpRuntime(Protocol):
         self, user: UserContext, service: ServiceLike, inp: Any, result: dict[str, Any], *, authorization: str | None
     ) -> AbstractContextManager[None]: ...
 
-    def audit(self, trace: TraceRecord) -> None:
+    def audit(self, trace: TraceRecord, *, payloads: Mapping[str, Mapping[str, Any]] | None = None) -> None:
         """Persist the per-call trace (kind='mcp'); raising here fails the call closed (INV-OBS-01)."""
         ...
 
@@ -150,6 +156,8 @@ def _audit(
     result: dict[str, Any] | None,
     started: float,
     stats: SearchExecution | None = None,
+    service: ServiceLike | None = None,
+    error_type: str | None = None,
 ) -> None:
     """One trace per tool call (M3-07): principal pseudonym, tool + input summary, outcome, chunk ids handed out.
     An audit failure is surfaced as a tool error and the data is withheld, like /v1/ask (record 60)."""
@@ -181,9 +189,22 @@ def _audit(
         cost_usd=stats.cost_usd,
         duration_ms=(perf_counter() - started) * 1000.0,
         spans=(),
+        query_context=stats.query_context,
+    )
+    material = tool_payloads(
+        tool=tool,
+        input_body=inp.model_dump(mode="json"),
+        user=user,
+        versions=versions,
+        snapshot=service.audit_snapshot() if service is not None else None,
+        stats=stats,
+        outcome=outcome,
+        result=result,
+        error_type=error_type,
+        reason_codes=reason_codes,
     )
     try:
-        runtime.audit(trace)
+        runtime.audit(trace, payloads=material)
     except Exception as exc:  # noqa: BLE001 - any audit failure fails the call closed
         raise ToolError("internal_error: audit unavailable, call refused (fail closed)") from exc
 
@@ -235,7 +256,7 @@ def build_server(runtime: McpRuntime, *, issuer_url: str | None = None, resource
                             retrieval_version=stats.retrieval_version or PRODUCTION_RETRIEVAL_VERSION,
                             policy_version=stats.policy_version or "",
                         )
-                    _audit(runtime, user, trace_id, name, inp, "answered", (), result, started, stats)
+                    _audit(runtime, user, trace_id, name, inp, "answered", (), result, started, stats, svc)
             except MedOpsError as exc:
                 annotate(current, error_code=exc.code.value)
                 if user is not None:
@@ -251,9 +272,31 @@ def build_server(runtime: McpRuntime, *, issuer_url: str | None = None, resource
                         None,
                         started,
                         stats,
+                        svc,
+                        type(exc).__name__,
                     )
                 # ToolError text is returned verbatim as isError; anything else would be wrapped as an unexpected error
                 raise ToolError(f"{exc.code.value}: {exc.message}") from None
+            except ToolError:
+                raise  # Audit storage already refused the call; never recursively retry persistence.
+            except Exception as exc:  # noqa: BLE001 - preserve accounting without returning internal messages
+                annotate(current, error_code=ErrorCode.internal_error.value)
+                if user is not None:
+                    _audit(
+                        runtime,
+                        user,
+                        trace_id,
+                        name,
+                        inp,
+                        "escalated",
+                        (ErrorCode.internal_error.value,),
+                        None,
+                        started,
+                        getattr(svc, "audit_stats", None),
+                        svc,
+                        type(exc).__name__,
+                    )
+                raise ToolError("internal_error: tool execution failed") from None
             return result
 
     @server.tool(name="search_documents", description=specs["search_documents"].description, annotations=READ_ONLY)
@@ -291,9 +334,14 @@ class McpProductionRuntime:
     app_dsn_for_directory: str
     searcher_factory: Any = None  # Callable[[conn, user], Searcher] | None
     settings: Settings | None = None
+    payload_provider: KeyProvider | None = field(default=None, repr=False)
     _final_audit_conn: ContextVar[Any] = field(
         default_factory=lambda: ContextVar("mcp_final_audit_conn", default=None), repr=False
     )
+
+    def __post_init__(self) -> None:
+        if self.payload_provider is None and self.settings is not None and self.settings.payload_key_file:
+            self.payload_provider = LocalFileKeyProvider(self.settings.payload_key_file)
 
     @contextmanager
     def directory(self) -> Iterator[PrincipalDirectory]:
@@ -302,15 +350,28 @@ class McpProductionRuntime:
         with open_connection(self.app_dsn_for_directory, self.settings) as conn, conn.transaction():
             yield PgDirectory(conn)
 
-    def audit(self, trace: TraceRecord) -> None:
+    def audit(self, trace: TraceRecord, *, payloads: Mapping[str, Mapping[str, Any]] | None = None) -> None:
         from medops.infrastructure.db.audit import PgTraceStore
+        from medops.infrastructure.db.payloads import PgPayloadStore
+
+        def record(conn: Any) -> None:
+            writer = (
+                PayloadWriter(
+                    PgPayloadStore(conn),
+                    self.payload_provider,
+                    retention_days=self.settings.payload_retention_days if self.settings else 90,
+                )
+                if self.payload_provider is not None
+                else None
+            )
+            ExecutionAuditWriter(PgTraceStore(conn), writer).record(trace, None, node="mcp", payloads=payloads or {})
 
         held = self._final_audit_conn.get()
         if held is not None:
-            PgTraceStore(held).record(trace, None)
+            record(held)
         else:
             with open_connection(self.app_dsn_for_directory, self.settings) as conn, conn.transaction():
-                PgTraceStore(conn).record(trace, None)
+                record(conn)
 
     @contextmanager
     def final_output(

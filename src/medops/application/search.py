@@ -1,11 +1,12 @@
 """Transport-independent search execution result and port."""
 
-from collections.abc import Sequence
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from datetime import date
-from typing import Protocol
+from typing import Any, Protocol
 
 from medops.domain.evidence import Evidence
+from medops.domain.query import QueryContext
 from medops.domain.state import VersionSet
 
 
@@ -19,6 +20,12 @@ class SearchExecution:
     policy_version: str | None = None
     cache_hit: bool = False
     versions: VersionSet | None = None
+    query_context: QueryContext | None = None
+    conditions: Mapping[str, Any] | None = None
+    retrieval_snapshot: Mapping[str, Any] | None = None
+    call_records: tuple[Mapping[str, Any], ...] = ()
+    call_receipts: tuple[Mapping[str, Any], ...] = ()
+    call_audit_complete: bool = True
 
 
 class Searcher(Protocol):

@@ -10,7 +10,7 @@ from __future__ import annotations
 
 import hashlib
 import uuid
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 from datetime import date
 from typing import Any
 
@@ -92,8 +92,17 @@ class McpService:
         self.audit_stats = SearchExecution(())
         self._returned_evidence: tuple[Evidence, ...] = ()
         self._search_as_of: date | None = None
-        self._chunk_reads: dict[str, _ChunkRow] = {}
+        self._chunk_reads: dict[str, _ChunkRow | None] = {}
         self._version_read: tuple[Any, ...] | None = None
+
+    def audit_snapshot(self) -> dict[str, Any]:
+        """Observed facts only, for encrypted storage; no new SQL or tool execution."""
+        return {
+            "returned_evidence": [e.model_dump(mode="json") for e in self._returned_evidence],
+            "chunk_reads": {cid: asdict(row) if row else None for cid, row in self._chunk_reads.items()},
+            "version_row": list(self._version_read) if self._version_read is not None else None,
+            "retrieval": self.audit_stats.retrieval_snapshot,
+        }
 
     def validate_final_output(self, inp: Any, result: dict[str, Any]) -> None:
         """Called under the runtime's final fence, before audit commit. Never search twice."""
@@ -138,6 +147,7 @@ class McpService:
             return None
         row = self._conn.execute(_CHUNK_SQL, (cid,)).fetchone()
         if row is None:
+            self._chunk_reads[cid] = None
             return None
         snapshot = _ChunkRow(
             chunk_id=row[0],
