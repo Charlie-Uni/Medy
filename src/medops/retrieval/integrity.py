@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Protocol
 
 import psycopg
 
@@ -32,7 +32,11 @@ OUTBOX_CRITICAL_LAG_S = 300
 READINESS_CONSUMERS = frozenset({"lexical-index", "vector-index"})
 
 
-def database_identity(conn: psycopg.Connection[Any]) -> str:
+class _IdentityConnection(Protocol):
+    def execute(self, query: str, *args: Any, **kwargs: Any) -> Any: ...
+
+
+def database_identity(conn: _IdentityConnection) -> str:
     """The same database of the same running cluster, whichever address or socket each DSN uses: database name
     and OID plus the postmaster start time (an address-based identity reported a false mismatch when the app and
     admin DSNs reached one server by different routes, record 144). Nothing here names a host or a DSN."""
@@ -84,6 +88,17 @@ def inspect_retrieval(
     assert counts is not None
     coverage.update(active_documents=int(counts[0]), active_documents_without_chunks=int(counts[1]))
     problems = []
+    fence = conn.execute("""
+        select to_regprocedure('public.medops_acquire_output_fence()') is not null
+           and (select count(*) from pg_trigger t join pg_class c on c.oid=t.tgrelid
+                 where t.tgname='final_output_write_fence' and t.tgenabled in ('O','A')
+                   and c.relnamespace='public'::regnamespace
+                   and c.relname in ('principals','document_acl','documents','source_objects','chunks','chunk_spans'))=6
+           and exists (select 1 from information_schema.columns where table_schema='public'
+                       and table_name='tasks' and column_name='output_binding')
+    """).fetchone()
+    if not fence or not fence[0]:
+        problems.append("final_output_fence_missing")
     if not coverage["active_documents"] or not coverage["active_chunks"]:
         problems.append("empty_active_corpus")
     if coverage["active_documents_without_chunks"]:

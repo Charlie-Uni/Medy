@@ -40,6 +40,7 @@ def test_complete_indexes_report_ready_under_read_only_transaction(db, indexed):
         ("tokenizer", "lexical_version_missing_or_mismatched"),
         ("model", "embedding_version_missing_or_mismatched"),
         ("empty_document", "active_document_without_chunks"),
+        ("output_fence", "final_output_fence_missing"),
     ],
 )
 def test_real_storage_faults_make_index_health_false(db, indexed, fault, reason):
@@ -61,6 +62,8 @@ def test_real_storage_faults_make_index_health_false(db, indexed, fault, reason)
                 "update embedding_index_meta set model_revision='wrong' where embedding_version=%s",
                 (EMBEDDING_VERSION,),
             )
+        elif fault == "output_fence":
+            conn.execute("alter table principals disable trigger final_output_write_fence")
         else:
             src = source_object(conn, 990001)
             document(conn, src, job(conn, src), status="active", effective_from=date(2026, 1, 1))

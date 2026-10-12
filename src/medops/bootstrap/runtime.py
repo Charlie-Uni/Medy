@@ -17,6 +17,7 @@ import psycopg
 from medops.application.audit import TraceStore
 from medops.application.contracts import AskRequest, HistoricalRequest
 from medops.application.metrics import MetricsSource, PgMetricsSource
+from medops.application.output_binding import EvidenceBinding, EvidenceLookupBinding, LookupBinding
 from medops.application.payloads import PayloadReader, PayloadWriter
 from medops.application.policy_loader import (
     ReleasedPolicySet,
@@ -24,13 +25,15 @@ from medops.application.policy_loader import (
     RoutedPolicies,
     load_released,
 )
-from medops.application.tasks import TaskStore
+from medops.application.tasks import TaskRecord, TaskStore
 from medops.bootstrap.connections import open_connection
 from medops.bootstrap.identity import authenticator_from_settings
 from medops.bootstrap.policies import PolicyRouter, request_policies
 from medops.bootstrap.retrieval import RetrievalServices, execution_binding
 from medops.core.config import Settings
-from medops.core.errors import ErrorCode, InfrastructureError
+from medops.core.deadline import deadline_scope
+from medops.core.errors import BusinessError, ErrorCode, InfrastructureError
+from medops.domain.evidence import Evidence
 from medops.domain.identity import UserContext
 from medops.domain.query import QueryContext, resolve_query_context
 from medops.domain.state import VersionSet
@@ -39,7 +42,14 @@ from medops.harness.dependencies import HarnessDeps
 from medops.harness.executions import PgExecutionStore
 from medops.harness.production import PRODUCTION_ANSWER_MODEL, PRODUCTION_JUDGE_MODEL
 from medops.infrastructure.db.audit import PgTraceStore
+from medops.infrastructure.db.deadline import DeadlineConnection
 from medops.infrastructure.db.documents import PgDocumentAdminStore
+from medops.infrastructure.db.final_output import (
+    acquire_output_fence,
+    directory_user,
+    require_same_user,
+    validate_evidence,
+)
 from medops.infrastructure.db.idempotency import PgReceiptStore
 from medops.infrastructure.db.payloads import PgPayloadStore
 from medops.infrastructure.db.policies import PgPolicyStore
@@ -57,6 +67,7 @@ from medops.retrieval.integrity import database_identity, inspect_readiness
 from medops.retrieval.production import (
     RERANK_OUTPUT,
 )
+from medops.retrieval.recheck import recheck_candidates
 from medops.retrieval.runtime import candidate_cache_from_settings
 from medops.skills.catalog import default_registry
 from medops.skills.production import doc_type_lookup, evidence_lookup
@@ -194,6 +205,86 @@ class ProductionRuntime:
         conn.execute(
             "select set_config('medops.dept', %s, true)", (user.dept.value,)
         )  # transaction-local (baseline 3.7)
+
+    def validate_final_output(
+        self,
+        conn: Any,
+        user: UserContext,
+        evidence: Sequence[Evidence],
+        context: QueryContext,
+        *,
+        authorization: str | None = None,
+        lookups: Sequence[LookupBinding] = (),
+    ) -> None:
+        try:
+            # A provider result is already in memory. A SQL failure must roll back
+            # this check, not destroy the enclosing transaction's failure audit.
+            with deadline_scope(5.0), conn.transaction():
+                conn = DeadlineConnection(conn)
+                acquire_output_fence(conn)
+                current = (
+                    self.authenticator.authenticate(authorization, self.directory(conn))
+                    if authorization is not None
+                    else directory_user(conn, user)
+                )
+                require_same_user(user, current)
+                # Never bind a different department to salvage a changed identity.
+                validate_evidence(conn, evidence, context)
+                self._validate_lookups(conn, user, context, lookups)
+        except psycopg.Error as exc:
+            raise InfrastructureError(
+                ErrorCode.dependency_unavailable, detail=type(exc).__name__, retryable=False
+            ) from None
+
+    def validate_task_result(
+        self, conn: Any, user: UserContext, record: TaskRecord, *, authorization: str | None
+    ) -> None:
+        if record.result is None:
+            return
+        binding = record.output_binding
+        if binding is None:
+            raise BusinessError(ErrorCode.evidence_integrity_failed, "legacy task result has no final fact binding")
+        # Preserve the completion date/historical contract. Never infer original
+        # hashes from today's rows, and do not silently regenerate a report.
+        self.bind_identity(conn, user)
+        try:
+            with deadline_scope(5.0), conn.transaction():
+                conn = DeadlineConnection(conn)
+                acquire_output_fence(conn)
+                current = self.authenticator.authenticate(authorization, self.directory(conn))
+                require_same_user(binding.user, current)
+                self._validate_lookups(conn, current, binding.query_context, binding.lookups)
+                facts = recheck_candidates(
+                    conn,
+                    [b.citation.chunk_id for b in binding.evidence],
+                    as_of=binding.query_context.as_of,
+                    allow_historical=binding.query_context.historical_requested,
+                )
+                if facts.rejected or tuple(EvidenceBinding.observed(e) for e in facts.evidence) != binding.evidence:
+                    raise BusinessError(ErrorCode.evidence_integrity_failed, "stored task facts changed")
+        except psycopg.Error as exc:
+            raise InfrastructureError(
+                ErrorCode.dependency_unavailable, detail=type(exc).__name__, retryable=False
+            ) from None
+
+    @staticmethod
+    def _validate_lookups(
+        conn: Any, user: UserContext, context: QueryContext, lookups: Sequence[LookupBinding]
+    ) -> None:
+        @contextmanager
+        def bound(_user: UserContext) -> Iterator[Any]:
+            yield conn
+
+        evidence = evidence_lookup(bound, as_of=context.as_of, allow_historical=context.historical_requested)
+        types = doc_type_lookup(bound)
+        for read in lookups:
+            if isinstance(read, EvidenceLookupBinding):
+                fresh = tuple(EvidenceBinding.observed(e) for e in evidence(user, read.ids))
+                matches = fresh == read.evidence
+            else:
+                matches = types(user, read.ids) == read.doc_types
+            if not matches:
+                raise BusinessError(ErrorCode.evidence_integrity_failed, "task lookup facts changed")
 
     # ---- released policy per request (M4-09: canary split, rollback without restart)
     @property

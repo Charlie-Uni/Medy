@@ -316,9 +316,9 @@ def test_unaccepted_attempt_keeps_evidence_but_cannot_claim_citations_or_return_
     env = SkillEnv("label_query")
     complete = env.store.complete
 
-    def expires_during_report(task_id, worker, attempt, trace_id, result, now):
+    def expires_during_report(task_id, worker, attempt, trace_id, result, now, **kwargs):
         env.clock.now += timedelta(seconds=301)
-        return complete(task_id, worker, attempt, trace_id, result, env.clock())
+        return complete(task_id, worker, attempt, trace_id, result, env.clock(), **kwargs)
 
     env.store.complete = expires_during_report
     report = env.run()

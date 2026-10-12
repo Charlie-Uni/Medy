@@ -10,11 +10,13 @@ import json
 import re
 import uuid
 from collections.abc import Iterator
-from contextlib import AbstractContextManager, contextmanager
-from dataclasses import dataclass
+from contextlib import AbstractContextManager, ExitStack, contextmanager
+from contextvars import ContextVar
+from dataclasses import dataclass, field
 from time import perf_counter
 from typing import Any, Protocol
 
+import psycopg
 from mcp.server.auth.middleware.auth_context import get_access_token
 from mcp.server.auth.provider import AccessToken
 from mcp.server.auth.settings import AuthSettings
@@ -27,11 +29,14 @@ from medops.application.audit import TraceRecord
 from medops.application.search import SearchExecution
 from medops.bootstrap.connections import open_connection
 from medops.core.config import Settings
+from medops.core.deadline import deadline_scope
 from medops.core.errors import BusinessError, ErrorCode, MedOpsError
 from medops.core.telemetry import annotate, span
 from medops.core.tracing import bind_trace_id
 from medops.domain.identity import UserContext
-from medops.infrastructure.identity import Authenticator, PrincipalDirectory
+from medops.infrastructure.db.deadline import DeadlineConnection
+from medops.infrastructure.db.final_output import acquire_output_fence, directory_user, require_same_user
+from medops.infrastructure.identity import Authenticator, PgDirectory, PrincipalDirectory
 from medops.infrastructure.llm.accounting import call_scope
 from medops.mcp.contracts import (
     MCP_TOOLS,
@@ -41,6 +46,7 @@ from medops.mcp.contracts import (
     VerifyCitationInput,
 )
 from medops.mcp.service import McpService
+from medops.retrieval.integrity import database_identity
 from medops.retrieval.production import PRODUCTION_RETRIEVAL_VERSION
 
 READ_ONLY = ToolAnnotations(read_only_hint=True, destructive_hint=False, idempotent_hint=True, open_world_hint=False)
@@ -57,6 +63,8 @@ class ServiceLike(Protocol):
 
     def list_active_versions(self, inp: ListActiveVersionsInput) -> Any: ...
 
+    def validate_final_output(self, inp: Any, result: dict[str, Any]) -> None: ...
+
 
 class McpRuntime(Protocol):
     authenticator: Authenticator | None  # None only for stdio dev mode
@@ -65,6 +73,10 @@ class McpRuntime(Protocol):
     def directory(self) -> AbstractContextManager[PrincipalDirectory]: ...
 
     def service(self, user: UserContext) -> AbstractContextManager[ServiceLike]: ...
+
+    def final_output(
+        self, user: UserContext, service: ServiceLike, inp: Any, result: dict[str, Any], *, authorization: str | None
+    ) -> AbstractContextManager[None]: ...
 
     def audit(self, trace: TraceRecord) -> None:
         """Persist the per-call trace (kind='mcp'); raising here fails the call closed (INV-OBS-01)."""
@@ -203,9 +215,27 @@ def build_server(runtime: McpRuntime, *, issuer_url: str | None = None, resource
             try:
                 user = _current_user(runtime)
                 annotate(current, dept=user.dept.value)
-                with runtime.service(user) as svc:
-                    result = getattr(svc, method)(inp).model_dump(mode="json")
-                    stats = getattr(svc, "audit_stats", None)
+                # Keep the short app-role fence/audit transaction alive across
+                # the read-only service commit. Both DSNs must be the same DB.
+                with ExitStack() as final:
+                    with runtime.service(user) as svc:
+                        result = getattr(svc, method)(inp).model_dump(mode="json")
+                        stats = getattr(svc, "audit_stats", None)
+                        token = get_access_token()
+                        final.enter_context(
+                            runtime.final_output(
+                                user, svc, inp, result, authorization="Bearer " + token.token if token else None
+                            )
+                        )
+                    if stats is not None:
+                        annotate(
+                            current,
+                            model_calls=stats.model_calls,
+                            cache_hit=stats.cache_hit,
+                            retrieval_version=stats.retrieval_version or PRODUCTION_RETRIEVAL_VERSION,
+                            policy_version=stats.policy_version or "",
+                        )
+                    _audit(runtime, user, trace_id, name, inp, "answered", (), result, started, stats)
             except MedOpsError as exc:
                 annotate(current, error_code=exc.code.value)
                 if user is not None:
@@ -224,16 +254,6 @@ def build_server(runtime: McpRuntime, *, issuer_url: str | None = None, resource
                     )
                 # ToolError text is returned verbatim as isError; anything else would be wrapped as an unexpected error
                 raise ToolError(f"{exc.code.value}: {exc.message}") from None
-            # the trace is written before the data leaves the process: no audit row, no answer (fail closed)
-            if stats is not None:
-                annotate(
-                    current,
-                    model_calls=stats.model_calls,
-                    cache_hit=stats.cache_hit,
-                    retrieval_version=stats.retrieval_version or PRODUCTION_RETRIEVAL_VERSION,
-                    policy_version=stats.policy_version or "",
-                )
-            _audit(runtime, user, trace_id, name, inp, "answered", (), result, started, stats)
             return result
 
     @server.tool(name="search_documents", description=specs["search_documents"].description, annotations=READ_ONLY)
@@ -271,6 +291,9 @@ class McpProductionRuntime:
     app_dsn_for_directory: str
     searcher_factory: Any = None  # Callable[[conn, user], Searcher] | None
     settings: Settings | None = None
+    _final_audit_conn: ContextVar[Any] = field(
+        default_factory=lambda: ContextVar("mcp_final_audit_conn", default=None), repr=False
+    )
 
     @contextmanager
     def directory(self) -> Iterator[PrincipalDirectory]:
@@ -282,8 +305,56 @@ class McpProductionRuntime:
     def audit(self, trace: TraceRecord) -> None:
         from medops.infrastructure.db.audit import PgTraceStore
 
-        with open_connection(self.app_dsn_for_directory, self.settings) as conn, conn.transaction():
-            PgTraceStore(conn).record(trace, None)
+        held = self._final_audit_conn.get()
+        if held is not None:
+            PgTraceStore(held).record(trace, None)
+        else:
+            with open_connection(self.app_dsn_for_directory, self.settings) as conn, conn.transaction():
+                PgTraceStore(conn).record(trace, None)
+
+    @contextmanager
+    def final_output(
+        self, user: UserContext, service: ServiceLike, inp: Any, result: dict[str, Any], *, authorization: str | None
+    ) -> Iterator[None]:
+        if not isinstance(service, McpService):
+            raise BusinessError(ErrorCode.forbidden, "unbound MCP service")
+        try:
+            with (
+                deadline_scope(5.0),
+                open_connection(self.app_dsn_for_directory, self.settings) as raw,
+                raw.transaction(),
+            ):
+                conn = DeadlineConnection(raw)
+                acquire_output_fence(conn)
+                if database_identity(conn) != database_identity(DeadlineConnection(service._conn)):
+                    raise BusinessError(ErrorCode.forbidden, "MCP facts and identity must use the same database")
+                current = (
+                    self.authenticator.authenticate(
+                        authorization,
+                        PgDirectory(conn),
+                    )
+                    if authorization and self.authenticator
+                    else directory_user(conn, user)
+                )
+                # Fixed stdio development identities may deliberately have no
+                # directory row. Existing/inactive rows never use this fallback.
+                if current is None and self.authenticator is None and self.dev_identity == user:
+                    row = conn.execute("select 1 from principals where sub_pseudonym=%s", (user.user_id,)).fetchone()
+                    if row is None:
+                        current = user
+                require_same_user(user, current)
+                service.validate_final_output(inp, result)
+                token = self._final_audit_conn.set(conn)
+                try:
+                    yield
+                finally:
+                    self._final_audit_conn.reset(token)
+        except psycopg.Error as exc:
+            from medops.core.errors import InfrastructureError
+
+            raise InfrastructureError(
+                ErrorCode.dependency_unavailable, detail=type(exc).__name__, retryable=False
+            ) from None
 
     @contextmanager
     def service(self, user: UserContext) -> Iterator[ServiceLike]:

@@ -88,8 +88,17 @@ class FakeRuntime:
     def payload_writer(self, conn):
         return None  # restricted payloads are off unless a test installs a writer (DEC-013)
 
+    def validate_final_output(self, conn, user, evidence, context, *, authorization=None):
+        # Explicit in-memory adapter: no PostgreSQL fact plane in these contract tests.
+        from medops.infrastructure.db.final_output import require_same_user
+
+        require_same_user(user, self.authenticator.authenticate(authorization, self.directory(conn)))
+
     def ready(self):
         return self.readiness
+
+    def validate_task_result(self, conn, user, record, *, authorization=None):
+        pass  # explicit in-memory adapter; PostgreSQL binding tested separately
 
 
 def client(runtime) -> TestClient:

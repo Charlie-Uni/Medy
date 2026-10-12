@@ -114,6 +114,11 @@ class FakeRuntime:
             raise RuntimeError("audit store down")
         self.audited.append(trace)
 
+    @contextmanager
+    def final_output(self, user, service, inp, result, *, authorization=None):
+        # Explicit in-memory service; production is covered by ordinary-role PG tests.
+        yield
+
 
 def call(server, tool: str, arguments: dict):
     async def main():

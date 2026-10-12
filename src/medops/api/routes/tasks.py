@@ -29,6 +29,7 @@ def build_router(runtime: ApiRuntime, *, idempotency_ttl_s: int) -> APIRouter:
         with runtime.connection() as conn:
             user = runtime.authenticator.authenticate(request.headers.get("authorization"), runtime.directory(conn))
             record = _tasks(conn).create(user, body, request.headers.get(IDEMPOTENCY_KEY_HEADER))
+            runtime.validate_task_result(conn, user, record, authorization=request.headers.get("authorization"))
         return to_response(record)
 
     @router.get("/v1/tasks/{task_id}", response_model=TaskResponse)
@@ -36,6 +37,7 @@ def build_router(runtime: ApiRuntime, *, idempotency_ttl_s: int) -> APIRouter:
         with runtime.connection() as conn:
             user = runtime.authenticator.authenticate(request.headers.get("authorization"), runtime.directory(conn))
             record = _tasks(conn).get(user, task_id)
+            runtime.validate_task_result(conn, user, record, authorization=request.headers.get("authorization"))
         return to_response(record)
 
     @router.post("/v1/feedback", response_model=FeedbackReceipt, status_code=201)
@@ -50,6 +52,7 @@ def build_router(runtime: ApiRuntime, *, idempotency_ttl_s: int) -> APIRouter:
         with runtime.connection() as conn:
             user = runtime.authenticator.authenticate(request.headers.get("authorization"), runtime.directory(conn))
             record = _tasks(conn).retry(user, task_id)
+            runtime.validate_task_result(conn, user, record, authorization=request.headers.get("authorization"))
         return to_response(record)
 
     return router

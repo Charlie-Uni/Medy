@@ -121,6 +121,10 @@ class WorkerEnv:
     def bind_identity(self, conn, user):
         pass
 
+    def validate_final_output(self, conn, user, evidence, context, *, lookups=()):
+        # This in-memory restart fixture has no facts or database adapter.
+        assert user == self.user and evidence == ()
+
     def task_store(self, conn):
         return self.store
 

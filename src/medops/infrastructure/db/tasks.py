@@ -11,13 +11,14 @@ from psycopg.errors import UniqueViolation
 from psycopg.types.json import Jsonb
 
 from medops.application.contracts import TaskStatus
+from medops.application.output_binding import OutputBinding
 from medops.application.tasks import IdempotencyRace, TaskRecord, validate_lease
 from medops.core.canonical import canonical_hash
 from medops.domain.common import Dept
 
 _COLUMNS = (
     "task_id::text, principal, dept::text, skill_name, skill_version, input, historical, status, attempts, max_attempts, "
-    "lease_owner, lease_until, trace_id, result, error, created_at, updated_at"
+    "lease_owner, lease_until, trace_id, result, error, created_at, updated_at, output_binding"
 )
 
 
@@ -40,6 +41,7 @@ def _record(row: tuple[Any, ...]) -> TaskRecord:
         error,
         created,
         updated,
+        binding,
     ) = row
     return TaskRecord(
         task_id=tid,
@@ -59,6 +61,7 @@ def _record(row: tuple[Any, ...]) -> TaskRecord:
         error=error,
         created_at=created,
         updated_at=updated,
+        output_binding=OutputBinding.model_validate(binding) if binding is not None else None,
     )
 
 
@@ -219,6 +222,7 @@ class PgTaskStore:
         status: str,
         result: Mapping[str, Any] | None,
         error: Mapping[str, Any] | None,
+        output_binding: OutputBinding | None = None,
     ) -> bool:
         # Acquire the row before checking the clock. An UPDATE predicate can otherwise be evaluated
         # before waiting for an unchanged, locked tuple, and admit a report after the lease expires.
@@ -231,13 +235,14 @@ class PgTaskStore:
         row = self._conn.execute(
             """
             update tasks set status = %(status)s, result = %(result)s, error = %(error)s, trace_id = %(trace)s,
-                   lease_owner = null, lease_until = null
+                   lease_owner = null, lease_until = null, output_binding = %(binding)s
              where task_id = %(id)s and status = 'running' and lease_owner = %(worker)s and attempts = %(attempt)s
                and lease_until > coalesce(%(now)s::timestamptz, clock_timestamp())
             returning task_id
             """,
             {
                 "status": status,
+                "binding": Jsonb(output_binding.model_dump(mode="json")) if output_binding is not None else None,
                 "result": Jsonb(dict(result)) if result is not None else None,
                 "error": Jsonb(dict(error)) if error is not None else None,
                 "trace": trace_id,
@@ -263,8 +268,20 @@ class PgTaskStore:
         trace_id: str,
         result: Mapping[str, Any],
         now: datetime | None = None,
+        *,
+        output_binding: OutputBinding | None = None,
     ) -> bool:
-        return self._finish(task_id, worker, attempt, trace_id, now, status="completed", result=result, error=None)
+        return self._finish(
+            task_id,
+            worker,
+            attempt,
+            trace_id,
+            now,
+            status="completed",
+            result=result,
+            error=None,
+            output_binding=output_binding,
+        )
 
     def fail(
         self,

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from contextlib import AbstractContextManager
 from typing import Any, Protocol
 
@@ -18,7 +19,8 @@ from medops.application.contracts import (
 from medops.application.metrics import MetricsSource
 from medops.application.payloads import PayloadReader, PayloadWriter
 from medops.application.policy_loader import RequestPolicies
-from medops.application.tasks import TaskStore
+from medops.application.tasks import TaskRecord, TaskStore
+from medops.domain.evidence import Evidence
 from medops.domain.identity import UserContext
 from medops.domain.query import QueryContext
 from medops.domain.state import VersionSet
@@ -60,6 +62,16 @@ class ApiRuntime(Protocol):
 
     def resolve_user(self, conn: Any, principal: str) -> UserContext | None: ...
 
+    def validate_final_output(
+        self,
+        conn: Any,
+        user: UserContext,
+        evidence: Sequence[Evidence],
+        context: QueryContext,
+        *,
+        authorization: str | None = None,
+    ) -> None: ...
+
     # M3-03 admin routes run on the admin database role (INV-AUTH-05: separated roles); the unit-test runtime yields None
     def admin_connection(self) -> AbstractContextManager[Any]: ...
 
@@ -78,5 +90,9 @@ class ApiRuntime(Protocol):
 
     @property
     def monthly_cap_usd(self) -> float | None: ...
+
+    def validate_task_result(
+        self, conn: Any, user: UserContext, record: TaskRecord, *, authorization: str | None
+    ) -> None: ...
 
     def ready(self) -> bool: ...

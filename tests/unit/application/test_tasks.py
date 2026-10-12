@@ -87,6 +87,11 @@ class FakeEnv:
     def bind_identity(self, conn, user):
         pass
 
+    def validate_final_output(self, conn, user, evidence, context, *, authorization=None, lookups=()):
+        from medops.infrastructure.db.final_output import require_same_user
+
+        require_same_user(user, self.resolve_user(conn, user.user_id))
+
     def task_store(self, conn):
         return self.store
 

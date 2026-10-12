@@ -12,7 +12,7 @@ import math
 import threading
 import time
 import uuid
-from collections.abc import Callable, Mapping
+from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass, field, replace
 from datetime import UTC, datetime, timedelta
 from typing import Any, Literal, Protocol
@@ -26,6 +26,7 @@ from medops.application.contracts import (
     TaskStatus,
 )
 from medops.application.execution_audit import ExecutionAuditWriter, output_citations, task_payloads, task_spans
+from medops.application.output_binding import EvidenceBinding, LookupBinding, OutputBinding, observe_lookups
 from medops.application.payloads import PayloadWriter
 from medops.core.canonical import canonical_hash
 from medops.core.deadline import check_deadline, deadline_scope
@@ -33,8 +34,9 @@ from medops.core.errors import BusinessError, ErrorCode, ErrorResponse, Infrastr
 from medops.core.telemetry import ATTR_TASK, ATTR_TRACE, annotate, span
 from medops.core.tracing import bind_trace_id, new_trace_id
 from medops.domain.common import Dept
+from medops.domain.evidence import Evidence
 from medops.domain.identity import UserContext
-from medops.domain.query import resolve_query_context
+from medops.domain.query import QueryContext, resolve_query_context
 from medops.harness.audit import ExecutionAudit, ExecutionAuditSnapshot
 from medops.infrastructure.db.deadline import DeadlineConnection
 from medops.infrastructure.llm.accounting import call_scope
@@ -75,6 +77,7 @@ class TaskRecord:
     result: Mapping[str, Any] | None = None
     error: Mapping[str, Any] | None = None
     historical: Mapping[str, Any] | None = None
+    output_binding: OutputBinding | None = None  # never part of the public TaskResponse
 
 
 class TaskStore(Protocol):
@@ -106,6 +109,8 @@ class TaskStore(Protocol):
         trace_id: str,
         result: Mapping[str, Any],
         now: datetime | None = None,
+        *,
+        output_binding: OutputBinding | None = None,
     ) -> bool: ...
 
     def fail(
@@ -229,6 +234,17 @@ class WorkerEnvironment(Protocol):
 
     def payload_writer(self, conn: Any) -> PayloadWriter | None: ...
 
+    def validate_final_output(
+        self,
+        conn: Any,
+        user: UserContext,
+        evidence: Sequence[Evidence],
+        context: QueryContext,
+        *,
+        authorization: str | None = None,
+        lookups: Sequence[LookupBinding] = (),
+    ) -> None: ...
+
     def skill_context(
         self, conn: Any, user: UserContext, trace_id: str, historical: Mapping[str, Any] | None
     ) -> SkillContext: ...
@@ -320,6 +336,7 @@ class TaskRunner:
 
     def _execute(self, claimed: TaskRecord, trace_id: str, body_until: float, claim_started: float) -> TaskExecution:
         ctx: SkillContext | None = None
+        lookups: list[LookupBinding] = []
         run: SkillRun | None = None
         started = time.perf_counter()
         try:
@@ -336,6 +353,7 @@ class TaskRunner:
                     self.env.bind_identity(guarded, user)
                     ctx = self.env.skill_context(guarded, user, trace_id, claimed.historical).pin_query_context()
                     ctx = replace(ctx, deps=replace(ctx.deps, audit=ExecutionAudit()))
+                    ctx = observe_lookups(ctx, lookups)
                     if not isinstance(ctx.deps.gateway, MeteredGateway):
                         ctx = replace(ctx, deps=replace(ctx.deps, gateway=MeteredGateway(ctx.deps.gateway)))
                     profile_until = body_until
@@ -347,11 +365,12 @@ class TaskRunner:
                         )
                         # Infrastructure escalation does not bypass the task's time/ownership fence.
                         self._check_lease(claimed)
-                return self._report(conn, claimed, trace_id, ctx, run, None, started)
+                with deadline_scope(min(5.0, body_until - time.monotonic())):
+                    return self._report(DeadlineConnection(conn), claimed, trace_id, ctx, run, None, started, lookups)
         except Exception as exc:  # noqa: BLE001 - crashes fail closed; cancellation still propagates
             # The business transaction has rolled back. Report with a fresh, usable connection.
             with self.env.connection() as conn:
-                return self._report(conn, claimed, trace_id, ctx, run, self._error(exc, trace_id), started)
+                return self._report(conn, claimed, trace_id, ctx, run, self._error(exc, trace_id), started, lookups)
 
     def _report(
         self,
@@ -362,6 +381,7 @@ class TaskRunner:
         run: SkillRun | None,
         error: Mapping[str, Any] | None,
         started: float,
+        lookups: Sequence[LookupBinding],
     ) -> TaskExecution:
         store = self.env.task_store(conn)
         audit = (
@@ -369,9 +389,15 @@ class TaskRunner:
             if ctx is not None and ctx.deps.audit is not None
             else ExecutionAuditSnapshot((), (), (), ())
         )
+        if error is None:
+            assert ctx is not None and ctx.query_context is not None
+            # Recheck all observed supporting facts, including inner Harness
+            # evidence omitted from the second-stage report. Locks last through
+            # complete + trace + encrypted bodies and their atomic commit.
+            self.env.validate_final_output(conn, ctx.user, audit.evidence, ctx.query_context, lookups=lookups)
         cited = output_citations(run.output, audit) if error is None and run is not None else ()
         if error is None:
-            assert run is not None and ctx is not None
+            assert run is not None and ctx is not None and ctx.query_context is not None
             result = TaskResult(
                 skill=run.spec.version_tag,
                 status=TaskResultStatus(run.output.status.value),
@@ -379,7 +405,20 @@ class TaskRunner:
                 output=run.output.model_dump(mode="json", exclude={"status", "reason_codes", "detail"}),
                 versions=ctx.versions,
             ).model_dump(mode="json")
-            accepted = store.complete(claimed.task_id, self.worker_id, claimed.attempts, trace_id, result, self._now())
+            accepted = store.complete(
+                claimed.task_id,
+                self.worker_id,
+                claimed.attempts,
+                trace_id,
+                result,
+                self._now(),
+                output_binding=OutputBinding(
+                    user=ctx.user,
+                    query_context=ctx.query_context,
+                    evidence=tuple(EvidenceBinding.observed(e) for e in audit.evidence),
+                    lookups=tuple(lookups),
+                ),
+            )
         else:
             accepted = store.fail(claimed.task_id, self.worker_id, claimed.attempts, trace_id, error, self._now())
         outcome: Literal["completed", "failed", "lost"] = (
@@ -636,10 +675,20 @@ class InMemoryTaskStore:
         trace_id: str,
         result: Mapping[str, Any],
         now: datetime | None = None,
+        *,
+        output_binding: OutputBinding | None = None,
     ) -> bool:
         with self._lock:
             return self._finish(
-                task_id, worker, attempt, trace_id, now, status=TaskStatus.completed, result=dict(result), error=None
+                task_id,
+                worker,
+                attempt,
+                trace_id,
+                now,
+                status=TaskStatus.completed,
+                result=dict(result),
+                error=None,
+                output_binding=output_binding,
             )
 
     def fail(
