@@ -1,0 +1,168 @@
+{
+  "format": "implementation-review-v1",
+  "record": 202,
+  "date": "2026-10-12",
+  "implementer": "Codex",
+  "self_reviewer": "Codex",
+  "independent_second_human": false,
+  "baseline_sha": "7e7a76aed46b96cfa78578c1ec68ed4113c827a5",
+  "task_ids": [
+    "EVAL-33"
+  ],
+  "main_slice": "whole locked batch aggregate export guard and custody deployment proposal",
+  "result_scope": "offline binary-result transport and public synthetic checks only",
+  "hosted_model_calls": 0,
+  "api_cost_usd": 0,
+  "business_database_writes": false,
+  "disposable_test_database_writes": true,
+  "deployment_changed": false,
+  "frozen_datasets_changed": false,
+  "production_gates_changed": false,
+  "owner_decisions": {
+    "D-01": "pending",
+    "D-02": "pending"
+  },
+  "custody_environment_decision": "pending",
+  "task_statuses": {
+    "PLAN-02": "HUMAN",
+    "EVAL-32": "BLOCKED",
+    "EVAL-33": "IN_PROGRESS"
+  },
+  "S2_started": false,
+  "baseline_maintenance_inputs": 716,
+  "unchanged_maintenance_inputs": 713,
+  "modified_maintenance_inputs": [
+    "src/medops/evals/isolation/contracts.py",
+    "src/medops/evals/isolation/__main__.py",
+    "src/medops/evals/isolation/canary.py"
+  ],
+  "new_maintained_python_files": 4,
+  "new_test_cases": 50,
+  "synthetic_canary_checks": {
+    "input_and_ledger": 9,
+    "aggregate_export": 6
+  },
+  "formal_export_thresholds": null,
+  "synthetic_example_thresholds": {
+    "min_tasks": 20,
+    "min_families": 2,
+    "min_cell_tasks": 5,
+    "formal": false
+  },
+  "tests": [
+    {
+      "command": "pytest -q tests/unit/evals/test_isolation_*.py",
+      "exit_code": 0,
+      "passed": 121,
+      "pytest_elapsed_s": 1.55,
+      "total_elapsed_s": 2.223
+    },
+    {
+      "command": "required-services make check",
+      "exit_code": 0,
+      "passed": 2443,
+      "skipped": 70,
+      "warnings": 1,
+      "pytest_elapsed_s": 90.18,
+      "total_elapsed_s": 119.386,
+      "warning_reason": "existing negative JWT algorithm test uses deliberately short HMAC key"
+    },
+    {
+      "command": "python -m medops.evals.isolation --self-check",
+      "exit_code": 0,
+      "checks": 9,
+      "model_calls": 0
+    },
+    {
+      "command": "python -m medops.evals.isolation --export-self-check",
+      "exit_code": 0,
+      "checks": 6,
+      "model_calls": 0
+    },
+    {
+      "command": "pytest -q tests/unit/docs",
+      "exit_code": 0,
+      "passed": 41,
+      "pytest_elapsed_s": 1.78,
+      "total_elapsed_s": 2.25
+    }
+  ],
+  "self_review": [
+    {
+      "item": "scope",
+      "verdict": "pass",
+      "reason": "固定完整批次的离线聚合传输和保管提案；不新增评分器/正式阈值/真实题或生产接线"
+    },
+    {
+      "item": "ADR_and_stage",
+      "verdict": "pass",
+      "reason": "PLAN-02 D-01/D-02仍pending，EVAL-32 BLOCKED、EVAL-33 IN_PROGRESS，S2未开始"
+    },
+    {
+      "item": "correctness_and_failures",
+      "verdict": "pass",
+      "reason": "绑定/角色/完整矩阵/unknown/稀有格双臂抑制/改行拒绝/限额和固定错误测试通过"
+    },
+    {
+      "item": "permissions_and_data",
+      "verdict": "pass",
+      "reason": "输出固定字段，无逐题正文/结果摘要；序列化警告关闭且重新校验，真实鉴权/隐私证明未宣称"
+    },
+    {
+      "item": "budget_cancellation_side_effects",
+      "verdict": "pass",
+      "reason": "0托管调用、0费用；只有一次性测试库写入，没有业务库写入、迁移、服务重启或激活"
+    },
+    {
+      "item": "traceability_and_versions",
+      "verdict": "pass",
+      "reason": "7e7a76a基线，集合/锁/策略/结果摘要与收据可定位；预登记及可信签发由后续部署承担"
+    },
+    {
+      "item": "verification",
+      "verdict": "pass",
+      "reason": "121定向、2443/70全量required-services、两套CLI、41文档、143任务/223链接/10片段与713未变维护输入通过；旧canary AST及PLAN/ADR规格保持"
+    },
+    {
+      "item": "status_and_documentation",
+      "verdict": "pass",
+      "reason": "明确二值全任务范围、N/A/CI/完整runner缺口，正式最小值和真实保管安排待定，独立人工仍缺"
+    }
+  ],
+  "failures_and_remediation": [
+    {
+      "stage": "first targeted lint",
+      "error": "B023 Function definition does not bind loop variable metric",
+      "remediation": "Move helper outside loop and pass metric explicitly; lint and full gate pass"
+    },
+    {
+      "stage": "CLI lint",
+      "error": "I001 Import block is un-sorted or un-formatted",
+      "remediation": "Ruff organized added imports; full lint passes"
+    },
+    {
+      "stage": "code self-review",
+      "issue": "Copied malformed private value could appear in Pydantic serializer warning before validation failure",
+      "remediation": "Suppress serializer warnings, revalidate copies, translate ValueError including serialization failure into fixed IsolationError; two regression tests pass"
+    }
+  ],
+  "known_limits": [
+    "No authenticated grant issuer, pre-run policy freeze or complete runner",
+    "No audit-before-disclosure orchestration or cumulative export limits",
+    "No true custody accounts/store/log/cache deployment verification",
+    "Whole-collection binary tallies only; N/A, claim, latency, cost, slices and paired CI unsupported",
+    "Cell suppression is not a formal privacy or inference-prevention proof",
+    "Source families/related groups, near duplicates and historical exposure incomplete",
+    "No new unseen tasks; independent human review missing; qualification unknown"
+  ],
+  "next_slice": "Pre-register near-duplicate and historical-exposure methods; real custody pending owner choice; PLAN-02 pending",
+  "document_audit": {
+    "task_ids": 143,
+    "local_links_checked": 223,
+    "local_fragments_checked": 10,
+    "unchanged_maintenance_inputs": 713,
+    "original_canary_function_ast_unchanged": true,
+    "original_development_spec_and_pending_contract_unchanged": true,
+    "unexpected_changed_paths": []
+  }
+}

@@ -178,3 +178,5 @@ CODE-07已完成[MCP受限材料及观测职责](MCP_EXECUTION_AUDIT.md)，[记�
 2026-10-12 S0 契约准备：[PLAN-02 v0.1](agent/PLAN-02-action-budget-and-acceptance.md)及[隔离方案](agent/EVALUATION_ISOLATION.md)已具备可审核提案，D-01/D-02 尚待所有者裁决；状态以台账为准。记录200只验证本轮文档/规格一致性，没有实现Agent、评分器或实际隔离，0托管调用。
 
 2026-10-12 EVAL-33 原语：[记录201](reviews/2026-10-12-implementation-201-evaluation-isolation-primitives.md)实现离线manifest/库存、运行输入投影、带可信头校验的暴露账本与合成canary。只完成应用层部分准备，不认证真实身份，不封存新盲测题；聚合出口/近重复/历史扫描及部署身份仍待。EVAL-33 为 IN_PROGRESS，PLAN-02 D-01/D-02 未决，S2 未开始；0托管调用，原评分、模型、ACL和生产门保持。
+
+2026-10-12 EVAL-33 聚合出口：[记录202](reviews/2026-10-12-implementation-202-evaluation-export-and-custody.md)实现固定完整集合的两臂/全部登记轮次二值结果传输校验，unknown保留分母，稀有结果整指标两臂抑制；[保管部署提案](agent/EVALUATION_CUSTODY.md)列独立环境选择和真实正负验收。合成20/2/5不是正式阈值；无评分器/CI/完整runner/新盲测或真实隔离声明。EVAL-33仍IN_PROGRESS，保管安排及PLAN-02 D-01/D-02待所有者决定，S2未开始；下一近重复方法/历史扫描，0托管调用，原生产/付费/人工门保持。
