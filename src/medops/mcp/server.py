@@ -38,7 +38,12 @@ from medops.core.telemetry import annotate, span
 from medops.core.tracing import bind_trace_id
 from medops.domain.identity import UserContext
 from medops.infrastructure.db.deadline import DeadlineConnection
-from medops.infrastructure.db.final_output import acquire_output_fence, directory_user, require_same_user
+from medops.infrastructure.db.final_output import (
+    acquire_output_fence,
+    directory_user,
+    require_current_fact_transaction,
+    require_same_user,
+)
 from medops.infrastructure.identity import Authenticator, PgDirectory, PrincipalDirectory
 from medops.infrastructure.llm.accounting import call_scope
 from medops.mcp.audit import tool_payloads
@@ -387,6 +392,8 @@ class McpProductionRuntime:
             ):
                 conn = DeadlineConnection(raw)
                 acquire_output_fence(conn)
+                # The app lock does not refresh a repeatable-read fact snapshot.
+                require_current_fact_transaction(DeadlineConnection(service._conn))
                 if database_identity(conn) != database_identity(DeadlineConnection(service._conn)):
                     raise BusinessError(ErrorCode.forbidden, "MCP facts and identity must use the same database")
                 current = (
@@ -421,5 +428,6 @@ class McpProductionRuntime:
     def service(self, user: UserContext) -> Iterator[ServiceLike]:
         with open_connection(self.readonly_dsn, self.settings) as conn, conn.transaction():
             conn.execute("select set_config('medops.dept', %s, true)", (user.dept.value,))
+            require_current_fact_transaction(conn)
             searcher = self.searcher_factory(conn, user) if self.searcher_factory is not None else None
             yield McpService(conn, user, searcher)

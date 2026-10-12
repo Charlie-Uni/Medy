@@ -45,8 +45,10 @@ from medops.infrastructure.db.audit import PgTraceStore
 from medops.infrastructure.db.deadline import DeadlineConnection
 from medops.infrastructure.db.documents import PgDocumentAdminStore
 from medops.infrastructure.db.final_output import (
+    acquire_admin_write_fence,
     acquire_output_fence,
     directory_user,
+    require_read_committed_transaction,
     require_same_user,
     validate_evidence,
 )
@@ -205,6 +207,40 @@ class ProductionRuntime:
         conn.execute(
             "select set_config('medops.dept', %s, true)", (user.dept.value,)
         )  # transaction-local (baseline 3.7)
+
+    def validate_privileged_access(
+        self,
+        identity_conn: Any,
+        target_conn: Any,
+        user: UserContext,
+        *,
+        authorization: str | None,
+        mutation: bool = False,
+    ) -> None:
+        """Bind privileged work to current identity until the target transaction commits.
+
+        Reads hold the app-role shared fence. Writes hold the exclusive fence on
+        their own admin connection so statement triggers reacquire the same lock.
+        No model work belongs inside this short privileged transaction.
+        """
+        try:
+            with deadline_scope(5.0):
+                identity = DeadlineConnection(identity_conn)
+                target = DeadlineConnection(target_conn)
+                require_read_committed_transaction(identity)
+                require_read_committed_transaction(target)
+                if mutation:
+                    acquire_admin_write_fence(target)
+                else:
+                    acquire_output_fence(identity)
+                if database_identity(identity) != database_identity(target):
+                    raise BusinessError(ErrorCode.forbidden, "privileged work requires the identity database")
+                current = self.authenticator.authenticate(authorization, self.directory(identity))
+                require_same_user(user, current)
+        except psycopg.Error as exc:
+            raise InfrastructureError(
+                ErrorCode.dependency_unavailable, detail=type(exc).__name__, retryable=False
+            ) from None
 
     def validate_final_output(
         self,

@@ -17,17 +17,41 @@ from medops.domain.query import QueryContext
 from medops.infrastructure.identity import PgDirectory
 from medops.retrieval.recheck import recheck_candidates, require_acl_enforced
 
+# Must remain the migration 0026 fact/identity mutation fence.
+OUTPUT_FENCE_KEY = 21749715913086032
 
-def acquire_output_fence(conn: Any) -> None:
+
+def require_read_committed_transaction(conn: Any) -> None:
+    """A different connection's fresh snapshot cannot make this connection fresh."""
     if conn.autocommit or conn.info.transaction_status != TransactionStatus.INTRANS:
         raise InfrastructureError(
-            ErrorCode.internal_error, detail="final output requires a caller-owned transaction", retryable=False
+            ErrorCode.internal_error, detail="authorization requires a caller-owned transaction", retryable=False
         )
+    row = conn.execute("select current_setting('transaction_isolation')").fetchone()
+    if row is None or row[0] != "read committed":
+        raise InfrastructureError(
+            ErrorCode.internal_error, detail="authorization requires read committed", retryable=False
+        )
+
+
+def require_current_fact_transaction(conn: Any) -> None:
+    require_read_committed_transaction(conn)
     require_acl_enforced(conn)
+
+
+def acquire_output_fence(conn: Any) -> None:
+    require_current_fact_transaction(conn)
     # A fixed short lock wait, in addition to the connection/active execution deadline.
     # The boundary's savepoint contains lock timeout failures so its audit remains usable.
     conn.execute("select set_config('lock_timeout','1000ms',true)")
     conn.execute("select public.medops_acquire_output_fence()")
+
+
+def acquire_admin_write_fence(conn: Any) -> None:
+    """Lock on the actual write connection; a shared lock on another connection deadlocks its own write."""
+    require_read_committed_transaction(conn)
+    conn.execute("select set_config('lock_timeout','1000ms',true)")
+    conn.execute("select pg_advisory_xact_lock(%s::bigint)", (OUTPUT_FENCE_KEY,))
 
 
 def directory_user(conn: Any, expected: UserContext) -> UserContext | None:
