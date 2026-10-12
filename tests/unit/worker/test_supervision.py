@@ -2,6 +2,7 @@
 
 import json
 import os
+import signal
 import sys
 import threading
 import time
@@ -9,6 +10,55 @@ import time
 import pytest
 
 from medops.worker import supervision as s
+
+
+def test_transient_permission_error_in_group_probe_is_retried_before_claiming_exit(monkeypatch):
+    calls = []
+
+    class Child:
+        pid = 123
+        waited = False
+
+        def poll(self):
+            return None
+
+        def wait(self):
+            self.waited = True
+
+    def killpg(pid, sig):
+        calls.append((pid, sig))
+        if sig == 0:
+            if len(calls) == 2:
+                raise PermissionError()
+            raise ProcessLookupError()
+
+    child = Child()
+    monkeypatch.setattr(s.os, "killpg", killpg)
+    assert s.stop_child(child, grace=0.2) is False
+    assert calls == [(123, signal.SIGTERM), (123, 0), (123, 0)] and child.waited
+
+
+def test_permanent_group_permission_failure_is_not_reported_as_a_successful_stop(monkeypatch):
+    calls = []
+
+    class Child:
+        pid = 123
+
+        def poll(self):
+            return None
+
+        def wait(self):
+            pytest.fail("unverified process group cannot be reported as stopped")
+
+    def killpg(pid, sig):
+        calls.append((pid, sig))
+        if sig != signal.SIGTERM:
+            raise PermissionError()
+
+    monkeypatch.setattr(s.os, "killpg", killpg)
+    with pytest.raises(PermissionError):
+        s.stop_child(Child(), grace=0.01)
+    assert calls[0] == (123, signal.SIGTERM) and calls[-1] == (123, signal.SIGKILL)
 
 
 def test_progress_requires_this_attempt_pid_and_nonfuture_clock(tmp_path):

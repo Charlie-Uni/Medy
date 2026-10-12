@@ -103,11 +103,16 @@ def stop_child(child: subprocess.Popen[Any], *, grace: float) -> bool:
         except ProcessLookupError:
             child.wait()
             return False
+        except PermissionError:
+            # A probe can transiently fail while an exiting group is becoming unobservable (Darwin).
+            # Unknown is not gone: retry within the existing grace, then require SIGKILL or ESRCH.
+            pass
         time.sleep(min(0.05, max(0, deadline - time.monotonic())))
     try:
         os.killpg(child.pid, signal.SIGKILL)
     except ProcessLookupError:
-        pass
+        child.wait()
+        return False
     child.wait()
     return True
 
