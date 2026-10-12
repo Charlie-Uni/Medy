@@ -1,0 +1,240 @@
+{
+  "record": 194,
+  "date": "2026-10-12",
+  "task": "CODE-07",
+  "implementer": "Codex",
+  "self_reviewer": "Codex",
+  "independent_human_review": false,
+  "baseline_head": "de0e6d3cb648d0ebb986f6b541009524067c7868",
+  "baseline_remote_ci": {
+    "run": 38190039254,
+    "head_sha": "de0e6d3cb648d0ebb986f6b541009524067c7868",
+    "conclusion": "success",
+    "all_steps": "success"
+  },
+  "full_check": {
+    "exit_code": 0,
+    "elapsed_s": 85.624,
+    "command": [
+      "make",
+      "check"
+    ],
+    "worktree": "/Users/leaf/.cache/medy-checks/code07-verified-wcigivho",
+    "required_services": true,
+    "passed": 2254,
+    "skipped": 70,
+    "warnings": 1,
+    "pytest_seconds": 81.86,
+    "formatted_files": 675,
+    "mypy_sources": 324,
+    "architecture_modules": 324,
+    "architecture_violations": 0,
+    "architecture_exceptions": 2
+  },
+  "targeted": {
+    "exit_code": 0,
+    "elapsed_s": 17.043,
+    "command": [
+      "/Users/leaf/.cache/medy-checks/code07-verified-wcigivho/venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/unit/mcp",
+      "tests/unit/bootstrap",
+      "tests/unit/core/test_telemetry_correlation.py",
+      "tests/unit/infrastructure/test_observability.py",
+      "tests/unit/infrastructure/test_feedback_identity.py",
+      "tests/unit/docs/test_architecture_boundaries.py",
+      "tests/integration/test_mcp_audit.py",
+      "tests/integration/test_mcp_service.py",
+      "tests/integration/test_final_output.py",
+      "tests/integration/test_feedback_export.py",
+      "tests/integration/test_payload_store.py"
+    ],
+    "worktree": "/Users/leaf/.cache/medy-checks/code07-verified-wcigivho",
+    "required_services": true,
+    "passed": 194,
+    "pytest_seconds": 15.96
+  },
+  "compatibility": {
+    "observation_definitions_ast_identical": [
+      "LangfuseScores",
+      "ScoreExportError",
+      "ScoreQueue",
+      "ScoreQueueFull",
+      "feedback_event",
+      "harvest_feedback",
+      "score_event",
+      "utc_timestamp",
+      "validate_score_event"
+    ],
+    "observation_constants_ast_identical": [
+      "FORMAT",
+      "_METADATA",
+      "_NAME"
+    ],
+    "import_graph_scope": "all explicit Import/ImportFrom internal module edges; excludes external and implicit parent-package/dynamic execution edges",
+    "cycles": {
+      "eager": {
+        "before": [],
+        "after": [],
+        "new": []
+      },
+      "including_lazy_and_type_checking": {
+        "before": [
+          [
+            "medops.evals.probe.review_provenance",
+            "medops.evals.probe.validator"
+          ],
+          [
+            "medops.harness.answer",
+            "medops.harness.audit",
+            "medops.harness.dependencies",
+            "medops.harness.execution_record",
+            "medops.harness.graph",
+            "medops.harness.nodes",
+            "medops.harness.runtime"
+          ],
+          [
+            "medops.retrieval.integrity",
+            "medops.retrieval.maintenance",
+            "medops.retrieval.production"
+          ]
+        ],
+        "after": [
+          [
+            "medops.evals.probe.review_provenance",
+            "medops.evals.probe.validator"
+          ],
+          [
+            "medops.harness.answer",
+            "medops.harness.audit",
+            "medops.harness.dependencies",
+            "medops.harness.execution_record",
+            "medops.harness.graph",
+            "medops.harness.nodes",
+            "medops.harness.runtime"
+          ],
+          [
+            "medops.retrieval.integrity",
+            "medops.retrieval.maintenance",
+            "medops.retrieval.production"
+          ]
+        ],
+        "new": []
+      }
+    }
+  },
+  "source_comparison": {
+    "count": 674,
+    "mismatches": [],
+    "sha256_of_sorted_path_hash_json": "2cc99994f89cce1c8eb3ab20ffed3f4b59fcc11f0ba9b34cca329e58aec3713a"
+  },
+  "failed_iterations": [
+    {
+      "passed": 109,
+      "failed": 6,
+      "cause": "fixture non-hex restricted-reader identity and missing required max_output_tokens; retained original constraints"
+    },
+    {
+      "passed": 5,
+      "failed": 1,
+      "cause": "zero-cost fake did not exercise positive metering; explicitly synthetic 0.002 cost stub, no supplier call"
+    }
+  ],
+  "self_review_repair": {
+    "initial_full_passed": 2253,
+    "defect": "over-cap failure fallback could retain unbounded identity and receipts",
+    "repair": "identity hash; oversize receipts hash + explicit omitted marker; no successful incomplete output",
+    "final_full_passed": 2254
+  },
+  "hosted_model_calls": 0,
+  "actual_cost_usd": 0,
+  "test_fee_usd": "synthetic only, not real cost",
+  "shared_business_db_writes": false,
+  "shared_deployment_restarted": false,
+  "limits": [
+    "no deployed service restart",
+    "no Task/MCP execution replay or original-condition restoration",
+    "no medical quality, actual API capacity or unseen holdout evidence",
+    "no new live Langfuse backend/UI verification",
+    "explicit import graph excludes dynamic execution and implicit parent-package loading",
+    "serializing payloads is not a total process memory bound",
+    "synthetic fee tests are not supplier bill reconciliation"
+  ],
+  "documentation_checks": {
+    "exit_code": 0,
+    "elapsed_s": 1.924,
+    "command": [
+      "/Users/leaf/.cache/medy-checks/code07-verified-wcigivho/venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/unit/docs"
+    ],
+    "worktree": "/Users/leaf/.cache/medy-checks/code07-verified-wcigivho",
+    "required_services": true,
+    "passed": 32,
+    "pytest_seconds": 1.47,
+    "task_ids": 142,
+    "task_ids_unchanged": true,
+    "local_links_checked": 234,
+    "protected_tracked_changes": []
+  },
+  "commits_before_documentation": [
+    {
+      "group": "mcp",
+      "sha": "154cdb216d62a5780f11e0a44ad99395436a8f18",
+      "paths": [
+        "src/medops/application/search.py",
+        "src/medops/bootstrap/search.py",
+        "src/medops/mcp/audit.py",
+        "src/medops/mcp/server.py",
+        "src/medops/mcp/service.py"
+      ]
+    },
+    {
+      "group": "observability",
+      "sha": "94580e3608b8d89ab20a6bc627bb7494ed9ef63f",
+      "paths": [
+        "scripts/check_architecture.py",
+        "scripts/langfuse_local.py",
+        "src/medops/evals/telemetry.py",
+        "src/medops/infrastructure/observability.py",
+        "src/medops/infrastructure/observability/__init__.py",
+        "src/medops/infrastructure/observability/client.py",
+        "src/medops/infrastructure/observability/errors.py",
+        "src/medops/infrastructure/observability/feedback.py",
+        "src/medops/infrastructure/observability/queue.py",
+        "src/medops/infrastructure/observability/schema.py",
+        "src/medops/worker/observability.py"
+      ]
+    },
+    {
+      "group": "tests",
+      "sha": "84e4522ac9241ae9b7d7e9b861dff9867ef8c641",
+      "paths": [
+        "tests/integration/test_final_output.py",
+        "tests/integration/test_mcp_audit.py",
+        "tests/mcp_client.py",
+        "tests/unit/bootstrap/test_composition.py",
+        "tests/unit/core/test_telemetry_correlation.py",
+        "tests/unit/docs/test_architecture_boundaries.py",
+        "tests/unit/mcp/test_audit_material.py",
+        "tests/unit/mcp/test_server.py"
+      ]
+    }
+  ],
+  "documentation_paths": [
+    "README.md",
+    "docs/CURRENT_TASKS.md",
+    "docs/EXECUTION_REPLAY.md",
+    "docs/ITERATION_STAGES.md",
+    "docs/LANGFUSE.md",
+    "docs/MCP_EXECUTION_AUDIT.md",
+    "docs/PRODUCTION_COMPOSITION.md",
+    "docs/TASK_KNOWLEDGE_MAP.md",
+    "docs/reviews/2026-10-12-implementation-194-mcp-audit-and-observability.md",
+    "docs/reviews/2026-10-12-implementation-194-results.json"
+  ]
+}

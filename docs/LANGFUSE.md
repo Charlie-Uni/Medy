@@ -13,6 +13,8 @@
 
 `INV-OBS-03` 不变：OTel 不发送问题、提示词、证据或回答。允许字段为 trace/task ID、节点与 observation 类型、版本、耗时、Token、费用、候选数量、受控状态和脱敏 score metadata。受限回放正文仍走独立加密载荷与授权读取。
 
+2026-10-12维护更新：评分代码已分为schema/client/queue/feedback，原公开API、wire/HTTP/SQLite/ID/时间/退避与死信行为保持；9定义/3常量AST对照一致。MCP正文走独立加密执行材料，不发送Langfuse，见[MCP执行审计](MCP_EXECUTION_AUDIT.md)和[记录194](reviews/2026-10-12-implementation-194-mcp-audit-and-observability.md)。本轮工程重构不冒充新的真实后端/UI验收。
+
 本机栈与 MedOps 事实面分离。Langfuse 自用 PostgreSQL、ClickHouse、Redis 和 MinIO 都只在 Compose 内网开放；主机只开放 UI/API 的 loopback 端口。使用统计显式关闭，内置 Agent 和实验功能关闭，注册关闭。MinIO 是官方 v4 Compose 的对象存储依赖，AGPL-3.0 组件仅在这个内部本机栈运行；Redis 固定在 7.2 BSD 许可线。
 
 **所有者决定（2026-10-09）**：项目所有者已知悉 MinIO 为 AGPL-3.0 并明确接受，前提是原样运行官方镜像、不修改其源码、不作为产品分发、不对外提供其服务；这是针对本内部观测栈的个案接受，不改变 ADR-0003 对生产组件优先采用宽松许可证的原则。若日后把 Langfuse 栈对外部署或把本项目作为可分发产品，应换用 Apache-2.0 的 S3 兼容存储（如 SeaweedFS、RustFS）。决定由所有者在 Claude 会话中作出，Claude 登记。

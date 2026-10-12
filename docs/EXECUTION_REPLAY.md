@@ -1,6 +1,6 @@
 # 执行记录与回放边界
 
-更新：2026-10-11。ARCH-07 的实现与八项自审见[记录 181](reviews/2026-10-11-implementation-181-execution-records-and-replay-boundaries.md)。本页规定在线执行记录和单条 Ask 诊断回放，不替代正式评测、独立人工复核或 Agent 轨迹验收。
+更新：2026-10-12。ARCH-07 的实现与八项自审见[记录 181](reviews/2026-10-11-implementation-181-execution-records-and-replay-boundaries.md)；CODE-07的MCP受限材料见[记录194](reviews/2026-10-12-implementation-194-mcp-audit-and-observability.md)。本页规定在线执行记录和单条 Ask 诊断回放，不替代正式评测、独立人工复核或 Agent 轨迹验收。
 
 ## 1. 两种模式
 
@@ -18,6 +18,8 @@
 ## 2. 保存什么
 
 正文仍使用 DEC-013 的 envelope encryption、受限读角色、管理员用途与访问日志、90 天默认保留和升级工单宽限期。原有 `input / evidence_snapshot / model_output` 三类结构保留；Ask 新记录使用 `ask-audit-v2`，Task 继续使用可增量读取的 `task-audit-v1`。
+
+MCP现使用 `mcp-audit-v1`，四工具完整typed输入/观察事实/输出与搜索逐调用记录已接通；配置key时与Trace原子持久化。完整字段、超限失败及观测边界见[MCP执行审计](MCP_EXECUTION_AUDIT.md)。这项记录能力没有开放MCP执行回放，也没有补造旧Trace的原完整输入。
 
 ### 2.1 输入与执行条件
 

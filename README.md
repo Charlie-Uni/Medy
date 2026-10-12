@@ -64,3 +64,5 @@ ARCH-14已补required依赖失败门、架构显式检查与已发布配置真�
 2026-10-12 后续：ARCH-15三批已推送，78218ae远端CI38186588254全步骤成功。CODE-04实验/生产词法边界自审通过，见[记录192](docs/reviews/2026-10-12-implementation-192-lexical-experiment-boundaries.md)与[迁移说明](docs/EXPERIMENT_ADAPTER_BOUNDARY.md)：四纯实验适配器迁出、BM25通用机制共享、版本/SQL/分词/分页对照一致；396定向、全量2223/70、0托管费用。历史原命令和产物保留，旧CLI使用新模块路径，A2回滚仍保留；下一CODE-05，Agent/PLAN-02及质量门保持。
 
 CODE-05已完成[维护工具打包](docs/EVALUATION_TOOLING.md)，自审见[记录193](docs/reviews/2026-10-12-implementation-193-evaluation-tool-packaging.md)：79模块入规范包、67原命令入口保留，收敛预算启动/事务/文件/冻结/复核，修复MPS缓存消息类型与重判连接泄漏。595定向、全量2240/70、665维护输入一致；57帮助和170安全起草内容对照一致，0托管费用。CODE-04的68783f0远端CI38188078574全步骤通过；下一CODE-07，PLAN-02/S2/S3、真实质量与人工/盲测门保持。
+
+CODE-07工程自审见[记录194](docs/reviews/2026-10-12-implementation-194-mcp-audit-and-observability.md)与[MCP执行审计](docs/MCP_EXECUTION_AUDIT.md)：四工具完整受限输入/事实/输出、搜索逐调用材料、原子加密持久化及失败超限控制；观测schema/HTTP/队列/反馈职责分开，原评分API/行为保持。194定向、全量2254/70、674输入一致，0费用；de0e6d3远端CI38190039254全步骤成功。下一CODE-01/02；未重启部署，Task/MCP回放、Agent/自进化和人工/盲测门保持。
