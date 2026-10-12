@@ -164,3 +164,7 @@ ARCH-14八项工程自审通过，见[记录187](reviews/2026-10-11-implementati
 ARCH-12评估范围八项自审通过，见[记录188](reviews/2026-10-11-implementation-188-request-transaction-assessment.md)与[事务方案](REQUEST_TRANSACTION_PLAN.md)：真实ProductionRuntime连接/临时PG、12臂288次合成执行、DDL/5种变化诊断；无限额未证明吞吐/时延收益，决定不启用Pool或分阶段事务。全量2163/70、559输入一致、0托管费用。新增ARCH-15 READY，先复现/修复Ask、五类Skill、MCP实际最终输出权限与事实边界；当前未实现生产栅栏。PLAN-02、原ARCH-04/11硬门、盲测/独立人工/付费与生产签字保持，未提交/推送/部署；下一主项ARCH-15。
 
 记录185～188已按[记录189](reviews/2026-10-12-implementation-189-batched-push.md)分批提交推送，连同此前13个提交一并同步。10月12日required全量2163/70、559维护输入一致；远端CI运行中，未部署。下一主项ARCH-15，S2/S3与付费、盲测、独立人工门不变。
+
+## 2026-10-12 最新工程回执
+
+记录189已分批推送完成工作；[记录190](reviews/2026-10-12-implementation-190-compose-ci-compatibility.md)修复干净CI的Compose输入，8d3669e远端38184157416全步骤成功。ARCH-15已通过[记录191](reviews/2026-10-12-implementation-191-final-output-validation.md)八项工程自审：真实输出边界复现、身份/完整证据/正负lookup终检、0026读写栅栏、旧Task读取和原子审计；全量2213 passed/70 skipped，三库升级且32表既有字段摘要/5索引计数保持，0费用。53/2/0个历史completed无原绑定，原数据保留，新接口失败关闭；没有重启部署。下一CODE-04；PLAN-02、S2/S3、盲测、第二独立人工、逐次付费与生产签字约束保持。

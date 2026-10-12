@@ -16,9 +16,9 @@
 | --- | --- | --- | --- |
 | ENV-01 | 本地 `DATABASE_URL` 与 `DATABASE_ADMIN_URL` 指向具备持久费用账本的正式本地事实库 | DONE | 本机 `.env` 已由 `medops` 改为 `medops_v2`；不记录凭据 |
 | ENV-02 | 锁定依赖运行环境迁出 iCloud 管理范围 | DONE | 本地 `venv` 链接外部缓存目录，原环境保留；锁哈希安装、pip check、repo 外导入通过；记录 168 |
-| DB-01 | `medops_v2` 升至 migration 0022 | DONE | 0020/0021 为费用账本；0022 为部门隔离 BM25；记录 162。本机现已追加 0023 调用回执，记录 175 ；本机已追加 0024 查询上下文，三库保护摘要不变，记录 178；本机已追加0025持久事实库身份，31表内容/5索引计数不变，记录183 |
-| DB-02 | `medops_v2_safety` 升至 migration 0022 | DONE | PG17 逻辑恢复核对后由 0021 升至 0022，索引零缺口；本机现为 0023，记录 175 ；本机已追加 0024 查询上下文，三库保护摘要不变，记录 178；本机已追加0025持久事实库身份，31表内容/5索引计数不变，记录183 |
-| DB-03 | 旧开发库 `medops` 的去留 | DONE | 同步迁移到 PG17/0022 并保留；没有向量索引，API/正式评测不连接它；本机现为 0023，记录 175 ；本机已追加 0024 查询上下文，三库保护摘要不变，记录 178；本机已追加0025持久事实库身份，31表内容/5索引计数不变，记录183 |
+| DB-01 | `medops_v2` 升至 migration 0022 | DONE | 0020/0021 为费用账本；0022 为部门隔离 BM25；记录 162。本机现已追加 0023 调用回执，记录 175 ；本机已追加 0024 查询上下文，三库保护摘要不变，记录 178；本机已追加0025持久事实库身份，31表内容/5索引计数不变，记录183；本机已追加0026输出栅栏，32表既有字段摘要/5索引计数不变，记录191 |
+| DB-02 | `medops_v2_safety` 升至 migration 0022 | DONE | PG17 逻辑恢复核对后由 0021 升至 0022，索引零缺口；本机现为 0023，记录 175 ；本机已追加 0024 查询上下文，三库保护摘要不变，记录 178；本机已追加0025持久事实库身份，31表内容/5索引计数不变，记录183；本机已追加0026输出栅栏，32表既有字段摘要/5索引计数不变，记录191 |
+| DB-03 | 旧开发库 `medops` 的去留 | DONE | 同步迁移到 PG17/0022 并保留；没有向量索引，API/正式评测不连接它；本机现为 0023，记录 175 ；本机已追加 0024 查询上下文，三库保护摘要不变，记录 178；本机已追加0025持久事实库身份，31表内容/5索引计数不变，记录183；本机已追加0026输出栅栏，32表既有字段摘要/5索引计数不变，记录191 |
 | ADJ-01 | 裁决 `ms-0125` | DONE | 项目所有者按建议保留现有 `char_end=2226` |
 | ADJ-02 | 裁决 `ms-0241/ms-0242` 的证据组 | DONE | 三类正式示例共同必需，standard-of-care 仅作补充；已落实到 v3 |
 | ADJ-03 | 裁决 `ms-0280` | DONE | 已增加 `protocol_id`，query、gold 与日期保留 |
@@ -56,9 +56,9 @@ probe v4 与 `main-v5-provisional` 均已冻结。EVAL-11 已完成：580 个 go
 | ARCH-08 | 收敛契约、生产共用模块与三入口装配 | DONE | [记录182](reviews/2026-10-11-implementation-182-shared-composition-and-import-boundaries.md)、[装配/边界契约](PRODUCTION_COMPOSITION.md)：共用DTO/身份、knowledge解析/PII/norm-v1、bootstrap策略/检索/连接与三入口装配；静态214模块0违例/2精确允许边，59定义AST与12配置/灰度版本比较一致；全量2071/70、532维护输入SHA一致，0托管调用，八项工程自审通过。ARCH-10底层scorer已由记录185完成；MCP受限正文/回放仍待；稳定反馈后续已由记录183完成；已按记录184提交，未部署。OPT-01～06 |
 | ARCH-10 | 共享重排 scorer 并限制重复初始化 | DONE | [记录185](reviews/2026-10-11-implementation-185-shared-reranker-scorer.md)：每lane一scorer/冻结输出视图/同配置singleflight，五种输出回切不加载新权重，CPU实际加载1次、分数差0、真实内存及主线程核验；定向37、全量2105/70、537维护输入一致，0托管费用，八项工程自审通过。仅进程内共享；MPS具体性能/API容量未测，已由记录189提交推送，未部署。OPT-11 |
 | ARCH-13 | 补部署资源、常驻消费者与监督 | DONE | [记录186](reviews/2026-10-11-implementation-186-worker-deployment-and-supervision.md)：版本词表/KEK overlay/评分卷与角色DSN；8监督入口/资源声明/进展心跳与强杀重启；清理及Observe opt-in调度，晚到审计记录清理保护；79定向+2Compose+22PG，Docker故障恢复，全量2136/70、548维护输入一致、0费用，八项工程自审通过。IDX-03长期驻留、DEPLOY-02目标资源/容量仍未验收；已由记录189提交推送，未替换共享部署。 |
-| ARCH-14 | 让 CI 必需依赖缺失时失败 | DONE | [记录187](reviews/2026-10-11-implementation-187-required-ci-and-container-gates.md)、[CI契约](CI_GATES.md)：required PG/Redis/Docker缺失非零，CI不能opt-out，jieba基础依赖必需；可选B/C的70 skip保留；架构显式门/真实已发布配置、BGE向量、UID10001及200→503启动核验，独立PG/internal网络通过。全量2157/70、556输入一致、0托管费用，八项工程自审通过；远端CI/amd64冷构建待实际运行，已由记录189提交推送，远端CI运行中，未替换部署。DEPLOY-02 |
+| ARCH-14 | 让 CI 必需依赖缺失时失败 | DONE | [记录187](reviews/2026-10-11-implementation-187-required-ci-and-container-gates.md)、[CI契约](CI_GATES.md)：required PG/Redis/Docker缺失非零，CI不能opt-out，jieba基础依赖必需；可选B/C的70 skip保留；架构显式门/真实已发布配置、BGE向量、UID10001及200→503启动核验，独立PG/internal网络通过。全量2157/70、556输入一致、0托管费用，八项工程自审通过；已由记录189提交推送；记录190修复Compose输入，8d3669e远端38184157416全部步骤通过，含真实运行镜像/容器启动；未替换部署。DEPLOY-02 |
 | ARCH-12 | 评估事务长度与数据库连接资源优化 | DONE | [记录188](reviews/2026-10-11-implementation-188-request-transaction-assessment.md)及[事务方案](REQUEST_TRANSACTION_PLAN.md)：12臂288次真实PG/连接合成对照、5种变化与DDL锁诊断；无限额未证明吞吐/时延收益，仅人工4槽有收益，决定不实施Pool/事务拆分。评估自审通过；原子提交/恢复/最终权限的生产实现没有交付，ARCH-15另列。36定向、全量2163/70、559输入一致，0费用；已由记录189提交推送，未部署。OPT-11、DEPLOY-02 |
-| ARCH-15 | 核验并补齐最终输出的授权与事实新鲜度栅栏 | IN_PROGRESS | 记录188的真实库诊断表明长事务期间ACL/状态/来源/身份可改变；这不是已完成的API漏洞复现。先在Ask/五类Skill/MCP输出边界零费用复现，再修实际缺口；共同必需证据、完整身份/哈希/状态复核、检查至审计提交的竞态、最小权限、费用与失败审计必须核验。事务性能拆分不得绕过此项；原ARCH-04/11、PLAN-02及质量门保持。INV-AUTH-01/05、INV-DATA-03/06、INV-OBS-03 |
+| ARCH-15 | 核验并补齐最终输出的授权与事实新鲜度栅栏 | DONE | [记录191](reviews/2026-10-12-implementation-191-final-output-validation.md)、[输出契约](FINAL_OUTPUT_VALIDATION.md)：真实Ask/五类Skill/MCP及Task旧结果读取反例；完整身份/证据与正负lookup复核、0026短事务读写栅栏、同库校验和保存绑定，首次SQL原子性修复。全量2213/70、563维护输入一致、三库0026/32表摘要与5索引计数保持，0托管调用，八项工程自审通过。主库53/安全库2个旧completed无原始绑定，新接口失败关闭但原数据保留；全局写锁争用与实际容量未测，未重启部署。INV-AUTH-01/05、INV-DATA-03/06、INV-OBS-03 |
 
 ### 0.2 下一执行顺序
 
@@ -73,7 +73,9 @@ probe v4 与 `main-v5-provisional` 均已冻结。EVAL-11 已完成：580 个 go
 
 贯穿工作：ARCH-08/10/13/14、CODE-03～07、IDX-03、OBS-03、DEV-BACKLOG-01 按依赖穿插；ARCH-12 有实测收益再实施。BM25-09、CACHE-10、PERF-10、SRC-05、FOCUS-01/02/09、ROUTE-01/02 全部保留，先分别验证再 COMBO-01。人工事项 PLAN-02、EVAL-29/30/31、LIC-03、DEPLOY-01 单独跟踪；EVOL-09 已决定限实验，生产自动批准不再列为待问事项。
 
-**当前下一项：ARCH-15 零托管费用核验并修复最终输出授权/事实新鲜度边界。** ARCH-12仅评估与方案通过，见[记录188](reviews/2026-10-11-implementation-188-request-transaction-assessment.md)：正常无限额原型吞吐未提升，不切生产事务；5种变化诊断表明必须终检主体和完整证据。全量2163/70、559输入一致、0费用。当前生产最终输出栅栏尚未实施，ARCH-15先做实际入口复现，再修实际缺口；不把数据库诊断当安全门禁通过。 ARCH-14工程自审通过，见[记录187](reviews/2026-10-11-implementation-187-required-ci-and-container-gates.md)：required依赖故障非零、实际已发布配置/真实BGE/index/private网络启动及200→503通过，全量2157/70、556维护输入一致、0费用；远端CI/amd64冷构建待执行，尚未提交/部署。 ARCH-13工程自审通过，见[记录186](reviews/2026-10-11-implementation-186-worker-deployment-and-supervision.md)及[部署契约](DEPLOYMENT_WORKERS.md)：79定向/2Compose/22PG、Docker监督重启、全量2136/70、548维护输入一致；修复晚到审计记录清理冲突。0费用；尚未长期部署，本机Docker约7.75GiB，评分容器需可达HTTPS或宿主监督，未放宽HTTP规则。 ARCH-10工程自审通过，见[记录185](reviews/2026-10-11-implementation-185-shared-reranker-scorer.md)：定向37、CPU加载1次/分数差0、全量2105/70、537维护输入一致，0托管费用；本轮代码未提交或部署。 W-03/W-04 本轮分批提交与提交后全量核验完成，见[记录184](reviews/2026-10-11-implementation-184-batched-architecture-commits.md)。 ARCH-09稳定反馈身份八项工程自审通过，见[记录183](reviews/2026-10-11-implementation-183-stable-feedback-identity.md)及[恢复契约](FEEDBACK_IDENTITY.md)：三库0025、31表内容/5索引计数不变，全量2089 passed/70 skipped，536维护输入SHA一致，0托管调用。旧来源必须明确绑定，未自动猜测、未向真实Langfuse导出或重启。ARCH-08已通过记录182；CODE-04/05/07可按顺序穿插，CODE-07仍须完成观测职责与MCP受限完整材料。ARCH-07原条件恢复未交付，原条件模式明确409拒绝；Task/MCP回放、FOCUS-02跨块完整定位、PLAN-02剩余Agent契约、真实语义校准、独立人工、未见盲测及S2/S3均未完成。ARCH-12评估完成，生产性能拆分需真实瓶颈/最终栅栏/恢复证据再启动；付费逐次授权，记录184及之前已分批提交；185～188已由记录189分五批提交推送，66文件与559维护输入核对一致，10月12日全量2163/70；远端CI运行中，未替换共享服务或上线。
+**当前下一项：CODE-04，收敛实验适配器与生产检索边界；CODE-05/07按依赖穿插。** ARCH-15已在实际入口复现并修复，见[记录191](reviews/2026-10-12-implementation-191-final-output-validation.md)和[输出契约](FINAL_OUTPUT_VALIDATION.md)：最终身份/完整证据及正负lookup、检查到提交的栅栏、已存Task重取、原子失败审计通过；全量2213/70，三库0026。旧completed未绑定结果分别53/2/0，原数据保留，新接口拒绝返回；有证据的恢复方案另行审计，不自动付费重跑。
+
+ARCH-12仅完成条件收益评估，生产Pool/事务拆分未采用；记录189已分批推送完成任务，记录190修复CI，8d3669e的远端38184157416全部步骤成功，包括真实容器门。ARCH-13仍未替换共享部署/长期驻留，容量仍待实测。原条件恢复、Task/MCP回放、MCP受限完整材料、FOCUS-02跨块定位、PLAN-02 Agent行动/profile和EVAL-32契约仍未完成；真实语义、第二独立人工、未见盲测、S2/S3及逐次付费授权门保持。
 
 每次只推进一个主切片。纯契约设计、机械检查和无付费测试可先准备；依赖未通过时不得把相关集成或阶段标为完成。真实并发/费用运行先满足 ARCH-01/04/11；历史 Skill/二阶段判断先满足 ARCH-02/03/06；回放先满足 ARCH-07；所有检索运行先核对事实库、索引覆盖和积压。EVAL-22/23/24 → EVAL-25/26 → EVAL-27/28 的基线依赖保留，S2/S3 开发演示不能替代正式门禁。等待人工/授权时继续无关 READY 项。
 
@@ -320,6 +322,6 @@ EVOL-06～08 按候选类型分切片记录，Prompt 先行；整项 DONE 需两
 
 人工/授权点：PLAN-02 的 ADR 剩余验收口径须沟通；EVAL-29/30/31 保留真实复核/盲测保管缺口；LIC-03 许可、DEPLOY-01 身份提供方按材料决定。EVOL-09 已决定限实验，不重复询问。每个 PAID 运行仍逐次批准范围、上限和停止条件；EVOL-13 的生产候选真实签字另行留证。已有裁决不重复索要，模型不冒充第二人工，单人＋模型的结果继续按 provisional 披露。
 
-最新提交/推送自审见[记录189](reviews/2026-10-12-implementation-189-batched-push.md)。远端CI结果单独回填，不能把推送成功当CI或部署通过。
+最新分批推送自审见[记录189](reviews/2026-10-12-implementation-189-batched-push.md)，CI修复与实际成功回执见[记录190](reviews/2026-10-12-implementation-190-compose-ci-compatibility.md)；ARCH-15工程自审见记录191。推送、各SHA的CI和部署分别登记。
 
-推送后的远端CI三项Compose测试失败，已按[记录190](reviews/2026-10-12-implementation-190-compose-ci-compatibility.md)修复：公开示例隔离渲染、合成.env，required独立全量2164/70；修复推送后的远端结果待核对。ARCH-15当前IN_PROGRESS，已做实际入口反例，尚未完成最终工程自审。
+推送后的远端CI三项Compose测试失败，已按[记录190](reviews/2026-10-12-implementation-190-compose-ci-compatibility.md)修复：公开示例隔离渲染、合成.env，required独立全量2164/70；修复SHA8d3669e的远端38184157416全部步骤成功。ARCH-15已通过记录191工程自审，其后续提交的远端结果须按新SHA核对。

@@ -30,3 +30,7 @@
 | 状态文档 | 通过 | ARCH-15仍IN_PROGRESS，不混入此CI修复提交 |
 
 下一步推送此修复并查看远端；同时继续ARCH-15实际输出授权与事实终检，原模型费用/盲测/生产签字门保持。
+
+## 远端回执（2026-10-12 后续核对）
+
+修复提交8d3669ed2dceb131da0e1a1f4652347a26fcb6b1的[运行38184157416](https://github.com/Charlie-Uni/Medy/actions/runs/38184157416)已completed/success；全部步骤通过，包括required依赖、迁移往返、运行镜像构建、真实BGE和容器启动/就绪故障测试。此回执只对应该SHA，不自动证明之后的ARCH-15提交通过。

@@ -45,5 +45,14 @@
     "traceability": "PASS",
     "verification": "PASS",
     "status_documentation": "PASS"
+  },
+  "remote_receipt": {
+    "head": "8d3669ed2dceb131da0e1a1f4652347a26fcb6b1",
+    "run_id": 38184157416,
+    "status": "completed",
+    "conclusion": "success",
+    "url": "https://github.com/Charlie-Uni/Medy/actions/runs/38184157416",
+    "all_steps_success": true,
+    "runtime_image_build_and_real_container_boot": "success"
   }
 }
