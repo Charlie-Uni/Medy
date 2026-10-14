@@ -31,6 +31,7 @@ Failure = Literal[
     "batch_incomplete",
     "release_denied",
     "release_limit",
+    "screening_limit",
 ]
 
 
@@ -175,7 +176,9 @@ ModelT = TypeVar("ModelT", bound=DomainModel)
 def validated_copy(model: type[ModelT], value: DomainModel, *, code: Failure) -> ModelT:
     """Revalidate copies/subclasses; report only fixed failure codes."""
     try:
-        return model.model_validate(value.model_dump(mode="json", warnings=False))
+        # Python mode preserves native bool/int distinctions before validation;
+        # JSON serialization can coerce a copied bool in an integer field to 1.
+        return model.model_validate(value.model_dump(mode="python", warnings=False))
     except ValueError:
         raise IsolationError(code) from None
 
