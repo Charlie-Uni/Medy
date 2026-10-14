@@ -164,6 +164,24 @@ Path({str(marker)!r}).write_text('committed')
     assert not s.healthy(tmp_path / "health.json")
 
 
+def _waiting_health_snapshot(state, data):
+    # The parent may enter starting between observing waiting and a second read.
+    # Validate the actual atomic snapshot that supplied the observed status.
+    sample = state / "sampled-waiting-health.json"
+    s._write(sample, data)
+    return s.healthy(sample)
+
+
+def test_waiting_health_snapshot_preserves_state_and_rejects_unready_waiting(tmp_path):
+    path = tmp_path / "health.json"
+    waiting = {"pid": os.getpid(), "ready": True, "status": "waiting", "updated_at": time.time()}
+    s._write(path, waiting)
+    observed = s._read(path)
+    s._write(path, {**waiting, "ready": False, "status": "starting"})
+    assert not s.healthy(path) and _waiting_health_snapshot(tmp_path, observed)
+    assert not _waiting_health_snapshot(tmp_path, {**observed, "ready": False})
+
+
 def test_successful_scheduled_exit_stays_healthy_while_waiting(tmp_path):
     count = tmp_path / "runs"
     child = f"from pathlib import Path; p=Path({str(count)!r}); p.write_text(p.read_text()+'x' if p.exists() else 'x')"
@@ -175,7 +193,7 @@ def test_successful_scheduled_exit_stays_healthy_while_waiting(tmp_path):
         while time.monotonic() < deadline:
             data = s._read(tmp_path / "health.json")
             if data.get("status") == "waiting":
-                observations.append(s.healthy(tmp_path / "health.json"))
+                observations.append(_waiting_health_snapshot(tmp_path, data))
                 if count.read_text() == "xx":
                     break
             time.sleep(0.02)
