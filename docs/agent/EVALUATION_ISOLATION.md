@@ -1,6 +1,6 @@
 # EVAL-33：候选生成、优化验证与最终盲测的隔离准备
 
-- 日期：2026-10-12；版本：v0.3，**离线原语与聚合出口已实现，真实身份/封存存储隔离尚未实现**。
+- 日期：2026-10-14；版本：v0.4，**离线原语、聚合出口与词面筛查/历史回执校验已实现，真实身份/封存存储隔离尚未实现**。
 - 范围：PLAN-02 的配套准备与 EVAL-33 的部分工程切片；不把本文件算作 EVAL-33 DONE，不生成或读取新的盲测 query/gold。
 - 依据：[ADR-0012 §5](../adr/ADR-0012-agent-evolution-goals-and-acceptance.md#5-盲测资格与改进声明原则已确认)、[当前盲测准备资料](../../evals/holdout/README.md)、[PLAN-02](PLAN-02-action-budget-and-acceptance.md)。草拟/自审：Codex，不是第二独立人工。
 
@@ -88,6 +88,12 @@ env -u DEBUG PYTHONPATH=src venv/bin/python -m medops.evals.isolation --export-s
 
 这是全任务二值结果的传输校验，未增加评分器、N/A/逐 claim/时延/CI 算法或 Agent rubric。授权签发、预登记时间门、持久审计先于披露、累计导出限制和真实身份/日志/缓存隔离须由后续 runner/部署落实；当前纯函数不承担这些保证。资格仍固定 unknown，部署及第二人工字段固定 false。
 
+### 3.5 记录 203：近重复参考方法与历史覆盖回执
+
+[检查方法v0.1](EVALUATION_SCREENING.md)补固定字符片段集合Jaccard的私有query筛查与内容/资源绑定；命中只为review_required，未命中仍unknown。沿用norm-v1，数字/否定保留；不自动合并家族，不检测一般语义等价/译文，不替代现有硬重叠检查。公开参考参数不是正式阈值。
+
+历史计划和回执绑定来源摘要、适配器及必查层次；缺失/未支持仍incomplete，完整声明清单不等于穷尽所有历史，资格保持unknown。当前没有真实字段解析器、历史正文扫描或账本联动。新`--screening-self-check`只用公开合成数据输出六项布尔检查，旧两套自检保持。
+
 ## 4. 暴露账本必须记录什么
 
 每条事件保存：事件 ID、时间、集合/任务或文档关联组 ID、访问者与角色、暴露层次（来源全文、query、gold、输出、逐题判词或聚合）、目的/本轮候选版本、证据回执以及后续资格处理。
@@ -108,4 +114,4 @@ env -u DEBUG PYTHONPATH=src venv/bin/python -m medops.evals.isolation --export-s
 
 EVAL-33 DONE 需要可执行访问边界、投影/输出规则、暴露账本、关联组与近重复检查、canary 正反测试及本轮自审证据；EVAL-31 另需真实封存任务、许可/标注与人工安排。EVAL-36 再负责实际三轮盲测。三个任务互不以文档存在代替运行/独立性证据。
 
-初始方案自审见[记录 200](../reviews/2026-10-12-implementation-200-plan02-contract-preparation.md)，原语与失败修复见[记录 201](../reviews/2026-10-12-implementation-201-evaluation-isolation-primitives.md)，聚合出口及保管提案见[记录 202](../reviews/2026-10-12-implementation-202-evaluation-export-and-custody.md)。EVAL-33 保持 IN_PROGRESS；下一切片预登记近重复方法与历史扫描，保管身份/真实部署待所有者选择。PLAN-02 D-01/D-02 仍待明确裁决，不能从“继续”推断批准新 Agent profile。没有新盲测题、模型费用、自动激活或生产门槛变动。
+初始方案自审见[记录 200](../reviews/2026-10-12-implementation-200-plan02-contract-preparation.md)，原语与失败修复见[记录 201](../reviews/2026-10-12-implementation-201-evaluation-isolation-primitives.md)，聚合出口及保管提案见[记录 202](../reviews/2026-10-12-implementation-202-evaluation-export-and-custody.md)。EVAL-33 保持 IN_PROGRESS；[记录203](../reviews/2026-10-14-implementation-203-screening-method-and-history-receipts.md)已补词面参考方法与历史计划/回执；正式校准及真实扫描未完成。下一切片历史来源清单与实际字段适配器设计，保管身份/真实部署待所有者选择。PLAN-02 D-01/D-02 仍待明确裁决，不能从“继续”推断批准新 Agent profile。没有新盲测题、模型费用、自动激活或生产门槛变动。
