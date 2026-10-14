@@ -1,0 +1,166 @@
+{
+  "record": 204,
+  "date": "2026-10-15",
+  "reviewer": "Codex (implementation self-review; not independent human)",
+  "task_id": "EVAL-33",
+  "baseline_sha": "83a67b7ae2eafb06aaed123a5b900b29d6013c26",
+  "task_statuses": {
+    "EVAL-33": "IN_PROGRESS",
+    "PLAN-02": "HUMAN",
+    "EVAL-32": "BLOCKED"
+  },
+  "owner_decisions": {
+    "D-01": "pending",
+    "D-02": "pending"
+  },
+  "S2_started": false,
+  "hosted_model_calls": 0,
+  "api_cost_usd": 0,
+  "deployment_changed": false,
+  "frozen_datasets_changed": false,
+  "real_history_body_scans": 0,
+  "new_holdout_tasks": 0,
+  "qualification": "unknown",
+  "historical_scope_exhaustive_verified": false,
+  "source_catalog": {
+    "known_artifacts": 16,
+    "main_probe_reader_candidates": 9,
+    "body_scan_state": "not_selected",
+    "actual_format_validated": false,
+    "approved_scan_plan": false,
+    "exhaustive": false
+  },
+  "validation": {
+    "initial_collection": {
+      "exit_code": 2,
+      "cause": "generated test byte-string newline was not escaped; SyntaxError before collection"
+    },
+    "first_fixed_reader": {
+      "exit_code": 0,
+      "passed": 52,
+      "pytest_seconds": 0.34,
+      "total_seconds": 1.44
+    },
+    "static_initial": {
+      "ruff_errors": 52,
+      "mypy_errors": 1,
+      "causes": [
+        "unformatted generated test code and intentional callback exception boundary lacked lint rationale",
+        "parsed object not narrowed to dict before typed projection"
+      ],
+      "resolved": true
+    },
+    "isolation_wrong_path": {
+      "exit_code": 4,
+      "cause": "guessed nonexistent test_isolation_contracts.py; no tests ran"
+    },
+    "isolation_final": {
+      "exit_code": 0,
+      "passed": 243,
+      "new_reader_cases": 61,
+      "old_isolation_cases": 182,
+      "pytest_seconds": 5.5,
+      "total_seconds": 7.034
+    },
+    "required_services_make_check": {
+      "exit_code": 0,
+      "passed": 2566,
+      "skipped": 70,
+      "warnings": 1,
+      "pytest_seconds": 100.03,
+      "total_seconds": 134.805,
+      "format_files": 731,
+      "mypy_sources": 339,
+      "architecture_modules": 339,
+      "architecture_violations": 0,
+      "architecture_existing_exceptions": 2,
+      "static_assert_files": 286,
+      "static_assert_violations": 0,
+      "schema_drift": false,
+      "frozen_input_audit": "PASS; 4 datasets"
+    },
+    "skip_basis": "existing optional B/C experimental dependencies; required PG, Redis, Docker and D executed",
+    "warning_basis": "existing JWT negative case intentionally uses a short HMAC key",
+    "D_test_binding": {
+      "server_major": 17,
+      "pg_textsearch_version": "1.5.1",
+      "read_only_preflight": true,
+      "disposable_test_databases": true,
+      "business_dsn_changed": false
+    },
+    "old_cli_checks": [
+      9,
+      6,
+      6
+    ],
+    "documentation": {
+      "exit_code": 0,
+      "passed": 41,
+      "pytest_seconds": 1.69,
+      "total_seconds": 2.135,
+      "local_links_checked": 244,
+      "local_fragments_checked": 10
+    }
+  },
+  "maintenance": {
+    "baseline_inputs": 727,
+    "unchanged_inputs": 726,
+    "changed_inputs": [
+      "src/medops/evals/isolation/contracts.py"
+    ],
+    "new_python_files": 3,
+    "owned_paths": 13,
+    "old_CLI_S0_ADR_runtime_schema_unchanged": true
+  },
+  "self_review": [
+    {
+      "criterion": "scope",
+      "verdict": "pass",
+      "scope": "bounded reader and metadata preparation only; pending custody, true scan and full EVAL-33 excluded"
+    },
+    {
+      "criterion": "ADR_and_stage",
+      "verdict": "pass",
+      "scope": "bounded reader and metadata preparation only; pending custody, true scan and full EVAL-33 excluded"
+    },
+    {
+      "criterion": "correctness_and_failures",
+      "verdict": "pass",
+      "scope": "bounded reader and metadata preparation only; pending custody, true scan and full EVAL-33 excluded"
+    },
+    {
+      "criterion": "permissions_and_data",
+      "verdict": "pass",
+      "scope": "bounded reader and metadata preparation only; pending custody, true scan and full EVAL-33 excluded"
+    },
+    {
+      "criterion": "budget_cancellation_side_effects",
+      "verdict": "pass",
+      "scope": "bounded reader and metadata preparation only; pending custody, true scan and full EVAL-33 excluded"
+    },
+    {
+      "criterion": "traceability_and_versions",
+      "verdict": "pass",
+      "scope": "bounded reader and metadata preparation only; pending custody, true scan and full EVAL-33 excluded"
+    },
+    {
+      "criterion": "verification",
+      "verdict": "pass",
+      "scope": "bounded reader and metadata preparation only; pending custody, true scan and full EVAL-33 excluded"
+    },
+    {
+      "criterion": "status_and_documentation",
+      "verdict": "pass",
+      "scope": "bounded reader and metadata preparation only; pending custody, true scan and full EVAL-33 excluded"
+    }
+  ],
+  "limits": [
+    "reader accepts already authorized descriptor; does not authenticate actor or audit before access",
+    "private projection is not a public export; whole-file authorization remains required",
+    "exact current schemas only; legacy formats may remain gaps",
+    "cooperative deadlines do not force-kill filesystem syscalls",
+    "source seeds not exhaustive or a approved scan plan",
+    "other adapters, trusted runner, decryption, ledger integration and actual scanning pending",
+    "no new unseen dataset, independent human review, formal quality, improvement, production release or deployment evidence"
+  ]
+}

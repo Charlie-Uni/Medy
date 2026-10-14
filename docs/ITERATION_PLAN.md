@@ -563,3 +563,5 @@ Goal / 对应基线任务：
 2026-10-12 EVAL-33 聚合出口：[记录202](reviews/2026-10-12-implementation-202-evaluation-export-and-custody.md)实现固定完整集合的两臂/全部登记轮次二值结果传输校验，unknown保留分母，稀有结果整指标两臂抑制；[保管部署提案](agent/EVALUATION_CUSTODY.md)列独立环境选择和真实正负验收。合成20/2/5不是正式阈值；无评分器/CI/完整runner/新盲测或真实隔离声明。EVAL-33仍IN_PROGRESS，保管安排及PLAN-02 D-01/D-02待所有者决定，S2未开始；下一近重复方法/历史扫描，0托管调用，原生产/付费/人工门保持。
 
 2026-10-14 EVAL-33检查准备：[记录203](reviews/2026-10-14-implementation-203-screening-method-and-history-receipts.md)与[方法v0.1](agent/EVALUATION_SCREENING.md)提供固定词面筛查、原字符/组合限额和历史计划/回执绑定；发现复制bool转整数的strict校验漏洞后修复。参考参数不作正式阈值，命中需复核、未命中仍unknown；没有真实历史正文扫描/新盲测/账户隔离或完整runner。EVAL-33 IN_PROGRESS，PLAN-02 D-01/D-02与保管安排待决定，S2未开始，0托管调用。下一历史来源/字段适配器设计，原评分、模型、ACL与生产/付费门保持。
+
+2026-10-15 EVAL-33历史读取准备：[记录204](reviews/2026-10-15-implementation-204-history-source-catalog-and-sample-reader.md)和[历史契约v0.1](agent/EVALUATION_HISTORY.md)交付16个元数据种子、固定现有Schema的主集/探针完整读取及私有白名单投影；坏行、摘要不符、超限、取消、文件变化均无成功回执。只用公开合成文件验证，真实历史正文扫描0、盲测0、费用0；无身份鉴权/预先审计/日志解密/全历史覆盖。EVAL-33仍IN_PROGRESS，PLAN-02和保管pending、S2未开始，原生产与付费门保持。下一检索/回放字段适配器和受限runner契约。
