@@ -1,0 +1,184 @@
+{
+  "format": "eval-historical-source-seeds-v1",
+  "date": "2026-10-15",
+  "baseline_git_sha": "83a67b7ae2eafb06aaed123a5b900b29d6013c26",
+  "example_only": true,
+  "approved_scan_plan": false,
+  "historical_scope_exhaustive_verified": false,
+  "qualification": "unknown",
+  "known_artifacts": [
+    {
+      "artifact_id": "00000000-0000-0000-0000-0000000003e8",
+      "path": "evals/main_set/main-v1-provisional/samples.jsonl",
+      "declared_sha256": "a8c01f31aa5a7ccc94b0c4a9aa3eac63d766e85a1f5d10e2760fe0897a1e0253",
+      "digest_basis": "existing_frozen_SHA256SUMS_not_body_rehashed",
+      "candidate_reader": "main-probe-samples-v1",
+      "actual_format_validated": false,
+      "body_scan_state": "not_selected",
+      "qualification": "unknown"
+    },
+    {
+      "artifact_id": "00000000-0000-0000-0000-0000000003e9",
+      "path": "evals/main_set/main-v2-provisional/samples.jsonl",
+      "declared_sha256": "a8c01f31aa5a7ccc94b0c4a9aa3eac63d766e85a1f5d10e2760fe0897a1e0253",
+      "digest_basis": "existing_frozen_SHA256SUMS_not_body_rehashed",
+      "candidate_reader": "main-probe-samples-v1",
+      "actual_format_validated": false,
+      "body_scan_state": "not_selected",
+      "qualification": "unknown"
+    },
+    {
+      "artifact_id": "00000000-0000-0000-0000-0000000003ea",
+      "path": "evals/main_set/main-v3-provisional/samples.jsonl",
+      "declared_sha256": "a8c01f31aa5a7ccc94b0c4a9aa3eac63d766e85a1f5d10e2760fe0897a1e0253",
+      "digest_basis": "existing_frozen_SHA256SUMS_not_body_rehashed",
+      "candidate_reader": "main-probe-samples-v1",
+      "actual_format_validated": false,
+      "body_scan_state": "not_selected",
+      "qualification": "unknown"
+    },
+    {
+      "artifact_id": "00000000-0000-0000-0000-0000000003eb",
+      "path": "evals/main_set/main-v4-provisional/samples.jsonl",
+      "declared_sha256": "441f98c6b4a5b93cdd30797c05d4086f13714cb4d1e83d37315f717cf3cd4ad3",
+      "digest_basis": "existing_frozen_SHA256SUMS_not_body_rehashed",
+      "candidate_reader": "main-probe-samples-v1",
+      "actual_format_validated": false,
+      "body_scan_state": "not_selected",
+      "qualification": "unknown"
+    },
+    {
+      "artifact_id": "00000000-0000-0000-0000-0000000003ec",
+      "path": "evals/main_set/main-v5-provisional/samples.jsonl",
+      "declared_sha256": "9add753a8672aa655a645a47d8a66199ede395d014507cbc44e8bfc00edf9b43",
+      "digest_basis": "existing_frozen_SHA256SUMS_not_body_rehashed",
+      "candidate_reader": "main-probe-samples-v1",
+      "actual_format_validated": false,
+      "body_scan_state": "not_selected",
+      "qualification": "unknown"
+    },
+    {
+      "artifact_id": "00000000-0000-0000-0000-0000000003ed",
+      "path": "evals/probe/precise_clause/v1/samples.jsonl",
+      "declared_sha256": "d5b12dc21ab6fab8b416f5830c991e89430a2e1105913936752078ccda263ada",
+      "digest_basis": "existing_frozen_SHA256SUMS_not_body_rehashed",
+      "candidate_reader": "main-probe-samples-v1",
+      "actual_format_validated": false,
+      "body_scan_state": "not_selected",
+      "qualification": "unknown"
+    },
+    {
+      "artifact_id": "00000000-0000-0000-0000-0000000003ee",
+      "path": "evals/probe/precise_clause/v2/samples.jsonl",
+      "declared_sha256": "3fc8e77ee2d6a8d6cbc456d95dd4dd23bd52666e0d4f76334ead16fa6a00e96e",
+      "digest_basis": "existing_frozen_SHA256SUMS_not_body_rehashed",
+      "candidate_reader": "main-probe-samples-v1",
+      "actual_format_validated": false,
+      "body_scan_state": "not_selected",
+      "qualification": "unknown"
+    },
+    {
+      "artifact_id": "00000000-0000-0000-0000-0000000003ef",
+      "path": "evals/probe/precise_clause/v3/samples.jsonl",
+      "declared_sha256": "e3a8c6bd7535bba1e45ff32ce6ba1160025c8d67fda7ba060f1b5e1c445d89de",
+      "digest_basis": "existing_frozen_SHA256SUMS_not_body_rehashed",
+      "candidate_reader": "main-probe-samples-v1",
+      "actual_format_validated": false,
+      "body_scan_state": "not_selected",
+      "qualification": "unknown"
+    },
+    {
+      "artifact_id": "00000000-0000-0000-0000-0000000003f0",
+      "path": "evals/probe/precise_clause/v4/samples.jsonl",
+      "declared_sha256": "3bf961f6b1bb1079fda4d2c03bf338de7878f50429f290db5c6cdc1053823bfb",
+      "digest_basis": "existing_frozen_SHA256SUMS_not_body_rehashed",
+      "candidate_reader": "main-probe-samples-v1",
+      "actual_format_validated": false,
+      "body_scan_state": "not_selected",
+      "qualification": "unknown"
+    },
+    {
+      "artifact_id": "00000000-0000-0000-0000-0000000003f1",
+      "path": "evals/replay/replay-v1/items.jsonl",
+      "declared_sha256": "a9bc634fa17ea918217b27853d0307922f057d8bc37492c6398cbc119d2dcbc0",
+      "digest_basis": "existing_frozen_SHA256SUMS_not_body_rehashed",
+      "candidate_reader": null,
+      "actual_format_validated": false,
+      "body_scan_state": "not_selected",
+      "qualification": "unknown"
+    },
+    {
+      "artifact_id": "00000000-0000-0000-0000-0000000003f2",
+      "path": "evals/replay/replay-v1/safety_items.jsonl",
+      "declared_sha256": "1570d0828a5cfcd77f659e4af444b14676213e51e62dd2dbdb74c58b4a0c2fd8",
+      "digest_basis": "existing_frozen_SHA256SUMS_not_body_rehashed",
+      "candidate_reader": null,
+      "actual_format_validated": false,
+      "body_scan_state": "not_selected",
+      "qualification": "unknown"
+    },
+    {
+      "artifact_id": "00000000-0000-0000-0000-0000000003f3",
+      "path": "evals/replay/replay-v2/items.jsonl",
+      "declared_sha256": "27c1851606cfcce7c7e9b5024a92a9e8aaee9924a2750185cdab6eb53237ddfa",
+      "digest_basis": "existing_frozen_SHA256SUMS_not_body_rehashed",
+      "candidate_reader": null,
+      "actual_format_validated": false,
+      "body_scan_state": "not_selected",
+      "qualification": "unknown"
+    },
+    {
+      "artifact_id": "00000000-0000-0000-0000-0000000003f4",
+      "path": "evals/replay/replay-v2/safety_items.jsonl",
+      "declared_sha256": "0445f07f30c0d49b924e77b032b863f9a7d4db0bb88b60d7fea8b113ce053694",
+      "digest_basis": "existing_frozen_SHA256SUMS_not_body_rehashed",
+      "candidate_reader": null,
+      "actual_format_validated": false,
+      "body_scan_state": "not_selected",
+      "qualification": "unknown"
+    },
+    {
+      "artifact_id": "00000000-0000-0000-0000-0000000003f5",
+      "path": "evals/replay/replay-v3/items.jsonl",
+      "declared_sha256": "32df2974cc75dac7d5bc6c1ec1fdeb31b14c401ade30c195d013e8501d638a26",
+      "digest_basis": "existing_frozen_SHA256SUMS_not_body_rehashed",
+      "candidate_reader": null,
+      "actual_format_validated": false,
+      "body_scan_state": "not_selected",
+      "qualification": "unknown"
+    },
+    {
+      "artifact_id": "00000000-0000-0000-0000-0000000003f6",
+      "path": "evals/replay/replay-v3/safety_items.jsonl",
+      "declared_sha256": "fe80268366b89d2b10c76dc8af4828d665833573177e170f5f25d115031f51d2",
+      "digest_basis": "existing_frozen_SHA256SUMS_not_body_rehashed",
+      "candidate_reader": null,
+      "actual_format_validated": false,
+      "body_scan_state": "not_selected",
+      "qualification": "unknown"
+    },
+    {
+      "artifact_id": "00000000-0000-0000-0000-0000000003f7",
+      "path": "evals/safety_set/safety-v2-provisional/samples.jsonl",
+      "declared_sha256": "7d47bb29140e847741a1c56011a9a66faf0bc59f608e96455d7ca2394de77d3d",
+      "digest_basis": "existing_frozen_SHA256SUMS_not_body_rehashed",
+      "candidate_reader": null,
+      "actual_format_validated": false,
+      "body_scan_state": "not_selected",
+      "qualification": "unknown"
+    }
+  ],
+  "unresolved_categories": [
+    "drafts_and_revision_review_materials",
+    "retrieval_and_optimization_runs",
+    "generation_and_judging_inputs",
+    "encrypted_Ask_Skill_MCP_execution_payloads",
+    "Claude_and_Codex_conversation_logs",
+    "human_notes",
+    "local_untracked_external_and_deleted_materials"
+  ],
+  "schema_pins": {
+    "main_sample_schema": "431f8cffef4b664fe4b1dcd8aeb23c8608bf00bd51e446c20988e11deb6c32be",
+    "probe_sample_schema": "3bc57fb18442ea3f4a35296332187a65c6fa8547531894b9e6a1da46e535e04f"
+  }
+}
