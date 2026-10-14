@@ -1,6 +1,6 @@
 # EVAL-33：候选生成、优化验证与最终盲测的隔离准备
 
-- 日期：2026-10-14；版本：v0.4，**离线原语、聚合出口与词面筛查/历史回执校验已实现，真实身份/封存存储隔离尚未实现**。
+- 日期：2026-10-15；版本：v0.5，**离线原语、聚合出口与词面筛查/历史回执及主集字段读取原语已实现，真实身份/封存存储隔离尚未实现**。
 - 范围：PLAN-02 的配套准备与 EVAL-33 的部分工程切片；不把本文件算作 EVAL-33 DONE，不生成或读取新的盲测 query/gold。
 - 依据：[ADR-0012 §5](../adr/ADR-0012-agent-evolution-goals-and-acceptance.md#5-盲测资格与改进声明原则已确认)、[当前盲测准备资料](../../evals/holdout/README.md)、[PLAN-02](PLAN-02-action-budget-and-acceptance.md)。草拟/自审：Codex，不是第二独立人工。
 
@@ -93,6 +93,10 @@ env -u DEBUG PYTHONPATH=src venv/bin/python -m medops.evals.isolation --export-s
 [检查方法v0.1](EVALUATION_SCREENING.md)补固定字符片段集合Jaccard的私有query筛查与内容/资源绑定；命中只为review_required，未命中仍unknown。沿用norm-v1，数字/否定保留；不自动合并家族，不检测一般语义等价/译文，不替代现有硬重叠检查。公开参考参数不是正式阈值。
 
 历史计划和回执绑定来源摘要、适配器及必查层次；缺失/未支持仍incomplete，完整声明清单不等于穷尽所有历史，资格保持unknown。当前没有真实字段解析器、历史正文扫描或账本联动。新`--screening-self-check`只用公开合成数据输出六项布尔检查，旧两套自检保持。
+
+### 3.6 记录 204：历史种子目录与主集字段读取
+
+[历史读取契约](EVALUATION_HISTORY.md)和[history_reader.py](../../src/medops/evals/isolation/history_reader.py)固定已有主集/探针Schema，完整摘要/限额绑定，逐行白名单投影；坏行/超限/取消/文件变化无成功回执。仅公开合成文件验证，16个元数据种子不是批准的全历史计划；其余适配器、真实历史扫描、访问前审计/身份鉴权和账本联动仍待。原三套CLI保持，qualification仍unknown；没有新盲测或S2实现。
 
 ## 4. 暴露账本必须记录什么
 
