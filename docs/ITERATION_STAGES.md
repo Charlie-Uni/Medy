@@ -180,3 +180,5 @@ CODE-07已完成[MCP受限材料及观测职责](MCP_EXECUTION_AUDIT.md)，[记�
 2026-10-12 EVAL-33 原语：[记录201](reviews/2026-10-12-implementation-201-evaluation-isolation-primitives.md)实现离线manifest/库存、运行输入投影、带可信头校验的暴露账本与合成canary。只完成应用层部分准备，不认证真实身份，不封存新盲测题；聚合出口/近重复/历史扫描及部署身份仍待。EVAL-33 为 IN_PROGRESS，PLAN-02 D-01/D-02 未决，S2 未开始；0托管调用，原评分、模型、ACL和生产门保持。
 
 2026-10-12 EVAL-33 聚合出口：[记录202](reviews/2026-10-12-implementation-202-evaluation-export-and-custody.md)实现固定完整集合的两臂/全部登记轮次二值结果传输校验，unknown保留分母，稀有结果整指标两臂抑制；[保管部署提案](agent/EVALUATION_CUSTODY.md)列独立环境选择和真实正负验收。合成20/2/5不是正式阈值；无评分器/CI/完整runner/新盲测或真实隔离声明。EVAL-33仍IN_PROGRESS，保管安排及PLAN-02 D-01/D-02待所有者决定，S2未开始；下一近重复方法/历史扫描，0托管调用，原生产/付费/人工门保持。
+
+2026-10-14 EVAL-33检查准备：[记录203](reviews/2026-10-14-implementation-203-screening-method-and-history-receipts.md)与[方法v0.1](agent/EVALUATION_SCREENING.md)提供固定词面筛查、原字符/组合限额和历史计划/回执绑定；发现复制bool转整数的strict校验漏洞后修复。参考参数不作正式阈值，命中需复核、未命中仍unknown；没有真实历史正文扫描/新盲测/账户隔离或完整runner。EVAL-33 IN_PROGRESS，PLAN-02 D-01/D-02与保管安排待决定，S2未开始，0托管调用。下一历史来源/字段适配器设计，原评分、模型、ACL与生产/付费门保持。

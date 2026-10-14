@@ -1,6 +1,6 @@
 # 当前任务台账
 
-更新：2026-10-12。项目所有者要求将 Agent、自进化、架构修复及此前全部迭代任务统一登记，并规定每次工作必须自审核。**本页是后续任务、顺序、依赖和状态的唯一台账入口**；[迭代计划](ITERATION_PLAN.md)解释设计，[阶段表](ITERATION_STAGES.md)规定通过条件和自审模板，[仓库执行规则](../AGENTS.md)要求后续实现者遵守。历史记录中的旧待办不自动覆盖本页；下列未完成任务不会因本次整理成为已实现能力。此次整理与自审见[记录 172](reviews/2026-10-10-implementation-172-unified-agent-evolution-backlog.md)。
+更新：2026-10-14。项目所有者要求将 Agent、自进化、架构修复及此前全部迭代任务统一登记，并规定每次工作必须自审核。**本页是后续任务、顺序、依赖和状态的唯一台账入口**；[迭代计划](ITERATION_PLAN.md)解释设计，[阶段表](ITERATION_STAGES.md)规定通过条件和自审模板，[仓库执行规则](../AGENTS.md)要求后续实现者遵守。历史记录中的旧待办不自动覆盖本页；下列未完成任务不会因本次整理成为已实现能力。此次整理与自审见[记录 172](reviews/2026-10-10-implementation-172-unified-agent-evolution-backlog.md)。
 
 状态：`DONE` 对应范围已完成、验证且自审通过；`READY` 可无付费继续；`IN_PROGRESS` 正在实施；`REVIEW` 实现待自审/复测；`HUMAN` 需要真实人工决定或复核；`PAID` 每次运行前需要用户明确批准本次范围和费用；`BLOCKED` 等待前置；`OPTIONAL` 当前不要求交付。`PAID` 不代表工程前置已满足；每项开始前同时核对依赖和授权。工程完成、真实质量通过、候选已发布分别留证。
 
@@ -74,7 +74,7 @@ probe v4 与 `main-v5-provisional` 均已冻结。EVAL-11 已完成：580 个 go
 
 贯穿工作：ARCH-08/10/13/14、CODE-03～07、IDX-03、OBS-03、DEV-BACKLOG-01 按依赖穿插；ARCH-12 有实测收益再实施。BM25-09、CACHE-10、PERF-10、SRC-05、FOCUS-01/02/09、ROUTE-01/02 全部保留，先分别验证再 COMBO-01。人工事项 PLAN-02、EVAL-29/30/31、LIC-03、DEPLOY-01 单独跟踪；EVOL-09 已决定限实验，生产自动批准不再列为待问事项。
 
-**当前下一项：EVAL-33 预登记近重复方法与历史扫描；真实保管环境待所有者选择，PLAN-02 D-01/D-02 仍待明确裁决。** [记录202](reviews/2026-10-12-implementation-202-evaluation-export-and-custody.md)补固定批次聚合出口及[保管提案](agent/EVALUATION_CUSTODY.md)：完整两臂/全部登记轮次、unknown留分母、稀有格整指标双臂抑制；显式最小值且无正式默认。仅离线传输工程范围，真实身份/runner/审计出口/近重复及历史扫描未完成，EVAL-33 保持 IN_PROGRESS。PLAN-02仍HUMAN、EVAL-32/S2前置保持。记录201六批最终7e7a76a已推送，远端[CI38244176833](https://github.com/Charlie-Uni/Medy/actions/runs/38244176833)全部29步骤成功；本轮发布与CI按自身SHA另留证。CODE-01～07各自工程范围完成；工程自审不代替正式模型质量、未见盲测、部署与人工验收。
+**当前下一项：EVAL-33 历史来源清单与字段适配器设计；真实保管环境待所有者选择，PLAN-02 D-01/D-02 仍待明确裁决。** [记录203](reviews/2026-10-14-implementation-203-screening-method-and-history-receipts.md)补词面近重复参考实现、历史计划/回执绑定及第三套公开自检；发现复制bool序列化绕过strict检查后修复并保留旧回归。参考参数未批准为正式阈值，无真实历史正文扫描、新盲测、完整runner或账户隔离，EVAL-33仍IN_PROGRESS。PLAN-02 HUMAN、EVAL-32/S2前置保持。记录202五批最终b9ce2ed已推送，远端[CI38248244541](https://github.com/Charlie-Uni/Medy/actions/runs/38248244541)全部29步骤成功；本轮发布/CI按自身SHA另留证。工程自审不替代质量、盲测、部署及独立人工。
 
 ARCH-12仅完成条件收益评估，生产Pool/事务拆分未采用；记录189已分批推送完成任务，记录190修复CI，8d3669e的远端38184157416全部步骤成功，包括真实容器门。ARCH-13仍未替换共享部署/长期驻留，容量仍待实测。MCP受限完整材料已由记录194补齐；原条件恢复、Task/MCP回放、FOCUS-02跨块定位、PLAN-02 Agent行动/profile和EVAL-32契约仍未完成；真实语义、第二独立人工、未见盲测、S2/S3及逐次付费授权门保持。
 
@@ -246,7 +246,7 @@ Redis 已在本机主运行配置切到 `redis`，TTL 300 秒；实际 smoke 为
 | AGENT-09 | 扩展五类 Skill 与多轮任务覆盖 | BLOCKED | AGENT-08、SESSION-01/02、HANDOFF-01/02；逐类核验工具适用范围、组合、最终判断及人工接手；不要求每题多步或每次调用所有工具 |
 | AGENT-10 | Agent 正式质量/安全/效率验收 | PAID | AGENT-09、EVAL-34；满足预登记任务成功、证据、安全、合理停止及预算指标；报告相对 Workflow 的收益与代价；不将模型路由或固定图改名计为自主能力 |
 | EVAL-32 | 新增多步 Agent rubric 与离线用例 | BLOCKED | PLAN-01/02；[PLAN-02 §6](agent/PLAN-02-action-budget-and-acceptance.md#6-eval-32-评分和验收提案)及机器规格已给分项/分母/12案例变体映射，D-02待确认；尚无评分器/运行/冻结。正式协议在测量前固定，不以正确停止或系统故障凑业务完成率 |
-| EVAL-33 | 候选生成、优化验证、最终盲测三方隔离 | IN_PROGRESS | [隔离方案v0.3](agent/EVALUATION_ISOLATION.md)、[保管提案v0.1](agent/EVALUATION_CUSTODY.md)与记录201/202：离线manifest/输入投影/暴露账本及固定完整批次的聚合出口、两套公开canary已实现。正式最小值无默认，完整runner/审计编排、独立身份/真实封存/累计出口、近重复及历史扫描仍待；第二人工缺口保持 |
+| EVAL-33 | 候选生成、优化验证、最终盲测三方隔离 | IN_PROGRESS | [隔离v0.4](agent/EVALUATION_ISOLATION.md)、[检查方法v0.1](agent/EVALUATION_SCREENING.md)、[保管提案](agent/EVALUATION_CUSTODY.md)及记录201～203：离线manifest/投影/账本/聚合出口、词面筛查与历史回执校验、三套公开canary已实现。参考参数仅演练；正式校准/真实字段适配器与历史扫描、完整runner/审计/独立身份和封存仍待；第二人工缺口保持 |
 | EVAL-34 | 固定 Workflow 与 Agent 配对正式评测 | PAID | AGENT-07、EVAL-32/33、新主集/安全基线 EVAL-22/23/24；相同事实/版本/权限和预登记预算规则，分别报告单步与多步任务；包含不需要 Agent 的正常题与可能误伤切片 |
 | EVAL-35 | Prompt/Skill 自进化候选正式配对回放 | PAID | EVOL-07、EVAL-26/33；至少 200 唯一 Trace、安全全量、随机流程 3 轮、配对 CI；目标 +5pp、非目标下降不超过 1pp、安全不下降按原规则；生成者不改评分器/阈值或读取冻结答案 |
 | EVAL-36 | 未见盲测上的 Prompt/Skill 改进声明验证 | PAID | EVAL-31/33、锁定候选与基线、EVOL-07/10（Skill 还需 EVOL-12）；≥200 唯一未见任务、建议目标/非目标各 100、三轮配对，调用次数/费用另估。新增盲测不设固定 +5pp；正向声明要求差值为正且 95% CI 下界 >0、非目标下降≤1pp、安全不下降；无正向结果可完成评测但不能宣称改进 |

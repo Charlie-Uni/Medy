@@ -1,0 +1,209 @@
+{
+  "format": "implementation-review-v1",
+  "record": 203,
+  "date": "2026-10-14",
+  "implementer": "Codex",
+  "self_reviewer": "Codex",
+  "independent_second_human": false,
+  "baseline_sha": "b9ce2ed87a5cc4935a73287b0df2a96429b1fd46",
+  "task_ids": [
+    "EVAL-33"
+  ],
+  "main_slice": "deterministic private query triage and pinned history scan receipt preparation",
+  "related_gate_repair": "worker waiting-state test snapshot; production worker unchanged",
+  "result_scope": "offline reference mechanism and public synthetic checks only",
+  "hosted_model_calls": 0,
+  "api_cost_usd": 0,
+  "business_database_writes": false,
+  "disposable_test_database_writes": true,
+  "deployment_changed": false,
+  "frozen_datasets_changed": false,
+  "production_gates_changed": false,
+  "owner_decisions": {
+    "D-01": "pending",
+    "D-02": "pending"
+  },
+  "custody_environment_decision": "pending",
+  "task_statuses": {
+    "PLAN-02": "HUMAN",
+    "EVAL-32": "BLOCKED",
+    "EVAL-33": "IN_PROGRESS"
+  },
+  "S2_started": false,
+  "baseline_maintenance_inputs": 720,
+  "unchanged_maintenance_inputs": 717,
+  "modified_maintenance_inputs": [
+    "src/medops/evals/isolation/contracts.py",
+    "src/medops/evals/isolation/__main__.py",
+    "tests/unit/worker/test_supervision.py"
+  ],
+  "new_maintained_python_files": 7,
+  "new_test_cases": 62,
+  "synthetic_canary_checks": {
+    "input_and_ledger": 9,
+    "aggregate_export": 6,
+    "screening_and_history": 6
+  },
+  "formal_screening_thresholds_approved": false,
+  "real_history_parsers_implemented": false,
+  "real_historical_body_scans": 0,
+  "unseen_tasks_created": 0,
+  "tests": [
+    {
+      "command": "pytest -q tests/unit/evals/test_isolation_*.py (before CLI test file separation)",
+      "exit_code": 0,
+      "passed": 182,
+      "pytest_elapsed_s": 1.14,
+      "total_elapsed_s": 1.625
+    },
+    {
+      "command": "pytest backup_restore + worker_manifest + supervision",
+      "exit_code": 0,
+      "passed": 21,
+      "pytest_elapsed_s": 7.49,
+      "total_elapsed_s": 10.163
+    },
+    {
+      "command": "pytest candidate D against native PG17 owned test databases",
+      "exit_code": 0,
+      "passed": 22,
+      "pytest_elapsed_s": 4.26,
+      "total_elapsed_s": 5.464
+    },
+    {
+      "command": "required-services make check with Docker PATH and native D test binding",
+      "exit_code": 0,
+      "passed": 2505,
+      "skipped": 70,
+      "warnings": 1,
+      "pytest_elapsed_s": 139.98,
+      "total_elapsed_s": 146.602,
+      "warning_reason": "existing negative JWT algorithm test uses deliberately short HMAC key"
+    },
+    {
+      "command": "three public synthetic CLI checks",
+      "exit_code": 0,
+      "checks": [
+        9,
+        6,
+        6
+      ],
+      "model_calls": 0
+    },
+    {
+      "command": "pytest -q tests/unit/docs",
+      "exit_code": 0,
+      "passed": 41,
+      "pytest_elapsed_s": 8.92,
+      "total_elapsed_s": 10.973
+    },
+    {
+      "command": "final pytest -q tests/unit/docs",
+      "exit_code": 0,
+      "passed": 41,
+      "pytest_elapsed_s": 3.3,
+      "total_elapsed_s": 3.976
+    }
+  ],
+  "self_review": [
+    {
+      "item": "scope",
+      "verdict": "pass",
+      "reason": "EVAL-33私有词面筛查、历史回执和方法文档；关联修复共享复制校验与旧worker测试竞态，未改业务评分/阈值/模型"
+    },
+    {
+      "item": "ADR_and_stage",
+      "verdict": "pass",
+      "reason": "D-01/D-02与保管安排pending，PLAN-02 HUMAN、EVAL-32 BLOCKED、EVAL-33 IN_PROGRESS，未进入S2"
+    },
+    {
+      "item": "correctness_and_failures",
+      "verdict": "pass",
+      "reason": "数字/否定保留，方法/投影/来源/层次绑定，超限拒绝；布尔转整数漏洞和实际快照测试竞态已复现修复"
+    },
+    {
+      "item": "permissions_and_data",
+      "verdict": "pass",
+      "reason": "仅授权投影及公开合成样例，无新盲测、历史正文、gold读取或公开私有匹配导出；资格始终unknown"
+    },
+    {
+      "item": "budget_cancellation_side_effects",
+      "verdict": "pass",
+      "reason": "0托管调用/费用；原业务库仅只读探测，临时测试数据库/角色写入清理；无生产配置、部署或激活"
+    },
+    {
+      "item": "traceability_and_versions",
+      "verdict": "pass",
+      "reason": "b9ce2ed基线、参考策略摘要、计划/来源/回执和失败收据可核对；没有伪造正式预登记或真实扫描证据"
+    },
+    {
+      "item": "verification",
+      "verdict": "pass",
+      "reason": "182隔离定向、21门禁失败项复测、22原生D、最终2505/70全量及三套CLI通过；失败、额外skip定位及环境修复均留证"
+    },
+    {
+      "item": "status_and_documentation",
+      "verdict": "pass",
+      "reason": "参考参数example_only且未正式批准；真实解析/全历史覆盖/身份和校准未完成，待办和八项自审明确部分范围"
+    }
+  ],
+  "failures_and_remediation": [
+    {
+      "stage": "first method tests",
+      "result": "2 failed, 54 passed in 0.11s",
+      "defect": "JSON dump coerced copied boolean in integer field before strict validation",
+      "remediation": "validated_copy now uses Python mode with warnings suppressed before validation; copied bool regressions and old isolation tests pass"
+    },
+    {
+      "stage": "mypy",
+      "error": "HistoryReceipt | None assigned to variable previously inferred as HistoryReceipt",
+      "remediation": "use separate loop variable; 338-source final mypy passes"
+    },
+    {
+      "stage": "first full gate",
+      "exit_code": 2,
+      "passed": 2475,
+      "failed": 7,
+      "skipped": 92,
+      "pytest_elapsed_s": 135.8,
+      "total_elapsed_s": 182.311,
+      "cause": "six missing Docker PATH failures and one two-read waiting/health test race",
+      "remediation": "add installed CLI paths only in verification environment; reproduce race and test health of original atomic snapshot without changing worker logic or test deadlines"
+    },
+    {
+      "stage": "PATH-repaired full gate",
+      "exit_code": 0,
+      "passed": 2483,
+      "skipped": 92,
+      "pytest_elapsed_s": 158.77,
+      "total_elapsed_s": 165.24,
+      "remaining_gap": "22 optional D experiment tests skipped due unreachable legacy D server",
+      "remediation": "verify native PG17 and pg_textsearch1.5.1 read-only, bind D contract tests to owned temporary databases, run 22/22 and final full gate"
+    },
+    {
+      "stage": "skip diagnostic",
+      "exit_code": 4,
+      "error": "guessed lexical test filenames absent",
+      "remediation": "use actual test filenames and -rs; retain both diagnostic receipts"
+    }
+  ],
+  "known_limits": [
+    "Word-surface triage only; semantic paraphrases, translations and source equivalence require additional review",
+    "Example 3-character/12-character/4-of-5 parameters are not calibrated or approved formal thresholds",
+    "Private pairing reports are not a public aggregate export",
+    "History adapter names specify interfaces; actual parsers, authenticated receipts and source discovery are absent",
+    "Complete declared receipt scope does not prove exhaustive real history or unseen qualification",
+    "No real custody isolation, full runner or audit-before-disclosure orchestration",
+    "No new blind tasks or independent second-human evidence"
+  ],
+  "next_slice": "History source catalog and actual schema adapter design; real custody and PLAN-02 pending",
+  "document_audit": {
+    "task_ids": 143,
+    "local_links_checked": 231,
+    "local_fragments_checked": 10,
+    "unchanged_maintenance_inputs": 717,
+    "original_canary_function_ast_unchanged": true,
+    "original_development_spec_and_pending_contract_unchanged": true,
+    "unexpected_changed_paths": []
+  }
+}
