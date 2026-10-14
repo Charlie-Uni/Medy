@@ -32,6 +32,10 @@ Failure = Literal[
     "release_denied",
     "release_limit",
     "screening_limit",
+    "history_limit",
+    "history_interrupted",
+    "history_io",
+    "history_unsupported",
 ]
 
 
