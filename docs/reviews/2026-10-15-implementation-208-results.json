@@ -1,0 +1,176 @@
+{
+  "record": 208,
+  "date": "2026-10-15",
+  "implementer": "Codex",
+  "reviewer": "Codex self-review; not an independent second human",
+  "task_ids": [
+    "EVAL-32"
+  ],
+  "status": "DONE",
+  "baseline_sha": "676a9f7d60074a034d7a44dc136be8737b71bb0e",
+  "task_statuses": {
+    "EVAL-32": "DONE",
+    "AGENT-03": "READY",
+    "EVAL-33": "IN_PROGRESS",
+    "GATE-01": "READY"
+  },
+  "validation": {
+    "required_full_gate": {
+      "exit_code": 0,
+      "elapsed_s": 114.696,
+      "command": [
+        "make",
+        "check"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit208-verified-hxociid5",
+      "required_services": true,
+      "passed": 2827,
+      "skipped": 70,
+      "warnings": 1,
+      "pytest_s": 88.22
+    },
+    "targeted": {
+      "exit_code": 0,
+      "elapsed_s": 0.754,
+      "command": [
+        "/Users/leaf/.cache/medy-checks/audit208-verified-hxociid5/venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/unit/evals/test_agent_rubric.py"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit208-verified-hxociid5",
+      "required_services": true,
+      "passed": 89
+    },
+    "documents": {
+      "exit_code": 0,
+      "elapsed_s": 1.844,
+      "command": [
+        "/Users/leaf/.cache/medy-checks/audit208-verified-hxociid5/venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/unit/docs"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit208-verified-hxociid5",
+      "required_services": true,
+      "passed": 41
+    },
+    "scope_audit": {
+      "exit_code": 0,
+      "task_ids": 144,
+      "local_links_checked": 304,
+      "local_fragments_checked": 7,
+      "baseline_maintenance_inputs": 748,
+      "maintenance_inputs_after": 754,
+      "old_schemas_unchanged": 36,
+      "unexpected_changed_paths": [],
+      "fixture_sha256": "751941822be7878619686d8a7fd7a03917f86a6d225b5108b427c8b615317065",
+      "script_report_sha256": "ccd3558cf5816ab3d56038d812291c7deb0eb22435224e07610deb335df84667"
+    }
+  },
+  "failures_and_fixes": [
+    {
+      "phase": "initial file generation",
+      "failure": "Private generator mkdir failed on rerun; no project files overwritten by failed invocation",
+      "fix": "idempotent private directory creation"
+    },
+    {
+      "phase": "initial targeted test",
+      "failure": "1 failed/82 passed: forged input_tokens=True serialized in JSON became integer 1 before strict validation; two literal-default mypy errors and one import-format issue",
+      "fix": "revalidate Python values with warnings=False; typed rubric literal; organize imports. 83 passed, mypy clean"
+    },
+    {
+      "phase": "separate semantic metrics review",
+      "failure": "2 failed/86 passed: claim metric still inherited citation failure; audit-unknown test reused material-missing record so fail correctly took precedence",
+      "fix": "independent claim/citation/source verdict maps; completeness uses the supported pair for its own requirement; reset test record before audit unknown. All reproduced counterexamples pass"
+    },
+    {
+      "phase": "fixture content review",
+      "failure": "Initial script inherited shared narrative/question for special cases, losing actual injection/historical/source overrides; same-run unsupported-recovery negative had a scripted action",
+      "fix": "explicit original per-case input overrides and source/date fields; refused starts zero actions; regression asserts original injection/size/hidden/history/ambiguity retained"
+    },
+    {
+      "phase": "local command wrapper",
+      "failure": "One editing helper used worktree cwd with root-private relative pointer and exited FileNotFoundError",
+      "fix": "correct explicit cwd/path; no repository change from failed helper"
+    }
+  ],
+  "self_review": [
+    {
+      "item": "requirements_and_scope",
+      "verdict": "pass",
+      "evidence": "Approved PLAN-02 v2 rubric; fixed developer-only scorer; no new threshold or historical rejudgment"
+    },
+    {
+      "item": "ADR_and_stage_entry",
+      "verdict": "pass",
+      "evidence": "Owner D-02 confirmed record205, ARCH-04/11 and tools passed; no S2/quality/production completion claimed"
+    },
+    {
+      "item": "correctness_and_failure_paths",
+      "verdict": "pass",
+      "evidence": "89 targeted tests plus 27 scripted projections; initial serialization/metric/input defects fixed and retested"
+    },
+    {
+      "item": "permissions_and_data",
+      "verdict": "pass",
+      "evidence": "Evaluator-only imports; original 748 maintenance inputs and 36 schemas identical; no real holdout or production data access"
+    },
+    {
+      "item": "budget_cancellation_and_side_effects",
+      "verdict": "pass",
+      "evidence": "0 hosted calls/0USD; cancelled/failed/missing rows and conservative/judge fees retained; no runtime protection claims"
+    },
+    {
+      "item": "traceability_and_versions",
+      "verdict": "pass",
+      "evidence": "Plan/record/assessment/conditions hashes; fixed IDs/parents; private command/failure receipts and artifact digests"
+    },
+    {
+      "item": "validation_sufficiency",
+      "verdict": "pass",
+      "evidence": "Required full gate 2827/70/1, 41 docs, static 0 violations; real runtime/semantic/performance limits explicit"
+    },
+    {
+      "item": "status_and_documents",
+      "verdict": "pass",
+      "evidence": "144 IDs unchanged; only EVAL-32 DONE; next AGENT-03 READY; EVAL-33/GATE-01 unchanged; 304 links/7 fragments"
+    }
+  ],
+  "rubric_version": "pv-agent-rubric-v1",
+  "development": {
+    "scenarios": 12,
+    "unique_synthetic_cases": 15,
+    "registered_executions": 27,
+    "linked_followup_or_recovery_denial_variants": 12,
+    "scripted_expectations_matched": true,
+    "actual_Agent_trajectories": 0,
+    "medical_gold": false,
+    "unseen_tasks": 0,
+    "usage_values": "synthetic_not_performance"
+  },
+  "hosted_model_calls": 0,
+  "api_cost_usd": 0,
+  "production_DML": false,
+  "deployment_changed": false,
+  "public_API_or_MCP_changed": false,
+  "frozen_datasets_changed": false,
+  "default_models_changed": false,
+  "ACL_or_security_rules_changed": false,
+  "old_schemas_changed": false,
+  "production_gate_changed": false,
+  "agent_controller_implemented": false,
+  "real_holdout_accessed": false,
+  "independent_human_review_claimed": false,
+  "limitations": [
+    "Only evaluator rubric mechanics and public scripts; not actual Agent executions or runtime fault tests",
+    "Trusted assessments required; hash does not authenticate an issuer or prove semantic truth",
+    "Original scenarios, approved contract and all old schemas unchanged",
+    "Real collector/calibration and AGENT-07 runtime matrix still pending",
+    "TTL/count/cost values in script are synthetic, not deployment defaults",
+    "Actual independent custody is not verified; new holdout zero; paid runs separately authorized"
+  ],
+  "next": "AGENT-03 model-selected action loop; AGENT-04/05/06 plus minimal SESSION before actual integration"
+}

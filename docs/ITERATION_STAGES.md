@@ -1,5 +1,7 @@
 # 分阶段执行与每轮自审
 
+2026-10-15记录208：EVAL-32评分器与公开开发脚本已实现；业务完成/处理正确分开，必需证据AND/OR、unknown与失败分母、同case续办和费用分别计分。12场景展开27条脚本；不是实际Agent执行/真实质量或盲测。0托管调用、0USD；下一AGENT-03模型决策循环。 详见[记录208](reviews/2026-10-15-implementation-208-agent-rubric-and-development-cases.md)。
+
 2026-10-15记录207：AGENT-02已接四类受控工具，复用既有检索装配、AE提取和引用核验Registry；指定来源固定于任务并隔离缓存，读取/返回前复查权限和事实。仅工具工程，尚无规划循环/持久观察/完整Agent；0托管调用、0USD，独立环境核验不阻塞开发。 详见[记录207](reviews/2026-10-15-implementation-207-agent-controlled-tools.md)。
 
 2026-10-15，记录206：AGENT-01已实现私有动作、运行状态、观察结果的Pydantic/JSON Schema和纯准入校验；仅契约工程，不含实际工具/规划循环/最终核验。所有者确认“有独立环境”，环境类型、管理归属及实际访问隔离仍待核验，真实盲测未接入。下一主切片AGENT-02，随后EVAL-32；预算、原门禁和付费逐次授权保持。 详见[记录206](reviews/2026-10-15-implementation-206-agent-action-and-state-contracts.md)。
@@ -51,7 +53,7 @@ ARCH-06 的 Ask/Task 共享审计与五类 Skill 内层证据链已通过工程�
 
 LangGraph 当前仍是固定主图，动态循环是新增待办；LG-01 仅为 checkpoint 技术选型选做，恢复要求按实际 Agent 契约落实。模型路由和 provisional 标签保持真实状态。
 
-S0 的 PLAN-01 证据入口为[能力矩阵与 PV 场景方案](agent/PLAN-01-capability-and-scenario.md)，包括参考源码重新核验、固定 Workflow 对照及 12 个合成开发用例。其完成仅表示设计输入可审阅；所有者已确认 PV 场景范围，完整契约仍归 PLAN-02，EVAL-32 尚未冻结，ARCH-04/11 已分别通过工程自审；PLAN-02 剩余 Agent 行动/profile 与验收契约未决，相关正确性前置继续满足，不能据此把 S2 标为已解锁或完成。
+S0 的 PLAN-01 证据入口为[能力矩阵与 PV 场景方案](agent/PLAN-01-capability-and-scenario.md)，含参考源码、固定Workflow对照及12个合成设计用例。PLAN-02行动/profile/验收已获所有者确认（记录205），ARCH-04/11硬前置已过，AGENT-01/02契约与工具已实现（记录206/207）；EVAL-32开发评分规则及公开脚本见记录208。后续进入AGENT-03循环；设计/评分脚本不证明完整S2或真实质量通过。
 
 ARCH-07 的执行记录和诊断边界已通过工程自审，见[记录181](reviews/2026-10-11-implementation-181-execution-records-and-replay-boundaries.md)及[回放契约](EXECUTION_REPLAY.md)：Ask/Task 完整输入、内容条件摘要、逐模型请求/实际 SDK 参数和回复/回执、渲染及 Unicode 来源区间；2038/70 全量、518维护输入一致，614条存档/6140布局比较零差异，0托管费用。原条件模式缺少归档事实/索引和经验证的旧运行工件，明确409拒绝，并未实现原条件恢复；Task/MCP回放、MCP受限正文和 FOCUS-02完整跨块定位仍未完成。当时下一项ARCH-08；真实模型质量、盲测和 S2/S3 约束保持，新代码未提交部署。
 

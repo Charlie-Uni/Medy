@@ -74,9 +74,9 @@ probe v4 与 `main-v5-provisional` 均已冻结。EVAL-11 已完成：580 个 go
 
 贯穿工作：ARCH-08/10/13/14、CODE-03～07、IDX-03、OBS-03、DEV-BACKLOG-01 按依赖穿插；ARCH-12 有实测收益再实施。BM25-09、CACHE-10、PERF-10、SRC-05、FOCUS-01/02/09、ROUTE-01/02 全部保留，先分别验证再 COMBO-01。人工事项 PLAN-02、EVAL-29/30/31、LIC-03、DEPLOY-01 单独跟踪；EVOL-09 已决定限实验，生产自动批准不再列为待问事项。
 
-**当前下一项：EVAL-32评分与开发用例，再AGENT-03决策循环；AGENT-02工具工程已自审通过，最小澄清续办仍纳入S2。** [记录205](reviews/2026-10-15-implementation-205-owner-decisions-and-agent-entry.md)只落实已获同意的设计与验收，没有实现Agent。GATE-01独立跟踪新采用规则工程接线；所有者确认有独立环境，类型/管理归属待提供、实际权限未核验，不阻塞公开开发场景工程。EVAL-33保留IN_PROGRESS及历史读取/隔离缺口，不再等待D-01/D-02；真实历史正文扫描0、新盲测0。本轮无付费/部署。记录204五批最终3f0267f已推送，[CI38571382863](https://github.com/Charlie-Uni/Medy/actions/runs/38571382863)全部29步骤成功；本轮发布/CI另按自身SHA留证。
+**当前下一项：AGENT-03模型决策循环；EVAL-32评分与开发脚本已通过本轮工程自审，AGENT-02工具已通过。最小澄清续办仍纳入S2。** [记录205](reviews/2026-10-15-implementation-205-owner-decisions-and-agent-entry.md)只落实已获同意的设计与验收，没有实现Agent。GATE-01独立跟踪新采用规则工程接线；所有者确认有独立环境，类型/管理归属待提供、实际权限未核验，不阻塞公开开发场景工程。EVAL-33保留IN_PROGRESS及历史读取/隔离缺口，不再等待D-01/D-02；真实历史正文扫描0、新盲测0。本轮无付费/部署。记录204五批最终3f0267f已推送，[CI38571382863](https://github.com/Charlie-Uni/Medy/actions/runs/38571382863)全部29步骤成功；本轮发布/CI另按自身SHA留证。
 
-ARCH-12仅完成条件收益评估，生产Pool/事务拆分未采用；记录189已分批推送完成任务，记录190修复CI，8d3669e的远端38184157416全部步骤成功，包括真实容器门。ARCH-13仍未替换共享部署/长期驻留，容量仍待实测。MCP受限完整材料已由记录194补齐；原条件恢复、Task/MCP回放、FOCUS-02跨块定位、PLAN-02行动/profile已确认，EVAL-32评分器及运行仍未完成；真实语义、第二独立人工、未见盲测、S2/S3及逐次付费授权门保持。
+ARCH-12仅完成条件收益评估，生产Pool/事务拆分未采用；记录189已分批推送完成任务，记录190修复CI，8d3669e的远端38184157416全部步骤成功，包括真实容器门。ARCH-13仍未替换共享部署/长期驻留，容量仍待实测。MCP受限完整材料已由记录194补齐；原条件恢复、Task/MCP回放、FOCUS-02跨块定位、PLAN-02行动/profile已确认，EVAL-32开发评分器工程自审已过，真实Agent运行仍未完成；真实语义、第二独立人工、未见盲测、S2/S3及逐次付费授权门保持。
 
 每次只推进一个主切片。纯契约设计、机械检查和无付费测试可先准备；依赖未通过时不得把相关集成或阶段标为完成。真实并发/费用运行先满足 ARCH-01/04/11；历史 Skill/二阶段判断先满足 ARCH-02/03/06；回放先满足 ARCH-07；所有检索运行先核对事实库、索引覆盖和积压。EVAL-22/23/24 → EVAL-25/26 → EVAL-27/28 的基线依赖保留，S2/S3 开发演示不能替代正式门禁。等待人工/授权时继续无关 READY 项。
 
@@ -237,7 +237,7 @@ Redis 已在本机主运行配置切到 `redis`，TTL 300 秒；实际 smoke 为
 | PLAN-02 | 先沟通 ADR，再明确目标变更、行动契约与验收 | DONE | 所有者2026-10-15对四项解决方案回复“同意”；ADR-0012 v0.6/PLAN-02 v0.2/机器契约v2落实D-01/D-02、预算分配和最小澄清续办。记录205文档/依赖自审通过；只完成决策契约，不代表运行时/付费/生产发布。效率参数及实际保管环境待具体输入，不再重复问已决方向 |
 | AGENT-01 | 定义动作、状态、观察结果与停止契约 | DONE | [契约说明](agent/AGENT_CONTRACTS.md)与[记录206](reviews/2026-10-15-implementation-206-agent-action-and-state-contracts.md)：七动作/六状态/观察三份私有Schema、case/task/run/attempt及条件摘要绑定、严格JSON/句柄/预算快照准入已实现；109契约测试、required全量2675 passed/70 skipped/1旧警告及范围/文档自审通过，0费用。不是工具执行、授权或完成核验 |
 | AGENT-02 | 将检索和现有 Skill 暴露为受控工具 | DONE | [工具说明](agent/AGENT_TOOLS.md)与[记录207](reviews/2026-10-15-implementation-207-agent-controlled-tools.md)：四工具适配器、指定来源检索/缓存上下文、RLS原文/相邻块、真实Registry与共享额度已实现；199定向、required全量2738 passed/70 skipped/1旧警告、41文档与八项自审通过，0费用。未接规划循环、公共端点或持久观察，不冒称完整Agent |
-| AGENT-03 | 实现模型选择动作与结果驱动循环 | READY | AGENT-02记录207及ARCH-05/11已过；按顺序先EVAL-32评分，随后无付费控制器工程；模型按结果决定补检索、换查询、调用 Skill 或结束；用假网关验证不同结果导致不同合法路径，托管模型试跑归 AGENT-08 |
+| AGENT-03 | 实现模型选择动作与结果驱动循环 | READY | AGENT-02记录207及ARCH-05/11已过；EVAL-32记录208工程自审已过，按顺序进入无付费控制器工程；模型按结果决定补检索、换查询、调用 Skill 或结束；用假网关验证不同结果导致不同合法路径，托管模型试跑归 AGENT-08 |
 | AGENT-04 | 有界执行、重复检测、取消与恢复 | BLOCKED | AGENT-03；按PLAN-02 v0.2加入最终核验预留/结构化状态/有界证据、共享总限额；故障恢复持久化原预算/预留/步数/截止/持有权，不新发额度。人工澄清后是显式关联新执行，不能混为恢复或无限自动续费 |
 | AGENT-05 | 最终证据核验、安全、澄清与人工升级 | BLOCKED | AGENT-03、ARCH-03/06；未核验证据不可作答；共同必需证据、数字/否定/条件、指定来源、冲突与无答案反例；说明缺失信息和升级材料，延续澄清会话依赖 SESSION-01/02 |
 | AGENT-06 | Agent 轨迹、版本、计量与回放接线 | BLOCKED | AGENT-03、ARCH-07/09；记录动作、简短行动理由、受限输入输出引用、证据、调用回执及实际版本；Langfuse 只发获准元数据；证明回放边界和重启后关联稳定 |
@@ -245,7 +245,7 @@ Redis 已在本机主运行配置切到 `redis`，TTL 300 秒；实际 smoke 为
 | AGENT-08 | 首个业务 Agent 真实试跑与路径对照 | PAID | AGENT-07；用户批准样本、轮数、费用上限和停止条件后，与固定 Workflow 对照；保存工具选择、补救、终态、质量/时延/费用；作为开发演示，不能冒充正式盲测 |
 | AGENT-09 | 扩展五类 Skill 与多轮任务覆盖 | BLOCKED | AGENT-08、SESSION-01/02、HANDOFF-01/02；逐类核验工具适用范围、组合、最终判断及人工接手；不要求每题多步或每次调用所有工具 |
 | AGENT-10 | Agent 正式质量/安全/效率验收 | PAID | AGENT-09、EVAL-34；满足预登记任务成功、证据、安全、合理停止及预算指标；报告相对 Workflow 的收益与代价；不将模型路由或固定图改名计为自主能力 |
-| EVAL-32 | 新增多步 Agent rubric 与离线用例 | READY | PLAN-01/02已通过设计自审，D-02已确认；可按PLAN-02 v0.2分项/分母/12开发案例及新增最小澄清续办实现评分与反例。尚无评分器/运行；同case续办不凑未见题，不以正确停止凑业务完成率 |
+| EVAL-32 | 新增多步 Agent rubric 与离线用例 | DONE | [记录208](reviews/2026-10-15-implementation-208-agent-rubric-and-development-cases.md)、[评分契约](agent/AGENT_EVALUATION.md)：pv-agent-rubric-v1、12场景/27公开脚本，完成/处理正确分开，AND/OR证据、unknown/失败分母及同case费用/续办计数。仅评分器反例，不是实际Agent集成/真实质量/盲测；AGENT-07/08及原门保持 |
 | EVAL-33 | 候选生成、优化验证、最终盲测三方隔离 | IN_PROGRESS | [隔离v0.6](agent/EVALUATION_ISOLATION.md)、[检查方法v0.3](agent/EVALUATION_SCREENING.md)、[历史读取v0.2](agent/EVALUATION_HISTORY.md)、[保管提案](agent/EVALUATION_CUSTODY.md)及记录201～204：离线manifest/投影/账本/聚合出口、词面筛查/历史回执和主集字段读取原语、三套公开canary已实现。16种子目录不穷尽，真扫描0；参考参数仅演练；其余适配器/正式校准/历史扫描、完整runner/审计/独立身份和封存仍待；第二人工缺口保持；2026-10-15所有者确认有独立环境，类型/管理归属及实际权限仍待核验，未接入真题 |
 | EVAL-34 | 固定 Workflow 与 Agent 配对正式评测 | PAID | AGENT-07、EVAL-32/33、新主集/安全基线 EVAL-22/23/24；相同事实/版本/权限和预登记预算规则，分别报告单步与多步任务；包含不需要 Agent 的正常题与可能误伤切片 |
 | EVAL-35 | Prompt/Skill 自进化候选正式配对回放 | PAID | EVOL-07、EVAL-26/33及GATE-01适用规则；≥200唯一历史Trace、安全全量、随机流程3轮和配对CI，保留非目标下降≤1pp/安全不下降及原适用门禁；质量采用另需EVAL-36合格盲测正向证据，无固定+5pp。旧成绩保留旧口径，生成者不能改评分器/分母 |
@@ -347,3 +347,5 @@ EVOL-06～08 按候选类型分切片记录，Prompt 先行；整项 DONE 需两
 2026-10-15，记录206：AGENT-01契约工程已通过自审并实现私有动作、运行状态、观察结果的Pydantic/JSON Schema和纯准入校验；仅契约工程，不含实际工具/规划循环/最终核验。所有者确认“有独立环境”，环境类型、管理归属及实际访问隔离仍待核验，真实盲测未接入。下一主切片AGENT-02，随后EVAL-32；预算、原门禁和付费逐次授权保持。 自审与验证见[记录206](reviews/2026-10-15-implementation-206-agent-action-and-state-contracts.md)。
 
 2026-10-15记录207：AGENT-02四类受控工具适配已实现，真实PG验证来源/历史/撤权/最终输出栅栏，模型调用均为离线fake。工具保留受限审计快照，尚未持久化为AgentObservation或注册公共端点。所有者补充另有电脑和云主机；规格、管理归属和实际隔离仍未核验。自审见[记录207](reviews/2026-10-15-implementation-207-agent-controlled-tools.md)。
+
+2026-10-15记录208：EVAL-32 DONE；[评分契约](agent/AGENT_EVALUATION.md)与12场景/27公开脚本、89计分反例通过，required全量2827 passed/70 skipped/1既有warning、文档41通过；748原维护输入/36Schema不变，新增6个Python文件。仅评分工程，实际Agent轨迹0、托管调用0/0USD、新盲测0；下一AGENT-03，EVAL-33、最小SESSION与原付费/生产门保持。

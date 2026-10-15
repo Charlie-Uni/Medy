@@ -1,5 +1,7 @@
 # Medy
 
+2026-10-15记录208：EVAL-32评分器与公开开发脚本已实现；业务完成/处理正确分开，必需证据AND/OR、unknown与失败分母、同case续办和费用分别计分。12场景展开27条脚本；不是实际Agent执行/真实质量或盲测。0托管调用、0USD；下一AGENT-03模型决策循环。 详见[记录208](docs/reviews/2026-10-15-implementation-208-agent-rubric-and-development-cases.md)。
+
 2026-10-15记录207：AGENT-02已接四类受控工具，复用既有检索装配、AE提取和引用核验Registry；指定来源固定于任务并隔离缓存，读取/返回前复查权限和事实。仅工具工程，尚无规划循环/持久观察/完整Agent；0托管调用、0USD，独立环境核验不阻塞开发。 详见[记录207](docs/reviews/2026-10-15-implementation-207-agent-controlled-tools.md)。
 
 MedOps Copilot 是面向医学事务、药物警戒和临床运营的可信医学 RAG 与受控 Agent 项目。
