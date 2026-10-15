@@ -1,5 +1,7 @@
 # Medy
 
+2026-10-15记录210：AGENT-04的连续重复/无进展切片已通过本轮工程自审；同动作/参数/稳定结果连续两次即停止，保留合法新证据、补读及核验变化。AGENT-04整体仍未完成，预算分配、持久取消/租约和原额度恢复继续推进；0托管调用/0USD。详见[记录210](docs/reviews/2026-10-15-implementation-210-agent-no-progress-guard.md)。
+
 2026-10-15记录209：AGENT-03内部模型决策循环已实现：一次规划提出动作，原工具返回已提交观察后再规划；覆盖空检索改写、邻块读取和来源歧义澄清等不同路径。本轮八项工程自审通过，下一AGENT-04；生产Driver、最终业务门和持久恢复仍待后续，0托管调用/0USD。 详见[记录209](docs/reviews/2026-10-15-implementation-209-model-selected-agent-loop.md)。
 
 2026-10-15记录208：EVAL-32评分器与公开开发脚本已实现；业务完成/处理正确分开，必需证据AND/OR、unknown与失败分母、同case续办和费用分别计分。12场景展开27条脚本；不是实际Agent执行/真实质量或盲测。0托管调用、0USD；下一AGENT-03模型决策循环。 详见[记录208](docs/reviews/2026-10-15-implementation-208-agent-rubric-and-development-cases.md)。
