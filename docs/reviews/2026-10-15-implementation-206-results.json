@@ -1,0 +1,190 @@
+{
+  "record": 206,
+  "date": "2026-10-15",
+  "implementer": "Codex",
+  "reviewer": "Codex self-review; not an independent second human",
+  "task_ids": [
+    "AGENT-01"
+  ],
+  "status": "DONE",
+  "baseline_sha": "2da630cef2c5626c94ecb71340b90da327fc7604",
+  "scope": "private PV action/state/observation models and pure admission; no tools/controller/API/paid calls",
+  "approved_profile": {
+    "decisions": 8,
+    "tokens": 12000,
+    "cost_cap_microusd": 600000,
+    "timeout_ms": 125000,
+    "same_no_progress_limit": 2,
+    "final_reserve_defaults": null
+  },
+  "task_statuses": {
+    "AGENT-01": "DONE",
+    "AGENT-02": "READY",
+    "EVAL-32": "READY",
+    "EVAL-33": "IN_PROGRESS",
+    "GATE-01": "READY"
+  },
+  "independent_environment": {
+    "owner_report": "有独立环境 进入下一步",
+    "existence_reported": true,
+    "type": null,
+    "administrator": null,
+    "actual_permissions_verified": false,
+    "real_holdout_accessed": false
+  },
+  "hosted_model_calls": 0,
+  "api_cost_usd": 0,
+  "deployment_changed": false,
+  "frozen_datasets_changed": false,
+  "public_API_or_MCP_changed": false,
+  "agent_controller_implemented": false,
+  "tools_wired": false,
+  "semantic_verification_implemented": false,
+  "paid_authorization_granted": false,
+  "validation": {
+    "initial_targeted": {
+      "passed": 420,
+      "exit_code": 0,
+      "pytest_s": 1.55
+    },
+    "new_contracts_refined": {
+      "passed": 109,
+      "exit_code": 0,
+      "pytest_s": 0.49
+    },
+    "required_full_gate": {
+      "exit_code": 0,
+      "elapsed_s": 93.516,
+      "command": [
+        "make",
+        "check"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit206-verified-rgwhtvbd",
+      "required_services": true,
+      "passed": 2675,
+      "skipped": 70,
+      "warnings": 1,
+      "pytest_s": 89.57,
+      "source_modules": 343,
+      "formatted_files": 739,
+      "architecture_violations": 0,
+      "hosted_model_calls": 0
+    },
+    "documents": {
+      "exit_code": 0,
+      "elapsed_s": 2.232,
+      "command": [
+        "/Users/leaf/.cache/medy-checks/audit206-verified-rgwhtvbd/venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/unit/docs"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit206-verified-rgwhtvbd",
+      "required_services": true,
+      "passed": 41,
+      "skipped": 0
+    },
+    "scope_audit": {
+      "exit_code": 0,
+      "phase": "final",
+      "elapsed_s": 0.763,
+      "baseline_sha": "2da630cef2c5626c94ecb71340b90da327fc7604",
+      "scope": "AGENT-01 private action/state/observation contracts and pure admission",
+      "task_ids": 144,
+      "added_ids": [],
+      "removed_ids": [],
+      "changed_existing_statuses": [
+        "AGENT-01",
+        "AGENT-02"
+      ],
+      "local_links_checked": 291,
+      "local_fragments_checked": 7,
+      "baseline_maintenance_inputs": 730,
+      "unchanged_maintenance_inputs": 726,
+      "modified_maintenance_inputs": [
+        "src/medops/contracts_export.py",
+        "src/medops/evals/isolation/contracts.py",
+        "src/medops/evals/isolation/exposure.py",
+        "src/medops/evals/isolation/history_reader.py"
+      ],
+      "new_maintained_python_files": 8,
+      "maintenance_inputs_after": 738,
+      "maintenance_mismatches": [],
+      "old_schemas_unchanged": 32,
+      "new_agent_schemas": 3,
+      "strict_json_function_AST_unchanged": true,
+      "protected_design_baselines_AGENTS_gate_state_unchanged": true,
+      "frozen_datasets_changed": false,
+      "unexpected_changed_paths": [],
+      "model_calls": 0,
+      "api_cost_usd": 0
+    }
+  },
+  "failures_and_fixes": [
+    {
+      "failure": "First make check: mypy JSON Schema comprehension/container invariance, two errors",
+      "exit_code": 2,
+      "fix": "explicit list[JsonValue] rule containers and contextual list values; no ignores or weakened types"
+    },
+    {
+      "failure": "Intermediate check still found list[str] for reason enum; a local rewrite briefly caused Unexpected indentation before testing",
+      "fix": "explicit reason_values: list[JsonValue], corrected list construction; formatter and targeted mypy pass"
+    },
+    {
+      "failure": "Initial schema-export command used editable root package instead of worktree, so it omitted Agent schemas",
+      "fix": "set PYTHONPATH to verified worktree src; regenerate all schemas and verify old schema byte equality"
+    }
+  ],
+  "self_review": [
+    {
+      "item": "scope",
+      "verdict": "pass",
+      "scope": "AGENT-01 private contracts and pure admission only; no tools or controller claims"
+    },
+    {
+      "item": "ADR_and_stage",
+      "verdict": "pass",
+      "scope": "PLAN-02 v0.2 and ARCH-04/11 approved; 8/12000/0.60/125 preserved, no holdout or production policy edits"
+    },
+    {
+      "item": "correctness_and_failures",
+      "verdict": "pass",
+      "scope": "typed/discriminated proposals, state pairing, corrupt snapshots, malformed JSON, strict budgets, quoted spans and forged handles covered; intermediate static failures fixed"
+    },
+    {
+      "item": "permissions_and_data",
+      "verdict": "pass",
+      "scope": "server-owned context separated; identity/source/condition/expiry binding checked; no true holdout access, live ACL not claimed"
+    },
+    {
+      "item": "budget_cancellation_side_effects",
+      "verdict": "pass",
+      "scope": "zero hosted calls, no deployment/DML; immutable deadline/budget metadata only, actual cancellation/reservations remain later tasks"
+    },
+    {
+      "item": "traceability_and_versions",
+      "verdict": "pass",
+      "scope": "case/task/run/attempt and full context hash, receipt references; old schemas/state and frozen designs preserved; actual trace persistence not claimed"
+    },
+    {
+      "item": "verification",
+      "verdict": "pass",
+      "scope": "109 contract tests and required make check 2675/70, 32 old schemas byte-identical; full document/scope audit independently attached"
+    },
+    {
+      "item": "status_and_documentation",
+      "verdict": "pass",
+      "scope": "AGENT-01 DONE within contract scope; AGENT-02 READY, scoring READY, environment existing but unverified; no complete Agent or medical quality claim"
+    }
+  ],
+  "limitations": [
+    "DTOs and hashes are not authentication or execution proof",
+    "Live ACL/revocation/source resolution and tool result authenticity await AGENT-02",
+    "Step accounting, no-progress, reservations/cancellation/lease/recovery await AGENT-03/04",
+    "Final semantic judgment and persistent completion await AGENT-05/06",
+    "No true model quality, blind test, production adoption or independent-human evidence",
+    "Final reserve fixture numbers are synthetic, not approved production defaults"
+  ],
+  "next": "AGENT-02 controlled adapters; EVAL-32 scoring follows; independent environment actual access validation pending"
+}

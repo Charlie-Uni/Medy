@@ -8,9 +8,11 @@ MedOps Copilot 是面向医学事务、药物警戒和临床运营的可信医�
 
 每个任务的当前状态与对应基础知识点，见 [任务与知识点对照](docs/TASK_KNOWLEDGE_MAP.md)。
 
-## 最新执行入口（2026-10-12）
+## 最新执行入口（2026-10-15）
 
-后续统一按[当前任务台账](docs/CURRENT_TASKS.md)推进。目标保持为受控业务Agent与模型生成Prompt/声明式Skill的自进化，沿用RAG、Harness、BM25、Redis、Langfuse和模型路由资产。ARCH-01～16对应工程切片自审通过，其中ARCH-12仅完成条件收益评估，生产Pool/事务拆分未采用；CODE-01～05/07已核验完成。最新[记录198](docs/reviews/2026-10-12-implementation-198-code-contract-cleanup.md)核实后删9无用定义，保留PDF兼容入口，收敛策略/检索校验/幂等/效率计算与设置契约；433定向、1060旧行为对照0差异、required全量2313 passed/70 skipped，费用0。上轮5a21的远端CI38197199807全部29步成功，新提交按自身SHA核对；没有重启部署。下一项CODE-06测试夹具。
+2026-10-15，记录206：AGENT-01已实现私有动作、运行状态、观察结果的Pydantic/JSON Schema和纯准入校验；仅契约工程，不含实际工具/规划循环/最终核验。所有者确认“有独立环境”，环境类型、管理归属及实际访问隔离仍待核验，真实盲测未接入。下一主切片AGENT-02，随后EVAL-32；预算、原门禁和付费逐次授权保持。 详见[记录206](docs/reviews/2026-10-15-implementation-206-agent-action-and-state-contracts.md)。
+
+2026-10-12历史快照：后续统一按[当前任务台账](docs/CURRENT_TASKS.md)推进。目标保持为受控业务Agent与模型生成Prompt/声明式Skill的自进化，沿用RAG、Harness、BM25、Redis、Langfuse和模型路由资产。ARCH-01～16对应工程切片自审通过，其中ARCH-12仅完成条件收益评估，生产Pool/事务拆分未采用；CODE-01～05/07已核验完成。最新[记录198](docs/reviews/2026-10-12-implementation-198-code-contract-cleanup.md)核实后删9无用定义，保留PDF兼容入口，收敛策略/检索校验/幂等/效率计算与设置契约；433定向、1060旧行为对照0差异、required全量2313 passed/70 skipped，费用0。上轮5a21的远端CI38197199807全部29步成功，新提交按自身SHA核对；没有重启部署。下一项CODE-06测试夹具。
 
 2026-10-15所有者已同意PLAN-02行动/profile与分项验收及四项解决方案，见[ADR-0012 v0.6](docs/adr/ADR-0012-agent-evolution-goals-and-acceptance.md)和[记录205](docs/reviews/2026-10-15-implementation-205-owner-decisions-and-agent-entry.md)。预算上限保持、最小澄清续办提前S2；首个Agent尚未实现，下一AGENT-01无付费领域契约。生产取消固定+5pp的采用v2待GATE-01接线，效率参数需具体预登记；独立保管方向已采纳但实际环境/权限未验收。自动激活仅实验，改进声明须合格盲测，原适用门禁/复核/签字和逐次付费保持。下方历轮快照不覆盖当前台账。
 

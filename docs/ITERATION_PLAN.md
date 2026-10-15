@@ -1,10 +1,12 @@
 # Medy 项目完整迭代计划与工程建议
 
+2026-10-15，记录206：AGENT-01已实现私有动作、运行状态、观察结果的Pydantic/JSON Schema和纯准入校验；仅契约工程，不含实际工具/规划循环/最终核验。所有者确认“有独立环境”，环境类型、管理归属及实际访问隔离仍待核验，真实盲测未接入。下一主切片AGENT-02，随后EVAL-32；预算、原门禁和付费逐次授权保持。 详见[记录206](reviews/2026-10-15-implementation-206-agent-action-and-state-contracts.md)。
+
 更新日期：2026-10-15。生产 BM25 切换与迁移证据见[记录 162](reviews/2026-10-09-implementation-162-production-bm25-cutover.md)；Langfuse 部署见[记录 163](reviews/2026-10-09-implementation-163-langfuse-deployment-and-recovery.md)；Redis 缓存切换、清账与恢复见[记录 164](reviews/2026-10-09-implementation-164-redis-cache-cutover.md)；向量规划模式、质量取舍与连接等价性见[记录 168](reviews/2026-10-10-implementation-168-fixed-vector-plan-and-quality-audit.md)。本文汇总代码修复、BM25、Redis、Langfuse、模型路由、评测、性能和产品能力，为每项工作明确现状、价值、步骤、约束与验收依据。
 
 2026-10-10 用户已要求将 Agent、自进化与之前的架构/评测/性能任务统一纳入后续执行，并强制每轮自审核。任务状态与顺序只在[当前任务台账](CURRENT_TASKS.md)维护，执行规则见[AGENTS.md](../AGENTS.md)；本文件解释设计。纳入待办不代表实现或发布完成。原 ADR、冻结数据、许可与生产签字要求继续有效；动态 Agent 的结构调整在 PLAN-02 留下明确决定，不改写历史门禁。
 
-后续约束见[ADR-0012 v0.6](adr/ADR-0012-agent-evolution-goals-and-acceptance.md)：D-01/D-02及四项解决方案已获所有者同意，首版预算上限保持并补分配/最终核验预留，最小澄清续办提前S2；ARCH-04/11硬前置已过。生产采用取消固定+5pp，质量型需合格盲测正向配对CI，效率型具体profile待运行前登记；GATE-01未接线，旧门结果不证明新门通过。自动激活仅实验、生产人工签字、原适用门禁和逐次付费保持。独立保管方向已确认，环境待提供，实际隔离未通过，不阻塞公开Agent开发。
+后续约束见[ADR-0012 v0.6](adr/ADR-0012-agent-evolution-goals-and-acceptance.md)：D-01/D-02及四项解决方案已获所有者同意，首版预算上限保持并补分配/最终核验预留，最小澄清续办提前S2；ARCH-04/11硬前置已过。生产采用取消固定+5pp，质量型需合格盲测正向配对CI，效率型具体profile待运行前登记；GATE-01未接线，旧门结果不证明新门通过。自动激活仅实验、生产人工签字、原适用门禁和逐次付费保持。独立保管方向已确认，环境存在已由所有者确认，类型/管理归属待提供，实际隔离未通过，不阻塞公开Agent开发。
 
 阅读导航：§2 看事实基线，§3 看 Goal 总表，§4–7 看 BM25/Redis/Langfuse/模型路由，§8 看性能，§9–10 看评测与数据，§11–15 看会话/索引/Loop/文档/部署，§16 查名词，§17–19 看执行顺序、共同约束和验收模板，§20 看新增 Agent 与最终成果。已完成的六项维护，其问题原因、修改文件、兼容约束与测试结果集中在[记录 126](reviews/2026-10-07-implementation-126-code-maintenance.md)。
 
