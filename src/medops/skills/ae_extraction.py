@@ -9,6 +9,7 @@ from typing import Annotated, Any, Literal
 
 from pydantic import Field
 
+from medops.domain.ae import KINDS, AeKind
 from medops.domain.common import DomainModel, NonEmptyStr, ReasonCode, RiskLevel
 from medops.domain.skill import SkillOutput, SkillSpec, SkillStatus
 from medops.skills._structured import quote_grounded, structured_call
@@ -25,28 +26,6 @@ SPEC = SkillSpec(
     idempotent=True,
 )
 
-AeKind = Literal[
-    "patient",
-    "suspect_drug",
-    "concomitant_drug",
-    "event",
-    "onset",
-    "seriousness",
-    "outcome",
-    "dechallenge_rechallenge",
-    "reporter",
-]
-KINDS: tuple[str, ...] = (
-    "patient",
-    "suspect_drug",
-    "concomitant_drug",
-    "event",
-    "onset",
-    "seriousness",
-    "outcome",
-    "dechallenge_rechallenge",
-    "reporter",
-)
 _CAUSALITY = re.compile(
     r"因果|相關性|相关性|歸因|归因|導致|导致|引起|所致|\brelated\b|\bcaused?\b|\bdue to\b|\battributable\b|\bcausal",
     re.I,
