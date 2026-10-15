@@ -28,7 +28,7 @@ from medops.infrastructure.llm.gateway import (
 )
 
 DEFAULT_EXECUTION_TOKENS = 12_000
-EXECUTION_BUDGET_VERSION = "execution-budget-v1+utf8-preflight"
+EXECUTION_BUDGET_VERSION = "execution-budget-v2+utf8-preflight+protected-headroom"
 PRICES = PriceTable(OPENAI_PRICES)
 
 if TYPE_CHECKING:
@@ -47,6 +47,17 @@ class ExecutionBudgetExceeded(BudgetExceeded):
         super().__init__(f"execution {dimension} budget exhausted")
 
 
+class BudgetProtection(GatewayModel):
+    """Unspent headroom, not provider usage, a bill or a pending call reservation.
+
+    Trusted execution owners may only increase this floor. Consuming it in a
+    final verification phase requires a separate approved owner integration.
+    """
+
+    tokens: int = Field(default=0, ge=0, strict=True)
+    cost_usd: float = Field(default=0, ge=0, strict=True)
+
+
 class BudgetSnapshot(GatewayModel):
     limits: ExecutionLimits
     accounted_tokens: int = Field(ge=0)
@@ -57,6 +68,8 @@ class BudgetSnapshot(GatewayModel):
     reserved_cost_usd: float = Field(ge=0)
     calls: int = Field(ge=0)
     blocked_reason: str | None = None
+    protected_tokens: int = Field(default=0, ge=0)
+    protected_cost_usd: float = Field(default=0, ge=0)
 
 
 @dataclass(frozen=True)
@@ -114,11 +127,34 @@ class ExecutionBudget:
         self._active: dict[str, CallAllowance] = {}
         self._settled: set[str] = set()
         self._blocked: str | None = None
+        self._protection = BudgetProtection()
         self._lock = threading.Lock()
 
     @property
     def limits(self) -> ExecutionLimits:
         return self._limits
+
+    def protection(self) -> BudgetProtection:
+        with self._lock:
+            return self._protection
+
+    def protect_remaining(self, protection: BudgetProtection) -> None:
+        """Atomically keep headroom across all threads, nested scopes and meters.
+
+        Protection persists on this budget after context exit; a child cannot
+        relax it or re-enter a fresh spending allowance. No fake call/fee entry.
+        """
+        protection = BudgetProtection.model_validate(protection.model_dump(mode="python", warnings=False))
+        with self._lock:
+            protected = BudgetProtection(
+                tokens=max(self._protection.tokens, protection.tokens),
+                cost_usd=max(self._protection.cost_usd, protection.cost_usd),
+            )
+            reason = self._blocked or self._dimension(protection=protected)
+            if reason is not None:
+                self._blocked = reason
+                raise ExecutionBudgetExceeded(reason)
+            self._protection = protected
 
     def remaining_timeout(self, timeout_s: float) -> float:
         with self._lock:
@@ -145,6 +181,8 @@ class ExecutionBudget:
                 reserved_cost_usd=sum(a.cost_usd for a in self._active.values()),
                 calls=self._calls,
                 blocked_reason=self._blocked,
+                protected_tokens=self._protection.tokens,
+                protected_cost_usd=self._protection.cost_usd,
             )
 
     def check(self) -> None:
@@ -156,11 +194,23 @@ class ExecutionBudget:
         with self._lock:
             return self._blocked is None and self._dimension(item) is None
 
-    def _dimension(self, item: CallAllowance) -> Literal["tokens", "cost"] | None:
-        if self._tokens + sum(a.tokens for a in self._active.values()) + item.tokens > self.limits.token_limit:
+    def _dimension(
+        self, item: CallAllowance | None = None, *, protection: BudgetProtection | None = None
+    ) -> Literal["tokens", "cost"] | None:
+        protected = protection or self._protection
+        if (
+            self._tokens
+            + sum(a.tokens for a in self._active.values())
+            + (item.tokens if item else 0)
+            + protected.tokens
+            > self.limits.token_limit
+        ):
             return "tokens"
         if (
-            self._cost + sum(a.cost_usd for a in self._active.values()) + item.cost_usd
+            self._cost
+            + sum(a.cost_usd for a in self._active.values())
+            + (item.cost_usd if item else 0)
+            + protected.cost_usd
             > self.limits.cost_limit_usd + 1e-12
         ):
             return "cost"
@@ -187,10 +237,17 @@ class ExecutionBudget:
             self._cost += receipt.accounted_cost_usd
             self._known_cost += receipt.actual_cost_usd or 0
             self._calls += int(receipt.provider_started)
+            # Zero protection keeps legacy settlement semantics. With protection,
+            # a surprise over-reservation usage must also retain the final floor.
+            reason: str | None = None
             if self._tokens > self.limits.token_limit:
-                self._blocked = "tokens"
+                reason = "tokens"
             elif self._cost > self.limits.cost_limit_usd + 1e-12:
-                self._blocked = "cost"
+                reason = "cost"
+            elif self._protection.tokens or self._protection.cost_usd:
+                reason = self._dimension()
+            if reason is not None:
+                self._blocked = reason
 
 
 _BUDGET: ContextVar[ExecutionBudget | None] = ContextVar("execution_budget", default=None)
