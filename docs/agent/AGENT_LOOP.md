@@ -1,0 +1,100 @@
+# AGENT-03：模型选择动作的内部循环
+
+2026-10-15；依据已批准的[PLAN-02](PLAN-02-action-budget-and-acceptance.md)、[ADR-0012](../adr/ADR-0012-agent-evolution-goals-and-acceptance.md)，主切片AGENT-03。实现与自审核：Codex，不是第二独立人工；证据见[记录209](../reviews/2026-10-15-implementation-209-model-selected-agent-loop.md)。
+
+## 1. 本轮可运行范围
+
+`AgentLoop`已实现“构造规划输入→调用ModelGateway→严格解析一个动作→调用原工具→接收已提交观察→再次调用规划模型”。七个动作沿用[AGENT-01](AGENT_CONTRACTS.md)，四个工具沿用[AGENT-02](AGENT_TOOLS.md)。生产代码没有按PV-S0编号、query关键词或预设业务流程选择动作；除准入/故障/终态边界外，下一动作来自网关返回的JSON。
+
+这轮提供内部控制器与必须实现的Driver接口，没有生产Driver、公共HTTP/MCP路由、持久恢复或最终业务完成门。测试中的Driver/事实库/模型均为明确的公开内存fake；实际复用Registry/引用Verifier/检索端口/AE Skill/共享MeteredGateway。**动态循环机制通过工程验证；真实规划质量和成本/时延尚未测量。**
+
+```mermaid
+flowchart TD
+    G[根额度、版本、身份、输入安全] --> S[保存本次决策计数]
+    S --> P[一次模型规划请求]
+    P --> V[本地严格JSON和动作准入]
+    V -->|四类工具| T[新工具适配器、短事务]
+    T --> C[受限保存并提交]
+    C --> B[校验绑定、证据、实际回执]
+    B --> S
+    V -->|非法回复仍计步| S
+    V -->|澄清、结束、升级申请| F[停止循环，交最终门]
+    G -->|失败| H[停止交接]
+```
+
+图中的循环每次由模型提出动作，最多八次决策；服务端不替模型编写补检索/邻块路径。现有LangGraph问答图及内部Harness约束保持，新增循环以顺序控制器组织当前七动作，不引入新编排依赖；checkpoint技术选型LG-01仍选做，不能替代真实持久恢复。
+
+## 2. 文件职责
+
+| 文件 | 职责 |
+| --- | --- |
+| [agent_loop.py](../../src/medops/application/agent_loop.py) | 单次、顺序、模型驱动控制器，计步、准入、调用及停止交接；不发布completed |
+| [agent_planning.py](../../src/medops/application/agent_planning.py) | 真实SYSTEM内容、内容SHA、明确PlannerConfig与PlanningBoard输入投影；不读取评分期望 |
+| [agent_loop_ports.py](../../src/medops/application/agent_loop_ports.py) | 必需AgentLoopDriver、受限LoopCheckpoint和AgentLoopResult；没有无操作默认实现 |
+| [agent_loop_validation.py](../../src/medops/application/agent_loop_validation.py) | 工具信封/句柄/来源/区间/原文摘录/逐claim核验结果的一致性检查 |
+| [money.py](../../src/medops/core/money.py) | 统一USD到整数微USD的向上取整；原AgentTools同一函数体迁移后复用，不改变费用口径 |
+
+应用层不导入evals、具体Skill实现、MCP或bootstrap；仍通过原Registry边界使用Skill。没有新增依赖、迁移、GRANT、公开Schema或已发布配置变化。
+
+## 3. 首次调用与每个决策
+
+调用方必须已认证并提供全新`PVAgentRun`、已有根execution_scope和MeteredGateway、显式PlannerConfig、可信Driver。没有父预算/期限就停止；不能重开额度。模型ID须在原价格表准入，max_output_tokens（1～4096）和timeout_s（1～125秒）必须显式给定，严格整数，不接受bool；不注册新默认模型。
+
+全新运行要求running、0步、零预算快照，实际父额度也不能已经消费/挂预留；旧/已开始运行或Prompt内容摘要不匹配明确拒绝恢复。非running快照直接拒绝。工具契约内容摘要在第一次规划前与实际工具/Skill契约核对，不等付费规划后再发现不兼容。拒绝恢复时保留输入快照的原费用/预留；只有全新运行与零消费父额度都通过才绑定预算，不能把别的父执行费用抄进新run。真正恢复原期限/原预留/原计数仍属AGENT-04。
+
+每次决策：
+
+1. 检查根deadline/共享预算、继承的调用持有权guard、Driver的当前身份/条件和全部已登记证据；Driver结束所有读事务后返回。
+2. 服务端生成decision_id，计数加一，调用`decision_started`同步checkpoint。Driver须以run/attempt和预期revision原子消费此步；保存失败不调用模型。
+3. 构建真实ModelRequest并按原UTF-8保守预检算最坏用量，检查规划调用加最终核验预留能否容纳；不足不进供应商，留下拒绝交接。
+4. 每步最多一个逻辑`agent_plan`请求，通过同一个MeteredGateway；run/attempt/decision真实关联。原网关的兼容性物理attempt由原call_journal记录，没有新增无限重试层。
+5. 保存`planning_returned`、实际回复和本次回执ID，用响应text作唯一准入输入；不信任parsed字段绕过原文。截断/坏JSON/重复字段/额外scopes/未知动作/非法句柄均不执行工具；下一次修正也是新决策，计步计费用。
+6. 工具动作交Driver使用新AgentTools实例执行；Driver须在事实/身份栅栏下保存受限结果及审计并commit，再返回。下一模型调用不可持有前一事务/栅栏。
+7. 控制器复查输出绑定/原文/句柄及本次真实meter回执集合和action身份，保存`tool_committed`，才允许结果进入PlanningBoard。
+
+`admission_run.decisions_consumed`是本次之前的计数，供原admit_action和AgentTools验证decision_index=prior+1；真实controller/checkpoint计数已经加一，不回退。这个只读准入视图不能持久化覆盖当前已消费步数。最多八决策，失败/非法/terminal申请都占步。
+
+`LoopCheckpoint.request`是构建时的预检请求；MeteredGateway.call_journal保留实际缩短后的timeout、SDK参数及供应商attempt。两者分别保存，不宣称哈希等于HTTP wire bytes。完整持久化接线/重启追溯由AGENT-06完成。
+
+## 4. 模型能看到什么
+
+两个消息角色：SYSTEM是真实固定Prompt；user是canonical JSON结构化数据。叙述、来源和检索正文始终是数据，不作为新system指令。
+
+可见字段包括原叙述/source_type、需求及说明、用户所问来源/版本及解析状态、允许文档ID/版本、QueryContext日期/历史模式、允许澄清字段、计数和预算、原文提取结果、可见证据、逐claim核验，以及上次动作名/kind。没有private gold、expected终态、评测结论、principal/scopes、case/task管理凭据、事实库身份或完整受限审计。原字段有条件/数字/否定就按原文保留，不生成事实来补知识缺口。
+
+- 提取结果明确标`extracted_unverified`，不是最终语义或业务判断。
+- 最多64个句柄元数据；只携带最近8份证据正文，旧的仍有handle/citation且明示`text_omitted_from_planning=true`，可由模型申请read。已读长片段不会被同句柄的后续短搜索摘录覆盖。
+- 原工具500字符搜索摘录/8,000字符read及truncated标记保持；不会偷偷截断已读条件来让预算通过。超长规划由真实预算预检拒绝，不自动扩额。
+- 最多32个不同claim检查，按requirement/text/handle集合关联；超限停止，不能静默删掉必需条件。核验结果仍名为`claim_checks_not_final_completion`。
+- 失败/unsupported的payload不进入知识状态。新句柄来源/版本/PDF摘要、原引用/原文摘要/Unicode前缀和truncated必须一致；非法信封、错action、伪造回执或额外未展示的新句柄立即停止。
+- 进入每次规划及其实际调用前，Driver再次核验所有登记证据和主体，撤权或事实改变后旧正文不再被交给模型。这里定义强制Driver契约；真实部署的DB短事务实现仍待后续。
+
+## 5. JSON格式与预算的取舍
+
+继续使用原闭合PlannerProposal/admit_action验证七动作。当前ModelRequest不附供应商json_schema，SYSTEM给出紧凑JSON字段规范，回复在本地强制校验；没有正则修补、执行代码或放宽额外字段。原完整Pydantic schema在本基线为6,115 UTF-8字节；现有根预算把schema字节计入保守预检，在12,000上限下会额外占用大量准入空间。省去重复传输完整schema并不取消服务端校验。
+
+这是当前内部planner的传输选择，不改变原Skill/QA structured-output配置，不声称真实模型输出有效率已验证。真实坏格式/截断率、需要的输出上限、实际完成率由获准试跑测量；若要变格式/profile另行版本化。初始Prompt是真实内容和SHA，不是空版本标签；后续模型生成Prompt候选仍归EVOL任务。
+
+12,000 input+output / 600,000微USD / 125秒总限额及原子调用预留继续由现有root budget约束。**本轮只实现规划调用对最终预留的预检保护；工具/嵌套判定的最坏消耗分配、重复无进展、取消/租约及原预算恢复统一归AGENT-04。** 测试的512输出Token、20秒调用、1,000 Token/50,000微USD预留是合成显式配置，不是批准的生产默认值，不能据此启动托管实验。
+
+## 6. 停止与最终门
+
+finish/clarify/escalate均立即结束本循环，无新工具或模型调用。`AgentLoopResult.terminal_request`是待处理的BoundAction，run依然running且terminal=None；reason="completed"只表达finish申请的原因，**不是成功判决**。最终证据/完整性/业务/安全/当前授权/预算/持有权及原子材料保存必须由AGENT-05/06的可信终态方完成。
+
+dependency_error、timeout、budget_exceeded、cancelled、lease_lost工具结果立即交接，不换成empty或正确无答案。Driver检查/checkpoint异常停止；保存失败统一audit_failure，不返回待完成材料。错误日志只记异常类型和最内层帧位置，不记录异常消息；Meter保留失败/取消/未知usage和保守费用。KeyboardInterrupt等BaseException传播到根执行者，不能当正常回答；实际取消收束/持久状态仍AGENT-04。
+
+控制器一个实例只供一次同步调用；并发持有权/重启恢复要由真实Driver与AGENT-04保证。没有默认生产Driver，不能把测试MemoryLoopDriver接到服务中代替事务、权限、审计或费用批准。
+
+## 7. 验证、限制与下一步
+
+可零费用复现：
+
+```sh
+PYTHONPATH=src env -u DEBUG venv/bin/python -m pytest -q \
+  tests/unit/application/test_agent_loop.py \
+  tests/unit/application/test_agent_planning.py
+```
+
+自适应假网关读取真实下一次规划消息，依据实际观察返回不同JSON；控制器使用同一个真实ModelRequest/MeteredGateway路径。验证正常search→verify→finish申请、empty→改query、部分证据→邻块读取、ambiguous→clarify、AE Skill及规划共额度等。反例验证非法/截断回复计步、八步终止、前置安全/版本/预算、保存失败、来源/句柄/正文/回执篡改、撤权、超时、未知费用及元数据遥测；不作为真实医学质量或正式Agent benchmark。
+
+真实Driver/持久原预算/无进展仍AGENT-04，完整最终门AGENT-05，受限持久追溯AGENT-06；最小SESSION仍S2前置，AGENT-07整体验证后才可AGENT-08获准付费试跑。EVAL-33真实独立保管、新盲测及原生产采用门继续独立，不因本轮循环实现而关闭。
