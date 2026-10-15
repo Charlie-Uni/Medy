@@ -11,7 +11,6 @@ import traceback
 from collections.abc import Callable
 from dataclasses import replace
 from datetime import UTC, datetime
-from decimal import ROUND_CEILING, Decimal
 from uuid import uuid4
 
 from medops.application.agent_contracts import AgentContractError, admit_action, context_binding
@@ -28,6 +27,7 @@ from medops.application.agent_tool_results import (
 from medops.core.canonical import canonical_hash
 from medops.core.deadline import CURRENT_DEADLINE, DeadlineExceeded, check_deadline, deadline_scope, execution_admission
 from medops.core.errors import BusinessError, ErrorCode, InfrastructureError
+from medops.core.money import usd_to_microusd
 from medops.core.telemetry import run_metadata
 from medops.domain.agent_actions import (
     ExtractAEAction,
@@ -69,10 +69,6 @@ def tool_contract_sha256(registry: SkillRegistry | None = None) -> str:
             "skills_sha256": (registry or default_registry()).agent_adapter().contract_sha256(),
         }
     )
-
-
-def _microusd(cost: float) -> int:
-    return int((Decimal(str(cost)) * 1_000_000).to_integral_value(rounding=ROUND_CEILING))
 
 
 class AgentTools:
@@ -235,7 +231,7 @@ class AgentTools:
         profile = self.context.profile
         if (
             snapshot.limits.token_limit > profile.token_cap
-            or _microusd(snapshot.limits.cost_limit_usd) > profile.cost_cap_microusd
+            or usd_to_microusd(snapshot.limits.cost_limit_usd) > profile.cost_cap_microusd
             or snapshot.limits.timeout_s > profile.timeout_ms / 1000
         ):
             raise AgentToolFault("dependency_error")
@@ -243,8 +239,8 @@ class AgentTools:
         if (b.accounted_tokens, b.reserved_tokens, b.accounted_cost_microusd, b.reserved_cost_microusd) != (
             snapshot.accounted_tokens,
             snapshot.reserved_tokens,
-            _microusd(snapshot.accounted_cost_usd),
-            _microusd(snapshot.reserved_cost_usd),
+            usd_to_microusd(snapshot.accounted_cost_usd),
+            usd_to_microusd(snapshot.reserved_cost_usd),
         ):
             raise AgentToolFault("dependency_error")
         check_deadline()
