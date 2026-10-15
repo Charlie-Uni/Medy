@@ -1,12 +1,9 @@
-# Agent 评测准备
+# Agent 开发评测
 
-当前只有 S0 的开发设计输入，尚无已运行的多步 Agent benchmark。
+EVAL-32已实现开发评分器与公开脚本，自审见[记录208](../../docs/reviews/2026-10-15-implementation-208-agent-rubric-and-development-cases.md)。详细口径和命令见[评分契约](../../docs/agent/AGENT_EVALUATION.md)。当前仍没有已运行的真实多步Agent benchmark。
 
-2026-10-10 所有者已确认 PV 资料整理与指定指南核对的业务范围；具体动作/预算/验收仍需定稿，场景确认不授权模型费用。
-
-- 场景、能力矩阵、参考实现及行动契约草案：[PLAN-01](../../docs/agent/PLAN-01-capability-and-scenario.md)。
-- [development/S0-pv-case-spec-v1.json](development/S0-pv-case-spec-v1.json)：12 个合成工程用例规格，已有暴露，`unseen_holdout=false`；没有真实模型判词或成功率。
-- 这里的合成文档是测试夹具，不属于生产事实库、医学标准答案或已获准官方资料。后续假网关/假事实库验证读取该规格；真实场景必须重新绑定获准原文和版本。
-- EVAL-32 的任务 rubric、时限和阈值尚未冻结；动态 Agent 实现/集成先满足 PLAN-02、ARCH-04/11 及对应正确性依赖。
-- 未见盲测的来源、保管、家族隔离和题量见[独立盲测准备](../holdout/README.md)，不能把这些开发用例移入盲测凑数。
-- 正式 Workflow/Agent 对照归 EVAL-34；Prompt/Skill 改进声明归 EVAL-36，真实调用每轮另行批准。
+- [PV-rubric-scripted-v1.json](development/PV-rubric-scripted-v1.json)：12原场景及必要变体，15个合成case/27登记执行（含同case12续办/恢复拒绝变体）；全部为scripted_fixture，不是实际Agent输出、医学gold或未见任务。
+- [S0-pv-case-spec-v1.json](development/S0-pv-case-spec-v1.json)、[PLAN-02契约v1](development/PLAN-02-contract-v1.json)、[PLAN-02契约v2](development/PLAN-02-contract-v2.json)保留历史字节与当时状态；新版本通过SHA关联，不反写历史为已实现。
+- 评分器分别报告业务完成、处理正确、工具适当性、实际结果驱动调整、叙述忠实、claim/引用语义、来源合规、AND/OR必需证据、停止和保护、效率；unknown/失败/取消/缺记录保留分母。
+- 合成文档不属于生产事实库或获准官方医学资料，不得移入盲测凑数。所有脚本计量值均为合成，实际0托管调用/0USD。
+- 业务与阶段见[PLAN-01](../../docs/agent/PLAN-01-capability-and-scenario.md)、[PLAN-02](../../docs/agent/PLAN-02-action-budget-and-acceptance.md)；真实保管/暴露账本归[EVAL-33](../holdout/README.md)，正式对照归EVAL-34，改进证据归EVAL-36；每次付费另行授权。
