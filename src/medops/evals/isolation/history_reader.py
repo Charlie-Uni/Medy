@@ -20,8 +20,9 @@ from jsonschema import Draft202012Validator
 from pydantic import Field
 
 from medops.core.canonical import canonical_hash
+from medops.core.strict_json import strict_json
 from medops.domain.common import DomainModel, Sha256
-from medops.evals.isolation.contracts import IsolationError, strict_json, validated_copy
+from medops.evals.isolation.contracts import IsolationError, validated_copy
 from medops.evals.isolation.history import HistoryPlan, HistoryReceipt, history_plan_digest
 
 # Exact existing schemas; schema changes require an explicit new reader version.

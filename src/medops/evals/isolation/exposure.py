@@ -18,12 +18,12 @@ from uuid import UUID
 from pydantic import ValidationError
 
 from medops.core.canonical import canonical_hash, canonical_json
+from medops.core.strict_json import strict_json
 from medops.evals.isolation.contracts import (
     ExposureEvent,
     IsolationError,
     LedgerEntry,
     LedgerHead,
-    strict_json,
     validated_copy,
 )
 

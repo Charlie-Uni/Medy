@@ -2,13 +2,13 @@
 
 from __future__ import annotations
 
-import json
 from datetime import UTC, datetime
 from typing import Literal, TypeVar
 from uuid import UUID
 
 from pydantic import Field, ValidationError, field_validator, model_validator
 
+from medops.core.strict_json import strict_json
 from medops.domain.common import DomainModel, Sha256
 
 Split = Literal["development", "validation", "holdout"]
@@ -185,18 +185,6 @@ def validated_copy(model: type[ModelT], value: DomainModel, *, code: Failure) ->
         return model.model_validate(value.model_dump(mode="python", warnings=False))
     except ValueError:
         raise IsolationError(code) from None
-
-
-def _unique_pairs(pairs: list[tuple[str, object]]) -> dict[str, object]:
-    value = dict(pairs)
-    if len(value) != len(pairs):
-        raise ValueError("duplicate_json_key")
-    return value
-
-
-def strict_json(data: str | bytes) -> object:
-    """Reject duplicate keys at every depth, before schema validation."""
-    return json.loads(data, object_pairs_hook=_unique_pairs)
 
 
 def parse_public_manifest(data: str | bytes) -> PublicManifest:
