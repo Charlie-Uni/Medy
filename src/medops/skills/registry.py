@@ -15,7 +15,7 @@ from collections.abc import Callable, Mapping, Sequence
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, replace
 from datetime import date, datetime
-from typing import Any, NamedTuple
+from typing import TYPE_CHECKING, Any, NamedTuple
 
 from pydantic import ValidationError
 
@@ -38,6 +38,9 @@ from medops.infrastructure.llm.execution_budget import EXECUTION_BUDGET_VERSION,
 from medops.infrastructure.llm.gateway import BudgetExceeded
 from medops.infrastructure.llm.meter import MeteredGateway
 from medops.safety.checks import SAFETY_VERSION, check_output_text
+
+if TYPE_CHECKING:
+    from medops.skills.agent_adapter import PVSkillAdapter
 
 OPERATION_SCOPE = "skill"
 
@@ -144,6 +147,12 @@ class SkillRegistry:
             "input_schema": entry.input_model.model_json_schema(),
             "output_schema": entry.output_model.model_json_schema(),
         }
+
+    def agent_adapter(self) -> PVSkillAdapter:
+        """Expose the PV adapter through the Registry's existing public package boundary."""
+        from medops.skills.agent_adapter import PVSkillAdapter
+
+        return PVSkillAdapter(self)
 
     # ------------------------------------------------------------------ execution
     def execute(self, name: str, version: str, raw_input: Mapping[str, object], *, context: SkillContext) -> SkillRun:
