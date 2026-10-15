@@ -1,0 +1,219 @@
+{
+  "record": 211,
+  "date": "2026-10-16",
+  "implementer": "Codex",
+  "reviewer": "Codex self-review; not a second independent human",
+  "task_ids": [
+    "AGENT-04"
+  ],
+  "slice": "shared model-call admission protects explicit final verification headroom",
+  "slice_status": "DONE",
+  "whole_task_status": "IN_PROGRESS",
+  "baseline_sha": "a60e83eac67ff9e691e58552ae39bac5595b1533",
+  "component_versions": {
+    "baseline": {
+      "execution_budget_version": "execution-budget-v1+utf8-preflight",
+      "tool_version": "pv-tools-v1",
+      "tool_contract_sha256": "9f755224bb5c8d3520a6cfd5f1e4eaf1cfc95a6766afe4c26f1a2da49ef3b8f5"
+    },
+    "candidate": {
+      "execution_budget_version": "execution-budget-v2+utf8-preflight+protected-headroom",
+      "tool_version": "pv-tools-v2+protected-headroom",
+      "tool_contract_sha256": "83d106b2a9ec5671f429b304196ed32521036154a4cc2712cea813c24c1d0943"
+    }
+  },
+  "failures_and_fixes": [
+    {
+      "phase": "initial regression helper",
+      "failure": "TypeError: admit_action() missing required evidence_registry; no product path tested",
+      "fix": "provide the empty registry and re-run against asserted original clean-root budget version; baseline then reproduced ok instead of budget_exceeded"
+    },
+    {
+      "phase": "baseline product reproduction",
+      "failure": "original a60e83e AE tool consumed final headroom and returned ok",
+      "fix": "atomic root protection, AgentLoop/AgentTools binding, independent checkpoint metadata and versioned contract"
+    },
+    {
+      "phase": "expanded tests",
+      "failure": "145 passed/2 failed: fee fixture cap below the protection itself; one ModelTimeout script exhausted during original Skill retries and became dependency_error",
+      "fix": "cap at protection+half request allowance; script all three existing allowed timeout attempts, preserve production retry policy"
+    },
+    {
+      "phase": "compatibility self-review",
+      "failure": "inspection found using pending-reservation comparison for zero-protection settlement would alter old concurrent behavior",
+      "fix": "retain original zero-protection settlement; active-protection settlement additionally protects remaining headroom; both paths regression-tested"
+    },
+    {
+      "phase": "static formatting",
+      "failure": "ruff E702 on two semicolon lines; import ordering",
+      "fix": "formatter/import fixes; final ruff check passes, no suppression"
+    },
+    {
+      "phase": "read-only/command paths",
+      "failure": "guessed old harness/query_translation path, then private logs read twice in the external worktree; targeted command used nonexistent test_model_gateway.py and exited 4 with zero tests",
+      "fix": "locate retrieval/query_translation.py and test_llm_gateway.py with rg --files; root-only logs read from root; corrected full targeted command retained"
+    }
+  ],
+  "validation": {
+    "required_full_gate": {
+      "exit_code": 0,
+      "elapsed_s": 155.487,
+      "command": [
+        "make",
+        "check"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit211-verified-ph5l2f4g",
+      "required_services": true,
+      "passed": 2951,
+      "skipped": 70,
+      "warnings": 1
+    },
+    "targeted": {
+      "exit_code": 0,
+      "elapsed_s": 11.349,
+      "command": [
+        "/Users/leaf/.cache/medy-checks/audit211-verified-ph5l2f4g/venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/unit/application/test_agent_budget_protection.py",
+        "tests/unit/infrastructure/test_budget_protection.py",
+        "tests/unit/infrastructure/test_execution_budget.py",
+        "tests/unit/harness/test_execution_budget.py",
+        "tests/unit/application/test_agent_loop.py",
+        "tests/unit/application/test_agent_loop_progress.py",
+        "tests/unit/application/test_agent_tools.py",
+        "tests/unit/application/test_agent_contracts.py",
+        "tests/unit/infrastructure/test_llm_gateway.py",
+        "tests/unit/infrastructure/test_llm_call_receipts.py",
+        "tests/unit/skills/test_registry.py",
+        "tests/unit/skills/test_no_bypass.py",
+        "tests/integration/test_agent_tools.py",
+        "tests/integration/test_llm_call_receipts.py"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit211-verified-ph5l2f4g",
+      "required_services": true,
+      "passed": 304,
+      "skipped": 0,
+      "warnings": 0
+    },
+    "new_tests": {
+      "exit_code": 0,
+      "elapsed_s": 1.849,
+      "command": [
+        "/Users/leaf/.cache/medy-checks/audit211-verified-ph5l2f4g/venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/unit/application/test_agent_budget_protection.py",
+        "tests/unit/infrastructure/test_budget_protection.py"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit211-verified-ph5l2f4g",
+      "required_services": true,
+      "passed": 27,
+      "skipped": 0,
+      "warnings": 0
+    },
+    "documents": {
+      "exit_code": 0,
+      "elapsed_s": 2.236,
+      "command": [
+        "/Users/leaf/.cache/medy-checks/audit211-verified-ph5l2f4g/venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/unit/docs"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit211-verified-ph5l2f4g",
+      "required_services": true,
+      "passed": 41
+    },
+    "scope_audit": {
+      "exit_code": 0,
+      "task_ids": 144,
+      "local_links_checked": 327,
+      "local_fragments_checked": 9,
+      "baseline_maintenance_inputs": 765,
+      "unchanged_maintenance_inputs": 761,
+      "maintenance_inputs_after": 767,
+      "old_schemas_unchanged": 36,
+      "unexpected_changed_paths": [],
+      "original_agent_tool_methods_only_protection_changed": true,
+      "top_level_budget_functions_AST_unchanged": true
+    }
+  },
+  "self_review": [
+    {
+      "item": "需求与范围",
+      "verdict": "pass",
+      "evidence": "按批准最终预留原则保护共享调用准入；原动作/步骤/总限额保持，只完成04本切片，不称完整工具估计或最终核验"
+    },
+    {
+      "item": "ADR与阶段硬门",
+      "verdict": "pass",
+      "evidence": "PLAN-02、ARCH-04/11及03/重复前置保持；无新生产默认预留数值或验收调整，真实质量/盲测仍独立"
+    },
+    {
+      "item": "正确性与失败路径",
+      "verdict": "pass",
+      "evidence": "原版本AE占用预留已真实复现；27新反例/304回归通过；未知费用/取消、并发/嵌套/原重试和旧零保护兼容已核验"
+    },
+    {
+      "item": "权限与数据",
+      "verdict": "pass",
+      "evidence": "原工具所有方法除_require_parent加入保护外AST等价；实时来源/ACL/事实链保持，临时PG集成通过；保护只含数值元数据，冻结/36Schema不变"
+    },
+    {
+      "item": "预算/取消/副作用",
+      "verdict": "pass",
+      "evidence": "0托管/0USD；保护单列非费用/假调用；分维max不可降低，真实/未知支出保留，翻译fallback不能隐藏预算锁存；持久取消/恢复仍待"
+    },
+    {
+      "item": "追溯与版本",
+      "verdict": "pass",
+      "evidence": "实际预算组件/工具版本和旧新SHA已留证；旧context首次规划/工具前失败关闭，checkpoint保留本执行实际保护，未绑定None不覆盖旧状态；无持久化完成声明"
+    },
+    {
+      "item": "验证充分性",
+      "verdict": "pass",
+      "evidence": "required make check 2951/70/1、304定向、27新测试与41文档，765原维护输入中761不变，新2文件；原模型/价格/网关/重试函数不变，不代替真实质量"
+    },
+    {
+      "item": "状态与文档",
+      "verdict": "pass",
+      "evidence": "14路径/144原ID、327链接/9锚点通过；04切片DONE/整体IN_PROGRESS，其余依赖/付费/生产门保持；剩余profile/消费/估计/恢复明确"
+    }
+  ],
+  "mechanism": {
+    "new_tests": 27,
+    "protection_is_separate_from_spend_and_pending_calls": true,
+    "root_protection_is_monotone": true,
+    "original_price_limits_deadlines_and_retry_policy": true,
+    "original_tool_contract_sha_intentionally_changed": true,
+    "old_public_schemas_changed": false
+  },
+  "hosted_model_calls": 0,
+  "api_cost_usd": 0,
+  "production_DML": false,
+  "deployment_changed": false,
+  "new_migration_or_grants": false,
+  "frozen_datasets_changed": false,
+  "default_models_changed": false,
+  "ACL_or_security_rules_changed": false,
+  "public_API_or_MCP_changed": false,
+  "production_gate_changed": false,
+  "real_holdout_accessed": false,
+  "actual_production_driver_implemented": false,
+  "durable_recovery_implemented": false,
+  "final_business_completion_gate_implemented": false,
+  "independent_human_review_claimed": false,
+  "limitations": [
+    "Only per-model-request admission protection and existing explicit profile inputs",
+    "No pre-action whole-tool maximum estimate or real final verification profile derived",
+    "No final-phase protection consumption/release implementation; no new allowance for it",
+    "No production Driver, durable cancel/lease/original-budget recovery, complete Agent endpoint or SESSION",
+    "New tests use real gateway/Registry/translation code with fake providers/facts; temporary PG covered by existing integration regression",
+    "No hosted model quality/performance evidence, independent human review or new unseen holdout"
+  ],
+  "next": "AGENT-04 whole-tool estimation, derived actual final verification profile/consumption, durable cancel/lease/original allowance recovery"
+}
