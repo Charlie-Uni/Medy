@@ -1,6 +1,6 @@
 # EVAL-33：候选生成、优化验证与最终盲测的隔离准备
 
-- 日期：2026-10-15；版本：v0.5，**离线原语、聚合出口与词面筛查/历史回执及主集字段读取原语已实现，真实身份/封存存储隔离尚未实现**。
+- 日期：2026-10-15；版本：v0.6，**离线原语、聚合出口与词面筛查/历史回执及主集字段读取原语已实现，真实身份/封存存储隔离尚未实现**。
 - 范围：PLAN-02 的配套准备与 EVAL-33 的部分工程切片；不把本文件算作 EVAL-33 DONE，不生成或读取新的盲测 query/gold。
 - 依据：[ADR-0012 §5](../adr/ADR-0012-agent-evolution-goals-and-acceptance.md#5-盲测资格与改进声明原则已确认)、[当前盲测准备资料](../../evals/holdout/README.md)、[PLAN-02](PLAN-02-action-budget-and-acceptance.md)。草拟/自审：Codex，不是第二独立人工。
 
@@ -118,4 +118,4 @@ env -u DEBUG PYTHONPATH=src venv/bin/python -m medops.evals.isolation --export-s
 
 EVAL-33 DONE 需要可执行访问边界、投影/输出规则、暴露账本、关联组与近重复检查、canary 正反测试及本轮自审证据；EVAL-31 另需真实封存任务、许可/标注与人工安排。EVAL-36 再负责实际三轮盲测。三个任务互不以文档存在代替运行/独立性证据。
 
-初始方案自审见[记录 200](../reviews/2026-10-12-implementation-200-plan02-contract-preparation.md)，原语与失败修复见[记录 201](../reviews/2026-10-12-implementation-201-evaluation-isolation-primitives.md)，聚合出口及保管提案见[记录 202](../reviews/2026-10-12-implementation-202-evaluation-export-and-custody.md)。EVAL-33 保持 IN_PROGRESS；[记录203](../reviews/2026-10-14-implementation-203-screening-method-and-history-receipts.md)已补词面参考方法与历史计划/回执；正式校准及真实扫描未完成。下一切片历史来源清单与实际字段适配器设计，保管身份/真实部署待所有者选择。PLAN-02 D-01/D-02 仍待明确裁决，不能从“继续”推断批准新 Agent profile。没有新盲测题、模型费用、自动激活或生产门槛变动。
+初始方案/原语/聚合/筛查与读取分别见记录200～204；当前已有[历史读取契约](EVALUATION_HISTORY.md)，真实历史扫描/账户保管/正式阈值校准仍未完成。2026-10-15所有者已确认PLAN-02 D-01/D-02及四项解决方案，见[记录205](../reviews/2026-10-15-implementation-205-owner-decisions-and-agent-entry.md)；S2可开始公开开发场景工程，最小澄清续办提前。独立保管方向已采纳，环境/实际身份/部署验收待提供；EVAL-33仍IN_PROGRESS，真实新题0、模型费用0，生产采用v2另待GATE-01接线。历史“未决”均为当轮记录，不再作为当前S2阻塞。

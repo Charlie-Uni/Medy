@@ -1,8 +1,8 @@
 # EVAL-33：近重复与历史暴露检查方法
 
-- 日期：2026-10-15；版本：v0.2；编写/自审：Codex，不是第二独立人工。
+- 日期：2026-10-15；版本：v0.3；编写/自审：Codex，不是第二独立人工。
 - 范围：确定性 query 近重复参考实现、历史扫描计划/回执校验、公开合成自检。**没有扫描真实历史正文，没有新盲测题，没有完成正式阈值校准或真实保管隔离。**
-- 依据：[ADR-0012](../adr/ADR-0012-agent-evolution-goals-and-acceptance.md)、[隔离契约](EVALUATION_ISOLATION.md)、[保管提案](EVALUATION_CUSTODY.md)。EVAL-33 保持 IN_PROGRESS；PLAN-02 D-01/D-02 和真实保管安排仍待裁决。
+- 依据：[ADR-0012](../adr/ADR-0012-agent-evolution-goals-and-acceptance.md)、[隔离契约](EVALUATION_ISOLATION.md)、[保管提案](EVALUATION_CUSTODY.md)。EVAL-33保持IN_PROGRESS；PLAN-02 D-01/D-02已按记录205确认，真实保管环境和实际权限验收仍待。
 
 ## 1. 要解决的问题与顺序
 
@@ -106,4 +106,4 @@ env -u DEBUG PYTHONPATH=src venv/bin/python -m medops.evals.isolation --screenin
 
 ## 6. 记录204进展与下一切片
 
-记录203上面的“未实现解析器”说明是该轮范围。记录204已交付[16个元数据种子和首个主集/探针字段读取器](EVALUATION_HISTORY.md)，完整摘要/Schema/限额与坏行/取消反例仅用公开合成文件验证。其他适配器、真实正文扫描、访问前审计、实际身份与账本联动仍未完成。下一准备实际检索/回放字段适配器与受限runner契约。正式参数与范围须在真实新题接入前固定；实际读新封存材料先满足独立保管安排。PLAN-02 D-01/D-02仍pending，S2尚未开始；付费运行继续逐次授权。
+记录203上面的“未实现解析器”说明是该轮范围。记录204已交付[16个元数据种子和首个主集/探针字段读取器](EVALUATION_HISTORY.md)，完整摘要/Schema/限额与坏行/取消反例仅用公开合成文件验证。其他适配器、真实正文扫描、访问前审计、实际身份与账本联动仍未完成。下一准备实际检索/回放字段适配器与受限runner契约。正式参数与范围须在真实新题接入前固定；实际读新封存材料先满足独立保管安排。PLAN-02 D-01/D-02已确认，下一主任务AGENT-01；本项后续解析/runner准备可穿插，真实保管尚缺环境，付费继续逐次授权。

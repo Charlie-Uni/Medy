@@ -1,6 +1,6 @@
 # EVAL-33：历史来源种子清单与首个字段读取器
 
-- 日期：2026-10-15；版本：v0.1；实现/自审：Codex，不是第二独立人工。
+- 日期：2026-10-15；版本：v0.2；实现/自审：Codex，不是第二独立人工。
 - 范围：已有公开历史文件的元数据种子目录、固定主集/探针 Schema 的 JSONL 私有读取原语及公开合成验证。**真实历史正文扫描次数为0，新盲测题为0，资格仍unknown。**
 - 依据：[检查方法](EVALUATION_SCREENING.md)、[隔离契约](EVALUATION_ISOLATION.md)、[保管提案](EVALUATION_CUSTODY.md)；工程证据见[记录204](../reviews/2026-10-15-implementation-204-history-source-catalog-and-sample-reader.md)。EVAL-33仍IN_PROGRESS。
 
@@ -62,4 +62,4 @@ env -u DEBUG PYTHONPATH=src venv/bin/python -m pytest -q tests/unit/evals/test_i
 
 ## 5. 下一步
 
-按真实检索/回放行文件的固定Schema准备第二类字段适配器与受限runner契约；单独登记还不能定位的日志/解密/访问身份缺口。真实历史及封存题的读取先满足独立保管安排、实际授权和访问前审计，正式近重复参数在新题接入前校准。PLAN-02 D-01/D-02待明确裁决，S2未开始；每次托管模型费用仍另行授权。
+按真实检索/回放行文件的固定Schema准备第二类字段适配器与受限runner契约；单独登记还不能定位的日志/解密/访问身份缺口。真实历史及封存题的读取先满足独立保管安排、实际授权和访问前审计，正式近重复参数在新题接入前校准。PLAN-02 D-01/D-02已由记录205确认，下一主任务AGENT-01；本项第二类读取准备穿插，真实保管环境仍待提供，每次托管模型费用另行授权。
