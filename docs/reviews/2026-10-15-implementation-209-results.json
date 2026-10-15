@@ -1,0 +1,236 @@
+{
+  "record": 209,
+  "date": "2026-10-15",
+  "implementer": "Codex",
+  "reviewer": "Codex self-review; not an independent second human",
+  "task_ids": [
+    "AGENT-03"
+  ],
+  "status": "DONE",
+  "baseline_sha": "e6b75737c0065cd282732bc212841ce8b8c1b6fe",
+  "task_statuses": {
+    "AGENT-03": "DONE",
+    "AGENT-04": "READY",
+    "AGENT-05": "READY",
+    "AGENT-06": "READY",
+    "EVAL-32": "DONE",
+    "EVAL-33": "IN_PROGRESS",
+    "GATE-01": "READY"
+  },
+  "validation": {
+    "targeted": {
+      "exit_code": 0,
+      "elapsed_s": 23.444,
+      "command": [
+        "/Users/leaf/.cache/medy-checks/audit209-verified-2z79je2e/venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/unit/application/test_agent_loop.py",
+        "tests/unit/application/test_agent_planning.py",
+        "tests/unit/application/test_agent_tools.py",
+        "tests/unit/application/test_agent_contracts.py",
+        "tests/unit/evals/test_agent_rubric.py",
+        "tests/unit/skills/test_no_bypass.py",
+        "tests/integration/test_agent_tools.py"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit209-verified-2z79je2e",
+      "required_services": true,
+      "passed": 273
+    },
+    "required_full_gate": {
+      "exit_code": 0,
+      "elapsed_s": 293.586,
+      "command": [
+        "make",
+        "check"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit209-verified-2z79je2e",
+      "required_services": true,
+      "passed": 2883,
+      "skipped": 70,
+      "warnings": 1,
+      "pytest_s": 280.1
+    },
+    "initial_full_gate": {
+      "exit_code": 0,
+      "elapsed_s": 108.942,
+      "command": [
+        "make",
+        "check"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit209-verified-2z79je2e",
+      "required_services": true,
+      "passed": 2880,
+      "skipped": 70,
+      "warnings": 1
+    },
+    "documents": {
+      "exit_code": 0,
+      "elapsed_s": 3.776,
+      "command": [
+        "/Users/leaf/.cache/medy-checks/audit209-verified-2z79je2e/venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/unit/docs"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit209-verified-2z79je2e",
+      "required_services": true,
+      "passed": 41
+    },
+    "scope_audit": {
+      "exit_code": 0,
+      "task_ids": 144,
+      "local_links_checked": 318,
+      "local_fragments_checked": 7,
+      "baseline_maintenance_inputs": 754,
+      "maintenance_inputs_after": 762,
+      "old_schemas_unchanged": 36,
+      "original_tool_AST_equivalent": true,
+      "unexpected_changed_paths": []
+    },
+    "pre_budget_binding_full_gate": {
+      "exit_code": 0,
+      "elapsed_s": 124.741,
+      "command": [
+        "make",
+        "check"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit209-verified-2z79je2e",
+      "required_services": true,
+      "passed": 2881,
+      "skipped": 70,
+      "warnings": 1
+    }
+  },
+  "self_review": [
+    {
+      "item": "requirements_and_scope",
+      "verdict": "pass",
+      "evidence": "Approved PLAN-02 seven actions, model-produced JSON drives next action; internal loop only, no new quality threshold"
+    },
+    {
+      "item": "ADR_and_stage_entry",
+      "verdict": "pass",
+      "evidence": "D-01/D-02 and ARCH-04/11, AGENT-02, EVAL-32 passed; no S2 or production/holdout completion claimed"
+    },
+    {
+      "item": "correctness_and_failure_paths",
+      "verdict": "pass",
+      "evidence": "56 new tests and 273 targeted; reproduced two budget-binding defects fixed; malformed/empty/old-version/commit-failure paths fail closed"
+    },
+    {
+      "item": "permissions_and_data",
+      "verdict": "pass",
+      "evidence": "Driver is mandatory, no default bypass; actual old tools/19 temporary-PG cases pass; new production transaction driver not implemented; 36 schemas/frozen inputs unchanged"
+    },
+    {
+      "item": "budget_cancellation_and_side_effects",
+      "verdict": "pass",
+      "evidence": "0 hosted calls/0USD; own budget binding preserves refused old/foreign snapshots, inherited guards/receipts retained; durable cancel/lease/recovery explicitly pending"
+    },
+    {
+      "item": "traceability_and_versions",
+      "verdict": "pass",
+      "evidence": "Real SYSTEM SHA and explicit ModelRequest; plan/tool/event/receipt identities, pre-first-call tool contract; encrypted persistence AGENT-06 pending"
+    },
+    {
+      "item": "validation_sufficiency",
+      "verdict": "pass",
+      "evidence": "Required full gate 2883/70/1, 273 targeted, 41 docs, AST and links; real quality/performance and production driver not inferred"
+    },
+    {
+      "item": "status_and_documents",
+      "verdict": "pass",
+      "evidence": "144 IDs preserved; AGENT-03 DONE, AGENT-04/05/06 READY; EVAL-33/GATE unchanged; 17 paths/318 links/7 anchors"
+    }
+  ],
+  "failures_and_fixes": [
+    {
+      "phase": "initial static check",
+      "failure": "BLE001 on generic Driver checkpoint storage boundary; import ordering",
+      "fix": "explicit fixed-code failure boundary with justified noqa; ruff ordering/format"
+    },
+    {
+      "phase": "initial targeted",
+      "failure": "2 failed/30 passed: test expected one model call on handoff but two decisions had executed; test expected private unpriced-model detail in public exception string",
+      "fix": "handoff expected calls=2; assert actual ModelUnavailable type, preserve original hidden-detail policy"
+    },
+    {
+      "phase": "expanded tools test",
+      "failure": "1 failed/40 passed: fake gateway forbade any model call inside a tool DB transaction, incorrectly including original AE Skill",
+      "fix": "only planning requires prior transaction closed; retain original tool transaction policy; fake assertion narrowed to agent_plan"
+    },
+    {
+      "phase": "self-review hardening",
+      "failure": "malformed committed payload validation became generic dependency_error; inconsistent success/extra issued handles could pass envelope-only checks; root errors had no failure location",
+      "fix": "invalid committed artifacts fail audit, compare envelope/payload and issued/view sets; fixed exception type/frame logs, no messages; adversarial result and telemetry tests"
+    },
+    {
+      "phase": "post initial full gate review",
+      "failure": "initial 2880/70/1 gate passed, but actual tool contract checked only when executing the first tool after planning",
+      "fix": "check actual tool contract before first planning; zero-call mismatch regression; final 2881/70/1 gate rerun"
+    },
+    {
+      "phase": "read-only discovery",
+      "failure": "queried legacy guessed models/gateway.py, harness/budget.py and harness/nodes subpaths that do not exist",
+      "fix": "rg --files located infrastructure/llm files and current nodes.py; no repository mutation from failed searches"
+    },
+    {
+      "phase": "final self-review budget binding",
+      "failure": "2 failed/6 passed/42 deselected: handoff before accepting fresh-run binding copied unrelated spent parent allowance, or zeroed old input budget",
+      "fix": "bind budget only after fresh-run/zero-parent checks; snapshot only owned bound allowance; reject scope replacement before calls. Two reproduced failures and final 273/2883 regressions passed"
+    }
+  ],
+  "planning": {
+    "scope": "PUBLIC synthetic preflight only; not provider usage or latency",
+    "schema_utf8_bytes": 6115,
+    "system_utf8_bytes": 2186,
+    "request_preflight_tokens_without_schema": 3780,
+    "request_preflight_tokens_with_full_schema": 9895,
+    "planning_prompt_sha256": "a44fb283089407d6f522b0b6ced0806674f9753fd0210a47ff69901851182767",
+    "fixture_max_output_tokens": 512,
+    "fixture_timeout_s": 20,
+    "hosted_model_calls": 0,
+    "api_cost_usd": 0
+  },
+  "mechanism": {
+    "model_request_and_strict_local_admission": true,
+    "new_decision_observes_committed_tool_result": true,
+    "original_four_controlled_tools_reused": true,
+    "terminal_request_is_not_completed": true,
+    "required_driver_without_permissive_default": true,
+    "engineering_provider": "offline fake",
+    "new_tests": 56,
+    "real_provider_Agent_executions": 0,
+    "rejected_run_budget_preserved": true
+  },
+  "hosted_model_calls": 0,
+  "api_cost_usd": 0,
+  "production_DML": false,
+  "deployment_changed": false,
+  "new_migration_or_grants": false,
+  "public_API_or_MCP_changed": false,
+  "frozen_datasets_changed": false,
+  "default_models_changed": false,
+  "ACL_or_security_rules_changed": false,
+  "old_schemas_changed": false,
+  "production_gate_changed": false,
+  "real_holdout_accessed": false,
+  "independent_human_review_claimed": false,
+  "actual_production_driver_implemented": false,
+  "final_business_completion_gate_implemented": false,
+  "durable_recovery_implemented": false,
+  "limitations": [
+    "Only internal model-driven mechanism and fake driver/provider/facts; real quality/performance unknown",
+    "Trusted Driver must atomically count steps and commit results/checkpoints in short transactions; no production implementation yet",
+    "Only fresh runs accepted; no checkpoint-only resume, root re-budget, or automatic clarification followup",
+    "Planning reserve preflight implemented; whole-tool budget allocation, no-progress and durable cancel/lease/recovery remain AGENT-04",
+    "Terminal proposals handed off, never completed or user-facing materials",
+    "JSON text is locally closed-validated; real format-validity/completion rate pending paid authorization",
+    "Full encrypted audit/trace/restart wiring remains AGENT-06; no private body telemetry",
+    "No new holdout or independent human evidence; production gates unchanged"
+  ],
+  "next": "AGENT-04 bounded allocation/no-progress/cancel/durable recovery, then AGENT-05/06 and minimum SESSION"
+}
