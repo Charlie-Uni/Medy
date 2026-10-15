@@ -1,0 +1,678 @@
+{
+  "$defs": {
+    "AgentBinding": {
+      "additionalProperties": false,
+      "properties": {
+        "attempt_id": {
+          "format": "uuid",
+          "title": "Attempt Id",
+          "type": "string"
+        },
+        "case_id": {
+          "format": "uuid",
+          "title": "Case Id",
+          "type": "string"
+        },
+        "conditions_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Conditions Sha256",
+          "type": "string"
+        },
+        "run_id": {
+          "format": "uuid",
+          "title": "Run Id",
+          "type": "string"
+        },
+        "task_id": {
+          "format": "uuid",
+          "title": "Task Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "case_id",
+        "task_id",
+        "run_id",
+        "attempt_id",
+        "conditions_sha256"
+      ],
+      "title": "AgentBinding",
+      "type": "object"
+    },
+    "Citation": {
+      "additionalProperties": false,
+      "properties": {
+        "chunk_id": {
+          "minLength": 1,
+          "title": "Chunk Id",
+          "type": "string"
+        },
+        "doc_id": {
+          "minLength": 1,
+          "title": "Doc Id",
+          "type": "string"
+        },
+        "effective_date": {
+          "format": "date",
+          "title": "Effective Date",
+          "type": "string"
+        },
+        "page": {
+          "minimum": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "section": {
+          "title": "Section",
+          "type": "string"
+        },
+        "version": {
+          "minLength": 1,
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "doc_id",
+        "version",
+        "effective_date",
+        "page",
+        "section",
+        "chunk_id"
+      ],
+      "title": "Citation",
+      "type": "object"
+    },
+    "ClaimToolCheck": {
+      "additionalProperties": false,
+      "properties": {
+        "requested_handles": {
+          "items": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Requested Handles",
+          "type": "array"
+        },
+        "requirement_id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "title": "Requirement Id",
+          "type": "string"
+        },
+        "supporting_handles": {
+          "items": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "maxItems": 8,
+          "title": "Supporting Handles",
+          "type": "array"
+        },
+        "text": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Text",
+          "type": "string"
+        },
+        "unconfirmed_handles": {
+          "items": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "maxItems": 8,
+          "title": "Unconfirmed Handles",
+          "type": "array"
+        },
+        "verdict": {
+          "$ref": "#/$defs/Verdict"
+        }
+      },
+      "required": [
+        "requirement_id",
+        "text",
+        "verdict",
+        "requested_handles",
+        "supporting_handles",
+        "unconfirmed_handles"
+      ],
+      "title": "ClaimToolCheck",
+      "type": "object"
+    },
+    "DocStatus": {
+      "description": "draft -> active -> archived; a draft may instead end as withdrawn (terminal, never evidence, never exposed).",
+      "enum": [
+        "draft",
+        "active",
+        "archived",
+        "withdrawn"
+      ],
+      "title": "DocStatus",
+      "type": "string"
+    },
+    "Evidence": {
+      "additionalProperties": false,
+      "description": "Evidence exists only after the fact-plane recheck; drafts can never become evidence.",
+      "properties": {
+        "chunk_content_hash": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Chunk Content Hash",
+          "type": "string"
+        },
+        "citation": {
+          "$ref": "#/$defs/Citation"
+        },
+        "evidence_text_hash": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Evidence Text Hash",
+          "type": "string"
+        },
+        "historical": {
+          "default": false,
+          "title": "Historical",
+          "type": "boolean"
+        },
+        "status": {
+          "$ref": "#/$defs/DocStatus"
+        },
+        "text": {
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "citation",
+        "text",
+        "evidence_text_hash",
+        "chunk_content_hash",
+        "status"
+      ],
+      "title": "Evidence",
+      "type": "object"
+    },
+    "EvidenceHandle": {
+      "additionalProperties": false,
+      "properties": {
+        "binding": {
+          "$ref": "#/$defs/AgentBinding"
+        },
+        "evidence": {
+          "$ref": "#/$defs/Evidence"
+        },
+        "expires_at": {
+          "format": "date-time",
+          "title": "Expires At",
+          "type": "string"
+        },
+        "handle": {
+          "format": "uuid",
+          "title": "Handle",
+          "type": "string"
+        },
+        "source_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Source Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "handle",
+        "binding",
+        "source_sha256",
+        "evidence",
+        "expires_at"
+      ],
+      "title": "EvidenceHandle",
+      "type": "object"
+    },
+    "EvidenceView": {
+      "additionalProperties": false,
+      "properties": {
+        "char_end": {
+          "exclusiveMinimum": 0,
+          "title": "Char End",
+          "type": "integer"
+        },
+        "char_start": {
+          "const": 0,
+          "default": 0,
+          "title": "Char Start",
+          "type": "integer"
+        },
+        "citation": {
+          "$ref": "#/$defs/Citation"
+        },
+        "evidence_text_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Evidence Text Sha256",
+          "type": "string"
+        },
+        "handle": {
+          "format": "uuid",
+          "title": "Handle",
+          "type": "string"
+        },
+        "source_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Source Sha256",
+          "type": "string"
+        },
+        "text": {
+          "maxLength": 8000,
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        },
+        "truncated": {
+          "title": "Truncated",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "handle",
+        "citation",
+        "text",
+        "char_end",
+        "truncated",
+        "evidence_text_sha256",
+        "source_sha256"
+      ],
+      "title": "EvidenceView",
+      "type": "object"
+    },
+    "ExtractedElement": {
+      "additionalProperties": false,
+      "properties": {
+        "char_end": {
+          "exclusiveMinimum": 0,
+          "title": "Char End",
+          "type": "integer"
+        },
+        "char_start": {
+          "minimum": 0,
+          "title": "Char Start",
+          "type": "integer"
+        },
+        "kind": {
+          "enum": [
+            "patient",
+            "suspect_drug",
+            "concomitant_drug",
+            "event",
+            "onset",
+            "seriousness",
+            "outcome",
+            "dechallenge_rechallenge",
+            "reporter"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "quote": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Quote",
+          "type": "string"
+        },
+        "value": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "value",
+        "quote",
+        "char_start",
+        "char_end"
+      ],
+      "title": "ExtractedElement",
+      "type": "object"
+    },
+    "ExtractionPayload": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "const": "extract_ae",
+          "default": "extract_ae",
+          "title": "Action",
+          "type": "string"
+        },
+        "dropped_causality": {
+          "minimum": 0,
+          "title": "Dropped Causality",
+          "type": "integer"
+        },
+        "dropped_ungrounded": {
+          "minimum": 0,
+          "title": "Dropped Ungrounded",
+          "type": "integer"
+        },
+        "elements": {
+          "items": {
+            "$ref": "#/$defs/ExtractedElement"
+          },
+          "maxItems": 64,
+          "title": "Elements",
+          "type": "array"
+        },
+        "missing_kinds": {
+          "items": {
+            "enum": [
+              "patient",
+              "suspect_drug",
+              "concomitant_drug",
+              "event",
+              "onset",
+              "seriousness",
+              "outcome",
+              "dechallenge_rechallenge",
+              "reporter"
+            ],
+            "type": "string"
+          },
+          "maxItems": 9,
+          "title": "Missing Kinds",
+          "type": "array"
+        },
+        "skill_status": {
+          "$ref": "#/$defs/SkillStatus"
+        },
+        "unaligned_elements": {
+          "minimum": 0,
+          "title": "Unaligned Elements",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "skill_status",
+        "elements",
+        "missing_kinds",
+        "unaligned_elements",
+        "dropped_ungrounded",
+        "dropped_causality"
+      ],
+      "title": "ExtractionPayload",
+      "type": "object"
+    },
+    "ReadPayload": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "const": "read_evidence",
+          "default": "read_evidence",
+          "title": "Action",
+          "type": "string"
+        },
+        "evidence": {
+          "$ref": "#/$defs/EvidenceView"
+        }
+      },
+      "required": [
+        "evidence"
+      ],
+      "title": "ReadPayload",
+      "type": "object"
+    },
+    "SearchPayload": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "const": "search_documents",
+          "default": "search_documents",
+          "title": "Action",
+          "type": "string"
+        },
+        "matches": {
+          "items": {
+            "$ref": "#/$defs/EvidenceView"
+          },
+          "maxItems": 8,
+          "title": "Matches",
+          "type": "array"
+        }
+      },
+      "required": [
+        "matches"
+      ],
+      "title": "SearchPayload",
+      "type": "object"
+    },
+    "SkillStatus": {
+      "enum": [
+        "completed",
+        "insufficient_evidence",
+        "escalated"
+      ],
+      "title": "SkillStatus",
+      "type": "string"
+    },
+    "Verdict": {
+      "enum": [
+        "supported",
+        "not_supported",
+        "contradicted"
+      ],
+      "title": "Verdict",
+      "type": "string"
+    },
+    "VerificationPayload": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "const": "verify_citations",
+          "default": "verify_citations",
+          "title": "Action",
+          "type": "string"
+        },
+        "checks": {
+          "items": {
+            "$ref": "#/$defs/ClaimToolCheck"
+          },
+          "maxItems": 20,
+          "minItems": 1,
+          "title": "Checks",
+          "type": "array"
+        },
+        "verifier_version": {
+          "title": "Verifier Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "checks",
+        "verifier_version"
+      ],
+      "title": "VerificationPayload",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "else": {
+        "properties": {
+          "issued_handles": {
+            "maxItems": 0
+          },
+          "new_handles_issued": {
+            "const": false
+          }
+        }
+      },
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "ok"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "payload"
+        ]
+      }
+    },
+    {
+      "else": {
+        "properties": {
+          "issued_handles": {
+            "maxItems": 0
+          }
+        }
+      },
+      "if": {
+        "properties": {
+          "new_handles_issued": {
+            "const": true
+          }
+        },
+        "required": [
+          "new_handles_issued"
+        ]
+      },
+      "then": {
+        "properties": {
+          "issued_handles": {
+            "minItems": 1
+          }
+        },
+        "required": [
+          "issued_handles"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "retryable": {
+            "const": true
+          }
+        },
+        "required": [
+          "retryable"
+        ]
+      },
+      "then": {
+        "properties": {
+          "kind": {
+            "const": "dependency_error"
+          }
+        }
+      }
+    }
+  ],
+  "description": "Private envelope, not a durable AgentObservation or permission to complete a task.\n\nissued_handles are server-only. The caller must persist payload and audit under\nthe fact fence, commit, then construct an observation referencing the stored result.",
+  "properties": {
+    "action_id": {
+      "format": "uuid",
+      "title": "Action Id",
+      "type": "string"
+    },
+    "binding": {
+      "$ref": "#/$defs/AgentBinding"
+    },
+    "call_receipt_ids": {
+      "default": [],
+      "items": {
+        "maxLength": 128,
+        "minLength": 1,
+        "type": "string"
+      },
+      "maxItems": 64,
+      "title": "Call Receipt Ids",
+      "type": "array",
+      "uniqueItems": true
+    },
+    "issued_handles": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/EvidenceHandle"
+      },
+      "maxItems": 8,
+      "title": "Issued Handles",
+      "type": "array"
+    },
+    "kind": {
+      "enum": [
+        "ok",
+        "empty",
+        "ambiguous",
+        "unsupported",
+        "denied_or_unavailable",
+        "invalid_action",
+        "dependency_error",
+        "budget_exceeded",
+        "timeout",
+        "cancelled",
+        "lease_lost"
+      ],
+      "title": "Kind",
+      "type": "string"
+    },
+    "new_handles_issued": {
+      "default": false,
+      "title": "New Handles Issued",
+      "type": "boolean"
+    },
+    "payload": {
+      "anyOf": [
+        {
+          "discriminator": {
+            "mapping": {
+              "extract_ae": "#/$defs/ExtractionPayload",
+              "read_evidence": "#/$defs/ReadPayload",
+              "search_documents": "#/$defs/SearchPayload",
+              "verify_citations": "#/$defs/VerificationPayload"
+            },
+            "propertyName": "action"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ExtractionPayload"
+            },
+            {
+              "$ref": "#/$defs/SearchPayload"
+            },
+            {
+              "$ref": "#/$defs/ReadPayload"
+            },
+            {
+              "$ref": "#/$defs/VerificationPayload"
+            }
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Payload"
+    },
+    "retryable": {
+      "default": false,
+      "title": "Retryable",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "action_id",
+    "binding",
+    "kind"
+  ],
+  "title": "AgentToolOutcome",
+  "type": "object"
+}

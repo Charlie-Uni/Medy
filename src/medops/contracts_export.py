@@ -19,6 +19,7 @@ from pydantic import BaseModel
 
 from medops.api.openapi import build_openapi
 from medops.application import contracts as api
+from medops.application.agent_tool_results import AgentToolOutcome
 from medops.core.errors import ErrorResponse
 from medops.domain.agent_actions import PlannerProposal
 from medops.domain.agent_execution import AgentObservation, PVAgentRun
@@ -64,6 +65,7 @@ AGENT_MODELS: dict[str, type[BaseModel]] = {
     "PlannerProposal": PlannerProposal,
     "PVAgentRun": PVAgentRun,
     "AgentObservation": AgentObservation,
+    "AgentToolOutcome": AgentToolOutcome,
 }
 
 
