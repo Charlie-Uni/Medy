@@ -1,4 +1,4 @@
-"""Export JSON Schemas for the API and MCP contracts (M0-08).
+"""Export JSON Schemas for API, MCP and private Agent contracts.
 
     python -m medops.contracts_export --out schemas
 
@@ -20,6 +20,8 @@ from pydantic import BaseModel
 from medops.api.openapi import build_openapi
 from medops.application import contracts as api
 from medops.core.errors import ErrorResponse
+from medops.domain.agent_actions import PlannerProposal
+from medops.domain.agent_execution import AgentObservation, PVAgentRun
 from medops.mcp import contracts as mcp
 
 API_MODELS: dict[str, type[BaseModel]] = {
@@ -58,10 +60,17 @@ MCP_MODELS: dict[str, type[BaseModel]] = {
 }
 
 
+AGENT_MODELS: dict[str, type[BaseModel]] = {
+    "PlannerProposal": PlannerProposal,
+    "PVAgentRun": PVAgentRun,
+    "AgentObservation": AgentObservation,
+}
+
+
 def render() -> dict[str, str]:
     """Return {relative path: file content} for every schema file."""
     files: dict[str, str] = {}
-    for folder, models in (("api", API_MODELS), ("mcp", MCP_MODELS)):
+    for folder, models in (("api", API_MODELS), ("mcp", MCP_MODELS), ("agent", AGENT_MODELS)):
         for name, model in models.items():
             files[f"{folder}/{name}.schema.json"] = (
                 json.dumps(model.model_json_schema(), ensure_ascii=False, indent=2, sort_keys=True) + "\n"

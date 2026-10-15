@@ -1,0 +1,966 @@
+{
+  "$defs": {
+    "AgentBinding": {
+      "additionalProperties": false,
+      "properties": {
+        "attempt_id": {
+          "format": "uuid",
+          "title": "Attempt Id",
+          "type": "string"
+        },
+        "case_id": {
+          "format": "uuid",
+          "title": "Case Id",
+          "type": "string"
+        },
+        "conditions_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Conditions Sha256",
+          "type": "string"
+        },
+        "run_id": {
+          "format": "uuid",
+          "title": "Run Id",
+          "type": "string"
+        },
+        "task_id": {
+          "format": "uuid",
+          "title": "Task Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "case_id",
+        "task_id",
+        "run_id",
+        "attempt_id",
+        "conditions_sha256"
+      ],
+      "title": "AgentBinding",
+      "type": "object"
+    },
+    "AgentBudget": {
+      "additionalProperties": false,
+      "properties": {
+        "accounted_cost_microusd": {
+          "minimum": 0,
+          "title": "Accounted Cost Microusd",
+          "type": "integer"
+        },
+        "accounted_tokens": {
+          "minimum": 0,
+          "title": "Accounted Tokens",
+          "type": "integer"
+        },
+        "reserved_cost_microusd": {
+          "minimum": 0,
+          "title": "Reserved Cost Microusd",
+          "type": "integer"
+        },
+        "reserved_tokens": {
+          "minimum": 0,
+          "title": "Reserved Tokens",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "accounted_tokens",
+        "reserved_tokens",
+        "accounted_cost_microusd",
+        "reserved_cost_microusd"
+      ],
+      "title": "AgentBudget",
+      "type": "object"
+    },
+    "AgentContext": {
+      "additionalProperties": false,
+      "properties": {
+        "clarifiable_fields": {
+          "default": [],
+          "items": {
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "maxItems": 32,
+          "title": "Clarifiable Fields",
+          "type": "array"
+        },
+        "identity": {
+          "$ref": "#/$defs/AgentIdentity"
+        },
+        "narrative": {
+          "maxLength": 4000,
+          "minLength": 20,
+          "pattern": "\\S",
+          "title": "Narrative",
+          "type": "string"
+        },
+        "principal": {
+          "$ref": "#/$defs/UserContext"
+        },
+        "profile": {
+          "$ref": "#/$defs/AgentProfile"
+        },
+        "query_context": {
+          "$ref": "#/$defs/QueryContext"
+        },
+        "requirements": {
+          "items": {
+            "$ref": "#/$defs/AgentRequirement"
+          },
+          "maxItems": 32,
+          "minItems": 1,
+          "title": "Requirements",
+          "type": "array"
+        },
+        "source_scope": {
+          "$ref": "#/$defs/AgentSourceScope"
+        },
+        "source_type": {
+          "enum": [
+            "call_note",
+            "email",
+            "literature",
+            "other"
+          ],
+          "title": "Source Type",
+          "type": "string"
+        },
+        "synthetic": {
+          "const": true,
+          "title": "Synthetic",
+          "type": "boolean"
+        },
+        "versions": {
+          "$ref": "#/$defs/AgentVersions"
+        }
+      },
+      "required": [
+        "identity",
+        "principal",
+        "query_context",
+        "narrative",
+        "synthetic",
+        "source_type",
+        "source_scope",
+        "requirements",
+        "versions",
+        "profile"
+      ],
+      "title": "AgentContext",
+      "type": "object"
+    },
+    "AgentIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "attempt_id": {
+          "format": "uuid",
+          "title": "Attempt Id",
+          "type": "string"
+        },
+        "case_id": {
+          "format": "uuid",
+          "title": "Case Id",
+          "type": "string"
+        },
+        "run_id": {
+          "format": "uuid",
+          "title": "Run Id",
+          "type": "string"
+        },
+        "task_id": {
+          "format": "uuid",
+          "title": "Task Id",
+          "type": "string"
+        },
+        "trace_id": {
+          "pattern": "^[0-9a-f]{32}$",
+          "title": "Trace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "case_id",
+        "task_id",
+        "run_id",
+        "attempt_id",
+        "trace_id"
+      ],
+      "title": "AgentIdentity",
+      "type": "object"
+    },
+    "AgentProfile": {
+      "additionalProperties": false,
+      "properties": {
+        "cost_cap_microusd": {
+          "default": 600000,
+          "maximum": 600000,
+          "minimum": 600000,
+          "title": "Cost Cap Microusd",
+          "type": "integer"
+        },
+        "final_reserve_cost_microusd": {
+          "exclusiveMinimum": 0,
+          "maximum": 600000,
+          "title": "Final Reserve Cost Microusd",
+          "type": "integer"
+        },
+        "final_reserve_tokens": {
+          "exclusiveMinimum": 0,
+          "maximum": 12000,
+          "title": "Final Reserve Tokens",
+          "type": "integer"
+        },
+        "max_decision_steps": {
+          "default": 8,
+          "maximum": 8,
+          "minimum": 8,
+          "title": "Max Decision Steps",
+          "type": "integer"
+        },
+        "profile_id": {
+          "const": "pv-agent-dev-v1",
+          "default": "pv-agent-dev-v1",
+          "title": "Profile Id",
+          "type": "string"
+        },
+        "same_no_progress_limit": {
+          "default": 2,
+          "maximum": 2,
+          "minimum": 2,
+          "title": "Same No Progress Limit",
+          "type": "integer"
+        },
+        "timeout_ms": {
+          "default": 125000,
+          "maximum": 125000,
+          "minimum": 125000,
+          "title": "Timeout Ms",
+          "type": "integer"
+        },
+        "token_cap": {
+          "default": 12000,
+          "maximum": 12000,
+          "minimum": 12000,
+          "title": "Token Cap",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "final_reserve_tokens",
+        "final_reserve_cost_microusd"
+      ],
+      "title": "AgentProfile",
+      "type": "object"
+    },
+    "AgentRequirement": {
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "maxLength": 500,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Description",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "narrative",
+            "guideline"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "required": {
+          "default": true,
+          "title": "Required",
+          "type": "boolean"
+        },
+        "requirement_id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "title": "Requirement Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "requirement_id",
+        "description",
+        "kind"
+      ],
+      "title": "AgentRequirement",
+      "type": "object"
+    },
+    "AgentSourceScope": {
+      "additionalProperties": false,
+      "else": {
+        "properties": {
+          "allowed_sources": {
+            "maxItems": 0
+          }
+        }
+      },
+      "if": {
+        "properties": {
+          "resolution": {
+            "const": "resolved"
+          }
+        }
+      },
+      "properties": {
+        "allowed_sources": {
+          "items": {
+            "$ref": "#/$defs/AllowedSource"
+          },
+          "maxItems": 32,
+          "title": "Allowed Sources",
+          "type": "array"
+        },
+        "requested_document": {
+          "anyOf": [
+            {
+              "maxLength": 200,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Requested Document"
+        },
+        "requested_version": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Requested Version"
+        },
+        "resolution": {
+          "enum": [
+            "resolved",
+            "ambiguous",
+            "denied_or_unavailable"
+          ],
+          "title": "Resolution",
+          "type": "string"
+        }
+      },
+      "required": [
+        "requested_document",
+        "requested_version",
+        "resolution",
+        "allowed_sources"
+      ],
+      "then": {
+        "properties": {
+          "allowed_sources": {
+            "minItems": 1
+          }
+        }
+      },
+      "title": "AgentSourceScope",
+      "type": "object"
+    },
+    "AgentVersions": {
+      "additionalProperties": false,
+      "properties": {
+        "fact_conditions_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Fact Conditions Sha256",
+          "type": "string"
+        },
+        "fact_database_id": {
+          "format": "uuid",
+          "title": "Fact Database Id",
+          "type": "string"
+        },
+        "planning_prompt_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Planning Prompt Sha256",
+          "type": "string"
+        },
+        "rubric_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Rubric Sha256",
+          "type": "string"
+        },
+        "tool_contract_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Tool Contract Sha256",
+          "type": "string"
+        },
+        "verification_policy_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Verification Policy Sha256",
+          "type": "string"
+        },
+        "versions": {
+          "$ref": "#/$defs/VersionSet"
+        }
+      },
+      "required": [
+        "versions",
+        "planning_prompt_sha256",
+        "tool_contract_sha256",
+        "verification_policy_sha256",
+        "rubric_sha256",
+        "fact_database_id",
+        "fact_conditions_sha256"
+      ],
+      "title": "AgentVersions",
+      "type": "object"
+    },
+    "AllowedSource": {
+      "additionalProperties": false,
+      "properties": {
+        "doc_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Doc Id",
+          "type": "string"
+        },
+        "source_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Source Sha256",
+          "type": "string"
+        },
+        "version": {
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "doc_id",
+        "version",
+        "source_sha256"
+      ],
+      "title": "AllowedSource",
+      "type": "object"
+    },
+    "Dept": {
+      "enum": [
+        "MA",
+        "PV",
+        "CO"
+      ],
+      "title": "Dept",
+      "type": "string"
+    },
+    "QueryContext": {
+      "additionalProperties": false,
+      "properties": {
+        "as_of": {
+          "format": "date",
+          "title": "As Of",
+          "type": "string"
+        },
+        "historical_requested": {
+          "default": false,
+          "title": "Historical Requested",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "as_of"
+      ],
+      "title": "QueryContext",
+      "type": "object"
+    },
+    "TerminalRecord": {
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "completed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "reason": {
+                "enum": [
+                  "completed"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "awaiting_clarification"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "reason": {
+                "enum": [
+                  "clarification_required"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "cancelled"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "reason": {
+                "enum": [
+                  "cancelled"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "escalated"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "reason": {
+                "enum": [
+                  "insufficient_evidence",
+                  "no_progress",
+                  "safety_boundary",
+                  "source_ambiguous",
+                  "step_limit",
+                  "unsupported_requirement",
+                  "version_conflict"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "failed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "reason": {
+                "enum": [
+                  "audit_failure",
+                  "budget_exceeded",
+                  "dependency_error",
+                  "lease_lost",
+                  "timeout",
+                  "unsupported_recovery"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "completed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "verification_ref": {
+                "format": "uuid",
+                "type": "string"
+              }
+            },
+            "required": [
+              "verification_ref"
+            ]
+          }
+        }
+      ],
+      "properties": {
+        "audit_ref": {
+          "format": "uuid",
+          "title": "Audit Ref",
+          "type": "string"
+        },
+        "binding": {
+          "$ref": "#/$defs/AgentBinding"
+        },
+        "material_ref": {
+          "format": "uuid",
+          "title": "Material Ref",
+          "type": "string"
+        },
+        "material_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Material Sha256",
+          "type": "string"
+        },
+        "reason": {
+          "enum": [
+            "completed",
+            "clarification_required",
+            "insufficient_evidence",
+            "source_ambiguous",
+            "version_conflict",
+            "unsupported_requirement",
+            "safety_boundary",
+            "no_progress",
+            "step_limit",
+            "dependency_error",
+            "budget_exceeded",
+            "timeout",
+            "cancelled",
+            "lease_lost",
+            "audit_failure",
+            "unsupported_recovery"
+          ],
+          "title": "Reason",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "awaiting_clarification",
+            "completed",
+            "escalated",
+            "failed",
+            "cancelled"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "verification_ref": {
+          "anyOf": [
+            {
+              "format": "uuid",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Verification Ref"
+        }
+      },
+      "required": [
+        "binding",
+        "status",
+        "reason",
+        "material_ref",
+        "material_sha256",
+        "audit_ref"
+      ],
+      "title": "TerminalRecord",
+      "type": "object"
+    },
+    "UserContext": {
+      "additionalProperties": false,
+      "properties": {
+        "acl_scopes": {
+          "default": [],
+          "items": {
+            "pattern": "^(MA|PV|CO|ADMIN):[a-z_]+$",
+            "type": "string"
+          },
+          "title": "Acl Scopes",
+          "type": "array",
+          "uniqueItems": true
+        },
+        "dept": {
+          "$ref": "#/$defs/Dept"
+        },
+        "roles": {
+          "default": [],
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Roles",
+          "type": "array"
+        },
+        "user_id": {
+          "minLength": 1,
+          "title": "User Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "user_id",
+        "dept"
+      ],
+      "title": "UserContext",
+      "type": "object"
+    },
+    "VersionSet": {
+      "additionalProperties": false,
+      "description": "Every version that shapes a run; recorded on each trace (INV-HAR-05) and inside operation keys.",
+      "properties": {
+        "model_config_version": {
+          "minLength": 1,
+          "title": "Model Config Version",
+          "type": "string"
+        },
+        "policy_version": {
+          "minLength": 1,
+          "title": "Policy Version",
+          "type": "string"
+        },
+        "retrieval_version": {
+          "minLength": 1,
+          "title": "Retrieval Version",
+          "type": "string"
+        },
+        "skill_version_set": {
+          "default": [],
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Skill Version Set",
+          "type": "array"
+        }
+      },
+      "required": [
+        "policy_version",
+        "retrieval_version",
+        "model_config_version"
+      ],
+      "title": "VersionSet",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "else": {
+        "properties": {
+          "stopped_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "terminal": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "stopped_at",
+          "terminal"
+        ]
+      },
+      "if": {
+        "properties": {
+          "status": {
+            "const": "running"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "stopped_at": {
+            "type": "null"
+          },
+          "terminal": {
+            "type": "null"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "completed"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "terminal": {
+            "properties": {
+              "status": {
+                "const": "completed"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "awaiting_clarification"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "terminal": {
+            "properties": {
+              "status": {
+                "const": "awaiting_clarification"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "cancelled"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "terminal": {
+            "properties": {
+              "status": {
+                "const": "cancelled"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "escalated"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "terminal": {
+            "properties": {
+              "status": {
+                "const": "escalated"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "failed"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "terminal": {
+            "properties": {
+              "status": {
+                "const": "failed"
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "properties": {
+    "budget": {
+      "$ref": "#/$defs/AgentBudget"
+    },
+    "context": {
+      "$ref": "#/$defs/AgentContext"
+    },
+    "decisions_consumed": {
+      "maximum": 8,
+      "minimum": 0,
+      "title": "Decisions Consumed",
+      "type": "integer"
+    },
+    "expires_at": {
+      "format": "date-time",
+      "title": "Expires At",
+      "type": "string"
+    },
+    "started_at": {
+      "format": "date-time",
+      "title": "Started At",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "running",
+        "awaiting_clarification",
+        "completed",
+        "escalated",
+        "failed",
+        "cancelled"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "stopped_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Stopped At"
+    },
+    "terminal": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/TerminalRecord"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    }
+  },
+  "required": [
+    "context",
+    "status",
+    "decisions_consumed",
+    "budget",
+    "started_at",
+    "expires_at"
+  ],
+  "title": "PVAgentRun",
+  "type": "object"
+}

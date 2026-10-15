@@ -1,0 +1,230 @@
+{
+  "$defs": {
+    "AgentBinding": {
+      "additionalProperties": false,
+      "properties": {
+        "attempt_id": {
+          "format": "uuid",
+          "title": "Attempt Id",
+          "type": "string"
+        },
+        "case_id": {
+          "format": "uuid",
+          "title": "Case Id",
+          "type": "string"
+        },
+        "conditions_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Conditions Sha256",
+          "type": "string"
+        },
+        "run_id": {
+          "format": "uuid",
+          "title": "Run Id",
+          "type": "string"
+        },
+        "task_id": {
+          "format": "uuid",
+          "title": "Task Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "case_id",
+        "task_id",
+        "run_id",
+        "attempt_id",
+        "conditions_sha256"
+      ],
+      "title": "AgentBinding",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "else": {
+        "properties": {
+          "evidence_handles": {
+            "maxItems": 0
+          },
+          "new_legal_information": {
+            "const": false
+          }
+        }
+      },
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "ok"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "result_ref": {
+            "type": "string"
+          },
+          "result_sha256": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "result_ref",
+          "result_sha256"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "retryable": {
+            "const": true
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "kind": {
+            "const": "dependency_error"
+          }
+        }
+      }
+    },
+    {
+      "else": {
+        "properties": {
+          "result_sha256": {
+            "type": "null"
+          }
+        }
+      },
+      "if": {
+        "properties": {
+          "result_ref": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "result_ref"
+        ]
+      },
+      "then": {
+        "properties": {
+          "result_sha256": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "result_sha256"
+        ]
+      }
+    }
+  ],
+  "properties": {
+    "action": {
+      "enum": [
+        "extract_ae",
+        "search_documents",
+        "read_evidence",
+        "verify_citations",
+        "clarify",
+        "finish",
+        "escalate"
+      ],
+      "title": "Action",
+      "type": "string"
+    },
+    "action_id": {
+      "format": "uuid",
+      "title": "Action Id",
+      "type": "string"
+    },
+    "binding": {
+      "$ref": "#/$defs/AgentBinding"
+    },
+    "call_receipt_ids": {
+      "default": [],
+      "items": {
+        "maxLength": 128,
+        "minLength": 1,
+        "type": "string"
+      },
+      "maxItems": 64,
+      "title": "Call Receipt Ids",
+      "type": "array"
+    },
+    "evidence_handles": {
+      "default": [],
+      "items": {
+        "format": "uuid",
+        "type": "string"
+      },
+      "maxItems": 64,
+      "title": "Evidence Handles",
+      "type": "array",
+      "uniqueItems": true
+    },
+    "kind": {
+      "enum": [
+        "ok",
+        "empty",
+        "ambiguous",
+        "unsupported",
+        "denied_or_unavailable",
+        "invalid_action",
+        "dependency_error",
+        "budget_exceeded",
+        "timeout",
+        "cancelled",
+        "lease_lost"
+      ],
+      "title": "Kind",
+      "type": "string"
+    },
+    "new_legal_information": {
+      "title": "New Legal Information",
+      "type": "boolean"
+    },
+    "result_ref": {
+      "anyOf": [
+        {
+          "format": "uuid",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Result Ref"
+    },
+    "result_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Result Sha256"
+    },
+    "retryable": {
+      "title": "Retryable",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "action_id",
+    "binding",
+    "action",
+    "kind",
+    "new_legal_information",
+    "retryable"
+  ],
+  "title": "AgentObservation",
+  "type": "object"
+}

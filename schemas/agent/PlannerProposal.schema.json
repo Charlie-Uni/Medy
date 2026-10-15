@@ -1,0 +1,451 @@
+{
+  "$defs": {
+    "ClarificationQuestion": {
+      "additionalProperties": false,
+      "properties": {
+        "field": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "title": "Field",
+          "type": "string"
+        },
+        "question": {
+          "maxLength": 500,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Question",
+          "type": "string"
+        },
+        "reason": {
+          "maxLength": 500,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "field",
+        "question",
+        "reason"
+      ],
+      "title": "ClarificationQuestion",
+      "type": "object"
+    },
+    "ClarifyAction": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "const": "clarify",
+          "title": "Action",
+          "type": "string"
+        },
+        "questions": {
+          "items": {
+            "$ref": "#/$defs/ClarificationQuestion"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Questions",
+          "type": "array"
+        },
+        "rationale": {
+          "maxLength": 500,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Rationale",
+          "type": "string"
+        }
+      },
+      "required": [
+        "rationale",
+        "action",
+        "questions"
+      ],
+      "title": "ClarifyAction",
+      "type": "object"
+    },
+    "EscalateAction": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "const": "escalate",
+          "title": "Action",
+          "type": "string"
+        },
+        "draft": {
+          "$ref": "#/$defs/ReviewDraft"
+        },
+        "rationale": {
+          "maxLength": 500,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Rationale",
+          "type": "string"
+        },
+        "reason": {
+          "enum": [
+            "insufficient_evidence",
+            "source_ambiguous",
+            "version_conflict",
+            "unsupported_requirement",
+            "safety_boundary",
+            "no_progress",
+            "step_limit"
+          ],
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "rationale",
+        "action",
+        "reason",
+        "draft"
+      ],
+      "title": "EscalateAction",
+      "type": "object"
+    },
+    "ExtractAEAction": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "const": "extract_ae",
+          "title": "Action",
+          "type": "string"
+        },
+        "narrative_ref": {
+          "const": "task_narrative",
+          "title": "Narrative Ref",
+          "type": "string"
+        },
+        "rationale": {
+          "maxLength": 500,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Rationale",
+          "type": "string"
+        },
+        "source_type": {
+          "enum": [
+            "call_note",
+            "email",
+            "literature",
+            "other"
+          ],
+          "title": "Source Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "rationale",
+        "action",
+        "narrative_ref",
+        "source_type"
+      ],
+      "title": "ExtractAEAction",
+      "type": "object"
+    },
+    "FinishAction": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "const": "finish",
+          "title": "Action",
+          "type": "string"
+        },
+        "draft": {
+          "$ref": "#/$defs/ReviewDraft"
+        },
+        "rationale": {
+          "maxLength": 500,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Rationale",
+          "type": "string"
+        }
+      },
+      "required": [
+        "rationale",
+        "action",
+        "draft"
+      ],
+      "title": "FinishAction",
+      "type": "object"
+    },
+    "GuidelineClaim": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_handles": {
+          "items": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Evidence Handles",
+          "type": "array",
+          "uniqueItems": true
+        },
+        "requirement_id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "title": "Requirement Id",
+          "type": "string"
+        },
+        "text": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "requirement_id",
+        "text",
+        "evidence_handles"
+      ],
+      "title": "GuidelineClaim",
+      "type": "object"
+    },
+    "NarrativeFact": {
+      "additionalProperties": false,
+      "properties": {
+        "char_end": {
+          "exclusiveMinimum": 0,
+          "title": "Char End",
+          "type": "integer"
+        },
+        "char_start": {
+          "minimum": 0,
+          "title": "Char Start",
+          "type": "integer"
+        },
+        "quote": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Quote",
+          "type": "string"
+        },
+        "requirement_id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "title": "Requirement Id",
+          "type": "string"
+        },
+        "value": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "requirement_id",
+        "value",
+        "quote",
+        "char_start",
+        "char_end"
+      ],
+      "title": "NarrativeFact",
+      "type": "object"
+    },
+    "ReadEvidenceAction": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "const": "read_evidence",
+          "title": "Action",
+          "type": "string"
+        },
+        "handle": {
+          "format": "uuid",
+          "title": "Handle",
+          "type": "string"
+        },
+        "rationale": {
+          "maxLength": 500,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Rationale",
+          "type": "string"
+        },
+        "region": {
+          "enum": [
+            "current",
+            "previous",
+            "next"
+          ],
+          "title": "Region",
+          "type": "string"
+        }
+      },
+      "required": [
+        "rationale",
+        "action",
+        "handle",
+        "region"
+      ],
+      "title": "ReadEvidenceAction",
+      "type": "object"
+    },
+    "ReviewDraft": {
+      "additionalProperties": false,
+      "properties": {
+        "guideline_claims": {
+          "items": {
+            "$ref": "#/$defs/GuidelineClaim"
+          },
+          "maxItems": 32,
+          "title": "Guideline Claims",
+          "type": "array",
+          "uniqueItems": true
+        },
+        "missing_requirement_ids": {
+          "items": {
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "maxItems": 32,
+          "title": "Missing Requirement Ids",
+          "type": "array",
+          "uniqueItems": true
+        },
+        "narrative_facts": {
+          "items": {
+            "$ref": "#/$defs/NarrativeFact"
+          },
+          "maxItems": 64,
+          "title": "Narrative Facts",
+          "type": "array",
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "narrative_facts",
+        "guideline_claims",
+        "missing_requirement_ids"
+      ],
+      "title": "ReviewDraft",
+      "type": "object"
+    },
+    "SearchDocumentsAction": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "const": "search_documents",
+          "title": "Action",
+          "type": "string"
+        },
+        "query": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Query",
+          "type": "string"
+        },
+        "rationale": {
+          "maxLength": 500,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Rationale",
+          "type": "string"
+        }
+      },
+      "required": [
+        "rationale",
+        "action",
+        "query"
+      ],
+      "title": "SearchDocumentsAction",
+      "type": "object"
+    },
+    "VerifyCitationsAction": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "const": "verify_citations",
+          "title": "Action",
+          "type": "string"
+        },
+        "claims": {
+          "items": {
+            "$ref": "#/$defs/GuidelineClaim"
+          },
+          "maxItems": 32,
+          "minItems": 1,
+          "title": "Claims",
+          "type": "array"
+        },
+        "rationale": {
+          "maxLength": 500,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Rationale",
+          "type": "string"
+        }
+      },
+      "required": [
+        "rationale",
+        "action",
+        "claims"
+      ],
+      "title": "VerifyCitationsAction",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "proposal": {
+      "discriminator": {
+        "mapping": {
+          "clarify": "#/$defs/ClarifyAction",
+          "escalate": "#/$defs/EscalateAction",
+          "extract_ae": "#/$defs/ExtractAEAction",
+          "finish": "#/$defs/FinishAction",
+          "read_evidence": "#/$defs/ReadEvidenceAction",
+          "search_documents": "#/$defs/SearchDocumentsAction",
+          "verify_citations": "#/$defs/VerifyCitationsAction"
+        },
+        "propertyName": "action"
+      },
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ExtractAEAction"
+        },
+        {
+          "$ref": "#/$defs/SearchDocumentsAction"
+        },
+        {
+          "$ref": "#/$defs/ReadEvidenceAction"
+        },
+        {
+          "$ref": "#/$defs/VerifyCitationsAction"
+        },
+        {
+          "$ref": "#/$defs/ClarifyAction"
+        },
+        {
+          "$ref": "#/$defs/FinishAction"
+        },
+        {
+          "$ref": "#/$defs/EscalateAction"
+        }
+      ],
+      "title": "Proposal"
+    }
+  },
+  "required": [
+    "proposal"
+  ],
+  "title": "PlannerProposal",
+  "type": "object"
+}
