@@ -41,7 +41,12 @@ from medops.domain.safety import SafetyDecision
 from medops.harness.audit import ExecutionAudit, ExecutionAuditSnapshot
 from medops.harness.retrieval_port import RetrievalRequest
 from medops.infrastructure.llm.accounting import call_scope
-from medops.infrastructure.llm.execution_budget import check_execution_budget, current_budget
+from medops.infrastructure.llm.execution_budget import (
+    EXECUTION_BUDGET_VERSION,
+    BudgetProtection,
+    check_execution_budget,
+    current_budget,
+)
 from medops.infrastructure.llm.gateway import BudgetExceeded
 from medops.infrastructure.llm.meter import MeteredGateway
 from medops.safety.checks import SAFETY_VERSION, check_input, screen_evidence
@@ -50,7 +55,7 @@ from medops.skills.registry import SkillContext, SkillRegistry
 from medops.verification.verifier import VERIFIER_VERSION
 
 log = logging.getLogger(__name__)
-TOOL_VERSION = "pv-tools-v1"
+TOOL_VERSION = "pv-tools-v2+protected-headroom"
 TOOL_ACTIONS = frozenset({"extract_ae", "search_documents", "read_evidence", "verify_citations"})
 SEARCH_EXCERPT_CHARS = 500
 READ_MAX_CHARS = 8000
@@ -60,6 +65,7 @@ def tool_contract_sha256(registry: SkillRegistry | None = None) -> str:
     return canonical_hash(
         {
             "version": TOOL_VERSION,
+            "execution_budget": EXECUTION_BUDGET_VERSION,
             "safety": SAFETY_VERSION,
             "verifier": VERIFIER_VERSION,
             "planner_schema": PlannerProposal.model_json_schema(),
@@ -243,6 +249,11 @@ class AgentTools:
             usd_to_microusd(snapshot.reserved_cost_usd),
         ):
             raise AgentToolFault("dependency_error")
+        budget.protect_remaining(
+            BudgetProtection(
+                tokens=profile.final_reserve_tokens, cost_usd=profile.final_reserve_cost_microusd / 1_000_000
+            )
+        )
         check_deadline()
         check_execution_budget()
 

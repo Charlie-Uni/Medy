@@ -29,6 +29,7 @@ from medops.domain.agent_execution import AgentBudget, BoundAction, EvidenceHand
 from medops.domain.safety import SafetyDecision
 from medops.infrastructure.llm.accounting import call_scope, check_call_ownership, new_call
 from medops.infrastructure.llm.execution_budget import (
+    BudgetProtection,
     ExecutionBudget,
     allowance,
     check_execution_budget,
@@ -105,6 +106,8 @@ class AgentLoop:
             or snapshot.accounted_cost_usd
             or snapshot.reserved_cost_usd
             or snapshot.calls
+            or snapshot.protected_tokens
+            or snapshot.protected_cost_usd
         ):
             return self._handoff("unsupported_recovery")
         self._budget = budget  # bind only after all fresh-run/zero-parent checks pass
@@ -116,6 +119,12 @@ class AgentLoop:
                 texts.append(context.source_scope.requested_document)
             if any(check_input(text).decision is not SafetyDecision.allow for text in texts):
                 return self._handoff("safety_boundary")
+            budget.protect_remaining(
+                BudgetProtection(
+                    tokens=profile.final_reserve_tokens,
+                    cost_usd=profile.final_reserve_cost_microusd / 1_000_000,
+                )
+            )
             remaining = (initial.expires_at - self._now()).total_seconds()
             with (
                 deadline_scope(remaining),
@@ -182,7 +191,8 @@ class AgentLoop:
             # A refused old run/foreign allowance has no bound progress here.
             # None instructs storage to preserve its existing state, never reset it.
             progress = self._progress.snapshot() if self._budget is not None else None
-            self.driver.checkpoint(replace(event, progress=progress))
+            protection = self._budget.protection() if self._budget is not None else None
+            self.driver.checkpoint(replace(event, progress=progress, budget_protection=protection))
         except Exception as exc:  # noqa: BLE001 - driver storage failures must stop, with a fixed code
             _failure_location(exc)
             raise AgentLoopAbort("audit_failure") from None

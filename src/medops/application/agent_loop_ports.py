@@ -13,6 +13,7 @@ from uuid import UUID
 from medops.application.agent_progress import ProgressCheckpoint
 from medops.application.agent_tool_results import AgentToolOutcome
 from medops.domain.agent_execution import AgentContext, BoundAction, EvidenceHandle, PVAgentRun, StopReason
+from medops.infrastructure.llm.execution_budget import BudgetProtection
 from medops.infrastructure.llm.gateway import ModelRequest, ModelResponse
 
 
@@ -43,6 +44,7 @@ class LoopCheckpoint:
     reason: str | None = None  # fixed error/stop code, no raw exception message
     # None means unbound: storage MUST preserve previous progress, never erase it.
     progress: ProgressCheckpoint | None = None  # hash-only, not durable recovery by itself
+    budget_protection: BudgetProtection | None = None  # None preserves unbound/old storage state
 
 
 class AgentLoopDriver(Protocol):
