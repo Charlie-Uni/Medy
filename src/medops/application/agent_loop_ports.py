@@ -10,6 +10,7 @@ from dataclasses import dataclass
 from typing import Literal, Protocol
 from uuid import UUID
 
+from medops.application.agent_progress import ProgressCheckpoint
 from medops.application.agent_tool_results import AgentToolOutcome
 from medops.domain.agent_execution import AgentContext, BoundAction, EvidenceHandle, PVAgentRun, StopReason
 from medops.infrastructure.llm.gateway import ModelRequest, ModelResponse
@@ -40,6 +41,8 @@ class LoopCheckpoint:
     outcome: AgentToolOutcome | None = None
     receipt_ids: tuple[str, ...] = ()
     reason: str | None = None  # fixed error/stop code, no raw exception message
+    # None means unbound: storage MUST preserve previous progress, never erase it.
+    progress: ProgressCheckpoint | None = None  # hash-only, not durable recovery by itself
 
 
 class AgentLoopDriver(Protocol):

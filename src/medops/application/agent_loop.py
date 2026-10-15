@@ -9,6 +9,7 @@ from __future__ import annotations
 import logging
 import traceback
 from collections.abc import Callable
+from dataclasses import replace
 from datetime import UTC, datetime
 from uuid import uuid4
 
@@ -16,6 +17,7 @@ from medops.application.agent_contracts import AgentContractError, admit_action,
 from medops.application.agent_loop_ports import AgentLoopAbort, AgentLoopDriver, AgentLoopResult, LoopCheckpoint
 from medops.application.agent_loop_validation import validate_tool_commit
 from medops.application.agent_planning import PlannerConfig, PlanningBoard, planning_prompt_sha256
+from medops.application.agent_progress import AgentProgress
 from medops.application.agent_tool_results import AgentToolOutcome
 from medops.application.agent_tools import tool_contract_sha256
 from medops.core.deadline import CURRENT_DEADLINE, DeadlineExceeded, check_deadline, deadline_scope, execution_admission
@@ -75,6 +77,7 @@ class AgentLoop:
         self._registry: tuple[EvidenceHandle, ...] = ()
         self._outcomes: tuple[AgentToolOutcome, ...] = ()
         self._board = PlanningBoard()
+        self._progress = AgentProgress()
         if (
             initial.decisions_consumed
             or any(initial.budget.model_dump().values())
@@ -176,7 +179,10 @@ class AgentLoop:
 
     def _record(self, event: LoopCheckpoint) -> None:
         try:
-            self.driver.checkpoint(event)
+            # A refused old run/foreign allowance has no bound progress here.
+            # None instructs storage to preserve its existing state, never reset it.
+            progress = self._progress.snapshot() if self._budget is not None else None
+            self.driver.checkpoint(replace(event, progress=progress))
         except Exception as exc:  # noqa: BLE001 - driver storage failures must stop, with a fixed code
             _failure_location(exc)
             raise AgentLoopAbort("audit_failure") from None
@@ -241,6 +247,7 @@ class AgentLoop:
                 if exc.code in {"agent_budget_exhausted", "agent_final_reserve"}:
                     return self._handoff("budget_exceeded")
                 self._board.observe(None, None)
+                self._progress.reset()
                 self._record(LoopCheckpoint("proposal_rejected", self._run, decision_id, reason=exc.code))
                 continue  # a NEW counted decision, never a free format-repair request
             proposal = action.proposal
@@ -270,6 +277,10 @@ class AgentLoop:
                 ):
                     raise AgentLoopAbort("audit_failure")
             self._snapshot()
+            try:
+                progress = self._progress.observe(action, outcome, registry)
+            except (ValueError, TypeError, AttributeError):
+                raise AgentLoopAbort("audit_failure") from None
             self._record(
                 LoopCheckpoint(
                     "tool_committed",
@@ -292,6 +303,8 @@ class AgentLoop:
             if outcome.kind in fatal:
                 return self._handoff(fatal[outcome.kind])
             self._board.observe(action, outcome)
+            if progress.consecutive >= context.profile.same_no_progress_limit:
+                return self._handoff("no_progress")
         return self._handoff("step_limit")
 
     def _handoff(self, reason: StopReason, action: BoundAction | None = None) -> AgentLoopResult:
