@@ -75,7 +75,27 @@ flowchart TD
 
 这是当前内部planner的传输选择，不改变原Skill/QA structured-output配置，不声称真实模型输出有效率已验证。真实坏格式/截断率、需要的输出上限、实际完成率由获准试跑测量；若要变格式/profile另行版本化。初始Prompt是真实内容和SHA，不是空版本标签；后续模型生成Prompt候选仍归EVOL任务。
 
-12,000 input+output / 600,000微USD / 125秒总限额及原子调用预留继续由现有root budget约束。**本轮只实现规划调用对最终预留的预检保护；工具/嵌套判定的最坏消耗分配、重复无进展、取消/租约及原预算恢复统一归AGENT-04。** 测试的512输出Token、20秒调用、1,000 Token/50,000微USD预留是合成显式配置，不是批准的生产默认值，不能据此启动托管实验。
+12,000 input+output / 600,000微USD / 125秒总限额及原子调用预留继续由现有root budget约束。**本轮只实现规划调用对最终预留的预检保护；工具/嵌套判定的最坏消耗分配、持久取消/租约及原预算恢复仍归AGENT-04；连续重复检查已按下节接入。** 测试的512输出Token、20秒调用、1,000 Token/50,000微USD预留是合成显式配置，不是批准的生产默认值，不能据此启动托管实验。
+
+### 5.1 连续重复与无进展（记录210）
+
+按批准profile的`same_no_progress_limit=2`，只比较已校验且工具已提交的观察；决策开始、调用回执、工具结果保存规则保持。四类工具的规范化参数与稳定结果连续相同两次时，第二次结果保存后立即交接`no_progress`，不为该重复序列再发下一次规划/工具调用。不是按固定业务路径代替模型选工具，也不根据规划者自报的“新增信息”判断。
+
+| 内容 | 比较规则 |
+| --- | --- |
+| 参数 | 保留工具名、AE叙述引用/来源类型、查询实际内容、读取目标/区域、核验claim及逐claim证据。忽略rationale、动作UUID、决策序号 |
+| 查询展示差异 | Unicode NFC、全角ASCII、空白及明确列出的常见语句标点归一；保留大小写、数值小数/数字间逗号、正负号、比较符号、单位、否定、编号内部标点。不是语义同义词判定 |
+| 句柄 | 将临时UUID解析成来源PDF SHA、完整citation（文档/版本/生效日/页/节/chunk）、正文SHA、chunk内容SHA、active/archived及historical的稳定摘要；到期时间与新UUID不算新事实。原实时ACL/期限/绑定校验仍在前面执行 |
+| 检索/读取 | 比较实际返回区间、前缀正文SHA、是否截断及证据身份；顺序和重复副本不算新增。相邻块、更长原文或真实内容变化会改变结果摘要 |
+| 提取 | 比较已对齐原文的要素（值/quote/偏移/kind）、缺失字段与Skill状态；丢弃/因果过滤计数不充当新事实。提取仍是未最终核验的业务材料 |
+| 引用核验 | 比较requirement、claim原文、verdict、requested/supporting/unconfirmed证据及核验器版本；支持结果改变会结束旧连续序列 |
+| 非ok结果 | 只比较固定kind；失败/不支持payload不成为新知识。dependency/timeout/budget/cancel/lease仍立即按原故障原因停止 |
+
+`AgentProgress`仅保留上一组参数/结果SHA与连续次数，空间固定；`ProgressCheckpoint.version=pv-progress-v1`写入每个内部LoopCheckpoint，供可信Driver与同一步结果一起保存。尚未绑定本执行预算时，progress=None表示保留旧存储状态，不写新零值；旧执行/外来预算拒绝不会清零原重复次数。Checkpoint只增加摘要元数据，不改变36个已有公开Schema、Prompt或工具契约。没有生产Driver，当前不具备真实持久恢复；未来恢复必须连同预算、步骤、原截止、身份/租约和规划状态一起一致恢复该连续状态，不能在恢复时清零。
+
+合法新信息继续：同query第一次empty、第二次获得证据，可以进入第三次规划；搜索后补读完整原文会改变动作/结果，重复相同完整读取才停止。真正改写query是新参数，即使结果相同也不在这条连续相同规则内；仍受8步/总预算/绝对期限限制。非法规划没有可执行动作，打断这段工具连续序列，照旧占决策步；不是免费重试。摘要变化仅表示没有连续重复，不证明改善或最终完成。非连续循环及一般语义等价不作该检测器的能力声明。
+
+`no_progress`是受限交接原因，不直接把run标成escalated或completed；完整终态仍需AGENT-05/06保存。当前取消/失租/撤权及审计失败优先，重复检测不能把它们伪装为业务无答案。没有新增模型判定、模型费用或额外重试。
 
 ## 6. 停止与最终门
 
@@ -92,9 +112,11 @@ dependency_error、timeout、budget_exceeded、cancelled、lease_lost工具结�
 ```sh
 PYTHONPATH=src env -u DEBUG venv/bin/python -m pytest -q \
   tests/unit/application/test_agent_loop.py \
-  tests/unit/application/test_agent_planning.py
+  tests/unit/application/test_agent_planning.py \
+  tests/unit/application/test_agent_progress.py \
+  tests/unit/application/test_agent_loop_progress.py
 ```
 
 自适应假网关读取真实下一次规划消息，依据实际观察返回不同JSON；控制器使用同一个真实ModelRequest/MeteredGateway路径。验证正常search→verify→finish申请、empty→改query、部分证据→邻块读取、ambiguous→clarify、AE Skill及规划共额度等。反例验证非法/截断回复计步、八步终止、前置安全/版本/预算、保存失败、来源/句柄/正文/回执篡改、撤权、超时、未知费用及元数据遥测；不作为真实医学质量或正式Agent benchmark。
 
-真实Driver/持久原预算/无进展仍AGENT-04，完整最终门AGENT-05，受限持久追溯AGENT-06；最小SESSION仍S2前置，AGENT-07整体验证后才可AGENT-08获准付费试跑。EVAL-33真实独立保管、新盲测及原生产采用门继续独立，不因本轮循环实现而关闭。
+连续重复检查见记录210；真实Driver/预算分配/持久取消及原预算恢复仍AGENT-04，完整最终门AGENT-05，受限持久追溯AGENT-06；最小SESSION仍S2前置，AGENT-07整体验证后才可AGENT-08获准付费试跑。EVAL-33真实独立保管、新盲测及原生产采用门继续独立，不因本轮循环实现而关闭。
