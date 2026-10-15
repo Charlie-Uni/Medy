@@ -181,3 +181,22 @@ def test_expired_queued_translation_never_reaches_its_callback():
     finally:
         release.set()
         pool.shutdown()
+
+
+def test_fixed_source_ids_reach_original_and_translated_search_channels(monkeypatch):
+    pool = TranslationPool(workers=1, capacity=1)
+    received = []
+
+    def retrieve(_conn, _lexical, _vector, query, **kwargs):
+        received.append((query, kwargs["doc_ids"]))
+        return _result(query)
+
+    monkeypatch.setattr(rp, "retrieve_evidence", retrieve)
+    scoped = _request().model_copy(update={"source_document_ids": ("doc-1",)})
+    try:
+        _port(pool, lambda _q: "translated query")._search(
+            scoped, [scoped.query], scoped.query, source_doc_ids=scoped.source_document_ids
+        )
+    finally:
+        pool.shutdown()
+    assert received == [(scoped.query, ("doc-1",)), ("translated query", ("doc-1",))]

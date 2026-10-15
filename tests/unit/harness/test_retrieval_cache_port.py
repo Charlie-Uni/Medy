@@ -224,3 +224,47 @@ def test_cache_separates_effective_day_and_explicit_history_on_the_same_day(visi
         assert port.retrieve(value).cache_hit is False
         assert port.retrieve(value).cache_hit is True
     assert port.searches == 3
+
+
+def test_task_source_scope_is_normalized_and_separates_cache_without_changing_legacy_keys(visible):
+    from medops.core.canonical import canonical_hash
+    from medops.retrieval.cache import CacheKeyInputs
+
+    port = Port(cache=CandidateCache(InMemoryCandidateCacheStore()), cache_versions=(RV, "policy-1"))
+    base = request()
+    original = CacheKeyInputs.build(
+        query=base.query, user=base.user, as_of=base.as_of, retrieval_version=RV, policy_version="policy-1"
+    )
+    assert port._cache_inputs(base).model_dump() == original.model_dump()
+    assert port._cache_inputs(base).digest() == canonical_hash(original.model_dump(mode="json"))
+    first = base.model_copy(update={"source_document_ids": ("doc-1",)})
+    second = base.model_copy(update={"source_document_ids": ("doc-2",)})
+    normalized = RetrievalRequest.model_validate(
+        {**base.model_dump(), "source_document_ids": ["doc-2", "doc-1", "doc-1"]}
+    )
+    assert normalized.source_document_ids == ("doc-1", "doc-2")
+    assert len({port._cache_inputs(r).digest() for r in (base, first, second, normalized)}) == 4
+    assert not port.retrieve(base).cache_hit
+    assert not port.retrieve(first).cache_hit and port.source_doc_ids == ("doc-1",)
+    assert port.retrieve(first).cache_hit
+    assert not port.retrieve(second).cache_hit and port.source_doc_ids == ("doc-2",)
+    assert not port.retrieve(second).evidence
+
+
+def test_task_source_scope_intersects_named_query_constraint_and_cannot_be_replaced(monkeypatch, visible):
+    from medops.retrieval.source_constraints import SourceConstraint
+
+    port = Port(source_constraint=True)
+    monkeypatch.setattr(
+        port, "_resolve_source_constraint", lambda _r: SourceConstraint(True, document_ids=("other-document",))
+    )
+    result = port.retrieve(request().model_copy(update={"source_document_ids": ("doc-1",)}))
+    assert not result.evidence and result.source_constraint_missing and port.searches == 0
+
+
+def test_source_scope_filters_even_a_misbehaving_searcher_on_miss_and_hit(visible):
+    port = Port(cache=CandidateCache(InMemoryCandidateCacheStore()), cache_versions=(RV, "policy-1"))
+    scoped = request().model_copy(update={"source_document_ids": ("different-doc",)})
+    assert not port.retrieve(scoped).evidence
+    assert not port.retrieve(scoped).evidence
+    assert port.searches == 1

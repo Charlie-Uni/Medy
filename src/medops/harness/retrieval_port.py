@@ -12,6 +12,9 @@ from contextlib import AbstractContextManager, contextmanager
 from datetime import UTC, date, datetime
 from typing import Any, Protocol
 
+from pydantic import Field, field_validator
+
+from medops.core.canonical import canonical_hash
 from medops.core.deadline import check_deadline
 from medops.core.errors import BusinessError, ErrorCode, InfrastructureError
 from medops.core.telemetry import annotate, span
@@ -38,6 +41,13 @@ class RetrievalRequest(DomainModel):
     historical_requested: bool = False
     as_of: date | None = None
     session_entities: tuple[Entity, ...] = ()
+    # Trusted task constraint; planner queries cannot replace it. None keeps legacy retrieval unchanged.
+    source_document_ids: tuple[NonEmptyStr, ...] | None = Field(default=None, min_length=1, max_length=32)
+
+    @field_validator("source_document_ids")
+    @classmethod
+    def _source_ids(cls, value: tuple[str, ...] | None) -> tuple[str, ...] | None:
+        return None if value is None else tuple(sorted(set(value)))
 
 
 class RetrievalOutcome(DomainModel):
@@ -143,7 +153,13 @@ class ProductionRetrieval:
         rw = rewrite(request.query, entities=request.session_entities, glossary=self._glossary)
         query = rw.queries[0]
         constraint = self._resolve_source_constraint(request) if self._source_constraint else SourceConstraint(False)
-        if constraint.missing:
+        source_doc_ids = constraint.document_ids if constraint.required else None
+        if request.source_document_ids is not None:
+            fixed = set(request.source_document_ids)
+            source_doc_ids = (
+                tuple(sorted(fixed & set(source_doc_ids))) if source_doc_ids is not None else tuple(sorted(fixed))
+            )
+        if constraint.missing or source_doc_ids == ():
             return RetrievalOutcome(
                 rewritten_queries=rw.queries,
                 candidates=(),
@@ -152,7 +168,6 @@ class ProductionRetrieval:
                 source_constraint_applied=True,
                 source_constraint_missing=True,
             )
-        source_doc_ids = constraint.document_ids if constraint.required else None
         spec = self._reranker.spec
         inputs = self._cache_inputs(request)
         cached = self._cache.lookup(inputs) if self._cache is not None and inputs is not None else None
@@ -174,6 +189,10 @@ class ProductionRetrieval:
             candidates, accepted, rejected = self._search(
                 request, list(rw.queries), query, source_doc_ids=source_doc_ids
             )
+        if source_doc_ids is not None:
+            accepted = tuple(e for e in accepted if e.citation.doc_id in source_doc_ids)
+            accepted_ids = {e.citation.chunk_id for e in accepted}
+            candidates = tuple(c for c in candidates if c.chunk_id in accepted_ids)
         if order is not None:
             # every accepted chunk was scored when the entry was written and has just passed the content-hash check,
             # so its position still holds: no reranker call on this path
@@ -199,7 +218,7 @@ class ProductionRetrieval:
             evidence=evidence,
             rejected=rejected,
             cache_hit=hit,
-            source_constraint_applied=constraint.required,
+            source_constraint_applied=constraint.required or request.source_document_ids is not None,
         )
 
     def _resolve_source_constraint(self, request: RetrievalRequest) -> SourceConstraint:
@@ -212,7 +231,7 @@ class ProductionRetrieval:
         if self._cache is None or self._cache_versions is None:
             return None
         retrieval_version, policy_version = self._cache_versions
-        return CacheKeyInputs.build(
+        inputs = CacheKeyInputs.build(
             query=request.query,
             user=request.user,
             as_of=request.as_of or date.today(),
@@ -221,6 +240,20 @@ class ProductionRetrieval:
             entities=request.session_entities,
             allow_historical=request.historical_requested,
         )
+        if request.source_document_ids is not None:
+            # Keep all legacy keys byte-identical; bind the task scope into the trusted context.
+            inputs = inputs.model_copy(
+                update={
+                    "context_fingerprint": canonical_hash(
+                        {
+                            "kind": "agent-source-scope-v1",
+                            "session": inputs.context_fingerprint,
+                            "document_ids": request.source_document_ids,
+                        }
+                    )
+                }
+            )
+        return inputs
 
     def _search(
         self,
