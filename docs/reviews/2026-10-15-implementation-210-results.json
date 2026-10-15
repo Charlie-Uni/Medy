@@ -1,0 +1,196 @@
+{
+  "record": 210,
+  "date": "2026-10-15",
+  "implementer": "Codex",
+  "reviewer": "Codex self-review; not a second independent human",
+  "task_ids": [
+    "AGENT-04"
+  ],
+  "slice": "consecutive stable action/result repetition guard",
+  "slice_status": "DONE",
+  "whole_task_status": "IN_PROGRESS",
+  "baseline_sha": "3b839fd7c8a7666e192310dc07d9af6392489eee",
+  "validation": {
+    "targeted": {
+      "exit_code": 0,
+      "elapsed_s": 30.13,
+      "command": [
+        "/Users/leaf/.cache/medy-checks/audit210-verified-mdi4tidj/venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/unit/application/test_agent_progress.py",
+        "tests/unit/application/test_agent_loop_progress.py",
+        "tests/unit/application/test_agent_loop.py",
+        "tests/unit/application/test_agent_planning.py",
+        "tests/unit/application/test_agent_tools.py",
+        "tests/unit/application/test_agent_contracts.py",
+        "tests/unit/domain/test_pv_agent_contracts.py",
+        "tests/integration/test_agent_tools.py",
+        "tests/unit/skills/test_no_bypass.py",
+        "tests/unit/evals/test_agent_rubric.py"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit210-verified-mdi4tidj",
+      "required_services": true,
+      "passed": 355,
+      "skipped": 0,
+      "warnings": 0
+    },
+    "required_full_gate": {
+      "exit_code": 0,
+      "elapsed_s": 300.272,
+      "command": [
+        "make",
+        "check"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit210-verified-mdi4tidj",
+      "required_services": true,
+      "passed": 2924,
+      "skipped": 70,
+      "warnings": 1
+    },
+    "initial_full_gate_not_final_evidence": {
+      "exit_code": 0,
+      "elapsed_s": 294.046,
+      "command": [
+        "make",
+        "check"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit210-verified-mdi4tidj",
+      "required_services": true,
+      "passed": 2922,
+      "skipped": 70,
+      "warnings": 1
+    },
+    "documents": {
+      "exit_code": 0,
+      "elapsed_s": 5.358,
+      "command": [
+        "/Users/leaf/.cache/medy-checks/audit210-verified-mdi4tidj/venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/unit/docs"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit210-verified-mdi4tidj",
+      "required_services": true,
+      "passed": 41
+    },
+    "scope_audit": {
+      "exit_code": 0,
+      "task_ids": 144,
+      "local_links_checked": 309,
+      "local_fragments_checked": 8,
+      "baseline_maintenance_inputs": 762,
+      "unchanged_maintenance_inputs": 760,
+      "maintenance_inputs_after": 765,
+      "old_schemas_unchanged": 36,
+      "unexpected_changed_paths": []
+    }
+  },
+  "self_review": [
+    {
+      "item": "需求与范围",
+      "verdict": "pass",
+      "evidence": "按批准两次连续规则接模型循环；只完成04本切片，整体未完成，无新质量阈值"
+    },
+    {
+      "item": "ADR与阶段硬门",
+      "verdict": "pass",
+      "evidence": "PLAN-02和ARCH-04/11、AGENT-03前置保持；无目标/验收变更、盲测或生产通过声明"
+    },
+    {
+      "item": "正确性与失败路径",
+      "verdict": "pass",
+      "evidence": "41新测试；原重复、数字逗号、拒绝恢复清零先复现后修复；新证据/补读/支持变化可继续"
+    },
+    {
+      "item": "权限与数据",
+      "verdict": "pass",
+      "evidence": "先验证/提交工具结果再检查；原来源/ACL/事实门保持；受限摘要，无正文遥测；36Schema/冻结输入不变"
+    },
+    {
+      "item": "预算/取消/副作用",
+      "verdict": "pass",
+      "evidence": "0托管/0USD，无扩额/新重试；第二步取消/失租/审计/篡改原因与费用保留；持久机制仍待"
+    },
+    {
+      "item": "追溯与版本",
+      "verdict": "pass",
+      "evidence": "pv-progress-v1随checkpoint；未绑定None保留旧状态；实际Prompt/工具/预算未改；不声称已有持久化"
+    },
+    {
+      "item": "验证充分性",
+      "verdict": "pass",
+      "evidence": "最终required全量2924/70/1、355定向、41文档、原维护摘要及范围核验；不代替真实质量"
+    },
+    {
+      "item": "状态与文档",
+      "verdict": "pass",
+      "evidence": "本切片DONE/04整体IN_PROGRESS、144原ID和12路径；EVAL-33/GATE/其余依赖与授权保持"
+    }
+  ],
+  "failures_and_fixes": [
+    {
+      "phase": "baseline reproduction",
+      "result": "3 failed; repeated unchanged success/empty and cosmetic query edit still made a third planning call",
+      "fix": "stable canonical action/result guard after tool validation and receipt checks, stop at approved count 2"
+    },
+    {
+      "phase": "numeric punctuation self-review",
+      "result": "1 failed / 8 passed / 17 deselected; 1,5 mg and 1 5 mg collided",
+      "fix": "preserve commas between digits; also preserve decimal points/signs/comparisons/case-sensitive units/negation/internal identifiers"
+    },
+    {
+      "phase": "rejected recovery self-review",
+      "result": "2 failed / 13 deselected; refused old-run/foreign-parent handoff emitted a fresh zero progress state",
+      "fix": "emit progress=None until this fresh run actually binds its own zero-spend parent; Driver contract preserves stored progress on None"
+    },
+    {
+      "phase": "validation command correction",
+      "result": "pytest exit 4: file or directory not found: tests/unit/agent; no tests ran",
+      "fix": "locate actual tests with rg --files, run tests/unit/evals/test_agent_rubric.py and actual contract/domain suites; keep failed log"
+    },
+    {
+      "phase": "read-only log path correction",
+      "result": "tail attempted root-only .local/audit210 logs from the external worktree; no such file",
+      "fix": "read logs from original repository; no product change or missing tests"
+    },
+    {
+      "phase": "private closure helper preparation",
+      "result": "nested Python triple-quote SyntaxError while generating a helper; nothing executed or changed",
+      "fix": "write the helper through a literal protected heredoc; no production code/data change"
+    }
+  ],
+  "implemented": {
+    "model_selected_loop_guard": true,
+    "fixed_approved_repeat_limit": 2,
+    "hash_only_checkpoint": true,
+    "unknown_progress_must_preserve_storage": true,
+    "new_tests": 41
+  },
+  "limitations": [
+    "AGENT-04 remains incomplete: whole-tool budget/final verification allocation and durable cancel/lease/original-budget recovery pending",
+    "Only internal model-driven loop, offline providers and in-memory checkpoint driver used for new cases",
+    "Progress checkpoint is not a durable store, resume adapter or business terminal record",
+    "Only consecutive equivalent parameters/results; nonconsecutive loops and general semantic equivalence not claimed",
+    "Invalid proposals break this tool streak and still consume one of the eight decisions",
+    "No real model quality/performance evidence, no new blind tasks or independent second human review"
+  ],
+  "hosted_model_calls": 0,
+  "api_cost_usd": 0,
+  "deployment_changed": false,
+  "production_DML": false,
+  "new_migration_or_grants": false,
+  "frozen_datasets_changed": false,
+  "default_models_changed": false,
+  "ACL_or_security_rules_changed": false,
+  "public_API_or_MCP_changed": false,
+  "production_gate_changed": false,
+  "real_holdout_accessed": false,
+  "actual_production_driver_implemented": false,
+  "durable_recovery_implemented": false,
+  "final_business_completion_gate_implemented": false,
+  "next": "AGENT-04 whole-tool/final-reserve budget allocation, then durable execution state/cancel/lease/recovery",
+  "independent_human_review_claimed": false
+}
