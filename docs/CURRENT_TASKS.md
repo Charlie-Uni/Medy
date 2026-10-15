@@ -74,7 +74,7 @@ probe v4 与 `main-v5-provisional` 均已冻结。EVAL-11 已完成：580 个 go
 
 贯穿工作：ARCH-08/10/13/14、CODE-03～07、IDX-03、OBS-03、DEV-BACKLOG-01 按依赖穿插；ARCH-12 有实测收益再实施。BM25-09、CACHE-10、PERF-10、SRC-05、FOCUS-01/02/09、ROUTE-01/02 全部保留，先分别验证再 COMBO-01。人工事项 PLAN-02、EVAL-29/30/31、LIC-03、DEPLOY-01 单独跟踪；EVOL-09 已决定限实验，生产自动批准不再列为待问事项。
 
-**当前下一项：AGENT-02受控工具；随后EVAL-32，最小澄清续办纳入S2。AGENT-01契约工程已自审通过。** [记录205](reviews/2026-10-15-implementation-205-owner-decisions-and-agent-entry.md)只落实已获同意的设计与验收，没有实现Agent。GATE-01独立跟踪新采用规则工程接线；所有者确认有独立环境，类型/管理归属待提供、实际权限未核验，不阻塞公开开发场景工程。EVAL-33保留IN_PROGRESS及历史读取/隔离缺口，不再等待D-01/D-02；真实历史正文扫描0、新盲测0。本轮无付费/部署。记录204五批最终3f0267f已推送，[CI38571382863](https://github.com/Charlie-Uni/Medy/actions/runs/38571382863)全部29步骤成功；本轮发布/CI另按自身SHA留证。
+**当前下一项：EVAL-32评分与开发用例，再AGENT-03决策循环；AGENT-02工具工程已自审通过，最小澄清续办仍纳入S2。** [记录205](reviews/2026-10-15-implementation-205-owner-decisions-and-agent-entry.md)只落实已获同意的设计与验收，没有实现Agent。GATE-01独立跟踪新采用规则工程接线；所有者确认有独立环境，类型/管理归属待提供、实际权限未核验，不阻塞公开开发场景工程。EVAL-33保留IN_PROGRESS及历史读取/隔离缺口，不再等待D-01/D-02；真实历史正文扫描0、新盲测0。本轮无付费/部署。记录204五批最终3f0267f已推送，[CI38571382863](https://github.com/Charlie-Uni/Medy/actions/runs/38571382863)全部29步骤成功；本轮发布/CI另按自身SHA留证。
 
 ARCH-12仅完成条件收益评估，生产Pool/事务拆分未采用；记录189已分批推送完成任务，记录190修复CI，8d3669e的远端38184157416全部步骤成功，包括真实容器门。ARCH-13仍未替换共享部署/长期驻留，容量仍待实测。MCP受限完整材料已由记录194补齐；原条件恢复、Task/MCP回放、FOCUS-02跨块定位、PLAN-02行动/profile已确认，EVAL-32评分器及运行仍未完成；真实语义、第二独立人工、未见盲测、S2/S3及逐次付费授权门保持。
 
@@ -236,8 +236,8 @@ Redis 已在本机主运行配置切到 `redis`，TTL 300 秒；实际 smoke 为
 | PLAN-01 | 对齐原要求、参考代码、当前实现和首个业务场景 | DONE | [S0 证据包](agent/PLAN-01-capability-and-scenario.md)：参考源码只读核验、16 项能力矩阵、已确认 PV 场景、固定 Workflow 对照、7 个拟议动作及 12 个合成开发用例。[记录 174](reviews/2026-10-10-implementation-174-plan01-capability-and-scenario.md)设计自审通过、文档测试 5 passed、141 条任务保留，费用 0；不是 Agent 实现或盲测 |
 | PLAN-02 | 先沟通 ADR，再明确目标变更、行动契约与验收 | DONE | 所有者2026-10-15对四项解决方案回复“同意”；ADR-0012 v0.6/PLAN-02 v0.2/机器契约v2落实D-01/D-02、预算分配和最小澄清续办。记录205文档/依赖自审通过；只完成决策契约，不代表运行时/付费/生产发布。效率参数及实际保管环境待具体输入，不再重复问已决方向 |
 | AGENT-01 | 定义动作、状态、观察结果与停止契约 | DONE | [契约说明](agent/AGENT_CONTRACTS.md)与[记录206](reviews/2026-10-15-implementation-206-agent-action-and-state-contracts.md)：七动作/六状态/观察三份私有Schema、case/task/run/attempt及条件摘要绑定、严格JSON/句柄/预算快照准入已实现；109契约测试、required全量2675 passed/70 skipped/1旧警告及范围/文档自审通过，0费用。不是工具执行、授权或完成核验 |
-| AGENT-02 | 将检索和现有 Skill 暴露为受控工具 | READY | AGENT-01记录206与ARCH-02已通过；下一无付费切片，工具白名单、入参/结果校验、用户身份透传、文档/产品/版本约束、原文和相邻块读取；复用 Registry/检索装配，不能由模型自授权限 |
-| AGENT-03 | 实现模型选择动作与结果驱动循环 | BLOCKED | AGENT-02、ARCH-05/11；模型按结果决定补检索、换查询、调用 Skill 或结束；用假网关验证不同结果导致不同合法路径，托管模型试跑归 AGENT-08 |
+| AGENT-02 | 将检索和现有 Skill 暴露为受控工具 | DONE | [工具说明](agent/AGENT_TOOLS.md)与[记录207](reviews/2026-10-15-implementation-207-agent-controlled-tools.md)：四工具适配器、指定来源检索/缓存上下文、RLS原文/相邻块、真实Registry与共享额度已实现；199定向、required全量2738 passed/70 skipped/1旧警告、41文档与八项自审通过，0费用。未接规划循环、公共端点或持久观察，不冒称完整Agent |
+| AGENT-03 | 实现模型选择动作与结果驱动循环 | READY | AGENT-02记录207及ARCH-05/11已过；按顺序先EVAL-32评分，随后无付费控制器工程；模型按结果决定补检索、换查询、调用 Skill 或结束；用假网关验证不同结果导致不同合法路径，托管模型试跑归 AGENT-08 |
 | AGENT-04 | 有界执行、重复检测、取消与恢复 | BLOCKED | AGENT-03；按PLAN-02 v0.2加入最终核验预留/结构化状态/有界证据、共享总限额；故障恢复持久化原预算/预留/步数/截止/持有权，不新发额度。人工澄清后是显式关联新执行，不能混为恢复或无限自动续费 |
 | AGENT-05 | 最终证据核验、安全、澄清与人工升级 | BLOCKED | AGENT-03、ARCH-03/06；未核验证据不可作答；共同必需证据、数字/否定/条件、指定来源、冲突与无答案反例；说明缺失信息和升级材料，延续澄清会话依赖 SESSION-01/02 |
 | AGENT-06 | Agent 轨迹、版本、计量与回放接线 | BLOCKED | AGENT-03、ARCH-07/09；记录动作、简短行动理由、受限输入输出引用、证据、调用回执及实际版本；Langfuse 只发获准元数据；证明回放边界和重启后关联稳定 |
@@ -345,3 +345,5 @@ EVOL-06～08 按候选类型分切片记录，Prompt 先行；整项 DONE 需两
 2026-10-12 S0行动/验收：记录200交付[PLAN-02 v0.1](agent/PLAN-02-action-budget-and-acceptance.md)、机器设计规格和[EVAL-33隔离方案](agent/EVALUATION_ISOLATION.md)。七动作/8决策步/12,000 Token/0.60 USD/125秒及分项rubric均作为待裁决Agent提案，未注册运行时；原开发规格/冻结数据/模型/生产门不变，0托管调用。自审通过仅表示材料一致，PLAN-02 HUMAN，EVAL-32 BLOCKED，EVAL-33 READY；下一独立切片可做合成隔离工程，S2等待真实决定。
 
 2026-10-15，记录206：AGENT-01契约工程已通过自审并实现私有动作、运行状态、观察结果的Pydantic/JSON Schema和纯准入校验；仅契约工程，不含实际工具/规划循环/最终核验。所有者确认“有独立环境”，环境类型、管理归属及实际访问隔离仍待核验，真实盲测未接入。下一主切片AGENT-02，随后EVAL-32；预算、原门禁和付费逐次授权保持。 自审与验证见[记录206](reviews/2026-10-15-implementation-206-agent-action-and-state-contracts.md)。
+
+2026-10-15记录207：AGENT-02四类受控工具适配已实现，真实PG验证来源/历史/撤权/最终输出栅栏，模型调用均为离线fake。工具保留受限审计快照，尚未持久化为AgentObservation或注册公共端点。所有者补充另有电脑和云主机；规格、管理归属和实际隔离仍未核验。自审见[记录207](reviews/2026-10-15-implementation-207-agent-controlled-tools.md)。

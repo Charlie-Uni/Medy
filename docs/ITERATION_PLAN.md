@@ -1,5 +1,7 @@
 # Medy 项目完整迭代计划与工程建议
 
+2026-10-15记录207：AGENT-02已接四类受控工具，复用既有检索装配、AE提取和引用核验Registry；指定来源固定于任务并隔离缓存，读取/返回前复查权限和事实。仅工具工程，尚无规划循环/持久观察/完整Agent；0托管调用、0USD，独立环境核验不阻塞开发。 详见[记录207](reviews/2026-10-15-implementation-207-agent-controlled-tools.md)。
+
 2026-10-15，记录206：AGENT-01已实现私有动作、运行状态、观察结果的Pydantic/JSON Schema和纯准入校验；仅契约工程，不含实际工具/规划循环/最终核验。所有者确认“有独立环境”，环境类型、管理归属及实际访问隔离仍待核验，真实盲测未接入。下一主切片AGENT-02，随后EVAL-32；预算、原门禁和付费逐次授权保持。 详见[记录206](reviews/2026-10-15-implementation-206-agent-action-and-state-contracts.md)。
 
 更新日期：2026-10-15。生产 BM25 切换与迁移证据见[记录 162](reviews/2026-10-09-implementation-162-production-bm25-cutover.md)；Langfuse 部署见[记录 163](reviews/2026-10-09-implementation-163-langfuse-deployment-and-recovery.md)；Redis 缓存切换、清账与恢复见[记录 164](reviews/2026-10-09-implementation-164-redis-cache-cutover.md)；向量规划模式、质量取舍与连接等价性见[记录 168](reviews/2026-10-10-implementation-168-fixed-vector-plan-and-quality-audit.md)。本文汇总代码修复、BM25、Redis、Langfuse、模型路由、评测、性能和产品能力，为每项工作明确现状、价值、步骤、约束与验收依据。

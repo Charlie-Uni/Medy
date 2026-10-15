@@ -1,5 +1,7 @@
 # Medy
 
+2026-10-15记录207：AGENT-02已接四类受控工具，复用既有检索装配、AE提取和引用核验Registry；指定来源固定于任务并隔离缓存，读取/返回前复查权限和事实。仅工具工程，尚无规划循环/持久观察/完整Agent；0托管调用、0USD，独立环境核验不阻塞开发。 详见[记录207](docs/reviews/2026-10-15-implementation-207-agent-controlled-tools.md)。
+
 MedOps Copilot 是面向医学事务、药物警戒和临床运营的可信医学 RAG 与受控 Agent 项目。
 
 开发范围、硬约束、里程碑和逐项验收以 [工程基线与开发 Checklist](docs/ENGINEERING_BASELINE.md) 为准。

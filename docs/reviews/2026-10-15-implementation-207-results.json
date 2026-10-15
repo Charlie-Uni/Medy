@@ -1,0 +1,234 @@
+{
+  "record": 207,
+  "date": "2026-10-15",
+  "implementer": "Codex",
+  "reviewer": "Codex self-review; not an independent second human",
+  "task_ids": [
+    "AGENT-02"
+  ],
+  "status": "DONE",
+  "baseline_sha": "e86f8a59f64cfdddc3f9dc7e7c96a901be860a48",
+  "scope": "four controlled PV adapters and production composition; no controller/public endpoint/durable AgentObservation",
+  "task_statuses": {
+    "AGENT-02": "DONE",
+    "AGENT-03": "READY",
+    "EVAL-32": "READY",
+    "EVAL-33": "IN_PROGRESS",
+    "GATE-01": "READY"
+  },
+  "validation": {
+    "final_targeted": {
+      "exit_code": 0,
+      "elapsed_s": 11.665,
+      "command": [
+        "/Users/leaf/.cache/medy-checks/audit207-verified-erut5bj4/venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/unit/application/test_agent_tools.py",
+        "tests/unit/harness/test_retrieval_cache_port.py",
+        "tests/unit/harness/test_retrieval_concurrency.py",
+        "tests/integration/test_agent_tools.py",
+        "tests/unit/domain/test_pv_agent_contracts.py",
+        "tests/unit/application/test_agent_contracts.py",
+        "tests/unit/bootstrap/test_composition.py",
+        "tests/unit/skills/test_citation_verification.py",
+        "tests/unit/skills/test_no_bypass.py"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit207-verified-erut5bj4",
+      "required_services": true,
+      "passed": 199,
+      "pytest_s": 9.8
+    },
+    "required_full_gate": {
+      "exit_code": 0,
+      "elapsed_s": 148.174,
+      "command": [
+        "make",
+        "check"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit207-verified-erut5bj4",
+      "required_services": true,
+      "passed": 2738,
+      "skipped": 70,
+      "warnings": 1,
+      "pytest_s": 138.89,
+      "source_modules": 350,
+      "formatted_files": 749,
+      "architecture_violations": 0,
+      "hosted_model_calls": 0
+    },
+    "documents": {
+      "exit_code": 0,
+      "elapsed_s": 2.188,
+      "command": [
+        "/Users/leaf/.cache/medy-checks/audit207-verified-erut5bj4/venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/unit/docs"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit207-verified-erut5bj4",
+      "required_services": true,
+      "passed": 41,
+      "skipped": 0
+    },
+    "scope_audit": {
+      "exit_code": 0,
+      "phase": "final",
+      "elapsed_s": 1.918,
+      "baseline_sha": "e86f8a59f64cfdddc3f9dc7e7c96a901be860a48",
+      "scope": "AGENT-02 controlled internal tools and production composition",
+      "task_ids": 144,
+      "added_ids": [],
+      "removed_ids": [],
+      "changed_existing_statuses": [
+        "AGENT-02",
+        "AGENT-03"
+      ],
+      "local_links_checked": 310,
+      "local_fragments_checked": 7,
+      "baseline_maintenance_inputs": 738,
+      "unchanged_maintenance_inputs": 732,
+      "modified_maintenance_inputs": [
+        "src/medops/contracts_export.py",
+        "src/medops/harness/retrieval_port.py",
+        "src/medops/skills/ae_extraction.py",
+        "src/medops/skills/registry.py",
+        "tests/unit/harness/test_retrieval_cache_port.py",
+        "tests/unit/harness/test_retrieval_concurrency.py"
+      ],
+      "new_maintained_python_files": 10,
+      "maintenance_inputs_after": 748,
+      "maintenance_mismatches": [],
+      "old_schemas_unchanged": 35,
+      "new_agent_schemas": 1,
+      "AE_contract_and_handler_unchanged": true,
+      "old_registry_method_AST_unchanged": true,
+      "original_skill_no_bypass_guard_unchanged": true,
+      "protected_design_baselines_AGENTS_gate_state_unchanged": true,
+      "frozen_datasets_changed": false,
+      "new_migration_or_grants": false,
+      "unexpected_changed_paths": [],
+      "model_calls": 0,
+      "api_cost_usd": 0
+    },
+    "AE_contract_comparison": {
+      "equal": true,
+      "sha256": "0f22e893fd593a884b941482be261ac995ae8298299a0bdd48643d854edcf948",
+      "fields": [
+        "spec",
+        "input",
+        "output",
+        "schema",
+        "system",
+        "kinds",
+        "causality"
+      ],
+      "handler_AST_equal": true,
+      "original_registry_members_AST_equal": 12
+    }
+  },
+  "failures_and_fixes": [
+    {
+      "phase": "initial static",
+      "failure": "DeadlineConnection disagreed with old concrete psycopg annotations; Skill bridge extraction shadowed context and briefly nested a helper",
+      "fix": "keep existing Any connection adapter boundary; separate AgentContext/SkillContext variables and restore helper; typed check and failure-path regressions"
+    },
+    {
+      "phase": "initial database integration",
+      "failure": "14 failed, 3 passed: app cannot read audit-only fact_plane_identity and readonly role cannot read principals",
+      "fix": "trusted startup UUID/runtime binding; actual action uses existing app role, no grants; 17 passed after fix"
+    },
+    {
+      "phase": "restricted audit integration",
+      "failure": "32 failed, 23 passed from prebinding a journal that Registry binds again; later two remaining failures: timeout classification and test using wrong event key",
+      "fix": "fresh action journal, let Registry bind once; preserve timeout error_code, actual event kind/spans; failure-path and real principal-revocation tests pass"
+    },
+    {
+      "phase": "initial full gate",
+      "failure": "1 failed, 2733 passed, 70 skipped: existing test_no_bypass rejected five direct implementation imports",
+      "fix": "AE vocabulary in domain, implementation bridge inside skills, exposed through Registry.agent_adapter; original PUBLIC list/tests unchanged"
+    },
+    {
+      "phase": "intermediate full gate",
+      "failure": "format-check requested one reformat in skills/agent_adapter.py",
+      "fix": "format all owned inputs, check stable output and rerun full gate"
+    }
+  ],
+  "self_review": [
+    {
+      "item": "scope",
+      "verdict": "pass",
+      "scope": "four real controlled tool adapters and composition; no planner or completed Agent claim"
+    },
+    {
+      "item": "ADR_and_stage",
+      "verdict": "pass",
+      "scope": "PLAN-02 and ARCH-04/11 approved; original limits, production gate and holdout requirements unchanged"
+    },
+    {
+      "item": "correctness_and_failures",
+      "verdict": "pass",
+      "scope": "199 targeted, 2738 full; malformed/stale/unsafe facts, failed calls, timeout/budget and source windows; integration failures fixed before closure"
+    },
+    {
+      "item": "permissions_and_data",
+      "verdict": "pass",
+      "scope": "existing RLS app role, current identity and final fence; startup database binding has no admin DSN; no grants or bypass exceptions"
+    },
+    {
+      "item": "budget_cancellation_side_effects",
+      "verdict": "pass",
+      "scope": "shared root allowance/deadline and inherited ownership guard; action-tagged receipts, zero hosted calls; full cancellation/recovery await AGENT-04"
+    },
+    {
+      "item": "traceability_and_versions",
+      "verdict": "pass",
+      "scope": "actual routed versions, fixed source snapshots and original expiry, restricted audit/model call records preserved; durable AgentObservation awaits AGENT-06"
+    },
+    {
+      "item": "verification",
+      "verdict": "pass",
+      "scope": "required services full gate, native PG19 new integration cases, old Skill contract/handler/Registry method AST comparison and 35 original schemas unchanged; skipped/warnings retained"
+    },
+    {
+      "item": "status_and_documentation",
+      "verdict": "pass",
+      "scope": "AGENT-02 contract/adapter scope DONE; EVAL-32 next and AGENT-03 READY; environment actual isolation, quality, deployment and independent-human gaps retained"
+    }
+  ],
+  "hosted_model_calls": 0,
+  "api_cost_usd": 0,
+  "real_holdout_accessed": false,
+  "production_DML": false,
+  "deployment_changed": false,
+  "new_migration_or_grants": false,
+  "default_models_changed": false,
+  "frozen_datasets_changed": false,
+  "public_API_or_MCP_changed": false,
+  "agent_controller_implemented": false,
+  "durable_observations_implemented": false,
+  "final_business_completion_gate_implemented": false,
+  "independent_environment": {
+    "owner_reports_another_computer_and_cloud_host": true,
+    "OS_specs_and_admin_ownership_provided": false,
+    "actual_permissions_verified": false
+  },
+  "compatibility": {
+    "legacy_cache_keys": "byte-identical for no explicit task scope",
+    "legacy_skill_prompts_schemas_and_handlers": "runtime contract and handler AST equal; old Registry method AST equal",
+    "old_schema_files": 35,
+    "original_skill_no_bypass_guard": "unchanged",
+    "budgets_and_published_policies": "unchanged"
+  },
+  "limitations": [
+    "Trusted startup FactDatabaseBinding required; no privileged DSN in action adapter",
+    "Caller must persist under final fence and commit before next planning call",
+    "Existing citation Skill retains 20 claims / 1000 characters; larger proposals explicitly unsupported",
+    "Tool results and restricted audit are not persisted AgentObservations",
+    "Step counting, no-progress, lease/cancel/recovery and final business completeness await later tasks",
+    "No real model quality, blind test, production adoption or independent-human claim"
+  ],
+  "next": "EVAL-32 scoring, then AGENT-03 decision loop; minimum SESSION remains S2 prerequisite"
+}

@@ -1,5 +1,7 @@
 # 分阶段执行与每轮自审
 
+2026-10-15记录207：AGENT-02已接四类受控工具，复用既有检索装配、AE提取和引用核验Registry；指定来源固定于任务并隔离缓存，读取/返回前复查权限和事实。仅工具工程，尚无规划循环/持久观察/完整Agent；0托管调用、0USD，独立环境核验不阻塞开发。 详见[记录207](reviews/2026-10-15-implementation-207-agent-controlled-tools.md)。
+
 2026-10-15，记录206：AGENT-01已实现私有动作、运行状态、观察结果的Pydantic/JSON Schema和纯准入校验；仅契约工程，不含实际工具/规划循环/最终核验。所有者确认“有独立环境”，环境类型、管理归属及实际访问隔离仍待核验，真实盲测未接入。下一主切片AGENT-02，随后EVAL-32；预算、原门禁和付费逐次授权保持。 详见[记录206](reviews/2026-10-15-implementation-206-agent-action-and-state-contracts.md)。
 
 更新：2026-10-15。依据用户要求，将 Agent、自进化、架构及既有十项迭代统一执行。[当前任务台账](CURRENT_TASKS.md)是唯一状态与顺序入口；本页规定阶段通过条件和每轮自审核，设计见[完整迭代计划](ITERATION_PLAN.md)。[原项目描述](source/PROJECT_DESCRIPTION_v0.1.md)和[工程基线](ENGINEERING_BASELINE.md)的质量、安全、独立复核及生产签字约束继续保留。
