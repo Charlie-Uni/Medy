@@ -96,3 +96,7 @@ ok必须有成对结果引用/摘要。非ok不能发新证据句柄或自报新
 下一AGENT-02接真实只读检索、AE提取、原文/相邻块及引用工具；再做EVAL-32固定开发评分、AGENT-03模型决策循环、AGENT-04预算/停止/恢复、AGENT-05最终核验、AGENT-06追溯、SESSION最小澄清及AGENT-07无付费集成。真实模型质量/路径收益归AGENT-08单次授权，真实盲测仍须独立保管验收。
 
 复现契约：`python -m medops.contracts_export --check`，新测试在`tests/unit/domain/test_pv_agent_contracts.py`、`tests/unit/application/test_agent_contracts.py`和`tests/unit/core/test_strict_json.py`。完整命令/结果和环境条件见记录206。回滚本轮契约及新增Schema即可移除未接线能力，无数据库迁移、策略切换或部署变更。
+
+## 8. 后继工具实现
+
+记录207已在这些契约上实现四类受控工具，见[工具说明](AGENT_TOOLS.md)。本文§1～7保留记录206契约切片的完成范围；工具已实现不表示规划循环、持久终态、最小澄清或完整Agent已交付。原三份Schema保持，新增私有AgentToolOutcome Schema。
