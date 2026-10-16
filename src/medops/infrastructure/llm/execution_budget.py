@@ -90,14 +90,27 @@ def request_tokens(request: ModelRequest) -> int:
     return prompt + len(schema.encode("utf-8")) + 128 + request.max_output_tokens
 
 
-def allowance(request: ModelRequest, prices: PriceTable = PRICES) -> CallAllowance:
-    assert request.call is not None
+@dataclass(frozen=True)
+class CallEstimate:
+    """Read-only admission estimate; never a pending call or an accounting receipt."""
+
+    tokens: int
+    cost_usd: float
+
+
+def estimate_request(request: ModelRequest, prices: PriceTable = PRICES) -> CallEstimate:
     tokens = request_tokens(request)
     input_tokens = tokens - request.max_output_tokens
     cost = prices.cost_usd(
         request.model_id, ModelUsage(input_tokens=input_tokens, output_tokens=request.max_output_tokens)
     )
-    return CallAllowance(request.call.call_id, tokens, cost)
+    return CallEstimate(tokens, cost)
+
+
+def allowance(request: ModelRequest, prices: PriceTable = PRICES) -> CallAllowance:
+    assert request.call is not None
+    estimate = estimate_request(request, prices)
+    return CallAllowance(request.call.call_id, estimate.tokens, estimate.cost_usd)
 
 
 def default_limits(*, timeout_s: float, token_limit: int = DEFAULT_EXECUTION_TOKENS) -> ExecutionLimits:
@@ -190,12 +203,12 @@ class ExecutionBudget:
             if self._blocked is not None:
                 raise ExecutionBudgetExceeded(self._blocked)
 
-    def fits(self, item: CallAllowance) -> bool:
+    def fits(self, item: CallAllowance | CallEstimate) -> bool:
         with self._lock:
             return self._blocked is None and self._dimension(item) is None
 
     def _dimension(
-        self, item: CallAllowance | None = None, *, protection: BudgetProtection | None = None
+        self, item: CallAllowance | CallEstimate | None = None, *, protection: BudgetProtection | None = None
     ) -> Literal["tokens", "cost"] | None:
         protected = protection or self._protection
         if (
