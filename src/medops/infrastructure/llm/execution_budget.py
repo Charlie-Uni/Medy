@@ -13,6 +13,7 @@ from typing import TYPE_CHECKING, Literal
 
 from pydantic import Field
 
+from medops.core.canonical import canonical_hash
 from medops.core.deadline import CURRENT_DEADLINE, DeadlineExceeded, check_deadline, deadline_scope, remaining_timeout
 from medops.infrastructure.llm.accounting import capture_call, check_call_ownership, new_call, publish_receipt
 from medops.infrastructure.llm.gateway import (
@@ -28,7 +29,8 @@ from medops.infrastructure.llm.gateway import (
 )
 
 DEFAULT_EXECUTION_TOKENS = 12_000
-EXECUTION_BUDGET_VERSION = "execution-budget-v2+utf8-preflight+protected-headroom"
+EXECUTION_BUDGET_VERSION = "execution-budget-v3+sealed-finalization"
+FINALIZATION_BUDGET_VERSION = "final-budget-v1+exact-requests"
 PRICES = PriceTable(OPENAI_PRICES)
 
 if TYPE_CHECKING:
@@ -50,8 +52,8 @@ class ExecutionBudgetExceeded(BudgetExceeded):
 class BudgetProtection(GatewayModel):
     """Unspent headroom, not provider usage, a bill or a pending call reservation.
 
-    Trusted execution owners may only increase this floor. Consuming it in a
-    final verification phase requires a separate approved owner integration.
+    Ordinary execution owners may only increase this floor. A sealed final
+    phase transfers it only to its pinned requests, within the same root cap.
     """
 
     tokens: int = Field(default=0, ge=0, strict=True)
@@ -113,6 +115,45 @@ def allowance(request: ModelRequest, prices: PriceTable = PRICES) -> CallAllowan
     return CallAllowance(request.call.call_id, estimate.tokens, estimate.cost_usd)
 
 
+class FinalizationProfile(GatewayModel):
+    version: str = FINALIZATION_BUDGET_VERSION
+    plan_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    max_calls: int = Field(ge=0, le=60)
+    estimated_tokens: int = Field(ge=0)
+    estimated_cost_usd: float = Field(ge=0)
+
+
+class FinalizationSnapshot(GatewayModel):
+    profile: FinalizationProfile
+    state: Literal["active", "closed"]
+    admitted_calls: int = Field(ge=0, le=60)
+
+
+@dataclass
+class _FinalSlot:
+    request_sha256: str
+    estimate: CallEstimate
+    timeout_s: float
+    used: bool = False
+
+
+@dataclass
+class _FinalPhase:
+    profile: FinalizationProfile
+    slots: tuple[_FinalSlot, ...]
+    token_base: int
+    cost_base: float
+    closed: bool = False
+
+
+_FINAL_PHASE: ContextVar[_FinalPhase | None] = ContextVar("execution_final_phase", default=None)
+
+
+def _final_request_hash(request: ModelRequest) -> str:
+    # Meter/SDK may shorten timeout and add a call identity; all provider inputs remain pinned.
+    return canonical_hash(request.model_dump(mode="json", exclude={"call", "timeout_s"}))
+
+
 def default_limits(*, timeout_s: float, token_limit: int = DEFAULT_EXECUTION_TOKENS) -> ExecutionLimits:
     # Owner-confirmed 2026-10-11: derive the compatible fee bound from the admitted fixed price table.
     highest = max(max(p.input_per_mtok, p.output_per_mtok, p.cached_input_per_mtok) for p in OPENAI_PRICES.values())
@@ -141,6 +182,7 @@ class ExecutionBudget:
         self._settled: set[str] = set()
         self._blocked: str | None = None
         self._protection = BudgetProtection()
+        self._final_phase: _FinalPhase | None = None
         self._lock = threading.Lock()
 
     @property
@@ -159,6 +201,8 @@ class ExecutionBudget:
         """
         protection = BudgetProtection.model_validate(protection.model_dump(mode="python", warnings=False))
         with self._lock:
+            if self._final_phase is not None:
+                raise ExecutionBudgetExceeded("finalization_sealed")
             protected = BudgetProtection(
                 tokens=max(self._protection.tokens, protection.tokens),
                 cost_usd=max(self._protection.cost_usd, protection.cost_usd),
@@ -168,6 +212,92 @@ class ExecutionBudget:
                 self._blocked = reason
                 raise ExecutionBudgetExceeded(reason)
             self._protection = protected
+
+    def finalization_snapshot(self) -> FinalizationSnapshot | None:
+        with self._lock:
+            phase = self._final_phase
+            return (
+                FinalizationSnapshot(
+                    profile=phase.profile,
+                    state="closed" if phase.closed else "active",
+                    admitted_calls=sum(s.used for s in phase.slots),
+                )
+                if phase is not None
+                else None
+            )
+
+    def _begin_finalization(self, requests: tuple[ModelRequest, ...], prices: PriceTable) -> _FinalPhase:
+        if len(requests) > 60:
+            raise ValueError("finalization request bound exceeded")
+        requests = tuple(ModelRequest.model_validate(r.model_dump(mode="python", warnings=False)) for r in requests)
+        if any(r.call is not None for r in requests):
+            raise ValueError("finalization requires unissued requests")
+        estimates = tuple(estimate_request(r, prices) for r in requests)
+        profile = FinalizationProfile(
+            plan_sha256=canonical_hash(
+                {
+                    "version": FINALIZATION_BUDGET_VERSION,
+                    "requests": [r.model_dump(mode="json") for r in requests],
+                    "estimates": [{"tokens": e.tokens, "cost_usd": e.cost_usd} for e in estimates],
+                    "limits": self.limits.model_dump(mode="json"),
+                }
+            ),
+            max_calls=len(requests),
+            estimated_tokens=sum(e.tokens for e in estimates),
+            estimated_cost_usd=round(sum(e.cost_usd for e in estimates), 8),
+        )
+        slots = tuple(
+            _FinalSlot(_final_request_hash(r), e, r.timeout_s) for r, e in zip(requests, estimates, strict=True)
+        )
+        with self._lock:
+            if self._final_phase is not None or self._active:
+                raise ExecutionBudgetExceeded("finalization_sealed_or_inflight")
+            if self._blocked:
+                raise ExecutionBudgetExceeded(self._blocked)
+            if not (self._protection.tokens or self._protection.cost_usd):
+                raise ExecutionBudgetExceeded("finalization_unprotected")
+            if profile.estimated_tokens > self._protection.tokens:
+                raise ExecutionBudgetExceeded("finalization_tokens")
+            if profile.estimated_cost_usd > self._protection.cost_usd + 1e-12:
+                raise ExecutionBudgetExceeded("finalization_cost")
+            reason = self._dimension()
+            if reason is not None:
+                raise ExecutionBudgetExceeded(reason)
+            phase = _FinalPhase(profile, slots, self._tokens, self._cost)
+            self._final_phase = phase
+            return phase
+
+    def _close_finalization(self, phase: _FinalPhase) -> None:
+        with self._lock:
+            if self._final_phase is not phase:
+                raise ValueError("foreign finalization phase")
+            phase.closed = True  # never restore ordinary spending, even on failure/cancellation
+
+    def _final_admission(
+        self,
+        item: CallAllowance | CallEstimate,
+        request: ModelRequest | None,
+    ) -> tuple[_FinalSlot | None, BudgetProtection]:
+        phase = self._final_phase
+        if phase is None:
+            return None, self._protection
+        if phase.closed or _FINAL_PHASE.get() is not phase:
+            raise ExecutionBudgetExceeded("finalization_sealed")
+        if request is not None:
+            digest = _final_request_hash(request)
+            for slot in phase.slots:
+                if (
+                    not slot.used
+                    and slot.request_sha256 == digest
+                    and request.timeout_s <= slot.timeout_s
+                    and item.tokens == slot.estimate.tokens
+                    and abs(item.cost_usd - slot.estimate.cost_usd) <= 1e-12
+                ):
+                    return slot, BudgetProtection(
+                        tokens=self._protection.tokens - item.tokens,
+                        cost_usd=max(0.0, self._protection.cost_usd - item.cost_usd),
+                    )
+        raise ExecutionBudgetExceeded("finalization_request")
 
     def remaining_timeout(self, timeout_s: float) -> float:
         with self._lock:
@@ -202,10 +332,17 @@ class ExecutionBudget:
         with self._lock:
             if self._blocked is not None:
                 raise ExecutionBudgetExceeded(self._blocked)
+            phase = self._final_phase
+            if phase is not None and phase.closed and _FINAL_PHASE.get() is phase:
+                raise ExecutionBudgetExceeded("finalization_sealed")
 
-    def fits(self, item: CallAllowance | CallEstimate) -> bool:
+    def fits(self, item: CallAllowance | CallEstimate, *, request: ModelRequest | None = None) -> bool:
         with self._lock:
-            return self._blocked is None and self._dimension(item) is None
+            try:
+                _, protection = self._final_admission(item, request)
+            except ExecutionBudgetExceeded:
+                return False
+            return self._blocked is None and self._dimension(item, protection=protection) is None
 
     def _dimension(
         self, item: CallAllowance | CallEstimate | None = None, *, protection: BudgetProtection | None = None
@@ -229,15 +366,24 @@ class ExecutionBudget:
             return "cost"
         return None
 
-    def reserve(self, item: CallAllowance) -> None:
+    def reserve(self, item: CallAllowance, *, request: ModelRequest | None = None) -> None:
         with self._lock:
             if item.call_id in self._active or item.call_id in self._settled:
                 raise ValueError("execution call identity was reused")
-            reason = self._blocked or self._dimension(item)
+            try:
+                slot, protection = self._final_admission(item, request)
+            except ExecutionBudgetExceeded as exc:
+                if exc.dimension == "finalization_request":
+                    self._blocked = exc.dimension
+                raise
+            reason = self._blocked or self._dimension(item, protection=protection)
             if reason is not None:
                 self._blocked = reason
                 raise ExecutionBudgetExceeded(reason)
             self._active[item.call_id] = item
+            if slot is not None:
+                slot.used = True
+                self._protection = protection
 
     def settle(self, item: CallAllowance, receipt: ModelCallReceipt) -> None:
         with self._lock:
@@ -259,6 +405,12 @@ class ExecutionBudget:
                 reason = "cost"
             elif self._protection.tokens or self._protection.cost_usd:
                 reason = self._dimension()
+            phase = self._final_phase
+            if phase is not None:
+                if self._tokens - phase.token_base > phase.profile.estimated_tokens:
+                    reason = "tokens"
+                elif self._cost - phase.cost_base > phase.profile.estimated_cost_usd + 1e-12:
+                    reason = "cost"
             if reason is not None:
                 self._blocked = reason
 
@@ -291,6 +443,33 @@ def execution_scope(limits: ExecutionLimits, *, budget: ExecutionBudget | None =
         _BUDGET.reset(token)
 
 
+@contextmanager
+def finalization_scope(
+    requests: tuple[ModelRequest, ...],
+    *,
+    prices: PriceTable = PRICES,
+) -> Iterator[FinalizationProfile]:
+    """Trusted terminal-owner API, not a tool or a release of ordinary headroom.
+
+    Pin every allowed logical request, including the original retry bound, before
+    entering. Exit permanently seals model admission; actual usage/fees remain on
+    the original root allowance. This does not grant business completion.
+    """
+    budget = current_budget()
+    if budget is None or CURRENT_DEADLINE.get() is None or _CALL.get() is not None:
+        raise ExecutionBudgetExceeded("finalization_context")
+    check_deadline()
+    check_call_ownership()
+    check_deadline()
+    phase = budget._begin_finalization(requests, prices)
+    token = _FINAL_PHASE.set(phase)
+    try:
+        yield phase.profile
+    finally:
+        budget._close_finalization(phase)
+        _FINAL_PHASE.reset(token)
+
+
 def admitted_cost(call_id: str) -> float | None:
     current = _CALL.get()
     return current[1].cost_usd if current is not None and current[1].call_id == call_id else None
@@ -301,7 +480,7 @@ def request_fits_budget(request: ModelRequest) -> bool:
     if budget is None:
         return True
     request = request.model_copy(update={"call": request.call or new_call(request, "preflight")})
-    return budget.fits(allowance(request))
+    return budget.fits(allowance(request), request=request)
 
 
 def complete_in_execution(
@@ -341,7 +520,7 @@ def complete_in_execution(
         )
         raise
     try:
-        budget.reserve(item)
+        budget.reserve(item, request=request)
     except ExecutionBudgetExceeded:
         publish_receipt(
             ModelCallReceipt(
