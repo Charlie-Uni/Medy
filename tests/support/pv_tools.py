@@ -58,10 +58,12 @@ class FakeAgentFacts:
             raise AgentToolFault("denied_or_unavailable")
 
 
-def setup_tools(*, script=None, narrative=None, items=None, resolution="resolved", judge=None):
+def setup_tools(*, script=None, narrative=None, items=None, resolution="resolved", judge=None, profile=None):
     registry = default_registry(sleep=lambda _: None, clock=lambda: NOW)
     current = run()
     context = current.context
+    if profile is not None:
+        context = context.model_copy(update={"profile": profile})
     if narrative is not None:
         context = context.model_copy(update={"narrative": narrative})
     versions = context.versions.model_copy(

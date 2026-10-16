@@ -13,7 +13,8 @@ from dataclasses import replace
 from datetime import UTC, datetime
 from uuid import uuid4
 
-from medops.application.agent_contracts import AgentContractError, admit_action, context_binding
+from medops.application.agent_contracts import AgentContractError, admit_action, context_binding, validate_run_snapshot
+from medops.application.agent_final_budget import FINAL_CITATION_BUDGET_VERSION, FinalCitationBudgetResult
 from medops.application.agent_tool_ports import AgentFacts, AgentToolFault
 from medops.application.agent_tool_results import (
     AgentFact,
@@ -23,6 +24,7 @@ from medops.application.agent_tool_results import (
     ReadPayload,
     SearchPayload,
     ToolPayload,
+    VerificationPayload,
 )
 from medops.core.canonical import canonical_hash
 from medops.core.deadline import CURRENT_DEADLINE, DeadlineExceeded, check_deadline, deadline_scope, execution_admission
@@ -31,6 +33,7 @@ from medops.core.money import usd_to_microusd
 from medops.core.telemetry import run_metadata
 from medops.domain.agent_actions import (
     ExtractAEAction,
+    FinishAction,
     PlannerProposal,
     ReadEvidenceAction,
     SearchDocumentsAction,
@@ -47,6 +50,7 @@ from medops.infrastructure.llm.execution_budget import (
     BudgetProtection,
     check_execution_budget,
     current_budget,
+    finalization_scope,
 )
 from medops.infrastructure.llm.gateway import BudgetExceeded
 from medops.infrastructure.llm.meter import MeteredGateway
@@ -56,7 +60,7 @@ from medops.skills.registry import SkillContext, SkillRegistry
 from medops.verification.verifier import VERIFIER_VERSION
 
 log = logging.getLogger(__name__)
-TOOL_VERSION = "pv-tools-v3+whole-tool-preflight"
+TOOL_VERSION = "pv-tools-v4+final-citation-budget"
 TOOL_ACTIONS = frozenset({"extract_ae", "search_documents", "read_evidence", "verify_citations"})
 SEARCH_EXCERPT_CHARS = 500
 READ_MAX_CHARS = 8000
@@ -68,6 +72,7 @@ def tool_contract_sha256(registry: SkillRegistry | None = None) -> str:
             "version": TOOL_VERSION,
             "execution_budget": EXECUTION_BUDGET_VERSION,
             "model_call_plan": CALL_PLAN_VERSION,
+            "final_citation_budget": FINAL_CITATION_BUDGET_VERSION,
             "safety": SAFETY_VERSION,
             "verifier": VERIFIER_VERSION,
             "planner_schema": PlannerProposal.model_json_schema(),
@@ -225,6 +230,145 @@ class AgentTools:
                 isinstance(exc, InfrastructureError) and exc.retryable and exc.code is ErrorCode.dependency_unavailable
             )
             return self._outcome(action, "dependency_error", before, retryable=retryable)
+
+    def verify_final_citations(
+        self,
+        action: BoundAction,
+        *,
+        run: PVAgentRun,
+        evidence_registry: tuple[EvidenceHandle, ...],
+    ) -> FinalCitationBudgetResult:
+        """Trusted final-owner entry, deliberately absent from the planner's tools.
+
+        The finish decision is already consumed. Keep original root quota/time,
+        pin the real draft's requests and retry bound, then seal ordinary model
+        admission permanently. Exceptions propagate to the trusted terminal owner;
+        a result proves citation checks only, never completed business/persistence.
+        """
+        if self._used:
+            raise AgentToolFault("dependency_error")
+        self._used = True
+        run = validate_run_snapshot(run)
+        action = BoundAction.model_validate(action.model_dump(mode="python", warnings=False))
+        evidence_registry = tuple(
+            EvidenceHandle.model_validate(h.model_dump(mode="python", warnings=False)) for h in evidence_registry
+        )
+        if (
+            not isinstance(action.proposal, FinishAction)
+            or run.decisions_consumed != action.decision_index
+            or action.binding != self._binding
+            or context_binding(run.context) != self._binding
+        ):
+            raise AgentContractError("agent_binding_mismatch")
+        expected = admit_action(
+            PlannerProposal(proposal=action.proposal).model_dump_json(),
+            run=run.model_copy(update={"decisions_consumed": run.decisions_consumed - 1}),
+            action_id=action.action_id,
+            evidence_registry=evidence_registry,
+            now=self.clock(),
+        )
+        if expected != action:
+            raise AgentContractError("agent_binding_mismatch")
+        self._require_parent(run)
+        before = {r.call.call_id for r in self.meter.receipts}
+        remaining = (run.expires_at - self.clock()).total_seconds()
+        with (
+            deadline_scope(min(60, remaining)),
+            execution_admission(),
+            run_metadata(
+                self.context.identity.trace_id,
+                self.context.versions.versions.model_dump(mode="json"),
+                kind="agent_final_citations",
+            ),
+            call_scope(
+                run_id=str(self.context.identity.run_id),
+                attempt_id=f"{self.context.identity.attempt_id}/final:{action.action_id}",
+                before_call=lambda: self._before_call(action),
+            ),
+        ):
+            self._before_call(action)
+            if any(
+                check_input(t).decision is not SafetyDecision.allow
+                for t in (self.context.narrative, *(c.text for c in action.proposal.draft.guideline_claims))
+            ):
+                raise AgentToolFault("unsupported")
+            by_handle = {h.handle: h for h in evidence_registry}
+            claims = action.proposal.draft.guideline_claims
+            verifying = (
+                VerifyCitationsAction(action="verify_citations", rationale="Final citation check", claims=claims)
+                if claims
+                else None
+            )
+            plan = (
+                self._skills.plan_verify(verifying, self.context, by_handle, self.skill_context, self.facts)
+                if verifying
+                else ModelCallPlan()
+            )
+            self._journal.record_event("agent_final_citation_action", action.model_dump(mode="json"))
+            self._journal.record_event(
+                "agent_final_citation_budget_plan", plan.audit_record(self.meter.execution_prices)
+            )
+            # Expanded original attempt bound, not new retries or a new execution allowance.
+            payload: VerificationPayload | None
+            with finalization_scope(plan.requests * plan.max_attempts, prices=self.meter.execution_prices) as profile:
+                self._journal.record_event("agent_final_citation_budget_profile", profile.model_dump(mode="json"))
+                if verifying is not None:
+                    payload, _, observed = self._skills.verify(
+                        verifying, self.context, by_handle, self.skill_context, self.facts
+                    )
+                else:
+                    self._journal.bind(self.context.identity.trace_id, self.context.principal.user_id)
+                    payload, observed = None, ()
+                check_deadline()
+                check_execution_budget()
+                self.meter.call_journal.ensure_complete()
+                receipt_ids = self._final_receipt_ids(action, before)
+                self._journal.record_event(
+                    "agent_final_citations_checked",
+                    payload.model_dump(mode="json")
+                    if payload is not None
+                    else {"claims_checked": 0, "no_guideline_claims": True},
+                )
+                self.facts.final_check(self.context, observed)
+                check_deadline()
+                check_execution_budget()
+        budget = current_budget()
+        if budget is None:
+            raise AgentToolFault("dependency_error")
+        return FinalCitationBudgetResult(
+            action_id=action.action_id,
+            binding=self._binding,
+            draft_sha256=canonical_hash(action.proposal.draft.model_dump(mode="json")),
+            payload=payload,
+            profile=profile,
+            budget=budget.snapshot(),
+            call_receipt_ids=receipt_ids,
+        )
+
+    def _final_receipt_ids(self, action: BoundAction, before: set[str]) -> tuple[str, ...]:
+        requests = {e["call_id"]: e["request"]["call"] for e in self.meter.call_journal.snapshot()}
+        owned_ids = []
+        for receipt in self.meter.receipts:
+            call = receipt.call
+            if call.call_id in before:
+                continue
+            recorded = requests.get(call.call_id)
+            if recorded is None or call.model_dump(mode="json", exclude={"reservation_id"}) != {
+                k: v for k, v in recorded.items() if k != "reservation_id"
+            }:
+                raise AgentToolFault("dependency_error")
+            owned = (
+                call.run_id == str(self.context.identity.run_id)
+                and call.trace_id == self.context.identity.trace_id
+                and f"final:{action.action_id}" in (call.attempt_id or "").split("/")
+                and call.purpose == "verify"
+                and call.requested_model == self.skill_context.deps.judge_model_id
+            )
+            if receipt.provider_started and not owned:
+                raise AgentToolFault("dependency_error")
+            if owned:
+                owned_ids.append(call.call_id)
+        return tuple(owned_ids)
 
     def audit_snapshot(self) -> ExecutionAuditSnapshot:
         """Restricted bodies for AGENT-06 persistence; never project this to a planner/telemetry."""
