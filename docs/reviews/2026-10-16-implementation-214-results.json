@@ -1,0 +1,190 @@
+{
+  "task_id": "AGENT-04",
+  "slice": "durable cancellation, lease generation, decision counter and same-transaction ownership fence",
+  "slice_status": "DONE",
+  "whole_task_status": "IN_PROGRESS",
+  "reviewer": "Codex self-review; not a second independent human",
+  "baseline_sha": "a9da1bbd28d8ef75d939bf51f754251ccf9ed474",
+  "hosted_model_calls": 0,
+  "api_cost_usd": 0,
+  "new_control_test_cases": 36,
+  "validation": {
+    "required_full_gate": {
+      "exit_code": 0,
+      "elapsed_s": 134.361,
+      "command": [
+        "make",
+        "check"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit214-verified-7a2f6wdo",
+      "required_services": true,
+      "passed": 3056,
+      "skipped": 70,
+      "warnings": 1,
+      "skip_reason": "70 pre-existing optional DEC-001 candidate B/C tests: their explicit PostgreSQL extension-server URLs are not supplied/reachable; selected D plus main PostgreSQL/Redis are required and passed"
+    },
+    "control_migration_RLS": {
+      "exit_code": 0,
+      "elapsed_s": 10.013,
+      "command": [
+        "/Users/leaf/.cache/medy-checks/audit214-verified-7a2f6wdo/venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/integration/test_agent_control.py",
+        "tests/integration/test_migrations.py",
+        "tests/integration/test_rls.py"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit214-verified-7a2f6wdo",
+      "required_services": true,
+      "passed": 92,
+      "skipped": 0
+    },
+    "earlier_original_loop_budget_and_controls": {
+      "exit_code": 0,
+      "elapsed_s": 23.081,
+      "command": [
+        "/Users/leaf/.cache/medy-checks/audit214-verified-7a2f6wdo/venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/integration/test_agent_control.py",
+        "tests/integration/test_migrations.py",
+        "tests/unit/application/test_agent_loop.py",
+        "tests/unit/infrastructure/test_execution_budget.py"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit214-verified-7a2f6wdo",
+      "required_services": true,
+      "passed": 114,
+      "skipped": 0
+    },
+    "initial_gate_failure": {
+      "exit_code": 2,
+      "elapsed_s": 191.534,
+      "command": [
+        "make",
+        "check"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit214-verified-7a2f6wdo",
+      "required_services": true
+    },
+    "format_gate_failure": {
+      "exit_code": 2,
+      "elapsed_s": 0.266,
+      "command": [
+        "make",
+        "check"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit214-verified-7a2f6wdo",
+      "required_services": true
+    },
+    "formal_migration_read_only": {
+      "read_only_verification": true,
+      "databases": [
+        {
+          "database": "medops_v2",
+          "migration": "0026"
+        },
+        {
+          "database": "medops_v2_safety",
+          "migration": "0026"
+        },
+        {
+          "database": "medops",
+          "migration": "0026"
+        }
+      ]
+    },
+    "documents": {
+      "exit_code": 0,
+      "phase": "final",
+      "elapsed_s": 21.547,
+      "baseline_sha": "a9da1bbd28d8ef75d939bf51f754251ccf9ed474",
+      "task_ids": 144,
+      "changed_existing_statuses": [],
+      "local_links_checked": 322,
+      "local_fragments_checked": 7,
+      "baseline_maintenance_inputs": 773,
+      "unchanged_maintenance_inputs": 771,
+      "modified_maintenance_inputs": [
+        "tests/integration/test_migrations.py",
+        "tests/integration/test_rls.py"
+      ],
+      "new_maintained_python_files": 4,
+      "maintenance_inputs_after": 777,
+      "maintenance_mismatches": [],
+      "old_schemas_unchanged": 36,
+      "new_schemas": 0,
+      "old_production_source_unchanged": true,
+      "existing_migrations_unchanged": true,
+      "new_migration": "0027",
+      "unexpected_changed_paths": [],
+      "hosted_model_calls": 0,
+      "api_cost_usd": 0
+    }
+  },
+  "self_review": [
+    {
+      "item": "需求与范围",
+      "verdict": "pass",
+      "evidence": "实现真实PG取消/租约/决策写入边界，不冒充预算恢复或完整Agent；原七动作/8步/额度/绝对截止、数据集和采用门保持"
+    },
+    {
+      "item": "ADR与阶段硬门",
+      "verdict": "pass",
+      "evidence": "按已同意PLAN-02/ADR-0012及AGENT-04实现，ARCH-04/11保持；无目标/阈值/默认模型/生产批准变更，无需新增ADR"
+    },
+    {
+      "item": "正确性与失败路径",
+      "verdict": "pass",
+      "evidence": "临时PG验证跨连接取消、回滚、重复创建/步数、旧持有者、锁后重验时钟、取消与提交排序、版本/身份变化及调用途中失败；首轮权限错误和清单遗漏先失败后修复测"
+    },
+    {
+      "item": "权限与数据",
+      "verdict": "pass",
+      "evidence": "新metadata表部门RLS+应用principal/context过滤；新表最小角色权限显式登记，旧ACL/身份表权限不改；复用可信启动绑定并逐次核对连接，不保存正文或密钥"
+    },
+    {
+      "item": "预算/取消/副作用",
+      "verdict": "pass",
+      "evidence": "原预算/最终阶段代码字节保持，真实循环离线验证已知正费用与未知保守费用不丢，取消/失租后不再推进；未实现恢复、无新额度、0托管调用/0USD，正式库无DDL/DML"
+    },
+    {
+      "item": "追溯与版本",
+      "verdict": "pass",
+      "evidence": "原UUID/trace/context摘要/绝对时间/步数与租约代数可读；0027显式新表迁移，原Prompt/Skill/工具版本及Schema字节保持；不声称已有完整LoopCheckpoint/生产Driver"
+    },
+    {
+      "item": "验证充分性",
+      "verdict": "pass",
+      "evidence": "required全量3056/70/1、92项控制/迁移/RLS定向通过；原安全清单断言未放宽，36公开Schema与冻结数据保持；不能代替真实质量/并发容量/盲测"
+    },
+    {
+      "item": "状态与文档",
+      "verdict": "pass",
+      "evidence": "本切片DONE、AGENT-04整体IN_PROGRESS；原144任务ID/其余状态及前置保持，控制契约/入口/限制一致；正式三库只读核对仍0026，未迁移/重启/部署"
+    }
+  ],
+  "durable_cancellation_and_lease_implemented": true,
+  "durable_budget_recovery_implemented": false,
+  "production_driver_implemented": false,
+  "new_migration": "0027",
+  "new_table_RLS_and_grants_added": true,
+  "existing_ACL_or_security_rules_changed": false,
+  "formal_database_migration_applied": false,
+  "formal_database_DML": false,
+  "frozen_datasets_changed": false,
+  "default_models_changed": false,
+  "public_API_or_MCP_changed": false,
+  "production_gate_changed": false,
+  "real_holdout_accessed": false,
+  "final_business_completion_gate_implemented": false,
+  "independent_human_review_claimed": false,
+  "limits": [
+    "metadata-only; no full budget/pending-call/planning/progress/sealed-phase recovery",
+    "no production driver, worker or public cancellation endpoint",
+    "call-before-send race remains; no external exactly-once guarantee",
+    "formal databases remain 0026; no deployment or restart",
+    "real semantic quality, holdout and capacity remain unverified"
+  ]
+}

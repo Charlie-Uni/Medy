@@ -1,5 +1,7 @@
 # Medy
 
+2026-10-16记录214：AGENT-04持久取消/租约/原步数控制层工程自审通过；新0027仅在临时PG执行，正式三库仍0026。真实循环的原预算/阶段状态恢复、生产Driver与完整最终门仍待，整体未完成；0托管调用/0USD。见[记录214](docs/reviews/2026-10-16-implementation-214-durable-agent-control.md)。
+
 2026-10-16记录213：AGENT-04补实际草稿引用核验预算profile及封闭消费入口，本切片工程自审通过。按真实请求/原重试上界估计，预留不足不扩大，进入后仅允许绑定请求且永久停止普通模型调用；结果不是completed。整体IN_PROGRESS，持久取消/租约/原额度恢复、完整最终门及启动前profile仍待。0托管调用/0USD。见[记录213](docs/reviews/2026-10-16-implementation-213-sealed-final-citation-budget.md)。
 
 2026-10-15记录210：AGENT-04的连续重复/无进展切片已通过本轮工程自审；同动作/参数/稳定结果连续两次即停止，保留合法新证据、补读及核验变化。AGENT-04整体仍未完成，预算分配、持久取消/租约和原额度恢复继续推进；0托管调用/0USD。详见[记录210](docs/reviews/2026-10-15-implementation-210-agent-no-progress-guard.md)。
