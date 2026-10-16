@@ -168,3 +168,7 @@ PYTHONPATH=src env -u DEBUG venv/bin/python -m pytest -q \
 自适应假网关读取真实下一次规划消息，依据实际观察返回不同JSON；控制器使用同一个真实ModelRequest/MeteredGateway路径。验证正常search→verify→finish申请、empty→改query、部分证据→邻块读取、ambiguous→clarify、AE Skill及规划共额度等。反例验证非法/截断回复计步、八步终止、前置安全/版本/预算、保存失败、来源/句柄/正文/回执篡改、撤权、超时、未知费用及元数据遥测；不作为真实医学质量或正式Agent benchmark。
 
 连续重复检查见记录210；共享调用保护见记录211；工具整项估计见记录212；实际草稿引用profile/封闭消费见记录213；真实Driver/完整初始profile/持久取消及原预算恢复仍AGENT-04，完整最终门AGENT-05，受限持久追溯AGENT-06；最小SESSION仍S2前置，AGENT-07整体验证后才可AGENT-08获准付费试跑。EVAL-33真实独立保管、新盲测及原生产采用门继续独立，不因本轮循环实现而关闭。
+
+## 8. 持久执行控制层（记录214）
+
+新增[持久控制契约](AGENT_CONTROL.md)与0027：取消、租约ID/代数、原截止和步数在临时PG验证；before_call守卫逐次检查并关闭连接，同事务fence阻止旧持有者提交。该内部组件尚未装配生产Driver，不保存完整预算/规划/观察/最终阶段，不改变本文拒绝非全新run的规则；真实恢复仍AGENT-04。正式三库未迁移/部署。
