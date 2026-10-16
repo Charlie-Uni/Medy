@@ -75,7 +75,7 @@ flowchart TD
 
 这是当前内部planner的传输选择，不改变原Skill/QA structured-output配置，不声称真实模型输出有效率已验证。真实坏格式/截断率、需要的输出上限、实际完成率由获准试跑测量；若要变格式/profile另行版本化。初始Prompt是真实内容和SHA，不是空版本标签；后续模型生成Prompt候选仍归EVOL任务。
 
-12,000 input+output / 600,000微USD / 125秒总限额及原子调用预留继续由现有root budget约束。**记录211将最终预留保护接到共享调用准入，覆盖规划及工具内模型调用；工具整体估计、实际最终核验profile/消费与持久取消/租约/原预算恢复仍待。** 测试的512输出Token、20秒调用、1,000 Token/50,000微USD预留是合成显式配置，不是批准的生产默认值，不能据此启动托管实验。
+12,000 input+output / 600,000微USD / 125秒总限额及原子调用预留继续由现有root budget约束。**记录211将最终预留保护接到共享调用准入，覆盖规划及工具内模型调用；记录212补工具整项预算估计；实际最终核验profile/可信消费与持久取消/租约/原预算恢复仍待。** 测试的512输出Token、20秒调用、1,000 Token/50,000微USD预留是合成显式配置，不是批准的生产默认值，不能据此启动托管实验。
 
 ### 5.1 连续重复与无进展（记录210）
 
@@ -113,7 +113,28 @@ LoopCheckpoint附带本执行的实际`budget_protection`；旧执行、外来�
 
 兼容变化明确登记：预算组件为`execution-budget-v2+utf8-preflight+protected-headroom`，工具为`pv-tools-v2+protected-headroom`；工具契约SHA新增绑定实际预算组件版本。旧工具摘要的context在首次规划/工具调用前失败关闭，不以旧标签运行新保护。SYSTEM内容、默认模型、价格、根Token/费用/截止/八步与已有36个Schema均不改变。新摘要和旧摘要见记录211的机器回执；不是更新已发布策略指针。
 
-预留数值继续来自显式AgentProfile；测试1,000 Token/50,000微USD是既有合成配置，不是新生产默认值。本轮没有推导实际最终核验器所需数值，也没有整项工具开始前的最大总调用估计；每个真实模型请求的调用准入保护已实现。实际核验profile/整体估计与可信最终阶段消费还需后续接线。本轮不提供解除保护接口，不能退出scope后任意花掉预留，更不能另开预算冒充最终核验。
+预留数值继续来自显式AgentProfile；测试1,000 Token/50,000微USD是既有合成配置，不是新生产默认值。记录211当时没有推导实际最终核验器所需数值或整项工具估计；记录212补齐后者，实际核验profile与可信最终阶段消费仍待。仍不提供解除保护接口，不能退出scope后任意花掉预留，更不能另开预算冒充最终核验。
+
+### 5.3 工具开始前的整项估计（记录212）
+
+准入顺序保持：动作/版本/身份/父额度/绝对截止检查 → 当前授权和输入安全 → 服务端构造实际请求的预算计划 → 整项预检 → 原工具执行 → 原调用级硬限制 → 最终事实栅栏。模型只提动作，不能指定价格、重试次数或额度。`ModelCallPlan`不调用网关、不制造call_id/usage/月账本预留，也不释放最终保护。
+
+| 工具 | 一个attempt的实际请求 | 最大attempt数 |
+| --- | --- | --- |
+| extract_ae | 原AE的SYSTEM/报告类型/原文/严格Schema/800输出上限，共一请求 | 原Registry的幂等策略：1+MAX_RETRIES=3 |
+| verify_citations | 原事实回查和注入筛选后，逐claim走现有polarity_only分支；逐字包含/明确极性矛盾/未配置judge不产生模型请求，其余每claim至多一次600输出judge | 原Registry同样最多3次；重试可能重新处理前面claims，故按整attempt上界计 |
+| search_documents | 原query的查询翻译；无CJK或翻译关闭为零，否则一次240输出。按cache miss估计，不为确认命中访问缓存/数据库 | 1，不增加工具重试 |
+| read_evidence | 无托管模型请求；原句柄/邻块/权限/安全检查照旧 | 1 |
+
+每个请求继续用原UTF-8字节、framing、严格Schema和最大输出估计，再按当前MeteredGateway实际价目表计算费用。整项两维估计为`sum(各请求估计) × 原最大attempt数`；在同一根预算锁内比较`accounted + active + protected + 整项估计 <= 原上限`。原实际调用的原子reserve/settle/拒绝锁存、失败未知费用和真实超量处理全部保留。没有增加物理供应商的重试层或改变重试策略。
+
+整项预检拒绝时还没进入任何逻辑模型调用，所以只有受限工具失败/计划事件，没有伪造denied模型回执、usage或费用；原调用级拒绝仍按§5.2保留回执和锁存。估计是只读fit检查，不会像物理reserve那样锁存，也不是一次占住整项预算；并发竞争、事实变化、异常真实usage仍可能使后面的调用失败。保守预检不保证执行成功，也不保证够走满8步。
+
+引用请求预览复用现有verify_claims：在实际gateway.complete之前截获请求并用专用异常退出，不返回假verdict/ModelResponse、不产生模型回执。只允许已证明每claim最多一次judge的polarity_only；策略变化失败关闭，不能沿用少算上界。AE/structured/翻译的真实执行和预览共用请求构造，未改SYSTEM、Schema和输出上限。生产检索装配把同一个QueryTranslator的translate和request成对绑定；旧Ask端口没有新增必实现方法，Agent搜索遇到缺失预览则在检索前失败关闭。自定义适配器须可信地声明全部模型调用，不提供任意不合作插件的全知估计保证。
+
+受限ExecutionAudit记录请求、原最大attempt数、估计和plan_sha256；正文沿用既有受限存储边界，不进入模型可见工具结果或普通遥测。工具契约变为`pv-tools-v3+whole-tool-preflight`并绑定`model-call-plan-v1+original-retry-bound`；旧context在第一次规划/工具前拒绝。预算组件原调用公式/版本不变，公开36个Schema、生产默认模型/价格/策略不变。
+
+本轮`plan_verify`可对已明确claims/句柄给出真实引用核验请求的只读估计，供后续可信终态方复用。它不是未知最终草稿的初始profile推导，不覆盖尚未实现的完整最终业务门，也没有最终预留消费入口。合成1,000 Token/50,000微USD仍不是生产默认配置；这些剩余工作继续记在AGENT-04/05。
 
 ## 6. 停止与最终门
 
@@ -137,4 +158,4 @@ PYTHONPATH=src env -u DEBUG venv/bin/python -m pytest -q \
 
 自适应假网关读取真实下一次规划消息，依据实际观察返回不同JSON；控制器使用同一个真实ModelRequest/MeteredGateway路径。验证正常search→verify→finish申请、empty→改query、部分证据→邻块读取、ambiguous→clarify、AE Skill及规划共额度等。反例验证非法/截断回复计步、八步终止、前置安全/版本/预算、保存失败、来源/句柄/正文/回执篡改、撤权、超时、未知费用及元数据遥测；不作为真实医学质量或正式Agent benchmark。
 
-连续重复检查见记录210；共享调用保护见记录211；真实Driver/工具整体估计/实际核验profile与消费/持久取消及原预算恢复仍AGENT-04，完整最终门AGENT-05，受限持久追溯AGENT-06；最小SESSION仍S2前置，AGENT-07整体验证后才可AGENT-08获准付费试跑。EVAL-33真实独立保管、新盲测及原生产采用门继续独立，不因本轮循环实现而关闭。
+连续重复检查见记录210；共享调用保护见记录211；工具整项估计见记录212；真实Driver/实际核验profile与可信消费/持久取消及原预算恢复仍AGENT-04，完整最终门AGENT-05，受限持久追溯AGENT-06；最小SESSION仍S2前置，AGENT-07整体验证后才可AGENT-08获准付费试跑。EVAL-33真实独立保管、新盲测及原生产采用门继续独立，不因本轮循环实现而关闭。
