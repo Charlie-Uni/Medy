@@ -29,6 +29,7 @@ flowchart TD
 | 文件 | 职责 |
 | --- | --- |
 | [agent_loop.py](../../src/medops/application/agent_loop.py) | 单次、顺序、模型驱动控制器，计步、准入、调用及停止交接；不发布completed |
+| [agent_final_budget.py](../../src/medops/application/agent_final_budget.py) | 私有最终引用预算结果，实际可信入口见AgentTools；不发布completed |
 | [agent_planning.py](../../src/medops/application/agent_planning.py) | 真实SYSTEM内容、内容SHA、明确PlannerConfig与PlanningBoard输入投影；不读取评分期望 |
 | [agent_loop_ports.py](../../src/medops/application/agent_loop_ports.py) | 必需AgentLoopDriver、受限LoopCheckpoint和AgentLoopResult；没有无操作默认实现 |
 | [agent_loop_validation.py](../../src/medops/application/agent_loop_validation.py) | 工具信封/句柄/来源/区间/原文摘录/逐claim核验结果的一致性检查 |
@@ -75,7 +76,7 @@ flowchart TD
 
 这是当前内部planner的传输选择，不改变原Skill/QA structured-output配置，不声称真实模型输出有效率已验证。真实坏格式/截断率、需要的输出上限、实际完成率由获准试跑测量；若要变格式/profile另行版本化。初始Prompt是真实内容和SHA，不是空版本标签；后续模型生成Prompt候选仍归EVOL任务。
 
-12,000 input+output / 600,000微USD / 125秒总限额及原子调用预留继续由现有root budget约束。**记录211将最终预留保护接到共享调用准入，覆盖规划及工具内模型调用；记录212补工具整项预算估计；实际最终核验profile/可信消费与持久取消/租约/原预算恢复仍待。** 测试的512输出Token、20秒调用、1,000 Token/50,000微USD预留是合成显式配置，不是批准的生产默认值，不能据此启动托管实验。
+12,000 input+output / 600,000微USD / 125秒总限额及原子调用预留继续由现有root budget约束。**记录211将最终预留保护接到共享调用准入，覆盖规划及工具内模型调用；记录212补工具整项预算估计；记录213补实际草稿引用核验profile/封闭消费；完整初始profile、完整最终门与持久取消/租约/原预算恢复仍待。** 测试的512输出Token、20秒调用、1,000 Token/50,000微USD预留是合成显式配置，不是批准的生产默认值，不能据此启动托管实验。
 
 ### 5.1 连续重复与无进展（记录210）
 
@@ -105,7 +106,7 @@ flowchart TD
 已入账（已知或保守） + 当前在途预留 + 最终核验保护 + 本次请求保守预检量 <= 原执行上限
 ```
 
-保护在同一根预算上只可逐维增大，重复安装取max，不叠加两份；退出scope、线程复制上下文或子Skill重新进入执行scope均不能清除。没有给子工具新发12,000 Token/0.60 USD，也不通过假调用占用月账本。`BudgetSnapshot.protected_tokens/protected_cost_usd`独立于accounted/known/reserved；AgentBudget的四个旧字段继续只表示真实已入账和待结算调用，不能把保护空间计成费用或供应商usage。
+普通规划/工具调用下，保护在同一根预算上只可逐维增大，重复安装取max，不叠加两份；退出scope、线程复制上下文或子Skill重新进入执行scope均不能清除。没有给子工具新发12,000 Token/0.60 USD，也不通过假调用占用月账本。`BudgetSnapshot.protected_tokens/protected_cost_usd`独立于accounted/known/reserved；AgentBudget的四个旧字段继续只表示真实已入账和待结算调用，不能把保护空间计成费用或供应商usage。
 
 调用拒绝发生在供应商和月度预留前，仍生成原零费用denied回执；预算拒绝锁存，QueryTranslator即使按旧策略捕获异常并做普通检索fallback，工具最终预算检查仍失败关闭。原Skill重试共享同一保护，unknown usage继续保守入账；真实报告意外侵占保护时保留全部真实usage/费用、阻止输出及后续调用。保护为零的旧Ask/Skill路径保留原结算行为。
 
@@ -113,7 +114,7 @@ LoopCheckpoint附带本执行的实际`budget_protection`；旧执行、外来�
 
 兼容变化明确登记：预算组件为`execution-budget-v2+utf8-preflight+protected-headroom`，工具为`pv-tools-v2+protected-headroom`；工具契约SHA新增绑定实际预算组件版本。旧工具摘要的context在首次规划/工具调用前失败关闭，不以旧标签运行新保护。SYSTEM内容、默认模型、价格、根Token/费用/截止/八步与已有36个Schema均不改变。新摘要和旧摘要见记录211的机器回执；不是更新已发布策略指针。
 
-预留数值继续来自显式AgentProfile；测试1,000 Token/50,000微USD是既有合成配置，不是新生产默认值。记录211当时没有推导实际最终核验器所需数值或整项工具估计；记录212补齐后者，实际核验profile与可信最终阶段消费仍待。仍不提供解除保护接口，不能退出scope后任意花掉预留，更不能另开预算冒充最终核验。
+预留数值继续来自显式AgentProfile；测试1,000 Token/50,000微USD是既有合成配置，不是新生产默认值。记录211当时没有推导实际最终核验器所需数值或整项工具估计；记录212补齐后者，实际草稿引用核验profile与封闭消费后由记录213补齐，完整初始profile/最终门仍待。普通调用仍不提供解除保护接口，不能退出scope后任意花掉预留，更不能另开预算冒充最终核验。
 
 ### 5.3 工具开始前的整项估计（记录212）
 
@@ -134,7 +135,15 @@ LoopCheckpoint附带本执行的实际`budget_protection`；旧执行、外来�
 
 受限ExecutionAudit记录请求、原最大attempt数、估计和plan_sha256；正文沿用既有受限存储边界，不进入模型可见工具结果或普通遥测。工具契约变为`pv-tools-v3+whole-tool-preflight`并绑定`model-call-plan-v1+original-retry-bound`；旧context在第一次规划/工具前拒绝。预算组件原调用公式/版本不变，公开36个Schema、生产默认模型/价格/策略不变。
 
-本轮`plan_verify`可对已明确claims/句柄给出真实引用核验请求的只读估计，供后续可信终态方复用。它不是未知最终草稿的初始profile推导，不覆盖尚未实现的完整最终业务门，也没有最终预留消费入口。合成1,000 Token/50,000微USD仍不是生产默认配置；这些剩余工作继续记在AGENT-04/05。
+本轮`plan_verify`可对已明确claims/句柄给出真实引用核验请求的只读估计，供后续可信终态方复用。它不是未知最终草稿的初始profile推导，不覆盖尚未实现的完整最终业务门，记录213随后增加仅供可信终态方的引用预留消费入口。合成1,000 Token/50,000微USD仍不是生产默认配置；完整初始profile和完整最终门继续记在AGENT-04/05。
+
+### 5.4 封闭最终引用预算（记录213）
+
+可信终态方可在finish决策已消费后调用AgentTools.verify_final_citations，原execute工具动作集合仍只有四类，不暴露预算解除动作。复用实际草稿claims、当前事实与原引用Skill，推导原最大attempt数的请求预算；必须容纳在已安装的最终保护内，原总额度/期限/步数保持。
+
+进入后只允许已绑定的请求、输出上限、参数/Schema、报价和调用次数，timeout仅可缩短；每次把相应保护转成原在途reserve，仍经原Meter/月账本结算。退出成功/失败/取消都永久封闭该根预算的新模型调用，不恢复普通消费或另开额度。结果只含引用核验、草稿/预算摘要与回执，不发布completed；无指南claims时payload=None、max_calls=0，不能伪造核验通过。
+
+详见[最终引用预算契约](AGENT_FINAL_BUDGET.md)。该profile针对实际草稿，不是未知草稿的完整启动profile或完整业务门；AGENT-05/06仍须完整性/叙述/安全/当前持有权和原子保存。持久阶段/额度/租约恢复尚未实现，未来必须恢复封闭状态与剩余调用，不能清零重发。
 
 ## 6. 停止与最终门
 
@@ -158,4 +167,4 @@ PYTHONPATH=src env -u DEBUG venv/bin/python -m pytest -q \
 
 自适应假网关读取真实下一次规划消息，依据实际观察返回不同JSON；控制器使用同一个真实ModelRequest/MeteredGateway路径。验证正常search→verify→finish申请、empty→改query、部分证据→邻块读取、ambiguous→clarify、AE Skill及规划共额度等。反例验证非法/截断回复计步、八步终止、前置安全/版本/预算、保存失败、来源/句柄/正文/回执篡改、撤权、超时、未知费用及元数据遥测；不作为真实医学质量或正式Agent benchmark。
 
-连续重复检查见记录210；共享调用保护见记录211；工具整项估计见记录212；真实Driver/实际核验profile与可信消费/持久取消及原预算恢复仍AGENT-04，完整最终门AGENT-05，受限持久追溯AGENT-06；最小SESSION仍S2前置，AGENT-07整体验证后才可AGENT-08获准付费试跑。EVAL-33真实独立保管、新盲测及原生产采用门继续独立，不因本轮循环实现而关闭。
+连续重复检查见记录210；共享调用保护见记录211；工具整项估计见记录212；实际草稿引用profile/封闭消费见记录213；真实Driver/完整初始profile/持久取消及原预算恢复仍AGENT-04，完整最终门AGENT-05，受限持久追溯AGENT-06；最小SESSION仍S2前置，AGENT-07整体验证后才可AGENT-08获准付费试跑。EVAL-33真实独立保管、新盲测及原生产采用门继续独立，不因本轮循环实现而关闭。

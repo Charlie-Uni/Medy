@@ -100,3 +100,9 @@ AgentTools在原根预算快照和profile匹配后安装Token/费用保护，AE/
 四类工具在执行前生成服务端预算计划，AE和引用Skill按原最大3次attempt计算，搜索按一次原query翻译的cache-miss路径估计，读取为零模型调用。请求内容、Schema、输出上限与当前网关价目表共用真实执行逻辑；引用核验的免费分支不虚构模型调用。Token/费用估计必须连同原最终预留一起容纳，否则在第一个逻辑模型调用前返回budget_exceeded，无模型费用/回执。原逐调用reserve/settle及失败未知费用不变。
 
 这是只读预检而非整项原子预留；并发/事实漂移/异常usage仍可让后续调用失败。保守估计可能拒绝实际能靠首试或缓存完成的任务，待获准真实试跑衡量完成率，不静默缩小安全空间。Agent搜索要求可信检索适配器提供预览，旧Ask仍按原端口工作。工具版本现为pv-tools-v3+whole-tool-preflight，具体公式、事实边界和剩余最终核验工作见[循环整项预算契约](AGENT_LOOP.md#53-工具开始前的整项估计记录212)。
+
+## 13. 记录213：可信终态方的引用预算入口
+
+verify_final_citations仅供可信服务端消费已计步的finish申请，复用当前AgentTools的身份/事实/版本/父预算检查及原Registry引用Skill，未加入TOOL_ACTIONS/七动作/公共API。实际草稿请求与原重试上界生成FinalizationProfile，必须放进已有最终保护；预留不足拒绝，不修改AgentProfile或根额度。
+
+进入后仅匹配的请求能把保护转入原调用reserve，普通规划/工具和关闭后调用都被拒绝；成功/失败/取消都不重开额度。返回私有FinalCitationBudgetResult，不是终态审批，原事实栅栏须由调用方保存并commit。完整性、业务、安全、持久取消/租约与恢复仍待，0托管调用/0USD。工具版本pv-tools-v4+final-citation-budget与预算组件v3绑定，旧context模型前拒绝，36公开Schema保持。见[契约](AGENT_FINAL_BUDGET.md)。
