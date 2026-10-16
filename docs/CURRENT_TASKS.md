@@ -74,7 +74,7 @@ probe v4 与 `main-v5-provisional` 均已冻结。EVAL-11 已完成：580 个 go
 
 贯穿工作：ARCH-08/10/13/14、CODE-03～07、IDX-03、OBS-03、DEV-BACKLOG-01 按依赖穿插；ARCH-12 有实测收益再实施。BM25-09、CACHE-10、PERF-10、SRC-05、FOCUS-01/02/09、ROUTE-01/02 全部保留，先分别验证再 COMBO-01。人工事项 PLAN-02、EVAL-29/30/31、LIC-03、DEPLOY-01 单独跟踪；EVOL-09 已决定限实验，生产自动批准不再列为待问事项。
 
-**当前主切片：AGENT-04工具整体估计、实际最终核验profile/消费，随后持久取消/租约/原额度恢复；共享调用保护已过记录211，连续重复检查已过记录210。AGENT-04整体IN_PROGRESS，最小澄清续办仍纳入S2。** [记录205](reviews/2026-10-15-implementation-205-owner-decisions-and-agent-entry.md)只落实已获同意的设计与验收，没有实现Agent。GATE-01独立跟踪新采用规则工程接线；所有者确认有独立环境，类型/管理归属待提供、实际权限未核验，不阻塞公开开发场景工程。EVAL-33保留IN_PROGRESS及历史读取/隔离缺口，不再等待D-01/D-02；真实历史正文扫描0、新盲测0。本轮无付费/部署。记录204五批最终3f0267f已推送，[CI38571382863](https://github.com/Charlie-Uni/Medy/actions/runs/38571382863)全部29步骤成功；本轮发布/CI另按自身SHA留证。
+**当前主切片：AGENT-04实际最终核验profile/可信消费，随后持久取消/租约/原额度恢复；整项工具预算预检已过记录212，共享调用保护已过211、连续重复检查已过210。AGENT-04整体IN_PROGRESS，最小澄清续办仍纳入S2。** [记录205](reviews/2026-10-15-implementation-205-owner-decisions-and-agent-entry.md)只落实已获同意的设计与验收，没有实现Agent。GATE-01独立跟踪新采用规则工程接线；所有者确认有独立环境，类型/管理归属待提供、实际权限未核验，不阻塞公开开发场景工程。EVAL-33保留IN_PROGRESS及历史读取/隔离缺口，不再等待D-01/D-02；真实历史正文扫描0、新盲测0。本轮无付费/部署。记录204五批最终3f0267f已推送，[CI38571382863](https://github.com/Charlie-Uni/Medy/actions/runs/38571382863)全部29步骤成功；本轮发布/CI另按自身SHA留证。
 
 ARCH-12仅完成条件收益评估，生产Pool/事务拆分未采用；记录189已分批推送完成任务，记录190修复CI，8d3669e的远端38184157416全部步骤成功，包括真实容器门。ARCH-13仍未替换共享部署/长期驻留，容量仍待实测。MCP受限完整材料已由记录194补齐；原条件恢复、Task/MCP回放、FOCUS-02跨块定位、PLAN-02行动/profile已确认，EVAL-32开发评分器工程自审已过，真实Agent运行仍未完成；真实语义、第二独立人工、未见盲测、S2/S3及逐次付费授权门保持。
 
@@ -238,7 +238,7 @@ Redis 已在本机主运行配置切到 `redis`，TTL 300 秒；实际 smoke 为
 | AGENT-01 | 定义动作、状态、观察结果与停止契约 | DONE | [契约说明](agent/AGENT_CONTRACTS.md)与[记录206](reviews/2026-10-15-implementation-206-agent-action-and-state-contracts.md)：七动作/六状态/观察三份私有Schema、case/task/run/attempt及条件摘要绑定、严格JSON/句柄/预算快照准入已实现；109契约测试、required全量2675 passed/70 skipped/1旧警告及范围/文档自审通过，0费用。不是工具执行、授权或完成核验 |
 | AGENT-02 | 将检索和现有 Skill 暴露为受控工具 | DONE | [工具说明](agent/AGENT_TOOLS.md)与[记录207](reviews/2026-10-15-implementation-207-agent-controlled-tools.md)：四工具适配器、指定来源检索/缓存上下文、RLS原文/相邻块、真实Registry与共享额度已实现；199定向、required全量2738 passed/70 skipped/1旧警告、41文档与八项自审通过，0费用。未接规划循环、公共端点或持久观察，不冒称完整Agent |
 | AGENT-03 | 实现模型选择动作与结果驱动循环 | DONE | [记录209](reviews/2026-10-15-implementation-209-model-selected-agent-loop.md)、[内部循环](agent/AGENT_LOOP.md)：实际ModelGateway单动作规划、已提交观察驱动下一请求、原四工具/共享预算/严格准入及终态申请交接；假网关反例与原工具回归通过，本轮八项工程自审已过。无生产Driver/持久恢复/完整终态或公共入口，真实质量仍AGENT-08 |
-| AGENT-04 | 有界执行、重复检测、取消与恢复 | IN_PROGRESS | [记录210](reviews/2026-10-15-implementation-210-agent-no-progress-guard.md)连续重复检查已过；[记录211](reviews/2026-10-16-implementation-211-shared-agent-budget-protection.md)共享调用准入保护工程自审已过。整体未完成：工具整体估计、实际最终核验profile/消费及持久取消/租约/原预算恢复；恢复须保留原预留/步数/绝对截止/持有权，不新发额度。人工澄清后仍是显式关联新执行，须授权，不混作恢复或自动续费 |
+| AGENT-04 | 有界执行、重复检测、取消与恢复 | IN_PROGRESS | [记录212](reviews/2026-10-16-implementation-212-whole-tool-budget-preflight.md)整项工具预检工程自审通过； [记录210](reviews/2026-10-15-implementation-210-agent-no-progress-guard.md)连续重复检查已过；[记录211](reviews/2026-10-16-implementation-211-shared-agent-budget-protection.md)共享调用准入保护工程自审已过。整体未完成：实际最终核验profile/可信消费及持久取消/租约/原预算恢复；恢复须保留原预留/步数/绝对截止/持有权，不新发额度。人工澄清后仍是显式关联新执行，须授权，不混作恢复或自动续费 |
 | AGENT-05 | 最终证据核验、安全、澄清与人工升级 | READY | AGENT-03记录209工程自审已过；ARCH-03/06；未核验证据不可作答；共同必需证据、数字/否定/条件、指定来源、冲突与无答案反例；说明缺失信息和升级材料，延续澄清会话依赖 SESSION-01/02 |
 | AGENT-06 | Agent 轨迹、版本、计量与回放接线 | READY | AGENT-03记录209工程自审已过；ARCH-07/09；记录动作、简短行动理由、受限输入输出引用、证据、调用回执及实际版本；Langfuse 只发获准元数据；证明回放边界和重启后关联稳定 |
 | AGENT-07 | 首个业务 Agent 的无付费集成验证 | BLOCKED | AGENT-04/05/06、EVAL-32及SESSION-01/02最小澄清切片；完整任务、空检索补救、失败/预算/权限/注入/恢复及澄清后关联新执行/累计费用/过期删除撤权并发反例全通过。真实质量另验 |
@@ -355,3 +355,5 @@ EVOL-06～08 按候选类型分切片记录，Prompt 先行；整项 DONE 需两
 2026-10-15记录210：AGENT-04的连续重复/无进展切片工程自审通过，整体保留IN_PROGRESS。相同稳定动作/结果两次即停，句柄UUID/理由/标点不能伪造新增；数字逗号和拒绝恢复清零两缺陷先复现后修复。41新测试、355定向、required全量2924 passed/70 skipped/1既有warning、文档41；36Schema/冻结数据不变，0托管调用/0USD。下一预算分配/最终预留，持久取消/租约/原额度恢复及生产Driver仍待。
 
 2026-10-16记录211：AGENT-04共享调用准入的最终预留保护切片自审通过，整体IN_PROGRESS。Token/费用保护贯穿规划/原工具/翻译/重试，单独于真实费用和在途预留；预算/工具版本及SHA明确升级，旧context失败关闭。27新测试、304定向、required全量2951 passed/70 skipped/1既有warning、文档41；36Schema和冻结输入保持，0托管调用/0USD。下一工具整体估计、实际核验profile/消费及持久取消/租约/原预算恢复；不宣称完整Agent/生产Driver或真实质量通过。
+
+2026-10-16记录212：AGENT-04工具整项预检切片工程自审通过，整体IN_PROGRESS。AE/引用按原最大3次attempt、搜索按cache miss翻译、读取零模型请求；共用实际请求与当前网关价格。24新/8更新测试、166定向、required全量2975 passed/70 skipped/1既有warning；36Schema及冻结输入保持，0托管调用/0USD。预检非原子占额，不保证首试/缓存完成率；下一实际最终核验profile/可信消费及持久取消/租约/原额度恢复。

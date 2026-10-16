@@ -1,6 +1,6 @@
 # Medy
 
-2026-10-16记录211：AGENT-04已将最终核验预留接到共享预算的调用准入，覆盖规划、原工具、翻译与重试，本轮工程自审通过。预留与真实费用/待结算调用分列，不能被嵌套或并发绕过；预算/工具契约版本已更新。AGENT-04整体未完成，实际核验profile、最终阶段消费和持久恢复仍待；0托管调用/0USD。见[记录211](docs/reviews/2026-10-16-implementation-211-shared-agent-budget-protection.md)。
+2026-10-16记录212：AGENT-04增加四类工具开始前的整项模型预算估计，复用实际请求构造、当前网关价格和原Skill重试上界，本切片工程自审通过。估计不是费用、调用预留或完成保证；最终核验profile/可信消费与持久恢复仍待，整体IN_PROGRESS。0托管调用/0USD。见[记录212](docs/reviews/2026-10-16-implementation-212-whole-tool-budget-preflight.md)。
 
 2026-10-15记录210：AGENT-04的连续重复/无进展切片已通过本轮工程自审；同动作/参数/稳定结果连续两次即停止，保留合法新证据、补读及核验变化。AGENT-04整体仍未完成，预算分配、持久取消/租约和原额度恢复继续推进；0托管调用/0USD。详见[记录210](docs/reviews/2026-10-15-implementation-210-agent-no-progress-guard.md)。
 
