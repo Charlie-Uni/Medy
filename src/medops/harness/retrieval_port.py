@@ -23,6 +23,7 @@ from medops.domain.evidence import Evidence
 from medops.domain.identity import UserContext
 from medops.domain.intent import Entity
 from medops.domain.state import MAX_CANDIDATES, MAX_EVIDENCE, CandidateRef
+from medops.infrastructure.llm.gateway import ModelRequest
 from medops.retrieval.cache import CachedCandidates, CacheKeyInputs, CandidateCache, recheck_cached
 from medops.retrieval.contracts import LexicalRetriever, LexicalVersions
 from medops.retrieval.doc_focus import FOCUS_K, focus_documents, load_documents
@@ -91,6 +92,7 @@ class ProductionRetrieval:
         doc_focus: bool = False,
         source_constraint: bool = False,
         translator: Callable[[str], str | None] | None = None,
+        translation_request: Callable[[str], ModelRequest | None] | None = None,
         translation_pool: TranslationPool | None = None,
         cache: CandidateCache | None = None,
         cache_versions: tuple[str, str] | None = None,
@@ -116,6 +118,7 @@ class ProductionRetrieval:
         self._source_constraint = source_constraint
         # record 95: an English rendering of a Chinese question becomes one more search query (never evidence)
         self._translator = translator
+        self._translation_request = translation_request
         # record 165: remote translation may overlap the independent original-query retrieval. One bounded pool is
         # shared by the process; callers may inject an isolated pool for tests.
         self._translation_pool = translation_pool or DEFAULT_TRANSLATION_POOL
@@ -126,6 +129,15 @@ class ProductionRetrieval:
             raise ValueError("a retrieval cache needs the (retrieval_version, policy_version) of its entries")
         self._cache = cache
         self._cache_versions = cache_versions
+
+    def model_requests(self, request: RetrievalRequest) -> tuple[ModelRequest, ...]:
+        """Conservative cache-miss preview; no DB/cache/network reads or retrieval work."""
+        if self._translator is None:
+            return ()
+        if self._translation_request is None:
+            raise InfrastructureError(ErrorCode.dependency_unavailable, "translation budget preview unavailable")
+        preview = self._translation_request(request.query)
+        return (preview,) if preview is not None else ()
 
     def retrieve(self, request: RetrievalRequest) -> RetrievalOutcome:
         if request.historical_requested and request.as_of is None:

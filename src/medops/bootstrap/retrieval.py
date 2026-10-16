@@ -80,7 +80,7 @@ class RetrievalServices:
         if translation_model != QUERY_TRANSLATION_OFF and meter is None:
             raise ValueError("query translation requires the execution's metered gateway")
         translator = (
-            QueryTranslator(meter, translation_model).translate
+            QueryTranslator(meter, translation_model)
             if translation_model != QUERY_TRANSLATION_OFF and meter is not None
             else None
         )
@@ -94,7 +94,8 @@ class RetrievalServices:
             multi_query=policies.multi_query(),
             doc_focus=policies.doc_focus(),
             source_constraint=policies.source_constraint(),
-            translator=translator,
+            translator=translator.translate if translator is not None else None,
+            translation_request=translator.request if translator is not None else None,
             cache=self.cache,
             cache_versions=(routed.versions.retrieval_version, routed.versions.policy_version) if self.cache else None,
         )

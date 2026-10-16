@@ -13,6 +13,7 @@ from typing import Any, Protocol
 
 from medops.domain.identity import UserContext
 from medops.harness.retrieval_port import ProductionRetrieval
+from medops.infrastructure.llm.gateway import ModelRequest
 from medops.retrieval.cache import CandidateCache
 from medops.retrieval.contracts import LexicalRetriever
 from medops.retrieval.hybrid import HybridConfig
@@ -44,6 +45,7 @@ def build_retrieval(
     doc_focus: bool = False,
     source_constraint: bool = False,
     translator: Callable[[str], str | None] | None = None,
+    translation_request: Callable[[str], ModelRequest | None] | None = None,
     cache: CandidateCache | None = None,
     cache_versions: tuple[str, str] | None = None,
 ) -> ProductionRetrieval:
@@ -60,6 +62,7 @@ def build_retrieval(
         doc_focus=doc_focus,
         source_constraint=source_constraint,
         translator=translator,
+        translation_request=translation_request,
         cache=cache,
         cache_versions=cache_versions,
     )
