@@ -25,7 +25,7 @@ def test_ae_cannot_spend_the_final_verification_reserve():
         result = tool.execute(action, run=current)
     assert result.kind == "budget_exceeded"
     assert not fake.calls and budget.snapshot().accounted_tokens == 0
-    assert len(tool.meter.receipts) == 1 and not tool.meter.receipts[0].provider_started
+    assert not tool.meter.receipts  # whole-tool refusal precedes any logical model call
 
 
 def test_ae_fee_protection_rejects_before_provider():
@@ -43,7 +43,7 @@ def test_ae_fee_protection_rejects_before_provider():
         result = tool.execute(action, run=current)
     assert result.kind == "budget_exceeded" and not fake.calls
     assert budget.snapshot().accounted_cost_usd == 0 and budget.protection().cost_usd == floor
-    assert len(tool.meter.receipts) == 1 and not tool.meter.receipts[0].provider_started
+    assert not tool.meter.receipts  # whole-tool refusal precedes any logical model call
 
 
 def verification_setup():
@@ -76,7 +76,7 @@ def test_real_citation_skill_cannot_consume_final_verification_headroom():
         result = tool.execute(action, run=current, evidence_registry=(record,))
     assert result.kind == "budget_exceeded" and not fake.calls
     assert budget.snapshot().accounted_tokens == 0 and budget.protection().tokens == 1000
-    assert len(tool.meter.receipts) == 1 and not tool.meter.receipts[0].provider_started
+    assert not tool.meter.receipts  # whole-tool refusal precedes any logical model call
 
 
 def translation_setup():
@@ -92,6 +92,7 @@ def translation_setup():
         return original(request)
 
     retrieval.retrieve = retrieve
+    retrieval.model_requests = lambda request: (translator.request(request.query),)
     body = proposal()
     body["proposal"]["query"] = "PUBLIC 药物警戒审计的分类"
     action = admit_action(wire(body), run=current, action_id=uid(202), evidence_registry=(), now=NOW)
@@ -108,8 +109,8 @@ def test_translation_budget_denial_cannot_be_hidden_by_ordinary_search_fallback(
     with parent(token_limit=n + 500) as budget:
         result = tool.execute(action, run=current)
     assert result.kind == "budget_exceeded" and not fake.calls
-    assert budget.snapshot().blocked_reason == "tokens" and budget.protection().tokens == 1000
-    assert len(tool.meter.receipts) == 1 and not tool.meter.receipts[0].provider_started
+    assert budget.snapshot().blocked_reason is None and budget.protection().tokens == 1000
+    assert not tool.meter.receipts  # whole-tool refusal precedes any logical model call
 
 
 def test_loop_checkpoints_keep_actual_protection_separate_from_usage_and_pending_calls():
@@ -159,7 +160,7 @@ def test_loop_tool_timeout_retains_unknown_usage_and_final_protection():
     assert any(r.cost_basis == "conservative_reservation" for r in meter.receipts)
 
 
-def test_original_skill_retry_stops_before_invading_the_protected_floor():
+def test_whole_skill_retry_bound_is_checked_before_any_model_call():
     from medops.infrastructure.llm.gateway import ModelTimeout
 
     current, tool, fake, action = extract_setup()
@@ -172,7 +173,7 @@ def test_original_skill_retry_stops_before_invading_the_protected_floor():
     action = admit_action(wire(proposal("extract_ae")), run=current, action_id=uid(203), evidence_registry=(), now=NOW)
     with parent(token_limit=2 * n + 999) as budget:
         result = tool.execute(action, run=current)
-    assert result.kind == "budget_exceeded" and len(fake.calls) == 1
-    assert len(tool.meter.receipts) == 2 and tool.meter.receipts[-1].outcome == "denied"
-    assert budget.snapshot().accounted_tokens == n and budget.snapshot().known_tokens == 0
-    assert budget.protection().tokens == 1000 and not tool.meter.receipts[-1].provider_started
+    assert result.kind == "budget_exceeded" and not fake.calls
+    assert not tool.meter.receipts
+    assert budget.snapshot().accounted_tokens == budget.snapshot().known_tokens == 0
+    assert budget.protection().tokens == 1000

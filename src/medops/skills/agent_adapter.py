@@ -18,12 +18,17 @@ from medops.core.deadline import DeadlineExceeded
 from medops.core.errors import ErrorCode
 from medops.domain.agent_actions import VerifyCitationsAction
 from medops.domain.agent_execution import AgentContext, EvidenceHandle
+from medops.domain.answer import Claim
 from medops.domain.common import ReasonCode
 from medops.domain.skill import SkillStatus
 from medops.domain.verification import Verdict
-from medops.infrastructure.llm.gateway import BudgetExceeded
+from medops.harness.contracts import MAX_RETRIES
+from medops.infrastructure.llm.call_plan import ModelCallPlan
+from medops.infrastructure.llm.gateway import BudgetExceeded, ModelRequest
+from medops.safety.checks import screen_evidence
 from medops.skills import ae_extraction, citation_verification
 from medops.skills.registry import SkillContext, SkillRegistry, SkillRun
+from medops.verification.verifier import plan_claim_judges
 
 
 def _skill_ok(result: SkillRun) -> None:
@@ -112,14 +117,52 @@ class PVSkillAdapter:
             (),
         )
 
-    def verify(
+    def plan_extract(self, context: AgentContext, skill_context: SkillContext) -> ModelCallPlan:
+        inp = ae_extraction.AeExtractionInput(narrative=context.narrative, source_type=context.source_type)
+        return ModelCallPlan(
+            requests=(ae_extraction.budget_request(skill_context, inp),),
+            max_attempts=1 + (MAX_RETRIES if ae_extraction.SPEC.idempotent else 0),
+        )
+
+    def plan_verify(
         self,
         proposal: VerifyCitationsAction,
         context: AgentContext,
         registry: dict[UUID, EvidenceHandle],
         skill_context: SkillContext,
         facts_port: AgentFacts,
-    ) -> tuple[VerificationPayload, tuple[EvidenceHandle, ...], tuple[AgentFact, ...]]:
+    ) -> ModelCallPlan:
+        facts = self._verification_facts(proposal, context, registry, facts_port)
+        visible, _ = screen_evidence(tuple(f.evidence for f in facts))
+        by_id = {e.citation.chunk_id: e for e in visible}
+        requests: list[ModelRequest] = []
+        for item in proposal.claims:
+            known = tuple(
+                registry[h].evidence.citation.chunk_id
+                for h in item.evidence_handles
+                if registry[h].evidence.citation.chunk_id in by_id
+            )
+            if known:
+                requests.extend(
+                    plan_claim_judges(
+                        [Claim(text=item.text, citation_chunk_ids=known)],
+                        [by_id[c] for c in known],
+                        judge_model_id=skill_context.deps.judge_model_id,
+                        timeout_s=skill_context.deps.specs["verify"].timeout_s,
+                    )
+                )
+        return ModelCallPlan(
+            requests=tuple(requests),
+            max_attempts=1 + (MAX_RETRIES if citation_verification.SPEC.idempotent else 0),
+        )
+
+    def _verification_facts(
+        self,
+        proposal: VerifyCitationsAction,
+        context: AgentContext,
+        registry: dict[UUID, EvidenceHandle],
+        facts_port: AgentFacts,
+    ) -> tuple[AgentFact, ...]:
         if len(proposal.claims) > citation_verification.MAX_CLAIMS or any(len(c.text) > 1000 for c in proposal.claims):
             raise AgentToolFault("unsupported")
         wanted = tuple(
@@ -135,6 +178,17 @@ class PVSkillAdapter:
         }
         if {f.evidence.citation.chunk_id: f for f in facts} != expected:
             raise AgentToolFault("denied_or_unavailable")
+        return facts
+
+    def verify(
+        self,
+        proposal: VerifyCitationsAction,
+        context: AgentContext,
+        registry: dict[UUID, EvidenceHandle],
+        skill_context: SkillContext,
+        facts_port: AgentFacts,
+    ) -> tuple[VerificationPayload, tuple[EvidenceHandle, ...], tuple[AgentFact, ...]]:
+        facts = self._verification_facts(proposal, context, registry, facts_port)
         by_id = {f.evidence.citation.chunk_id: f.evidence for f in facts}
 
         def lookup(user, ids):

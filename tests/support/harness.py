@@ -23,6 +23,9 @@ class FakeRetrieval:
         self.degraded = degraded
         self.requests: list[RetrievalRequest] = []
 
+    def model_requests(self, request):
+        return ()  # this fixture never invokes a hosted model
+
     def retrieve(self, request):
         self.requests.append(request)
         cands = tuple(

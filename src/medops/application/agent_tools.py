@@ -41,6 +41,7 @@ from medops.domain.safety import SafetyDecision
 from medops.harness.audit import ExecutionAudit, ExecutionAuditSnapshot
 from medops.harness.retrieval_port import RetrievalRequest
 from medops.infrastructure.llm.accounting import call_scope
+from medops.infrastructure.llm.call_plan import CALL_PLAN_VERSION, ModelCallPlan
 from medops.infrastructure.llm.execution_budget import (
     EXECUTION_BUDGET_VERSION,
     BudgetProtection,
@@ -55,7 +56,7 @@ from medops.skills.registry import SkillContext, SkillRegistry
 from medops.verification.verifier import VERIFIER_VERSION
 
 log = logging.getLogger(__name__)
-TOOL_VERSION = "pv-tools-v2+protected-headroom"
+TOOL_VERSION = "pv-tools-v3+whole-tool-preflight"
 TOOL_ACTIONS = frozenset({"extract_ae", "search_documents", "read_evidence", "verify_citations"})
 SEARCH_EXCERPT_CHARS = 500
 READ_MAX_CHARS = 8000
@@ -66,6 +67,7 @@ def tool_contract_sha256(registry: SkillRegistry | None = None) -> str:
         {
             "version": TOOL_VERSION,
             "execution_budget": EXECUTION_BUDGET_VERSION,
+            "model_call_plan": CALL_PLAN_VERSION,
             "safety": SAFETY_VERSION,
             "verifier": VERIFIER_VERSION,
             "planner_schema": PlannerProposal.model_json_schema(),
@@ -160,6 +162,13 @@ class AgentTools:
                     texts.extend(c.text for c in action.proposal.claims)
                 if any(check_input(t).decision is not SafetyDecision.allow for t in texts):
                     raise AgentToolFault("unsupported")
+                plan = self._model_plan(action, evidence_registry)
+                self._journal.record_event("agent_tool_budget_plan", plan.audit_record(self.meter.execution_prices))
+                budget = current_budget()
+                if budget is None:
+                    raise AgentToolFault("dependency_error")
+                if not budget.fits(plan.estimate(self.meter.execution_prices)):
+                    raise BudgetExceeded("agent_tool_plan_exceeds_budget")
                 payload, issued, observed = self._dispatch(action, evidence_registry)
                 check_deadline()
                 check_execution_budget()
@@ -284,6 +293,31 @@ class AgentTools:
             ),
         )
 
+    def _search_request(self, proposal: SearchDocumentsAction) -> RetrievalRequest:
+        return RetrievalRequest(
+            query=proposal.query,
+            user=self.context.principal,
+            as_of=self.context.query_context.as_of,
+            historical_requested=self.context.query_context.historical_requested,
+            source_document_ids=tuple(s.doc_id for s in self.context.source_scope.allowed_sources),
+        )
+
+    def _model_plan(self, action: BoundAction, registry: tuple[EvidenceHandle, ...]) -> ModelCallPlan:
+        proposal = action.proposal
+        if isinstance(proposal, ExtractAEAction):
+            return self._skills.plan_extract(self.context, self.skill_context)
+        self.facts.sources(self.context)
+        if isinstance(proposal, SearchDocumentsAction):
+            preview = getattr(self.skill_context.deps.retrieval, "model_requests", None)
+            if not callable(preview):
+                raise AgentToolFault("dependency_error")
+            return ModelCallPlan(requests=tuple(preview(self._search_request(proposal))))
+        if isinstance(proposal, VerifyCitationsAction):
+            return self._skills.plan_verify(
+                proposal, self.context, {h.handle: h for h in registry}, self.skill_context, self.facts
+            )
+        return ModelCallPlan()  # read_evidence performs no hosted model work
+
     def _dispatch(
         self, action: BoundAction, registry: tuple[EvidenceHandle, ...]
     ) -> tuple[ToolPayload, tuple[EvidenceHandle, ...], tuple[AgentFact, ...]]:
@@ -292,15 +326,7 @@ class AgentTools:
             return self._skills.extract(self.context, self.skill_context)
         self.facts.sources(self.context)
         if isinstance(proposal, SearchDocumentsAction):
-            result = self.skill_context.deps.retrieval.retrieve(
-                RetrievalRequest(
-                    query=proposal.query,
-                    user=self.context.principal,
-                    as_of=self.context.query_context.as_of,
-                    historical_requested=self.context.query_context.historical_requested,
-                    source_document_ids=tuple(s.doc_id for s in self.context.source_scope.allowed_sources),
-                )
-            )
+            result = self.skill_context.deps.retrieval.retrieve(self._search_request(proposal))
             facts = self.facts.lookup(self.context, tuple(e.citation.chunk_id for e in result.evidence))
             if tuple(f.evidence for f in facts) != result.evidence:
                 raise AgentToolFault("denied_or_unavailable")
