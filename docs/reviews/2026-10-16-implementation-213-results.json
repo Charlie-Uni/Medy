@@ -1,0 +1,219 @@
+{
+  "task_id": "AGENT-04",
+  "slice": "actual-draft final citation profile and sealed protected-budget consumption",
+  "slice_status": "DONE",
+  "whole_task_status": "IN_PROGRESS",
+  "reviewer": "Codex self-review; not a second independent human",
+  "baseline_sha": "06aead54ba87785dbe129cfa40e6e2846fef15df",
+  "hosted_model_calls": 0,
+  "api_cost_usd": 0,
+  "new_test_cases": 45,
+  "component_versions": {
+    "baseline": {
+      "tool_version": "pv-tools-v3+whole-tool-preflight",
+      "tool_contract_sha256": "0e242630399ae3d9424a9b1cddd0d4f1ae481d480c27b0cc64ff2e1150c13a87",
+      "execution_budget_version": "execution-budget-v2+utf8-preflight+protected-headroom"
+    },
+    "candidate": {
+      "tool_version": "pv-tools-v4+final-citation-budget",
+      "tool_contract_sha256": "cf4875c058258d4f482569af5b94d6a81aa097e0cab1c62052f28c73fec4a941",
+      "execution_budget_version": "execution-budget-v3+sealed-finalization"
+    }
+  },
+  "validation": {
+    "required_full_gate": {
+      "exit_code": 0,
+      "elapsed_s": 95.58,
+      "command": [
+        "make",
+        "check"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit213-verified-2z6lp5jp",
+      "required_services": true,
+      "passed": 3020,
+      "skipped": 70,
+      "warnings": 1
+    },
+    "targeted_original_paths": {
+      "exit_code": 0,
+      "elapsed_s": 9.79,
+      "command": [
+        "/Users/leaf/.cache/medy-checks/audit213-verified-2z6lp5jp/venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/unit/infrastructure/test_execution_budget.py",
+        "tests/unit/infrastructure/test_budget_protection.py",
+        "tests/unit/infrastructure/test_model_call_plan.py",
+        "tests/unit/application/test_agent_tools.py",
+        "tests/unit/application/test_agent_tool_plans.py",
+        "tests/unit/application/test_agent_budget_protection.py",
+        "tests/unit/application/test_agent_loop.py",
+        "tests/unit/harness/test_execution_budget.py",
+        "tests/integration/test_agent_tools.py"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit213-verified-2z6lp5jp",
+      "required_services": true,
+      "passed": 182,
+      "skipped": 0
+    },
+    "finalization_and_PG": {
+      "exit_code": 0,
+      "elapsed_s": 4.564,
+      "command": [
+        "/Users/leaf/.cache/medy-checks/audit213-verified-2z6lp5jp/venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/unit/infrastructure/test_finalization_budget.py",
+        "tests/unit/application/test_agent_final_budget.py",
+        "tests/integration/test_agent_tools.py"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit213-verified-2z6lp5jp",
+      "required_services": true,
+      "passed": 62,
+      "skipped": 0
+    },
+    "post_quote_fact_drift": {
+      "exit_code": 0,
+      "elapsed_s": 0.963,
+      "command": [
+        "/Users/leaf/.cache/medy-checks/audit213-verified-2z6lp5jp/venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/unit/application/test_agent_final_budget.py::test_changed_evidence_between_quote_and_actual_request_cannot_spend_the_final_floor"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit213-verified-2z6lp5jp",
+      "required_services": true,
+      "passed": 1
+    },
+    "receipt_attribution_repro": {
+      "exit_code": 1,
+      "elapsed_s": 1.04,
+      "command": [
+        "/Users/leaf/.cache/medy-checks/audit213-verified-2z6lp5jp/venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/unit/application/test_agent_final_budget.py::test_same_call_id_with_foreign_run_receipt_cannot_be_accepted_as_final_check"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit213-verified-2z6lp5jp",
+      "required_services": true
+    },
+    "receipt_attribution_fixed": {
+      "exit_code": 0,
+      "elapsed_s": 0.885,
+      "command": [
+        "/Users/leaf/.cache/medy-checks/audit213-verified-2z6lp5jp/venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/unit/application/test_agent_final_budget.py::test_same_call_id_with_foreign_run_receipt_cannot_be_accepted_as_final_check"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit213-verified-2z6lp5jp",
+      "required_services": true
+    },
+    "monthly_final_smoke": {
+      "exit_code": 0,
+      "provider": "PUBLIC fake",
+      "actual_hosted_calls": 0,
+      "actual_usd": 0,
+      "monthly_reservation_identity_accepted": true,
+      "logical_calls": 1,
+      "execution_admissions": 1,
+      "monthly_receipts": 1,
+      "final_payload": "supported",
+      "worktree_import_verified": true
+    },
+    "documents": {
+      "exit_code": 0,
+      "elapsed_s": 4.283,
+      "command": [
+        "/Users/leaf/.cache/medy-checks/audit213-verified-2z6lp5jp/venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/unit/docs"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit213-verified-2z6lp5jp",
+      "required_services": true,
+      "passed": 41
+    },
+    "scope_audit": {
+      "task_ids": 144,
+      "local_links_checked": 332,
+      "local_fragments_checked": 9,
+      "baseline_maintenance_inputs": 770,
+      "unchanged_maintenance_inputs": 766,
+      "new_maintained_python_files": 3,
+      "maintenance_inputs_after": 773,
+      "old_schemas_unchanged": 36,
+      "unexpected_changed_paths": []
+    }
+  },
+  "self_review": [
+    {
+      "item": "需求与范围",
+      "verdict": "pass",
+      "evidence": "完成已知实际草稿的引用预算profile/封闭消费，原七动作/8步和总cap不变；完整初始profile/业务门及持久恢复明确待办"
+    },
+    {
+      "item": "ADR与阶段硬门",
+      "verdict": "pass",
+      "evidence": "按PLAN-02获准最终预留原则实施，ARCH-04/11及既有工具/循环前置保持；不新增生产默认数值/验收门/自动生产批准"
+    },
+    {
+      "item": "正确性与失败路径",
+      "verdict": "pass",
+      "evidence": "45新用例覆盖精确请求/次数、免费路径、额度不足、费用漂移、取消/晚到/外来线程及真实PG撤权/栅栏；空payload缺陷先失败后修，不放宽Schema"
+    },
+    {
+      "item": "权限与数据",
+      "verdict": "pass",
+      "evidence": "原AgentTools方法全部AST相同，原Registry/adapter/临床Verifier/模型提示字节保持；新入口重验finish/context/当前事实安全并保留最后栅栏，不暴露给模型或公共API"
+    },
+    {
+      "item": "预算/取消/副作用",
+      "verdict": "pass",
+      "evidence": "保护原子转成原调用预留，原Meter/月账本计费与已知/未知费用保留；只用根额度/期限，退出永久封闭，0托管调用/0USD；持久取消/租约未完成"
+    },
+    {
+      "item": "追溯与版本",
+      "verdict": "pass",
+      "evidence": "真实请求/报价/根限额产生profile SHA，受限动作/计划/结果和原复合attempt回执保留；根预算v3/工具v4实际加载，新旧工具SHA留证，未实现持久阶段恢复"
+    },
+    {
+      "item": "验证充分性",
+      "verdict": "pass",
+      "evidence": "required全量3020/70/1、182原路径、62机制与临时PG加1漂移反例通过；原调用公式/回执和正常settle对照保持，36公开Schema/冻结数据不变；不代替真实质量"
+    },
+    {
+      "item": "状态与文档",
+      "verdict": "pass",
+      "evidence": "16路径/145原ID、332链接/9锚点核对；本切片DONE而04整体IN_PROGRESS，05/06 READY、07 BLOCKED及其余门原状态保持；下一持久取消/租约/原额度恢复"
+    }
+  ],
+  "limits": [
+    "actual known draft citation requests only, not initial unknown-draft profile or full business gate",
+    "no terminal completion or persistence is performed by the result",
+    "existing explicit floor must cover quoted final retries; no cap/profile expansion",
+    "sealed phase and slots remain process-local; durable cancellation/lease/recovery pending",
+    "PUBLIC synthetic providers and temporary PG only, no medical quality or blind holdout evidence"
+  ],
+  "deployment_changed": false,
+  "production_DML": false,
+  "new_migration_or_grants": false,
+  "frozen_datasets_changed": false,
+  "default_models_changed": false,
+  "ACL_or_security_rules_changed": false,
+  "public_API_or_MCP_changed": false,
+  "production_gate_changed": false,
+  "real_holdout_accessed": false,
+  "actual_production_driver_implemented": false,
+  "durable_recovery_implemented": false,
+  "final_business_completion_gate_implemented": false,
+  "actual_draft_final_citation_budget_implemented": true,
+  "initial_unknown_draft_profile_implemented": false,
+  "independent_human_review_claimed": false
+}

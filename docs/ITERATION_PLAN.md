@@ -1,6 +1,6 @@
 # Medy 项目完整迭代计划与工程建议
 
-2026-10-16记录212：AGENT-04增加四类工具开始前的整项模型预算估计，复用实际请求构造、当前网关价格和原Skill重试上界，本切片工程自审通过。估计不是费用、调用预留或完成保证；最终核验profile/可信消费与持久恢复仍待，整体IN_PROGRESS。0托管调用/0USD。见[记录212](reviews/2026-10-16-implementation-212-whole-tool-budget-preflight.md)。
+2026-10-16记录213：AGENT-04补实际草稿引用核验预算profile及封闭消费入口，本切片工程自审通过。按真实请求/原重试上界估计，预留不足不扩大，进入后仅允许绑定请求且永久停止普通模型调用；结果不是completed。整体IN_PROGRESS，持久取消/租约/原额度恢复、完整最终门及启动前profile仍待。0托管调用/0USD。见[记录213](reviews/2026-10-16-implementation-213-sealed-final-citation-budget.md)。
 
 2026-10-15记录210：AGENT-04的连续重复/无进展切片已通过本轮工程自审；同动作/参数/稳定结果连续两次即停止，保留合法新证据、补读及核验变化。AGENT-04整体仍未完成，预算分配、持久取消/租约和原额度恢复继续推进；0托管调用/0USD。详见[记录210](reviews/2026-10-15-implementation-210-agent-no-progress-guard.md)。
 
