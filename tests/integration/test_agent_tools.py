@@ -333,3 +333,32 @@ def test_principal_revocation_during_model_call_drops_payload_but_keeps_usage(da
             assert budget.snapshot().calls == 1 and budget.snapshot().accounted_tokens > 0
         assert result.kind == "denied_or_unavailable" and result.payload is None and len(result.call_receipt_ids) == 1
         assert len(gateway.calls) == 1
+
+
+@pytest.mark.parametrize("revoked", [False, True])
+def test_final_citation_budget_preserves_real_rls_and_output_fence(data, revoked):
+    with transaction(data) as conn:
+        current, tool, facts, fake = prepared(data, conn)
+        fact = facts.lookup(current.context, (data["rows"]["visible"]["chunks"][0],))[0]
+        item = record(current, fact)
+        draft = proposal("finish")["proposal"]["draft"]
+        draft["guideline_claims"][0]["text"] = fact.evidence.text
+        finish = bound(current, "finish", (item,), draft=draft)
+        current = current.model_copy(update={"decisions_consumed": 1})
+        if revoked:
+            with psycopg.connect(data["db"]["owner"]) as admin:
+                admin.execute("delete from document_acl where doc_id=%s", (data["rows"]["visible"]["doc"],))
+        with parent(token_limit=1000) as budget:
+            if revoked:
+                with pytest.raises((AgentToolFault, BusinessError)):
+                    tool.verify_final_citations(finish, run=current, evidence_registry=(item,))
+                assert budget.finalization_snapshot() is None
+            else:
+                result = tool.verify_final_citations(finish, run=current, evidence_registry=(item,))
+                assert result.profile.max_calls == 0 and result.payload.checks[0].verdict.value == "supported"
+                assert budget.finalization_snapshot().state == "closed"
+                with psycopg.connect(data["db"]["owner"]) as admin:
+                    admin.execute("set lock_timeout='100ms'")
+                    with pytest.raises(psycopg.errors.LockNotAvailable):
+                        admin.execute("delete from document_acl where doc_id=%s", (data["rows"]["visible"]["doc"],))
+        assert not fake.calls and current.status == "running" and current.terminal is None
