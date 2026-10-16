@@ -52,18 +52,25 @@ def structured_call(
     return result
 
 
+def structured_request(
+    ctx: SkillContext, *, purpose: str, system: str, user: str, schema: dict[str, Any]
+) -> ModelRequest:
+    """The actual request, shared with read-only budget planning."""
+    return ModelRequest(
+        purpose=purpose,
+        model_id=ctx.deps.answer_model_id,
+        messages=(Message(role="system", content=system), Message(role="user", content=user)),
+        max_output_tokens=STRUCTURED_MAX_OUTPUT_TOKENS,
+        json_schema=schema,
+        timeout_s=min(ctx.deps.specs["answer"].timeout_s, 120),
+    )
+
+
 def _structured_call(
     ctx: SkillContext, *, purpose: str, system: str, user: str, schema: dict[str, Any], audit: dict[str, Any]
 ) -> dict[str, Any]:
     response = ctx.deps.gateway.complete(
-        ModelRequest(
-            purpose=purpose,
-            model_id=ctx.deps.answer_model_id,
-            messages=(Message(role="system", content=system), Message(role="user", content=user)),
-            max_output_tokens=STRUCTURED_MAX_OUTPUT_TOKENS,
-            json_schema=schema,
-            timeout_s=min(ctx.deps.specs["answer"].timeout_s, 120),
-        )
+        structured_request(ctx, purpose=purpose, system=system, user=user, schema=schema)
     )
     audit["output"] = {"text": response.text, "parsed": response.parsed, "truncated": response.truncated}
     if response.truncated:

@@ -12,7 +12,8 @@ from pydantic import Field
 from medops.domain.ae import KINDS, AeKind
 from medops.domain.common import DomainModel, NonEmptyStr, ReasonCode, RiskLevel
 from medops.domain.skill import SkillOutput, SkillSpec, SkillStatus
-from medops.skills._structured import quote_grounded, structured_call
+from medops.infrastructure.llm.gateway import ModelRequest
+from medops.skills._structured import quote_grounded, structured_call, structured_request
 from medops.skills.registry import RegisteredSkill, SkillContext
 
 SPEC = SkillSpec(
@@ -83,12 +84,20 @@ class AeExtractionOutput(SkillOutput):
     )
 
 
+def _user(inp: AeExtractionInput) -> str:
+    return f"报告类型：{inp.source_type}\n\n报告原文：\n{inp.narrative}"
+
+
+def budget_request(ctx: SkillContext, inp: AeExtractionInput) -> ModelRequest:
+    return structured_request(ctx, purpose="skill:ae_extraction", system=SYSTEM, user=_user(inp), schema=SCHEMA)
+
+
 def _run(ctx: SkillContext, inp: AeExtractionInput) -> AeExtractionOutput:
     parsed = structured_call(
         ctx,
         purpose="skill:ae_extraction",
         system=SYSTEM,
-        user=f"报告类型：{inp.source_type}\n\n报告原文：\n{inp.narrative}",
+        user=_user(inp),
         schema=SCHEMA,
     )
     elements: list[AeElement] = []

@@ -124,21 +124,26 @@ class QueryTranslator:
     def version(self) -> str:
         return f"{QUERY_TRANSLATION_VERSION}:{self.model_id}"
 
-    def translate(self, query: str) -> str | None:
+    def request(self, query: str) -> ModelRequest | None:
+        """Pure preview of the exact translation request; no cache, model call or telemetry."""
         if not _CJK.search(query):
+            return None
+        return ModelRequest(
+            purpose="query_translation",
+            model_id=self.model_id,
+            messages=(Message(role="system", content=SYSTEM), Message(role="user", content=query)),
+            max_output_tokens=self._max_output_tokens,
+            json_schema=SCHEMA,
+            timeout_s=self._timeout_s,
+        )
+
+    def translate(self, query: str) -> str | None:
+        request = self.request(query)
+        if request is None:
             return None  # already in the documents' language
         with span("retrieval.translate", model_id=self.model_id) as current:
             try:
-                response = self._gateway.complete(
-                    ModelRequest(
-                        purpose="query_translation",
-                        model_id=self.model_id,
-                        messages=(Message(role="system", content=SYSTEM), Message(role="user", content=query)),
-                        max_output_tokens=self._max_output_tokens,
-                        json_schema=SCHEMA,
-                        timeout_s=self._timeout_s,
-                    )
-                )
+                response = self._gateway.complete(request)
                 parsed = response.parsed if response.parsed is not None else json.loads(response.text)
                 text = str(parsed.get("translation", "")).strip() if isinstance(parsed, dict) else ""
             except (InfrastructureError, BudgetExceeded, ModelOutputInvalid, ValueError, TypeError) as exc:

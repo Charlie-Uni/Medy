@@ -12,7 +12,7 @@ from __future__ import annotations
 
 import json
 from collections.abc import Sequence
-from typing import Literal
+from typing import Literal, NoReturn
 
 from medops.domain.answer import Claim
 from medops.domain.evidence import Evidence
@@ -276,6 +276,50 @@ def _statement_support(
         confidence=0.5,
         reason=f"token overlap {ratio:.2f} below threshold; no judge configured",
     )
+
+
+class _RequestCaptured(Exception):
+    pass
+
+
+class _JudgePreview:
+    provider = "budget-preview"
+
+    def __init__(self) -> None:
+        self.requests: list[ModelRequest] = []
+
+    def complete(self, request: ModelRequest) -> NoReturn:
+        self.requests.append(request)
+        raise _RequestCaptured()
+
+
+def plan_claim_judges(
+    claims: Sequence[Claim], evidence: Sequence[Evidence], *, judge_model_id: str | None, timeout_s: float
+) -> tuple[ModelRequest, ...]:
+    """Run the existing deterministic decisions, stopping at the first real request per claim.
+
+    polarity_only makes at most one judge call per claim. No fabricated verdict,
+    provider response, receipt or external I/O is used to finish a preview.
+    A different policy must implement its own proven bound before using this API.
+    """
+    if not judge_model_id:
+        return ()
+    if DEFAULT_POLICY != "polarity_only":
+        raise ValueError("judge budget preview requires polarity_only")
+    preview = _JudgePreview()
+    for claim in claims:
+        try:
+            verify_claims(
+                [claim],
+                evidence,
+                gateway=preview,
+                judge_model_id=judge_model_id,
+                timeout_s=timeout_s,
+                policy=DEFAULT_POLICY,
+            )
+        except _RequestCaptured:
+            pass
+    return tuple(preview.requests)
 
 
 def _llm_judge(
