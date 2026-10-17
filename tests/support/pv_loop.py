@@ -71,7 +71,7 @@ class MemoryLoopDriver:
             assert event.run.decisions_consumed == self.consumed + 1
             self.consumed += 1
 
-    def execute_tool(self, action, *, admission_run, evidence_registry):
+    def execute_tool(self, action, *, admission_run, admitted_at, evidence_registry):
         self.actions.append(action)
         self.admission_runs.append(admission_run)
         self.in_transaction = True

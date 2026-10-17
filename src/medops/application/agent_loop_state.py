@@ -26,7 +26,7 @@ from medops.core.strict_json import strict_json
 from medops.domain.agent_actions import AgentModel, ClarifyAction, EscalateAction, FinishAction
 from medops.domain.agent_execution import AgentBudget, BoundAction, EvidenceHandle, PVAgentRun, StopReason, utc_time
 
-LOOP_STATE_VERSION: Final = "pv-loop-state-v1+committed-observations"
+LOOP_STATE_VERSION: Final = "pv-loop-state-v2+terminal-admission-budget"
 MAX_LOOP_STATE_BYTES = 2 * 1024 * 1024
 FATAL_OUTCOMES: dict[str, StopReason] = {
     "dependency_error": "dependency_error",
@@ -65,7 +65,7 @@ class CommittedDecision(AgentModel):
 
 class LoopState(AgentModel):
     # All fields required: missing history/cursor/stop markers must not default to a fresh run.
-    version: Literal["pv-loop-state-v1+committed-observations"]
+    version: Literal["pv-loop-state-v2+terminal-admission-budget"]
     run: PVAgentRun
     config: PlannerConfig
     phase: LoopPhase
@@ -75,6 +75,7 @@ class LoopState(AgentModel):
     stop_reason: StopReason | None
     terminal_request: BoundAction | None
     terminal_admitted_at: datetime | None
+    terminal_admission_budget: AgentBudget | None
 
     _utc = field_validator("captured_at", "terminal_admitted_at")(
         lambda value: utc_time(value) if value is not None else None
@@ -108,6 +109,8 @@ class LoopState(AgentModel):
             raise ValueError("invalid_agent_loop_state")
         terminal = self.terminal_request
         if (terminal is None) != (self.terminal_admitted_at is None):
+            raise ValueError("invalid_agent_loop_state")
+        if (terminal is None) != (self.terminal_admission_budget is None):
             raise ValueError("invalid_agent_loop_state")
         if terminal is not None:
             proposal = terminal.proposal
@@ -226,7 +229,12 @@ def rebuild_loop_state(state: LoopState, *, expected_run: PVAgentRun, config: Pl
             raise ValueError("invalid_agent_loop_state")
         admitted = admit_action(
             canonical_json({"proposal": terminal.proposal.model_dump(mode="json")}),
-            run=state.run.model_copy(update={"decisions_consumed": state.run.decisions_consumed - 1}),
+            run=state.run.model_copy(
+                update={
+                    "decisions_consumed": state.run.decisions_consumed - 1,
+                    "budget": state.terminal_admission_budget,
+                }
+            ),
             action_id=terminal.action_id,
             evidence_registry=registry,
             now=when,

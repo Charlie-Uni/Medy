@@ -7,17 +7,19 @@ transactions, durable checkpoints and committed tool results (AGENT-04/06).
 from __future__ import annotations
 
 from dataclasses import dataclass
+from datetime import datetime
 from typing import TYPE_CHECKING, Literal, Protocol
 from uuid import UUID
 
 from medops.application.agent_progress import ProgressCheckpoint
 from medops.application.agent_tool_results import AgentToolOutcome
 from medops.domain.agent_execution import AgentContext, BoundAction, EvidenceHandle, PVAgentRun, StopReason
-from medops.infrastructure.llm.execution_budget import BudgetProtection
+from medops.infrastructure.llm.execution_budget import BudgetProtection, ExecutionBudget
 from medops.infrastructure.llm.gateway import ModelRequest, ModelResponse
 
 if TYPE_CHECKING:
     from medops.application.agent_loop_state import LoopState
+    from medops.application.agent_runtime_state import PlanningFrame
 
 LoopPhase = Literal["decision_started", "planning_returned", "proposal_rejected", "tool_committed", "handoff"]
 
@@ -56,6 +58,14 @@ class LoopCheckpoint:
 
 
 class AgentLoopDriver(Protocol):
+    def validate_recovery(self, state: LoopState, budget: ExecutionBudget) -> PlanningFrame | None:
+        """Attest the consumed encrypted head and exact root object, with current facts/lease.
+
+        A frame without a receipt may be returned ONLY if there is no admitted
+        call for it. A known response is reused without another model call.
+        """
+        ...
+
     def check_access(self, context: AgentContext, evidence_registry: tuple[EvidenceHandle, ...]) -> None:
         """Current identity/conditions/ownership AND all projected evidence; close transaction before return."""
         ...
@@ -70,7 +80,12 @@ class AgentLoopDriver(Protocol):
         ...
 
     def execute_tool(
-        self, action: BoundAction, *, admission_run: PVAgentRun, evidence_registry: tuple[EvidenceHandle, ...]
+        self,
+        action: BoundAction,
+        *,
+        admission_run: PVAgentRun,
+        admitted_at: datetime,
+        evidence_registry: tuple[EvidenceHandle, ...],
     ) -> AgentToolOutcome:
         """Fresh AGENT-02 adapter; save restricted result/audit under its fence and COMMIT.
 

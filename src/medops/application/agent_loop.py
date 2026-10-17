@@ -1,7 +1,7 @@
 """Model-selected sequential PV actions. Internal composition only; no terminal publisher.
 
 A mandatory trusted driver owns transaction commits/checkpoints. This slice does
-not implement durable recovery, final business validation or public endpoints.
+delegate durable recovery to an authenticated driver; final publication and public endpoints remain separate.
 """
 
 from __future__ import annotations
@@ -13,7 +13,7 @@ from copy import deepcopy
 from dataclasses import replace
 from datetime import UTC, datetime
 from typing import cast
-from uuid import uuid4
+from uuid import UUID, uuid4
 
 from medops.application.agent_contracts import AgentContractError, admit_action, validate_run_snapshot
 from medops.application.agent_loop_ports import AgentLoopAbort, AgentLoopDriver, AgentLoopResult, LoopCheckpoint
@@ -23,10 +23,12 @@ from medops.application.agent_loop_state import (
     CommittedDecision,
     LoopState,
     encode_loop_state,
+    rebuild_loop_state,
 )
 from medops.application.agent_loop_validation import validate_tool_commit
 from medops.application.agent_planning import PlannerConfig, PlanningBoard, planning_prompt_sha256
 from medops.application.agent_progress import AgentProgress
+from medops.application.agent_runtime_state import run_with_budget
 from medops.application.agent_tool_results import AgentToolOutcome
 from medops.application.agent_tools import tool_contract_sha256
 from medops.core.deadline import CURRENT_DEADLINE, DeadlineExceeded, check_deadline, deadline_scope, execution_admission
@@ -44,7 +46,7 @@ from medops.infrastructure.llm.execution_budget import (
     check_execution_budget,
     current_budget,
 )
-from medops.infrastructure.llm.gateway import BudgetExceeded, ModelOutputInvalid, ModelResponse
+from medops.infrastructure.llm.gateway import BudgetExceeded, ModelOutputInvalid, ModelRequest, ModelResponse
 from medops.infrastructure.llm.meter import MeteredGateway
 from medops.safety.checks import check_input
 
@@ -76,7 +78,7 @@ class AgentLoop:
         gateway.execution_prices.require(self.config.model_id)  # no inferred price/default model
         self._used = False
 
-    def run(self, initial: PVAgentRun) -> AgentLoopResult:
+    def _start(self, initial: PVAgentRun) -> PVAgentRun:
         if self._used:
             raise ValueError("agent_loop_already_used")
         self._used = True
@@ -90,6 +92,11 @@ class AgentLoop:
         self._progress = AgentProgress()
         self._history: tuple[CommittedDecision, ...] = ()
         self._admitted_at: datetime | None = None
+        self._admitted_budget: AgentBudget | None = None
+        return initial
+
+    def run(self, initial: PVAgentRun) -> AgentLoopResult:
+        initial = self._start(initial)
         if (
             initial.decisions_consumed
             or any(initial.budget.model_dump().values())
@@ -122,6 +129,101 @@ class AgentLoop:
         ):
             return self._handoff("unsupported_recovery")
         self._budget = budget  # bind only after all fresh-run/zero-parent checks pass
+        return self._execute(self._loop, protect=True)
+
+    def resume(self, state: LoopState) -> AgentLoopResult:
+        self._start(state.run)
+        budget = current_budget()
+        validate = getattr(self.driver, "validate_recovery", None)
+        if budget is None or CURRENT_DEADLINE.get() is None or validate is None:
+            return self._handoff("unsupported_recovery")
+        try:
+            rebuilt = rebuild_loop_state(state, expected_run=self._run, config=self.config)
+            frame = validate(state, budget)
+            if run_with_budget(self._run, budget.snapshot()) != self._run:
+                raise AgentLoopAbort("unsupported_recovery")
+            profile = self._run.context.profile
+            limits = budget.limits
+            if (
+                limits.token_limit > profile.token_cap
+                or usd_to_microusd(limits.cost_limit_usd) > profile.cost_cap_microusd
+                or limits.timeout_s > profile.timeout_ms / 1000
+            ):
+                raise AgentLoopAbort("budget_exceeded")
+            if state.phase != "handoff":
+                floor = budget.protection()
+                if (
+                    budget.finalization_snapshot() is not None
+                    or floor.tokens < profile.final_reserve_tokens
+                    or usd_to_microusd(floor.cost_usd) < profile.final_reserve_cost_microusd
+                ):
+                    raise AgentLoopAbort("unsupported_recovery")
+        except AgentLoopAbort as exc:
+            return self._handoff(exc.reason)
+        except (ValueError, TypeError, AttributeError):
+            return self._handoff("unsupported_recovery")
+        self._budget = budget
+        self._board, self._progress = rebuilt.board, rebuilt.progress
+        self._registry, self._outcomes, self._history = rebuilt.evidence_registry, rebuilt.outcomes, state.history
+        self._admitted_at, self._admitted_budget = state.terminal_admitted_at, state.terminal_admission_budget
+
+        def continue_saved() -> AgentLoopResult:
+            if state.phase == "handoff":
+                return AgentLoopResult(
+                    self._snapshot(),
+                    cast(StopReason, state.stop_reason),
+                    state.terminal_request,
+                    self._registry,
+                    self._outcomes,
+                )
+            if state.phase in {"decision_started", "planning_returned"}:
+                if frame is None or frame.decision_id != state.decision_id:
+                    raise AgentLoopAbort("unsupported_recovery")
+                context = self._run.context
+                with call_scope(
+                    run_id=str(context.identity.run_id),
+                    attempt_id=f"{context.identity.attempt_id}/decision:{frame.decision_id}",
+                    before_call=self._local_guard,
+                ):
+                    if frame.receipt is None:
+                        remaining = (frame.deadline_at - self._now()).total_seconds()
+                        with deadline_scope(remaining):
+                            check_deadline()
+                            response, invalid = self._planning(frame.request, frame.decision_id)
+                    else:
+                        response, invalid = frame.response, frame.invalid
+                        if response is None:
+                            return self._handoff(
+                                "timeout"
+                                if frame.receipt.error_type in {"ModelTimeout", "DeadlineExceeded", "TimeoutError"}
+                                else "budget_exceeded"
+                                if frame.receipt.outcome == "denied"
+                                else "dependency_error"
+                            )
+                        if state.phase == "decision_started":
+                            self._record(
+                                LoopCheckpoint(
+                                    "planning_returned",
+                                    self._snapshot(),
+                                    frame.decision_id,
+                                    response=response,
+                                    receipt_ids=(frame.receipt.call.call_id,),
+                                )
+                            )
+                result = self._decision(response, invalid, self._run.decisions_consumed - 1, frame.decision_id)
+                if result is not None:
+                    return result
+            elif rebuilt.blocked_reason is not None:
+                return self._handoff(rebuilt.blocked_reason)
+            return self._loop()
+
+        return self._execute(continue_saved, protect=False)
+
+    def _execute(self, operation: Callable[[], AgentLoopResult], *, protect: bool) -> AgentLoopResult:
+        budget = self._budget
+        if budget is None:
+            return self._handoff("unsupported_recovery")
+        profile = self._run.context.profile
         try:
             self._guard()
             context = self._run.context
@@ -130,13 +232,14 @@ class AgentLoop:
                 texts.append(context.source_scope.requested_document)
             if any(check_input(text).decision is not SafetyDecision.allow for text in texts):
                 return self._handoff("safety_boundary")
-            budget.protect_remaining(
-                BudgetProtection(
-                    tokens=profile.final_reserve_tokens,
-                    cost_usd=profile.final_reserve_cost_microusd / 1_000_000,
+            if protect:
+                budget.protect_remaining(
+                    BudgetProtection(
+                        tokens=profile.final_reserve_tokens,
+                        cost_usd=profile.final_reserve_cost_microusd / 1_000_000,
+                    )
                 )
-            )
-            remaining = (initial.expires_at - self._now()).total_seconds()
+            remaining = (self._run.expires_at - self._now()).total_seconds()
             with (
                 deadline_scope(remaining),
                 execution_admission(),
@@ -144,7 +247,7 @@ class AgentLoop:
                     context.identity.trace_id, context.versions.versions.model_dump(mode="json"), kind="agent"
                 ),
             ):
-                return self._loop()
+                return operation()
         except AgentLoopAbort as exc:
             return self._handoff(exc.reason)
         except (DeadlineExceeded, TimeoutError):
@@ -215,6 +318,9 @@ class AgentLoop:
                     stop_reason=cast(StopReason, event.reason) if event.phase == "handoff" else None,
                     terminal_request=event.action if event.phase == "handoff" else None,
                     terminal_admitted_at=self._admitted_at if event.phase == "handoff" and event.action else None,
+                    terminal_admission_budget=self._admitted_budget
+                    if event.phase == "handoff" and event.action
+                    else None,
                 )
                 if self._budget is not None
                 else None
@@ -241,136 +347,152 @@ class AgentLoop:
                 request = self._board.request(self._run, self.config)
                 request = request.model_copy(update={"call": new_call(request, self.gateway.provider)})
                 self._record(LoopCheckpoint("decision_started", self._run, decision_id, request=request))
-                item = allowance(request, self.gateway.execution_prices)
-                budget = current_budget()
-                if budget is None:
-                    raise AgentLoopAbort("budget_exceeded")
-                s = budget.snapshot()
-                p = context.profile
-                if (
-                    s.accounted_tokens + s.reserved_tokens + item.tokens + p.final_reserve_tokens > s.limits.token_limit
-                    or usd_to_microusd(s.accounted_cost_usd + s.reserved_cost_usd + item.cost_usd)
-                    + p.final_reserve_cost_microusd
-                    > usd_to_microusd(s.limits.cost_limit_usd)
-                ):
-                    return self._handoff("budget_exceeded")
-                before = {r.call.call_id for r in self.gateway.receipts}
-                response: ModelResponse | None = None
-                invalid = False
-                try:
-                    response = self.gateway.complete(request)  # one logical planning request; no repair/retry loop
-                    invalid = response.truncated
-                except ModelOutputInvalid as exc:
-                    response, invalid = exc.model_response, True
-                finally:
-                    self.gateway.call_journal.ensure_complete()
-                    receipts = tuple(r.call.call_id for r in self.gateway.receipts if r.call.call_id not in before)
-                    self._record(
-                        LoopCheckpoint(
-                            "planning_returned", self._snapshot(), decision_id, response=response, receipt_ids=receipts
-                        )
-                    )
-            self._guard()
-            admission_run = self._snapshot().model_copy(update={"decisions_consumed": prior_count})
-            admitted_at = self._now()
-            self._admitted_at = admitted_at
-            try:
-                if invalid or response is None:
-                    raise AgentContractError("invalid_agent_payload")
-                action = admit_action(
-                    response.text,
-                    run=admission_run,
-                    action_id=decision_id,
-                    evidence_registry=self._registry,
-                    now=admitted_at,
+                response, invalid = self._planning(request, decision_id)
+            result = self._decision(response, invalid, prior_count, decision_id)
+            if result is not None:
+                return result
+        return self._handoff("step_limit")
+
+    def _planning(self, request: ModelRequest, decision_id: UUID) -> tuple[ModelResponse | None, bool]:
+        item = allowance(request, self.gateway.execution_prices)
+        budget = current_budget()
+        if budget is None:
+            raise AgentLoopAbort("budget_exceeded")
+        s = budget.snapshot()
+        p = self._run.context.profile
+        if (
+            s.accounted_tokens + s.reserved_tokens + item.tokens + p.final_reserve_tokens > s.limits.token_limit
+            or usd_to_microusd(s.accounted_cost_usd + s.reserved_cost_usd + item.cost_usd)
+            + p.final_reserve_cost_microusd
+            > usd_to_microusd(s.limits.cost_limit_usd)
+        ):
+            raise AgentLoopAbort("budget_exceeded")
+        before = {r.call.call_id for r in self.gateway.receipts}
+        response: ModelResponse | None = None
+        invalid = False
+        try:
+            response = self.gateway.complete(request)  # one logical planning request; no repair/retry loop
+            invalid = response.truncated
+        except ModelOutputInvalid as exc:
+            response, invalid = exc.model_response, True
+        finally:
+            self.gateway.call_journal.ensure_complete()
+            receipts = tuple(r.call.call_id for r in self.gateway.receipts if r.call.call_id not in before)
+            self._record(
+                LoopCheckpoint(
+                    "planning_returned", self._snapshot(), decision_id, response=response, receipt_ids=receipts
                 )
-            except AgentContractError as exc:
-                if exc.code in {"agent_budget_exhausted", "agent_final_reserve"}:
-                    return self._handoff("budget_exceeded")
-                self._board.observe(None, None)
-                self._progress.reset()
-                self._history += (
-                    CommittedDecision(
-                        decision_id=decision_id,
-                        decision_index=prior_count + 1,
-                        admitted_at=admitted_at,
-                        observed_at=self._now(),
-                        admission_budget=admission_run.budget,
-                        action=None,
-                        outcome=None,
-                        rejected=exc.code,
-                    ),
-                )
-                self._record(LoopCheckpoint("proposal_rejected", self._run, decision_id, reason=exc.code))
-                continue  # a NEW counted decision, never a free format-repair request
-            proposal = action.proposal
-            if isinstance(proposal, (FinishAction, ClarifyAction, EscalateAction)):
-                reason: StopReason = (
-                    "completed"
-                    if isinstance(proposal, FinishAction)
-                    else ("clarification_required" if isinstance(proposal, ClarifyAction) else proposal.reason)
-                )
-                return self._handoff(reason, action)
-            before = {r.call.call_id for r in self.gateway.receipts}
-            outcome = self.driver.execute_tool(action, admission_run=admission_run, evidence_registry=self._registry)
-            self._guard()
-            observed_at = self._now()
-            try:
-                outcome, registry = validate_tool_commit(action, outcome, self._run, self._registry, now=observed_at)
-            except AgentLoopAbort:
-                raise
-            except (ValueError, TypeError, AttributeError):
-                raise AgentLoopAbort("audit_failure") from None
-            actual = {r.call.call_id for r in self.gateway.receipts if r.call.call_id not in before}
-            if set(outcome.call_receipt_ids) != actual:
-                raise AgentLoopAbort("audit_failure")
-            for receipt in self.gateway.receipts:
-                if receipt.call.call_id in actual and (
-                    receipt.call.run_id != str(context.identity.run_id)
-                    or f"action:{action.action_id}" not in (receipt.call.attempt_id or "")
-                ):
-                    raise AgentLoopAbort("audit_failure")
-            self._snapshot()
-            try:
-                # Stage both projections. A size/shape failure must not leave
-                # progress ahead of the last reconstructible observation.
-                next_board, next_progress = deepcopy(self._board), deepcopy(self._progress)
-                progress = next_progress.observe(action, outcome, registry)
-                next_board.observe(action, outcome)
-            except (ValueError, TypeError, AttributeError):
-                raise AgentLoopAbort("audit_failure") from None
-            # A complete checkpoint must include the same committed observation
-            # the next planner sees. Persistence failure still stops this loop.
-            self._board, self._progress = next_board, next_progress
-            self._registry = registry
-            self._outcomes += (outcome,)
+            )
+        return response, invalid
+
+    def _decision(
+        self, response: ModelResponse | None, invalid: bool, prior_count: int, decision_id: UUID
+    ) -> AgentLoopResult | None:
+        self._guard()
+        context = self._run.context
+        admission_run = self._snapshot().model_copy(update={"decisions_consumed": prior_count})
+        admitted_at = self._now()
+        self._admitted_at = admitted_at
+        self._admitted_budget = admission_run.budget
+        try:
+            if invalid or response is None:
+                raise AgentContractError("invalid_agent_payload")
+            action = admit_action(
+                response.text,
+                run=admission_run,
+                action_id=decision_id,
+                evidence_registry=self._registry,
+                now=admitted_at,
+            )
+        except AgentContractError as exc:
+            if exc.code in {"agent_budget_exhausted", "agent_final_reserve"}:
+                return self._handoff("budget_exceeded")
+            self._board.observe(None, None)
+            self._progress.reset()
             self._history += (
                 CommittedDecision(
                     decision_id=decision_id,
                     decision_index=prior_count + 1,
                     admitted_at=admitted_at,
-                    observed_at=observed_at,
+                    observed_at=self._now(),
                     admission_budget=admission_run.budget,
-                    action=action,
-                    outcome=outcome,
-                    rejected=None,
+                    action=None,
+                    outcome=None,
+                    rejected=exc.code,
                 ),
             )
-            self._record(
-                LoopCheckpoint(
-                    "tool_committed",
-                    self._run,
-                    decision_id,
-                    action=action,
-                    outcome=outcome,
-                    receipt_ids=outcome.call_receipt_ids,
-                )
+            self._record(LoopCheckpoint("proposal_rejected", self._run, decision_id, reason=exc.code))
+            return None  # the next decision remains counted, never a free format repair
+        proposal = action.proposal
+        if isinstance(proposal, (FinishAction, ClarifyAction, EscalateAction)):
+            reason: StopReason = (
+                "completed"
+                if isinstance(proposal, FinishAction)
+                else ("clarification_required" if isinstance(proposal, ClarifyAction) else proposal.reason)
             )
-            if outcome.kind in FATAL_OUTCOMES:
-                return self._handoff(FATAL_OUTCOMES[outcome.kind])
-            if progress.consecutive >= context.profile.same_no_progress_limit:
-                return self._handoff("no_progress")
-        return self._handoff("step_limit")
+            return self._handoff(reason, action)
+        before = {r.call.call_id for r in self.gateway.receipts}
+        outcome = self.driver.execute_tool(
+            action, admission_run=admission_run, admitted_at=admitted_at, evidence_registry=self._registry
+        )
+        self._guard()
+        observed_at = self._now()
+        try:
+            outcome, registry = validate_tool_commit(action, outcome, self._run, self._registry, now=observed_at)
+        except AgentLoopAbort:
+            raise
+        except (ValueError, TypeError, AttributeError):
+            raise AgentLoopAbort("audit_failure") from None
+        actual = {r.call.call_id for r in self.gateway.receipts if r.call.call_id not in before}
+        if set(outcome.call_receipt_ids) != actual:
+            raise AgentLoopAbort("audit_failure")
+        for receipt in self.gateway.receipts:
+            if receipt.call.call_id in actual and (
+                receipt.call.run_id != str(context.identity.run_id)
+                or f"action:{action.action_id}" not in (receipt.call.attempt_id or "")
+            ):
+                raise AgentLoopAbort("audit_failure")
+        self._snapshot()
+        try:
+            # Stage both projections. A size/shape failure must not leave
+            # progress ahead of the last reconstructible observation.
+            next_board, next_progress = deepcopy(self._board), deepcopy(self._progress)
+            progress = next_progress.observe(action, outcome, registry)
+            next_board.observe(action, outcome)
+        except (ValueError, TypeError, AttributeError):
+            raise AgentLoopAbort("audit_failure") from None
+        # A complete checkpoint must include the same committed observation
+        # the next planner sees. Persistence failure still stops this loop.
+        self._board, self._progress = next_board, next_progress
+        self._registry = registry
+        self._outcomes += (outcome,)
+        self._history += (
+            CommittedDecision(
+                decision_id=decision_id,
+                decision_index=prior_count + 1,
+                admitted_at=admitted_at,
+                observed_at=observed_at,
+                admission_budget=admission_run.budget,
+                action=action,
+                outcome=outcome,
+                rejected=None,
+            ),
+        )
+        self._record(
+            LoopCheckpoint(
+                "tool_committed",
+                self._run,
+                decision_id,
+                action=action,
+                outcome=outcome,
+                receipt_ids=outcome.call_receipt_ids,
+            )
+        )
+        if outcome.kind in FATAL_OUTCOMES:
+            return self._handoff(FATAL_OUTCOMES[outcome.kind])
+        if progress.consecutive >= context.profile.same_no_progress_limit:
+            return self._handoff("no_progress")
+        return None
 
     def _handoff(self, reason: StopReason, action: BoundAction | None = None) -> AgentLoopResult:
         self._snapshot()
