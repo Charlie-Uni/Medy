@@ -5,11 +5,12 @@ from __future__ import annotations
 import json
 import threading
 import time
-from collections.abc import Callable, Iterator
+from collections.abc import Callable, Iterator, Mapping
 from contextlib import contextmanager
 from contextvars import ContextVar
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, Literal
+from typing import TYPE_CHECKING, Any, Literal
+from uuid import uuid4
 
 from pydantic import Field
 
@@ -31,6 +32,7 @@ from medops.infrastructure.llm.gateway import (
 DEFAULT_EXECUTION_TOKENS = 12_000
 EXECUTION_BUDGET_VERSION = "execution-budget-v3+sealed-finalization"
 FINALIZATION_BUDGET_VERSION = "final-budget-v1+exact-requests"
+BUDGET_CHECKPOINT_VERSION = "budget-checkpoint-v1+sealed-handoff"
 PRICES = PriceTable(OPENAI_PRICES)
 
 if TYPE_CHECKING:
@@ -183,6 +185,7 @@ class ExecutionBudget:
         self._blocked: str | None = None
         self._protection = BudgetProtection()
         self._final_phase: _FinalPhase | None = None
+        self._suspended = False
         self._lock = threading.Lock()
 
     @property
@@ -201,6 +204,7 @@ class ExecutionBudget:
         """
         protection = BudgetProtection.model_validate(protection.model_dump(mode="python", warnings=False))
         with self._lock:
+            self._require_running()
             if self._final_phase is not None:
                 raise ExecutionBudgetExceeded("finalization_sealed")
             protected = BudgetProtection(
@@ -250,6 +254,7 @@ class ExecutionBudget:
             _FinalSlot(_final_request_hash(r), e, r.timeout_s) for r, e in zip(requests, estimates, strict=True)
         )
         with self._lock:
+            self._require_running()
             if self._final_phase is not None or self._active:
                 raise ExecutionBudgetExceeded("finalization_sealed_or_inflight")
             if self._blocked:
@@ -301,6 +306,7 @@ class ExecutionBudget:
 
     def remaining_timeout(self, timeout_s: float) -> float:
         with self._lock:
+            self._require_running()
             now = time.monotonic()
             if self._expires_at is None:
                 self._expires_at = now + min(self.limits.timeout_s, timeout_s)
@@ -314,22 +320,115 @@ class ExecutionBudget:
 
     def snapshot(self) -> BudgetSnapshot:
         with self._lock:
-            return BudgetSnapshot(
-                limits=self.limits,
-                accounted_tokens=self._tokens,
-                known_tokens=self._known_tokens,
-                reserved_tokens=sum(a.tokens for a in self._active.values()),
-                accounted_cost_usd=self._cost,
-                known_cost_usd=self._known_cost,
-                reserved_cost_usd=sum(a.cost_usd for a in self._active.values()),
-                calls=self._calls,
-                blocked_reason=self._blocked,
-                protected_tokens=self._protection.tokens,
-                protected_cost_usd=self._protection.cost_usd,
+            return self._snapshot_locked()
+
+    def _snapshot_locked(self) -> BudgetSnapshot:
+        return BudgetSnapshot(
+            limits=self.limits,
+            accounted_tokens=self._tokens,
+            known_tokens=self._known_tokens,
+            reserved_tokens=sum(a.tokens for a in self._active.values()),
+            accounted_cost_usd=self._cost,
+            known_cost_usd=self._known_cost,
+            reserved_cost_usd=sum(a.cost_usd for a in self._active.values()),
+            calls=self._calls,
+            blocked_reason=self._blocked,
+            protected_tokens=self._protection.tokens,
+            protected_cost_usd=self._protection.cost_usd,
+        )
+
+    def _require_running(self) -> None:
+        if self._suspended:
+            raise ExecutionBudgetExceeded("checkpoint_suspended")
+
+    def freeze_state(self) -> dict[str, Any]:
+        """Atomically stop further admission and detach a metadata-only handoff image.
+
+        Settlement of an already-issued call remains allowed, preserving late fees.
+        Pending images must be quarantined on restore; no request body is exported.
+        The caller must persist under a durable owner fence before any recovery.
+        """
+        with self._lock:
+            self._require_running()
+            deadline = CURRENT_DEADLINE.get()
+            if current_budget() is not self or deadline is None or self._expires_at is None:
+                raise ValueError("checkpoint requires its original execution scope")
+            phase = self._final_phase
+            state = {
+                "version": BUDGET_CHECKPOINT_VERSION,
+                "runtime_version": EXECUTION_BUDGET_VERSION,
+                "checkpoint_id": str(uuid4()),
+                "snapshot": self._snapshot_locked().model_dump(mode="json"),
+                "pending": [
+                    dict(call_id=a.call_id, tokens=a.tokens, cost_usd=a.cost_usd) for a in self._active.values()
+                ],
+                "settled": sorted(self._settled),
+                "remaining_timeout_s": max(0.0, min(self._expires_at, deadline.expires_at) - time.monotonic()),
+                "final_phase": {
+                    "profile": phase.profile.model_dump(mode="json"),
+                    "slots": [
+                        dict(
+                            request_sha256=s.request_sha256,
+                            tokens=s.estimate.tokens,
+                            cost_usd=s.estimate.cost_usd,
+                            timeout_s=s.timeout_s,
+                            used=s.used,
+                        )
+                        for s in phase.slots
+                    ],
+                    "token_base": phase.token_base,
+                    "cost_base": phase.cost_base,
+                    "closed": phase.closed,
+                }
+                if phase is not None
+                else None,
+            }
+            self._suspended = True  # permanent, including persistence/commit failures
+            return state
+
+    @classmethod
+    def _from_validated_state(cls, data: Mapping[str, Any], *, expires_at_monotonic: float) -> ExecutionBudget:
+        """Internal codec boundary; only a consumed durable checkpoint may supply it.
+
+        Full shape/version/integrity validation lives in budget_checkpoint.py to
+        keep that codec outside this runtime's admission path. Never restore a
+        caller's wire dict here or use this as an AgentLoop recovery shortcut.
+        """
+        snapshot = BudgetSnapshot.model_validate(data["snapshot"])
+        owned = cls(snapshot.limits)
+        owned._tokens, owned._known_tokens, owned._calls = (
+            snapshot.accounted_tokens,
+            snapshot.known_tokens,
+            snapshot.calls,
+        )
+        owned._cost, owned._known_cost = snapshot.accounted_cost_usd, snapshot.known_cost_usd
+        owned._active = {a["call_id"]: CallAllowance(a["call_id"], a["tokens"], a["cost_usd"]) for a in data["pending"]}
+        owned._settled = set(data["settled"])
+        owned._blocked = snapshot.blocked_reason
+        owned._protection = BudgetProtection(tokens=snapshot.protected_tokens, cost_usd=snapshot.protected_cost_usd)
+        owned._expires_at = expires_at_monotonic
+        phase = data["final_phase"]
+        if phase is not None:
+            owned._final_phase = _FinalPhase(
+                FinalizationProfile.model_validate(phase["profile"]),
+                tuple(
+                    _FinalSlot(s["request_sha256"], CallEstimate(s["tokens"], s["cost_usd"]), s["timeout_s"], s["used"])
+                    for s in phase["slots"]
+                ),
+                phase["token_base"],
+                phase["cost_base"],
+                True,
             )
+            if not phase["closed"]:
+                owned._blocked = owned._blocked or "recovery_finalization_active"
+        if owned._active:
+            owned._blocked = owned._blocked or "recovery_inflight"
+        owned._blocked = owned._blocked or owned._dimension()
+        return owned
 
     def check(self) -> None:
         with self._lock:
+            self._require_running()
             if self._blocked is not None:
                 raise ExecutionBudgetExceeded(self._blocked)
             phase = self._final_phase
@@ -338,6 +437,8 @@ class ExecutionBudget:
 
     def fits(self, item: CallAllowance | CallEstimate, *, request: ModelRequest | None = None) -> bool:
         with self._lock:
+            if self._suspended:
+                return False
             try:
                 _, protection = self._final_admission(item, request)
             except ExecutionBudgetExceeded:
@@ -368,6 +469,7 @@ class ExecutionBudget:
 
     def reserve(self, item: CallAllowance, *, request: ModelRequest | None = None) -> None:
         with self._lock:
+            self._require_running()
             if item.call_id in self._active or item.call_id in self._settled:
                 raise ValueError("execution call identity was reused")
             try:
