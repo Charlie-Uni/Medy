@@ -17,6 +17,7 @@ from pydantic import Field
 from medops.core.canonical import canonical_hash
 from medops.core.deadline import CURRENT_DEADLINE, DeadlineExceeded, check_deadline, deadline_scope, remaining_timeout
 from medops.infrastructure.llm.accounting import capture_call, check_call_ownership, new_call, publish_receipt
+from medops.infrastructure.llm.execution_journal import current_execution_journal
 from medops.infrastructure.llm.gateway import (
     OPENAI_PRICES,
     BudgetExceeded,
@@ -353,38 +354,53 @@ class ExecutionBudget:
             deadline = CURRENT_DEADLINE.get()
             if current_budget() is not self or deadline is None or self._expires_at is None:
                 raise ValueError("checkpoint requires its original execution scope")
-            phase = self._final_phase
-            state = {
-                "version": BUDGET_CHECKPOINT_VERSION,
-                "runtime_version": EXECUTION_BUDGET_VERSION,
-                "checkpoint_id": str(uuid4()),
-                "snapshot": self._snapshot_locked().model_dump(mode="json"),
-                "pending": [
-                    dict(call_id=a.call_id, tokens=a.tokens, cost_usd=a.cost_usd) for a in self._active.values()
-                ],
-                "settled": sorted(self._settled),
-                "remaining_timeout_s": max(0.0, min(self._expires_at, deadline.expires_at) - time.monotonic()),
-                "final_phase": {
-                    "profile": phase.profile.model_dump(mode="json"),
-                    "slots": [
-                        dict(
-                            request_sha256=s.request_sha256,
-                            tokens=s.estimate.tokens,
-                            cost_usd=s.estimate.cost_usd,
-                            timeout_s=s.timeout_s,
-                            used=s.used,
-                        )
-                        for s in phase.slots
-                    ],
-                    "token_base": phase.token_base,
-                    "cost_base": phase.cost_base,
-                    "closed": phase.closed,
-                }
-                if phase is not None
-                else None,
-            }
+            state = self._export_state_locked(deadline.expires_at)
             self._suspended = True  # permanent, including persistence/commit failures
             return state
+
+    def journal_state(self) -> dict[str, Any]:
+        """Detach current accounting under its lock, without permitting stale replay.
+
+        This is NOT a reusable recovery credential. The durable journal must bind
+        each image to its committed revision and current lease before restoring.
+        """
+        with self._lock:
+            deadline = CURRENT_DEADLINE.get()
+            if current_budget() is not self or deadline is None or self._expires_at is None:
+                raise ValueError("journal_requires_original_execution")
+            return self._export_state_locked(self._expires_at)
+
+    def _export_state_locked(self, deadline_at: float) -> dict[str, Any]:
+        if self._expires_at is None:
+            raise ValueError("budget_deadline_not_initialized")
+        phase = self._final_phase
+        return {
+            "version": BUDGET_CHECKPOINT_VERSION,
+            "runtime_version": EXECUTION_BUDGET_VERSION,
+            "checkpoint_id": str(uuid4()),
+            "snapshot": self._snapshot_locked().model_dump(mode="json"),
+            "pending": [dict(call_id=a.call_id, tokens=a.tokens, cost_usd=a.cost_usd) for a in self._active.values()],
+            "settled": sorted(self._settled),
+            "remaining_timeout_s": max(0.0, min(self._expires_at, deadline_at) - time.monotonic()),
+            "final_phase": {
+                "profile": phase.profile.model_dump(mode="json"),
+                "slots": [
+                    dict(
+                        request_sha256=s.request_sha256,
+                        tokens=s.estimate.tokens,
+                        cost_usd=s.estimate.cost_usd,
+                        timeout_s=s.timeout_s,
+                        used=s.used,
+                    )
+                    for s in phase.slots
+                ],
+                "token_base": phase.token_base,
+                "cost_base": phase.cost_base,
+                "closed": phase.closed,
+            }
+            if phase is not None
+            else None,
+        }
 
     @classmethod
     def _from_validated_state(cls, data: Mapping[str, Any], *, expires_at_monotonic: float) -> ExecutionBudget:
@@ -641,17 +657,62 @@ def complete_in_execution(
     token = _CALL.set((budget, item))
     try:
         with capture_call(call.call_id) as capture:
+            journal = current_execution_journal()
+            if journal is not None:
+                try:
+                    journal.admitted(request, budget)
+                except BaseException as exc:
+                    receipt = ModelCallReceipt(
+                        call=call,
+                        outcome="failed" if isinstance(exc, Exception) else "cancelled",
+                        provider_started=False,
+                        estimated_cost_usd=item.cost_usd,
+                        actual_cost_usd=0,
+                        accounted_cost_usd=0,
+                        cost_basis="not_started",
+                        settlement_status="not_required",
+                        error_type=type(exc).__name__,
+                    )
+                    publish_receipt(receipt)
+                    budget.settle(item, receipt)
+                    raise
+            dispatched = False
             try:
+                if journal is not None:
+                    # The durable commit itself may consume time or outlive
+                    # ownership. Recheck before crossing the provider boundary.
+                    check_deadline()
+                    check_call_ownership()
+                    check_deadline()
+                dispatched = True
                 response = operation(request)
             except BaseException as exc:
                 known = exc.model_response if isinstance(exc, ModelOutputInvalid) else None
-                receipt = capture.receipt or _receipt(request, known, item, exc)
+                receipt = (
+                    (capture.receipt or _receipt(request, known, item, exc))
+                    if dispatched
+                    else ModelCallReceipt(
+                        call=call,
+                        outcome="failed" if isinstance(exc, Exception) else "cancelled",
+                        provider_started=False,
+                        estimated_cost_usd=item.cost_usd,
+                        actual_cost_usd=0,
+                        accounted_cost_usd=0,
+                        cost_basis="not_started",
+                        settlement_status="not_required",
+                        error_type=type(exc).__name__,
+                    )
+                )
                 publish_receipt(receipt)
                 budget.settle(item, receipt)
+                if journal is not None:
+                    journal.settled(request, receipt, known, budget)
                 raise
             receipt = response.call_receipt or capture.receipt or _receipt(request, response, item)
             publish_receipt(receipt)
             budget.settle(item, receipt)
+            if journal is not None:
+                journal.settled(request, receipt, response, budget)
             budget.check()  # retain actual overage, reject the late answer and stop any further model work
             return response.model_copy(update={"call_receipt": receipt})
     finally:

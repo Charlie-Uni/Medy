@@ -11,7 +11,7 @@ from psycopg.types.json import Jsonb
 from medops.application.agent_loop_ports import AgentLoopAbort
 from medops.core.canonical import canonical_hash
 from medops.infrastructure.db.agent_control import AgentLease, PgAgentControl
-from medops.infrastructure.llm.budget_checkpoint import FrozenBudgetState
+from medops.infrastructure.llm.budget_checkpoint import FrozenBudgetState, advances_budget
 
 
 @dataclass(frozen=True)
@@ -20,42 +20,6 @@ class BudgetHandoff:
     state: FrozenBudgetState
     expires_at: datetime
     claimed: bool
-
-
-def _advances(old: FrozenBudgetState, new: FrozenBudgetState) -> bool:
-    a, b = old.snapshot, new.snapshot
-    if a.limits != b.limits or old.checkpoint_id == new.checkpoint_id:
-        return False
-    if any(
-        getattr(b, n) < getattr(a, n)
-        for n in ("accounted_tokens", "known_tokens", "accounted_cost_usd", "known_cost_usd", "calls")
-    ):
-        return False
-    if not set(old.settled) <= set(new.settled) or (
-        a.blocked_reason is not None and a.blocked_reason != b.blocked_reason
-    ):
-        return False
-    pending = {p.call_id: p for p in new.pending}
-    if any(p.call_id not in new.settled and pending.get(p.call_id) != p for p in old.pending):
-        return False
-    previous, current = old.final_phase, new.final_phase
-    if previous is None:
-        return current is not None or (
-            b.protected_tokens >= a.protected_tokens and b.protected_cost_usd + 1e-12 >= a.protected_cost_usd
-        )
-    if (
-        current is None
-        or previous.profile != current.profile
-        or previous.token_base != current.token_base
-        or previous.cost_base != current.cost_base
-    ):
-        return False
-    if previous.closed and not current.closed:
-        return False
-    return all(
-        p.model_dump(exclude={"used"}) == q.model_dump(exclude={"used"}) and (not p.used or q.used)
-        for p, q in zip(previous.slots, current.slots, strict=True)
-    )
 
 
 class PgAgentBudget:
@@ -87,7 +51,11 @@ class PgAgentBudget:
                 (prior is None and expected_revision != 0)
                 or (
                     prior is not None
-                    and (prior.revision != expected_revision or not prior.claimed or not _advances(prior.state, state))
+                    and (
+                        prior.revision != expected_revision
+                        or not prior.claimed
+                        or not advances_budget(prior.state, state)
+                    )
                 )
             )
         ):

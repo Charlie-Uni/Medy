@@ -32,6 +32,28 @@ class CallJournal:
         self._blocked = False
         self._lock = threading.RLock()
 
+    def restore(self, entries: tuple[Mapping[str, Any], ...]) -> None:
+        """Trusted, authenticated recovery only; never merge into a live journal."""
+        with self._lock:
+            if self._entries or self._blocked or len(entries) > self._max_calls:
+                raise ValueError("invalid_call_journal_recovery")
+            for raw in entries:
+                entry = _detach(raw)
+                request = ModelRequest.model_validate(entry["request"])
+                if (
+                    request.call is None
+                    or entry["call_id"] != request.call.call_id
+                    or canonical_hash(entry["request"]) != entry["request_sha256"]
+                    or entry["call_id"] in self._entries
+                ):
+                    raise ValueError("invalid_call_journal_recovery")
+                for attempt in entry["provider_attempts"]:
+                    if canonical_hash(attempt["arguments"]) != attempt["sha256"] or (
+                        "response" in attempt and canonical_hash(attempt["response"]) != attempt["response_sha256"]
+                    ):
+                        raise ValueError("invalid_call_journal_recovery")
+                self._replace(entry["call_id"], entry)
+
     def ensure_complete(self) -> None:
         with self._lock:
             if self._blocked:

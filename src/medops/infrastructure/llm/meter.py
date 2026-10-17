@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import threading
+from collections.abc import Mapping
+from typing import Any
 
 from medops.core.deadline import check_deadline, remaining_timeout
 from medops.core.telemetry import annotate, span
@@ -30,6 +32,16 @@ class MeteredGateway:
         self._receipts: dict[str, ModelCallReceipt] = {}
         self._lock = threading.Lock()
         self.call_journal = CallJournal()
+
+    def restore_calls(self, entries: tuple[Mapping[str, Any], ...]) -> None:
+        """Install authenticated durable entries before this meter can be used."""
+        with self._lock:
+            if self._receipts or self.calls or self.tokens or self.cost_usd:
+                raise ValueError("meter_recovery_requires_fresh_instance")
+        self.call_journal.restore(entries)
+        for entry in entries:
+            if entry.get("receipt") is not None:
+                self._record(ModelCallReceipt.model_validate(entry["receipt"]))
 
     @property
     def receipts(self) -> tuple[ModelCallReceipt, ...]:
