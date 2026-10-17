@@ -9,12 +9,21 @@ from __future__ import annotations
 import logging
 import traceback
 from collections.abc import Callable
+from copy import deepcopy
 from dataclasses import replace
 from datetime import UTC, datetime
+from typing import cast
 from uuid import uuid4
 
 from medops.application.agent_contracts import AgentContractError, admit_action, validate_run_snapshot
 from medops.application.agent_loop_ports import AgentLoopAbort, AgentLoopDriver, AgentLoopResult, LoopCheckpoint
+from medops.application.agent_loop_state import (
+    FATAL_OUTCOMES,
+    LOOP_STATE_VERSION,
+    CommittedDecision,
+    LoopState,
+    encode_loop_state,
+)
 from medops.application.agent_loop_validation import validate_tool_commit
 from medops.application.agent_planning import PlannerConfig, PlanningBoard, planning_prompt_sha256
 from medops.application.agent_progress import AgentProgress
@@ -79,6 +88,8 @@ class AgentLoop:
         self._outcomes: tuple[AgentToolOutcome, ...] = ()
         self._board = PlanningBoard()
         self._progress = AgentProgress()
+        self._history: tuple[CommittedDecision, ...] = ()
+        self._admitted_at: datetime | None = None
         if (
             initial.decisions_consumed
             or any(initial.budget.model_dump().values())
@@ -192,7 +203,25 @@ class AgentLoop:
             # None instructs storage to preserve its existing state, never reset it.
             progress = self._progress.snapshot() if self._budget is not None else None
             protection = self._budget.protection() if self._budget is not None else None
-            self.driver.checkpoint(replace(event, progress=progress, budget_protection=protection))
+            state = (
+                LoopState(
+                    version=LOOP_STATE_VERSION,
+                    run=event.run,
+                    config=self.config,
+                    phase=event.phase,
+                    captured_at=self._now(),
+                    decision_id=event.decision_id,
+                    history=self._history,
+                    stop_reason=cast(StopReason, event.reason) if event.phase == "handoff" else None,
+                    terminal_request=event.action if event.phase == "handoff" else None,
+                    terminal_admitted_at=self._admitted_at if event.phase == "handoff" and event.action else None,
+                )
+                if self._budget is not None
+                else None
+            )
+            if state is not None:
+                encode_loop_state(state)  # validate complete, bounded restricted image before the driver sees it
+            self.driver.checkpoint(replace(event, progress=progress, budget_protection=protection, state=state))
         except Exception as exc:  # noqa: BLE001 - driver storage failures must stop, with a fixed code
             _failure_location(exc)
             raise AgentLoopAbort("audit_failure") from None
@@ -243,6 +272,8 @@ class AgentLoop:
                     )
             self._guard()
             admission_run = self._snapshot().model_copy(update={"decisions_consumed": prior_count})
+            admitted_at = self._now()
+            self._admitted_at = admitted_at
             try:
                 if invalid or response is None:
                     raise AgentContractError("invalid_agent_payload")
@@ -251,13 +282,25 @@ class AgentLoop:
                     run=admission_run,
                     action_id=decision_id,
                     evidence_registry=self._registry,
-                    now=self._now(),
+                    now=admitted_at,
                 )
             except AgentContractError as exc:
                 if exc.code in {"agent_budget_exhausted", "agent_final_reserve"}:
                     return self._handoff("budget_exceeded")
                 self._board.observe(None, None)
                 self._progress.reset()
+                self._history += (
+                    CommittedDecision(
+                        decision_id=decision_id,
+                        decision_index=prior_count + 1,
+                        admitted_at=admitted_at,
+                        observed_at=self._now(),
+                        admission_budget=admission_run.budget,
+                        action=None,
+                        outcome=None,
+                        rejected=exc.code,
+                    ),
+                )
                 self._record(LoopCheckpoint("proposal_rejected", self._run, decision_id, reason=exc.code))
                 continue  # a NEW counted decision, never a free format-repair request
             proposal = action.proposal
@@ -271,8 +314,9 @@ class AgentLoop:
             before = {r.call.call_id for r in self.gateway.receipts}
             outcome = self.driver.execute_tool(action, admission_run=admission_run, evidence_registry=self._registry)
             self._guard()
+            observed_at = self._now()
             try:
-                outcome, registry = validate_tool_commit(action, outcome, self._run, self._registry, now=self._now())
+                outcome, registry = validate_tool_commit(action, outcome, self._run, self._registry, now=observed_at)
             except AgentLoopAbort:
                 raise
             except (ValueError, TypeError, AttributeError):
@@ -288,9 +332,30 @@ class AgentLoop:
                     raise AgentLoopAbort("audit_failure")
             self._snapshot()
             try:
-                progress = self._progress.observe(action, outcome, registry)
+                # Stage both projections. A size/shape failure must not leave
+                # progress ahead of the last reconstructible observation.
+                next_board, next_progress = deepcopy(self._board), deepcopy(self._progress)
+                progress = next_progress.observe(action, outcome, registry)
+                next_board.observe(action, outcome)
             except (ValueError, TypeError, AttributeError):
                 raise AgentLoopAbort("audit_failure") from None
+            # A complete checkpoint must include the same committed observation
+            # the next planner sees. Persistence failure still stops this loop.
+            self._board, self._progress = next_board, next_progress
+            self._registry = registry
+            self._outcomes += (outcome,)
+            self._history += (
+                CommittedDecision(
+                    decision_id=decision_id,
+                    decision_index=prior_count + 1,
+                    admitted_at=admitted_at,
+                    observed_at=observed_at,
+                    admission_budget=admission_run.budget,
+                    action=action,
+                    outcome=outcome,
+                    rejected=None,
+                ),
+            )
             self._record(
                 LoopCheckpoint(
                     "tool_committed",
@@ -301,18 +366,8 @@ class AgentLoop:
                     receipt_ids=outcome.call_receipt_ids,
                 )
             )
-            self._registry = registry
-            self._outcomes += (outcome,)
-            fatal: dict[str, StopReason] = {
-                "dependency_error": "dependency_error",
-                "timeout": "timeout",
-                "budget_exceeded": "budget_exceeded",
-                "cancelled": "cancelled",
-                "lease_lost": "lease_lost",
-            }
-            if outcome.kind in fatal:
-                return self._handoff(fatal[outcome.kind])
-            self._board.observe(action, outcome)
+            if outcome.kind in FATAL_OUTCOMES:
+                return self._handoff(FATAL_OUTCOMES[outcome.kind])
             if progress.consecutive >= context.profile.same_no_progress_limit:
                 return self._handoff("no_progress")
         return self._handoff("step_limit")
