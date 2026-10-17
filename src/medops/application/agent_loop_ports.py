@@ -7,7 +7,7 @@ transactions, durable checkpoints and committed tool results (AGENT-04/06).
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Literal, Protocol
+from typing import TYPE_CHECKING, Literal, Protocol
 from uuid import UUID
 
 from medops.application.agent_progress import ProgressCheckpoint
@@ -15,6 +15,11 @@ from medops.application.agent_tool_results import AgentToolOutcome
 from medops.domain.agent_execution import AgentContext, BoundAction, EvidenceHandle, PVAgentRun, StopReason
 from medops.infrastructure.llm.execution_budget import BudgetProtection
 from medops.infrastructure.llm.gateway import ModelRequest, ModelResponse
+
+if TYPE_CHECKING:
+    from medops.application.agent_loop_state import LoopState
+
+LoopPhase = Literal["decision_started", "planning_returned", "proposal_rejected", "tool_committed", "handoff"]
 
 
 class AgentLoopAbort(ValueError):
@@ -33,7 +38,7 @@ class LoopCheckpoint:
     actual adjusted timeout/SDK attempts. Keep both, never call them wire bytes.
     """
 
-    phase: Literal["decision_started", "planning_returned", "proposal_rejected", "tool_committed", "handoff"]
+    phase: LoopPhase
     run: PVAgentRun
     decision_id: UUID | None = None
     request: ModelRequest | None = None
@@ -45,6 +50,9 @@ class LoopCheckpoint:
     # None means unbound: storage MUST preserve previous progress, never erase it.
     progress: ProgressCheckpoint | None = None  # hash-only, not durable recovery by itself
     budget_protection: BudgetProtection | None = None  # None preserves unbound/old storage state
+    # Restricted complete image, not telemetry; None MUST preserve old storage.
+    # No permission to replay pending calls or resume a stopped handoff.
+    state: LoopState | None = None
 
 
 class AgentLoopDriver(Protocol):
