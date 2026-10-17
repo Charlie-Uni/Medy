@@ -3,8 +3,8 @@
 from __future__ import annotations
 
 import threading
-from collections.abc import Iterator
-from contextlib import contextmanager
+from collections.abc import Callable, Iterator
+from contextlib import AbstractContextManager, contextmanager
 from dataclasses import asdict, dataclass, field
 from typing import Any
 
@@ -65,6 +65,8 @@ class RetrievalServices:
         context: QueryContext,
         routed: RequestPolicies,
         meter: MeteredGateway | None,
+        *,
+        connection_for_user: Callable[[UserContext], AbstractContextManager[Any]] | None = None,
     ) -> ProductionRetrieval:
         """Use the caller's department-bound transaction and one pinned calendar context."""
         conn = DeadlineConnection(conn)
@@ -85,7 +87,7 @@ class RetrievalServices:
             else None
         )
         return build_retrieval(
-            conn_for_user=conn_for_user,
+            conn_for_user=connection_for_user or conn_for_user,
             as_of=context.as_of,
             provider=self.embedding,
             reranker=self.reranker_for(policies.rerank_output(RERANK_OUTPUT)),
