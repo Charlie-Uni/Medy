@@ -1,0 +1,199 @@
+{
+  "task_id": "AGENT-04",
+  "slice": "explicit frozen budget persistence and single-consumer handoff",
+  "slice_status": "DONE",
+  "whole_task_status": "IN_PROGRESS",
+  "baseline_sha": "0f60d4b73e07e1159ad502328bd6f1f04c492cab",
+  "reviewer": "Codex self-review; not a second independent human",
+  "hosted_model_calls": 0,
+  "api_cost_usd": 0,
+  "new_test_cases": 43,
+  "validation": {
+    "required_full_gate": {
+      "exit_code": 0,
+      "elapsed_s": 263.305,
+      "command": [
+        "make",
+        "check"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit215-verified-lcwiwrt2",
+      "required_services": true,
+      "passed": 3099,
+      "skipped": 70,
+      "warnings": 1,
+      "skip_reason": "70 existing optional DEC-001 B/C server tests; required PG/Redis/D and all new cases executed"
+    },
+    "original_and_new_targeted": {
+      "exit_code": 0,
+      "elapsed_s": 24.031,
+      "command": [
+        "/Users/leaf/.cache/medy-checks/audit215-verified-lcwiwrt2/venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/unit/infrastructure/test_budget_checkpoint.py",
+        "tests/integration/test_agent_budget.py",
+        "tests/integration/test_agent_control.py",
+        "tests/integration/test_migrations.py",
+        "tests/integration/test_rls.py",
+        "tests/unit/infrastructure/test_execution_budget.py",
+        "tests/unit/infrastructure/test_finalization_budget.py",
+        "tests/unit/application/test_agent_final_budget.py",
+        "tests/unit/application/test_agent_loop.py"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit215-verified-lcwiwrt2",
+      "required_services": true,
+      "passed": 241,
+      "skipped": 0
+    },
+    "mechanisms_and_PG_final": {
+      "exit_code": 0,
+      "elapsed_s": 19.405,
+      "command": [
+        "/Users/leaf/.cache/medy-checks/audit215-verified-lcwiwrt2/venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/unit/infrastructure/test_budget_checkpoint.py",
+        "tests/integration/test_agent_budget.py"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit215-verified-lcwiwrt2",
+      "required_services": true,
+      "passed": 43,
+      "skipped": 0
+    },
+    "initial_fixture_failure": {
+      "exit_code": 1,
+      "elapsed_s": 18.735,
+      "command": [
+        "/Users/leaf/.cache/medy-checks/audit215-verified-lcwiwrt2/venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/unit/infrastructure/test_budget_checkpoint.py",
+        "tests/integration/test_agent_budget.py",
+        "tests/integration/test_agent_control.py",
+        "tests/integration/test_migrations.py",
+        "tests/integration/test_rls.py"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit215-verified-lcwiwrt2",
+      "required_services": true
+    },
+    "documents": {
+      "exit_code": 0,
+      "phase": "final",
+      "elapsed_s": 48.55,
+      "baseline_sha": "0f60d4b73e07e1159ad502328bd6f1f04c492cab",
+      "task_ids": 144,
+      "changed_existing_statuses": [],
+      "local_links_checked": 315,
+      "local_fragments_checked": 7,
+      "baseline_maintenance_inputs": 777,
+      "unchanged_maintenance_inputs": 773,
+      "modified_maintenance_inputs": [
+        "src/medops/infrastructure/llm/execution_budget.py",
+        "tests/integration/test_migrations.py",
+        "tests/integration/test_rls.py",
+        "tests/integration/test_agent_control.py"
+      ],
+      "new_maintained_python_files": 7,
+      "maintenance_inputs_after": 784,
+      "maintenance_mismatches": [],
+      "old_schemas_unchanged": 36,
+      "new_schemas": 0,
+      "old_production_source_except_budget_runtime_unchanged": true,
+      "existing_migrations_unchanged": true,
+      "new_migration": "0028",
+      "unexpected_changed_paths": [],
+      "hosted_model_calls": 0,
+      "api_cost_usd": 0
+    },
+    "formal_migration_read_only": {
+      "read_only_verification": true,
+      "databases": [
+        {
+          "database": "medops_v2",
+          "migration": "0026",
+          "handoff_table": null
+        },
+        {
+          "database": "medops_v2_safety",
+          "migration": "0026",
+          "handoff_table": null
+        },
+        {
+          "database": "medops",
+          "migration": "0026",
+          "handoff_table": null
+        }
+      ]
+    }
+  },
+  "self_review": [
+    {
+      "item": "需求与范围",
+      "verdict": "pass",
+      "evidence": "实际实现冻结/PG单次领取/提交后重建，严格限定预算交接；非完整AgentLoop或任意崩溃恢复，原动作/步数/额度/期限与门禁不改"
+    },
+    {
+      "item": "ADR与阶段硬门",
+      "verdict": "pass",
+      "evidence": "沿用已获准PLAN-02/ADR-0012及原ARCH-04/11，未改目标/阈值/自动生产批准；没有付费实验或新增真实盲测声明"
+    },
+    {
+      "item": "正确性与失败路径",
+      "verdict": "pass",
+      "evidence": "43新反例覆盖新进程、单次/并发、父根替换、旧根冻结、保存/提交失败与不确定、损坏/缺字段、过期/当前取消/租约/权限及最终阶段封闭；首轮时间fixture失败已修复复测"
+    },
+    {
+      "item": "权限与数据",
+      "verdict": "pass",
+      "evidence": "新表metadata-only，显式最小新表权限与部门RLS；原principal/context/fact/步数fence保持；无正文/密钥、旧ACL/身份表权限不改"
+    },
+    {
+      "item": "预算/取消/副作用",
+      "verdict": "pass",
+      "evidence": "完整原消费/known/unknown/pending/settled/保护/最终槽位保留；在途/active阶段停止、超额不裁剪，恢复一次且截止不重开；0托管调用/0USD、正式库无DDL/DML"
+    },
+    {
+      "item": "追溯与版本",
+      "verdict": "pass",
+      "evidence": "私有checkpoint-v1与实际state/SHA/revision/lease绑定；原预算v3/最终v1及Prompt/Skill/工具版本保持；原顶层调用/正常settle/公开模型AST一致，无完整轨迹恢复声明"
+    },
+    {
+      "item": "验证充分性",
+      "verdict": "pass",
+      "evidence": "required全量3099/70/1、241原/新定向和最终43机制通过，真实临时PG/独立Python进程；旧36控制测试函数及迁移/RLS原断言保持，36Schema/冻结数据不改；不代替真实质量"
+    },
+    {
+      "item": "状态与文档",
+      "verdict": "pass",
+      "evidence": "18路径/144原ID及其他任务状态保持，八项自审通过；预算交接本切片DONE而AGENT-04整体IN_PROGRESS，后续Driver/完整检查点/write-ahead/对账及05/06前置未消失"
+    }
+  ],
+  "frozen_budget_handoff_implemented": true,
+  "one_time_consumption_implemented": true,
+  "arbitrary_crash_recovery_implemented": false,
+  "full_loop_recovery_implemented": false,
+  "pending_provider_reconciliation_implemented": false,
+  "production_driver_implemented": false,
+  "new_migration": "0028",
+  "new_table_RLS_and_grants_added": true,
+  "existing_ACL_changed": false,
+  "formal_database_DDL_or_DML": false,
+  "frozen_datasets_changed": false,
+  "public_schemas_changed": false,
+  "default_models_changed": false,
+  "production_gate_changed": false,
+  "deployment_changed": false,
+  "independent_human_review_claimed": false,
+  "runtime_budget_version_changed": false,
+  "checkpoint_version": "budget-checkpoint-v1+sealed-handoff",
+  "limits": [
+    "explicit handoff only; consumed images cannot replay after a new-root crash",
+    "pending provider calls and interrupted active finalization fail closed",
+    "whole AgentLoop remains fresh-only until full observations/progress/facts and write-ahead recovery",
+    "trusted PostgreSQL clock is authoritative; no general server-clock anomaly guarantee",
+    "formal databases remain 0026; no deployment, provider quality or unseen-holdout evidence"
+  ]
+}
