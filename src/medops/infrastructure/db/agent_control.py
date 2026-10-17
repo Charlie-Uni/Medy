@@ -190,6 +190,11 @@ class PgAgentControl:
             raise AgentLoopAbort("unsupported_recovery")
         return int(row[0])
 
+    def release(self, lease: AgentLease) -> None:
+        """End this holder's lease after its execution root has been suspended."""
+        self.fence(lease)
+        self.conn.execute("update agent_run_control set lease_until=clock_timestamp() where run_id=%s", (lease.run_id,))
+
     def cancel(self) -> AgentControlState:
         """Idempotent owner cancellation, retained after connection/process replacement."""
         self._read(lock=True)

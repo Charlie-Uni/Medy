@@ -19,6 +19,8 @@ from tests.support.documents import _hash, active_document, document, job, set_a
 EXPECTED_TABLES = {
     "agent_run_control",
     "agent_budget_handoffs",
+    "agent_runtime_heads",
+    "agent_runtime_events",
     "fact_plane_identity",
     "source_objects",
     "ingestion_jobs",
@@ -111,7 +113,7 @@ def _inventory(dsn: str) -> dict[str, set[str]]:
 
 def test_single_head_and_offline_sql_render(migrated):
     heads = ScriptDirectory.from_config(alembic_config(migrated)).get_heads()
-    assert heads == ["0028"]
+    assert heads == ["0029"]
 
 
 def test_upgrade_downgrade_upgrade_round_trip_leaves_nothing_behind(scratch_database):
@@ -126,6 +128,7 @@ def test_upgrade_downgrade_upgrade_round_trip_leaves_nothing_behind(scratch_data
         "medops_task_output_binding_guard",
         "medops_agent_control_guard",
         "medops_agent_budget_guard",
+        "medops_agent_runtime_guard",
         "medops_bad_case_guard",  # migration 0016: Loop cases (M4-01)
         "medops_document_request_guard",  # migration 0017: knowledge-gap tickets (M4-05)
         "medops_retention_purge_allowed",  # migration 0019: retention purge gate (M5-06)
