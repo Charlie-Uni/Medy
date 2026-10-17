@@ -1,0 +1,134 @@
+{
+  "task_id": "AGENT-04",
+  "slice": "reconstructible complete loop observation images",
+  "slice_status": "DONE",
+  "whole_task_status": "IN_PROGRESS",
+  "baseline_sha": "ccc2ec9517e191e58d7ff59d5af8bf6b0ad491c5",
+  "reviewer": "Codex self-review; not a second independent human",
+  "hosted_model_calls": 0,
+  "api_cost_usd": 0,
+  "new_test_cases": 45,
+  "validation": {
+    "required_full_gate": {
+      "exit_code": 0,
+      "elapsed_s": 392.523,
+      "command": [
+        "make",
+        "check"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit216-verified-c1n6m2a6",
+      "required_services": true,
+      "passed": 3144,
+      "skipped": 70,
+      "warnings": 1,
+      "skip_reason": "70 existing optional DEC-001 B/C server tests; required PG/Redis/D and all new tests ran",
+      "evaluation_warnings": [
+        "2 unmappable gold groups kept as misses",
+        "historical safety replay is not current safety acceptance",
+        "independent human review pending",
+        "no unseen holdout"
+      ]
+    },
+    "original_and_new_targeted": {
+      "exit_code": 0,
+      "elapsed_s": 48.096,
+      "command": [
+        "/Users/leaf/.cache/medy-checks/audit216-verified-c1n6m2a6/venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/unit/application/test_agent_loop_state.py",
+        "tests/unit/application/test_agent_loop.py",
+        "tests/unit/application/test_agent_loop_progress.py",
+        "tests/unit/application/test_agent_planning.py",
+        "tests/unit/application/test_agent_progress.py",
+        "tests/unit/application/test_agent_budget_protection.py",
+        "tests/unit/application/test_agent_final_budget.py",
+        "tests/integration/test_agent_control.py",
+        "tests/integration/test_agent_budget.py",
+        "tests/integration/test_agent_tools.py"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit216-verified-c1n6m2a6",
+      "required_services": true,
+      "passed": 247,
+      "skipped": 0
+    },
+    "documents": {
+      "exit_code": 0,
+      "task_ids": 144,
+      "local_links_checked": 333,
+      "local_fragments_checked": 7,
+      "baseline_maintenance_inputs": 784,
+      "unchanged_maintenance_inputs": 782,
+      "maintenance_inputs_after": 786,
+      "old_schemas_unchanged": 36
+    }
+  },
+  "self_review": [
+    {
+      "item": "需求与范围",
+      "verdict": "pass",
+      "evidence": "完整已提交观察图像及重建接入原模型循环，保留原七动作/八步/预算/期限；没有把序列化声明为完整持久恢复、业务质量或生产Agent完成"
+    },
+    {
+      "item": "ADR与阶段硬门",
+      "verdict": "pass",
+      "evidence": "沿用PLAN-02/ADR-0012及ARCH-04/11已通过前置，未改验收或扩大自动激活范围；无付费、无新增盲测或自进化改进声明"
+    },
+    {
+      "item": "正确性与失败路径",
+      "verdict": "pass",
+      "evidence": "45新项覆盖四工具投影、完整下一请求、独立进程、无效/重复/八步/终态/存储与投影失败及损坏；已修复AE fixture错误、三处类型错误及副本原子接纳问题"
+    },
+    {
+      "item": "权限与数据",
+      "verdict": "pass",
+      "evidence": "图像明确为受限正文，禁止普通遥测/metadata表；解码不认证、不检查当前库，不返回执行根或重放工具；不新增GRANT/公开接口，原权限与事实栅栏保持"
+    },
+    {
+      "item": "预算、取消与副作用",
+      "verdict": "pass",
+      "evidence": "保留原消费/预留摘要、原预算组件和所有调用前guard；pending不重发、handoff不续跑；原fresh-only保护不解除；0托管调用/0USD/无正式库变更或部署"
+    },
+    {
+      "item": "追溯与版本",
+      "verdict": "pass",
+      "evidence": "pv-loop-state-v1实际挂到每个绑定检查点，历史动作/结果/准入时刻/预算/停止申请可查；拒绝旧Prompt/工具hash与错run/config；原Prompt/工具/Skill内容和版本不改"
+    },
+    {
+      "item": "验证充分性",
+      "verdict": "pass",
+      "evidence": "247定向及required make check 3144/70/1通过；369模块mypy/架构、310断言文件、四套冻结数据审计/36Schema通过；保留旧70 skip和警告，不代替实际模型质量/恢复集成"
+    },
+    {
+      "item": "状态与文档",
+      "verdict": "pass",
+      "evidence": "11精确路径，144原ID及其他状态保持；八项自审通过只关闭本切片，整体AGENT-04继续IN_PROGRESS；下一持久Driver/write-ahead/对账和AGENT-05/06等依赖保留"
+    }
+  ],
+  "checkpoint_version": "pv-loop-state-v1+committed-observations",
+  "loop_observation_image_implemented": true,
+  "planning_input_reconstruction_verified": true,
+  "new_process_reconstruction_verified": true,
+  "full_loop_recovery_implemented": false,
+  "arbitrary_crash_recovery_implemented": false,
+  "pending_provider_reconciliation_implemented": false,
+  "production_driver_implemented": false,
+  "original_fresh_only_guard_retained": true,
+  "original_ACL_changed": false,
+  "formal_database_DDL_or_DML": false,
+  "new_migration": null,
+  "frozen_datasets_changed": false,
+  "public_schemas_changed": false,
+  "default_models_changed": false,
+  "production_gate_changed": false,
+  "deployment_changed": false,
+  "independent_human_review_claimed": false,
+  "limits": [
+    "restricted plaintext codec, not encrypted durable storage or a resume credential",
+    "requires a trusted driver to bind full images, original budget handoff, lease and actual call journal",
+    "pending planning/tool work and every stopped handoff remain closed; no exactly-once guarantee",
+    "no current ACL/fact lookup in historical reconstruction; original run entry remains fresh-only",
+    "engineering evidence only; no real provider Agent run, unseen holdout result or production release"
+  ]
+}

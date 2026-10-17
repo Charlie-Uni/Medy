@@ -172,3 +172,27 @@ PYTHONPATH=src env -u DEBUG venv/bin/python -m pytest -q \
 ## 8. 持久执行控制层（记录214）
 
 新增[持久控制契约](AGENT_CONTROL.md)与0027：取消、租约ID/代数、原截止和步数在临时PG验证；before_call守卫逐次检查并关闭连接，同事务fence阻止旧持有者提交。该内部组件尚未装配生产Driver，不保存完整预算/规划/观察/最终阶段，不改变本文拒绝非全新run的规则；真实恢复仍AGENT-04。正式三库未迁移/部署。
+
+
+## 9. 可重建的完整循环观察检查点（记录216）
+
+实现见 [agent_loop_state.py](../../src/medops/application/agent_loop_state.py)，验证与限制见[记录216](../reviews/2026-10-17-implementation-216-reconstructible-loop-state.md)。私有版本 `pv-loop-state-v1+committed-observations`，不新增公开Schema/默认模型或动作。
+
+每个已绑定根预算的 `LoopCheckpoint.state` 带原PVAgentRun、原PlannerConfig、阶段/当前决策ID、捕获时刻、按顺序编号的已提交观察、停止原因及终态申请/原准入时刻。观察保留原动作/结果、准入预算与准入/观察时刻；它们包含叙述和证据正文，属于受限材料，不能写普通遥测、control表或预算metadata表。未来Driver须复用受限加密/保留机制，并将原预算交接ID、租约、版本和实际CallJournal绑定于同一提交边界。
+
+`encode_loop_state` / `decode_loop_state` 有2 MiB上限，拒绝重复JSON键、缺字段、非法类型/版本/步数、重复动作ID、错绑定、改写证据和重复工具回执；不截断记录或补默认空状态。这里的字节是受限明文，**不是已加密持久存储，也不是恢复凭证**。旧run/外来额度被拒时 state/progress=None，要求Driver保留旧值，不能用空新状态覆盖。
+
+2 MiB是本轮新增私有检查点的保守工程容量界限，用于限制反序列化和受限正文写入量，不是原业务验收阈值。原Evidence文本没有总字节上限，因此某些合法的大证据任务可能在写检查点时更早停止为audit_failure；当前不会为保留可执行性而截去证据、遗忘历史或绕过保存。后续若采用分片/引用存储，必须保留完整绑定并验证兼容；本轮未证明大材料可完成率或检查点时延。
+
+`rebuild_loop_state` 只在内存重放已提交观察，通过原动作准入/工具结果校验重建PlanningBoard、完整证据注册表、全部工具结果和AgentProgress。提取/摘录/核验结果保持原值，不重新调用工具或模型；过往无效决策仍计步，并保留其打断连续重复的效果。重建不读取当前事实库，不能替代撤权/删除/改版本/租约及绝对期限的重新检查。调用者须独立提供可信expected_run/config，内部相等性校验不等于认证。
+
+| 检查点 | 内存重建结果 | 执行权限 |
+| --- | --- | --- |
+| tool_committed / proposal_rejected | 能重建下一规划输入；重复/故障/8步限制仍阻止下一步 | 无；还须真实Driver、原预算及当前事实/权限检查 |
+| decision_started / planning_returned | 保留原步数/预算，已有观察可核对；未完成决策标记unsupported_recovery | 不重发规划、不重跑可能已提交的工具 |
+| handoff | 保存停止原因与finish/clarify/escalate申请，run仍running且terminal=None | 不恢复本次循环；交AGENT-05/06，澄清后另建获授权执行 |
+| unbound / 被拒的旧run | 不产生覆盖图像 | 保留原存储，停止 |
+
+已提交结果经过校验后，规划状态和重复计数先在副本上同时更新，成功后才接受该观察，并把完整图像交Driver保存；保存失败停止。工具本身的提交与后续loop检查点仍有间隙：进程在其间退出必须由write-ahead/回执对账收敛，不能声称exactly-once，也不能把未记录的工具结果当作没执行过。
+
+本轮没有解除 `AgentLoop.run` 的全新run限制，没有实际跨进程Agent续跑、生产Driver、公开入口、终态发布或真实规划质量证据。跨进程测试仅证明公开合成图像能重建同样输入/进度，没有跨进程执行工具/模型。下一切片把检查点接入受限持久事务与原预算单次交接，再补调用前写入和迟到/未知回执对账。
