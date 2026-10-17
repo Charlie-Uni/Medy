@@ -1,5 +1,7 @@
 # Medy 项目完整迭代计划与工程建议
 
+2026-10-17记录217：AGENT-04持久Driver、调用前写入/回执对账、同事务工具观察及真实终检预算包络已实现，工程自审通过，AGENT-04已完成。0托管调用/0USD，正式库未迁移，终态发布及公开入口仍AGENT-05/06。 [记录217](reviews/2026-10-17-implementation-217-durable-agent-runtime.md)
+
 2026-10-17记录216：AGENT-04完整循环观察检查点工程自审通过；重建证据、提取结果、逐项引用检查与重复计数，原步数/费用/截止保持。在途规划/工具不重放、所有停止交接保持停止；尚无生产Driver、持久完整循环恢复或write-ahead对账，整体未完成。0托管调用/0USD。 [记录216](reviews/2026-10-17-implementation-216-reconstructible-loop-state.md)
 
 2026-10-17记录215：AGENT-04显式冻结预算交接工程自审通过；完整预算/在途ID/最终槽位metadata入PG，一次性领取并提交后重建，原根永久停止。有在途或active最终阶段则封闭停止，不能重开额度；不是完整循环或任意崩溃恢复。0028仅临时库，0托管调用/0USD。 [记录215](reviews/2026-10-17-implementation-215-frozen-budget-handoff.md).

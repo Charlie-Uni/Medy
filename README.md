@@ -1,5 +1,7 @@
 # Medy
 
+2026-10-17记录217：AGENT-04持久Driver、调用前写入/回执对账、同事务工具观察及真实终检预算包络已实现，工程自审通过，AGENT-04已完成。0托管调用/0USD，正式库未迁移，终态发布及公开入口仍AGENT-05/06。 [记录217](docs/reviews/2026-10-17-implementation-217-durable-agent-runtime.md)
+
 2026-10-17记录216：AGENT-04完整循环观察检查点工程自审通过；重建证据、提取结果、逐项引用检查与重复计数，原步数/费用/截止保持。在途规划/工具不重放、所有停止交接保持停止；尚无生产Driver、持久完整循环恢复或write-ahead对账，整体未完成。0托管调用/0USD。 [记录216](docs/reviews/2026-10-17-implementation-216-reconstructible-loop-state.md)
 
 2026-10-17记录215：AGENT-04显式冻结预算交接工程自审通过；完整预算/在途ID/最终槽位metadata入PG，一次性领取并提交后重建，原根永久停止。有在途或active最终阶段则封闭停止，不能重开额度；不是完整循环或任意崩溃恢复。0028仅临时库，0托管调用/0USD。 [记录215](docs/reviews/2026-10-17-implementation-215-frozen-budget-handoff.md).
@@ -36,7 +38,7 @@ MedOps Copilot 是面向医学事务、药物警戒和临床运营的可信医�
 
 此前[架构审查](docs/reviews/2026-10-10-architecture-audit.md)发现 14 项缺陷/风险，已并入台账 ARCH-01～14。首项 ARCH-01 已完成总截止时间、旧尝试收束、SQL/HTTP 取消及本地 BGE 推理进程回收；该轮工程自审与等价快照全量检查通过，1774 passed、70 skipped，费用 0。后续任务租约、历史 Skill、二阶段判断、整体预算和任务审计按统一依赖推进。范围、实际模型核验、iCloud 核验限制和错误补救见[记录 171](docs/reviews/2026-10-10-implementation-171-harness-deadline-and-cancellation.md)；原组件切换、历史成绩和验收门槛保留。本次统一待办及自审见[记录 172](docs/reviews/2026-10-10-implementation-172-unified-agent-evolution-backlog.md)。
 
-ARCH-04 已为成功、失败、拒绝和取消调用建立独立回执，避免并发共享费用串入其他 Trace；实际 usage 计算与保守预留分开，结算不确定不重跑模型。本机三库已升至 0023，原业务和费用数据未变；全量 1807 passed、70 skipped，0 托管调用。工程自审通过；迁移和对账限制见[记录 175](docs/reviews/2026-10-11-implementation-175-call-receipts-and-fee-attribution.md)及[费用说明](docs/LLM_ACCOUNTING.md)。ARCH-11 已完成共享执行预算并通过自审核：[记录 176](docs/reviews/2026-10-11-implementation-176-shared-execution-budget.md)，全量 1830 passed、70 skipped，0 托管调用；现有 profile 为 12,000 Token / 0.60 USD、Ask 125 秒，Skill/MCP 保留较短原期限。翻译、作答、判定、结构化与重试共同扣减，不能在嵌套或线程中重开。新 Agent/模型 Loop 与跨进程恢复尚未实现，S2 仍未完成。
+ARCH-04 已为成功、失败、拒绝和取消调用建立独立回执，避免并发共享费用串入其他 Trace；实际 usage 计算与保守预留分开，结算不确定不重跑模型。本机三库已升至 0023，原业务和费用数据未变；全量 1807 passed、70 skipped，0 托管调用。工程自审通过；迁移和对账限制见[记录 175](docs/reviews/2026-10-11-implementation-175-call-receipts-and-fee-attribution.md)及[费用说明](docs/LLM_ACCOUNTING.md)。ARCH-11 已完成共享执行预算并通过自审核：[记录 176](docs/reviews/2026-10-11-implementation-176-shared-execution-budget.md)，全量 1830 passed、70 skipped，0 托管调用；现有 profile 为 12,000 Token / 0.60 USD、Ask 125 秒，Skill/MCP 保留较短原期限。翻译、作答、判定、结构化与重试共同扣减，不能在嵌套或线程中重开。Agent模型循环及原额度持久恢复现由记录209/217接线；公开入口、最终业务发布和真实质量仍待S2后续。
 
 ARCH-02 已统一 Ask、Skill 与单条 Ask Replay 的日期/历史模式，修复归档来源选择与四类 Skill 历史提示；裸版本、缺上下文的旧 Trace 及 Task/MCP 回放明确拒绝。三库已到 0024，保护摘要不变；全量 1908 passed、70 skipped、0 托管调用，工程自审通过。输入、兼容和当前事实诊断边界见[历史查询契约](docs/HISTORICAL_QUERIES.md)及[记录 178](docs/reviews/2026-10-11-implementation-178-historical-query-context.md)。后续最终判断修复见下段，完整原条件回放仍待 ARCH-07；新代码本轮未重启到常驻服务。
 

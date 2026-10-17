@@ -1,5 +1,7 @@
 # AGENT-02：PV Agent 受控工具
 
+当前接线（记录217）：真实持久Driver、原额度恢复和启动终检包络见[持久执行契约](AGENT_RUNTIME.md)。以下按记录时间保留原工具/引用切片；业务终态发布、完整审核交付和真实模型质量仍由AGENT-05/06及AGENT-08验收。
+
 日期：2026-10-15。实现及自审核：Codex，不是第二独立人工。依据[PLAN-02](PLAN-02-action-budget-and-acceptance.md)、[AGENT-01契约](AGENT_CONTRACTS.md)和[台账](../CURRENT_TASKS.md)；本轮证据见[记录207](../reviews/2026-10-15-implementation-207-agent-controlled-tools.md)。
 
 ## 1. 可以运行的内容

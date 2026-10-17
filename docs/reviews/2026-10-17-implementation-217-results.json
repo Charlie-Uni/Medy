@@ -1,0 +1,126 @@
+{
+  "task_id": "AGENT-04",
+  "state": "DONE",
+  "completion_scope": "engineering bounded execution, cancellation, durable recovery and original budget protection",
+  "baseline_sha": "4b0b57d1ff47163d8f0978974b57e914400809b0",
+  "reviewer": "Codex self-review; not a second independent human",
+  "hosted_model_calls": 0,
+  "hosted_model_cost_usd": 0,
+  "new_test_cases": 41,
+  "new_runtime_test_cases": 25,
+  "validation": {
+    "required_full_gate": {
+      "exit_code": 0,
+      "elapsed_s": 270.649,
+      "command": [
+        "make",
+        "check"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit217-verified-13g8f4jx",
+      "required_services": true,
+      "passed": 3185,
+      "skipped": 70,
+      "warnings": 1,
+      "skip_reason": "70 existing optional DEC-001 B/C server cases; required PG/Redis/D and every new test executed"
+    },
+    "runtime_hardened": {
+      "exit_code": 0,
+      "elapsed_s": 84.969,
+      "command": [
+        "/Users/leaf/.cache/medy-checks/audit217-verified-13g8f4jx/venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/integration/test_agent_runtime.py",
+        "-x"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit217-verified-13g8f4jx",
+      "required_services": true
+    },
+    "documents": "final audited after DONE update"
+  },
+  "self_review": [
+    {
+      "item": "需求与范围",
+      "verdict": "pass",
+      "evidence": "AGENT-04原有界循环、重复、取消/失租、原额度恢复全部工程接线；顺序仍由模型选择动作，未知调用不重发。共用终检形状为真实初始预留必需，未冒称AGENT-05/06整体完成"
+    },
+    {
+      "item": "ADR与阶段硬门",
+      "verdict": "pass",
+      "evidence": "沿用PLAN-02/ADR-0012及已通过ARCH-04/11；原7动作/8决策/12000 Token/0.60 USD/125秒/原重试保持，无质量/发布阈值或默认模型变更"
+    },
+    {
+      "item": "正确性与失败路径",
+      "verdict": "pass",
+      "evidence": "真实进程强杀、已提交回复/工具复用、未知停止、原重复计数、迟到回执、提交确认故障、恢复提交前不建根、密文/绝对期限损坏、短期限及退出清理反例通过；全量发现fixture边界后修复复测"
+    },
+    {
+      "item": "权限与数据",
+      "verdict": "pass",
+      "evidence": "当前身份/部门/来源/内容/版本检查和原事实栅栏保持；0029新表强制RLS、正文envelope加密和完整AAD绑定，既有表未扩权；公开Schema与冻结数据保持"
+    },
+    {
+      "item": "预算、取消与副作用",
+      "verdict": "pass",
+      "evidence": "原accounted/known/pending/settled、原期限/子期限/步数/最终槽位保留；旧根永久冻结，确认提交后才恢复，未知费用不清零；终检真实包络实际强制，0托管调用/0 USD，正式三库仍0026"
+    },
+    {
+      "item": "追溯与版本",
+      "verdict": "pass",
+      "evidence": "调用前WAL/实际逐调用回执与SDK审计、完整工具审计/观察/head同事务；真实生产装配绑定实际策略/工具/提示/终检/事实身份，私有Loop v2明确拒绝旧版；原请求与账目推进构造AST等价"
+    },
+    {
+      "item": "验证充分性",
+      "verdict": "pass",
+      "evidence": "required make check退出0，3185 passed/70 skipped/1既有warning；377模块mypy和架构0新违例、316断言文件、冻结数据/36Schema通过。41新增用例执行；70旧skip与真实模型/部署/盲测未测范围分别披露"
+    },
+    {
+      "item": "状态与文档",
+      "verdict": "pass",
+      "evidence": "144原任务ID与其他状态保持，只将AGENT-04置DONE；AGENT-05/06保持READY并登记共用部分，AGENT-07仍BLOCKED。42精确路径，契约/入口/自审/结构化证据同步；工程不替代真实质量/发布"
+    }
+  ],
+  "maintenance_inputs": {
+    "original": 786,
+    "modified_existing": 17,
+    "new": 15,
+    "final": 801,
+    "protected_tracked_blobs_unchanged": 2150
+  },
+  "public_schemas_unchanged": 36,
+  "frozen_datasets_changed": false,
+  "default_models_changed": false,
+  "published_policy_changed": false,
+  "formal_database_versions": {
+    "medops": "0026",
+    "medops_v2": "0026",
+    "medops_v2_safety": "0026"
+  },
+  "formal_database_migrated": false,
+  "deployed": false,
+  "new_migration": "0029, isolated test databases only",
+  "durable_production_driver_composed": true,
+  "supported_process_restart_recovery_verified": true,
+  "write_ahead_before_provider": true,
+  "unknown_inflight_requests_resent": false,
+  "known_and_unknown_costs_preserved": true,
+  "original_absolute_deadline_and_retention_aad_bound": true,
+  "confirmed_tool_observation_and_head_atomic": true,
+  "executable_root_only_after_confirmed_recovery_commit": true,
+  "final_material_check_shape_implemented": true,
+  "final_material_check_quality_measured": false,
+  "business_terminal_publication_complete": false,
+  "real_provider_agent_executions": 0,
+  "independent_human_review_claimed": false,
+  "holdout_improvement_claimed": false,
+  "limits": [
+    "unknown or partially committed model-dependent work stops without resend; no provider exactly-once promise",
+    "final validation shape and internal proof are implemented; business terminal publication and complete audit UI/replay remain AGENT-05/06",
+    "engineering final envelopes are explicit bounded server inputs; no numeric production default or guarantee of eight steps",
+    "private loop state v2 required; no silent migration of old v1 images",
+    "formal local databases remain 0026; migrations 0027-0029 only tested on isolated databases",
+    "real model quality/completion rate/cost/performance and independent holdout remain unmeasured; paid runs require separate authorization"
+  ],
+  "next": "AGENT-05 final business outcomes and handoff materials; AGENT-06 public/restricted trajectory integration; then SESSION minimum and AGENT-07"
+}
