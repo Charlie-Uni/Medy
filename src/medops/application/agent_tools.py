@@ -15,6 +15,14 @@ from uuid import uuid4
 
 from medops.application.agent_contracts import AgentContractError, admit_action, context_binding, validate_run_snapshot
 from medops.application.agent_final_budget import FINAL_CITATION_BUDGET_VERSION, FinalCitationBudgetResult
+from medops.application.agent_final_gate import (
+    FinalGateConfig,
+    FinalMaterialCheck,
+    check_final_plan,
+    check_structure,
+    material_request,
+    policy_sha256,
+)
 from medops.application.agent_tool_ports import AgentFacts, AgentToolFault
 from medops.application.agent_tool_results import (
     AgentFact,
@@ -30,6 +38,7 @@ from medops.core.canonical import canonical_hash
 from medops.core.deadline import CURRENT_DEADLINE, DeadlineExceeded, check_deadline, deadline_scope, execution_admission
 from medops.core.errors import BusinessError, ErrorCode, InfrastructureError
 from medops.core.money import usd_to_microusd
+from medops.core.strict_json import strict_json
 from medops.core.telemetry import run_metadata
 from medops.domain.agent_actions import (
     ExtractAEAction,
@@ -237,6 +246,7 @@ class AgentTools:
         *,
         run: PVAgentRun,
         evidence_registry: tuple[EvidenceHandle, ...],
+        final_config: FinalGateConfig | None = None,
     ) -> FinalCitationBudgetResult:
         """Trusted final-owner entry, deliberately absent from the planner's tools.
 
@@ -304,13 +314,25 @@ class AgentTools:
                 if verifying
                 else ModelCallPlan()
             )
+            review_request = None
+            if final_config is not None:
+                check_structure(self.context, action.proposal.draft)
+                check_final_plan(plan, final_config)
+                review_request = material_request(self.context, action.proposal.draft, final_config)
+                if any(
+                    check_input(f.value).decision is not SafetyDecision.allow
+                    for f in action.proposal.draft.narrative_facts
+                ):
+                    raise AgentToolFault("unsupported")
+            material_check = None
             self._journal.record_event("agent_final_citation_action", action.model_dump(mode="json"))
             self._journal.record_event(
                 "agent_final_citation_budget_plan", plan.audit_record(self.meter.execution_prices)
             )
             # Expanded original attempt bound, not new retries or a new execution allowance.
             payload: VerificationPayload | None
-            with finalization_scope(plan.requests * plan.max_attempts, prices=self.meter.execution_prices) as profile:
+            requests = plan.requests * plan.max_attempts + ((review_request,) if review_request is not None else ())
+            with finalization_scope(requests, prices=self.meter.execution_prices) as profile:
                 self._journal.record_event("agent_final_citation_budget_profile", profile.model_dump(mode="json"))
                 if verifying is not None:
                     payload, _, observed = self._skills.verify(
@@ -319,10 +341,42 @@ class AgentTools:
                 else:
                     self._journal.bind(self.context.identity.trace_id, self.context.principal.user_id)
                     payload, observed = None, ()
+                if review_request is not None and final_config is not None:
+                    response = self.meter.complete(review_request)
+                    try:
+                        data = strict_json(response.text)
+                    except (ValueError, TypeError):
+                        raise AgentToolFault("dependency_error") from None
+                    expected_keys = {"narrative_supported", "complete", "scope_safe"}
+                    if (
+                        response.truncated
+                        or not isinstance(data, dict)
+                        or set(data) != expected_keys
+                        or any(type(data[k]) is not bool for k in expected_keys)
+                    ):
+                        raise AgentToolFault("dependency_error")
+                    material_check = FinalMaterialCheck(
+                        draft_sha256=canonical_hash(action.proposal.draft.model_dump(mode="json")),
+                        policy_sha256=policy_sha256(final_config),
+                        semantic_supported=all(data.values()),
+                        citations_supported=payload is None
+                        or all(c.verdict.value == "supported" for c in payload.checks),
+                    )
+                    self._journal.record_event(
+                        "agent_final_material_checked",
+                        {
+                            "policy_sha256": material_check.policy_sha256,
+                            "draft_sha256": material_check.draft_sha256,
+                            "semantic_supported": material_check.semantic_supported,
+                            "citations_supported": material_check.citations_supported,
+                        },
+                    )
                 check_deadline()
                 check_execution_budget()
                 self.meter.call_journal.ensure_complete()
-                receipt_ids = self._final_receipt_ids(action, before)
+                receipt_ids = self._final_receipt_ids(
+                    action, before, final_model_id=final_config.model_id if final_config else None
+                )
                 self._journal.record_event(
                     "agent_final_citations_checked",
                     payload.model_dump(mode="json")
@@ -343,9 +397,12 @@ class AgentTools:
             profile=profile,
             budget=budget.snapshot(),
             call_receipt_ids=receipt_ids,
+            material_check=material_check,
         )
 
-    def _final_receipt_ids(self, action: BoundAction, before: set[str]) -> tuple[str, ...]:
+    def _final_receipt_ids(
+        self, action: BoundAction, before: set[str], *, final_model_id: str | None = None
+    ) -> tuple[str, ...]:
         requests = {e["call_id"]: e["request"]["call"] for e in self.meter.call_journal.snapshot()}
         owned_ids = []
         for receipt in self.meter.receipts:
@@ -361,8 +418,14 @@ class AgentTools:
                 call.run_id == str(self.context.identity.run_id)
                 and call.trace_id == self.context.identity.trace_id
                 and f"final:{action.action_id}" in (call.attempt_id or "").split("/")
-                and call.purpose == "verify"
-                and call.requested_model == self.skill_context.deps.judge_model_id
+                and (
+                    (call.purpose == "verify" and call.requested_model == self.skill_context.deps.judge_model_id)
+                    or (
+                        call.purpose == "agent_final_material"
+                        and final_model_id is not None
+                        and call.requested_model == final_model_id
+                    )
+                )
             )
             if receipt.provider_started and not owned:
                 raise AgentToolFault("dependency_error")

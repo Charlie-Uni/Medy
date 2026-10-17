@@ -8,6 +8,7 @@ AGENT-06 must persist the terminal under the returned fact fence.
 from dataclasses import dataclass
 from uuid import UUID
 
+from medops.application.agent_final_gate import FinalMaterialCheck
 from medops.application.agent_tool_results import VerificationPayload
 from medops.domain.agent_execution import AgentBinding
 from medops.infrastructure.llm.execution_budget import BudgetSnapshot, FinalizationProfile
@@ -24,3 +25,4 @@ class FinalCitationBudgetResult:
     profile: FinalizationProfile
     budget: BudgetSnapshot
     call_receipt_ids: tuple[str, ...]
+    material_check: FinalMaterialCheck | None = None

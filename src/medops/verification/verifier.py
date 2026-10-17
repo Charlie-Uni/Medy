@@ -322,13 +322,12 @@ def plan_claim_judges(
     return tuple(preview.requests)
 
 
-def _llm_judge(
-    gateway: ModelGateway, model_id: str, statement: str, cited: Sequence[Evidence], timeout_s: float
-) -> tuple[Verdict, str | None, str]:
+def claim_judge_request(model_id: str, statement: str, cited: Sequence[Evidence], timeout_s: float) -> ModelRequest:
+    """Canonical real citation-judge request, also used to derive bounded final headroom."""
     blocks = "\n\n".join(
         f"<<证据 {i} | chunk={e.citation.chunk_id}>>\n{e.text}\n<<证据 {i} 结束>>" for i, e in enumerate(cited, 1)
     )
-    request = ModelRequest(
+    return ModelRequest(
         purpose="verify",
         model_id=model_id,
         messages=(
@@ -339,6 +338,12 @@ def _llm_judge(
         json_schema=JUDGE_SCHEMA,
         timeout_s=timeout_s,
     )
+
+
+def _llm_judge(
+    gateway: ModelGateway, model_id: str, statement: str, cited: Sequence[Evidence], timeout_s: float
+) -> tuple[Verdict, str | None, str]:
+    request = claim_judge_request(model_id, statement, cited, timeout_s)
     response = gateway.complete(request)
     parsed = response.parsed
     if parsed is None:
