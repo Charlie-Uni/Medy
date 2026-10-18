@@ -21,6 +21,7 @@ from medops.application.agent_loop import AgentLoop
 from medops.application.agent_loop_ports import AgentLoopAbort, AgentLoopResult, LoopCheckpoint
 from medops.application.agent_loop_state import LOOP_STATE_VERSION, LoopState
 from medops.application.agent_planning import PlannerConfig
+from medops.application.agent_review import PreparedReview
 from medops.application.agent_runtime_state import (
     RUNTIME_STATE_VERSION,
     RuntimeBody,
@@ -89,6 +90,10 @@ class AgentExecution:
         result = loop.resume(state) if self.recovered and state is not None else loop.run(d.head.body.run)
         self.result = result
         return result
+
+    def review(self) -> PreparedReview:
+        """Internal committed review, without publishing or extending this run."""
+        return self.driver.prepare_review()
 
     def _seal_stop(self, reason: StopReason) -> None:
         d = self.driver

@@ -13,6 +13,7 @@ from medops.infrastructure.llm.fake import FakeModelGateway
 from tests.support.agent_runtime import runtime_case
 from tests.support.pv_agent import proposal
 from tests.support.pv_loop import terminal
+from tests.support.pv_review import material_verdict
 
 
 def crash(case, mode):
@@ -334,7 +335,12 @@ def test_derived_final_floor_is_consumed_by_real_durable_final_gate_and_cannot_r
     fake = FakeModelGateway(
         {
             "agent_plan": [finish],
-            "agent_final_material": [{"narrative_supported": True, "complete": True, "scope_safe": True}],
+            "agent_final_material": [
+                material_verdict(
+                    draft_value=finish["proposal"]["draft"],
+                    requirements=[{"requirement_id": "event", "complete": True}],
+                )
+            ],
         }
     )
     case = runtime_case(db, fake, final_config=cfg, narrative_only=True)

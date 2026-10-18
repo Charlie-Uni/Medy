@@ -17,11 +17,10 @@ from medops.application.agent_contracts import AgentContractError, admit_action,
 from medops.application.agent_final_budget import FINAL_CITATION_BUDGET_VERSION, FinalCitationBudgetResult
 from medops.application.agent_final_gate import (
     FinalGateConfig,
-    FinalMaterialCheck,
     check_final_plan,
     check_structure,
     material_request,
-    policy_sha256,
+    parse_material_check,
 )
 from medops.application.agent_tool_ports import AgentFacts, AgentToolFault
 from medops.application.agent_tool_results import (
@@ -293,10 +292,17 @@ class AgentTools:
             call_scope(
                 run_id=str(self.context.identity.run_id),
                 attempt_id=f"{self.context.identity.attempt_id}/final:{action.action_id}",
-                before_call=lambda: self._before_call(action),
+                before_call=lambda: (
+                    self._before_final_call(action, evidence_registry)
+                    if final_config is not None
+                    else self._before_call(action)
+                ),
             ),
         ):
-            self._before_call(action)
+            if final_config is not None:
+                self._before_final_call(action, evidence_registry)
+            else:
+                self._before_call(action)
             if any(
                 check_input(t).decision is not SafetyDecision.allow
                 for t in (self.context.narrative, *(c.text for c in action.proposal.draft.guideline_claims))
@@ -318,7 +324,9 @@ class AgentTools:
             if final_config is not None:
                 check_structure(self.context, action.proposal.draft)
                 check_final_plan(plan, final_config)
-                review_request = material_request(self.context, action.proposal.draft, final_config)
+                review_request = material_request(
+                    self.context, action.proposal.draft, final_config, evidence_registry=evidence_registry
+                )
                 if any(
                     check_input(f.value).decision is not SafetyDecision.allow
                     for f in action.proposal.draft.narrative_facts
@@ -347,29 +355,22 @@ class AgentTools:
                         data = strict_json(response.text)
                     except (ValueError, TypeError):
                         raise AgentToolFault("dependency_error") from None
-                    expected_keys = {"narrative_supported", "complete", "scope_safe"}
-                    if (
-                        response.truncated
-                        or not isinstance(data, dict)
-                        or set(data) != expected_keys
-                        or any(type(data[k]) is not bool for k in expected_keys)
-                    ):
+                    if response.truncated:
                         raise AgentToolFault("dependency_error")
-                    material_check = FinalMaterialCheck(
-                        draft_sha256=canonical_hash(action.proposal.draft.model_dump(mode="json")),
-                        policy_sha256=policy_sha256(final_config),
-                        semantic_supported=all(data.values()),
-                        citations_supported=payload is None
-                        or all(c.verdict.value == "supported" for c in payload.checks),
-                    )
+                    try:
+                        material_check = parse_material_check(
+                            data,
+                            self.context,
+                            action.proposal.draft,
+                            final_config,
+                            original_citations_supported=payload is None
+                            or all(c.verdict.value == "supported" for c in payload.checks),
+                        )
+                    except (ValueError, TypeError):
+                        raise AgentToolFault("dependency_error") from None
                     self._journal.record_event(
                         "agent_final_material_checked",
-                        {
-                            "policy_sha256": material_check.policy_sha256,
-                            "draft_sha256": material_check.draft_sha256,
-                            "semantic_supported": material_check.semantic_supported,
-                            "citations_supported": material_check.citations_supported,
-                        },
+                        material_check.model_dump(mode="json"),
                     )
                 check_deadline()
                 check_execution_budget()
@@ -437,6 +438,26 @@ class AgentTools:
         """Restricted bodies for AGENT-06 persistence; never project this to a planner/telemetry."""
         self._journal.ensure_complete()
         return self._journal.snapshot()
+
+    def _before_final_call(self, action: BoundAction, registry: tuple[EvidenceHandle, ...]) -> None:
+        self._before_call(action)
+        if not isinstance(action.proposal, FinishAction):
+            raise AgentToolFault("dependency_error")
+        by_handle = {h.handle: h for h in registry}
+        wanted = tuple(dict.fromkeys(h for c in action.proposal.draft.guideline_claims for h in c.evidence_handles))
+        expected = {
+            by_handle[h].evidence.citation.chunk_id: AgentFact(
+                evidence=by_handle[h].evidence, source_sha256=by_handle[h].source_sha256
+            )
+            for h in wanted
+        }
+        current = (
+            {f.evidence.citation.chunk_id: f for f in self.facts.lookup(self.context, tuple(expected))}
+            if expected
+            else {}
+        )
+        if current != expected:
+            raise AgentToolFault("denied_or_unavailable")
 
     def _before_call(self, action: BoundAction) -> None:
         check_deadline()

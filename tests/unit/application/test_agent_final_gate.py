@@ -4,7 +4,6 @@ import pytest
 from pydantic import ValidationError
 
 from medops.application.agent_final_gate import (
-    FinalGateConfig,
     check_structure,
     derived_profile,
     material_request,
@@ -14,21 +13,11 @@ from medops.application.agent_tool_ports import AgentToolFault
 from medops.domain.agent_actions import ReviewDraft
 from medops.infrastructure.llm.execution_budget import PRICES, estimate_request
 from medops.infrastructure.llm.gateway import BudgetExceeded
-from tests.support.pv_agent import draft, run
+from tests.support.pv_agent import draft, handle, run
 from tests.support.pv_final import setup_final
+from tests.support.pv_review import final_config as config
+from tests.support.pv_review import material_verdict
 from tests.support.pv_tools import parent
-
-
-def config(**changes):
-    values = dict(
-        model_id="gpt-6-sol",
-        max_output_tokens=128,
-        timeout_s=20,
-        max_review_user_bytes=2000,
-        max_citation_user_bytes=500,
-        max_citation_judges=1,
-    )
-    return FinalGateConfig(**(values | changes))
 
 
 def test_real_final_shape_derives_the_startup_floor_without_issuing_requests():
@@ -36,7 +25,7 @@ def test_real_final_shape_derives_the_startup_floor_without_issuing_requests():
     cfg = config()
     estimate = startup_reserve(cfg, PRICES)
     profile = derived_profile(current.context, cfg, PRICES)
-    request = material_request(current.context, ReviewDraft(**draft()), cfg)
+    request = material_request(current.context, ReviewDraft(**draft()), cfg, evidence_registry=(handle(current),))
     assert estimate.tokens == profile.final_reserve_tokens > estimate_request(request).tokens
     assert profile.cost_cap_microusd == 600000 and profile.token_cap == 12000
     assert startup_reserve(config(max_review_user_bytes=2001), PRICES).tokens == estimate.tokens + 1
@@ -65,7 +54,7 @@ def test_real_final_gate_uses_original_protected_root_and_seals_it(semantic):
         reserve=10000,
         script={
             "verify": [{"verdict": "supported", "reason": "PUBLIC"}],
-            "agent_final_material": [{"narrative_supported": semantic, "complete": True, "scope_safe": True}],
+            "agent_final_material": [material_verdict(narrative_supported=semantic)],
         },
     )
     with parent(token_limit=12000) as root:

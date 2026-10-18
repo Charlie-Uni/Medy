@@ -12,10 +12,11 @@ from typing import Any
 from uuid import UUID, uuid4
 
 from medops.application.agent_contracts import context_binding
-from medops.application.agent_final_gate import FinalGateConfig, derived_profile
+from medops.application.agent_final_gate import FinalGateConfig, check_structure, derived_profile
 from medops.application.agent_loop_ports import AgentLoopAbort, LoopCheckpoint
 from medops.application.agent_loop_state import CommittedDecision, LoopState, rebuild_loop_state
 from medops.application.agent_loop_validation import validate_tool_commit
+from medops.application.agent_review import PreparedReview, compile_review, structure_rejection, validate_review_binding
 from medops.application.agent_runtime_state import (
     DurableCall,
     PendingTool,
@@ -37,7 +38,7 @@ from medops.infrastructure.db.agent_fact_scope import AgentFactScope
 from medops.infrastructure.db.agent_facts import FactDatabaseBinding, PgAgentFacts
 from medops.infrastructure.db.agent_runtime import PgAgentRuntime, RuntimeHead
 from medops.infrastructure.llm.budget_checkpoint import FrozenBudgetState
-from medops.infrastructure.llm.execution_budget import ExecutionBudget, current_budget
+from medops.infrastructure.llm.execution_budget import ExecutionBudget, current_budget, finalization_scope
 from medops.infrastructure.llm.gateway import ModelCallReceipt, ModelRequest, ModelResponse
 from medops.infrastructure.llm.meter import MeteredGateway
 from medops.skills.registry import SkillContext, SkillRegistry
@@ -107,6 +108,7 @@ class PgAgentDriver:
             raise AgentLoopAbort("version_conflict")
         self._lock = threading.RLock()
         self._active_call: str | None = None
+        self._prepared_review: PreparedReview | None = None
         self._failed = False
         self._stop_reason: StopReason | None = None
 
@@ -513,51 +515,151 @@ class PgAgentDriver:
                 self.head = head
         return outcome
 
+    @contextmanager
+    def _review_boundary(self) -> Iterator[None]:
+        """A failed/uncertain commit must not advance this instance's stale head."""
+        try:
+            yield
+        except BaseException:
+            self._failed = True
+            raise
+
     def verify_final(self):
         """Validate the saved finish request; never publish business completion."""
-        state = self.head.body.loop
-        if (
-            state is None
-            or state.phase != "handoff"
-            or state.terminal_request is None
-            or state.terminal_request.proposal.action != "finish"
-            or self.resources.final_config is None
-        ):
-            raise AgentLoopAbort("unsupported_requirement")
-        rebuilt = rebuild_loop_state(state, expected_run=self.head.body.run, config=self.head.body.config)
-        self.check_access(self.context, rebuilt.evidence_registry)
-        with AgentFactScope(
-            self.connection, self.context, self.lease, self.database_binding, self.resources.check_bindings
-        ) as facts:
-            tool = AgentTools(
-                context=self.context,
-                facts=facts,
-                registry=self.resources.registry,
-                skill_context=self.resources.skill_context,
-                clock=self.clock,
-            )
-            result = tool.verify_final_citations(
-                state.terminal_request,
-                run=self.head.body.run,
-                evidence_registry=rebuilt.evidence_registry,
-                final_config=self.resources.final_config,
-            )
-            conn = facts.completion_connection()
-            store = self._store(conn)
-            store.append(
-                self.lease,
-                "checkpoint",
-                uuid4(),
-                {
-                    "kind": "final_material_check",
-                    "draft_sha256": result.draft_sha256,
-                    "profile": result.profile.model_dump(mode="json"),
-                    "material_check": asdict(result.material_check) if result.material_check else None,
-                    "events": list(tool.audit_snapshot().events),
-                },
-                retained_until=self.head.retained_until,
-            )
-            head = self._save(store, self.head.body)
-            facts.commit()
-            self.head = head
-        return result
+        self._root(self.root)
+        with self._review_boundary():
+            state = self.head.body.loop
+            if (
+                state is None
+                or state.phase != "handoff"
+                or state.terminal_request is None
+                or state.terminal_request.proposal.action != "finish"
+                or self.resources.final_config is None
+            ):
+                raise AgentLoopAbort("unsupported_requirement")
+            rebuilt = rebuild_loop_state(state, expected_run=self.head.body.run, config=self.head.body.config)
+            self.check_access(self.context, rebuilt.evidence_registry)
+            with AgentFactScope(
+                self.connection, self.context, self.lease, self.database_binding, self.resources.check_bindings
+            ) as facts:
+                tool = AgentTools(
+                    context=self.context,
+                    facts=facts,
+                    registry=self.resources.registry,
+                    skill_context=self.resources.skill_context,
+                    clock=self.clock,
+                )
+                result = tool.verify_final_citations(
+                    state.terminal_request,
+                    run=self.head.body.run,
+                    evidence_registry=rebuilt.evidence_registry,
+                    final_config=self.resources.final_config,
+                )
+                prepared = compile_review(
+                    self.context, state.terminal_request, rebuilt.evidence_registry, result, self.resources.final_config
+                )
+                conn = facts.completion_connection()
+                store = self._store(conn)
+                store.append(
+                    self.lease,
+                    "checkpoint",
+                    uuid4(),
+                    {
+                        "kind": "final_material_check",
+                        "draft_sha256": result.draft_sha256,
+                        "profile": result.profile.model_dump(mode="json"),
+                        "material_check": result.material_check.model_dump(mode="json")
+                        if result.material_check
+                        else None,
+                        "prepared_review": prepared.model_dump(mode="json"),
+                        "events": list(tool.audit_snapshot().events),
+                    },
+                    retained_until=self.head.retained_until,
+                )
+                head = self._save(store, self.head.body)
+                facts.commit()
+                self.head = head
+                self._prepared_review = prepared
+            return result
+
+    def prepare_review(self) -> PreparedReview:
+        """Return only committed private material; stopped/unknown work is never reissued."""
+        self._root(self.root)
+        with self._review_boundary():
+            state = self.head.body.loop
+            config = self.resources.final_config
+            if state is None or state.phase != "handoff" or state.terminal_request is None or config is None:
+                raise AgentLoopAbort("unsupported_requirement")
+            action = state.terminal_request
+            if action.proposal.action != "finish":
+                raise AgentLoopAbort("unsupported_requirement")
+            rebuilt = rebuild_loop_state(state, expected_run=self.head.body.run, config=self.head.body.config)
+            self.check_access(self.context, rebuilt.evidence_registry)
+            if self._prepared_review is None and self.root.finalization_snapshot() is not None:
+                # Only a confirmed encrypted material event may be reused. A known
+                # model receipt without this commit remains a stopped final phase.
+                with self.connection() as conn:
+                    store = self._store(conn)
+                    store.control.fence(self.lease)
+                    rows = [
+                        e
+                        for e in store.events()
+                        if e.kind == "checkpoint"
+                        and e.body.get("kind") in {"final_material_check", "final_review_rejected"}
+                        and e.body.get("prepared_review") is not None
+                    ]
+                    if len(rows) != 1:
+                        raise AgentLoopAbort("unsupported_recovery")
+                    review = PreparedReview.model_validate(rows[0].body["prepared_review"])
+                    validate_review_binding(review, self.context, action, rebuilt.evidence_registry, config)
+                    calls = store.calls()
+                    known = {
+                        c.allowance.call_id
+                        for c in calls
+                        if c.receipt is not None
+                        and f"final:{action.action_id}" in (request_call(c.request).attempt_id or "").split("/")
+                    }
+                    if not set(review.call_receipt_ids) <= known:
+                        raise AgentLoopAbort("unsupported_recovery")
+                self._prepared_review = review
+            if self._prepared_review is None:
+                try:
+                    check_structure(self.context, action.proposal.draft)
+                except AgentToolFault:
+                    review = structure_rejection(self.context, action, config)
+                    with (
+                        finalization_scope((), prices=self.meter.execution_prices),
+                        AgentFactScope(
+                            self.connection,
+                            self.context,
+                            self.lease,
+                            self.database_binding,
+                            self.resources.check_bindings,
+                        ) as facts,
+                    ):
+                        facts.final_check(self.context, ())
+                        conn = facts.completion_connection()
+                        store = self._store(conn)
+                        store.append(
+                            self.lease,
+                            "checkpoint",
+                            uuid4(),
+                            {
+                                "kind": "final_review_rejected",
+                                "prepared_review": review.model_dump(mode="json"),
+                                "reason": "unsupported_requirement",
+                                "semantic_model_run": False,
+                            },
+                            retained_until=self.head.retained_until,
+                        )
+                        head = self._save(store, self.head.body)
+                        facts.commit()
+                        self.head = head
+                        self._prepared_review = review
+                else:
+                    self.verify_final()
+            if self._prepared_review is None:
+                raise AgentLoopAbort("audit_failure")
+            validate_review_binding(self._prepared_review, self.context, action, rebuilt.evidence_registry, config)
+            self.check_access(self.context, rebuilt.evidence_registry)
+            return self._prepared_review
