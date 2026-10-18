@@ -1,5 +1,7 @@
 # Medy
 
+2026-10-18记录218：AGENT-05逐项终检、实际证据AND/OR支持组及受限审核材料同事务保存切片工程自审通过。整体IN_PROGRESS，业务终态/澄清/升级仍待。0托管调用/0USD，未部署。 [内部审核契约](docs/agent/AGENT_REVIEW.md) · [记录218](docs/reviews/2026-10-18-implementation-218-agent-item-review.md)
+
 2026-10-17记录217：AGENT-04持久Driver、调用前写入/回执对账、同事务工具观察及真实终检预算包络已实现，工程自审通过，AGENT-04已完成。0托管调用/0USD，正式库未迁移，终态发布及公开入口仍AGENT-05/06。 [记录217](docs/reviews/2026-10-17-implementation-217-durable-agent-runtime.md)
 
 2026-10-17记录216：AGENT-04完整循环观察检查点工程自审通过；重建证据、提取结果、逐项引用检查与重复计数，原步数/费用/截止保持。在途规划/工具不重放、所有停止交接保持停止；尚无生产Driver、持久完整循环恢复或write-ahead对账，整体未完成。0托管调用/0USD。 [记录216](docs/reviews/2026-10-17-implementation-216-reconstructible-loop-state.md)

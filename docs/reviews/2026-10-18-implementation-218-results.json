@@ -1,0 +1,144 @@
+{
+  "task_id": "AGENT-05",
+  "slice_status": "DONE",
+  "whole_task_status": "IN_PROGRESS",
+  "completion_scope": "private item-level final verdict, AND/OR actual evidence groups, fenced committed internal review and authenticated reuse",
+  "baseline_sha": "b607e5621c6c7e6feee73437d4c60852ad7fc792",
+  "reviewer": "Codex self-review; not a second independent human",
+  "hosted_model_calls": 0,
+  "hosted_model_cost_usd": 0,
+  "new_test_cases": 53,
+  "new_unit_cases": 41,
+  "new_integration_cases": 12,
+  "validation": {
+    "required_full_gate": {
+      "exit_code": 0,
+      "elapsed_s": 297.202,
+      "command": [
+        "make",
+        "check"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit218-verified-x2891vmq",
+      "required_services": true,
+      "passed": 3238,
+      "skipped": 70,
+      "warnings": 1,
+      "skip_reason": "70 preexisting optional DEC-001 B/C server cases; required PostgreSQL/Redis/D and all 53 new cases executed"
+    },
+    "pg_fixed": {
+      "exit_code": 0,
+      "elapsed_s": 54.523,
+      "command": [
+        "/Users/leaf/.cache/medy-checks/audit218-verified-x2891vmq/venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/integration/test_agent_review.py"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit218-verified-x2891vmq",
+      "required_services": true
+    },
+    "initial_pg": {
+      "exit_code": 1,
+      "elapsed_s": 89.079,
+      "command": [
+        "/Users/leaf/.cache/medy-checks/audit218-verified-x2891vmq/venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/integration/test_agent_review.py",
+        "tests/integration/test_agent_runtime.py"
+      ],
+      "worktree": "/Users/leaf/.cache/medy-checks/audit218-verified-x2891vmq",
+      "required_services": true,
+      "passed": 31,
+      "failed": 6,
+      "implementation_defects": 1,
+      "test_fixture_defects": 5
+    }
+  },
+  "self_review": [
+    {
+      "item": "需求与范围",
+      "verdict": "pass",
+      "evidence": "仅AGENT-05逐项终检、证据组和内部受限材料切片；实际模型动作循环保留。完整终态/澄清/升级/公开入口未交付，整体仍IN_PROGRESS；未改原质量门"
+    },
+    {
+      "item": "ADR与阶段硬门",
+      "verdict": "pass",
+      "evidence": "沿用ADR-0012/PLAN-02已确认范围，ARCH-04/11已通过；没有S3改进声明、盲测结果或生产自动激活"
+    },
+    {
+      "item": "正确性与失败路径",
+      "verdict": "pass",
+      "evidence": "41新增单元+12真实PG反例；逐要求/陈述集合、AND/OR、原引用与本地安全交叉约束、结构拒绝not_run、提交失败/确认丢失和认证恢复均通过。发现1真实清理缺陷已修复复测"
+    },
+    {
+      "item": "权限与数据",
+      "verdict": "pass",
+      "evidence": "身份/来源/版本/ACL/取消变化后无材料；每次读取重查，完整证据调用前比对与最终事实栅栏保持。加密事件/RLS沿用，未向规划/遥测发送受限审核正文或gold"
+    },
+    {
+      "item": "预算、取消与副作用",
+      "verdict": "pass",
+      "evidence": "0托管调用/0USD；8步/12000 Token/0.60USD/125秒与原引用重试上界保持；实际提示Schema/字节进入原包络，错误封闭不加额度。已提交材料恢复不重发模型，正式三库0026且未部署"
+    },
+    {
+      "item": "追溯与版本",
+      "verdict": "pass",
+      "evidence": "最终私有策略v2及材料v1明确摘要绑定；真实原文/源哈希/Citation/支持组/逐调用回执可定位，同一事实事务保存审核事件和head，旧三布尔回复不补默认结果"
+    },
+    {
+      "item": "验证充分性",
+      "verdict": "pass",
+      "evidence": "required全量3238/70/1旧JWT warning，378源码类型/架构、319断言文件、lint/格式/四套评测审计及36Schema通过；12PG修复复测。真实医学语义/性能/费用/盲测未测"
+    },
+    {
+      "item": "状态与文档",
+      "verdict": "pass",
+      "evidence": "144任务ID和其余状态保持，仅AGENT-05改IN_PROGRESS；切片DONE与整体未完分开。契约/README/台账/自审/结构化结果同步，范围外2176受保护tracked blob及801原维护输入核对，新增4输入共805"
+    }
+  ],
+  "maintenance_inputs": {
+    "original": 801,
+    "new": 4,
+    "final": 805,
+    "modified_existing": 6,
+    "protected_tracked_blobs_unchanged": 2176
+  },
+  "public_schemas_unchanged": 36,
+  "frozen_datasets_changed": false,
+  "default_models_changed": false,
+  "published_policy_changed": false,
+  "new_migration": false,
+  "formal_database_versions": {
+    "medops": "0026",
+    "medops_v2": "0026",
+    "medops_v2_safety": "0026"
+  },
+  "formal_database_migrated": false,
+  "deployed": false,
+  "actual_evidence_in_final_request": true,
+  "support_group_semantics": "AND within a jointly necessary bundle; OR across independently sufficient alternatives; runtime model judgement, not evaluator gold",
+  "item_rows_must_exactly_match_original_task_and_draft": true,
+  "original_citation_failures_cannot_be_overridden": true,
+  "review_head_and_final_fact_fence_atomic": true,
+  "unconfirmed_material_returned": false,
+  "recovery_reuses_confirmed_material_without_model_calls": true,
+  "business_terminal_publication_complete": false,
+  "clarification_escalation_delivery_complete": false,
+  "real_provider_agent_executions": 0,
+  "real_semantic_quality_measured": false,
+  "independent_human_review_claimed": false,
+  "holdout_improvement_claimed": false,
+  "limits": [
+    "completion_eligible is an internal review field, not a business completed/publication authorization",
+    "final material policy v2 requires exact matching bound versions; old three-boolean replies are refused",
+    "explicit bounded engineering configuration may reduce planning headroom/completion rate; no production numeric default or eight-step guarantee",
+    "unknown/partial final model work without committed complete material stops without resend",
+    "current authorization/version/fact checks still apply when reading cached/recovered review",
+    "public result publication, clarification/escalation delivery, SESSION continuation and AGENT-06 trace/read/replay remain future slices",
+    "real model semantic quality, costs, performance, independent human review and holdout remain unmeasured"
+  ],
+  "next": "AGENT-05 atomic business terminal, clarification/escalation materials and restricted reading; then SESSION minimum and AGENT-06"
+}
