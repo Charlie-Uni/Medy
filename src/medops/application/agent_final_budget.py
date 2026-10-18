@@ -1,8 +1,8 @@
 """Private citation-check handoff for the trusted final owner, not a completed task.
 
 The result covers the final draft's citation requests and their budget only.
-AGENT-05 must still establish completeness, narrative/business/safety validity;
-AGENT-06 must persist the terminal under the returned fact fence.
+The terminal owner establishes completeness, narrative/business/safety validity
+and persists the business result under its final fact fence. This DTO alone cannot complete a run.
 """
 
 from dataclasses import dataclass

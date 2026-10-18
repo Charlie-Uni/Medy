@@ -1,6 +1,7 @@
 """Own one Agent lease, original allowance, durable journal and current-state recovery.
 
-No endpoint, automatic retry, new authorization or business completion is created.
+Terminal ownership is explicit through execute()/finish(); results need a confirmed commit.
+No endpoint, automatic retry or new paid authorization is created.
 Resources and profiles must be supplied by trusted server composition.
 """
 
@@ -28,12 +29,15 @@ from medops.application.agent_runtime_state import (
     reconcile_budget,
     verify_accounting,
 )
+from medops.application.agent_terminal import AgentDelivery
 from medops.bootstrap.agent_driver import AgentResources, Connection, PgAgentDriver, financial_cleanup
+from medops.bootstrap.agent_terminal import AgentTerminalOwner, read_delivery
 from medops.core.deadline import DeadlineExceeded, deadline_scope
 from medops.core.envelope import KeyProvider
 from medops.core.errors import BusinessError
 from medops.core.telemetry import run_metadata
 from medops.domain.agent_execution import AgentBudget, AgentContext, PVAgentRun, StopReason
+from medops.domain.identity import UserContext
 from medops.infrastructure.db.agent_control import PgAgentControl
 from medops.infrastructure.db.agent_facts import FactDatabaseBinding
 from medops.infrastructure.db.agent_runtime import PgAgentRuntime
@@ -74,8 +78,10 @@ class LeaseHeartbeat:
 
 
 class AgentExecution:
-    def __init__(self, driver: PgAgentDriver, *, recovered: bool, lease_s: float):
+    def __init__(self, driver: PgAgentDriver, *, recovered: bool, lease_s: float, runtime: AgentRuntime):
         self.driver, self.recovered = driver, recovered
+        self.runtime = runtime
+        self.delivery: AgentDelivery | None = None
         self.heartbeat = LeaseHeartbeat(driver, lease_s)
         self.result: AgentLoopResult | None = None
         self.used = False
@@ -94,6 +100,40 @@ class AgentExecution:
     def review(self) -> PreparedReview:
         """Internal committed review, without publishing or extending this run."""
         return self.driver.prepare_review()
+
+    def finish(self) -> AgentDelivery:
+        """Only a confirmed, currently authorized committed terminal is returned."""
+        if self.delivery is not None:
+            return self.runtime.result(self.driver.context, user=self.driver.context.principal)
+        if not self.used or self.result is None:
+            raise AgentLoopAbort("unsupported_requirement")
+        d = self.driver
+        try:
+            self.delivery = AgentTerminalOwner(d).publish(self.result)
+            return self.delivery
+        except BaseException as exc:
+            d._failed = True
+            try:
+                with financial_cleanup(), d.connection() as conn:
+                    d._store(conn).append(
+                        d.lease,
+                        "late_stop",
+                        uuid4(),
+                        {
+                            "kind": "terminal_save_failed",
+                            "reason": exc.reason if isinstance(exc, AgentLoopAbort) else "audit_failure",
+                            "error_type": type(exc).__name__,
+                        },
+                        retained_until=d.head.retained_until,
+                    )
+            except Exception:  # noqa: BLE001 - best effort metadata only; original failure is re-raised
+                pass  # No committed result can be claimed while the audit store is unavailable.
+            raise
+
+    def execute(self) -> AgentDelivery:
+        """Run the dynamic loop and its mandatory terminal owner, using one original allowance."""
+        self.run()
+        return self.finish()
 
     def _seal_stop(self, reason: StopReason) -> None:
         d = self.driver
@@ -141,10 +181,12 @@ class AgentExecution:
         finally:
             # The root cannot admit a new request even if save/release or the
             # commit acknowledgement below fails. No zero-budget fallback.
-            state = FrozenBudgetState.model_validate(d.root.freeze_state())
+            state = d.freeze_root()
         try:
             with financial_cleanup(), d.connection() as conn:
                 store = d._store(conn)
+                if store.control.get().terminal_ref is not None:
+                    return
                 store.control.fence(d.lease)
                 if not d._failed:
                     head = store.save(d.lease, d.head.body.with_budget(state), state, expected_revision=d.head.revision)
@@ -197,6 +239,11 @@ class AgentRuntime:
             or self.limits.timeout_s > p.timeout_ms / 1000
         ):
             raise AgentLoopAbort("budget_exceeded")
+
+    def result(self, context: AgentContext, *, user: UserContext) -> AgentDelivery:
+        if user != context.principal:
+            raise AgentLoopAbort("safety_boundary")
+        return read_delivery(self, context)
 
     def new_run(self, context: AgentContext) -> PVAgentRun:
         with self.connection() as conn:
@@ -318,7 +365,7 @@ class AgentRuntime:
 
     @contextmanager
     def _session(self, driver: PgAgentDriver, *, recovered: bool) -> Iterator[AgentExecution]:
-        session = AgentExecution(driver, recovered=recovered, lease_s=self.lease_s)
+        session = AgentExecution(driver, recovered=recovered, lease_s=self.lease_s, runtime=self)
         session.heartbeat.start()
         error: BaseException | None = None
         try:

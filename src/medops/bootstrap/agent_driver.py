@@ -109,8 +109,18 @@ class PgAgentDriver:
         self._lock = threading.RLock()
         self._active_call: str | None = None
         self._prepared_review: PreparedReview | None = None
+        self._frozen = False
         self._failed = False
         self._stop_reason: StopReason | None = None
+
+    def freeze_root(self) -> FrozenBudgetState:
+        """Suspend once; later accounting snapshots preserve late settlements."""
+        with self._lock:
+            if self._frozen:
+                return FrozenBudgetState.model_validate(self.root.journal_state())
+            state = FrozenBudgetState.model_validate(self.root.freeze_state())
+            self._frozen = True
+            return state
 
     def _control(self, conn: Any) -> PgAgentControl:
         conn.execute("select set_config('medops.dept',%s,true)", (self.context.principal.dept.value,))

@@ -24,7 +24,9 @@ from tests.support.documents import document, job, source_object
 from tests.support.harness import FakeRetrieval, make_deps
 
 
-def runtime_case(db, gateway, *, lease_s=10, limits=None, final_config=None, narrative_only=False):
+def runtime_case(
+    db, gateway, *, lease_s=10, limits=None, final_config=None, narrative_only=False, scope_resolution="resolved"
+):
     _, base, binding = control_data(db)
     with psycopg.connect(db["owner"]) as conn:
         src = source_object(conn, uuid4().int % 2**55)
@@ -69,9 +71,11 @@ def runtime_case(db, gateway, *, lease_s=10, limits=None, final_config=None, nar
             "identity": base.context.identity.model_copy(update={"trace_id": uuid4().hex}),
             "source_scope": AgentSourceScope(
                 requested_document=str(doc),
-                requested_version="PUBLIC v1",
-                resolution="resolved",
-                allowed_sources=(AllowedSource(doc_id=str(doc), version="PUBLIC v1", source_sha256=sha),),
+                requested_version="PUBLIC v1" if scope_resolution == "resolved" else None,
+                resolution=scope_resolution,
+                allowed_sources=(AllowedSource(doc_id=str(doc), version="PUBLIC v1", source_sha256=sha),)
+                if scope_resolution == "resolved"
+                else (),
             ),
         }
     )
@@ -108,7 +112,9 @@ def reopen_case(db, run, binding, chunk, gateway, *, lease_s=10, limits=None, fi
         "calls": [],
         "context": context,
         "db": db,
-        "doc": context.source_scope.allowed_sources[0].doc_id,
+        "doc": context.source_scope.allowed_sources[0].doc_id
+        if context.source_scope.allowed_sources
+        else context.source_scope.requested_document,
         "chunk": str(chunk),
     }
 
@@ -126,10 +132,15 @@ def reopen_case(db, run, binding, chunk, gateway, *, lease_s=10, limits=None, fi
             raise AgentLoopAbort("version_conflict")
 
     def resources(ctx, meter):
-        with connection() as conn:
-            conn.execute("select set_config('medops.dept','PV',true)")
-            fact = PgAgentFacts(conn, ctx.principal, database_binding=binding).lookup(ctx, (str(chunk),))[0]
-        retrieval = FakeRetrieval(fact.evidence)
+        if ctx.source_scope.resolution == "resolved":
+            with connection() as conn:
+                conn.execute("select set_config('medops.dept','PV',true)")
+                facts = PgAgentFacts(conn, ctx.principal, database_binding=binding).lookup(
+                    ctx, state.get("chunks", (str(chunk),))
+                )
+            retrieval = FakeRetrieval(*(f.evidence for f in facts))
+        else:
+            retrieval = FakeRetrieval()
         deps = make_deps(
             retrieval, meter, judge_model_id="gpt-6-sol", as_of=ctx.query_context.as_of, query_context=ctx.query_context
         )
