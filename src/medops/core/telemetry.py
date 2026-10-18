@@ -192,9 +192,17 @@ def _observation_type(name: str) -> str:
         return "generation"
     if name.startswith("retrieval.") and name != "retrieval.translate":
         return "retriever"
-    if name in {"harness.run", "harness.node"}:
+    if name in {
+        "harness.run",
+        "harness.node",
+        "agent.execution",
+        "agent.loop",
+        "agent.plan",
+        "agent.final_review",
+        "agent.terminal",
+    }:
         return "chain"
-    if name in {"skill.run", "worker.task", "mcp.tool"}:
+    if name in {"skill.run", "worker.task", "mcp.tool", "agent.tool"}:
         return "tool"
     return "span"
 

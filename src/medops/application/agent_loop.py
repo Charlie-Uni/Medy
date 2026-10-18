@@ -34,7 +34,7 @@ from medops.application.agent_tools import tool_contract_sha256
 from medops.core.deadline import CURRENT_DEADLINE, DeadlineExceeded, check_deadline, deadline_scope, execution_admission
 from medops.core.errors import BusinessError, ErrorCode, InfrastructureError
 from medops.core.money import usd_to_microusd
-from medops.core.telemetry import run_metadata
+from medops.core.telemetry import run_metadata, span
 from medops.domain.agent_actions import ClarifyAction, EscalateAction, FinishAction
 from medops.domain.agent_execution import AgentBudget, BoundAction, EvidenceHandle, PVAgentRun, StopReason, utc_time
 from medops.domain.safety import SafetyDecision
@@ -354,36 +354,43 @@ class AgentLoop:
         return self._handoff("step_limit")
 
     def _planning(self, request: ModelRequest, decision_id: UUID) -> tuple[ModelResponse | None, bool]:
-        item = allowance(request, self.gateway.execution_prices)
-        budget = current_budget()
-        if budget is None:
-            raise AgentLoopAbort("budget_exceeded")
-        s = budget.snapshot()
-        p = self._run.context.profile
-        if (
-            s.accounted_tokens + s.reserved_tokens + item.tokens + p.final_reserve_tokens > s.limits.token_limit
-            or usd_to_microusd(s.accounted_cost_usd + s.reserved_cost_usd + item.cost_usd)
-            + p.final_reserve_cost_microusd
-            > usd_to_microusd(s.limits.cost_limit_usd)
+        with span(
+            "agent.plan",
+            **{
+                "medops.agent.decision_id": str(decision_id),
+                "medops.agent.decision_index": self._run.decisions_consumed,
+            },
         ):
-            raise AgentLoopAbort("budget_exceeded")
-        before = {r.call.call_id for r in self.gateway.receipts}
-        response: ModelResponse | None = None
-        invalid = False
-        try:
-            response = self.gateway.complete(request)  # one logical planning request; no repair/retry loop
-            invalid = response.truncated
-        except ModelOutputInvalid as exc:
-            response, invalid = exc.model_response, True
-        finally:
-            self.gateway.call_journal.ensure_complete()
-            receipts = tuple(r.call.call_id for r in self.gateway.receipts if r.call.call_id not in before)
-            self._record(
-                LoopCheckpoint(
-                    "planning_returned", self._snapshot(), decision_id, response=response, receipt_ids=receipts
+            item = allowance(request, self.gateway.execution_prices)
+            budget = current_budget()
+            if budget is None:
+                raise AgentLoopAbort("budget_exceeded")
+            s = budget.snapshot()
+            p = self._run.context.profile
+            if (
+                s.accounted_tokens + s.reserved_tokens + item.tokens + p.final_reserve_tokens > s.limits.token_limit
+                or usd_to_microusd(s.accounted_cost_usd + s.reserved_cost_usd + item.cost_usd)
+                + p.final_reserve_cost_microusd
+                > usd_to_microusd(s.limits.cost_limit_usd)
+            ):
+                raise AgentLoopAbort("budget_exceeded")
+            before = {r.call.call_id for r in self.gateway.receipts}
+            response: ModelResponse | None = None
+            invalid = False
+            try:
+                response = self.gateway.complete(request)  # one logical planning request; no repair/retry loop
+                invalid = response.truncated
+            except ModelOutputInvalid as exc:
+                response, invalid = exc.model_response, True
+            finally:
+                self.gateway.call_journal.ensure_complete()
+                receipts = tuple(r.call.call_id for r in self.gateway.receipts if r.call.call_id not in before)
+                self._record(
+                    LoopCheckpoint(
+                        "planning_returned", self._snapshot(), decision_id, response=response, receipt_ids=receipts
+                    )
                 )
-            )
-        return response, invalid
+            return response, invalid
 
     def _decision(
         self, response: ModelResponse | None, invalid: bool, prior_count: int, decision_id: UUID
