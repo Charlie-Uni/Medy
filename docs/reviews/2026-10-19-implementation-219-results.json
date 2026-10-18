@@ -1,0 +1,125 @@
+{
+  "record": 219,
+  "date": "2026-10-19",
+  "task_id": "AGENT-05",
+  "baseline_sha": "47a50e434a7d6962f60b35d4de684816c7eab43c",
+  "implementer": "Codex",
+  "reviewer": "Codex (self-review, not independent human)",
+  "engineering_status": "DONE",
+  "scope": [
+    "validated business terminals",
+    "clarification and escalation materials",
+    "atomic persistence and sealed execution",
+    "current authorized result reads",
+    "original budget and receipt preservation"
+  ],
+  "validation": {
+    "command": "make check",
+    "required_services": true,
+    "exit_code": 0,
+    "passed": 3311,
+    "skipped": 70,
+    "warnings": 1,
+    "elapsed_s": 481.986,
+    "source_modules": 381,
+    "architecture_violations": 0,
+    "existing_architecture_exceptions": 2,
+    "assertion_test_files": 322,
+    "new_terminal_integration_cases": 56,
+    "new_unit_cases": 17,
+    "targeted_budget_and_failure_rechecks": 6,
+    "schema_downgrade_recheck": 1,
+    "proof_integrity_and_result_rechecks": 23,
+    "targeted_exit_code": 0,
+    "prior_registry_and_unit_regression_passed": 103
+  },
+  "input_binding": {
+    "maintained_inputs": 812,
+    "original_inputs": 805,
+    "protected_tracked_blobs_unchanged": 2174,
+    "public_schemas_unchanged": 36,
+    "task_ids": 144,
+    "only_status_change": "AGENT-05",
+    "source_hashes_verified": true,
+    "frozen_datasets_changed": false,
+    "default_models_changed": false
+  },
+  "formal_databases_readonly_versions": {
+    "medops": "0026",
+    "medops_v2": "0026",
+    "medops_v2_safety": "0026"
+  },
+  "new_migration": "0030; applied only to isolated temporary test databases",
+  "evaluation_audit_warnings": [
+    "unmappable_gold: 2 groups remain misses",
+    "replay_uses_old_safety: historical replay is not current frozen safety",
+    "independent_review_pending: datasets remain provisional",
+    "no_unseen_holdout: no new unseen holdout registered"
+  ],
+  "paid": {
+    "hosted_calls": 0,
+    "usd": 0,
+    "real_model_quality_measured": false
+  },
+  "prior_failures_preserved": {
+    "first_gate_exit_code": 2,
+    "second_gate_exit_code": 2,
+    "second_gate_summary": "1 failed (test expected subprocess error for in-process Alembic), 3309 passed, 70 skipped; fixed test and rechecked; third gate intentionally interrupted at 78 passed for proof-reference hardening",
+    "first_gate_summary": "2 failed, 120 passed; interrupted to investigate",
+    "double_freeze_fixed": true,
+    "budget_and_deadline_gaps_fixed": true,
+    "fixture_and_test_contract_errors_fixed": true,
+    "first_gate_intermittent_failures": "isolated rechecks and final required gate passed; original logs retained; no unproven root cause claimed"
+  },
+  "self_review": [
+    {
+      "item": "需求与范围",
+      "result": "通过",
+      "evidence": "AGENT-05实际终检、五状态持久交付、核验问题/部分资料/缺口和升级回执均有代码及真实PG反例；SESSION/完整轨迹/质量仍单列。"
+    },
+    {
+      "item": "ADR与阶段硬门",
+      "result": "通过",
+      "evidence": "无目标/验收阈值变更；沿用ADR-0012/PLAN-02和已通过ARCH-04/11；无S3改进/生产自动批准声明。"
+    },
+    {
+      "item": "正确性与失败路径",
+      "result": "通过",
+      "evidence": "成功、终检拒绝、无证据、错误JSON/截断/供应商故障、取消、保存回滚/确认丢失、认证恢复不重发、过期/损坏/旧SQL推进均经必要反例验证。"
+    },
+    {
+      "item": "权限与数据",
+      "result": "通过",
+      "evidence": "当前身份/部门、归档/ACL/来源内容/版本、最终同事务事实栅栏及读取时再次授权；0030无新授权，原36Schema与冻结数据保持；无密钥/正文遥测扩张。"
+    },
+    {
+      "item": "预算、取消与副作用",
+      "result": "通过",
+      "evidence": "0托管调用/0USD；原12,000 Token/0.60 USD/125秒/8步保持。实际终检预留、显式较小尝试数、实报超额/在途、最终deadline、一次冻结、迟到回执与失租阻断验证；正式库无迁移。"
+    },
+    {
+      "item": "追溯与版本",
+      "result": "通过",
+      "evidence": "v3终检摘要绑定实际停止提示/Schema及尝试数；原真实write-ahead/请求/回执保留，材料hash/实际最终检查event_id/终态event_id同事务关联。完整公共轨迹/回放属于AGENT-06。"
+    },
+    {
+      "item": "验证充分性",
+      "result": "通过",
+      "evidence": "required make check退出0：3311 passed/70 skipped/1既有JWT warning；6条预算/失败定向复测、原工具/Registry103回归及56终态集成均覆盖；812输入和2174受保护blob核对。离线Fake不证明模型质量。"
+    },
+    {
+      "item": "状态与文档",
+      "result": "通过",
+      "evidence": "八项自审后AGENT-05工程DONE；144任务ID/次序与其他状态保持，AGENT-06 READY、AGENT-07 BLOCKED，SESSION不标完成；README/阶段/计划/契约/记录同步并检查链接。"
+    }
+  ],
+  "limitations": [
+    "Formal databases remain 0026; no deployment/restart or production activation",
+    "Offline fake providers do not establish semantic quality, actual latency, completion rate or fees",
+    "SESSION minimal continuation, actual human assignment and AGENT-06 full trace/replay remain outstanding",
+    "No new unseen benchmark or independent second human review",
+    "70 optional alternative lexical service skips (25 candidate C pg_search BM25, 45 candidate B zhparser FTS) and one existing JWT short-key warning retained"
+  ],
+  "next_task": "AGENT-06, followed by SESSION minimal continuation and AGENT-07 prerequisites",
+  "publication": "four functional commits; final exact-SHA remote CI receipt retained separately after push"
+}

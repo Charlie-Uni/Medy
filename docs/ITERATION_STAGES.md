@@ -1,5 +1,7 @@
 # 分阶段执行与每轮自审
 
+2026-10-19记录219：AGENT-05业务终态、澄清/升级资料、同事务保存和当前授权读取已通过八项工程自审，AGENT-05 DONE；0托管调用/0USD，0030仅临时测试，正式三库仍0026。SESSION最小续办/AGENT-06轨迹及真实质量仍待。 [交付契约](agent/AGENT_TERMINALS.md) · [记录219](reviews/2026-10-19-implementation-219-agent-terminal-delivery.md)
+
 2026-10-17记录217：AGENT-04持久Driver、调用前写入/回执对账、同事务工具观察及真实终检预算包络已实现，工程自审通过，AGENT-04已完成。0托管调用/0USD，正式库未迁移，终态发布及公开入口仍AGENT-05/06。 [记录217](reviews/2026-10-17-implementation-217-durable-agent-runtime.md)
 
 2026-10-17记录216：AGENT-04完整循环观察检查点工程自审通过；重建证据、提取结果、逐项引用检查与重复计数，原步数/费用/截止保持。在途规划/工具不重放、所有停止交接保持停止；尚无生产Driver、持久完整循环恢复或write-ahead对账，整体未完成。0托管调用/0USD。 [记录216](reviews/2026-10-17-implementation-216-reconstructible-loop-state.md)
@@ -65,7 +67,7 @@ ARCH-03 两类最终业务比较的工程修复与自审通过，见[记录 179]
 
 ARCH-06 的 Ask/Task 共享审计与五类 Skill 内层证据链已通过工程自审，见[记录 180](reviews/2026-10-11-implementation-180-task-execution-audit.md)和[执行审计契约](TASK_EXECUTION_AUDIT.md)：完整引用绑定、结构化候选/最终核验、安全与重试保留，失败/撤权/lost 及数据库原子回滚通过。全量 2008/70、510 维护输入 SHA 一致、0 托管调用，无迁移；无 key 配置只存元数据。下一主切片 ARCH-07，ARCH-07/08 仅解锁无付费实现；Task/MCP 精确回放、真实语义校准、独立人工、未见盲测及 S2/S3 未完成，新代码未重启上线。
 
-LangGraph 当前仍是固定主图，动态循环是新增待办；LG-01 仅为 checkpoint 技术选型选做，恢复要求按实际 Agent 契约落实。模型路由和 provisional 标签保持真实状态。
+LangGraph继续服务既有固定主图；独立Agent模型循环、持久执行与终态服务已按记录209/217/219工程接线，公开轨迹/综合验证/SESSION与真实试跑仍待。LG-01仅评估具体checkpoint方案，不能替代已有恢复约束；模型路由和provisional标签保持。
 
 S0 的 PLAN-01 证据入口为[能力矩阵与 PV 场景方案](agent/PLAN-01-capability-and-scenario.md)，含参考源码、固定Workflow对照及12个合成设计用例。PLAN-02行动/profile/验收已获所有者确认（记录205），ARCH-04/11硬前置已过，AGENT-01/02契约与工具已实现（记录206/207）；EVAL-32开发评分规则及公开脚本见记录208。AGENT-03内部模型循环已通过记录209工程自审，下一AGENT-04；这些前置不证明完整S2或真实质量通过。
 
