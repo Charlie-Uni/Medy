@@ -32,6 +32,7 @@ from medops.application.agent_tools import AgentTools, tool_contract_sha256
 from medops.core.deadline import CURRENT_DEADLINE, Deadline, deadline_scope
 from medops.core.envelope import KeyProvider
 from medops.core.errors import BusinessError
+from medops.core.telemetry import span
 from medops.domain.agent_execution import AgentContext, BoundAction, EvidenceHandle, PVAgentRun, StopReason
 from medops.infrastructure.db.agent_control import AgentLease, PgAgentControl
 from medops.infrastructure.db.agent_fact_scope import AgentFactScope
@@ -449,81 +450,89 @@ class PgAgentDriver:
         admitted_at: datetime,
         evidence_registry: tuple[EvidenceHandle, ...],
     ) -> AgentToolOutcome:
-        self._root(self.root)
-        with self._lock:
-            pending = self.head.body.tool
-            if pending is not None:
-                if pending.action != action:
-                    raise AgentLoopAbort("audit_failure")
-            else:
-                pending = PendingTool(action=action, admitted_at=admitted_at, admission_budget=admission_run.budget)
-                with self.connection() as conn:
-                    head = self._save(self._store(conn), self.head.body.model_copy(update={"tool": pending}))
-                self.head = head
-        timeout = 20 if action.proposal.action == "search_documents" else 60
-        remaining = (
-            min(admission_run.expires_at, pending.admitted_at + timedelta(seconds=timeout)) - self.clock()
-        ).total_seconds()
-        with AgentFactScope(
-            self.connection, self.context, self.lease, self.database_binding, self.resources.check_bindings
-        ) as facts:
-            tool = AgentTools(
-                context=self.context,
-                facts=facts,
-                registry=self.resources.registry,
-                skill_context=self.resources.skill_context,
-                clock=self.clock,
-            )
-            with deadline_scope(remaining):
-                outcome = tool.execute(action, run=admission_run, evidence_registry=evidence_registry)
-            observed_at = self.clock()
-            run = run_with_budget(self.head.body.run, self.root.snapshot())
-            validate_tool_commit(action, outcome, run, evidence_registry, now=observed_at)
+        with span(
+            "agent.tool",
+            **{
+                "medops.agent.action": action.proposal.action,
+                "medops.agent.action_id": str(action.action_id),
+                "medops.agent.decision_index": action.decision_index,
+            },
+        ):
+            self._root(self.root)
             with self._lock:
-                old = self.head.body
-                if old.loop is None:
-                    raise AgentLoopAbort("audit_failure")
-                decision = CommittedDecision(
-                    decision_id=action.action_id,
-                    decision_index=action.decision_index,
-                    admitted_at=pending.admitted_at,
-                    observed_at=observed_at,
-                    admission_budget=pending.admission_budget,
-                    action=action,
-                    outcome=outcome,
-                    rejected=None,
+                pending = self.head.body.tool
+                if pending is not None:
+                    if pending.action != action:
+                        raise AgentLoopAbort("audit_failure")
+                else:
+                    pending = PendingTool(action=action, admitted_at=admitted_at, admission_budget=admission_run.budget)
+                    with self.connection() as conn:
+                        head = self._save(self._store(conn), self.head.body.model_copy(update={"tool": pending}))
+                    self.head = head
+            timeout = 20 if action.proposal.action == "search_documents" else 60
+            remaining = (
+                min(admission_run.expires_at, pending.admitted_at + timedelta(seconds=timeout)) - self.clock()
+            ).total_seconds()
+            with AgentFactScope(
+                self.connection, self.context, self.lease, self.database_binding, self.resources.check_bindings
+            ) as facts:
+                tool = AgentTools(
+                    context=self.context,
+                    facts=facts,
+                    registry=self.resources.registry,
+                    skill_context=self.resources.skill_context,
+                    clock=self.clock,
                 )
-                state = old.loop.model_copy(
-                    update={
-                        "run": run,
-                        "phase": "tool_committed",
-                        "captured_at": observed_at,
-                        "history": old.loop.history + (decision,),
-                    }
-                )
-                rebuild_loop_state(state, expected_run=run, config=old.config)
-                conn = facts.completion_connection()
-                store = self._store(conn)
-                store.append(
-                    self.lease,
-                    "tool_committed",
-                    action.action_id,
-                    {
-                        "outcome": outcome.model_dump(mode="json"),
-                        "audit": {
-                            "version": "execution-audit-v1",
-                            "events": list(tool.audit_snapshot().events),
-                            "evidence": [e.model_dump(mode="json") for e in tool.audit_snapshot().evidence],
-                            "flagged": list(tool.audit_snapshot().flagged),
-                            "spans": [s.model_dump(mode="json") for s in tool.audit_snapshot().spans],
+                with deadline_scope(remaining):
+                    outcome = tool.execute(action, run=admission_run, evidence_registry=evidence_registry)
+                observed_at = self.clock()
+                run = run_with_budget(self.head.body.run, self.root.snapshot())
+                validate_tool_commit(action, outcome, run, evidence_registry, now=observed_at)
+                with self._lock:
+                    old = self.head.body
+                    if old.loop is None:
+                        raise AgentLoopAbort("audit_failure")
+                    decision = CommittedDecision(
+                        decision_id=action.action_id,
+                        decision_index=action.decision_index,
+                        admitted_at=pending.admitted_at,
+                        observed_at=observed_at,
+                        admission_budget=pending.admission_budget,
+                        action=action,
+                        outcome=outcome,
+                        rejected=None,
+                    )
+                    state = old.loop.model_copy(
+                        update={
+                            "run": run,
+                            "phase": "tool_committed",
+                            "captured_at": observed_at,
+                            "history": old.loop.history + (decision,),
+                        }
+                    )
+                    rebuild_loop_state(state, expected_run=run, config=old.config)
+                    conn = facts.completion_connection()
+                    store = self._store(conn)
+                    store.append(
+                        self.lease,
+                        "tool_committed",
+                        action.action_id,
+                        {
+                            "outcome": outcome.model_dump(mode="json"),
+                            "audit": {
+                                "version": "execution-audit-v1",
+                                "events": list(tool.audit_snapshot().events),
+                                "evidence": [e.model_dump(mode="json") for e in tool.audit_snapshot().evidence],
+                                "flagged": list(tool.audit_snapshot().flagged),
+                                "spans": [s.model_dump(mode="json") for s in tool.audit_snapshot().spans],
+                            },
                         },
-                    },
-                    retained_until=self.head.retained_until,
-                )
-                head = self._save(store, old.model_copy(update={"run": run, "loop": state, "tool": None}))
-                facts.commit()  # commit acknowledgement precedes accepting this observation in memory
-                self.head = head
-        return outcome
+                        retained_until=self.head.retained_until,
+                    )
+                    head = self._save(store, old.model_copy(update={"run": run, "loop": state, "tool": None}))
+                    facts.commit()  # commit acknowledgement precedes accepting this observation in memory
+                    self.head = head
+            return outcome
 
     @contextmanager
     def _review_boundary(self) -> Iterator[None]:
@@ -594,82 +603,83 @@ class PgAgentDriver:
 
     def prepare_review(self) -> PreparedReview:
         """Return only committed private material; stopped/unknown work is never reissued."""
-        self._root(self.root)
-        with self._review_boundary():
-            state = self.head.body.loop
-            config = self.resources.final_config
-            if state is None or state.phase != "handoff" or state.terminal_request is None or config is None:
-                raise AgentLoopAbort("unsupported_requirement")
-            action = state.terminal_request
-            if action.proposal.action != "finish":
-                raise AgentLoopAbort("unsupported_requirement")
-            rebuilt = rebuild_loop_state(state, expected_run=self.head.body.run, config=self.head.body.config)
-            self.check_access(self.context, rebuilt.evidence_registry)
-            if self._prepared_review is None and self.root.finalization_snapshot() is not None:
-                # Only a confirmed encrypted material event may be reused. A known
-                # model receipt without this commit remains a stopped final phase.
-                with self.connection() as conn:
-                    store = self._store(conn)
-                    store.control.fence(self.lease)
-                    rows = [
-                        e
-                        for e in store.events()
-                        if e.kind == "checkpoint"
-                        and e.body.get("kind") in {"final_material_check", "final_review_rejected"}
-                        and e.body.get("prepared_review") is not None
-                    ]
-                    if len(rows) != 1:
-                        raise AgentLoopAbort("unsupported_recovery")
-                    review = PreparedReview.model_validate(rows[0].body["prepared_review"])
-                    validate_review_binding(review, self.context, action, rebuilt.evidence_registry, config)
-                    calls = store.calls()
-                    known = {
-                        c.allowance.call_id
-                        for c in calls
-                        if c.receipt is not None
-                        and f"final:{action.action_id}" in (request_call(c.request).attempt_id or "").split("/")
-                    }
-                    if not set(review.call_receipt_ids) <= known:
-                        raise AgentLoopAbort("unsupported_recovery")
-                self._prepared_review = review
-            if self._prepared_review is None:
-                try:
-                    check_structure(self.context, action.proposal.draft)
-                except AgentToolFault:
-                    review = structure_rejection(self.context, action, config)
-                    with (
-                        finalization_scope((), prices=self.meter.execution_prices),
-                        AgentFactScope(
-                            self.connection,
-                            self.context,
-                            self.lease,
-                            self.database_binding,
-                            self.resources.check_bindings,
-                        ) as facts,
-                    ):
-                        facts.final_check(self.context, ())
-                        conn = facts.completion_connection()
+        with span("agent.final_review"):
+            self._root(self.root)
+            with self._review_boundary():
+                state = self.head.body.loop
+                config = self.resources.final_config
+                if state is None or state.phase != "handoff" or state.terminal_request is None or config is None:
+                    raise AgentLoopAbort("unsupported_requirement")
+                action = state.terminal_request
+                if action.proposal.action != "finish":
+                    raise AgentLoopAbort("unsupported_requirement")
+                rebuilt = rebuild_loop_state(state, expected_run=self.head.body.run, config=self.head.body.config)
+                self.check_access(self.context, rebuilt.evidence_registry)
+                if self._prepared_review is None and self.root.finalization_snapshot() is not None:
+                    # Only a confirmed encrypted material event may be reused. A known
+                    # model receipt without this commit remains a stopped final phase.
+                    with self.connection() as conn:
                         store = self._store(conn)
-                        store.append(
-                            self.lease,
-                            "checkpoint",
-                            uuid4(),
-                            {
-                                "kind": "final_review_rejected",
-                                "prepared_review": review.model_dump(mode="json"),
-                                "reason": "unsupported_requirement",
-                                "semantic_model_run": False,
-                            },
-                            retained_until=self.head.retained_until,
-                        )
-                        head = self._save(store, self.head.body)
-                        facts.commit()
-                        self.head = head
-                        self._prepared_review = review
-                else:
-                    self.verify_final()
-            if self._prepared_review is None:
-                raise AgentLoopAbort("audit_failure")
-            validate_review_binding(self._prepared_review, self.context, action, rebuilt.evidence_registry, config)
-            self.check_access(self.context, rebuilt.evidence_registry)
-            return self._prepared_review
+                        store.control.fence(self.lease)
+                        rows = [
+                            e
+                            for e in store.events()
+                            if e.kind == "checkpoint"
+                            and e.body.get("kind") in {"final_material_check", "final_review_rejected"}
+                            and e.body.get("prepared_review") is not None
+                        ]
+                        if len(rows) != 1:
+                            raise AgentLoopAbort("unsupported_recovery")
+                        review = PreparedReview.model_validate(rows[0].body["prepared_review"])
+                        validate_review_binding(review, self.context, action, rebuilt.evidence_registry, config)
+                        calls = store.calls()
+                        known = {
+                            c.allowance.call_id
+                            for c in calls
+                            if c.receipt is not None
+                            and f"final:{action.action_id}" in (request_call(c.request).attempt_id or "").split("/")
+                        }
+                        if not set(review.call_receipt_ids) <= known:
+                            raise AgentLoopAbort("unsupported_recovery")
+                    self._prepared_review = review
+                if self._prepared_review is None:
+                    try:
+                        check_structure(self.context, action.proposal.draft)
+                    except AgentToolFault:
+                        review = structure_rejection(self.context, action, config)
+                        with (
+                            finalization_scope((), prices=self.meter.execution_prices),
+                            AgentFactScope(
+                                self.connection,
+                                self.context,
+                                self.lease,
+                                self.database_binding,
+                                self.resources.check_bindings,
+                            ) as facts,
+                        ):
+                            facts.final_check(self.context, ())
+                            conn = facts.completion_connection()
+                            store = self._store(conn)
+                            store.append(
+                                self.lease,
+                                "checkpoint",
+                                uuid4(),
+                                {
+                                    "kind": "final_review_rejected",
+                                    "prepared_review": review.model_dump(mode="json"),
+                                    "reason": "unsupported_requirement",
+                                    "semantic_model_run": False,
+                                },
+                                retained_until=self.head.retained_until,
+                            )
+                            head = self._save(store, self.head.body)
+                            facts.commit()
+                            self.head = head
+                            self._prepared_review = review
+                    else:
+                        self.verify_final()
+                if self._prepared_review is None:
+                    raise AgentLoopAbort("audit_failure")
+                validate_review_binding(self._prepared_review, self.context, action, rebuilt.evidence_registry, config)
+                self.check_access(self.context, rebuilt.evidence_registry)
+                return self._prepared_review
