@@ -43,9 +43,12 @@ class AgentControlState:
     lease_generation: int
     lease_until: datetime | None
     cancelled_at: datetime | None
+    terminal_ref: UUID | None
+    terminal_at: datetime | None
+    terminal_status: str | None
 
 
-_COLUMNS = "run_id, decisions_consumed, started_at, expires_at, lease_id, lease_generation, lease_until, cancelled_at"
+_COLUMNS = "run_id, decisions_consumed, started_at, expires_at, lease_id, lease_generation, lease_until, cancelled_at, terminal_ref, terminal_at, terminal_status"
 
 
 def _lease_seconds(value: float) -> float:
@@ -129,6 +132,8 @@ class PgAgentControl:
         # Separate statement: PostgreSQL must obtain any row lock before reading
         # the real clock, including after a lock wait. No caller-supplied clock.
         now = self.conn.execute("select clock_timestamp()").fetchone()[0]
+        if state.terminal_ref is not None:
+            raise AgentLoopAbort("unsupported_recovery")
         if state.cancelled_at is not None:
             raise AgentLoopAbort("cancelled")
         if now < state.started_at or now >= state.expires_at:
@@ -197,9 +202,37 @@ class PgAgentControl:
 
     def cancel(self) -> AgentControlState:
         """Idempotent owner cancellation, retained after connection/process replacement."""
-        self._read(lock=True)
+        state = self._read(lock=True)
+        if state.terminal_ref is not None:
+            return state
         self.conn.execute(
             "update agent_run_control set cancelled_at=clock_timestamp() where run_id=%(run)s and cancelled_at is null",
             self._params,
         )
         return self._read(lock=False)
+
+    def seal(self, lease: AgentLease, event_id: UUID, status: str) -> datetime:
+        """The result/audit must already be inserted in this SAME caller-owned transaction."""
+        state = self._read(lock=True)
+        now = self.conn.execute("select clock_timestamp()").fetchone()[0]
+        if state.terminal_ref is not None or (state.lease_id, state.lease_generation) != (
+            lease.lease_id,
+            lease.generation,
+        ):
+            raise AgentLoopAbort("unsupported_recovery")
+        if status not in {"failed", "cancelled"}:
+            now = self._live(state, lease)
+            head = self.conn.execute(
+                "select budget_deadline from agent_runtime_heads where run_id=%s", (lease.run_id,)
+            ).fetchone()
+            if head is None:
+                raise AgentLoopAbort("audit_failure")
+            if now >= head[0]:
+                raise AgentLoopAbort("timeout")
+        elif status == "cancelled" and state.cancelled_at is None:
+            raise AgentLoopAbort("unsupported_recovery")
+        self.conn.execute(
+            "update agent_run_control set terminal_ref=%s,terminal_at=%s,terminal_status=%s where run_id=%s",
+            (event_id, now, status, lease.run_id),
+        )
+        return now

@@ -206,12 +206,13 @@ class PgAgentRuntime:
 
     def append(
         self, lease: AgentLease, kind: str, item_id: UUID, body: dict[str, Any], *, retained_until: datetime
-    ) -> None:
+    ) -> UUID:
         if kind not in {"call_admitted", "call_settled", "tool_committed", "checkpoint", "late_stop"}:
             raise ValueError("invalid_agent_runtime_event")
         # Late settlements/stops deliberately do not acquire a live lease. Their
         # immutable admission/control binding is verified by the driver; they can
-        # never advance the head or publish a tool/business result.
+        # never advance the head. A terminal event alone is not publication authority:
+        # the terminal owner must also atomically seal control under its final fence.
         if kind not in {"call_settled", "late_stop"}:
             self.control.fence(lease)
         event_id = uuid4()
@@ -245,6 +246,16 @@ class PgAgentRuntime:
             prior = next((e for e in self.events() if e.kind == kind and e.item_id == item_id), None)
             if prior is None or prior.lease != lease or canonical_json(prior.body) != canonical_json(body):
                 raise AgentLoopAbort("audit_failure")
+
+        if inserted is not None:
+            return inserted[0]
+        row = self.conn.execute(
+            "select event_id from agent_runtime_events where run_id=%s and kind=%s and item_id=%s",
+            (lease.run_id, kind, item_id),
+        ).fetchone()
+        if row is None:
+            raise AgentLoopAbort("audit_failure")
+        return row[0]
 
     def events(self) -> tuple[RuntimeEvent, ...]:
         rows = self.conn.execute(
