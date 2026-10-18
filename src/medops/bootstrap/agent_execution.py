@@ -31,11 +31,12 @@ from medops.application.agent_runtime_state import (
 )
 from medops.application.agent_terminal import AgentDelivery
 from medops.bootstrap.agent_driver import AgentResources, Connection, PgAgentDriver, financial_cleanup
+from medops.bootstrap.agent_observability import execution_attributes, execution_summary
 from medops.bootstrap.agent_terminal import AgentTerminalOwner, read_delivery
 from medops.core.deadline import DeadlineExceeded, deadline_scope
 from medops.core.envelope import KeyProvider
 from medops.core.errors import BusinessError
-from medops.core.telemetry import run_metadata
+from medops.core.telemetry import annotate, run_metadata, span
 from medops.domain.agent_execution import AgentBudget, AgentContext, PVAgentRun, StopReason
 from medops.domain.identity import UserContext
 from medops.infrastructure.db.agent_control import PgAgentControl
@@ -87,15 +88,16 @@ class AgentExecution:
         self.used = False
 
     def run(self) -> AgentLoopResult:
-        if self.used:
-            raise ValueError("agent_execution_already_used")
-        self.used = True
-        d = self.driver
-        loop = AgentLoop(gateway=d.meter, config=d.head.body.config, driver=d, clock=d.clock)
-        state = d.head.body.loop
-        result = loop.resume(state) if self.recovered and state is not None else loop.run(d.head.body.run)
-        self.result = result
-        return result
+        with span("agent.loop"):
+            if self.used:
+                raise ValueError("agent_execution_already_used")
+            self.used = True
+            d = self.driver
+            loop = AgentLoop(gateway=d.meter, config=d.head.body.config, driver=d, clock=d.clock)
+            state = d.head.body.loop
+            result = loop.resume(state) if self.recovered and state is not None else loop.run(d.head.body.run)
+            self.result = result
+            return result
 
     def review(self) -> PreparedReview:
         """Internal committed review, without publishing or extending this run."""
@@ -104,31 +106,41 @@ class AgentExecution:
     def finish(self) -> AgentDelivery:
         """Only a confirmed, currently authorized committed terminal is returned."""
         if self.delivery is not None:
-            return self.runtime.result(self.driver.context, user=self.driver.context.principal)
+            with (
+                run_metadata(
+                    self.driver.context.identity.trace_id,
+                    self.driver.context.versions.versions.model_dump(mode="json"),
+                    kind="agent",
+                ),
+                span("agent.result", **{"medops.run_id": str(self.driver.context.identity.run_id)}),
+            ):
+                return self.runtime.result(self.driver.context, user=self.driver.context.principal)
         if not self.used or self.result is None:
             raise AgentLoopAbort("unsupported_requirement")
         d = self.driver
-        try:
-            self.delivery = AgentTerminalOwner(d).publish(self.result)
-            return self.delivery
-        except BaseException as exc:
-            d._failed = True
+        with span("agent.terminal") as observed:
             try:
-                with financial_cleanup(), d.connection() as conn:
-                    d._store(conn).append(
-                        d.lease,
-                        "late_stop",
-                        uuid4(),
-                        {
-                            "kind": "terminal_save_failed",
-                            "reason": exc.reason if isinstance(exc, AgentLoopAbort) else "audit_failure",
-                            "error_type": type(exc).__name__,
-                        },
-                        retained_until=d.head.retained_until,
-                    )
-            except Exception:  # noqa: BLE001 - best effort metadata only; original failure is re-raised
-                pass  # No committed result can be claimed while the audit store is unavailable.
-            raise
+                self.delivery = AgentTerminalOwner(d).publish(self.result)
+                annotate(observed, **execution_summary(d, self.delivery, None))
+                return self.delivery
+            except BaseException as exc:
+                d._failed = True
+                try:
+                    with financial_cleanup(), d.connection() as conn:
+                        d._store(conn).append(
+                            d.lease,
+                            "late_stop",
+                            uuid4(),
+                            {
+                                "kind": "terminal_save_failed",
+                                "reason": exc.reason if isinstance(exc, AgentLoopAbort) else "audit_failure",
+                                "error_type": type(exc).__name__,
+                            },
+                            retained_until=d.head.retained_until,
+                        )
+                except Exception:  # noqa: BLE001 - best effort metadata only; original failure is re-raised
+                    pass  # No committed result can be claimed while the audit store is unavailable.
+                raise
 
     def execute(self) -> AgentDelivery:
         """Run the dynamic loop and its mandatory terminal owner, using one original allowance."""
@@ -366,29 +378,43 @@ class AgentRuntime:
     @contextmanager
     def _session(self, driver: PgAgentDriver, *, recovered: bool) -> Iterator[AgentExecution]:
         session = AgentExecution(driver, recovered=recovered, lease_s=self.lease_s, runtime=self)
-        session.heartbeat.start()
-        error: BaseException | None = None
-        try:
-            with (
-                run_metadata(
-                    driver.context.identity.trace_id,
-                    driver.context.versions.versions.model_dump(mode="json"),
-                    kind="agent",
-                ),
-                execution_journal_scope(driver),
-                call_scope(
-                    run_id=str(driver.context.identity.run_id),
-                    attempt_id=str(driver.context.identity.attempt_id),
-                    before_call=lambda: driver.check_access(driver.context, ()),
-                ),
-            ):
-                yield session
-        except BaseException as exc:
-            error = exc
-            raise
-        finally:
+        calls_at_start = driver.root.snapshot().calls
+        with (
+            run_metadata(
+                driver.context.identity.trace_id, driver.context.versions.versions.model_dump(mode="json"), kind="agent"
+            ),
+            span("agent.execution", **execution_attributes(driver, recovered=recovered)) as observed,
+        ):
+            session.heartbeat.start()
+            error: BaseException | None = None
             try:
-                session.close(error)
-            except Exception:
-                if error is None:
-                    raise
+                with (
+                    execution_journal_scope(driver),
+                    call_scope(
+                        run_id=str(driver.context.identity.run_id),
+                        attempt_id=str(driver.context.identity.attempt_id),
+                        before_call=lambda: driver.check_access(driver.context, ()),
+                    ),
+                ):
+                    yield session
+            except BaseException as exc:
+                error = exc
+                raise
+            finally:
+                try:
+                    session.close(error)
+                except Exception as close_error:
+                    if error is None:
+                        error = close_error
+                        raise
+                finally:
+                    annotate(
+                        observed,
+                        **execution_summary(
+                            driver,
+                            session.delivery,
+                            error,
+                            calls_at_start=calls_at_start,
+                            handoff_reason=session.result.reason if session.result is not None else None,
+                        ),
+                    )
