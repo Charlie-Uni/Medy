@@ -1,0 +1,121 @@
+{
+  "record": 220,
+  "date": "2026-10-19",
+  "task_id": "AGENT-06",
+  "slice": "runtime metadata spans, accounting and recovery correlation",
+  "slice_status": "DONE",
+  "overall_task_status": "IN_PROGRESS",
+  "baseline_sha": "8e1c7d2653a85de9fb94fa08fbcfab6232b84921",
+  "implementer": "Codex",
+  "reviewer": "Codex self-review, not independent human",
+  "validation": {
+    "command": "make check",
+    "required_services": true,
+    "exit_code": 0,
+    "passed": 3326,
+    "skipped": 70,
+    "warnings": 1,
+    "elapsed_s": 597.517,
+    "new_cases": 15,
+    "targeted_first_passed": 79,
+    "final_edge_rechecks_passed": 3,
+    "zero_call_budget_stop_recheck": 1,
+    "source_modules": 382,
+    "architecture_violations": 0,
+    "existing_architecture_exceptions": 2,
+    "assertion_test_files": 324
+  },
+  "source_binding": {
+    "baseline_inputs": 812,
+    "current_inputs": 815,
+    "protected_tracked_blobs_unchanged": 2189,
+    "public_schemas_unchanged": 36,
+    "task_ids": 144,
+    "only_status_change": "AGENT-06",
+    "ast": {
+      "baseline_sha": "8e1c7d2653a85de9fb94fa08fbcfab6232b84921",
+      "span_only_bodies_equivalent": [
+        "AgentExecution.run",
+        "AgentLoop._planning",
+        "PgAgentDriver.execute_tool",
+        "PgAgentDriver.prepare_review"
+      ],
+      "intentional_lifecycle_and_classification_changes": [
+        "AgentExecution.finish",
+        "AgentRuntime._session",
+        "_observation_type"
+      ],
+      "all_other_functions_ast_equal": 60,
+      "no_budget_model_acl_or_sql_logic_changes": true
+    }
+  },
+  "paid": {
+    "hosted_calls": 0,
+    "usd": 0,
+    "real_model_quality_measured": false
+  },
+  "formal_database_versions": {
+    "medops": "0026",
+    "medops_v2": "0026",
+    "medops_v2_safety": "0026"
+  },
+  "new_migration": null,
+  "deployed": false,
+  "new_langfuse_backend_demo": false,
+  "self_review": [
+    {
+      "item": "需求与范围",
+      "result": "通过",
+      "evidence": "只交付AGENT-06运行metadata首切片，实际节点/计量/版本/恢复关联已接线；受限审计读取、持久业务Trace/反馈和回放不宣称完成。"
+    },
+    {
+      "item": "ADR与阶段硬门",
+      "result": "通过",
+      "evidence": "沿用ADR-0012/PLAN-02；ARCH-04/11、AGENT-01～05工程前置已过，无目标/阈值变更、自动生产激活或S3改进声明。"
+    },
+    {
+      "item": "正确性与失败路径",
+      "result": "通过",
+      "evidence": "真实PG/原Driver验证执行树、内部handoff、三种业务交付、超时、调用者异常、终态回滚/确认丢失、同进程/独立Python恢复、foreign parent及退出后读取。"
+    },
+    {
+      "item": "权限与数据",
+      "result": "通过",
+      "evidence": "固定UUID/hash/闭集状态/数值投影；新增span不含叙述、证据、问题、prompt/output或异常消息；没有新增授权、正文读取或Schema/SQL修改。"
+    },
+    {
+      "item": "预算、取消与副作用",
+      "result": "通过",
+      "evidence": "0托管调用/0USD；原根/限额/准入/回执保持。累计与本次新增分别记录，已知/保守/在途分开；不靠另一个预算或重发恢复计量。"
+    },
+    {
+      "item": "追溯与版本",
+      "result": "通过",
+      "evidence": "真实case/task/run/attempt、条件/策略hash与租约代数进入固定metadata；恢复同业务Trace新span；未确认提交不能报完成；加密runtime仍为持久事实。"
+    },
+    {
+      "item": "验证充分性",
+      "result": "通过",
+      "evidence": "required make check退出0：3326 passed/70 skipped/1旧JWT warning，15新集成，79首轮定向及3最终边界通过；4包裹函数正文和其余60函数AST等价，815输入绑定。"
+    },
+    {
+      "item": "状态与文档",
+      "result": "通过",
+      "evidence": "本切片工程通过，AGENT-06整体IN_PROGRESS；144任务编号/顺序/其他状态保持；最新入口、计划、阶段、契约和本记录一致；部署/模型质量/实际后端交付另验。"
+    }
+  ],
+  "remaining": [
+    "Restricted audit reader with administrator purpose/access log",
+    "Persistent business Trace and feedback registration",
+    "Diagnostic replay wiring and explicit original-condition boundaries",
+    "Real model quality, live backend/UI demonstration, deployment and unseen benchmark remain separately gated"
+  ],
+  "known_limits": [
+    "Spans are not the authoritative durable journal",
+    "Hard process death can lose unexported spans; old spans are not fabricated",
+    "HTTP sends may exceed logical call count",
+    "70 optional candidate C pg_search/candidate B zhparser tests skipped; one existing JWT short-key warning",
+    "Evaluation audit retains unmappable_gold, old safety replay, independent review pending and no unseen holdout warnings"
+  ],
+  "publication": "four functional commits, source/owned-path check and exact-SHA remote CI recorded separately"
+}

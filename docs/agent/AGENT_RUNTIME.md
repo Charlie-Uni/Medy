@@ -70,3 +70,5 @@
 记录218更新：实际证据逐项终检与内部审核材料已按[AGENT_REVIEW](AGENT_REVIEW.md)推进；私有最终策略v2进入原版本摘要和包络。业务终态/澄清/升级交付仍归AGENT-05，公开轨迹/回放仍AGENT-06；本轮不部署。
 
 记录219更新：[业务终态契约](AGENT_TERMINALS.md)补实际Owner、控制封闭与读取。0030后sealed控制拒绝恢复成可执行根，结果走无模型result读取；历史运行head是最后执行快照。终态后新准入/head写入由SQL阻止，费用可迟到；正式三库仍0026。
+
+记录220更新：[运行观测首切片](AGENT_OBSERVABILITY.md)接入固定metadata的Agent节点层级、原累计/本会话计量及跨进程同Trace关联。加密runtime仍为持久审计事实；受限读取/业务Trace/反馈和回放仍AGENT-06后续，无正式部署。
