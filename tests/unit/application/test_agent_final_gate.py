@@ -10,6 +10,7 @@ from medops.application.agent_final_gate import (
     startup_reserve,
 )
 from medops.application.agent_tool_ports import AgentToolFault
+from medops.core.deadline import DeadlineExceeded
 from medops.domain.agent_actions import ReviewDraft
 from medops.infrastructure.llm.execution_budget import PRICES, estimate_request
 from medops.infrastructure.llm.gateway import BudgetExceeded
@@ -93,3 +94,25 @@ def test_duplicate_final_verdict_keys_are_rejected_even_if_gateway_parsed_them()
         tool.verify_final_citations(action, run=current, evidence_registry=(record,), final_config=config())
     assert root.finalization_snapshot().state == "closed" and root.snapshot().calls == 2
     assert len(fake.calls) == 2
+
+
+@pytest.mark.parametrize("attempts", [1, 2, 3])
+def test_explicit_lower_citation_attempt_cap_limits_real_registry_retries_without_new_allowance(attempts):
+    from medops.infrastructure.llm.gateway import ModelTimeout
+
+    current, tool, _, fake, action, record = setup_final(
+        reserve=10000,
+        script={"verify": [ModelTimeout("PUBLIC temporary judge failure")] * 3},
+    )
+    with parent(token_limit=12000) as root, pytest.raises(DeadlineExceeded):
+        tool.verify_final_citations(
+            action, run=current, evidence_registry=(record,), final_config=config(citation_attempts=attempts)
+        )
+    assert len(fake.calls) == attempts and all(r.purpose == "verify" for r in fake.calls)
+    assert root.finalization_snapshot().state == "closed" and root.snapshot().limits.token_limit == 12000
+
+
+@pytest.mark.parametrize("attempts", [0, 4, True, "1"])
+def test_attempt_caps_cannot_expand_original_retry_limit_or_coerce_types(attempts):
+    with pytest.raises(ValidationError):
+        config(citation_attempts=attempts)

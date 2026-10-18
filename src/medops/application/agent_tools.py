@@ -64,7 +64,7 @@ from medops.infrastructure.llm.gateway import BudgetExceeded
 from medops.infrastructure.llm.meter import MeteredGateway
 from medops.safety.checks import SAFETY_VERSION, check_input, screen_evidence
 from medops.skills.catalog import default_registry
-from medops.skills.registry import SkillContext, SkillRegistry
+from medops.skills.registry import MAX_RETRIES, SkillContext, SkillRegistry
 from medops.verification.verifier import VERIFIER_VERSION
 
 log = logging.getLogger(__name__)
@@ -315,8 +315,15 @@ class AgentTools:
                 if claims
                 else None
             )
+            attempt_limit = (
+                final_config.citation_attempts
+                if final_config and final_config.citation_attempts < 1 + MAX_RETRIES
+                else None
+            )
             plan = (
-                self._skills.plan_verify(verifying, self.context, by_handle, self.skill_context, self.facts)
+                self._skills.plan_verify(
+                    verifying, self.context, by_handle, self.skill_context, self.facts, attempt_limit=attempt_limit
+                )
                 if verifying
                 else ModelCallPlan()
             )
@@ -344,7 +351,7 @@ class AgentTools:
                 self._journal.record_event("agent_final_citation_budget_profile", profile.model_dump(mode="json"))
                 if verifying is not None:
                     payload, _, observed = self._skills.verify(
-                        verifying, self.context, by_handle, self.skill_context, self.facts
+                        verifying, self.context, by_handle, self.skill_context, self.facts, attempt_limit=attempt_limit
                     )
                 else:
                     self._journal.bind(self.context.identity.trace_id, self.context.principal.user_id)

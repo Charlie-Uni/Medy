@@ -61,6 +61,8 @@ class SkillContext:
     trace_id: str
     run_id: str
     as_of: date | None = None
+    # Trusted server may reduce the existing bound; untrusted Skill input cannot set this.
+    attempt_limit: int | None = None
 
     @property
     def query_context(self) -> QueryContext:
@@ -157,6 +159,10 @@ class SkillRegistry:
     # ------------------------------------------------------------------ execution
     def execute(self, name: str, version: str, raw_input: Mapping[str, object], *, context: SkillContext) -> SkillRun:
         context = context.pin_query_context()
+        if context.attempt_limit is not None and (
+            type(context.attempt_limit) is not int or not 1 <= context.attempt_limit <= 1 + MAX_RETRIES
+        ):
+            raise ValueError("invalid_skill_attempt_limit")
         journal = context.deps.audit or ExecutionAudit()
         journal.bind(context.trace_id, context.user.user_id)
         context = replace(context, deps=replace(context.deps, audit=journal))
@@ -186,6 +192,7 @@ class SkillRegistry:
                         else None,
                     },
                     "conditions": execution_conditions(context.deps, limits, shared_limits=budget.limits),
+                    **({"attempt_limit": context.attempt_limit} if context.attempt_limit is not None else {}),
                     "skill_spec": entry.spec.model_dump(mode="json"),
                     "input_schema_sha256": canonical_hash(entry.input_model.model_json_schema()),
                     "output_schema_sha256": canonical_hash(entry.output_model.model_json_schema()),
@@ -241,6 +248,7 @@ class SkillRegistry:
             context.run_id,
             spec.version_tag,
             {
+                **({"attempt_limit": context.attempt_limit} if context.attempt_limit is not None else {}),
                 "input": payload.model_dump(mode="json"),
                 "user": context.user.model_dump(mode="json"),
                 "versions": context.versions.model_dump(mode="json"),
@@ -250,7 +258,11 @@ class SkillRegistry:
         node = NodeSpec(
             name=f"skill:{spec.name}",
             timeout_s=spec.timeout_s,
-            max_retries=MAX_RETRIES if spec.idempotent else 0,
+            max_retries=min(
+                MAX_RETRIES, context.attempt_limit - 1 if context.attempt_limit is not None else MAX_RETRIES
+            )
+            if spec.idempotent
+            else 0,
         )
         try:
             output, attempts = run_node(

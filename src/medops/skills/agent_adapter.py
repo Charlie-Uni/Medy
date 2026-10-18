@@ -131,6 +131,8 @@ class PVSkillAdapter:
         registry: dict[UUID, EvidenceHandle],
         skill_context: SkillContext,
         facts_port: AgentFacts,
+        *,
+        attempt_limit: int | None = None,
     ) -> ModelCallPlan:
         facts = self._verification_facts(proposal, context, registry, facts_port)
         visible, _ = screen_evidence(tuple(f.evidence for f in facts))
@@ -153,7 +155,10 @@ class PVSkillAdapter:
                 )
         return ModelCallPlan(
             requests=tuple(requests),
-            max_attempts=1 + (MAX_RETRIES if citation_verification.SPEC.idempotent else 0),
+            max_attempts=min(
+                1 + (MAX_RETRIES if citation_verification.SPEC.idempotent else 0),
+                attempt_limit if attempt_limit is not None else 1 + MAX_RETRIES,
+            ),
         )
 
     def _verification_facts(
@@ -187,6 +192,8 @@ class PVSkillAdapter:
         registry: dict[UUID, EvidenceHandle],
         skill_context: SkillContext,
         facts_port: AgentFacts,
+        *,
+        attempt_limit: int | None = None,
     ) -> tuple[VerificationPayload, tuple[EvidenceHandle, ...], tuple[AgentFact, ...]]:
         facts = self._verification_facts(proposal, context, registry, facts_port)
         by_id = {f.evidence.citation.chunk_id: f.evidence for f in facts}
@@ -196,7 +203,7 @@ class PVSkillAdapter:
                 raise AgentToolFault("denied_or_unavailable")
             return tuple(f.evidence for f in facts_port.lookup(context, tuple(ids)))
 
-        verifying_context = replace(skill_context, evidence_lookup=lookup)
+        verifying_context = replace(skill_context, evidence_lookup=lookup, attempt_limit=attempt_limit)
         raw = {
             "claims": [
                 {
