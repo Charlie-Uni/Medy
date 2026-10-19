@@ -1,0 +1,381 @@
+{
+  "record": 223,
+  "date": "2026-10-19",
+  "task": "AGENT-06",
+  "baseline_sha": "7d66146a333965cdceb0e1f42ff9292f27eed301",
+  "slice": "current-condition Agent diagnostic replay and original-condition refusal",
+  "slice_status": "DONE",
+  "overall_status": "DONE",
+  "reviewer": "Codex self-review, not second independent human",
+  "hosted_model_calls": 0,
+  "hosted_usd": 0,
+  "formal_migrations": 0,
+  "deployed": false,
+  "self_review": [
+    {
+      "item": "需求与范围",
+      "result": "通过",
+      "evidence": "PLAN-02 §7；真实当前条件 AgentRuntime/Driver 诊断及差异报告，原条件明确拒绝；仅可信服务层接线。"
+    },
+    {
+      "item": "正确性与兼容",
+      "result": "通过",
+      "evidence": "新旧终态、日期/输入、来源、实际版本及规范化引用组；原826 Python、36公开Schema及范围外blob保持；18新增用例全执行。"
+    },
+    {
+      "item": "失败路径",
+      "result": "通过",
+      "evidence": "原条件、过期、变更/重复请求、日志/报告失败、并发、保留Trace、同ID替代快照；未解决的共享本机环境不计部署通过。"
+    },
+    {
+      "item": "权限与安全",
+      "result": "通过",
+      "evidence": "当前管理员、原主体、同事实库和来源ACL，供应商前及报告提交前再次检查；报告无正文/凭据/异常消息。"
+    },
+    {
+      "item": "预算、取消与停止",
+      "result": "通过",
+      "evidence": "全新身份使用原批准profile；重复UUID不重开根，未知执行拒绝；管理员调用中撤权保留settlement且无后续模型调用。"
+    },
+    {
+      "item": "可追溯性",
+      "result": "通过",
+      "evidence": "用途日志提交、受限provenance、真实Agent Trace/终态/预算/调用链与既有replays；旧失败和取消CI保留。"
+    },
+    {
+      "item": "验证证据",
+      "result": "通过",
+      "evidence": "https://github.com/Charlie-Uni/Medy/actions/runs/39244683766，源码b230c74e803af943436cb6b8a349f3ba88015b36；29步骤成功，3372 passed/92 skipped/1旧警告；891输入与候选合并树绑定。"
+    },
+    {
+      "item": "文档与台账",
+      "result": "通过",
+      "evidence": "144个任务ID/顺序、其余143状态保持；只关闭AGENT-06工程。SESSION、公开准入/演示、AGENT-07/08、质量/盲测/生产继续分别验收。"
+    }
+  ],
+  "targeted_runs": [
+    {
+      "name": "docs-review",
+      "command": [
+        "venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/unit/docs"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 11.049,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    },
+    {
+      "name": "first",
+      "command": [
+        "venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/integration/test_agent_replay.py",
+        "-x"
+      ],
+      "exit_code": 1,
+      "elapsed_s": 25.604,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    },
+    {
+      "name": "heartbeat-diagnose",
+      "command": [
+        "venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/integration/test_agent_replay.py::test_original_conditions_refused_before_audit_or_prepare_or_provider",
+        "tests/integration/test_agent_trace.py::test_real_terminal_trace_has_original_identity_versions_accounting_and_no_body",
+        "-x"
+      ],
+      "exit_code": 1,
+      "elapsed_s": 89.71,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    },
+    {
+      "name": "replay-all",
+      "command": [
+        "venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/integration/test_agent_replay.py"
+      ],
+      "exit_code": 2,
+      "elapsed_s": 246.211,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    },
+    {
+      "name": "replay-diagnose",
+      "command": [
+        "venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/integration/test_agent_replay.py::test_original_conditions_refused_before_audit_or_prepare_or_provider",
+        "tests/integration/test_agent_replay.py::test_report_failure_can_be_repaired_without_another_execution_or_charge",
+        "tests/integration/test_agent_replay.py::test_current_authorization_failures_prevent_new_calls",
+        "-x"
+      ],
+      "exit_code": 1,
+      "elapsed_s": 27.628,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    },
+    {
+      "name": "restored-content-coherent",
+      "command": [
+        "venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/integration/test_agent_replay.py::test_same_chunk_ids_with_changed_text_are_reported_as_content_changes",
+        "-x"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 31.054,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    },
+    {
+      "name": "restored-content",
+      "command": [
+        "venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/integration/test_agent_replay.py::test_same_chunk_ids_with_changed_text_are_reported_as_content_changes",
+        "-x"
+      ],
+      "exit_code": 1,
+      "elapsed_s": 18.839,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    },
+    {
+      "name": "retained-identity",
+      "command": [
+        "venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/integration/test_agent_replay.py::test_surviving_trace_blocks_reusing_identity_without_runtime_before_any_charge",
+        "-x"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 41.271,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    },
+    {
+      "name": "second",
+      "command": [
+        "venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/integration/test_agent_replay.py",
+        "-x"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 141.729,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    },
+    {
+      "name": "static-after-retention",
+      "command": [
+        "make",
+        "lint",
+        "format-check",
+        "typecheck",
+        "architecture-check",
+        "test-assertion-check"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 16.711,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    },
+    {
+      "name": "static-final",
+      "command": [
+        "make",
+        "lint",
+        "format-check",
+        "typecheck",
+        "architecture-check",
+        "test-assertion-check"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 20.392,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    },
+    {
+      "name": "static-first",
+      "command": [
+        "venv/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "src/medops/application/agent_replay.py",
+        "src/medops/bootstrap/agent_replay.py",
+        "--fix"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 0.271,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    },
+    {
+      "name": "static-fixed",
+      "command": [
+        "make",
+        "lint",
+        "format-check",
+        "typecheck",
+        "architecture-check",
+        "test-assertion-check"
+      ],
+      "exit_code": 2,
+      "elapsed_s": 0.849,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    },
+    {
+      "name": "static-freeze",
+      "command": [
+        "make",
+        "lint",
+        "format-check",
+        "typecheck",
+        "architecture-check",
+        "test-assertion-check"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 11.405,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    },
+    {
+      "name": "stop-metadata",
+      "command": [
+        "venv/bin/python",
+        ".local/audit223/diagnose_stop.py"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 46.534,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    },
+    {
+      "name": "stop-scope",
+      "command": [
+        "venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/integration/test_agent_replay.py::test_diagnostic_retains_agent_stop_semantics_without_mapping_to_ask",
+        "-x"
+      ],
+      "exit_code": 1,
+      "elapsed_s": 39.984,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    }
+  ],
+  "new_integration_cases": 18,
+  "known_local_instability": "New and unchanged terminal tests intermittently fail on shared PostgreSQL; no timeout/lease or production-service changes; required isolated CI pending.",
+  "ci_attempts": [
+    {
+      "sha": "3b71edbaa13bceebfa1f9ae569616036eaa61627",
+      "url": "https://github.com/Charlie-Uni/Medy/actions/runs/39242560420",
+      "conclusion": "failure",
+      "status": "completed"
+    },
+    {
+      "sha": "f43ff912e065af2c28c4af6862b425fe4ed3f36c",
+      "url": "https://github.com/Charlie-Uni/Medy/actions/runs/39243336291",
+      "conclusion": "failure",
+      "status": "completed"
+    },
+    {
+      "sha": "d1bfd39d3426420cd85d1ad383191d41ad3fd722",
+      "url": "https://github.com/Charlie-Uni/Medy/actions/runs/39244470707",
+      "conclusion": "cancelled",
+      "status": "completed",
+      "reason": "Known local restored-snapshot fixture lacked the matching content hash; cancelled before using it as final evidence."
+    }
+  ],
+  "validation": {
+    "mode": "candidate4",
+    "sha": "b230c74e803af943436cb6b8a349f3ba88015b36",
+    "url": "https://github.com/Charlie-Uni/Medy/actions/runs/39244683766",
+    "exit_code": 0,
+    "passed": 3372,
+    "skipped": 92,
+    "warnings": 1,
+    "steps_success": 29,
+    "bound_inputs": 891,
+    "maintained_python": 829,
+    "schemas": 36,
+    "new_cases": 18,
+    "local_full_make_check_passed": false,
+    "source_bytes_match_commit": true,
+    "skip_breakdown": {
+      "C_pg_search": 25,
+      "B_zhparser": 45,
+      "D_separate_experiment": 22
+    },
+    "required_production_pg_redis_and_bm25_executed": true
+  },
+  "formal_databases": [
+    {
+      "database": "medops",
+      "migration": "0026",
+      "read_only": true
+    },
+    {
+      "database": "medops_v2",
+      "migration": "0026",
+      "read_only": true
+    },
+    {
+      "database": "medops_v2_safety",
+      "migration": "0026",
+      "read_only": true
+    }
+  ],
+  "limits": [
+    "No original-condition restoration or attested historical build/corpus/index.",
+    "Private trusted service; public Agent admission/CLI delivery and minimal SESSION continuation remain separate.",
+    "No hosted model quality, latency, blind-test, production deployment or second independent human claim.",
+    "Shared local PostgreSQL intermittently fails existing/new terminal tests; required isolated CI passed. Local deployment stability remains DEPLOY-02 follow-up.",
+    "Idempotency evidence is retention-bound; fully purged commands are not promised permanent deduplication."
+  ]
+}

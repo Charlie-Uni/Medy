@@ -1,5 +1,7 @@
 # Medy 项目完整迭代计划与工程建议
 
+2026-10-19记录223：AGENT-06当前条件诊断、独立执行身份、无正文差异报告和原条件拒绝已通过八项工程自审，AGENT-06 DONE；完整CI3372/92/1，18新增全部执行。SESSION最小澄清及AGENT-07/08继续分别验收。0托管调用/0USD，正式库不迁移、无部署。[回放契约](agent/AGENT_REPLAY.md) · [自审](reviews/2026-10-19-implementation-223-agent-diagnostic-replay.md)
+
 2026-10-19记录222：AGENT-06真实终态与持久Trace同事务接线、原反馈入口及元数据队列已通过八项工程自审；整体AGENT-06 IN_PROGRESS。0032仅临时测试，0托管调用/0USD，无正式部署。[契约](agent/AGENT_TRACE.md) · [自审](reviews/2026-10-19-implementation-222-agent-business-trace.md)
 
 2026-10-19记录221：AGENT-06受限历史审计读取、用途日志、0031只读策略和旧密文兼容接线已通过八项工程自审；AGENT-06整体IN_PROGRESS。0托管调用/0USD，正式库未迁移/部署。[读取契约](agent/AGENT_AUDIT.md) · [记录221](reviews/2026-10-19-implementation-221-agent-restricted-audit.md)
