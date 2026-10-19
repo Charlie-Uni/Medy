@@ -213,7 +213,9 @@ class PgAgentClarification:
             raise AgentLoopAbort("timeout")
 
     def read(self, case_id: UUID) -> ClarificationCase:
-        row = self._case(case_id)
+        # Keep revision/current-run stable until the aggregate read commits.
+        # READ COMMITTED alone could combine an old revision with a new run's fees.
+        row = self._case(case_id, lock=True)
         totals = self.conn.execute(
             """select count(*) filter(where ordinal>0),coalesce(sum(accounted_cost_microusd),0),
             coalesce(sum(held_cost_microusd),0),coalesce(sum(known_cost_microusd),0)

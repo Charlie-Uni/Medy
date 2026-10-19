@@ -337,3 +337,54 @@ def test_deletion_during_provider_call_blocks_further_actions_and_delivery_but_r
     case = s["service"].case(s["business_case"].case_id, authorization=s["authorization"])
     assert case.deleted_at is not None
     assert case.accounted_cost_microusd + case.held_cost_microusd > s["source"].run.budget.accounted_cost_microusd
+
+
+def test_case_read_cannot_mix_old_revision_with_concurrent_execution_costs(db):
+    from medops.application.agent_continuation import clarified_context
+    from medops.core.canonical import canonical_hash
+    from medops.infrastructure.db.agent_clarification import PgAgentClarification
+
+    s = clarification_case(db)
+    context, _ = s["service"].prepare(clarified_context(s["source"], s["command"]))
+    user = context.principal
+    digest = canonical_hash(
+        {"source_run_id": str(s["source_context"].identity.run_id), "command": s["command"].model_dump(mode="json")}
+    )
+
+    def reserve(store):
+        store.reserve(
+            context,
+            command_id=s["command"].command_id,
+            batch_id=s["grant"].batch_id,
+            source_run_id=s["source_context"].identity.run_id,
+            request_sha256=digest,
+            expected_revision=1,
+        )
+
+    with psycopg.connect(db["users"]["app"]) as writer:
+        other = PgAgentClarification(writer, user)
+        with s["runtime"].connection() as conn:
+            reader = PgAgentClarification(conn, user)
+            original = reader._case
+            blocked = []
+
+            def between_revision_and_sum(*args, **kwargs):
+                row = original(*args, **kwargs)
+                try:
+                    with writer.transaction():
+                        writer.execute("set local lock_timeout='100ms'")
+                        reserve(other)
+                except psycopg.errors.LockNotAvailable:
+                    blocked.append(True)
+                return row
+
+            reader._case = between_revision_and_sum
+            before = reader.read(s["business_case"].case_id)
+            assert blocked == [True]
+            assert before.revision == 1 and before.continuations == 0 and before.held_cost_microusd == 0
+        # Once the reader commits, the same valid writer can reserve normally.
+        with writer.transaction():
+            reserve(other)
+    after = s["service"].case(before.case_id, authorization=s["authorization"])
+    assert after.revision == 2 and after.continuations == 1 and after.held_cost_microusd == 600000
+    assert len(s["fake"].calls) == 0
