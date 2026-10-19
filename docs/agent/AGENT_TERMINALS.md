@@ -90,3 +90,8 @@ AGENT-06继续完整轨迹、受限审计读取及回放/公开入口；AGENT-07
 `tests/unit/application/test_agent_stop_gate.py`、`test_agent_final_gate.py`及既有工具/Registry/循环/恢复矩阵；required `make check`包含迁移往返、冻结输入和公开Schema检查。
 
 实际结果、原失败与修复、自审结论见[记录219](../reviews/2026-10-19-implementation-219-agent-terminal-delivery.md)。
+
+
+## 8. 记录224的最小SESSION实现
+
+SESSION-01/02的S2最小切片已通过记录224八项工程自审及固定提交完整CI：保存原澄清终态后，显式回答问题、创建关联同case的新task/run，TTL/删除/并发/身份与累计预算接线；不是原run恢复。完整多轮仍S4。接口与限制见[澄清续办](AGENT_CLARIFICATION.md)，最终通过状态以[记录224](../reviews/2026-10-19-implementation-224-agent-clarification-continuation.md)为准。

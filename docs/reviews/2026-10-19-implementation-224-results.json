@@ -1,0 +1,469 @@
+{
+  "record": 224,
+  "tasks": [
+    "SESSION-01",
+    "SESSION-02"
+  ],
+  "scope": "S2 minimal explicit clarification continuation; full S4 sessions remain open",
+  "baseline": "6297849eb5d9c643280d1f9b94d94cd3c88a3696",
+  "reviewer": "Codex self-review, not independent human",
+  "status": "DONE",
+  "hosted_calls": 0,
+  "hosted_cost_usd": 0,
+  "deployed": false,
+  "new_migration": "0033 temporary tests only",
+  "formal_databases_migration": "0026",
+  "checks": [
+    {
+      "name": "collect-final",
+      "command": [
+        "venv/bin/python",
+        "-m",
+        "pytest",
+        "--collect-only",
+        "-q",
+        "tests/integration/test_agent_continuation.py",
+        "tests/unit/application/test_agent_continuation.py"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 10.761,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    },
+    {
+      "name": "collect",
+      "command": [
+        "venv/bin/python",
+        "-m",
+        "pytest",
+        "--collect-only",
+        "-q",
+        "tests/integration/test_agent_continuation.py",
+        "tests/unit/application/test_agent_continuation.py"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 8.651,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    },
+    {
+      "name": "continuation-matrix",
+      "command": [
+        "venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/integration/test_agent_continuation.py",
+        "tests/unit/application/test_agent_continuation.py"
+      ],
+      "exit_code": 1,
+      "elapsed_s": 15.277,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    },
+    {
+      "name": "continuation-matrix-v2",
+      "command": [
+        "venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/integration/test_agent_continuation.py",
+        "tests/unit/application/test_agent_continuation.py"
+      ],
+      "exit_code": 2,
+      "elapsed_s": 282.26,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    },
+    {
+      "name": "docs-review",
+      "command": [
+        "venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/unit/docs"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 6.044,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    },
+    {
+      "name": "durable-case-fence",
+      "command": [
+        "venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/integration/test_agent_continuation.py::test_rebuilt_runtime_recovery_rechecks_durable_case_without_service_closure",
+        "tests/integration/test_agent_continuation.py::test_generic_runtime_cannot_admit_an_unreserved_run_for_an_existing_case",
+        "tests/integration/test_agent_continuation.py::test_deletion_during_provider_call_blocks_further_actions_and_delivery_but_retains_fees"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 75.153,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    },
+    {
+      "name": "durable-fence-positive",
+      "command": [
+        "venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/integration/test_agent_continuation.py::test_actual_clarification_new_execution_same_case_old_deadline_cost_and_retry_are_preserved",
+        "tests/integration/test_agent_continuation.py::test_generic_runtime_cannot_admit_an_unreserved_run_for_an_existing_case"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 56.309,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    },
+    {
+      "name": "final-matrix",
+      "command": [
+        "venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/integration/test_agent_continuation.py",
+        "tests/unit/application/test_agent_continuation.py",
+        "tests/integration/test_migrations.py",
+        "tests/integration/test_agent_terminal.py::test_schema_downgrade_cannot_reopen_already_sealed_executions"
+      ],
+      "exit_code": 1,
+      "elapsed_s": 608.973,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    },
+    {
+      "name": "first-positive",
+      "command": [
+        "venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/unit/application/test_agent_continuation.py",
+        "tests/integration/test_agent_continuation.py::test_actual_clarification_new_execution_same_case_old_deadline_cost_and_retry_are_preserved"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 36.359,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    },
+    {
+      "name": "maintained-static-final",
+      "command": [
+        "make",
+        "lint",
+        "format-check",
+        "typecheck",
+        "architecture-check",
+        "test-assertion-check"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 10.842,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    },
+    {
+      "name": "maintained-static",
+      "command": [
+        "make",
+        "lint",
+        "format-check",
+        "typecheck",
+        "architecture-check",
+        "test-assertion-check"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 11.614,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    },
+    {
+      "name": "positive-accounting",
+      "command": [
+        "venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/integration/test_agent_continuation.py::test_actual_clarification_new_execution_same_case_old_deadline_cost_and_retry_are_preserved",
+        "tests/integration/test_agent_continuation.py::test_unknown_failed_provider_cost_remains_in_case_total"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 72.393,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    },
+    {
+      "name": "read-serialization",
+      "command": [
+        "venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/integration/test_agent_continuation.py::test_case_read_cannot_mix_old_revision_with_concurrent_execution_costs"
+      ],
+      "exit_code": 1,
+      "elapsed_s": 33.112,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    },
+    {
+      "name": "read-serialization-v2",
+      "command": [
+        "venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/integration/test_agent_continuation.py::test_case_read_cannot_mix_old_revision_with_concurrent_execution_costs"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 29.959,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    },
+    {
+      "name": "rls-inventory",
+      "command": [
+        "venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/integration/test_rls.py::test_group_roles_login_users_and_forced_rls"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 4.044,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    },
+    {
+      "name": "static-durable-fence-final",
+      "command": [
+        "make",
+        "lint",
+        "format-check",
+        "typecheck",
+        "architecture-check",
+        "test-assertion-check"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 9.704,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    },
+    {
+      "name": "static-durable-fence",
+      "command": [
+        "make",
+        "lint",
+        "format-check",
+        "typecheck",
+        "architecture-check",
+        "test-assertion-check"
+      ],
+      "exit_code": 2,
+      "elapsed_s": 0.27,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    },
+    {
+      "name": "static-final-caller",
+      "command": [
+        "make",
+        "lint",
+        "format-check",
+        "typecheck",
+        "architecture-check",
+        "test-assertion-check"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 11.77,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    },
+    {
+      "name": "store-caller-binding",
+      "command": [
+        "venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/integration/test_agent_continuation.py::test_store_guard_cannot_pair_another_caller_with_the_owners_context"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 16.126,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    },
+    {
+      "name": "type-check",
+      "command": [
+        "venv/bin/mypy",
+        "src"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 14.841,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    }
+  ],
+  "limitations": [
+    "No public paid HTTP admission or UI",
+    "No approved numeric product defaults",
+    "Uncertain commands retain full reservation; no automatic retry",
+    "No S2 completion, model quality or blind-test claim",
+    "Local shared PostgreSQL remains intermittently unstable (DEPLOY-02); local full make check not claimed",
+    "Metadata-only deletion tombstone; original encrypted audit follows its existing retention policy",
+    "Old incompatible or unavailable source material fails closed; no automatic historical migration",
+    "Whole SESSION-01/02 S4 scope, AGENT-07/08, model quality, blind testing and production release remain separate"
+  ],
+  "slice_status": "DONE",
+  "full_task_status": {
+    "SESSION-01": "IN_PROGRESS",
+    "SESSION-02": "IN_PROGRESS"
+  },
+  "completed_date_local": "2026-10-20",
+  "validation": {
+    "mode": "candidate4",
+    "sha": "c3c7cbacaa7b0df8b654c6ce14bb745bd6edecd8",
+    "url": "https://github.com/Charlie-Uni/Medy/actions/runs/39260349784",
+    "exit_code": 0,
+    "passed": 3412,
+    "skipped": 92,
+    "warnings": 1,
+    "steps_success": 29,
+    "bound_inputs": 899,
+    "maintained_python": 837,
+    "schemas": 36,
+    "new_cases": 40,
+    "source_bytes_match_commit": true,
+    "skip_breakdown": {
+      "C_pg_search": 25,
+      "B_zhparser": 45,
+      "D_separate_experiment": 22
+    },
+    "required_production_pg_redis_and_bm25_executed": true
+  },
+  "formal_databases": [
+    {
+      "database": "medops",
+      "migration": "0026",
+      "read_only": true
+    },
+    {
+      "database": "medops_v2",
+      "migration": "0026",
+      "read_only": true
+    },
+    {
+      "database": "medops_v2_safety",
+      "migration": "0026",
+      "read_only": true
+    }
+  ],
+  "self_review": [
+    {
+      "item": "需求与范围",
+      "result": "通过",
+      "evidence": "PLAN-02 §4.3：同case、显式补充/新执行；旧run不续期，完整S4多轮未关闭。"
+    },
+    {
+      "item": "正确性",
+      "result": "通过",
+      "evidence": "真实生产装配、原终态/日期/要求不变、来源重解析与新证据绑定；每执行及case已知/保守/预留分开；原公开Schema及范围外内容保持。"
+    },
+    {
+      "item": "失败路径",
+      "result": "通过",
+      "evidence": "旧修订/错问题/注入/过期/删除/撤权/变更命令/并发/未知启动拒绝；真实双连接证明修订与费用不混读。"
+    },
+    {
+      "item": "权限与数据",
+      "result": "通过",
+      "evidence": "当前JWT/目录身份、部门RLS及原主体验证；每次模型前与交付前重验，正文保留在原加密journal，metadata不带叙述/密钥。"
+    },
+    {
+      "item": "预算与取消",
+      "result": "通过",
+      "evidence": "case与批次跨task/case累计；调用前整轮持久预留；未知usage保守计费、未确认命令不重开；删除仍保留财务清理。"
+    },
+    {
+      "item": "追溯",
+      "result": "通过",
+      "evidence": "新task/run/attempt/trace、原case与来源执行、命令/批次摘要在首次供应商前持久化；终态Trace原子保存及分页费用明细。"
+    },
+    {
+      "item": "验证",
+      "result": "通过",
+      "evidence": "https://github.com/Charlie-Uni/Medy/actions/runs/39260349784：29步骤成功，3412 passed/92 skipped/1既有警告；40新增全执行，899输入与源码c3c7cbacaa7b0df8b654c6ce14bb745bd6edecd8及PR同树工件绑定。"
+    },
+    {
+      "item": "文档与台账",
+      "result": "通过",
+      "evidence": "144任务ID/顺序保持；仅SESSION-01/02最小范围通过，整项IN_PROGRESS；AGENT-07由BLOCKED到READY，其他141状态不改；正式库0026/无部署。"
+    }
+  ],
+  "cancelled_ci": {
+    "run": 39255701054,
+    "source_sha": "4405382210e22495bc70430349506e4bfab1eb2c",
+    "reason": "Stopped after self-review found mixed revision/fee reads; not a passing gate"
+  },
+  "ci_attempts": [
+    {
+      "run": 39255701054,
+      "source_sha": "4405382210e22495bc70430349506e4bfab1eb2c",
+      "status": "cancelled",
+      "reason": "mixed case revision/fee snapshot found during self-review"
+    },
+    {
+      "run": 39256331087,
+      "source_sha": "bd8ef6ef27989915dbeae4d6495c04f3e4ff2d09",
+      "status": "failure",
+      "failed": 1,
+      "passed": 3407,
+      "skipped": 92,
+      "warnings": 1,
+      "reason": "forced-RLS expected inventory omitted three new tables; all 36 then-new cases passed"
+    },
+    {
+      "run": 39259627349,
+      "source_sha": "ea39cdfb75c546a0ea313e3820815e99e0c3924a",
+      "status": "cancelled",
+      "reason": "preserve explicit store caller/context identity check after common-fence refactor"
+    },
+    {
+      "run": 39260349784,
+      "source_sha": "c3c7cbacaa7b0df8b654c6ce14bb745bd6edecd8",
+      "status": "success",
+      "passed": 3412,
+      "skipped": 92,
+      "warnings": 1,
+      "new_cases": 40,
+      "steps": 29
+    }
+  ]
+}
