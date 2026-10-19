@@ -14,6 +14,7 @@ from typing import Any
 
 import psycopg
 
+from medops.application.agent_audit import AgentAuditReader
 from medops.application.audit import TraceStore
 from medops.application.contracts import AskRequest, HistoricalRequest
 from medops.application.metrics import MetricsSource, PgMetricsSource
@@ -41,6 +42,7 @@ from medops.harness.answer import ANSWER_SYSTEM
 from medops.harness.dependencies import HarnessDeps
 from medops.harness.executions import PgExecutionStore
 from medops.harness.production import PRODUCTION_ANSWER_MODEL, PRODUCTION_JUDGE_MODEL
+from medops.infrastructure.db.agent_audit import PgAgentAuditStore
 from medops.infrastructure.db.audit import PgTraceStore
 from medops.infrastructure.db.deadline import DeadlineConnection
 from medops.infrastructure.db.documents import PgDocumentAdminStore
@@ -202,6 +204,9 @@ class ProductionRuntime:
 
     def payload_reader(self, conn: Any) -> PayloadReader:
         return PayloadReader(store=PgPayloadStore(conn), provider=self._key_provider)
+
+    def agent_audit_reader(self, conn: Any) -> AgentAuditReader:
+        return AgentAuditReader(store=PgAgentAuditStore(conn), provider=self._key_provider)
 
     def bind_identity(self, conn: Any, user: UserContext) -> None:
         conn.execute(

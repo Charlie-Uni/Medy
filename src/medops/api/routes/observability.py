@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from datetime import UTC, datetime
 
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Request, Response
 from fastapi.responses import PlainTextResponse
 
 from medops.api.authorization import privileged_connection
@@ -89,5 +89,13 @@ def build_router(runtime: ApiRuntime) -> APIRouter:
             raise BusinessError(ErrorCode.invalid_request, "purpose must be 8-500 characters")
         with privileged_connection(runtime, request, "admin", kind="restricted") as (admin, rconn):
             return runtime.payload_reader(rconn).read(admin, trace_id, purpose)
+
+    @router.get("/admin/agent-runs/{run_id}/audit", response_model=TracePayloadResponse)
+    def read_agent_audit(run_id: str, purpose: str, request: Request, response: Response) -> TracePayloadResponse:
+        """DEC-013 historical material, with the original trace ID and a committed access log."""
+        with privileged_connection(runtime, request, "admin", kind="restricted") as (admin, rconn):
+            result = runtime.agent_audit_reader(rconn).read(admin, run_id, purpose)
+        response.headers["Cache-Control"] = "no-store"
+        return result
 
     return router

@@ -17,6 +17,7 @@ REPO = Path(__file__).resolve().parents[3]
 
 # (path, method) -> (request model, success status, response model); mirrors the REST table in CONTRACTS.md
 EXPECTED_OPERATIONS = {
+    ("/admin/agent-runs/{run_id}/audit", "get"): (None, "200", "TracePayloadResponse"),
     ("/v1/ask", "post"): ("AskRequest", "200", "AskResponse"),
     ("/v1/tasks", "post"): ("TaskCreateRequest", "202", "TaskResponse"),
     ("/v1/tasks/{task_id}", "get"): (None, "200", "TaskResponse"),

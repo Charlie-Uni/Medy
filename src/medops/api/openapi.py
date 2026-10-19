@@ -31,6 +31,7 @@ BEARER_SCHEME = "bearerAuth"
 IDEMPOTENCY_PARAMETER = "IdempotencyKey"
 TASK_ID_PARAMETER = "TaskId"
 TRACE_ID_PARAMETER = "TraceIdPath"
+RUN_ID_PARAMETER = "AgentRunIdPath"
 DOC_ID_PARAMETER = "DocumentIdPath"
 POLICY_ID_PARAMETER = "PolicyIdPath"
 PURPOSE_PARAMETER = "PurposeQuery"
@@ -182,6 +183,23 @@ def _paths() -> dict[str, Any]:
                 response_model="FeedbackReceipt",
                 request_model="FeedbackRequest",
                 parameters=(IDEMPOTENCY_PARAMETER,),
+            ),
+        },
+        "/admin/agent-runs/{run_id}/audit": {
+            "parameters": [{"$ref": f"#/components/parameters/{RUN_ID_PARAMETER}"}],
+            "get": _operation(
+                "readAgentAudit",
+                "Read restricted Agent runtime material (admin)",
+                "Requires current admin identity, the same fact database and a stated purpose. "
+                "Returns the original trace ID, encrypted-journal head and events decrypted only after access logging. "
+                "Expired material is unavailable; concurrent changes return version_conflict. "
+                "This is a historical audit, not execution, recovery, feedback registration or replay. "
+                "The response is not cacheable.",
+                tag="admin",
+                success_status=200,
+                success_description="Purpose-logged Agent audit snapshot.",
+                response_model="TracePayloadResponse",
+                parameters=(PURPOSE_PARAMETER,),
             ),
         },
         "/admin/documents": {
@@ -414,6 +432,13 @@ def build_openapi(models: Mapping[str, type[BaseModel]]) -> dict[str, Any]:
                     "required": True,
                     "description": "Trace identifier (32 lowercase hex characters) of a previous request.",
                     "schema": {"type": "string", "pattern": "^[0-9a-f]{32}$"},
+                },
+                RUN_ID_PARAMETER: {
+                    "name": "run_id",
+                    "in": "path",
+                    "required": True,
+                    "description": "Original Agent run identifier (UUID), not a trace ID or task ID.",
+                    "schema": {"type": "string", "format": "uuid"},
                 },
                 DOC_ID_PARAMETER: {
                     "name": "doc_id",

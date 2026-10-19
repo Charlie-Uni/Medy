@@ -1,6 +1,16 @@
 {
   "components": {
     "parameters": {
+      "AgentRunIdPath": {
+        "description": "Original Agent run identifier (UUID), not a trace ID or task ID.",
+        "in": "path",
+        "name": "run_id",
+        "required": true,
+        "schema": {
+          "format": "uuid",
+          "type": "string"
+        }
+      },
       "DocumentIdPath": {
         "description": "Document identifier (UUID).",
         "in": "path",
@@ -2096,6 +2106,68 @@
   },
   "openapi": "3.1.0",
   "paths": {
+    "/admin/agent-runs/{run_id}/audit": {
+      "get": {
+        "description": "Requires current admin identity, the same fact database and a stated purpose. Returns the original trace ID, encrypted-journal head and events decrypted only after access logging. Expired material is unavailable; concurrent changes return version_conflict. This is a historical audit, not execution, recovery, feedback registration or replay. The response is not cacheable.",
+        "operationId": "readAgentAudit",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/PurposeQuery"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TracePayloadResponse"
+                }
+              }
+            },
+            "description": "Purpose-logged Agent audit snapshot."
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "500": {
+            "$ref": "#/components/responses/Error500"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          },
+          "504": {
+            "$ref": "#/components/responses/Error504"
+          }
+        },
+        "summary": "Read restricted Agent runtime material (admin)",
+        "tags": [
+          "admin"
+        ]
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/AgentRunIdPath"
+        }
+      ]
+    },
     "/admin/documents": {
       "get": {
         "description": "Metadata, status, effective window and read departments of every document, optionally filtered by `dept`, `status` or `family_id`; never returns chunk content. Requires the admin role (DEC-012).",

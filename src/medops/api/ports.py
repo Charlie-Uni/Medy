@@ -13,6 +13,7 @@ from medops.application.admin import (
     PolicyStore,
     ReceiptStore,
 )
+from medops.application.agent_audit import AgentAuditReader
 from medops.application.audit import TraceStore
 from medops.application.contracts import (
     AskRequest,
@@ -104,6 +105,8 @@ class ApiRuntime(Protocol):
     def restricted_connection(self) -> AbstractContextManager[Any]: ...
 
     def payload_reader(self, conn: Any) -> PayloadReader: ...
+
+    def agent_audit_reader(self, conn: Any) -> AgentAuditReader: ...
 
     @property
     def monthly_cap_usd(self) -> float | None: ...
