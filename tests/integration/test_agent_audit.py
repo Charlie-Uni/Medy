@@ -17,6 +17,7 @@ from tests.support.agent_terminal import retrieval_terminal_case, terminal_case
 from tests.support.database import database_fixture, run_alembic
 
 db = database_fixture("admin_dsn", scope="module")
+audit_policy_db = database_fixture("admin_dsn", scope="function")
 PURPOSE = "PUBLIC incident review Agent06"
 
 
@@ -316,10 +317,16 @@ def test_restricted_reader_cannot_mutate_live_heads_events_or_control(db):
         assert conn.execute("select count(*) from agent_runtime_heads where run_id=%s", (run_id,)).fetchone()[0] == 1
 
 
-def test_new_read_policies_round_trip_without_rewriting_existing_ciphertext(db):
-    case, _, _ = completed(db)
+def test_new_read_policies_round_trip_without_rewriting_existing_ciphertext(audit_policy_db):
+    # A retained execution journal without a business terminal. Retained
+    # terminal Traces must prevent downgrade and may not be deleted here.
+    db = audit_policy_db
+    case, _ = terminal_case(db)
+    with case["runtime"].start(case["run"]) as execution:
+        execution.run()
     run_id = case["context"].identity.run_id
     with psycopg.connect(db["owner"]) as conn:
+        assert conn.execute("select count(*) from traces where kind='agent'").fetchone()[0] == 0
         before = conn.execute(
             "select ciphertext,nonce,dek_wrapped,kek_version,revision from agent_runtime_heads where run_id=%s",
             (run_id,),

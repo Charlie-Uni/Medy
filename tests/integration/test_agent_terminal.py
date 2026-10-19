@@ -505,8 +505,13 @@ def test_schema_downgrade_cannot_reopen_already_sealed_executions(db):
     with pytest.raises(IntegrityError) as fault:
         run_alembic(db["owner"], "downgrade", "0029")
     assert isinstance(fault.value.orig, RestrictViolation)
+    assert "retained Agent traces prevent downgrade" in str(fault.value.orig)
     with psycopg.connect(db["owner"]) as conn:
-        assert conn.execute("select version_num from alembic_version").fetchone()[0] == "0030"
+        # 0032 now refuses earlier than the original 0030 seal guard.
+        assert conn.execute("select version_num from alembic_version").fetchone()[0] == "0032"
+        assert conn.execute(
+            "select kind,outcome from traces where trace_id=%s", (case["context"].identity.trace_id,)
+        ).fetchone() == ("agent", "completed")
         assert (
             conn.execute(
                 "select terminal_status from agent_run_control where run_id=%s", (case["context"].identity.run_id,)

@@ -421,6 +421,7 @@ def test_migration_round_trip_and_legacy_store_without_new_column(scratch_databa
     with psycopg.connect(scratch_database) as conn:
         old = trace(uuid4().hex)
         PgTraceStore(conn).record(old, None)
+        before = conn.execute("select to_jsonb(t) from traces t where trace_id=%s", (old.trace_id,)).fetchone()[0]
         assert conn.execute("select query from traces where trace_id=%s", (old.trace_id,)).fetchone() == (old.query,)
         assert (
             conn.execute(
@@ -432,4 +433,10 @@ def test_migration_round_trip_and_legacy_store_without_new_column(scratch_databa
     with psycopg.connect(scratch_database) as conn:
         assert conn.execute("select agent_metadata from traces where trace_id=%s", (old.trace_id,)).fetchone() == (
             None,
+        )
+        assert (
+            conn.execute(
+                "select to_jsonb(t)-'agent_metadata' from traces t where trace_id=%s", (old.trace_id,)
+            ).fetchone()[0]
+            == before
         )

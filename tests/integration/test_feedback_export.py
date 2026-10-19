@@ -175,7 +175,8 @@ def test_identity_migration_has_no_body_changes_and_no_fallback_without_identity
         PgTraceStore(conn).record(trace("c" * 32), None)
         conn.commit()
         before = conn.execute("select row_to_json(t)::text from traces t").fetchall()
-    run_alembic(scratch_database, "upgrade", "head")
+    # Isolate 0025: later additive columns are not identity-migration body mutations.
+    run_alembic(scratch_database, "upgrade", "0025")
     restored_inventory = inventory(scratch_database)
     with psycopg.connect(scratch_database) as conn:
         identity = fact_plane_identity(conn)
@@ -186,7 +187,7 @@ def test_identity_migration_has_no_body_changes_and_no_fallback_without_identity
         assert conn.execute("select row_to_json(t)::text from traces t").fetchall() == before
         with pytest.raises(psycopg.errors.UndefinedTable), conn.transaction():
             fact_plane_identity(conn)
-    run_alembic(scratch_database, "upgrade", "head")
+    run_alembic(scratch_database, "upgrade", "0025")
     with psycopg.connect(scratch_database) as conn:
         assert fact_plane_identity(conn) != identity  # Downgrade loses the source; it is not a safe routine rollback.
         assert conn.execute("select row_to_json(t)::text from traces t").fetchall() == before
