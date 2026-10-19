@@ -330,6 +330,8 @@ class PgAgentClarification:
 
     def guard(self, context: AgentContext, *, request_sha256: str) -> None:
         self._access()
+        if context.principal != self.user:
+            raise AgentLoopAbort("safety_boundary")
         if guard_registered_case(self.conn, context) != request_sha256:
             raise AgentLoopAbort("version_conflict")
 

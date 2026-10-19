@@ -439,3 +439,30 @@ def test_generic_runtime_cannot_admit_an_unreserved_run_for_an_existing_case(db)
             pytest.fail("registered cases require the durable batch reservation")
     assert len(s["fake"].calls) == 0
     assert s["service"].case(context.identity.case_id, authorization=s["authorization"]).continuations == 0
+
+
+def test_store_guard_cannot_pair_another_caller_with_the_owners_context(db):
+    from medops.application.agent_continuation import clarified_context
+    from medops.core.canonical import canonical_hash
+    from medops.infrastructure.db.agent_clarification import PgAgentClarification
+
+    s = clarification_case(db)
+    context, _ = s["service"].prepare(clarified_context(s["source"], s["command"]))
+    digest = canonical_hash(
+        {"source_run_id": str(s["source_context"].identity.run_id), "command": s["command"].model_dump(mode="json")}
+    )
+    with s["runtime"].connection() as conn:
+        PgAgentClarification(conn, context.principal).reserve(
+            context,
+            command_id=s["command"].command_id,
+            batch_id=s["grant"].batch_id,
+            source_run_id=s["source_context"].identity.run_id,
+            request_sha256=digest,
+            expected_revision=1,
+        )
+    other_id, _ = principal(db)
+    with s["runtime"].connection() as conn:
+        other = s["runtime"].resolve_user(conn, other_id)
+        with pytest.raises(AgentLoopAbort, match="safety_boundary"):
+            PgAgentClarification(conn, other).guard(context, request_sha256=digest)
+    assert len(s["fake"].calls) == 0
