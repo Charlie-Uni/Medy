@@ -26,11 +26,15 @@ class PgTraceStore:
         self._conn = conn
 
     def record(self, trace: TraceRecord, escalation: EscalationRecord | None) -> None:
+        # Keep the old column set for non-Agent records, including databases
+        # that have not yet adopted the optional Agent migration.
+        extra_columns = ", agent_metadata" if trace.agent_metadata is not None else ""
+        extra_values = ", %s" if trace.agent_metadata is not None else ""
         self._conn.execute(
-            """
+            f"""
             insert into traces (trace_id, run_id, kind, task_id, principal, dept, query, outcome, reason_codes, versions,
-                                evidence_chunk_ids, cited_chunk_ids, flagged_chunk_ids, model_calls, tokens, cost_usd, duration_ms, query_context)
-            values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                                evidence_chunk_ids, cited_chunk_ids, flagged_chunk_ids, model_calls, tokens, cost_usd, duration_ms, query_context{extra_columns})
+            values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s{extra_values})
             """,
             (
                 trace.trace_id,
@@ -51,7 +55,8 @@ class PgTraceStore:
                 round(trace.cost_usd, 6),
                 trace.duration_ms,
                 Jsonb(trace.query_context.model_dump(mode="json")) if trace.query_context is not None else None,
-            ),
+            )
+            + ((Jsonb(dict(trace.agent_metadata)),) if trace.agent_metadata is not None else ()),
         )
         if trace.spans:
             with self._conn.cursor() as cur:

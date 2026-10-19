@@ -27,7 +27,7 @@ FEEDBACK_ROUTE = "POST /v1/feedback"
 class TraceRecord:
     trace_id: str
     run_id: str
-    kind: str  # ask | task
+    kind: str  # ask | task | replay | mcp | agent
     principal: str
     dept: Dept
     query: str
@@ -44,6 +44,7 @@ class TraceRecord:
     spans: tuple[NodeAttempt, ...]
     task_id: str | None = None
     query_context: QueryContext | None = None  # None = legacy/other transport, never guessed by Replay
+    agent_metadata: Mapping[str, Any] | None = None  # Explicit body-free Agent terminal projection only.
 
 
 @dataclass(frozen=True)
