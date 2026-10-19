@@ -22,6 +22,8 @@ from medops.application.agent_terminal import (
 )
 from medops.application.agent_tool_ports import AgentToolFault
 from medops.application.agent_tool_results import AgentFact, ExtractedElement, ExtractionPayload
+from medops.application.agent_trace import terminal_trace
+from medops.application.audit import record_or_fail_closed
 from medops.core.canonical import canonical_hash
 from medops.core.deadline import DeadlineExceeded, check_deadline, deadline_scope, execution_admission
 from medops.core.errors import BusinessError
@@ -32,6 +34,7 @@ from medops.domain.safety import SafetyDecision
 from medops.infrastructure.db.agent_fact_scope import AgentFactScope
 from medops.infrastructure.db.agent_facts import PgAgentFacts
 from medops.infrastructure.db.agent_runtime import PgAgentRuntime
+from medops.infrastructure.db.audit import PgTraceStore
 from medops.infrastructure.llm.accounting import call_scope
 from medops.infrastructure.llm.execution_budget import check_execution_budget, finalization_scope
 from medops.infrastructure.llm.gateway import BudgetExceeded, ModelTimeout
@@ -403,6 +406,9 @@ class AgentTerminalOwner:
                 retained_until=d.head.retained_until,
             )
             control.seal(d.lease, event, status)
+            # One append-only business Trace, on the same transaction as its
+            # authenticated terminal. Failure rolls back both, including seal.
+            record_or_fail_closed(PgTraceStore(conn), terminal_trace(envelope, event_id=event), None)
         d.head = head
         return result
 
