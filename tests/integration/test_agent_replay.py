@@ -1,5 +1,6 @@
 """Agent current-condition diagnosis using real transactions and offline providers."""
 
+import hashlib
 from types import SimpleNamespace
 from uuid import uuid4
 
@@ -347,7 +348,10 @@ def test_same_chunk_ids_with_changed_text_are_reported_as_content_changes(db):
         conn.execute("alter table chunks disable trigger user")
         conn.execute("alter table chunk_spans disable trigger user")
         changed = "PUBLIC revised clause: keep the report date and the follow-up date."
-        conn.execute("update chunks set content=%s where chunk_id=%s", (changed, case["chunk"]))
+        conn.execute(
+            "update chunks set content=%s,chunk_content_hash=%s where chunk_id=%s",
+            (changed, hashlib.sha256(changed.encode()).hexdigest(), case["chunk"]),
+        )
         conn.execute("update chunk_spans set char_end=%s where chunk_id=%s", (len(changed), case["chunk"]))
         conn.execute("alter table chunk_spans enable trigger user")
         conn.execute("alter table chunks enable trigger user")
