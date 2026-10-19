@@ -229,11 +229,20 @@ def test_revoked_directory_identity_cannot_renew_or_write(data):
 
 
 @pytest.mark.parametrize("role", ["readonly", "restricted", "loop"])
-def test_unrelated_roles_cannot_read_control_metadata(data, role):
-    created(data)
+def test_control_read_permissions_for_readonly_restricted_and_loop_roles(data, role):
+    lease = created(data)
     with connection(data, role=role) as (conn, _):
-        with pytest.raises(InsufficientPrivilege):
-            conn.execute("select * from agent_run_control")
+        if role != "restricted":
+            with pytest.raises(InsufficientPrivilege):
+                conn.execute("select * from agent_run_control")
+        else:
+            # 0031 grants the existing audit role SELECT, never runtime writes.
+            assert conn.execute(
+                "select run_id,trace_id from agent_run_control where run_id=%s", (lease.run_id,)
+            ).fetchone() == (lease.run_id, data[1].context.identity.trace_id)
+            with pytest.raises(InsufficientPrivilege):
+                with conn.transaction():
+                    conn.execute("update agent_run_control set decisions_consumed=0 where run_id=%s", (lease.run_id,))
 
 
 @pytest.mark.parametrize(

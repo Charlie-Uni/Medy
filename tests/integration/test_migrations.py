@@ -113,7 +113,7 @@ def _inventory(dsn: str) -> dict[str, set[str]]:
 
 def test_single_head_and_offline_sql_render(migrated):
     heads = ScriptDirectory.from_config(alembic_config(migrated)).get_heads()
-    assert heads == ["0030"]
+    assert heads == ["0031"]
 
 
 def test_upgrade_downgrade_upgrade_round_trip_leaves_nothing_behind(scratch_database):
