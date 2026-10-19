@@ -16,6 +16,7 @@ from medops.infrastructure.llm.gateway import ModelTimeout
 from tests.support.agent_audit import audit_runtime
 from tests.support.agent_runtime import reopen_case
 from tests.support.agent_terminal import PublicRetrievalAgent, retrieval_terminal_case, terminal_case
+from tests.support.audit_records import trace
 from tests.support.database import database_fixture
 from tests.support.documents import document, job, source_object
 from tests.support.harness import FakeRetrieval
@@ -68,6 +69,7 @@ def prepared(db, kind="finish", *, retrieval=False):
                 doc_type="guideline",
                 version="PUBLIC v2",
                 title=title,
+                effective_from=case["context"].query_context.as_of,
             )
             conn.execute(
                 "insert into document_acl(doc_id,dept,granted_by) values (%s,'PV','PUBLIC-replay-test')", (second,)
@@ -409,3 +411,19 @@ def test_admin_revoked_during_provider_call_stops_further_calls_but_retains_sett
             (replay_identity(command.replay_id).run_id,),
         ).fetchone() == (1,)
         assert conn.execute("select count(*) from replays where replay_id=%s", (command.replay_id,)).fetchone() == (0,)
+
+
+def test_surviving_trace_blocks_reusing_identity_without_runtime_before_any_charge(db):
+    case, _, _, runtime, authorization, _, service, command = prepared(db)
+    identity = replay_identity(command.replay_id)
+    # A legitimate retained Trace can outlive its restricted runtime material.
+    # Seed that state without deleting any audit or altering retention policy.
+    with psycopg.connect(db["owner"]) as conn:
+        PgTraceStore(conn).record(trace(trace_id=identity.trace_id), None)
+    with pytest.raises(BusinessError) as failure:
+        service.replay(case["context"].identity.run_id, command, authorization=authorization)
+    assert failure.value.code.value == "version_conflict" and not runtime.gateway.calls
+    with psycopg.connect(db["owner"]) as conn:
+        assert conn.execute(
+            "select count(*) from agent_run_control where run_id=%s", (identity.run_id,)
+        ).fetchone() == (0,)

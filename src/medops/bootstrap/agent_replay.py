@@ -126,6 +126,15 @@ class AgentReplayService:
                 raise BusinessError(ErrorCode.forbidden, "the original principal is no longer authorized")
             self.runtime.bind_identity(conn, user)
             existing = conn.execute("select 1 from agent_run_control where run_id=%s", (identity.run_id,)).fetchone()
+            if not existing and (
+                conn.execute("select 1 from traces where trace_id=%s", (identity.trace_id,)).fetchone()
+                or conn.execute("select 1 from replays where replay_id=%s", (request.replay_id,)).fetchone()
+            ):
+                # A surviving report/Trace still proves the identity was used,
+                # even if its restricted runtime material has been purged.
+                raise BusinessError(
+                    ErrorCode.version_conflict, "diagnostic identity already used; saved runtime unavailable"
+                )
         if existing:
             replay = self._load(identity.run_id, authorization, request.reason, admin)
             if replay.context.identity != identity or replay.provenance != (provenance,):
