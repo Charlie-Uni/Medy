@@ -341,9 +341,16 @@ def test_same_chunk_ids_with_changed_text_are_reported_as_content_changes(db):
     case, original, _, runtime, authorization, _, service, command = prepared(db, retrieval=True)
     before = len(original.calls)
     with psycopg.connect(db["owner"]) as conn:
+        # Model a restored/corrupt snapshot in OUR disposable database. Normal
+        # production writes must keep rejecting mutation of immutable chunks.
+        assert conn.info.dbname.startswith("medops_test_")
+        conn.execute("alter table chunks disable trigger user")
+        conn.execute("alter table chunk_spans disable trigger user")
         changed = "PUBLIC revised clause: keep the report date and the follow-up date."
         conn.execute("update chunks set content=%s where chunk_id=%s", (changed, case["chunk"]))
         conn.execute("update chunk_spans set char_end=%s where chunk_id=%s", (len(changed), case["chunk"]))
+        conn.execute("alter table chunk_spans enable trigger user")
+        conn.execute("alter table chunks enable trigger user")
     report = service.replay(case["context"].identity.run_id, command, authorization=authorization)
     assert report.source.metadata.status == report.replay.metadata.status == "completed"
     assert report.source.cited_chunk_ids == report.replay.cited_chunk_ids
