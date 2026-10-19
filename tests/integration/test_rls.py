@@ -141,6 +141,9 @@ def test_group_roles_login_users_and_forced_rls(migrated, login_users):
             )
         }
         assert forced == {
+            "agent_clarification_cases",
+            "agent_clarification_batches",
+            "agent_clarification_executions",
             "agent_run_control",
             "agent_budget_handoffs",
             "agent_runtime_heads",
