@@ -22,6 +22,7 @@ from medops.core.money import usd_to_microusd
 from medops.core.strict_json import strict_json
 from medops.domain.agent_execution import AgentContext
 from medops.domain.identity import UserContext
+from medops.infrastructure.db.agent_case_fence import guard_registered_case
 from medops.infrastructure.db.agent_control import PgAgentControl
 from medops.infrastructure.db.agent_facts import FactDatabaseBinding
 from medops.infrastructure.db.agent_runtime import MAX_RUNTIME_BYTES, PgAgentRuntime
@@ -328,24 +329,9 @@ class PgAgentClarification:
         )
 
     def guard(self, context: AgentContext, *, request_sha256: str) -> None:
-        row = self._case(context.identity.case_id, lock=True)
-        self._live(row)
-        allocation = self.conn.execute(
-            """select e.context_sha256,e.request_sha256,e.settled,b.expires_at from agent_clarification_executions e
-            join agent_clarification_batches b on b.batch_id=e.batch_id
-            where e.run_id=%s and e.case_id=%s and e.principal=%s and e.dept=%s""",
-            (context.identity.run_id, context.identity.case_id, self.user.user_id, self.user.dept.value),
-        ).fetchone()
-        if (
-            allocation is None
-            or row[1] != context.identity.run_id
-            or allocation[2]
-            or allocation[0] != canonical_hash(context.model_dump(mode="json"))
-            or allocation[1] != request_sha256
-        ):
+        self._access()
+        if guard_registered_case(self.conn, context) != request_sha256:
             raise AgentLoopAbort("version_conflict")
-        if allocation[3] <= self._now():
-            raise AgentLoopAbort("timeout")
 
     def settle(self, context: AgentContext, *, delivery: AgentDelivery) -> None:
         # Accounting-only cleanup, deliberately not the case live/permission

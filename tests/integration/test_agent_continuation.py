@@ -388,3 +388,54 @@ def test_case_read_cannot_mix_old_revision_with_concurrent_execution_costs(db):
     after = s["service"].case(before.case_id, authorization=s["authorization"])
     assert after.revision == 2 and after.continuations == 1 and after.held_cost_microusd == 600000
     assert len(s["fake"].calls) == 0
+
+
+@pytest.mark.parametrize("stop", ["deleted", "expired"])
+def test_rebuilt_runtime_recovery_rechecks_durable_case_without_service_closure(db, stop):
+    import time
+
+    from medops.application.agent_continuation import clarified_context
+    from medops.core.canonical import canonical_hash
+    from medops.infrastructure.db.agent_clarification import PgAgentClarification
+
+    s = clarification_case(db, ttl_from_now=20 if stop == "expired" else None)
+    context, executor = s["service"].prepare(clarified_context(s["source"], s["command"]))
+    digest = canonical_hash(
+        {"source_run_id": str(s["source_context"].identity.run_id), "command": s["command"].model_dump(mode="json")}
+    )
+    with s["runtime"].connection() as conn:
+        PgAgentClarification(conn, context.principal).reserve(
+            context,
+            command_id=s["command"].command_id,
+            batch_id=s["grant"].batch_id,
+            source_run_id=s["source_context"].identity.run_id,
+            request_sha256=digest,
+            expected_revision=1,
+        )
+    # This is a real durable head and released lease, without running any model.
+    # A reconstructed generic runtime does NOT retain the service's closure.
+    with executor.start(executor.new_run(context)):
+        pass
+    if stop == "deleted":
+        s["service"].delete(context.identity.case_id, expected_revision=2, authorization=s["authorization"])
+    else:
+        time.sleep(max(0, (s["business_case"].expires_at - datetime.now(UTC)).total_seconds()) + 0.05)
+    rebuilt = s["service"].source_runtime(context)
+    with pytest.raises(AgentLoopAbort, match="cancelled" if stop == "deleted" else "timeout"):
+        with rebuilt.recover(context):
+            pytest.fail("recovery cannot bypass durable case state")
+    assert len(s["fake"].calls) == 0
+    case = s["service"].case(context.identity.case_id, authorization=s["authorization"])
+    assert case.held_cost_microusd == 600000 and case.continuations == 1
+
+
+def test_generic_runtime_cannot_admit_an_unreserved_run_for_an_existing_case(db):
+    from medops.application.agent_continuation import clarified_context
+
+    s = clarification_case(db)
+    context, executor = s["service"].prepare(clarified_context(s["source"], s["command"]))
+    with pytest.raises(AgentLoopAbort, match="version_conflict"):
+        with executor.start(executor.new_run(context)):
+            pytest.fail("registered cases require the durable batch reservation")
+    assert len(s["fake"].calls) == 0
+    assert s["service"].case(context.identity.case_id, authorization=s["authorization"]).continuations == 0

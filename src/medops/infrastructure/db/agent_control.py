@@ -21,6 +21,7 @@ from medops.application.agent_loop_ports import AgentLoopAbort
 from medops.core.canonical import canonical_hash
 from medops.domain.agent_actions import AgentModel
 from medops.domain.agent_execution import AgentContext, PVAgentRun
+from medops.infrastructure.db.agent_case_fence import guard_registered_case
 from medops.infrastructure.db.agent_facts import FactDatabaseBinding
 from medops.infrastructure.db.deadline import DeadlineConnection
 from medops.infrastructure.db.final_output import acquire_output_fence, directory_user, require_same_user
@@ -131,11 +132,13 @@ class PgAgentControl:
     def _live(self, state: AgentControlState, lease: AgentLease | None = None) -> datetime:
         # Separate statement: PostgreSQL must obtain any row lock before reading
         # the real clock, including after a lock wait. No caller-supplied clock.
-        now = self.conn.execute("select clock_timestamp()").fetchone()[0]
         if state.terminal_ref is not None:
             raise AgentLoopAbort("unsupported_recovery")
         if state.cancelled_at is not None:
             raise AgentLoopAbort("cancelled")
+        guard_registered_case(self.conn, self.context)
+        # Re-read time AFTER acquiring any registered case row lock as well.
+        now = self.conn.execute("select clock_timestamp()").fetchone()[0]
         if now < state.started_at or now >= state.expires_at:
             raise AgentLoopAbort("timeout")
         if lease is not None and (
