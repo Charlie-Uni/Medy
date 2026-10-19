@@ -1,0 +1,390 @@
+{
+  "record": 221,
+  "date": "2026-10-19",
+  "task_id": "AGENT-06",
+  "slice": "restricted historical audit reader",
+  "slice_status": "DONE",
+  "overall_task_status": "IN_PROGRESS",
+  "baseline_sha": "f417cfb3cf3a17fe88cde11064bfd1ee01d948e0",
+  "implementer": "Codex",
+  "reviewer": "Codex self-review, not independent human",
+  "interrupted_full_gate": {
+    "exit_code": 2,
+    "elapsed_s": 267.551,
+    "command": [
+      "make",
+      "check"
+    ],
+    "worktree": "/Users/leaf/.cache/medy-checks/audit221-cached-o36pew2k",
+    "required_services": true,
+    "passed": 102,
+    "failed": 1,
+    "reason": "old restricted-role SELECT assertion contradicted explicit 0031 read contract; stopped and fixed regression before rerun"
+  },
+  "second_interrupted_full_gate": {
+    "exit_code": 2,
+    "elapsed_s": 102.188,
+    "command": [
+      "make",
+      "check"
+    ],
+    "worktree": "/Users/leaf/.cache/medy-checks/audit221-cached-o36pew2k",
+    "required_services": true,
+    "passed": 22,
+    "failed": 0,
+    "reason": "historical reader was coupled to current execution prompt/tool validators; stopped for explicit failing regression and repair"
+  },
+  "local_dependency_interruption": {
+    "exit_code": 2,
+    "elapsed_s": 911.395,
+    "command": [
+      "make",
+      "check"
+    ],
+    "worktree": "/Users/leaf/.cache/medy-checks/audit221-cached-o36pew2k",
+    "required_services": true,
+    "observed_failure_markers": 2,
+    "reason": "shared PostgreSQL entered recovery; teardown and isolated local retry also blocked; no complete local gate passed"
+  },
+  "validation": {
+    "command": "isolated GitHub CI repository gates",
+    "required_services": true,
+    "exit_code": 0,
+    "passed": 3330,
+    "skipped": 92,
+    "skip_evidence": {
+      "total_cases": 3422,
+      "passed": 3330,
+      "skipped": 92,
+      "skipped_modules": {
+        "tests/integration/test_lexical_pg_search_bm25.py": 25,
+        "tests/integration/test_lexical_pg_textsearch_bm25.py": 22,
+        "tests/integration/test_lexical_pg_zhparser_fts.py": 45
+      },
+      "new_agent_audit_cases_executed": 24,
+      "required_services_flag": "1"
+    },
+    "warnings": 1,
+    "elapsed_s": 831.0,
+    "local_make_check_passed": false,
+    "execution_environment": "isolated GitHub Actions PostgreSQL/Redis; not the shared local instance",
+    "source_ci_sha": "1295979f8954c53d04944458a6227920aaf228bd",
+    "source_ci_url": "https://github.com/Charlie-Uni/Medy/actions/runs/39180744186",
+    "new_cases": 26,
+    "source_modules": 385,
+    "architecture_violations": 0,
+    "existing_architecture_exceptions": 2,
+    "assertion_test_files": 327,
+    "targeted_runs": [
+      {
+        "exit_code": 1,
+        "elapsed_s": 39.641,
+        "command": [
+          "venv/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "tests/integration/test_agent_audit.py",
+          "-x"
+        ],
+        "worktree": "isolated cached Git worktree",
+        "required_services": true,
+        "name": "audit-first"
+      },
+      {
+        "exit_code": 1,
+        "elapsed_s": 117.304,
+        "command": [
+          "venv/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "tests/integration/test_agent_audit.py",
+          "-x"
+        ],
+        "worktree": "isolated cached Git worktree",
+        "required_services": true,
+        "name": "audit-retry"
+      },
+      {
+        "exit_code": 0,
+        "elapsed_s": 41.591,
+        "command": [
+          "venv/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "tests/integration/test_agent_audit.py::test_admin_reads_real_actions_reasons_evidence_receipts_versions_without_any_new_call",
+          "-x"
+        ],
+        "worktree": "isolated cached Git worktree",
+        "required_services": true,
+        "name": "audit-first-detail"
+      },
+      {
+        "exit_code": 1,
+        "elapsed_s": 94.284,
+        "command": [
+          "venv/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "tests/integration/test_agent_audit.py",
+          "tests/unit/application/test_agent_runtime_envelope.py",
+          "tests/unit/api/test_payload_route.py",
+          "tests/unit/api/test_openapi.py",
+          "-x"
+        ],
+        "worktree": "isolated cached Git worktree",
+        "required_services": true,
+        "name": "audit-complete"
+      },
+      {
+        "exit_code": 1,
+        "elapsed_s": 7.051,
+        "command": [
+          "venv/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "tests/integration/test_agent_audit.py::test_concurrent_head_or_event_change_rejects_the_entire_snapshot",
+          "-x"
+        ],
+        "worktree": "isolated cached Git worktree",
+        "required_services": true,
+        "name": "audit-concurrency-detail"
+      },
+      {
+        "exit_code": 1,
+        "elapsed_s": 6.91,
+        "command": [
+          "venv/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "tests/integration/test_agent_audit.py::test_concurrent_head_or_event_change_rejects_the_entire_snapshot",
+          "tests/integration/test_agent_audit.py::test_restricted_reader_cannot_mutate_live_heads_events_or_control",
+          "-x"
+        ],
+        "worktree": "isolated cached Git worktree",
+        "required_services": true,
+        "name": "audit-concurrency-fixed"
+      },
+      {
+        "exit_code": 0,
+        "elapsed_s": 14.956,
+        "command": [
+          "venv/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "tests/integration/test_agent_audit.py::test_concurrent_head_or_event_change_rejects_the_entire_snapshot",
+          "tests/integration/test_agent_audit.py::test_restricted_reader_cannot_mutate_live_heads_events_or_control",
+          "-x"
+        ],
+        "worktree": "isolated cached Git worktree",
+        "required_services": true,
+        "name": "audit-concurrency-fixed-v2"
+      },
+      {
+        "exit_code": 0,
+        "elapsed_s": 25.126,
+        "command": [
+          "venv/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "tests/integration/test_agent_audit.py::test_size_and_event_count_are_checked_before_ciphertext_decryption",
+          "tests/integration/test_agent_audit.py::test_expired_ciphertext_is_not_returned_even_before_retention_purge",
+          "tests/integration/test_agent_audit.py::test_authenticated_ciphertext_cannot_be_relabelled_as_another_event",
+          "tests/integration/test_agent_audit.py::test_new_read_policies_round_trip_without_rewriting_existing_ciphertext",
+          "tests/unit/application/test_agent_runtime_envelope.py",
+          "tests/unit/api/test_payload_route.py",
+          "tests/unit/api/test_openapi.py",
+          "-x"
+        ],
+        "worktree": "isolated cached Git worktree",
+        "required_services": true,
+        "name": "audit-tail"
+      },
+      {
+        "exit_code": 0,
+        "elapsed_s": 5.056,
+        "command": [
+          "venv/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "tests/integration/test_agent_control.py::test_control_read_permissions_for_readonly_restricted_and_loop_roles",
+          "-x"
+        ],
+        "worktree": "isolated cached Git worktree",
+        "required_services": true,
+        "name": "control-read-boundary"
+      },
+      {
+        "exit_code": 1,
+        "elapsed_s": 10.451,
+        "command": [
+          "venv/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "tests/integration/test_agent_audit.py::test_current_prompt_or_tool_versions_do_not_prevent_reading_original_historical_material",
+          "-x"
+        ],
+        "worktree": "isolated cached Git worktree",
+        "required_services": true,
+        "name": "historical-version-before"
+      },
+      {
+        "exit_code": 0,
+        "elapsed_s": 26.591,
+        "command": [
+          "venv/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "tests/integration/test_agent_audit.py::test_current_prompt_or_tool_versions_do_not_prevent_reading_original_historical_material",
+          "tests/integration/test_agent_audit.py::test_admin_reads_real_actions_reasons_evidence_receipts_versions_without_any_new_call",
+          "tests/integration/test_agent_audit.py::test_authenticated_ciphertext_cannot_be_relabelled_as_another_event",
+          "-x"
+        ],
+        "worktree": "isolated cached Git worktree",
+        "required_services": true,
+        "name": "historical-version-fixed"
+      },
+      {
+        "exit_code": 0,
+        "elapsed_s": 10.56,
+        "command": [
+          "venv/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "tests/integration/test_agent_audit.py::test_current_prompt_or_tool_versions_do_not_prevent_reading_original_historical_material",
+          "-x"
+        ],
+        "worktree": "isolated cached Git worktree",
+        "required_services": true,
+        "name": "historical-reader-and-execution-boundary"
+      }
+    ]
+  },
+  "source_binding": {
+    "baseline_inputs": 815,
+    "current_inputs": 822,
+    "protected_tracked_blobs_unchanged": 2187,
+    "contract_files": 36,
+    "only_schema_change": "OpenAPI additive GET /admin/agent-runs/{run_id}/audit and UUID parameter",
+    "existing_operations_and_models_unchanged": true,
+    "task_ids": 144,
+    "ast": {
+      "runtime_writer_intentional_method_changes": [
+        "_aad",
+        "_head_aad"
+      ],
+      "all_other_writer_functions_ast_equal": 9,
+      "aad_format_version_unchanged": "pv-agent-runtime-v1",
+      "golden_vectors": 2,
+      "unchanged_function_names": [
+        "__init__",
+        "_seal",
+        "_open",
+        "read",
+        "initialize",
+        "save",
+        "append",
+        "events",
+        "calls"
+      ]
+    }
+  },
+  "migration": {
+    "new": "0031",
+    "change": "restricted-role SELECT policies and control SELECT grant only",
+    "formal_database_versions": {
+      "medops": "0026",
+      "medops_v2": "0026",
+      "medops_v2_safety": "0026"
+    },
+    "applied_only_to_disposable_tests": true
+  },
+  "limits": {
+    "encrypted_material_bytes": 33554432,
+    "events": 512,
+    "reader_timeout_s": 5,
+    "whole_http_sla_measured": false,
+    "failed_attempt_log_is_not_guaranteed": true
+  },
+  "paid": {
+    "hosted_calls": 0,
+    "usd": 0,
+    "real_model_quality_measured": false
+  },
+  "deployed": false,
+  "new_langfuse_backend_demo": false,
+  "formal_database_versions_last_checked_before_recovery": true,
+  "shared_postgresql_recovery_issue_resolved_by_this_slice": false,
+  "self_review": [
+    {
+      "item": "需求与范围",
+      "result": "通过",
+      "evidence": "AGENT-06受限历史读取实际接入HTTP与ProductionRuntime，返回真实运行材料；持久业务Trace/反馈及回放未宣称完成。"
+    },
+    {
+      "item": "ADR与阶段硬门",
+      "result": "通过",
+      "evidence": "沿用ADR-0012/PLAN-02，ARCH-04/11和AGENT-01～05已通过；无目标/阈值变更、S3改进声明或生产激活。"
+    },
+    {
+      "item": "正确性与失败路径",
+      "result": "通过",
+      "evidence": "成功/澄清/升级、日志/密钥/提交失败、缺失/过期/超量/密文替换、合法head/event并发及0031往返已核验；并发测试夹具两处误用先修后复测，原预算防重放保持。"
+    },
+    {
+      "item": "权限与数据",
+      "result": "通过",
+      "evidence": "真实当前管理员/同库/身份栅栏与用途日志；匿名/其他角色/撤权/错库拒绝，MA/PV普通部门隔离和受限角色不可写保持。0031仅新增受限SELECT；原35个模型/描述文件及旧OpenAPI语义不变，只加路径/参数。"
+    },
+    {
+      "item": "预算、取消与副作用",
+      "result": "通过",
+      "evidence": "0托管调用/0USD；读取器不创建执行根、租约或调用，无运行/恢复/重发。32MiB/512事件、读取器5秒；正式库不迁移/重启/部署。"
+    },
+    {
+      "item": "追溯与版本",
+      "result": "通过",
+      "evidence": "返回原case/task/run/attempt与Trace、原版本/配置/动作/证据/回执；日志在同受限事务先写、提交成功后才返回。AAD旧字节格式2个golden向量及历史写入路径通过，其他9个writer函数AST未变；历史读取不执行当前Loop/预算校验，当前执行守卫仍拒绝旧版本。"
+    },
+    {
+      "item": "验证充分性",
+      "result": "通过",
+      "evidence": "独立CI完整门禁通过：3330/92/1既有JWT warning，385源码0架构违规/2旧例外、327断言文件、36契约文件通过；26新增用例。基础/边界34条、3角色及1历史兼容分组覆盖38条，最终全量覆盖同一822输入快照；原失败与原因未明的一次failed保留。"
+    },
+    {
+      "item": "状态与文档",
+      "result": "通过",
+      "evidence": "AGENT-06整体IN_PROGRESS、仅本切片工程DONE；144任务ID/顺序/其他状态保持。契约/API文档/入口/阶段/本记录一致；真实质量/盲测/部署仍独立验收。"
+    }
+  ],
+  "known_limits": [
+    "Initial ConnectionTimeout was not skipped; no service restart",
+    "One initial saved failed outcome (105.28 s) lacked its stop code; cause remains unknown. No production change or relaxed expectation was used; strengthened strict test passed separately and in final full suite",
+    "92 optional experiments skipped: C pg_search 25, B zhparser 45, D separate experiment 22; production BM25 is tested; existing JWT warning and four evaluation-audit warnings remain",
+    "No pagination/huge export, failed-read attempt log, replay, production migration, real model quality or benchmark acceptance"
+  ],
+  "remaining": [
+    "Persistent business Trace and feedback registration",
+    "Diagnostic replay wiring and explicit original-condition refusal boundaries",
+    "SESSION minimal continuation and AGENT-07/08 keep their own prerequisites"
+  ],
+  "publication": "four functional commits, exact reviewed-source binding and exact-SHA remote CI recorded separately",
+  "publication_preflight": {
+    "owned_paths": 25,
+    "cached_runtime_symlink_excluded": "venv",
+    "preflight_aborted_before_working_file_write": true,
+    "icloud_placeholder_read_interrupted_after_fresh_read_succeeded": true,
+    "unplanned_paths_rejected": true
+  }
+}

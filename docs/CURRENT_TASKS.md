@@ -74,7 +74,7 @@ probe v4 与 `main-v5-provisional` 均已冻结。EVAL-11 已完成：580 个 go
 
 贯穿工作：ARCH-08/10/13/14、CODE-03～07、IDX-03、OBS-03、DEV-BACKLOG-01 按依赖穿插；ARCH-12 有实测收益再实施。BM25-09、CACHE-10、PERF-10、SRC-05、FOCUS-01/02/09、ROUTE-01/02 全部保留，先分别验证再 COMBO-01。人工事项 PLAN-02、EVAL-29/30/31、LIC-03、DEPLOY-01 单独跟踪；EVOL-09 已决定限实验，生产自动批准不再列为待问事项。
 
-**当前主切片：AGENT-06记录220运行遥测/实际计量与恢复关联，首切片八项工程自审通过，整体IN_PROGRESS。AGENT-05已工程DONE，受限审计读取、持久Trace/反馈及回放仍待后续；本轮0托管调用/0USD，无正式部署。** [记录205](reviews/2026-10-15-implementation-205-owner-decisions-and-agent-entry.md)只落实已获同意的设计与验收，没有实现Agent。GATE-01独立跟踪新采用规则工程接线；所有者确认有独立环境，类型/管理归属待提供、实际权限未核验，不阻塞公开开发场景工程。EVAL-33保留IN_PROGRESS及历史读取/隔离缺口，不再等待D-01/D-02；真实历史正文扫描0、新盲测0。本轮无付费/部署。记录204五批最终3f0267f已推送，[CI38571382863](https://github.com/Charlie-Uni/Medy/actions/runs/38571382863)全部29步骤成功；本轮发布/CI另按自身SHA留证。
+**当前主切片：AGENT-06记录221受限历史审计读取已通过八项工程自审，整体IN_PROGRESS；记录220运行metadata已通过。0031仅临时测试，正式库不升级；持久Trace/反馈与诊断回放仍待。0托管调用/0USD，无正式部署。** [记录205](reviews/2026-10-15-implementation-205-owner-decisions-and-agent-entry.md)只落实已获同意的设计与验收，没有实现Agent。GATE-01独立跟踪新采用规则工程接线；所有者确认有独立环境，类型/管理归属待提供、实际权限未核验，不阻塞公开开发场景工程。EVAL-33保留IN_PROGRESS及历史读取/隔离缺口，不再等待D-01/D-02；真实历史正文扫描0、新盲测0。本轮无付费/部署。记录204五批最终3f0267f已推送，[CI38571382863](https://github.com/Charlie-Uni/Medy/actions/runs/38571382863)全部29步骤成功；本轮发布/CI另按自身SHA留证。
 
 ARCH-12仅完成条件收益评估，生产Pool/事务拆分未采用；记录189已分批推送完成任务，记录190修复CI，8d3669e的远端38184157416全部步骤成功，包括真实容器门。ARCH-13仍未替换共享部署/长期驻留，容量仍待实测。MCP受限完整材料已由记录194补齐；原条件恢复、Task/MCP回放、FOCUS-02跨块定位、PLAN-02行动/profile已确认，EVAL-32开发评分器工程自审已过，真实Agent运行仍未完成；真实语义、第二独立人工、未见盲测、S2/S3及逐次付费授权门保持。
 
@@ -240,7 +240,7 @@ Redis 已在本机主运行配置切到 `redis`，TTL 300 秒；实际 smoke 为
 | AGENT-03 | 实现模型选择动作与结果驱动循环 | DONE | [记录209](reviews/2026-10-15-implementation-209-model-selected-agent-loop.md)、[内部循环](agent/AGENT_LOOP.md)：实际ModelGateway单动作规划、已提交观察驱动下一请求、原四工具/共享预算/严格准入及终态申请交接；假网关反例与原工具回归通过，本轮八项工程自审已过。无生产Driver/持久恢复/完整终态或公共入口，真实质量仍AGENT-08 |
 | AGENT-04 | 有界执行、重复检测、取消与恢复 | DONE | 2026-10-17记录217：AGENT-04持久Driver、调用前写入/回执对账、同事务工具观察及真实终检预算包络已实现，工程自审通过，AGENT-04已完成。0托管调用/0USD，正式库未迁移，终态发布及公开入口仍AGENT-05/06。 [记录217](reviews/2026-10-17-implementation-217-durable-agent-runtime.md)、[持久执行契约](agent/AGENT_RUNTIME.md)；记录210～216原工程证据保持。恢复保留原预算/步数/绝对期限/持有权，未知请求不重发；澄清后的新执行仍须单独授权。 |
 | AGENT-05 | 最终证据核验、安全、澄清与人工升级 | DONE | 记录219业务终态/当前授权读取、停止判断实际模型检查、澄清/部分资料/升级回执与原子封闭通过八项工程自审；required全量3311/70；[交付契约](agent/AGENT_TERMINALS.md)。记录218逐项AND/OR证据门保持；SESSION-01/02关联新执行、HANDOFF分派及AGENT-06完整轨迹仍单独验收，真实质量仍AGENT-08；0托管费用，无部署。 |
-| AGENT-06 | Agent 轨迹、版本、计量与回放接线 | IN_PROGRESS | 记录220首切片接入实际运行/规划/工具/终检/终态metadata层级、原预算分项及独立进程恢复关联，本切片工程自审通过；[观测契约](agent/AGENT_OBSERVABILITY.md)。整体未完成； 记录217已提供受限加密runtime事件及完整工具审计，公开轨迹/受限读取与完整回放仍待；AGENT-03记录209工程自审已过；ARCH-07/09；记录动作、简短行动理由、受限输入输出引用、证据、调用回执及实际版本；Langfuse 只发获准元数据；证明回放边界和重启后关联稳定 |
+| AGENT-06 | Agent 轨迹、版本、计量与回放接线 | IN_PROGRESS | 记录221完成管理员用途审计读取并工程自审通过；[读取契约](agent/AGENT_AUDIT.md)。 记录220首切片接入实际运行/规划/工具/终检/终态metadata层级、原预算分项及独立进程恢复关联，本切片工程自审通过；[观测契约](agent/AGENT_OBSERVABILITY.md)。整体未完成； 记录217已提供受限加密runtime事件及完整工具审计，受限读取已由记录221完成；持久Trace/反馈与完整回放仍待；AGENT-03记录209工程自审已过；ARCH-07/09；记录动作、简短行动理由、受限输入输出引用、证据、调用回执及实际版本；Langfuse 只发获准元数据；证明回放边界和重启后关联稳定 |
 | AGENT-07 | 首个业务 Agent 的无付费集成验证 | BLOCKED | AGENT-04/05/06、EVAL-32及SESSION-01/02最小澄清切片；完整任务、空检索补救、失败/预算/权限/注入/恢复及澄清后关联新执行/累计费用/过期删除撤权并发反例全通过。真实质量另验 |
 | AGENT-08 | 首个业务 Agent 真实试跑与路径对照 | PAID | AGENT-07；用户批准样本、轮数、费用上限和停止条件后，与固定 Workflow 对照；保存工具选择、补救、终态、质量/时延/费用；作为开发演示，不能冒充正式盲测 |
 | AGENT-09 | 扩展五类 Skill 与多轮任务覆盖 | BLOCKED | AGENT-08、SESSION-01/02、HANDOFF-01/02；逐类核验工具适用范围、组合、最终判断及人工接手；不要求每题多步或每次调用所有工具 |
@@ -376,3 +376,5 @@ EVOL-06～08 按候选类型分切片记录，Prompt 先行；整项 DONE 需两
 2026-10-19记录219：AGENT-05工程DONE。终检后的五状态业务保存/当前授权读取、模型核验澄清必要性/升级理由、实际部分资料/缺口/回执、原期限/超额/取消/失租约束、0030终态后SQL封闭与恢复不重发通过；required全量3311 passed/70 skipped/1旧warning，73新用例，812维护输入/2174范围外blob/36Schema/144任务一致。0托管调用/0USD，正式三库仍0026，无部署。SESSION关联新执行及HANDOFF分派不算完成，下一AGENT-06；AGENT-07继续等待其余前置，真实质量/盲测和付费逐次授权保持。见[记录219](reviews/2026-10-19-implementation-219-agent-terminal-delivery.md)。
 
 2026-10-19记录220：AGENT-06运行metadata首切片工程自审通过，整体IN_PROGRESS。Agent执行/规划/工具/终检/终态层级、原预算累计与本次调用计量、内部handoff和确认提交区分、同Trace恢复及独立进程关联已验证；15新用例、79首轮定向及3边界、required全量3326/70/1旧warning、815输入/2189保护blob/36Schema/144任务保持。0托管调用/0USD，无新迁移和部署。下一仍AGENT-06受限审计读取、持久Trace/反馈与诊断回放；完整S2及真实质量/盲测/付费门保持。见[记录220](reviews/2026-10-19-implementation-220-agent-runtime-observability.md)。
+
+2026-10-19记录221：AGENT-06受限读取切片八项工程自审通过，整体IN_PROGRESS。管理员同库/当前身份栅栏、用途日志提交后才返回、真实原始材料、跨Prompt/工具版本的历史读取与AAD兼容、32MiB/512事件/读取器5秒、并发变化拒绝、0031只读策略往返已验证。独立CI完整门禁3330/92/1旧warning，26新增，822维护输入/2187保护blob/36契约/144任务保持；原一次failed原因未明和全部原失败保留。0托管调用/0USD，正式三库本轮未升级（故障前核对0026），共享实例恢复异常另待处理，无部署。下一持久Trace/反馈及诊断回放；[记录221](reviews/2026-10-19-implementation-221-agent-restricted-audit.md)。

@@ -1,5 +1,7 @@
 # Medy 项目完整迭代计划与工程建议
 
+2026-10-19记录221：AGENT-06受限历史审计读取、用途日志、0031只读策略和旧密文兼容接线已通过八项工程自审；AGENT-06整体IN_PROGRESS。0托管调用/0USD，正式库未迁移/部署。[读取契约](agent/AGENT_AUDIT.md) · [记录221](reviews/2026-10-19-implementation-221-agent-restricted-audit.md)
+
 2026-10-19记录220：AGENT-06运行metadata层级、实际版本/计量、恢复关联首切片八项工程自审通过；AGENT-06整体IN_PROGRESS，受限审计/回放仍待。0托管调用/0USD，无迁移部署。[观测契约](agent/AGENT_OBSERVABILITY.md) · [记录220](reviews/2026-10-19-implementation-220-agent-runtime-observability.md)
 
 2026-10-19记录219：AGENT-05业务终态、澄清/升级资料、同事务保存和当前授权读取已通过八项工程自审，AGENT-05 DONE；0托管调用/0USD，0030仅临时测试，正式三库仍0026。SESSION最小续办/AGENT-06轨迹及真实质量仍待。 [交付契约](agent/AGENT_TERMINALS.md) · [记录219](reviews/2026-10-19-implementation-219-agent-terminal-delivery.md)
