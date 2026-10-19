@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import UTC, datetime
+from datetime import datetime
 from typing import Any
 from uuid import UUID, uuid4
 
@@ -11,8 +11,9 @@ from psycopg.types.json import Jsonb
 
 from medops.application.agent_contracts import context_binding
 from medops.application.agent_loop_ports import AgentLoopAbort
+from medops.application.agent_runtime_envelope import head_aad, runtime_aad
 from medops.application.agent_runtime_state import DurableCall, RuntimeBody, run_with_budget
-from medops.core.canonical import canonical_hash, canonical_json
+from medops.core.canonical import canonical_json
 from medops.core.envelope import KeyProvider, Sealed, open_sealed, seal
 from medops.core.strict_json import strict_json
 from medops.infrastructure.db.agent_control import AgentLease, PgAgentControl
@@ -48,21 +49,20 @@ class PgAgentRuntime:
         self.binding = context_binding(self.context)
 
     def _aad(self, kind: str, *parts: object) -> bytes:
-        return canonical_json(
-            ["pv-agent-runtime-v1", str(self.binding.run_id), self.binding.conditions_sha256, kind, *map(str, parts)]
-        ).encode()
+        return runtime_aad(self.binding.run_id, self.binding.conditions_sha256, kind, *parts)
 
     def _head_aad(
         self, revision: int, lease: AgentLease, data: dict[str, Any], deadline: datetime, retained_until: datetime
     ) -> bytes:
-        return self._aad(
-            "head",
+        return head_aad(
+            self.binding.run_id,
+            self.binding.conditions_sha256,
             revision,
             lease.lease_id,
             lease.generation,
-            canonical_hash(data),
-            deadline.astimezone(UTC).isoformat(timespec="microseconds"),
-            retained_until.astimezone(UTC).isoformat(timespec="microseconds"),
+            data,
+            deadline,
+            retained_until,
         )
 
     def _seal(self, body: dict[str, Any], aad: bytes) -> Sealed:
