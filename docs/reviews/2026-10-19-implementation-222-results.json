@@ -1,0 +1,306 @@
+{
+  "record": 222,
+  "date": "2026-10-19",
+  "task": "AGENT-06",
+  "baseline_sha": "0280f3b7e6da5d863b23490d2bb09644dea29c61",
+  "slice": "persistent terminal Trace and existing feedback",
+  "slice_status": "DONE",
+  "overall_status": "IN_PROGRESS",
+  "reviewer": "Codex self-review, not second independent human",
+  "validation": {
+    "mode": "candidate",
+    "sha": "c50cb4243e12bd2f49f15091d85f67fc6c5cb3e3",
+    "url": "https://github.com/Charlie-Uni/Medy/actions/runs/39202627068",
+    "exit_code": 0,
+    "passed": 3354,
+    "skipped": 92,
+    "warnings": 1,
+    "steps_success": 29,
+    "bound_inputs": 888,
+    "maintained_python": 826,
+    "schemas": 36,
+    "new_cases": 24,
+    "local_full_make_check_passed": false,
+    "source_bytes_match_commit": true,
+    "skip_breakdown": {
+      "C_pg_search": 25,
+      "B_zhparser": 45,
+      "D_separate_experiment": 22
+    },
+    "required_production_pg_redis_and_bm25_executed": true
+  },
+  "targeted_runs": [
+    {
+      "name": "trace-first",
+      "command": [
+        "venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/integration/test_agent_trace.py::test_real_terminal_trace_has_original_identity_versions_accounting_and_no_body",
+        "-x"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 59.02,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    },
+    {
+      "name": "trace-all",
+      "command": [
+        "venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/integration/test_agent_trace.py",
+        "-x"
+      ],
+      "exit_code": 1,
+      "elapsed_s": 119.443,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    },
+    {
+      "name": "trace-tail",
+      "command": [
+        "venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/integration/test_agent_trace.py",
+        "-k",
+        "feedback_export or replay_explicitly or trace_collision or new_agent_trace_requires or append_only or migration_round_trip",
+        "-x"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 39.648,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    },
+    {
+      "name": "gate-final",
+      "command": [
+        "make",
+        "check"
+      ],
+      "exit_code": 2,
+      "elapsed_s": 166.907,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    },
+    {
+      "name": "privacy-before",
+      "command": [
+        "venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/integration/test_agent_trace.py::test_budget_free_text_never_enters_the_plain_trace_projection",
+        "-x"
+      ],
+      "exit_code": 1,
+      "elapsed_s": 12.784,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    },
+    {
+      "name": "privacy-fixed",
+      "command": [
+        "venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/integration/test_agent_trace.py::test_budget_free_text_never_enters_the_plain_trace_projection",
+        "tests/integration/test_agent_trace.py::test_real_terminal_trace_has_original_identity_versions_accounting_and_no_body",
+        "tests/integration/test_agent_trace.py::test_trace_write_failure_rolls_back_terminal_control_event_and_summary",
+        "-x"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 45.048,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    },
+    {
+      "name": "static-final",
+      "command": [
+        "make",
+        "lint",
+        "format-check",
+        "typecheck",
+        "architecture-check",
+        "test-assertion-check"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 6.242,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    },
+    {
+      "name": "migration-fixes",
+      "command": [
+        "venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/integration/test_agent_audit.py::test_new_read_policies_round_trip_without_rewriting_existing_ciphertext",
+        "tests/integration/test_agent_terminal.py::test_schema_downgrade_cannot_reopen_already_sealed_executions",
+        "tests/integration/test_feedback_export.py::test_identity_migration_has_no_body_changes_and_no_fallback_without_identity",
+        "tests/integration/test_agent_trace.py::test_migration_round_trip_and_legacy_store_without_new_column",
+        "-x"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 27.827,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    },
+    {
+      "name": "static-fixes",
+      "command": [
+        "make",
+        "lint",
+        "format-check",
+        "typecheck",
+        "architecture-check",
+        "test-assertion-check"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 2.734,
+      "required_pg_redis": true,
+      "hosted_model_keys_available": false,
+      "worktree": "isolated cached Git worktree"
+    }
+  ],
+  "first_candidate_ci": {
+    "url": "https://github.com/Charlie-Uni/Medy/actions/runs/39197510714",
+    "sha": "a4e0688e4c6e9356ba08571afeb9f9f9dc6ca068",
+    "failed": 3,
+    "passed": 3351,
+    "skipped": 92,
+    "reason": "three legacy migration fixture assumptions, all new 24 cases passed"
+  },
+  "source_binding": {
+    "baseline_sha": "0280f3b7e6da5d863b23490d2bb09644dea29c61",
+    "owned_paths": [
+      "README.md",
+      "docs/CURRENT_TASKS.md",
+      "docs/ITERATION_PLAN.md",
+      "docs/ITERATION_STAGES.md",
+      "docs/agent/AGENT_AUDIT.md",
+      "docs/agent/AGENT_OBSERVABILITY.md",
+      "docs/agent/AGENT_TRACE.md",
+      "docs/reviews/2026-10-19-implementation-222-agent-business-trace.md",
+      "docs/reviews/2026-10-19-implementation-222-results.json",
+      "migrations/versions/0032_agent_business_trace.py",
+      "src/medops/application/agent_trace.py",
+      "src/medops/application/audit.py",
+      "src/medops/bootstrap/agent_terminal.py",
+      "src/medops/infrastructure/db/audit.py",
+      "tests/integration/test_agent_audit.py",
+      "tests/integration/test_agent_terminal.py",
+      "tests/integration/test_agent_trace.py",
+      "tests/integration/test_feedback_export.py",
+      "tests/integration/test_migrations.py"
+    ],
+    "protected_blobs_unchanged": 2600,
+    "baseline_blobs": 2613,
+    "bound_verification_inputs": 888,
+    "maintained_python": 826,
+    "public_schemas_unchanged": 36,
+    "task_ids_and_states_unchanged": 144,
+    "relative_links_checked": 362,
+    "new_migration": "0032",
+    "only_task": "AGENT-06"
+  },
+  "merge_binding": {
+    "source_sha": "c50cb4243e12bd2f49f15091d85f67fc6c5cb3e3",
+    "merge_sha": "7633595352862abc5cd806855ff4167413ded13b",
+    "tree_sha": "1f7344a3700fd0c4264812ac59ef2be6ce2a796a",
+    "candidate_merge_tree_identical": true
+  },
+  "self_review": [
+    {
+      "item": "需求与范围",
+      "result": "通过",
+      "evidence": "真实已保存业务终态同事务写入Trace并复用原反馈，旧Ask Replay明确拒绝Agent；诊断回放/完整AGENT-06未冒充完成。"
+    },
+    {
+      "item": "ADR与阶段硬门",
+      "result": "通过",
+      "evidence": "原ADR-0012/PLAN-02/ARCH-04/11与AGENT-01～05前置保持；0032是明确兼容扩展，目标、阈值、模型、发布策略和S3盲测/实验限定不变。"
+    },
+    {
+      "item": "正确性与失败路径",
+      "result": "通过",
+      "evidence": "五状态、内部finish无假Trace、写前/写后失败、提交确认丢失、恢复不重发、PK冲突、提交前不可见、格式约束、append-only与降级保留审计均有反例；发现问题先修复测。"
+    },
+    {
+      "item": "权限与数据",
+      "result": "通过",
+      "evidence": "现有当前身份/主体所有权/幂等；三类交付反馈、外人/匿名/撤权均真实HTTP验证；未扩大SQL权限。自由文本反例先失败后通过，预算只投影13个数值/布尔字段，叙述/理由/证据/回复/凭据不复制。"
+    },
+    {
+      "item": "预算、取消与副作用",
+      "result": "通过",
+      "evidence": "0托管调用/0USD；原累计accounted/known/reserved/保护额度与pending语义保留，不重开/重定价。未结不当已知零；读取反馈不调用模型；正式库未迁移/重启/部署。"
+    },
+    {
+      "item": "追溯与版本",
+      "result": "通过",
+      "evidence": "原case/task/run/attempt、实际版本与终态事件/材料/预算检查点绑定；原Trace ID关联反馈与稳定score ID。Trace成本为accounted、时长为墙钟；不造Harness spans、生产工单或S3候选。"
+    },
+    {
+      "item": "验证充分性",
+      "result": "通过",
+      "evidence": "独立CI同源码3354 passed/92可选实验skipped/1既有JWT warning，29步骤成功；24新增用例全部执行，386类型/架构0违规2旧例外、328断言文件、36Schema保持。888输入与CI提交/合并树绑定；本地完整make check中断，未宣称通过。"
+    },
+    {
+      "item": "状态与文档",
+      "result": "通过",
+      "evidence": "本切片工程DONE，AGENT-06整体IN_PROGRESS；144任务ID/顺序/状态不变。19文件按存储/终态集成/迁移回归/文档分4批，保留2600范围外原blob；真实模型质量/盲测/容量/部署分开。"
+    }
+  ],
+  "paid": {
+    "hosted_model_calls": 0,
+    "usd": 0,
+    "real_model_quality_measured": false
+  },
+  "deployed": false,
+  "formal_database_versions_readonly_preflight": {
+    "medops": "0026",
+    "medops_v2": "0026",
+    "medops_v2_safety": "0026"
+  },
+  "formal_database_versions_readonly_postflight": {
+    "medops": "0026",
+    "medops_v2": "0026",
+    "medops_v2_safety": "0026"
+  },
+  "formal_migration_executed": false,
+  "schema_changes": {
+    "public_schemas_changed": false,
+    "new_database_migration": "0032",
+    "change": "nullable body-free agent_metadata and Agent-only kind/outcome extension; no grants"
+  },
+  "local_complete_make_check_passed": false,
+  "known_limits": [
+    "Only committed business terminals create Trace rows; no historical terminal backfill",
+    "accounting_complete means no pending allowance, not known provider usage or a reconciled bill",
+    "Trace cost column is accounted USD rounded to six decimals; separate known/reserved amounts are retained",
+    "Business duration includes recovery gaps, not active span time or a measured latency gate",
+    "No new actual Langfuse delivery/UI demonstration, clinical quality, benchmark, capacity or production deployment",
+    "Original shared PostgreSQL recovery root cause was not repaired by this slice; current readonly preflight succeeded at 0026",
+    "Downgrade with retained Agent Trace/feedback refuses; no audit deletion to force success"
+  ],
+  "remaining": [
+    "AGENT-06 diagnostic replay and explicit original-condition refusal",
+    "SESSION minimal continuation and AGENT-07/08 keep their own prerequisites"
+  ]
+}

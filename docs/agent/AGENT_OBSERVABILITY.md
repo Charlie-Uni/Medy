@@ -50,6 +50,8 @@ agent.execution/loop/plan/final_review/terminal映射Langfuse chain，agent.tool
 
 真实临时PG＋离线Fake供应商＋OpenTelemetry InMemory exporter，覆盖父子关系、实际ID/版本、原调用数/预算、成功/澄清/升级/超时、内部handoff、提交回滚/确认丢失、外部父Trace、重新装配与独立进程恢复、无exporter及退出后重复读取。原核心OTel测试另验证本地HTTP OTLP/脱敏协议；本轮没有向真实Langfuse后端执行新排障演示。
 
-记录221已完成[管理员用途审计读取](AGENT_AUDIT.md)，本切片工程自审通过。AGENT-06后续仍含持久业务Trace/反馈入口、诊断回放接线及原条件不可恢复时的明确拒绝。完整任务保持IN_PROGRESS。SESSION最小续办、真实质量/性能、正式部署和未见盲测仍分别验收。
+记录221已完成[管理员用途审计读取](AGENT_AUDIT.md)，本切片工程自审通过。持久业务Trace/反馈入口已由记录222完成；AGENT-06后续仍含诊断回放及原条件不可恢复时的明确拒绝。完整任务保持IN_PROGRESS。SESSION最小续办、真实质量/性能、正式部署和未见盲测仍分别验收。
 
 实际命令、原失败、复测与八项自审见[记录220](../reviews/2026-10-19-implementation-220-agent-runtime-observability.md)。
+
+2026-10-19记录222已完成[持久业务Trace与反馈](AGENT_TRACE.md)，本切片八项工程自审通过。原预算、真实终态事务与元数据边界保持；诊断回放仍未完成。

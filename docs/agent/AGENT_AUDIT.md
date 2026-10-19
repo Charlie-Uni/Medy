@@ -32,4 +32,6 @@ runtime AAD抽为共享纯函数，严格保留pv-agent-runtime-v1原字节格�
 
 真实临时PG、五类LOGIN与生产ProductionRuntime/HTTP装配；供应商全部Fake。核验成功/澄清/升级、原始材料/同Trace、用途/日志、当前管理员与错库/撤权、提交/密钥/日志失败、密文替换、并发、大小/数量、过期及迁移往返。历史Ask/Skill/MCP/Agent与原Schema检查同时回归。
 
-AGENT-06整体保持IN_PROGRESS：持久业务Trace/反馈接线、诊断回放与原条件拒绝边界尚待；真实模型质量、Langfuse实际后端演示、容量、正式部署/独立盲测分别验收。实际命令、失败、修复和八项自审见[记录221](../reviews/2026-10-19-implementation-221-agent-restricted-audit.md)。
+AGENT-06整体保持IN_PROGRESS：持久业务Trace/反馈后由记录222完成，诊断回放与原条件拒绝边界尚待；真实模型质量、Langfuse实际后端演示、容量、正式部署/独立盲测分别验收。实际命令、失败、修复和八项自审见[记录221](../reviews/2026-10-19-implementation-221-agent-restricted-audit.md)。
+
+2026-10-19记录222已完成[持久业务Trace及原反馈接线](AGENT_TRACE.md)，本切片八项工程自审通过。诊断回放仍待，整体AGENT-06未完成；既有管理员用途审计边界保持。

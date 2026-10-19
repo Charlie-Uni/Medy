@@ -1,5 +1,7 @@
 # 分阶段执行与每轮自审
 
+2026-10-19记录222：AGENT-06真实终态与持久Trace同事务接线、原反馈入口及元数据队列已通过八项工程自审；整体AGENT-06 IN_PROGRESS。0032仅临时测试，0托管调用/0USD，无正式部署。[契约](agent/AGENT_TRACE.md) · [自审](reviews/2026-10-19-implementation-222-agent-business-trace.md)
+
 2026-10-19记录221：AGENT-06受限历史审计读取、用途日志、0031只读策略和旧密文兼容接线已通过八项工程自审；AGENT-06整体IN_PROGRESS。0托管调用/0USD，正式库未迁移/部署。[读取契约](agent/AGENT_AUDIT.md) · [记录221](reviews/2026-10-19-implementation-221-agent-restricted-audit.md)
 
 2026-10-19记录220：AGENT-06运行metadata层级、实际版本/计量、恢复关联首切片八项工程自审通过；AGENT-06整体IN_PROGRESS，受限审计/回放仍待。0托管调用/0USD，无迁移部署。[观测契约](agent/AGENT_OBSERVABILITY.md) · [记录220](reviews/2026-10-19-implementation-220-agent-runtime-observability.md)
