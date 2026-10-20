@@ -113,7 +113,9 @@ jobs:
         run: make PY=python architecture-check
       - name: test assertion discrimination
         run: make PY=python test-assertion-check
-      - run: python -m pytest -q
+      - run: python -m pytest -q --junitxml=/tmp/medy-check.xml
+      - name: Agent integration acceptance matrix (reuse full-suite evidence)
+        run: python scripts/agent_integration_check.py --junit /tmp/medy-check.xml --output /tmp/medy-agent07.json
       - name: frozen evaluation inputs and lineage
         run: make PY=python eval-check
       - name: migration check (single head, upgrade/downgrade round trip)
