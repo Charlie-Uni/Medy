@@ -1,5 +1,7 @@
 # Medy
 
+2026-10-20记录225：AGENT-07无付费综合验证已通过八项工程自审及固定CI，3433 passed/92 skipped/1旧警告；12场景/121实例全部执行，21新增无跳过，908输入绑定。规划投影v2去除重复内部元数据，正文/服务端绑定/权限/额度保持。0托管费用、无迁移部署；完整SESSION仍IN_PROGRESS，AGENT-08仍需单独付费授权。 [综合验收](docs/agent/AGENT_INTEGRATION.md) · [自审](docs/reviews/2026-10-20-implementation-225-agent-integration.md)
+
 2026-10-20记录224：SESSION-01/02的S2最小澄清续办已通过八项工程自审，完整CI3412/92/1、40新增全执行。稳定case/新执行、必填TTL/次数/case及批次累计上限、身份/删除/并发与分页费用已接线；完整S4多轮仍IN_PROGRESS，下一AGENT-07。0托管调用/0USD，0033仅临时测试、正式三库0026/无部署。[续办契约](docs/agent/AGENT_CLARIFICATION.md) · [自审](docs/reviews/2026-10-19-implementation-224-agent-clarification-continuation.md)
 
 2026-10-19记录223：AGENT-06当前条件诊断、独立执行身份、无正文差异报告和原条件拒绝已通过八项工程自审，AGENT-06 DONE；完整CI3372/92/1，18新增全部执行。SESSION最小澄清及AGENT-07/08继续分别验收。0托管调用/0USD，正式库不迁移、无部署。[回放契约](docs/agent/AGENT_REPLAY.md) · [自审](docs/reviews/2026-10-19-implementation-223-agent-diagnostic-replay.md)

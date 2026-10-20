@@ -1,0 +1,130 @@
+{
+  "task_id": "AGENT-07",
+  "date": "2026-10-20",
+  "reviewer": "Codex",
+  "independent_human_review": false,
+  "engineering_status": "DONE",
+  "baseline": "d31c7ddd08f8f891bf10ee605183e0ac011b3d6c",
+  "verified_code_sha": "2bbbf7c2b2f9e069dc006237d7b43672904606b2",
+  "ci": {
+    "mode": "candidate",
+    "sha": "2bbbf7c2b2f9e069dc006237d7b43672904606b2",
+    "url": "https://github.com/Charlie-Uni/Medy/actions/runs/39349091166",
+    "exit_code": 0,
+    "passed": 3433,
+    "skipped": 92,
+    "warnings": 1,
+    "steps_success": 30,
+    "bound_inputs": 908,
+    "maintained_python": 841,
+    "schemas": 36,
+    "new_cases": 21,
+    "source_bytes_match_commit": true,
+    "skip_breakdown": {
+      "C_pg_search": 25,
+      "B_zhparser": 45,
+      "D_separate_experiment": 22
+    },
+    "required_production_pg_redis_and_bm25_executed": true
+  },
+  "matrix": {
+    "registered_scenarios": 12,
+    "expected_instances": 121,
+    "executed_instances": 121,
+    "passed_instances": 121,
+    "skipped_instances": 0,
+    "report_scope": "offline engineering assertions; no real-model quality score"
+  },
+  "bound_inputs": 908,
+  "maintained_python": 841,
+  "public_schemas_unchanged": 36,
+  "new_test_instances": 21,
+  "hosted_model_calls": 0,
+  "api_cost_usd": 0,
+  "synthetic_usage_is_not_actual_billing": true,
+  "formal_gate": false,
+  "unseen_tasks": 0,
+  "deployed": false,
+  "formal_database_revisions": {
+    "medops": "0026",
+    "medops_v2": "0026",
+    "medops_v2_safety": "0026"
+  },
+  "local_evidence": {
+    "agent_unit_passed": 495,
+    "targeted_run": {
+      "passed": 26,
+      "failed": 1,
+      "reason": "dependency_error"
+    },
+    "failed_case_retest_passed": true,
+    "static_fixed_exit": 0,
+    "partial_junit_correctly_rejected": true
+  },
+  "self_review": [
+    {
+      "item": "需求与范围",
+      "result": "通过",
+      "evidence": "12个S0场景、列明的原变体及最小澄清反例映射到固定121实例；真实执行与评分器脚本分开，原数据/分母/门槛不变。",
+      "reviewer": "Codex"
+    },
+    {
+      "item": "ADR与阶段硬门",
+      "result": "通过",
+      "evidence": "PLAN-02已确认；ARCH-04/11及AGENT-01～06、最小SESSION前置通过。无目标/验收扩张；S2真实质量与S3盲测/实验限定保持。",
+      "reviewer": "Codex"
+    },
+    {
+      "item": "正确性与失败路径",
+      "result": "通过",
+      "evidence": "固定CI全部121实例执行通过，包含实际补检索/邻块、原子保存、故障/取消/失租/未知在途/子进程恢复与续办并发。保留本机失败，不把它们重写为成功。",
+      "reviewer": "Codex"
+    },
+    {
+      "item": "权限与数据",
+      "result": "通过",
+      "evidence": "RLS/身份/来源/版本/输出栅栏反例执行；规划正文和权限不变，仅减少不能用于动作的内部元数据。生成模型不读评测期望；36公共Schema与原冻结JSON保持。",
+      "reviewer": "Codex"
+    },
+    {
+      "item": "预算、取消与副作用",
+      "result": "通过",
+      "evidence": "8步/12,000 Token/0.60 USD/125秒不变；长提取包络供应商前拒绝、终检预留与同case/批次累计保留；0托管调用/0API费用。自建临时测试容器已清理，未部署。",
+      "reviewer": "Codex"
+    },
+    {
+      "item": "追溯与版本",
+      "result": "通过",
+      "evidence": "规划v2摘要绑定SYSTEM/格式/投影字段，完整私有证据仍持久化；908输入与固定Git SHA/同树PR合并绑定，逐调用/终态/业务Trace及恢复检查通过。",
+      "reviewer": "Codex"
+    },
+    {
+      "item": "验证充分性",
+      "result": "通过",
+      "evidence": "required CI3433 passed/92 skipped/1旧警告，30步骤成功；21新增全部执行；矩阵121实例全通过。92为独立实验25+45+22，非矩阵跳过。本机单次27项有1 dependency_error，单题复测通过；本机稳定性不宣称已修复。",
+      "reviewer": "Codex"
+    },
+    {
+      "item": "状态与文档",
+      "result": "通过",
+      "evidence": "只关闭AGENT-07工程任务；完整SESSION保持IN_PROGRESS、AGENT-08仍PAID；主入口/计划/阶段/契约/记录同步，不宣布质量、性能、部署或生产发布通过。",
+      "reviewer": "Codex"
+    }
+  ],
+  "remaining_limits": [
+    "real model quality and path selection unmeasured; AGENT-08 requires fresh scope/budget/stop authorization",
+    "full SESSION-01/02 remains S4 IN_PROGRESS",
+    "no unseen/independent-human/production approval claim",
+    "local intermittent dependency failures remain DEPLOY-02; no timeout/lease widening",
+    "12k does not guarantee all eight steps; original extraction retry envelope can correctly refuse before provider"
+  ],
+  "next": "AGENT-08",
+  "documentation_validation": {
+    "command": "venv/bin/python -m pytest -q tests/unit/docs",
+    "passed": 41,
+    "exit_code": 0,
+    "relative_links_checked": 405,
+    "task_ids_order_unchanged": 144,
+    "other_task_states_unchanged": 143
+  }
+}

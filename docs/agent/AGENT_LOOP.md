@@ -200,3 +200,7 @@ PYTHONPATH=src env -u DEBUG venv/bin/python -m pytest -q \
 ## 10. 持久运行接线（记录217）
 
 记录216以前各节描述当时切片；当前真实Driver、调用前写入、加密事务、原预算恢复与可执行边界以[持久运行契约](AGENT_RUNTIME.md)为准。私有循环格式现为v2并保存终态原准入预算；公开Schema不变。AGENT-04本轮工程自审通过；业务终态发布及澄清后新执行仍归后续任务。
+
+## 2026-10-20 规划投影v2
+
+[记录225](../reviews/2026-10-20-implementation-225-agent-integration.md)修复综合验证中发现的规划预算冗余：EvidenceView仅向规划模型投影handle/citation/text/truncated；内部哈希和区间仍完整持久化并参与服务端准入、事实回查与输出栅栏。正文及条件不裁剪。格式`pv-planner-v2+evidence-projection`的摘要绑定SYSTEM、格式和投影字段；旧条件恢复失败关闭，不能悄悄换投影。SYSTEM原字节不变，单次12,000 Token/0.60 USD/125秒/8步保持。实际工程证据与限制见[综合验收](AGENT_INTEGRATION.md)，真实模型效果仍待AGENT-08。
