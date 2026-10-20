@@ -6,7 +6,6 @@ The local PlannerProposal validator is mandatory; model text is never executable
 
 from __future__ import annotations
 
-import hashlib
 from collections import OrderedDict
 
 from pydantic import Field
@@ -20,12 +19,13 @@ from medops.application.agent_tool_results import (
     SearchPayload,
     VerificationPayload,
 )
-from medops.core.canonical import canonical_json
+from medops.core.canonical import canonical_hash, canonical_json
 from medops.domain.agent_actions import AgentModel
 from medops.domain.agent_execution import BoundAction, PVAgentRun
 from medops.infrastructure.llm.gateway import Message, ModelRequest
 
-PLANNING_VERSION = "pv-planner-v1"
+PLANNING_VERSION = "pv-planner-v2+evidence-projection"
+EVIDENCE_FIELDS = frozenset({"handle", "citation", "text", "truncated"})
 # Compact action syntax; full closed validation remains PlannerProposal/admit_action.
 SYSTEM = """You prepare synthetic PV review materials, not medical advice or causality decisions.
 Choose ONE next action from observations. Return exactly one JSON object {"proposal":{...}}.
@@ -53,7 +53,7 @@ Do not use every tool by default. Stop when necessary information is missing or 
 
 
 def planning_prompt_sha256() -> str:
-    return hashlib.sha256(SYSTEM.encode("utf-8")).hexdigest()
+    return canonical_hash({"version": PLANNING_VERSION, "system": SYSTEM, "evidence_fields": sorted(EVIDENCE_FIELDS)})
 
 
 class PlannerConfig(AgentModel):
@@ -100,7 +100,10 @@ class PlanningBoard:
         latest = set(list(self.views)[-8:])
         views = []
         for key, view in self.views.items():
-            data = view.model_dump(mode="json")
+            # Digests/offsets still bind the full private EvidenceView and are
+            # rechecked server-side; the planner cannot act on those fields.
+            # Avoid charging them to every subsequent planning admission.
+            data = view.model_dump(mode="json", include=set(EVIDENCE_FIELDS))
             if key not in latest:
                 data.pop("text")
                 data["text_omitted_from_planning"] = True

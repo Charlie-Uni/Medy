@@ -100,3 +100,25 @@ def test_history_metadata_capacity_does_not_drop_required_conditions_silently():
     action, outcome, _ = view_and_outcome(current, 74, "PUBLIC final rule.")
     with pytest.raises(ValueError, match="state_limit"):
         board.observe(action, outcome)
+
+
+def test_compact_projection_keeps_actionable_evidence_and_preserves_private_binding():
+    from medops.core.canonical import canonical_json
+
+    current, board = run(), PlanningBoard()
+    action, outcome, view = view_and_outcome(current, 10, "PUBLIC keep 100 mg, negation and conditions exactly.")
+    original = view.model_dump(mode="json")
+    board.observe(action, outcome)
+    row = state(board, current)[1]["evidence"][0]
+    assert set(row) == {"handle", "citation", "text", "truncated"}
+    assert row == {k: original[k] for k in row}
+    assert len(canonical_json(original).encode()) - len(canonical_json(row).encode()) > 200
+    assert board.views[str(view.handle)].model_dump(mode="json") == original
+
+
+def test_planning_digest_binds_projection_contract_as_well_as_system_prompt(monkeypatch):
+    from medops.application import agent_planning
+
+    original = agent_planning.planning_prompt_sha256()
+    monkeypatch.setattr(agent_planning, "EVIDENCE_FIELDS", agent_planning.EVIDENCE_FIELDS | {"source_sha256"})
+    assert agent_planning.planning_prompt_sha256() != original
