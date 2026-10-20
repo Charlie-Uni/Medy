@@ -1,0 +1,209 @@
+{
+  "format": "agent-07-integration-v1",
+  "task_id": "AGENT-07",
+  "development_only": true,
+  "formal_gate": false,
+  "hosted_model_calls": 0,
+  "unseen_tasks": 0,
+  "spec_sha256": "b428d81645d295e2b183419b79997588d4445af9c862390431275137cbd6dbb7",
+  "scenarios": [
+    {
+      "id": "PV-S0-01",
+      "checks": [
+        {
+          "nodeid": "tests/integration/test_agent_s0.py::test_s0_01_03_06_actual_observations_change_paths_and_commit_joint_evidence[complete]",
+          "instances": 1
+        }
+      ]
+    },
+    {
+      "id": "PV-S0-02",
+      "checks": [
+        {
+          "nodeid": "tests/integration/test_agent_continuation.py",
+          "instances": 30
+        },
+        {
+          "nodeid": "tests/integration/test_agent_terminal.py::test_real_terminal_is_saved_once_and_prevents_all_future_execution",
+          "instances": 3
+        },
+        {
+          "nodeid": "tests/unit/application/test_agent_continuation.py",
+          "instances": 10
+        }
+      ]
+    },
+    {
+      "id": "PV-S0-03",
+      "checks": [
+        {
+          "nodeid": "tests/integration/test_agent_s0.py::test_s0_01_03_06_actual_observations_change_paths_and_commit_joint_evidence[empty_then_rewrite]",
+          "instances": 1
+        }
+      ]
+    },
+    {
+      "id": "PV-S0-04",
+      "checks": [
+        {
+          "nodeid": "tests/integration/test_agent_tools.py::test_resolve_visible_name_id_version_and_hide_other_department",
+          "instances": 1
+        },
+        {
+          "nodeid": "tests/integration/test_agent_tools.py::test_historical_window_and_rls_are_preserved",
+          "instances": 3
+        },
+        {
+          "nodeid": "tests/integration/test_agent_tools.py::test_search_adapter_rejects_acl_revocation_after_retrieval",
+          "instances": 1
+        }
+      ]
+    },
+    {
+      "id": "PV-S0-05",
+      "checks": [
+        {
+          "nodeid": "tests/integration/test_agent_s0.py::test_s0_05_missing_attachment_limit_is_not_invented_or_completed",
+          "instances": 1
+        }
+      ]
+    },
+    {
+      "id": "PV-S0-06",
+      "checks": [
+        {
+          "nodeid": "tests/integration/test_agent_s0.py::test_s0_01_03_06_actual_observations_change_paths_and_commit_joint_evidence[adjacent_read]",
+          "instances": 1
+        },
+        {
+          "nodeid": "tests/integration/test_agent_tools.py::test_read_and_adjacent_use_fresh_fact_checks_with_exact_source",
+          "instances": 3
+        }
+      ]
+    },
+    {
+      "id": "PV-S0-07",
+      "checks": [
+        {
+          "nodeid": "tests/integration/test_agent_s0.py::test_s0_07_retrieval_timeout_is_system_failure_not_correct_abstention",
+          "instances": 1
+        },
+        {
+          "nodeid": "tests/integration/test_agent_observability.py::test_actual_timeout_keeps_known_and_conservative_accounting_without_provider_error_text",
+          "instances": 1
+        }
+      ]
+    },
+    {
+      "id": "PV-S0-08",
+      "checks": [
+        {
+          "nodeid": "tests/integration/test_agent_terminal.py::test_input_safety_stop_creates_only_an_escalation_receipt_without_calling_a_model",
+          "instances": 1
+        }
+      ]
+    },
+    {
+      "id": "PV-S0-09",
+      "checks": [
+        {
+          "nodeid": "tests/integration/test_agent_observability.py::test_zero_call_budget_stop_has_an_explicit_failure_reason_without_claiming_business_commit",
+          "instances": 1
+        },
+        {
+          "nodeid": "tests/unit/application/test_agent_budget_protection.py",
+          "instances": 8
+        },
+        {
+          "nodeid": "tests/integration/test_agent_s0.py::test_s0_09_whole_extraction_envelope_preserves_final_reserve_and_stops_before_skill_provider",
+          "instances": 1
+        }
+      ]
+    },
+    {
+      "id": "PV-S0-10",
+      "checks": [
+        {
+          "nodeid": "tests/integration/test_agent_terminal.py::test_last_moment_change_cannot_publish_completed_or_override_new_owner",
+          "instances": 6
+        },
+        {
+          "nodeid": "tests/integration/test_agent_runtime.py::test_late_receipt_after_lease_loss_is_retained_without_advancing_old_head",
+          "instances": 1
+        }
+      ]
+    },
+    {
+      "id": "PV-S0-11",
+      "checks": [
+        {
+          "nodeid": "tests/integration/test_agent_s0.py::test_s0_11_final_gate_rejects_credible_but_incorrect_material",
+          "instances": 2
+        },
+        {
+          "nodeid": "tests/integration/test_agent_s0.py::test_s0_11_existing_citation_does_not_support_an_invented_attachment_limit",
+          "instances": 1
+        }
+      ]
+    },
+    {
+      "id": "PV-S0-12",
+      "checks": [
+        {
+          "nodeid": "tests/integration/test_agent_s0.py::test_s0_12_unavailable_history_is_clarified_without_silent_current_source_fallback",
+          "instances": 1
+        }
+      ]
+    }
+  ],
+  "supplemental": [
+    {
+      "nodeid": "tests/integration/test_agent_runtime.py::test_process_death_recovers_same_decision_or_committed_result_without_repeating_calls",
+      "instances": 3
+    },
+    {
+      "nodeid": "tests/integration/test_agent_runtime.py::test_unknown_inflight_call_is_preserved_and_never_resent",
+      "instances": 1
+    },
+    {
+      "nodeid": "tests/integration/test_agent_runtime.py::test_no_progress_counter_is_rebuilt_after_actual_process_death",
+      "instances": 1
+    },
+    {
+      "nodeid": "tests/integration/test_agent_terminal.py::test_committed_final_check_can_recover_and_publish_without_repeating_judgement",
+      "instances": 3
+    },
+    {
+      "nodeid": "tests/integration/test_agent_terminal.py::test_terminal_commit_ack_failure_is_atomic_and_never_repeats_model",
+      "instances": 2
+    },
+    {
+      "nodeid": "tests/unit/application/test_agent_contracts.py::test_unknown_or_unapproved_action_is_rejected",
+      "instances": 5
+    },
+    {
+      "nodeid": "tests/unit/application/test_agent_contracts.py::test_forged_cross_run_outdated_or_wrong_source_handle_is_unavailable",
+      "instances": 11
+    },
+    {
+      "nodeid": "tests/unit/application/test_agent_loop.py::test_eight_bad_decisions_stop_without_free_repair_or_ninth_call",
+      "instances": 1
+    },
+    {
+      "nodeid": "tests/integration/test_agent_terminal.py::test_clarification_retains_only_actual_quote_grounded_extraction_after_final_check",
+      "instances": 2
+    },
+    {
+      "nodeid": "tests/integration/test_agent_terminal.py::test_real_retrieved_sources_and_joint_groups_are_bound_to_the_delivered_result",
+      "instances": 2
+    },
+    {
+      "nodeid": "tests/unit/application/test_agent_planning.py",
+      "instances": 8
+    },
+    {
+      "nodeid": "tests/integration/test_agent_trace.py::test_real_terminal_trace_has_original_identity_versions_accounting_and_no_body",
+      "instances": 3
+    }
+  ]
+}
